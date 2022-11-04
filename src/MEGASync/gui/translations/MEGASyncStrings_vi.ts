@@ -11,7 +11,7 @@
     <message>
         <source>Inbox</source>
         <translatorcomment>Label for Inbox space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="vanished">Hộp Thư</translation>
+        <translation>Hộp Thư</translation>
     </message>
     <message>
         <source>Loading...</source>
@@ -47,45 +47,6 @@
         <source>Available storage</source>
         <translatorcomment>Label for Available storage space used. Maintain capital letter in first word.(Max 18 characters)</translatorcomment>
         <translation>Không gian lưu trữ còn lại</translation>
-    </message>
-    <message>
-        <source>Backups</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>AddBackupDialog</name>
-    <message>
-        <source>Add backup folder</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Backup folder:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Choose folder</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Choose</source>
-        <translation type="unfinished">Chọn</translation>
-    </message>
-    <message>
-        <source>Backup to:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add</source>
-        <translation type="unfinished">Thêm</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Hủy</translation>
-    </message>
-    <message>
-        <source>Do you want to continue?</source>
-        <translation type="unfinished">Bạn có muốn tiếp tục không?</translation>
     </message>
 </context>
 <context>
@@ -379,225 +340,17 @@
     <message numerus="yes">
         <source>[A] added %n item</source>
         <translatorcomment>Label to indicate that [A] has added %n items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and %n with the number of added items.</translatorcomment>
-        <translation>
-            <numerusform>[A] đã thêm %n mục</numerusform>
-        </translation>
+        <translation><numerusform>[A] đã thêm %n mục</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>[A] removed %n item</source>
         <translatorcomment>Label to indicate that [A] has removed %n items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and %n with the number of removed items.</translatorcomment>
-        <translation>
-            <numerusform>[A] đã loại bỏ %n mục</numerusform>
-        </translation>
+        <translation><numerusform>[A] đã loại bỏ %n mục</numerusform></translation>
     </message>
     <message>
         <source>New shared folder from [A]</source>
         <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
         <translation>Thư mục chia sẻ mới từ [A]</translation>
-    </message>
-    <message>
-        <source>[WEEKDAY] [MONTHDAY] [MONTH] [TIME]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>[MONTHDAY] [MONTH] [TIME]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>[MONTHDAY] [MONTH] [YEAR] [TIME]</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>BackupItemModel</name>
-    <message>
-        <source>Sort by state</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Local Folder</source>
-        <translation type="unfinished">Thư mục trong máy</translation>
-    </message>
-    <message>
-        <source>Sort by name</source>
-        <translation type="unfinished">Sắp xếp theo tên</translation>
-    </message>
-    <message>
-        <source>Backup is enabled</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Backup is disabled</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Click menu for more Backup actions</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>BackupTableView</name>
-    <message>
-        <source>Open in MEGA</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Remove backup</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>BackupsWizard</name>
-    <message>
-        <source>Setup backups</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You can back up folders from your computer to MEGA. Files will automatically back up when the desktop app is running.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No folders available</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>More folders</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>All folders have been synced or backed up.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Selected backup folders</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Backup to</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Folders will be stored in backups and you can check the status of your backups in backup centre.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show more…</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Hủy</translation>
-    </message>
-    <message>
-        <source>Next</source>
-        <translation type="unfinished">Tiếp</translation>
-    </message>
-    <message>
-        <source>Try again</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Dismiss</source>
-        <translation type="unfinished">Đã đọc</translation>
-    </message>
-    <message>
-        <source>View in Backup Centre</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Lato&apos;; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:200%;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>1. [B]Select[/B] folders to backup</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>2. [B]Confirm[/B] backup settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Setup</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Collapse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add folders</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n folder</source>
-        <translation type="unfinished">
-            <numerusform>%n thư mục</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>Problem backing up folder</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>This folder wasn&apos;t backed up. Try again.</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-        </translation>
-    </message>
-    <message>
-        <source>Folder is already selected. Select a different folder.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You can&apos;t backup this folder as it&apos;s already inside a backed up folder.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You can&apos;t backup this folder as it contains backed up folders.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Do you want to continue?</source>
-        <translation type="unfinished">Bạn có muốn tiếp tục không?</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to cancel? All changes will be lost.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Choose directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message numerus="yes">
-        <source>Backup created</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>We&apos;re backing up your folder. The time this takes depends on the files in this folder.</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-        </translation>
-    </message>
-    <message>
-        <source>Creating or setting folder &quot;%1&quot; as backups root failed.
-Reason: %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error: %1</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -708,17 +461,17 @@ Reason: %2</source>
     <message>
         <source>The selected local folder is already synced</source>
         <translatorcomment>Message displayed when an user is adding a local folder wich is already synced.</translatorcomment>
-        <translation type="vanished">Thư mục nội bộ vừa chọn đã được đồng bộ từ trước</translation>
+        <translation>Thư mục nội bộ vừa chọn đã được đồng bộ từ trước</translation>
     </message>
     <message>
         <source>A synced folder cannot be inside another synced folder</source>
         <translatorcomment>Message displayed when an user is adding nested local folders for synchronization.</translatorcomment>
-        <translation type="vanished">Một thư mục được đồng bộ không thể nằm trong một thư mục được đồng bộ khác</translation>
+        <translation>Một thư mục được đồng bộ không thể nằm trong một thư mục được đồng bộ khác</translation>
     </message>
     <message>
         <source>The selected MEGA folder is already synced</source>
         <translatorcomment>Message displayed when an user is adding an already synchronized remote folder.</translatorcomment>
-        <translation type="vanished">Thư mục MEGA vừa chọn đã được đồng bộ từ trước</translation>
+        <translation>Thư mục MEGA vừa chọn đã được đồng bộ từ trước</translation>
     </message>
     <message>
         <source>Sync name</source>
@@ -739,7 +492,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Error</source>
         <translatorcomment>Label for status of an error performing an operation.</translatorcomment>
-        <translation type="vanished">Lỗi</translation>
+        <translation>Lỗi</translation>
     </message>
     <message>
         <source>Add folder</source>
@@ -760,10 +513,6 @@ Please enter a different name to identify this synced folder:</source>
         <source>Add synchronised folder:</source>
         <translatorcomment>Label to indicate the user to add synchronised folder (macOS)</translatorcomment>
         <translation>Thêm thư mục đồng bộ hóa:</translation>
-    </message>
-    <message>
-        <source>Do you want to continue?</source>
-        <translation type="unfinished">Bạn có muốn tiếp tục không?</translation>
     </message>
 </context>
 <context>
@@ -877,11 +626,6 @@ Please enter a different name to identify this synced folder:</source>
         <translation>Hủy các phiên truyền tải?</translation>
     </message>
     <message>
-        <source>Transfers not yet processed will be cancelled.</source>
-        <translatorcomment>Dialog messages which warns the user about the potential problems of cancelling the folder scanning</translatorcomment>
-        <translation>Các phiên truyền tải chưa được tiến hành sẽ bị hủy bỏ.</translation>
-    </message>
-    <message>
         <source>No, continue</source>
         <translatorcomment>Button to continue folder scanning cancellation</translatorcomment>
         <translation>Không, tiếp tục</translation>
@@ -889,7 +633,16 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Yes, cancel</source>
         <translatorcomment>Button to abort a folder scanning</translatorcomment>
-        <translation>Đúng, hủy</translation>
+        <translation>Phải, hủy</translation>
+    </message>
+    <message>
+        <source>All the queued transfers from your current download will be cancelled.</source>
+        <translatorcomment>Dialog messages which warns the user about the potential problems of cancelling the folder scanning</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancelling…</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -987,9 +740,7 @@ Please enter a different name to identify this synced folder:</source>
     <message numerus="yes">
         <source>Your Pro membership plan will expire in %n day</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in %n days. Placeholder will be replaced by the remaining days until plan will expire.</translatorcomment>
-        <translation>
-            <numerusform>Tài khoản hạng Pro sẽ hết hạn trong %n ngày tới</numerusform>
-        </translation>
+        <translation><numerusform>Tài khoản hạng Pro sẽ hết hạn trong %n ngày tới</numerusform></translation>
     </message>
     <message>
         <source>Pro membership plan expiring soon</source>
@@ -999,9 +750,7 @@ Please enter a different name to identify this synced folder:</source>
     <message numerus="yes">
         <source>Your Pro membership plan expired %n day ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired %n days ago. Placeholder will be replaced by the days from the expiration of the PRO membership.</translatorcomment>
-        <translation>
-            <numerusform>Hạng Pro của bạn đã hết hạn vào %n ngày trước</numerusform>
-        </translation>
+        <translation><numerusform>Hạng Pro của bạn đã hết hạn vào %n ngày trước</numerusform></translation>
     </message>
 </context>
 <context>
@@ -1223,12 +972,12 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>Tài khoản doanh nghiệp đã hết hạn</translation>
+        <translation>Tài khoản Doanh Nghiệp đã hết hạn</translation>
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation>Tài khoản bị hết hạn cho đến khi các thanh toán thuê bao được chi trả.</translation>
+        <translation>Tài khoản đã hết hạn và chỉ được xem cho đến khi bạn thanh toán các khoản phí được yêu cầu.</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -1243,16 +992,12 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message numerus="yes">
         <source>[A] added %n item</source>
         <translatorcomment>Label to indicate that [A] has added %n items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and %n with the number of added items.</translatorcomment>
-        <translation>
-            <numerusform>[A] đã thêm %n mục</numerusform>
-        </translation>
+        <translation><numerusform>[A] đã thêm %n mục</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>You have %n day left to save your data</source>
         <translatorcomment>Notification content to inform the days the user have to save the date before possible deletion. %n will be replaced with remaining days amount.</translatorcomment>
-        <translation>
-            <numerusform>Bạn còn lại %n ngày để giải quyết lưu trữ dữ liệu của mình</numerusform>
-        </translation>
+        <translation><numerusform>Bạn còn lại %n ngày để giải quyết lưu trữ dữ liệu của mình</numerusform></translation>
     </message>
     <message>
         <source>Upgrade now to a Pro account.</source>
@@ -1333,7 +1078,7 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>The new folder will be merged with the folder at this destination.</source>
         <translatorcomment>Text explaining the result of the folder merge action</translatorcomment>
-        <translation>Thư mục mới sẽ được hợp nhất với thư mục có sẵn tại chỗ này.</translation>
+        <translation>Thư mục mới sẽ được hợp nhất với thư mục có sẵn tại nơi này.</translation>
     </message>
     <message>
         <source>The folder at this destination will be maintained.</source>
@@ -1348,7 +1093,7 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>The file at this destination will be replaced with the new file.</source>
         <translatorcomment>Text explaining the result of the file upload and replace action</translatorcomment>
-        <translation>Tệp tin có sẵn tại chỗ này sẽ được thay thế bằng tệp tin mới.</translation>
+        <translation>Tệp tin có sẵn tại nơi này sẽ được thay thế bằng tệp tin mới.</translation>
     </message>
     <message>
         <source>The file will be renamed as:</source>
@@ -1363,7 +1108,7 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>Folder already exists</source>
         <translatorcomment>Dialog title when a folder with the same name has been found on the cloud</translatorcomment>
-        <translation>Thư mục đã tồn tại</translation>
+        <translation>Thư mục đã tồn tại sẵn</translation>
     </message>
     <message>
         <source>File already exists</source>
@@ -1373,9 +1118,7 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message numerus="yes">
         <source>Apply to all %1 duplicates</source>
         <translatorcomment>Checkbox text to apply the action to all the following conflicts. %1 is the number of conflicts</translatorcomment>
-        <translation>
-            <numerusform>Áp dụng cho tất cả %1 mục trùng lặp</numerusform>
-        </translation>
+        <translation><numerusform>Áp dụng cho tất cả %1 mục trùng lặp</numerusform></translation>
     </message>
     <message>
         <source>The file at this destination will be updated with a new version.</source>
@@ -1488,16 +1231,12 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Context menu option label to indicate the user has selected %n number of files</translatorcomment>
-        <translation>
-            <numerusform>%n tệp tin</numerusform>
-        </translation>
+        <translation><numerusform>%n tệp tin</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Context menu option label to indicate the user has selected %n number of folders</translatorcomment>
-        <translation>
-            <numerusform>%n thư mục</numerusform>
-        </translation>
+        <translation><numerusform>%n thư mục</numerusform></translation>
     </message>
 </context>
 <context>
@@ -1525,29 +1264,29 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>Warning</source>
         <translatorcomment>Label to indicate a waring during the process of stablish a synchronization.</translatorcomment>
-        <translation type="vanished">Chú Ý</translation>
+        <translation>Chú Ý</translation>
     </message>
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
         <translatorcomment>Label to indicate that MEGAsync won&apos;t be able to download anything due to the user doesn&apos;t have writhe permissions on the local selected folder.</translatorcomment>
-        <translation type="vanished">MEGAsync sẽ không tải xuống được gì vào chỗ này.</translation>
+        <translation>MEGAsync sẽ không tải xuống được gì vào chỗ này.</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
         <translatorcomment>Label to indicate if the user wants to continue in spite of the problem occured.</translatorcomment>
-        <translation type="vanished">Bạn có muốn tiếp tục không?</translation>
+        <translation>Bạn có muốn tiếp tục không?</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder for a synchronization.</translatorcomment>
-        <translation type="vanished">Bạn không có quyền hạn ghi dữ liệu vào thư mục này.</translation>
+        <translation>Bạn không có quyền hạn ghi dữ liệu vào thư mục này.</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translatorcomment>Label to inform a user about the fact of syncing a extremely large folder and the possible drawbacks that could arise.</translatorcomment>
-        <translation type="vanished">Thư mục này có kích thước vô cùng lớn. Lỗi có thể xảy ra khi cố thử đồng bộ dung lượng lớn dữ liệu, gây ra chậm chạp và hư hỏng, chúng tôi khuyên bạn nên chọn một thư mục nhỏ hơn và từ từ thêm vào dữ liệu khi MEGAsync đang hoạt động.</translation>
+        <translation>Thư mục này có kích thước vô cùng lớn. Lỗi có thể xảy ra khi cố thử đồng bộ dung lượng lớn dữ liệu, gây ra chậm chạp và hư hỏng, chúng tôi khuyên bạn nên chọn một thư mục nhỏ hơn và từ từ thêm vào dữ liệu khi MEGAsync đang hoạt động.</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1619,7 +1358,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Incorrect email and/or password.</source>
         <translatorcomment>Message box shown when user enters incorrect email and/or password at login</translatorcomment>
-        <translation>Email và/hoặc mật khẩu chưa đúng.</translation>
+        <translation>Email hoặc mật khẩu không hợp lệ.</translation>
     </message>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
@@ -1810,7 +1549,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Syncs</source>
         <translatorcomment>Button label to show all synchronizations that the user has stablish (String as short as possible).</translatorcomment>
-        <translation type="vanished">Đồng bộ</translation>
+        <translation>Đồng bộ</translation>
     </message>
     <message>
         <source>Add Sync</source>
@@ -1894,7 +1633,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Download</source>
         <translatorcomment>Label to indicate a download.</translatorcomment>
-        <translation type="vanished">Tải xuống</translation>
+        <translation>Tải xuống</translation>
     </message>
     <message>
         <source>Transfers</source>
@@ -2024,23 +1763,17 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message numerus="yes">
         <source>We have contacted you by email to [A] on [B] but you still have %n file taking up [D] in your MEGA account, which requires you to have [E].</source>
         <translatorcomment>Informative label about account status regarding over quota storage. Placeholders will be replaced: [A] - user email, [B] - localized date list of emails sent to inform the user about the situation,  %n - amount of files in the current account, [D] - amount of storage used and [E] - min PRO plan needed to fix the situation.</translatorcomment>
-        <translation>
-            <numerusform>Chúng tôi đã gửi thông báo vào địa chỉ email [A]của quý khách vào ngày [B] nhưng quý khách vẫn còn %n tệp tin chiếm tới [D] trong tài khoản MEGA, quý khách cần phải nâng câp lên [E]để đáp ứng dung lượng.</numerusform>
-        </translation>
+        <translation><numerusform>Chúng tôi đã gửi thông báo vào địa chỉ email [A]của quý khách vào ngày [B] nhưng quý khách vẫn còn %n tệp tin chiếm tới [D] trong tài khoản MEGA, quý khách cần phải nâng câp lên [E]để đáp ứng dung lượng.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>You have [A]%n day[/A] left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, %n- number of days left to upgrade.</translatorcomment>
-        <translation>
-            <numerusform>Quý khách còn lại [A]%n ngày[/A] để tiến hành nâng cấp. Nếu không sau thời gian này, dữ liệu của quý khách sẽ bị xóa bỏ.</numerusform>
-        </translation>
+        <translation><numerusform>Quý khách còn lại [A]%n ngày[/A] để tiến hành nâng cấp. Nếu không sau thời gian này, dữ liệu của quý khách sẽ bị xóa bỏ.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>You have [A]%n hour[/A] left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, %n- number of hours left to upgrade.</translatorcomment>
-        <translation>
-            <numerusform>Quý khách còn lại [A]%n giờ đồng hồ[/A] để tiến hành nâng cấp. Nếu không sau thời gian này, dữ liệu của quý khách sẽ bị xóa bỏ.</numerusform>
-        </translation>
+        <translation><numerusform>Quý khách còn lại [A]%n giờ đồng hồ[/A] để tiến hành nâng cấp. Nếu không sau thời gian này, dữ liệu của quý khách sẽ bị xóa bỏ.</numerusform></translation>
     </message>
     <message>
         <source>Error</source>
@@ -2051,30 +1784,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Folder can&apos;t be opened. Check that the folder in your local drive hasn&apos;t been deleted or moved.</source>
         <translatorcomment>Warning message text to let the user know that the local folder could not be opened</translatorcomment>
         <translation>Thư mục không mở được. Kiểm tra xem thư mục trong ổ đĩa nội bộ có bị xóa hoặc di chuyển sang chỗ khác.</translation>
-    </message>
-    <message>
-        <source>Add Backups</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Some syncs and backups have been disabled</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Something went wrong while trying to backup and sync your folders.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>One or more backups have been disabled</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Something went wrong while trying to backup your folders.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error adding %1:</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2576,12 +2285,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Add Sync</source>
         <translatorcomment>Menu item to add a new synchronization</translatorcomment>
-        <translation type="vanished">Thêm đồng bộ</translation>
+        <translation>Thêm đồng bộ</translation>
     </message>
     <message>
         <source>Syncs</source>
         <translatorcomment>Menu item to show current synchronizations</translatorcomment>
-        <translation type="vanished">Đồng bộ</translation>
+        <translation>Đồng bộ</translation>
     </message>
     <message>
         <source>Cloud drive</source>
@@ -2601,7 +2310,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>Tài khoản doanh nghiệp đã hết hạn</translation>
+        <translation>Tài khoản Doanh Nghiệp đã hết hạn</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -2611,7 +2320,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message shown to admin business account when a payment has failed. </translatorcomment>
-        <translation>Có vẻ như giao dịch thanh toán cho tài khoản Doanh Nghiệp của quý khách bị thất bại. Tài khoản của quý khách đã bị hết hạn và quyền truy cập vài dữ liệu sẽ bị giới hạn thành chỉ được xem cho đến khi quý khách thực hiện việc trả phí.</translation>
+        <translation>Tài khoản Doanh Nghiệp của bạn đã bị vô hiệu hóa do việc thanh toán đã thất bại. Bạn sẽ không thể truy cập vào dữ liệu đã có trong tài khoản của mình cho đến khi hoàn tất thanh toán và khôi phục gói đăng ký dịch vụ.</translation>
     </message>
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
@@ -2626,7 +2335,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>This month&apos;s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</source>
         <translatorcomment>Informative message shown to the user when a payment has failed for a business account.</translatorcomment>
-        <translation>Thanh toán thuê bao cho tháng này bị thất bại. Xin giải quyết việc thanh toán ngay sớm nhất có thể để tránh các giới hạn có thể sẽ xảy cho tài khoản doanh nghiệp của quý khách.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -2636,7 +2345,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
         <translatorcomment>Informative message shown when a business account is expired and the user can only browse data and none operation (upload, download, creation..) is allowed.</translatorcomment>
-        <translation>Tài khoản của quý khách hiện [A]đã hết hạn[/A]. Quý khách chỉ có thể xem qua dữ liệu của mình.</translation>
+        <translation>Tài khoản của bạn hiện đã [A]bị vô hiệu hóa[/A]. Bạn chỉ có thể xem và duyệt dữ liệu của mình.</translation>
     </message>
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
@@ -2721,44 +2430,32 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>File count, where %n is the number of files. Used to build the &quot;Files and folders successfully uploaded/downloaded&quot; string.</translatorcomment>
-        <translation>
-            <numerusform>%n tệp tin</numerusform>
-        </translation>
+        <translation><numerusform>%n tệp tin</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Folder count, where %n is the number of folders. Used to build the &quot;Files and folders successfully uploaded/downloaded&quot; string.</translatorcomment>
-        <translation>
-            <numerusform>%n thư mục</numerusform>
-        </translation>
+        <translation><numerusform>%n thư mục</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n file was successfully uploaded</source>
         <translatorcomment>System notification to inform the user that %1 files were successfully uploaded</translatorcomment>
-        <translation>
-            <numerusform>%n tệp tin đã được tải lên thành công</numerusform>
-        </translation>
+        <translation><numerusform>%n tệp tin đã được tải lên thành công</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n file was successfully downloaded</source>
         <translatorcomment>System notification to inform the user that %1 files were successfully downloaded</translatorcomment>
-        <translation>
-            <numerusform>%n tệp tin đã được tải xuống thành công</numerusform>
-        </translation>
+        <translation><numerusform>%n tệp tin đã được tải xuống thành công</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n folder was successfully uploaded</source>
         <translatorcomment>System notification to inform the user that %n folders were successfully uploaded</translatorcomment>
-        <translation>
-            <numerusform>%n thư mục đã được tải lên thành công</numerusform>
-        </translation>
+        <translation><numerusform>%n thư mục đã được tải lên thành công</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n folder was successfully downloaded</source>
         <translatorcomment>System notification to inform the user that %n folders were successfully downloaded</translatorcomment>
-        <translation>
-            <numerusform>%n thư mục đã được tải xuống thành công</numerusform>
-        </translation>
+        <translation><numerusform>%n thư mục đã được tải xuống thành công</numerusform></translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available. Click on this message to install it</source>
@@ -2784,10 +2481,8 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>There is an active transfer. Exit the app?
 Transfer will automatically resume when you re-open the app.</source>
         <translatorcomment>Messagebox text to let the user know that there are active transfers when closing the app. The user will be able to exit and pause them, or stop the exit action.</translatorcomment>
-        <translation>
-            <numerusform>Đang có một phiên truyền tải đang hoạt động. Bạn muốn thoát ứng dụng?
-Phiên truyền tải sẽ được tự động tiếp tục khi bạn mở lại ứng dụng.</numerusform>
-        </translation>
+        <translation><numerusform>Đang có một phiên truyền tải đang hoạt động. Bạn muốn thoát ứng dụng?
+Phiên truyền tải sẽ được tự động tiếp tục khi bạn mở lại ứng dụng.</numerusform></translation>
     </message>
     <message>
         <source>Exit app</source>
@@ -2798,74 +2493,6 @@ Phiên truyền tải sẽ được tự động tiếp tục khi bạn mở l�
         <source>Stay in app</source>
         <translatorcomment>One of the messagebox options: Keep the app open and continue with the active transfers</translatorcomment>
         <translation>Tiếp tục sử dụng</translation>
-    </message>
-    <message>
-        <source>Some syncs and backups have been disabled</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>One or more backups have been disabled</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error adding %1:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Some syncs and backups have been disabled.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>One or more backups have been disabled.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>One or more syncs have been disabled.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Your syncs and backups have been disabled</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Your backups have been disabled</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been temporarily disabled</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled because the local folder has changed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled because the remote folder has changed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled. Reason: %2</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2991,14 +2618,6 @@ Phiên truyền tải sẽ được tự động tiếp tục khi bạn mở l�
         <translation>Lỗi không xác định được</translation>
     </message>
     <message>
-        <source>Your account has been suspended due to multiple breaches of MEGA’s Terms of Service. Please check your email inbox.</source>
-        <translation type="vanished">Tài khoản của quý khách đã bị đình chỉ do vị phạm nhiều lỗi được nêu trong Điều Khoản Dịch Vụ của MEGA. Xin kiểm tra hộp thư email.</translation>
-    </message>
-    <message>
-        <source>Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
-        <translation type="vanished">Tài khoản của quý khách đã bị chấm dứt hoạt động do vi phạm Điều Khoản Dịch Vụ của MEGA, có thể liên quan tới lạm dụng quyền của cá nhân khác; chia sẻ và phân phối nội dung phi pháp; hay ảnh hưởng đến hệ thống.</translation>
-    </message>
-    <message>
         <source>SSL verification failed</source>
         <translatorcomment>Error shown when SSL check has failed</translatorcomment>
         <translation>Xác thực SSL bị thất bại</translation>
@@ -3035,10 +2654,12 @@ Phiên truyền tải sẽ được tự động tiếp tục khi bạn mở l�
     </message>
     <message>
         <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
+        <translatorcomment>Error triggered by SDK when an account has been suspended due to copyright violations.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
+        <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3107,20 +2728,20 @@ Phiên truyền tải sẽ được tự động tiếp tục khi bạn mở l�
         <translatorcomment>Node name column title tooltip. Sorts the order of the column by date.</translatorcomment>
         <translation>Sắp xếp theo tên</translation>
     </message>
-    <message>
+    <message numerus="yes">
         <source>Today at %1</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened today. %1 represents the hour</translatorcomment>
-        <translation>Hôm nay lúc %1</translation>
+        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened today. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
-    <message>
+    <message numerus="yes">
         <source>Yesterday at %1</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened yesterday. %1 represents the hour</translatorcomment>
-        <translation>Hôm qua lúc %1</translation>
+        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened yesterday. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
-    <message>
+    <message numerus="yes">
         <source>%1 at %2</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was previously to yesterday. %1 represents the date (day month and year), while %2 represents the hour)</translatorcomment>
-        <translation>%1 lúc %2</translation>
+        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was previously to yesterday. %1 represents the date (day month and year), while %2 represents the hour). Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Recently used</source>
@@ -3147,10 +2768,6 @@ Phiên truyền tải sẽ được tự động tiếp tục khi bạn mở l�
         <source>Cloud Drive</source>
         <translatorcomment>Title of the Cloud Drive section</translatorcomment>
         <translation>Ổ Mây</translation>
-    </message>
-    <message>
-        <source>Backups</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3221,7 +2838,7 @@ Phiên truyền tải sẽ được tự động tiếp tục khi bạn mở l�
     <message>
         <source>Business account expired</source>
         <translatorcomment>Label to show that the current business account is expired during a SDK operation.</translatorcomment>
-        <translation>Tài khoản doanh nghiệp bị hết hạn</translation>
+        <translation>Tài khoản Doanh Nghiệp đã hết hạn</translation>
     </message>
     <message>
         <source>Foreign target storage quota reached</source>
@@ -3359,7 +2976,7 @@ Phiên truyền tải sẽ được tự động tiếp tục khi bạn mở l�
     <message>
         <source>Get link</source>
         <translatorcomment>Context menu action to get transfer link</translatorcomment>
-        <translation>Lấy Liên Kết</translation>
+        <translation>Lấy liên kết</translation>
     </message>
     <message>
         <source>Open in MEGA</source>
@@ -3374,35 +2991,27 @@ Phiên truyền tải sẽ được tự động tiếp tục khi bạn mở l�
     <message>
         <source>Error opening file</source>
         <translatorcomment>Text on an error messagebox because a local file could not be opened</translatorcomment>
-        <translation>Lỗi mở tệp</translation>
+        <translation>Tệp không thể mở được. Xin kiểm tra tệp tin có nằm trong ở đĩa nội bộ không có bị đổi chỗ hoặc đã bị xóa.</translation>
     </message>
     <message numerus="yes">
         <source>Pause transfer</source>
         <translatorcomment>Context menu action to pause transfer</translatorcomment>
-        <translation>
-            <numerusform>Tạm dừng các truyền tải</numerusform>
-        </translation>
+        <translation><numerusform>Tạm dừng các truyền tải</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Resume transfer</source>
         <translatorcomment>Context menu action to resume transfer</translatorcomment>
-        <translation>
-            <numerusform>Tiếp tục các truyền tải</numerusform>
-        </translation>
+        <translation><numerusform>Tiếp tục các truyền tải</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Cancel transfer</source>
         <translatorcomment>Context menu action to cancel transfer</translatorcomment>
-        <translation>
-            <numerusform>Hủy các truyền tải</numerusform>
-        </translation>
+        <translation><numerusform>Hủy các truyền tải</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Clear transfer</source>
         <translatorcomment>Tooltip for the clear button in a transfer row</translatorcomment>
-        <translation>
-            <numerusform>Dọn dẹp các truyền tải</numerusform>
-        </translation>
+        <translation><numerusform>Dọn dẹp các truyền tải</numerusform></translation>
     </message>
     <message>
         <source>Cancel transfers?
@@ -3434,7 +3043,7 @@ Các phiên truyền tải đồng bộ chưa có hoàn tất sẽ không bị h
     </message>
     <message>
         <source>Cancel transfers?
-Your incomplete sync transfers won&apos;t be cancelled
+Your incomplete sync transfers won't be cancelled
 All the other transfers will be cancelled and cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
         <translation>Hủy các phiên truyền tải?
@@ -3471,7 +3080,7 @@ Tất cả các phiên truyền tải bạn đã chọn sẽ bị hủy và dọ
     </message>
     <message>
         <source>Cancel transfers?
-Your selected incomplete sync transfers won&apos;t be cancelled
+Your selected incomplete sync transfers won't be cancelled
 All the other selected transfers will be cancelled and cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
         <translation>Hủy các phiên truyền tải?
@@ -3495,7 +3104,7 @@ Tất cả các phiên truyền tải đã hoàn tất bạn chọn trong loại
 Your selected incomplete sync transfers won&apos;t be cancelled.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
         <translation>Hủy các phiên truyền tải?
-Các phiên truyền tải đồng bộ chưa có hoàn tất bạn đã chọn sẽ không bị hủy.</translation>
+Các phiên truyền tải đồng bộ chưa có hoàn tất bạn đã chọn sẽ không bị hủy. Tất cả các phiên khác bạn đã chọn sẽ bị hủy.</translation>
     </message>
     <message>
         <source>Clear transfer?</source>
@@ -3505,14 +3114,12 @@ Các phiên truyền tải đồng bộ chưa có hoàn tất bạn đã chọn 
     <message numerus="yes">
         <source>Cancel and clear transfer</source>
         <translatorcomment>Context menu action to resume cancel the active transfers and clear the completed transfers (multiple transfers selected)</translatorcomment>
-        <translation>
-            <numerusform>Hủy và dọn dẹp các phiên truyền tải</numerusform>
-        </translation>
+        <translation><numerusform>Hủy và dọn dẹp các phiên truyền tải</numerusform></translation>
     </message>
     <message>
         <source>Yes, cancel</source>
         <translatorcomment>Dialog button to do the proposed actions (cancel the transfers)</translatorcomment>
-        <translation>Đúng, hủy</translation>
+        <translation>Phải, hủy</translation>
     </message>
     <message>
         <source>No, continue</source>
@@ -3526,29 +3133,21 @@ Các phiên truyền tải đồng bộ chưa có hoàn tất bạn đã chọn 
     </message>
 </context>
 <context>
-    <name>MegaUploader</name>
-    <message>
-        <source>Upload failed</source>
-        <translatorcomment>Informative message shown to the user when an upload has failed</translatorcomment>
-        <translation>Tải lên thất bại</translation>
-    </message>
-</context>
-<context>
     <name>Model</name>
     <message>
         <source>MEGAsync</source>
         <translatorcomment>Label used for title of a system message box.</translatorcomment>
-        <translation type="vanished">MEGAsync</translation>
+        <translation>MEGAsync</translation>
     </message>
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a FAT filesystem.</translatorcomment>
-        <translation type="vanished">Bạn đang cố đồng bộ hóa một thư mục nội bộ được định dạng với filesystem FAT. Hệ thống tệp này có thiếu sót trong việc quản lý và đánh dấu thời gian với các tệp lớn, có thể gây ra sự cố khi đồng bộ hóa (ví dụ: việc thay đồi giờ theo mùa ở một số quốc gia), vì vậy chỉ nên đồng bộ hóa các thư mục được định dạng với hệ thống tệp đáng tin cậy hơn như NTFS (để biết thêm [A]click vào đây[/A]).</translation>
+        <translation>Bạn đang cố đồng bộ hóa một thư mục nội bộ được định dạng với filesystem FAT. Hệ thống tệp này có thiếu sót trong việc quản lý và đánh dấu thời gian với các tệp lớn, có thể gây ra sự cố khi đồng bộ hóa (ví dụ: việc thay đồi giờ theo mùa ở một số quốc gia), vì vậy chỉ nên đồng bộ hóa các thư mục được định dạng với hệ thống tệp đáng tin cậy hơn như NTFS (để biết thêm [A]click vào đây[/A]).</translation>
     </message>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a local folder shared with VMWare third party app.</translatorcomment>
-        <translation type="vanished">Bạn đang muốn đồng bộ một thư mục đồng bộ chung với VMWare. Thư mục này không có hỗ trợ dạng tệp tin hệ thống gửi cập nhật và sẽ khiến MEGAsync liên tục phải quét dữ liệu để tìm kiếm thay đổi có trong tệp tin và thư mục. Xin chọn một thư mục khác nếu được để giảm tải mức sử dụng CPU.</translation>
+        <translation>Bạn đang muốn đồng bộ một thư mục đồng bộ chung với VMWare. Thư mục này không có hỗ trợ dạng tệp tin hệ thống gửi cập nhật và sẽ khiến MEGAsync liên tục phải quét dữ liệu để tìm kiếm thay đổi có trong tệp tin và thư mục. Xin chọn một thư mục khác nếu được để giảm tải mức sử dụng CPU.</translation>
     </message>
 </context>
 <context>
@@ -3570,7 +3169,7 @@ Các phiên truyền tải đồng bộ chưa có hoàn tất bạn đã chọn 
         <source>The following characters are not allowed:
 %1</source>
         <translatorcomment>Message shown when the user has entered a not allowed character</translatorcomment>
-        <translation>Các ký tự này không được phép sử dụng:
+        <translation>Các ký tự sau không được phép sử dụng:
 %1</translation>
     </message>
 </context>
@@ -3653,14 +3252,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>You no longer have access to this item. Ask the owner to share again.</source>
         <translatorcomment>Error message shown when the user is trying to download an file or folder from an incoming share and the owner stops sharing/removes all items</translatorcomment>
-        <translation>
-            <numerusform>Bạn không còn quyền truy cập vào các mục này nữa. Xin hỏi chủ sở hữu chia sẻ lại.</numerusform>
-        </translation>
+        <translation><numerusform>Bạn không còn quyền truy cập vào các mục này nữa. Xin hỏi chủ sở hữu chia sẻ lại.</numerusform></translation>
     </message>
     <message>
         <source>Cloud drive</source>
         <translatorcomment>Node selector button Text. Switch the view to show only the cloud drive nodes (files and folders)</translatorcomment>
-        <translation>Ổ Mây</translation>
+        <translation>Ổ mây</translation>
     </message>
     <message>
         <source>Incoming shares</source>
@@ -3669,34 +3266,24 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Error:</source>
-        <translation type="vanished">Lỗi:</translation>
+        <translation>Lỗi:</translation>
     </message>
     <message numerus="yes">
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
-        <translation>
-            <numerusform>Các mục bạn lựa chọn đã bị hủy. Để thực hiện chọn lại, đóng cửa sổ này và làm lại từ đầu.</numerusform>
-        </translation>
+        <translation><numerusform>Các mục bạn lựa chọn đã bị hủy. Để thực hiện chọn lại, đóng cửa sổ này và làm lại từ đầu.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 item selected</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
                            First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation>
-            <numerusform>%1 mục đã được chọn</numerusform>
-        </translation>
+        <translation><numerusform>%1 mục đã được chọn</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1. %2 has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
                            Second and last part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation>
-            <numerusform>%1. %2 mục đã bị bỏ chọn. Để chọn lại, óng cửa sổ này và thử lại.</numerusform>
-        </translation>
-    </message>
-    <message>
-        <source>Backups</source>
-        <translation type="unfinished"></translation>
+        <translation><numerusform>%1. %2 mục đã bị bỏ chọn. Để chọn lại, óng cửa sổ này và thử lại.</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3790,9 +3377,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>[A] removed %n item</source>
         <translatorcomment>Label to indicate that [A] has removed %n items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and %n with the number of removed items.</translatorcomment>
-        <translation>
-            <numerusform>[A] đã loại bỏ %n mục</numerusform>
-        </translation>
+        <translation><numerusform>[A] đã loại bỏ %n mục</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4080,9 +3665,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>minimum %n user</source>
         <translatorcomment>Label to inform about the minimum number of users for a business plan. %1 will be replaced with the minimum number of users.</translatorcomment>
-        <translation>
-            <numerusform>tối thiểu %n nhân viên</numerusform>
-        </translation>
+        <translation><numerusform>tối thiểu %n nhân viên</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4122,44 +3705,28 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translatorcomment>Label to indicate the &quot;Show in Finder&quot; option to open local folder of a sync (macOS). Keep Finder name as it is the app name of file explorer on macOS.</translatorcomment>
         <translation>Hiện trong Finder</translation>
     </message>
-    <message>
-        <source>Open settings</source>
-        <translation type="unfinished">Đi tới Cài đặt</translation>
-    </message>
-    <message>
-        <source>Go to settings to enable them again.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open preferences</source>
-        <translation type="unfinished">Mở tùy chỉnh</translation>
-    </message>
-    <message>
-        <source>Go to preferences to enable them again.</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>PlatformStrings</name>
     <message>
         <source>Open settings</source>
         <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
-        <translation>Đi tới Cài đặt</translation>
+        <translation>Đi tới trang Thiết Đặt</translation>
     </message>
     <message>
         <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
         <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (Windows and Linux)</translatorcomment>
-        <translation>Một hay nhiều mục đồng bộ đã bị vô hiệu. Đi tới trang thiết đặt và bật lại.</translation>
+        <translation>Một hay nhiều mục đồng bộ đã bị vô hiệu. Đi tới trang Thiết Đặt và bật lại.</translation>
     </message>
     <message>
         <source>Open preferences</source>
         <translatorcomment>Button label to open MEGAsync preferences dialog (MacOS).</translatorcomment>
-        <translation>Mở tùy chỉnh</translation>
+        <translation>Mở trang Tùy Chỉnh</translation>
     </message>
     <message>
         <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
         <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (macOS)</translatorcomment>
-        <translation>Một hay nhiều mục đồng bộ đã bị vô hiệu. Đi tới trang tùy chỉnh và bật lại.</translation>
+        <translation>Một hay nhiều mục đồng bộ đã bị vô hiệu. Đi tới trang Tùy Chỉnh và bật lại.</translation>
     </message>
     <message>
         <source>Sync transfers cannot be cancelled individually.
@@ -4179,29 +3746,25 @@ Xin xóa đi thư mục đồng bộ trong trang tùy chỉnh đẻ có thể h�
 <context>
     <name>Preferences</name>
     <message>
-        <source>- There is now a new transfer manager.
-- Transfer management was enhanced and reliability of downloads and uploads improved. 
-- Detected crashes on Windows, Linux, and macOS fixed.
-- Translation issues fixed.
-- Performance improved.
-- UI fixed and adjusted.
+        <source>- Added new Apple Silicon native support.
+- Added a new feature to stop sleep mode if there are active transfers.
+- Updated third-party libs.
+- Improved folders transfers.
+- Fixed detected crashes on Windows, Linux, and macOS.
+- Fixed translation issues.
+- Improved performance.
+- Fixed and adjusted UI.
 </source>
-        <translatorcomment>Changelog for version v4.7.0</translatorcomment>
-        <translation type="vanished">- Trang quản lý truyền tải mới
-- Bộ quản lý truyền tải được cải thiện và độ đảm bảo tải lên và tải xuống được nâng cao.
-- Các lỗi treo máy ghi nhận trước đây trên Windows, Linux, và macOS đều đã được sửa.
-- Sửa lỗi dịch thuật.
-- Hiệu suất cải thiện.
-- Sửa và điều chỉnh UI.
+        <translatorcomment>Changelog for version v4.7.2</translatorcomment>
+        <translation>- Thêm hỗ trợ gốc cho hệ thống Apple silicon.
+- Thêm một tính năng mới để ngăn chặn chế độ ngủ khi đang có truyền tải.
+- Cập nhật thành phần thư viện phần mềm của bên thứ ba
+- Cải thiện truyền tải thư mục
+- Khắc phục sự cố được phát hiện trên Windows, Linux và macOS.
+- Sửa sai sót dịch thuật
+- Cải thiện hiệu suất.
+- Sửa chữa điều chỉnh giao diện người dùng.
 </translation>
-    </message>
-    <message>
-        <source>Import changes from Desktop app develop (including v4.7.0) and SDK v4.4.0
-[BAC-51] - Dapp: Backup display path adjustment
-[BAC-122] - Backup choose folder and sync choose folder opens the same location
-[BAC-164] - Use new isNodeSyncableWithErrors() sdk interface to check node syncability
-</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4524,12 +4087,12 @@ Xin xóa đi thư mục đồng bộ trong trang tùy chỉnh đẻ có thể h�
     </message>
     <message>
         <source>Shortcut</source>
-        <translatorcomment>Label for shourcut in all other platforms</translatorcomment>
+        <translatorcomment>Label used in Qt file/folder choosing dialog. Not being used at the moment.</translatorcomment>
         <translation>Lối tắt</translation>
     </message>
     <message>
         <source>Unknown</source>
-        <translatorcomment>Name when the file or folder does not match</translatorcomment>
+        <translatorcomment>Label used in Qt file/folder choosing dialog. Not being used at the moment.</translatorcomment>
         <translation>Chưa biết</translation>
     </message>
     <message>
@@ -4615,27 +4178,27 @@ Bạn có muốn tiếp tục xóa không?</translation>
     <message>
         <source>%1 TB</source>
         <translatorcomment>File size measured in terabytes</translatorcomment>
-        <translation>%1&#xa0;TB</translation>
+        <translation>%1 TB</translation>
     </message>
     <message>
         <source>%1 GB</source>
         <translatorcomment>File size measured in gigabytes</translatorcomment>
-        <translation>%1&#xa0;GB</translation>
+        <translation>%1 GB</translation>
     </message>
     <message>
         <source>%1 MB</source>
         <translatorcomment>File size measured in megabytes</translatorcomment>
-        <translation>%1&#xa0;MB</translation>
+        <translation>%1 MB</translation>
     </message>
     <message>
         <source>%1 KB</source>
         <translatorcomment>File size measured in kilobytes</translatorcomment>
-        <translation>%1&#xa0;KB</translation>
+        <translation>%1 KB</translation>
     </message>
     <message>
         <source>%1 bytes</source>
         <translatorcomment>File size measured in bytes</translatorcomment>
-        <translation>%1&#xa0;bytes</translation>
+        <translation>%1 bytes</translation>
     </message>
     <message>
         <source>Invalid filename</source>
@@ -4654,12 +4217,12 @@ Bạn có muốn tiếp tục xóa không?</translation>
     </message>
     <message>
         <source>Kind</source>
-        <translatorcomment>Header name of the column that shows file kind</translatorcomment>
+        <translatorcomment>Header name of the column that shows file kind. Used by QT on QT standard dialogs. For MacOS platforms only.</translatorcomment>
         <translation>Dạng</translation>
     </message>
     <message>
         <source>Type</source>
-        <translatorcomment>Header name of the column that shows file type</translatorcomment>
+        <translatorcomment>Header name of the column that shows file type. Used by QT on QT standard dialogs. For Windows/Linux platforms.</translatorcomment>
         <translation>Dạng</translation>
     </message>
     <message>
@@ -4703,61 +4266,6 @@ Bạn có muốn tiếp tục xóa không?</translation>
     </message>
 </context>
 <context>
-    <name>RemoveBackupDialog</name>
-    <message>
-        <source>Remove backup</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Stop backing up folder?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>To stop backing up this folder, you need to either move it or delete it.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Move folder</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Move this folder from backups to another location in your cloud drive to get full access to your data. This folder will stop being backed up.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Move to:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Change</source>
-        <translation type="unfinished">Thay đổi</translation>
-    </message>
-    <message>
-        <source>Delete folder permanently</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. This action cannot be undone.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Confirm</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Hủy</translation>
-    </message>
-    <message>
-        <source>Stop backup</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Move this folder from backups to another location in your Cloud Drive to get full access to your data. This folder will stop being backed up.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>RenameLocalNodeDialog</name>
     <message>
         <source>File can’t be renamed to &quot;%1&quot;</source>
@@ -4796,19 +4304,44 @@ Bạn có muốn tiếp tục xóa không?</translation>
 <context>
     <name>ScanningWidget</name>
     <message>
-        <source>Cancel transfers</source>
+        <source>Cancel</source>
         <translatorcomment>Button text to cancel the scanning of transfers</translatorcomment>
-        <translation>Hủy các phiên truyền tải</translation>
+        <translation>Hủy</translation>
     </message>
     <message>
-        <source>Scanning…</source>
-        <translatorcomment>Text to let the user know that the app is scanning a folder</translatorcomment>
-        <translation>Đang quét…</translation>
+        <source>Don&apos;t close the app. If you close, transfers not yet queued will be lost.</source>
+        <translatorcomment>Message displayed in scanning widget to warn the user of consequences of closing the app.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Don´t exit the app</source>
-        <translatorcomment>Text below the GIF to askt he user not to close the app while it is scanning a folder</translatorcomment>
-        <translation>Xin đừng thoát ứng dụng</translation>
+        <source>Scanning</source>
+        <translatorcomment>Label used to display when the scanning widget is on the &quot;Scanning&quot; step</translatorcomment>
+        <translation>Đang quét nội dung</translation>
+    </message>
+    <message>
+        <source>Creating folders</source>
+        <translatorcomment>Label used to display when the scanning widget is on the &quot;Creating folders&quot; step</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1/%2</source>
+        <translatorcomment>Label showing the quantity of folders created (%1) with the quantity of folders to create in total (%2)</translatorcomment>
+        <translation>%1/%2</translation>
+    </message>
+    <message>
+        <source>found %1, %2</source>
+        <translatorcomment>Label used to display current status of scanning step. %1 is the string with number of folders found so far, %2 is the string with number of files found so far.</translatorcomment>
+        <translation>đã tìm thấy %1, %2</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n folder</source>
+        <translatorcomment>Part of the string used to display number of folders in scanning step. %1 is the number of folders found so far.</translatorcomment>
+        <translation><numerusform>%n thư mục</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n file</source>
+        <translatorcomment>Part of the string used to display number of files in scanning step. %1 is the number of files found so far.</translatorcomment>
+        <translation><numerusform>%n tệp tin</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4871,12 +4404,12 @@ Bạn có muốn tiếp tục xóa không?</translation>
     <message>
         <source>Local Folder</source>
         <translatorcomment>Label to indicate the local folder column for sync table. String as short as possible.</translatorcomment>
-        <translation type="vanished">Thư mục trong máy</translation>
+        <translation>Thư mục trong máy</translation>
     </message>
     <message>
         <source>MEGA folder</source>
         <translatorcomment>Label to indicate the MEGA folder column for sync table. String as short as possible.</translatorcomment>
-        <translation type="vanished">Thư mục trên MEGA</translation>
+        <translation>Thư mục trên MEGA</translation>
     </message>
     <message>
         <source>Auto</source>
@@ -4943,7 +4476,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Enable / disable</source>
         <translatorcomment>Tooltip for checkbox to let the user enable/disable a specific synchronization.</translatorcomment>
-        <translation type="vanished">Bật / tắt</translation>
+        <translation>Bật / tắt</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
@@ -5058,7 +4591,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Unexpected error disabling sync %1</source>
         <translatorcomment>Error message shown when an error occurs while trying to disable a sync named %1.</translatorcomment>
-        <translation type="vanished">Lỗi phát sinh khi vô hiệu phiên đồng bộ %1</translation>
+        <translation>Lỗi phát sinh khi vô hiệu phiên đồng bộ %1</translation>
     </message>
     <message>
         <source>Error enabling sync</source>
@@ -5358,22 +4891,22 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Synchronization will stop working. Are you sure?</source>
         <translatorcomment>Message label indicating that the synchronizations will stop if the user logs out. Ask for confirmation.</translatorcomment>
-        <translation type="vanished">Việc đồng bộ hóa sẽ dừng hoạt động. Bạn có chắc chắn không?</translation>
+        <translation>Việc đồng bộ hóa sẽ dừng hoạt động. Bạn có chắc chắn không?</translation>
     </message>
     <message>
         <source>Open in MEGA</source>
         <translatorcomment>Text label for action menu item to open the selected Sync folder in MEGA web app File Manager. Keep string as short as possible, as this shows up in menu similar to a context menu.</translatorcomment>
-        <translation type="vanished">Mở trên MEGA</translation>
+        <translation>Mở trên MEGA</translation>
     </message>
     <message>
         <source>Remove synced folder</source>
         <translatorcomment>Text label for action menu item to remove the synchronization for the selected folder. Keep string as short as possible, as this shows up in menu similar to a context menu.</translatorcomment>
-        <translation type="vanished">Gỡ thư mục đồng bộ</translation>
+        <translation>Gỡ thư mục đồng bộ</translation>
     </message>
     <message>
         <source>Saving Sync settings</source>
         <translatorcomment>Not used currently. Might get removed in a future refactoring.</translatorcomment>
-        <translation type="vanished">Đang lưu lại các thiết đặt cho Đồng Bộ</translation>
+        <translation>Đang lưu lại các thiết đặt cho Đồng Bộ</translation>
     </message>
     <message>
         <source>Restart MEGAsync</source>
@@ -5413,7 +4946,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>MEGA Folder</source>
         <translatorcomment>Label to indicate the MEGA folder column for sync table. String as short as possible.</translatorcomment>
-        <translation type="vanished">Thư mục trên MEGA</translation>
+        <translation>Thư mục trên MEGA</translation>
     </message>
     <message>
         <source>Choose which files or folders you want to exclude from synchronisation.</source>
@@ -5458,116 +4991,44 @@ Do you want to restart MEGAsync now?</source>
     <message numerus="yes">
         <source>Used quota for the last %n hour:</source>
         <translatorcomment>Informative text shown in Account pane for Free account type. Indicates the used quota in the last %n specified number of hours. Keep the %n subsitution argument.</translatorcomment>
-        <translation>
-            <numerusform>Lượng băng thông đã sử dụng trong %n giờ qua:</numerusform>
-        </translation>
+        <translation><numerusform>Lượng băng thông đã sử dụng trong %n giờ qua:</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>day</source>
         <translatorcomment>Suffix text label for number of days to keep files in local cache.</translatorcomment>
-        <translation>
-            <numerusform>ngày</numerusform>
-        </translation>
+        <translation><numerusform>ngày</numerusform></translation>
     </message>
     <message>
-        <source>Backup</source>
-        <translation type="unfinished"></translation>
+        <source>Sleep settings</source>
+        <translatorcomment>Sleep/Active mode: Settings dialog groupbox title for keeping the pc awake when there are active transfers (WIndows and Linux)</translatorcomment>
+        <translation>Thiết đặt chế độ ngủ</translation>
     </message>
     <message>
-        <source>Backups</source>
-        <translation type="unfinished"></translation>
+        <source>Prevent the computer from going to sleep when transfers or syncs are in progress.
+Computer will enter sleep mode once these are complete.</source>
+        <translatorcomment>Sleep/Active mode: Feature description label for keeping the pc awake when there are active transfers</translatorcomment>
+        <translation>Ngăn chặn máy tính chuyển sang chế độ ngủ khi đang còn có các phiên truyền tải hoặc đồng bộ
+Máy tính sẽ vào chế độ ngủ khi mọi thứ đã hoàn tất.</translation>
     </message>
     <message>
-        <source>Backup Folder</source>
-        <translation type="unfinished"></translation>
+        <source>Note: Some operating systems won&apos;t allow this.</source>
+        <translatorcomment>Sleep/Active mode: Warning message below the description label, as not all the computers can activate the feature to keep it awake if there are transfers active </translatorcomment>
+        <translation>Ghi chú: Một số hệ điều hành không cho phép thiết đặt này.</translation>
     </message>
     <message>
-        <source>View in MEGA</source>
-        <translation type="unfinished"></translation>
+        <source>Sleep mode:</source>
+        <translatorcomment>Sleep/Active mode: Settings dialog groupbox title for keeping the pc awake when there are active transfers (macOS)</translatorcomment>
+        <translation>Chế độ ngủ:</translation>
     </message>
     <message>
-        <source>Saving backups…</source>
-        <translation type="unfinished"></translation>
+        <source>Sleep mode can&apos;t be setup</source>
+        <translatorcomment>Sleep/Active mode: Error messagebox title when the pc awake mode could not be activated after activating the feature using the checkbox.</translatorcomment>
+        <translation>Chế độ ngủ không thể áp đặt</translation>
     </message>
     <message>
-        <source>Some folders have not backed up. For more information please hover over the yellow warning icon.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>To Backup Center</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Backup folder:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Synchronizations and backups will stop working.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Backups will stop working.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Synchronizations will stop working.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Are you sure?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error adding sync</source>
-        <translation type="unfinished">Lỗi khi thêm phiên đồng bộ</translation>
-    </message>
-    <message>
-        <source>Error removing sync</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; can&apos;t be removed. Reason: %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error disabling sync</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Backup Error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error creating Backups root folder: %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error adding backup %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error removing backup</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; can&apos;t be removed. Reason: %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error enabling backup</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; can&apos;t be enabled. Reason: %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error disabling backup</source>
-        <translation type="unfinished"></translation>
+        <source>Your operating system doesn&apos;t allow its sleep setting to be overwritten.</source>
+        <translatorcomment>Sleep/Active mode: Error messagebox text when the pc awake mode could not be activated after activating the feature using the checkbox.</translatorcomment>
+        <translation>Hệ điều hành của bạn không có cho phép thiết đặt của chế độ ngủ bị thay đổi.</translation>
     </message>
 </context>
 <context>
@@ -5665,7 +5126,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Incorrect email and/or password.</source>
         <translatorcomment>Message displayed when a user is trying to loging with an incorrect email/password.</translatorcomment>
-        <translation>Email và/hoặc mật khẩu chưa đúng.</translation>
+        <translation>Email hoặc mật khẩu không hợp lệ.</translation>
     </message>
     <message>
         <source>MEGA folder doesn&apos;t exist</source>
@@ -5747,7 +5208,7 @@ Do you want to restart MEGAsync now?</source>
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translatorcomment>Message displayed to advise the user that is trying to sync an extremely large folder.</translatorcomment>
-        <translation type="vanished">Thư mục này có kích thước vô cùng lớn. Lỗi có thể xảy ra khi cố thử đồng bộ dung lượng lớn dữ liệu, gây ra chậm chạp và hư hỏng, chúng tôi khuyên bạn nên chọn một thư mục nhỏ hơn và từ từ thêm vào dữ liệu khi MEGAsync đang hoạt động.</translation>
+        <translation>Thư mục này có kích thước vô cùng lớn. Lỗi có thể xảy ra khi cố thử đồng bộ dung lượng lớn dữ liệu, gây ra chậm chạp và hư hỏng, chúng tôi khuyên bạn nên chọn một thư mục nhỏ hơn và từ từ thêm vào dữ liệu khi MEGAsync đang hoạt động.</translation>
     </message>
     <message>
         <source>Unable to get the filesystem.
@@ -5773,12 +5234,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
-        <translation type="vanished">Bạn không có quyền hạn ghi dữ liệu vào thư mục này.</translation>
+        <translation>Bạn không có quyền hạn ghi dữ liệu vào thư mục này.</translation>
     </message>
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
-        <translation type="vanished">MEGAsync sẽ không tải xuống được gì vào chỗ này.</translation>
+        <translation>MEGAsync sẽ không tải xuống được gì vào chỗ này.</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
@@ -5807,7 +5268,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Creating folder...</source>
         <translatorcomment>Label shown when an user is creating a remote folder.</translatorcomment>
-        <translation type="vanished">Đang tạo thư mục…</translation>
+        <translation>Đang tạo thư mục…</translation>
     </message>
     <message>
         <source>Logging out...</source>
@@ -5932,10 +5393,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label shown when the user completes the initial setup wizard</translatorcomment>
         <translation>Mọi thứ đã xong</translation>
     </message>
-    <message>
-        <source>Creating folder…</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ShellExtension</name>
@@ -5987,16 +5444,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Label to indicate file count. Keep %n code because it will be filled with the number of files at runtime.</translatorcomment>
-        <translation>
-            <numerusform>%n tệp</numerusform>
-        </translation>
+        <translation><numerusform>%n tệp</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Label to indicate folder count. Keep %n code because it will be filled with the number of folders at runtime.</translatorcomment>
-        <translation>
-            <numerusform>%n thư mục</numerusform>
-        </translation>
+        <translation><numerusform>%n thư mục</numerusform></translation>
     </message>
 </context>
 <context>
@@ -6164,189 +5617,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
 </context>
 <context>
-    <name>SyncController</name>
-    <message>
-        <source>You can&apos;t backup this folder as it&apos;s already synced.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Folder is already backed up. Select a different one.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You can&apos;t sync this folder as it&apos;s already synced.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You can&apos;t sync this folder as it&apos;s already backed up.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You can&apos;t backup this folder as it&apos;s already inside a synced folder.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You can&apos;t backup this folder as it&apos;s already inside a backed up folder.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You can&apos;t sync folders that are inside synced folders.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You can&apos;t sync folders that are inside backed up folders.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You can&apos;t backup this folder as it contains synced folders.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You can&apos;t backup this folder as it contains backed up folders.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You can&apos;t sync folders that contain synced folders.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You can&apos;t sync folders that contain backed up folders.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You are trying to backup an extremely large folder.
-To prevent the backup of entire boot volumes, which is inefficient and dangerous,
-we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You are trying to sync an extremely large folder.
-To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
-we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation type="unfinished">Thư mục này có kích thước vô cùng lớn. Lỗi có thể xảy ra khi cố thử đồng bộ dung lượng lớn dữ liệu, gây ra chậm chạp và hư hỏng, chúng tôi khuyên bạn nên chọn một thư mục nhỏ hơn và từ từ thêm vào dữ liệu khi MEGAsync đang hoạt động.</translation>
-    </message>
-    <message>
-        <source>You don&apos;t have write permissions in this local folder.</source>
-        <translation type="unfinished">Bạn không có quyền hạn ghi dữ liệu vào thư mục này.</translation>
-    </message>
-    <message>
-        <source>MEGAsync won&apos;t be able to download anything here.</source>
-        <translation type="unfinished">MEGAsync sẽ không tải xuống được gì vào chỗ này.</translation>
-    </message>
-    <message>
-        <source>You don&apos;t have enough permissions for this remote folder</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Invalid remote path</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Folder contents already synced</source>
-        <translation type="unfinished">Nội dung trong thư mục đã được đồng bộ rồi</translation>
-    </message>
-    <message>
-        <source>Folder already synced</source>
-        <translation type="unfinished">Thư mục đã được đồng bộ rồi</translation>
-    </message>
-    <message>
-        <source>Unable to create backup as selected folder is not valid. Try again.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unable to create backup. Try again and if issue continues, contact [A]Support[/A].</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unable to create backup as the device you&apos;re backing up from doesn&apos;t have a name. Give your device a name and then try again. If issue continues, contact [A]Support[/A].</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unable to create backup. For further information, contact [A]Support[/A].</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>SyncItemModel</name>
-    <message>
-        <source>Sort by state</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Local Folder</source>
-        <translation type="unfinished">Thư mục trong máy</translation>
-    </message>
-    <message>
-        <source>Sort by folder name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>MEGA Folder</source>
-        <translation type="unfinished">Thư mục trên MEGA</translation>
-    </message>
-    <message>
-        <source>Sort by MEGA folder name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Sync is enabled</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Sync is disabled</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Click menu for more Sync actions</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>SyncModel</name>
-    <message>
-        <source>MEGAsync</source>
-        <translation type="unfinished">MEGAsync</translation>
-    </message>
-    <message>
-        <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
-        <translation type="unfinished">Bạn đang cố đồng bộ hóa một thư mục nội bộ được định dạng với filesystem FAT. Hệ thống tệp này có thiếu sót trong việc quản lý và đánh dấu thời gian với các tệp lớn, có thể gây ra sự cố khi đồng bộ hóa (ví dụ: việc thay đồi giờ theo mùa ở một số quốc gia), vì vậy chỉ nên đồng bộ hóa các thư mục được định dạng với hệ thống tệp đáng tin cậy hơn như NTFS (để biết thêm [A]click vào đây[/A]).</translation>
-    </message>
-    <message>
-        <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
-        <translation type="unfinished">Bạn đang muốn đồng bộ một thư mục đồng bộ chung với VMWare. Thư mục này không có hỗ trợ dạng tệp tin hệ thống gửi cập nhật và sẽ khiến MEGAsync liên tục phải quét dữ liệu để tìm kiếm thay đổi có trong tệp tin và thư mục. Xin chọn một thư mục khác nếu được để giảm tải mức sử dụng CPU.</translation>
-    </message>
-</context>
-<context>
-    <name>SyncTableView</name>
-    <message>
-        <source>Open in MEGA</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Remove synced folder</source>
-        <translation type="unfinished">Gỡ thư mục đồng bộ</translation>
-    </message>
-</context>
-<context>
-    <name>SyncsMenu</name>
-    <message>
-        <source>Add Sync</source>
-        <translation type="unfinished">Thêm đồng bộ</translation>
-    </message>
-    <message>
-        <source>Syncs</source>
-        <translation type="unfinished">Đồng bộ</translation>
-    </message>
-    <message>
-        <source>Add Backups</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Backups</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>TransferBaseDelegateWidget</name>
     <message>
         <source>Starting…</source>
@@ -6381,7 +5651,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Completed</source>
         <translatorcomment>Transfer is completed</translatorcomment>
-        <translation>Hoàn Tất</translation>
+        <translation>Hoàn tất</translation>
     </message>
     <message>
         <source>Paused</source>
@@ -6411,12 +5681,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Out of storage space</source>
         <translatorcomment>Transfer is paused for out of storage space</translatorcomment>
-        <translation> Cảnh báo vượt mức</translation>
+        <translation>Hết không gian lưu trữ</translation>
     </message>
     <message>
         <source>Out of transfer quota</source>
         <translatorcomment>Transfer is paused for out of transfer quota</translatorcomment>
-        <translation>Quá hạn mức truyền tải</translation>
+        <translation>Hết băng thông truyền tải</translation>
     </message>
 </context>
 <context>
@@ -6457,7 +5727,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Transfers</source>
         <translatorcomment>Transfer manager title</translatorcomment>
-        <translation>Các Phiên Truyền Tải</translation>
+        <translation>Phiên truyền tải</translation>
     </message>
     <message>
         <source>Search</source>
@@ -6492,12 +5762,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Documents</source>
         <translatorcomment>Categories for document type transfers</translatorcomment>
-        <translation>Tệp Tài Liệu</translation>
+        <translation>Tài liệu</translation>
     </message>
     <message>
         <source>Images</source>
         <translatorcomment>Categories for image type transfers</translatorcomment>
-        <translation>Hình Ảnh</translation>
+        <translation>Hình ảnh</translation>
     </message>
     <message>
         <source>Videos</source>
@@ -6507,7 +5777,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Audio</source>
         <translatorcomment>Categories for audio type transfers</translatorcomment>
-        <translation>Âm Thanh</translation>
+        <translation>Âm thanh</translation>
     </message>
     <message>
         <source>Other</source>
@@ -6522,7 +5792,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Scanning</source>
         <translatorcomment>State of the Transfers: Message which shows that a folder is being scanned</translatorcomment>
-        <translation>Đang quét nội dung</translation>
+        <translation>Đang quét</translation>
     </message>
     <message>
         <source>All paused</source>
@@ -6532,7 +5802,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>All</source>
         <translatorcomment>Title for all searched transfers by text</translatorcomment>
-        <translation>Tất Cả</translation>
+        <translation>Tất cả</translation>
     </message>
     <message>
         <source>Search:</source>
@@ -6582,9 +5852,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message numerus="yes">
         <source>%1 result found</source>
         <translatorcomment>Message shown with search results,when there are only uploads or downloads, but not both at the same time</translatorcomment>
-        <translation>
-            <numerusform>%1 kết quả tìm kiếm</numerusform>
-        </translation>
+        <translation><numerusform>%1 kết quả tìm kiếm</numerusform></translation>
     </message>
     <message>
         <source>Upgrade now</source>
@@ -6616,9 +5884,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message numerus="yes">
         <source>Issue found</source>
         <translatorcomment>Message shown when there are some failed transfers/syncs/backups</translatorcomment>
-        <translation>
-            <numerusform>Phát hiện có vấn đề</numerusform>
-        </translation>
+        <translation><numerusform>Phát hiện có vấn đề</numerusform></translation>
     </message>
 </context>
 <context>
@@ -7023,13 +6289,6 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     </message>
 </context>
 <context>
-    <name>UserAttributes::DeviceName</name>
-    <message>
-        <source>Your computer</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>Utilities</name>
     <message>
         <source>just now</source>
@@ -7084,44 +6343,32 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message numerus="yes">
         <source>%n second ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n seconds ago</translatorcomment>
-        <translation>
-            <numerusform>%n giây trước</numerusform>
-        </translation>
+        <translation><numerusform>%n giây trước</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n minute ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n minutes ago</translatorcomment>
-        <translation>
-            <numerusform>%n phút trước</numerusform>
-        </translation>
+        <translation><numerusform>%n phút trước</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n hour ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n hours ago</translatorcomment>
-        <translation>
-            <numerusform>%n tiếng trước</numerusform>
-        </translation>
+        <translation><numerusform>%n tiếng trước</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n day ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n days ago</translatorcomment>
-        <translation>
-            <numerusform>%n ngày trước</numerusform>
-        </translation>
+        <translation><numerusform>%n ngày trước</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n months ago</translatorcomment>
-        <translation>
-            <numerusform>%n tháng trước</numerusform>
-        </translation>
+        <translation><numerusform>%n tháng trước</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n year ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n years ago</translatorcomment>
-        <translation>
-            <numerusform>%n năm trước</numerusform>
-        </translation>
+        <translation><numerusform>%n năm trước</numerusform></translation>
     </message>
 </context>
 <context>
