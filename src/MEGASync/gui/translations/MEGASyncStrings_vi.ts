@@ -626,11 +626,6 @@ Please enter a different name to identify this synced folder:</source>
         <translation>Hủy các phiên truyền tải?</translation>
     </message>
     <message>
-        <source>Transfers not yet processed will be cancelled.</source>
-        <translatorcomment>Dialog messages which warns the user about the potential problems of cancelling the folder scanning</translatorcomment>
-        <translation>Các phiên truyền tải chưa được tiến hành sẽ bị hủy bỏ.</translation>
-    </message>
-    <message>
         <source>No, continue</source>
         <translatorcomment>Button to continue folder scanning cancellation</translatorcomment>
         <translation>Không, tiếp tục</translation>
@@ -638,7 +633,16 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Yes, cancel</source>
         <translatorcomment>Button to abort a folder scanning</translatorcomment>
-        <translation>Đúng, hủy</translation>
+        <translation>Phải, hủy</translation>
+    </message>
+    <message>
+        <source>All the queued transfers from your current download will be cancelled.</source>
+        <translatorcomment>Dialog messages which warns the user about the potential problems of cancelling the folder scanning</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancelling…</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -968,12 +972,12 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>Tài khoản doanh nghiệp đã hết hạn</translation>
+        <translation>Tài khoản Doanh Nghiệp đã hết hạn</translation>
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation>Tài khoản bị hết hạn cho đến khi các thanh toán thuê bao được chi trả.</translation>
+        <translation>Tài khoản đã hết hạn và chỉ được xem cho đến khi bạn thanh toán các khoản phí được yêu cầu.</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -1074,7 +1078,7 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>The new folder will be merged with the folder at this destination.</source>
         <translatorcomment>Text explaining the result of the folder merge action</translatorcomment>
-        <translation>Thư mục mới sẽ được hợp nhất với thư mục có sẵn tại chỗ này.</translation>
+        <translation>Thư mục mới sẽ được hợp nhất với thư mục có sẵn tại nơi này.</translation>
     </message>
     <message>
         <source>The folder at this destination will be maintained.</source>
@@ -1089,7 +1093,7 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>The file at this destination will be replaced with the new file.</source>
         <translatorcomment>Text explaining the result of the file upload and replace action</translatorcomment>
-        <translation>Tệp tin có sẵn tại chỗ này sẽ được thay thế bằng tệp tin mới.</translation>
+        <translation>Tệp tin có sẵn tại nơi này sẽ được thay thế bằng tệp tin mới.</translation>
     </message>
     <message>
         <source>The file will be renamed as:</source>
@@ -1104,7 +1108,7 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>Folder already exists</source>
         <translatorcomment>Dialog title when a folder with the same name has been found on the cloud</translatorcomment>
-        <translation>Thư mục đã tồn tại</translation>
+        <translation>Thư mục đã tồn tại sẵn</translation>
     </message>
     <message>
         <source>File already exists</source>
@@ -1354,7 +1358,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Incorrect email and/or password.</source>
         <translatorcomment>Message box shown when user enters incorrect email and/or password at login</translatorcomment>
-        <translation>Email và/hoặc mật khẩu chưa đúng.</translation>
+        <translation>Email hoặc mật khẩu không hợp lệ.</translation>
     </message>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
@@ -2306,7 +2310,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>Tài khoản doanh nghiệp đã hết hạn</translation>
+        <translation>Tài khoản Doanh Nghiệp đã hết hạn</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -2316,7 +2320,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message shown to admin business account when a payment has failed. </translatorcomment>
-        <translation>Có vẻ như giao dịch thanh toán cho tài khoản Doanh Nghiệp của quý khách bị thất bại. Tài khoản của quý khách đã bị hết hạn và quyền truy cập vài dữ liệu sẽ bị giới hạn thành chỉ được xem cho đến khi quý khách thực hiện việc trả phí.</translation>
+        <translation>Tài khoản Doanh Nghiệp của bạn đã bị vô hiệu hóa do việc thanh toán đã thất bại. Bạn sẽ không thể truy cập vào dữ liệu đã có trong tài khoản của mình cho đến khi hoàn tất thanh toán và khôi phục gói đăng ký dịch vụ.</translation>
     </message>
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
@@ -2331,7 +2335,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>This month&apos;s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</source>
         <translatorcomment>Informative message shown to the user when a payment has failed for a business account.</translatorcomment>
-        <translation>Thanh toán thuê bao cho tháng này bị thất bại. Xin giải quyết việc thanh toán ngay sớm nhất có thể để tránh các giới hạn có thể sẽ xảy cho tài khoản doanh nghiệp của quý khách.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -2341,7 +2345,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
         <translatorcomment>Informative message shown when a business account is expired and the user can only browse data and none operation (upload, download, creation..) is allowed.</translatorcomment>
-        <translation>Tài khoản của quý khách hiện [A]đã hết hạn[/A]. Quý khách chỉ có thể xem qua dữ liệu của mình.</translation>
+        <translation>Tài khoản của bạn hiện đã [A]bị vô hiệu hóa[/A]. Bạn chỉ có thể xem và duyệt dữ liệu của mình.</translation>
     </message>
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
@@ -2614,14 +2618,6 @@ Phiên truyền tải sẽ được tự động tiếp tục khi bạn mở l�
         <translation>Lỗi không xác định được</translation>
     </message>
     <message>
-        <source>Your account has been suspended due to multiple breaches of MEGA’s Terms of Service. Please check your email inbox.</source>
-        <translation>Tài khoản của quý khách đã bị đình chỉ do vị phạm nhiều lỗi được nêu trong Điều Khoản Dịch Vụ của MEGA. Xin kiểm tra hộp thư email.</translation>
-    </message>
-    <message>
-        <source>Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
-        <translation>Tài khoản của quý khách đã bị chấm dứt hoạt động do vi phạm Điều Khoản Dịch Vụ của MEGA, có thể liên quan tới lạm dụng quyền của cá nhân khác; chia sẻ và phân phối nội dung phi pháp; hay ảnh hưởng đến hệ thống.</translation>
-    </message>
-    <message>
         <source>SSL verification failed</source>
         <translatorcomment>Error shown when SSL check has failed</translatorcomment>
         <translation>Xác thực SSL bị thất bại</translation>
@@ -2655,6 +2651,16 @@ Phiên truyền tải sẽ được tự động tiếp tục khi bạn mở l�
         <source>Decryption error</source>
         <translatorcomment>String shown when a file/folder name can not be decrypted.</translatorcomment>
         <translation>Lỗi giải mã</translation>
+    </message>
+    <message>
+        <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
+        <translatorcomment>Error triggered by SDK when an account has been suspended due to copyright violations.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
+        <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2722,20 +2728,20 @@ Phiên truyền tải sẽ được tự động tiếp tục khi bạn mở l�
         <translatorcomment>Node name column title tooltip. Sorts the order of the column by date.</translatorcomment>
         <translation>Sắp xếp theo tên</translation>
     </message>
-    <message>
+    <message numerus="yes">
         <source>Today at %1</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened today. %1 represents the hour</translatorcomment>
-        <translation>Hôm nay lúc %1</translation>
+        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened today. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
-    <message>
+    <message numerus="yes">
         <source>Yesterday at %1</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened yesterday. %1 represents the hour</translatorcomment>
-        <translation>Hôm qua lúc %1</translation>
+        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened yesterday. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
-    <message>
+    <message numerus="yes">
         <source>%1 at %2</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was previously to yesterday. %1 represents the date (day month and year), while %2 represents the hour)</translatorcomment>
-        <translation>%1 lúc %2</translation>
+        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was previously to yesterday. %1 represents the date (day month and year), while %2 represents the hour). Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Recently used</source>
@@ -2832,7 +2838,7 @@ Phiên truyền tải sẽ được tự động tiếp tục khi bạn mở l�
     <message>
         <source>Business account expired</source>
         <translatorcomment>Label to show that the current business account is expired during a SDK operation.</translatorcomment>
-        <translation>Tài khoản doanh nghiệp bị hết hạn</translation>
+        <translation>Tài khoản Doanh Nghiệp đã hết hạn</translation>
     </message>
     <message>
         <source>Foreign target storage quota reached</source>
@@ -2970,7 +2976,7 @@ Phiên truyền tải sẽ được tự động tiếp tục khi bạn mở l�
     <message>
         <source>Get link</source>
         <translatorcomment>Context menu action to get transfer link</translatorcomment>
-        <translation>Lấy Liên Kết</translation>
+        <translation>Lấy liên kết</translation>
     </message>
     <message>
         <source>Open in MEGA</source>
@@ -2985,7 +2991,7 @@ Phiên truyền tải sẽ được tự động tiếp tục khi bạn mở l�
     <message>
         <source>Error opening file</source>
         <translatorcomment>Text on an error messagebox because a local file could not be opened</translatorcomment>
-        <translation>Lỗi mở tệp</translation>
+        <translation>Tệp không thể mở được. Xin kiểm tra tệp tin có nằm trong ở đĩa nội bộ không có bị đổi chỗ hoặc đã bị xóa.</translation>
     </message>
     <message numerus="yes">
         <source>Pause transfer</source>
@@ -3098,7 +3104,7 @@ Tất cả các phiên truyền tải đã hoàn tất bạn chọn trong loại
 Your selected incomplete sync transfers won&apos;t be cancelled.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
         <translation>Hủy các phiên truyền tải?
-Các phiên truyền tải đồng bộ chưa có hoàn tất bạn đã chọn sẽ không bị hủy.</translation>
+Các phiên truyền tải đồng bộ chưa có hoàn tất bạn đã chọn sẽ không bị hủy. Tất cả các phiên khác bạn đã chọn sẽ bị hủy.</translation>
     </message>
     <message>
         <source>Clear transfer?</source>
@@ -3113,7 +3119,7 @@ Các phiên truyền tải đồng bộ chưa có hoàn tất bạn đã chọn 
     <message>
         <source>Yes, cancel</source>
         <translatorcomment>Dialog button to do the proposed actions (cancel the transfers)</translatorcomment>
-        <translation>Đúng, hủy</translation>
+        <translation>Phải, hủy</translation>
     </message>
     <message>
         <source>No, continue</source>
@@ -3124,14 +3130,6 @@ Các phiên truyền tải đồng bộ chưa có hoàn tất bạn đã chọn 
         <source>Yes, clear</source>
         <translatorcomment>Dialog button to do the proposed actions (clear the transfers)</translatorcomment>
         <translation>OK, dọn</translation>
-    </message>
-</context>
-<context>
-    <name>MegaUploader</name>
-    <message>
-        <source>Upload failed</source>
-        <translatorcomment>Informative message shown to the user when an upload has failed</translatorcomment>
-        <translation>Tải lên thất bại</translation>
     </message>
 </context>
 <context>
@@ -3171,7 +3169,7 @@ Các phiên truyền tải đồng bộ chưa có hoàn tất bạn đã chọn 
         <source>The following characters are not allowed:
 %1</source>
         <translatorcomment>Message shown when the user has entered a not allowed character</translatorcomment>
-        <translation>Các ký tự này không được phép sử dụng:
+        <translation>Các ký tự sau không được phép sử dụng:
 %1</translation>
     </message>
 </context>
@@ -3259,7 +3257,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Cloud drive</source>
         <translatorcomment>Node selector button Text. Switch the view to show only the cloud drive nodes (files and folders)</translatorcomment>
-        <translation>Ổ Mây</translation>
+        <translation>Ổ mây</translation>
     </message>
     <message>
         <source>Incoming shares</source>
@@ -3713,22 +3711,22 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Open settings</source>
         <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
-        <translation>Đi tới Cài đặt</translation>
+        <translation>Đi tới trang Thiết Đặt</translation>
     </message>
     <message>
         <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
         <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (Windows and Linux)</translatorcomment>
-        <translation>Một hay nhiều mục đồng bộ đã bị vô hiệu. Đi tới trang thiết đặt và bật lại.</translation>
+        <translation>Một hay nhiều mục đồng bộ đã bị vô hiệu. Đi tới trang Thiết Đặt và bật lại.</translation>
     </message>
     <message>
         <source>Open preferences</source>
         <translatorcomment>Button label to open MEGAsync preferences dialog (MacOS).</translatorcomment>
-        <translation>Mở tùy chỉnh</translation>
+        <translation>Mở trang Tùy Chỉnh</translation>
     </message>
     <message>
         <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
         <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (macOS)</translatorcomment>
-        <translation>Một hay nhiều mục đồng bộ đã bị vô hiệu. Đi tới trang tùy chỉnh và bật lại.</translation>
+        <translation>Một hay nhiều mục đồng bộ đã bị vô hiệu. Đi tới trang Tùy Chỉnh và bật lại.</translation>
     </message>
     <message>
         <source>Sync transfers cannot be cancelled individually.
@@ -3748,20 +3746,24 @@ Xin xóa đi thư mục đồng bộ trong trang tùy chỉnh đẻ có thể h�
 <context>
     <name>Preferences</name>
     <message>
-        <source>- There is now a new transfer manager.
-- Transfer management was enhanced and reliability of downloads and uploads improved. 
-- Detected crashes on Windows, Linux, and macOS fixed.
-- Translation issues fixed.
-- Performance improved.
-- UI fixed and adjusted.
+        <source>- Added new Apple Silicon native support.
+- Added a new feature to stop sleep mode if there are active transfers.
+- Updated third-party libs.
+- Improved folders transfers.
+- Fixed detected crashes on Windows, Linux, and macOS.
+- Fixed translation issues.
+- Improved performance.
+- Fixed and adjusted UI.
 </source>
-        <translatorcomment>Changelog for version v4.7.0</translatorcomment>
-        <translation>- Trang quản lý truyền tải mới
-- Bộ quản lý truyền tải được cải thiện và độ đảm bảo tải lên và tải xuống được nâng cao.
-- Các lỗi treo máy ghi nhận trước đây trên Windows, Linux, và macOS đều đã được sửa.
-- Sửa lỗi dịch thuật.
-- Hiệu suất cải thiện.
-- Sửa và điều chỉnh UI.
+        <translatorcomment>Changelog for version v4.7.2</translatorcomment>
+        <translation>- Thêm hỗ trợ gốc cho hệ thống Apple silicon.
+- Thêm một tính năng mới để ngăn chặn chế độ ngủ khi đang có truyền tải.
+- Cập nhật thành phần thư viện phần mềm của bên thứ ba
+- Cải thiện truyền tải thư mục
+- Khắc phục sự cố được phát hiện trên Windows, Linux và macOS.
+- Sửa sai sót dịch thuật
+- Cải thiện hiệu suất.
+- Sửa chữa điều chỉnh giao diện người dùng.
 </translation>
     </message>
 </context>
@@ -4085,12 +4087,12 @@ Xin xóa đi thư mục đồng bộ trong trang tùy chỉnh đẻ có thể h�
     </message>
     <message>
         <source>Shortcut</source>
-        <translatorcomment>Label for shourcut in all other platforms</translatorcomment>
+        <translatorcomment>Label used in Qt file/folder choosing dialog. Not being used at the moment.</translatorcomment>
         <translation>Lối tắt</translation>
     </message>
     <message>
         <source>Unknown</source>
-        <translatorcomment>Name when the file or folder does not match</translatorcomment>
+        <translatorcomment>Label used in Qt file/folder choosing dialog. Not being used at the moment.</translatorcomment>
         <translation>Chưa biết</translation>
     </message>
     <message>
@@ -4215,12 +4217,12 @@ Bạn có muốn tiếp tục xóa không?</translation>
     </message>
     <message>
         <source>Kind</source>
-        <translatorcomment>Header name of the column that shows file kind</translatorcomment>
+        <translatorcomment>Header name of the column that shows file kind. Used by QT on QT standard dialogs. For MacOS platforms only.</translatorcomment>
         <translation>Dạng</translation>
     </message>
     <message>
         <source>Type</source>
-        <translatorcomment>Header name of the column that shows file type</translatorcomment>
+        <translatorcomment>Header name of the column that shows file type. Used by QT on QT standard dialogs. For Windows/Linux platforms.</translatorcomment>
         <translation>Dạng</translation>
     </message>
     <message>
@@ -4302,19 +4304,44 @@ Bạn có muốn tiếp tục xóa không?</translation>
 <context>
     <name>ScanningWidget</name>
     <message>
-        <source>Cancel transfers</source>
+        <source>Cancel</source>
         <translatorcomment>Button text to cancel the scanning of transfers</translatorcomment>
-        <translation>Hủy các phiên truyền tải</translation>
+        <translation>Hủy</translation>
     </message>
     <message>
-        <source>Scanning…</source>
-        <translatorcomment>Text to let the user know that the app is scanning a folder</translatorcomment>
-        <translation>Đang quét…</translation>
+        <source>Don&apos;t close the app. If you close, transfers not yet queued will be lost.</source>
+        <translatorcomment>Message displayed in scanning widget to warn the user of consequences of closing the app.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Don´t exit the app</source>
-        <translatorcomment>Text below the GIF to askt he user not to close the app while it is scanning a folder</translatorcomment>
-        <translation>Xin đừng thoát ứng dụng</translation>
+        <source>Scanning</source>
+        <translatorcomment>Label used to display when the scanning widget is on the &quot;Scanning&quot; step</translatorcomment>
+        <translation>Đang quét nội dung</translation>
+    </message>
+    <message>
+        <source>Creating folders</source>
+        <translatorcomment>Label used to display when the scanning widget is on the &quot;Creating folders&quot; step</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1/%2</source>
+        <translatorcomment>Label showing the quantity of folders created (%1) with the quantity of folders to create in total (%2)</translatorcomment>
+        <translation>%1/%2</translation>
+    </message>
+    <message>
+        <source>found %1, %2</source>
+        <translatorcomment>Label used to display current status of scanning step. %1 is the string with number of folders found so far, %2 is the string with number of files found so far.</translatorcomment>
+        <translation>đã tìm thấy %1, %2</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n folder</source>
+        <translatorcomment>Part of the string used to display number of folders in scanning step. %1 is the number of folders found so far.</translatorcomment>
+        <translation><numerusform>%n thư mục</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n file</source>
+        <translatorcomment>Part of the string used to display number of files in scanning step. %1 is the number of files found so far.</translatorcomment>
+        <translation><numerusform>%n tệp tin</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4971,6 +4998,38 @@ Do you want to restart MEGAsync now?</source>
         <translatorcomment>Suffix text label for number of days to keep files in local cache.</translatorcomment>
         <translation><numerusform>ngày</numerusform></translation>
     </message>
+    <message>
+        <source>Sleep settings</source>
+        <translatorcomment>Sleep/Active mode: Settings dialog groupbox title for keeping the pc awake when there are active transfers (WIndows and Linux)</translatorcomment>
+        <translation>Thiết đặt chế độ ngủ</translation>
+    </message>
+    <message>
+        <source>Prevent the computer from going to sleep when transfers or syncs are in progress.
+Computer will enter sleep mode once these are complete.</source>
+        <translatorcomment>Sleep/Active mode: Feature description label for keeping the pc awake when there are active transfers</translatorcomment>
+        <translation>Ngăn chặn máy tính chuyển sang chế độ ngủ khi đang còn có các phiên truyền tải hoặc đồng bộ
+Máy tính sẽ vào chế độ ngủ khi mọi thứ đã hoàn tất.</translation>
+    </message>
+    <message>
+        <source>Note: Some operating systems won&apos;t allow this.</source>
+        <translatorcomment>Sleep/Active mode: Warning message below the description label, as not all the computers can activate the feature to keep it awake if there are transfers active </translatorcomment>
+        <translation>Ghi chú: Một số hệ điều hành không cho phép thiết đặt này.</translation>
+    </message>
+    <message>
+        <source>Sleep mode:</source>
+        <translatorcomment>Sleep/Active mode: Settings dialog groupbox title for keeping the pc awake when there are active transfers (macOS)</translatorcomment>
+        <translation>Chế độ ngủ:</translation>
+    </message>
+    <message>
+        <source>Sleep mode can&apos;t be setup</source>
+        <translatorcomment>Sleep/Active mode: Error messagebox title when the pc awake mode could not be activated after activating the feature using the checkbox.</translatorcomment>
+        <translation>Chế độ ngủ không thể áp đặt</translation>
+    </message>
+    <message>
+        <source>Your operating system doesn&apos;t allow its sleep setting to be overwritten.</source>
+        <translatorcomment>Sleep/Active mode: Error messagebox text when the pc awake mode could not be activated after activating the feature using the checkbox.</translatorcomment>
+        <translation>Hệ điều hành của bạn không có cho phép thiết đặt của chế độ ngủ bị thay đổi.</translation>
+    </message>
 </context>
 <context>
     <name>SetupWizard</name>
@@ -5067,7 +5126,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Incorrect email and/or password.</source>
         <translatorcomment>Message displayed when a user is trying to loging with an incorrect email/password.</translatorcomment>
-        <translation>Email và/hoặc mật khẩu chưa đúng.</translation>
+        <translation>Email hoặc mật khẩu không hợp lệ.</translation>
     </message>
     <message>
         <source>MEGA folder doesn&apos;t exist</source>
@@ -5592,7 +5651,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Completed</source>
         <translatorcomment>Transfer is completed</translatorcomment>
-        <translation>Hoàn Tất</translation>
+        <translation>Hoàn tất</translation>
     </message>
     <message>
         <source>Paused</source>
@@ -5622,12 +5681,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Out of storage space</source>
         <translatorcomment>Transfer is paused for out of storage space</translatorcomment>
-        <translation> Cảnh báo vượt mức</translation>
+        <translation>Hết không gian lưu trữ</translation>
     </message>
     <message>
         <source>Out of transfer quota</source>
         <translatorcomment>Transfer is paused for out of transfer quota</translatorcomment>
-        <translation>Quá hạn mức truyền tải</translation>
+        <translation>Hết băng thông truyền tải</translation>
     </message>
 </context>
 <context>
@@ -5668,7 +5727,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Transfers</source>
         <translatorcomment>Transfer manager title</translatorcomment>
-        <translation>Các Phiên Truyền Tải</translation>
+        <translation>Phiên truyền tải</translation>
     </message>
     <message>
         <source>Search</source>
@@ -5703,12 +5762,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Documents</source>
         <translatorcomment>Categories for document type transfers</translatorcomment>
-        <translation>Tệp Tài Liệu</translation>
+        <translation>Tài liệu</translation>
     </message>
     <message>
         <source>Images</source>
         <translatorcomment>Categories for image type transfers</translatorcomment>
-        <translation>Hình Ảnh</translation>
+        <translation>Hình ảnh</translation>
     </message>
     <message>
         <source>Videos</source>
@@ -5718,7 +5777,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Audio</source>
         <translatorcomment>Categories for audio type transfers</translatorcomment>
-        <translation>Âm Thanh</translation>
+        <translation>Âm thanh</translation>
     </message>
     <message>
         <source>Other</source>
@@ -5733,7 +5792,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Scanning</source>
         <translatorcomment>State of the Transfers: Message which shows that a folder is being scanned</translatorcomment>
-        <translation>Đang quét nội dung</translation>
+        <translation>Đang quét</translation>
     </message>
     <message>
         <source>All paused</source>
@@ -5743,7 +5802,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>All</source>
         <translatorcomment>Title for all searched transfers by text</translatorcomment>
-        <translation>Tất Cả</translation>
+        <translation>Tất cả</translation>
     </message>
     <message>
         <source>Search:</source>

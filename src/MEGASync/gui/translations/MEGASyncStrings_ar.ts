@@ -626,11 +626,6 @@ Please enter a different name to identify this synced folder:</source>
         <translation>إلغاء عمليات التراسل؟</translation>
     </message>
     <message>
-        <source>Transfers not yet processed will be cancelled.</source>
-        <translatorcomment>Dialog messages which warns the user about the potential problems of cancelling the folder scanning</translatorcomment>
-        <translation>سيتم إلغاء التحويلات التي لم تتم معالجتها بعد.</translation>
-    </message>
-    <message>
         <source>No, continue</source>
         <translatorcomment>Button to continue folder scanning cancellation</translatorcomment>
         <translation>لا، استمر</translation>
@@ -639,6 +634,15 @@ Please enter a different name to identify this synced folder:</source>
         <source>Yes, cancel</source>
         <translatorcomment>Button to abort a folder scanning</translatorcomment>
         <translation>نعم، إلغاء</translation>
+    </message>
+    <message>
+        <source>All the queued transfers from your current download will be cancelled.</source>
+        <translatorcomment>Dialog messages which warns the user about the potential problems of cancelling the folder scanning</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancelling…</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -968,12 +972,12 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>انتهت صلاحية حساب الأعمال الخاص بك</translation>
+        <translation>انتهت صلاحية حساب الأعمال Business الخاص بك</translation>
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation>انتهت صلاحية حسابك للقراءة فقط حتى يتم تنفيذ الدفعات المطلوبة.</translation>
+        <translation>انتهت صلاحية للقراءة فقط لحسابك حتى تقوم بمتابعة الدفعات المطلوبة.</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -1354,7 +1358,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Incorrect email and/or password.</source>
         <translatorcomment>Message box shown when user enters incorrect email and/or password at login</translatorcomment>
-        <translation>البريد الإلكتروني و / أو كلمة المرور غير صحيحين.</translation>
+        <translation>كلمة مرور أو البريد الإلكتروني غير صالحين</translation>
     </message>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
@@ -2306,7 +2310,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>انتهت صلاحية حساب الأعمال الخاص بك</translation>
+        <translation>انتهت صلاحية حساب الأعمال Business الخاص بك</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -2316,7 +2320,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message shown to admin business account when a payment has failed. </translatorcomment>
-        <translation>يبدو أن الدفع لحساب الأعمال الخاص بك قد فشل. انتهت صلاحية حسابك وتم منحه أذونات وصول للقراءة فقط حتى تتابع الدفع المطلوب.</translation>
+        <translation>يبدو أن دفعة حساب الأعمال Business الخاص بك قد فشل. انتهت صلاحية حسابك وتم منحه أذونات وصول للقراءة فقط حتى تقوم بمتابعة الدفعات المطلوبة.</translation>
     </message>
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
@@ -2331,7 +2335,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>This month&apos;s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</source>
         <translatorcomment>Informative message shown to the user when a payment has failed for a business account.</translatorcomment>
-        <translation>فشل الدفع لهذا الشهر. يرجى حل مشكلة الدفع الخاصة بك في أقرب وقت ممكن لتجنب أي تعليق لحساب الأعمال الخاص بك.</translation>
+        <translation>فشل الدفع لهذا الشهر. الرجاء حل مشكلة الدفع الخاصة بك في أقرب وقت ممكن لتجنب أي تعليق حساب الأعمال business الخاص بك.</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -2341,7 +2345,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
         <translatorcomment>Informative message shown when a business account is expired and the user can only browse data and none operation (upload, download, creation..) is allowed.</translatorcomment>
-        <translation>حسابك [A]منتهي الصلاحية[/A]. يمكنك فقط تصفح البيانات الخاصة بك.</translation>
+        <translation>انتهت [A]صلاحية[/A] حسابك. يمكنك فقط تصفح البيانات الخاصة بك.</translation>
     </message>
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
@@ -2619,14 +2623,6 @@ Transfer will automatically resume when you re-open the app.</source>
         <translation>خطأ غير معروف</translation>
     </message>
     <message>
-        <source>Your account has been suspended due to multiple breaches of MEGA’s Terms of Service. Please check your email inbox.</source>
-        <translation>تم تعليق حسابك بسبب الانتهاكات المتعددة لشروط خدمة ميغا MEGA. يرجى التحقق من صندوق البريد الإلكتروني الخاص بك.</translation>
-    </message>
-    <message>
-        <source>Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
-        <translation>تم إنهاء حسابك بسبب خرق شروط الخدمة الخاصة بميغا MEGA، مثل إساءة استخدام حقوق الآخرين؛ مشاركة و/ أو استيراد البيانات غير القانونية؛ أو إساءة استخدام النظام.</translation>
-    </message>
-    <message>
         <source>SSL verification failed</source>
         <translatorcomment>Error shown when SSL check has failed</translatorcomment>
         <translation>فشل مصادقة شهادة التشفير SSL</translation>
@@ -2660,6 +2656,16 @@ Transfer will automatically resume when you re-open the app.</source>
         <source>Decryption error</source>
         <translatorcomment>String shown when a file/folder name can not be decrypted.</translatorcomment>
         <translation>خطأ فك التشفير</translation>
+    </message>
+    <message>
+        <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
+        <translatorcomment>Error triggered by SDK when an account has been suspended due to copyright violations.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
+        <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2727,20 +2733,20 @@ Transfer will automatically resume when you re-open the app.</source>
         <translatorcomment>Node name column title tooltip. Sorts the order of the column by date.</translatorcomment>
         <translation>فرز حسب الاسم</translation>
     </message>
-    <message>
+    <message numerus="yes">
         <source>Today at %1</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened today. %1 represents the hour</translatorcomment>
-        <translation>اليوم الساعة %1</translation>
+        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened today. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
-    <message>
+    <message numerus="yes">
         <source>Yesterday at %1</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened yesterday. %1 represents the hour</translatorcomment>
-        <translation>البارحة الساعة %1</translation>
+        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened yesterday. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
-    <message>
+    <message numerus="yes">
         <source>%1 at %2</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was previously to yesterday. %1 represents the date (day month and year), while %2 represents the hour)</translatorcomment>
-        <translation>%1 الساعة %2</translation>
+        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was previously to yesterday. %1 represents the date (day month and year), while %2 represents the hour). Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Recently used</source>
@@ -3129,14 +3135,6 @@ Your selected incomplete sync transfers won&apos;t be cancelled.</source>
         <source>Yes, clear</source>
         <translatorcomment>Dialog button to do the proposed actions (clear the transfers)</translatorcomment>
         <translation>نعم، مسح</translation>
-    </message>
-</context>
-<context>
-    <name>MegaUploader</name>
-    <message>
-        <source>Upload failed</source>
-        <translatorcomment>Informative message shown to the user when an upload has failed</translatorcomment>
-        <translation>فشل الترفيع</translation>
     </message>
 </context>
 <context>
@@ -3753,20 +3751,24 @@ Please delete the folder sync from preferences to cancel them.</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- There is now a new transfer manager.
-- Transfer management was enhanced and reliability of downloads and uploads improved. 
-- Detected crashes on Windows, Linux, and macOS fixed.
-- Translation issues fixed.
-- Performance improved.
-- UI fixed and adjusted.
+        <source>- Added new Apple Silicon native support.
+- Added a new feature to stop sleep mode if there are active transfers.
+- Updated third-party libs.
+- Improved folders transfers.
+- Fixed detected crashes on Windows, Linux, and macOS.
+- Fixed translation issues.
+- Improved performance.
+- Fixed and adjusted UI.
 </source>
-        <translatorcomment>Changelog for version v4.7.0</translatorcomment>
-        <translation>- يوجد الآن مدير جديد لعمليات تراسل المعطيات.
-- تم تحسين إدارة عمليات تراسل المعطيات وتحسين موثوقية عمليات التنزيل والترفيع.
-- تم إصلاح الأعطال المكتشفة على أنظمة التشغيل ويندوز Windows  و لينيكس Linux و ماك او اس macOS.
+        <translatorcomment>Changelog for version v4.7.2</translatorcomment>
+        <translation>- تمت إضافة دعم Apple silicon الأصلي الجديد.
+- تمت إضافة ميزة جديدة لإيقاف وضع السكون إذا كانت هناك عمليات تراسل نشطة.
+- تحديث libs الطرف الثالث.
+- تحسين عمليات تراسل المجلدات.
+- إصلاح الأعطال المكتشفة على أنظمة التشغيل ويندوز Windows و لينيكس Linux و ماك macOS.
 - إصلاح مشاكل الترجمة.
-- تحسن الأداء.
-- إصلاح وتعديل واجهة المستخدم.
+- تحسين الأداء.
+- إصلاح و تعديل واجهة المستخدم.
 </translation>
     </message>
 </context>
@@ -4090,12 +4092,12 @@ Please delete the folder sync from preferences to cancel them.</source>
     </message>
     <message>
         <source>Shortcut</source>
-        <translatorcomment>Label for shourcut in all other platforms</translatorcomment>
+        <translatorcomment>Label used in Qt file/folder choosing dialog. Not being used at the moment.</translatorcomment>
         <translation>الاختصار</translation>
     </message>
     <message>
         <source>Unknown</source>
-        <translatorcomment>Name when the file or folder does not match</translatorcomment>
+        <translatorcomment>Label used in Qt file/folder choosing dialog. Not being used at the moment.</translatorcomment>
         <translation>غير معروف</translation>
     </message>
     <message>
@@ -4220,12 +4222,12 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <source>Kind</source>
-        <translatorcomment>Header name of the column that shows file kind</translatorcomment>
+        <translatorcomment>Header name of the column that shows file kind. Used by QT on QT standard dialogs. For MacOS platforms only.</translatorcomment>
         <translation>نوع</translation>
     </message>
     <message>
         <source>Type</source>
-        <translatorcomment>Header name of the column that shows file type</translatorcomment>
+        <translatorcomment>Header name of the column that shows file type. Used by QT on QT standard dialogs. For Windows/Linux platforms.</translatorcomment>
         <translation>نوع</translation>
     </message>
     <message>
@@ -4307,19 +4309,44 @@ Do you want to delete it anyway?</source>
 <context>
     <name>ScanningWidget</name>
     <message>
-        <source>Cancel transfers</source>
+        <source>Cancel</source>
         <translatorcomment>Button text to cancel the scanning of transfers</translatorcomment>
-        <translation>إلغاء عمليات التراسل</translation>
+        <translation>إلغاء</translation>
     </message>
     <message>
-        <source>Scanning…</source>
-        <translatorcomment>Text to let the user know that the app is scanning a folder</translatorcomment>
-        <translation>جاري الفحص…</translation>
+        <source>Don&apos;t close the app. If you close, transfers not yet queued will be lost.</source>
+        <translatorcomment>Message displayed in scanning widget to warn the user of consequences of closing the app.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Don´t exit the app</source>
-        <translatorcomment>Text below the GIF to askt he user not to close the app while it is scanning a folder</translatorcomment>
-        <translation>لا تخرج من التطبيق</translation>
+        <source>Scanning</source>
+        <translatorcomment>Label used to display when the scanning widget is on the &quot;Scanning&quot; step</translatorcomment>
+        <translation>جاري الفحص</translation>
+    </message>
+    <message>
+        <source>Creating folders</source>
+        <translatorcomment>Label used to display when the scanning widget is on the &quot;Creating folders&quot; step</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1/%2</source>
+        <translatorcomment>Label showing the quantity of folders created (%1) with the quantity of folders to create in total (%2)</translatorcomment>
+        <translation>%1/%2</translation>
+    </message>
+    <message>
+        <source>found %1, %2</source>
+        <translatorcomment>Label used to display current status of scanning step. %1 is the string with number of folders found so far, %2 is the string with number of files found so far.</translatorcomment>
+        <translation>تم إيجاد%1،%2</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n folder</source>
+        <translatorcomment>Part of the string used to display number of folders in scanning step. %1 is the number of folders found so far.</translatorcomment>
+        <translation><numerusform>%n مجلد</numerusform><numerusform>%n مجلد</numerusform><numerusform>%n مجلدان</numerusform><numerusform>%n مجلدات</numerusform><numerusform>%n مجلداً</numerusform><numerusform>%n مجلد</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n file</source>
+        <translatorcomment>Part of the string used to display number of files in scanning step. %1 is the number of files found so far.</translatorcomment>
+        <translation><numerusform>%n ملف</numerusform><numerusform>%n ملف</numerusform><numerusform>%n ملفان</numerusform><numerusform>%n ملفات</numerusform><numerusform>%n ملفاً</numerusform><numerusform>%n ملف</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4976,6 +5003,38 @@ Do you want to restart MEGAsync now?</source>
         <translatorcomment>Suffix text label for number of days to keep files in local cache.</translatorcomment>
         <translation><numerusform>يوم</numerusform><numerusform>يوم</numerusform><numerusform>يومان</numerusform><numerusform>أيام</numerusform><numerusform>يوم</numerusform><numerusform>يوم</numerusform></translation>
     </message>
+    <message>
+        <source>Sleep settings</source>
+        <translatorcomment>Sleep/Active mode: Settings dialog groupbox title for keeping the pc awake when there are active transfers (WIndows and Linux)</translatorcomment>
+        <translation>إعدادات وضع السكون</translation>
+    </message>
+    <message>
+        <source>Prevent the computer from going to sleep when transfers or syncs are in progress.
+Computer will enter sleep mode once these are complete.</source>
+        <translatorcomment>Sleep/Active mode: Feature description label for keeping the pc awake when there are active transfers</translatorcomment>
+        <translation>منع الكمبيوتر من السكون عندما تكون عمليات التراسل أو المزامنة قيد الإنجاز.
+سيدخل الكمبيوتر في وضع السكون بمجرد اكتمالها.</translation>
+    </message>
+    <message>
+        <source>Note: Some operating systems won&apos;t allow this.</source>
+        <translatorcomment>Sleep/Active mode: Warning message below the description label, as not all the computers can activate the feature to keep it awake if there are transfers active </translatorcomment>
+        <translation>ملاحظة: بعض أنظمة التشغيل لا تسمح بذلك.</translation>
+    </message>
+    <message>
+        <source>Sleep mode:</source>
+        <translatorcomment>Sleep/Active mode: Settings dialog groupbox title for keeping the pc awake when there are active transfers (macOS)</translatorcomment>
+        <translation>وضع السكون</translation>
+    </message>
+    <message>
+        <source>Sleep mode can&apos;t be setup</source>
+        <translatorcomment>Sleep/Active mode: Error messagebox title when the pc awake mode could not be activated after activating the feature using the checkbox.</translatorcomment>
+        <translation>لا يمكن إعداد وضع السكون</translation>
+    </message>
+    <message>
+        <source>Your operating system doesn&apos;t allow its sleep setting to be overwritten.</source>
+        <translatorcomment>Sleep/Active mode: Error messagebox text when the pc awake mode could not be activated after activating the feature using the checkbox.</translatorcomment>
+        <translation>لا يسمح نظام التشغيل الخاص بك بتعديل إعداد السكون الخاص به.</translation>
+    </message>
 </context>
 <context>
     <name>SetupWizard</name>
@@ -5072,7 +5131,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Incorrect email and/or password.</source>
         <translatorcomment>Message displayed when a user is trying to loging with an incorrect email/password.</translatorcomment>
-        <translation>البريد الإلكتروني غير صحيح و / أو كلمة المرور.</translation>
+        <translation>كلمة مرور أو البريد الإلكتروني غير صالحين.</translation>
     </message>
     <message>
         <source>MEGA folder doesn&apos;t exist</source>

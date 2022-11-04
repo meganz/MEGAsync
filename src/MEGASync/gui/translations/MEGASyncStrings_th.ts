@@ -626,11 +626,6 @@ Please enter a different name to identify this synced folder:</source>
         <translation>ยกเลิกการถ่ายโอนหรือไม่</translation>
     </message>
     <message>
-        <source>Transfers not yet processed will be cancelled.</source>
-        <translatorcomment>Dialog messages which warns the user about the potential problems of cancelling the folder scanning</translatorcomment>
-        <translation>การถ่ายโอนที่ยังไม่ได้ดำเนินการจะถูกยกเลิก</translation>
-    </message>
-    <message>
         <source>No, continue</source>
         <translatorcomment>Button to continue folder scanning cancellation</translatorcomment>
         <translation>ไม่ ดำเนินการต่อ</translation>
@@ -639,6 +634,15 @@ Please enter a different name to identify this synced folder:</source>
         <source>Yes, cancel</source>
         <translatorcomment>Button to abort a folder scanning</translatorcomment>
         <translation>ใช่ ยกเลิกเลย</translation>
+    </message>
+    <message>
+        <source>All the queued transfers from your current download will be cancelled.</source>
+        <translatorcomment>Dialog messages which warns the user about the potential problems of cancelling the folder scanning</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancelling…</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -968,12 +972,12 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>บัญชีธุรกิจของคุณหมดอายุแล้ว</translation>
+        <translation>บัญชีถูกปิดใช้งาน</translation>
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation>บัญชีของคุณหมดอายุ และจะอ่านได้อย่างเดียวจนกว่าคุณจะดำเนินการชำระเงินให้เรียบร้อย</translation>
+        <translation>บัญชีของคุณถูกปิดใช้งานและมีสถานะเป็นแบบอ่านอย่างเดียวจนกว่าคุณจะชำระเงินตามที่กำหนด</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -1354,7 +1358,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Incorrect email and/or password.</source>
         <translatorcomment>Message box shown when user enters incorrect email and/or password at login</translatorcomment>
-        <translation>อีเมลและ/หรือรหัสผ่านไม่ถูกต้อง</translation>
+        <translation>อีเมลหรือรหัสผ่านไม่ถูกต้อง</translation>
     </message>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
@@ -2306,7 +2310,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>บัญชีธุรกิจของคุณหมดอายุแล้ว</translation>
+        <translation>บัญชีถูกปิดใช้งาน</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -2316,7 +2320,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message shown to admin business account when a payment has failed. </translatorcomment>
-        <translation>ดูเหมือนว่าการชำระเงินสำหรับบัญชีธุรกิจของคุณล้มเหลว บัญชีของคุณหมดอายุแล้ว และได้รับสิทธิ์การเข้าถึงแบบอ่านอย่างเดียวจนกว่าคุณจะดำเนินการชำระเงินให้เรียบร้อย</translation>
+        <translation>บัญชีธุรกิจของคุณถูกปิดใช้งานเนื่องจากการชำระเงินไม่สำเร็จ คุณจะไม่สามารถเข้าถึงข้อมูลของคุณได้จนกว่าคุณจะชำระเงินและเปิดใช้การสมัครใช้งานของคุณอีกครั้ง</translation>
     </message>
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
@@ -2331,7 +2335,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>This month&apos;s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</source>
         <translatorcomment>Informative message shown to the user when a payment has failed for a business account.</translatorcomment>
-        <translation>การชำระเงินเดือนนี้ล้มเหลว กรุณาแก้ไขปัญหาการชำระเงินโดยเร็วที่สุด เพื่อหลีกเลี่ยงการถูกระงับบัญชีธุรกิจของคุณ</translation>
+        <translation>การชำระเงินเดือนนี้ไม่สำเร็จ กรุณาแก้ไขปัญหาการชำระเงินของคุณโดยเร็วที่สุด เพื่อหลีกเลี่ยงไม่ให้บัญชีของคุณถูกปิดใช้งาน</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -2341,7 +2345,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
         <translatorcomment>Informative message shown when a business account is expired and the user can only browse data and none operation (upload, download, creation..) is allowed.</translatorcomment>
-        <translation>บัญชีของคุณ[A]หมดอายุแล้ว[/A] คุณสามารถเรียกดูได้เฉพาะข้อมูลเท่านั้น</translation>
+        <translation>บัญชีของคุณ[A]ถูกปิดใช้งาน[/A] คุณจะสามารถเรียกดูได้แค่ข้อมูลอย่างเดียวเท่านั้น</translation>
     </message>
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
@@ -2614,14 +2618,6 @@ Transfer will automatically resume when you re-open the app.</source>
         <translation>ข้อผิดพลาดที่ไม่รู้จัก</translation>
     </message>
     <message>
-        <source>Your account has been suspended due to multiple breaches of MEGA’s Terms of Service. Please check your email inbox.</source>
-        <translation>บัญชีของคุณถูกระงับเนื่องจากมีการละเมิดเงื่อนไขการให้บริการของ MEGA หลายครั้ง กรุณาตรวจสอบกล่องจดหมายอีเมลของคุณ</translation>
-    </message>
-    <message>
-        <source>Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
-        <translation>บัญชีของคุณถูกยกเลิกเนื่องจากการละเมิดเงื่อนไขการให้บริการของ MEGA เช่น การละเมิดสิทธิของผู้อื่น การแบ่งปันและ/หรือการนําเข้าข้อมูลที่ผิดกฎหมาย หรือการละเมิดของระบบ</translation>
-    </message>
-    <message>
         <source>SSL verification failed</source>
         <translatorcomment>Error shown when SSL check has failed</translatorcomment>
         <translation>การตรวจสอบ SSL ล้มเหลว</translation>
@@ -2655,6 +2651,16 @@ Transfer will automatically resume when you re-open the app.</source>
         <source>Decryption error</source>
         <translatorcomment>String shown when a file/folder name can not be decrypted.</translatorcomment>
         <translation>เกิดข้อผิดพลาดในการถอดรหัส</translation>
+    </message>
+    <message>
+        <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
+        <translatorcomment>Error triggered by SDK when an account has been suspended due to copyright violations.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
+        <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2722,20 +2728,20 @@ Transfer will automatically resume when you re-open the app.</source>
         <translatorcomment>Node name column title tooltip. Sorts the order of the column by date.</translatorcomment>
         <translation>เรียงตามชื่อ</translation>
     </message>
-    <message>
+    <message numerus="yes">
         <source>Today at %1</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened today. %1 represents the hour</translatorcomment>
-        <translation>วันนี้ เวลา %1</translation>
+        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened today. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
-    <message>
+    <message numerus="yes">
         <source>Yesterday at %1</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened yesterday. %1 represents the hour</translatorcomment>
-        <translation>เมื่อวานนี้ เวลา %1</translation>
+        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened yesterday. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
-    <message>
+    <message numerus="yes">
         <source>%1 at %2</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was previously to yesterday. %1 represents the date (day month and year), while %2 represents the hour)</translatorcomment>
-        <translation>%1 เวลา %2</translation>
+        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was previously to yesterday. %1 represents the date (day month and year), while %2 represents the hour). Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Recently used</source>
@@ -2832,7 +2838,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Business account expired</source>
         <translatorcomment>Label to show that the current business account is expired during a SDK operation.</translatorcomment>
-        <translation>บัญชีธุรกิจของคุณหมดอายุแล้ว</translation>
+        <translation>บัญชีธุรกิจของคุณถูกปิดใช้งาน</translation>
     </message>
     <message>
         <source>Foreign target storage quota reached</source>
@@ -3124,14 +3130,6 @@ Your selected incomplete sync transfers won&apos;t be cancelled.</source>
         <source>Yes, clear</source>
         <translatorcomment>Dialog button to do the proposed actions (clear the transfers)</translatorcomment>
         <translation>ใช่ ล้างเลย</translation>
-    </message>
-</context>
-<context>
-    <name>MegaUploader</name>
-    <message>
-        <source>Upload failed</source>
-        <translatorcomment>Informative message shown to the user when an upload has failed</translatorcomment>
-        <translation>อัปโหลดไม่สำเร็จ</translation>
     </message>
 </context>
 <context>
@@ -3746,21 +3744,24 @@ Please delete the folder sync from preferences to cancel them.</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- There is now a new transfer manager.
-- Transfer management was enhanced and reliability of downloads and uploads improved. 
-- Detected crashes on Windows, Linux, and macOS fixed.
-- Translation issues fixed.
-- Performance improved.
-- UI fixed and adjusted.
+        <source>- Added new Apple Silicon native support.
+- Added a new feature to stop sleep mode if there are active transfers.
+- Updated third-party libs.
+- Improved folders transfers.
+- Fixed detected crashes on Windows, Linux, and macOS.
+- Fixed translation issues.
+- Improved performance.
+- Fixed and adjusted UI.
 </source>
-        <translatorcomment>Changelog for version v4.7.0</translatorcomment>
-        <translation>- ตอนนี้มีตัวจัดการการถ่ายโอนใหม่แล้ว
-- ตัวจัดการการถ่ายโอนได้รับการเพิ่มประสิทธิภาพและความน่าเชื่อถือการดาวน์โหลดและอัปโหลดได้รับการปรับปรุงเช่นเดียวกัน 
-- ตรวจพบและแก้ไขข้อขัดข้องใน Windows, Linux และ macOS แล้ว
-- ปรับปรุงการแปลภาษาแล้ว
+        <translatorcomment>Changelog for version v4.7.2</translatorcomment>
+        <translation>- เพิ่มการสนับสนุนการทำงานกับ Apple silicon ใหม่
+- เพิ่มฟีเจอร์ใหม่หากยังมีการถ่ายโอนข้อมูลอยู่จะไม่เข้าสู่โหมดสลีป
+- อัปเดตไลบรารีจากบริษัทอื่น
+- ปรับปรุงการถ่ายโอนโฟลเดอร์
+- แก้ไขการหยุดทำงานที่ตรวจพบบน Windows, Linux และ macOS
+- แก้ไขปัญหาการแปลภาษาไม่ถูกต้อง
 - ปรับปรุงประสิทธิภาพการทำงานทั่วไป
-- แก้ไขและปรับปรุง UI แล้ว
-</translation>
+- แก้ไขและปรับแต่ง UI ให้สมบูรณ์</translation>
     </message>
 </context>
 <context>
@@ -4083,12 +4084,12 @@ Please delete the folder sync from preferences to cancel them.</source>
     </message>
     <message>
         <source>Shortcut</source>
-        <translatorcomment>Label for shourcut in all other platforms</translatorcomment>
+        <translatorcomment>Label used in Qt file/folder choosing dialog. Not being used at the moment.</translatorcomment>
         <translation>ทางลัด</translation>
     </message>
     <message>
         <source>Unknown</source>
-        <translatorcomment>Name when the file or folder does not match</translatorcomment>
+        <translatorcomment>Label used in Qt file/folder choosing dialog. Not being used at the moment.</translatorcomment>
         <translation>ไม่ทราบ</translation>
     </message>
     <message>
@@ -4213,12 +4214,12 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <source>Kind</source>
-        <translatorcomment>Header name of the column that shows file kind</translatorcomment>
+        <translatorcomment>Header name of the column that shows file kind. Used by QT on QT standard dialogs. For MacOS platforms only.</translatorcomment>
         <translation>ประเภท</translation>
     </message>
     <message>
         <source>Type</source>
-        <translatorcomment>Header name of the column that shows file type</translatorcomment>
+        <translatorcomment>Header name of the column that shows file type. Used by QT on QT standard dialogs. For Windows/Linux platforms.</translatorcomment>
         <translation>ประเภท</translation>
     </message>
     <message>
@@ -4300,19 +4301,44 @@ Do you want to delete it anyway?</source>
 <context>
     <name>ScanningWidget</name>
     <message>
-        <source>Cancel transfers</source>
+        <source>Cancel</source>
         <translatorcomment>Button text to cancel the scanning of transfers</translatorcomment>
-        <translation>ยกเลิกการถ่ายโอน</translation>
+        <translation>ยกเลิก</translation>
     </message>
     <message>
-        <source>Scanning…</source>
-        <translatorcomment>Text to let the user know that the app is scanning a folder</translatorcomment>
-        <translation>กำลังสแกน…</translation>
+        <source>Don&apos;t close the app. If you close, transfers not yet queued will be lost.</source>
+        <translatorcomment>Message displayed in scanning widget to warn the user of consequences of closing the app.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Don´t exit the app</source>
-        <translatorcomment>Text below the GIF to askt he user not to close the app while it is scanning a folder</translatorcomment>
-        <translation>อย่าปิดแอป</translation>
+        <source>Scanning</source>
+        <translatorcomment>Label used to display when the scanning widget is on the &quot;Scanning&quot; step</translatorcomment>
+        <translation>กำลังสแกน</translation>
+    </message>
+    <message>
+        <source>Creating folders</source>
+        <translatorcomment>Label used to display when the scanning widget is on the &quot;Creating folders&quot; step</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1/%2</source>
+        <translatorcomment>Label showing the quantity of folders created (%1) with the quantity of folders to create in total (%2)</translatorcomment>
+        <translation>%1/%2</translation>
+    </message>
+    <message>
+        <source>found %1, %2</source>
+        <translatorcomment>Label used to display current status of scanning step. %1 is the string with number of folders found so far, %2 is the string with number of files found so far.</translatorcomment>
+        <translation>พบ %1, %2</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n folder</source>
+        <translatorcomment>Part of the string used to display number of folders in scanning step. %1 is the number of folders found so far.</translatorcomment>
+        <translation><numerusform>%n โฟลเดอร์</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n file</source>
+        <translatorcomment>Part of the string used to display number of files in scanning step. %1 is the number of files found so far.</translatorcomment>
+        <translation><numerusform>%n ไฟล์</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4969,6 +4995,37 @@ Do you want to restart MEGAsync now?</source>
         <translatorcomment>Suffix text label for number of days to keep files in local cache.</translatorcomment>
         <translation><numerusform>วัน</numerusform></translation>
     </message>
+    <message>
+        <source>Sleep settings</source>
+        <translatorcomment>Sleep/Active mode: Settings dialog groupbox title for keeping the pc awake when there are active transfers (WIndows and Linux)</translatorcomment>
+        <translation>โหมดสลีป</translation>
+    </message>
+    <message>
+        <source>Prevent the computer from going to sleep when transfers or syncs are in progress.
+Computer will enter sleep mode once these are complete.</source>
+        <translatorcomment>Sleep/Active mode: Feature description label for keeping the pc awake when there are active transfers</translatorcomment>
+        <translation>ป้องกันไม่ให้คอมพิวเตอร์เข้าสู่โหมดสลีปเมื่อกำลังถ่ายโอนหรือซิงค์อยู่ และเมื่อเสร็จสิ้นแล้วคอมพิวเตอร์จะเข้าสู่โหมดสลีป</translation>
+    </message>
+    <message>
+        <source>Note: Some operating systems won&apos;t allow this.</source>
+        <translatorcomment>Sleep/Active mode: Warning message below the description label, as not all the computers can activate the feature to keep it awake if there are transfers active </translatorcomment>
+        <translation>หมายเหตุ: ระบบปฏิบัติการบางระบบอาจไม่อนุญาตให้ดำเนินการ</translation>
+    </message>
+    <message>
+        <source>Sleep mode:</source>
+        <translatorcomment>Sleep/Active mode: Settings dialog groupbox title for keeping the pc awake when there are active transfers (macOS)</translatorcomment>
+        <translation>โหมดสลีป</translation>
+    </message>
+    <message>
+        <source>Sleep mode can&apos;t be setup</source>
+        <translatorcomment>Sleep/Active mode: Error messagebox title when the pc awake mode could not be activated after activating the feature using the checkbox.</translatorcomment>
+        <translation>ตั้งค่าโหมดสลีปไม่ได้</translation>
+    </message>
+    <message>
+        <source>Your operating system doesn&apos;t allow its sleep setting to be overwritten.</source>
+        <translatorcomment>Sleep/Active mode: Error messagebox text when the pc awake mode could not be activated after activating the feature using the checkbox.</translatorcomment>
+        <translation>ระบบปฏิบัติการของคุณไม่อนุญาตให้แก้ไขการตั้งค่าโหมดสลีป</translation>
+    </message>
 </context>
 <context>
     <name>SetupWizard</name>
@@ -5065,7 +5122,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Incorrect email and/or password.</source>
         <translatorcomment>Message displayed when a user is trying to loging with an incorrect email/password.</translatorcomment>
-        <translation>อีเมลและ/หรือรหัสผ่านไม่ถูกต้อง</translation>
+        <translation>อีเมลหรือรหัสผ่านไม่ถูกต้อง</translation>
     </message>
     <message>
         <source>MEGA folder doesn&apos;t exist</source>

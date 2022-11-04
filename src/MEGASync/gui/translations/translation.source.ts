@@ -644,11 +644,11 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>All the queued transfers from your current download will be cancelled.</source>
         <translatorcomment>Dialog messages which warns the user about the potential problems of cancelling the folder scanning</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>All the queued transfers from your current download will be cancelled.</translation>
     </message>
     <message>
         <source>Cancelling…</source>
-        <translation type="unfinished"></translation>
+        <translation>Cancelling…</translation>
     </message>
 </context>
 <context>
@@ -2713,12 +2713,12 @@ Transfers will automatically resume when you re-open the app.</numerusform>
     <message>
         <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
         <translatorcomment>Error triggered by SDK when an account has been suspended due to copyright violations.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Your account has been suspended due to copyright violations. Please check your email inbox.</translation>
     </message>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</translation>
     </message>
 </context>
 <context>
@@ -2789,7 +2789,7 @@ Transfers will automatically resume when you re-open the app.</numerusform>
     <message numerus="yes">
         <source>Today at %1</source>
         <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened today. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>Today at %1</numerusform>
             <numerusform>Today at %1</numerusform>
         </translation>
@@ -2797,7 +2797,7 @@ Transfers will automatically resume when you re-open the app.</numerusform>
     <message numerus="yes">
         <source>Yesterday at %1</source>
         <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened yesterday. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>Yesterday at %1</numerusform>
             <numerusform>Yesterday at %1</numerusform>
         </translation>
@@ -2805,7 +2805,7 @@ Transfers will automatically resume when you re-open the app.</numerusform>
     <message numerus="yes">
         <source>%1 at %2</source>
         <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was previously to yesterday. %1 represents the date (day month and year), while %2 represents the hour). Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%1 at %2</numerusform>
             <numerusform>%1 at %2</numerusform>
         </translation>
@@ -3846,20 +3846,24 @@ Please delete the folder sync from preferences to cancel them.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- There is now a new transfer manager.
-- Transfer management was enhanced and reliability of downloads and uploads improved. 
-- Detected crashes on Windows, Linux, and macOS fixed.
-- Translation issues fixed.
-- Performance improved.
-- UI fixed and adjusted.
+        <source>- Added new Apple Silicon native support.
+- Added a new feature to stop sleep mode if there are active transfers.
+- Updated third-party libs.
+- Improved folders transfers.
+- Fixed detected crashes on Windows, Linux, and macOS.
+- Fixed translation issues.
+- Improved performance.
+- Fixed and adjusted UI.
 </source>
-        <translatorcomment>Changelog for version v4.7.0</translatorcomment>
-        <translation>- There is now a new transfer manager.
-- Transfer management was enhanced and reliability of downloads and uploads improved. 
-- Detected crashes on Windows, Linux, and macOS fixed.
-- Translation issues fixed.
-- Performance improved.
-- UI fixed and adjusted.
+        <translatorcomment>Changelog for version v4.7.2</translatorcomment>
+        <translation>- Added new Apple Silicon native support.
+- Added a new feature to stop sleep mode if there are active transfers.
+- Updated third-party libs.
+- Improved folders transfers.
+- Fixed detected crashes on Windows, Linux, and macOS.
+- Fixed translation issues.
+- Improved performance.
+- Fixed and adjusted UI.
 </translation>
     </message>
 </context>
@@ -4402,37 +4406,37 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Cancel</source>
         <translatorcomment>Button text to cancel the scanning of transfers</translatorcomment>
-        <translation type="unfinished">Cancel</translation>
+        <translation>Cancel</translation>
     </message>
     <message>
         <source>Don&apos;t close the app. If you close, transfers not yet queued will be lost.</source>
         <translatorcomment>Message displayed in scanning widget to warn the user of consequences of closing the app.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Don&apos;t close the app. If you close, transfers not yet queued will be lost.</translation>
     </message>
     <message>
         <source>Scanning</source>
         <translatorcomment>Label used to display when the scanning widget is on the &quot;Scanning&quot; step</translatorcomment>
-        <translation type="unfinished">Scanning</translation>
+        <translation>Scanning</translation>
     </message>
     <message>
         <source>Creating folders</source>
         <translatorcomment>Label used to display when the scanning widget is on the &quot;Creating folders&quot; step</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Creating folders</translation>
     </message>
     <message>
         <source>%1/%2</source>
         <translatorcomment>Label showing the quantity of folders created (%1) with the quantity of folders to create in total (%2)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1/%2</translation>
     </message>
     <message>
         <source>found %1, %2</source>
         <translatorcomment>Label used to display current status of scanning step. %1 is the string with number of folders found so far, %2 is the string with number of files found so far.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>found %1, %2</translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Part of the string used to display number of folders in scanning step. %1 is the number of folders found so far.</translatorcomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%n folder</numerusform>
             <numerusform>%n folders</numerusform>
         </translation>
@@ -4440,7 +4444,7 @@ Do you want to delete it anyway?</translation>
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Part of the string used to display number of files in scanning step. %1 is the number of files found so far.</translatorcomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%n file</numerusform>
             <numerusform>%n files</numerusform>
         </translation>
@@ -5109,33 +5113,34 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Sleep settings</source>
         <translatorcomment>Sleep/Active mode: Settings dialog groupbox title for keeping the pc awake when there are active transfers (WIndows and Linux)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Sleep settings</translation>
     </message>
     <message>
         <source>Prevent the computer from going to sleep when transfers or syncs are in progress.
 Computer will enter sleep mode once these are complete.</source>
         <translatorcomment>Sleep/Active mode: Feature description label for keeping the pc awake when there are active transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Prevent the computer from going to sleep when transfers or syncs are in progress.
+Computer will enter sleep mode once these are complete.</translation>
     </message>
     <message>
         <source>Note: Some operating systems won&apos;t allow this.</source>
         <translatorcomment>Sleep/Active mode: Warning message below the description label, as not all the computers can activate the feature to keep it awake if there are transfers active </translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Note: Some operating systems won&apos;t allow this.</translation>
     </message>
     <message>
         <source>Sleep mode:</source>
         <translatorcomment>Sleep/Active mode: Settings dialog groupbox title for keeping the pc awake when there are active transfers (macOS)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Sleep mode:</translation>
     </message>
     <message>
         <source>Sleep mode can&apos;t be setup</source>
         <translatorcomment>Sleep/Active mode: Error messagebox title when the pc awake mode could not be activated after activating the feature using the checkbox.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Sleep mode can&apos;t be setup</translation>
     </message>
     <message>
         <source>Your operating system doesn&apos;t allow its sleep setting to be overwritten.</source>
         <translatorcomment>Sleep/Active mode: Error messagebox text when the pc awake mode could not be activated after activating the feature using the checkbox.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Your operating system doesn&apos;t allow its sleep setting to be overwritten.</translation>
     </message>
 </context>
 <context>
