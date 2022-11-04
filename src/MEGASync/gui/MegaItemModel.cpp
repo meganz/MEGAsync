@@ -14,7 +14,8 @@
 using namespace mega;
 
 NodeRequester::NodeRequester(MegaItemModel *model)
-    : mModel(model)
+    : mModel(model),
+      mCancelToken(MegaCancelToken::createInstance())
 {
 
 }
@@ -24,7 +25,7 @@ void NodeRequester::lockMutex(bool state) const
     state ? mMutex.lock() : mMutex.unlock();
 }
 
-void NodeRequester::requestNodeAndCreateChildren(MegaItem* item, const QModelIndex& parentIndex, bool showFiles, std::shared_ptr<MegaCancelToken> cancelToken)
+void NodeRequester::requestNodeAndCreateChildren(MegaItem* item, const QModelIndex& parentIndex, bool showFiles)
 {
     if(item)
     {
@@ -39,14 +40,14 @@ void NodeRequester::requestNodeAndCreateChildren(MegaItem* item, const QModelInd
             auto childNodesFiltered = MegaNodeList::createInstance();
             if(!showFiles)
             {
-                childNodesFiltered = megaApi->getChildrenFromType(item->getNode().get(), MegaNode::TYPE_FOLDER, MegaApi::ORDER_NONE, cancelToken.get());
+                childNodesFiltered = megaApi->getChildrenFromType(item->getNode().get(), MegaNode::TYPE_FOLDER, MegaApi::ORDER_NONE, mCancelToken.get());
             }
             else
             {
-                childNodesFiltered = megaApi->getChildren(node.get(), MegaApi::ORDER_NONE, cancelToken.get());
+                childNodesFiltered = megaApi->getChildren(node.get(), MegaApi::ORDER_NONE, mCancelToken.get());
             }
 
-            if(!mAborted)
+            if(!mAborted && !mCancelToken->isCancelled())
             {
                 lockMutex(true);
                 item->createChildItems(std::unique_ptr<mega::MegaNodeList>(childNodesFiltered));
@@ -159,6 +160,14 @@ MegaItem *NodeRequester::getRootItem(int index) const
     return mRootItems.at(index);
 }
 
+void NodeRequester::cancelCurrentRequest()
+{
+    if(mCancelToken)
+    {
+        mCancelToken->cancel();
+    }
+}
+
 void NodeRequester::finishWorker()
 {
     qDeleteAll(mRootItems);
@@ -189,8 +198,7 @@ MegaItemModel::MegaItemModel(QObject *parent) :
     mDisplayFiles(false),
     mSyncSetupMode(false),
     mShowFiles(true),
-    mNeedsToBeSelected(false),
-    mCancelToken(MegaCancelToken::createInstance())
+    mNeedsToBeSelected(false)
 {
     mCameraFolderAttribute = UserAttributes::CameraUploadFolder::requestCameraUploadFolder();
     mMyChatFilesFolderAttribute = UserAttributes::MyChatFilesFolder::requestMyChatFilesFolder();
@@ -206,13 +214,11 @@ MegaItemModel::MegaItemModel(QObject *parent) :
     connect(this, &MegaItemModel::removeRootItem, mNodeRequesterWorker, &NodeRequester::removeRootItem);
     connect(this, &MegaItemModel::deleteWorker, mNodeRequesterWorker, &NodeRequester::abort);
 
-
     connect(mNodeRequesterWorker, &NodeRequester::nodesReady, this, &MegaItemModel::onChildNodesReady, Qt::QueuedConnection);
     connect(mNodeRequesterWorker, &NodeRequester::nodeAdded, this, &MegaItemModel::onNodeAdded, Qt::QueuedConnection);
 
     qRegisterMetaType<std::shared_ptr<mega::MegaNodeList>>("std::shared_ptr<mega::MegaNodeList>");
     qRegisterMetaType<std::shared_ptr<mega::MegaNode>>("std::shared_ptr<mega::MegaNode>");
-    qRegisterMetaType<std::shared_ptr<mega::MegaNodeList>>("std::shared_ptr<mega::MegaCancelToken>");
 }
 
 MegaItemModel::~MegaItemModel()
@@ -655,10 +661,7 @@ void MegaItemModel::clearIndexesToMap()
 
 void MegaItemModel::abort()
 {
-    if(mCancelToken)
-    {
-        mCancelToken->cancel();
-    }
+    mNodeRequesterWorker->cancelCurrentRequest();
     emit deleteWorker();
 }
 
@@ -779,8 +782,6 @@ bool MegaItemModel::canFetchMore(const QModelIndex &parent) const
     if(item)
     {
         return item->canFetchMore();
-
-        //return item->getNumChildren() != item->getNumItemChildren();
     }
     else
     {
@@ -800,7 +801,7 @@ void MegaItemModel::fetchItemChildren(const QModelIndex& parent)
         blockSignals(true);
         beginInsertRows(parent, 0, itemNumChildren-1);
         blockSignals(false);
-        emit requestChildNodes(item, parent, mShowFiles, mCancelToken);
+        emit requestChildNodes(item, parent, mShowFiles);
     }
     else
     {
@@ -877,7 +878,6 @@ MegaItemModelCloudDrive::MegaItemModelCloudDrive(QObject *parent)
     megaApi->getCameraUploadsFolder(mDelegateListener.get());
     megaApi->getCameraUploadsFolderSecondary(mDelegateListener.get());
     megaApi->getMyChatFilesFolder(mDelegateListener.get());
-    qDebug()<<"CLOUD DRIVE MODEL"<<this;
 }
 
 MegaItemModelCloudDrive::~MegaItemModelCloudDrive()
