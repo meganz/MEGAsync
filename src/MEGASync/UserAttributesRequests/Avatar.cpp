@@ -151,7 +151,7 @@ void Avatar::getLetterColor()
 
         mega::MegaHandle userHandle (mega::INVALID_HANDLE);
 
-        if (avatarEmail.isEmpty())
+        if (avatarEmail.isEmpty() || avatarEmail == Preferences::instance()->email())
         {
             userHandle = api->getMyUserHandleBinary();
         }
@@ -161,16 +161,7 @@ void Avatar::getLetterColor()
             if (user)
             {
                 userHandle = user->getHandle();
-            }
-            else
-            {
-                std::unique_ptr<char[]> loggedUserEmailStr (api->getMyEmail());
-                auto loggedUserEmail (QString::fromUtf8(loggedUserEmailStr.get()));
-                if (avatarEmail == loggedUserEmail)
-                {
-                    userHandle = api->getMyUserHandleBinary();
-                }
-            }
+            }            
         }
         std::unique_ptr<char[]> userHandleStr (api->userHandleToBase64(userHandle));
         std::unique_ptr<char[]> primaryColor (api->getUserAvatarColor(userHandleStr.get()));
