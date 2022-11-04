@@ -53,6 +53,7 @@ void TransfersManagerSortFilterProxyModel::sort(int sortCriterion, Qt::SortOrder
         sourceM->pauseModelProcessing(true);
     }
 
+    emit layoutAboutToBeChanged();
     QFuture<void> sorting = QtConcurrent::run([this]()
     {
         startProcessingInOtherThread();
@@ -117,6 +118,7 @@ void TransfersManagerSortFilterProxyModel::invalidateModel()
         sourceM->pauseModelProcessing(true);
     }
 
+    emit layoutAboutToBeChanged();
     QFuture<void> filtered = QtConcurrent::run([this](){
         startProcessingInOtherThread();
 #if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
@@ -148,7 +150,6 @@ void TransfersManagerSortFilterProxyModel::finishProcessingInOtherThread()
     sourceM->lockModelMutex(false);
     sourceM->blockModelSignals(false);
     blockSignals(false);
-    emit layoutChanged();
 }
 
 void TransfersManagerSortFilterProxyModel::onModelSortedFiltered()
@@ -158,7 +159,7 @@ void TransfersManagerSortFilterProxyModel::onModelSortedFiltered()
     {
         sourceM->pauseModelProcessing(false);
     }
-
+    emit layoutChanged();
     emit modelChanged();
     emit searchNumbersChanged();
 }

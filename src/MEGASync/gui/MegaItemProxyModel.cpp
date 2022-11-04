@@ -39,14 +39,13 @@ void MegaItemProxyModel::sort(int column, Qt::SortOrder order)
 
     //If it is already blocked, it is ignored.
     emit getMegaModel()->blockUi(true);
+    emit layoutAboutToBeChanged();
     if(mFilterWatcher.isFinished())
     {
         QFuture<void> filtered = QtConcurrent::run([this, column, order](){
-            qDebug()<<"filtering started";
             auto itemModel = dynamic_cast<MegaItemModel*>(sourceModel());
             if(itemModel)
             {
-                emit layoutAboutToBeChanged();
                 blockSignals(true);
                 sourceModel()->blockSignals(true);
                 invalidateFilter();
@@ -58,7 +57,6 @@ void MegaItemProxyModel::sort(int column, Qt::SortOrder order)
                 }
                 blockSignals(false);
                 sourceModel()->blockSignals(false);
-                emit layoutChanged();
             }
         });
         mFilterWatcher.setFuture(filtered);
@@ -330,4 +328,5 @@ void MegaItemProxyModel::onModelSortedFiltered()
 
     emit getMegaModel()->blockUi(false);
     itemsToMap.clear();
+    emit layoutChanged();
 }
