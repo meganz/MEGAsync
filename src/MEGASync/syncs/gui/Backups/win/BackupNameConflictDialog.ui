@@ -215,7 +215,6 @@ background-color: #ECECEC;
  </widget>
  <resources>
   <include location="../../../../gui/Resources_win.qrc"/>
-  <include location="../Resources_win.qrc"/>
  </resources>
  <connections>
   <connection>
