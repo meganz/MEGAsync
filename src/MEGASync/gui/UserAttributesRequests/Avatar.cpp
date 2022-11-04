@@ -66,8 +66,11 @@ void Avatar::onRequestFinish(mega::MegaApi*, mega::MegaRequest* incoming_request
         }
         else
         {
-            QFile::remove(mIconPath);
-            mIconPath.clear();
+            if(!mIconPath.isEmpty())
+            {
+                QFile::remove(mIconPath);
+                mIconPath.clear();
+            }
             mIcon.clear();
             if (!mFullName)
             {

@@ -18,8 +18,7 @@ TransfersManagerSortFilterProxyModel::TransfersManagerSortFilterProxyModel(QObje
       mNextTransferTypes (mTransferTypes),
       mNextFileTypes (mFileTypes),
       mSortCriterion (SortCriterion::PRIORITY),
-      mThreadPool (ThreadPoolSingleton::getInstance()),
-      mIsFiltering(false)
+      mThreadPool (ThreadPoolSingleton::getInstance())
 {
     connect(&mFilterWatcher, &QFutureWatcher<void>::finished,
             this, &TransfersManagerSortFilterProxyModel::onModelSortedFiltered);
@@ -48,8 +47,23 @@ void TransfersManagerSortFilterProxyModel::sort(int sortCriterion, Qt::SortOrder
 
     mSortOrder = order;
 
-    resetTransfersStateCounters();
-    invalidateModel();
+    auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
+    if(sourceM)
+    {
+        sourceM->pauseModelProcessing(true);
+    }
+
+    QFuture<void> sorting = QtConcurrent::run([this]()
+    {
+        startProcessingInOtherThread();
+        if(sortOrder() == mSortOrder)
+        {
+            QSortFilterProxyModel::sort(-1,mSortOrder);
+        }
+        QSortFilterProxyModel::sort(0, mSortOrder);
+        finishProcessingInOtherThread();
+    });
+    mFilterWatcher.setFuture(sorting);
 }
 
 int TransfersManagerSortFilterProxyModel::getSortCriterion() const
@@ -104,24 +118,37 @@ void TransfersManagerSortFilterProxyModel::invalidateModel()
     }
 
     QFuture<void> filtered = QtConcurrent::run([this](){
-        auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
-        sourceM->lockModelMutex(true);
-        sourceM->blockModelSignals(true);
-        blockSignals(true);
-        mIsFiltering = true;
+        startProcessingInOtherThread();
 #if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
         invalidate();
 #else
         invalidateFilter();
 #endif
+        if(sortOrder() == mSortOrder)
+        {
+            QSortFilterProxyModel::sort(-1,mSortOrder);
+        }
         QSortFilterProxyModel::sort(0, mSortOrder);
-        mIsFiltering = false;
-        sourceM->lockModelMutex(false);
-        sourceM->blockModelSignals(false);
-        blockSignals(false);
-        emit layoutChanged();
+        finishProcessingInOtherThread();
     });
     mFilterWatcher.setFuture(filtered);
+}
+
+void TransfersManagerSortFilterProxyModel::startProcessingInOtherThread()
+{
+    auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
+    sourceM->lockModelMutex(true);
+    sourceM->blockModelSignals(true);
+    blockSignals(true);
+}
+
+void TransfersManagerSortFilterProxyModel::finishProcessingInOtherThread()
+{
+    auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
+    sourceM->lockModelMutex(false);
+    sourceM->blockModelSignals(false);
+    blockSignals(false);
+    emit layoutChanged();
 }
 
 void TransfersManagerSortFilterProxyModel::onModelSortedFiltered()
@@ -394,7 +421,7 @@ void TransfersManagerSortFilterProxyModel::onRowsAboutToBeRemoved(const QModelIn
 
    if(searchRowsRemoved)
    {
-       searchNumbersChanged();
+       emit searchNumbersChanged();
    }
 }
 

@@ -55,6 +55,7 @@ public:
         int  transfersCount() const;
 
         bool isModelProcessing() const;
+
 signals:
         void modelAboutToBeChanged();
         void modelChanged();
@@ -103,7 +104,6 @@ private:
         ThreadPool* mThreadPool;
         QFutureWatcher<void> mFilterWatcher;
         QString mFilterText;
-        bool mIsFiltering;
 
         void removeActiveTransferFromCounter(TransferTag tag) const;
         void removePausedTransferFromCounter(TransferTag tag) const;
@@ -112,6 +112,9 @@ private:
         void removeFailedTransferFromCounter(TransferTag tag) const;
         void removeCompletingTransferFromCounter(TransferTag tag) const;
         bool updateTransfersCounterFromTag(QExplicitlySharedDataPointer<TransferData> transfer) const;
+
+        void startProcessingInOtherThread();
+        void finishProcessingInOtherThread();
 
         void invalidateModel();
 

@@ -36,6 +36,7 @@ TransfersWidget::TransfersWidget(QWidget* parent) :
 
     ui->tCancelClearVisible->installEventFilter(this);
     ui->tPauseResumeVisible->installEventFilter(this);
+    ui->tvTransfers->installEventFilter(this);
 
     auto leftPaneButtons = ui->wTableHeader->findChildren<QAbstractButton*>();
     foreach(auto& button, leftPaneButtons)
@@ -86,8 +87,10 @@ void TransfersWidget::configureTransferView()
     ui->tvTransfers->setDropIndicatorShown(true);
     ui->tvTransfers->setDragDropMode(QAbstractItemView::InternalMove);
     ui->tvTransfers->enableContextMenu();
+    ui->tvTransfers->setHeader(nullptr);
 
     mLoadingScene.setView(ui->tvTransfers);
+    //mLoadingScene.setDelayTimeToShowInMs(100);
     mDelegateHoverManager.setView(ui->tvTransfers);
 }
 
@@ -385,10 +388,13 @@ bool TransfersWidget::eventFilter(QObject *watched, QEvent *event)
     {
         updateCancelClearButtonTooltip();
     }
-
-    if(watched == ui->tPauseResumeVisible && event->type() == QEvent::ToolTip)
+    else if(watched == ui->tPauseResumeVisible && event->type() == QEvent::ToolTip)
     {
         updatePauseResumeButtonTooltip();
+    }
+    else if(watched == ui->tvTransfers && event->type() == QEvent::Show)
+    {
+        onVerticalScrollBarVisibilityChanged(ui->tvTransfers->verticalScrollBar()->isVisible());
     }
 
     return QWidget::eventFilter(watched, event);
@@ -415,6 +421,9 @@ void TransfersWidget::setScanningWidgetVisible(bool state)
 
 void TransfersWidget::onUiBlocked()
 {
+    ui->tvTransfers->blockSignals(true);
+    ui->tvTransfers->header()->blockSignals(true);
+
     mLoadingScene.changeLoadingSceneStatus(true);
 
     if(!mScanningIsActive)
@@ -425,7 +434,11 @@ void TransfersWidget::onUiBlocked()
 
 void TransfersWidget::onUiUnblocked()
 {
+    ui->tvTransfers->header()->blockSignals(false);
+    ui->tvTransfers->blockSignals(false);
+
     mLoadingScene.changeLoadingSceneStatus(false);
+
     emit disableTransferManager(false);
 
     mModel->uiUnblocked();
@@ -443,7 +456,6 @@ void TransfersWidget::onModelAboutToBeChanged()
 {
     onUiBlocked();
 }
-
 
 void TransfersWidget::onModelChanged()
 {

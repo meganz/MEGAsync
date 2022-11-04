@@ -214,6 +214,7 @@ template <class DelegateWidget>
 class ViewLoadingScene : public ViewLoadingSceneBase
 {
     const uint8_t MAX_LOADING_ROWS = 20;
+    const long long MIN_TIME_DISPLAYING_VIEW = 350;
 
 public:
     ViewLoadingScene() :
@@ -225,20 +226,20 @@ public:
         mLoadingModel(nullptr),
         mLoadingDelegate(nullptr),
         mViewLayout(nullptr),
+        mLoadingViewSet(false),
         ViewLoadingSceneBase()
     {
     }
 
     ~ViewLoadingScene()
     {
-        //mLoadingDelegate->setLoading(false);
         mLoadingDelegate->deleteLater();
         mLoadingModel->deleteLater();
     }
 
     bool isLoadingViewSet() const
     {
-        return mLoadingModel && mLoadingModel->rowCount() != 0;
+        return mLoadingViewSet;
     }
 
     inline void setView(QAbstractItemView* view)
@@ -311,9 +312,9 @@ public:
         }
         else
         {
-            //int val = 350ll;
-            auto delay = std::max(0ll, 350ll - (QDateTime::currentMSecsSinceEpoch()
-                                                     - mStartTime));
+            mLoadingViewSet = false;
+            auto delay = std::max(0ll, MIN_TIME_DISPLAYING_VIEW - (QDateTime::currentMSecsSinceEpoch()
+                                                - mStartTime));
             QTimer::singleShot(delay, this, [this, state] () {
                 mLoadingModel->setRowCount(0);
                 mLoadingView->hide();
@@ -334,12 +335,12 @@ private:
             int delegateHeight(mLoadingDelegate->sizeHint(QStyleOptionViewItem(), QModelIndex()).height());
 
             mView->updateGeometry();
-            visibleRows = mView->size().height()/delegateHeight;
+            visibleRows = mView->size().height()/delegateHeight + 1;
 
             //If the vertical header is visible, add one row to the loading model to show the vertical scroll
-            if(mViewModel && mView->verticalScrollBar()->isVisible())
+            if(mViewModel)
             {
-                visibleRows++;
+                mView->verticalScrollBar()->isVisible() ? mLoadingView->verticalScrollBar()->show() : mLoadingView->verticalScrollBar()->hide();
             }
 
             if(visibleRows > MAX_LOADING_ROWS)
@@ -362,6 +363,7 @@ private:
         mViewLayout->replaceWidget(mView, mLoadingView);
         mStartTime = QDateTime::currentMSecsSinceEpoch();
         mLoadingDelegate->setLoading(true);
+        mLoadingViewSet = true;
     }
 
     int rowCount() const
@@ -385,6 +387,7 @@ private:
     QPointer<LoadingSceneDelegate<DelegateWidget>> mLoadingDelegate;
     QLayout* mViewLayout;
     qint64 mStartTime;
+    bool mLoadingViewSet;
 
 };
 
