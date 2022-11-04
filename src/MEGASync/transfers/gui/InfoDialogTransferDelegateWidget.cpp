@@ -412,12 +412,13 @@ bool InfoDialogTransferDelegateWidget::eventFilter(QObject *watched, QEvent *eve
             }
             else
             {
-                availableSize = getNameAvailableSize(mUi->wFileNameCompleted, mUi->lSyncIcon, mUi->fileNameCompletedSpacer);
+                availableSize = getNameAvailableSize(mUi->wFileNameCompleted, mUi->lSyncIconCompleted, mUi->fileNameCompletedSpacer);
             }
 
             nameLabel->setText(nameLabel->fontMetrics()
                                              .elidedText(getData()->mFilename, Qt::ElideMiddle,
                                                          availableSize));
+            nameLabel->adjustSize();
         }
     }
 

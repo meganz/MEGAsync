@@ -91,9 +91,11 @@ void MegaItemTreeView::drawBranches(QPainter *painter, const QRect &rect, const 
 void MegaItemTreeView::mousePressEvent(QMouseEvent *event)
 {
     bool accept = true;
-#ifndef __APPLE__
-    accept = mousePressorReleaseEvent(event);
-#endif
+    if (style()->styleHint(QStyle::SH_ListViewExpand_SelectMouseType, 0, this) == QEvent::MouseButtonPress)
+    {
+        accept = mousePressorReleaseEvent(event);
+    }
+
     if(accept)
     {
         QTreeView::mousePressEvent(event);
@@ -104,9 +106,11 @@ void MegaItemTreeView::mousePressEvent(QMouseEvent *event)
 void MegaItemTreeView::mouseReleaseEvent(QMouseEvent *event)
 {
     bool accept = true;
-#ifdef __APPLE__
-    accept = mousePressorReleaseEvent(event);
-#endif
+
+    if (style()->styleHint(QStyle::SH_ListViewExpand_SelectMouseType, 0, this) == QEvent::MouseButtonRelease)
+    {
+        accept = mousePressorReleaseEvent(event);
+    }
     if(accept)
     {
         QTreeView::mouseReleaseEvent(event);
@@ -199,7 +203,6 @@ void MegaItemTreeView::onNavigateReady(const QModelIndex &index)
         QPoint point = visualRect(index).center();
         QMouseEvent mouseEvent(QEvent::MouseButtonDblClick, point, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
         mouseDoubleClickEvent(&mouseEvent);
-//        mIndexToEnter = QModelIndex();
     }
 }
 
@@ -248,6 +251,7 @@ bool MegaItemTreeView::mousePressorReleaseEvent(QMouseEvent *event)
                         proxyModel()->setExpandMapped(true);
                         proxyModel()->sourceModel()->fetchMore(sourceIndexToExpand);
                     }
+
                     if(event->type() == QMouseEvent::MouseButtonPress)
                     {
                         QAbstractItemView::mousePressEvent(event);
