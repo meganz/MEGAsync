@@ -39,6 +39,15 @@ void TransferScanCancelUi::disableCancelling()
     }
 }
 
+void TransferScanCancelUi::setInCancellingStage()
+{
+    mConfirmWidget->setInCancellingStage();
+    if (mContainer->currentWidget() != mConfirmWidget)
+    {
+        mContainer->setCurrentWidget(mConfirmWidget);
+    }
+}
+
 void TransferScanCancelUi::update()
 {
     if (mContainer->currentWidget() == mBlockingWidget)
@@ -51,6 +60,14 @@ bool TransferScanCancelUi::isActive()
 {
     return (mContainer->currentWidget() == mBlockingWidget) ||
            (mContainer->currentWidget() == mConfirmWidget);
+}
+
+void TransferScanCancelUi::onFolderTransferUpdate(const FolderTransferUpdateEvent & event)
+{
+    if (mContainer->currentWidget() == mBlockingWidget)
+    {
+        mBlockingWidget->onReceiveStatusUpdate(event);
+    }
 }
 
 void TransferScanCancelUi::onCancelClicked()
@@ -78,7 +95,7 @@ const char* TransferScanCancelUi::getControlStyles()
                             "*[role=\"details\"] {font-size: 14px; color: #666666;}"
                             "QPushButton { "
                             "   font-size: 16px; font-weight:400;"
-                            "   padding-top : 10px; padding-bottom : 12px; padding-left : 15px; padding-right : 15px;"
+                            "   padding-top : 11px; padding-bottom : 12px; padding-left : 18px; padding-right : 18px;"
                             "   background-color : #FCFCFC;"
                             "   border-style: solid; border-width: 1px; border-color: #d7d6d5; border-radius: 3px;"
                             "   color: #333333;"

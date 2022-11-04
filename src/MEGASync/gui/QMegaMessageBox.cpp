@@ -34,7 +34,7 @@ QMessageBox::StandardButton QMegaMessageBox::showNewMessageBox(QWidget *parent, 
     const QString &title, const QString &text, QMessageBox::StandardButtons buttons, QMessageBox::StandardButton defaultButton, QMap<QMessageBox::StandardButton, QString> textByButton)
 {
     QMessageBox msgBox(icon, title, text, QMessageBox::NoButton, parent);
-    msgBox.setTextFormat(Qt::TextFormat::PlainText);
+    msgBox.setTextFormat(Qt::TextFormat::AutoText);
     HighDpiResize hDpiResizer(&msgBox);
 
     QDialogButtonBox *buttonBox = msgBox.findChild<QDialogButtonBox*>();

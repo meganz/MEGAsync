@@ -1,0 +1,99 @@
+pipeline {
+    agent { label 'linux' }
+    
+    parameters {
+        booleanParam(name: 'BUILD_FFMPEG', defaultValue: false, description: 'Should we build ffmpeg before building MEGAsync?')
+        booleanParam(name: 'BUILD_PDFIUM', defaultValue: false, description: 'Should we build pdfium before building MEGAsync?')
+        booleanParam(name: 'BUILD_LINUX', defaultValue: true, description: 'Should we build MEGAsync for Linux?')
+        booleanParam(name: 'BUILD_MAC', defaultValue: true, description: 'Should we build MEGAsync for MAC?')
+        booleanParam(name: 'IS_RELEASE', defaultValue: false, description: 'Is this a release?')
+        string(name: 'RELEASE_CANDIDATE', defaultValue: '', description: 'Which Release Candidate is it? i.e: RC1, RC2, etc')
+    }
+
+    options { 
+        disableConcurrentBuilds()
+        skipStagesAfterUnstable()
+        gitLabConnection('GitLabConnectionJenkins')
+    }
+
+    stages {
+        stage('Build ffmpeg') {
+            when {
+                allOf {
+                    expression { params.BUILD_FFMPEG == true }
+                    expression { params.BUILD_LINUX == true }
+                }
+            }
+            steps {
+                gitlabCommitStatus(name: 'Ffmpeg build') {
+                    script {
+                        echo "Triggering ffmpeg job."
+                        build job: 'megasync-package-ffpmeg', wait: true, propagate: true
+                    }
+                }
+            }
+        }
+
+        stage('Build pdfium') {
+            when {
+                allOf {
+                    expression { params.BUILD_PDFIUM == true }
+                    expression { params.BUILD_LINUX == true }
+                }
+            }
+            steps {
+                gitlabCommitStatus(name: 'Pdfium build') {
+                    script {
+                        echo "Triggering pdfium job."
+                        build job: 'megasync-package-pdfium', wait: true, propagate: true
+                    }
+                }
+                
+            }
+        }
+        
+        stage('Build MEGAsync'){
+            parallel {
+                stage('Build macOS') {
+                    when {
+                        expression { params.BUILD_MAC == true }
+                    }
+                    steps {
+                        gitlabCommitStatus(name: 'MacOS build') {
+                            script {
+                                echo "Triggering MEGAsync job for macOS."
+                                build job: '../MEGAsync/main', wait: true, propagate: true, parameters: [
+                                    string(name: 'MEGASYNC_BRANCH', value: "${env.BRANCH_NAME}"),
+                                    booleanParam(name: 'BUILD_LINUX', value: false),
+                                    booleanParam(name: 'BUILD_MAC', value: true),
+                                    booleanParam(name: 'IS_RELEASE', value: "${IS_RELEASE}"),
+                                    string(name: 'RELEASE_CANDIDATE', value: "${RELEASE_CANDIDATE}")
+                                    ]
+                            }
+                        }
+                    }
+                }
+
+                stage('Build Linux') {
+                    when {
+                        expression { params.BUILD_LINUX == true }
+                    }
+                    steps {
+                        gitlabCommitStatus(name: 'Linux build') {
+                            script {
+                                echo "Triggering MEGAsync job for Linux."
+                                build job: '../MEGAsync/main', wait: true, propagate: true, parameters: [
+                                    string(name: 'MEGASYNC_BRANCH', value: "${env.BRANCH_NAME}"),
+                                    booleanParam(name: 'BUILD_LINUX', value: true),
+                                    booleanParam(name: 'BUILD_MAC', value: false),
+                                    booleanParam(name: 'IS_RELEASE', value: "${IS_RELEASE}"),
+                                    string(name: 'RELEASE_CANDIDATE', value: "${RELEASE_CANDIDATE}")
+                                    ]
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

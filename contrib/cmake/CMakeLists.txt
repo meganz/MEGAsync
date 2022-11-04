@@ -193,6 +193,7 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/CancelConfirmWidget.ui
     ${MEGAsyncDir}/transfers/gui/${UiDir}/InfoDialogTransfersWidget.ui
     ${MEGAsyncDir}/transfers/gui/${UiDir}/InfoDialogTransferDelegateWidget.ui
+    ${MEGAsyncDir}/transfers/gui/${UiDir}/InfoDialogTransferLoadingItem.ui
     ${MEGAsyncDir}/transfers/gui/${UiDir}/TransferWidgetHeaderItem.ui
     ${MEGAsyncDir}/transfers/gui/${UiDir}/TransferManager.ui
     ${MEGAsyncDir}/transfers/gui/${UiDir}/TransferManagerDragBackDrop.ui
@@ -230,6 +231,8 @@ set (MOC_INPUT
     ${MEGAsyncDir}/CommonMessages.h
     ${MEGAsyncDir}/ScanStageController.h
     ${MEGAsyncDir}/EventUpdater.h
+    ${MEGAsyncDir}/FolderTransferListener.h
+    ${MEGAsyncDir}/BlockingStageProgressController.h
     ${MEGAsyncDir}/control/ConnectivityChecker.h
     ${MEGAsyncDir}/control/CrashHandler.h
     ${MEGAsyncDir}/control/EncryptedSettings.h
@@ -314,13 +317,14 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/BlurredShadowEffect.h
     ${MEGAsyncDir}/gui/ButtonIconManager.h
     ${MEGAsyncDir}/gui/DialogGeometryRetainer.h
-    ${MEGAsyncDir}/gui/NodeNameSetterDialog/NodeNameSetterDialog.cpp
-    ${MEGAsyncDir}/gui/NodeNameSetterDialog/NewFolderDialog.cpp
-    ${MEGAsyncDir}/gui/NodeNameSetterDialog/RenameNodeDialog.cpp
+    ${MEGAsyncDir}/gui/NodeNameSetterDialog/NodeNameSetterDialog.h
+    ${MEGAsyncDir}/gui/NodeNameSetterDialog/NewFolderDialog.h
+    ${MEGAsyncDir}/gui/NodeNameSetterDialog/RenameNodeDialog.h
     ${MEGAsyncDir}/gui/CancelConfirmWidget.h	
 
     ${MEGAsyncDir}/platform/notificator.h
 	${MEGAsyncDir}/platform/PlatformStrings.h
+	${MEGAsyncDir}/platform/PowerOptions.h
     
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaGlobalListener.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaListener.h
@@ -333,16 +337,23 @@ set (MOC_INPUT
     ${MEGAsyncDir}/transfers/model/TransfersSortFilterProxyBaseModel.h
     ${MEGAsyncDir}/transfers/model/TransfersModel.h
     ${MEGAsyncDir}/transfers/model/InfoDialogTransfersProxyModel.h
-    ${MEGAsyncDir}/transfers/gui/TransferItem.h
+    
+    ${MEGAsyncDir}/transfers/gui/TransfersStatusWidget.h
+	${MEGAsyncDir}/transfers/gui/TransferItem.h
+    ${MEGAsyncDir}/transfers/gui/InfoDialogTransfersWidget.h
     ${MEGAsyncDir}/transfers/gui/TransferManager.h
     ${MEGAsyncDir}/transfers/gui/TransfersWidget.h
-    ${MEGAsyncDir}/transfers/gui/TransfersStatusWidget.h
-    ${MEGAsyncDir}/transfers/gui/TransfersSummaryWidget.h
-    ${MEGAsyncDir}/transfers/gui/InfoDialogTransfersWidget.h
-    ${MEGAsyncDir}/transfers/gui/MegaTransferDelegate.h
     ${MEGAsyncDir}/transfers/gui/MegaTransferView.h
+    ${MEGAsyncDir}/transfers/gui/MegaTransferDelegate.h
+    ${MEGAsyncDir}/transfers/gui/TransfersSummaryWidget.h
     ${MEGAsyncDir}/transfers/gui/TransferWidgetHeaderItem.h
     ${MEGAsyncDir}/transfers/gui/TransferScanCancelUi.h
+	${MEGAsyncDir}/transfers/gui/TransferManagerLoadingItem.h
+    ${MEGAsyncDir}/transfers/gui/TransferBaseDelegateWidget.h
+    ${MEGAsyncDir}/transfers/gui/InfoDialogTransferDelegateWidget.h
+	${MEGAsyncDir}/transfers/gui/InfoDialogTransferLoadingItem.h
+    ${MEGAsyncDir}/transfers/gui/TransferManagerDelegateWidget.h
+	
     ${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/DuplicatedNodeDialog.h
     ${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/DuplicatedNodeInfo.h
     ${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/DuplicatedNodeItem.h
@@ -412,6 +423,8 @@ set (SRCS
     ${MEGAsyncDir}/CommonMessages.cpp
     ${MEGAsyncDir}/ScanStageController.cpp
     ${MEGAsyncDir}/EventUpdater.cpp
+    ${MEGAsyncDir}/FolderTransferListener.cpp
+    ${MEGAsyncDir}/BlockingStageProgressController.cpp
 
     ${FORMS}
     ${MOC_INPUT}
@@ -489,24 +502,26 @@ set (SRCS
     ${MEGAsyncDir}/gui/NodeNameSetterDialog/NewFolderDialog.cpp 
     ${MEGAsyncDir}/gui/NodeNameSetterDialog/RenameNodeDialog.cpp
 
-    ${MEGAsyncDir}/transfers/gui/TransfersStatusWidget.cpp
+	${MEGAsyncDir}/transfers/model/TransfersManagerSortFilterProxyModel.cpp
+    ${MEGAsyncDir}/transfers/model/TransfersModel.cpp
+    ${MEGAsyncDir}/transfers/model/InfoDialogTransfersProxyModel.cpp
+    
+	${MEGAsyncDir}/transfers/gui/TransfersStatusWidget.cpp
     ${MEGAsyncDir}/transfers/gui/TransferItem.cpp
     ${MEGAsyncDir}/transfers/gui/InfoDialogTransfersWidget.cpp
     ${MEGAsyncDir}/transfers/gui/TransferManager.cpp
     ${MEGAsyncDir}/transfers/gui/TransfersWidget.cpp
     ${MEGAsyncDir}/transfers/gui/MegaTransferDelegate.cpp
     ${MEGAsyncDir}/transfers/gui/MegaTransferView.cpp
-    ${MEGAsyncDir}/transfers/gui/TransfersStatusWidget.cpp
     ${MEGAsyncDir}/transfers/gui/TransfersSummaryWidget.cpp
     ${MEGAsyncDir}/transfers/gui/TransferWidgetHeaderItem.cpp
     ${MEGAsyncDir}/transfers/gui/TransferScanCancelUi.cpp
     ${MEGAsyncDir}/transfers/gui/TransferManagerLoadingItem.cpp
-    ${MEGAsyncDir}/transfers/model/TransfersManagerSortFilterProxyModel.cpp
-    ${MEGAsyncDir}/transfers/model/TransfersModel.cpp
-    ${MEGAsyncDir}/transfers/model/InfoDialogTransfersProxyModel.cpp
     ${MEGAsyncDir}/transfers/gui/TransferBaseDelegateWidget.cpp
     ${MEGAsyncDir}/transfers/gui/InfoDialogTransferDelegateWidget.cpp
+	${MEGAsyncDir}/transfers/gui/InfoDialogTransferLoadingItem.cpp
     ${MEGAsyncDir}/transfers/gui/TransferManagerDelegateWidget.cpp
+	
     ${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/DuplicatedNodeDialog.cpp
     ${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/DuplicatedNodeInfo.cpp
     ${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/DuplicatedNodeItem.cpp
@@ -570,6 +585,7 @@ if (CMAKE_HOST_WIN32)
         ${MEGAsyncDir}/platform/win/WinTrayReceiver.cpp
         ${MEGAsyncDir}/platform/win/wintoastlib.cpp
         ${MEGAsyncDir}/platform/win/PlatformStrings.cpp
+        ${MEGAsyncDir}/platform/win/PowerOptions.cpp
 
         ${MEGAsyncDir}/icon.rc
         )
@@ -603,6 +619,7 @@ elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
         ${MEGAsyncDir}/platform/linux/ExtServer.cpp
         ${MEGAsyncDir}/platform/linux/NotifyServer.cpp
         ${MEGAsyncDir}/platform/linux/PlatformStrings.cpp
+        ${MEGAsyncDir}/platform/linux/PowerOptions.cpp
         )
 else()
     set (SRCS ${SRCS}
@@ -659,6 +676,7 @@ else()
 
         ${MEGAsyncDir}/platform/macx/MacXPlatform.cpp
         ${MEGAsyncDir}/platform/macx/PlatformStrings.cpp
+        ${MEGAsyncDir}/platform/macx/PowerOptions.cpp
         ${MEGAsyncDir}/platform/macx/MacXFunctions.mm
         ${MEGAsyncDir}/platform/macx/macnotificationhandler.mm
         ${MEGAsyncDir}/platform/macx/NotificationDelegate.mm
@@ -724,7 +742,7 @@ target_include_directories(MEGAsync PRIVATE
                                     )
 
 if (CMAKE_HOST_WIN32)
-    set(TARGET_LINK_LIBRARIES_PLATFORM ${TARGET_LINK_LIBRARIES_PLATFORM} ole32 Shell32 crypt32 taskschd Kernel32.lib Iphlpapi.lib Userenv.lib Psapi.lib )
+    set(TARGET_LINK_LIBRARIES_PLATFORM ${TARGET_LINK_LIBRARIES_PLATFORM} ole32 Shell32 crypt32 taskschd Powrprof Kernel32.lib Iphlpapi.lib Userenv.lib Psapi.lib )
     set_target_properties(MEGAsync  PROPERTIES LINK_FLAGS_DEBUG "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup /LARGEADDRESSAWARE /SAFESEH:NO /DEBUG " )
     set_target_properties(MEGAsync  PROPERTIES LINK_FLAGS_RELEASE "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup /LARGEADDRESSAWARE /SAFESEH:NO /DEBUG " )
 else()

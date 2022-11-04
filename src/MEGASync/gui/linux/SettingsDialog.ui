@@ -207,6 +207,19 @@ margin: 0px;
 {
     font-weight: bold;
 }
+
+#cbSleepSettings
+{
+margin-top: 4px;
+}
+
+#lSleepModeWarning
+{
+font-size: 10px;
+line-height: 16px;
+font-weight: 400;
+color: #505862;
+}
 </string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_15">
@@ -1030,6 +1043,49 @@ margin: 0px;
              </size>
             </property>
            </spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="gSleepSettings">
+         <property name="title">
+          <string>Sleep settings</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_2">
+          <item row="0" column="0" alignment="Qt::AlignTop">
+           <widget class="QCheckBox" name="cbSleepMode">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLabel" name="lSleepMode">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Prevent the computer from going to sleep when transfers or syncs are in progress.
+Computer will enter sleep mode once these are complete.</string>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLabel" name="lSleepModeWarning">
+            <property name="text">
+             <string>Note: Some operating systems won't allow this.</string>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -2964,12 +3020,6 @@ color: #0078D7;
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>WaitingSpinnerWidget</class>
-   <extends>QWidget</extends>
-   <header location="global">WaitingSpinnerWidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>AvatarWidget</class>
    <extends>QWidget</extends>
    <header>AvatarWidget.h</header>
@@ -2979,6 +3029,12 @@ color: #0078D7;
    <class>NotificationsSettings</class>
    <extends>QWidget</extends>
    <header location="global">NotificationsSettings.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>WaitingSpinnerWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">WaitingSpinnerWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

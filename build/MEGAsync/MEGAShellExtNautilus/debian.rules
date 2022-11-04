@@ -1,4 +1,6 @@
 #!/usr/bin/make -f
+DPKGXZ := $(shell cat /etc/issue | grep "Ubuntu 22\|Kinetic Kudu\|Jammy Jellyfish\|Ubuntu 21.10" >/dev/null && echo "-- -Zxz" || echo "")
+export QT_SELECT=qt5
 
 export DH_VERBOSE=1
 
@@ -15,3 +17,4 @@ common-configure-impl::;
 include /usr/share/cdbs/1/rules/debhelper.mk
 include /usr/share/cdbs/1/class/qmake.mk
 
+DEB_DH_BUILDDEB_ARGS += $(DPKGXZ)

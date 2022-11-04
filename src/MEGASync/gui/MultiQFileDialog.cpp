@@ -27,7 +27,8 @@ MultiQFileDialog::MultiQFileDialog(QWidget *parent, const QString &caption, cons
         if (l)
         {
             l->setSelectionMode(QListView::ExtendedSelection);
-            if (mLe)
+
+            if(mLe)
             {
                 connect(l->selectionModel(), &QItemSelectionModel::selectionChanged,
                         this, &MultiQFileDialog::onSelectionChanged);
@@ -37,12 +38,7 @@ MultiQFileDialog::MultiQFileDialog(QWidget *parent, const QString &caption, cons
         QTreeView *t = findChild<QTreeView*>();
         if (t)
         {
-            t->setSelectionMode(QAbstractItemView::ExtendedSelection);
-            if (mLe)
-            {
-                connect(t->selectionModel(), &QItemSelectionModel::selectionChanged,
-                        this, &MultiQFileDialog::onSelectionChanged);
-            }
+            t->setSelectionMode(QListView::ExtendedSelection);
         }
 
         QLabel *label = findChild<QLabel*>(QString::fromUtf8("fileNameLabel"));
@@ -182,6 +178,7 @@ void MultiQFileDialog::onSelectionChanged()
 {
     int numFiles = 0;
     int numFolders = 0;
+
     findSelectedFilesAndFoldersCount(numFiles, numFolders);
 
     if (mBOpen)
@@ -195,16 +192,22 @@ void MultiQFileDialog::onSelectionChanged()
 void MultiQFileDialog::findSelectedFilesAndFoldersCount(int& fileCount, int& folderCount)
 {
     QString dir (directory().absolutePath());
-    QStringList files = selectedFiles();
+
 
     // Do not select a file/folder whose name is the same as the parent
     // upon entering a directory.
-    if (files.size() == 2 && (files[0] == dir || files[0] == files[1]))
+    QStringList files = selectedFiles();
+    if(files.contains(dir))
     {
-        files.clear();
+        files.removeOne(dir);
+        for (auto& file : qAsConst(files))
+        {
+            selectFile(file);
+        }
+        return;
     }
 
-    for (auto file : qAsConst(files))
+    for (auto& file : qAsConst(files))
     {
         if (file != dir)
         {
@@ -233,7 +236,6 @@ void MultiQFileDialog::updateOpenButtonEnabledStatus(int selectedItemCount)
         int nbItemsInLineEdit = findItemCountInLineEdit();
         mEnableOkButton = nbItemsInLineEdit == selectedItemCount;
     }
-
     mBOpen->setEnabled(mEnableOkButton);
 }
 

@@ -7,17 +7,30 @@
 
 namespace UserAttributes
 {
-//AVATAR REQUEST
+// AVATAR REQUEST
 //
+// The Avatar is either (in order of preference)
+// - an image set by the user
+// - the first letter of the user's name
+// - the first letter of the user's email
 //
-Avatar::Avatar(const QString &userEmail)
- : AttributeRequest(userEmail)
-{
-    mFullName = UserAttributesManager::instance().requestAttribute<FullName>(userEmail.toUtf8());
-    connect(mFullName.get(), &FullName::attributeReady, this, &Avatar::onFullNameAttributeReady);
+// The flow is the following:
+// 1. Request the user's avatar
+// 2. When the Avatar request comes back:
+// 2.a. If we have a picture, use it and emit attributeReady().
+// 2.b. If not, request the full name
+// 3. When the request for fullname comes back:
+// 3.a. Update the symbol info with the fisrt symbol from the user's first name
+// 3.b. If we don't have the Name either, use the first letter from the user's email
+// 3.c. Emit attributeReady()
+//
+// The avatar is updated on attribute change. If there is no picture, see above.
+//
 
-    getLetterColor();
-    fillLetterInfo();
+Avatar::Avatar(const QString &userEmail)
+ : AttributeRequest(userEmail), mUseImgFile(true)
+{
+    mLetterAvatarInfo.clear();
 }
 
 std::shared_ptr<const Avatar> Avatar::requestAvatar(const char *user_email)
@@ -25,93 +38,136 @@ std::shared_ptr<const Avatar> Avatar::requestAvatar(const char *user_email)
     return UserAttributesManager::instance().requestAttribute<Avatar>(user_email);
 }
 
-std::shared_ptr<FullName> Avatar::getFullName()
-{
-    return mFullName;
-}
-
 void Avatar::onRequestFinish(mega::MegaApi*, mega::MegaRequest* incoming_request, mega::MegaError* e)
 {
     if(incoming_request->getParamType() == mega::MegaApi::USER_ATTR_AVATAR)
     {
-        mIconPath = QString::fromUtf8(incoming_request->getFile());
-        #ifdef WIN32
-        if (mIconPath.startsWith(QString::fromUtf8("\\\\?\\")))
+        mUseImgFile = false;
+        auto errorCode (e->getErrorCode());
+
+        if (errorCode == mega::MegaError::API_OK)
         {
-            mIconPath = mIconPath.mid(4);
-        }
-        #endif
-
-        QFile iconFile(mIconPath);
-
-        if(!iconFile.exists() || e->getErrorCode() == mega::MegaError::API_ENOENT)
-        {
-            mIcon.clear();
-
-            fillLetterInfo();
-            getLetterColor();
-
-            QFile::remove(mIconPath);
+            mIconPath = QString::fromUtf8(incoming_request->getFile());
+            #ifdef WIN32
+            if (mIconPath.startsWith(QString::fromUtf8("\\\\?\\")))
+            {
+                mIconPath = mIconPath.mid(4);
+            }
+            #endif
+            if (QFile::exists(mIconPath))
+            {
+                mUseImgFile = true;
+                mIcon.clear();
+            }
+            if (mFullName)
+            {
+                disconnect(mFullName.get(), &FullName::attributeReady, this, &Avatar::onFullNameAttributeReady);
+            }
         }
         else
         {
-            mLetterAvatarInfo.clear();
+            QFile::remove(mIconPath);
+            mIconPath.clear();
             mIcon.clear();
+            if (!mFullName)
+            {
+                mFullName = FullName::requestFullName(getEmail().toUtf8().constData());
+            }
+            connect(mFullName.get(), &FullName::attributeReady, this, &Avatar::onFullNameAttributeReady);
+            onFullNameAttributeReady();
         }
 
-        if(isAttributeReady())
+        if (isAttributeReady())
         {
             emit attributeReady();
         }
     }
 }
 
-void Avatar::requestAttribute()
+AttributeRequest::RequestInfo Avatar::fillRequestInfo()
 {
-    MegaSyncApp->getMegaApi()->getUserAvatar(mUserEmail.toUtf8(),
-                                         Utilities::getAvatarPath(getEmail()).toUtf8());
+    std::function<void()> avatarRequestFunc = [this]()
+    {
+        mUseImgFile = false;
+        mLetterAvatarInfo.symbol.clear();
+        MegaSyncApp->getMegaApi()->getUserAvatar(getEmail().toUtf8().constData(),
+                                                 Utilities::getAvatarPath(getEmail()).toUtf8().constData());
+    };
+    QSharedPointer<ParamInfo> avatarParamInfo(new ParamInfo(avatarRequestFunc, QList<int>()
+                                                            << mega::MegaError::API_OK
+                                                            << mega::MegaError::API_ENOENT));
+    ParamInfoMap paramInfo({{mega::MegaApi::USER_ATTR_AVATAR, avatarParamInfo}});
+    RequestInfo ret(paramInfo, QMap<int, int>({{mega::MegaUser::CHANGE_TYPE_AVATAR,
+                                                mega::MegaApi::USER_ATTR_AVATAR}}));
+    return ret;
 }
 
-void Avatar::updateAttributes(mega::MegaUser *user)
+void Avatar::requestAttribute()
 {
-    if (user->hasChanged(mega::MegaUser::CHANGE_TYPE_AVATAR))
-    {
-        requestAttribute();
-    }
+    requestUserAttribute(mega::MegaApi::USER_ATTR_AVATAR);
 }
 
 void Avatar::onFullNameAttributeReady()
 {
-    if(isAttributeReady())
+    // This case handles the situation when the name changes and the user does not
+    // have an avatar set. Only emit if the symbol changes.
+    auto oldSymbol (mLetterAvatarInfo.symbol);
+    fillLetterInfo();
+    if (!mUseImgFile && oldSymbol != mLetterAvatarInfo.symbol)
     {
-        requestAttribute();
+        mIcon.clear();
         emit attributeReady();
     }
 }
 
 void Avatar::fillLetterInfo()
 {
-    if(mFullName && mFullName->isAttributeReady())
+    if (mFullName && !mFullName->isRequestPending())
     {
-        auto name = mFullName->getFirstName();
+        getLetterColor();
+        auto name = mFullName->getFullName();
         if(!name.isEmpty())
         {
-            mLetterAvatarInfo.letter = name.toUpper().at(0);
+            auto c (name.cbegin());
+            mLetterAvatarInfo.symbol = c->toUpper();
+            if (c->isHighSurrogate() && ++c != name.cend() && c->isLowSurrogate())
+            {
+                mLetterAvatarInfo.symbol += *c;
+            }
         }
-    }
-
-    if(mLetterAvatarInfo.isEmpty())
-    {
-        mLetterAvatarInfo.letter = getEmail().toUpper().at(0);
     }
 }
 
 void Avatar::getLetterColor()
 {
-    const char* color = MegaSyncApp->getMegaApi()->getUserAvatarColor(MegaSyncApp->getMegaApi()->handleToBase64(qHash(getEmail())));
-    mLetterAvatarInfo.color = color == nullptr ? Qt::red : QColor(color);
+    if (mLetterAvatarInfo.colorNeedsRefresh)
+    {
+        auto api = MegaSyncApp->getMegaApi();
+        auto avatarEmail (getEmail());
+        std::unique_ptr<char[]> loggedUserEmailStr (api->getMyEmail());
+        auto loggedUserEmail (QString::fromUtf8(loggedUserEmailStr.get()));
+        mega::MegaHandle userHandle (mega::INVALID_HANDLE);
 
-    delete [] color;
+        if (avatarEmail == loggedUserEmail)
+        {
+            userHandle = api->getMyUserHandleBinary();
+        }
+        else
+        {
+            std::unique_ptr<mega::MegaUser> user (api->getContact(avatarEmail.toUtf8().constData()));
+            if (user)
+            {
+                userHandle = user->getHandle();
+            }
+        }
+        std::unique_ptr<char[]> userHandleStr (api->userHandleToBase64(userHandle));
+        std::unique_ptr<char[]> primaryColor (api->getUserAvatarColor(userHandleStr.get()));
+        mLetterAvatarInfo.primaryColor = QColor(primaryColor.get());
+        std::unique_ptr<char[]> secondaryColor (api->getUserAvatarSecondaryColor(userHandleStr.get()));
+        mLetterAvatarInfo.secondaryColor = QColor(secondaryColor.get());
+
+        mLetterAvatarInfo.colorNeedsRefresh = userHandle != mega::INVALID_HANDLE;
+    }
 }
 
 const QPixmap& Avatar::getPixmap(const int& size) const
@@ -119,22 +175,25 @@ const QPixmap& Avatar::getPixmap(const int& size) const
     auto& icon = mIcon[size];
     if(icon.isNull())
     {
-        if(!mLetterAvatarInfo.isEmpty())
-        {           
-            icon = AvatarPixmap::createFromLetter(mLetterAvatarInfo.letter, mLetterAvatarInfo.color, size);
+        if(!mUseImgFile)
+        {
+            // If the attribute is not ready, use the first char of the email as a placeholder.
+            icon = AvatarPixmap::createFromLetter(isAttributeReady() ? mLetterAvatarInfo.symbol
+                    : getEmail().at(0).toUpper(), mLetterAvatarInfo.primaryColor,
+                                                  mLetterAvatarInfo.secondaryColor, size);
         }
         else
         {
             icon = AvatarPixmap::maskFromImagePath(mIconPath, size);
         }
     }
-
     return icon;
 }
 
 bool Avatar::isAttributeReady() const
 {
-    return !mIconPath.isEmpty() && (mFullName && mFullName->isAttributeReady());
+    // We need to have at least 1 valid avatar
+    return !mLetterAvatarInfo.isEmpty() || !mIconPath.isEmpty();
 }
 
 }//end namespace UserAttributes

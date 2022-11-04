@@ -7,7 +7,6 @@
 #include "MegaDelegateHoverManager.h"
 #include "TransferManagerLoadingItem.h"
 #include "ViewLoadingScene.h"
-
 #include "ButtonIconManager.h"
 
 #include <QToolButton>

@@ -61,7 +61,7 @@ build() {
 	ln -sfn libfreeimage.so.3 $PWD/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeimage.so; \
 	qmake-qt5 "CONFIG += FULLREQUIREMENTS" QMAKE_RPATHDIR="/opt/mega/lib" MEGA.pro || qmake-qt4 "CONFIG += FULLREQUIREMENTS" QMAKE_RPATHDIR="/opt/mega/lib" MEGA.pro #qmake would fail when qt4 installed (due to some path missconfigurations)
 	lrelease-qt5 MEGASync/MEGASync.pro || lrelease-qt4 MEGASync/MEGASync.pro 
-	make
+	make ${BUILD_PARALLEL_JOBS}
 }
 
 check() {

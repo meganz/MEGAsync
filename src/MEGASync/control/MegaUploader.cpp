@@ -20,14 +20,10 @@
 using namespace mega;
 using namespace std;
 
-
-MegaUploader::MegaUploader(MegaApi *megaApi)
+MegaUploader::MegaUploader(MegaApi *megaApi, std::shared_ptr<FolderTransferListener> _listener)
+    : listener(_listener)
 {
     this->megaApi = megaApi;
-}
-
-MegaUploader::~MegaUploader()
-{
 }
 
 void MegaUploader::upload(QString path, const QString& nodeName, std::shared_ptr<MegaNode> parent, unsigned long long appDataID, const std::shared_ptr<TransferBatch>& transferBatch)
@@ -39,7 +35,7 @@ void MegaUploader::upload(QString path, const QString& nodeName, std::shared_ptr
         QString currentPath = QDir::toNativeSeparators(info.absoluteFilePath());
         QString msg = QString::fromLatin1("Starting upload : '%1' - '%2' - '%3'").arg(info.fileName(), currentPath).arg(appDataID);
         megaApi->log(MegaApi::LOG_LEVEL_DEBUG, msg.toUtf8().constData());
-        transferBatch->add(info.absoluteFilePath());
+        transferBatch->add(info.absoluteFilePath(), QString());
         startUpload(currentPath, nodeName, appDataID, parent.get(), transferBatch->getCancelTokenPtr());
 
         emit startingTransfers();
@@ -62,6 +58,5 @@ void MegaUploader::startUpload(const QString& localPath, const QString &nodeName
     QByteArray appData = (QString::number(appDataID) + QString::fromUtf8("*")).toUtf8();
     const int64_t mtime = ::mega::MegaApi::INVALID_CUSTOM_MOD_TIME;
     const bool isSrcTemporary = false;
-    MegaTransferListener* listener = nullptr;
-    megaApi->startUpload(localPathArray.constData(), parent, fileName, mtime, appData.constData(), isSrcTemporary, startFirst, cancelToken, listener);
+    megaApi->startUpload(localPathArray.constData(), parent, fileName, mtime, appData.constData(), isSrcTemporary, startFirst, cancelToken, listener.get());
 }

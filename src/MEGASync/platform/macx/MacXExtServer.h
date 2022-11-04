@@ -35,7 +35,6 @@ protected:
 public slots:
    void acceptConnection();
    void onClientData();
-   void onClientDisconnected();
 
    void doSendToAll(QByteArray str);
 
@@ -48,6 +47,7 @@ private:
    QString sockPath;
    QList<QPointer<MacXLocalSocket>> m_clients;
    bool GetAnswerToRequest(const char *buf, QByteArray *response);
+   void clientDisconnected(QPointer<MacXLocalSocket> client);
 
 signals:
    void newUploadQueue(QQueue<QString> uploadQueue);

@@ -16,7 +16,7 @@ public:
 
     bool isEmpty();
 
-    void add(const QString& nodePath);
+    void add(const QString& nodePath, const QString& nodeName);
 
     void cancel();
 

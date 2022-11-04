@@ -18,12 +18,14 @@ ScanningWidget::ScanningWidget(QWidget *parent) :
                                   : QString::fromUtf8(":/animations/scanning@2x.gif");
     mMovie->setFileName(gifFile);
 
-    mUi->lScanning->setProperty("role", QString::fromLatin1("title"));
-    mUi->lExplanation->setProperty("role", QString::fromLatin1("details"));
+    setRole(mUi->lStepTitle, "title");
+    setRole(mUi->lStepDescription, "details");
 
     mUi->pBlockingStageCancel->setGraphicsEffect(CreateBlurredShadowEffect());
     connect(mUi->pBlockingStageCancel, &QPushButton::clicked,
             this, &ScanningWidget::onCancelClicked);
+
+    mPreviousStage = mega::MegaTransfer::STATE_NONE;
 }
 
 ScanningWidget::~ScanningWidget()
@@ -38,6 +40,8 @@ void ScanningWidget::show()
 
     mUi->pBlockingStageCancel->show();
     mUi->pBlockingStageCancel->setEnabled(true);
+    mUi->lStepTitle->setText(tr("Scanning"));
+    mUi->lStepDescription->setText(QString());
 }
 
 void ScanningWidget::hide()
@@ -61,9 +65,38 @@ void ScanningWidget::updateAnimation()
     startAnimation();
 }
 
+void ScanningWidget::onReceiveStatusUpdate(const FolderTransferUpdateEvent &event)
+{
+    switch (event.stage)
+    {
+        case mega::MegaTransfer::STAGE_SCAN:
+        {
+            mUi->lStepTitle->setText(tr("Scanning"));
+            mUi->lStepDescription->setText(buildScanDescription(event.foldercount, event.filecount));
+            break;
+        }
+        case mega::MegaTransfer::STAGE_CREATE_TREE:
+        {
+            mUi->lStepTitle->setText(tr("Creating folders"));
+            mUi->lStepDescription->setText(tr("%1/%2").arg(event.createdfoldercount).arg(event.foldercount));
+            break;
+        }
+    }
+    mPreviousStage = event.stage;
+}
+
 void ScanningWidget::onCancelClicked()
 {
     emit cancel();
+}
+
+void ScanningWidget::changeEvent(QEvent* event)
+{
+    if (event->type() == QEvent::LanguageChange)
+    {
+        mUi->retranslateUi(this);
+    }
+    QWidget::changeEvent(event);
 }
 
 void ScanningWidget::startAnimation()
@@ -73,4 +106,23 @@ void ScanningWidget::startAnimation()
         mUi->lAnimation->setMovie(mMovie);
         mMovie->start();
     }
+}
+
+QString ScanningWidget::buildScanDescription(const uint32_t folderCount, const uint32_t fileCount)
+{
+    QString folderStr = tr("%n folder", "", folderCount);
+    QString fileStr = tr("%n file", "", fileCount);
+    return tr("found %1, %2").arg(folderStr, fileStr);
+}
+
+void ScanningWidget::setRole(QObject *object, const char *name)
+{
+    object->setProperty("role", QString::fromLatin1(name));
+}
+
+QString ScanningWidget::formattedNode(const QString &name)
+{
+    const QString quote = QString::fromLatin1("");
+    const QChar ellipsis(0x2026);
+    return quote + name + quote + ellipsis;
 }

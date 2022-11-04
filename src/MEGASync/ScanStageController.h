@@ -1,6 +1,8 @@
 #ifndef SCANSTAGECONTROLLER_H
 #define SCANSTAGECONTROLLER_H
 
+#include "FolderTransferEvents.h"
+
 #include <QObject>
 #include <QTimer>
 #include <QPointer>
@@ -22,21 +24,28 @@ public:
 
     bool isInScanningState() const;
 
+public slots:
+    void onFolderTransferUpdate(const FolderTransferUpdateEvent &event);
+
 signals:
     void enableTransferActions(bool enable);
 
 private:
     void startScanStage();
+    void stopScanStage();
 
     void setUiInScanStage();
     void setUiInNormalStage();
     void setUiInDisabledScanStage();
+    void setDelayedCancellingStage();
+    void setUiInCancellingStage();
 
     void onMinimumDisplayTimeElapsed();
 
     QPointer<InfoDialog> mInfoDialog;
     QPointer<TransferManager> mTransferManager;
     QTimer mScanStageTimer;
+    QTimer mCancelStageTimer;
     bool mIsInScanningState = false;
     bool mIsInScanningStateInMinimumTime = false;
     bool mLastScanCancelled = false;

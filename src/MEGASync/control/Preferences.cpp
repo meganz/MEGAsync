@@ -1,6 +1,7 @@
 #include "model/Model.h"
 #include "Preferences.h"
 #include "platform/Platform.h"
+#include "UserAttributesRequests/FullName.h"
 
 #include <QDesktopServices>
 #include <assert.h>
@@ -12,19 +13,21 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/4.7.1.0";
-const int Preferences::VERSION_CODE = 4701;
-const int Preferences::BUILD_ID = 0;
+const char Preferences::USER_AGENT[] = "MEGAsync/4.7.2.0";
+const int Preferences::VERSION_CODE = 4702;
+const int Preferences::BUILD_ID = 1;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("4.7.1");
-QString Preferences::SDK_ID = QString::fromAscii("44c0918");
+const QString Preferences::VERSION_STRING = QString::fromAscii("4.7.2");
+QString Preferences::SDK_ID = QString::fromAscii("2cad2e5e");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
-"- There is now a new transfer manager.\n"
-"- Transfer management was enhanced and reliability of downloads and uploads improved. \n"
-"- Detected crashes on Windows, Linux, and macOS fixed.\n"
-"- Translation issues fixed.\n"
-"- Performance improved.\n"
-"- UI fixed and adjusted.\n"));
+"- Added new Apple Silicon native support.\n"
+"- Added a new feature to stop sleep mode if there are active transfers.\n"
+"- Updated third-party libs.\n"
+"- Improved folders transfers.\n"
+"- Fixed detected crashes on Windows, Linux, and macOS.\n"
+"- Fixed translation issues.\n"
+"- Improved performance.\n"
+"- Fixed and adjusted UI.\n"));
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
@@ -388,6 +391,10 @@ const QString Preferences::neverCreateLinkKey       = QString::fromUtf8("neverCr
 const QString Preferences::notifyDisabledSyncsKey = QString::fromAscii("notifyDisabledSyncs");
 const QString Preferences::importMegaLinksEnabledKey = QString::fromAscii("importMegaLinksEnabled");
 const QString Preferences::downloadMegaLinksEnabledKey = QString::fromAscii("downloadMegaLinksEnabled");
+
+//Sleep settings
+const QString Preferences::awakeIfActiveKey = QString::fromAscii("sleepIfInactiveEnabledKey");
+const bool Preferences::defaultAwakeIfActive = false;
 
 const bool Preferences::defaultStartOnStartup       = true;
 const bool Preferences::defaultUpdateAutomatically  = true;
@@ -2675,6 +2682,20 @@ void Preferences::setLastStatsRequest(long long value)
     setValueAndSyncConcurrent(lastStatsRequestKey, value);
 }
 
+bool Preferences::awakeIfActiveEnabled()
+{
+    mutex.lock();
+    assert(logged());
+    bool result = getValue(awakeIfActiveKey, defaultAwakeIfActive);
+    mutex.unlock();
+    return result;
+}
+
+void Preferences::setAwakeIfActive(bool value)
+{
+    setValueAndSyncConcurrent(awakeIfActiveKey, value);
+}
+
 bool Preferences::fileVersioningDisabled()
 {
     mutex.lock();
@@ -2792,6 +2813,13 @@ void Preferences::setEmailAndGeneralSettings(const QString &email)
     this->setProxyRequiresAuth(proxyAuth);
     this->setProxyUsername(proxyUsername);
     this->setProxyPassword(proxyPassword);
+}
+
+void Preferences::monitorUserAttributes()
+{
+    assert(logged());
+    // Setup FIRST_NAME and LAST_NAME monitoring
+    updateFullName();
 }
 
 void Preferences::login(QString account)
@@ -3223,4 +3251,26 @@ void Preferences::overridePreferences(const QSettings &settings)
     overridePreference(settings, QString::fromUtf8("MUTEX_STEALER_MS"), Preferences::MUTEX_STEALER_MS);
     overridePreference(settings, QString::fromUtf8("MUTEX_STEALER_PERIOD_MS"), Preferences::MUTEX_STEALER_PERIOD_MS);
     overridePreference(settings, QString::fromUtf8("MUTEX_STEALER_PERIOD_ONLY_ONCE"), Preferences::MUTEX_STEALER_PERIOD_ONLY_ONCE);
+}
+
+void Preferences::updateFullName(QString)
+{
+    auto fullNameRequest (UserAttributes::UserAttributesManager::instance()
+                      .requestAttribute<UserAttributes::FullName>(email().toUtf8().constData()));
+    connect(fullNameRequest.get(), &UserAttributes::FullName::attributeReady,
+            this, &Preferences::updateFullName, Qt::UniqueConnection);
+
+    if (fullNameRequest->isAttributeReady())
+    {
+        auto newFirstName (fullNameRequest->getFirstName());
+        auto newLastName (fullNameRequest->getLastName());
+        if (newFirstName != firstName())
+        {
+            setFirstName(newFirstName);
+        }
+        if (newLastName != lastName())
+        {
+            setLastName(newLastName);
+        }
+    }
 }

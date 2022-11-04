@@ -13,6 +13,8 @@ class ButtonIconManager : public QObject
     static const char*   CHECK_STATE;
     static const char*   IGNORE_BUTTON;
 
+    static const char*   BUTTON_FULL_TEXT;
+    static const char*   BUTTON_ELIDE_TEXT;
 
     struct IconInfo
     {
@@ -58,6 +60,8 @@ private:
     void setDefaultIcon(QAbstractButton* button);
     void setHoverIcon(QAbstractButton* button);
     void setSelectedIcon(QAbstractButton* button);
+
+    void elideButtonText(QAbstractButton *button, const QString &text);
 
     Settings mSettings;
 };

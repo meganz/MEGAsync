@@ -36,6 +36,16 @@ void InfoDialogTransfersWidget::showEvent(QShowEvent*)
 {
 }
 
+void InfoDialogTransfersWidget::onUiBlocked()
+{
+    mLoadingScene.setLoadingScene(true);
+}
+
+void InfoDialogTransfersWidget::onUiUnblocked()
+{
+    mLoadingScene.setLoadingScene(false);
+}
+
 void InfoDialogTransfersWidget::configureTransferView()
 {
     if (!mProxyModel)
@@ -53,6 +63,12 @@ void InfoDialogTransfersWidget::configureTransferView()
     mUi->tView->setDragDropMode(QAbstractItemView::InternalMove);
     mUi->tView->setModel(mProxyModel);
     mUi->tView->setFocusPolicy(Qt::NoFocus);
+
+    mLoadingScene.setView(mUi->tView);
+
+    connect(MegaSyncApp->getTransfersModel(), &TransfersModel::blockUi, this, &InfoDialogTransfersWidget::onUiBlocked);
+    connect(MegaSyncApp->getTransfersModel(), &TransfersModel::unblockUi, this, &InfoDialogTransfersWidget::onUiUnblocked);
+    connect(MegaSyncApp->getTransfersModel(), &TransfersModel::unblockUiAndFilter, this, &InfoDialogTransfersWidget::onUiUnblocked);
 
     mViewHoverManager.setView(mUi->tView);
 }
