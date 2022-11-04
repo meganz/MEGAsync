@@ -236,19 +236,19 @@ QString SyncController::getIsLocalFolderAllowedForSyncMsg(const QString& path, c
     {
         if (syncType == MegaSync::SyncType::TYPE_BACKUP)
         {
-            message = tr("You are trying to backup an extremely large folder.\n"
-                         "To prevent the backup of entire boot volumes,"
-                         " which is inefficient and dangerous,\n"
-                         "we ask you to start with a smaller folder"
-                         " and add more data while MEGAsync is running.");
+            message = tr("You can’t backup “%1” as it’s the root folder. "
+                         "The root folder is either; the top-level folder on your device "
+                         "or computer that holds all your folders and files or the folder "
+                         "where the system or program is installed. We don’t allow users to "
+                         "back up root folders as it may cause file conflicts or errors.").arg(inputPath);
         }
         else
         {
-            message = tr("You are trying to sync an extremely large folder.\n"
-                         "To prevent the syncing of entire boot volumes,"
-                         " which is inefficient and dangerous,\n"
-                         "we ask you to start with a smaller folder"
-                         " and add more data while MEGAsync is running.");
+            message = tr("You can’t sync “%1” as it’s the root folder. "
+                         "The root folder is either; the top-level folder on your device "
+                         "or computer that holds all your folders and files or the folder "
+                         "where the system or program is installed. We don’t allow users to "
+                         "back up root folders as it may cause file conflicts or errors.").arg(inputPath);
         }
     }
     return message;
