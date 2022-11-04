@@ -1,20 +1,19 @@
 #ifndef UTILITIES_H
 #define UTILITIES_H
 
+#include "megaapi.h"
+#include "ThreadPool.h"
+
 #include <QString>
 #include <QHash>
 #include <QPixmap>
 #include <QProgressDialog>
 #include <QDesktopServices>
 #include <QFuture>
-
 #include <QDir>
 #include <QIcon>
-#include <functional>
 #include <QLabel>
 #include <QEasingCurve>
-#include "megaapi.h"
-#include "ThreadPool.h"
 
 #include <functional>
 
@@ -381,8 +380,6 @@ public:
     static constexpr int ERROR_DISPLAY_TIME_MS = 10000; //10s in milliseconds
 
     static bool isNodeNameValid(const QString& name);
-
-    static QSet<QString> getBackupsNames();
 };
 
 Q_DECLARE_METATYPE(Utilities::FileType)

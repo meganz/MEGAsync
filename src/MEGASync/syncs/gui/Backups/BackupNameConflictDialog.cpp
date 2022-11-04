@@ -2,6 +2,7 @@
 #include "ui_BackupNameConflictDialog.h"
 #include "syncs/gui/Backups/BackupRenameWidget.h"
 #include "Utilities.h"
+#include "syncs/control/SyncInfo.h"
 #include "syncs/control/SyncController.h"
 #include "EventHelper.h"
 
@@ -69,7 +70,7 @@ bool BackupNameConflictDialog::backupNamesValid(QStringList candidatePaths)
     }
 
     return areValid && candidatePaths.size() == candidatesNames.size()
-            && !candidatesNames.intersects(Utilities::getBackupsNames());
+            && !candidatesNames.intersects(SyncInfo::getRemoteBackupFolderNames());
 }
 
 void BackupNameConflictDialog::checkChangedNames()
@@ -78,7 +79,7 @@ void BackupNameConflictDialog::checkChangedNames()
     const auto conflicts = ui->wConflictZone->findChildren<BackupRenameWidget*>();
 
     // Get the remote names
-    QStringList chosenNames (Utilities::getBackupsNames().toList());
+    QStringList chosenNames (SyncInfo::getRemoteBackupFolderNames().toList());
 
     // First pass to get all the new names:
     //   - First replace in candidate nams all the changed names
@@ -119,7 +120,7 @@ void BackupNameConflictDialog::createWidgets()
     QString conflictText;
 
     // Check conflicts and add widgets
-    const auto currentNames = Utilities::getBackupsNames();
+    const auto currentNames = SyncInfo::getRemoteBackupFolderNames();
     for (auto it = mBackupNames.cbegin(); it != mBackupNames.cend(); it++)
     {
         if (currentNames.contains(it.value()))
