@@ -21,17 +21,14 @@ public:
     struct Filter{
         bool showReadOnly = true;
         bool showReadWriteFolders = true;
-        bool showOwnerColumn = true;
         Filter() : showReadOnly(true),
-                    showReadWriteFolders(true),
-                    showOwnerColumn(true){};
+                    showReadWriteFolders(true){};
     };
 
     explicit MegaItemProxyModel(QObject* parent = nullptr);
 
     void showReadOnlyFolders(bool value);
     void showReadWriteFolders(bool value);
-    void showOwnerColumn(bool value);
     void sort(int column, Qt::SortOrder order = Qt::AscendingOrder) override;
 
     mega::MegaHandle getHandle(const QModelIndex &index);
@@ -55,7 +52,6 @@ signals:
 
 protected:
     bool filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const override;
-    bool filterAcceptsColumn(int sourceColumn, const QModelIndex& sourceParent) const override;
 
 private:
     QVector<QModelIndex> forEach(std::shared_ptr<mega::MegaNodeList> parentNodeList, QModelIndex parent = QModelIndex());

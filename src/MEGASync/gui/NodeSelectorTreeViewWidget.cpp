@@ -95,7 +95,6 @@ void NodeSelectorTreeViewWidget::setSelectionMode(int selectMode)
     connect(mModel.get(), &MegaItemModel::blockUi, this, &NodeSelectorTreeViewWidget::onUiBlocked);
 
     setLoadingSceneVisible(true);
-    mProxyModel->showOwnerColumn(false);
     ui->tMegaFolders->setSortingEnabled(true);
     mProxyModel->setSourceModel(mModel.get());
 
@@ -766,7 +765,7 @@ std::unique_ptr<MegaItemModel> NodeSelectorTreeViewWidgetCloudDrive::getModel()
 void NodeSelectorTreeViewWidgetCloudDrive::setRootIndex_Reimplementation(const QModelIndex &source_idx)
 {
     Q_UNUSED(source_idx)
-    mProxyModel->showOwnerColumn(false);
+    ui->tMegaFolders->header()->hideSection(MegaItemModel::COLUMN::USER);
 }
 
 NodeSelectorTreeViewWidgetIncomingShares::NodeSelectorTreeViewWidgetIncomingShares(QWidget *parent)
@@ -796,9 +795,10 @@ void NodeSelectorTreeViewWidgetIncomingShares::setRootIndex_Reimplementation(con
         ui->lOwnerIcon->setToolTip(tooltip);
         ui->lOwnerIcon->setPixmap(pm);
         ui->avatarSpacer->spacerItem()->changeSize(10, 0);
+        ui->tMegaFolders->header()->hideSection(MegaItemModel::COLUMN::USER);
     }
     else
     {
-        mProxyModel->showOwnerColumn(true);
+        ui->tMegaFolders->header()->showSection(MegaItemModel::COLUMN::USER);
     }
 }

@@ -32,14 +32,6 @@ void MegaItemProxyModel::showReadWriteFolders(bool value)
     invalidateFilter();
 }
 
-void MegaItemProxyModel::showOwnerColumn(bool value)
-{
-    if(mFilter.showOwnerColumn != value)
-    {
-        mFilter.showOwnerColumn = value;
-    }
-}
-
 void MegaItemProxyModel::sort(int column, Qt::SortOrder order)
 {
     mOrder = order;
@@ -50,6 +42,7 @@ void MegaItemProxyModel::sort(int column, Qt::SortOrder order)
     if(mFilterWatcher.isFinished())
     {
         QFuture<void> filtered = QtConcurrent::run([this, column, order](){
+            qDebug()<<"filtering started";
             auto itemModel = dynamic_cast<MegaItemModel*>(sourceModel());
             if(itemModel)
             {
@@ -246,21 +239,6 @@ bool MegaItemProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sour
         }
     }
     return QSortFilterProxyModel::filterAcceptsRow(sourceRow, sourceParent);
-}
-
-bool MegaItemProxyModel::filterAcceptsColumn(int sourceColumn, const QModelIndex &sourceParent) const
-{
-    Q_UNUSED(sourceParent);
-    switch(sourceColumn)
-    { // Fallthrough
-    case MegaItemModel::COLUMN::NODE:
-    case MegaItemModel::COLUMN::STATUS:
-    case MegaItemModel::COLUMN::DATE:
-        return true;
-    case MegaItemModel::COLUMN::USER:
-        return  mFilter.showOwnerColumn;
-    }
-    return false;
 }
 
 QVector<QModelIndex> MegaItemProxyModel::forEach(std::shared_ptr<mega::MegaNodeList> parentNodeList, QModelIndex parent)
