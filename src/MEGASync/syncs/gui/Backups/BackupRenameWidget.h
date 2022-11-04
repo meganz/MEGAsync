@@ -20,12 +20,16 @@ public:
 
     QString getPath();
 
+protected:
+    bool eventFilter(QObject *watched, QEvent *event) override;
+
 private slots:
     void openLocalPath(QString link);
 
 private:
     Ui::BackupRenameWidget *ui;
     QString mPath;
+    QString mPathPattern;
 };
 
 #endif // BACKUPRENAMEWIDGET_H

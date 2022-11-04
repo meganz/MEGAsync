@@ -4,6 +4,7 @@
 #include "Utilities.h"
 #include "Platform.h"
 #include "CommonMessages.h"
+#include "syncs/gui/SyncTooltipCreator.h"
 
 BackupRenameWidget::BackupRenameWidget(const QString& path, int number, QWidget *parent) :
     QFrame(parent),
@@ -14,7 +15,10 @@ BackupRenameWidget::BackupRenameWidget(const QString& path, int number, QWidget 
     ui->hLine->setVisible(number > 1);
     ui->lError->hide();
     ui->lLocalFolder->setText(ui->lLocalFolder->text().arg(number));
-    ui->lLocalFolderPath->setText(ui->lLocalFolderPath->text().arg(path));
+    ui->lLocalFolderPath->setToolTip(SyncTooltipCreator::createForLocal(mPath));
+    mPathPattern = ui->lLocalFolderPath->text();
+    ui->leNewName->installEventFilter(this);
+
     connect(ui->lLocalFolderPath, &QLabel::linkActivated,
             this, &BackupRenameWidget::openLocalPath);
 }
@@ -59,6 +63,18 @@ QString BackupRenameWidget::getNewNameRaw()
 QString BackupRenameWidget::getPath()
 {
     return mPath;
+}
+
+bool BackupRenameWidget::eventFilter(QObject *watched, QEvent *event)
+{
+    if(watched == ui->leNewName && event->type() == QEvent::Resize)
+    {
+        auto elidedPath = ui->lLocalFolderPath->fontMetrics().elidedText(mPath,
+                                                                         Qt::ElideMiddle,
+                                                                         ui->leNewName->width());
+        ui->lLocalFolderPath->setText(mPathPattern.arg(mPath, elidedPath));
+    }
+    return QFrame::eventFilter(watched, event);
 }
 
 void BackupRenameWidget::openLocalPath(QString link)
