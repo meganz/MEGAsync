@@ -18,9 +18,6 @@ BackupRenameWidget::BackupRenameWidget(const QString& path, int number, QWidget 
     ui->lLocalFolderPath->setToolTip(SyncTooltipCreator::createForLocal(mPath));
     ui->leNewName->installEventFilter(this);
     ui->lLocalFolderPath->installEventFilter(this);
-
-//    connect(ui->lLocalFolderPath, &QLabel::cli,
-//            this, &BackupRenameWidget::openLocalPath);
 }
 
 BackupRenameWidget::~BackupRenameWidget()
