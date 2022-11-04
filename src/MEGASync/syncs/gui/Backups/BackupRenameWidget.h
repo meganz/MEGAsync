@@ -29,7 +29,6 @@ private slots:
 private:
     Ui::BackupRenameWidget *ui;
     QString mPath;
-    QString mPathPattern;
 };
 
 #endif // BACKUPRENAMEWIDGET_H

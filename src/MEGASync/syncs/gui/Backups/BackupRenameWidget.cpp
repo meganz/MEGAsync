@@ -16,11 +16,11 @@ BackupRenameWidget::BackupRenameWidget(const QString& path, int number, QWidget 
     ui->lError->hide();
     ui->lLocalFolder->setText(ui->lLocalFolder->text().arg(number));
     ui->lLocalFolderPath->setToolTip(SyncTooltipCreator::createForLocal(mPath));
-    mPathPattern = ui->lLocalFolderPath->text();
     ui->leNewName->installEventFilter(this);
+    ui->lLocalFolderPath->installEventFilter(this);
 
-    connect(ui->lLocalFolderPath, &QLabel::linkActivated,
-            this, &BackupRenameWidget::openLocalPath);
+//    connect(ui->lLocalFolderPath, &QLabel::cli,
+//            this, &BackupRenameWidget::openLocalPath);
 }
 
 BackupRenameWidget::~BackupRenameWidget()
@@ -72,7 +72,11 @@ bool BackupRenameWidget::eventFilter(QObject *watched, QEvent *event)
         auto elidedPath = ui->lLocalFolderPath->fontMetrics().elidedText(mPath,
                                                                          Qt::ElideMiddle,
                                                                          ui->leNewName->width());
-        ui->lLocalFolderPath->setText(mPathPattern.arg(mPath, elidedPath));
+        ui->lLocalFolderPath->setText(elidedPath);
+    }
+    else if(watched == ui->lLocalFolderPath && event->type() == QEvent::MouseButtonPress)
+    {
+        openLocalPath(mPath);
     }
     return QFrame::eventFilter(watched, event);
 }
