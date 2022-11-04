@@ -525,7 +525,7 @@ bool registerUpdateDaemon()
         return false;
     }
 
-    return p.exitCode();
+    return p.exitCode() ? false : true;
 }
 
 // Check if it's needed to start the local HTTP server
