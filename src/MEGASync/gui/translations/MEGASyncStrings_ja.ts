@@ -971,12 +971,12 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>お客様のビジネスアカウントは期限切れです</translation>
+        <translation>ビジネスアカウントの有効期限が切れています</translation>
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation>ご必要なお支払いをしていただくまで、アカウントは読み取り専用として無効化されています。</translation>
+        <translation>ご必要なお支払いをしていただくまで、アカウントは読み取り専用として停止されています。</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -2309,7 +2309,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>アカウントが無効です</translation>
+        <translation>ビジネスアカウントの有効期限が切れています</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -2319,7 +2319,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message shown to admin business account when a payment has failed. </translatorcomment>
-        <translation>お支払いが失敗したため、お客様のビジネスアカウントが無効になりました。お支払いを行ってサブスクリプションを再開するまで、アカウントに保存されているデータにアクセスすることはできません。</translation>
+        <translation>ビジネスアカウントのお支払いが失敗したようです。ご必要なお支払いをされるまで、お客様のアカウントは読み取り専用として停止されます。</translation>
     </message>
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
@@ -2334,7 +2334,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>This month&apos;s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</source>
         <translatorcomment>Informative message shown to the user when a payment has failed for a business account.</translatorcomment>
-        <translation>今月のお支払いが失敗しました。お支払いの問題をできるだけ早く解決し、お客様のビジネスアカウントの一時停止を回避してください。</translation>
+        <translation>今月のお支払いが失敗しました。お支払いの問題をできるだけ早く解決し、お客様のビジネスアカウントの停止を回避してください。</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -2344,7 +2344,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
         <translatorcomment>Informative message shown when a business account is expired and the user can only browse data and none operation (upload, download, creation..) is allowed.</translatorcomment>
-        <translation>お客様のアカウントは[A]無効になっています[/A]。お客様のデータの閲覧のみ可能です。</translation>
+        <translation>お客様のアカウントは現在[A]凍結[/A]されています。データの閲覧のみ可能です。</translation>
     </message>
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
@@ -2837,7 +2837,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Business account expired</source>
         <translatorcomment>Label to show that the current business account is expired during a SDK operation.</translatorcomment>
-        <translation>お客様のビジネスアカウントは無効になっています</translation>
+        <translation>ビジネスアカウントの有効期限切れ</translation>
     </message>
     <message>
         <source>Foreign target storage quota reached</source>
@@ -4312,7 +4312,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Scanning</source>
         <translatorcomment>Label used to display when the scanning widget is on the &quot;Scanning&quot; step</translatorcomment>
-        <translation>スキャン中</translation>
+        <translation>スキャン中…</translation>
     </message>
     <message>
         <source>Creating folders</source>
@@ -5863,7 +5863,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your MEGA account is full</source>
         <translatorcomment>Message shown when the MEGA account is full</translatorcomment>
-        <translation>あなたのMEGA PROアカウントはいっぱいです。</translation>
+        <translation>あなたのMEGAアカウントはいっぱいです。</translation>
     </message>
     <message>
         <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left for this IP address.

@@ -64,12 +64,12 @@
     <message>
         <source>Choose File</source>
         <translatorcomment>Label of button that pop up a selection dialog to choose a file to be excluded for the synchonization</translatorcomment>
-        <translation>Kies Bestand</translation>
+        <translation>Kies bestand</translation>
     </message>
     <message>
         <source>Choose Folder</source>
         <translatorcomment>Label of button that pop up a selection dialog to choose a folder to be excluded for the synchonization</translatorcomment>
-        <translation>Kies Map</translation>
+        <translation>Kies map</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -132,7 +132,7 @@
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Label to indicate that the application is showing only incoming share notifications</translatorcomment>
-        <translation>Binnenkomende Delingen</translation>
+        <translation>Binnenkomende delingen</translation>
     </message>
 </context>
 <context>
@@ -150,7 +150,7 @@
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Label title for Incoming shares category of a notification</translatorcomment>
-        <translation>Binnenkomende Delingen</translation>
+        <translation>Binnenkomende delingen</translation>
     </message>
     <message>
         <source>Payment</source>
@@ -310,7 +310,7 @@
     <message>
         <source>Shared Folder Activity</source>
         <translatorcomment>Generic label to indicate that there is activity in a shared folder but the name of the shared folder is not available.</translatorcomment>
-        <translation>Gedeelde Map Activiteit</translation>
+        <translation>Gedeelde map activiteit</translation>
     </message>
     <message>
         <source>Access to shared folder was removed</source>
@@ -842,7 +842,7 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     <message>
         <source>New Contact Established</source>
         <translatorcomment>Title of the notification when a contact relationship has been established.</translatorcomment>
-        <translation>Nieuw Contact Gelegd</translation>
+        <translation>Nieuw contact</translation>
     </message>
     <message>
         <source>New contact with [A] has been established</source>
@@ -857,17 +857,17 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     <message>
         <source>Shared Folder Received</source>
         <translatorcomment>Title of the notification when a shared folder has been received</translatorcomment>
-        <translation>Gedeelde Map Ontvangen</translation>
+        <translation>Gedeelde map ontvangen</translation>
     </message>
     <message>
         <source>Shared Folder Removed</source>
         <translatorcomment>Title of the notification when a shared folder has been removed</translatorcomment>
-        <translation>Gedeelde Map Verwijderd</translation>
+        <translation>Gedeelde map verwijderd</translation>
     </message>
     <message>
         <source>Shared Folder Updated</source>
         <translatorcomment>Generic label to indicate that there is an update in a shared folder but the name of the shared folder is not available.</translatorcomment>
-        <translation>Gedeelde Map Bijgewerkt</translation>
+        <translation>Gedeelde map bijgewerkt</translation>
     </message>
     <message>
         <source>Payment Info</source>
@@ -882,7 +882,7 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     <message>
         <source>Shared Folder Activity</source>
         <translatorcomment>Generic label to indicate that there is activity in a shared folder but the name of the shared folder is not available.</translatorcomment>
-        <translation>Gedeelde Map Activiteit</translation>
+        <translation>Gedeelde map activiteit</translation>
     </message>
     <message>
         <source>Show</source>
@@ -957,7 +957,7 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     <message>
         <source>Payment Failed</source>
         <translatorcomment>Notification title shown when a payment has failed for a business account.</translatorcomment>
-        <translation>Betaling Mislukt</translation>
+        <translation>Betaling mislukt</translation>
     </message>
     <message>
         <source>Please resolve your payment issue to avoid suspension of your account.</source>
@@ -967,7 +967,7 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     <message>
         <source>Pay Now</source>
         <translatorcomment>Button text to redirect the user to fix issues with pending payments for the current business account.</translatorcomment>
-        <translation>Betaal Nu</translation>
+        <translation>Betaal nu</translation>
     </message>
     <message>
         <source>Your Business account is expired</source>
@@ -977,12 +977,12 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation>Uw account is verlopen naar alleen-lezen totdat u weer doorgaat met de benodigde betalingen.</translation>
+        <translation>Uw account is geschorst naar alleen-lezen totdat u doorgaat met de nodige betalingen.</translation>
     </message>
     <message>
         <source>Account Suspended</source>
         <translatorcomment>Title to inform that a business account is actually suspended.</translatorcomment>
-        <translation>Account Geschorst</translation>
+        <translation>Account geschorst</translation>
     </message>
     <message>
         <source>Contact your business account administrator to resolve the issue and activate your account.</source>
@@ -1194,7 +1194,7 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Label to indicate that only Incoming Shares notifications will be shown.</translatorcomment>
-        <translation>Binnenkomende Delingen</translation>
+        <translation>Binnenkomende delingen</translation>
     </message>
     <message>
         <source>Payment</source>
@@ -1308,7 +1308,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Login</source>
         <translatorcomment>Button label to start the Login process. (String as short as possible)</translatorcomment>
-        <translation>Inloggen</translation>
+        <translation>Login</translation>
     </message>
     <message>
         <source>Create account</source>
@@ -2320,7 +2320,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message shown to admin business account when a payment has failed. </translatorcomment>
-        <translation>Het lijkt dat de betalingen voor uw Zakelijke account zijn mislukt. Uw account is verlopen en heeft alleen-lezen toegang toestemmingen totdat u doorgaat met de betaling die nodig is.</translation>
+        <translation>Het lijkt dat de betaling voor uw Zakelijke account is mislukt. Uw account is geschorst als alleen-lezen totdat u doorgaat met de nodige betalingen.</translation>
     </message>
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
@@ -2335,7 +2335,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>This month&apos;s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</source>
         <translatorcomment>Informative message shown to the user when a payment has failed for a business account.</translatorcomment>
-        <translation>Deze maand betaling is mislukt. Herstel uw betalingsprobleem zo snel mogelijk om verdere oponthoud van uw zakelijke account te voorkomen.</translation>
+        <translation>Deze maand betaling is mislukt. Herstel uw betaling zo snel mogelijk om verdere schorsing van uw Zakelijke account te voorkomen.</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -2345,7 +2345,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
         <translatorcomment>Informative message shown when a business account is expired and the user can only browse data and none operation (upload, download, creation..) is allowed.</translatorcomment>
-        <translation>Uw account is [A]verlopen[/A]. U kunt alleen uw gegevens bladeren.</translation>
+        <translation>Uw account is momenteel [A]geschorst[/A]. U kunt u gegevens alleen bladeren.</translation>
     </message>
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
@@ -2481,9 +2481,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>There is an active transfer. Exit the app?
 Transfer will automatically resume when you re-open the app.</source>
         <translatorcomment>Messagebox text to let the user know that there are active transfers when closing the app. The user will be able to exit and pause them, or stop the exit action.</translatorcomment>
-        <translation><numerusform>Er is een actieve overdracht. Wilt u de applicatie verlaten?
-Overdrachten worden automatisch hervat wanneer u de applicatie heropend.</numerusform><numerusform>Er zijn actieve overdrachten. Wilt u de applicatie verlaten?
-Overdrachten worden automatisch hervat wanneer u de applicatie heropend.</numerusform></translation>
+        <translation><numerusform>Er is een actieve overdracht. Applicatie verlaten?
+Overdracht wordt automatisch hervat wanneer u de applicatie heropend.</numerusform><numerusform>Er is een actieve overdracht. Applicatie verlaten?
+Overdracht wordt automatisch hervat wanneer u de applicatie heropend.</numerusform></translation>
     </message>
     <message>
         <source>Exit app</source>
@@ -2839,7 +2839,7 @@ Overdrachten worden automatisch hervat wanneer u de applicatie heropend.</numeru
     <message>
         <source>Business account expired</source>
         <translatorcomment>Label to show that the current business account is expired during a SDK operation.</translatorcomment>
-        <translation>Uw Zakelijke account is verlopen</translation>
+        <translation>Zakelijke account verlopen</translation>
     </message>
     <message>
         <source>Foreign target storage quota reached</source>
@@ -3258,7 +3258,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Cloud drive</source>
         <translatorcomment>Node selector button Text. Switch the view to show only the cloud drive nodes (files and folders)</translatorcomment>
-        <translation>Cloud Schijf</translation>
+        <translation>Cloud schijf</translation>
     </message>
     <message>
         <source>Incoming shares</source>
@@ -4170,8 +4170,8 @@ Controleer of de juiste bestandsnaam is opgegeven.</translation>
         <source>&apos;%1&apos; is write protected.
 Do you want to delete it anyway?</source>
         <translatorcomment>Warning message when a write protected file is about to be delete</translatorcomment>
-        <translation>&quot;%1” is beveiligd tegen schrijven.
-Wilt u deze toch verwijderen?</translation>
+        <translation>&apos;%1&apos; is beveiligd tegen schrijven.
+Wilt u het toch verwijderen?</translation>
     </message>
 </context>
 <context>
@@ -4317,7 +4317,7 @@ Wilt u deze toch verwijderen?</translation>
     <message>
         <source>Scanning</source>
         <translatorcomment>Label used to display when the scanning widget is on the &quot;Scanning&quot; step</translatorcomment>
-        <translation>Scannen</translation>
+        <translation>Scannen…</translation>
     </message>
     <message>
         <source>Creating folders</source>
@@ -5868,7 +5868,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your MEGA account is full</source>
         <translatorcomment>Message shown when the MEGA account is full</translatorcomment>
-        <translation>Uw MEGA-account is vol.</translation>
+        <translation>Uw MEGA account is vol</translation>
     </message>
     <message>
         <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left for this IP address.
@@ -5952,7 +5952,7 @@ Om meer tegoed te krijgen, upgrade naar een Pro-account of wacht [A] tot er meer
     <message>
         <source>Avg. speed</source>
         <translatorcomment>speed table header column name for completed and failed transfers categories</translatorcomment>
-        <translation>Gemiddelde snelheid</translation>
+        <translation>Gem. snelheid</translation>
     </message>
     <message>
         <source>Time</source>

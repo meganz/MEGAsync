@@ -446,15 +446,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>If you don&apos;t want to rename the new folder, stop the backup in the [A]Backup centre[/A] for the existing folder. Then setup the backup for the new folder again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Rename and backup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>A folder named &quot;%1&quot; already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer. </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If you don&apos;t want to rename the new folder, stop the backup in the &lt;a href=&quot;https://13755-backup-center.developers.mega.co.nz/fm/backups&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#aa1a00;&quot;&gt;Backup centre&lt;/span&gt;&lt;/a&gt; for the existing folder. Then setup the backup for the new folder again. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -478,12 +478,6 @@
         <source>Backup folder:</source>
         <translatorcomment>In the right of this label the line edit will be displayed. This line edit will be used by the user to change the backup name.</translatorcomment>
         <translation type="unfinished">Backup folder:</translation>
-    </message>
-    <message>
-        <source>The following characters are not allowed:
-</source>
-        <translatorcomment>Error message in case the user enters any invalid character. After the two dots, a list of unallowed characters will be displayed</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>A folder named &quot;%1&quot; already exists in your Backups. Rename the new folder to continue with the backup.</source>
@@ -578,18 +572,7 @@
     </message>
     <message>
         <source>View in Backup Centre</source>
-        <translatorcomment>Button text shown in success dialog, it opens the backup center in webclient and closes the dialog.</translatorcomment>
-        <translation>View in Backup Centre</translation>
-    </message>
-    <message>
-        <source>1. [B]Select[/B] folders to backup</source>
-        <translatorcomment>First step title in backup wizard. [B][/B] for text styles.</translatorcomment>
-        <translation>1. [B]Select[/B] folders to backup</translation>
-    </message>
-    <message>
-        <source>2. [B]Confirm[/B] backup settings</source>
-        <translatorcomment>Second step title in backup wizard. [B][/B] for text styles.</translatorcomment>
-        <translation>2. [B]Confirm[/B] backup settings</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Setup</source>
@@ -615,6 +598,22 @@
         </translation>
     </message>
     <message numerus="yes">
+        <source>Backup created</source>
+        <translatorcomment>Backup successfully created dialog title</translatorcomment>
+        <translation>
+            <numerusform>Backup created</numerusform>
+            <numerusform>Backups created</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>We&apos;re backing up your folder. The time this takes depends on the files in this folder.</source>
+        <translatorcomment>Label indicating that the backup configuration was successfull and it is being uploaded.</translatorcomment>
+        <translation>
+            <numerusform>We&amp;apos;re backing up your folder. The time this takes depends on the files in this folder.</numerusform>
+            <numerusform>We&amp;apos;re backing up your folders. The time this takes depends on the files in these folders.</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
         <source>Problem backing up folder</source>
         <translatorcomment>Label that indicates that there happened an error backing up a folder/folders</translatorcomment>
         <translation>
@@ -636,32 +635,21 @@
         <translation>Folder is already selected. Select a different folder.</translation>
     </message>
     <message>
-        <source>You can&apos;t backup this folder as it&apos;s already inside a backed up folder.</source>
-        <translatorcomment>Error  message that indicates that the selected folder is inside an already backed up folder, ence it is not possible to create this backup.</translatorcomment>
-        <translation>You can&apos;t backup this folder as it&apos;s already inside a backed up folder.</translation>
-    </message>
-    <message>
-        <source>You can&apos;t backup this folder as it contains backed up folders.</source>
-        <translatorcomment>Error  message. It indicates that the backup can´t be set as it contains backups.</translatorcomment>
-        <translation>You can&apos;t backup this folder as it contains backed up folders.</translation>
-    </message>
-    <message>
         <source>Do you want to continue?</source>
-        <translatorcomment>Warning dialog body text that show up a warning message but allows you to continue.</translatorcomment>
-        <translation>Do you want to continue?</translation>
+        <translation type="unfinished">Do you want to continue?</translation>
+    </message>
+    <message>
+        <source>1. [B]Select[/B] folders to backup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2. [B]Confirm[/B] backup settings</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Are you sure you want to cancel? All changes will be lost.</source>
         <translatorcomment>Warning dialog that appears when user click in cancel button in backup wizard and it will be closed.</translatorcomment>
-        <translation>Are you sure you want to cancel? All changes will be lost.</translation>
-    </message>
-    <message numerus="yes">
-        <source>We&apos;re backing up your folder. The time this takes depends on the files in this folder.</source>
-        <translatorcomment>Label indicating that the backup configuration was successfull and it is being uploaded.</translatorcomment>
-        <translation>
-            <numerusform>We&apos;re backing up your folder. The time this takes depends on the files in this folder.</numerusform>
-            <numerusform>We&apos;re backing up your folders. The time this takes depends on the files in these folders.</numerusform>
-        </translation>
+        <translation type="unfinished">Are you sure you want to cancel? All changes will be lost.</translation>
     </message>
     <message>
         <source>Choose directory</source>
@@ -672,22 +660,6 @@
         <source>Error: %1</source>
         <translatorcomment>Placeholder will show the error message, this is being shown in a tooltip</translatorcomment>
         <translation>Error: %1</translation>
-    </message>
-    <message numerus="yes">
-        <source>Backup created</source>
-        <translatorcomment>Backup successfully created dialog title</translatorcomment>
-        <translation>
-            <numerusform>Backup created</numerusform>
-            <numerusform>Backups created</numerusform>
-        </translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Lato&apos;; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; line-height:200%;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1295,12 +1267,12 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>Your Business account has expired</translation>
+        <translation>Your Business account is expired</translation>
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation>Your account is expired as read only until you proceed with the needed payments.</translation>
+        <translation>Your account is suspended as read only until you proceed with the needed payments.</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -1619,7 +1591,7 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Login</source>
         <translatorcomment>Button label to start the Login process. (String as short as possible)</translatorcomment>
-        <translation>Log in</translation>
+        <translation>Login</translation>
     </message>
     <message>
         <source>Create account</source>
@@ -2640,7 +2612,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>Your Business account has expired</translation>
+        <translation>Your Business account is expired</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -2650,7 +2622,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message shown to admin business account when a payment has failed. </translatorcomment>
-        <translation>It seems the payment for your Business account has failed. Your account has expired and has been granted with read-only access permissions until you proceed with the payment required.</translation>
+        <translation>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</translation>
     </message>
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
@@ -2665,7 +2637,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>This month&apos;s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</source>
         <translatorcomment>Informative message shown to the user when a payment has failed for a business account.</translatorcomment>
-        <translation>This month’s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</translation>
+        <translation>This month&apos;s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -2675,7 +2647,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
         <translatorcomment>Informative message shown when a business account is expired and the user can only browse data and none operation (upload, download, creation..) is allowed.</translatorcomment>
-        <translation>Your account has [A]expired[/A]. You can only browse your data.</translation>
+        <translation>Your account is currently [A]suspended[/A]. You can only browse your data.</translation>
     </message>
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
@@ -2877,17 +2849,20 @@ Transfers will automatically resume when you re-open the app.</numerusform>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Your syncs and backups have been disabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your backups have been disabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Your backup &quot;%1&quot; has been temporarily disabled</source>
         <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder displays backup name</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
-        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
@@ -2918,17 +2893,6 @@ Transfers will automatically resume when you re-open the app.</numerusform>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled. Reason: %2</source>
-        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Your syncs and backups have been disabled</source>
-        <translatorcomment>Notification message launched when your syncs and backups have been disabled.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Your backups have been disabled</source>
-        <translatorcomment>Notification message launched when your backups have been disabled.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3289,7 +3253,7 @@ Transfers will automatically resume when you re-open the app.</numerusform>
     <message>
         <source>Business account expired</source>
         <translatorcomment>Label to show that the current business account is expired during a SDK operation.</translatorcomment>
-        <translation>Your business account has expired</translation>
+        <translation>Business account expired</translation>
     </message>
     <message>
         <source>Foreign target storage quota reached</source>
@@ -3427,7 +3391,7 @@ Transfers will automatically resume when you re-open the app.</numerusform>
     <message>
         <source>Get link</source>
         <translatorcomment>Context menu action to get transfer link</translatorcomment>
-        <translation>Get Link</translation>
+        <translation>Get link</translation>
     </message>
     <message>
         <source>Open in MEGA</source>
@@ -3708,7 +3672,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Cloud drive</source>
         <translatorcomment>Node selector button Text. Switch the view to show only the cloud drive nodes (files and folders)</translatorcomment>
-        <translation>Cloud Drive</translation>
+        <translation>Cloud drive</translation>
     </message>
     <message>
         <source>Incoming shares</source>
@@ -4656,7 +4620,7 @@ Please verify the correct file name was given.</translation>
         <source>&apos;%1&apos; is write protected.
 Do you want to delete it anyway?</source>
         <translatorcomment>Warning message when a write protected file is about to be delete</translatorcomment>
-        <translation>”%1” is write protected.
+        <translation>&apos;%1&apos; is write protected.
 Do you want to delete it anyway?</translation>
     </message>
 </context>
@@ -4755,6 +4719,11 @@ Do you want to delete it anyway?</translation>
 <context>
     <name>RemoveBackupDialog</name>
     <message>
+        <source>Stop backup</source>
+        <translatorcomment>Backup removal dialog window title (Linux and windows)</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Stop backing up folder?</source>
         <translatorcomment>Backup removal dialog title</translatorcomment>
         <translation type="unfinished"></translation>
@@ -4790,6 +4759,11 @@ Do you want to delete it anyway?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. This action cannot be undone.</source>
+        <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Confirm</source>
         <translatorcomment>Button text that accepts</translatorcomment>
         <translation type="unfinished"></translation>
@@ -4798,16 +4772,6 @@ Do you want to delete it anyway?</translation>
         <source>Cancel</source>
         <translatorcomment>Button text that cancels</translatorcomment>
         <translation type="unfinished">Cancel</translation>
-    </message>
-    <message>
-        <source>Stop backup</source>
-        <translatorcomment>Backup removal dialog window title (Linux and windows)</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. This action cannot be undone.</source>
-        <translatorcomment>Delete folder permanently </translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Move this folder from backups to another location in your Cloud Drive to get full access to your data. This folder will stop being backed up.</source>
@@ -4866,7 +4830,7 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Scanning</source>
         <translatorcomment>Label used to display when the scanning widget is on the &quot;Scanning&quot; step</translatorcomment>
-        <translation>Scanning</translation>
+        <translation>Scanning…</translation>
     </message>
     <message>
         <source>Creating folders</source>
@@ -5618,8 +5582,7 @@ Computer will enter sleep mode once these are complete.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; can&apos;t be removed. Reason: %2</source>
-        <translatorcomment>Warning message indicating that an error happened removing a sync. First palceholder is the sync name. Second placeholder is the error message sent by SDK (reason)</translatorcomment>
+        <source>Your sync can&apos;t be removed. Reason: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5643,23 +5606,27 @@ Computer will enter sleep mode once these are complete.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Your backup &quot;%1&quot; can&apos;t be removed. Reason: %2</source>
-        <translatorcomment>Error message dialog Text. First placeholder is backup name, second placeholder is the error reason</translatorcomment>
+        <source>Your backup can&apos;t be removed. Reason: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error moving or removing remote backup folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to move or remove the remote backup folder. Reason: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Error enabling backup</source>
-        <translatorcomment>Error message dialog title</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; can&apos;t be enabled. Reason: %2</source>
-        <translatorcomment>Error message dialog Text. First placeholder is backup name, second placeholder is the error reason</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Error disabling backup</source>
-        <translatorcomment>Error message dialog title</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6239,65 +6206,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
 <context>
     <name>SyncController</name>
     <message>
-        <source>You can&apos;t backup this folder as it contains synced folders.</source>
-        <translatorcomment>Warning message indicating that the selected folder for backup contains synced folders, ence it can not be backed up.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You can&apos;t backup this folder as it contains backed up folders.</source>
-        <translatorcomment>Warning message indicating that the selected folder for backup contains backed up folders, ence it can not be backed up.</translatorcomment>
-        <translation type="unfinished">You can&apos;t backup this folder as it contains backed up folders.</translation>
-    </message>
-    <message>
-        <source>You can&apos;t sync folders that contain synced folders.</source>
-        <translatorcomment>Warning message indicating that the selected folder for sync contains synced folders, ence it can not be synced.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You are trying to backup an extremely large folder.
-To prevent the backup of entire boot volumes, which is inefficient and dangerous,
-we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translatorcomment>Warning message displayed if user tryes to backup the system main hard disk.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You are trying to sync an extremely large folder.
-To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
-we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translatorcomment>Warning message displayed if user tryes to sync the system main hard disk.</translatorcomment>
-        <translation type="unfinished">You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
-    </message>
-    <message>
-        <source>You don&apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Warning message indicating that the user doesn´t have write permissions on that folder</translatorcomment>
-        <translation type="unfinished">You don’t have write permissions in this local folder.</translation>
-    </message>
-    <message>
-        <source>MEGAsync won&apos;t be able to download anything here.</source>
-        <translatorcomment>Warning message indicating that megasync is not going to be able to download anything in the selected folder.</translatorcomment>
-        <translation type="unfinished">MEGAsync won’t be able to download anything here.</translation>
-    </message>
-    <message>
-        <source>Unable to create backup as selected folder is not valid. Try again.</source>
-        <translatorcomment>Warning message indicating that is not possible to create a backup of the selected folder.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unable to create backup. Try again and if issue continues, contact [A]Support[/A].</source>
-        <translatorcomment>Warning message indicating that is not possible to create a backup. Placeholder is a link to support page.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unable to create backup as the device you&apos;re backing up from doesn&apos;t have a name. Give your device a name and then try again. If issue continues, contact [A]Support[/A].</source>
-        <translatorcomment>Warning message related with device name. Place holder is a link to support</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unable to create backup. For further information, contact [A]Support[/A].</source>
-        <translatorcomment>Warning message on backup creation. Place holder is a link to support</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>You can&apos;t backup this folder as it&apos;s already synced.</source>
         <translatorcomment>Warning message indicating that a folder can´t be backed up as it is synced.</translatorcomment>
         <translation type="unfinished"></translation>
@@ -6319,13 +6227,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>You can&apos;t backup this folder as it&apos;s already inside a synced folder.</source>
-        <translatorcomment>Warning message indicating that a folder can´t be backed up as it is inside a synced folder.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You can&apos;t backup this folder as it&apos;s already inside a backed up folder.</source>
         <translatorcomment>Warning message indicating that a folder can´t be backed up as it is inside a backed up folder.</translatorcomment>
-        <translation type="unfinished">You can&apos;t backup this folder as it&apos;s already inside a backed up folder.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>You can&apos;t sync folders that are inside synced folders.</source>
@@ -6338,9 +6241,41 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>You can&apos;t backup this folder as it contains synced folders.</source>
+        <translatorcomment>Warning message indicating that the selected folder for sync contains synced folders, ence it can not be synced.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t sync folders that contain synced folders.</source>
+        <translatorcomment>Warning message indicating that the selected folder for sync contains synced folders, hence it can not be synced.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>You can&apos;t sync folders that contain backed up folders.</source>
         <translatorcomment>Warning message indicating that a folder can´t be synced as it contains backed up folders.</translatorcomment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can’t backup “%1” as it’s the root folder. The root folder is either; the top-level folder on your device or computer that holds all your folders and files or the folder where the system or program is installed. We don’t allow users to back up root folders as it may cause file conflicts or errors.
+To continue, select a different folder.</source>
+        <translatorcomment>Warning message displayed if user tries to backup the system main hard disk.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can’t sync “%1” as it’s the root folder. The root folder is either; the top-level folder on your device or computer that holds all your folders and files or the folder where the system or program is installed. We don’t allow users to sync root folders as it may cause file conflicts or errors.
+To continue, select a different folder.</source>
+        <translatorcomment>Warning message displayed if user tries to sync the system main hard disk.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translatorcomment>Warning message indicating that the user doesn´t have write permissions on that folder</translatorcomment>
+        <translation type="unfinished">You don’t have write permissions in this local folder.</translation>
+    </message>
+    <message>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <translatorcomment>Warning message indicating that megasync is not going to be able to download anything in the selected folder.</translatorcomment>
+        <translation type="unfinished">MEGAsync won’t be able to download anything here.</translation>
     </message>
     <message>
         <source>You don&apos;t have enough permissions for this remote folder</source>
@@ -6353,6 +6288,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>The selected MEGA folder is already synced</source>
+        <translatorcomment>Warning message indicating that the selected folder is already a synced folder.</translatorcomment>
+        <translation type="unfinished">The selected MEGA folder is already synced</translation>
+    </message>
+    <message>
         <source>Folder contents already synced</source>
         <translatorcomment>Warning message indicating that the selected folder have got an active sync bellow the selected path.</translatorcomment>
         <translation type="unfinished">Folder contents already synced</translation>
@@ -6363,9 +6303,43 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation type="unfinished">Folder already synced</translation>
     </message>
     <message>
-        <source>The selected MEGA folder is already synced</source>
-        <translatorcomment>Warning message indicating that the selected folder is already a synced folder.</translatorcomment>
-        <translation type="unfinished">The selected MEGA folder is already synced</translation>
+        <source>You can&apos;t backup this folder as it contains backed up folders.</source>
+        <translatorcomment>Warning message indicating that the selected folder for backup contains backed up folders, ence it can not be backed up.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t backup this folder as it&apos;s already inside a backed up folder.</source>
+        <translatorcomment>Warning message indicating that a folder can´t be backed up as it is inside a backed up folder.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to create backup as selected folder is not valid. Try again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to create backup. Try again and if issue continues, contact [A]Support[/A].</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to create backup as the device you&apos;re backing up from doesn&apos;t have a name. Give your device a name and then try again. If issue continues, contact [A]Support[/A].</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to create backup. For further information, contact [A]Support[/A].</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SyncInfo</name>
+    <message>
+        <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
+        <translatorcomment>Informative message shown when a user is trying to sync using a FAT filesystem.</translatorcomment>
+        <translation type="unfinished">You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it’s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</translation>
+    </message>
+    <message>
+        <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
+        <translatorcomment>Informative message shown when a user is trying to sync using a local folder shared with VMWare third party app.</translatorcomment>
+        <translation type="unfinished">You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</translation>
     </message>
 </context>
 <context>
@@ -6409,24 +6383,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Click menu for more Sync actions</source>
         <translatorcomment>Menu column item tooltip.</translatorcomment>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>SyncModel</name>
-    <message>
-        <source>MEGAsync</source>
-        <translatorcomment>Warning message dialog title.</translatorcomment>
-        <translation type="unfinished">MEGAsync</translation>
-    </message>
-    <message>
-        <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
-        <translatorcomment>Informative message shown when a user is trying to sync using a FAT filesystem.</translatorcomment>
-        <translation type="unfinished">You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it’s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</translation>
-    </message>
-    <message>
-        <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
-        <translatorcomment>Informative message shown when a user is trying to sync using a local folder shared with VMWare third party app.</translatorcomment>
-        <translation type="unfinished">You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</translation>
     </message>
 </context>
 <context>
@@ -6732,7 +6688,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Your MEGA account is full</source>
         <translatorcomment>Message shown when the MEGA account is full</translatorcomment>
-        <translation>Your MEGA account is full.</translation>
+        <translation>Your MEGA account is full</translation>
     </message>
     <message>
         <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left for this IP address.

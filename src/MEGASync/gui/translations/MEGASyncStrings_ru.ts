@@ -150,7 +150,7 @@
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Label title for Incoming shares category of a notification</translatorcomment>
-        <translation>Входящие общие папки</translation>
+        <translation>Входящие элементы</translation>
     </message>
     <message>
         <source>Payment</source>
@@ -310,7 +310,7 @@
     <message>
         <source>Shared Folder Activity</source>
         <translatorcomment>Generic label to indicate that there is activity in a shared folder but the name of the shared folder is not available.</translatorcomment>
-        <translation>Активность с общими папками</translation>
+        <translation>Действия с общими папками</translation>
     </message>
     <message>
         <source>Access to shared folder was removed</source>
@@ -448,7 +448,7 @@
     <message>
         <source>Only enable this option if tranfers don&apos;t start. Under all other circumstances, using HTTP is satisfactory as MEGA already encrypts all data.</source>
         <translatorcomment>Description label about the option Use HTTPS for transfers that don&amp;apos;t start checkbox.</translatorcomment>
-        <translation>Включайте эту опцию только если передача не начинается. При всех других обстоятельствах HTTP достаточно, поскольку MEGA уже шифрует все данные.</translation>
+        <translation>Включайте эту опцию, только если передача не начинается. При всех других обстоятельствах HTTP достаточно, поскольку MEGA уже шифрует все данные.</translation>
     </message>
 </context>
 <context>
@@ -842,7 +842,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>New Contact Established</source>
         <translatorcomment>Title of the notification when a contact relationship has been established.</translatorcomment>
-        <translation>Установлен новый контакт</translation>
+        <translation>Hовый контакт</translation>
     </message>
     <message>
         <source>New contact with [A] has been established</source>
@@ -882,7 +882,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Shared Folder Activity</source>
         <translatorcomment>Generic label to indicate that there is activity in a shared folder but the name of the shared folder is not available.</translatorcomment>
-        <translation>Активность с общими папками</translation>
+        <translation>Действия с общими папками</translation>
     </message>
     <message>
         <source>Show</source>
@@ -972,12 +972,12 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>Аккаунт деактивирован</translation>
+        <translation>Срок действия вашего бизнес-аккаунта истёк</translation>
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation>Срок действия вашего аккаунта истёк. Он переведён в режим только для чтения, пока вы не выполните необходимые платежи.</translation>
+        <translation>Ваш аккаунт переведён в режим только для чтения, пока вы не произведёте необходимые платежи.</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -1073,7 +1073,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>A folder named [A] already exists at this destination</source>
         <translatorcomment>Dialog text shown when a folder with the same name has been found on the cloud. [A] folder name</translatorcomment>
-        <translation>В этой папке уже существует папка «[A]»</translation>
+        <translation>В этом расположении уже существует папка «[A]»</translation>
     </message>
     <message>
         <source>The new folder will be merged with the folder at this destination.</source>
@@ -1088,7 +1088,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>A file named [A] already exists at this destination</source>
         <translatorcomment>Dialog text shown when a file with the same name has been found on the cloud. [A] file name</translatorcomment>
-        <translation>В этой папке уже существует файл «[A]»</translation>
+        <translation>В этом расположении уже существует файл «[A]»</translation>
     </message>
     <message>
         <source>The file at this destination will be replaced with the new file.</source>
@@ -1166,12 +1166,12 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>loading time…</source>
         <translatorcomment>Text shown while the local file/folder modified time is calculated</translatorcomment>
-        <translation>Вычисление даты и времени…</translation>
+        <translation>вычисление времени…</translation>
     </message>
     <message>
         <source>loading size…</source>
         <translatorcomment>Text shown while the local file/folder size is calculated</translatorcomment>
-        <translation>Вычисление размера…</translation>
+        <translation>вычисление размера…</translation>
     </message>
     <message>
         <source>Learn more</source>
@@ -1358,7 +1358,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Incorrect email and/or password.</source>
         <translatorcomment>Message box shown when user enters incorrect email and/or password at login</translatorcomment>
-        <translation>Неверный e-mail или пароль.</translation>
+        <translation>Неверный email и/или пароль.</translation>
     </message>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
@@ -1643,7 +1643,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Notifications</source>
         <translatorcomment>Label to open notifications section at main dialog</translatorcomment>
-        <translation>Оповещения</translation>
+        <translation>Уведомления</translation>
     </message>
     <message>
         <source>Storage</source>
@@ -1963,7 +1963,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
         <translatorcomment>Notification message launched when a problem occurs uploading files to a destination folder in MEGA.</translatorcomment>
-        <translation>Ошибка: Неверная папка назначения. Загрузка была остановлена</translation>
+        <translation>Ошибка: Неверное расположение папки. Загрузка была остановлена</translation>
     </message>
     <message>
         <source>About MEGAsync</source>
@@ -2180,7 +2180,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Error: Invalid destination folder. The download has been cancelled</source>
         <translatorcomment>Notification message shown when an error occurs while downloading a file to a invalid destination folder.</translatorcomment>
-        <translation>Ошибка: неверная папка назначения. Загрузка отменена.</translation>
+        <translation>Ошибка: Неверное расположение папки. Загрузка была отменена</translation>
     </message>
     <message>
         <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
@@ -2320,7 +2320,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message shown to admin business account when a payment has failed. </translatorcomment>
-        <translation>Ваш бизнес-аккаунт деактивирован из-за сбоя при оплате. Вы не сможете получить доступ к данным аккаунта, пока оплатите подписку и не активируете её повторно.</translation>
+        <translation>Похоже, оплата вашего бизнес-аккаунта не прошла. Аккаунт переведён в режим только для чтения до тех пор, пока вы не произведёте необходимые платежи.</translation>
     </message>
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
@@ -2345,7 +2345,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
         <translatorcomment>Informative message shown when a business account is expired and the user can only browse data and none operation (upload, download, creation..) is allowed.</translatorcomment>
-        <translation>Срок действия вашего аккаунта [A]истёк[/A]. Вы можете только просматривать данные.</translation>
+        <translation>Ваш аккаунт [B]приостановлен[/B]. Вы можете только просматривать данные.</translation>
     </message>
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
@@ -2470,22 +2470,18 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 and %2 were successfully uploaded</source>
         <translatorcomment>System notification to inform the user that %1 files and %2 folders were successfully uploaded. The %1 is a sentence part for files and %2 for folders.</translatorcomment>
-        <translation>Загружены %1 и %2</translation>
+        <translation>%1 и %2 успешно загружены</translation>
     </message>
     <message>
         <source>%1 and %2 were successfully downloaded</source>
         <translatorcomment>System notification to inform the user that %1 files and %2 folders were successfully downloaded. The %1 is a sentence part for files and %2 for folders.</translatorcomment>
-        <translation>Скачаны %1 и %2</translation>
+        <translation>%1 и %2 успешно скачаны</translation>
     </message>
     <message numerus="yes">
         <source>There is an active transfer. Exit the app?
 Transfer will automatically resume when you re-open the app.</source>
         <translatorcomment>Messagebox text to let the user know that there are active transfers when closing the app. The user will be able to exit and pause them, or stop the exit action.</translatorcomment>
-        <translation><numerusform>Есть активная передача. Выйти из приложения?
-Передача автоматически возобновится, когда вы снова откроете приложение.</numerusform><numerusform>Есть активные передачи. Выйти из приложения?
-Передачи автоматически возобновятся, когда вы снова откроете приложение.</numerusform><numerusform>Есть активные передачи. Выйти из приложения?
-Передачи автоматически возобновятся, когда вы снова откроете приложение.</numerusform><numerusform>Есть активные передачи. Выйти из приложения?
-Передачи автоматически возобновятся, когда вы снова откроете приложение.</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Exit app</source>
@@ -2568,7 +2564,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Incomplete</source>
         <translatorcomment>Label to show that an error related with an Incomplete SDK operation.</translatorcomment>
-        <translation>Неполный</translation>
+        <translation>Неполная</translation>
     </message>
     <message>
         <source>Invalid key/Decryption error</source>
@@ -2841,7 +2837,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Business account expired</source>
         <translatorcomment>Label to show that the current business account is expired during a SDK operation.</translatorcomment>
-        <translation>Срок действия вашего бизнес-аккаунта истёк</translation>
+        <translation>Срок действия бизнес-аккаунта истёк</translation>
     </message>
     <message>
         <source>Foreign target storage quota reached</source>
@@ -3057,14 +3053,14 @@ All the other transfers will be cancelled and cleared.</source>
         <source>Clear transfers?
 All your completed transfers will be cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to clear all the transfers in the completed category</translatorcomment>
-        <translation>Отменить передачи?
+        <translation>Очистить передачи?
 Все завершённые передачи будут удалены.</translation>
     </message>
     <message>
         <source>Clear transfers?
 All your completed transfers in this category will be cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to clear all the transfers in a category other than the completed category</translatorcomment>
-        <translation>Отменить передачи?
+        <translation>Очистить передачи?
 Все завершённые передачи в этой категории будут удалены.</translation>
     </message>
     <message>
@@ -3099,7 +3095,7 @@ All the other selected transfers will be cancelled and cleared.</source>
         <source>Clear transfers?
 All the selected completed transfers in this category will be cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to clear the selected completed transfer</translatorcomment>
-        <translation>Отменить передачи?
+        <translation>Очистить передачи?
 Все выбранные завершённые передачи в этой категории будут удалены.</translation>
     </message>
     <message>
@@ -3735,13 +3731,13 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Sync transfers cannot be cancelled individually.
 Please delete the folder sync from settings to cancel them.</source>
         <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for windows and linux)</translatorcomment>
-        <translation>Передачи синхронизации нельзя отменить по отдельности. Чтобы удалить синхронизацию, перейдите в «Hастройки» в настольном приложении и удалите синхронизируемую папку.</translation>
+        <translation>Передачи синхронизации нельзя отменить по отдельности. Чтобы отменить синхронизацию, перейдите в «Hастройки» в настольном приложении и удалите синхронизируемую папку.</translation>
     </message>
     <message>
         <source>Sync transfers cannot be cancelled individually.
 Please delete the folder sync from preferences to cancel them.</source>
         <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for macOS)</translatorcomment>
-        <translation>Передачи синхронизации нельзя отменить по отдельности. Чтобы удалить синхронизацию, перейдите в «Hастройки» в настольном приложении и удалите синхронизируемую папку.</translation>
+        <translation>Передачи синхронизации нельзя отменить по отдельности. Чтобы отменить синхронизацию, перейдите в «Hастройки» в настольном приложении и удалите синхронизируемую папку.</translation>
     </message>
 </context>
 <context>
@@ -4139,7 +4135,7 @@ Please delete the folder sync from preferences to cancel them.</source>
     <message>
         <source>File &amp;name:</source>
         <translatorcomment>Selected file text box label when opening a file. The ampersand means that the key after can be used for triggers the action instead of using the mouse to click it. The shortcut key chosen cannot be the same as the one chosen on the next strings (&amp;Open, &amp;Choose, &amp;Save).</translatorcomment>
-        <translation>&amp;Имя файла:</translation>
+        <translation>&amp;Название файла:</translation>
     </message>
     <message>
         <source>%1
@@ -4204,7 +4200,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Invalid filename</source>
         <translatorcomment>Name of an invalid filename</translatorcomment>
-        <translation>Неверное имя файла</translation>
+        <translation>Неверное название файла</translation>
     </message>
     <message>
         <source>Name</source>
@@ -4244,7 +4240,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>&lt;b&gt;The name &quot;%1&quot; cannot be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuation marks.</source>
         <translatorcomment>Alert message when file name is incorrect</translatorcomment>
-        <translation>&lt;b&gt;Имя «%1» использовать нельзя.&lt;/b&gt;&lt;p&gt;Попробуйте использовать другое имя, с меньшим количеством символов или без знаков препинания.</translation>
+        <translation>&lt;b&gt;Название «%1» использовать нельзя.&lt;/b&gt;&lt;p&gt;Попробуйте использовать другое название, с меньшим количеством символов или без знаков препинания.</translation>
     </message>
 </context>
 <context>
@@ -4317,7 +4313,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Scanning</source>
         <translatorcomment>Label used to display when the scanning widget is on the &quot;Scanning&quot; step</translatorcomment>
-        <translation>Сканирование</translation>
+        <translation>Сканирование…</translation>
     </message>
     <message>
         <source>Creating folders</source>
@@ -4882,7 +4878,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Pro Lite</source>
         <translatorcomment>Text label indicating the Pro Lite tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro Lite</translation>
+        <translation>Pro Lite</translation>
     </message>
     <message>
         <source>Business</source>
@@ -5127,7 +5123,7 @@ Computer will enter sleep mode once these are complete.</source>
     <message>
         <source>Incorrect email and/or password.</source>
         <translatorcomment>Message displayed when a user is trying to loging with an incorrect email/password.</translatorcomment>
-        <translation>Неверный e-mail или пароль.</translation>
+        <translation>Неверный email и/или пароль.</translation>
     </message>
     <message>
         <source>MEGA folder doesn&apos;t exist</source>
@@ -5177,7 +5173,7 @@ Computer will enter sleep mode once these are complete.</source>
     <message>
         <source>Creating account...</source>
         <translatorcomment>Label displayed when the account is being created.</translatorcomment>
-        <translation>Создание учётной записи…</translation>
+        <translation>Создание аккаунта…</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -5705,7 +5701,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Uploads</source>
         <translatorcomment>Label of tab to access all active uploads</translatorcomment>
-        <translation>Загрузки в облако</translation>
+        <translation>Загрузки</translation>
     </message>
     <message>
         <source>Completed</source>
@@ -5962,7 +5958,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Clear all completed</source>
         <translatorcomment>Tooltip for clear button when the user is in the completed category</translatorcomment>
-        <translation>Удалить все завершённые</translation>
+        <translation>Очистить все завершённые</translation>
     </message>
     <message>
         <source>Clear all search results</source>
@@ -5972,27 +5968,27 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Clear all audios</source>
         <translatorcomment>Tooltip for clear button when the user is in the audios category</translatorcomment>
-        <translation>Удалить все аудио</translation>
+        <translation>Очистить все передачи в «Аудио»</translation>
     </message>
     <message>
         <source>Clear all videos</source>
         <translatorcomment>Tooltip for clear button when the user is in the videos category</translatorcomment>
-        <translation>Удалить все видео</translation>
+        <translation>Очистить все передачи в «Видео»</translation>
     </message>
     <message>
         <source>Clear all archives</source>
         <translatorcomment>Tooltip for clear button when the user is in the archives category</translatorcomment>
-        <translation>Удалить все архивы</translation>
+        <translation>Очистить все передачи в «Архивах»</translation>
     </message>
     <message>
         <source>Clear all documents</source>
         <translatorcomment>Tooltip for clear button when the user is in the documents category</translatorcomment>
-        <translation>Удалить все документы</translation>
+        <translation>Очистить все передачи в «Документах»</translation>
     </message>
     <message>
         <source>Clear all images</source>
         <translatorcomment>Tooltip for clear button when the user is in the images category</translatorcomment>
-        <translation>Удалить все изображения</translation>
+        <translation>Очистить все передачи в «Изображениях»</translation>
     </message>
     <message>
         <source>Clear all transfers</source>
@@ -6002,17 +5998,17 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Cancel all downloads</source>
         <translatorcomment>Tooltip for cancel button when the user is in the downloads category</translatorcomment>
-        <translation>Отменить все скачивания</translation>
+        <translation>Отменить все передачи в «Скачиваниях»</translation>
     </message>
     <message>
         <source>Cancel all uploads</source>
         <translatorcomment>Tooltip for cancel button when the user is in the uploads category</translatorcomment>
-        <translation>Отменить все загрузки</translation>
+        <translation>Отменить все передачи в «Загрузках»</translation>
     </message>
     <message>
         <source>Cancel all failed</source>
         <translatorcomment>Tooltip for cancel button when the user is in the failed category</translatorcomment>
-        <translation>Отменить все неудавшиеся</translation>
+        <translation>Отменить все передачи в «Неудавшихся»</translation>
     </message>
     <message>
         <source>Cancel all search results</source>
@@ -6022,27 +6018,27 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Cancel all audios</source>
         <translatorcomment>Tooltip for cancel button when the user is in the audios category</translatorcomment>
-        <translation>Отменить все аудио</translation>
+        <translation>Отменить все передачи в «Аудио»</translation>
     </message>
     <message>
         <source>Cancel all videos</source>
         <translatorcomment>Tooltip for cancel button when the user is in the videos category</translatorcomment>
-        <translation>Отменить все видео</translation>
+        <translation>Отменить все передачи в «Видео»</translation>
     </message>
     <message>
         <source>Cancel all archives</source>
         <translatorcomment>Tooltip for cancel button when the user is in the archives category</translatorcomment>
-        <translation>Отменить все архивы</translation>
+        <translation>Отменить все передачи в «Архивах»</translation>
     </message>
     <message>
         <source>Cancel all documents</source>
         <translatorcomment>Tooltip for cancel button when the user is in the documents category</translatorcomment>
-        <translation>Отменить все документы</translation>
+        <translation>Отменить все передачи в «Документах»</translation>
     </message>
     <message>
         <source>Cancel all images</source>
         <translatorcomment>Tooltip for cancel button when the user is in the images category</translatorcomment>
-        <translation>Отменить все изображения</translation>
+        <translation>Отменить все передачи в «Изображениях»</translation>
     </message>
     <message>
         <source>Cancel all transfers</source>
@@ -6324,7 +6320,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Pro Lite</source>
         <translatorcomment>Label to refer Pro Lite tier</translatorcomment>
-        <translation>Pro Lite</translation>
+        <translation>Pro Lite</translation>
     </message>
     <message>
         <source>Pro I</source>
