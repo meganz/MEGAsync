@@ -25,11 +25,17 @@ class LoadingSceneDelegateBase : public QStyledItemDelegate
 
 public:
     explicit LoadingSceneDelegateBase(QAbstractItemView* view) :
+        QStyledItemDelegate(view),
         mView(view),
         mOpacitySteps(OPACITY_STEPS),
-        mOpacity(MAX_OPACITY),
-        QStyledItemDelegate(view)
+        mOpacity(MAX_OPACITY)
     {
+    }
+    QWidget *createEditor(QWidget *,
+                          const QStyleOptionViewItem &,
+                          const QModelIndex &) const override
+    {
+        return nullptr;
     }
 
     ~LoadingSceneDelegateBase()
@@ -286,6 +292,7 @@ public:
             mLoadingView->setSizePolicy(mView->sizePolicy());
             mLoadingView->setFrameStyle(QFrame::NoFrame);
             mLoadingView->setIndentation(0);
+            mLoadingView->setSelectionMode(QAbstractItemView::NoSelection);
 
             mLoadingModel = new QStandardItemModel(mLoadingView);
             mLoadingDelegate = new LoadingSceneDelegate<DelegateWidget>(mLoadingView);

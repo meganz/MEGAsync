@@ -313,6 +313,8 @@ void MegaItemProxyModel::invalidateModel(const QModelIndexList& parents)
 
 void MegaItemProxyModel::onModelSortedFiltered()
 {
+    emit layoutChanged();
+
     if(mExpandMapped)
     {
         emit expandReady();
@@ -328,5 +330,4 @@ void MegaItemProxyModel::onModelSortedFiltered()
 
     emit getMegaModel()->blockUi(false);
     itemsToMap.clear();
-    emit layoutChanged();
 }

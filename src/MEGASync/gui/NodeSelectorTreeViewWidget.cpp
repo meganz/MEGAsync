@@ -94,7 +94,7 @@ void NodeSelectorTreeViewWidget::setSelectionMode(int selectMode)
     connect(mProxyModel.get(), &MegaItemProxyModel::expandReady, this, &NodeSelectorTreeViewWidget::onExpandReady);
     connect(mModel.get(), &MegaItemModel::blockUi, this, &NodeSelectorTreeViewWidget::onUiBlocked);
 
-    setLoadingSceneVisible(true);
+    //setLoadingSceneVisible(true);
     ui->tMegaFolders->setSortingEnabled(true);
     mProxyModel->setSourceModel(mModel.get());
 
@@ -176,15 +176,6 @@ void NodeSelectorTreeViewWidget::onRowsInserted()
     }
 }
 
-void NodeSelectorTreeViewWidget::onModelAboutToBeChanged()
-{
-    //mProxyModel->blockSignals(true);
-    //ui->tMegaFolders->blockSignals(true);
-    //ui->tMegaFolders->header()->blockSignals(true);
-    //setLoadingSceneVisible(true);
-    //mProxyModel->blockSignals(true);
-}
-
 void NodeSelectorTreeViewWidget::onExpandReady()
 {
     if(ui->tMegaFolders->model() == nullptr)
@@ -192,13 +183,10 @@ void NodeSelectorTreeViewWidget::onExpandReady()
         ui->tMegaFolders->setContextMenuPolicy(Qt::DefaultContextMenu);
         ui->tMegaFolders->setExpandsOnDoubleClick(false);
         ui->tMegaFolders->setHeader(new MegaItemHeaderView(Qt::Horizontal));
-        //ui->tMegaFolders->header()->
         ui->tMegaFolders->setItemDelegate(new NodeRowDelegate(ui->tMegaFolders));
         ui->tMegaFolders->setItemDelegateForColumn(MegaItemModel::STATUS, new IconDelegate(ui->tMegaFolders));
         ui->tMegaFolders->setItemDelegateForColumn(MegaItemModel::USER, new IconDelegate(ui->tMegaFolders));
         ui->tMegaFolders->setTextElideMode(Qt::ElideMiddle);
-
-        setLoadingSceneVisible(true);
 
         ui->tMegaFolders->sortByColumn(MegaItemModel::NODE, Qt::AscendingOrder);
         ui->tMegaFolders->setModel(mProxyModel.get());
@@ -243,7 +231,6 @@ void NodeSelectorTreeViewWidget::onExpandReady()
         }
     }
 
-    setLoadingSceneVisible(false);
 }
 
 void NodeSelectorTreeViewWidget::onGoBackClicked()

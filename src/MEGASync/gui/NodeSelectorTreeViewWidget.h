@@ -82,7 +82,6 @@ private slots:
     void onSectionResized();
     void onRowsInserted();
     void onExpandReady();
-    void onModelAboutToBeChanged();
     void setLoadingSceneVisible(bool visible);
     void onUiBlocked(bool state);
 
