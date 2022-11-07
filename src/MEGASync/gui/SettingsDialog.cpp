@@ -1189,8 +1189,6 @@ void SettingsDialog::onCacheSizeAvailable()
 // Account -----------------------------------------------------------------------------------------
 void SettingsDialog::updateStorageElements()
 {
-    int accountType = mPreferences->accountType();
-
     auto totalStorage = mPreferences->totalStorage();
     auto usedStorage = mPreferences->usedStorage();
     if (totalStorage == 0)
@@ -1203,7 +1201,7 @@ void SettingsDialog::updateStorageElements()
     {
         mUi->bStorageDetails->setEnabled(true);
 
-        if (accountType == Preferences::ACCOUNT_TYPE_BUSINESS)
+        if (Utilities::isBusinessAccount())
         {
             mUi->lStorage->setText(tr("%1 used").arg(Utilities::getSizeString(usedStorage)));
         }
@@ -1232,7 +1230,7 @@ void SettingsDialog::updateBandwidthElements()
         mUi->lBandwidthFree->show();
         mUi->lBandwidthFree->setText(Utilities::getSizeString(usedBandwidth));
     }
-    else if (accountType == Preferences::ACCOUNT_TYPE_BUSINESS)
+    else if (Utilities::isBusinessAccount())
     {
         mUi->lBandwidth->setText(tr("%1 used").arg(Utilities::getSizeString(usedBandwidth)));
     }
@@ -1261,43 +1259,50 @@ void SettingsDialog::updateAccountElements()
     switch(mPreferences->accountType())
     {
         case Preferences::ACCOUNT_TYPE_FREE:
-            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Small_Free.png"));
+            icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/Small_Free.png"));
             mUi->lAccountType->setText(tr("Free"));
             mUi->bUpgrade->show();
             mUi->pStorageQuota->show();
             mUi->pTransferQuota->hide();
             break;
         case Preferences::ACCOUNT_TYPE_PROI:
-            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Small_Pro_I.png"));
+            icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/Small_Pro_I.png"));
             mUi->lAccountType->setText(tr("Pro I"));
             mUi->bUpgrade->hide();
             mUi->pStorageQuota->show();
             mUi->pTransferQuota->show();
             break;
         case Preferences::ACCOUNT_TYPE_PROII:
-            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Small_Pro_II.png"));
+            icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/Small_Pro_II.png"));
             mUi->lAccountType->setText(tr("Pro II"));
             mUi->bUpgrade->hide();
             mUi->pStorageQuota->show();
             mUi->pTransferQuota->show();
             break;
         case Preferences::ACCOUNT_TYPE_PROIII:
-            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Small_Pro_III.png"));
+            icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/Small_Pro_III.png"));
             mUi->lAccountType->setText(tr("Pro III"));
             mUi->bUpgrade->hide();
             mUi->pStorageQuota->show();
             mUi->pTransferQuota->show();
             break;
         case Preferences::ACCOUNT_TYPE_LITE:
-            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Small_Lite.png"));
+            icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/Small_Lite.png"));
             mUi->lAccountType->setText(tr("Pro Lite"));
             mUi->bUpgrade->hide();
             mUi->pStorageQuota->show();
             mUi->pTransferQuota->show();
             break;
         case Preferences::ACCOUNT_TYPE_BUSINESS:
-            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Small_Business.png"));
+            icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/Small_Business.png"));
             mUi->lAccountType->setText(tr("Business"));
+            mUi->bUpgrade->hide();
+            mUi->pStorageQuota->hide();
+            mUi->pTransferQuota->hide();
+            break;
+        case Preferences::ACCOUNT_TYPE_PRO_FLEXI:
+            icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/Small_Pro_Flexi.png"));
+            mUi->lAccountType->setText(tr("Pro Flexi"));
             mUi->bUpgrade->hide();
             mUi->pStorageQuota->hide();
             mUi->pTransferQuota->hide();

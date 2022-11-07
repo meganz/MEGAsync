@@ -82,6 +82,12 @@ void UpgradeOverStorage::updatePlans()
         int products (mPricing->getNumProducts());
         for (int it = 0; it < products; it++)
         {
+            // Skip showing Pro card for flexi pro in UpgradeDialog
+            if (mPricing->getProLevel(it) == mega::MegaAccountDetails::ACCOUNT_TYPE_PRO_FLEXI)
+            {
+                continue;
+            }
+
             if (mPricing->getMonths(it) == 1)
             {
                 PlanInfo data {

@@ -411,7 +411,7 @@ void InfoDialog::setUsage()
     auto totalStorage(mPreferences->totalStorage());
     auto usedStorage(mPreferences->usedStorage());
 
-    if (accType == Preferences::ACCOUNT_TYPE_BUSINESS)
+    if (Utilities::isBusinessAccount())
     {
         ui->sStorage->setCurrentWidget(ui->wBusinessStorage);
         ui->wCircularStorage->setValue(0);
@@ -476,7 +476,7 @@ void InfoDialog::setUsage()
 
     auto usedTransfer(mPreferences->usedBandwidth());
 
-    if (accType == Preferences::ACCOUNT_TYPE_BUSINESS)
+    if (Utilities::isBusinessAccount())
     {
         ui->sQuota->setCurrentWidget(ui->wBusinessQuota);
         ui->wCircularStorage->setTotalValueUnknown();
@@ -648,7 +648,7 @@ void InfoDialog::setAccountType(int accType)
     }
 
     actualAccountType = accType;
-    if (actualAccountType == Preferences::ACCOUNT_TYPE_BUSINESS)
+    if (Utilities::isBusinessAccount())
     {
          ui->bUpgrade->hide();
     }

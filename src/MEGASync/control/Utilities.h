@@ -332,6 +332,8 @@ public:
     //get mega transfer nodepath
     static QString getNodePath(mega::MegaTransfer* transfer);
 
+    //Check is current account is business (either business or flexi pro)
+    static bool isBusinessAccount();
     static QFuture<bool> openUrl(QUrl url);
     static void openInMega(mega::MegaHandle handle);
     static void openBackupCenter();

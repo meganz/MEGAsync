@@ -38,6 +38,12 @@ AccountDetailsDialog::AccountDetailsDialog(QWidget *parent) :
     // Init HiDPI
     mHighDpiResize.init(this);
 
+    // Disable available storage for business accounts
+    if (MegaSyncApp->getMegaApi()->isBusinessAccount())
+    {
+        mUi->wAvailable->hide();
+    }
+
     // Subscribe to data updates (but detach after 1 callback)
     MegaSyncApp->attachStorageObserver(*this);
 }
@@ -74,7 +80,7 @@ void AccountDetailsDialog::refresh()
         auto totalStorage(preferences->totalStorage());
         auto usedStorage(preferences->usedStorage());
 
-        if (accType == Preferences::ACCOUNT_TYPE_BUSINESS)
+        if (Utilities::isBusinessAccount())
         {
             // Set unused fields to 0
             mUi->wCircularStorage->setValue(0);
@@ -159,6 +165,7 @@ void AccountDetailsDialog::refresh()
         switch (accType)
         {
             case Preferences::ACCOUNT_TYPE_BUSINESS:
+            case Preferences::ACCOUNT_TYPE_PRO_FLEXI:
             {
                 setProperty("accountType", QLatin1String("business"));
                 mUi->wCircularStorage->setValue(0);
