@@ -47,7 +47,7 @@ QLabel
     min-width:440px;
 }
 
-#lCloudDrive, #lInbox, #lRubbish, #lStorage, #lTransfer, #lAvailable
+#lCloudDrive, #lVault, #lRubbish, #lStorage, #lTransfer, #lAvailable
 {
   color: #333333;
   font-size: 13px;
@@ -59,12 +59,12 @@ QLabel
   qproperty-alignment: 'AlignLeft | AlignVCenter';
 }
 
-#lCloudDrive, #lInbox, #lRubbish, #lAvailable
+#lCloudDrive, #lVault, #lRubbish, #lAvailable
 {
     qproperty-alignment: 'AlignLeft | AlignBottom';
 }
 
-#wCloudDrive, #wRubbish, #wInbox
+#wCloudDrive, #wRubbish, #wVault
 {
     border: 0px;
 }
@@ -85,7 +85,7 @@ QLabel
   font-size: 13px;
 }
 
-#lUsedCloudDrive, #lUsedInbox,  #lUsedRubbish
+#lUsedCloudDrive, #lUsedVault,  #lUsedRubbish
 {
     qproperty-alignment: 'AlignRight | AlignBottom';
     padding-right: 4px;
@@ -152,14 +152,19 @@ QLabel
     background-color: #EEEEEE;
 }
 
+#bCloudDrive, #bVault, #bRubbish
+{
+    qproperty-iconSize: 24px;
+}
+
 #bCloudDrive
 {
     qproperty-icon : url(:/images/account_details/Cloud_Drive_24_ico.png);
 }
 
-#bInbox
+#bVault
 {
-    qproperty-icon : url(:/images/account_details/Inbox_24_ico.png);
+    qproperty-icon : url(:/images/Backups_24_ico.png);
 }
 
 #bRubbish
@@ -831,7 +836,7 @@ QProgressBar::chunk
        </widget>
       </item>
       <item>
-       <widget class="QWidget" name="wInbox" native="true">
+       <widget class="QWidget" name="wVault" native="true">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -867,7 +872,7 @@ QProgressBar::chunk
           <number>0</number>
          </property>
          <item>
-          <widget class="QPushButton" name="bInbox">
+          <widget class="QPushButton" name="bVault">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -905,19 +910,19 @@ QProgressBar::chunk
               <number>0</number>
              </property>
              <item>
-              <widget class="QLabel" name="lInbox">
+              <widget class="QLabel" name="lVault">
                <property name="text">
-                <string>Inbox</string>
+                <string>Backups</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="lUsedInbox"/>
+              <widget class="QLabel" name="lUsedVault"/>
              </item>
             </layout>
            </item>
            <item>
-            <widget class="QProgressBar" name="pbInbox">
+            <widget class="QProgressBar" name="pbVault">
              <property name="value">
               <number>0</number>
              </property>

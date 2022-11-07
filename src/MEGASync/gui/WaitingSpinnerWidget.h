@@ -32,7 +32,7 @@ public:
     /*! Constructor for "standard" widget behaviour - use this
    * constructor if you wish to, e.g. embed your widget in another. */
     WaitingSpinnerWidget(QWidget *parent = 0,
-                         bool centerOnParent = true,
+                         bool centerOnParent = false,
                          bool disableParentWhenSpinning = true);
 
     /*! Constructor - use this constructor to automatically create a modal
@@ -60,6 +60,7 @@ public:
     void setLineWidth(int width);
     void setInnerRadius(int radius);
     void setText(QString text);
+    void setCenterOnParent(bool value);
     qint64 getStartTime();
 
     QColor color();

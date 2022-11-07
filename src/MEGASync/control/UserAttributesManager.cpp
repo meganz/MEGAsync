@@ -23,14 +23,14 @@ void UserAttributesManager::reset()
 
 void UserAttributesManager::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *incoming_request, mega::MegaError *e)
 {
-    if(incoming_request->getType() == mega::MegaRequest::TYPE_GET_ATTR_USER)
+    auto reqType (incoming_request->getType());
+    if(reqType == mega::MegaRequest::TYPE_GET_ATTR_USER
+            || reqType == mega::MegaRequest::TYPE_SET_ATTR_USER)
     {
         auto userEmail = QString::fromUtf8(incoming_request->getEmail());
-        if(userEmail.isEmpty())
-        {
-            userEmail = QString::fromUtf8(api->getMyEmail());
-        }
-        foreach(auto request, mRequests.values(userEmail))
+
+        // Forward to requests related to the corresponding user
+        foreach(auto request, mRequests.values(getKey(userEmail)))
         {
             if(request->getRequestInfo().mParamInfo.contains(incoming_request->getParamType()))
             {
@@ -53,7 +53,7 @@ void UserAttributesManager::onUsersUpdate(mega::MegaApi*, mega::MegaUserList *us
             if(user->isOwnChange() <= 0)
             {
                 auto userEmail = QString::fromUtf8(user->getEmail());
-                foreach(auto request, mRequests.values(userEmail))
+                foreach(auto request, mRequests.values(getKey(userEmail)))
                 {
                     foreach(auto changeType, request->getRequestInfo().mChangedTypes.keys())
                     {
@@ -75,7 +75,7 @@ void UserAttributesManager::onUsersUpdate(mega::MegaApi*, mega::MegaUserList *us
 
 void AttributeRequest::RequestInfo::ParamInfo::setNeedsRetry(int errCode)
 {
-   mNeedsRetry = !mNoRetryErrCodes.contains(errCode);
+    mNeedsRetry = !mNoRetryErrCodes.contains(errCode);
 }
 
 void AttributeRequest::RequestInfo::ParamInfo::setPending(bool isPending)
@@ -105,7 +105,6 @@ bool AttributeRequest::isRequestPending() const
     return isPending;
 }
 
-
 bool AttributeRequest::attributeRequestNeedsRetry(int attribute) const
 {
     if(getRequestInfo().mParamInfo.contains(attribute))
@@ -125,6 +124,22 @@ void AttributeRequest::requestUserAttribute(int attribute)
         val->setPending(true);
         val->requestFunc();
     }
+}
+
+QString UserAttributesManager::getKey(const QString& userEmail) const
+{
+    // If the email is not empty, use key 'u' for current user.
+    QString key (QLatin1Char('u'));
+    if (!userEmail.isEmpty())
+    {
+        std::unique_ptr<char[]> currentUserEmail (MegaSyncApp->getMegaApi()->getMyEmail());
+        if (userEmail != QString::fromUtf8(currentUserEmail.get()))
+        {
+            key = userEmail;
+        }
+    }
+
+    return key;
 }
 
 }//end namespace UserAttributes

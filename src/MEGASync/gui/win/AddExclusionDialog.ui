@@ -129,7 +129,6 @@ font-size: 11px;
        </widget>
       </item>
      </layout>
-     <zorder>horizontalSpacer</zorder>
      <zorder>bCancel</zorder>
      <zorder>bOk</zorder>
      <zorder>bChoose</zorder>

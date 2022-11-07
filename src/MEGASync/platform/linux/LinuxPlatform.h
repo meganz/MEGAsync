@@ -9,6 +9,7 @@
 #include <QThread>
 #include <QDir>
 #include <QProcess>
+#include <QMenu>
 
 #include "MegaApplication.h"
 #include "ExtServer.h"
@@ -61,8 +62,12 @@ public:
     static bool shouldRunHttpServer();
     static bool shouldRunHttpsServer();
     static bool isUserActive();
+    static QString getDeviceName();
+    static void initMenu(QMenu* m);
 
     static const char* settingsString;
+    static const char* openSettingsString;
+    static const char* goToSettingsToEnableSyncsString;
     static const char* exitString;
     static const char* fileExplorerString;
 };

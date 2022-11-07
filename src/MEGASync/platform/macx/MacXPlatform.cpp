@@ -1,5 +1,6 @@
 #include "MacXPlatform.h"
 #include <unistd.h>
+#include <pwd.h>
 
 using namespace std;
 
@@ -290,7 +291,70 @@ void MacXPlatform::disableSignalHandler()
     signal(SIGABRT, SIG_DFL);
 }
 
+QString MacXPlatform::getDeviceName()
+{
+    // First, try to read maker and model
+    QString deviceName;
+    QProcess proc;
+
+    proc.start(QLatin1String("/bin/sh"), QStringList()<<QLatin1String("-c")
+                                                       <<QLatin1String("system_profiler SPHardwareDataType | "
+                                                                       "grep \"Model Name\" | awk -F \"Model "
+                                                                       "Name: \" '{print $2}' | tr -d '\n'"));
+    proc.waitForFinished();
+    deviceName = QString::fromStdString(proc.readAll().toStdString());
+
+    if (deviceName.isEmpty())
+    {
+        deviceName = QSysInfo::machineHostName();
+        deviceName.remove(QLatin1Literal(".local"));
+    }
+
+    return deviceName;
+}
+
+void MacXPlatform::initMenu(QMenu* m)
+{
+    if (m)
+    {
+        m->setStyleSheet(QLatin1String("QMenu {"
+                                           "background: #ffffff;"
+                                           "padding-top: 5px;"
+                                           "padding-bottom: 5px;"
+                                           "border: 1px solid #B8B8B8;"
+                                           "border-radius: 5px;"
+                                       "}"
+                                       "QMenu::separator {"
+                                           "height: 1px;"
+                                           "margin: 0px 8px 0px 8px;"
+                                           "background-color: rgba(0, 0, 0, 0.1);"
+                                       "}"
+                                       // For vanilla QMenus (only in TransferManager and MegaItemTreeView (NodeSelector))
+                                       "QMenu::item {"
+                                           "font-size: 14px;"
+                                           "margin: 6px 16px 6px 16px;"
+                                           "color: #777777;"
+                                           "padding-right: 16px;"
+                                       "}"
+                                       "QMenu::item:selected {"
+                                           "color: #000000;"
+                                       "}"
+                                       // For menus with MenuItemActions
+                                       "QLabel {"
+                                           "font-family: Lato;"
+                                           "font-size: 14px;"
+                                           "padding: 0px;"
+                                       "}"
+                                       ));
+        m->setAttribute(Qt::WA_TranslucentBackground);
+        m->setWindowFlags(m->windowFlags() | Qt::FramelessWindowHint);
+        m->ensurePolished();
+    }
+}
+
 // Platform-specific strings
 const char* MacXPlatform::settingsString {QT_TRANSLATE_NOOP("Platform", "Preferences")};
+const char* MacXPlatform::openSettingsString {QT_TRANSLATE_NOOP("Platform", "Open preferences")};
+const char* MacXPlatform::goToSettingsToEnableSyncsString {QT_TRANSLATE_NOOP("Platform", "Go to preferences to enable them again.")};
 const char* MacXPlatform::exitString {QT_TRANSLATE_NOOP("Platform", "Quit")};
 const char* MacXPlatform::fileExplorerString {QT_TRANSLATE_NOOP("Platform","Show in Finder")};

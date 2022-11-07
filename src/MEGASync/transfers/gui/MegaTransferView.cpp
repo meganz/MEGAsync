@@ -550,11 +550,8 @@ void MegaTransferView::onCustomContextMenu(const QPoint& point)
 QMenu* MegaTransferView::createContextMenu()
 {
     auto contextMenu = new QMenu(this);
-
-    contextMenu->setAttribute(Qt::WA_TranslucentBackground);
-#if defined(Q_OS_WINDOWS)
-    contextMenu->setWindowFlags(contextMenu->windowFlags() | Qt::FramelessWindowHint | Qt::NoDropShadowWindowHint);
-#endif
+    contextMenu->setWindowFlags(contextMenu->windowFlags() | Qt::NoDropShadowWindowHint);
+    Platform::initMenu(contextMenu);
 
     bool enablePause = false;
     bool enableResume = false;
@@ -1129,7 +1126,7 @@ void MegaTransferView::openItemClicked()
                 QFileInfo info(path);
                 if(info.exists())
                 {
-                    auto openUrlTask = QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(path));
+                    auto openUrlTask = Utilities::openUrl(QUrl::fromLocalFile(path));
                     mOpenUrlWatcher.setFuture(openUrlTask);
                 }
                 else

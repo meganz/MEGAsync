@@ -1,12 +1,13 @@
 #include "MegaItemModel.h"
 #include "MegaApplication.h"
-#include "control/Utilities.h"
+#include "Utilities.h"
 #include "Preferences.h"
-#include "model/Model.h"
+#include "syncs/control/SyncInfo.h"
 #include "UserAttributesRequests/CameraUploadFolder.h"
-#include "mega/types.h"
 #include "UserAttributesRequests/MyChatFilesFolder.h"
-#include "UserAttributesRequests/CameraUploadFolder.h"
+#include "UserAttributesRequests/MyBackupsHandle.h"
+
+#include "mega/types.h"
 
 #include <QApplication>
 #include <QToolTip>
@@ -19,26 +20,33 @@ MegaItemModel::MegaItemModel(QObject *parent) :
     QAbstractItemModel(parent),
     mRequiredRights(MegaShare::ACCESS_READ),
     mDisplayFiles(false),
-    mSyncSetupMode(false)
+    mSyncSetupMode(false),
+    mMegaApi(MegaSyncApp->getMegaApi())
 {
    mCameraFolderAttribute = UserAttributes::CameraUploadFolder::requestCameraUploadFolder();
    mMyChatFilesFolderAttribute = UserAttributes::MyChatFilesFolder::requestMyChatFilesFolder();
 
-   MegaApi* megaApi = MegaSyncApp->getMegaApi();
-   auto root = std::unique_ptr<MegaNode>(megaApi->getRootNode());
+   //cloud drive
+   auto root = std::unique_ptr<MegaNode>(mMegaApi->getRootNode());
    mRootItems.append(new MegaItem(move(root)));
-   auto folders = std::unique_ptr<MegaNodeList>(megaApi->getInShares());
 
    //incoming shares
+   auto folders = std::unique_ptr<MegaNodeList>(mMegaApi->getInShares());
    for (int j = 0; j < folders->size(); j++)
    {
        auto folder = std::unique_ptr<MegaNode>(folders->get(j)->copy());
-       auto user = std::unique_ptr<MegaUser>(megaApi->getUserFromInShare(folder.get()));
+       auto user = std::unique_ptr<MegaUser>(mMegaApi->getUserFromInShare(folder.get()));
        MegaItem* item = new MegaItem(move(folder));
        item->setOwner(move(user));
        connect(item, &MegaItem::infoUpdated, this, &MegaItemModel::onItemInfoUpdated);
        mRootItems.append(item);
    }
+
+   // Get "My Backups" handle to localize the name
+   auto myBackupsHandle = UserAttributes::MyBackupsHandle::requestMyBackupsHandle();
+   connect(myBackupsHandle.get(), &UserAttributes::MyBackupsHandle::attributeReady,
+           this, &MegaItemModel::onMyBackupsFolderHandleSet);
+   onMyBackupsFolderHandleSet(myBackupsHandle->getMyBackupsHandle());
 }
 
 int MegaItemModel::columnCount(const QModelIndex &) const
@@ -124,7 +132,7 @@ QVariant MegaItemModel::data(const QModelIndex &index, int role) const
         }
         case toInt(NodeRowDelegateRoles::INDENT_ROLE):
         {
-            return item->isRoot()? -10 : 0;
+            return item->isRoot() || item->isVault()? -10 : 0;
         }
         default:
         {
@@ -146,8 +154,7 @@ QModelIndex MegaItemModel::index(int row, int column, const QModelIndex &parent)
         MegaItem* item = static_cast<MegaItem*>(parent.internalPointer());
         if (!item->areChildrenSet())
         {
-            MegaApi* megaApi = MegaSyncApp->getMegaApi();
-            auto children = std::shared_ptr<MegaNodeList>(megaApi->getChildren(item->getNode().get()));
+            auto children = std::shared_ptr<MegaNodeList>(mMegaApi->getChildren(item->getNode().get()));
             item->setChildren(children);
         }
         return createIndex(row, column, item->getChild(row));
@@ -184,8 +191,7 @@ int MegaItemModel::rowCount(const QModelIndex &parent) const
         MegaItem *item = static_cast<MegaItem*>(parent.internalPointer());
         if (!item->areChildrenSet())
         {
-            MegaApi* megaApi = MegaSyncApp->getMegaApi();
-            auto children = std::shared_ptr<MegaNodeList>(megaApi->getChildren(item->getNode().get()));
+            auto children = std::shared_ptr<MegaNodeList>(mMegaApi->getChildren(item->getNode().get()));
             item->setChildren(children);
         }
         return item->getNumChildren();
@@ -372,12 +378,14 @@ QVariant MegaItemModel::getIcon(const QModelIndex &index, MegaItem* item) const
 
 QVariant MegaItemModel::getText(const QModelIndex &index, MegaItem *item) const
 {
-
     switch(index.column())
     {
         case COLUMN::NODE:
         {
-
+            if(item->isVault())
+            {
+                return QCoreApplication::translate("MegaNodeNames", UserAttributes::MyBackupsHandle::DEFAULT_BACKUPS_ROOT_DIRNAME);
+            }
             if(item->isRoot())
             {
                 return QApplication::translate("MegaNodeNames", item->getNode()->getName());
@@ -394,10 +402,11 @@ QVariant MegaItemModel::getText(const QModelIndex &index, MegaItem *item) const
         }
         case COLUMN::DATE:
         {
-            if(item->isRoot())
+            if(item->isRoot() || item->isVault())
             {
                 return QVariant();
             }
+
             const QString language = MegaSyncApp->getCurrentLanguageCode();
             QLocale locale(language);
             QDateTime dateTime = dateTime.fromSecsSinceEpoch(item->getNode()->getCreationTime());
@@ -457,6 +466,19 @@ void MegaItemModel::onItemInfoUpdated(int role)
                 }
             }
         }
+    }
+}
+
+void MegaItemModel::onMyBackupsFolderHandleSet(mega::MegaHandle h)
+{
+    if (h != INVALID_HANDLE)
+    {
+     auto node = mMegaApi->getNodeByHandle(h);
+     auto megaItem = new MegaItem(std::unique_ptr<MegaNode>(node));
+     megaItem->setAsVaultNode();
+     beginInsertRows(QModelIndex(), rowCount(), rowCount());
+     mRootItems.append(move(megaItem));
+     endInsertRows();
     }
 }
 
@@ -526,29 +548,29 @@ QIcon MegaItemModel::getFolderIcon(MegaItem *item) const
            || node->getHandle() == mCameraFolderAttribute->getCameraUploadFolderSecondaryHandle())
         {
             QIcon icon;
-            icon.addFile(QLatin1String("://images/node_selector/small-camera-sync.png"), QSize(), QIcon::Normal);
-            icon.addFile(QLatin1String("://images/node_selector/small-folder-camera-sync-disabled.png"), QSize(), QIcon::Disabled);
+            icon.addFile(QLatin1String("://images/icons/folder/small-camera-sync.png"), QSize(), QIcon::Normal);
+            icon.addFile(QLatin1String("://images/icons/folder/small-folder-camera-sync-disabled.png"), QSize(), QIcon::Disabled);
             return icon;;
         }
         else if(node->getHandle() == mMyChatFilesFolderAttribute->getMyChatFilesFolderHandle())
         {
             QIcon icon;
-            icon.addFile(QLatin1String("://images/node_selector/small-chat-files.png"), QSize(), QIcon::Normal);
-            icon.addFile(QLatin1String("://images/node_selector/small-chat-files-disabled.png"), QSize(), QIcon::Disabled);
+            icon.addFile(QLatin1String("://images/icons/folder/small-chat-files.png"), QSize(), QIcon::Normal);
+            icon.addFile(QLatin1String("://images/icons/folder/small-chat-files-disabled.png"), QSize(), QIcon::Disabled);
             return icon;
         }
         else if (node->isInShare())
         {
             QIcon icon;
-            icon.addFile(QLatin1String("://images/node_selector/small-folder-incoming.png"), QSize(), QIcon::Normal);
-            icon.addFile(QLatin1String("://images/node_selector/small-folder-incoming-disabled.png"), QSize(), QIcon::Disabled);
+            icon.addFile(QLatin1String("://images/icons/folder/small-folder-incoming.png"), QSize(), QIcon::Normal);
+            icon.addFile(QLatin1String("://images/icons/folder/small-folder-incoming-disabled.png"), QSize(), QIcon::Disabled);
             return icon;
         }
         else if (node->isOutShare())
         {
             QIcon icon;
-            icon.addFile(QLatin1String("://images/node_selector/small-folder-outgoing.png"), QSize(), QIcon::Normal);
-            icon.addFile(QLatin1String("://images/node_selector/small-folder-outgoing_disabled.png"), QSize(), QIcon::Disabled);
+            icon.addFile(QLatin1String("://images/icons/folder/small-folder-outgoing.png"), QSize(), QIcon::Normal);
+            icon.addFile(QLatin1String("://images/icons/folder/small-folder-outgoing_disabled.png"), QSize(), QIcon::Disabled);
             return icon;
         }
         else if(node->getHandle() == MegaSyncApp->getRootNode()->getHandle())
@@ -557,11 +579,42 @@ QIcon MegaItemModel::getFolderIcon(MegaItem *item) const
             icon.addFile(QLatin1String("://images/ico-cloud-drive.png"));
             return icon;
         }
-        else
+        else if(item->isVault())
         {
             QIcon icon;
-            icon.addFile(QLatin1String("://images/small_folder.png"), QSize(), QIcon::Normal);
-            icon.addFile(QLatin1String("://images/node_selector/small-folder-disabled.png"), QSize(), QIcon::Disabled);
+            icon.addFile(QLatin1String("://images/node_selector/Backups_small_ico.png"));
+            return icon;
+        }
+        else
+        {
+            QString nodeDeviceId (QString::fromUtf8(node->getDeviceId()));
+            if (!nodeDeviceId.isEmpty())
+            {
+                std::unique_ptr<mega::MegaNode> parent (mMegaApi->getNodeByHandle(node->getParentHandle()));
+                if (parent)
+                {
+                    QString parentDeviceId (QString::fromUtf8(parent->getDeviceId()));
+                    if (parentDeviceId.isEmpty())
+                    {
+                        // TODO, future: choose icon according to host OS
+                        if (nodeDeviceId == QString::fromUtf8(mMegaApi->getDeviceId()))
+                        {
+                            #ifdef Q_OS_WINDOWS
+                            const QIcon thisDeviceIcon (QLatin1String("://images/icons/pc/pc-win_24.png"));
+                            #elif defined(Q_OS_MACOS)
+                            const QIcon thisDeviceIcon (QLatin1String("://images/icons/pc/pc-mac_24.png"));
+                            #elif defined(Q_OS_LINUX)
+                            const QIcon thisDeviceIcon (QLatin1String("://images/icons/pc/pc-linux_24.png"));
+                            #endif
+                            return thisDeviceIcon;
+                        }
+                        return QIcon(QLatin1String("://images/icons/pc/pc_24.png"));
+                    }
+                }
+            }
+            QIcon icon;
+            icon.addFile(QLatin1String("://images/icons/folder/small-folder.png"), QSize(), QIcon::Normal);
+            icon.addFile(QLatin1String("://images/icons/folder/small-folder-disabled.png"), QSize(), QIcon::Disabled);
             return icon;
         }
     }

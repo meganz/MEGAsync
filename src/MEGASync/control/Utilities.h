@@ -1,19 +1,19 @@
 #ifndef UTILITIES_H
 #define UTILITIES_H
 
+#include "megaapi.h"
+#include "ThreadPool.h"
+
 #include <QString>
 #include <QHash>
 #include <QPixmap>
 #include <QProgressDialog>
-#include <control/MegaController.h>
-
+#include <QDesktopServices>
+#include <QFuture>
 #include <QDir>
 #include <QIcon>
-#include <functional>
 #include <QLabel>
 #include <QEasingCurve>
-#include "megaapi.h"
-#include "ThreadPool.h"
 
 #include <functional>
 
@@ -289,6 +289,8 @@ public:
         TYPE_IMAGE    = 0x20,
     };
     Q_DECLARE_FLAGS(FileTypes, FileType)
+    static const QString SUPPORT_URL;
+    static const QString BACKUP_CENTER_URL;
 
     static QString getSizeString(unsigned long long bytes);
     static QString getSizeString(long long bytes);
@@ -303,7 +305,6 @@ public:
     static QString getTimeString(long long secs, bool secondPrecision = true, bool color = true);
     static QString getQuantityString(unsigned long long quantity);
     static QString getFinishedTimeString(long long secs);
-    static bool verifySyncedFolderLimits(QString path);
     static QString extractJSONString(QString json, QString name);
     static long long extractJSONNumber(QString json, QString name);
     static QString getDefaultBasePath();
@@ -326,14 +327,14 @@ public:
     // i.e. for 1 day & 3 hours remaining, remainingHours will be 27, not 3.
     static void getDaysAndHoursToTimestamp(int64_t secsTimestamps, int64_t &remaininDays, int64_t &remainingHours);
 
-    // shows a ProgressDialog while some progress goes on. it returns a copy of the object,
-    // but the object will be deleted when the progress closes
-    static QProgressDialog *showProgressDialog(ProgressHelper *progressHelper, QWidget *parent = nullptr);
-
     static QPair<QString, QString> getFilenameBasenameAndSuffix(const QString& fileName);
 
     //get mega transfer nodepath
     static QString getNodePath(mega::MegaTransfer* transfer);
+
+    static QFuture<bool> openUrl(QUrl url);
+    static void openInMega(mega::MegaHandle handle);
+    static void openBackupCenter();
 
 private:
     Utilities() {}
@@ -370,6 +371,15 @@ public:
 
     // Compute the part per <ref> of <part> from <total>. Defaults to %
     static int partPer(unsigned long long part, unsigned long long total, uint ref = 100);
+
+    // Human-friendly list of forbidden chars for New Remote Folder
+    static const QLatin1String FORBIDDEN_CHARS;
+    // Forbidden chars PCRE using a capture list: [\\/:"\*<>?|]
+    static const QRegularExpression FORBIDDEN_CHARS_RX;
+    // Time to show the new remote folder input error in milliseconds
+    static constexpr int ERROR_DISPLAY_TIME_MS = 10000; //10s in milliseconds
+
+    static bool isNodeNameValid(const QString& name);
 };
 
 Q_DECLARE_METATYPE(Utilities::FileType)

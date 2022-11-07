@@ -491,7 +491,79 @@ xcb_atom_t getAtom(xcb_connection_t * const connection, const char *name)
     return result;
 }
 
+QString LinuxPlatform::getDeviceName()
+{
+    // First, try to read maker and model
+    QString vendor;
+    QFile vendorFile(QLatin1Literal("/sys/devices/virtual/dmi/id/board_vendor"));
+    if (vendorFile.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+            vendor = QString::fromUtf8(vendorFile.readLine()).trimmed();
+    }
+    vendorFile.close();
+
+    QString model;
+    QFile modelFile(QLatin1Literal("/sys/devices/virtual/dmi/id/product_name"));
+    if (modelFile.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+            model = QString::fromUtf8(modelFile.readLine()).trimmed();
+    }
+    modelFile.close();
+
+    QString deviceName;
+    // If failure or empty strings, give hostname
+    if (vendor.isEmpty() && model.isEmpty())
+    {
+        deviceName = QSysInfo::machineHostName();
+        deviceName.remove(QLatin1Literal(".local"));
+    }
+    else
+    {
+        deviceName = vendor + QLatin1Literal(" ") + model;
+    }
+
+    return deviceName;
+}
+
+void LinuxPlatform::initMenu(QMenu* m)
+{
+    if (m)
+    {
+        m->setStyleSheet(QLatin1String("QMenu {"
+                                       "background: #ffffff;"
+                                       "padding-top: 6px;"
+                                       "padding-bottom: 6px;"
+                                       "border: 1px solid #B8B8B8;"
+                                   "}"
+                                   "QMenu::separator {"
+                                       "height: 1px;"
+                                       "margin: 6px 10px 6px 10px;"
+                                       "background-color: rgba(0, 0, 0, 0.1);"
+                                   "}"
+                                   // For vanilla QMenus (only in TransferManager and MegaItemTreeView (NodeSelector))
+                                   "QMenu::item {"
+                                       "font-family: Lato;"
+                                       "font-size: 14px;"
+                                       "margin: 6px 16px 6px 16px;"
+                                       "color: #777777;"
+                                       "padding-right: 16px;"
+                                   "}"
+                                   "QMenu::item:selected {"
+                                       "color: #000000;"
+                                   "}"
+                                   // For menus with MenuItemActions
+                                   "QLabel {"
+                                       "font-family: Lato;"
+                                       "font-size: 14px;"
+                                       "padding: 0px;"
+                                   "}"
+                                   ));
+        m->ensurePolished();
+    }
+}
 // Platform-specific strings
 const char* LinuxPlatform::settingsString {QT_TRANSLATE_NOOP("Platform", "Settings")};
+const char* LinuxPlatform::openSettingsString {QT_TRANSLATE_NOOP("Platform", "Open settings")};
+const char* LinuxPlatform::goToSettingsToEnableSyncsString {QT_TRANSLATE_NOOP("Platform", "Go to settings to enable them again.")};
 const char* LinuxPlatform::exitString {QT_TRANSLATE_NOOP("Platform", "Exit")};
 const char* LinuxPlatform::fileExplorerString {QT_TRANSLATE_NOOP("Platform", "Show in folder")};

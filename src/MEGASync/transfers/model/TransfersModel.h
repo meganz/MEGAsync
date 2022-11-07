@@ -4,6 +4,7 @@
 #include "QTMegaTransferListener.h"
 #include "TransferItem.h"
 #include "TransferRemainingTime.h"
+#include "control/Preferences.h"
 
 #include <megaapi.h>
 
