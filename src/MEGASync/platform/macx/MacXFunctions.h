@@ -16,6 +16,8 @@ QStringList qt_mac_NSArrayToQStringList(void *nsarray);
 QStringList uploadMultipleFiles(QString uploadTitle);
 bool startAtLogin(bool opt);
 bool isStartAtLoginActive();
+void addLoginItem();
+void removeLoginItem();
 void addPathToPlaces(QString path, QString pathName);
 void removePathFromPlaces(QString path);
 void setFolderIcon(QString path);
