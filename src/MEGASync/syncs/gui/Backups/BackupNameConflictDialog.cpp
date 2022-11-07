@@ -25,6 +25,19 @@ BackupNameConflictDialog::BackupNameConflictDialog(const QStringList& candidateP
     setModal(true);
 
     ui->lToBackupCenterText->setVisible(false);
+    ui->lToBackupCenterText->setTextFormat(Qt::RichText);
+    QString toBackupCenterText = tr("If you don't want to rename the new folder, "
+    "stop the backup in the [A]Backup centre[/A] for the existing folder. Then"
+    " setup the backup for the new folder again.");
+
+    toBackupCenterText.prepend(QString::fromUtf8("<html><head/><body><p>"));
+    toBackupCenterText.append(QString::fromUtf8("</p></body></html>"));
+    toBackupCenterText.replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"https://13755-backup-center.develo"
+                                                                  "pers.mega.co.nz/fm/backups\"><span style=\" "
+                                                                   "text-decoration: underline; color:#aa1a00;\">"));
+    toBackupCenterText.replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span></a>"));
+
+    ui->lToBackupCenterText->setText(toBackupCenterText);
 
     // Rename "Apply" button to "Rename and backup"
     auto bApply (ui->buttonBox->button(QDialogButtonBox::Apply));
@@ -35,7 +48,6 @@ BackupNameConflictDialog::BackupNameConflictDialog(const QStringList& candidateP
         connect(bApply, &QPushButton::clicked,
                 this, &BackupNameConflictDialog::checkChangedNames);
     }
-
     // Populate
     ui->wConflictZone->setLayout(new QVBoxLayout());
     createWidgets();
