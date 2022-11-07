@@ -443,10 +443,10 @@ void MegaApplication::initialize()
 
     model = SyncInfo::instance();
 
-    connect(model, SIGNAL(syncStateChanged(std::shared_ptr<SyncSetting>)),
-            this, SLOT(onSyncStateChanged(std::shared_ptr<SyncSetting>)));
-    connect(model, SIGNAL(syncRemoved(std::shared_ptr<SyncSetting>)),
-            this, SLOT(onSyncDeleted(std::shared_ptr<SyncSetting>)));
+    connect(model, SIGNAL(syncStateChanged(std::shared_ptr<SyncSettings>)),
+            this, SLOT(onSyncStateChanged(std::shared_ptr<SyncSettings>)));
+    connect(model, SIGNAL(syncRemoved(std::shared_ptr<SyncSettings>)),
+            this, SLOT(onSyncDeleted(std::shared_ptr<SyncSettings>)));
 
     if (preferences->error())
     {
