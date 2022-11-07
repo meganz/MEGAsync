@@ -64,7 +64,7 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(LinkProcessor *processor, QWidget *
 
     if (mPreferences->logged())
     {
-        initUiAsLogged(mPreferences);
+        initUiAsLogged();
     }
     else
     {
@@ -268,9 +268,9 @@ void ImportMegaLinksDialog::changeEvent(QEvent *event)
     QDialog::changeEvent(event);
 }
 
-void ImportMegaLinksDialog::initUiAsLogged(std::shared_ptr<Preferences> mPreferences)
+void ImportMegaLinksDialog::initUiAsLogged()
 {
-    initImportFolderControl(mPreferences);
+    initImportFolderControl();
     ui->cImport->setChecked(mPreferences->getImportMegaLinksEnabled());
     ui->cDownload->setChecked(mPreferences->getDownloadMegaLinksEnabled());
 }
@@ -283,7 +283,7 @@ void ImportMegaLinksDialog::initUiAsUnlogged()
     ui->cDownload->setVisible(false);
 }
 
-void ImportMegaLinksDialog::initImportFolderControl(std::shared_ptr<Preferences> mPreferences)
+void ImportMegaLinksDialog::initImportFolderControl()
 {
     std::unique_ptr<MegaNode> importFolderNode(mMegaApi->getNodeByHandle(mPreferences->importFolder()));
     if (importFolderNode)
@@ -296,16 +296,16 @@ void ImportMegaLinksDialog::initImportFolderControl(std::shared_ptr<Preferences>
         }
         else
         {
-            setInvalidImportFolder(mPreferences);
+            setInvalidImportFolder();
         }
     }
     else
     {
-        setInvalidImportFolder(mPreferences);
+        setInvalidImportFolder();
     }
 }
 
-void ImportMegaLinksDialog::setInvalidImportFolder(std::shared_ptr<Preferences> mPreferences)
+void ImportMegaLinksDialog::setInvalidImportFolder()
 {
     ui->eMegaFolder->setText(QString::fromUtf8("/MEGAsync Imports"));
     mPreferences->setImportFolder(mega::INVALID_HANDLE);

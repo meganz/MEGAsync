@@ -79,10 +79,22 @@ void AlertItem::onAttributesReady()
 {
     MegaHandle handle = mAlertUser->getNodeHandle();
 
-    mAlertNodeWatcher.setFuture(QtConcurrent::run([=]()
+    if (handle != INVALID_HANDLE)
     {
-        return megaApi ? megaApi->getNodeByHandle(handle) : nullptr;
-    }));
+        mAlertNodeWatcher.setFuture(QtConcurrent::run([=]()
+        {
+            return megaApi ? megaApi->getNodeByHandle(handle) : nullptr;
+        }));
+    }
+    else
+    {
+        setAlertType(mAlertUser->getType());
+        setAlertHeading(mAlertUser.get());
+        setAlertContent(mAlertUser.get());
+        setAlertTimeStamp(mAlertUser->getTimestamp(0));
+        mAlertUser->getSeen() ? ui->lNew->hide() : ui->lNew->show();
+        emit refreshAlertItem(mAlertUser->getId());
+    }
 }
 
 void AlertItem::setAlertType(int type)
@@ -117,11 +129,11 @@ void AlertItem::setAlertType(int type)
             {
                 if (type == MegaUserAlert::TYPE_DELETEDSHARE)
                 {
-                    ui->bSharedFolder->setIcon(QIcon(QString::fromUtf8(":/images/grey_folder.png")).pixmap(24.0, 24.0));
+                    ui->bSharedFolder->setIcon(QIcon(QString::fromUtf8(":/images/icons/folder/small-folder-disabled.png")).pixmap(24.0, 24.0));
                 }
                 else
                 {
-                    ui->bSharedFolder->setIcon(QIcon(QString::fromUtf8(":/images/color_folder.png")).pixmap(24.0, 24.0));
+                    ui->bSharedFolder->setIcon(QIcon(QString::fromUtf8(":/images/icons/folder/small-folder.png")).pixmap(24.0, 24.0));
                 }
 
                 ui->bNotificationIcon->setMinimumSize(QSize(10, 8));

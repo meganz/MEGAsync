@@ -22,7 +22,7 @@ class MegaApplication;
 class PreConfiguredSync
 {
 public:
-   PreConfiguredSync(QString localFolder, mega::MegaHandle megaFolderHandle);
+   PreConfiguredSync(QString localFolder, mega::MegaHandle megaFolderHandle, QString syncName);
 
    QString localFolder() const;
    QString syncName() const;
@@ -32,6 +32,7 @@ public:
 private:
     mega::MegaHandle mMegaFolderHandle;
     QString mLocalFolder;
+    QString mSyncName;
 };
 
 class SetupWizard : public QDialog, public mega::MegaRequestListener

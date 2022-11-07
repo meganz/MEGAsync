@@ -194,7 +194,7 @@ void OverQuotaDialog::onUpgradeClicked()
 {
     QString url{QString::fromUtf8("mega://#pro")};
     Utilities::getPROurlWithParameters(url);
-    QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
+    Utilities::openUrl(QUrl(url));
     QDialog::accept();
 }
 

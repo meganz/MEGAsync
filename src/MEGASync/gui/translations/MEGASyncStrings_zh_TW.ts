@@ -626,11 +626,6 @@ Please enter a different name to identify this synced folder:</source>
         <translation>取消傳輸？</translation>
     </message>
     <message>
-        <source>Transfers not yet processed will be cancelled.</source>
-        <translatorcomment>Dialog messages which warns the user about the potential problems of cancelling the folder scanning</translatorcomment>
-        <translation>所有您目前上傳或下載佇列中的傳輸將被取消。</translation>
-    </message>
-    <message>
         <source>No, continue</source>
         <translatorcomment>Button to continue folder scanning cancellation</translatorcomment>
         <translation>否，繼續</translation>
@@ -639,6 +634,15 @@ Please enter a different name to identify this synced folder:</source>
         <source>Yes, cancel</source>
         <translatorcomment>Button to abort a folder scanning</translatorcomment>
         <translation>是，取消</translation>
+    </message>
+    <message>
+        <source>All the queued transfers from your current download will be cancelled.</source>
+        <translatorcomment>Dialog messages which warns the user about the potential problems of cancelling the folder scanning</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancelling…</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -968,12 +972,12 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>您的商業帳戶已經過期</translation>
+        <translation>帳戶已停用</translation>
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation>直到您處理所需的付款為止，在這之前您的帳戶為過期狀態並只有讀取權限。</translation>
+        <translation>在您處理所需要的付款前，您的帳戶已被停用並且只有唯讀功能。</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -1354,7 +1358,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Incorrect email and/or password.</source>
         <translatorcomment>Message box shown when user enters incorrect email and/or password at login</translatorcomment>
-        <translation>不正確的電子郵件與/或密碼。</translation>
+        <translation>無效的電子郵件地址或密碼。</translation>
     </message>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
@@ -2306,7 +2310,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>您的商業帳戶已經過期</translation>
+        <translation>帳戶已停用</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -2316,7 +2320,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message shown to admin business account when a payment has failed. </translatorcomment>
-        <translation>您的商業版帳戶付款似乎已失效。在處理所需要的付款之前，您的帳戶已經到期並且只有唯讀的存取權限。</translation>
+        <translation>由於付款失敗，您的商業帳戶已被停用。在您付款並且重新啟用您的訂閱之前，您將無法存取儲存在您帳戶中的資料。</translation>
     </message>
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
@@ -2331,7 +2335,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>This month&apos;s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</source>
         <translatorcomment>Informative message shown to the user when a payment has failed for a business account.</translatorcomment>
-        <translation>本月的付款失敗。請儘快解決您的付款問題以避免您的商業帳戶被暫時停用。</translation>
+        <translation>本月付款失敗。請盡快解決您的付款問題以免您的帳戶被停用。</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -2341,7 +2345,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
         <translatorcomment>Informative message shown when a business account is expired and the user can only browse data and none operation (upload, download, creation..) is allowed.</translatorcomment>
-        <translation>您的帳戶已經[A]到期[/A]。您只能瀏覽您的資料。</translation>
+        <translation>您的帳戶已被[A]停用[/A]。您現在只能瀏覽您的資料。</translation>
     </message>
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
@@ -2536,7 +2540,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Expired</source>
         <translatorcomment>Label to show that an error related with expiration occurs during a SDK operation.</translatorcomment>
-        <translation>過期</translation>
+        <translation>已過期</translation>
     </message>
     <message>
         <source>Not found</source>
@@ -2614,14 +2618,6 @@ Transfer will automatically resume when you re-open the app.</source>
         <translation>未知的錯誤</translation>
     </message>
     <message>
-        <source>Your account has been suspended due to multiple breaches of MEGA’s Terms of Service. Please check your email inbox.</source>
-        <translation>由於多次違反MEGA的服務條款，您的帳戶已被暫停使用。請至您的電子信箱收信以了解詳情。</translation>
-    </message>
-    <message>
-        <source>Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
-        <translation>您的帳戶因違反MEGA的服務條款而被終止，例如濫用他人的權利、分享和/或匯入違法的資料，或濫用系統資源。</translation>
-    </message>
-    <message>
         <source>SSL verification failed</source>
         <translatorcomment>Error shown when SSL check has failed</translatorcomment>
         <translation>SSL驗證失敗</translation>
@@ -2655,6 +2651,16 @@ Transfer will automatically resume when you re-open the app.</source>
         <source>Decryption error</source>
         <translatorcomment>String shown when a file/folder name can not be decrypted.</translatorcomment>
         <translation>解密錯誤</translation>
+    </message>
+    <message>
+        <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
+        <translatorcomment>Error triggered by SDK when an account has been suspended due to copyright violations.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
+        <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2722,20 +2728,20 @@ Transfer will automatically resume when you re-open the app.</source>
         <translatorcomment>Node name column title tooltip. Sorts the order of the column by date.</translatorcomment>
         <translation>按名稱排序</translation>
     </message>
-    <message>
+    <message numerus="yes">
         <source>Today at %1</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened today. %1 represents the hour</translatorcomment>
-        <translation>今天%1</translation>
+        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened today. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
-    <message>
+    <message numerus="yes">
         <source>Yesterday at %1</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened yesterday. %1 represents the hour</translatorcomment>
-        <translation>昨天%1</translation>
+        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened yesterday. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
-    <message>
+    <message numerus="yes">
         <source>%1 at %2</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was previously to yesterday. %1 represents the date (day month and year), while %2 represents the hour)</translatorcomment>
-        <translation>%1%2</translation>
+        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was previously to yesterday. %1 represents the date (day month and year), while %2 represents the hour). Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Recently used</source>
@@ -2832,7 +2838,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Business account expired</source>
         <translatorcomment>Label to show that the current business account is expired during a SDK operation.</translatorcomment>
-        <translation>您的商業版帳戶已經到期</translation>
+        <translation>您的商業帳戶已被停用</translation>
     </message>
     <message>
         <source>Foreign target storage quota reached</source>
@@ -3124,14 +3130,6 @@ Your selected incomplete sync transfers won&apos;t be cancelled.</source>
         <source>Yes, clear</source>
         <translatorcomment>Dialog button to do the proposed actions (clear the transfers)</translatorcomment>
         <translation>是，清除</translation>
-    </message>
-</context>
-<context>
-    <name>MegaUploader</name>
-    <message>
-        <source>Upload failed</source>
-        <translatorcomment>Informative message shown to the user when an upload has failed</translatorcomment>
-        <translation>上傳失敗</translation>
     </message>
 </context>
 <context>
@@ -3746,20 +3744,24 @@ Please delete the folder sync from preferences to cancel them.</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- There is now a new transfer manager.
-- Transfer management was enhanced and reliability of downloads and uploads improved. 
-- Detected crashes on Windows, Linux, and macOS fixed.
-- Translation issues fixed.
-- Performance improved.
-- UI fixed and adjusted.
+        <source>- Added new Apple Silicon native support.
+- Added a new feature to stop sleep mode if there are active transfers.
+- Updated third-party libs.
+- Improved folders transfers.
+- Fixed detected crashes on Windows, Linux, and macOS.
+- Fixed translation issues.
+- Improved performance.
+- Fixed and adjusted UI.
 </source>
-        <translatorcomment>Changelog for version v4.7.0</translatorcomment>
-        <translation>- 現在有新的傳輸管理員。
-- 加強傳輸管理，改善下載和上傳的可靠性。
+        <translatorcomment>Changelog for version v4.7.2</translatorcomment>
+        <translation>- 加入新Apple silicon的原生支援。
+- 新增當有傳輸正在進行時停止睡眠模式的新功能。
+- 更新第三方程式庫。
+- 改善資料夾傳輸。
 - 修復在Windows、Linux和macOS上偵測到的崩潰問題。
-- 修正翻譯問題。
-- 性能改善。
-- 介面修復和調整。
+- 修復翻譯問題。
+- 改進性能。
+- 修正和調整用戶介面。
 </translation>
     </message>
 </context>
@@ -4083,12 +4085,12 @@ Please delete the folder sync from preferences to cancel them.</source>
     </message>
     <message>
         <source>Shortcut</source>
-        <translatorcomment>Label for shourcut in all other platforms</translatorcomment>
+        <translatorcomment>Label used in Qt file/folder choosing dialog. Not being used at the moment.</translatorcomment>
         <translation>捷徑</translation>
     </message>
     <message>
         <source>Unknown</source>
-        <translatorcomment>Name when the file or folder does not match</translatorcomment>
+        <translatorcomment>Label used in Qt file/folder choosing dialog. Not being used at the moment.</translatorcomment>
         <translation>未知</translation>
     </message>
     <message>
@@ -4213,12 +4215,12 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <source>Kind</source>
-        <translatorcomment>Header name of the column that shows file kind</translatorcomment>
+        <translatorcomment>Header name of the column that shows file kind. Used by QT on QT standard dialogs. For MacOS platforms only.</translatorcomment>
         <translation>類型</translation>
     </message>
     <message>
         <source>Type</source>
-        <translatorcomment>Header name of the column that shows file type</translatorcomment>
+        <translatorcomment>Header name of the column that shows file type. Used by QT on QT standard dialogs. For Windows/Linux platforms.</translatorcomment>
         <translation>類型</translation>
     </message>
     <message>
@@ -4300,19 +4302,44 @@ Do you want to delete it anyway?</source>
 <context>
     <name>ScanningWidget</name>
     <message>
-        <source>Cancel transfers</source>
+        <source>Cancel</source>
         <translatorcomment>Button text to cancel the scanning of transfers</translatorcomment>
         <translation>取消</translation>
     </message>
     <message>
-        <source>Scanning…</source>
-        <translatorcomment>Text to let the user know that the app is scanning a folder</translatorcomment>
-        <translation>正在掃描⋯</translation>
+        <source>Don&apos;t close the app. If you close, transfers not yet queued will be lost.</source>
+        <translatorcomment>Message displayed in scanning widget to warn the user of consequences of closing the app.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Don´t exit the app</source>
-        <translatorcomment>Text below the GIF to askt he user not to close the app while it is scanning a folder</translatorcomment>
-        <translation>不要退出應用程式</translation>
+        <source>Scanning</source>
+        <translatorcomment>Label used to display when the scanning widget is on the &quot;Scanning&quot; step</translatorcomment>
+        <translation>掃描中</translation>
+    </message>
+    <message>
+        <source>Creating folders</source>
+        <translatorcomment>Label used to display when the scanning widget is on the &quot;Creating folders&quot; step</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1/%2</source>
+        <translatorcomment>Label showing the quantity of folders created (%1) with the quantity of folders to create in total (%2)</translatorcomment>
+        <translation>%1/%2</translation>
+    </message>
+    <message>
+        <source>found %1, %2</source>
+        <translatorcomment>Label used to display current status of scanning step. %1 is the string with number of folders found so far, %2 is the string with number of files found so far.</translatorcomment>
+        <translation>找到%1，%2</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n folder</source>
+        <translatorcomment>Part of the string used to display number of folders in scanning step. %1 is the number of folders found so far.</translatorcomment>
+        <translation><numerusform>%n個資料夾</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n file</source>
+        <translatorcomment>Part of the string used to display number of files in scanning step. %1 is the number of files found so far.</translatorcomment>
+        <translation><numerusform>%n個檔案</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4969,6 +4996,38 @@ Do you want to restart MEGAsync now?</source>
         <translatorcomment>Suffix text label for number of days to keep files in local cache.</translatorcomment>
         <translation><numerusform>天</numerusform></translation>
     </message>
+    <message>
+        <source>Sleep settings</source>
+        <translatorcomment>Sleep/Active mode: Settings dialog groupbox title for keeping the pc awake when there are active transfers (WIndows and Linux)</translatorcomment>
+        <translation>睡眠模式</translation>
+    </message>
+    <message>
+        <source>Prevent the computer from going to sleep when transfers or syncs are in progress.
+Computer will enter sleep mode once these are complete.</source>
+        <translatorcomment>Sleep/Active mode: Feature description label for keeping the pc awake when there are active transfers</translatorcomment>
+        <translation>在傳輸或同步過程中避免電腦進入睡眠狀態。
+一旦完成，電腦將進入睡眠模式。</translation>
+    </message>
+    <message>
+        <source>Note: Some operating systems won&apos;t allow this.</source>
+        <translatorcomment>Sleep/Active mode: Warning message below the description label, as not all the computers can activate the feature to keep it awake if there are transfers active </translatorcomment>
+        <translation>注意：某些作業系統不允許此操作。</translation>
+    </message>
+    <message>
+        <source>Sleep mode:</source>
+        <translatorcomment>Sleep/Active mode: Settings dialog groupbox title for keeping the pc awake when there are active transfers (macOS)</translatorcomment>
+        <translation>睡眠模式：</translation>
+    </message>
+    <message>
+        <source>Sleep mode can&apos;t be setup</source>
+        <translatorcomment>Sleep/Active mode: Error messagebox title when the pc awake mode could not be activated after activating the feature using the checkbox.</translatorcomment>
+        <translation>無法設定睡眠模式</translation>
+    </message>
+    <message>
+        <source>Your operating system doesn&apos;t allow its sleep setting to be overwritten.</source>
+        <translatorcomment>Sleep/Active mode: Error messagebox text when the pc awake mode could not be activated after activating the feature using the checkbox.</translatorcomment>
+        <translation>您作業系統的睡眠設定不允許被覆寫。</translation>
+    </message>
 </context>
 <context>
     <name>SetupWizard</name>
@@ -5065,7 +5124,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Incorrect email and/or password.</source>
         <translatorcomment>Message displayed when a user is trying to loging with an incorrect email/password.</translatorcomment>
-        <translation>不正確的電子郵件與/或密碼。</translation>
+        <translation>無效的電子郵件地址或密碼。</translation>
     </message>
     <message>
         <source>MEGA folder doesn&apos;t exist</source>

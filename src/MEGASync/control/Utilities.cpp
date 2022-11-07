@@ -4,7 +4,6 @@
 #include <QApplication>
 #include <QImageReader>
 #include <QDirIterator>
-#include <QDesktopServices>
 #include <QTextStream>
 #include <QDateTime>
 #include <iostream>
@@ -29,10 +28,18 @@ QHash<QString, QString> Utilities::languageNames;
 
 std::unique_ptr<ThreadPool> ThreadPoolSingleton::instance = nullptr;
 
+const QString Utilities::SUPPORT_URL = QString::fromUtf8("https://mega.nz/contact");
+const QString Utilities::BACKUP_CENTER_URL = QString::fromLatin1("mega://#fm/devices");
+
 const unsigned long long KB = 1024;
 const unsigned long long MB = 1024 * KB;
 const unsigned long long GB = 1024 * MB;
 const unsigned long long TB = 1024 * GB;
+
+// Human-friendly list of forbidden chars for New Remote Folder
+const QLatin1String Utilities::FORBIDDEN_CHARS("\\ / : \" * < > \? |");
+// Forbidden chars PCRE using a capture list: [\\/:"\*<>?|]
+const QRegularExpression Utilities::FORBIDDEN_CHARS_RX(QLatin1String("[\\\\/:\"*<>\?|]"));
 
 void Utilities::initializeExtensions()
 {
@@ -477,23 +484,6 @@ void Utilities::copyRecursively(QString srcPath, QString dstPath)
     }
 }
 
-bool Utilities::verifySyncedFolderLimits(QString path)
-{
-#ifdef WIN32
-    if (path.startsWith(QString::fromAscii("\\\\?\\")))
-    {
-        path = path.mid(4);
-    }
-#endif
-
-    QString rootPath = QDir::toNativeSeparators(QDir::rootPath());
-    if (rootPath == path)
-    {
-        return false;
-    }
-    return true;
-}
-
 void replaceLeadingZeroCharacterWithSpace(QString& string)
 {
     if(!string.isEmpty() && string.at(0) == QLatin1Char('0'))
@@ -771,27 +761,9 @@ long long Utilities::extractJSONNumber(QString json, QString name)
 
 QString Utilities::getDefaultBasePath()
 {
+        QStringList defaultPaths;
 #ifdef WIN32
-    #if QT_VERSION < 0x050000
-        QString defaultPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
-        if (!defaultPath.isEmpty())
-        {
-            return defaultPath;
-        }
-
-        defaultPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
-        if (!defaultPath.isEmpty())
-        {
-            return defaultPath;
-        }
-
-        defaultPath = QDesktopServices::storageLocation(QDesktopServices::DesktopLocation);
-        if (!defaultPath.isEmpty())
-        {
-            return defaultPath;
-        }
-    #else
-        QStringList defaultPaths = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation);
+        defaultPaths = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation);
         if (defaultPaths.size())
         {
             return defaultPaths.at(0);
@@ -802,40 +774,8 @@ QString Utilities::getDefaultBasePath()
         {
             return defaultPaths.at(0);
         }
-
-        defaultPaths = QStandardPaths::standardLocations(QStandardPaths::DesktopLocation);
-        if (defaultPaths.size())
-        {
-            return defaultPaths.at(0);
-        }
-
-        defaultPaths = QStandardPaths::standardLocations(QStandardPaths::DownloadLocation);
-        if (defaultPaths.size())
-        {
-            return defaultPaths.at(0);
-        }
-    #endif
 #else
-    #if QT_VERSION < 0x050000
-        QString defaultPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
-        if (!defaultPath.isEmpty())
-        {
-            return defaultPath;
-        }
-
-        defaultPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
-        if (!defaultPath.isEmpty())
-        {
-            return defaultPath;
-        }
-
-        defaultPath = QDesktopServices::storageLocation(QDesktopServices::DesktopLocation);
-        if (!defaultPath.isEmpty())
-        {
-            return defaultPath;
-        }
-    #else
-        QStringList defaultPaths = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
+        defaultPaths = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
         if (defaultPaths.size())
         {
             return defaultPaths.at(0);
@@ -846,7 +786,7 @@ QString Utilities::getDefaultBasePath()
         {
             return defaultPaths.at(0);
         }
-
+#endif
         defaultPaths = QStandardPaths::standardLocations(QStandardPaths::DesktopLocation);
         if (defaultPaths.size())
         {
@@ -858,8 +798,6 @@ QString Utilities::getDefaultBasePath()
         {
             return defaultPaths.at(0);
         }
-    #endif
-#endif
 
     QDir dataDir = QDir(Preferences::instance()->getDataPath());
     QString rootPath = QDir::toNativeSeparators(dataDir.rootPath());
@@ -1152,35 +1090,6 @@ void Utilities::getDaysAndHoursToTimestamp(int64_t secsTimestamps, int64_t &rema
     remainDays  = remainHours / 24;
 }
 
-QProgressDialog *Utilities::showProgressDialog(ProgressHelper *progressHelper, QWidget *parent)
-{
-    QProgressDialog *progressDialog = new QProgressDialog(progressHelper->description(), QString()/*no cancel button*/, 0, 100, parent);
-    progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowContextHelpButtonHint);
-
-    progressDialog->setWindowModality(Qt::WindowModal);
-    progressDialog->setMinimumDuration(0);
-    progressDialog->setValue(0);
-    progressDialog->setAutoClose(false);
-    progressDialog->setAutoReset(false);
-    QObject::connect(progressDialog, SIGNAL(close()), progressDialog, SLOT(deleteLater()));
-    progressDialog->show();
-    auto startTime = QDateTime::currentMSecsSinceEpoch();
-
-    QObject::connect(progressHelper, &ProgressHelper::progress, progressDialog, [progressDialog](double percentage){
-        progressDialog->setValue(static_cast<int>(percentage * 100));
-    });
-
-    QObject::connect(progressHelper, &ProgressHelper::completed, progressDialog, [progressDialog, startTime](){
-        progressDialog->setValue(100);
-
-        //delay closing if thing went too fast, to avoid show/close glitch
-        auto closeDelay = max(qint64(0), 350 - (QDateTime::currentMSecsSinceEpoch() - startTime) );
-        QTimer::singleShot(closeDelay, [progressDialog] () {progressDialog->close(); });
-    });
-
-    return progressDialog;
-}
-
 QPair<QString, QString> Utilities::getFilenameBasenameAndSuffix(const QString& fileName)
 {
     QMimeDatabase db;
@@ -1224,6 +1133,33 @@ bool Utilities::isBusinessAccount()
     int accountType = Preferences::instance()->accountType();
     return accountType == Preferences::ACCOUNT_TYPE_BUSINESS
             || accountType == Preferences::ACCOUNT_TYPE_PRO_FLEXI;
+}
+
+QFuture<bool> Utilities::openUrl(QUrl url)
+{
+    return QtConcurrent::run(QDesktopServices::openUrl, url);
+}
+
+void Utilities::openInMega(MegaHandle handle)
+{
+    auto api (MegaSyncApp->getMegaApi());
+    if (api)
+    {
+        std::unique_ptr<MegaNode> node (api->getNodeByHandle(handle));
+        if (node)
+        {
+            std::unique_ptr<char[]> h (node->getBase64Handle());
+            if(h)
+            {
+                openUrl(QUrl(QLatin1String("mega://#fm/") + QString::fromLatin1(h.get())));
+            }
+        }
+    }
+}
+
+void Utilities::openBackupCenter()
+{
+    openUrl(QUrl(Utilities::BACKUP_CENTER_URL));
 }
 
 long long Utilities::getSystemsAvailableMemory()
@@ -1278,6 +1214,12 @@ int Utilities::partPer(unsigned long long  part, unsigned long long total, uint 
 
     // We can safely cast because the result should reasonably fit in an int.
     return (static_cast<int>((partd * refd) / totald));
+}
+
+bool Utilities::isNodeNameValid(const QString& name)
+{
+    QString trimmedName (name.trimmed());
+    return !trimmedName.isEmpty() && !trimmedName.contains(FORBIDDEN_CHARS_RX);
 }
 
 void MegaListenerFuncExecuter::setExecuteInAppThread(bool executeInAppThread)

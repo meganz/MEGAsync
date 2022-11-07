@@ -1,10 +1,10 @@
 #ifndef USERATTRIBUTESMANAGER_H
 #define USERATTRIBUTESMANAGER_H
 
+#include <QTMegaListener.h>
+
 #include <QObject>
 #include <QMultiMap>
-
-#include <QTMegaListener.h>
 #include <QSharedPointer>
 
 #include <memory>
@@ -73,14 +73,15 @@ public:
     void reset();
 
     template <typename AttributeClass>
-    std::shared_ptr<AttributeClass> requestAttribute(const char* user_email)
+    std::shared_ptr<AttributeClass> requestAttribute(const char* user_email = nullptr)
     {
         QString userEmail = QString::fromUtf8(user_email);
+        QString mapKey = getKey(userEmail);
 
         auto classType = typeid(AttributeClass).name();
 
-        auto requestsByEmail = mRequests.values(userEmail);
-        foreach(auto& request, requestsByEmail)
+        auto userRequests = mRequests.values(mapKey);
+        foreach(auto& request, userRequests)
         {
             auto requestType = typeid(*request).name();
             if(requestType == classType)
@@ -95,7 +96,7 @@ public:
 
         auto request = std::make_shared<AttributeClass>(userEmail);
         request->initRequestInfo();
-        mRequests.insert(userEmail, std::static_pointer_cast<AttributeRequest>(request));
+        mRequests.insert(mapKey, std::static_pointer_cast<AttributeRequest>(request));
         request->requestAttribute();
 
         return request;
@@ -106,6 +107,7 @@ public:
 
 private:
     explicit UserAttributesManager();
+    QString getKey(const QString& userEmail) const;
 
     std::unique_ptr<mega::QTMegaListener> mDelegateListener;
     QMultiMap<QString, std::shared_ptr<AttributeRequest>> mRequests;

@@ -107,7 +107,7 @@ void WindowsPlatform::prepareForSync()
                         MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Network drive detected: %1 (%2)")
                                     .arg(networkName).arg(driveName).toUtf8().constData());
 
-                        QStringList localFolders = Model::instance()->getLocalFolders();
+                        QStringList localFolders = SyncInfo::instance()->getLocalFolders(SyncInfo::AllHandledSyncTypes);
                         for (int i = 0; i < localFolders.size(); i++)
                         {
                             QString localFolder = localFolders.at(i);
@@ -1441,6 +1441,74 @@ void WindowsPlatform::execBackgroundWindow(QDialog *window)
     window->exec();
 }
 
+QString WindowsPlatform::getDeviceName()
+{
+    // First, try to read maker and model
+    QSettings settings (QLatin1Literal("HKEY_LOCAL_MACHINE\\HARDWARE\\DESCRIPTION\\System\\BIOS"),
+                        QSettings::NativeFormat);
+    QString vendor (settings.value(QLatin1Literal("BaseBoardManufacturer"),
+                                   QLatin1Literal("0")).toString());
+    QString model (settings.value(QLatin1String("SystemProductName"),
+                                  QLatin1Literal("0")).toString());
+    QString deviceName;
+    // If failure or empty strings, give hostname
+    if (vendor.isEmpty() && model.isEmpty())
+    {
+        deviceName = QSysInfo::machineHostName();
+        deviceName.remove(QLatin1Literal(".local"));
+    }
+    else
+    {
+        deviceName = vendor + QLatin1Literal(" ") + model;
+    }
+
+    return deviceName;
+}
+
+void WindowsPlatform::initMenu(QMenu* m)
+{
+    if (m)
+    {
+        m->setStyleSheet(QLatin1String("QMenu {"
+                                           "background: #ffffff;"
+                                           "padding-top: 6px;"
+                                           "padding-bottom: 6px;"
+                                           "border: 1px solid #B8B8B8;"
+                                       "}"
+                                       "QMenu::separator {"
+                                           "height: 1px;"
+                                           "margin: 6px 10px 6px 10px;"
+                                           "background-color: rgba(0, 0, 0, 0.1);"
+                                       "}"
+                                       // For vanilla QMenus (only in TransferManager and MegaItemTreeView (NodeSelector))
+                                       "QMenu::item {"
+                                           "font-family: Lato;"
+                                           "font-size: 14px;"
+                                           "margin: 6px 16px 6px 16px;"
+                                           "color: #777777;"
+                                           "padding-right: 16px;"
+                                       "}"
+                                       "QMenu::item:selected {"
+                                           "color: #000000;"
+                                       "}"
+                                       // For menus with MenuItemActions
+                                       "QLabel {"
+                                           "font-family: Lato;"
+                                           "font-size: 14px;"
+                                           "padding: 0px;"
+                                       "}"
+                                       ));
+        m->ensurePolished();
+    }
+}
+
+// Platform-specific strings
+const char* WindowsPlatform::settingsString {QT_TRANSLATE_NOOP("Platform", "Settings")};
+const char* WindowsPlatform::openSettingsString {QT_TRANSLATE_NOOP("Platform", "Open settings")};
+const char* WindowsPlatform::goToSettingsToEnableSyncsString {QT_TRANSLATE_NOOP("Platform", "Go to settings to enable them again.")};
+const char* WindowsPlatform::exitString {QT_TRANSLATE_NOOP("Platform", "Exit")};
+const char* WindowsPlatform::fileExplorerString {QT_TRANSLATE_NOOP("Platform", "Show in Explorer")};
+
 ShellNotifier::~ShellNotifier()
 {
     if (!mThread.joinable()) // thread wasn't started
@@ -1511,8 +1579,3 @@ void ShellNotifier::notify(const std::string& path) const
     // same as in WindowsPlatform::notifyItemChange()
     SHChangeNotify(SHCNE_UPDATEITEM, SHCNF_PATH, path.data(), NULL);
 }
-
-// Platform-specific strings
-const char* WindowsPlatform::settingsString {QT_TRANSLATE_NOOP("Platform", "Settings")};
-const char* WindowsPlatform::exitString {QT_TRANSLATE_NOOP("Platform", "Exit")};
-const char* WindowsPlatform::fileExplorerString {QT_TRANSLATE_NOOP("Platform", "Show in Explorer")};
