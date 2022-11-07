@@ -293,7 +293,6 @@ public:
             mLoadingView->setFrameStyle(QFrame::NoFrame);
             mLoadingView->setIndentation(0);
             mLoadingView->setSelectionMode(QAbstractItemView::NoSelection);
-
             mLoadingModel = new QStandardItemModel(mLoadingView);
             mLoadingDelegate = new LoadingSceneDelegate<DelegateWidget>(mLoadingView);
             mLoadingView->setModel(mLoadingModel);
