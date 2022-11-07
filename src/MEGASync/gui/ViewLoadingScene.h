@@ -202,9 +202,13 @@ class ViewLoadingSceneBase : public QObject
         mDelayTimeToShowInMs = newDelayTimeToShowInMs;
     }
 
+signals:
+    void sceneVisibilityChange(bool value);
+
 protected:
     QTimer mDelayTimerToShow;
     int mDelayTimeToShowInMs;
+
 
 private slots:
     void onDelayTimerTimeout()
@@ -322,6 +326,7 @@ public:
             auto delay = std::max(0ll, MIN_TIME_DISPLAYING_VIEW - (QDateTime::currentMSecsSinceEpoch()
                                                 - mStartTime));
             QTimer::singleShot(delay, this, [this, state] () {
+                sceneVisibilityChange(false);
                 mLoadingModel->setRowCount(0);
                 mLoadingView->hide();
                 mView->show();
@@ -334,6 +339,7 @@ public:
 private:
     inline void setLoadingSceneVisible() override
     {
+        sceneVisibilityChange(true);
         int visibleRows(0);
 
         if(mView->isVisible())

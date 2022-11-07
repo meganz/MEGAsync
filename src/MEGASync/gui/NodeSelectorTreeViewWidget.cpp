@@ -92,9 +92,8 @@ void NodeSelectorTreeViewWidget::setSelectionMode(int selectMode)
     }
 
     connect(mProxyModel.get(), &MegaItemProxyModel::expandReady, this, &NodeSelectorTreeViewWidget::onExpandReady);
-    connect(mModel.get(), &MegaItemModel::blockUi, this, &NodeSelectorTreeViewWidget::onUiBlocked);
+    connect(&mLoadingScene, &ViewLoadingSceneBase::sceneVisibilityChange, this, &NodeSelectorTreeViewWidget::onUiBlocked);
 
-    //setLoadingSceneVisible(true);
     ui->tMegaFolders->setSortingEnabled(true);
     mProxyModel->setSourceModel(mModel.get());
 
@@ -283,8 +282,6 @@ void NodeSelectorTreeViewWidget::onbNewFolderClicked()
     //2) The dialog has been rejected because the folder already exists. If so, select the existing folder
     if(newNode)
     {
-        mega::MegaHandle handle = newNode->getHandle();
-
         if(result == QDialog::Accepted)
         {
             QModelIndex idx = ui->tMegaFolders->rootIndex();
