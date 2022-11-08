@@ -638,11 +638,11 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>All the queued transfers from your current download will be cancelled.</source>
         <translatorcomment>Dialog messages which warns the user about the potential problems of cancelling the folder scanning</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>سيتم إلغاء جميع عمليات تراسل المعطيات في قائمة الانتظار من التنزيل الحالي الخاص بك.</translation>
     </message>
     <message>
         <source>Cancelling…</source>
-        <translation type="unfinished"></translation>
+        <translation>جارٍ الإلغاء...</translation>
     </message>
 </context>
 <context>
@@ -842,7 +842,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>New Contact Established</source>
         <translatorcomment>Title of the notification when a contact relationship has been established.</translatorcomment>
-        <translation>إنشاء طلب تواصل جديد</translation>
+        <translation>جهة اتصال جديدة</translation>
     </message>
     <message>
         <source>New contact with [A] has been established</source>
@@ -857,7 +857,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Shared Folder Received</source>
         <translatorcomment>Title of the notification when a shared folder has been received</translatorcomment>
-        <translation>تم استلام مجلد مشارك</translation>
+        <translation>تم استلام المجلد المشارك</translation>
     </message>
     <message>
         <source>Shared Folder Removed</source>
@@ -867,7 +867,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Shared Folder Updated</source>
         <translatorcomment>Generic label to indicate that there is an update in a shared folder but the name of the shared folder is not available.</translatorcomment>
-        <translation>تمت تحديث المجلد المشترك</translation>
+        <translation>تم تحديث المجلد المشارك</translation>
     </message>
     <message>
         <source>Payment Info</source>
@@ -972,17 +972,17 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>انتهت صلاحية حساب الأعمال Business الخاص بك</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation>انتهت صلاحية للقراءة فقط لحسابك حتى تقوم بمتابعة الدفعات المطلوبة.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Account Suspended</source>
         <translatorcomment>Title to inform that a business account is actually suspended.</translatorcomment>
-        <translation>الحساب معلق</translation>
+        <translation>تم تعليق الحساب</translation>
     </message>
     <message>
         <source>Contact your business account administrator to resolve the issue and activate your account.</source>
@@ -1295,7 +1295,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You can not sync a shared folder without Full Access permissions</source>
         <translatorcomment>Label to inform a user about the incompatibility of sync a shared folder without Full Access permissions</translatorcomment>
-        <translation>لا يمكنك مزامنة مجلد مشترك بدون أذونات الوصول الكامل</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select</source>
@@ -1308,7 +1308,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Login</source>
         <translatorcomment>Button label to start the Login process. (String as short as possible)</translatorcomment>
-        <translation>تسجيل الدخول</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Create account</source>
@@ -1408,7 +1408,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Log out</source>
         <translatorcomment>Button label to log out the current account.</translatorcomment>
-        <translation>تسجيل خروج</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
@@ -2310,7 +2310,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>انتهت صلاحية حساب الأعمال Business الخاص بك</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -2320,7 +2320,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message shown to admin business account when a payment has failed. </translatorcomment>
-        <translation>يبدو أن دفعة حساب الأعمال Business الخاص بك قد فشل. انتهت صلاحية حسابك وتم منحه أذونات وصول للقراءة فقط حتى تقوم بمتابعة الدفعات المطلوبة.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
@@ -2335,7 +2335,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>This month&apos;s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</source>
         <translatorcomment>Informative message shown to the user when a payment has failed for a business account.</translatorcomment>
-        <translation>فشل الدفع لهذا الشهر. الرجاء حل مشكلة الدفع الخاصة بك في أقرب وقت ممكن لتجنب أي تعليق حساب الأعمال business الخاص بك.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -2345,7 +2345,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
         <translatorcomment>Informative message shown when a business account is expired and the user can only browse data and none operation (upload, download, creation..) is allowed.</translatorcomment>
-        <translation>انتهت [A]صلاحية[/A] حسابك. يمكنك فقط تصفح البيانات الخاصة بك.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
@@ -2481,13 +2481,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>There is an active transfer. Exit the app?
 Transfer will automatically resume when you re-open the app.</source>
         <translatorcomment>Messagebox text to let the user know that there are active transfers when closing the app. The user will be able to exit and pause them, or stop the exit action.</translatorcomment>
-        <translation><numerusform>هناك عملية تراسل نشطة. هل تريد الخروج من التطبيق؟
-سيتم استئناف عملية التراسل تلقائيًا عند إعادة فتح التطبيق.</numerusform><numerusform>هناك عملية تراسل نشطة. هل تريد الخروج من التطبيق؟
-سيتم استئناف عملية التراسل تلقائيًا عند إعادة فتح التطبيق.</numerusform><numerusform>هناك عمليات تراسل نشطة. هل تريد الخروج من التطبيق؟
-سيتم استئناف عمليات التراسل تلقائيًا عند إعادة فتح التطبيق.</numerusform><numerusform>هناك عمليات تراسل نشطة. هل تريد الخروج من التطبيق؟
-سيتم استئناف عمليات التراسل تلقائيًا عند إعادة فتح التطبيق.</numerusform><numerusform>هناك عمليات تراسل نشطة. هل تريد الخروج من التطبيق؟
-سيتم استئناف عمليات التراسل تلقائيًا عند إعادة فتح التطبيق.</numerusform><numerusform>هناك عمليات تراسل نشطة. هل تريد الخروج من التطبيق؟
-سيتم استئناف عمليات التراسل تلقائيًا عند إعادة فتح التطبيق.</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Exit app</source>
@@ -2843,7 +2837,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Business account expired</source>
         <translatorcomment>Label to show that the current business account is expired during a SDK operation.</translatorcomment>
-        <translation>انتهت صلاحية حساب الأعمال الخاص بك</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Foreign target storage quota reached</source>
@@ -2981,7 +2975,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Get link</source>
         <translatorcomment>Context menu action to get transfer link</translatorcomment>
-        <translation>إحصل على الرابط</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Open in MEGA</source>
@@ -3147,7 +3141,7 @@ Your selected incomplete sync transfers won&apos;t be cancelled.</source>
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a FAT filesystem.</translatorcomment>
-        <translation>أنت تقوم بمزامنة مجلد محلي منسق بنظام ملفات FAT. يحتوي نظام الملفات هذا على عيوب في إدارة الملفات الكبيرة وأوقات التعديل التي يمكن أن تسبب مشاكل في المزامنة (على سبيل المثال عند تغير التوقيت الصيفي)، لذلك يوصى بشدة بمزامنة المجلدات المنسقة بأنظمة ملفات أكثر موثوقية مثل NTFS فقط (مزيد من المعلومات [A]هنا[/A]).</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
@@ -3262,7 +3256,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Cloud drive</source>
         <translatorcomment>Node selector button Text. Switch the view to show only the cloud drive nodes (files and folders)</translatorcomment>
-        <translation>السواقة السحابية</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Incoming shares</source>
@@ -4174,8 +4168,7 @@ Please verify the correct file name was given.</source>
         <source>&apos;%1&apos; is write protected.
 Do you want to delete it anyway?</source>
         <translatorcomment>Warning message when a write protected file is about to be delete</translatorcomment>
-        <translation>”%1” محمي من الكتابة.
-هل تريد حذفه على أية حال؟</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4389,7 +4382,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Log out</source>
         <translatorcomment>Button label to log out of the application. String as short as possible.</translatorcomment>
-        <translation>تسجيل خروج</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Upgrade</source>
@@ -5381,7 +5374,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Log in</source>
         <translatorcomment>Button label to open Login form</translatorcomment>
-        <translation>تسجيل الدخول</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>I agree with the MEGA [A]Terms of Service[/A]</source>
@@ -5872,14 +5865,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your MEGA account is full</source>
         <translatorcomment>Message shown when the MEGA account is full</translatorcomment>
-        <translation>حساب ميغا MEGA الخاص بك ممتلئ.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left for this IP address.
 To get more quota, upgrade to a Pro account or wait for [A] until more free quota becomes available on your IP address.</source>
         <translatorcomment>Message which shows that the user reachs the overquota. [A] is the time to wait until the quota is reset in hh:mm:ss</translatorcomment>
         <translation>لا يمكنك متابعة التنزيل نظرًا لعدم وجود حجم تراسل معطيات كافٍِ للعنوان الشبكي IP هذا.
-للحصول على حجم أكبر ، قم بالترقية إلى حساب برو Pro أو انتظر حتى [A] لمزيد من الحجم المجاني على العنوان الشبكي IP الخاص بك</translation>
+للحصول على حجم أكبر، قم بالترقية إلى حساب برو Pro أو انتظر حتى [A] لمزيد من الحجم المجاني على العنوان الشبكي IP الخاص بك</translation>
     </message>
     <message>
         <source>More about transfer quota</source>
@@ -6386,7 +6379,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Log out</source>
         <translatorcomment>Button label to log out the current account</translatorcomment>
-        <translation>تسجيل خروج</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Verify your email</source>

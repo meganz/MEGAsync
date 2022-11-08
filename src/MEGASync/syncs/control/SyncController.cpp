@@ -246,7 +246,7 @@ QString SyncController::getIsLocalFolderAllowedForSyncMsg(const QString& path, c
         }
         else
         {
-            message = tr("You can’t sync “name of folder” as it’s the root folder. "
+            message = tr("You can’t sync “%1” as it’s the root folder. "
                          "The root folder is either; the top-level folder on your "
                          "device or computer that holds all your folders and files"
                          " or the folder where the system or program is installed."

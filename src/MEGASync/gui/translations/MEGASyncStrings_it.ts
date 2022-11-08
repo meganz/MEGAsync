@@ -310,7 +310,7 @@
     <message>
         <source>Shared Folder Activity</source>
         <translatorcomment>Generic label to indicate that there is activity in a shared folder but the name of the shared folder is not available.</translatorcomment>
-        <translation>Attività delle Cartelle condivise</translation>
+        <translation>Attività delle cartelle condivise</translation>
     </message>
     <message>
         <source>Access to shared folder was removed</source>
@@ -842,7 +842,7 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message>
         <source>New Contact Established</source>
         <translatorcomment>Title of the notification when a contact relationship has been established.</translatorcomment>
-        <translation>Nuovo contatto stabilito</translation>
+        <translation>Nuovo contatto</translation>
     </message>
     <message>
         <source>New contact with [A] has been established</source>
@@ -882,7 +882,7 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message>
         <source>Shared Folder Activity</source>
         <translatorcomment>Generic label to indicate that there is activity in a shared folder but the name of the shared folder is not available.</translatorcomment>
-        <translation>Attività delle Cartelle condivise</translation>
+        <translation>Attività delle cartelle condivise</translation>
     </message>
     <message>
         <source>Show</source>
@@ -957,7 +957,7 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message>
         <source>Payment Failed</source>
         <translatorcomment>Notification title shown when a payment has failed for a business account.</translatorcomment>
-        <translation>Pagamento Fallito</translation>
+        <translation>Pagamento fallito</translation>
     </message>
     <message>
         <source>Please resolve your payment issue to avoid suspension of your account.</source>
@@ -1020,7 +1020,7 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message>
         <source>Download from MEGA</source>
         <translatorcomment>Label and Title of the dialog displayed when a user is trying to retrieve a file/folder from MEGA.(MAX 20 characters)</translatorcomment>
-        <translation>Download</translation>
+        <translation>Scarica da MEGA</translation>
     </message>
     <message>
         <source>Please select the download folder for your files:</source>
@@ -1308,7 +1308,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Login</source>
         <translatorcomment>Button label to start the Login process. (String as short as possible)</translatorcomment>
-        <translation>Login</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Create account</source>
@@ -2481,9 +2481,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>There is an active transfer. Exit the app?
 Transfer will automatically resume when you re-open the app.</source>
         <translatorcomment>Messagebox text to let the user know that there are active transfers when closing the app. The user will be able to exit and pause them, or stop the exit action.</translatorcomment>
-        <translation><numerusform>C&apos;è un trasferimento attivo. Uscire dall&apos;app?
-Il trasferimento riprenderà automaticamente quando riaprirai l&apos;app.</numerusform><numerusform>Ci sono trasferimenti attivi. Uscire dall&apos;app?
-I trasferimenti riprenderanno automaticamente quando riaprirai l&apos;app.</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Exit app</source>
@@ -2977,7 +2975,7 @@ I trasferimenti riprenderanno automaticamente quando riaprirai l&apos;app.</nume
     <message>
         <source>Get link</source>
         <translatorcomment>Context menu action to get transfer link</translatorcomment>
-        <translation>Ottieni il link</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Open in MEGA</source>
@@ -3143,7 +3141,7 @@ I trasferimenti selezionati ed incompleti non saranno annullati.</translation>
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a FAT filesystem.</translatorcomment>
-        <translation>Stai sincronizzando una cartella locale formattata con un filesystem FAT. Quel filesystem ha problemi nel gestire grandi file e le modifiche che può causare problemi di sincronizzazione (ad esempio quando cambia l’orario), quindi è altamente raccomandata la sincronizzazione di sole cartelle formattate con un filesystem più affidabile, come NTFS (più informazioni [A]qui[/A]).</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
@@ -3257,7 +3255,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Cloud drive</source>
         <translatorcomment>Node selector button Text. Switch the view to show only the cloud drive nodes (files and folders)</translatorcomment>
-        <translation>Cloud Drive</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Incoming shares</source>
@@ -3756,7 +3754,15 @@ Per favore, elimina la cartella di sincronizzazione dalle Preferenze per annulla
 - Fixed and adjusted UI.
 </source>
         <translatorcomment>Changelog for version v4.7.2</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Aggiunto supporto nativo ai nuovi Apple Silicon.
+- Aggiunta una nuova feature per fermare la modalità di sospensione se ci sono trasferimenti attivi.
+- Aggiornate le librerie di terze parti.
+- Migliorati i trasferimenti di cartelle.
+- Sistemati alcuni crash su Windows, Linux, e macOS.
+- Sistemati problemi di traduzione.
+- Migliorata la performance.
+- Sistemata l&apos;interfaccia utente.
+</translation>
     </message>
 </context>
 <context>
@@ -4161,8 +4167,7 @@ Per favore, verifica di aver inserito il nome corretto del file.</translation>
         <source>&apos;%1&apos; is write protected.
 Do you want to delete it anyway?</source>
         <translatorcomment>Warning message when a write protected file is about to be delete</translatorcomment>
-        <translation>″%1″ è protetto dalla scrittura.
-Sei sicuro di volerlo eliminare lo stesso?</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5859,7 +5864,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your MEGA account is full</source>
         <translatorcomment>Message shown when the MEGA account is full</translatorcomment>
-        <translation>Il tuo account MEGA è pieno.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left for this IP address.

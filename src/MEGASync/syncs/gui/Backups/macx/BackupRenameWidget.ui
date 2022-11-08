@@ -71,7 +71,7 @@ color: #04101E;
 }</string>
      </property>
      <property name="placeholderText">
-      <string>Rename backup folder </string>
+      <string>Rename backup folder</string>
      </property>
     </widget>
    </item>
