@@ -85,7 +85,6 @@ class MegaItemModel : public QAbstractItemModel
     Q_OBJECT
 
 public:
-
     static const int ROW_HEIGHT;
 
     enum COLUMN{
@@ -94,6 +93,13 @@ public:
       USER,
       DATE,
       last
+    };
+
+    struct IndexesActionInfo
+    {
+        bool needsToBeSelected = false;
+        QModelIndexList indexesToBeExpanded;
+        bool needsToBeEntered = false;
     };
 
     explicit MegaItemModel(QObject *parent = 0);
@@ -129,8 +135,8 @@ public:
     virtual void firstLoad() = 0;
     void rootItemsLoaded();
 
-    QPair<QModelIndexList, bool> needsToBeExpandedAndSelected();
-    void clearIndexesToMap();
+    IndexesActionInfo needsToBeExpandedAndSelected();
+    void clearIndexesNodeInfo();
     void abort();
 
 signals:
@@ -156,8 +162,7 @@ protected:
     bool mDisplayFiles;
     bool mSyncSetupMode;
     bool mShowFiles;
-    mutable QModelIndexList mIndexesToMap;
-    bool mNeedsToBeSelected;
+    mutable IndexesActionInfo mIndexesActionInfo;
     NodeRequester* mNodeRequesterWorker;
     QList<std::shared_ptr<mega::MegaNode>> mNodesToLoad;
 

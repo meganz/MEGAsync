@@ -13,6 +13,8 @@
 
 using namespace mega;
 
+const char* INDEX_PROPERTY = "INDEX";
+
 NodeRequester::NodeRequester(MegaItemModel *model)
     : mModel(model),
       mCancelToken(MegaCancelToken::createInstance())
@@ -30,7 +32,7 @@ void NodeRequester::requestNodeAndCreateChildren(MegaItem* item, const QModelInd
     if(item)
     {
         auto node = item->getNode();
-        item->setProperty("INDEX", parentIndex);
+        item->setProperty(INDEX_PROPERTY, parentIndex);
 
         if(!item->requestingChildren() && !item->childrenAreInit())
         {
@@ -90,7 +92,7 @@ void NodeRequester::createIncomingSharesRootItems(std::shared_ptr<mega::MegaNode
             auto incomingSharesModel = dynamic_cast<MegaItemModelIncomingShares*>(mModel);
             if(incomingSharesModel)
             {
-                item->setProperty("INDEX", incomingSharesModel->index(0,i));
+                item->setProperty(INDEX_PROPERTY, incomingSharesModel->index(0,i));
                 connect(item, &MegaItem::infoUpdated, incomingSharesModel, &MegaItemModelIncomingShares::onItemInfoUpdated);
                 item->setOwner(move(user));
             }
@@ -115,11 +117,11 @@ void NodeRequester::createIncomingSharesRootItems(std::shared_ptr<mega::MegaNode
 void NodeRequester::onAddNodeRequested(std::shared_ptr<MegaNode> newNode, MegaItem *parentItem)
 {
     //Too fast to protect it agains crashes?
-    auto parentIndex = parentItem->property("INDEX").toModelIndex();
+    auto parentIndex = parentItem->property(INDEX_PROPERTY).toModelIndex();
     lockMutex(true);
     auto childItem = parentItem->addNode(newNode);
     lockMutex(false);
-    childItem->setProperty("INDEX", mModel->index(parentItem->getNumChildren() -1 ,0, parentIndex));
+    childItem->setProperty(INDEX_PROPERTY, mModel->index(parentItem->getNumChildren() -1 ,0, parentIndex));
 
     if(!mAborted)
     {
@@ -197,8 +199,7 @@ MegaItemModel::MegaItemModel(QObject *parent) :
     mRequiredRights(MegaShare::ACCESS_READ),
     mDisplayFiles(false),
     mSyncSetupMode(false),
-    mShowFiles(true),
-    mNeedsToBeSelected(false)
+    mShowFiles(true)
 {
     mCameraFolderAttribute = UserAttributes::CameraUploadFolder::requestCameraUploadFolder();
     mMyChatFilesFolderAttribute = UserAttributes::MyChatFilesFolder::requestMyChatFilesFolder();
@@ -483,8 +484,10 @@ void MegaItemModel::setSyncSetupMode(bool value)
 
 void MegaItemModel::addNode(std::shared_ptr<MegaNode> node, const QModelIndex &parent)
 {
-    mIndexesToMap.clear();
+    clearIndexesNodeInfo();
+
     MegaItem *parentItem = static_cast<MegaItem*>(parent.internalPointer());
+    parentItem->setProperty(INDEX_PROPERTY, parent);
     int numchildren = parentItem->getNumChildren();
 
     beginInsertRows(parent, numchildren, numchildren);
@@ -495,11 +498,12 @@ void MegaItemModel::onNodeAdded(MegaItem* childItem)
 {
     endInsertRows();
 
-    auto index = childItem->property("INDEX").toModelIndex();
-    mIndexesToMap.append(index);
+    auto index = childItem->property(INDEX_PROPERTY).toModelIndex();
+    mIndexesActionInfo.indexesToBeExpanded.append(index);
 
-    mNeedsToBeSelected = true;
-    emit levelsAdded(mIndexesToMap);
+    mIndexesActionInfo.needsToBeSelected = true;
+    mIndexesActionInfo.needsToBeEntered = true;
+    emit levelsAdded(mIndexesActionInfo.indexesToBeExpanded);
 }
 
 
@@ -639,24 +643,17 @@ QVariant MegaItemModel::getText(const QModelIndex &index, MegaItem *item) const
     return QVariant(QLatin1String(""));
 }
 
-QPair<QModelIndexList, bool> MegaItemModel::needsToBeExpandedAndSelected()
+MegaItemModel::IndexesActionInfo MegaItemModel::needsToBeExpandedAndSelected()
 {
-    if(mNodesToLoad.isEmpty() && !mIndexesToMap.isEmpty())
-    {
-        auto indexesToExpand = mIndexesToMap;
-        auto needsToBeSelected = mNeedsToBeSelected;
-        clearIndexesToMap();
+    IndexesActionInfo info = mIndexesActionInfo;
+    clearIndexesNodeInfo();
 
-        return qMakePair(indexesToExpand, needsToBeSelected);
-    }
-
-    return qMakePair(QModelIndexList(), false);
+    return info;
 }
 
-void MegaItemModel::clearIndexesToMap()
+void MegaItemModel::clearIndexesNodeInfo()
 {
-    mIndexesToMap.clear();
-    mNeedsToBeSelected = false;
+    mIndexesActionInfo = IndexesActionInfo();
 }
 
 void MegaItemModel::abort()
@@ -686,12 +683,12 @@ void MegaItemModel::loadTreeFromNode(const std::shared_ptr<mega::MegaNode> node)
     //First, we se the loading view as it can take long to load the tree path to the node
     emit blockUi(true);
 
-    mNeedsToBeSelected = true;
+    clearIndexesNodeInfo();
+    mIndexesActionInfo.needsToBeSelected = true;
 
     mNodesToLoad.clear();
-    mIndexesToMap.clear();
-
     mNodesToLoad.append(node);
+
     auto p_node = std::shared_ptr<mega::MegaNode>(MegaSyncApp->getMegaApi()->getParentNode(node.get()));
     while(p_node)
     {
@@ -703,10 +700,8 @@ void MegaItemModel::loadTreeFromNode(const std::shared_ptr<mega::MegaNode> node)
     {
         emit blockUi(false);
         mNodesToLoad.clear();
-        mIndexesToMap.clear();
-        mNeedsToBeSelected = false;
+        clearIndexesNodeInfo();
     }
-
 }
 
 bool MegaItemModel::fetchMoreRecursively(const QModelIndex& parentIndex)
@@ -726,7 +721,7 @@ bool MegaItemModel::fetchMoreRecursively(const QModelIndex& parentIndex)
             }
             else
             {
-                mIndexesToMap.append(indexToCheck);
+                mIndexesActionInfo.indexesToBeExpanded.append(indexToCheck);
                 continueWithNextItemToLoad(indexToCheck);
             }
         }
@@ -773,7 +768,7 @@ void MegaItemModel::addRootItems()
 
 void MegaItemModel::loadLevelFinished()
 {
-   emit levelsAdded(mIndexesToMap);
+   emit levelsAdded(mIndexesActionInfo.indexesToBeExpanded);
 }
 
 bool MegaItemModel::canFetchMore(const QModelIndex &parent) const
@@ -811,8 +806,8 @@ void MegaItemModel::fetchItemChildren(const QModelIndex& parent)
 
 void MegaItemModel::onChildNodesReady(MegaItem* parent)
 {
-    auto index = parent->property("INDEX").value<QModelIndex>();
-    mIndexesToMap.append(index);
+    auto index = parent->property(INDEX_PROPERTY).value<QModelIndex>();
+    mIndexesActionInfo.indexesToBeExpanded.append(index);
     continueWithNextItemToLoad(index);
 }
 

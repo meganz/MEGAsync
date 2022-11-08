@@ -324,7 +324,7 @@ void MegaItemProxyModel::onModelSortedFiltered()
         emit navigateReady(itemsToMap.isEmpty() ? QModelIndex() : mapFromSource(itemsToMap.first()));
         if(auto megaItemModel = dynamic_cast<MegaItemModel*>(sourceModel()))
         {
-            megaItemModel->clearIndexesToMap();
+            megaItemModel->clearIndexesNodeInfo();
         }
     }
 

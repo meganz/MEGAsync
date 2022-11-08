@@ -228,6 +228,7 @@ class ViewLoadingScene : public ViewLoadingSceneBase
 
 public:
     ViewLoadingScene() :
+        ViewLoadingSceneBase(),
         mViewDelegate(nullptr),
         mView(nullptr),
         mViewModel(nullptr),
@@ -236,8 +237,7 @@ public:
         mLoadingModel(nullptr),
         mLoadingDelegate(nullptr),
         mViewLayout(nullptr),
-        mLoadingViewSet(false),
-        ViewLoadingSceneBase()
+        mLoadingViewSet(false)
     {
     }
 

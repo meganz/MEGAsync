@@ -42,6 +42,7 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(QWidget *parent) :
 
     mLoadingScene.setView(ui->tMegaFolders);
     mLoadingScene.setDelayTimeToShowInMs(100);
+    connect(&mLoadingScene, &ViewLoadingSceneBase::sceneVisibilityChange, this, &NodeSelectorTreeViewWidget::onUiBlocked);
 }
 
 void NodeSelectorTreeViewWidget::changeEvent(QEvent *event)
@@ -92,7 +93,6 @@ void NodeSelectorTreeViewWidget::setSelectionMode(int selectMode)
     }
 
     connect(mProxyModel.get(), &MegaItemProxyModel::expandReady, this, &NodeSelectorTreeViewWidget::onExpandReady);
-    connect(&mLoadingScene, &ViewLoadingSceneBase::sceneVisibilityChange, this, &NodeSelectorTreeViewWidget::onUiBlocked);
 
     ui->tMegaFolders->setSortingEnabled(true);
     mProxyModel->setSourceModel(mModel.get());
@@ -215,21 +215,29 @@ void NodeSelectorTreeViewWidget::onExpandReady()
     }
 
     auto indexesAndSelected = mModel->needsToBeExpandedAndSelected();
-    if(!indexesAndSelected.first.isEmpty())
+    if(!indexesAndSelected.indexesToBeExpanded.isEmpty())
     {
-        for (auto it = indexesAndSelected.first.begin(); it != indexesAndSelected.first.end(); ++it)
+        for (auto it = indexesAndSelected.indexesToBeExpanded.begin(); it != indexesAndSelected.indexesToBeExpanded.end(); ++it)
         {
              auto proxyIndex(mProxyModel->mapFromSource((*it)));
              ui->tMegaFolders->setExpanded(proxyIndex, true);
 
-             if(indexesAndSelected.second && (*it) == indexesAndSelected.first.last())
+             if((*it) == indexesAndSelected.indexesToBeExpanded.last())
              {
-                ui->tMegaFolders->selectionModel()->setCurrentIndex(proxyIndex, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
-                ui->tMegaFolders->selectionModel()->select(proxyIndex, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
+                 if(indexesAndSelected.needsToBeSelected)
+                 {
+                     ui->tMegaFolders->selectionModel()->setCurrentIndex(proxyIndex, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
+                     ui->tMegaFolders->selectionModel()->select(proxyIndex, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
+                     ui->tMegaFolders->scrollTo(proxyIndex, QAbstractItemView::ScrollHint::PositionAtCenter);
+                 }
+
+                 if(indexesAndSelected.needsToBeEntered)
+                 {
+                     onItemDoubleClick(proxyIndex);
+                 }
              }
         }
     }
-
 }
 
 void NodeSelectorTreeViewWidget::onGoBackClicked()
