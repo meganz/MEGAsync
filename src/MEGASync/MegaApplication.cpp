@@ -1390,26 +1390,25 @@ if (!preferences->lastExecutionTime())
         if (haveSyncs && haveBackups)
         {
             syncsTypesToDismiss = {MegaSync::TYPE_TWOWAY, MegaSync::TYPE_BACKUP};
-            message = tr("Some syncs and backups have been disabled.");
+            message = PlatformStrings::syncsAndBackupsDisableWarning();
         }
         else if (haveBackups)
         {
             settingsTabToOpen = SettingsDialog::BACKUP_TAB;
             syncsTypesToDismiss = {MegaSync::TYPE_BACKUP};
-            message = tr("One or more backups have been disabled.");
+            message = PlatformStrings::backupsDisableWarning();
         }
         else if (haveSyncs)
         {
             syncsTypesToDismiss = {MegaSync::TYPE_TWOWAY};
-            message = tr("One or more syncs have been disabled.");
+            message = PlatformStrings::syncsDisableWarning();
         }
 
         // Display the message if it has been set
         if (!message.isEmpty())
         {
-            message += QLatin1Char(' ') + QCoreApplication::translate("Platform", Platform::goToSettingsToEnableSyncsString);
             QMessageBox msgBox (QMessageBox::Warning, QCoreApplication::applicationName(), message);
-            QString buttonText (QCoreApplication::translate("Platform", Platform::openSettingsString));
+            QString buttonText (PlatformStrings::openSettings());
             QPushButton *openPreferences = msgBox.addButton(buttonText, QMessageBox::YesRole);
 
             msgBox.addButton(tr("Dismiss"), QMessageBox::NoRole);

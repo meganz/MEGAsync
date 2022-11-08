@@ -160,7 +160,7 @@ void BackupNameConflictDialog::createWidgets()
         QString name (mBackupNames[conflicts.first()->getPath()]);
         conflictText = tr("A folder named \"%1\" already exists in your Backups. Rename the new "
                           "folder to continue with the backup. "
-                          "Folder name will not change on your computer. ").arg(name);
+                          "Folder name will not change on your computer.").arg(name);
 
         connect(ui->lToBackupCenterText, &QLabel::linkActivated,
                 this, &BackupNameConflictDialog::openLink, Qt::UniqueConnection);

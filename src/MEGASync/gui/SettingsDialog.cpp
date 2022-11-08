@@ -1724,7 +1724,7 @@ void SettingsDialog::connectBackupHandlers()
     {
         onSavingSyncsCompleted(SyncStateInformation::SAVING_BACKUPS_FINISHED);
         QMegaMessageBox::warning(nullptr, tr("Error disabling backup"),
-                                  tr("Your sync \"%1\" can't be disabled. Reason: %2")
+                                  tr("Your backup \"%1\" can't be disabled. Reason: %2")
                                   .arg(sync->name())
                                   .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(sync->getError()))));
 
