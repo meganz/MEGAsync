@@ -458,11 +458,6 @@
         <translation type="unfinished">Rename and backup</translation>
     </message>
     <message>
-        <source>A folder named &quot;%1&quot; already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer. </source>
-        <translatorcomment>Test telling the user that he has a backup name conflict between 2 local folders (they want to backup folders that have the same name but different paths)</translatorcomment>
-        <translation type="unfinished">A folder named &quot;%1&quot; already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer. </translation>
-    </message>
-    <message>
         <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
         <translatorcomment>Text informing the user that they can&amp;apos;t have duplicated backup names and instructing them to rename them</translatorcomment>
         <translation type="unfinished">You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</translation>
@@ -2845,21 +2840,6 @@ Transfers will automatically resume when you re-open the app.</numerusform>
         <translation type="unfinished">Error adding %1:</translation>
     </message>
     <message>
-        <source>Some syncs and backups have been disabled.</source>
-        <translatorcomment>Warning message shown when some syncs and backups are disabled</translatorcomment>
-        <translation type="unfinished">Some syncs and backups have been disabled.</translation>
-    </message>
-    <message>
-        <source>One or more backups have been disabled.</source>
-        <translatorcomment>Warning message shown when some backups are disabled</translatorcomment>
-        <translation type="unfinished">One or more backups have been disabled.</translation>
-    </message>
-    <message>
-        <source>One or more syncs have been disabled.</source>
-        <translatorcomment>Warning message shown when some syncs are disabled</translatorcomment>
-        <translation type="unfinished">One or more syncs have been disabled.</translation>
-    </message>
-    <message>
         <source>Your syncs and backups have been disabled</source>
         <translatorcomment>Warning message shown when  all the syncs and backups have been disabled</translatorcomment>
         <translation type="unfinished">Your syncs and backups have been disabled</translation>
@@ -4150,26 +4130,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translatorcomment>Label to indicate the &quot;Show in Finder&quot; option to open local folder of a sync (macOS). Keep Finder name as it is the app name of file explorer on macOS.</translatorcomment>
         <translation>Show in Finder</translation>
     </message>
-    <message>
-        <source>Open settings</source>
-        <translatorcomment>Open settings button on warning message when syncs/backups are disabled (Linux and windows)</translatorcomment>
-        <translation type="unfinished">Open settings</translation>
-    </message>
-    <message>
-        <source>Go to settings to enable them again.</source>
-        <translatorcomment>Go to settings message on warning message when syncs/backups are disabled  (Linux and windows)</translatorcomment>
-        <translation type="unfinished">Go to settings to enable them again.</translation>
-    </message>
-    <message>
-        <source>Open preferences</source>
-        <translatorcomment>Open preferences button on warning message when syncs/backups are disabled (macOS)</translatorcomment>
-        <translation type="unfinished">Open preferences</translation>
-    </message>
-    <message>
-        <source>Go to preferences to enable them again.</source>
-        <translatorcomment>Go to preferences message on warning message when syncs/backups are disabled  (macOS)</translatorcomment>
-        <translation type="unfinished">Go to preferences to enable them again.</translation>
-    </message>
 </context>
 <context>
     <name>PlatformStrings</name>
@@ -4206,6 +4166,26 @@ Please delete the folder sync from preferences to cancel them.</source>
         <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for macOS)</translatorcomment>
         <translation>Sync transfers cannot be cancelled individually.
 Please delete the folder sync from preferences to cancel them.</translation>
+    </message>
+    <message>
+        <source>One or more backups have been disabled. Go to settings to enable them again.</source>
+        <translatorcomment>Warning message shown when some backups are disabled. Tell the userto go to settings to solve the issue (win/linux)</translatorcomment>
+        <translation type="unfinished">One or more backups have been disabled. Go to settings to enable them again.</translation>
+    </message>
+    <message>
+        <source>Some syncs and backups have been disabled. Go to settings to enable them again.</source>
+        <translatorcomment>Warning message shown when some backups and syncs are disabled. Tell the userto go to settings to solve the issue (win/linux)</translatorcomment>
+        <translation type="unfinished">Some syncs and backups have been disabled. Go to settings to enable them again.</translation>
+    </message>
+    <message>
+        <source>One or more backups have been disabled. Go to preferences to enable them again.</source>
+        <translatorcomment>Warning message shown when some backups are disabled. Tell the userto go to settings to solve the issue (mac)</translatorcomment>
+        <translation type="unfinished">One or more backups have been disabled. Go to preferences to enable them again.</translation>
+    </message>
+    <message>
+        <source>Some syncs and backups have been disabled. Go to preferences to enable them again.</source>
+        <translatorcomment>Warning message shown when some backups and syncs are disabled. Tell the userto go to settings to solve the issue (mac)</translatorcomment>
+        <translation type="unfinished">Some syncs and backups have been disabled. Go to preferences to enable them again.</translation>
     </message>
 </context>
 <context>
@@ -4786,11 +4766,6 @@ Do you want to delete it anyway?</translation>
         <source>Cancel</source>
         <translatorcomment>Button text that cancels</translatorcomment>
         <translation type="unfinished">Cancel</translation>
-    </message>
-    <message>
-        <source>Move this folder from backups to another location in your Cloud Drive to get full access to your data. This folder will stop being backed up.</source>
-        <translatorcomment>Radio button description</translatorcomment>
-        <translation type="unfinished">Move this folder from backups to another location in your Cloud Drive to get full access to your data. This folder will stop being backed up.</translation>
     </message>
 </context>
 <context>
@@ -5642,7 +5617,7 @@ Computer will enter sleep mode once these are complete.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; can&apos;t be enabled. Reason: %2</source>
-        <translatorcomment>Error text when enabling a bacckup failed</translatorcomment>
+        <translatorcomment>Error text when enabling a backup failed</translatorcomment>
         <translation type="unfinished">Your backup &quot;%1&quot; can&apos;t be enabled. Reason: %2</translation>
     </message>
     <message>
@@ -5653,7 +5628,12 @@ Computer will enter sleep mode once these are complete.</translation>
     <message>
         <source>Pro Flexi</source>
         <translatorcomment>Text label indicating the Pro Flexi tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pro Flexi</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
+        <translatorcomment>Error text when disabling a backup failed</translatorcomment>
+        <translation type="unfinished">Your backup &quot;%1&quot; can&apos;t be disabled. Reason: %2</translation>
     </message>
 </context>
 <context>
@@ -6293,31 +6273,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">MEGAsync won’t be able to download anything here.</translation>
     </message>
     <message>
-        <source>You don&apos;t have enough permissions for this remote folder</source>
-        <translatorcomment>Warning message indicating that a folder can´t be synced as it the remote folder is an incoming share and the current user doesn´t have enought permisions</translatorcomment>
-        <translation type="unfinished">You don&apos;t have enough permissions for this remote folder</translation>
-    </message>
-    <message>
-        <source>Invalid remote path</source>
-        <translatorcomment>The selected remote path for the sync creation is invalid</translatorcomment>
-        <translation type="unfinished">Invalid remote path</translation>
-    </message>
-    <message>
-        <source>The selected MEGA folder is already synced</source>
-        <translatorcomment>Warning message indicating that the selected folder is already a synced folder.</translatorcomment>
-        <translation type="unfinished">The selected MEGA folder is already synced</translation>
-    </message>
-    <message>
-        <source>Folder contents already synced</source>
-        <translatorcomment>Warning message indicating that the selected folder have got an active sync bellow the selected path.</translatorcomment>
-        <translation type="unfinished">Folder contents already synced</translation>
-    </message>
-    <message>
-        <source>Folder already synced</source>
-        <translatorcomment>Warning message indicating that the selected folder have got a parent that is already synced.</translatorcomment>
-        <translation type="unfinished">Folder already synced</translation>
-    </message>
-    <message>
         <source>You can&apos;t backup this folder as it contains backed up folders.</source>
         <translatorcomment>Warning message indicating that the selected folder for backup contains backed up folders, ence it can not be backed up.</translatorcomment>
         <translation type="unfinished">You can&apos;t backup this folder as it contains backed up folders.</translation>
@@ -6360,6 +6315,31 @@ To continue, select a different folder.</source>
         <translatorcomment>Warning message displayed if user tries to sync the system main hard disk.</translatorcomment>
         <translation type="unfinished">You can’t sync “%1” as it’s the root folder. The root folder is either; the top-level folder on your device or computer that holds all your folders and files or the folder where the system or program is installed. We don’t allow users to sync root folders as it may cause file conflicts or errors.
 To continue, select a different folder.</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have enough permissions for this remote folder.</source>
+        <translatorcomment>Warning message indicating that a folder can´t be synced as it the remote folder is an incoming share and the current user doesn´t have enought permisions</translatorcomment>
+        <translation type="unfinished">You don&apos;t have enough permissions for this remote folder.</translation>
+    </message>
+    <message>
+        <source>Invalid remote path.</source>
+        <translatorcomment>The selected remote path for the sync creation is invalid</translatorcomment>
+        <translation type="unfinished">Invalid remote path.</translation>
+    </message>
+    <message>
+        <source>The selected MEGA folder is already synced.</source>
+        <translatorcomment>Warning message indicating that the selected folder is already a synced folder.</translatorcomment>
+        <translation type="unfinished">The selected MEGA folder is already synced.</translation>
+    </message>
+    <message>
+        <source>Folder contents already synced.</source>
+        <translatorcomment>Warning message indicating that the selected folder have got an active sync bellow the selected path.</translatorcomment>
+        <translation type="unfinished">Folder contents already synced.</translation>
+    </message>
+    <message>
+        <source>Folder already synced.</source>
+        <translatorcomment>Warning message indicating that the selected folder have got a parent that is already synced.</translatorcomment>
+        <translation type="unfinished">Folder already synced.</translation>
     </message>
 </context>
 <context>

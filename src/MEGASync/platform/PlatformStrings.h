@@ -10,6 +10,8 @@ class PlatformStrings : QObject
 public:
     static QString openSettings();
     static QString syncsDisableWarning();
+    static QString backupsDisableWarning();
+    static QString syncsAndBackupsDisableWarning();
     static QString cancelSyncsWarning();
 };
 

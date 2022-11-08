@@ -136,9 +136,13 @@ void SyncInfo::activateSync(std::shared_ptr<SyncSettings> syncSetting)
     if (!preferences->isFatWarningShown() && syncSetting->getError() == MegaSync::Warning::LOCAL_IS_FAT)
     {
         QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"),
-         tr("You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it's strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).")
+         tr("You are syncing a local folder formatted with a FAT filesystem. "
+            "That filesystem has deficiencies managing big files and modification"
+            " times that can cause synchronization problems (e.g. when daylight "
+            "saving changes), so it's strongly recommended that you only sync "
+            "folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).")
          .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"https://help.mega.nz/megasync/syncing.html#can-i-sync-fat-fat32-partitions-under-windows\">"))
-         .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</a>")));
+         .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</a>")), QMessageBox::Ok, QMessageBox::NoButton, QMap<QMessageBox::StandardButton, QString>(), Qt::RichText);
         preferences->setFatWarningShown();
     }
     else if (!preferences->isOneTimeActionDone(Preferences::ONE_TIME_ACTION_HGFS_WARNING) && syncSetting->getError() == MegaSync::Warning::LOCAL_IS_HGFS)
