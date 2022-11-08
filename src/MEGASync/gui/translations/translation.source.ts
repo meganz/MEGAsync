@@ -54,7 +54,7 @@
     <message>
         <source>Add backup folder</source>
         <translatorcomment>Window title for add backup dialog (not backup wizard)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Add backup folder</translation>
     </message>
     <message>
         <source>Backup folder:</source>
@@ -64,7 +64,7 @@
     <message>
         <source>Choose folder</source>
         <translatorcomment>Line edit placeholder, here the path of the backup will be displayed once the user select it</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Choose folder</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -74,7 +74,7 @@
     <message>
         <source>Backup to:</source>
         <translatorcomment>Remote path where the backup is going to be stored</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Backup to:</translation>
     </message>
     <message>
         <source>Add</source>
@@ -422,17 +422,17 @@
     <message>
         <source>Backup is enabled</source>
         <translatorcomment>Checkbox tooltip that is displayed when it is checked.(Backup enabled)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Backup is enabled</translation>
     </message>
     <message>
         <source>Backup is disabled</source>
         <translatorcomment>Checkbox tooltip that is displayed when it is unchecked.(Backup disabled)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Backup is disabled</translation>
     </message>
     <message>
         <source>Click menu for more Backup actions</source>
         <translatorcomment>Menu column tooltip (three dots in the table)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Click menu for more Backup actions</translation>
     </message>
 </context>
 <context>
@@ -445,27 +445,27 @@
     <message>
         <source>A folder named &quot;%1&quot; already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
         <translatorcomment>Text shown to the user if there is a name conflict with a folder in the Backups remote folder for the current device</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">A folder named &quot;%1&quot; already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</translation>
     </message>
     <message>
         <source>If you don&apos;t want to rename the new folder, stop the backup in the [A]Backup centre[/A] for the existing folder. Then setup the backup for the new folder again.</source>
         <translatorcomment>Text instructing the user to go to the backup center to solve the backup name conflict</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">If you don&apos;t want to rename the new folder, stop the backup in the [A]Backup centre[/A] for the existing folder. Then setup the backup for the new folder again.</translation>
     </message>
     <message>
         <source>Rename and backup</source>
         <translatorcomment>Text for the button to apply the name conflict resolution in the backup name conflict resolution dialog</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Rename and backup</translation>
     </message>
     <message>
         <source>A folder named &quot;%1&quot; already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer. </source>
         <translatorcomment>Test telling the user that he has a backup name conflict between 2 local folders (they want to backup folders that have the same name but different paths)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">A folder named &quot;%1&quot; already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer. </translation>
     </message>
     <message>
         <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
         <translatorcomment>Text informing the user that they can&amp;apos;t have duplicated backup names and instructing them to rename them</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</translation>
     </message>
 </context>
 <context>
@@ -473,12 +473,12 @@
     <message>
         <source>Local folder %1:</source>
         <translatorcomment>Backup rename widget dialog label. Placeholder will display the conflict count. In the right of the label the local folder path will be displayed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Local folder %1:</translation>
     </message>
     <message>
         <source>Rename backup folder</source>
         <translatorcomment>Placeholder for the backup rename widget line edit.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Rename backup folder</translation>
     </message>
     <message>
         <source>Backup folder:</source>
@@ -488,7 +488,7 @@
     <message>
         <source>A folder named &quot;%1&quot; already exists in your Backups. Rename the new folder to continue with the backup.</source>
         <translatorcomment>Error message displayed in the top of the rename backup dialog. It indicates that a backup with that name already exists.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">A folder named &quot;%1&quot; already exists in your Backups. Rename the new folder to continue with the backup.</translation>
     </message>
 </context>
 <context>
@@ -501,7 +501,7 @@
     <message>
         <source>Remove backup</source>
         <translatorcomment>Menu action removes the backup</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Remove backup</translation>
     </message>
 </context>
 <context>
@@ -509,47 +509,47 @@
     <message>
         <source>Setup backups</source>
         <translatorcomment>Backup wizard window title</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Setup backups</translation>
     </message>
     <message>
         <source>You can back up folders from your computer to MEGA. Files will automatically back up when the desktop app is running.</source>
         <translatorcomment>Backup wizard body text</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">You can back up folders from your computer to MEGA. Files will automatically back up when the desktop app is running.</translation>
     </message>
     <message>
         <source>No folders available</source>
         <translatorcomment>Backup wizard text that indicates that here aren´t any folder available for backup.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">No folders available</translation>
     </message>
     <message>
         <source>More folders</source>
         <translatorcomment>Button text that opens a window where you can choose a folder to backup</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">More folders</translation>
     </message>
     <message>
         <source>All folders have been synced or backed up.</source>
         <translatorcomment>Label that indicates that all the folders in the system have been synced or backed up</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">All folders have been synced or backed up.</translation>
     </message>
     <message>
         <source>Selected backup folders</source>
         <translatorcomment>This is the title for a table that shows the full list of selected folders for backup</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Selected backup folders</translation>
     </message>
     <message>
         <source>Backup to</source>
         <translatorcomment>Line edit title, in this line edit the remote folder for backups will be displayed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Backup to</translation>
     </message>
     <message>
         <source>Folders will be stored in backups and you can check the status of your backups in backup centre.</source>
         <translatorcomment>Successfull dialog text</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Folders will be stored in backups and you can check the status of your backups in backup centre.</translation>
     </message>
     <message>
         <source>Show more…</source>
         <translatorcomment>Button text that expands failed backup list</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Show more…</translation>
     </message>
     <message>
         <source>Back</source>
@@ -569,7 +569,7 @@
     <message>
         <source>Try again</source>
         <translatorcomment>Button text shown in error dialog, it allows the user to go to first step on backup wizard and start the process again</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Try again</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -579,22 +579,22 @@
     <message>
         <source>View in Backup Centre</source>
         <translatorcomment>Text for a button allowing the user to view the newly created backup i nthe Backup center (in the webclient)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">View in Backup Centre</translation>
     </message>
     <message>
         <source>Setup</source>
         <translatorcomment>Step 2 button text that will initiate the creation of the backups.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Setup</translation>
     </message>
     <message>
         <source>Collapse</source>
         <translatorcomment>Error dialog button text that will collapse the list of failed backups.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Collapse</translation>
     </message>
     <message>
         <source>Add folders</source>
         <translatorcomment>Button Text, the user will be able to select new folders to backup if clicks here.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Add folders</translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
@@ -639,7 +639,7 @@
     <message>
         <source>Folder is already selected. Select a different folder.</source>
         <translatorcomment>Warning message that indicates that the folder that the user is trying to select is already selected</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Folder is already selected. Select a different folder.</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
@@ -649,27 +649,27 @@
     <message>
         <source>1. [B]Select[/B] folders to backup</source>
         <translatorcomment>Title for the first step of the backups wizard, instructing the user to select folders to backup</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">1. [B]Select[/B] folders to backup</translation>
     </message>
     <message>
         <source>2. [B]Confirm[/B] backup settings</source>
         <translatorcomment>Title for the second step of the backups wizard, instructing the user to confirm his choice</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">2. [B]Confirm[/B] backup settings</translation>
     </message>
     <message>
         <source>Are you sure you want to cancel? All changes will be lost.</source>
         <translatorcomment>Warning dialog that appears when user click in cancel button in backup wizard and it will be closed.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Are you sure you want to cancel? All changes will be lost.</translation>
     </message>
     <message>
         <source>Choose directory</source>
         <translatorcomment>Folder selector window title text</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Choose directory</translation>
     </message>
     <message>
         <source>Error: %1</source>
         <translatorcomment>Placeholder will show the error message, this is being shown in a tooltip</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Error: %1</translation>
     </message>
 </context>
 <context>
@@ -2086,27 +2086,27 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Some syncs and backups have been disabled</source>
         <translatorcomment>Warning message title shown on info dialog</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Some syncs and backups have been disabled</translation>
     </message>
     <message>
         <source>Something went wrong while trying to backup and sync your folders.</source>
         <translatorcomment>Warning message body shown on info dialog</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Something went wrong while trying to backup and sync your folders.</translation>
     </message>
     <message>
         <source>One or more backups have been disabled</source>
         <translatorcomment>Warning message title shown on info dialog</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">One or more backups have been disabled</translation>
     </message>
     <message>
         <source>Something went wrong while trying to backup your folders.</source>
         <translatorcomment>Warning message body shown on info dialog</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Something went wrong while trying to backup your folders.</translation>
     </message>
     <message>
         <source>Error adding %1:</source>
         <translatorcomment>Error label displayed when it fails adding a sync or backup. Placeholder will show the name of the sync. After the two dots an error message is displayed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Error adding %1:</translation>
     </message>
 </context>
 <context>
@@ -2832,82 +2832,82 @@ Transfers will automatically resume when you re-open the app.</numerusform>
     <message>
         <source>Some syncs and backups have been disabled</source>
         <translatorcomment>Tooltip message for tray icon when some syncs and backups are disabled</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Some syncs and backups have been disabled</translation>
     </message>
     <message>
         <source>One or more backups have been disabled</source>
         <translatorcomment>Tooltip message for tray icon when some backups are disabled</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">One or more backups have been disabled</translation>
     </message>
     <message>
         <source>Error adding %1:</source>
         <translatorcomment>Error label displayed when it fails adding a sync or backup. Placeholder will show the name of the sync. After the two dots an error message is displayed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Error adding %1:</translation>
     </message>
     <message>
         <source>Some syncs and backups have been disabled.</source>
         <translatorcomment>Warning message shown when some syncs and backups are disabled</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Some syncs and backups have been disabled.</translation>
     </message>
     <message>
         <source>One or more backups have been disabled.</source>
         <translatorcomment>Warning message shown when some backups are disabled</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">One or more backups have been disabled.</translation>
     </message>
     <message>
         <source>One or more syncs have been disabled.</source>
         <translatorcomment>Warning message shown when some syncs are disabled</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">One or more syncs have been disabled.</translation>
     </message>
     <message>
         <source>Your syncs and backups have been disabled</source>
         <translatorcomment>Warning message shown when  all the syncs and backups have been disabled</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Your syncs and backups have been disabled</translation>
     </message>
     <message>
         <source>Your backups have been disabled</source>
         <translatorcomment>Warning message shown when all the backups have been disabled</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Your backups have been disabled</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been temporarily disabled</source>
         <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder displays backup name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Your backup &quot;%1&quot; has been temporarily disabled</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Your backup &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Your backup &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder has changed</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Your backup &quot;%1&quot; has been disabled because the local folder has changed</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder has changed</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Your backup &quot;%1&quot; has been disabled because the remote folder has changed</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled. Reason: %2</source>
         <translatorcomment>Notification message launched when a backup is disabled. Keep &amp;quot;%1&amp;quot; code because is filled with the name of the backup at runtime and %2 with the reason of the error.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Your backup &quot;%1&quot; has been disabled. Reason: %2</translation>
     </message>
 </context>
 <context>
@@ -4158,7 +4158,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Go to settings to enable them again.</source>
         <translatorcomment>Go to settings message on warning message when syncs/backups are disabled  (Linux and windows)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Go to settings to enable them again.</translation>
     </message>
     <message>
         <source>Open preferences</source>
@@ -4168,7 +4168,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Go to preferences to enable them again.</source>
         <translatorcomment>Go to preferences message on warning message when syncs/backups are disabled  (macOS)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Go to preferences to enable them again.</translation>
     </message>
 </context>
 <context>
@@ -5994,7 +5994,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Creating folder…</source>
         <translatorcomment>Label shown when an user is creating a remote folder.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Creating folder…</translation>
     </message>
 </context>
 <context>
@@ -6346,13 +6346,15 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>You can’t backup “%1” as it’s the root folder. The root folder is either; the top-level folder on your device or computer that holds all your folders and files or the folder where the system or program is installed. We don’t allow users to back up root folders as it may cause file conflicts or errors.
 To continue, select a different folder.</source>
         <translatorcomment>Warning message displayed if user tries to backup the system main hard disk.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">You can’t backup “%1” as it’s the root folder. The root folder is either; the top-level folder on your device or computer that holds all your folders and files or the folder where the system or program is installed. We don’t allow users to back up root folders as it may cause file conflicts or errors.
+To continue, select a different folder.</translation>
     </message>
     <message>
         <source>You can’t sync “%1” as it’s the root folder. The root folder is either; the top-level folder on your device or computer that holds all your folders and files or the folder where the system or program is installed. We don’t allow users to sync root folders as it may cause file conflicts or errors.
 To continue, select a different folder.</source>
         <translatorcomment>Warning message displayed if user tries to sync the system main hard disk.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">You can’t sync “%1” as it’s the root folder. The root folder is either; the top-level folder on your device or computer that holds all your folders and files or the folder where the system or program is installed. We don’t allow users to sync root folders as it may cause file conflicts or errors.
+To continue, select a different folder.</translation>
     </message>
 </context>
 <context>
@@ -7143,7 +7145,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>My computer</source>
         <translatorcomment>Text that will be used as the folder name of the backup in case the device name couldn´t be fetched correctly.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">My computer</translation>
     </message>
 </context>
 <context>
