@@ -1317,7 +1317,8 @@ void MegaApplication::loggedIn(bool fromWizard)
     // get the requested value
     bool startOnStartup = preferences->startOnStartup();
     // try to enable / disable startup (e.g. copy or delete desktop file)
-    if (!Platform::startOnStartup(startOnStartup)) {
+    if (!Platform::startOnStartup(startOnStartup))
+    {
         // in case of failure - make sure configuration keeps the right value
         //LOG_debug << "Failed to " << (startOnStartup ? "enable" : "disable") << " MEGASync on startup.";
         preferences->setStartOnStartup(!startOnStartup);
