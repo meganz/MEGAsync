@@ -972,12 +972,12 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>Tài khoản Doanh Nghiệp của bạn đã hết hạn</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation>Tài khoản đã bị đình chỉ và chỉ được phép duyệt xem cho đến khi bạn thanh toán các khoản phí được yêu cầu.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -1308,7 +1308,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Login</source>
         <translatorcomment>Button label to start the Login process. (String as short as possible)</translatorcomment>
-        <translation>Đăng nhập</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Create account</source>
@@ -2310,7 +2310,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>Tài khoản Doanh Nghiệp của bạn đã hết hạn</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -2320,7 +2320,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message shown to admin business account when a payment has failed. </translatorcomment>
-        <translation>Có vẻ như việc thanh toán cho tài khoản doanh nghiệp của bạn đã thất bại. Tài khoản của bạn đã bị đình chỉ và chỉ được phép duyệt xem cho đến khi bạn hoàn tất thanh toán các khoản yêu cầu.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
@@ -2335,7 +2335,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>This month&apos;s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</source>
         <translatorcomment>Informative message shown to the user when a payment has failed for a business account.</translatorcomment>
-        <translation>Thanh toán định kỳ của tháng này đã thất bại. Xin sửa lại vấn đề thanh toán càng sớm càng càng tốt để tránh việc tài khoản doanh nghiệp bị đình chỉ.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -2345,7 +2345,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
         <translatorcomment>Informative message shown when a business account is expired and the user can only browse data and none operation (upload, download, creation..) is allowed.</translatorcomment>
-        <translation>Tài khoản của bạn hiện đang bị [A]đình chỉ[/A]. Bạn chỉ được phép duyệt xem dữ liệu của mình.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
@@ -2481,8 +2481,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>There is an active transfer. Exit the app?
 Transfer will automatically resume when you re-open the app.</source>
         <translatorcomment>Messagebox text to let the user know that there are active transfers when closing the app. The user will be able to exit and pause them, or stop the exit action.</translatorcomment>
-        <translation><numerusform>Đang có một phiên truyền tải đang hoạt động. Muốn thoát ứng dụng?
-Phiên truyền tải sẽ được tự động tiếp tục khi bạn mở lại ứng dụng.</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Exit app</source>
@@ -2838,7 +2837,7 @@ Phiên truyền tải sẽ được tự động tiếp tục khi bạn mở l�
     <message>
         <source>Business account expired</source>
         <translatorcomment>Label to show that the current business account is expired during a SDK operation.</translatorcomment>
-        <translation>Tài khoản doanh nghiệp đã hết hạn</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Foreign target storage quota reached</source>
@@ -2976,7 +2975,7 @@ Phiên truyền tải sẽ được tự động tiếp tục khi bạn mở l�
     <message>
         <source>Get link</source>
         <translatorcomment>Context menu action to get transfer link</translatorcomment>
-        <translation>Lấy đường liên kết</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Open in MEGA</source>
@@ -3142,7 +3141,7 @@ Các phiên truyền tải đồng bộ chưa có hoàn tất mà bạn đã ch�
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a FAT filesystem.</translatorcomment>
-        <translation>Bạn đang cố đồng bộ hóa một thư mục nội bộ được định dạng với hệ thống tệp FAT. Hệ thống tệp này có thiếu sót trong việc quản lý và đánh dấu thời gian với các tệp lớn, có thể gây ra sự cố khi đồng bộ hóa (ví dụ: việc thay đồi giờ theo mùa ở một số quốc gia), vì vậy chỉ nên đồng bộ hóa các thư mục được định dạng với hệ thống tệp đáng tin cậy hơn như NTFS (để biết thêm [A]click vào đây[/A]).</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
@@ -3257,7 +3256,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Cloud drive</source>
         <translatorcomment>Node selector button Text. Switch the view to show only the cloud drive nodes (files and folders)</translatorcomment>
-        <translation>Ổ mây</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Incoming shares</source>
@@ -4167,8 +4166,7 @@ Xin kiểm tra lại tên tệp tin cho đúng.</translation>
         <source>&apos;%1&apos; is write protected.
 Do you want to delete it anyway?</source>
         <translatorcomment>Warning message when a write protected file is about to be delete</translatorcomment>
-        <translation>&apos;%1&apos; được bảo vệ chống ghi chép.
-Bạn vẫn muốn xóa nó đi?</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4314,7 +4312,7 @@ Bạn vẫn muốn xóa nó đi?</translation>
     <message>
         <source>Scanning</source>
         <translatorcomment>Label used to display when the scanning widget is on the &quot;Scanning&quot; step</translatorcomment>
-        <translation>Đang quét…</translation>
+        <translation>Đang quét nội dung</translation>
     </message>
     <message>
         <source>Creating folders</source>
@@ -5865,7 +5863,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your MEGA account is full</source>
         <translatorcomment>Message shown when the MEGA account is full</translatorcomment>
-        <translation>Tài khoản MEGA của bạn đã đầy</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left for this IP address.

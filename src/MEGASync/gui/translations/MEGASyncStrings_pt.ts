@@ -1308,7 +1308,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Login</source>
         <translatorcomment>Button label to start the Login process. (String as short as possible)</translatorcomment>
-        <translation>Entrar</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Create account</source>
@@ -4312,7 +4312,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Scanning</source>
         <translatorcomment>Label used to display when the scanning widget is on the &quot;Scanning&quot; step</translatorcomment>
-        <translation>Examinando…</translation>
+        <translation>Analisando</translation>
     </message>
     <message>
         <source>Creating folders</source>

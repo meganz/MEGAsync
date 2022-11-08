@@ -1308,7 +1308,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Login</source>
         <translatorcomment>Button label to start the Login process. (String as short as possible)</translatorcomment>
-        <translation>Autentificare</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Create account</source>

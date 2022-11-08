@@ -972,12 +972,12 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>Uw Zakelijke account is verlopen</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation>Uw account is geschorst naar alleen-lezen totdat u doorgaat met de nodige betalingen.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -1308,7 +1308,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Login</source>
         <translatorcomment>Button label to start the Login process. (String as short as possible)</translatorcomment>
-        <translation>Login</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Create account</source>
@@ -2310,7 +2310,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>Uw Zakelijke account is verlopen</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -2320,7 +2320,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message shown to admin business account when a payment has failed. </translatorcomment>
-        <translation>Het lijkt dat de betaling voor uw Zakelijke account is mislukt. Uw account is geschorst als alleen-lezen totdat u doorgaat met de nodige betalingen.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
@@ -2335,7 +2335,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>This month&apos;s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</source>
         <translatorcomment>Informative message shown to the user when a payment has failed for a business account.</translatorcomment>
-        <translation>Deze maand betaling is mislukt. Herstel uw betaling zo snel mogelijk om verdere schorsing van uw Zakelijke account te voorkomen.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -2345,7 +2345,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
         <translatorcomment>Informative message shown when a business account is expired and the user can only browse data and none operation (upload, download, creation..) is allowed.</translatorcomment>
-        <translation>Uw account is momenteel [A]geschorst[/A]. U kunt u gegevens alleen bladeren.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
@@ -2481,9 +2481,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>There is an active transfer. Exit the app?
 Transfer will automatically resume when you re-open the app.</source>
         <translatorcomment>Messagebox text to let the user know that there are active transfers when closing the app. The user will be able to exit and pause them, or stop the exit action.</translatorcomment>
-        <translation><numerusform>Er is een actieve overdracht. Applicatie verlaten?
-Overdracht wordt automatisch hervat wanneer u de applicatie heropend.</numerusform><numerusform>Er is een actieve overdracht. Applicatie verlaten?
-Overdracht wordt automatisch hervat wanneer u de applicatie heropend.</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Exit app</source>
@@ -2839,7 +2837,7 @@ Overdracht wordt automatisch hervat wanneer u de applicatie heropend.</numerusfo
     <message>
         <source>Business account expired</source>
         <translatorcomment>Label to show that the current business account is expired during a SDK operation.</translatorcomment>
-        <translation>Zakelijke account verlopen</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Foreign target storage quota reached</source>
@@ -2977,7 +2975,7 @@ Overdracht wordt automatisch hervat wanneer u de applicatie heropend.</numerusfo
     <message>
         <source>Get link</source>
         <translatorcomment>Context menu action to get transfer link</translatorcomment>
-        <translation>Link ophalen</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Open in MEGA</source>
@@ -3143,7 +3141,7 @@ All de andere geselecteerde overdrachten worden geannuleerd en gewist.</translat
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a FAT filesystem.</translatorcomment>
-        <translation>U synchroniseert een lokale map die is geformatteerd met een FAT-bestandssysteem. Dat bestandssysteem heeft tekortkomingen bij het beheren van grote bestanden en wijzigingstijden die synchronisatieproblemen kunnen veroorzaken (bijvoorbeeld wanneer de zomertijd verandert), dus het wordt sterk aanbevolen om alleen mappen te synchroniseren die zijn geformatteerd met betrouwbaardere bestandssystemen zoals NTFS (meer informatie [A]hier[/A]).</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
@@ -3258,7 +3256,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Cloud drive</source>
         <translatorcomment>Node selector button Text. Switch the view to show only the cloud drive nodes (files and folders)</translatorcomment>
-        <translation>Cloud schijf</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Incoming shares</source>
@@ -4170,8 +4168,7 @@ Controleer of de juiste bestandsnaam is opgegeven.</translation>
         <source>&apos;%1&apos; is write protected.
 Do you want to delete it anyway?</source>
         <translatorcomment>Warning message when a write protected file is about to be delete</translatorcomment>
-        <translation>&apos;%1&apos; is beveiligd tegen schrijven.
-Wilt u het toch verwijderen?</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4317,7 +4314,7 @@ Wilt u het toch verwijderen?</translation>
     <message>
         <source>Scanning</source>
         <translatorcomment>Label used to display when the scanning widget is on the &quot;Scanning&quot; step</translatorcomment>
-        <translation>Scannen…</translation>
+        <translation>Scannen</translation>
     </message>
     <message>
         <source>Creating folders</source>
@@ -5868,7 +5865,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your MEGA account is full</source>
         <translatorcomment>Message shown when the MEGA account is full</translatorcomment>
-        <translation>Uw MEGA account is vol</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left for this IP address.

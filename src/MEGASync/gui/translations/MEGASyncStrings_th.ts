@@ -1308,7 +1308,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Login</source>
         <translatorcomment>Button label to start the Login process. (String as short as possible)</translatorcomment>
-        <translation>เข้าสู่ระบบ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Create account</source>
@@ -2975,7 +2975,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Get link</source>
         <translatorcomment>Context menu action to get transfer link</translatorcomment>
-        <translation>รับลิงก์</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Open in MEGA</source>
@@ -3256,7 +3256,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Cloud drive</source>
         <translatorcomment>Node selector button Text. Switch the view to show only the cloud drive nodes (files and folders)</translatorcomment>
-        <translation>คลาวด์ไดรฟ์</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Incoming shares</source>
@@ -4311,7 +4311,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Scanning</source>
         <translatorcomment>Label used to display when the scanning widget is on the &quot;Scanning&quot; step</translatorcomment>
-        <translation>กำลังสแกน…</translation>
+        <translation>กำลังสแกน</translation>
     </message>
     <message>
         <source>Creating folders</source>
@@ -5861,7 +5861,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your MEGA account is full</source>
         <translatorcomment>Message shown when the MEGA account is full</translatorcomment>
-        <translation>พื้นที่เก็บข้อมูลในบัญชี MEGA ของคุณเต็มแล้ว</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left for this IP address.

@@ -972,12 +972,12 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>انتهت صلاحية حساب الأعمال Business الخاص بك</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation>تم تعليق حسابك للقراءة فقط حتى تقوم بمتابعة الدفعات المطلوبة.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -4314,7 +4314,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Scanning</source>
         <translatorcomment>Label used to display when the scanning widget is on the &quot;Scanning&quot; step</translatorcomment>
-        <translation>جاري الفحص…</translation>
+        <translation>جاري الفحص</translation>
     </message>
     <message>
         <source>Creating folders</source>

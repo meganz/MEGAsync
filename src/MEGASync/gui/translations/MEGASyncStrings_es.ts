@@ -972,12 +972,12 @@ En algunos casos podría contener detalles como nombres de archivo o carpeta.</t
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>Tu cuenta Business ha caducado</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation>Tu cuenta está desactivada y se quedará en solo lectura hasta que procedas con los pagos correspondientes.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -1308,7 +1308,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Login</source>
         <translatorcomment>Button label to start the Login process. (String as short as possible)</translatorcomment>
-        <translation>Iniciar sesión</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Create account</source>
@@ -2311,7 +2311,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>Tu cuenta Business ha caducado</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -2321,7 +2321,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message shown to admin business account when a payment has failed. </translatorcomment>
-        <translation>Parece que el pago de tu cuenta Business ha fallado. Tu cuenta está desactivada y se quedará en solo lectura hasta que procedas con los pagos correspondientes. </translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
@@ -2336,7 +2336,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>This month&apos;s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</source>
         <translatorcomment>Informative message shown to the user when a payment has failed for a business account.</translatorcomment>
-        <translation>El pago de este mes ha fallado. Resuelve tu problema de pago lo antes posible para evitar la desactivación de tu cuenta Business.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -2482,9 +2482,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>There is an active transfer. Exit the app?
 Transfer will automatically resume when you re-open the app.</source>
         <translatorcomment>Messagebox text to let the user know that there are active transfers when closing the app. The user will be able to exit and pause them, or stop the exit action.</translatorcomment>
-        <translation><numerusform>Hay una transferencias activa. ¿Salir de la aplicación?
-La transferencia se reanudará automáticamente cuando vuelvas a abrir la aplicación.</numerusform><numerusform>Hay transferencias activas. ¿Salir de la aplicación?
-Las transferencias se reanudarán automáticamente cuando vuelvas a abrir la aplicación.</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Exit app</source>
@@ -2840,7 +2838,7 @@ Las transferencias se reanudarán automáticamente cuando vuelvas a abrir la apl
     <message>
         <source>Business account expired</source>
         <translatorcomment>Label to show that the current business account is expired during a SDK operation.</translatorcomment>
-        <translation>La cuenta Business ha caducado</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Foreign target storage quota reached</source>
@@ -2978,7 +2976,7 @@ Las transferencias se reanudarán automáticamente cuando vuelvas a abrir la apl
     <message>
         <source>Get link</source>
         <translatorcomment>Context menu action to get transfer link</translatorcomment>
-        <translation>Obtener enlace</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Open in MEGA</source>
@@ -3144,7 +3142,7 @@ No se cancelarán tus transferencias seleccionadas sin completar relacionadas a 
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a FAT filesystem.</translatorcomment>
-        <translation>Estás sincronizando una carpeta local formateada con un sistema de archivos FAT. Este sistema de archivos tiene problemas al manejar archivos grandes y los tiempos de modificación, lo que puede causar problemas de sincronización (por ejemplo con el cambio de hora), por lo que te recomendamos encarecidamente que sólo sincronices carpetas formateadas con sistemas de archivos más fiables, como NTFS (más información [A]aquí[/A]).</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
@@ -3259,7 +3257,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Cloud drive</source>
         <translatorcomment>Node selector button Text. Switch the view to show only the cloud drive nodes (files and folders)</translatorcomment>
-        <translation>Nube</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Incoming shares</source>
@@ -4168,8 +4166,7 @@ Verifique que el nombre del fichero es correcto.</translation>
         <source>&apos;%1&apos; is write protected.
 Do you want to delete it anyway?</source>
         <translatorcomment>Warning message when a write protected file is about to be delete</translatorcomment>
-        <translation>&apos;%1&apos; está protegido contra escritura.
-¿Desea borrarlo de todas formas?</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4315,7 +4312,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Scanning</source>
         <translatorcomment>Label used to display when the scanning widget is on the &quot;Scanning&quot; step</translatorcomment>
-        <translation>Examinando…</translation>
+        <translation>Escaneando</translation>
     </message>
     <message>
         <source>Creating folders</source>

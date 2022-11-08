@@ -972,12 +972,12 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>Срок действия вашего бизнес-аккаунта истёк</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation>Ваш аккаунт переведён в режим только для чтения, пока вы не произведёте необходимые платежи.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -1308,7 +1308,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Login</source>
         <translatorcomment>Button label to start the Login process. (String as short as possible)</translatorcomment>
-        <translation>Войти</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Create account</source>
@@ -2310,7 +2310,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>Срок действия вашего бизнес-аккаунта истёк</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -2320,7 +2320,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message shown to admin business account when a payment has failed. </translatorcomment>
-        <translation>Похоже, оплата вашего бизнес-аккаунта не прошла. Аккаунт переведён в режим только для чтения до тех пор, пока вы не произведёте необходимые платежи.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
@@ -2335,7 +2335,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>This month&apos;s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</source>
         <translatorcomment>Informative message shown to the user when a payment has failed for a business account.</translatorcomment>
-        <translation>В этом месяце платёж не прошёл. Пожалуйста, решите проблему с платежом как можно скорее, чтобы избежать заморозки вашего бизнес-аккаунта.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -2345,7 +2345,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
         <translatorcomment>Informative message shown when a business account is expired and the user can only browse data and none operation (upload, download, creation..) is allowed.</translatorcomment>
-        <translation>Ваш аккаунт [B]приостановлен[/B]. Вы можете только просматривать данные.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
@@ -2837,7 +2837,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Business account expired</source>
         <translatorcomment>Label to show that the current business account is expired during a SDK operation.</translatorcomment>
-        <translation>Срок действия бизнес-аккаунта истёк</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Foreign target storage quota reached</source>
@@ -2975,7 +2975,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Get link</source>
         <translatorcomment>Context menu action to get transfer link</translatorcomment>
-        <translation>Получить ссылку</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Open in MEGA</source>
@@ -3141,7 +3141,7 @@ Your selected incomplete sync transfers won&apos;t be cancelled.</source>
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a FAT filesystem.</translatorcomment>
-        <translation>Синхронизируемая локальная папка использует файловую систему FAT. Эта файловая система не поддерживает большие файлы и запись времени изменения, что может нарушить синхронизацию (например, при переходе на летнее время), поэтому рекомендуется синхронизировать папки с более надёжными файловыми системами, такими как NTFS (подробнее [A]здесь[/A]).</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
@@ -3256,7 +3256,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Cloud drive</source>
         <translatorcomment>Node selector button Text. Switch the view to show only the cloud drive nodes (files and folders)</translatorcomment>
-        <translation>Облачный диск</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Incoming shares</source>
@@ -4166,8 +4166,7 @@ Please verify the correct file name was given.</source>
         <source>&apos;%1&apos; is write protected.
 Do you want to delete it anyway?</source>
         <translatorcomment>Warning message when a write protected file is about to be delete</translatorcomment>
-        <translation>«%1» защищён от записи.
-Вы всё равно хотите удалить его?</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4313,7 +4312,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Scanning</source>
         <translatorcomment>Label used to display when the scanning widget is on the &quot;Scanning&quot; step</translatorcomment>
-        <translation>Сканирование…</translation>
+        <translation>Сканирование</translation>
     </message>
     <message>
         <source>Creating folders</source>
@@ -5864,7 +5863,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your MEGA account is full</source>
         <translatorcomment>Message shown when the MEGA account is full</translatorcomment>
-        <translation>Ваш MEGA-аккаунт заполнен.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left for this IP address.
