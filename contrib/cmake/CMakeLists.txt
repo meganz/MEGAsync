@@ -721,7 +721,7 @@ else()
 
         ${MEGAsyncDir}/platform/macx/MacXPlatform.cpp
         ${MEGAsyncDir}/platform/macx/PlatformStrings.cpp
-        ${MEGAsyncDir}/platform/macx/PowerOptions.cpp
+        ${MEGAsyncDir}/platform/macx/PowerOptions.mm
         ${MEGAsyncDir}/platform/macx/MacXFunctions.mm
         ${MEGAsyncDir}/platform/macx/macnotificationhandler.mm
         ${MEGAsyncDir}/platform/macx/NotificationDelegate.mm
