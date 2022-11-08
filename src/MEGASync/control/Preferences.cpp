@@ -13,21 +13,19 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/4.7.2.0";
-const int Preferences::VERSION_CODE = 4702;
-const int Preferences::BUILD_ID = 1;
+const char Preferences::USER_AGENT[] = "MEGAsync/4.8.0.0";
+const int Preferences::VERSION_CODE = 4800;
+const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("4.7.2");
-QString Preferences::SDK_ID = QString::fromAscii("2cad2e5e");
+const QString Preferences::VERSION_STRING = QString::fromAscii("4.8.0");
+QString Preferences::SDK_ID = QString::fromAscii("c5a8ab62");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
-"- Added new Apple Silicon native support.\n"
-"- Added a new feature to stop sleep mode if there are active transfers.\n"
-"- Updated third-party libs.\n"
-"- Improved folders transfers.\n"
+"- Support for Flexi Pro accounts.\n"
+"- New backups feature.\n"
+"- Fixed issues detected with macOS Ventura.\n"
 "- Fixed detected crashes on Windows, Linux, and macOS.\n"
 "- Fixed translation issues.\n"
-"- Improved performance.\n"
-"- Fixed and adjusted UI.\n"));
+"- Improved performance.\n"));
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
