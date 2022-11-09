@@ -8241,10 +8241,6 @@ void MegaApplication::onSyncStateChanged(MegaApi *api, MegaSync *sync)
         }
         onSyncDisabled(model->getSyncSettingByTag(sync->getBackupId()));
     }
-    else if (sync->getRunState() == MegaSync::RUNSTATE_RUNNING)
-    {
-        onSyncEnabled(model->getSyncSettingByTag(sync->getBackupId()));
-    }
 
     model->updateSyncSettings(sync); //Note, we are not updating the remote sync path
     // we asume that cannot change for existing syncs.
