@@ -70,9 +70,9 @@ QVariant BackupItemModel::data(const QModelIndex &index, int role) const
     {
     case Column::ENABLED:
         if(role == Qt::CheckStateRole)
-            return sync->isEnabled() ? Qt::Checked : Qt::Unchecked;
+            return sync->getSync()->getRunState() == ::mega::MegaSync::RUNSTATE_RUNNING ? Qt::Checked : Qt::Unchecked;
         else if(role == Qt::ToolTipRole)
-            return sync->isEnabled() ? tr("Backup is enabled") : tr("Backup is disabled");
+            return sync->getSync()->getRunState() == ::mega::MegaSync::RUNSTATE_RUNNING ? tr("Backup is enabled") : tr("Backup is disabled");
         break;
     case Column::LNAME:
         if(role == Qt::DecorationRole)

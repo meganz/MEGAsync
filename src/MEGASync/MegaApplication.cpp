@@ -6225,7 +6225,7 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
         const auto syncSettings (model->getAllSyncSettings());
         auto firstActiveSyncSetting (std::find_if(syncSettings.cbegin(), syncSettings.cend(),
                                                   [](std::shared_ptr<SyncSettings> s)
-                                     {return s->isActive();}));
+                                     {return s->getSync()->getRunState() == MegaSync::RUNSTATE_RUNNING;}));
         if (firstActiveSyncSetting != syncSettings.cend())
         {
             infoDialogTimer->stop();
@@ -8277,16 +8277,7 @@ void MegaApplication::onSyncDisabled(std::shared_ptr<SyncSettings> syncSetting)
                      QString::fromUtf8("Your sync \"%1\" has been disabled. Error = %2")
                      .arg(syncName, QString(errorCode)).toUtf8().constData());
 
-        if (syncSetting->isTemporaryDisabled()
-            && errorCode != MegaSync::Error::LOGGED_OUT)
-        {
-            QString errMsg(tr("Your sync \"%1\" has been temporarily disabled").arg(syncName));
-            errMsg += QLatin1String(": ");
-            errMsg += QCoreApplication::translate("MegaSyncError",
-                                                  MegaSync::getMegaSyncErrorCode(errorCode));
-            showErrorMessage(errMsg);
-        }
-        else if (errorCode != MegaSync::NO_SYNC_ERROR
+        if (errorCode != MegaSync::NO_SYNC_ERROR
                  && errorCode != MegaSync::Error::LOGGED_OUT)
         {
             switch(errorCode)
@@ -8347,16 +8338,7 @@ void MegaApplication::onSyncDisabled(std::shared_ptr<SyncSettings> syncSetting)
         MegaApi::log(MegaApi::LOG_LEVEL_WARNING,
                      QString::fromUtf8("Your backup \"%1\" has been disabled. Error = %2")
                      .arg(syncName, QString(errorCode)).toUtf8().constData());
-        if (syncSetting->isTemporaryDisabled()
-            && errorCode != MegaSync::Error::LOGGED_OUT)
-        {
-            QString errMsg (tr("Your backup \"%1\" has been temporarily disabled").arg(syncName));
-            errMsg += QLatin1String(": ");
-            errMsg += QCoreApplication::translate("MegaSyncError",
-                                                  MegaSync::getMegaSyncErrorCode(errorCode));
-            showErrorMessage(errMsg);
-        }
-        else if (errorCode != MegaSync::NO_SYNC_ERROR
+        if (errorCode != MegaSync::NO_SYNC_ERROR
                  && errorCode != MegaSync::Error::LOGGED_OUT)
         {
             switch(errorCode)
@@ -8426,22 +8408,6 @@ void MegaApplication::onSyncDisabled(std::shared_ptr<SyncSettings> syncSetting)
     }
 }
 
-void MegaApplication::onSyncDisabled(MegaApi*, MegaSync* sync)
-{
-    if (appfinished || !sync)
-    {
-        return;
-    }
-
-    if (sync->getError())
-    {
-        model->addUnattendedDisabledSync(sync->getBackupId(),
-                                         static_cast<MegaSync::SyncType>(sync->getType()));
-    }
-
-    onSyncDisabled(model->getSyncSettingByTag(sync->getBackupId()));
-}
-
 void MegaApplication::onSyncEnabled(std::shared_ptr<SyncSettings> syncSetting)
 {
     if (!syncSetting)
@@ -8460,30 +8426,14 @@ void MegaApplication::onSyncEnabled(std::shared_ptr<SyncSettings> syncSetting)
     model->removeUnattendedDisabledSync(syncSetting->backupId(), syncSetting->getType());
 }
 
-void MegaApplication::onSyncEnabled(MegaApi* , MegaSync* sync)
+void MegaApplication::onSyncAdded(MegaApi *api, MegaSync *sync)
 {
     if (appfinished || !sync)
     {
         return;
     }
 
-    onSyncEnabled(model->getSyncSettingByTag(sync->getBackupId()));
-}
-
-void MegaApplication::onSyncAdded(MegaApi *api, MegaSync *sync, int additionState)
-{
-    if (appfinished || !sync)
-    {
-        return;
-    }
-
-    auto syncSetting = model->updateSyncSettings(sync, additionState);
-
-    if (additionState == MegaSync::SyncAdded::FROM_CACHE_FAILED_TO_RESUME
-            || additionState == MegaSync::SyncAdded::NEW_TEMP_DISABLED)
-    {
-        onSyncDisabled(syncSetting);
-    }
+    auto syncSetting = model->updateSyncSettings(sync);
 
     onGlobalSyncStateChanged(api);
 }

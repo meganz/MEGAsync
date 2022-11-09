@@ -116,7 +116,7 @@ void SyncsMenu::refresh()
         {
             auto backupSetting = model->getSyncSetting(i, mType);
 
-            if (backupSetting->isActive())
+            if (backupSetting->getSync()->getRunState() == ::mega::MegaSync::RUNSTATE_RUNNING)
             {
                 activeFolders++;
                 MenuItemAction* action =
