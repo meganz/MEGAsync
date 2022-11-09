@@ -29,7 +29,7 @@ arch=('i686' 'x86_64')
 url="http://mega.nz/#sync"
 license=() #TODO
 groups=()
-depends=('glibc>=2.33' 'gcc-libs>=10.2.0' 'qt5-base>=5.15' 'qt5-tools>=5.15' 'icu>=69.1' 'sqlite' 'openssl>=1.1.1' 'zlib' 'qt5-svg>=5.15' 'qt5-x11extras' 'bzip2' 'xz' 'libraw' 'double-conversion>=3.1.5' 'systemd')
+depends=('glibc>=2.33' 'gcc-libs>=10.2.0' 'qt5-base>=5.15' 'qt5-tools>=5.15' 'icu>=69.1' 'sqlite' 'openssl>=3.0.0' 'zlib' 'qt5-svg>=5.15' 'qt5-x11extras' 'bzip2' 'xz' 'libraw' 'double-conversion>=3.1.5' 'systemd')
 makedepends=('unzip' 'wget' 'ca-certificates' 'qt5-tools' 'ffmpeg-mega' 'pdfium-mega' 'bzip2' 'xz')
 checkdepends=()
 optdepends=('sni-qt: fix systray issue on KDE and LXQt', 'nautilus-megasync: for integration with nautilus')
