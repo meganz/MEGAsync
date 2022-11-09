@@ -104,9 +104,9 @@ QVariant SyncItemModel::data(const QModelIndex &index, int role) const
     {
     case Column::ENABLED:
         if(role == Qt::CheckStateRole)
-            return sync->getSync()->getRunState() == ::mega::MegaSync::RUNSTATE_RUNNING ? Qt::Checked : Qt::Unchecked;
+            return sync->isEnabled() ? Qt::Checked : Qt::Unchecked;
         else if(role == Qt::ToolTipRole)
-            return sync->getSync()->getRunState() == ::mega::MegaSync::RUNSTATE_RUNNING ? tr("Sync is enabled") : tr("Sync is disabled");
+            return sync->isEnabled() ? tr("Sync is enabled") : tr("Sync is disabled");
         break;
     case Column::LNAME:
         if(role == Qt::DecorationRole)

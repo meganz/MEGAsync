@@ -55,6 +55,8 @@ public:
     long long getLocalFingerprint() const;
     QString getMegaFolder() const;
     mega::MegaHandle getMegaHandle() const;
+    bool isEnabled() const; //enabled by user
+    bool isActive() const; //not disabled by user nor failed (nor being removed)
     int getError() const;
 
     mega::MegaSync* getSync() const;

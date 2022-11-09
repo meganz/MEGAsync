@@ -6225,7 +6225,7 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
         const auto syncSettings (model->getAllSyncSettings());
         auto firstActiveSyncSetting (std::find_if(syncSettings.cbegin(), syncSettings.cend(),
                                                   [](std::shared_ptr<SyncSettings> s)
-                                     {return s->getSync()->getRunState() == MegaSync::RUNSTATE_RUNNING;}));
+                                     {return s->isActive();}));
         if (firstActiveSyncSetting != syncSettings.cend())
         {
             infoDialogTimer->stop();
