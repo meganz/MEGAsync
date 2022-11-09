@@ -52,7 +52,7 @@ void SyncInfo::removeSyncedFolderByBackupId(MegaHandle backupId)
         return;
     }
 
-    if (cs->getSync()->getRunState() == ::mega::MegaSync::RUNSTATE_RUNNING)
+    if (cs->isActive())
     {
         deactivateSync(cs);
     }
@@ -91,7 +91,7 @@ void SyncInfo::removeAllFolders()
 
     for (auto it = configuredSyncsMap.begin(); it != configuredSyncsMap.end(); it++)
     {
-        if (it.value()->getSync()->getRunState() == ::mega::MegaSync::RUNSTATE_RUNNING)
+        if (it.value()->isActive())
         {
             deactivateSync(it.value());
         }
@@ -204,7 +204,7 @@ std::shared_ptr<SyncSettings> SyncInfo::updateSyncSettings(MegaSync *sync)
 
     if (cs)
     {
-        wasActive = cs->getSync()->getRunState() == ::mega::MegaSync::RUNSTATE_RUNNING;
+        wasActive = cs->isActive();
         wasInactive = !wasActive;
 
         cs->setSync(sync);
@@ -234,12 +234,12 @@ std::shared_ptr<SyncSettings> SyncInfo::updateSyncSettings(MegaSync *sync)
 
     });// end of thread pool function
 
-    if (cs->getSync()->getRunState() == ::mega::MegaSync::RUNSTATE_RUNNING && wasInactive)
+    if (cs->isActive() && wasInactive)
     {
         activateSync(cs);
     }
 
-    if (cs->getSync()->getRunState() != ::mega::MegaSync::RUNSTATE_RUNNING && wasActive )
+    if (cs->isActive() && wasActive )
     {
         deactivateSync(cs);
     }
