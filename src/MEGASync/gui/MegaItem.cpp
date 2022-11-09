@@ -131,7 +131,7 @@ void MegaItem::setOwner(std::unique_ptr<mega::MegaUser> user)
     mFullNameAttribute = UserAttributes::FullName::requestFullName(mOwner->getEmail());
     if(mFullNameAttribute)
     {
-        connect(mFullNameAttribute.get(), &UserAttributes::FullName::attributeReady, this, &MegaItem::onFullNameAttributeReady);
+        connect(mFullNameAttribute.get(), &UserAttributes::FullName::fullNameReady, this, &MegaItem::onFullNameAttributeReady);
         if(mFullNameAttribute->isAttributeReady())
         {
             onFullNameAttributeReady();

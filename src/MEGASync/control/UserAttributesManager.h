@@ -25,7 +25,14 @@ public:
             ParamInfo(const std::function<void()>& func, QList<int> errCodes)
                 : mNoRetryErrCodes(errCodes)
                 , requestFunc(func)
-            {}
+            {
+                Q_ASSERT(!errCodes.isEmpty());
+            }
+            ParamInfo(const std::function<void()>& func)
+                : requestFunc(func)
+            {
+            }
+
             void setNeedsRetry(int errCode);
             void setPending(bool isPending);
             std::function<void()> requestFunc;

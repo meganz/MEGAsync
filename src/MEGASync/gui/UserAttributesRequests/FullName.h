@@ -27,10 +27,16 @@ public:
     const QString& getFirstName() const;
     const QString& getLastName() const;
 
+private:
+    QString createFullName() const;
+
 signals:
     //In order to use in Rich Text labels (otherwise some characters may be interpreted as HMTL)
-    void attributeReadyRichText(const QString&);
-    void attributeReady(const QString&);
+    void fullNameReadyRichText(const QString&);
+    void fullNameReady(const QString&);
+
+    void separateNamesReadyRichText(const QString&, const QString&);
+    void separateNamesReady(const QString&, const QString&);
 
 private:
     QString mFirstName;
