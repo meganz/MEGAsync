@@ -161,11 +161,11 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
                 if(fullNameUserAttributes && !mUserAttributes.contains(userEmail))
                 {
                     mUserAttributes.insert(userEmail, fullNameUserAttributes);
-                    connect(fullNameUserAttributes.get(), &UserAttributes::FullName::attributeReady,
+                    connect(fullNameUserAttributes.get(), &UserAttributes::FullName::fullNameReady,
                             this, &DesktopNotifications::OnUserAttributesReady, Qt::UniqueConnection);
                 }
 
-                if(fullNameUserAttributes && fullNameUserAttributes->isRequestPending())
+                if(fullNameUserAttributes && !fullNameUserAttributes->isAttributeReady())
                 {
                     mPendingUserAlerts.insert(userEmail, alert->copy());
                 }
@@ -757,7 +757,7 @@ void DesktopNotifications::OnUserAttributesReady()
 
         //Disconnect the full name attribute request as it still lives
         //in attributes manager
-        disconnect(UserAttribute, &UserAttributes::FullName::attributeReady,
+        disconnect(UserAttribute, &UserAttributes::FullName::fullNameReady,
                 this, &DesktopNotifications::OnUserAttributesReady);
     }
 }
