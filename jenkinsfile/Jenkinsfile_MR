@@ -1,0 +1,185 @@
+pipeline {
+    agent { label 'linux' }
+
+    options { 
+        buildDiscarder(logRotator(numToKeepStr: '35', daysToKeepStr: '21'))
+        gitLabConnection('GitLabConnectionJenkins')
+    }
+
+    environment {
+        BUILD_OPTIONS = null
+        SDK_BRANCH = null
+    }
+
+    stages {
+        stage('get additional build parameters'){
+            when { expression { env.gitlabTriggerPhrase.contains('BUILD_OPTIONS') } }
+            steps {
+                script{
+                    BUILD_OPTIONS = sh(script: "echo '${env.gitlabTriggerPhrase}' | grep BUILD_OPTIONS | awk -F 'BUILD_OPTIONS='  '{print \$2}' | cut -d'\"' -f2", returnStdout: true)
+                    println BUILD_OPTIONS
+                }
+            }
+            post{
+                always {
+                    script{                        
+                        if (currentBuild.currentResult == 'FAILURE'){
+                            addGitLabMRComment(comment: ":red_circle: ${env.JOB_NAME} FAILURE when getting the additional build parameters :worried:<br/>Build results: [Jenkins [${env.JOB_NAME} ${env.BUILD_DISPLAY_NAME}]](${env.RUN_DISPLAY_URL})<br/>Commit: ${env.GIT_COMMIT}" )
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('get sdk branch'){
+            when {
+                expression { 
+                    env.gitlabMergeRequestDescription.contains('SDK_SUBMODULE_TEST')
+                }
+            }
+            steps {
+                script{
+                    println "${env.gitlabMergeRequestDescription}"
+                    SDK_BRANCH = sh(script: "echo \"${env.gitlabMergeRequestDescription}\" | grep SDK_SUBMODULE_TEST | awk -F 'SDK_SUBMODULE_TEST='  '{print \$2}' | cut -d' ' -f1", returnStdout: true)
+                    println SDK_BRANCH
+                }
+            }
+            post{
+                always {
+                    script{                        
+                        if (currentBuild.currentResult == 'FAILURE'){
+                            addGitLabMRComment(comment: ":red_circle: ${env.JOB_NAME} FAILURE when getting the SDK branch :worried:<br/>Build results: [Jenkins [${env.JOB_NAME} ${env.BUILD_DISPLAY_NAME}]](${env.RUN_DISPLAY_URL})<br/>Commit: ${env.GIT_COMMIT}" )
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('build MEGASync'){
+            parallel {
+                stage('Build macOS') {
+                    when {
+                        expression { env.gitlabTriggerPhrase == 'launch compilation' || env.gitlabTriggerPhrase.startsWith('launch compilation macos')}
+                    }
+                    steps {
+                        gitlabCommitStatus(name: 'MacOS build') {
+                            script {
+                                echo "Triggering MEGAsync job for macOS."
+                                build job: 'MEGASync-MRs-private', wait: true, propagate: true, parameters: [
+                                    string(name: 'SOURCE_BRANCH', value: "${env.gitlabSourceBranch}"),
+                                    string(name: 'TARGET_BRANCH', value: "${env.gitlabTargetBranch}"),
+                                    booleanParam(name: 'BUILD_LINUX', value: false),
+                                    booleanParam(name: 'BUILD_MAC', value: true),
+                                    booleanParam(name: 'BUILD_WINDOWS', value: false),
+                                    string(name: 'BUILD_OPTIONS', value: "${BUILD_OPTIONS}"),
+                                    string(name: 'SDK_BRANCH', value: "${SDK_BRANCH}")
+                                    ]
+                            }
+                        }
+                    }
+                    post{
+                        always {
+                            script{
+                                if (currentBuild.currentResult == 'SUCCESS'){
+                                    addGitLabMRComment(comment: ":white_check_mark: ${env.JOB_NAME} :green_apple: <b>macOS</b> SUCCEEDED :muscle:<br/>Build results: [Jenkins [${env.JOB_NAME} ${env.BUILD_DISPLAY_NAME}]](${env.RUN_DISPLAY_URL})<br/>Commit: ${env.GIT_COMMIT}" )
+                                }                                
+                                if (currentBuild.currentResult == 'FAILURE'){
+                                    addGitLabMRComment(comment: ":red_circle: ${env.JOB_NAME} :green_apple: <b>macOS</b> FAILURE  :worried:<br/>Build results: [Jenkins [${env.JOB_NAME} ${env.BUILD_DISPLAY_NAME}]](${env.RUN_DISPLAY_URL})<br/>Commit: ${env.GIT_COMMIT}" )
+                                }
+                                if (currentBuild.currentResult == 'ABORTED'){
+                                addGitLabMRComment(comment: ":interrobang: ${env.JOB_NAME} :green_apple: <b>macOS</b> ABORTED  :confused:<br/>Build results: [Jenkins [${env.JOB_NAME} ${env.BUILD_DISPLAY_NAME}]](${env.RUN_DISPLAY_URL})<br/>Commit: ${env.GIT_COMMIT}" )
+                                }                                
+                                if (currentBuild.currentResult == 'UNSTABLE'){
+                                    addGitLabMRComment(comment: ":interrobang: ${env.JOB_NAME} :green_apple: <b>macOS</b> UNSTABLE  :confused:<br/>Build results: [Jenkins [${env.JOB_NAME} ${env.BUILD_DISPLAY_NAME}]](${env.RUN_DISPLAY_URL})<br/>Commit: ${env.GIT_COMMIT}" )
+                                }
+                            }
+
+                        }
+                    }
+                }
+
+                stage('Build Linux') {
+                    when {
+                        expression { env.gitlabTriggerPhrase == 'launch compilation' || env.gitlabTriggerPhrase.startsWith('launch compilation linux') }
+                    }
+                    steps {
+                        gitlabCommitStatus(name: 'Linux build') {
+                            script {
+                                echo "Triggering MEGAsync job for Linux."
+                                build job: 'MEGASync-MRs-private', wait: true, propagate: true, parameters: [
+                                    string(name: 'SOURCE_BRANCH', value: "${env.gitlabSourceBranch}"),
+                                    string(name: 'TARGET_BRANCH', value: "${env.gitlabTargetBranch}"),
+                                    booleanParam(name: 'BUILD_LINUX', value: true),
+                                    booleanParam(name: 'BUILD_MAC', value: false),
+                                    booleanParam(name: 'BUILD_WINDOWS', value: false),
+                                    string(name: 'BUILD_OPTIONS', value: "${BUILD_OPTIONS}"),
+                                    string(name: 'SDK_BRANCH', value: "${SDK_BRANCH}")
+                                    ]
+                            }
+                        }
+                    }
+                    post{
+                        always {
+                            script{
+                                if (currentBuild.currentResult == 'SUCCESS'){
+                                    addGitLabMRComment(comment: ":white_check_mark: ${env.JOB_NAME} :penguin: <b>LINUX</b> SUCCEEDED :muscle:<br/>Build results: [Jenkins [${env.JOB_NAME} ${env.BUILD_DISPLAY_NAME}]](${env.RUN_DISPLAY_URL})<br/>Commit: ${env.GIT_COMMIT}" )
+                                }                                
+                                if (currentBuild.currentResult == 'FAILURE'){
+                                    addGitLabMRComment(comment: ":red_circle: ${env.JOB_NAME} :penguin: <b>Linux</b> FAILURE  :worried:<br/>Build results: [Jenkins [${env.JOB_NAME} ${env.BUILD_DISPLAY_NAME}]](${env.RUN_DISPLAY_URL})<br/>Commit: ${env.GIT_COMMIT}" )
+                                }
+                                if (currentBuild.currentResult == 'ABORTED'){
+                                addGitLabMRComment(comment: ":interrobang: ${env.JOB_NAME} :penguin: <b>Linux</b> ABORTED  :confused:<br/>Build results: [Jenkins [${env.JOB_NAME} ${env.BUILD_DISPLAY_NAME}]](${env.RUN_DISPLAY_URL})<br/>Commit: ${env.GIT_COMMIT}" )
+                                }                                
+                                if (currentBuild.currentResult == 'UNSTABLE'){
+                                    addGitLabMRComment(comment: ":interrobang: ${env.JOB_NAME} :penguin: <b>Linux</b> UNSTABLE  :confused:<br/>Build results: [Jenkins [${env.JOB_NAME} ${env.BUILD_DISPLAY_NAME}]](${env.RUN_DISPLAY_URL})<br/>Commit: ${env.GIT_COMMIT}" )
+                                }
+                            }
+
+                        }
+                    }
+                }
+
+                stage('Build Windows') {
+                    when {
+                        expression { env.gitlabTriggerPhrase == 'launch compilation' || env.gitlabTriggerPhrase.startsWith('launch compilation windows') }
+                    }
+                    steps {
+                        gitlabCommitStatus(name: 'Windows build') {
+                            script {
+                                echo "Triggering MEGAsync job for Windows."
+                                build job: 'MEGASync-MRs-private', wait: true, propagate: true, parameters: [
+                                    string(name: 'SOURCE_BRANCH', value: "${env.gitlabSourceBranch}"),
+                                    string(name: 'TARGET_BRANCH', value: "${env.gitlabTargetBranch}"),
+                                    booleanParam(name: 'BUILD_LINUX', value: false),
+                                    booleanParam(name: 'BUILD_MAC', value: false),
+                                    booleanParam(name: 'BUILD_WINDOWS', value: true),
+                                    string(name: 'BUILD_OPTIONS', value: "${BUILD_OPTIONS}"),
+                                    string(name: 'SDK_BRANCH', value: "${SDK_BRANCH}")
+                                    ]
+                            }
+                        }
+                    }
+                    post{
+                        always {
+                            script{
+                                if (currentBuild.currentResult == 'SUCCESS'){
+                                    addGitLabMRComment(comment: ":white_check_mark: ${env.JOB_NAME} <b>Windows</b> SUCCEEDED :muscle:<br/>Build results: [Jenkins [${env.JOB_NAME} ${env.BUILD_DISPLAY_NAME}]](${env.RUN_DISPLAY_URL})<br/>Commit: ${env.GIT_COMMIT}" )
+                                }                                
+                                if (currentBuild.currentResult == 'FAILURE'){
+                                    addGitLabMRComment(comment: ":red_circle: ${env.JOB_NAME} <b>Windows</b> FAILURE  :worried:<br/>Build results: [Jenkins [${env.JOB_NAME} ${env.BUILD_DISPLAY_NAME}]](${env.RUN_DISPLAY_URL})<br/>Commit: ${env.GIT_COMMIT}" )
+                                }
+                                if (currentBuild.currentResult == 'ABORTED'){
+                                addGitLabMRComment(comment: ":interrobang: ${env.JOB_NAME} <b>Windows</b> ABORTED  :confused:<br/>Build results: [Jenkins [${env.JOB_NAME} ${env.BUILD_DISPLAY_NAME}]](${env.RUN_DISPLAY_URL})<br/>Commit: ${env.GIT_COMMIT}" )
+                                }                                
+                                if (currentBuild.currentResult == 'UNSTABLE'){
+                                    addGitLabMRComment(comment: ":interrobang: ${env.JOB_NAME} <b>Windows</b> UNSTABLE  :confused:<br/>Build results: [Jenkins [${env.JOB_NAME} ${env.BUILD_DISPLAY_NAME}]](${env.RUN_DISPLAY_URL})<br/>Commit: ${env.GIT_COMMIT}" )
+                                }
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
