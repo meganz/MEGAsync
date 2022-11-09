@@ -1,16 +1,17 @@
 #ifndef PREFERENCES_H
 #define PREFERENCES_H
 
-#include <iostream>
+#include "megaapi.h"
+#include "control/EncryptedSettings.h"
+#include "syncs/control/SyncInfo.h"
+
 #include <QLocale>
 #include <QStringList>
 #include <QMutex>
 #include <QDataStream>
 
-#include "control/EncryptedSettings.h"
-#include "syncs/control/SyncInfo.h"
+#include <iostream>
 #include <assert.h>
-#include "megaapi.h"
 #include <chrono>
 #include <type_traits>
 

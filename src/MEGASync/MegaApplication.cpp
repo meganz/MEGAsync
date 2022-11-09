@@ -2733,7 +2733,7 @@ void MegaApplication::createInfoDialog()
     connect(transferQuota.get(), &TransferQuota::overQuotaMessageNeedsToBeShown, infoDialog.data(), &InfoDialog::enableTransferOverquotaAlert);
     connect(transferQuota.get(), &TransferQuota::almostOverQuotaMessageNeedsToBeShown, infoDialog.data(), &InfoDialog::enableTransferAlmostOverquotaAlert);
     connect(infoDialog, SIGNAL(cancelScanning()), this, SLOT(cancelScanningStage()));
-    connect(this, &MegaApplication::addBackup, infoDialog, &InfoDialog::onAddBackup);
+    connect(this, &MegaApplication::addBackup, infoDialog.data(), &InfoDialog::onAddBackup);
     scanStageController.updateReference(infoDialog);
 }
 
@@ -6539,16 +6539,16 @@ void MegaApplication::createInfoDialogMenus()
     if (!mSyncs2waysMenu)
     {
         mSyncs2waysMenu = new SyncsMenu(MegaSync::TYPE_TWOWAY, infoDialog);
-        connect(mSyncs2waysMenu, &SyncsMenu::addSync,
-                infoDialog, &InfoDialog::onAddSync);
+        connect(mSyncs2waysMenu.data(), &SyncsMenu::addSync,
+                infoDialog.data(), &InfoDialog::onAddSync);
         mSyncs2waysMenu->setEnabled(exitAction->isEnabled());
     }
 
     if (!mBackupsMenu)
     {
         mBackupsMenu = new SyncsMenu(MegaSync::TYPE_BACKUP, infoDialog);
-        connect(mBackupsMenu, &SyncsMenu::addSync,
-                infoDialog, &InfoDialog::onAddSync);
+        connect(mBackupsMenu.data(), &SyncsMenu::addSync,
+                infoDialog.data(), &InfoDialog::onAddSync);
         mBackupsMenu->setEnabled(exitAction->isEnabled());
     }
 

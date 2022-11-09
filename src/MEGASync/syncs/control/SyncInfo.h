@@ -1,6 +1,5 @@
 #pragma once
 
-#include "control/Preferences.h"
 #include "syncs/control/SyncSettings.h"
 
 #include "megaapi.h"
@@ -10,6 +9,8 @@
 #include <QSet>
 #include <QMutex>
 #include <QVector>
+#include <QMap>
+#include <QList>
 
 #include <memory>
 
