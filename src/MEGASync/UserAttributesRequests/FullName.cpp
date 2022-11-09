@@ -37,10 +37,13 @@ void FullName::onRequestFinish(mega::MegaApi*, mega::MegaRequest* incoming_reque
             }
         }
 
-        if (isAttributeReady() || !isRequestPending())
+        if (isAttributeReady())
         {
-            emit attributeReady(getFullName());
-            emit attributeReadyRichText(getRichFullName());
+            emit fullNameReady(getFullName());
+            emit fullNameReadyRichText(getRichFullName());
+
+            emit separateNamesReady(getFirstName(), getLastName());
+            emit separateNamesReadyRichText(getFirstName().toHtmlEscaped(), getLastName().toHtmlEscaped());
         }
     }
 }
@@ -66,9 +69,8 @@ AttributeRequest::RequestInfo FullName::fillRequestInfo()
                                                     mega::MegaApi::USER_ATTR_LASTNAME);
     };
 
-    auto dontRetryOnErr = QList<int>() << mega::MegaError::API_OK << mega::MegaError::API_EACCESS;
-    QSharedPointer<ParamInfo> firstNameInfo(new ParamInfo(firstNameRequest, dontRetryOnErr));
-    QSharedPointer<ParamInfo> lastNameInfo(new ParamInfo(lastNameRequest, dontRetryOnErr));
+    QSharedPointer<ParamInfo> firstNameInfo(new ParamInfo(firstNameRequest));
+    QSharedPointer<ParamInfo> lastNameInfo(new ParamInfo(lastNameRequest));
 
     ParamInfoMap paramInfo({{mega::MegaApi::USER_ATTR_FIRSTNAME, firstNameInfo},
                             {mega::MegaApi::USER_ATTR_LASTNAME, lastNameInfo}});
@@ -85,7 +87,7 @@ QString FullName::getFullName() const
         return getEmail();
     }
 
-    return QString::fromUtf8("%1 %2").arg(mFirstName).arg(mLastName);
+    return createFullName();
 }
 
 QString FullName::getRichFullName() const
@@ -95,13 +97,12 @@ QString FullName::getRichFullName() const
         return getEmail();
     }
 
-    auto text = QString::fromUtf8("%1 %2").arg(mFirstName).arg(mLastName);
-    return text.toHtmlEscaped();
+    return createFullName().toHtmlEscaped();
 }
 
 bool FullName::isAttributeReady() const
 {
-    return !mFirstName.isEmpty() && !mLastName.isEmpty();
+    return !isRequestPending() && (!getFirstName().isEmpty() || !getLastName().isEmpty());
 }
 
 const QString &FullName::getFirstName() const
@@ -112,6 +113,27 @@ const QString &FullName::getFirstName() const
 const QString &FullName::getLastName() const
 {
     return mLastName;
+}
+
+QString FullName::createFullName() const
+{
+    QString fullName;
+
+    if(!mFirstName.isEmpty())
+    {
+        fullName = mFirstName;
+
+        if(!mLastName.isEmpty())
+        {
+            fullName.append(QString::fromUtf8(" %1").arg(mLastName));
+        }
+    }
+    else
+    {
+        fullName = mLastName;
+    }
+
+    return fullName;
 }
 
 std::shared_ptr<const FullName> FullName::requestFullName(const char *user_email)

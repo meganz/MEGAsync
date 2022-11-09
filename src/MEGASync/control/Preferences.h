@@ -756,8 +756,11 @@ protected:
     static const bool defaultImportMegaLinksEnabled;
     static const bool defaultDownloadMegaLinksEnabled;
 
+private:
+    void updateFullName();
+
 private slots:
-    void updateFullName(QString fullName = QString());
+    void setFullName(const QString& newFirstName, const QString& newLastName);
 
 };
 

@@ -572,7 +572,7 @@ void SettingsDialog::loadSettings()
 
     //Update name in case it changes
     auto FullNameRequest = UserAttributes::FullName::requestFullName();
-    connect(FullNameRequest.get(), &UserAttributes::FullName::attributeReady, this, [this](const QString& fullName){
+    connect(FullNameRequest.get(), &UserAttributes::FullName::fullNameReady, this, [this](const QString& fullName){
         mUi->lName->setText(fullName);
     });
 
