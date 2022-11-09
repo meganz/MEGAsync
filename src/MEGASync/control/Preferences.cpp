@@ -3253,24 +3253,27 @@ void Preferences::overridePreferences(const QSettings &settings)
     overridePreference(settings, QString::fromUtf8("MUTEX_STEALER_PERIOD_ONLY_ONCE"), Preferences::MUTEX_STEALER_PERIOD_ONLY_ONCE);
 }
 
-void Preferences::updateFullName(QString)
+void Preferences::updateFullName()
 {
     auto fullNameRequest (UserAttributes::UserAttributesManager::instance()
                       .requestAttribute<UserAttributes::FullName>(email().toUtf8().constData()));
-    connect(fullNameRequest.get(), &UserAttributes::FullName::attributeReady,
-            this, &Preferences::updateFullName, Qt::UniqueConnection);
+    connect(fullNameRequest.get(), &UserAttributes::FullName::separateNamesReady,
+            this, &Preferences::setFullName, Qt::UniqueConnection);
 
-    if (fullNameRequest->isAttributeReady())
+    if(fullNameRequest->isAttributeReady())
     {
-        auto newFirstName (fullNameRequest->getFirstName());
-        auto newLastName (fullNameRequest->getLastName());
-        if (newFirstName != firstName())
-        {
-            setFirstName(newFirstName);
-        }
-        if (newLastName != lastName())
-        {
-            setLastName(newLastName);
-        }
+        setFullName(fullNameRequest->getFirstName(), fullNameRequest->getLastName());
+    }
+}
+
+void Preferences::setFullName(const QString& newFirstName, const QString& newLastName)
+{
+    if (newFirstName != firstName())
+    {
+        setFirstName(newFirstName);
+    }
+    if (newLastName != lastName())
+    {
+        setLastName(newLastName);
     }
 }
