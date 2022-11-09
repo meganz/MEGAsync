@@ -14,8 +14,8 @@ namespace UserAttributes
 // In case of error, and as a placeholder while we don't have both, the email is returned.
 //
 // The attributeReady() signal is sent when:
-// - the attribute becomes ready (i.e. we just received either first or last name and we have both)
-// - there was an error retrieving both the first name and the last name
+// - the attribute becomes ready (i.e. we received both first and last name, correctly or with fail)
+// -
 //
 
 void FullName::onRequestFinish(mega::MegaApi*, mega::MegaRequest* incoming_request, mega::MegaError* e)
@@ -102,7 +102,7 @@ QString FullName::getRichFullName() const
 
 bool FullName::isAttributeReady() const
 {
-    return !isRequestPending() && (!getFirstName().isEmpty() || !getLastName().isEmpty());
+    return !isRequestPending();
 }
 
 const QString &FullName::getFirstName() const
