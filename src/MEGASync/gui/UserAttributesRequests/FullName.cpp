@@ -10,12 +10,11 @@ namespace UserAttributes
 // FULL NAME REQUEST
 //
 // The Full Name comprises the First Name AND the Last Name.
-// The attribute is not considered resady while we don't have both.
+// The attribute is not considered resady while we don't have received the answer to both requests
 // In case of error, and as a placeholder while we don't have both, the email is returned.
 //
 // The attributeReady() signal is sent when:
-// - the attribute becomes ready (i.e. we just received either first or last name and we have both)
-// - there was an error retrieving both the first name and the last name
+// - the attribute becomes ready (i.e. we received both first and last name, correctly or with fail)
 //
 
 void FullName::onRequestFinish(mega::MegaApi*, mega::MegaRequest* incoming_request, mega::MegaError* e)
@@ -80,7 +79,7 @@ AttributeRequest::RequestInfo FullName::fillRequestInfo()
 
 QString FullName::getFullName() const
 {
-    if(!isAttributeReady())
+    if(!isAttributeReady() || (mFirstName.isEmpty() && mLastName.isEmpty()))
     {
         return getEmail();
     }
@@ -90,7 +89,7 @@ QString FullName::getFullName() const
 
 QString FullName::getRichFullName() const
 {
-    if(!isAttributeReady())
+    if(!isAttributeReady() || (mFirstName.isEmpty() && mLastName.isEmpty()))
     {
         return getEmail();
     }
@@ -100,7 +99,7 @@ QString FullName::getRichFullName() const
 
 bool FullName::isAttributeReady() const
 {
-    return !isRequestPending() && (!getFirstName().isEmpty() || !getLastName().isEmpty());
+    return !isRequestPending();
 }
 
 const QString &FullName::getFirstName() const
