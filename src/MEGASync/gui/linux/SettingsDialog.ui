@@ -3205,7 +3205,7 @@ color: grey;
           <item>
            <widget class="QPushButton" name="bBackupCenter">
             <property name="text">
-             <string>To Backup Center</string>
+             <string>Go to backup centre</string>
             </property>
            </widget>
           </item>

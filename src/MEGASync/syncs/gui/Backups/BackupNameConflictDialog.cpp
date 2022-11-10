@@ -5,6 +5,7 @@
 #include "syncs/control/SyncInfo.h"
 #include "syncs/control/SyncController.h"
 #include "EventHelper.h"
+#include <QScrollBar>
 
 #include <QPushButton>
 #include <QtConcurrent/QtConcurrent>
@@ -23,6 +24,9 @@ BackupNameConflictDialog::BackupNameConflictDialog(const QStringList& candidateP
     ui->setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
     setModal(true);
+
+    ui->scrollArea->installEventFilter(this);
+    ui->scrollArea->verticalScrollBar()->installEventFilter(this);
 
     ui->lToBackupCenterText->setVisible(false);
     ui->lToBackupCenterText->setTextFormat(Qt::RichText);
@@ -49,7 +53,6 @@ BackupNameConflictDialog::BackupNameConflictDialog(const QStringList& candidateP
                 this, &BackupNameConflictDialog::checkChangedNames);
     }
     // Populate
-    ui->wConflictZone->setLayout(new QVBoxLayout());
     createWidgets();
 
     open();
@@ -85,6 +88,23 @@ bool BackupNameConflictDialog::backupNamesValid(QStringList candidatePaths)
             && !candidatesNames.intersects(SyncInfo::getRemoteBackupFolderNames());
 }
 
+bool BackupNameConflictDialog::eventFilter(QObject *obj, QEvent *event)
+{
+    if(event->type() == QEvent::Resize)
+    {
+        if(obj == ui->scrollArea || obj == ui->scrollArea->verticalScrollBar())
+        {
+            auto verticalScrollArea = ui->scrollArea->verticalScrollBar()->isVisible() ? ui->scrollArea->verticalScrollBar()->width() : 0;
+            ui->wConflictZone->setFixedWidth(ui->scrollArea->width() - verticalScrollArea);
+        }
+        else
+        {
+            updateScrollHeight();
+        }
+    }
+    return QObject::eventFilter(obj, event);
+}
+
 void BackupNameConflictDialog::checkChangedNames()
 {
     unsigned int failCount (0);
@@ -115,10 +135,6 @@ void BackupNameConflictDialog::checkChangedNames()
     if (failCount == 0)
     {
         accept();
-    }
-    else
-    {
-        ui->scrollArea->setMinimumHeight(conflicts.at(0)->sizeHint().height() * std::min(2U, failCount));
     }
 }
 
@@ -152,6 +168,8 @@ void BackupNameConflictDialog::createWidgets()
         }
     }
 
+    ui->scrollAreaLayout->addStretch();
+
     // Update texts
     auto conflicts = ui->wConflictZone->findChildren<BackupRenameWidget*>();
     int nbConflict = conflicts.size();
@@ -166,8 +184,6 @@ void BackupNameConflictDialog::createWidgets()
                 this, &BackupNameConflictDialog::openLink, Qt::UniqueConnection);
 
         ui->lToBackupCenterText->show();
-        ui->scrollArea->setMinimumHeight(conflicts.first()->height());
-        ui->scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         EventManager::addEvent(ui->scrollArea->viewport(), QEvent::Wheel, EventHelper::BLOCK);
     }
     else if(nbConflict > 1)
@@ -176,8 +192,15 @@ void BackupNameConflictDialog::createWidgets()
                           "continue with the backup. Folder names won't change on your computer.");
 
         ui->lToBackupCenterText->hide();
-        ui->scrollArea->setMinimumHeight(conflicts.first()->height() * 2);
     }
+
+    updateScrollHeight();
+
+#ifdef Q_OS_LINUX
+    //It is the only OS where the bottom buttons will be over the conflict without this
+    adjustSize();
+    setMinimumHeight(sizeHint().height());
+#endif
 
     ui->lConflictText->setText(conflictText);
     ui->lTitle->setText(tr("Rename folder", "", nbConflict));
@@ -196,5 +219,22 @@ void BackupNameConflictDialog::addRenameWidget(const QString& path)
     }
 
     // Insert rename widget
-    ui->wConflictZone->layout()->addWidget(new BackupRenameWidget(path, conflictNumber));
+    auto conflictItem = new BackupRenameWidget(path, conflictNumber);
+    ui->scrollAreaLayout->addWidget(conflictItem,0, Qt::AlignTop);
+    conflictItem->installEventFilter(this);
+}
+
+void BackupNameConflictDialog::updateScrollHeight()
+{
+    auto conflicts = ui->wConflictZone->findChildren<BackupRenameWidget*>();
+    int nbConflict = conflicts.size();
+
+    auto minHeight(0);
+    for(int index = 0; index < std::min(nbConflict, 2); ++index)
+    {
+        auto conflict = conflicts.at(index);
+        minHeight += conflict->sizeHint().height();
+    }
+
+    ui->scrollArea->setMinimumHeight(minHeight);
 }

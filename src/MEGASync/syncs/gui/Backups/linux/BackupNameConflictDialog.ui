@@ -173,6 +173,9 @@ background-color: #ECECEC;
      <property name="lineWidth">
       <number>0</number>
      </property>
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
      <property name="widgetResizable">
       <bool>true</bool>
      </property>
@@ -182,9 +185,26 @@ background-color: #ECECEC;
         <x>0</x>
         <y>0</y>
         <width>560</width>
-        <height>152</height>
+        <height>141</height>
        </rect>
       </property>
+      <layout class="QVBoxLayout" name="scrollAreaLayout">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+      </layout>
      </widget>
     </widget>
    </item>

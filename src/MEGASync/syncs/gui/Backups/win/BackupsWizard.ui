@@ -1272,7 +1272,7 @@ color:#666666;
           </size>
          </property>
          <property name="text">
-          <string>View in Backup Centre</string>
+          <string>View in backup centre</string>
          </property>
         </widget>
        </item>

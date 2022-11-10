@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>635</width>
-    <height>143</height>
+    <width>310</width>
+    <height>173</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -38,13 +38,13 @@ margin-left: 32px;
     <number>25</number>
    </property>
    <property name="bottomMargin">
-    <number>5</number>
+    <number>15</number>
    </property>
    <property name="horizontalSpacing">
     <number>12</number>
    </property>
    <property name="verticalSpacing">
-    <number>5</number>
+    <number>10</number>
    </property>
    <item row="2" column="0">
     <widget class="QLabel" name="lLocalFolder">

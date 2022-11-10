@@ -123,10 +123,8 @@ background: rgba(0,0,0,0.01);
      </property>
      <property name="styleSheet">
       <string notr="true">border: none;
+background: transparent;
 </string>
-     </property>
-     <property name="text">
-      <string/>
      </property>
      <property name="icon">
       <iconset resource="../../../gui/Resources_macx.qrc">
