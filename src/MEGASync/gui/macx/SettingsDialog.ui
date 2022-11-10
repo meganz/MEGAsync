@@ -4982,7 +4982,7 @@ margin-right: 32px;</string>
             <item>
              <widget class="QPushButton" name="bBackupCenter">
               <property name="text">
-               <string>To Backup Center</string>
+               <string>Go to backup centre</string>
               </property>
               <property name="autoDefault">
                <bool>false</bool>

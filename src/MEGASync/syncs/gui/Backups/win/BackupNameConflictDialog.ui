@@ -10,6 +10,12 @@
     <height>341</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>550</width>
+    <height>0</height>
+   </size>
+  </property>
   <property name="styleSheet">
    <string notr="true">QDialog
 {
@@ -164,6 +170,9 @@ background-color: #ECECEC;
      <property name="lineWidth">
       <number>0</number>
      </property>
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
      <property name="widgetResizable">
       <bool>true</bool>
      </property>
@@ -173,9 +182,26 @@ background-color: #ECECEC;
         <x>0</x>
         <y>0</y>
         <width>560</width>
-        <height>85</height>
+        <height>96</height>
        </rect>
       </property>
+      <layout class="QVBoxLayout" name="scrollAreaLayout" stretch="">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+      </layout>
      </widget>
     </widget>
    </item>

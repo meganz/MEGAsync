@@ -612,7 +612,7 @@
         <translatorcomment>Label indicating that the backup configuration was successfull and it is being uploaded.</translatorcomment>
         <translation>
             <numerusform>We&apos;re backing up your folder. The time this takes depends on the files in this folder.</numerusform>
-            <numerusform>We&apos;re backing up your folders. The time this takes depends on the files in these folder.</numerusform>
+            <numerusform>We&apos;re backing up your folders. The time this takes depends on the files in the folders.</numerusform>
         </translation>
     </message>
     <message numerus="yes">
