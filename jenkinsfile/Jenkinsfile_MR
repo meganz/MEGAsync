@@ -7,8 +7,8 @@ pipeline {
     }
 
     environment {
-        BUILD_OPTIONS = null
-        SDK_BRANCH = null
+        BUILD_OPTIONS = ' '
+        SDK_BRANCH = ' '
     }
 
     stages {
@@ -16,7 +16,7 @@ pipeline {
             when { expression { env.gitlabTriggerPhrase.contains('BUILD_OPTIONS') } }
             steps {
                 script{
-                    BUILD_OPTIONS = sh(script: "echo '${env.gitlabTriggerPhrase}' | grep BUILD_OPTIONS | awk -F 'BUILD_OPTIONS='  '{print \$2}' | cut -d'\"' -f2", returnStdout: true)
+                    BUILD_OPTIONS = sh(script: "echo '${env.gitlabTriggerPhrase}' | grep BUILD_OPTIONS | awk -F 'BUILD_OPTIONS='  '{print \$2}' | cut -d'\"' -f2", returnStdout: true).trim()
                     println BUILD_OPTIONS
                 }
             }
@@ -40,7 +40,7 @@ pipeline {
             steps {
                 script{
                     println "${env.gitlabMergeRequestDescription}"
-                    SDK_BRANCH = sh(script: "echo \"${env.gitlabMergeRequestDescription}\" | grep SDK_SUBMODULE_TEST | awk -F 'SDK_SUBMODULE_TEST='  '{print \$2}' | cut -d' ' -f1", returnStdout: true)
+                    SDK_BRANCH = sh(script: "echo \"${env.gitlabMergeRequestDescription}\" | grep SDK_SUBMODULE_TEST | awk -F 'SDK_SUBMODULE_TEST='  '{print \$2}' | cut -d' ' -f1", returnStdout: true).trim()
                     println SDK_BRANCH
                 }
             }
