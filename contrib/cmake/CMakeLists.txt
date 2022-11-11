@@ -794,6 +794,7 @@ else()
 
 if (CMAKE_HOST_APPLE)
     set_source_files_properties(app.icns folder.icns folder_yosemite.icns appicon32.tiff PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
+    set(TARGET_LINK_LIBRARIES_PLATFORM ${TARGET_LINK_LIBRARIES_PLATFORM} "-framework IOKit")
     endif()
 
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
