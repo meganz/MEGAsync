@@ -136,11 +136,25 @@ class ProxyModel : public QSortFilterProxyModel
 
 class WizardDelegate : public QStyledItemDelegate
 {
-    public:
-        explicit WizardDelegate(QObject *parent = nullptr) : QStyledItemDelegate(parent){}
+public:
+    explicit WizardDelegate(QObject *parent = nullptr) : QStyledItemDelegate(parent){}
 
-        void paint(QPainter* painter, const QStyleOptionViewItem& option,
-                   const QModelIndex& index) const override;
+    void paint(QPainter* painter, const QStyleOptionViewItem& option,
+               const QModelIndex& index) const override;
+
+    bool editorEvent(QEvent *event,
+                     QAbstractItemModel *model,
+                     const QStyleOptionViewItem &option,
+                     const QModelIndex &index) override;
+
+    bool helpEvent(QHelpEvent *event, QAbstractItemView *view, const QStyleOptionViewItem &option, const QModelIndex &index);
+
+private:
+    QRect calculateIconRect(QStyleOptionViewItem &option) const;
+    QRect calculateTextRect(QStyleOptionViewItem &option, QRect iconRect = QRect()) const;
+
+    bool isStep1(const QWidget* view) const;
+
 };
 
 #endif // BACKUPSWIZARD_H
