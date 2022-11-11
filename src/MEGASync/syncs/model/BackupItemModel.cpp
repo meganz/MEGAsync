@@ -3,6 +3,7 @@
 #include "syncs/gui/SyncTooltipCreator.h"
 #include "UserAttributesRequests/DeviceName.h"
 #include "UserAttributesRequests/MyBackupsHandle.h"
+#include "syncs/control/SyncController.h"
 
 #include <QCoreApplication>
 #include <QIcon>
@@ -91,7 +92,7 @@ QVariant BackupItemModel::data(const QModelIndex &index, int role) const
         }
         else if(role == Qt::DisplayRole)
         {
-            return sync->name();
+            return SyncController::getSyncNameFromPath(sync->getLocalFolder());
         }
         else if(role == Qt::ToolTipRole)
         {
