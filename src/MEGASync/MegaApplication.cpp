@@ -8270,6 +8270,12 @@ void MegaApplication::onSyncDisabled(std::shared_ptr<SyncSettings> syncSetting)
     auto errorCode (syncSetting->getError());
     auto syncType (syncSetting->getType());
 
+    if (errorCode != mega::MegaError::API_OK)
+    {
+        model->addUnattendedDisabledSync(syncSetting->getMegaHandle(),
+                                         static_cast<MegaSync::SyncType>(syncSetting->getType()));
+    }
+
     if (syncType == MegaSync::TYPE_TWOWAY)
     {
         MegaApi::log(MegaApi::LOG_LEVEL_WARNING,
@@ -8430,12 +8436,6 @@ void MegaApplication::onSyncDisabled(MegaApi*, MegaSync* sync)
     if (appfinished || !sync)
     {
         return;
-    }
-
-    if (sync->getError())
-    {
-        model->addUnattendedDisabledSync(sync->getBackupId(),
-                                         static_cast<MegaSync::SyncType>(sync->getType()));
     }
 
     onSyncDisabled(model->getSyncSettingByTag(sync->getBackupId()));
