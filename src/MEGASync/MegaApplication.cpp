@@ -8270,7 +8270,7 @@ void MegaApplication::onSyncDisabled(std::shared_ptr<SyncSettings> syncSetting)
     auto errorCode (syncSetting->getError());
     auto syncType (syncSetting->getType());
 
-    if (errorCode != mega::MegaError::API_OK)
+    if (errorCode != MegaError::API_OK)
     {
         model->addUnattendedDisabledSync(syncSetting->getMegaHandle(),
                                          static_cast<MegaSync::SyncType>(syncSetting->getType()));
