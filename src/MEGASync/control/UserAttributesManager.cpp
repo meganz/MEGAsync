@@ -21,6 +21,16 @@ void UserAttributesManager::reset()
     mRequests.clear();
 }
 
+void UserAttributesManager::updateAllRequestByUser(const char *user_email)
+{
+    QString userEmail = QString::fromUtf8(user_email);
+    auto requests = mRequests.values(userEmail);
+    foreach(auto request, requests)
+    {
+        request->forceRequestAttribute();
+    }
+}
+
 void UserAttributesManager::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *incoming_request, mega::MegaError *e)
 {
     auto reqType (incoming_request->getType());
@@ -78,6 +88,20 @@ void UserAttributesManager::onUsersUpdate(mega::MegaApi*, mega::MegaUserList *us
     }
 }
 
+void UserAttributesManager::forceRequestAttribute(const AttributeRequest* request) const
+{
+    if(request)
+    {
+        foreach(auto paramType, request->getRequestInfo().mParamInfo.keys())
+        {
+            auto paramInfo = request->getRequestInfo().mParamInfo.value(paramType);
+            paramInfo->mNeedsRetry = true;
+            paramInfo->setPending(true);
+            paramInfo->requestFunc();
+        }
+    }
+}
+
 void AttributeRequest::RequestInfo::ParamInfo::setNeedsRetry(int errCode)
 {
     mNeedsRetry = !mNoRetryErrCodes.isEmpty() &&!mNoRetryErrCodes.contains(errCode);
@@ -108,6 +132,11 @@ bool AttributeRequest::isRequestPending() const
         paramInfoIt++;
     }
     return isPending;
+}
+
+void AttributeRequest::forceRequestAttribute() const
+{
+    UserAttributesManager::instance().forceRequestAttribute(this);
 }
 
 bool AttributeRequest::attributeRequestNeedsRetry(int attribute) const

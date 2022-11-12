@@ -2,6 +2,7 @@
 #include "CommonMessages.h"
 #include "DesktopNotifications.h"
 #include "MegaApplication.h"
+#include "QTMegaRequestListener.h"
 #include "mega/user.h"
 #include "Platform.h"
 #include "UserAttributesRequests/FullName.h"
@@ -73,7 +74,7 @@ DesktopNotifications::DesktopNotifications(const QString &appName, QSystemTrayIc
 QString DesktopNotifications::getItemsAddedText(mega::MegaUserAlert *info)
 {
     const int updatedItems = static_cast<int>(info->getNumber(1) + info->getNumber(0));
-    auto FullNameRequest = mUserAttributes.value(QString::fromUtf8(info->getEmail()));
+    auto FullNameRequest = UserAttributes::FullName::requestFullName(info->getEmail());
     QString message(tr("[A] added %n item", "", updatedItems));
     if(FullNameRequest)
     {
@@ -93,7 +94,7 @@ QString DesktopNotifications::createDeletedShareMessage(mega::MegaUserAlert* inf
     QString name;
 
     const bool someoneLeftTheFolder{info->getNumber(0) == 0};
-    auto FullNameRequest = mUserAttributes.value(QString::fromUtf8(info->getEmail()));
+    auto FullNameRequest = UserAttributes::FullName::requestFullName(info->getEmail());
     if(FullNameRequest)
     {
         name = FullNameRequest->getFullName();
@@ -158,9 +159,8 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
             if(!userEmail.isEmpty())
             {
                 auto fullNameUserAttributes = UserAttributes::FullName::requestFullName(userEmail.toUtf8().constData());
-                if(fullNameUserAttributes && !mUserAttributes.contains(userEmail))
+                if(fullNameUserAttributes)
                 {
-                    mUserAttributes.insert(userEmail, fullNameUserAttributes);
                     connect(fullNameUserAttributes.get(), &UserAttributes::FullName::fullNameReady,
                             this, &DesktopNotifications::OnUserAttributesReady, Qt::UniqueConnection);
                 }
@@ -188,7 +188,7 @@ void DesktopNotifications::processAlert(mega::MegaUserAlert* alert)
     QString fullName = email;
     if (!email.isEmpty())
     {
-        auto FullNameRequest = mUserAttributes.value(email);
+        auto FullNameRequest = UserAttributes::FullName::requestFullName(email.toUtf8().constData());
         if (FullNameRequest)
         {
             fullName = FullNameRequest->getFullName();
@@ -353,7 +353,13 @@ void DesktopNotifications::replayIncomingPendingRequest(MegaNotification::Action
         {
             if(action == MegaNotification::Action::firstButton)
             {
-               megaApp->getMegaApi()->replyContactRequest(request, mega::MegaContactRequest::REPLY_ACTION_ACCEPT);
+                megaApp->getMegaApi()->replyContactRequest(request, mega::MegaContactRequest::REPLY_ACTION_ACCEPT,
+                                                           new mega::OnFinishOneShot(megaApp->getMegaApi(), [=](const mega::MegaError& e){
+                    if (e.getErrorCode() == mega::MegaError::API_OK)
+                    {
+                        UserAttributes::UserAttributesManager::instance().updateAllRequestByUser(sourceEmail.toStdString().c_str());
+                    }
+                }));
             }
             else if(action == MegaNotification::Action::secondButton)
             {
@@ -752,7 +758,6 @@ void DesktopNotifications::OnUserAttributesReady()
                 delete alert;
             }
             mPendingUserAlerts.remove(UserAttribute->getEmail());
-            mUserAttributes.remove(UserAttribute->getEmail());
         }
 
         //Disconnect the full name attribute request as it still lives
