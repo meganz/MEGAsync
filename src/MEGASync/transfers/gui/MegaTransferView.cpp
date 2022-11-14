@@ -600,9 +600,19 @@ QMenu* MegaTransferView::createContextMenu()
             case TransferData::TRANSFER_FAILED:
             {
                 enableCancel |= !(d->mType & TransferData::TRANSFER_SYNC);
+                enableClear = true;
+                break;
             }
-            case TransferData::TRANSFER_CANCELLED:
             case TransferData::TRANSFER_COMPLETED:
+            {
+                showLink = true;
+                showOpen = true;
+                showShowInFolder = true;
+                enableClear = true;
+                break;
+            }
+                //Never used, as cancelled transfers are automatically removed from the model
+            case TransferData::TRANSFER_CANCELLED:
             {
                 enableClear = true;
                 break;
@@ -610,48 +620,15 @@ QMenu* MegaTransferView::createContextMenu()
             default:
                 break;
         }
-    }
 
-    bool onlyOneSelected ((indexes.size() == 1));
-
-    if (onlyOneSelected)
-    {
-        auto d (qvariant_cast<TransferItem>(indexes.first().data()).getTransferData());
-        auto state (d->getState());
-        auto type ((d->mType & TransferData::TRANSFER_UPLOAD) ?
-                       TransferData::TRANSFER_UPLOAD
-                     : TransferData::TRANSFER_DOWNLOAD);
-
-        if (state == TransferData::TRANSFER_COMPLETED)
-        {
-            showLink = true;
-            showOpen = true;
-            showShowInFolder = true;
-        }
-        else if (type == TransferData::TRANSFER_UPLOAD)
+        if (d->mType & TransferData::TRANSFER_UPLOAD)
         {
             showOpen = true;
             showShowInFolder = true;
         }
-        else if (type == TransferData::TRANSFER_DOWNLOAD)
+        else if (d->mType & TransferData::TRANSFER_DOWNLOAD)
         {
             showLink = true;
-        }
-        else if(type == TransferData::TRANSFER_SYNC)
-        {
-            //Check if the file exists on local drive. Otherwise, show the OpenInMEGAACtion (as it is on the remote drive)
-            auto path = d->path();
-            QFileInfo file(path);
-
-            if(file.exists())
-            {
-                showOpen = true;
-                showShowInFolder = true;
-            }
-            else
-            {
-                showLink = true;
-            }
         }
     }
 

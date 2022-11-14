@@ -1066,33 +1066,36 @@ void TransfersModel::openInMEGA(QList<int> &rows)
         {
             auto d (getTransfer(row));
 
-            MegaNode *node (nullptr);
+            std::unique_ptr<MegaNode> node;
 
             if (d->getState() == TransferData::TRANSFER_FAILED)
             {
                 auto transfer = mMegaApi->getTransferByTag(d->mTag);
                 if(transfer)
                 {
-                    node = transfer->getPublicMegaNode();
+                    node.reset(transfer->getPublicMegaNode()->copy());
                 }
             }
             else if(d->mNodeHandle)
             {
-                node = ((MegaApplication*)qApp)->getMegaApi()->getNodeByHandle(d->mNodeHandle);
+                node.reset(mMegaApi->getNodeByHandle(d->mNodeHandle));
             }
 
             if (node)
             {
-                char *handle = node->getBase64Handle();
-                char *key = node->getBase64Key();
-                if (handle && key)
+                auto openURL = [](std::unique_ptr<mega::MegaNode> node)
                 {
-                    QString url = QString::fromUtf8("mega://#fm/") + QString::fromUtf8(handle);
-                    Utilities::openUrl(QUrl(url));
-                }
-                delete [] key;
-                delete [] handle;
-                delete node;
+                    std::unique_ptr<char[]> handle(node->getBase64Handle());
+                    std::unique_ptr<char[]> key(node->getBase64Key());
+                    if (handle && key)
+                    {
+                        QString url = QString::fromUtf8("mega://#fm/") + QString::fromUtf8(handle.get());
+                        Utilities::openUrl(QUrl(url));
+                    }
+                };
+
+                std::unique_ptr<mega::MegaNode> parentNode(mMegaApi->getParentNode(node.get()));
+                parentNode ? openURL(std::move(parentNode)) : openURL(std::move(node));
             }
         }
     }
