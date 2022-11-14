@@ -36,9 +36,8 @@ BackupNameConflictDialog::BackupNameConflictDialog(const QStringList& candidateP
 
     toBackupCenterText.prepend(QString::fromUtf8("<html><head/><body><p>"));
     toBackupCenterText.append(QString::fromUtf8("</p></body></html>"));
-    toBackupCenterText.replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"https://13755-backup-center.develo"
-                                                                  "pers.mega.co.nz/fm/backups\"><span style=\" "
-                                                                   "text-decoration: underline; color:#aa1a00;\">"));
+    toBackupCenterText.replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"%1\"><span style=\" "
+                                                                   "text-decoration: underline; color:#aa1a00;\">").arg(Utilities::BACKUP_CENTER_URL));
     toBackupCenterText.replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span></a>"));
 
     ui->lToBackupCenterText->setText(toBackupCenterText);
