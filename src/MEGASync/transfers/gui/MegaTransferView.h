@@ -111,14 +111,6 @@ private slots:
     void onOpenUrlFinished();
 
 private:
-    friend class TransferManagerDelegateWidget;
-
-    bool mDisableLink;
-    bool mKeyNavigation;
-
-    TransfersWidget* mParentTransferWidget;
-    QFutureWatcher<bool> mOpenUrlWatcher;
-
     QMenu *createContextMenu();
     void addSeparatorToContextMenu(bool& addSeparator, QMenu* contextMenu);
 
@@ -129,6 +121,14 @@ private:
     QModelIndexList getSelectedTransfers();
 
     void showOpeningFileError();
+
+    friend class TransferManagerDelegateWidget;
+
+    bool mDisableLink;
+    bool mKeyNavigation;
+
+    TransfersWidget* mParentTransferWidget;
+    QFutureWatcher<bool> mOpenUrlWatcher;
 };
 
 #endif // MEGATRANSFERVIEW_H

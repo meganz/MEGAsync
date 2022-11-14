@@ -31,60 +31,60 @@ void QSegmentedControl::configureTableSegment()
 {
     segmentType = TYPE_TABLE;
 
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    NSSegmentedControl *segControl = [[NSSegmentedControl alloc] init];
+    @autoreleasepool {
+        NSSegmentedControl *segControl = [[NSSegmentedControl alloc] init];
 
-    [segControl setSegmentCount:3];
-    [segControl setSegmentStyle:NSSegmentStyleSmallSquare];
-    [segControl setTrackingMode:NSSegmentSwitchTrackingMomentary];
-    [segControl setImage:[NSImage imageNamed:NSImageNameAddTemplate] forSegment:0];
-    [segControl setImage:[NSImage imageNamed:NSImageNameRemoveTemplate] forSegment:1];
-    [segControl setEnabled:NO forSegment:2];
-    [segControl setWidth:31 forSegment:0];
-    [segControl setWidth:31 forSegment:1];
+        [segControl setSegmentCount:3];
+        [segControl setSegmentStyle:NSSegmentStyleSmallSquare];
+        [segControl setTrackingMode:NSSegmentSwitchTrackingMomentary];
+        [segControl setImage:[NSImage imageNamed:NSImageNameAddTemplate] forSegment:0];
+        [segControl setImage:[NSImage imageNamed:NSImageNameRemoveTemplate] forSegment:1];
+        [segControl setEnabled:NO forSegment:2];
+        [segControl setWidth:31 forSegment:0];
+        [segControl setWidth:31 forSegment:1];
 
-    //Remaining space witouth + and - buttons and borders
-    CGFloat remainingSpace = [segControl widthForSegment:0] * 2 + 4;
-    QSegmentedControlTarget *proxy = [[QSegmentedControlTarget alloc] init];
-    proxy->pimpl = this;
+        //Remaining space witouth + and - buttons and borders
+        CGFloat remainingSpace = [segControl widthForSegment:0] * 2 + 4;
+        QSegmentedControlTarget *proxy = [[QSegmentedControlTarget alloc] init];
+        proxy->pimpl = this;
 
-    [segControl setTarget:proxy];
-    [segControl setAction:@selector(clicked:)];
+        [segControl setTarget:proxy];
+        [segControl setAction:@selector(clicked:)];
 
-    setupView((NSView *)segControl, this);
+        setupView((NSView *)segControl, this);
 
-    [segControl release];
-    [pool release];
+        [segControl release];
+    }
 }
 
 void QSegmentedControl::configureTabSegment(QStringList options)
 {
     segmentType = TYPE_TAB;
 
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    NSSegmentedControl *segControl = [[NSSegmentedControl alloc] init];
+    @autoreleasepool {
+        NSSegmentedControl *segControl = [[NSSegmentedControl alloc] init];
 
-    NSRect frame = [segControl frame];
-    [segControl setFrame:frame];
+        NSRect frame = [segControl frame];
+        [segControl setFrame:frame];
 
-    [segControl setSegmentCount:options.size()];
+        [segControl setSegmentCount:options.size()];
 
-    for (int i = 0; i < options.size(); i++)
-    {
-        [segControl setLabel:options[i].toNSString() forSegment:i];
-        [segControl setWidth:0 forSegment:i];
+        for (int i = 0; i < options.size(); i++)
+        {
+            [segControl setLabel:options[i].toNSString() forSegment:i];
+            [segControl setWidth:0 forSegment:i];
+        }
+
+        QSegmentedControlTarget *proxy = [[QSegmentedControlTarget alloc] init];
+        proxy->pimpl = this;
+
+        [segControl setTarget:proxy];
+        [segControl setAction:@selector(clicked:)];
+
+        setupView((NSView *)segControl, this);
+
+        [segControl release];
     }
-
-    QSegmentedControlTarget *proxy = [[QSegmentedControlTarget alloc] init];
-    proxy->pimpl = this;
-
-    [segControl setTarget:proxy];
-    [segControl setAction:@selector(clicked:)];
-
-    setupView((NSView *)segControl, this);
-
-    [segControl release];
-    [pool release];
 }
 
 void QSegmentedControl::clicked(int segment)

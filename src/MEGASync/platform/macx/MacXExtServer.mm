@@ -54,11 +54,9 @@ void MacXExtServer::acceptConnection()
         m_clients.append(client);
 
         // send the list of current synced folders to the new client
-        Model *model = Model::instance();
-        for (int i = 0; i < model->getNumSyncedFolders(); i++)
+        SyncInfo *model = SyncInfo::instance();
+        for (auto syncSetting : model->getAllSyncSettings())
         {
-            auto syncSetting = model->getSyncSetting(i);
-
             QString syncPath = QDir::toNativeSeparators(QDir(syncSetting->getLocalFolder()).canonicalPath());
             if (!syncPath.size() || syncSetting->getRunState() != MegaSync::RUNSTATE_RUNNING)
             {
@@ -365,7 +363,7 @@ void MacXExtServer::notifyAllClients(int op)
     // send the list of current synced folders to all connected clients
     // This is needed once MEGAsync switches from non-logged to logged state and vice-versa
 
-    Model *model = Model::instance();
+    SyncInfo *model = SyncInfo::instance();
     QString command;
     if (op == NOTIFY_ADD_SYNCS)
     {
@@ -376,10 +374,8 @@ void MacXExtServer::notifyAllClients(int op)
         command = QString::fromUtf8("D:");
     }
 
-    for (int i = 0; i < model->getNumSyncedFolders(); i++)
+    for (auto syncSetting : model->getAllSyncSettings())
     {
-        auto syncSetting = model->getSyncSetting(i);
-
         QString syncPath = QDir::toNativeSeparators(QDir(syncSetting->getLocalFolder()).canonicalPath());
         if (!syncPath.size() || syncSetting->getRunState() != MegaSync::RUNSTATE_RUNNING)
         {

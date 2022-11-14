@@ -237,7 +237,7 @@ ln -sfn libfreeimage.so.3 $PWD/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeim
     %define extraqmake %{nil}
 %endif
 
-%if 0%{?fedora_version} >= 35
+%if 0%{?fedora_version} >= 33 || 0%{?centos_version} == 800
     %define extraconfig CONFIG+=FFMPEG_WITH_LZMA
 %else
     %define extraconfig %{nil}
@@ -270,7 +270,7 @@ ln -sfn libfreeimage.so.3 $PWD/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeim
     %endif
 %endif
 
-make
+make %{?_smp_mflags}
 
 
 %install

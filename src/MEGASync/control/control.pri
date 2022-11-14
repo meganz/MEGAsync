@@ -20,10 +20,10 @@ SOURCES += $$PWD/HTTPServer.cpp \
     $$PWD/Utilities.cpp \
     $$PWD/ThreadPool.cpp \
     $$PWD/MegaDownloader.cpp \
-    $$PWD/MegaController.cpp \
     $$PWD/MegaSyncLogger.cpp \
     $$PWD/ConnectivityChecker.cpp \
     $$PWD/TransferBatch.cpp \
+    $$PWD/TextDecorator.cpp \
     $$PWD/qrcodegen.c \
 
 HEADERS  +=  $$PWD/HTTPServer.h \
@@ -40,10 +40,10 @@ HEADERS  +=  $$PWD/HTTPServer.h \
     $$PWD/Utilities.h \
     $$PWD/ThreadPool.h \
     $$PWD/MegaDownloader.h \
-    $$PWD/MegaController.h \
     $$PWD/MegaSyncLogger.h \
     $$PWD/ConnectivityChecker.h \
     $$PWD/TransferBatch.h \
+    $$PWD/TextDecorator.h \
     $$PWD/qrcodegen.h \
     $$PWD/gzjoin.h
 

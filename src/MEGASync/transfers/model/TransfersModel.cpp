@@ -6,6 +6,7 @@
 #include "QMegaMessageBox.h"
 #include "EventUpdater.h"
 #include "SettingsDialog.h"
+#include "platform/PowerOptions.h"
 #include "PlatformStrings.h"
 
 #include <QSharedData>
@@ -442,24 +443,26 @@ int TransfersModel::hasActiveTransfers() const
 
 void TransfersModel::setActiveTransfer(TransferTag tag)
 {
+    auto isEmpty = mActiveTransfers.isEmpty();
     mActiveTransfers.insert(tag);
+    if(isEmpty)
+    {
+        emit activeTransfersChanged();
+    }
 }
 
 void TransfersModel::unsetActiveTransfer(TransferTag tag)
 {
-    mActiveTransfers.remove(tag);
+    auto removed = mActiveTransfers.remove(tag);
+    if(removed && mActiveTransfers.isEmpty())
+    {
+        emit activeTransfersChanged();
+    }
 }
 
 void TransfersModel::checkActiveTransfer(TransferTag tag, bool isActive)
 {
-    if(isActive)
-    {
-        setActiveTransfer(tag);
-    }
-    else
-    {
-        unsetActiveTransfer(tag);
-    }
+   isActive ? setActiveTransfer(tag) : unsetActiveTransfer(tag);
 }
 
 void TransfersModel::uiUnblocked()
@@ -585,9 +588,9 @@ TransfersModel::TransfersModel(QObject *parent) :
     //Update transfers state for the first time
     updateTransfersCount();
 
-    mTimer.setInterval(PROCESS_TIMER);
-    QObject::connect(&mTimer, &QTimer::timeout, this, &TransfersModel::onProcessTransfers);
-    mTimer.start();
+    mProcessTransfersTimer.setInterval(PROCESS_TIMER);
+    QObject::connect(&mProcessTransfersTimer, &QTimer::timeout, this, &TransfersModel::onProcessTransfers);
+    mProcessTransfersTimer.start();
 
     mTransferEventThread->start();
 
@@ -597,10 +600,16 @@ TransfersModel::TransfersModel(QObject *parent) :
 
     connect(&mUpdateTransferWatcher, &QFutureWatcher<void>::finished, this, &TransfersModel::updateTransfersCount);
     connect(&mClearTransferWatcher, &QFutureWatcher<void>::finished, this, &TransfersModel::onClearTransfersFinished);
+    connect(&mAskForMostPriorityTransfersWatcher, &QFutureWatcher<QPair<int,int>>::finished, this, &TransfersModel::onAskForMostPriorityTransfersFinished);
+
+    connect(this, &TransfersModel::activeTransfersChanged, this, &TransfersModel::onKeepPCAwake);
 }
 
 TransfersModel::~TransfersModel()
 {
+    mActiveTransfers.clear();
+    onKeepPCAwake();
+
     // Cleanup
     mTransfers.clear();
 
@@ -616,11 +625,11 @@ void TransfersModel::pauseModelProcessing(bool value)
 
     if(value)
     {
-        mTimer.stop();
+        mProcessTransfersTimer.stop();
     }
     else
     {
-        mTimer.start(PROCESS_TIMER);
+        mProcessTransfersTimer.start(PROCESS_TIMER);
     }
 }
 
@@ -730,7 +739,6 @@ void TransfersModel::onProcessTransfers()
 
                         mModelMutex.unlock();
                     }
-
                 });
                 mUpdateTransferWatcher.setFuture(future);
             }
@@ -1080,7 +1088,7 @@ void TransfersModel::openInMEGA(QList<int> &rows)
                 if (handle && key)
                 {
                     QString url = QString::fromUtf8("mega://#fm/") + QString::fromUtf8(handle);
-                    QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
+                    Utilities::openUrl(QUrl(url));
                 }
                 delete [] key;
                 delete [] handle;
@@ -1461,10 +1469,11 @@ void TransfersModel::clearTransfers(const QMap<QModelIndex, QExplicitlySharedDat
         auto totalTransfersToClear(uploads.size() + downloads.size());
         if(totalTransfersToClear > CLEAR_THRESHOLD_THREAD)
         {
+            setUiBlockedMode(true);
+            pauseModelProcessing(true);
+
             auto future = QtConcurrent::run([this, uploads, downloads]()
             {
-                emit blockUi();
-
                 blockModelSignals(true);
                 performClearTransfers(uploads, downloads);
                 blockModelSignals(false);
@@ -1485,10 +1494,17 @@ void TransfersModel::clearTransfers(const QMap<QModelIndex, QExplicitlySharedDat
 void TransfersModel::onClearTransfersFinished()
 {
     updateTransfersCount();
+    pauseModelProcessing(false);
 
     //The clear transfer is the only action which does not receive a SDK request
     emit transfersProcessChanged();
     emit unblockUiAndFilter();
+}
+
+void TransfersModel::onKeepPCAwake()
+{
+    PowerOptions options;
+    options.keepAwake(hasActiveTransfers());
 }
 
 void TransfersModel::performClearTransfers(const QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData> > uploads,
@@ -1784,7 +1800,7 @@ void TransfersModel::removeRows(QModelIndexList& indexesToRemove)
 
 QExplicitlySharedDataPointer<TransferData> TransfersModel::getTransfer(int row) const
 {
-    if(mTransfers.size() > row)
+    if(row >= 0 && mTransfers.size() > row)
     {
         auto transfer = mTransfers.at(row);
         return transfer;
@@ -1979,25 +1995,23 @@ void TransfersModel::mostPriorityTransferMayChanged(bool state)
 
 void TransfersModel::askForMostPriorityTransfer()
 {
-    QtConcurrent::run([this]()
+    auto task = QtConcurrent::run([this]()
     {
-        MegaTransfer *nextUTransfer = MegaSyncApp->getMegaApi()->getFirstTransfer(MegaTransfer::TYPE_UPLOAD);
-        MegaTransfer *nextDTransfer = MegaSyncApp->getMegaApi()->getFirstTransfer(MegaTransfer::TYPE_DOWNLOAD);
+        std::unique_ptr<MegaTransfer> nextUTransfer(MegaSyncApp->getMegaApi()->getFirstTransfer(MegaTransfer::TYPE_UPLOAD));
+        auto UTag = nextUTransfer ? nextUTransfer->getTag() : -1;
+        std::unique_ptr<MegaTransfer> nextDTransfer(MegaSyncApp->getMegaApi()->getFirstTransfer(MegaTransfer::TYPE_DOWNLOAD));
+        auto DTag = nextDTransfer ? nextDTransfer->getTag() : -1;
 
-        if(nextUTransfer && nextDTransfer)
-        {
-            auto tag = nextUTransfer->getPriority() < nextDTransfer->getPriority() ? nextUTransfer->getTag() : nextDTransfer->getTag();
-            emit mostPriorityTransferUpdate(tag);
-        }
-        else if(nextUTransfer)
-        {
-            emit mostPriorityTransferUpdate(nextUTransfer->getTag());
-        }
-        else if(nextDTransfer)
-        {
-            emit mostPriorityTransferUpdate(nextDTransfer->getTag());
-        }
+        return qMakePair(UTag, DTag);
     });
+
+    mAskForMostPriorityTransfersWatcher.setFuture(task);
+}
+
+void TransfersModel::onAskForMostPriorityTransfersFinished()
+{
+    auto tags = mAskForMostPriorityTransfersWatcher.result();
+    emit mostPriorityTransferUpdate(tags.first, tags.second);
 }
 
 bool TransfersModel::removeRows(int row, int count, const QModelIndex& parent)
@@ -2019,6 +2033,11 @@ bool TransfersModel::removeRows(int row, int count, const QModelIndex& parent)
     {
         return false;
     }
+}
+
+bool TransfersModel::moveRows(const QModelIndex &sourceParent, int sourceRow, int count, const QModelIndex &destinationParent, int destinationChild)
+{
+    return QAbstractItemModel::moveRows(sourceParent, sourceRow, count, destinationParent, destinationChild);
 }
 
 void TransfersModel::ignoreMoveRowsSignal(bool state)
@@ -2191,7 +2210,7 @@ bool TransfersModel::dropMimeData(const QMimeData* data, Qt::DropAction action, 
 
     if (destRow >= 0 && destRow <= rowCount(DEFAULT_IDX) && action == Qt::MoveAction)
     {
-        QList<int> rows = getDragAndDropRows(data, destRow);
+        QList<int> rows = getDragAndDropRows(data);
 
         moveTransferPriority(parent, rows, parent, destRow);
     }
@@ -2200,7 +2219,7 @@ bool TransfersModel::dropMimeData(const QMimeData* data, Qt::DropAction action, 
     return false;
 }
 
-QList<int> TransfersModel::getDragAndDropRows(const QMimeData *data, int destRow)
+QList<int> TransfersModel::getDragAndDropRows(const QMimeData *data)
 {
     QByteArray byteArray (data->data(QString::fromUtf8("application/x-qabstractitemmodeldatalist")));
     QDataStream stream (&byteArray, QIODevice::ReadOnly);

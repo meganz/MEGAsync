@@ -469,7 +469,7 @@ void TransfersWidget::onRowsAboutToBeMoved(int scrollTo)
 
 void TransfersWidget::selectAndScrollToMovedTransfer(QAbstractItemView::ScrollHint scrollHint)
 {
-    QTimer::singleShot(200, [this, scrollHint]()
+    QTimer::singleShot(200, this, [this, scrollHint]()
     {
         if(!mScrollToAfterMovingRow.isEmpty())
         {

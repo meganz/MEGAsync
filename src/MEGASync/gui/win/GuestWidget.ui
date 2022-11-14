@@ -2173,7 +2173,7 @@ background-color: #F0373A;
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_16">
           <item>
-           <widget class="QWidget" name="wHeader" native="true">
+           <widget class="QWidget" name="wHeader1" native="true">
             <property name="styleSheet">
              <string notr="true">background: transparent;</string>
             </property>

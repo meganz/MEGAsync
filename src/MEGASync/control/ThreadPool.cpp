@@ -10,6 +10,8 @@
 #include <pthread.h>
 #endif
 
+thread_local std::atomic<bool>* ThreadPool::mLocalToThreadDone = nullptr;
+
 ThreadPool::ThreadPool(const std::size_t threadCount)
 {
     Q_ASSERT(threadCount > 0);
@@ -52,6 +54,18 @@ void ThreadPool::push(std::function<void()> functor)
     mCv.notify_one();
 }
 
+bool ThreadPool::isThreadInterrupted()
+{
+    if(mLocalToThreadDone && (*mLocalToThreadDone))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
 void ThreadPool::worker(const std::size_t index)
 {
     const auto threadName = "TPw" + std::to_string(index);
@@ -62,6 +76,7 @@ void ThreadPool::worker(const std::size_t index)
         Q_ASSERT(false);
     }
 #endif
+    mLocalToThreadDone = &mDone;
     for (;;)
     {
         std::function<void()> functor;

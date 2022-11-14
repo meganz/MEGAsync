@@ -157,11 +157,11 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
 
             if(!userEmail.isEmpty())
             {
-                auto fullNameUserAttributes = UserAttributes::FullName::requestFullName(alert->getEmail());
+                auto fullNameUserAttributes = UserAttributes::FullName::requestFullName(userEmail.toUtf8().constData());
                 if(fullNameUserAttributes && !mUserAttributes.contains(userEmail))
                 {
                     mUserAttributes.insert(userEmail, fullNameUserAttributes);
-                    connect(fullNameUserAttributes.get(), &UserAttributes::FullName::attributeReady,
+                    connect(fullNameUserAttributes.get(), &UserAttributes::FullName::fullNameReady,
                             this, &DesktopNotifications::OnUserAttributesReady, Qt::UniqueConnection);
                 }
 
@@ -184,8 +184,8 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
 
 void DesktopNotifications::processAlert(mega::MegaUserAlert* alert)
 {
-    QString fullName;
     QString email = QString::fromUtf8(alert->getEmail());
+    QString fullName = email;
     if (!email.isEmpty())
     {
         auto FullNameRequest = mUserAttributes.value(email);
@@ -507,7 +507,7 @@ void DesktopNotifications::viewContactOnWebClient(MegaNotification::Action activ
             url = QUrl(QString::fromUtf8("mega://#fm/chat/p/%1").arg(userHandle));
         }
     }
-    QtConcurrent::run(QDesktopServices::openUrl, url);
+    Utilities::openUrl(url);
     delete userMail;
 }
 
@@ -591,7 +591,7 @@ void DesktopNotifications::redirectToUpgrade(MegaNotification::Action activation
     {
         QString url = QString::fromUtf8("mega://#pro");
         Utilities::getPROurlWithParameters(url);
-        QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
+        Utilities::openUrl(QUrl(url));
     }
 }
 
@@ -668,7 +668,7 @@ void DesktopNotifications::redirectToPayBusiness(MegaNotification::Action activa
     {
         QString url = QString::fromUtf8("mega://#repay");
         Utilities::getPROurlWithParameters(url);
-        QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
+        Utilities::openUrl(QUrl(url));
     }
 }
 
@@ -692,7 +692,7 @@ void DesktopNotifications::viewShareOnWebClient(MegaNotification::Action action)
         if (!nodeHandlerBase64.isEmpty())
         {
             const auto url = QUrl(QString::fromUtf8("mega://#fm/%1").arg(nodeHandlerBase64));
-            QtConcurrent::run(QDesktopServices::openUrl, url);
+            Utilities::openUrl(url);
         }
     }
 }
@@ -744,17 +744,20 @@ void DesktopNotifications::OnUserAttributesReady()
     if(UserAttribute)
     {
         auto pendingAlerts = mPendingUserAlerts.values(UserAttribute->getEmail());
-        foreach(auto alert, pendingAlerts)
+        if(!pendingAlerts.isEmpty())
         {
-            processAlert(alert);
-            delete alert;
+            foreach(auto alert, pendingAlerts)
+            {
+                processAlert(alert);
+                delete alert;
+            }
+            mPendingUserAlerts.remove(UserAttribute->getEmail());
+            mUserAttributes.remove(UserAttribute->getEmail());
         }
-        mPendingUserAlerts.remove(UserAttribute->getEmail());
-        mUserAttributes.remove(UserAttribute->getEmail());
 
-        //After processing the alerts, disconnect the full name attribute request as it still lives
+        //Disconnect the full name attribute request as it still lives
         //in attributes manager
-        disconnect(UserAttribute, &UserAttributes::FullName::attributeReady,
+        disconnect(UserAttribute, &UserAttributes::FullName::fullNameReady,
                 this, &DesktopNotifications::OnUserAttributesReady);
     }
 }

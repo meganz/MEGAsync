@@ -35,7 +35,7 @@ class PlanWidget : public QWidget
         explicit PlanWidget(const PlanInfo& data, const QString& userAgent, QWidget* parent);
         ~PlanWidget();
 
-        void setPlanInfo(const PlanInfo& data);
+        void setPlanInfo(const PlanInfo& planData);
         bool isBillingCurrency() const;
         int getPriceFontSizePx() const;
         void setPriceFontSizePx(int fontSizepx);

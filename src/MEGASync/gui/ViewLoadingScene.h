@@ -23,13 +23,18 @@ class LoadingSceneDelegateBase : public QStyledItemDelegate
     const int    UPDATE_TIMER = 100;
 
 public:
-    explicit LoadingSceneDelegateBase(QAbstractItemView* view) : mView(view),
-        mOpacitySteps(OPACITY_STEPS), mOpacity(MAX_OPACITY)
+    explicit LoadingSceneDelegateBase(QAbstractItemView* view) :
+        mView(view),
+        mOpacitySteps(OPACITY_STEPS),
+        mOpacity(MAX_OPACITY),
+        QStyledItemDelegate(view)
     {
-        connect(&mTimer, &QTimer::timeout, this, &LoadingSceneDelegateBase::onLoadingTimerTimeout);
     }
 
-    ~LoadingSceneDelegateBase(){}
+    ~LoadingSceneDelegateBase()
+    {
+        updateTimer(false);
+    }
 
     inline void setLoading(bool state)
     {
@@ -42,7 +47,16 @@ public:
 protected:
     inline void updateTimer(bool state)
     {
-        state ? mTimer.start(UPDATE_TIMER) : mTimer.stop();
+        if(state)
+        {
+            connect(&mTimer, &QTimer::timeout, this, &LoadingSceneDelegateBase::onLoadingTimerTimeout);
+            mTimer.start(UPDATE_TIMER);
+        }
+        else
+        {
+            disconnect(&mTimer, &QTimer::timeout, this, &LoadingSceneDelegateBase::onLoadingTimerTimeout);
+            mTimer.stop();
+        }
     }
 
     inline double getOpacity() const
@@ -183,11 +197,7 @@ public:
     {}
 
     ~ViewLoadingScene()
-    {
-        mLoadingDelegate->setLoading(false);
-        mLoadingDelegate->deleteLater();
-        mLoadingModel->deleteLater();
-    }
+    {}
 
     bool isLoadingViewSet() const
     {

@@ -221,7 +221,7 @@
               <number>0</number>
              </property>
              <item>
-              <widget class="QWidget" name="wNameCompleted" native="true">
+              <widget class="QWidget" name="wFileNameCompleted" native="true">
                <layout class="QHBoxLayout" name="horizontalLayout_4">
                 <property name="spacing">
                  <number>5</number>
@@ -301,7 +301,7 @@
                  </widget>
                 </item>
                 <item>
-                 <spacer name="horizontalSpacer_3">
+                 <spacer name="fileNameCompletedSpacer">
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>
@@ -649,7 +649,7 @@ background-color: rgba(0, 0, 0, 8%);
                     <number>5</number>
                    </property>
                    <item>
-                    <widget class="QWidget" name="wName" native="true">
+                    <widget class="QWidget" name="wFileName" native="true">
                      <layout class="QHBoxLayout" name="horizontalLayout">
                       <property name="spacing">
                        <number>5</number>
@@ -729,7 +729,7 @@ background-color: rgba(0, 0, 0, 8%);
                        </widget>
                       </item>
                       <item>
-                       <spacer name="horizontalSpacer_2">
+                       <spacer name="fileNameSpacer">
                         <property name="orientation">
                          <enum>Qt::Horizontal</enum>
                         </property>

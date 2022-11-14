@@ -12,8 +12,8 @@
 
 using namespace mega;
 
-MegaDownloader::MegaDownloader(MegaApi* _megaApi)
-    : QObject(), megaApi(_megaApi)
+MegaDownloader::MegaDownloader(MegaApi* _megaApi, std::shared_ptr<FolderTransferListener> _listener)
+    : QObject(), megaApi(_megaApi), listener(_listener)
 {
 }
 
@@ -38,7 +38,7 @@ bool MegaDownloader::processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, B
 
     downloadBatches.add(batch);
 
-    EventUpdater updater(downloadQueue->size());
+    EventUpdater updater(downloadQueue->size(), 20);
     mProcessingTransferQueue = true;
 
     // Process all nodes in the download queue
@@ -69,12 +69,14 @@ bool MegaDownloader::processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, B
         bool transferStarted = download(wNode, currentPath, appData, batch->getCancelTokenPtr());
         if (transferStarted && wNode->getTransferOrigin() == WrappedNode::FROM_APP)
         {
-            QString nodePath = currentPath + QString::fromLatin1("/") + QString::fromUtf8(node->getName());
-            batch->add(nodePath);
+            batch->add(currentPath, QString::fromUtf8(node->getName()));
         }
         delete wNode;
 
-        updater.update(downloadQueue->size());
+        if(!downloadQueue->isEmpty())
+        {
+            updater.update(downloadQueue->size());
+        }
     }
 
     if (batch->isEmpty())
@@ -136,8 +138,7 @@ void MegaDownloader::startDownload(WrappedNode *parent, const QString& appData,
     bool startFirst = hasTransferPriority(parent->getTransferOrigin());
     QByteArray localPath = currentPathWithSep.toUtf8();
     const char* name = parent->getMegaNode()->getName();
-    MegaTransferListener* listener = nullptr;
-    megaApi->startDownload(parent->getMegaNode(), localPath.constData(), name, appData.toUtf8().constData(), startFirst, cancelToken, listener);
+    megaApi->startDownload(parent->getMegaNode(), localPath.constData(), name, appData.toUtf8().constData(), startFirst, cancelToken, listener.get());
 }
 
 void MegaDownloader::downloadForeignDir(MegaNode *node, const QString& appData, const QString& currentPathWithSep)

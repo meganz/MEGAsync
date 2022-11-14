@@ -7,179 +7,136 @@ const QString MenuItemAction::Colors::Highlight = QLatin1String("#000000");
 const QString MenuItemAction::Colors::Accent = QLatin1String("#F46265");
 static constexpr int ENTRY_MAX_WIDTH_PX = 240;
 
-MenuItemAction::MenuItemAction(const QString title, const QIcon icon, bool manageHoverStates, QSize iconSize, bool accent)
-    : QWidgetAction(NULL), mAccent(accent)
+MenuItemAction::MenuItemAction(const QString& title, const QString& value,
+                               const QIcon& icon, const QIcon& hoverIcon, bool manageHoverStates,
+                               int treeDepth, const QSize& iconSize, QObject* parent)
+    : QWidgetAction (parent),
+      mAccent(false),
+      mContainer (new QWidget()),
+      mIcon (icon),
+      mHoverIcon (hoverIcon),
+      mTitle (new QLabel(mContainer)),
+      mValue (value.isNull() ? nullptr : new QLabel(value, mContainer)),
+      mTreeDepth (treeDepth),
+      mIconButton (new QPushButton(mContainer))
 {
-    this->title = new QLabel();
-    this->icon = new QIcon(icon);
-    this->hoverIcon = NULL;
-    this->value = NULL;
-    container = new QWidget(NULL);
-    container->setObjectName(QString::fromUtf8("wContainer"));
-    container->installEventFilter(this);
-
-    if (manageHoverStates)
-    {
-        container->setAttribute(Qt::WA_TransparentForMouseEvents);
-    }
-
-    setupActionWidget(iconSize, title);
-    setDefaultWidget(container);
-}
-
-MenuItemAction::MenuItemAction(const QString title, const QString value, const QIcon icon, bool manageHoverStates, QSize iconSize, bool accent)
-    : QWidgetAction(NULL), mAccent(accent)
-{
-    this->title = new QLabel();
-    this->value = new QLabel(value);
-    this->icon = new QIcon(icon);
-    this->hoverIcon = NULL;
-    container = new QWidget(NULL);
-    container->setObjectName(QString::fromUtf8("wContainer"));
-    container->installEventFilter(this);
-
-    if (manageHoverStates)
-    {
-        container->setAttribute(Qt::WA_TransparentForMouseEvents);
-    }
-
-    setupActionWidget(iconSize, title);
-    setDefaultWidget(container);
-}
-
-MenuItemAction::MenuItemAction(const QString title, const QIcon icon, const QIcon hoverIcon, bool manageHoverStates, QSize iconSize, bool accent)
-    : QWidgetAction(NULL), mAccent(accent)
-{
-    this->title = new QLabel();
     setLabelText(title);
-    this->icon = new QIcon(icon);
-    this->hoverIcon = new QIcon(hoverIcon);
-    this->value = NULL;
-    container = new QWidget (NULL);
-    container->setObjectName(QString::fromUtf8("wContainer"));
-    container->installEventFilter(this);
+    mContainer->setObjectName(QLatin1String("wContainer"));
+    mContainer->installEventFilter(this);
 
     if (manageHoverStates)
     {
-        container->setAttribute(Qt::WA_TransparentForMouseEvents);
+        mContainer->setAttribute(Qt::WA_TransparentForMouseEvents);
     }
 
-    setupActionWidget(iconSize, title);
-    setDefaultWidget(container);
+    setupActionWidget(iconSize);
+    setDefaultWidget(mContainer);
+}
+
+MenuItemAction::MenuItemAction(const QString& title, const QIcon& icon,
+                               bool manageHoverStates, int treeDepth, const QSize& iconSize, QObject* parent)
+    : MenuItemAction (title, QString(), icon, QIcon(), manageHoverStates, treeDepth, iconSize, parent)
+{
+}
+
+MenuItemAction::MenuItemAction(const QString& title, const QString& value, const QIcon& icon,
+                               bool manageHoverStates, int treeDepth, const QSize& iconSize, QObject* parent)
+    : MenuItemAction (title, value, icon,  QIcon(), manageHoverStates, treeDepth, iconSize, parent)
+{
+}
+
+void MenuItemAction::setIcon(const QIcon& icon)
+{
+    mIcon = icon;
+    mIconButton->setIcon(mIcon);
+}
+
+void MenuItemAction::setHoverIcon(const QIcon& icon)
+{
+    mHoverIcon = icon;
+}
+
+void MenuItemAction::setHighlight(bool highlight)
+{   
+    if (highlight)
+    {
+        mTitle->setStyleSheet(QString::fromLatin1("color: %1;").arg(Colors::Highlight));
+    }
+    else
+    {
+        mTitle->setStyleSheet(QString::fromLatin1("color: %1;").arg(getColor()));
+    }
 }
 
 MenuItemAction::~MenuItemAction()
 {
-    delete title;
-    delete value;
-    delete iconButton;
-    delete icon;
-    delete hoverIcon;
-    delete layout;
-    delete container;
+    QLayout* layout (mContainer->layout());
+    QLayoutItem* child;
+    while ((child = layout->takeAt(0)) != 0)
+    {
+        delete child->widget();
+        delete child;
+    }
+    mContainer->deleteLater();
 }
 
-
-void MenuItemAction::setLabelText(QString title)
+void MenuItemAction::setLabelText(const QString& title)
 {
     // Force polish to update font Info with .ui StyleSheet
-    this->title->ensurePolished();
-    auto f (this->title->fontMetrics());
+    this->mTitle->ensurePolished();
+    auto f (this->mTitle->fontMetrics());
     QString elidedTitle (f.elidedText(title, Qt::ElideMiddle, ENTRY_MAX_WIDTH_PX));
-    this->title->setText(elidedTitle);
+    this->mTitle->setText(elidedTitle);
     if (title != elidedTitle)
     {
         this->setToolTip(title);
     }
 }
 
-void MenuItemAction::setIcon(const QIcon icon)
+void MenuItemAction::setupActionWidget(const QSize& iconSize)
 {
-    delete this->icon;
-    this->icon = new QIcon(icon);
-    iconButton->setIcon(*(this->icon));
-}
+    mContainer->setMinimumHeight(32);
+    mContainer->setMaximumHeight(32);
+    mContainer->setStyleSheet(QLatin1String("#wContainer { margin-left: 20px; padding: 0px; }"
+                                            "QLabel {font-family: Lato; font-size: 14px;}"
+                                            "QPushButton { border: none; }"));
 
-void MenuItemAction::setHoverIcon(const QIcon icon)
-{
-    delete this->hoverIcon;
-    this->hoverIcon = new QIcon(icon);
-}
+    mIconButton->setAttribute(Qt::WA_TransparentForMouseEvents, true);
+    mIconButton->setText(QString());
+    mIconButton->setMinimumSize(iconSize);
+    mIconButton->setMaximumSize(iconSize);
+    mIconButton->setIconSize(iconSize);
+    mIconButton->setIcon(mIcon);
 
-void MenuItemAction::setHighlight(bool highlight)
-{
-    if(isEnabled())
-    {
-        if (highlight)
-        {
-            title->setStyleSheet(QString::fromAscii("color: %1;").arg(Colors::Highlight));
-        }
-        else
-        {
-            title->setStyleSheet(QString::fromAscii("color: %1;").arg(getColor()));
-        }
-    }
-}
+    mTitle->setStyleSheet(QString::fromLatin1("color: %1;").arg(getColor()));
 
-void MenuItemAction::setupActionWidget(QSize iconSize, const QString& actionTitle)
-{
-    container->setMinimumHeight(32);
-    container->setMaximumHeight(32);
-    container->setStyleSheet(QString::fromAscii("#wContainer { margin-left: 20px; padding: 0px; } QLabel {font-family: Lato; font-size: 14px;}"
-                                                "QPushButton { border: none; }"));
-
-    iconButton = new QPushButton();
-    iconButton->setAttribute(Qt::WA_TransparentForMouseEvents, true);
-    iconButton->setText(QString::fromUtf8(""));
-    iconButton->setMinimumSize(iconSize);
-    iconButton->setMaximumSize(iconSize);
-    const QList<QSize> sizes = icon->availableSizes();
-    if (!sizes.empty())
-    {
-        iconButton->setIconSize(sizes.at(0));
-    }
-    iconButton->setIcon(*icon);
-
-    title->setParent(container);
-    title->setStyleSheet(QString::fromAscii("color: %1;").arg(getColor()));
-    // Set title after setting-up the stylesheet to take the font into account (needed for eliding)
-    setLabelText(actionTitle);
-
-    layout = new QHBoxLayout();
-    layout->setContentsMargins(QMargins(16, 0, 8, 0));
+    auto layout = new QHBoxLayout();
+    layout->setContentsMargins(QMargins(16 + mTreeDepth * 20, 0, 16, 0));
     layout->setSpacing(12);
-    layout->addWidget(iconButton);
-    layout->addWidget(title);
-    layout->addItem(new QSpacerItem(10,10, QSizePolicy::Expanding, QSizePolicy::Expanding));
+    layout->addWidget(mIconButton);
+    layout->addWidget(mTitle);
 
-    if (value)
+    if (mValue)
     {
-        value->setStyleSheet(QString::fromAscii("padding-right: 6px; color: %1;").arg(getColor()));
-        layout->addWidget(value);
+        layout->addItem(new QSpacerItem(10, 10, QSizePolicy::Expanding, QSizePolicy::Expanding));
+        mValue->setStyleSheet(QString::fromLatin1("color: %1;").arg(getColor()));
+        layout->addWidget(mValue);
     }
-    container->setLayout(layout);
-}
-
-QString MenuItemAction::getColor()
-{
-    if(mAccent)
-        return Colors::Accent;
-    else
-        return Colors::Normal;
+    mContainer->setLayout(layout);
 }
 
 bool MenuItemAction::eventFilter(QObject *obj, QEvent *event)
 {
-    if (!value && isEnabled())
+    if (!mValue && isEnabled())
     {
         if (event->type() == QEvent::Enter)
         {
-            title->setStyleSheet(QString::fromAscii("color: %1;").arg(Colors::Highlight));
+            mTitle->setStyleSheet(QString::fromLatin1("color: %1;").arg(Colors::Highlight));
         }
 
         if (event->type() == QEvent::Leave)
         {
-            title->setStyleSheet(QString::fromAscii("color: %1;").arg(getColor()));
+            mTitle->setStyleSheet(QString::fromLatin1("color: %1;").arg(getColor()));
         }
     }
 
@@ -194,6 +151,17 @@ bool MenuItemAction::getAccent() const
 void MenuItemAction::setAccent(bool enabled)
 {
     mAccent = enabled;
-    if(title)
-        title->setStyleSheet(QString::fromAscii("color: %1;").arg(getColor()));
+    if(mTitle)
+    {
+        mTitle->setStyleSheet(QString::fromLatin1("color: %1;").arg(getColor()));
+    }
 }
+
+const QString& MenuItemAction::getColor() const
+{
+    if(mAccent)
+        return Colors::Accent;
+    else
+        return Colors::Normal;
+}
+

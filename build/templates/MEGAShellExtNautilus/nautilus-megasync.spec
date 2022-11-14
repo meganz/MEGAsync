@@ -9,16 +9,23 @@ Source0:	nautilus-megasync_%{version}.tar.gz
 Vendor:		MEGA Limited
 Packager:	MEGA Linux Team <linux@mega.co.nz>
 
-BuildRequires:  qt-devel, glib2-devel, nautilus-devel, gnome-common
-BuildRequires:  pkgconfig(libnautilus-extension) >= 2.16.0
+BuildRequires:  glib2-devel, nautilus-devel, gnome-common
+BuildRequires:  nautilus-devel
 BuildRequires:	hicolor-icon-theme, gnome-shell
-%if 0%{?rhel_version} 
+
+%if 0%{?suse_version} || 0%{?sle_version}
+BuildRequires: libqt5-qtbase-devel
+%else
+BuildRequires: qt5-qtbase-devel
+%endif
+
+%if 0%{?rhel_version}
 BuildRequires: redhat-logos
 %endif
-%if 0%{?fedora_version} 
+%if 0%{?fedora_version}
 BuildRequires: fedora-logos
 %endif
-%if 0%{?scientificlinux_version} 
+%if 0%{?scientificlinux_version}
 BuildRequires: sl-logos, gcc-c++
 %endif
 
@@ -43,20 +50,19 @@ Store up to 50 GB for free!
 %build
 export DESKTOP_DESTDIR=$RPM_BUILD_ROOT/usr
 
-%if 0%{?fedora} || 0%{?rhel_version} || 0%{?centos_version} || 0%{?scientificlinux_version}
-qmake-qt4
-%else
-qmake
-%endif
+NAUTILUS_VERSION=`(rpm -qi nautilus-extensions | grep ^Version) | awk -F':' '{print $2}' | awk -F "." '{FS=".";print $1*10000+$2*100+$3}'`
 
-if [ 0$(head /usr/share/doc/nautilus/NEWS -n 1 | awk '{print $NF}' | awk -F':' '{print $1}' | awk -F "." '{FS=".";print $1*10000+$2*100+$3}') -gt 31503 ]; then 
+if [ 0$NAUTILUS_VERSION -gt 31503 ]; then
     for i in data/emblems/64x64/*smaller.png; do mv $i ${i/-smaller/}; done
-    echo "NEWER NAUTILUS REQUIRES SMALLER OVERLAY ICONS"    
+    echo "NEWER NAUTILUS REQUIRES SMALLER OVERLAY ICONS"
 else
     rm data/emblems/64x64/*smaller.png
     echo "OLDER NAUTILUS DOES NOT REQUIRE SMALLER OVERLAY ICONS"
 fi
-%if 0%{?fedora_version} >= 27
+
+qmake-qt5 || qmake
+
+%if 0%{?fedora_version} >= 27 || 0%{?centos_version} == 800
 #tweak to have debug symbols to stripe: for some reason they seem gone by default in Fedora 27,
 #   causing "gdb-add-index: No index was created for ..." which lead to error "Empty %files file ....debugsourcefiles.list"
 sed "s# gcc# gcc -g#g" -i Makefile
@@ -65,8 +71,7 @@ make
 
 %install
 make install
-mkdir -p $RPM_BUILD_ROOT%{_libdir}/nautilus/extensions-3.0
-%{__install} libMEGAShellExtNautilus.so -D $RPM_BUILD_ROOT%{_libdir}/nautilus/extensions-3.0
+
 # clean up
 rm -fr $RPM_BUILD_ROOT/usr/share/icons/hicolor/icon-theme.cache || true
 
@@ -134,7 +139,7 @@ fi
 
 %files
 %defattr(-,root,root)
-%{_libdir}/nautilus/extensions-3.0/libMEGAShellExtNautilus.so
+%{_libdir}/nautilus/extensions-*/libMEGAShellExtNautilus.so*
 %{_datadir}/icons/hicolor/*/*/mega-*.icon
 %{_datadir}/icons/hicolor/*/*/mega-*.png
 

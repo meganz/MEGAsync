@@ -2,15 +2,18 @@
 #define SETTINGSDIALOG_H
 
 #include "AccountDetailsDialog.h"
-#include "BindFolderDialog.h"
+#include "syncs/gui/Twoways/BindFolderDialog.h"
 #include "DownloadFromMegaDialog.h"
 #include "ChangePassword.h"
 #include "Preferences.h"
-#include "MegaController.h"
-#include "../model/Model.h"
-#include "megaapi.h"
 #include "HighDpiResize.h"
 #include "control/Utilities.h"
+#include "syncs/model/SyncItemModel.h"
+#include "syncs/model/BackupItemModel.h"
+
+#include "syncs/control/SyncController.h"
+#include "syncs/control/SyncInfo.h"
+#include "megaapi.h"
 
 #include <QDialog>
 #include <QFuture>
@@ -38,10 +41,11 @@ public:
         GENERAL_TAB  = 0,
         ACCOUNT_TAB  = 1,
         SYNCS_TAB    = 2,
-        SECURITY_TAB = 3,
-        FOLDERS_TAB  = 4,
-        NETWORK_TAB  = 5,
-        NOTIFICATIONS_TAB = 6
+        BACKUP_TAB    = 3,
+        SECURITY_TAB = 4,
+        FOLDERS_TAB  = 5,
+        NETWORK_TAB  = 6,
+        NOTIFICATIONS_TAB = 7
         };
 
     explicit SettingsDialog(MegaApplication* app, bool proxyOnly = false, QWidget* parent = nullptr);
@@ -60,9 +64,14 @@ public:
     void updateAccountElements() override;
 
     // Syncs
-    enum SyncStateInformation {NO_SAVING_SYNCS = 0, SAVING_SYNCS = 1};
-    void loadSyncSettings();
-    void addSyncFolder(mega::MegaHandle megaFolderHandle);
+    enum SyncStateInformation
+    {
+        SAVING_SYNCS = 0,
+        SAVING_BACKUPS,
+        SAVING_SYNCS_FINISHED,
+        SAVING_BACKUPS_FINISHED,
+    };
+    void addSyncFolder(mega::MegaHandle megaFolderHandle = mega::INVALID_HANDLE);
 
     // Folders
     void updateUploadFolder();
@@ -88,12 +97,6 @@ public slots:
     // Account
     void storageStateChanged(int state);
 
-    // Syncs
-    void onSyncStateChanged(std::shared_ptr<SyncSetting>);
-    void onEnableSyncFailed(int, std::shared_ptr<SyncSetting> syncSetting);
-    void onDisableSyncFailed(std::shared_ptr<SyncSetting> syncSetting);
-    void onSyncSelected(const QItemSelection& selected, const QItemSelection& deselected);
-
 private slots:
     void on_bHelp_clicked();
 #ifdef Q_OS_MACOS
@@ -112,6 +115,7 @@ private slots:
     void on_cStartOnStartup_toggled(bool checked);
     void on_cLanguage_currentIndexChanged(int index);
     void on_cFileVersioning_toggled(bool checked);
+    void on_cbSleepMode_toggled(bool checked);
     void on_cOverlayIcons_toggled(bool checked);
 #ifdef Q_OS_WINDOWS
     void on_cFinderIcons_toggled(bool checked);
@@ -128,23 +132,19 @@ private slots:
     void on_bMyAccount_clicked();
     void on_bStorageDetails_clicked();
     void on_bLogout_clicked();
-    void setAvatar();
 
     // Syncs
     void on_bSyncs_clicked();
-    void on_bAdd_clicked();
-    void on_bDelete_clicked();
-    void on_tSyncs_doubleClicked(const QModelIndex &index);
-    void onCellClicked(int row, int column);
-    void showInFolderClicked();
-    void showInMegaClicked();
-    void openMegaIgnore();
-    void onDeleteSync();
+    void on_bAddSync_clicked();
+    void on_bDeleteSync_clicked();
+    //void openMegaIgnore(int row, mega::MegaSync::SyncType type);
 
-    void setSyncToRun();
-    void setSyncToPause();
-    void setSyncToSuspend();
-    void setSyncToDisabled();
+    //std::shared_ptr<SyncSettings> selectedRowForTabType(mega::MegaSync::SyncType type);
+
+    //void setSyncToRun(int row, mega::MegaSync::SyncType type);
+    //void setSyncToPause(int row, mega::MegaSync::SyncType type);
+    //void setSyncToSuspend(int row, mega::MegaSync::SyncType type);
+    //void setSyncToDisabled(int row, mega::MegaSync::SyncType type);
 
     void onOpenMegaIgnoreFinished();
     void showOpenMegaIgnoreError();
@@ -152,6 +152,19 @@ private slots:
 #ifndef WIN32
     void on_bPermissions_clicked();
 #endif
+
+    void onSavingSyncsCompleted(SyncStateInformation value);
+
+    // Backup
+    void on_bBackup_clicked();
+    void on_bAddBackup_clicked();
+    void on_bDeleteBackup_clicked();
+    void removeBackup(std::shared_ptr<SyncSettings> backup);
+    void removeSync(std::shared_ptr<SyncSettings> sync);
+    void on_bOpenBackupFolder_clicked();
+    void openHandleInMega(mega::MegaHandle handle);
+    void on_bBackupCenter_clicked();
+    void onMyBackupsFolderHandleSet(mega::MegaHandle h);
 
     // Security
     void on_bSecurity_clicked();
@@ -190,30 +203,20 @@ protected:
     void restartApp();
 
 private:
+    void connectSyncHandlers();
+    void loadSyncSettings();
+    void connectBackupHandlers();
+    void loadBackupSettings();
+
     void loadSettings();
     void onCacheSizeAvailable();
-    void syncsStateInformation(int state);
-    void addSyncRow(int row, const QString& name, const QString& lPath,
-                    const QString& rPath, bool boxTicked, QString runStateString, int error, mega::MegaHandle megaHandle,
-                    mega::MegaHandle tag, std::shared_ptr<SyncSetting> syncSetting = nullptr);
-//    void saveExcludeSyncNames();
+    void saveExcludeSyncNames();
     void updateNetworkTab();
     void setShortCutsForToolBarItems();
     void showUnexpectedSyncError(const QString& message);
     void updateCacheSchedulerDaysLabel();
 
-    enum
-    {
-        SYNC_COL_ENABLE_CB    = 0,
-        SYNC_COL_DISPLAY_NAME = 1,
-        SYNC_COL_RUN_STATE    = 2,
-        SYNC_COL_MENU         = 3,
-        // Seemingly unused, left in place as possible debugging aid.
-        SYNC_COL_TAG          = 4,
-        SYNC_COL_HANDLE       = 5,
-        SYNC_COL_NAME         = 6,
-        SYNC_COL_NB
-    };
+    void syncsStateInformation(SyncStateInformation state);
 
 #ifdef Q_OS_MACOS
     void reloadToolBarItemNames();
@@ -226,6 +229,7 @@ private:
     std::unique_ptr<QMacToolBarItem> bGeneral;
     std::unique_ptr<QMacToolBarItem> bAccount;
     std::unique_ptr<QMacToolBarItem> bSyncs;
+    std::unique_ptr<QMacToolBarItem> bBackup;
     std::unique_ptr<QMacToolBarItem> bSecurity;
     std::unique_ptr<QMacToolBarItem> bFolders;
     std::unique_ptr<QMacToolBarItem> bNetwork;
@@ -235,8 +239,9 @@ private:
     Ui::SettingsDialog* mUi;
     MegaApplication* mApp;
     std::shared_ptr<Preferences> mPreferences;
-    Controller* mController;
-    Model* mModel;
+    SyncController mSyncController;
+    SyncController mBackupController;
+    SyncInfo* mModel;
     mega::MegaApi* mMegaApi;
     HighDpiResize mHighDpiResize;
     bool mProxyOnly;
@@ -250,10 +255,6 @@ private:
     long long mRemoteCacheSize;
     int mDebugCounter; // Easter Egg
     QStringList mSyncNames;
-    bool mAreSyncsDisabled; //Check if there are any sync disabled by any kind of error
-    bool mIsSavingSyncsOnGoing;
-    int mSelectedSyncRow;
-    std::unique_ptr<ProgressHelper> mSaveSyncsProgress;
     bool mHasDefaultUploadOption;
     bool mHasDefaultDownloadOption;
     QPointer<ProxySettings> mProxySettingsDialog;

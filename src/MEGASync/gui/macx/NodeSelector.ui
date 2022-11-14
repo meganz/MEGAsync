@@ -1022,7 +1022,6 @@ margin-right: 31px;
 	outline:none;
 }
 
-
 QTreeView::branch:selected:closed:has-children:adjoins-item {
     border-image: none;
 	image:url(://images/node_selector/Icon-Small-Arrow-Left-hover.png) ;

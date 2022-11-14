@@ -41,6 +41,8 @@ public:
     void enterBlockingState();
     void leaveBlockingState(bool fromCancellation);
     void disableCancelling();
+    void setUiInCancellingStage();
+    void onFolderTransferUpdate(const FolderTransferUpdateEvent& event);
 
     void setTransferState(const StatusInfo::TRANSFERS_STATES &transferState);
 
@@ -124,6 +126,8 @@ private:
 
     void updateCurrentSearchText();
     void updateCurrentCategoryTitle();
+
+    void filterByTab(TransfersWidget::TM_TAB tab);
 
 private slots:
     void on_tCompleted_clicked();

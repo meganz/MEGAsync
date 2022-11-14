@@ -20,32 +20,30 @@
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true">
-#wInfoDialogIn
+   <string notr="true">#wInfoDialogIn
 {
- border-radius: 16px;
- border: 1px solid rgba(100, 100, 100);
- background-color:  #F4F6F8;
-
+border-radius: 16px;
+border: 1px solid rgba(100, 100, 100);
+background-color:  #F4F6F8;
 }
 
 #tTransfers, #tNotifications
 {
-  font-family: &quot;Lato&quot;;
-  font-size: 15px;
-  color: rgba(0, 0, 0, 40%);
-  padding: 0px 8px 0px 8px;
-  border: none;
+font-family: &quot;Lato&quot;;
+font-size: 15px;
+color: rgba(0, 0, 0, 40%);
+padding: 0px 8px 0px 8px;
+border: none;
 }
 
 #tNotifications
 {
-  padding: 0px 4px 0px 16px;
+padding: 0px 4px 0px 16px;
 }
 
-#bAvatar, #bState, #bMEGAheader, #bClockDown, #bClockUp, #bOQIcon, #bBusinessQuota, #bBusinessStorage, #bSyncsDisabled
+#bAvatar, #bState, #bMEGAheader, #bClockDown, #bClockUp, #bOQIcon, #bBusinessQuota, #bBusinessStorage, #bSyncsDisabled, #bAddSync, #bAddBackup, #bSettings, #bUpload, #bBackupsDisabled, #bAllSyncsDisabled
 {
-	border: none;
+border: none;
 }
 
 #wSeparator, #wSeparatorStats, #wSeparatorNotificationsOpts
@@ -64,8 +62,8 @@ color: #333333;
 
 QPushButton
 {
-    padding-right: 12px;
-    padding-left: 12px;
+padding-right: 12px;
+padding-left: 12px;
 }
 </string>
   </property>
@@ -221,7 +219,7 @@ border: none;
               </property>
               <layout class="QHBoxLayout" name="horizontalLayout">
                <property name="spacing">
-                <number>10</number>
+                <number>16</number>
                </property>
                <property name="leftMargin">
                 <number>15</number>
@@ -317,6 +315,44 @@ stop: 0 #ffffff, stop: 1 #fafafa);
                 </spacer>
                </item>
                <item>
+                <widget class="QPushButton" name="bAddBackup">
+                 <property name="minimumSize">
+                  <size>
+                   <width>24</width>
+                   <height>24</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>24</width>
+                   <height>24</height>
+                  </size>
+                 </property>
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                 <property name="toolTip">
+                  <string>Add Backups</string>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="../Resources_win.qrc">
+                   <normaloff>:/images/icons/ico_backup.png</normaloff>:/images/icons/ico_backup.png</iconset>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>24</width>
+                   <height>24</height>
+                  </size>
+                 </property>
+                 <property name="flat">
+                  <bool>false</bool>
+                 </property>
+                </widget>
+               </item>
+               <item>
                 <widget class="QPushButton" name="bAddSync">
                  <property name="minimumSize">
                   <size>
@@ -336,19 +372,12 @@ stop: 0 #ffffff, stop: 1 #fafafa);
                  <property name="toolTip">
                   <string>Add Sync</string>
                  </property>
-                 <property name="styleSheet">
-                  <string notr="true">#bAddSync
-{
-border: none;
-}
-</string>
-                 </property>
                  <property name="text">
                   <string/>
                  </property>
                  <property name="icon">
-                  <iconset resource="../Resources_linux.qrc">
-                   <normaloff>:/images/ico_add_sync_folder.png</normaloff>:/images/ico_add_sync_folder.png</iconset>
+                  <iconset resource="../Resources_win.qrc">
+                   <normaloff>:/images/icons/ico_sync.png</normaloff>:/images/icons/ico_sync.png</iconset>
                  </property>
                  <property name="iconSize">
                   <size>
@@ -378,61 +407,12 @@ border: none;
                  <property name="toolTip">
                   <string>Upload</string>
                  </property>
-                 <property name="styleSheet">
-                  <string notr="true">#bUpload
-{
-border: none;
-}
-</string>
-                 </property>
                  <property name="text">
                   <string/>
                  </property>
                  <property name="icon">
-                  <iconset resource="../Resources_linux.qrc">
+                  <iconset resource="../Resources_win.qrc">
                    <normaloff>:/images/ico_upload.png</normaloff>:/images/ico_upload.png</iconset>
-                 </property>
-                 <property name="iconSize">
-                  <size>
-                   <width>24</width>
-                   <height>24</height>
-                  </size>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="bDownload">
-                 <property name="minimumSize">
-                  <size>
-                   <width>24</width>
-                   <height>24</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>24</width>
-                   <height>24</height>
-                  </size>
-                 </property>
-                 <property name="cursor">
-                  <cursorShape>PointingHandCursor</cursorShape>
-                 </property>
-                 <property name="toolTip">
-                  <string>Download</string>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">#bDownload
-{
-border: none;
-}
-</string>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                 <property name="icon">
-                  <iconset resource="../Resources_linux.qrc">
-                   <normaloff>:/images/ico_download.png</normaloff>:/images/ico_download.png</iconset>
                  </property>
                  <property name="iconSize">
                   <size>
@@ -468,18 +448,11 @@ border: none;
                  <property name="toolTip">
                   <string>Show MEGAsync options</string>
                  </property>
-                 <property name="styleSheet">
-                  <string notr="true">#bSettings
-{
-border: none;
-}
-</string>
-                 </property>
                  <property name="text">
                   <string/>
                  </property>
                  <property name="icon">
-                  <iconset resource="../Resources_linux.qrc">
+                  <iconset resource="../Resources_win.qrc">
                    <normaloff>:/images/more_settings.png</normaloff>:/images/more_settings.png</iconset>
                  </property>
                  <property name="iconSize">
@@ -1497,7 +1470,7 @@ background-color: transparent;
                                <string/>
                               </property>
                               <property name="icon">
-                               <iconset resource="../Resources_linux.qrc">
+                               <iconset resource="../Resources_win.qrc">
                                 <normaloff>:/images/upload_to_mega.png</normaloff>:/images/upload_to_mega.png</iconset>
                               </property>
                               <property name="iconSize">
@@ -2358,6 +2331,595 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                           </item>
                          </layout>
                         </widget>
+                        <widget class="QWidget" name="pAllSyncsDisabled">
+                         <property name="styleSheet">
+                          <string notr="true">background-color: #F4F6F8;</string>
+                         </property>
+                         <layout class="QVBoxLayout" name="verticalLayout_291">
+                          <property name="spacing">
+                           <number>18</number>
+                          </property>
+                          <property name="leftMargin">
+                           <number>20</number>
+                          </property>
+                          <property name="topMargin">
+                           <number>32</number>
+                          </property>
+                          <property name="rightMargin">
+                           <number>20</number>
+                          </property>
+                          <property name="bottomMargin">
+                           <number>30</number>
+                          </property>
+                          <item>
+                           <widget class="QWidget" name="wAllSyncsDisabledIcon" native="true">
+                            <property name="minimumSize">
+                             <size>
+                              <width>0</width>
+                              <height>96</height>
+                             </size>
+                            </property>
+                            <property name="maximumSize">
+                             <size>
+                              <width>16777215</width>
+                              <height>96</height>
+                             </size>
+                            </property>
+                            <layout class="QHBoxLayout" name="horizontalLayout_232">
+                             <property name="spacing">
+                              <number>0</number>
+                             </property>
+                             <property name="leftMargin">
+                              <number>0</number>
+                             </property>
+                             <property name="topMargin">
+                              <number>0</number>
+                             </property>
+                             <property name="rightMargin">
+                              <number>0</number>
+                             </property>
+                             <property name="bottomMargin">
+                              <number>2</number>
+                             </property>
+                             <item>
+                              <widget class="QPushButton" name="bAllSyncsDisabled">
+                               <property name="minimumSize">
+                                <size>
+                                 <width>128</width>
+                                 <height>96</height>
+                                </size>
+                               </property>
+                               <property name="maximumSize">
+                                <size>
+                                 <width>128</width>
+                                 <height>96</height>
+                                </size>
+                               </property>
+                               <property name="text">
+                                <string/>
+                               </property>
+                               <property name="icon">
+                                <iconset>
+                                 <normalon>:/images/icons/infodialog/warning-disabled-syncs-and-backups.png</normalon>
+                                </iconset>
+                               </property>
+                               <property name="iconSize">
+                                <size>
+                                 <width>128</width>
+                                 <height>96</height>
+                                </size>
+                               </property>
+                              </widget>
+                             </item>
+                            </layout>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QWidget" name="wAllSyncsDisabledLabels" native="true">
+                            <property name="minimumSize">
+                             <size>
+                              <width>0</width>
+                              <height>0</height>
+                             </size>
+                            </property>
+                            <property name="maximumSize">
+                             <size>
+                              <width>16777215</width>
+                              <height>16777215</height>
+                             </size>
+                            </property>
+                            <layout class="QVBoxLayout" name="verticalLayout_28">
+                             <property name="spacing">
+                              <number>10</number>
+                             </property>
+                             <property name="leftMargin">
+                              <number>6</number>
+                             </property>
+                             <property name="topMargin">
+                              <number>0</number>
+                             </property>
+                             <property name="rightMargin">
+                              <number>6</number>
+                             </property>
+                             <property name="bottomMargin">
+                              <number>0</number>
+                             </property>
+                             <item>
+                              <widget class="QLabel" name="lAllSyncsDisabledTitle">
+                               <property name="minimumSize">
+                                <size>
+                                 <width>0</width>
+                                 <height>19</height>
+                                </size>
+                               </property>
+                               <property name="maximumSize">
+                                <size>
+                                 <width>16777215</width>
+                                 <height>16777215</height>
+                                </size>
+                               </property>
+                               <property name="styleSheet">
+                                <string notr="true">#lAllSyncsDisabledTitle
+{
+        color: #333333;
+  font-family: &quot;Lato&quot;;
+        font-size: 16px;
+}</string>
+                               </property>
+                               <property name="text">
+                                <string>Some syncs and backups have been disabled</string>
+                               </property>
+                               <property name="alignment">
+                                <set>Qt::AlignCenter</set>
+                               </property>
+                               <property name="wordWrap">
+                                <bool>true</bool>
+                               </property>
+                              </widget>
+                             </item>
+                             <item>
+                              <widget class="QLabel" name="lAllSyncsDisabledDesc">
+                               <property name="styleSheet">
+                                <string notr="true">#lAllSyncsDisabledDesc
+{
+        color: #666666;
+    font-family: &quot;Lato&quot;;
+        font-size: 14px;
+}
+</string>
+                               </property>
+                               <property name="text">
+                                <string>Something went wrong while trying to backup and sync your folders.</string>
+                               </property>
+                               <property name="alignment">
+                                <set>Qt::AlignCenter</set>
+                               </property>
+                               <property name="wordWrap">
+                                <bool>true</bool>
+                               </property>
+                              </widget>
+                             </item>
+                            </layout>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QWidget" name="wAllSyncsDisabledButtons" native="true">
+                            <layout class="QHBoxLayout" name="horizontalLayout_22">
+                             <property name="spacing">
+                              <number>10</number>
+                             </property>
+                             <property name="leftMargin">
+                              <number>0</number>
+                             </property>
+                             <property name="topMargin">
+                              <number>0</number>
+                             </property>
+                             <property name="rightMargin">
+                              <number>0</number>
+                             </property>
+                             <property name="bottomMargin">
+                              <number>0</number>
+                             </property>
+                             <item>
+                              <spacer name="horizontalSpacer_201">
+                               <property name="orientation">
+                                <enum>Qt::Horizontal</enum>
+                               </property>
+                               <property name="sizeHint" stdset="0">
+                                <size>
+                                 <width>1</width>
+                                 <height>0</height>
+                                </size>
+                               </property>
+                              </spacer>
+                             </item>
+                             <item>
+                              <widget class="QPushButton" name="bDismissAllSyncsSettings">
+                               <property name="minimumSize">
+                                <size>
+                                 <width>98</width>
+                                 <height>38</height>
+                                </size>
+                               </property>
+                               <property name="maximumSize">
+                                <size>
+                                 <width>16777215</width>
+                                 <height>38</height>
+                                </size>
+                               </property>
+                               <property name="styleSheet">
+                                <string notr="true">#bDismissAllSyncsSettings
+{
+
+background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+stop: 0 #ffffff, stop: 1 #fafafa);
+ border-radius: 3px;
+ border: 1px solid rgba(0, 0, 0, 5%);
+ font-family: &quot;Lato&quot;;
+ font-size: 14px;
+ color: #333333;
+}
+
+#bDismissAllSyncsSettings::hover
+{
+border: 1px solid rgba(0, 0, 0, 10%);
+}
+</string>
+                               </property>
+                               <property name="text">
+                                <string>Dismiss</string>
+                               </property>
+                              </widget>
+                             </item>
+                             <item>
+                              <widget class="QPushButton" name="bOpenAllSyncsSettings">
+                               <property name="minimumSize">
+                                <size>
+                                 <width>155</width>
+                                 <height>38</height>
+                                </size>
+                               </property>
+                               <property name="maximumSize">
+                                <size>
+                                 <width>16777215</width>
+                                 <height>38</height>
+                                </size>
+                               </property>
+                               <property name="styleSheet">
+                                <string notr="true">#bOpenAllSyncsSettings
+{
+font-family: Lato;
+font-size: 14px;
+border: 1px solid rgba(0,191, 165, 30%);
+border-radius: 3px;
+color: #ffffff;
+background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                                        stop: 0 rgba(0, 204, 176, 1), stop: 1 rgba(0, 172,149,1));
+}
+
+
+#bOpenAllSyncsSettings:hover
+{
+        border: 1px solid rgba(0,191, 165, 80%);
+}</string>
+                               </property>
+                               <property name="text">
+                                <string>Open Settings</string>
+                               </property>
+                              </widget>
+                             </item>
+                             <item>
+                              <spacer name="horizontalSpacer_211">
+                               <property name="orientation">
+                                <enum>Qt::Horizontal</enum>
+                               </property>
+                               <property name="sizeHint" stdset="0">
+                                <size>
+                                 <width>1</width>
+                                 <height>0</height>
+                                </size>
+                               </property>
+                              </spacer>
+                             </item>
+                            </layout>
+                           </widget>
+                          </item>
+                         </layout>
+                        </widget>
+                        <widget class="QWidget" name="pBackupsDisabled">
+                         <property name="styleSheet">
+                          <string notr="true">background-color: #F4F6F8;</string>
+                         </property>
+                         <layout class="QVBoxLayout" name="verticalLayout_292">
+                          <property name="spacing">
+                           <number>18</number>
+                          </property>
+                          <property name="leftMargin">
+                           <number>20</number>
+                          </property>
+                          <property name="topMargin">
+                           <number>32</number>
+                          </property>
+                          <property name="rightMargin">
+                           <number>20</number>
+                          </property>
+                          <property name="bottomMargin">
+                           <number>30</number>
+                          </property>
+                          <item>
+                           <widget class="QWidget" name="wBackupsDisabledIcon" native="true">
+                            <property name="minimumSize">
+                             <size>
+                              <width>0</width>
+                              <height>96</height>
+                             </size>
+                            </property>
+                            <property name="maximumSize">
+                             <size>
+                              <width>16777215</width>
+                              <height>96</height>
+                             </size>
+                            </property>
+                            <layout class="QHBoxLayout" name="horizontalLayout_23">
+                             <property name="spacing">
+                              <number>0</number>
+                             </property>
+                             <property name="leftMargin">
+                              <number>0</number>
+                             </property>
+                             <property name="topMargin">
+                              <number>0</number>
+                             </property>
+                             <property name="rightMargin">
+                              <number>0</number>
+                             </property>
+                             <property name="bottomMargin">
+                              <number>2</number>
+                             </property>
+                             <item>
+                              <widget class="QPushButton" name="bBackupsDisabled">
+                               <property name="minimumSize">
+                                <size>
+                                 <width>96</width>
+                                 <height>96</height>
+                                </size>
+                               </property>
+                               <property name="maximumSize">
+                                <size>
+                                 <width>96</width>
+                                 <height>96</height>
+                                </size>
+                               </property>
+                               <property name="text">
+                                <string/>
+                               </property>
+                               <property name="icon">
+                                <iconset>
+                                 <normaloff>:/images/icons/infodialog/warning-disabled-backups.png</normaloff>:/images/icons/infodialog/warning-disabled-backups.png</iconset>
+                               </property>
+                               <property name="iconSize">
+                                <size>
+                                 <width>96</width>
+                                 <height>96</height>
+                                </size>
+                               </property>
+                              </widget>
+                             </item>
+                            </layout>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QWidget" name="wBackupsDisabledLabels" native="true">
+                            <property name="minimumSize">
+                             <size>
+                              <width>0</width>
+                              <height>0</height>
+                             </size>
+                            </property>
+                            <property name="maximumSize">
+                             <size>
+                              <width>16777215</width>
+                              <height>16777215</height>
+                             </size>
+                            </property>
+                            <layout class="QVBoxLayout" name="verticalLayout_281">
+                             <property name="spacing">
+                              <number>10</number>
+                             </property>
+                             <property name="leftMargin">
+                              <number>6</number>
+                             </property>
+                             <property name="topMargin">
+                              <number>0</number>
+                             </property>
+                             <property name="rightMargin">
+                              <number>6</number>
+                             </property>
+                             <property name="bottomMargin">
+                              <number>0</number>
+                             </property>
+                             <item>
+                              <widget class="QLabel" name="lBackupsDisabledTitle">
+                               <property name="minimumSize">
+                                <size>
+                                 <width>0</width>
+                                 <height>19</height>
+                                </size>
+                               </property>
+                               <property name="maximumSize">
+                                <size>
+                                 <width>16777215</width>
+                                 <height>16777215</height>
+                                </size>
+                               </property>
+                               <property name="styleSheet">
+                                <string notr="true">#lBackupsDisabledTitle
+{
+        color: #333333;
+  font-family: &quot;Lato&quot;;
+        font-size: 16px;
+}</string>
+                               </property>
+                               <property name="text">
+                                <string>One or more backups have been disabled</string>
+                               </property>
+                               <property name="alignment">
+                                <set>Qt::AlignCenter</set>
+                               </property>
+                               <property name="wordWrap">
+                                <bool>true</bool>
+                               </property>
+                              </widget>
+                             </item>
+                             <item>
+                              <widget class="QLabel" name="lBackupsDisabledDesc">
+                               <property name="styleSheet">
+                                <string notr="true">#lBackupsDisabledDesc
+{
+        color: #666666;
+    font-family: &quot;Lato&quot;;
+        font-size: 14px;
+}
+</string>
+                               </property>
+                               <property name="text">
+                                <string>Something went wrong while trying to backup your folders.</string>
+                               </property>
+                               <property name="alignment">
+                                <set>Qt::AlignCenter</set>
+                               </property>
+                               <property name="wordWrap">
+                                <bool>true</bool>
+                               </property>
+                              </widget>
+                             </item>
+                            </layout>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QWidget" name="wBackupsDisabledButtons" native="true">
+                            <layout class="QHBoxLayout" name="horizontalLayout_221">
+                             <property name="spacing">
+                              <number>10</number>
+                             </property>
+                             <property name="leftMargin">
+                              <number>0</number>
+                             </property>
+                             <property name="topMargin">
+                              <number>0</number>
+                             </property>
+                             <property name="rightMargin">
+                              <number>0</number>
+                             </property>
+                             <property name="bottomMargin">
+                              <number>0</number>
+                             </property>
+                             <item>
+                              <spacer name="horizontalSpacer_20">
+                               <property name="orientation">
+                                <enum>Qt::Horizontal</enum>
+                               </property>
+                               <property name="sizeHint" stdset="0">
+                                <size>
+                                 <width>1</width>
+                                 <height>0</height>
+                                </size>
+                               </property>
+                              </spacer>
+                             </item>
+                             <item>
+                              <widget class="QPushButton" name="bDismissBackupsSettings">
+                               <property name="minimumSize">
+                                <size>
+                                 <width>98</width>
+                                 <height>38</height>
+                                </size>
+                               </property>
+                               <property name="maximumSize">
+                                <size>
+                                 <width>16777215</width>
+                                 <height>38</height>
+                                </size>
+                               </property>
+                               <property name="styleSheet">
+                                <string notr="true">#bDismissBackupsSettings
+{
+
+background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+stop: 0 #ffffff, stop: 1 #fafafa);
+ border-radius: 3px;
+ border: 1px solid rgba(0, 0, 0, 5%);
+ font-family: &quot;Lato&quot;;
+ font-size: 14px;
+ color: #333333;
+}
+
+#bDismissSyncSettings::hover
+{
+border: 1px solid rgba(0, 0, 0, 10%);
+}
+</string>
+                               </property>
+                               <property name="text">
+                                <string>Dismiss</string>
+                               </property>
+                              </widget>
+                             </item>
+                             <item>
+                              <widget class="QPushButton" name="bOpenBackupsSettings">
+                               <property name="minimumSize">
+                                <size>
+                                 <width>155</width>
+                                 <height>38</height>
+                                </size>
+                               </property>
+                               <property name="maximumSize">
+                                <size>
+                                 <width>16777215</width>
+                                 <height>38</height>
+                                </size>
+                               </property>
+                               <property name="styleSheet">
+                                <string notr="true">#bOpenBackupsSettings
+{
+font-family: Lato;
+font-size: 14px;
+border: 1px solid rgba(0,191, 165, 30%);
+border-radius: 3px;
+color: #ffffff;
+background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                                        stop: 0 rgba(0, 204, 176, 1), stop: 1 rgba(0, 172,149,1));
+}
+
+
+#bOpenSyncSettings:hover
+{
+        border: 1px solid rgba(0,191, 165, 80%);
+}</string>
+                               </property>
+                               <property name="text">
+                                <string>Open Settings</string>
+                               </property>
+                              </widget>
+                             </item>
+                             <item>
+                              <spacer name="horizontalSpacer_21">
+                               <property name="orientation">
+                                <enum>Qt::Horizontal</enum>
+                               </property>
+                               <property name="sizeHint" stdset="0">
+                                <size>
+                                 <width>1</width>
+                                 <height>0</height>
+                                </size>
+                               </property>
+                              </spacer>
+                             </item>
+                            </layout>
+                           </widget>
+                          </item>
+                         </layout>
+                        </widget>
                         <widget class="QWidget" name="pSyncsDisabled">
                          <property name="styleSheet">
                           <string notr="true">background-color: #F4F6F8;</string>
@@ -2389,13 +2951,13 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                             <property name="maximumSize">
                              <size>
                               <width>16777215</width>
-                              <height>75</height>
+                              <height>96</height>
                              </size>
                             </property>
                             <property name="styleSheet">
                              <string notr="true"/>
                             </property>
-                            <layout class="QHBoxLayout" name="horizontalLayout_23">
+                            <layout class="QHBoxLayout" name="horizontalLayout_231">
                              <property name="spacing">
                               <number>0</number>
                              </property>
@@ -2411,19 +2973,6 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                              <property name="bottomMargin">
                               <number>2</number>
                              </property>
-                             <item>
-                              <spacer name="horizontalSpacer_22">
-                               <property name="orientation">
-                                <enum>Qt::Horizontal</enum>
-                               </property>
-                               <property name="sizeHint" stdset="0">
-                                <size>
-                                 <width>146</width>
-                                 <height>20</height>
-                                </size>
-                               </property>
-                              </spacer>
-                             </item>
                              <item>
                               <widget class="QPushButton" name="bSyncsDisabled">
                                <property name="minimumSize">
@@ -2443,7 +2992,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                </property>
                                <property name="icon">
                                 <iconset>
-                                 <normalon>:/images/warning-disabled-syncs.png</normalon>
+                                 <normalon>:/images/icons/infodialog/warning-disabled-syncs.png</normalon>
                                 </iconset>
                                </property>
                                <property name="iconSize">
@@ -2453,19 +3002,6 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                 </size>
                                </property>
                               </widget>
-                             </item>
-                             <item>
-                              <spacer name="horizontalSpacer_23">
-                               <property name="orientation">
-                                <enum>Qt::Horizontal</enum>
-                               </property>
-                               <property name="sizeHint" stdset="0">
-                                <size>
-                                 <width>145</width>
-                                 <height>20</height>
-                                </size>
-                               </property>
-                              </spacer>
                              </item>
                             </layout>
                            </widget>
@@ -2484,7 +3020,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                               <height>16777215</height>
                              </size>
                             </property>
-                            <layout class="QVBoxLayout" name="verticalLayout_28">
+                            <layout class="QVBoxLayout" name="verticalLayout_282">
                              <property name="spacing">
                               <number>10</number>
                              </property>
@@ -2560,7 +3096,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                           </item>
                           <item>
                            <widget class="QWidget" name="wSyncsDisabledButtons" native="true">
-                            <layout class="QHBoxLayout" name="horizontalLayout_22">
+                            <layout class="QHBoxLayout" name="horizontalLayout_222">
                              <property name="spacing">
                               <number>10</number>
                              </property>
@@ -2577,7 +3113,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                               <number>0</number>
                              </property>
                              <item>
-                              <spacer name="horizontalSpacer_20">
+                              <spacer name="horizontalSpacer_202">
                                <property name="orientation">
                                 <enum>Qt::Horizontal</enum>
                                </property>
@@ -2665,7 +3201,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                               </widget>
                              </item>
                              <item>
-                              <spacer name="horizontalSpacer_21">
+                              <spacer name="horizontalSpacer_212">
                                <property name="orientation">
                                 <enum>Qt::Horizontal</enum>
                                </property>
@@ -3297,7 +3833,7 @@ border: none;
   <tabstop>bSettings</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_win.qrc"/>
  </resources>
  <connections/>
 </ui>
