@@ -1440,14 +1440,14 @@ void SettingsDialog::connectSyncHandlers()
             Text::Decorator dec(&link);
             QString msg = errorMsg;
             dec.process(msg);
-            QMegaMessageBox::critical(nullptr, tr("Error adding sync"), msg, QMessageBox::Ok, QMessageBox::NoButton, QMap<QMessageBox::StandardButton, QString>(), Qt::RichText);
+            QMegaMessageBox::warning(nullptr, tr("Error adding sync"), msg, QMessageBox::Ok, QMessageBox::NoButton, QMap<QMessageBox::StandardButton, QString>(), Qt::RichText);
         }
     });
 
     connect(&mSyncController, &SyncController::syncRemoveError, this, [this](std::shared_ptr<mega::MegaError> err)
     {
         onSavingSyncsCompleted(SAVING_SYNCS_FINISHED);
-        QMegaMessageBox::critical(nullptr, tr("Error removing sync"),
+        QMegaMessageBox::warning(nullptr, tr("Error removing sync"),
                                   tr("Your sync can't be removed. Reason: %1")
                                   .arg(QCoreApplication::translate("MegaError", err->getErrorString())));
 
@@ -1456,7 +1456,7 @@ void SettingsDialog::connectSyncHandlers()
     connect(&mSyncController, &SyncController::syncEnableError, this, [this](std::shared_ptr<SyncSettings> sync)
     {
         onSavingSyncsCompleted(SAVING_SYNCS_FINISHED);
-        QMegaMessageBox::critical(nullptr, tr("Error enabling sync"),
+        QMegaMessageBox::warning(nullptr, tr("Error enabling sync"),
                                   tr("Your sync \"%1\" can't be enabled. Reason: %2")
                                   .arg(sync->name())
                                   .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(sync->getError()))));
@@ -1466,7 +1466,7 @@ void SettingsDialog::connectSyncHandlers()
     connect(&mSyncController, &SyncController::syncDisableError, this, [this](std::shared_ptr<SyncSettings> sync)
     {
         onSavingSyncsCompleted(SAVING_SYNCS_FINISHED);
-        QMegaMessageBox::critical(nullptr, tr("Error disabling sync"),
+        QMegaMessageBox::warning(nullptr, tr("Error disabling sync"),
                                   tr("Your sync \"%1\" can't be disabled. Reason: %2")
                                   .arg(sync->name())
                                   .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(sync->getError()))));

@@ -106,6 +106,7 @@ public:
     bool hasUnattendedDisabledSyncs(const QVector<SyncType>& types) const;
     bool hasUnattendedDisabledSyncs(SyncType type) const
         {return hasUnattendedDisabledSyncs(QVector<SyncType>({type}));}
+    const QSet<mega::MegaHandle> getUnattendedDisabledSyncs(const SyncType& type) const;
     void addUnattendedDisabledSync(mega::MegaHandle tag, SyncType type);
     void removeUnattendedDisabledSync(mega::MegaHandle tag, SyncType type);
     void setUnattendedDisabledSyncs(const QSet<mega::MegaHandle>& tags);
