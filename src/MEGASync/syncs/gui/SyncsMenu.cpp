@@ -43,7 +43,7 @@ SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type, QObject *parent) : QObject(p
         }
         case mega::MegaSync::TYPE_BACKUP:
         {
-            textAdd = tr("Add Backups");
+            textAdd = tr("Add Backup");
             textMenu = tr("Backups");
             iconMenu = QIcon(QLatin1String("://images/icons/ico_backup.png"));
             mDeviceNameRequest = UserAttributes::DeviceName::requestDeviceName();

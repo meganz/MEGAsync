@@ -6433,14 +6433,14 @@ To continue, select a different folder.</translation>
         <translation>Syncs</translation>
     </message>
     <message>
-        <source>Add Backups</source>
-        <translatorcomment>Menu option used to add backups</translatorcomment>
-        <translation>Add Backups</translation>
-    </message>
-    <message>
         <source>Backups</source>
         <translatorcomment>Menu option that shows backups menu</translatorcomment>
         <translation>Backups</translation>
+    </message>
+    <message>
+        <source>Add Backup</source>
+        <translatorcomment>Menu option used to add backups</translatorcomment>
+        <translation>Add Backup</translation>
     </message>
 </context>
 <context>

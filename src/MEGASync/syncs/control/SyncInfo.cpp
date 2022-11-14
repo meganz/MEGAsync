@@ -41,6 +41,11 @@ bool SyncInfo::hasUnattendedDisabledSyncs(const QVector<SyncType>& types) const
     return std::any_of(types.cbegin(), types.cend(), [this](SyncType t){return !unattendedDisabledSyncs[t].isEmpty();});
 }
 
+const QSet<MegaHandle> SyncInfo::getUnattendedDisabledSyncs(const SyncType &type) const
+{
+    return unattendedDisabledSyncs[type];
+}
+
 void SyncInfo::removeSyncedFolderByBackupId(MegaHandle backupId)
 {
     QMutexLocker qm(&syncMutex);
