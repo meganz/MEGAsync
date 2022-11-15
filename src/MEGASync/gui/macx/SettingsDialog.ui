@@ -296,7 +296,7 @@ color: #505862;
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>4</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="pGeneral">
       <layout class="QVBoxLayout" name="verticalLayout_25">
@@ -4822,7 +4822,7 @@ margin-right: 32px;</string>
   <customwidget>
    <class>NotificationsSettings</class>
    <extends>QWidget</extends>
-   <header location="global">NotificationsSettings.h</header>
+   <header>NotificationsSettings.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
@@ -4875,6 +4875,7 @@ margin-right: 32px;</string>
   <tabstop>bRestart</tabstop>
  </tabstops>
  <resources>
+  <include location="../Resources_macx.qrc"/>
   <include location="../Resources_macx.qrc"/>
  </resources>
  <connections/>
