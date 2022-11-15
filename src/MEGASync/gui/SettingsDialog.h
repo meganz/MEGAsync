@@ -137,15 +137,8 @@ private slots:
     void on_bSyncs_clicked();
     void on_bAddSync_clicked();
     void on_bDeleteSync_clicked();
-    //void openMegaIgnore(int row, mega::MegaSync::SyncType type);
 
-    //std::shared_ptr<SyncSettings> selectedRowForTabType(mega::MegaSync::SyncType type);
-
-    //void setSyncToRun(int row, mega::MegaSync::SyncType type);
-    //void setSyncToPause(int row, mega::MegaSync::SyncType type);
-    //void setSyncToSuspend(int row, mega::MegaSync::SyncType type);
-    //void setSyncToDisabled(int row, mega::MegaSync::SyncType type);
-
+    void openMegaIgnore(std::shared_ptr<SyncSettings>);
     void onOpenMegaIgnoreFinished();
     void showOpenMegaIgnoreError();
 
@@ -161,6 +154,11 @@ private slots:
     void on_bDeleteBackup_clicked();
     void removeBackup(std::shared_ptr<SyncSettings> backup);
     void removeSync(std::shared_ptr<SyncSettings> sync);
+    void setSyncToRun(std::shared_ptr<SyncSettings> sync);
+    void setSyncToPause(std::shared_ptr<SyncSettings> sync);
+    void setSyncToSuspend(std::shared_ptr<SyncSettings> sync);
+    void setSyncToDisabled(std::shared_ptr<SyncSettings> sync);
+
     void on_bOpenBackupFolder_clicked();
     void openHandleInMega(mega::MegaHandle handle);
     void on_bBackupCenter_clicked();

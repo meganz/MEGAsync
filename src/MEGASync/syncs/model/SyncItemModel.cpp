@@ -180,9 +180,9 @@ bool SyncItemModel::setData(const QModelIndex &index, const QVariant &value, int
             return false;
         }
         if (value.toInt() == Qt::Checked)
-            emit enableSync(sync);
+            emit signalSyncCheckboxOn(sync);
         else if (value.toInt() == Qt::Unchecked)
-            emit disableSync(sync);
+            emit signalSyncCheckboxOff(sync);
         emit dataChanged(index, index, QVector<int>(role));
         return true;
     }

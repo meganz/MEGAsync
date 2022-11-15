@@ -1444,7 +1444,13 @@ void SettingsDialog::on_bLogout_clicked()
 // Syncs -------------------------------------------------------------------------------------------
 void SettingsDialog::connectSyncHandlers()
 {
-    connect(mUi->syncTableView, &BackupTableView::removeSync, this, &SettingsDialog::removeSync);
+    connect(mUi->syncTableView, &SyncTableView::signalRemoveSync, this, &SettingsDialog::removeSync);
+    connect(mUi->syncTableView, &SyncTableView::signalRunSync, this, &SettingsDialog::setSyncToRun);
+    connect(mUi->syncTableView, &SyncTableView::signalPauseSync, this, &SettingsDialog::setSyncToPause);
+    connect(mUi->syncTableView, &SyncTableView::signalSuspendSync, this, &SettingsDialog::setSyncToSuspend);
+    connect(mUi->syncTableView, &SyncTableView::signalDisableSync, this, &SettingsDialog::setSyncToDisabled);
+    connect(mUi->syncTableView, &SyncTableView::signalOpenMegaignore, this, &SettingsDialog::openMegaIgnore);
+
     connect(&mSyncController, &SyncController::syncAddStatus, this, [this](int errorCode, const QString errorMsg)
     {
         if (errorCode != MegaError::API_OK)
@@ -1467,41 +1473,15 @@ void SettingsDialog::connectSyncHandlers()
 
     });
 
-    connect(&mSyncController, &SyncController::syncEnableError, this, [this](std::shared_ptr<SyncSettings> sync)
-    {
-        onSavingSyncsCompleted(SAVING_SYNCS_FINISHED);
-        QMegaMessageBox::critical(nullptr, tr("Error enabling sync"),
-                                  tr("Your sync \"%1\" can't be enabled. Reason: %2")
-                                  .arg(sync->name())
-                                  .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(sync->getError()))));
-
-    });
-
-    connect(&mSyncController, &SyncController::syncDisableError, this, [this](std::shared_ptr<SyncSettings> sync)
-    {
-        onSavingSyncsCompleted(SAVING_SYNCS_FINISHED);
-        QMegaMessageBox::critical(nullptr, tr("Error disabling sync"),
-                                  tr("Your sync \"%1\" can't be disabled. Reason: %2")
-                                  .arg(sync->name())
-                                  .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(sync->getError()))));
-
-    });
 }
 
 void SettingsDialog::loadSyncSettings()
 {
     SyncItemModel *model(new SyncItemModel(mUi->syncTableView));
     model->fillData();
-    connect(model, &SyncItemModel::enableSync, this, [this](std::shared_ptr<SyncSettings> sync)
-    {
-        syncsStateInformation(SyncStateInformation::SAVING_SYNCS);
-        mSyncController.enableSync(sync);
-    });
-    connect(model, &SyncItemModel::disableSync, this, [this](std::shared_ptr<SyncSettings> sync)
-    {
-        syncsStateInformation(SyncStateInformation::SAVING_SYNCS);
-        mSyncController.disableSync(sync);
-    });
+    connect(model, &SyncItemModel::signalSyncCheckboxOn, this, &SettingsDialog::setSyncToRun);
+    connect(model, &SyncItemModel::signalSyncCheckboxOff, this, &SettingsDialog::setSyncToSuspend);
+
     connect(model, &SyncItemModel::syncUpdateFinished, this, [this](std::shared_ptr<SyncSettings> syncSetting)
     {
         if(syncSetting->getType() == mega::MegaSync::SyncType::TYPE_TWOWAY)
@@ -1509,6 +1489,39 @@ void SettingsDialog::loadSyncSettings()
             onSavingSyncsCompleted(SAVING_SYNCS_FINISHED);
         }
     });
+
+    connect(&mSyncController, &SyncController::signalSyncOperationBegins, this, [this](std::shared_ptr<SyncSettings> sync)
+    {
+        syncsStateInformation(sync->getType() == mega::MegaSync::SyncType::TYPE_BACKUP ?
+                               SyncStateInformation::SAVING_BACKUPS :
+                               SyncStateInformation::SAVING_SYNCS);
+    });
+
+    connect(&mSyncController, &SyncController::signalSyncOperationEnds, this, [this](std::shared_ptr<SyncSettings> sync)
+    {
+        onSavingSyncsCompleted(sync->getType() == mega::MegaSync::SyncType::TYPE_BACKUP ?
+                               SyncStateInformation::SAVING_BACKUPS_FINISHED :
+                               SyncStateInformation::SAVING_SYNCS_FINISHED);
+    });
+
+    connect(&mSyncController, &SyncController::signalSyncOperationError, this, [this](std::shared_ptr<SyncSettings> sync)
+    {
+        if (sync->getType() == mega::MegaSync::SyncType::TYPE_BACKUP)
+        {
+            QMegaMessageBox::critical(nullptr, tr("Backup operation failed"),
+                                      tr("Operation on backup '%1' failed. Reason: %2")
+                                      .arg(sync->name())
+                                      .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(sync->getError()))));
+        }
+        else
+        {
+            QMegaMessageBox::critical(nullptr, tr("Sync operation failed"),
+                                      tr("Operation on sync '%1' failed. Reason: %2")
+                                      .arg(sync->name())
+                                      .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(sync->getError()))));
+        }
+    });
+
 
     SyncItemSortModel *sortModel = new SyncItemSortModel(mUi->syncTableView);
     sortModel->setSourceModel(model);
@@ -1564,89 +1577,6 @@ void SettingsDialog::on_bSyncs_clicked()
 #endif
 }
 
-/*
-void SettingsDialog::setSyncToRun()
-{
-    ActionProgress* action
-        = new ActionProgress(true, QString::fromUtf8("Run sync"));
-
-    connect(action, &ActionProgress::failedRequest,
-        this, [this](MegaRequest* request, MegaError* error)
-        {
-            Q_UNUSED(request)
-            if (error->getErrorCode())
-                showUnexpectedSyncError(tr("Unexpected error running sync"));
-        },
-        Qt::DirectConnection);
-
-    auto syncSetting = Model::instance()->getSyncSetting(mSelectedSyncRow);
-    mController->setSyncRunState(mega::MegaSync::RUNSTATE_RUNNING, syncSetting, action);
-}
-
-void SettingsDialog::setSyncToPause()
-{
-    ActionProgress* action
-        = new ActionProgress(true, QString::fromUtf8("Pause sync"));
-
-    connect(action, &ActionProgress::failedRequest,
-        this, [this](MegaRequest* request, MegaError* error)
-        {
-            Q_UNUSED(request)
-            if (error->getErrorCode())
-                showUnexpectedSyncError(tr("Unexpected error pausing sync"));
-        }, Qt::DirectConnection);
-
-    auto syncSetting = Model::instance()->getSyncSetting(mSelectedSyncRow);
-    mController->setSyncRunState(mega::MegaSync::RUNSTATE_PAUSED, syncSetting, action);
-}
-
-
-void SettingsDialog::setSyncToSuspend()
-{
-    ActionProgress* action
-        = new ActionProgress(true, QString::fromUtf8("Suspend sync"));
-
-    connect(action, &ActionProgress::failedRequest,
-        this, [this](MegaRequest* request, MegaError* error)
-        {
-            Q_UNUSED(request)
-            if (error->getErrorCode())
-                showUnexpectedSyncError(tr("Unexpected error suspending sync"));
-        }, Qt::DirectConnection);
-
-    auto syncSetting = Model::instance()->getSyncSetting(mSelectedSyncRow);
-    mController->setSyncRunState(mega::MegaSync::RUNSTATE_SUSPENDED, syncSetting, action);
-}
-
-
-void SettingsDialog::setSyncToDisabled()
-{
-    ActionProgress* action
-            = new ActionProgress(true, QString::fromUtf8("Disabling sync"));
-
-    connect(action, &ActionProgress::failedRequest,
-            this, [this](MegaRequest* request, MegaError* error)
-    {
-        Q_UNUSED(request)
-        if (error->getErrorCode())
-            showUnexpectedSyncError(tr("Unexpected error disabling sync"));
-    }, Qt::DirectConnection);
-
-    auto syncSetting = Model::instance()->getSyncSetting(mSelectedSyncRow);
-    mController->setSyncRunState(mega::MegaSync::RUNSTATE_DISABLED, syncSetting, action);
-}
-*/
-
-/*
-void SettingsDialog::openMegaIgnore(int row, mega::MegaSync::SyncType type)
-{
-    if (auto syncSetting = selectedRowForTabType(type))
-    {
-        QString ignore(syncSetting->getLocalFolder() + QDir::separator() + QString::fromUtf8(".megaignore"));
-        auto future = QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(ignore));
-        mOpenUrlWatcher.setFuture(future);
-    }
-}*/
 
 void SettingsDialog::onOpenMegaIgnoreFinished()
 {
@@ -1661,25 +1591,6 @@ void SettingsDialog::showOpenMegaIgnoreError()
 {
     QMegaMessageBox::warning(nullptr, tr("Error"), tr("Error opening megaignore file"), QMessageBox::Ok);
 }
-
-/*
-void SettingsDialog::onDeleteSync()
-{
-    ActionProgress* action
-        = new ActionProgress(true, QString::fromUtf8("Remove sync"));
-
-    connect(action, &ActionProgress::failedRequest,
-        this, [this](MegaRequest* request, MegaError* error)
-        {
-            Q_UNUSED(request)
-            if (error->getErrorCode())
-                showUnexpectedSyncError(tr("Unexpected error removing sync"));
-        }, Qt::DirectConnection);
-
-    auto syncSetting = Model::instance()->getSyncSetting(mSelectedSyncRow);
-    mController->removeSync(syncSetting, action);
-}
-*/
 
 #ifndef WIN32
 void SettingsDialog::on_bPermissions_clicked()
@@ -1804,6 +1715,12 @@ void SettingsDialog::connectBackupHandlers()
     connect(mUi->backupTableView, &BackupTableView::removeBackup, this, &SettingsDialog::removeBackup);
     connect(mUi->backupTableView, &BackupTableView::openInMEGA, this, &SettingsDialog::openHandleInMega);
 
+    connect(mUi->backupTableView, &BackupTableView::signalRunSync, this, &SettingsDialog::setSyncToRun);
+    connect(mUi->backupTableView, &BackupTableView::signalPauseSync, this, &SettingsDialog::setSyncToPause);
+    connect(mUi->backupTableView, &BackupTableView::signalSuspendSync, this, &SettingsDialog::setSyncToSuspend);
+    connect(mUi->backupTableView, &BackupTableView::signalDisableSync, this, &SettingsDialog::setSyncToDisabled);
+    connect(mUi->backupTableView, &BackupTableView::signalOpenMegaignore, this, &SettingsDialog::openMegaIgnore);
+
     auto myBackupsHandle = UserAttributes::MyBackupsHandle::requestMyBackupsHandle();
     connect(myBackupsHandle.get(), &UserAttributes::MyBackupsHandle::attributeReady,
             this, &SettingsDialog::onMyBackupsFolderHandleSet);
@@ -1839,42 +1756,16 @@ void SettingsDialog::connectBackupHandlers()
                                  .arg(QCoreApplication::translate("MegaError", err->getErrorString())));
 
     });
-
-    connect(&mBackupController, &SyncController::syncEnableError, this, [this](std::shared_ptr<SyncSettings> sync)
-    {
-        onSavingSyncsCompleted(SyncStateInformation::SAVING_BACKUPS_FINISHED);
-        QMegaMessageBox::warning(nullptr, tr("Error enabling backup"),
-                                  tr("Your backup \"%1\" can't be enabled. Reason: %2")
-                                  .arg(sync->name())
-                                  .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(sync->getError()))));
-
-    });
-
-    connect(&mBackupController, &SyncController::syncDisableError, this, [this](std::shared_ptr<SyncSettings> sync)
-    {
-        onSavingSyncsCompleted(SyncStateInformation::SAVING_BACKUPS_FINISHED);
-        QMegaMessageBox::warning(nullptr, tr("Error disabling backup"),
-                                  tr("Your sync \"%1\" can't be disabled. Reason: %2")
-                                  .arg(sync->name())
-                                  .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(sync->getError()))));
-
-    });
 }
 
 void SettingsDialog::loadBackupSettings()
 {
     BackupItemModel *model(new BackupItemModel(mUi->backupTableView));
     model->fillData();
-    connect(model, &BackupItemModel::enableSync, this, [this](std::shared_ptr<SyncSettings> sync)
-    {
-        syncsStateInformation(SyncStateInformation::SAVING_BACKUPS);
-        mBackupController.enableSync(sync);
-    });
-    connect(model, &BackupItemModel::disableSync, this, [this](std::shared_ptr<SyncSettings> sync)
-    {
-        syncsStateInformation(SyncStateInformation::SAVING_BACKUPS);
-        mBackupController.disableSync(sync);
-    });
+
+    connect(model, &SyncItemModel::signalSyncCheckboxOn, this, &SettingsDialog::setSyncToRun);
+    connect(model, &SyncItemModel::signalSyncCheckboxOff, this, &SettingsDialog::setSyncToSuspend);
+
     connect(model, &BackupItemModel::syncUpdateFinished, this, [this](std::shared_ptr<SyncSettings> syncSetting)
     {
         if(syncSetting->getType() == mega::MegaSync::SyncType::TYPE_BACKUP)
@@ -1949,6 +1840,38 @@ void SettingsDialog::removeSync(std::shared_ptr<SyncSettings> sync)
 {
     syncsStateInformation(SyncStateInformation::SAVING_SYNCS);
     mSyncController.removeSync(sync);
+}
+
+void SettingsDialog::setSyncToRun(std::shared_ptr<SyncSettings> sync)
+{
+    syncsStateInformation(sync->getType() == mega::MegaSync::TYPE_BACKUP ? SyncStateInformation::SAVING_BACKUPS : SyncStateInformation::SAVING_SYNCS);
+    mSyncController.setSyncToRun(sync);
+}
+
+void SettingsDialog::setSyncToPause(std::shared_ptr<SyncSettings> sync)
+{
+    syncsStateInformation(sync->getType() == mega::MegaSync::TYPE_BACKUP ? SyncStateInformation::SAVING_BACKUPS : SyncStateInformation::SAVING_SYNCS);
+    mSyncController.setSyncToPause(sync);
+}
+
+void SettingsDialog::setSyncToSuspend(std::shared_ptr<SyncSettings> sync)
+{
+    syncsStateInformation(sync->getType() == mega::MegaSync::TYPE_BACKUP ? SyncStateInformation::SAVING_BACKUPS : SyncStateInformation::SAVING_SYNCS);
+    mSyncController.setSyncToSuspend(sync);
+}
+
+void SettingsDialog::setSyncToDisabled(std::shared_ptr<SyncSettings> sync)
+{
+    syncsStateInformation(sync->getType() == mega::MegaSync::TYPE_BACKUP ? SyncStateInformation::SAVING_BACKUPS : SyncStateInformation::SAVING_SYNCS);
+    mSyncController.setSyncToDisabled(sync);
+}
+
+void SettingsDialog::openMegaIgnore(std::shared_ptr<SyncSettings> sync)
+{
+
+    QString ignore(sync->getLocalFolder() + QDir::separator() + QString::fromUtf8(".megaignore"));
+    auto future = QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(ignore));
+    mOpenUrlWatcher.setFuture(future);
 }
 
 void SettingsDialog::on_bOpenBackupFolder_clicked()

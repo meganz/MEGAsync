@@ -109,21 +109,21 @@ void SyncTableView::showContextMenu(const QPoint &pos, const QModelIndex index)
     Platform::initMenu(menu);
     menu->setAttribute(Qt::WA_DeleteOnClose);
 
+    auto sync = index.data(Qt::UserRole).value<std::shared_ptr<SyncSettings>>();
+
     // Show in file explorer action
     auto showLocalAction (new MenuItemAction(QCoreApplication::translate("Platform", Platform::fileExplorerString),
                                              QIcon(QString::fromUtf8("://images/show_in_folder_ico.png"))));
-    connect(showLocalAction, &MenuItemAction::triggered, this, [index]()
+    connect(showLocalAction, &MenuItemAction::triggered, this, [sync]()
     {
-        auto sync = index.data(Qt::UserRole).value<std::shared_ptr<SyncSettings>>();
         Utilities::openUrl(QUrl::fromLocalFile(sync->getLocalFolder()));
     });
 
     // Show in Mega web action
     auto showRemoteAction (new MenuItemAction(tr("Open in MEGA"),
                                               QIcon(QString::fromUtf8("://images/ico_open_MEGA.png"))));
-    connect(showRemoteAction, &MenuItemAction::triggered, this, [index]()
+    connect(showRemoteAction, &MenuItemAction::triggered, this, [sync]()
     {
-        auto sync = index.data(Qt::UserRole).value<std::shared_ptr<SyncSettings>>();
         Utilities::openInMega(sync->getMegaHandle());
     });
 
@@ -131,12 +131,33 @@ void SyncTableView::showContextMenu(const QPoint &pos, const QModelIndex index)
     auto delAction (new MenuItemAction(tr("Remove synced folder"),
                                        QIcon(QString::fromUtf8("://images/ico_Delete.png"))));
     delAction->setAccent(true);
-    connect(delAction, &MenuItemAction::triggered, this, [this, index]()
+    connect(delAction, &MenuItemAction::triggered, this, [this, sync]()
     {
-        auto sync = index.data(Qt::UserRole).value<std::shared_ptr<SyncSettings>>();
-        emit removeSync(sync);
+        emit signalRemoveSync(sync);
     });
 
+    auto syncRun (new MenuItemAction(tr("Run"), QIcon(QString::fromUtf8("://images/ico_open_MEGA.png"))));
+    auto syncPause (new MenuItemAction(tr("Pause"), QIcon(QString::fromUtf8("://images/ico_open_MEGA.png"))));
+    auto syncSuspend (new MenuItemAction(tr("Suspend"), QIcon(QString::fromUtf8("://images/ico_open_MEGA.png"))));
+    auto syncDisable (new MenuItemAction(tr("Disable"), QIcon(QString::fromUtf8("://images/ico_open_MEGA.png"))));
+    auto openMegaignore (new MenuItemAction(tr("Edit .megaignore"), QIcon(QString::fromUtf8("://images/ico_open_MEGA.png"))));
+
+    connect(syncRun, &MenuItemAction::triggered, this, [this, sync]() { emit signalRunSync(sync); });
+    connect(syncPause, &MenuItemAction::triggered, this, [this, sync]() { emit signalPauseSync(sync); });
+    connect(syncSuspend, &MenuItemAction::triggered, this, [this, sync]() { emit signalSuspendSync(sync); });
+    connect(syncDisable, &MenuItemAction::triggered, this, [this, sync]() { emit signalDisableSync(sync); });
+    connect(openMegaignore, &MenuItemAction::triggered, this, [this, sync]() { emit signalOpenMegaignore(sync); });
+
+    syncRun->setEnabled(sync->getSync()->getRunState() !=  mega::MegaSync::RUNSTATE_RUNNING);
+    syncPause->setEnabled(sync->getSync()->getRunState() !=  mega::MegaSync::RUNSTATE_PAUSED);
+    syncSuspend->setEnabled(sync->getSync()->getRunState() !=  mega::MegaSync::RUNSTATE_SUSPENDED);
+    syncDisable->setEnabled(sync->getSync()->getRunState() !=  mega::MegaSync::RUNSTATE_DISABLED);
+
+    syncRun->setParent(menu);
+    syncPause->setParent(menu);
+    syncSuspend->setParent(menu);
+    syncDisable->setParent(menu);
+    openMegaignore->setParent(menu);
 
     showLocalAction->setParent(menu);
     showRemoteAction->setParent(menu);
@@ -146,6 +167,15 @@ void SyncTableView::showContextMenu(const QPoint &pos, const QModelIndex index)
     menu->addAction(showRemoteAction);
     menu->addSeparator();
     menu->addAction(delAction);
+
+    menu->addSeparator();
+    menu->addAction(syncRun);
+    menu->addAction(syncPause);
+    menu->addAction(syncSuspend);
+    menu->addAction(syncDisable);
+
+    menu->addSeparator();
+    menu->addAction(openMegaignore);
 
     menu->popup(pos);
 }

@@ -49,8 +49,8 @@ protected:
     void setMode(mega::MegaSync::SyncType syncType);
 
 signals:
-    void enableSync(std::shared_ptr<SyncSettings> syncSetting);
-    void disableSync(std::shared_ptr<SyncSettings> syncSetting);
+    void signalSyncCheckboxOn(std::shared_ptr<SyncSettings> syncSetting);
+    void signalSyncCheckboxOff(std::shared_ptr<SyncSettings> syncSetting);
     void syncUpdateFinished(std::shared_ptr<SyncSettings> syncSetting);
 
 private slots:

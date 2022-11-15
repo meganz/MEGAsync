@@ -21,7 +21,12 @@ protected:
     virtual void initTable();
 
 signals:
-    void removeSync(std::shared_ptr<SyncSettings> sync);
+    void signalRemoveSync(std::shared_ptr<SyncSettings> sync);
+    void signalRunSync(std::shared_ptr<SyncSettings> sync);
+    void signalPauseSync(std::shared_ptr<SyncSettings> sync);
+    void signalSuspendSync(std::shared_ptr<SyncSettings> sync);
+    void signalDisableSync(std::shared_ptr<SyncSettings> sync);
+    void signalOpenMegaignore(std::shared_ptr<SyncSettings> sync);
 
 private slots:
     virtual void onCustomContextMenuRequested(const QPoint& pos);

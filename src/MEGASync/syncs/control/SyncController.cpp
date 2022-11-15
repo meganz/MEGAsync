@@ -117,22 +117,73 @@ void SyncController::removeSync(std::shared_ptr<SyncSettings> syncSetting, const
     }));
 }
 
-void SyncController::enableSync(std::shared_ptr<SyncSettings> syncSetting)
+void SyncController::setSyncToRun(std::shared_ptr<SyncSettings> syncSetting)
 {
     if (!syncSetting)
     {
-        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Trying to enable null sync").toUtf8().constData());
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Trying to run null sync").toUtf8().constData());
         return;
     }
 
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Enabling sync (%1) \"%2\" to \"%3\"")
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Running sync (%1) \"%2\" to \"%3\"")
                  .arg(getSyncTypeString(syncSetting->getType()), syncSetting->getLocalFolder(), syncSetting->getMegaFolder())
                  .toUtf8().constData());
 
-    mApi->setSyncRunState(syncSetting->backupId(), MegaSync::RUNSTATE_RUNNING, mDelegateListener);
+    emit signalSyncOperationBegins(syncSetting);
+    mApi->setSyncRunState(syncSetting->backupId(), MegaSync::RUNSTATE_RUNNING, new OnFinishOneShot(mApi, [=](const MegaError& e){
+        emit signalSyncOperationEnds(syncSetting);
+        if (e.getErrorCode() != MegaError::API_OK)
+        {
+            emit signalSyncOperationError(syncSetting);
+        }
+    }));
 }
 
-void SyncController::disableSync(std::shared_ptr<SyncSettings> syncSetting)
+void SyncController::setSyncToPause(std::shared_ptr<SyncSettings> syncSetting)
+{
+    if (!syncSetting)
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Trying to pause invalid sync").toUtf8().constData());
+        return;
+    }
+
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Pausing sync (%1) \"%2\" to \"%3\"")
+                 .arg(getSyncTypeString(syncSetting->getType()), syncSetting->getLocalFolder(), syncSetting->getMegaFolder())
+                 .toUtf8().constData());
+
+    emit signalSyncOperationBegins(syncSetting);
+    mApi->setSyncRunState(syncSetting->backupId(), MegaSync::RUNSTATE_PAUSED, new OnFinishOneShot(mApi, [=](const MegaError& e){
+        emit signalSyncOperationEnds(syncSetting);
+        if (e.getErrorCode() != MegaError::API_OK)
+        {
+            emit signalSyncOperationError(syncSetting);
+        }
+    }));
+}
+
+void SyncController::setSyncToSuspend(std::shared_ptr<SyncSettings> syncSetting)
+{
+    if (!syncSetting)
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Trying to suspend invalid sync").toUtf8().constData());
+        return;
+    }
+
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Suspending sync (%1) \"%2\" to \"%3\"")
+                 .arg(getSyncTypeString(syncSetting->getType()), syncSetting->getLocalFolder(), syncSetting->getMegaFolder())
+                 .toUtf8().constData());
+
+    emit signalSyncOperationBegins(syncSetting);
+    mApi->setSyncRunState(syncSetting->backupId(), MegaSync::RUNSTATE_SUSPENDED, new OnFinishOneShot(mApi, [=](const MegaError& e){
+        emit signalSyncOperationEnds(syncSetting);
+        if (e.getErrorCode() != MegaError::API_OK)
+        {
+            emit signalSyncOperationError(syncSetting);
+        }
+    }));
+}
+
+void SyncController::setSyncToDisabled(std::shared_ptr<SyncSettings> syncSetting)
 {
     if (!syncSetting)
     {
@@ -144,7 +195,14 @@ void SyncController::disableSync(std::shared_ptr<SyncSettings> syncSetting)
                  .arg(getSyncTypeString(syncSetting->getType()), syncSetting->getLocalFolder(), syncSetting->getMegaFolder())
                  .toUtf8().constData());
 
-    mApi->setSyncRunState(syncSetting->backupId(), MegaSync::RUNSTATE_DISABLED, mDelegateListener);
+    emit signalSyncOperationBegins(syncSetting);
+    mApi->setSyncRunState(syncSetting->backupId(), MegaSync::RUNSTATE_DISABLED, new OnFinishOneShot(mApi, [=](const MegaError& e){
+        emit signalSyncOperationEnds(syncSetting);
+        if (e.getErrorCode() != MegaError::API_OK)
+        {
+            emit signalSyncOperationError(syncSetting);
+        }
+    }));
 }
 
 // Checks if a path belongs is in an existing sync or backup tree; and if the selected
@@ -519,78 +577,5 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
         emit syncAddStatus(errorCode, errorMsg, QString::fromUtf8(req->getFile()));
         break;
     }
-    /*
-    case MegaRequest::TYPE_DISABLE_SYNC:
-    {
-        if (errorCode == MegaError::API_OK)
-            break;
-
-        int syncErrorCode (req->getNumDetails());
-        std::shared_ptr<SyncSettings> sync = mSyncInfo->getSyncSettingByTag(req->getParentHandle());
-
-        if (sync && (syncErrorCode != MegaSync::NO_SYNC_ERROR))
-        {
-            QString errorMsg = QString::fromUtf8("Error disabling sync (%1) \"%2\" for \"%3\" to \"%4\": %5").arg(
-                        getSyncTypeString(sync->getType()),
-                        sync->name(),
-                        sync->getLocalFolder(),
-                        sync->getMegaFolder(),
-                        QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(syncErrorCode)));
-
-            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, errorMsg.toUtf8().constData());
-            emit syncDisableError(sync);
-        }
-        else
-        {
-            QString errorMsg = getSyncAPIErrorMsg(errorCode);
-            if(errorMsg.isEmpty())
-                errorMsg = QCoreApplication::translate("MegaError", e->getErrorString());
-
-            QString logMsg = QString::fromUtf8("Error disabling sync (%1) (request error): %2").arg(
-                                 getSyncTypeString(sync ? sync->getType() : MegaSync::SyncType::TYPE_UNKNOWN),
-                                 errorMsg);
-            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, logMsg.toUtf8().constData());
-        }
-        break;
-    }
-    case MegaRequest::TYPE_ENABLE_SYNC:
-    {
-        if (errorCode == MegaError::API_OK)
-            break;
-
-        int syncErrorCode (req->getNumDetails());
-        std::shared_ptr<SyncSettings> sync = mSyncInfo->getSyncSettingByTag(req->getParentHandle());
-
-        if (sync && (syncErrorCode != MegaSync::NO_SYNC_ERROR))
-        {
-            QString errorMsg = QString::fromUtf8("Error enabling sync (%1) \"%2\" for \"%3\" to \"%4\": %5").arg(
-                        getSyncTypeString(sync->getType()),
-                        sync->name(),
-                        sync->getLocalFolder(),
-                        sync->getMegaFolder(),
-                        QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(syncErrorCode)));
-
-            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, errorMsg.toUtf8().constData());
-            emit syncEnableError(sync);
-        }
-        else
-        {
-            QString errorMsg = getSyncAPIErrorMsg(errorCode);
-            if(errorMsg.isEmpty())
-                errorMsg = QCoreApplication::translate("MegaError", e->getErrorString());
-
-            QString logMsg = QString::fromUtf8("Error enabling sync (%1) (request reason): %2").arg(
-                                 getSyncTypeString(sync ? sync->getType() : MegaSync::SyncType::TYPE_UNKNOWN),
-                                 errorMsg);
-            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, logMsg.toUtf8().constData());
-        }
-
-        if (!req->getNumDetails() && sync)
-        {
-            mSyncInfo->removeUnattendedDisabledSync(sync->backupId(), sync->getType());
-        }
-        break;
-    }
-    */
     }
 }
