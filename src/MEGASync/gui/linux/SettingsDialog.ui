@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>662</width>
-    <height>660</height>
+    <width>675</width>
+    <height>672</height>
    </rect>
   </property>
   <property name="contextMenuPolicy">
@@ -129,14 +129,6 @@ margin: 0px;
 #cbSleepSettings
 {
 margin-top: 4px;
-}
-
-#lSleepModeWarning
-{
-font-size: 10px;
-line-height: 16px;
-font-weight: 400;
-color: #505862;
 }
 </string>
   </property>
@@ -1033,18 +1025,7 @@ color: #505862;
              </sizepolicy>
             </property>
             <property name="text">
-             <string>Prevent the computer from going to sleep when transfers or syncs are in progress.
-Computer will enter sleep mode once these are complete.</string>
-            </property>
-            <property name="wordWrap">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QLabel" name="lSleepModeWarning">
-            <property name="text">
-             <string>Note: Some operating systems won't allow this.</string>
+             <string>Prevent the computer from going to sleep when transfers or syncs are in progress.</string>
             </property>
             <property name="wordWrap">
              <bool>true</bool>
