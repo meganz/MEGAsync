@@ -46,7 +46,8 @@ private:
     SyncInfo();
 
     std::shared_ptr<Preferences> preferences;
-    bool isFirstSyncDone = false;
+    bool mIsFirstTwoWaySyncDone;
+    bool mIsFirstBackupDone;
 
     void saveUnattendedDisabledSyncs();
 

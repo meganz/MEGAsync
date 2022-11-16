@@ -32,6 +32,8 @@ SyncInfo *SyncInfo::instance()
 
 SyncInfo::SyncInfo() : QObject(),
     preferences (Preferences::instance()),
+    mIsFirstTwoWaySyncDone (preferences->isFirstSyncDone()),
+    mIsFirstBackupDone (preferences->isFirstBackupDone()),
     syncMutex (QMutex::Recursive)
 {
 }
@@ -129,13 +131,32 @@ void SyncInfo::activateSync(std::shared_ptr<SyncSettings> syncSetting)
         syncSetting->setSyncID(QUuid::createUuid().toString().toUpper());
     }
 
-    //send event for the first sync
-    if (!isFirstSyncDone && !preferences->isFirstSyncDone())
+    //send event for the first sync/backup
+    switch (syncSetting->getType())
     {
-        MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_1ST_SYNC,
-                                             "MEGAsync first sync");
+    case mega::MegaSync::SyncType::TYPE_TWOWAY:
+    {
+        // Send event for the first sync
+        if (!mIsFirstTwoWaySyncDone && !preferences->isFirstSyncDone())
+        {
+            MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_1ST_SYNC,
+                                                 "MEGAsync first sync");
+        }
+        mIsFirstTwoWaySyncDone = true;
+        break;
     }
-    isFirstSyncDone = true;
+    case mega::MegaSync::SyncType::TYPE_BACKUP:
+    {
+        // Send event for the first backup
+        if (!mIsFirstBackupDone && !preferences->isFirstBackupDone())
+        {
+            MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_1ST_BACKUP,
+                                                 "MEGAsync first backup");
+        }
+        mIsFirstBackupDone = true;
+        break;
+    }
+    }
 
     // TODO: extract the QMegaMessageBoxes from the model, use signal to send message
     if (!preferences->isFatWarningShown() && syncSetting->getError() == MegaSync::Warning::LOCAL_IS_FAT)
@@ -321,7 +342,8 @@ void SyncInfo::reset()
     configuredSyncsMap.clear();
     syncsSettingPickedFromOldConfig.clear();
     unattendedDisabledSyncs.clear();
-    isFirstSyncDone = false;
+    mIsFirstTwoWaySyncDone = false;
+    mIsFirstBackupDone = false;
 }
 
 int SyncInfo::getNumSyncedFolders(const QVector<SyncType>& types)
