@@ -84,7 +84,7 @@
     <message>
         <source>Cancel</source>
         <translatorcomment>Button text to cancel the addition of a backup</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>취소</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
@@ -401,32 +401,32 @@
     <message>
         <source>Sort by state</source>
         <translatorcomment>Backup table header label tooltip that indicates that if you click here the column will be sorted by check state</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>상태로 정렬</translation>
     </message>
     <message>
         <source>Local Folder</source>
         <translatorcomment>Local folder column header name for backlups table in settings dialog</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>로컬 폴더</translation>
     </message>
     <message>
         <source>Sort by name</source>
         <translatorcomment>Backup table header label tooltip that indicates that if you click here the column will be sorted by name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>이름으로 정렬</translation>
     </message>
     <message>
         <source>Backup is enabled</source>
         <translatorcomment>Checkbox tooltip that is displayed when it is checked.(Backup enabled)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>백업 활성화됨</translation>
     </message>
     <message>
         <source>Backup is disabled</source>
         <translatorcomment>Checkbox tooltip that is displayed when it is unchecked.(Backup disabled)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>백업 비활성화됨</translation>
     </message>
     <message>
         <source>Click menu for more Backup actions</source>
         <translatorcomment>Menu column tooltip (three dots in the table)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>더 많은 백업 행동은 메뉴를 클릭하세요</translation>
     </message>
 </context>
 <context>
@@ -434,27 +434,27 @@
     <message>
         <source>Rename folder</source>
         <translatorcomment>Title of the dialog prompting the user to resolve backup name conflicts by renaming them</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>폴더 이름 변경</translation>
     </message>
     <message>
         <source>A folder named &quot;%1&quot; already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
         <translatorcomment>Text shown to the user if there is a name conflict with a folder in the Backups remote folder for the current device</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; 폴더는 이미 백업에 존재합니다. 백업을 계속하려면 새 폴더의 이름을 바꾸세요. 컴퓨터의 폴더 이름은 바뀌지 않습니다.</translation>
     </message>
     <message>
         <source>If you don&apos;t want to rename the new folder, stop the backup in the [A]Backup centre[/A] for the existing folder. Then setup the backup for the new folder again.</source>
         <translatorcomment>Text instructing the user to go to the backup center to solve the backup name conflict</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>만약 새 폴더의 이름을 바꾸고 싶지 않다면, [A]백업 센터[/A]에서 기존 폴더의 백업을 멈추세요. 그리고 새 폴더의 백업을 다시 설정하세요.</translation>
     </message>
     <message>
         <source>Rename and backup</source>
         <translatorcomment>Text for the button to apply the name conflict resolution in the backup name conflict resolution dialog</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>이름 바꾸고 백업</translation>
     </message>
     <message>
         <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
         <translatorcomment>Text informing the user that they can&amp;apos;t have duplicated backup names and instructing them to rename them</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>같은 이름을 가진 폴더를 백업할 수 없습니다. 백업을 계속하려면 이름을 바꾸세요. 컴퓨터의 폴더 이름은 바뀌지 않습니다.</translation>
     </message>
 </context>
 <context>
@@ -462,12 +462,12 @@
     <message>
         <source>Local folder %1:</source>
         <translatorcomment>Backup rename widget dialog label. Placeholder will display the conflict count. In the right of the label the local folder path will be displayed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>로컬 폴더 %1:</translation>
     </message>
     <message>
         <source>Rename backup folder</source>
         <translatorcomment>Placeholder for the backup rename widget line edit.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>백업 폴더 이름 바꾸기</translation>
     </message>
     <message>
         <source>Backup folder:</source>
@@ -477,7 +477,7 @@
     <message>
         <source>A folder named &quot;%1&quot; already exists in your Backups. Rename the new folder to continue with the backup.</source>
         <translatorcomment>Error message displayed in the top of the rename backup dialog. It indicates that a backup with that name already exists.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; 폴더는 이미 백업에 존재합니다. 백업을 계속하려면 새 폴더의 이름을 바꾸세요.</translation>
     </message>
 </context>
 <context>
@@ -485,12 +485,12 @@
     <message>
         <source>Open in MEGA</source>
         <translatorcomment>Menu action that opens MEGA webclient to show this backup</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>MEGA에서 열기</translation>
     </message>
     <message>
         <source>Remove backup</source>
         <translatorcomment>Menu action removes the backup</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>백업 중지</translation>
     </message>
 </context>
 <context>
@@ -498,27 +498,27 @@
     <message>
         <source>Setup backups</source>
         <translatorcomment>Backup wizard window title</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>백업 설정</translation>
     </message>
     <message>
         <source>You can back up folders from your computer to MEGA. Files will automatically back up when the desktop app is running.</source>
         <translatorcomment>Backup wizard body text</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>컴퓨터에서 MEGA로 폴더를 백업할 수 있습니다. 파일은 데스크톱 앱이 실행 중일 때 자동으로 백업 됩니다.</translation>
     </message>
     <message>
         <source>No folders available</source>
         <translatorcomment>Backup wizard text that indicates that here aren´t any folder available for backup.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>이용 가능한 폴더 없음</translation>
     </message>
     <message>
         <source>More folders</source>
         <translatorcomment>Button text that opens a window where you can choose a folder to backup</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>더 많은 폴더</translation>
     </message>
     <message>
         <source>All folders have been synced or backed up.</source>
         <translatorcomment>Label that indicates that all the folders in the system have been synced or backed up</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>모든 폴더가 동기화 또는 백업되었습니다.</translation>
     </message>
     <message>
         <source>Selected backup folders</source>
@@ -528,17 +528,17 @@
     <message>
         <source>Backup to</source>
         <translatorcomment>Line edit title, in this line edit the remote folder for backups will be displayed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>다음으로 백업</translation>
     </message>
     <message>
         <source>Folders will be stored in backups and you can check the status of your backups in backup centre.</source>
         <translatorcomment>Successfull dialog text</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>폴더가 백업에 저장될 것이며 백업 센터에서 백업 상황을 볼 수 있습니다.</translation>
     </message>
     <message>
         <source>Show more…</source>
         <translatorcomment>Button text that expands failed backup list</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>더 보기</translation>
     </message>
     <message>
         <source>Back</source>
@@ -548,7 +548,7 @@
     <message>
         <source>Cancel</source>
         <translatorcomment>Button text to cancel the creation of backups</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>취소</translation>
     </message>
     <message>
         <source>Next</source>
@@ -563,17 +563,12 @@
     <message>
         <source>Dismiss</source>
         <translatorcomment>Button text shown in success dialog, it closes the dialog.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>View in Backup Centre</source>
-        <translatorcomment>Text for a button allowing the user to view the newly created backup i nthe Backup center (in the webclient)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>해제</translation>
     </message>
     <message>
         <source>Setup</source>
         <translatorcomment>Step 2 button text that will initiate the creation of the backups.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>설정</translation>
     </message>
     <message>
         <source>Collapse</source>
@@ -583,37 +578,37 @@
     <message>
         <source>Add folders</source>
         <translatorcomment>Button Text, the user will be able to select new folders to backup if clicks here.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>폴더 추가</translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Label that indicates the number of folders that are going to be backed up.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>폴더 %n개</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Backup created</source>
         <translatorcomment>Backup successfully created dialog title</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>백업 생성됨</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>We&apos;re backing up your folder. The time this takes depends on the files in this folder.</source>
         <translatorcomment>Label indicating that the backup configuration was successfull and it is being uploaded.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>폴더를 백업하고 있습니다. 폴더 안의 파일에 따라 시간이 걸립니다.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Problem backing up folder</source>
         <translatorcomment>Label that indicates that there happened an error backing up a folder/folders</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>폴더 백업 중 문제 발생</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>This folder wasn&apos;t backed up. Try again.</source>
         <translatorcomment>Label that indicates that there happened an error backing up a folder/folders</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>이 폴더들은 백업되지 않았습니다. 다시 확인하세요.</numerusform></translation>
     </message>
     <message>
         <source>Folder is already selected. Select a different folder.</source>
         <translatorcomment>Warning message that indicates that the folder that the user is trying to select is already selected</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>폴더가 이미 선택되었습니다. 다른 폴더를 선택하세요.</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
@@ -623,27 +618,32 @@
     <message>
         <source>1. [B]Select[/B] folders to backup</source>
         <translatorcomment>Title for the first step of the backups wizard, instructing the user to select folders to backup</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>1. 백업할 폴더를 [B]선택[/B]하세요.</translation>
     </message>
     <message>
         <source>2. [B]Confirm[/B] backup settings</source>
         <translatorcomment>Title for the second step of the backups wizard, instructing the user to confirm his choice</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>2. 백업 설정을 [B]확인[/B]하세요.</translation>
     </message>
     <message>
         <source>Are you sure you want to cancel? All changes will be lost.</source>
         <translatorcomment>Warning dialog that appears when user click in cancel button in backup wizard and it will be closed.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>취소할까요? 모든 변경사항을 잃게 됩니다.</translation>
     </message>
     <message>
         <source>Choose directory</source>
         <translatorcomment>Folder selector window title text</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>폴더 선택</translation>
     </message>
     <message>
         <source>Error: %1</source>
         <translatorcomment>Placeholder will show the error message, this is being shown in a tooltip</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>오류: %1</translation>
+    </message>
+    <message>
+        <source>View in backup centre</source>
+        <translatorcomment>Text for a button allowing the user to view the newly created backup i nthe Backup center (in the webclient)</translatorcomment>
+        <translation>백업 센터에서 보기</translation>
     </message>
 </context>
 <context>
@@ -852,7 +852,7 @@
     <message>
         <source>Ok</source>
         <translatorcomment>Button label to confirm and close a message box dialog.</translatorcomment>
-        <translation>Ok</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Are you sure you want to exit uploading?</source>
@@ -905,11 +905,11 @@
     <message>
         <source>All the queued transfers from your current download will be cancelled.</source>
         <translatorcomment>Dialog messages which warns the user about the potential problems of cancelling the folder scanning</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>현재 다운로드에 대기 중인 모든 전송이 취소됩니다.</translation>
     </message>
     <message>
         <source>Cancelling…</source>
-        <translation type="unfinished"></translation>
+        <translation>취소 중...</translation>
     </message>
 </context>
 <context>
@@ -1023,7 +1023,8 @@
         <source>The following characters are not allowed:
 %1</source>
         <translatorcomment>Text introducing the prohibited characters (the list replaces the placeholder)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>다음의 문자는 허용되지 않습니다:
+%1</translation>
     </message>
 </context>
 <context>
@@ -1245,12 +1246,12 @@
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>당신의 비즈니스 계정이 만료되었습니다</translation>
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>당신의 계정은 필요한 결제가 이루어질 때까지 읽기 전용입니다.</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -1554,7 +1555,7 @@
     <message>
         <source>Login</source>
         <translatorcomment>Button label to start the Login process. (String as short as possible)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>로그인</translation>
     </message>
     <message>
         <source>Create account</source>
@@ -1816,7 +1817,7 @@
     <message>
         <source>Open Transfer Manager</source>
         <translatorcomment>Tooltip for the button that open transfer manager dialog</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>전송 관리자 열기</translation>
     </message>
     <message>
         <source>Show MEGAsync options</source>
@@ -2023,34 +2024,34 @@
         <translation>폴더를 열 수 없습니다. 로컬 드라이브의 폴더가 삭제되거나 이동되지 않았는지 확인하세요.</translation>
     </message>
     <message>
-        <source>Add Backups</source>
-        <translatorcomment>Info dialog menu entry for backups</translatorcomment>
-        <translation>백업 추가</translation>
-    </message>
-    <message>
         <source>Some syncs and backups have been disabled</source>
         <translatorcomment>Warning message title shown on info dialog</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>일부 동기화와 백업이 비활성화 되었습니다</translation>
     </message>
     <message>
         <source>Something went wrong while trying to backup and sync your folders.</source>
         <translatorcomment>Warning message body shown on info dialog</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>폴더를 백업하고 동기화하던 중 무언가 잘못 되었습니다.</translation>
     </message>
     <message>
         <source>One or more backups have been disabled</source>
         <translatorcomment>Warning message title shown on info dialog</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>1개 이상의 백업이 비활성화 되었습니다</translation>
     </message>
     <message>
         <source>Something went wrong while trying to backup your folders.</source>
         <translatorcomment>Warning message body shown on info dialog</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>폴더를 백업하던 중 무언가 잘못 되었습니다.</translation>
     </message>
     <message>
         <source>Error adding %1:</source>
         <translatorcomment>Error label displayed when it fails adding a sync or backup. Placeholder will show the name of the sync. After the two dots an error message is displayed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 추가 중 오류:</translation>
+    </message>
+    <message>
+        <source>Add Backup</source>
+        <translatorcomment>Tooltip message shown while hovering backups button.</translatorcomment>
+        <translation>백업 추가</translation>
     </message>
 </context>
 <context>
@@ -2104,12 +2105,12 @@
     <message>
         <source>Login or create an account to start using MEGA Desktop app.</source>
         <translatorcomment>Description label to inform the user about next step in order to use MEGA Desktop app. Users will need to login or create an account.</translatorcomment>
-        <translation>MEGA 데스크톱 앱 이용을 시작하려면 로그인하거나 계정을 생성하세요.</translation>
+        <translation>앱을 사용하려면 로그인하거나 계정을 생성하세요.</translation>
     </message>
     <message>
         <source>You need to log into MEGA account to use the MEGA desktop app.</source>
         <translatorcomment>Description label to indicate the user needs to log in in order to fully use MEGA desktop app.</translatorcomment>
-        <translation>MEGA 데스크톱 앱을 실행하려면 MEGA 계정으로 로그인해야 합니다.</translation>
+        <translation>앱을 사용하려면 MEGA 계정으로 로그인하세요.</translation>
     </message>
     <message>
         <source>Create account</source>
@@ -2124,7 +2125,7 @@
     <message>
         <source>Know more about MEGA desktop app. [A]Read more[/A]</source>
         <translatorcomment>Label with hyperlink to sync client webpage to know more about MEGA desktop app. Keep placeholders.</translatorcomment>
-        <translation>MEGA 데스크톱 앱에 대해 더 알아보기. [A]자세히 읽어보기[/A]</translation>
+        <translation>앱에 대해 자세히 알아보세요. [A]더 읽어보기[/A]</translation>
     </message>
 </context>
 <context>
@@ -2442,7 +2443,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log)</source>
         <translatorcomment>Notification message shown when the DEBUG mode is enabled.</translatorcomment>
-        <translation>디버그 모드가 활성화 되었습니다. “MEGASync.log” 이름을 가진 로그가 컴퓨터에 만들어졌습니다.</translation>
+        <translation>디버그 모드가 활성화 되었습니다. “MEGAsync.log” 이름을 가진 로그가 컴퓨터에 만들어졌습니다.</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The download has been cancelled</source>
@@ -2567,7 +2568,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>당신의 비즈니스 계정이 만료되었습니다</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -2577,7 +2578,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message shown to admin business account when a payment has failed. </translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>비즈니스 계정에 대한 결제가 실패하여 계정이 비활성화 되었습니다. 결제를 하고 구독을 재활성화할 때까지 계정에 저장된 데이터에 접근할 수 없습니다.</translation>
     </message>
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
@@ -2592,7 +2593,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>This month&apos;s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</source>
         <translatorcomment>Informative message shown to the user when a payment has failed for a business account.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>이번달 결제가 실패하였습니다. 당신의 계정이 비활성화되는 것을 피하려면 결제 문제를 최대한 빨리 해결하세요.</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -2602,7 +2603,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
         <translatorcomment>Informative message shown when a business account is expired and the user can only browse data and none operation (upload, download, creation..) is allowed.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>당신의 계정은 현재 [B]정지[/B]되었습니다. 데이터 탐색만 할 수 있습니다.</translation>
     </message>
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
@@ -2632,7 +2633,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
         <translatorcomment>Informative message box shown if user is running an old Win version (vista or previous), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation>앱이 계속 작동은 하지만, 업데이트가 Windows Vista와 더 오래된 운영 체제를 지원하지 않을 것입니다.</translation>
+        <translation>앱은 계속 작동할 것이지만, 업데이트가 Windows 7 이전 버전에 대하여 지원하지 않을 것입니다.</translation>
     </message>
     <message>
         <source>Transferring</source>
@@ -2738,7 +2739,8 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>There is an active transfer. Exit the app?
 Transfer will automatically resume when you re-open the app.</source>
         <translatorcomment>Messagebox text to let the user know that there are active transfers when closing the app. The user will be able to exit and pause them, or stop the exit action.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>활성 상태의 전송이 있습니다. 앱을 나갈까요?
+앱을 다시 열면 전송이 자동으로 재개됩니다.</numerusform></translation>
     </message>
     <message>
         <source>Exit app</source>
@@ -2753,67 +2755,67 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Some syncs and backups have been disabled</source>
         <translatorcomment>Tooltip message for tray icon when some syncs and backups are disabled</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>일부 동기화와 백업이 비활성화 되었습니다</translation>
     </message>
     <message>
         <source>One or more backups have been disabled</source>
         <translatorcomment>Tooltip message for tray icon when some backups are disabled</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>1개 이상의 백업이 비활성화 되었습니다</translation>
     </message>
     <message>
         <source>Error adding %1:</source>
         <translatorcomment>Error label displayed when it fails adding a sync or backup. Placeholder will show the name of the sync. After the two dots an error message is displayed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 추가 중 오류:</translation>
     </message>
     <message>
         <source>Your syncs and backups have been disabled</source>
         <translatorcomment>Warning message shown when  all the syncs and backups have been disabled</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>동기화와 백업이 비활성화 되었습니다:</translation>
     </message>
     <message>
         <source>Your backups have been disabled</source>
         <translatorcomment>Warning message shown when all the backups have been disabled</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>백업이 비활성화 되었습니다:</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been temporarily disabled</source>
         <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder displays backup name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>백업 &quot;%1&quot;이/가 일시적으로 비활성화 되었습니다:</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>로컬 폴더가 존재하지 않아서 백업 &quot;%1&quot;이/가 비활성화 되었습니다.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>파일 시스템의 결함으로 VirtualBox의 공유된 폴더에 대한 동기화를 지원하지 않기 때문에 백업 &quot;%1&quot;이/가 비활성화 되었습니다.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>MEGA 폴더가 휴지통에 있어서 백업 &quot;%1&quot;이/가 비활성화 되었습니다.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>MEGA 폴더 (또는 일부분)에 완전한 접근 권한이 없어서 백업 &quot;%1&quot;이/가 비활성화 되었습니다.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder has changed</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>로컬 폴더가 변경되어서 백업 &quot;%1&quot;이/가 비활성화 되었습니다</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder has changed</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>MEGA 폴더가 변경되어서 백업 &quot;%1&quot;이/가 비활성화 되었습니다</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled. Reason: %2</source>
         <translatorcomment>Notification message launched when a backup is disabled. Keep &amp;quot;%1&amp;quot; code because is filled with the name of the backup at runtime and %2 with the reason of the error.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>백업 &quot;%1&quot;이/가 비활성화 되었습니다. 사유: %2</translation>
     </message>
 </context>
 <context>
@@ -2976,12 +2978,12 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
         <translatorcomment>Error triggered by SDK when an account has been suspended due to copyright violations.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>계정이 저작권 침해로 인해 정지되었습니다. 이메일로 이것에 대한 자세한 정보를 보냈습니다.</translation>
     </message>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>계정이 다른 이의 권리 침해, 불법 데이터의 공유 또는 들여오기, 또는 시스템 오남용 등 MEGA 이용 약관 침해로 인해 제거 되었습니다.</translation>
     </message>
 </context>
 <context>
@@ -3052,17 +3054,17 @@ Transfer will automatically resume when you re-open the app.</source>
     <message numerus="yes">
         <source>Today at %1</source>
         <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened today. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>오늘 %1</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Yesterday at %1</source>
         <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened yesterday. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>어제 %1</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 at %2</source>
         <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was previously to yesterday. %1 represents the date (day month and year), while %2 represents the hour). Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%1 %2</numerusform></translation>
     </message>
     <message>
         <source>Recently used</source>
@@ -3093,7 +3095,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Backups</source>
         <translatorcomment>Title of the Backups root node</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>백업</translation>
     </message>
 </context>
 <context>
@@ -3254,12 +3256,12 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>You can&apos;t run MEGA Desktop App from this location. Move it into the Applications folder then run it.</source>
         <translatorcomment>Error message shown when the user is trying to run MEGA Desktop App from a path different than Applications. Only affects to macOS.</translatorcomment>
-        <translation>이 위치에서 MEGA 데스크톱 앱을 실행할 수 없습니다. 애플리케이션 폴더로 옮긴 후 실행하세요.</translation>
+        <translation>이 위치에서 데스크톱 앱을 실행할 수 없습니다. 응용 프로그램 폴더로 이동한 후 실행하세요.</translation>
     </message>
     <message>
         <source>Account expired (business or Pro Flexi)</source>
         <translatorcomment>Label to show that the current account (either business or Pro Flexi) is expired during a SDK operation.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>계정 만료됨</translation>
     </message>
 </context>
 <context>
@@ -3302,7 +3304,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Get link</source>
         <translatorcomment>Context menu action to get transfer link</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>링크 얻기</translation>
     </message>
     <message>
         <source>Open in MEGA</source>
@@ -3567,7 +3569,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Cloud drive</source>
         <translatorcomment>Node selector button Text. Switch the view to show only the cloud drive nodes (files and folders)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>클라우드 드라이브</translation>
     </message>
     <message>
         <source>Incoming shares</source>
@@ -3594,7 +3596,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Backups</source>
         <translatorcomment>Title of the Backups section</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>백업</translation>
     </message>
 </context>
 <context>
@@ -4054,22 +4056,22 @@ Please delete the folder sync from preferences to cancel them.</source>
     <message>
         <source>One or more backups have been disabled. Go to settings to enable them again.</source>
         <translatorcomment>Warning message shown when some backups are disabled. Tell the userto go to settings to solve the issue (win/linux)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>하나 이상의 백업이 비활성화 되었습니다. 다시 활성화하려면 설정으로 가세요.</translation>
     </message>
     <message>
         <source>Some syncs and backups have been disabled. Go to settings to enable them again.</source>
         <translatorcomment>Warning message shown when some backups and syncs are disabled. Tell the userto go to settings to solve the issue (win/linux)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>일부 동기화와 백업이 비활성화 되었습니다. 다시 활성화하려면 설정으로 가세요.</translation>
     </message>
     <message>
         <source>One or more backups have been disabled. Go to preferences to enable them again.</source>
         <translatorcomment>Warning message shown when some backups are disabled. Tell the userto go to settings to solve the issue (mac)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>하나 이상의 백업이 비활성화 되었습니다. 다시 활성화하려면 설정으로 가세요.</translation>
     </message>
     <message>
         <source>Some syncs and backups have been disabled. Go to preferences to enable them again.</source>
         <translatorcomment>Warning message shown when some backups and syncs are disabled. Tell the userto go to settings to solve the issue (mac)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>일부 동기화와 백업이 비활성화 되었습니다. 다시 활성화하려면 설정으로 가세요.</translation>
     </message>
 </context>
 <context>
@@ -4083,7 +4085,13 @@ Please delete the folder sync from preferences to cancel them.</source>
 - Improved performance.
 </source>
         <translatorcomment>Changelog for v4.8.0 version</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Pro Flexi 계정 지원 추가.
+- 새 백업 기능 추가.
+- macOS Ventura에서 감지된 문제 수정.
+- Windows, Linux, 그리고 macOS에서 감지된 충돌 수정.
+- 번역 문제 수정.
+- 성능 향상.
+</translation>
     </message>
 </context>
 <context>
@@ -4488,7 +4496,8 @@ Please verify the correct file name was given.</source>
         <source>&apos;%1&apos; is write protected.
 Do you want to delete it anyway?</source>
         <translatorcomment>Warning message when a write protected file is about to be delete</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>″%1″은/는 쓰기 보호되어있습니다.
+삭제하시겠습니까?</translation>
     </message>
 </context>
 <context>
@@ -4593,7 +4602,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Stop backing up folder?</source>
         <translatorcomment>Backup removal dialog title</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>폴더 백업을 멈출까요?</translation>
     </message>
     <message>
         <source>To stop backing up this folder, you need to either move it or delete it.</source>
@@ -4628,7 +4637,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. This action cannot be undone.</source>
         <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>폴더가 MEGA에서 삭제됩니다. 컴퓨터에서는 삭제되지 않습니다. 이 행동은 되돌릴 수 없습니다.</translation>
     </message>
     <message>
         <source>Confirm</source>
@@ -4638,7 +4647,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Button text that cancels</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>취소</translation>
     </message>
 </context>
 <context>
@@ -4682,22 +4691,22 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Button text to cancel the scanning of transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>취소</translation>
     </message>
     <message>
         <source>Don&apos;t close the app. If you close, transfers not yet queued will be lost.</source>
         <translatorcomment>Message displayed in scanning widget to warn the user of consequences of closing the app.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>앱을 닫지 마세요. 닫으면, 대기열에 들어가지 않은 전송을 잃게 됩니다.</translation>
     </message>
     <message>
         <source>Scanning</source>
         <translatorcomment>Label used to display when the scanning widget is on the &quot;Scanning&quot; step</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>탐색중</translation>
     </message>
     <message>
         <source>Creating folders</source>
         <translatorcomment>Label used to display when the scanning widget is on the &quot;Creating folders&quot; step</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>폴더 생성 중...</translation>
     </message>
     <message>
         <source>%1/%2</source>
@@ -4817,7 +4826,7 @@ Do you want to delete it anyway?</source>
 
 Do you want to restart MEGAsync now?</source>
         <translatorcomment>Message displayed asking for confirmation to the user to restart the application for a Full scan operation.</translatorcomment>
-        <translation>MEGAsync가 시작할 때 동기화된 폴더의 전체 검색을 실시합니다. MEGAsync를 지금 재시작할까요?</translation>
+        <translation>MEGAsync가 재시작할 때 동기화된 폴더를 전체 검사합니다. 지금 MEGAsync를 재시작할까요?</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -4862,7 +4871,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
         <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
-        <translation>항상 당신의 복구 키에 대해 물리적 분리 보관을유지하세요(예를 들어 클라이언트 장치, 외부 저장소, 또는 인쇄 등).</translation>
+        <translation>항상 복구 키에 대한 물리적 관리를 유지하세요 (예를 들어 컴퓨터, 외부 저장소, 또는 인쇄).</translation>
     </message>
     <message>
         <source>Exclude by size</source>
@@ -5102,7 +5111,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Restart MEGA Desktop App to apply changes.</source>
         <translatorcomment>Informative text shown in Folders pane, letting the user know that an application restart is required to apply the changes he just made.</translatorcomment>
-        <translation>변경 사항을 적용하려면 MEGA 데스크톱 앱을 재시작하세요.</translation>
+        <translation>변경 사항을 적용하려면 앱을 재시작하세요.</translation>
     </message>
     <message>
         <source>Change Settings…</source>
@@ -5335,18 +5344,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>절전 설정</translation>
     </message>
     <message>
-        <source>Prevent the computer from going to sleep when transfers or syncs are in progress.
-Computer will enter sleep mode once these are complete.</source>
-        <translatorcomment>Sleep/Active mode: Feature description label for keeping the pc awake when there are active transfers</translatorcomment>
-        <translation>전송 또는 동기화가 진행 중일 때 컴퓨터가 절전 모드에 들어가는 것을 방지합니다.
-이러한 것들이 완료되면 컴퓨터는 절전 모드에 들어갈 수 있습니다.</translation>
-    </message>
-    <message>
-        <source>Note: Some operating systems won&apos;t allow this.</source>
-        <translatorcomment>Sleep/Active mode: Warning message below the description label, as not all the computers can activate the feature to keep it awake if there are transfers active </translatorcomment>
-        <translation>참고: 몇몇 운영 체제는 이것을 허용하지 않습니다.</translation>
-    </message>
-    <message>
         <source>Sleep mode:</source>
         <translatorcomment>Sleep/Active mode: Settings dialog groupbox title for keeping the pc awake when there are active transfers (macOS)</translatorcomment>
         <translation>절전 모드:</translation>
@@ -5369,32 +5366,27 @@ Computer will enter sleep mode once these are complete.</source>
     <message>
         <source>Backups</source>
         <translatorcomment>Backups table title</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>백업</translation>
     </message>
     <message>
         <source>Backup Folder</source>
         <translatorcomment>Groupbox title, inside the remote backup folder path will be displayed (Linux and windows)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>백업 폴더</translation>
     </message>
     <message>
         <source>View in MEGA</source>
         <translatorcomment>Button text that opens backups folder in webclient</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>MEGA에서 보기</translation>
     </message>
     <message>
         <source>Saving backups…</source>
         <translatorcomment>Label text displayed while backups settings are being saved</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>백업 저장 중...</translation>
     </message>
     <message>
         <source>Some folders have not backed up. For more information please hover over the yellow warning icon.</source>
         <translatorcomment>Warning message displayed inside settings dialog indicating that there is a problem with a backup.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>To Backup Center</source>
-        <translatorcomment>Button text that opens backup center in webclient</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>일부 폴더가 백업 되지 않았습니다. 자세한 정보는 노란 경고 아이콘에 커서를 올려놓으세요.</translation>
     </message>
     <message>
         <source>Backup folder:</source>
@@ -5404,97 +5396,107 @@ Computer will enter sleep mode once these are complete.</source>
     <message>
         <source>Synchronizations and backups will stop working.</source>
         <translatorcomment>Warning message displayed on logout if there are active syncs and backups</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>동기화와 백업이 비활성화 됩니다.</translation>
     </message>
     <message>
         <source>Backups will stop working.</source>
         <translatorcomment>Warning message displayed on logout if there are active backups (not syncs)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>백업이 비활성화 됩니다.</translation>
     </message>
     <message>
         <source>Synchronizations will stop working.</source>
         <translatorcomment>Warning message displayed on logout if there are active syncs (not backups)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>동기화가 비활성화 됩니다.</translation>
     </message>
     <message>
         <source>Are you sure?</source>
         <translatorcomment>Warning message second part asking if you are sure about continuing with the logout.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>확실하십니까?</translation>
     </message>
     <message>
         <source>Error adding sync</source>
         <translatorcomment>Warning message title indicating that an error happened adding a sync.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>동기화 추가 오류</translation>
     </message>
     <message>
         <source>Error removing sync</source>
         <translatorcomment>Warning message title indicating that an error happened removing a sync.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>동기화 제거 중 오류</translation>
     </message>
     <message>
         <source>Your sync can&apos;t be removed. Reason: %1</source>
         <translatorcomment>Warning message title indicating that an error happened removing a sync. the reason is given at runtime in place of the placeholder</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>동기화를 제거할 수 없습니다. 사유: %1</translation>
     </message>
     <message>
         <source>Error disabling sync</source>
         <translatorcomment>Warning message title indicating that an error happened disabling a sync.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>동기화 비활성화 중 오류</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
         <translatorcomment>Warning message indicating that an error happened disabling a sync. First placeholder is the sync name and second placeholder is the error message sent by SDK (reason)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>동기화 &quot;%1&quot;을/를 비활성화할 수 없습니다. 사유: %2</translation>
     </message>
     <message>
         <source>Error adding backup %1</source>
         <translatorcomment>Error message dialog title. Placeholder shows the backup name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>백업 %1 추가 중 오류</translation>
     </message>
     <message>
         <source>Error removing backup</source>
         <translatorcomment>Error message dialog title</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>백업 중지 중 오류</translation>
     </message>
     <message>
         <source>Your backup can&apos;t be removed. Reason: %1</source>
         <translatorcomment>Warning message title indicating that an error happened removing a backup. the reason is given at runtime in place of the placeholder</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>백업을 중지할 수 없습니다. 사유: %1</translation>
     </message>
     <message>
         <source>Error moving or removing remote backup folder</source>
         <translatorcomment>Title of the dialog shown when the deletion or move of the remote backup folder failed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>MEGA 백업 폴더를 이동 또는 삭제하던 중 오류</translation>
     </message>
     <message>
         <source>Failed to move or remove the remote backup folder. Reason: %1</source>
         <translatorcomment>Error text when the deletion or move of the remote backup folder failed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>MEGA 백업 폴더를 이동 또는 삭제할 수 없습니다. 사유: %1</translation>
     </message>
     <message>
         <source>Error enabling backup</source>
         <translatorcomment>Title of the dialog shown when enabling a backup failed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>백업 활성화 중 오류</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; can&apos;t be enabled. Reason: %2</source>
         <translatorcomment>Error text when enabling a backup failed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>백업 &quot;%1&quot;을/를 활성화할 수 없습니다. 사유: %2</translation>
     </message>
     <message>
         <source>Error disabling backup</source>
         <translatorcomment>Title of the dialog shown when enabling a backup failed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>백업 비활성화 중 오류</translation>
     </message>
     <message>
         <source>Pro Flexi</source>
         <translatorcomment>Text label indicating the Pro Flexi tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro Flexi</translation>
+        <translation>Pro Flexi</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
         <translatorcomment>Error text when disabling a backup failed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>백업 &quot;%1&quot;을/를 비활성화할 수 없습니다. 사유: %2</translation>
+    </message>
+    <message>
+        <source>Go to backup centre</source>
+        <translatorcomment>Button text that opens backup center in webclient</translatorcomment>
+        <translation>백업 센터로 가기</translation>
+    </message>
+    <message>
+        <source>Prevent the computer from going to sleep when transfers or syncs are in progress.</source>
+        <translatorcomment>Sleep/Active mode: Feature description label for keeping the pc awake when there are active transfers</translatorcomment>
+        <translation>전송 또는 동기화가 진행 중일 때 컴퓨터가 절전 모드에 들어가는 것을 방지합니다.</translation>
     </message>
 </context>
 <context>
@@ -6071,52 +6073,52 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You can&apos;t backup this folder as it&apos;s already synced.</source>
         <translatorcomment>Warning message indicating that a folder can´t be backed up as it is synced.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>이미 동기화된 폴더를 백업할 수 없습니다.</translation>
     </message>
     <message>
         <source>Folder is already backed up. Select a different one.</source>
         <translatorcomment>Warning message indicating that a folder can´t be backed up as it is already backed up.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>폴더가 이미 백업 되었습니다. 다른 것을 선택하세요.</translation>
     </message>
     <message>
         <source>You can&apos;t sync this folder as it&apos;s already synced.</source>
         <translatorcomment>Warning message indicating that a folder can´t be synced again as it is already synced.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>이미 동기화된 폴더를 동기화할 수 없습니다.</translation>
     </message>
     <message>
         <source>You can&apos;t sync this folder as it&apos;s already backed up.</source>
         <translatorcomment>Warning message indicating that a folder can´t be synced as it is backed up.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>이미 백업된 폴더를 동기화할 수 없습니다.</translation>
     </message>
     <message>
         <source>You can&apos;t backup this folder as it&apos;s already inside a synced folder.</source>
         <translatorcomment>Warning message indicating that a folder can´t be backed up as it is inside a backed up folder.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>동기화된 폴더 안에 있는 폴더를 백업할 수 없습니다.</translation>
     </message>
     <message>
         <source>You can&apos;t sync folders that are inside synced folders.</source>
         <translatorcomment>Warning message indicating that a folder can´t be synced as it is inside a synced folder.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>동기화된 폴더 안에 있는 폴더를 동기화할 수 없습니다.</translation>
     </message>
     <message>
         <source>You can&apos;t sync folders that are inside backed up folders.</source>
         <translatorcomment>Warning message indicating that a folder can´t be synced as it is inside a backed up folder.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>백업된 폴더 안에 있는 폴더를 동기화할 수 없습니다.</translation>
     </message>
     <message>
         <source>You can&apos;t backup this folder as it contains synced folders.</source>
         <translatorcomment>Warning message indicating that the selected folder for sync contains synced folders, ence it can not be synced.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>동기화된 폴더를 담고 있는 폴더를 백업할 수 없습니다.</translation>
     </message>
     <message>
         <source>You can&apos;t sync folders that contain synced folders.</source>
         <translatorcomment>Warning message indicating that the selected folder for sync contains synced folders, hence it can not be synced.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>동기화된 폴더를 담고 있는 폴더를 동기화할 수 없습니다.</translation>
     </message>
     <message>
         <source>You can&apos;t sync folders that contain backed up folders.</source>
         <translatorcomment>Warning message indicating that a folder can´t be synced as it contains backed up folders.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>백업된 폴더를 담고 있는 폴더를 동기화할 수 없습니다.</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
@@ -6126,74 +6128,76 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
         <translatorcomment>Warning message indicating that megasync is not going to be able to download anything in the selected folder.</translatorcomment>
-        <translation>MEGAsync가 이 곳에 아무 것도 다운로드 할 수 없을 것입니다.</translation>
+        <translation>MEGAsync가 여기에 아무 것도 다운로드할 수 없습니다.</translation>
     </message>
     <message>
         <source>You can&apos;t backup this folder as it contains backed up folders.</source>
         <translatorcomment>Warning message indicating that the selected folder for backup contains backed up folders, ence it can not be backed up.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>백업된 폴더를 담고 있는 폴더를 백업할 수 없습니다.</translation>
     </message>
     <message>
         <source>You can&apos;t backup this folder as it&apos;s already inside a backed up folder.</source>
         <translatorcomment>Warning message indicating that a folder can´t be backed up as it is inside a backed up folder.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>백업된 폴더 안에 있는 폴더를 동기화할 수 없습니다.</translation>
     </message>
     <message>
         <source>Unable to create backup as selected folder is not valid. Try again.</source>
         <translatorcomment>Text instructing to try creating a backup again. Failure cause: node is not valid</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>선택한 폴더가 유효하지 않아서 백업을 만들 수 없습니다. 다시 시도하세요.</translation>
     </message>
     <message>
         <source>Unable to create backup. Try again and if issue continues, contact [A]Support[/A].</source>
         <translatorcomment>Text instructing to try creating a backup again. If it fails again, they should contact support</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>백업을 만들 수 없습니다. 다시 시도하시고 문제가 계속 되면, [A]지원[/A]에 연락하세요.</translation>
     </message>
     <message>
         <source>Unable to create backup as the device you&apos;re backing up from doesn&apos;t have a name. Give your device a name and then try again. If issue continues, contact [A]Support[/A].</source>
         <translatorcomment>Text instructing to try creating a backup again.Failure cause: the device does not have a name. If it fails again, they should contact support</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>이름이 없는 컴퓨터에서 백업을 시도하고 있기 때문에 백업을 만들 수 없습니다. 컴퓨터에 이름을 붙여주고, 다시 시도하세요. 만약 문제가 계속 되면, [A]지원[/A]에 연락하세요.</translation>
     </message>
     <message>
         <source>Unable to create backup. For further information, contact [A]Support[/A].</source>
         <translatorcomment>Text instructing to try creating a backup again.They should contact support</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>백업을 만들 수 없습니다. 자세한 정보는, [A]지원[/A]에 연락하세요.</translation>
     </message>
     <message>
         <source>You can’t backup “%1” as it’s the root folder. The root folder is either; the top-level folder on your device or computer that holds all your folders and files or the folder where the system or program is installed. We don’t allow users to back up root folders as it may cause file conflicts or errors.
 To continue, select a different folder.</source>
         <translatorcomment>Warning message displayed if user tries to backup the system main hard disk.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>“%1”은/는 루트 폴더이기 때문에 백업할 수 없습니다. 백업 폴더는 컴퓨터의 최상위 폴더이자 시스템 또는 프로그램이 설치된 폴더 또는 당신의 모든 폴더와 파일을 가지고 있습니다. 우리는 파일 충돌 또는 오류가 발생할 수 있기 때문에 루트 폴더 백업을 지원하지 않습니다.
+계속 하려면, 다른 폴더를 선택하세요.</translation>
     </message>
     <message>
         <source>You can’t sync “%1” as it’s the root folder. The root folder is either; the top-level folder on your device or computer that holds all your folders and files or the folder where the system or program is installed. We don’t allow users to sync root folders as it may cause file conflicts or errors.
 To continue, select a different folder.</source>
         <translatorcomment>Warning message displayed if user tries to sync the system main hard disk.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>“%1”은/는 루트 폴더이기 때문에 동기화할 수 없습니다. 백업 폴더는 컴퓨터의 최상위 폴더이자 시스템 또는 프로그램이 설치된 폴더 또는 당신의 모든 폴더와 파일을 가지고 있습니다. 우리는 파일 충돌 또는 오류가 발생할 수 있기 때문에 루트 폴더 동기화를 지원하지 않습니다.
+계속 하려면, 다른 폴더를 선택하세요.</translation>
     </message>
     <message>
         <source>You don&apos;t have enough permissions for this remote folder.</source>
         <translatorcomment>Warning message indicating that a folder can´t be synced as it the remote folder is an incoming share and the current user doesn´t have enought permisions</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>이 공유된 폴더에 완전 접근 권한이 없기 때문에 동기화할 수 없습니다.</translation>
     </message>
     <message>
         <source>Invalid remote path.</source>
         <translatorcomment>The selected remote path for the sync creation is invalid</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>이 MEGA 폴더는 동기화할 수 없습니다.</translation>
     </message>
     <message>
         <source>The selected MEGA folder is already synced.</source>
         <translatorcomment>Warning message indicating that the selected folder is already a synced folder.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>선택한 MEGA 폴더가 이미 동기화 되었습니다.</translation>
     </message>
     <message>
         <source>Folder contents already synced.</source>
         <translatorcomment>Warning message indicating that the selected folder have got an active sync bellow the selected path.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>폴더 내용물이 이미 동기화 되었습니다.</translation>
     </message>
     <message>
         <source>Folder already synced.</source>
         <translatorcomment>Warning message indicating that the selected folder have got a parent that is already synced.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>폴더가 이미 동기화 되었습니다.</translation>
     </message>
 </context>
 <context>
@@ -6201,12 +6205,12 @@ To continue, select a different folder.</source>
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a FAT filesystem.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>FAT 파일 시스템으로 포맷된 로컬 폴더를 동기화하고 있습니다. 해당 파일 시스템은 동기화 오류를 유발할 수 있는 시간 수정과 큰 파일 관리에 결함이 있습니다(예를 들어 일광 시간 절약 적용시), 그러므로 NTFS처럼 믿을만한 파일 시스템으로 포맷된 폴더만 동기화할 것을 강력히 추천합니다(자세한 정보는 [A]여기에[/A]).</translation>
     </message>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a local folder shared with VMWare third party app.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>당신은 VMWare와 공유된 로컬 폴더를 동기화하려고 합니다. 이러한 폴더들은 파일 시스템 알림을 지원하지 않아서 앱이 지속적으로 파일과 폴더의 변화를 탐지하기 위해 스캔을 할 것입니다. CPU 사용량을 줄이려면 다른 폴더를 이용하세요.</translation>
     </message>
 </context>
 <context>
@@ -6214,12 +6218,12 @@ To continue, select a different folder.</source>
     <message>
         <source>Sort by state</source>
         <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by state in case the user clicks.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>상태로 정렬</translation>
     </message>
     <message>
         <source>Local Folder</source>
         <translatorcomment>Sync table header column title</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>로컬 폴더</translation>
     </message>
     <message>
         <source>Sort by folder name</source>
@@ -6229,7 +6233,7 @@ To continue, select a different folder.</source>
     <message>
         <source>MEGA Folder</source>
         <translatorcomment>Sync table header column title</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>MEGA 폴더</translation>
     </message>
     <message>
         <source>Sort by MEGA folder name</source>
@@ -6249,7 +6253,7 @@ To continue, select a different folder.</source>
     <message>
         <source>Click menu for more Sync actions</source>
         <translatorcomment>Menu column item tooltip.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>더 많은 동기화 행동은 메뉴를 클릭하세요</translation>
     </message>
 </context>
 <context>
@@ -6257,12 +6261,12 @@ To continue, select a different folder.</source>
     <message>
         <source>Open in MEGA</source>
         <translatorcomment>Context menu option that opens the folder in MEGA webclient.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>MEGA에서 열기</translation>
     </message>
     <message>
         <source>Remove synced folder</source>
         <translatorcomment>Context menu option that removes the sync.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>동기화 폴더 삭제</translation>
     </message>
 </context>
 <context>
@@ -6283,7 +6287,7 @@ To continue, select a different folder.</source>
     <message>
         <source>Add Sync</source>
         <translatorcomment>Menu option used to add sync</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>동기화 추가</translation>
     </message>
     <message>
         <source>Syncs</source>
@@ -6291,14 +6295,14 @@ To continue, select a different folder.</source>
         <translation>동기화</translation>
     </message>
     <message>
-        <source>Add Backups</source>
-        <translatorcomment>Menu option used to add backups</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Backups</source>
         <translatorcomment>Menu option that shows backups menu</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>백업</translation>
+    </message>
+    <message>
+        <source>Add Backup</source>
+        <translatorcomment>Menu option used to add backups</translatorcomment>
+        <translation>백업 추가</translation>
     </message>
 </context>
 <context>
@@ -6552,7 +6556,7 @@ To continue, select a different folder.</source>
     <message>
         <source>Your MEGA account is full</source>
         <translatorcomment>Message shown when the MEGA account is full</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>당신의 MEGA 계정이 가득 찼습니다.</translation>
     </message>
     <message>
         <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left for this IP address.

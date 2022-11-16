@@ -54,12 +54,12 @@
     <message>
         <source>Add backup folder</source>
         <translatorcomment>Window title for add backup dialog (not backup wizard)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>أضف مجلد للنسخ الاحتياطي</translation>
     </message>
     <message>
         <source>Backup folder:</source>
         <translatorcomment>Line edit title label that shows the path that is going to be backed up</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>مجلد النسخ الاحتياطي:</translation>
     </message>
     <message>
         <source>Choose folder</source>
@@ -74,7 +74,7 @@
     <message>
         <source>Backup to:</source>
         <translatorcomment>Remote path where the backup is going to be stored</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>نسخ احتياطي إلى:</translation>
     </message>
     <message>
         <source>Add</source>
@@ -89,7 +89,7 @@
     <message>
         <source>Do you want to continue?</source>
         <translatorcomment>Warning dialog body text that show up a warning message but allows you to continue.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>هل تريد المتابعة؟</translation>
     </message>
 </context>
 <context>
@@ -278,7 +278,7 @@
     <message>
         <source>[A] has been deleted/deactivated</source>
         <translatorcomment>Label to indicate that [A] has been deleted from your contacts. Placeholder will be replaced by email of user deleted</translatorcomment>
-        <translation>[A] تم حذفه/ إلغاء تفعيله</translation>
+        <translation>تم حذف أو إلغاء تفعيل [A]</translation>
     </message>
     <message>
         <source>[A] established you as a contact</source>
@@ -401,12 +401,12 @@
     <message>
         <source>Sort by state</source>
         <translatorcomment>Backup table header label tooltip that indicates that if you click here the column will be sorted by check state</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ترتيب حسب الولاية</translation>
     </message>
     <message>
         <source>Local Folder</source>
         <translatorcomment>Local folder column header name for backlups table in settings dialog</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>مجلد محلي</translation>
     </message>
     <message>
         <source>Sort by name</source>
@@ -416,17 +416,17 @@
     <message>
         <source>Backup is enabled</source>
         <translatorcomment>Checkbox tooltip that is displayed when it is checked.(Backup enabled)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم تمكين النسخ الاحتياطي</translation>
     </message>
     <message>
         <source>Backup is disabled</source>
         <translatorcomment>Checkbox tooltip that is displayed when it is unchecked.(Backup disabled)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم تعطيل النسخ الاحتياطي</translation>
     </message>
     <message>
         <source>Click menu for more Backup actions</source>
         <translatorcomment>Menu column tooltip (three dots in the table)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>انقر فوق القائمة لمزيد من إجراءات النسخ الاحتياطي</translation>
     </message>
 </context>
 <context>
@@ -439,22 +439,22 @@
     <message>
         <source>A folder named &quot;%1&quot; already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
         <translatorcomment>Text shown to the user if there is a name conflict with a folder in the Backups remote folder for the current device</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>يوجد بالفعل مجلد باسم &quot;%1&quot; في النسخ الاحتياطية الخاصة بك. قم بإعادة تسمية المجلد الجديد لمتابعة النسخ الاحتياطي. لن يتغير اسم المجلد على جهاز الكمبيوتر الخاص بك.</translation>
     </message>
     <message>
         <source>If you don&apos;t want to rename the new folder, stop the backup in the [A]Backup centre[/A] for the existing folder. Then setup the backup for the new folder again.</source>
         <translatorcomment>Text instructing the user to go to the backup center to solve the backup name conflict</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>إذا كنت لا تريد إعادة تسمية المجلد الجديد، فقم بإيقاف النسخ الاحتياطي في [A]مركز النسخ الاحتياطي[/A] للمجلد الحالي. ثم قم بإعداد النسخة الاحتياطية للمجلد الجديد مرة أخرى.</translation>
     </message>
     <message>
         <source>Rename and backup</source>
         <translatorcomment>Text for the button to apply the name conflict resolution in the backup name conflict resolution dialog</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>إعادة التسمية والنسخ الاحتياطي</translation>
     </message>
     <message>
         <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
         <translatorcomment>Text informing the user that they can&amp;apos;t have duplicated backup names and instructing them to rename them</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكنك إجراء نسخ احتياطي للمجلدات بنفس الاسم. أعد تسميتها لمتابعة النسخ الاحتياطي. لن تتغير أسماء المجلدات على جهاز الكمبيوتر الخاص بك.</translation>
     </message>
 </context>
 <context>
@@ -462,22 +462,22 @@
     <message>
         <source>Local folder %1:</source>
         <translatorcomment>Backup rename widget dialog label. Placeholder will display the conflict count. In the right of the label the local folder path will be displayed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>مجلد محلي%1:</translation>
     </message>
     <message>
         <source>Rename backup folder</source>
         <translatorcomment>Placeholder for the backup rename widget line edit.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>إعادة تسمية مجلد النسخ الاحتياطي</translation>
     </message>
     <message>
         <source>Backup folder:</source>
         <translatorcomment>In the right of this label the line edit will be displayed. This line edit will be used by the user to change the backup name.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>مجلد النسخ الاحتياطي:</translation>
     </message>
     <message>
         <source>A folder named &quot;%1&quot; already exists in your Backups. Rename the new folder to continue with the backup.</source>
         <translatorcomment>Error message displayed in the top of the rename backup dialog. It indicates that a backup with that name already exists.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>يوجد بالفعل مجلد باسم &quot;%1&quot; في النسخ الاحتياطية الخاصة بك. أعد تسمية المجلد الجديد لمتابعة النسخ الاحتياطي.</translation>
     </message>
 </context>
 <context>
@@ -490,7 +490,7 @@
     <message>
         <source>Remove backup</source>
         <translatorcomment>Menu action removes the backup</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>أوقف النسخ الاحتياطي</translation>
     </message>
 </context>
 <context>
@@ -498,47 +498,47 @@
     <message>
         <source>Setup backups</source>
         <translatorcomment>Backup wizard window title</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>إعداد النسخ الاحتياطية</translation>
     </message>
     <message>
         <source>You can back up folders from your computer to MEGA. Files will automatically back up when the desktop app is running.</source>
         <translatorcomment>Backup wizard body text</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>يمكنك عمل نسخ احتياطية من المجلدات من جهاز الكمبيوتر الخاص بك إلى ميغا MEGA. سيتم نسخ الملفات احتياطيًا تلقائيًا عند تشغيل تطبيق الحاسوب المكتبي.</translation>
     </message>
     <message>
         <source>No folders available</source>
         <translatorcomment>Backup wizard text that indicates that here aren´t any folder available for backup.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>لا توجد مجلدات متاحة</translation>
     </message>
     <message>
         <source>More folders</source>
         <translatorcomment>Button text that opens a window where you can choose a folder to backup</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>المزيد من المجلدات</translation>
     </message>
     <message>
         <source>All folders have been synced or backed up.</source>
         <translatorcomment>Label that indicates that all the folders in the system have been synced or backed up</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تمت مزامنة جميع المجلدات أو نسخها احتياطيًا.</translation>
     </message>
     <message>
         <source>Selected backup folders</source>
         <translatorcomment>This is the title for a table that shows the full list of selected folders for backup</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>مجلدات النسخ الاحتياطي المختارة</translation>
     </message>
     <message>
         <source>Backup to</source>
         <translatorcomment>Line edit title, in this line edit the remote folder for backups will be displayed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>نسخ احتياطي إلى</translation>
     </message>
     <message>
         <source>Folders will be stored in backups and you can check the status of your backups in backup centre.</source>
         <translatorcomment>Successfull dialog text</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>سيتم تخزين المجلدات في النسخ الاحتياطية ويمكنك التحقق من حالة النسخ الاحتياطية في مركز النسخ الاحتياطي.</translation>
     </message>
     <message>
         <source>Show more…</source>
         <translatorcomment>Button text that expands failed backup list</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>إظهار المزيد...</translation>
     </message>
     <message>
         <source>Back</source>
@@ -566,14 +566,9 @@
         <translation>رفض</translation>
     </message>
     <message>
-        <source>View in Backup Centre</source>
-        <translatorcomment>Text for a button allowing the user to view the newly created backup i nthe Backup center (in the webclient)</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Setup</source>
         <translatorcomment>Step 2 button text that will initiate the creation of the backups.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>إعداد</translation>
     </message>
     <message>
         <source>Collapse</source>
@@ -583,67 +578,72 @@
     <message>
         <source>Add folders</source>
         <translatorcomment>Button Text, the user will be able to select new folders to backup if clicks here.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>أضف المجلدات</translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Label that indicates the number of folders that are going to be backed up.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n مجلد</numerusform><numerusform>%n مجلد</numerusform><numerusform>%n مجلدان</numerusform><numerusform>%n مجلدات</numerusform><numerusform>%n مجلداً</numerusform><numerusform>%n مجلد</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Backup created</source>
         <translatorcomment>Backup successfully created dialog title</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>تم إنشاء النسخ الاحتياطية</numerusform><numerusform>تم إنشاء النسخة الاحتياطية</numerusform><numerusform>تم إنشاء النسخ الاحتياطية</numerusform><numerusform>تم إنشاء النسخ الاحتياطية</numerusform><numerusform>تم إنشاء النسخ الاحتياطية</numerusform><numerusform>تم إنشاء النسخ الاحتياطية</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>We&apos;re backing up your folder. The time this takes depends on the files in this folder.</source>
         <translatorcomment>Label indicating that the backup configuration was successfull and it is being uploaded.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>نحن نقوم بعمل نسخة احتياطية من مجلداتك. يعتمد الوقت الذي يستغرقه هذا على الملفات الموجودة في المجلدات.</numerusform><numerusform>نحن نقوم بعمل نسخة احتياطية من مجلدك. يعتمد الوقت الذي يستغرقه هذا على الملفات الموجودة في المجلد.</numerusform><numerusform>نحن نقوم بعمل نسخة احتياطية من مجلداتك. يعتمد الوقت الذي يستغرقه هذا على الملفات الموجودة في المجلدات.</numerusform><numerusform>نحن نقوم بعمل نسخة احتياطية من مجلداتك. يعتمد الوقت الذي يستغرقه هذا على الملفات الموجودة في المجلدات.</numerusform><numerusform>نحن نقوم بعمل نسخة احتياطية من مجلداتك. يعتمد الوقت الذي يستغرقه هذا على الملفات الموجودة في المجلدات.</numerusform><numerusform>نحن نقوم بعمل نسخة احتياطية من مجلداتك. يعتمد الوقت الذي يستغرقه هذا على الملفات الموجودة في المجلدات.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Problem backing up folder</source>
         <translatorcomment>Label that indicates that there happened an error backing up a folder/folders</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>مشكلة في النسخ الاحتياطي للمجلدات</numerusform><numerusform>مشكلة في النسخ الاحتياطي للمجلد</numerusform><numerusform>مشكلة في النسخ الاحتياطي للمجلدات</numerusform><numerusform>مشكلة في النسخ الاحتياطي للمجلدات</numerusform><numerusform>مشكلة في النسخ الاحتياطي للمجلدات</numerusform><numerusform>مشكلة في النسخ الاحتياطي للمجلدات</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>This folder wasn&apos;t backed up. Try again.</source>
         <translatorcomment>Label that indicates that there happened an error backing up a folder/folders</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>لم يتم نسخ هذا المجلد احتياطيًا. حاول مرة أخرى. </numerusform><numerusform>لم يتم نسخ هذا المجلد احتياطيًا. حاول مرة أخرى. </numerusform><numerusform>لم يتم نسخ هذه المجلدات احتياطيًا. حاول مرة أخرى. </numerusform><numerusform>لم يتم نسخ هذه المجلدات احتياطيًا. حاول مرة أخرى. </numerusform><numerusform>لم يتم نسخ هذه المجلدات احتياطيًا. حاول مرة أخرى. </numerusform><numerusform>لم يتم نسخ هذه المجلدات احتياطيًا. حاول مرة أخرى. </numerusform></translation>
     </message>
     <message>
         <source>Folder is already selected. Select a different folder.</source>
         <translatorcomment>Warning message that indicates that the folder that the user is trying to select is already selected</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم تحديد المجلد بالفعل. حدد مجلدًا مختلفًا.</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
         <translatorcomment>Text shown at the end of a warning dialog, asking the user if they want to proceed with the action in spite of the warning</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>هل تريد المتابعة؟</translation>
     </message>
     <message>
         <source>1. [B]Select[/B] folders to backup</source>
         <translatorcomment>Title for the first step of the backups wizard, instructing the user to select folders to backup</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>1. [B]حدد[/B] المجلدات لإجراء نسخ احتياطي لها</translation>
     </message>
     <message>
         <source>2. [B]Confirm[/B] backup settings</source>
         <translatorcomment>Title for the second step of the backups wizard, instructing the user to confirm his choice</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>2. قم [B]بتأكيد[/B] إعدادات النسخ الاحتياطي</translation>
     </message>
     <message>
         <source>Are you sure you want to cancel? All changes will be lost.</source>
         <translatorcomment>Warning dialog that appears when user click in cancel button in backup wizard and it will be closed.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>هل تريد الإلغاء؟ سوف تفقد كل التغيرات.</translation>
     </message>
     <message>
         <source>Choose directory</source>
         <translatorcomment>Folder selector window title text</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>اختر مجلد</translation>
     </message>
     <message>
         <source>Error: %1</source>
         <translatorcomment>Placeholder will show the error message, this is being shown in a tooltip</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>خطأ: %1</translation>
+    </message>
+    <message>
+        <source>View in backup centre</source>
+        <translatorcomment>Text for a button allowing the user to view the newly created backup i nthe Backup center (in the webclient)</translatorcomment>
+        <translation>عرض في مركز النسخ الاحتياطي</translation>
     </message>
 </context>
 <context>
@@ -779,7 +779,7 @@
     <message>
         <source>Do you want to continue?</source>
         <translatorcomment>Warning dialog body text that show up a warning message but allows you to continue.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>هل تريد المتابعة؟</translation>
     </message>
 </context>
 <context>
@@ -905,11 +905,11 @@
     <message>
         <source>All the queued transfers from your current download will be cancelled.</source>
         <translatorcomment>Dialog messages which warns the user about the potential problems of cancelling the folder scanning</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>سيتم إلغاء جميع عمليات التراسل في قائمة الانتظار في التنزيل الحالي الخاص بك.</translation>
     </message>
     <message>
         <source>Cancelling…</source>
-        <translation type="unfinished"></translation>
+        <translation>جارٍ الإلغاء ...</translation>
     </message>
 </context>
 <context>
@@ -1037,12 +1037,12 @@
     <message>
         <source>MEGAsync has detected a problem. These are the details:</source>
         <translatorcomment>Label to indicate that a crash has occured and the detailed stacktrace of the problem.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>اكتشف تطبيق ميغا MEGA وجود مشكلة. هذه هي التفاصيل:</translation>
     </message>
     <message>
         <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
         <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>يمكنك مساعدتنا في تحسين تطبيق MEGA عن طريق إرسال تقرير الخطأ هذا. إنه لا يحتوي على أي معلومات شخصية. إذا كنت ترغب في تزويدنا بمزيد من التفاصيل فيرجى كتابتها أدناه:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1246,12 +1246,12 @@
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>انتهت صلاحية حساب الأعمال الخاص بك</translation>
+        <translation>الحساب غير مفعل</translation>
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation>انتهت صلاحية للقراءة فقط لحسابك حتى تقوم بمتابعة الدفعات المطلوبة.</translation>
+        <translation>تم إلغاء تفعيل حسابك كحساب للقراءة فقط حتى تقوم بمتابعة الدفعات المطلوبة.</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -1440,12 +1440,12 @@
     <message>
         <source>loading time…</source>
         <translatorcomment>Text shown while the local file/folder modified time is calculated</translatorcomment>
-        <translation>وقت الترفيع…</translation>
+        <translation>جاري حساب الوقت...</translation>
     </message>
     <message>
         <source>loading size…</source>
         <translatorcomment>Text shown while the local file/folder size is calculated</translatorcomment>
-        <translation>حجم الترفيع ...</translation>
+        <translation>جاري حساب الحجم...</translation>
     </message>
     <message>
         <source>Learn more</source>
@@ -1542,7 +1542,7 @@
     <message>
         <source>You can not sync a shared folder without Full Access permissions</source>
         <translatorcomment>Label to inform a user about the incompatibility of sync a shared folder without Full Access permissions</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكنك مزامنة مجلد مشترك بدون أذونات الوصول الكامل</translation>
     </message>
     <message>
         <source>Select</source>
@@ -1555,7 +1555,7 @@
     <message>
         <source>Login</source>
         <translatorcomment>Button label to start the Login process. (String as short as possible)</translatorcomment>
-        <translation>تسجيل الدخول</translation>
+        <translation>تسجيل الدخول</translation>
     </message>
     <message>
         <source>Create account</source>
@@ -1655,7 +1655,7 @@
     <message>
         <source>Log out</source>
         <translatorcomment>Button label to log out the current account.</translatorcomment>
-        <translation>الخروج</translation>
+        <translation>تسجيل الخروج</translation>
     </message>
     <message>
         <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
@@ -1816,12 +1816,12 @@
     <message>
         <source>Open Transfer Manager</source>
         <translatorcomment>Tooltip for the button that open transfer manager dialog</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>افتح مدير تراسل المعطيات</translation>
     </message>
     <message>
         <source>Show MEGAsync options</source>
         <translatorcomment>Tooltip for the button that opens MEGAsync options menu</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>عرض الخيارات</translation>
     </message>
     <message>
         <source>The process is taking longer than expected. Please wait...</source>
@@ -2023,34 +2023,34 @@
         <translation>لا يمكن فتح المجلد. تحقق من أن المجلد الموجود في السواقة المحلية لم يتم حذفه أو نقله.</translation>
     </message>
     <message>
-        <source>Add Backups</source>
-        <translatorcomment>Info dialog menu entry for backups</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Some syncs and backups have been disabled</source>
         <translatorcomment>Warning message title shown on info dialog</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم تعطيل بعض عمليات المزامنة والنسخ الاحتياطي</translation>
     </message>
     <message>
         <source>Something went wrong while trying to backup and sync your folders.</source>
         <translatorcomment>Warning message body shown on info dialog</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>حدث خطأ ما أثناء محاولة نسخ مجلداتك احتياطيًا ومزامنتها.</translation>
     </message>
     <message>
         <source>One or more backups have been disabled</source>
         <translatorcomment>Warning message title shown on info dialog</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم تعطيل واحدة أو أكثر من عمليات النسخ الاحتياطي</translation>
     </message>
     <message>
         <source>Something went wrong while trying to backup your folders.</source>
         <translatorcomment>Warning message body shown on info dialog</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>حدث خطأ ما أثناء محاولة نسخ مجلداتك احتياطيًا.</translation>
     </message>
     <message>
         <source>Error adding %1:</source>
         <translatorcomment>Error label displayed when it fails adding a sync or backup. Placeholder will show the name of the sync. After the two dots an error message is displayed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>خطأ في إضافة%1:</translation>
+    </message>
+    <message>
+        <source>Add Backup</source>
+        <translatorcomment>Tooltip message shown while hovering backups button.</translatorcomment>
+        <translation>إضافة نسخة احتياطية</translation>
     </message>
 </context>
 <context>
@@ -2073,7 +2073,7 @@
     <message>
         <source>Copy link to file</source>
         <translatorcomment>Tooltip for copy linr</translatorcomment>
-        <translation>انسخ الرابط إلى الملف</translation>
+        <translation>انسخ الرابط إلى الحافظة</translation>
     </message>
     <message>
         <source>Added [A]</source>
@@ -2104,12 +2104,12 @@
     <message>
         <source>Login or create an account to start using MEGA Desktop app.</source>
         <translatorcomment>Description label to inform the user about next step in order to use MEGA Desktop app. Users will need to login or create an account.</translatorcomment>
-        <translation>قم بتسجيل الدخول أو إنشاء حساب لبدء استخدام تطبيق ميغا MEGA الخاص بسطح المكتب.</translation>
+        <translation>قم بتسجيل الدخول أو إنشاء حساب لبدء استخدام تطبيقنا.</translation>
     </message>
     <message>
         <source>You need to log into MEGA account to use the MEGA desktop app.</source>
         <translatorcomment>Description label to indicate the user needs to log in in order to fully use MEGA desktop app.</translatorcomment>
-        <translation>تحتاج إلى تسجيل الدخول إلى حساب ميغا MEGA لاستخدام تطبيق ميغا للحاسوب المكتبي MEGA desktop.</translation>
+        <translation>قم بتسجيل الدخول إلى حساب ميغا MEGA الخاص بك لاستخدام تطبيقنا.</translation>
     </message>
     <message>
         <source>Create account</source>
@@ -2124,7 +2124,7 @@
     <message>
         <source>Know more about MEGA desktop app. [A]Read more[/A]</source>
         <translatorcomment>Label with hyperlink to sync client webpage to know more about MEGA desktop app. Keep placeholders.</translatorcomment>
-        <translation>تعرف على المزيد حول تطبيق ميغا MEGA الخاص بالحاسوب المكتبي. [A] اقرأ المزيد [/A]</translation>
+        <translation>لمعرفة المزيد حول تطبيقنا. [A]اقرأ المزيد[/A]</translation>
     </message>
 </context>
 <context>
@@ -2225,7 +2225,7 @@
     <message>
         <source>MEGAsync is now running. Click here to open the status window.</source>
         <translatorcomment>Notification message that MEGAsync is actually running.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>التطبيق قيد التشغيل الآن. انقر هنا لفتح نافذة الحالة.</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
@@ -2235,7 +2235,7 @@
     <message>
         <source>About MEGAsync</source>
         <translatorcomment>Title of the dialog that displays the version code of MEGAsync.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>حول</translation>
     </message>
     <message>
         <source>The link has been copied to the clipboard</source>
@@ -2280,7 +2280,7 @@
     <message>
         <source>MEGAsync has been updated</source>
         <translatorcomment>Notification message launched when an update has been succesfully applied.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم تحديث التطبيق</translation>
     </message>
     <message>
         <source>Waiting</source>
@@ -2347,12 +2347,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
         <translatorcomment>Notification message launched when an user logged in succesfully. String as short as possible.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>التطبيق قيد التشغيل الآن. انقر هنا لفتح نافذة الحالة.</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
         <translatorcomment>Notification message launched when an user logged in succesfully. String as short as possible.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>التطبيق قيد التشغيل الآن. انقر هنا لفتح نافذة الحالة.</translation>
     </message>
     <message>
         <source>Show status</source>
@@ -2372,7 +2372,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
         <translatorcomment>Notification message launched when a connectivity problem occurs.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>التطبيق غير قادر على الاتصال. يرجى التحقق من الاتصال بالإنترنت و إعدادات جدار الحماية على جهازك. لاحظ أن معظم برامج مكافحة الفيروسات تشتمل على جدار حماية.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
@@ -2442,7 +2442,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log)</source>
         <translatorcomment>Notification message shown when the DEBUG mode is enabled.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم تمكين وضع Debug. يتم إنشاء سجل يسمى ”MEGAsync.log“على سطح المكتب الخاص بك.</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The download has been cancelled</source>
@@ -2478,7 +2478,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
         <translatorcomment>Message shown to the user to inform that MEGAsync is not able to find a systray to place tray icon</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>لم نتمكن من العثور على شريط المهام لوضع رمز شريط مهام التطبيق فيه. حاول تشغيل التطبيق مرة أخرى.</translation>
     </message>
     <message>
         <source>Error getting link:</source>
@@ -2517,7 +2517,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however you might not receive new updates.</source>
         <translatorcomment>Message shown to the user to inform that he is using an operating system that will be unsupported soon</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>سيستمر التطبيق في العمل ولكن قد لا تتلقى تحديثات جديدة.</translation>
     </message>
     <message>
         <source>Password changed</source>
@@ -2567,7 +2567,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>انتهت صلاحية حساب الأعمال الخاص بك</translation>
+        <translation>حسابك غير مفعل</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -2577,7 +2577,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message shown to admin business account when a payment has failed. </translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم إلغاء تفعيل حساب الأعمال Business الخاص بك بسبب فشل الدفع. لن تتمكن من الوصول إلى البيانات المخزنة في حسابك حتى تقوم بالدفع و إعادة تفعيل اشتراكك.</translation>
     </message>
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
@@ -2592,7 +2592,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>This month&apos;s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</source>
         <translatorcomment>Informative message shown to the user when a payment has failed for a business account.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>فشل الدفع لهذا الشهر. يرجى حل مشكلة الدفع الخاصة بك في أقرب وقت ممكن لتجنب إلغاء تفعيل حسابك.</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -2602,7 +2602,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
         <translatorcomment>Informative message shown when a business account is expired and the user can only browse data and none operation (upload, download, creation..) is allowed.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم [A]إلغاء تفعيل[/A] حسابك. يمكنك فقط تصفح البيانات الخاصة بك.</translation>
     </message>
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
@@ -2632,7 +2632,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
         <translatorcomment>Informative message box shown if user is running an old Win version (vista or previous), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>سيستمر التطبيق في العمل ومع ذلك، لن يتم دعم التحديثات للإصدارات السابقة لنظام التشغيل ويندوز Windows 7.</translation>
     </message>
     <message>
         <source>Transferring</source>
@@ -2672,7 +2672,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
         <translatorcomment>Informative message box shown if user is running an old OSX version (previous than Yosemite), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>سيستمر التطبيق في العمل ولكن لن يتم دعم التحديثات بعد الآن للإصدارات السابقة لـ OS X Yosemite قريبًا.</translation>
     </message>
     <message>
         <source>Your syncs have been disabled</source>
@@ -2717,12 +2717,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>A new version of MEGAsync is available. Click on this message to install it</source>
         <translatorcomment>System notification to inform the user that there is a new version of MEGAsync available for update. Windows version.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>يتوفر إصدار جديد من هذا التطبيق. انقر فوق هذه الرسالة لتثبيتها.</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available</source>
         <translatorcomment>System notification to inform the user that there is a new version of MEGAsync available for update. macOS version cannot be installed making click so, a new string is provided</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>يتوفر إصدار جديد من هذا التطبيق.</translation>
     </message>
     <message>
         <source>%1 and %2 were successfully uploaded</source>
@@ -2738,7 +2738,13 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>There is an active transfer. Exit the app?
 Transfer will automatically resume when you re-open the app.</source>
         <translatorcomment>Messagebox text to let the user know that there are active transfers when closing the app. The user will be able to exit and pause them, or stop the exit action.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>هناك عملية تراسل نشطة. هل تريد الخروج من التطبيق؟
+سيتم استئناف عملية التراسل تلقائيًا عند إعادة فتح التطبيق.</numerusform><numerusform>هناك عملية تراسل نشطة. هل تريد الخروج من التطبيق؟
+سيتم استئناف عملية التراسل تلقائيًا عند إعادة فتح التطبيق.</numerusform><numerusform>هناك عمليتا تراسل نشطتين. هل تريد الخروج من التطبيق؟
+سيتم استئناف عمليتا التراسل تلقائيًا عند إعادة فتح التطبيق.</numerusform><numerusform>هناك عمليات تراسل نشطة. هل تريد الخروج من التطبيق؟
+سيتم استئناف عمليات التراسل تلقائيًا عند إعادة فتح التطبيق.</numerusform><numerusform>هناك عمليات تراسل نشطة. هل تريد الخروج من التطبيق؟
+سيتم استئناف عمليات التراسل تلقائيًا عند إعادة فتح التطبيق.</numerusform><numerusform>هناك عمليات تراسل نشطة. هل تريد الخروج من التطبيق؟
+سيتم استئناف عمليات التراسل تلقائيًا عند إعادة فتح التطبيق.</numerusform></translation>
     </message>
     <message>
         <source>Exit app</source>
@@ -2753,67 +2759,67 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Some syncs and backups have been disabled</source>
         <translatorcomment>Tooltip message for tray icon when some syncs and backups are disabled</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم تعطيل بعض عمليات المزامنة والنسخ الاحتياطي</translation>
     </message>
     <message>
         <source>One or more backups have been disabled</source>
         <translatorcomment>Tooltip message for tray icon when some backups are disabled</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم تعطيل واحدة أو أكثر من عمليات النسخ الاحتياطي</translation>
     </message>
     <message>
         <source>Error adding %1:</source>
         <translatorcomment>Error label displayed when it fails adding a sync or backup. Placeholder will show the name of the sync. After the two dots an error message is displayed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>خطأ في إضافة%1:</translation>
     </message>
     <message>
         <source>Your syncs and backups have been disabled</source>
         <translatorcomment>Warning message shown when  all the syncs and backups have been disabled</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم تعطيل عمليات المزامنة والنسخ الاحتياطي:</translation>
     </message>
     <message>
         <source>Your backups have been disabled</source>
         <translatorcomment>Warning message shown when all the backups have been disabled</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم تعطيل النسخ الاحتياطي الخاص بك:</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been temporarily disabled</source>
         <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder displays backup name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم تعطيل نسخك الاحتياطي &quot;%1&quot; مؤقتًا:</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم تعطيل نسخك الاحتياطي &quot;%1&quot; لأن المجلد المحلي غير موجود.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم تعطيل نسخك الاحتياطي &quot;%1&quot; لأن مزامنة المجلدات المشاركة في VirtualBox غير مدعومة بسبب أوجه القصور في نظام الملفات هذا.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم تعطيل نسخك الاحتياطي &quot;%1&quot; لأن مجلد ميغا MEGA في سلة المحذوفات.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم تعطيل نسخك الاحتياطي &quot;%1&quot;. لا يمتلك مجلد ميغا MEGA (أو جزء منه) إذن الوصول الكامل.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder has changed</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم تعطيل نسخك الاحتياطي &quot;%1&quot; بسبب تغيير المجلد المحلي.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder has changed</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم تعطيل نسخك الاحتياطي &quot;%1&quot; بسبب تغيير مجلد ميغا MEGA.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled. Reason: %2</source>
         <translatorcomment>Notification message launched when a backup is disabled. Keep &amp;quot;%1&amp;quot; code because is filled with the name of the backup at runtime and %2 with the reason of the error.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم تعطيل نسخك الاحتياطي &quot;%1&quot;. بسبب: %2</translation>
     </message>
 </context>
 <context>
@@ -2956,7 +2962,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Not accessible due to ToS/AUP violation</source>
         <translatorcomment>Error shown when import a link that has violated ToS/AUP.</translatorcomment>
-        <translation>لا يمكن الوصول إليه بسبب انتهاك شروط استخدام الخدمة أو سياسة الاستخدام المقبول ToS/AUP</translation>
+        <translation>لا يمكن الوصول إليه لأنه ينتهك شروط الخدمة الخاصة بنا</translation>
     </message>
     <message>
         <source>Upload produces recursivity</source>
@@ -2976,12 +2982,12 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
         <translatorcomment>Error triggered by SDK when an account has been suspended due to copyright violations.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم تعليق الحساب بسبب انتهاكات حقوق النشر. لقد أرسلنا لك بريدًا إلكترونيًا يحتوي على مزيد من المعلومات حول هذا الموضوع.</translation>
     </message>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم إنهاء الحساب بسبب انتهاك شروط خدمة ميغا MEGA، مثل إساءة استخدام حقوق الآخرين و/أو مشاركة واستيراد البيانات غير القانونية أو إساءة استخدام النظام.</translation>
     </message>
 </context>
 <context>
@@ -3052,17 +3058,17 @@ Transfer will automatically resume when you re-open the app.</source>
     <message numerus="yes">
         <source>Today at %1</source>
         <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened today. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>اليوم الساعة %1</numerusform><numerusform>اليوم الساعة %1</numerusform><numerusform>اليوم الساعة %1</numerusform><numerusform>اليوم الساعة %1</numerusform><numerusform>اليوم الساعة %1</numerusform><numerusform>اليوم الساعة %1</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Yesterday at %1</source>
         <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened yesterday. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>البارحة الساعة %1</numerusform><numerusform>البارحة الساعة %1</numerusform><numerusform>البارحة الساعة %1</numerusform><numerusform>البارحة الساعة %1</numerusform><numerusform>البارحة الساعة %1</numerusform><numerusform>البارحة الساعة %1</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 at %2</source>
         <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was previously to yesterday. %1 represents the date (day month and year), while %2 represents the hour). Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 الساعة %2</numerusform><numerusform>%1 الساعة %2</numerusform><numerusform>%1 الساعة %2</numerusform><numerusform>%1 الساعة %2</numerusform><numerusform>%1 الساعة %2</numerusform><numerusform>%1 الساعة %2</numerusform></translation>
     </message>
     <message>
         <source>Recently used</source>
@@ -3254,12 +3260,12 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>You can&apos;t run MEGA Desktop App from this location. Move it into the Applications folder then run it.</source>
         <translatorcomment>Error message shown when the user is trying to run MEGA Desktop App from a path different than Applications. Only affects to macOS.</translatorcomment>
-        <translation>لا يمكنك تشغيل تطبيق ميغا للحاسوب المكتبي MEGA Desktop من هذا الموقع. انقله إلى مجلد التطبيقات ثم قم بتشغيله.</translation>
+        <translation>لا يمكنك تشغيل تطبيق الحاسوب المكتبي من هذا الموقع. انقله إلى مجلد التطبيقات ثم قم بتشغيله.</translation>
     </message>
     <message>
         <source>Account expired (business or Pro Flexi)</source>
         <translatorcomment>Label to show that the current account (either business or Pro Flexi) is expired during a SDK operation.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>انتهت صلاحية الحساب</translation>
     </message>
 </context>
 <context>
@@ -3302,7 +3308,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Get link</source>
         <translatorcomment>Context menu action to get transfer link</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>إحصل على الرابط</translation>
     </message>
     <message>
         <source>Open in MEGA</source>
@@ -3317,7 +3323,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Error opening file</source>
         <translatorcomment>Text on an error messagebox because a local file could not be opened</translatorcomment>
-        <translation>خطأ في فتح الملف</translation>
+        <translation>لا يمكن فتح الملف. تحقق من أن الملف الموجود في السواقة المحلية لم يتم حذفه أو نقله.</translation>
     </message>
     <message numerus="yes">
         <source>Pause transfer</source>
@@ -3365,7 +3371,7 @@ All your transfers in this category will be cancelled.</source>
 Your incomplete sync transfers won&apos;t be cancelled.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
         <translation>إلغاء عمليات تراسل المعطيات؟
-سيتم إلغاء جميع عمليات تراسل المعطيات الغير مكتملة و المتزامنة الخاصة بك.</translation>
+لن يتم إلغاء عمليات تراسل المعطيات المتزامنة غير المكتملة. سيتم إلغاء جميع عمليات تراسل المعطيات الأخرى.</translation>
     </message>
     <message>
         <source>Cancel transfers?
@@ -3373,8 +3379,8 @@ Your incomplete sync transfers won't be cancelled
 All the other transfers will be cancelled and cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
         <translation>إلغاء عمليات تراسل المعطيات؟
-لن يتم إلغاء عمليات تراسل المعطيات المتزامنة غير المكتملة
-سيتم إلغاء جميع عمليات تراسل المعطيات الأخرى و مسحها.</translation>
+لن يتم إلغاء عمليات تراسل المعطيات المتزامنة غير المكتملة.
+سيتم إلغاء جميع عمليات تراسل المعطيات الأخرى ومسحها.</translation>
     </message>
     <message>
         <source>Clear transfers?
@@ -3430,7 +3436,7 @@ All the selected completed transfers in this category will be cleared.</source>
 Your selected incomplete sync transfers won&apos;t be cancelled.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
         <translation>إلغاء عمليات تراسل المعطيات؟
-لن يتم إلغاء جميع عمليات تراسل المعطيات المحددة و الغير مكتملة و المتزامنة الخاصة بك.</translation>
+لن يتم إلغاء عمليات تراسل المعطيات المحددة الغير المكتملة و المتزامنة . سيتم إلغاء جميع عمليات تراسل المعطيات المحددة الأخرى.</translation>
     </message>
     <message>
         <source>Clear transfer?</source>
@@ -3565,7 +3571,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Cloud drive</source>
         <translatorcomment>Node selector button Text. Switch the view to show only the cloud drive nodes (files and folders)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>السواقة السحابية</translation>
     </message>
     <message>
         <source>Incoming shares</source>
@@ -3879,7 +3885,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&apos;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>الملفات والمجلدات لها مالك وتنتمي إلى مجموعة من المستخدمين. باستخدام مربع الحوار هذا يمكنك منح أذونات وصول مختلفة للملفات والمجلدات الجديدة التي تم إنشاؤها بواسطة تطبيق الحاسوب المكتبي للمستخدمين الذين ينتمون إلى نفس المجموعة وبقية المستخدمين في الكمبيوتر. إذا لم تكن بحاجة إلى تغييرهم فالرجاء تركهم على الإعدادات الافتراضية لأسباب أمنية.</translation>
     </message>
     <message>
         <source>Owner permissions:</source>
@@ -4041,35 +4047,33 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Sync transfers cannot be cancelled individually.
 Please delete the folder sync from settings to cancel them.</source>
         <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for windows and linux)</translatorcomment>
-        <translation>لا يمكن إلغاء عمليات تراسل المعطيات المزامنة بشكل فردي.
-يرجى حذف مزامنة المجلد من الإعدادات لإلغائهم.</translation>
+        <translation>لا يمكن إلغاء عمليات تراسل المعطيات المتزامنة. لإزالة المزامنة انتقل إلى الإعدادات في تطبيق الحاسوب المكتبي واحذف المجلد المتزامن.</translation>
     </message>
     <message>
         <source>Sync transfers cannot be cancelled individually.
 Please delete the folder sync from preferences to cancel them.</source>
         <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for macOS)</translatorcomment>
-        <translation>لا يمكن إلغاء عمليات تراسل المعطيات المزامنة بشكل فردي.
-يرجى حذف مزامنة المجلد من التفضيلات لإلغائهم.</translation>
+        <translation>لا يمكن إلغاء عمليات تراسل المعطيات المتزامنة. لإزالة المزامنة انتقل إلى التفضيلات في تطبيق الحاسوب المكتبي واحذف المجلد المتزامن.</translation>
     </message>
     <message>
         <source>One or more backups have been disabled. Go to settings to enable them again.</source>
         <translatorcomment>Warning message shown when some backups are disabled. Tell the userto go to settings to solve the issue (win/linux)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم تعطيل واحد أو أكثر من النسخ الاحتياطية. انتقل إلى الإعدادات لتمكينها مرة أخرى.</translation>
     </message>
     <message>
         <source>Some syncs and backups have been disabled. Go to settings to enable them again.</source>
         <translatorcomment>Warning message shown when some backups and syncs are disabled. Tell the userto go to settings to solve the issue (win/linux)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم تعطيل بعض عمليات المزامنة والنسخ الاحتياطية. انتقل إلى الإعدادات لتمكينها مرة أخرى.</translation>
     </message>
     <message>
         <source>One or more backups have been disabled. Go to preferences to enable them again.</source>
         <translatorcomment>Warning message shown when some backups are disabled. Tell the userto go to settings to solve the issue (mac)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم تعطيل واحد أو أكثر من النسخ الاحتياطية. انتقل إلى التفضيلات لتمكينها مرة أخرى.</translation>
     </message>
     <message>
         <source>Some syncs and backups have been disabled. Go to preferences to enable them again.</source>
         <translatorcomment>Warning message shown when some backups and syncs are disabled. Tell the userto go to settings to solve the issue (mac)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم تعطيل بعض عمليات المزامنة والنسخ الاحتياطية. انتقل إلى التفضيلات لتمكينها مرة أخرى.</translation>
     </message>
 </context>
 <context>
@@ -4083,7 +4087,13 @@ Please delete the folder sync from preferences to cancel them.</source>
 - Improved performance.
 </source>
         <translatorcomment>Changelog for v4.8.0 version</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- تمت إضافة دعم لحسابات برو Pro Flexi.
+- تمت إضافة ميزة النسخ الاحتياطي الجديدة.
+- تم إصلاح المشكلات التي تم اكتشافها في macOS Ventura.
+- إصلاح الأعطال المكتشفة على أنظمة التشغيل ويندوز Windows و لينيكس Linux و ماك او اس macOS .
+- إصلاح مشاكل الترجمة.
+- تحسين الأداء.
+</translation>
     </message>
 </context>
 <context>
@@ -4488,7 +4498,8 @@ Please verify the correct file name was given.</source>
         <source>&apos;%1&apos; is write protected.
 Do you want to delete it anyway?</source>
         <translatorcomment>Warning message when a write protected file is about to be delete</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>“%1” محمي ضد التعديل.
+هل تريد حذفه على أي حال؟</translation>
     </message>
 </context>
 <context>
@@ -4593,7 +4604,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Stop backing up folder?</source>
         <translatorcomment>Backup removal dialog title</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>التوقف عن النسخ الاحتياطي للمجلد؟</translation>
     </message>
     <message>
         <source>To stop backing up this folder, you need to either move it or delete it.</source>
@@ -4608,7 +4619,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Move this folder from backups to another location in your cloud drive to get full access to your data. This folder will stop being backed up.</source>
         <translatorcomment>Radio button description</translatorcomment>
-        <translation>انقل هذا المجلد من النسخ الاحتياطية إلى موقع آخر في محرك السواقة السحابية لديك للوصول الكامل إلى بياناتك. سيتوقف نسخ هذا المجلد احتياطيًا.</translation>
+        <translation>انقل هذا المجلد من النسخ الاحتياطية إلى موقع آخر في سواقتك السحابية لتحصل على إذن الوصول الكامل إلى بياناتك. سيتوقف نسخ هذا المجلد احتياطيًا.</translation>
     </message>
     <message>
         <source>Move to:</source>
@@ -4628,7 +4639,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. This action cannot be undone.</source>
         <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>سيتم حذف المجلد من ميغا MEGA. لن يتم حذفه من جهاز الكمبيوتر الخاص بك. لا يمكن التراجع عن هذا الإجراء.</translation>
     </message>
     <message>
         <source>Confirm</source>
@@ -4687,7 +4698,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Don&apos;t close the app. If you close, transfers not yet queued will be lost.</source>
         <translatorcomment>Message displayed in scanning widget to warn the user of consequences of closing the app.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>لا تغلق التطبيق. إذا أغلقت فستفقد عمليات تراسل المعطيات التي لم يتم وضعها في قائمة الانتظار.</translation>
     </message>
     <message>
         <source>Scanning</source>
@@ -4697,7 +4708,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Creating folders</source>
         <translatorcomment>Label used to display when the scanning widget is on the &quot;Creating folders&quot; step</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>جاري إنشاء المجلدات...</translation>
     </message>
     <message>
         <source>%1/%2</source>
@@ -4760,7 +4771,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Log out</source>
         <translatorcomment>Button label to log out of the application. String as short as possible.</translatorcomment>
-        <translation>الخروج</translation>
+        <translation>تسجيل الخروج</translation>
     </message>
     <message>
         <source>Upgrade</source>
@@ -4817,7 +4828,7 @@ Do you want to delete it anyway?</source>
 
 Do you want to restart MEGAsync now?</source>
         <translatorcomment>Message displayed asking for confirmation to the user to restart the application for a Full scan operation.</translatorcomment>
-        <translation>تطبيق MEGAsync سيجري إعادة تفحص لكل المجلدات المزامنة عند إعادة التشغيل. هل تريد إعادة تشغيل MEGAsync الان؟</translation>
+        <translation>سيجري التطبيق فحصًا كاملاً للمجلدات المتزامنة عند بدء تشغيله. هل تريد إعادة تشغيل التطبيق الآن؟</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -4862,7 +4873,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
         <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
-        <translation>احتفظ دائمًا بالتحكم الشخصي بمفتاح الاستعادة (على سبيل المثال على جهازك أو وحدة تخزين خارجية أو طباعة).</translation>
+        <translation>حافظ على مفتاح الاستعادة الخاص بك بحوزتك دائماً (مثلا على جهازك الشخصي أو على وسيط تخزين خارجي أو اطبعه).</translation>
     </message>
     <message>
         <source>Exclude by size</source>
@@ -4887,7 +4898,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Do you want to restart MEGAsync now?</source>
         <translatorcomment>Message shown when clicking on restart MEGAsync button in Settings.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>هل تريد إعادة تشغيل التطبيق الآن؟</translation>
     </message>
     <message>
         <source>Permissions</source>
@@ -5102,7 +5113,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Restart MEGA Desktop App to apply changes.</source>
         <translatorcomment>Informative text shown in Folders pane, letting the user know that an application restart is required to apply the changes he just made.</translatorcomment>
-        <translation>أعد تشغيل تطبيق ميغا للحاسوب المكتبي MEGA Desktop لتثبيت التغييرات.</translation>
+        <translation>أعد تشغيل التطبيق لتطبيق التغييرات.</translation>
     </message>
     <message>
         <source>Change Settings…</source>
@@ -5247,7 +5258,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Restart MEGAsync</source>
         <translatorcomment>Title text of dialog shown when clicking on Restart application button. Keep as short as possible.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>إعادة التشغيل</translation>
     </message>
     <message>
         <source>No limit</source>
@@ -5335,18 +5346,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>إعدادات وضع السكون</translation>
     </message>
     <message>
-        <source>Prevent the computer from going to sleep when transfers or syncs are in progress.
-Computer will enter sleep mode once these are complete.</source>
-        <translatorcomment>Sleep/Active mode: Feature description label for keeping the pc awake when there are active transfers</translatorcomment>
-        <translation>منع الكمبيوتر من السكون عندما تكون عمليات التراسل أو المزامنة قيد الإنجاز.
-سيدخل الكمبيوتر في وضع السكون بمجرد اكتمالها.</translation>
-    </message>
-    <message>
-        <source>Note: Some operating systems won&apos;t allow this.</source>
-        <translatorcomment>Sleep/Active mode: Warning message below the description label, as not all the computers can activate the feature to keep it awake if there are transfers active </translatorcomment>
-        <translation>ملاحظة: بعض أنظمة التشغيل لا تسمح بذلك.</translation>
-    </message>
-    <message>
         <source>Sleep mode:</source>
         <translatorcomment>Sleep/Active mode: Settings dialog groupbox title for keeping the pc awake when there are active transfers (macOS)</translatorcomment>
         <translation>وضع السكون</translation>
@@ -5374,127 +5373,132 @@ Computer will enter sleep mode once these are complete.</source>
     <message>
         <source>Backup Folder</source>
         <translatorcomment>Groupbox title, inside the remote backup folder path will be displayed (Linux and windows)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>مجلد النسخ الاحتياطي</translation>
     </message>
     <message>
         <source>View in MEGA</source>
         <translatorcomment>Button text that opens backups folder in webclient</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>عرض في ميغا MEGA</translation>
     </message>
     <message>
         <source>Saving backups…</source>
         <translatorcomment>Label text displayed while backups settings are being saved</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>جاري حفظ النسخ الاحتياطية...</translation>
     </message>
     <message>
         <source>Some folders have not backed up. For more information please hover over the yellow warning icon.</source>
         <translatorcomment>Warning message displayed inside settings dialog indicating that there is a problem with a backup.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>To Backup Center</source>
-        <translatorcomment>Button text that opens backup center in webclient</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>لم يتم نسخ بعض المجلدات احتياطيًا. لمزيد من المعلومات مرر الفأرة فوق رمز التحذير الأصفر.</translation>
     </message>
     <message>
         <source>Backup folder:</source>
         <translatorcomment>Line edit title, remote backup folder path will be displayed (macOS)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>مجلد النسخ الاحتياطي:</translation>
     </message>
     <message>
         <source>Synchronizations and backups will stop working.</source>
         <translatorcomment>Warning message displayed on logout if there are active syncs and backups</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>سيتم تعطيل عمليات المزامنة والنسخ الاحتياطي.</translation>
     </message>
     <message>
         <source>Backups will stop working.</source>
         <translatorcomment>Warning message displayed on logout if there are active backups (not syncs)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>سيتم تعطيل النسخ الاحتياطي.</translation>
     </message>
     <message>
         <source>Synchronizations will stop working.</source>
         <translatorcomment>Warning message displayed on logout if there are active syncs (not backups)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>سيتم تعطيل المزامنة.</translation>
     </message>
     <message>
         <source>Are you sure?</source>
         <translatorcomment>Warning message second part asking if you are sure about continuing with the logout.</translatorcomment>
-        <translation>هل أنت متأكد؟</translation>
+        <translation>هل تريد تسجيل الخروج؟</translation>
     </message>
     <message>
         <source>Error adding sync</source>
         <translatorcomment>Warning message title indicating that an error happened adding a sync.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>خطأ في إضافة المزامنة</translation>
     </message>
     <message>
         <source>Error removing sync</source>
         <translatorcomment>Warning message title indicating that an error happened removing a sync.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>خطأ في إزالة المزامنة</translation>
     </message>
     <message>
         <source>Your sync can&apos;t be removed. Reason: %1</source>
         <translatorcomment>Warning message title indicating that an error happened removing a sync. the reason is given at runtime in place of the placeholder</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن إزالة المزامنة الخاصة بك. بسبب: %1</translation>
     </message>
     <message>
         <source>Error disabling sync</source>
         <translatorcomment>Warning message title indicating that an error happened disabling a sync.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>خطأ في تعطيل المزامنة</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
         <translatorcomment>Warning message indicating that an error happened disabling a sync. First placeholder is the sync name and second placeholder is the error message sent by SDK (reason)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن تعطيل مزامنة &quot;%1&quot;. بسبب: %2</translation>
     </message>
     <message>
         <source>Error adding backup %1</source>
         <translatorcomment>Error message dialog title. Placeholder shows the backup name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>خطأ في إضافة نسخة احتياطية %1</translation>
     </message>
     <message>
         <source>Error removing backup</source>
         <translatorcomment>Error message dialog title</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>خطأ في إيقاف النسخ الاحتياطي</translation>
     </message>
     <message>
         <source>Your backup can&apos;t be removed. Reason: %1</source>
         <translatorcomment>Warning message title indicating that an error happened removing a backup. the reason is given at runtime in place of the placeholder</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن إيقاف النسخ الاحتياطي الخاص بك. بسبب: %1</translation>
     </message>
     <message>
         <source>Error moving or removing remote backup folder</source>
         <translatorcomment>Title of the dialog shown when the deletion or move of the remote backup folder failed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>خطأ في نقل أو حذف مجلد ميغا MEGA للنسخ الاحتياطي</translation>
     </message>
     <message>
         <source>Failed to move or remove the remote backup folder. Reason: %1</source>
         <translatorcomment>Error text when the deletion or move of the remote backup folder failed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تعذر نقل أو حذف مجلد ميغا MEGA للنسخ الاحتياطي. بسبب: %1</translation>
     </message>
     <message>
         <source>Error enabling backup</source>
         <translatorcomment>Title of the dialog shown when enabling a backup failed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>خطأ في تمكين النسخ الاحتياطي</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; can&apos;t be enabled. Reason: %2</source>
         <translatorcomment>Error text when enabling a backup failed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن تمكين النسخ الاحتياطي &quot;%1&quot;. بسبب: %2</translation>
     </message>
     <message>
         <source>Error disabling backup</source>
         <translatorcomment>Title of the dialog shown when enabling a backup failed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>خطأ في تعطيل النسخ الاحتياطي</translation>
     </message>
     <message>
         <source>Pro Flexi</source>
         <translatorcomment>Text label indicating the Pro Flexi tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Pro Flexi</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
         <translatorcomment>Error text when disabling a backup failed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن تعطيل النسخ الاحتياطي &quot;%1&quot;. بسبب: %2</translation>
+    </message>
+    <message>
+        <source>Go to backup centre</source>
+        <translatorcomment>Button text that opens backup center in webclient</translatorcomment>
+        <translation>اذهب إلى مركز النسخ الاحتياطي</translation>
+    </message>
+    <message>
+        <source>Prevent the computer from going to sleep when transfers or syncs are in progress.</source>
+        <translatorcomment>Sleep/Active mode: Feature description label for keeping the pc awake when there are active transfers</translatorcomment>
+        <translation>منع الكمبيوتر من السكون عندما تكون عمليات التراسل أو المزامنة قيد الإنجاز.</translation>
     </message>
 </context>
 <context>
@@ -5678,7 +5682,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Set up Assistant - MEGAsync</source>
         <translatorcomment>Title of the setup assistant dialog. Keep capital letters.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>إعداد المساعد</translation>
     </message>
     <message>
         <source>Full sync</source>
@@ -5820,7 +5824,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Log in</source>
         <translatorcomment>Button label to open Login form</translatorcomment>
-        <translation>تسجيل الدخول</translation>
+        <translation>تسجيل الدخول</translation>
     </message>
     <message>
         <source>I agree with the MEGA [A]Terms of Service[/A]</source>
@@ -5830,7 +5834,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Enjoy MEGAsync</source>
         <translatorcomment>Label displayed when user completes the setup wizard</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>استمتع بتطبيقنا</translation>
     </message>
     <message>
         <source>We are all done</source>
@@ -5840,7 +5844,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Creating folder…</source>
         <translatorcomment>Label shown when an user is creating a remote folder.</translatorcomment>
-        <translation>انشاء المجلد…</translation>
+        <translation>جاري انشاء المجلد…</translation>
     </message>
 </context>
 <context>
@@ -6070,52 +6074,52 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You can&apos;t backup this folder as it&apos;s already synced.</source>
         <translatorcomment>Warning message indicating that a folder can´t be backed up as it is synced.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكنك الاحتفاظ بنسخة احتياطية من هذا المجلد لأنه تمت مزامنته بالفعل.</translation>
     </message>
     <message>
         <source>Folder is already backed up. Select a different one.</source>
         <translatorcomment>Warning message indicating that a folder can´t be backed up as it is already backed up.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم نسخ المجلد احتياطيًا بالفعل. اختر واحداً مختلفاً.</translation>
     </message>
     <message>
         <source>You can&apos;t sync this folder as it&apos;s already synced.</source>
         <translatorcomment>Warning message indicating that a folder can´t be synced again as it is already synced.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكنك مزامنة هذا المجلد لأنه تمت مزامنته بالفعل.</translation>
     </message>
     <message>
         <source>You can&apos;t sync this folder as it&apos;s already backed up.</source>
         <translatorcomment>Warning message indicating that a folder can´t be synced as it is backed up.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكنك مزامنة هذا المجلد لأنه تم نسخه احتياطيًا بالفعل.</translation>
     </message>
     <message>
         <source>You can&apos;t backup this folder as it&apos;s already inside a synced folder.</source>
         <translatorcomment>Warning message indicating that a folder can´t be backed up as it is inside a backed up folder.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكنك عمل نسخة احتياطية من هذا المجلد لأنه داخل مجلد متزامن.</translation>
     </message>
     <message>
         <source>You can&apos;t sync folders that are inside synced folders.</source>
         <translatorcomment>Warning message indicating that a folder can´t be synced as it is inside a synced folder.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكنك مزامنة المجلدات الموجودة داخل المجلدات المتزامنة.</translation>
     </message>
     <message>
         <source>You can&apos;t sync folders that are inside backed up folders.</source>
         <translatorcomment>Warning message indicating that a folder can´t be synced as it is inside a backed up folder.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكنك مزامنة المجلدات الموجودة داخل المجلدات التي تم نسخها احتياطيًا.</translation>
     </message>
     <message>
         <source>You can&apos;t backup this folder as it contains synced folders.</source>
         <translatorcomment>Warning message indicating that the selected folder for sync contains synced folders, ence it can not be synced.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكنك نسخ هذا المجلد احتياطياً لأنه يحتوي على مجلدات متزامنة.</translation>
     </message>
     <message>
         <source>You can&apos;t sync folders that contain synced folders.</source>
         <translatorcomment>Warning message indicating that the selected folder for sync contains synced folders, hence it can not be synced.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكنك مزامنة المجلدات التي تحتوي على مجلدات متزامنة.</translation>
     </message>
     <message>
         <source>You can&apos;t sync folders that contain backed up folders.</source>
         <translatorcomment>Warning message indicating that a folder can´t be synced as it contains backed up folders.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكنك مزامنة المجلدات التي تحتوي على مجلدات تم نسخها احتياطيًا.</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
@@ -6125,74 +6129,76 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
         <translatorcomment>Warning message indicating that megasync is not going to be able to download anything in the selected folder.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>لن يتمكن التطبيق من تنزيل أي شيء هنا.</translation>
     </message>
     <message>
         <source>You can&apos;t backup this folder as it contains backed up folders.</source>
         <translatorcomment>Warning message indicating that the selected folder for backup contains backed up folders, ence it can not be backed up.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكنك عمل نسخة احتياطية من هذا المجلد لأنه يحتوي على مجلدات تم نسخها احتياطيًا.</translation>
     </message>
     <message>
         <source>You can&apos;t backup this folder as it&apos;s already inside a backed up folder.</source>
         <translatorcomment>Warning message indicating that a folder can´t be backed up as it is inside a backed up folder.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكنك إجراء نسخ احتياطي لهذا المجلد لأنه موجود بالفعل داخل مجلد تم نسخه احتياطيًا.</translation>
     </message>
     <message>
         <source>Unable to create backup as selected folder is not valid. Try again.</source>
         <translatorcomment>Text instructing to try creating a backup again. Failure cause: node is not valid</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تعذر إنشاء نسخة احتياطية لأن المجلد المحدد غير صالح. حاول مرة أخرى.</translation>
     </message>
     <message>
         <source>Unable to create backup. Try again and if issue continues, contact [A]Support[/A].</source>
         <translatorcomment>Text instructing to try creating a backup again. If it fails again, they should contact support</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تعذر إنشاء نسخة احتياطية. حاول مرة أخرى وإذا استمرت المشكلة تواصل مع [A]الدعم[/A].</translation>
     </message>
     <message>
         <source>Unable to create backup as the device you&apos;re backing up from doesn&apos;t have a name. Give your device a name and then try again. If issue continues, contact [A]Support[/A].</source>
         <translatorcomment>Text instructing to try creating a backup again.Failure cause: the device does not have a name. If it fails again, they should contact support</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تعذر إنشاء نسخة احتياطية لأن الكمبيوتر الذي تقوم بالنسخ الاحتياطي منه ليس له اسم. قم بتسمية جهاز الكمبيوتر الخاص بك ثم حاول مرة أخرى. إذا استمرت المشكلة تواصل مع [A]الدعم[/A].</translation>
     </message>
     <message>
         <source>Unable to create backup. For further information, contact [A]Support[/A].</source>
         <translatorcomment>Text instructing to try creating a backup again.They should contact support</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تعذر إنشاء نسخة احتياطية. لمزيد من المعلومات تواصل مع [A]الدعم[/A].</translation>
     </message>
     <message>
         <source>You can’t backup “%1” as it’s the root folder. The root folder is either; the top-level folder on your device or computer that holds all your folders and files or the folder where the system or program is installed. We don’t allow users to back up root folders as it may cause file conflicts or errors.
 To continue, select a different folder.</source>
         <translatorcomment>Warning message displayed if user tries to backup the system main hard disk.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكنك نسخ ”%1“ احتياطياً لأنه المجلد الرئيسي. المجلد الرئيسي هو إما مجلد المستوى الأعلى على جهازك أو حاسوبك الذي يحتوي على جميع المجلدات والملفات الخاصة بك أو المجلد الذي تم تثبيت النظام أو البرنامج به. لا نسمح للمستخدمين بالنسخ الاحتياطي للمجلدات الرئيسية حيث قد يتسبب ذلك في حدوث تعارضات أو أخطاء في الملفات.
+للمتابعة اختر مجلدًا مختلفًا.</translation>
     </message>
     <message>
         <source>You can’t sync “%1” as it’s the root folder. The root folder is either; the top-level folder on your device or computer that holds all your folders and files or the folder where the system or program is installed. We don’t allow users to sync root folders as it may cause file conflicts or errors.
 To continue, select a different folder.</source>
         <translatorcomment>Warning message displayed if user tries to sync the system main hard disk.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكنك نسخ ”%1“ احتياطياً لأنه المجلد الرئيسي. المجلد الرئيسي هو إما مجلد المستوى الأعلى على حاسوبك الذي يحتوي على جميع مجلداتك وملفاتك أو المجلد الذي تم تثبيت النظام أو البرنامج به. لا نسمح للمستخدمين بالنسخ الاحتياطي للمجلدات الرئيسية حيث قد يتسبب ذلك في حدوث تعارضات أو أخطاء.
+للمتابعة اختر مجلدًا مختلفًا.</translation>
     </message>
     <message>
         <source>You don&apos;t have enough permissions for this remote folder.</source>
         <translatorcomment>Warning message indicating that a folder can´t be synced as it the remote folder is an incoming share and the current user doesn´t have enought permisions</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ليس لديك إذن وصول كامل لهذا المجلد المشترك ولا يمكنك مزامنته.</translation>
     </message>
     <message>
         <source>Invalid remote path.</source>
         <translatorcomment>The selected remote path for the sync creation is invalid</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن مزامنة مجلد ميغا MEGA هذا.</translation>
     </message>
     <message>
         <source>The selected MEGA folder is already synced.</source>
         <translatorcomment>Warning message indicating that the selected folder is already a synced folder.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تمت مزامنة مجلد ميغا MEGA المحدد بالفعل.</translation>
     </message>
     <message>
         <source>Folder contents already synced.</source>
         <translatorcomment>Warning message indicating that the selected folder have got an active sync bellow the selected path.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تمت مزامنة محتويات المجلد بالفعل.</translation>
     </message>
     <message>
         <source>Folder already synced.</source>
         <translatorcomment>Warning message indicating that the selected folder have got a parent that is already synced.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تمت مزامنة المجلد بالفعل.</translation>
     </message>
 </context>
 <context>
@@ -6200,12 +6206,12 @@ To continue, select a different folder.</source>
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a FAT filesystem.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>أنت تقوم بمزامنة مجلد محلي تم تنسيقه باستخدام نظام ملفات FAT. يحتوي نظام ملفات FAT على أوجه قصور في إدارة الملفات الكبيرة وتعديل الأوقات التي يمكن أن تسبب مشاكل في المزامنة (على سبيل المثال عند تغيير التوقيت الصيفي) لذلك يوصى بشدة بمزامنة المجلدات المنسقة فقط بأنظمة ملفات أكثر موثوقية مثل NTFS (للمزيد من المعلومات [A]هنا[/A]).</translation>
     </message>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a local folder shared with VMWare third party app.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>أنت تقوم بمزامنة مجلد محلي مشترك مع برنامج VMWare. لا تدعم هذه المجلدات إشعارات نظام الملفات، لذا سيتعين على التطبيق أن يقوم بالفحص باستمرار لاكتشاف التغييرات في ملفاتك ومجلداتك. يرجى استخدام مجلد مختلف إن أمكن لتقليل استخدام وحدة المعالجة المركزية.</translation>
     </message>
 </context>
 <context>
@@ -6213,42 +6219,42 @@ To continue, select a different folder.</source>
     <message>
         <source>Sort by state</source>
         <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by state in case the user clicks.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ترتيب حسب الولاية</translation>
     </message>
     <message>
         <source>Local Folder</source>
         <translatorcomment>Sync table header column title</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>مجلد محلي</translation>
     </message>
     <message>
         <source>Sort by folder name</source>
         <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by folder name in case the user clicks.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>فرز حسب اسم المجلد</translation>
     </message>
     <message>
         <source>MEGA Folder</source>
         <translatorcomment>Sync table header column title</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>مجلد ميغا MEGA</translation>
     </message>
     <message>
         <source>Sort by MEGA folder name</source>
         <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by MEGA folder name in case the user clicks.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>فرز حسب اسم مجلد ميغا MEGA</translation>
     </message>
     <message>
         <source>Sync is enabled</source>
         <translatorcomment>Checkbox tooltip in case the sync is enabled.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم تمكين المزامنة</translation>
     </message>
     <message>
         <source>Sync is disabled</source>
         <translatorcomment>Checkbox tooltip in case the sync is disabled.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم تعطيل المزامنة</translation>
     </message>
     <message>
         <source>Click menu for more Sync actions</source>
         <translatorcomment>Menu column item tooltip.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>انقر فوق القائمة لمزيد من إجراءات المزامنة</translation>
     </message>
 </context>
 <context>
@@ -6261,7 +6267,7 @@ To continue, select a different folder.</source>
     <message>
         <source>Remove synced folder</source>
         <translatorcomment>Context menu option that removes the sync.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>قم بإزالة المجلد المتزامن</translation>
     </message>
 </context>
 <context>
@@ -6269,12 +6275,12 @@ To continue, select a different folder.</source>
     <message>
         <source>Local path:</source>
         <translatorcomment>Part of the tooltip text. It indicates that it will be followed by the local path of the sync.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>المسار المحلي:</translation>
     </message>
     <message>
         <source>MEGA path:</source>
         <translatorcomment>Part of the tooltip text. It indicates that it will be followed by the remote path of the sync.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>مسار ميغا MEGA:</translation>
     </message>
 </context>
 <context>
@@ -6282,22 +6288,22 @@ To continue, select a different folder.</source>
     <message>
         <source>Add Sync</source>
         <translatorcomment>Menu option used to add sync</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>أضف مزامنة</translation>
     </message>
     <message>
         <source>Syncs</source>
         <translatorcomment>Menu option that shows syncs menu</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add Backups</source>
-        <translatorcomment>Menu option used to add backups</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>مزامنات</translation>
     </message>
     <message>
         <source>Backups</source>
         <translatorcomment>Menu option that shows backups menu</translatorcomment>
         <translation>النسخ الاحتياطية</translation>
+    </message>
+    <message>
+        <source>Add Backup</source>
+        <translatorcomment>Menu option used to add backups</translatorcomment>
+        <translation>إضافة نسخة احتياطية</translation>
     </message>
 </context>
 <context>
@@ -6310,7 +6316,7 @@ To continue, select a different folder.</source>
     <message>
         <source>Retrying</source>
         <translatorcomment>Transfer is starting again after failure</translatorcomment>
-        <translation>إعادة المحاولة</translation>
+        <translation>جاري إعادة المحاولة…</translation>
     </message>
     <message>
         <source>Uploading…</source>
@@ -6330,7 +6336,7 @@ To continue, select a different folder.</source>
     <message>
         <source>Completing</source>
         <translatorcomment>Transfer is being completed</translatorcomment>
-        <translation>مكتمل</translation>
+        <translation>جاري الإكمال...</translation>
     </message>
     <message>
         <source>Completed</source>
@@ -6476,7 +6482,7 @@ To continue, select a different folder.</source>
     <message>
         <source>Scanning</source>
         <translatorcomment>State of the Transfers: Message which shows that a folder is being scanned</translatorcomment>
-        <translation>جاري الفحص</translation>
+        <translation>جاري الفحص…</translation>
     </message>
     <message>
         <source>All paused</source>
@@ -6551,7 +6557,7 @@ To continue, select a different folder.</source>
     <message>
         <source>Your MEGA account is full</source>
         <translatorcomment>Message shown when the MEGA account is full</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>حساب ميغا MEGA الخاص بك ممتلئ.</translation>
     </message>
     <message>
         <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left for this IP address.
@@ -6655,27 +6661,27 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Clear all audios</source>
         <translatorcomment>Tooltip for clear button when the user is in the audios category</translatorcomment>
-        <translation>امسح كل الملفات الصوتية</translation>
+        <translation>امسح كل عمليات تراسل المعطيات في الملفات الصوتية</translation>
     </message>
     <message>
         <source>Clear all videos</source>
         <translatorcomment>Tooltip for clear button when the user is in the videos category</translatorcomment>
-        <translation>مسح جميع مقاطع الفيديو</translation>
+        <translation>امسح كل عمليات تراسل المعطيات في مقاطع الفيديو</translation>
     </message>
     <message>
         <source>Clear all archives</source>
         <translatorcomment>Tooltip for clear button when the user is in the archives category</translatorcomment>
-        <translation>مسح كل عمليات الأرشفة</translation>
+        <translation>امسح كل عمليات تراسل المعطيات في الأرشفة</translation>
     </message>
     <message>
         <source>Clear all documents</source>
         <translatorcomment>Tooltip for clear button when the user is in the documents category</translatorcomment>
-        <translation>مسح كل المستندات</translation>
+        <translation>امسح كل عمليات تراسل المعطيات في المستندات</translation>
     </message>
     <message>
         <source>Clear all images</source>
         <translatorcomment>Tooltip for clear button when the user is in the images category</translatorcomment>
-        <translation>مسح كل الصور</translation>
+        <translation>امسح كل عمليات تراسل المعطيات في الصور</translation>
     </message>
     <message>
         <source>Clear all transfers</source>
@@ -6685,17 +6691,17 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Cancel all downloads</source>
         <translatorcomment>Tooltip for cancel button when the user is in the downloads category</translatorcomment>
-        <translation>إلغاء جميع عمليات التنزيل</translation>
+        <translation>إلغاء كل عمليات تراسل المعطيات في التنزيلات</translation>
     </message>
     <message>
         <source>Cancel all uploads</source>
         <translatorcomment>Tooltip for cancel button when the user is in the uploads category</translatorcomment>
-        <translation>إلغاء جميع عمليات الترفيع</translation>
+        <translation>إلغاء كل عمليات تراسل المعطيات في الترفيعات</translation>
     </message>
     <message>
         <source>Cancel all failed</source>
         <translatorcomment>Tooltip for cancel button when the user is in the failed category</translatorcomment>
-        <translation>إلغاء كل العمليات الفاشلة</translation>
+        <translation>إلغاء كل عمليات تراسل المعطيات في العمليات الفاشلة</translation>
     </message>
     <message>
         <source>Cancel all search results</source>
@@ -6705,27 +6711,27 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Cancel all audios</source>
         <translatorcomment>Tooltip for cancel button when the user is in the audios category</translatorcomment>
-        <translation>إلغاء جميع الملفات الصوتية</translation>
+        <translation>إلغاء كل عمليات تراسل المعطيات في الملفات الصوتية</translation>
     </message>
     <message>
         <source>Cancel all videos</source>
         <translatorcomment>Tooltip for cancel button when the user is in the videos category</translatorcomment>
-        <translation>إلغاء كافة مقاطع الفيديو</translation>
+        <translation>إلغاء كل عمليات تراسل المعطيات في مقاطع الفيديو</translation>
     </message>
     <message>
         <source>Cancel all archives</source>
         <translatorcomment>Tooltip for cancel button when the user is in the archives category</translatorcomment>
-        <translation>إلغاء كل عمليات الأرشفة</translation>
+        <translation>إلغاء كل عمليات تراسل المعطيات في الأرشفة</translation>
     </message>
     <message>
         <source>Cancel all documents</source>
         <translatorcomment>Tooltip for cancel button when the user is in the documents category</translatorcomment>
-        <translation>إلغاء كافة المستندات</translation>
+        <translation>إلغاء كل عمليات تراسل المعطيات في المستندات</translation>
     </message>
     <message>
         <source>Cancel all images</source>
         <translatorcomment>Tooltip for cancel button when the user is in the images category</translatorcomment>
-        <translation>إلغاء جميع الصور</translation>
+        <translation>إلغاء كل عمليات تراسل المعطيات في الصور</translation>
     </message>
     <message>
         <source>Cancel all transfers</source>
@@ -7073,7 +7079,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Log out</source>
         <translatorcomment>Button label to log out the current account</translatorcomment>
-        <translation>الخروج</translation>
+        <translation>تسجيل الخروج</translation>
     </message>
     <message>
         <source>Verify your email</source>

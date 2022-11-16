@@ -566,11 +566,6 @@
         <translation>Dismiss</translation>
     </message>
     <message>
-        <source>View in Backup Centre</source>
-        <translatorcomment>Text for a button allowing the user to view the newly created backup i nthe Backup center (in the webclient)</translatorcomment>
-        <translation>View in Backup Centre</translation>
-    </message>
-    <message>
         <source>Setup</source>
         <translatorcomment>Step 2 button text that will initiate the creation of the backups.</translatorcomment>
         <translation>Setup</translation>
@@ -598,7 +593,7 @@
     <message numerus="yes">
         <source>We&apos;re backing up your folder. The time this takes depends on the files in this folder.</source>
         <translatorcomment>Label indicating that the backup configuration was successfull and it is being uploaded.</translatorcomment>
-        <translation><numerusform>We&apos;re backing up your folder. The time this takes depends on the files in this folder.</numerusform><numerusform>We&apos;re backing up your folders. The time this takes depends on the files in these folder.</numerusform></translation>
+        <translation><numerusform>We&apos;re backing up your folder. The time this takes depends on the files in this folder.</numerusform><numerusform>We&apos;re backing up your folders. The time this takes depends on the files in the folders.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Problem backing up folder</source>
@@ -644,6 +639,11 @@
         <source>Error: %1</source>
         <translatorcomment>Placeholder will show the error message, this is being shown in a tooltip</translatorcomment>
         <translation>Error: %1</translation>
+    </message>
+    <message>
+        <source>View in backup centre</source>
+        <translatorcomment>Text for a button allowing the user to view the newly created backup i nthe Backup center (in the webclient)</translatorcomment>
+        <translation>View in backup centre</translation>
     </message>
 </context>
 <context>
@@ -2023,11 +2023,6 @@ In some cases they may contain details about your data, such as file or folder n
         <translation>Folder can&apos;t be opened. Check that the folder in your local drive hasn&apos;t been deleted or moved.</translation>
     </message>
     <message>
-        <source>Add Backups</source>
-        <translatorcomment>Info dialog menu entry for backups</translatorcomment>
-        <translation>Add Backups</translation>
-    </message>
-    <message>
         <source>Some syncs and backups have been disabled</source>
         <translatorcomment>Warning message title shown on info dialog</translatorcomment>
         <translation>Some syncs and backups have been disabled</translation>
@@ -2051,6 +2046,11 @@ In some cases they may contain details about your data, such as file or folder n
         <source>Error adding %1:</source>
         <translatorcomment>Error label displayed when it fails adding a sync or backup. Placeholder will show the name of the sync. After the two dots an error message is displayed</translatorcomment>
         <translation>Error adding %1:</translation>
+    </message>
+    <message>
+        <source>Add Backup</source>
+        <translatorcomment>Tooltip message shown while hovering backups button.</translatorcomment>
+        <translation>Add Backup</translation>
     </message>
 </context>
 <context>
@@ -5344,18 +5344,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Sleep settings</translation>
     </message>
     <message>
-        <source>Prevent the computer from going to sleep when transfers or syncs are in progress.
-Computer will enter sleep mode once these are complete.</source>
-        <translatorcomment>Sleep/Active mode: Feature description label for keeping the pc awake when there are active transfers</translatorcomment>
-        <translation>Prevent the computer from going to sleep when transfers or syncs are in progress.
-Computer will enter sleep mode once these are complete.</translation>
-    </message>
-    <message>
-        <source>Note: Some operating systems won&apos;t allow this.</source>
-        <translatorcomment>Sleep/Active mode: Warning message below the description label, as not all the computers can activate the feature to keep it awake if there are transfers active </translatorcomment>
-        <translation>Note: Some operating systems won&apos;t allow this.</translation>
-    </message>
-    <message>
         <source>Sleep mode:</source>
         <translatorcomment>Sleep/Active mode: Settings dialog groupbox title for keeping the pc awake when there are active transfers (macOS)</translatorcomment>
         <translation>Sleep mode:</translation>
@@ -5399,11 +5387,6 @@ Computer will enter sleep mode once these are complete.</translation>
         <source>Some folders have not backed up. For more information please hover over the yellow warning icon.</source>
         <translatorcomment>Warning message displayed inside settings dialog indicating that there is a problem with a backup.</translatorcomment>
         <translation>Some folders have not backed up. For more information please hover over the yellow warning icon.</translation>
-    </message>
-    <message>
-        <source>To Backup Center</source>
-        <translatorcomment>Button text that opens backup center in webclient</translatorcomment>
-        <translation>To Backup Center</translation>
     </message>
     <message>
         <source>Backup folder:</source>
@@ -5504,6 +5487,16 @@ Computer will enter sleep mode once these are complete.</translation>
         <source>Your backup &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
         <translatorcomment>Error text when disabling a backup failed</translatorcomment>
         <translation>Your backup &quot;%1&quot; can&apos;t be disabled. Reason: %2</translation>
+    </message>
+    <message>
+        <source>Go to backup centre</source>
+        <translatorcomment>Button text that opens backup center in webclient</translatorcomment>
+        <translation>Go to backup centre</translation>
+    </message>
+    <message>
+        <source>Prevent the computer from going to sleep when transfers or syncs are in progress.</source>
+        <translatorcomment>Sleep/Active mode: Feature description label for keeping the pc awake when there are active transfers</translatorcomment>
+        <translation>Prevent the computer from going to sleep when transfers or syncs are in progress.</translation>
     </message>
 </context>
 <context>
@@ -6301,14 +6294,14 @@ To continue, select a different folder.</translation>
         <translation>Syncs</translation>
     </message>
     <message>
-        <source>Add Backups</source>
-        <translatorcomment>Menu option used to add backups</translatorcomment>
-        <translation>Add Backups</translation>
-    </message>
-    <message>
         <source>Backups</source>
         <translatorcomment>Menu option that shows backups menu</translatorcomment>
         <translation>Backups</translation>
+    </message>
+    <message>
+        <source>Add Backup</source>
+        <translatorcomment>Menu option used to add backups</translatorcomment>
+        <translation>Add Backup</translation>
     </message>
 </context>
 <context>

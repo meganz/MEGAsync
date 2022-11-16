@@ -84,7 +84,7 @@
     <message>
         <source>Cancel</source>
         <translatorcomment>Button text to cancel the addition of a backup</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
@@ -406,12 +406,12 @@
     <message>
         <source>Local Folder</source>
         <translatorcomment>Local folder column header name for backlups table in settings dialog</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ローカルフォルダ</translation>
     </message>
     <message>
         <source>Sort by name</source>
         <translatorcomment>Backup table header label tooltip that indicates that if you click here the column will be sorted by name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>名前で並び替え</translation>
     </message>
     <message>
         <source>Backup is enabled</source>
@@ -434,7 +434,7 @@
     <message>
         <source>Rename folder</source>
         <translatorcomment>Title of the dialog prompting the user to resolve backup name conflicts by renaming them</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>フォルダ名を変更</translation>
     </message>
     <message>
         <source>A folder named &quot;%1&quot; already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
@@ -444,7 +444,7 @@
     <message>
         <source>If you don&apos;t want to rename the new folder, stop the backup in the [A]Backup centre[/A] for the existing folder. Then setup the backup for the new folder again.</source>
         <translatorcomment>Text instructing the user to go to the backup center to solve the backup name conflict</translatorcomment>
-        <translation>新しいフォルダの名前を変更したくない場合は、[A]バックアップ センター[/A]既存のフォルダのバックアップを停止してください。次に、新しいフォルダのバックアップを再度設定します。</translation>
+        <translation>新しいフォルダの名前を変更したくない場合は、[A]バックアップセンター[/A]で既存のフォルダのバックアップを停止してください。その後、新しいフォルダのバックアップを再度設定します。</translation>
     </message>
     <message>
         <source>Rename and backup</source>
@@ -485,7 +485,7 @@
     <message>
         <source>Open in MEGA</source>
         <translatorcomment>Menu action that opens MEGA webclient to show this backup</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>MEGAで開く</translation>
     </message>
     <message>
         <source>Remove backup</source>
@@ -503,7 +503,7 @@
     <message>
         <source>You can back up folders from your computer to MEGA. Files will automatically back up when the desktop app is running.</source>
         <translatorcomment>Backup wizard body text</translatorcomment>
-        <translation>コンピューターからMEGAにフォルダをバックアップできます。ファイルは、デスクトップアプリの実行中に自動的にバックアップされます。</translation>
+        <translation>コンピューターからMEGAにフォルダをバックアップできます。デスクトップアプリの実行中にファイルが自動的にバックアップされます。</translation>
     </message>
     <message>
         <source>No folders available</source>
@@ -548,7 +548,7 @@
     <message>
         <source>Cancel</source>
         <translatorcomment>Button text to cancel the creation of backups</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <source>Next</source>
@@ -563,12 +563,7 @@
     <message>
         <source>Dismiss</source>
         <translatorcomment>Button text shown in success dialog, it closes the dialog.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>View in Backup Centre</source>
-        <translatorcomment>Text for a button allowing the user to view the newly created backup i nthe Backup center (in the webclient)</translatorcomment>
-        <translation>バックアップセンターで表示</translation>
+        <translation>却下</translation>
     </message>
     <message>
         <source>Setup</source>
@@ -598,7 +593,7 @@
     <message numerus="yes">
         <source>We&apos;re backing up your folder. The time this takes depends on the files in this folder.</source>
         <translatorcomment>Label indicating that the backup configuration was successfull and it is being uploaded.</translatorcomment>
-        <translation><numerusform>フォルダをバックアップしています。これにかかる時間は、これらのフォルダ内のファイルによって異なります。</numerusform></translation>
+        <translation><numerusform>フォルダをバックアップしています。これにかかる時間は、フォルダ内のファイルによって異なります。</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Problem backing up folder</source>
@@ -633,17 +628,22 @@
     <message>
         <source>Are you sure you want to cancel? All changes will be lost.</source>
         <translatorcomment>Warning dialog that appears when user click in cancel button in backup wizard and it will be closed.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>キャンセルしたいですか？変更内容がすべて失われます。</translation>
     </message>
     <message>
         <source>Choose directory</source>
         <translatorcomment>Folder selector window title text</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ディレクトリを選択</translation>
     </message>
     <message>
         <source>Error: %1</source>
         <translatorcomment>Placeholder will show the error message, this is being shown in a tooltip</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>エラー：%1</translation>
+    </message>
+    <message>
+        <source>View in backup centre</source>
+        <translatorcomment>Text for a button allowing the user to view the newly created backup i nthe Backup center (in the webclient)</translatorcomment>
+        <translation>バックアップセンターで表示</translation>
     </message>
 </context>
 <context>
@@ -905,11 +905,11 @@
     <message>
         <source>All the queued transfers from your current download will be cancelled.</source>
         <translatorcomment>Dialog messages which warns the user about the potential problems of cancelling the folder scanning</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>現在のダウンロードからキューに入れられた転送はすべてキャンセルされます。</translation>
     </message>
     <message>
         <source>Cancelling…</source>
-        <translation type="unfinished"></translation>
+        <translation>キャンセル中…</translation>
     </message>
 </context>
 <context>
@@ -1023,7 +1023,7 @@
         <source>The following characters are not allowed:
 %1</source>
         <translatorcomment>Text introducing the prohibited characters (the list replaces the placeholder)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>次の文字は許可されていません：%1</translation>
     </message>
 </context>
 <context>
@@ -1244,12 +1244,12 @@
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>お客様のビジネスアカウントは期限切れです</translation>
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ご必要なお支払いをしていただくまで、アカウントは期限切れとなり、読み取り専用になります。</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -1553,7 +1553,7 @@
     <message>
         <source>Login</source>
         <translatorcomment>Button label to start the Login process. (String as short as possible)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ログイン</translation>
     </message>
     <message>
         <source>Create account</source>
@@ -1814,7 +1814,7 @@
     <message>
         <source>Open Transfer Manager</source>
         <translatorcomment>Tooltip for the button that open transfer manager dialog</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>転送マネージャーを開く</translation>
     </message>
     <message>
         <source>Show MEGAsync options</source>
@@ -2021,34 +2021,34 @@
         <translation>フォルダを開けません。ローカルドライブのフォルダが削除または移動されていないことを確認してください。</translation>
     </message>
     <message>
-        <source>Add Backups</source>
-        <translatorcomment>Info dialog menu entry for backups</translatorcomment>
-        <translation>バックアップを追加</translation>
-    </message>
-    <message>
         <source>Some syncs and backups have been disabled</source>
         <translatorcomment>Warning message title shown on info dialog</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>一部の同期とバックアップが無効になっています</translation>
     </message>
     <message>
         <source>Something went wrong while trying to backup and sync your folders.</source>
         <translatorcomment>Warning message body shown on info dialog</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>フォルダのバックアップと同期中に問題が発生しました。</translation>
     </message>
     <message>
         <source>One or more backups have been disabled</source>
         <translatorcomment>Warning message title shown on info dialog</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>1 つまたは複数のバックアップが無効になっています</translation>
     </message>
     <message>
         <source>Something went wrong while trying to backup your folders.</source>
         <translatorcomment>Warning message body shown on info dialog</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>フォルダのバックアップ中に問題が発生しました。</translation>
     </message>
     <message>
         <source>Error adding %1:</source>
         <translatorcomment>Error label displayed when it fails adding a sync or backup. Placeholder will show the name of the sync. After the two dots an error message is displayed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1の追加でエラーが発生しました：</translation>
+    </message>
+    <message>
+        <source>Add Backup</source>
+        <translatorcomment>Tooltip message shown while hovering backups button.</translatorcomment>
+        <translation>バックアップを追加</translation>
     </message>
 </context>
 <context>
@@ -2102,12 +2102,12 @@
     <message>
         <source>Login or create an account to start using MEGA Desktop app.</source>
         <translatorcomment>Description label to inform the user about next step in order to use MEGA Desktop app. Users will need to login or create an account.</translatorcomment>
-        <translation>ログインするかアカウントを作成し、MEGAデスクトップアプリの使用を開始してください。</translation>
+        <translation>ログインするかアカウントを作成して、当社のアプリの使用を開始してください。</translation>
     </message>
     <message>
         <source>You need to log into MEGA account to use the MEGA desktop app.</source>
         <translatorcomment>Description label to indicate the user needs to log in in order to fully use MEGA desktop app.</translatorcomment>
-        <translation>MEGAデスクトップアプリを使用するには、MEGAアカウントにログインする必要があります。</translation>
+        <translation>当社のアプリを使用するには、MEGAアカウントにログインしてください。</translation>
     </message>
     <message>
         <source>Create account</source>
@@ -2122,7 +2122,7 @@
     <message>
         <source>Know more about MEGA desktop app. [A]Read more[/A]</source>
         <translatorcomment>Label with hyperlink to sync client webpage to know more about MEGA desktop app. Keep placeholders.</translatorcomment>
-        <translation>MEGAデスクトップアプリをもっと詳しく知ってください。[A]続きを読む[/A]</translation>
+        <translation>当社のアプリの詳細をご覧ください。[A]詳しくはこちら[/A]</translation>
     </message>
 </context>
 <context>
@@ -2233,7 +2233,7 @@
     <message>
         <source>About MEGAsync</source>
         <translatorcomment>Title of the dialog that displays the version code of MEGAsync.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>MEGAsyncについて</translation>
     </message>
     <message>
         <source>The link has been copied to the clipboard</source>
@@ -2440,7 +2440,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log)</source>
         <translatorcomment>Notification message shown when the DEBUG mode is enabled.</translatorcomment>
-        <translation>DEBUGモードが有効になっています。「MEGASync.log」というログがお使いのコンピューターに作成されています。</translation>
+        <translation>デバッグモードが有効になっています。「MEGAsync.log」というログがお使いのコンピューターに作成されています。</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The download has been cancelled</source>
@@ -2565,7 +2565,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>お客様のビジネスアカウントは期限切れです</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -2575,7 +2575,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message shown to admin business account when a payment has failed. </translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ビジネスアカウントのお支払いが失敗したようです。お客様のアカウントは有効期限が切れており、ご必要なお支払いをしていただくまで、読み取り専用のアクセス権限が付与されています。</translation>
     </message>
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
@@ -2590,7 +2590,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>This month&apos;s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</source>
         <translatorcomment>Informative message shown to the user when a payment has failed for a business account.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>今月のお支払いが失敗しました。お支払いの問題をできるだけ早く解決し、お客様のビジネスアカウントの一時停止を回避してください。</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -2600,7 +2600,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
         <translatorcomment>Informative message shown when a business account is expired and the user can only browse data and none operation (upload, download, creation..) is allowed.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>お客様のアカウントは[A]無効になっています[/A]。お客様のデータの閲覧のみ可能です。</translation>
     </message>
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
@@ -2630,7 +2630,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
         <translatorcomment>Informative message box shown if user is running an old Win version (vista or previous), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation>アプリは引き続き動作しますが、Windows Vistaおよびそれ以前のOSのアップデートはまもなくサポートされなくなります。</translation>
+        <translation>アプリは引き続き動作しますが、Windows 7より前のバージョンの更新はサポートされなくなります。</translation>
     </message>
     <message>
         <source>Transferring</source>
@@ -2736,7 +2736,8 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>There is an active transfer. Exit the app?
 Transfer will automatically resume when you re-open the app.</source>
         <translatorcomment>Messagebox text to let the user know that there are active transfers when closing the app. The user will be able to exit and pause them, or stop the exit action.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>アクティブな転送があります。アプリを終了しますか？
+アプリを再度開くと、転送は自動的に再開されます。</numerusform></translation>
     </message>
     <message>
         <source>Exit app</source>
@@ -2751,67 +2752,67 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Some syncs and backups have been disabled</source>
         <translatorcomment>Tooltip message for tray icon when some syncs and backups are disabled</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>一部の同期とバックアップが無効になっています</translation>
     </message>
     <message>
         <source>One or more backups have been disabled</source>
         <translatorcomment>Tooltip message for tray icon when some backups are disabled</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>1 つまたは複数のバックアップが無効になっています</translation>
     </message>
     <message>
         <source>Error adding %1:</source>
         <translatorcomment>Error label displayed when it fails adding a sync or backup. Placeholder will show the name of the sync. After the two dots an error message is displayed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1の追加でエラーが発生しました：</translation>
     </message>
     <message>
         <source>Your syncs and backups have been disabled</source>
         <translatorcomment>Warning message shown when  all the syncs and backups have been disabled</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>同期とバックアップが無効になっています：</translation>
     </message>
     <message>
         <source>Your backups have been disabled</source>
         <translatorcomment>Warning message shown when all the backups have been disabled</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>バックアップが無効になっています：</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been temporarily disabled</source>
         <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder displays backup name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>バックアップ「%1」は一時的に無効になっています</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ローカルフォルダが存在しないため、バックアップ「%1」が無効になっています</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>VirtualBox共有フォルダの同期は、そのファイルシステムの欠陥によりサポートされていないため、バックアップ「%1」が無効になっています。</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>リモートフォルダがごみ箱に入っているため、バックアップ「%1」は無効となっています</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>バックアップ「%1」が無効になっています。リモートフォルダ（またはその一部）にフルアクセス権がありません</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder has changed</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ローカルフォルダが変更されたため、バックアップ「%1」は無効になっています。</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder has changed</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>リモートフォルダが変更されたため、バックアップ「%1」は無効になっています</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled. Reason: %2</source>
         <translatorcomment>Notification message launched when a backup is disabled. Keep &amp;quot;%1&amp;quot; code because is filled with the name of the backup at runtime and %2 with the reason of the error.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>バックアップ「%1」は無効になっています。理由：%2</translation>
     </message>
 </context>
 <context>
@@ -2974,12 +2975,12 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
         <translatorcomment>Error triggered by SDK when an account has been suspended due to copyright violations.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>あなたのアカウントは、著作権侵害のため凍結されました。メールの受信トレイを確認してください。</translation>
     </message>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>あなたのアカウントは、他人の権利の乱用、違法データの共有やインポート、システムの乱用など、MEGAのご利用規約に違反したため終了しました。</translation>
     </message>
 </context>
 <context>
@@ -3050,17 +3051,17 @@ Transfer will automatically resume when you re-open the app.</source>
     <message numerus="yes">
         <source>Today at %1</source>
         <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened today. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>今日の%1時</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Yesterday at %1</source>
         <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened yesterday. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>昨日の%1時</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 at %2</source>
         <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was previously to yesterday. %1 represents the date (day month and year), while %2 represents the hour). Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%1の%2時</numerusform></translation>
     </message>
     <message>
         <source>Recently used</source>
@@ -3091,7 +3092,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Backups</source>
         <translatorcomment>Title of the Backups root node</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>バックアップ</translation>
     </message>
 </context>
 <context>
@@ -3252,12 +3253,12 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>You can&apos;t run MEGA Desktop App from this location. Move it into the Applications folder then run it.</source>
         <translatorcomment>Error message shown when the user is trying to run MEGA Desktop App from a path different than Applications. Only affects to macOS.</translatorcomment>
-        <translation>この場所からMEGAデスクトップアプリを実行することはできません。アプリケーションフォルダに移動して実行します。</translation>
+        <translation>この場所からデスクトップアプリを実行することはできません。アプリケーションフォルダに移動してから実行してください。</translation>
     </message>
     <message>
         <source>Account expired (business or Pro Flexi)</source>
         <translatorcomment>Label to show that the current account (either business or Pro Flexi) is expired during a SDK operation.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>アカウントの有効期限切れ（ビジネスまたはPro Flexi）</translation>
     </message>
 </context>
 <context>
@@ -3300,7 +3301,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Get link</source>
         <translatorcomment>Context menu action to get transfer link</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>リンクを取得</translation>
     </message>
     <message>
         <source>Open in MEGA</source>
@@ -3562,7 +3563,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Cloud drive</source>
         <translatorcomment>Node selector button Text. Switch the view to show only the cloud drive nodes (files and folders)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>クラウドドライブ</translation>
     </message>
     <message>
         <source>Incoming shares</source>
@@ -3589,7 +3590,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Backups</source>
         <translatorcomment>Title of the Backups section</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>バックアップ</translation>
     </message>
 </context>
 <context>
@@ -4049,22 +4050,22 @@ Please delete the folder sync from preferences to cancel them.</source>
     <message>
         <source>One or more backups have been disabled. Go to settings to enable them again.</source>
         <translatorcomment>Warning message shown when some backups are disabled. Tell the userto go to settings to solve the issue (win/linux)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>1つまたは複数のバックアップが無効になっています。設定に移動して、再度有効にします。</translation>
     </message>
     <message>
         <source>Some syncs and backups have been disabled. Go to settings to enable them again.</source>
         <translatorcomment>Warning message shown when some backups and syncs are disabled. Tell the userto go to settings to solve the issue (win/linux)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>一部の同期とバックアップが無効になっています。設定に移動して、再度有効にします。</translation>
     </message>
     <message>
         <source>One or more backups have been disabled. Go to preferences to enable them again.</source>
         <translatorcomment>Warning message shown when some backups are disabled. Tell the userto go to settings to solve the issue (mac)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>1つまたは複数のバックアップが無効になっています。環境設定に移動して、再度有効にします。</translation>
     </message>
     <message>
         <source>Some syncs and backups have been disabled. Go to preferences to enable them again.</source>
         <translatorcomment>Warning message shown when some backups and syncs are disabled. Tell the userto go to settings to solve the issue (mac)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>一部の同期とバックアップが無効になっています。環境設定に移動して、再度有効にします。</translation>
     </message>
 </context>
 <context>
@@ -4078,7 +4079,13 @@ Please delete the folder sync from preferences to cancel them.</source>
 - Improved performance.
 </source>
         <translatorcomment>Changelog for v4.8.0 version</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ーPro Flexiアカウントのサポートを追加。
+ー新しいバックアップ機能を追加。
+ーmacOS Venturaで検出された問題を修正。
+ーWindows、Linux、およびmacOSで検出されたクラッシュを修正。
+ー翻訳の問題を修正。
+ーパフォーマンスを改善。
+</translation>
     </message>
 </context>
 <context>
@@ -4483,7 +4490,8 @@ Please verify the correct file name was given.</source>
         <source>&apos;%1&apos; is write protected.
 Do you want to delete it anyway?</source>
         <translatorcomment>Warning message when a write protected file is about to be delete</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>「%1」は書き込み保護されています。
+それでも削除しますか？</translation>
     </message>
 </context>
 <context>
@@ -4633,7 +4641,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Button text that cancels</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>キャンセル</translation>
     </message>
 </context>
 <context>
@@ -4677,22 +4685,22 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Button text to cancel the scanning of transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <source>Don&apos;t close the app. If you close, transfers not yet queued will be lost.</source>
         <translatorcomment>Message displayed in scanning widget to warn the user of consequences of closing the app.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>アプリを閉じないでください。閉じると、まだキューに入っていない転送は失われます。</translation>
     </message>
     <message>
         <source>Scanning</source>
         <translatorcomment>Label used to display when the scanning widget is on the &quot;Scanning&quot; step</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>スキャン中</translation>
     </message>
     <message>
         <source>Creating folders</source>
         <translatorcomment>Label used to display when the scanning widget is on the &quot;Creating folders&quot; step</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>フォルダを作成中</translation>
     </message>
     <message>
         <source>%1/%2</source>
@@ -4812,7 +4820,7 @@ Do you want to delete it anyway?</source>
 
 Do you want to restart MEGAsync now?</source>
         <translatorcomment>Message displayed asking for confirmation to the user to restart the application for a Full scan operation.</translatorcomment>
-        <translation>MEGAsyncは、起動時に同期フォルダのフルスキャンを実行します。今すぐMEGAsyncを再起動しますか？　</translation>
+        <translation>このアプリは、起動時に同期フォルダのフル スキャンを実行します。今すぐアプリを再起動しますか？</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -4857,7 +4865,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
         <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
-        <translation>回復キーは常に物理的に管理してください（例：クライアントデバイス上、外部ストレージ、または印刷）。</translation>
+        <translation>回復キーは常に物理的に管理してください（例：パソコン、外部ストレージ、または印刷）。</translation>
     </message>
     <message>
         <source>Exclude by size</source>
@@ -5097,7 +5105,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Restart MEGA Desktop App to apply changes.</source>
         <translatorcomment>Informative text shown in Folders pane, letting the user know that an application restart is required to apply the changes he just made.</translatorcomment>
-        <translation>MEGAデスクトップアプリを再起動すると変更が適用されます。</translation>
+        <translation>変更を適用するにはアプリを再起動します。</translation>
     </message>
     <message>
         <source>Change Settings…</source>
@@ -5330,18 +5338,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>スリープモード</translation>
     </message>
     <message>
-        <source>Prevent the computer from going to sleep when transfers or syncs are in progress.
-Computer will enter sleep mode once these are complete.</source>
-        <translatorcomment>Sleep/Active mode: Feature description label for keeping the pc awake when there are active transfers</translatorcomment>
-        <translation>転送中または同期中にコンピューターがスリープ状態にならないようにします。
-これらが完了すると、コンピューターはスリープモードに入ります。</translation>
-    </message>
-    <message>
-        <source>Note: Some operating systems won&apos;t allow this.</source>
-        <translatorcomment>Sleep/Active mode: Warning message below the description label, as not all the computers can activate the feature to keep it awake if there are transfers active </translatorcomment>
-        <translation>注意：一部のOSでは、これが許可されません。</translation>
-    </message>
-    <message>
         <source>Sleep mode:</source>
         <translatorcomment>Sleep/Active mode: Settings dialog groupbox title for keeping the pc awake when there are active transfers (macOS)</translatorcomment>
         <translation>スリープモード：</translation>
@@ -5364,12 +5360,12 @@ Computer will enter sleep mode once these are complete.</source>
     <message>
         <source>Backups</source>
         <translatorcomment>Backups table title</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>バックアップ</translation>
     </message>
     <message>
         <source>Backup Folder</source>
         <translatorcomment>Groupbox title, inside the remote backup folder path will be displayed (Linux and windows)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>バックアップフォルダ</translation>
     </message>
     <message>
         <source>View in MEGA</source>
@@ -5384,12 +5380,7 @@ Computer will enter sleep mode once these are complete.</source>
     <message>
         <source>Some folders have not backed up. For more information please hover over the yellow warning icon.</source>
         <translatorcomment>Warning message displayed inside settings dialog indicating that there is a problem with a backup.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>To Backup Center</source>
-        <translatorcomment>Button text that opens backup center in webclient</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>一部のフォルダがバックアップされていません。詳細については、黄色の警告アイコンにカーソルを合わせてください。</translation>
     </message>
     <message>
         <source>Backup folder:</source>
@@ -5399,97 +5390,107 @@ Computer will enter sleep mode once these are complete.</source>
     <message>
         <source>Synchronizations and backups will stop working.</source>
         <translatorcomment>Warning message displayed on logout if there are active syncs and backups</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>同期とバックアップは無効になります。</translation>
     </message>
     <message>
         <source>Backups will stop working.</source>
         <translatorcomment>Warning message displayed on logout if there are active backups (not syncs)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>バックアップは無効になります。</translation>
     </message>
     <message>
         <source>Synchronizations will stop working.</source>
         <translatorcomment>Warning message displayed on logout if there are active syncs (not backups)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>同期は無効になります。</translation>
     </message>
     <message>
         <source>Are you sure?</source>
         <translatorcomment>Warning message second part asking if you are sure about continuing with the logout.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ログアウトしますか？</translation>
     </message>
     <message>
         <source>Error adding sync</source>
         <translatorcomment>Warning message title indicating that an error happened adding a sync.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>同期の追加でエラーが発生しました</translation>
     </message>
     <message>
         <source>Error removing sync</source>
         <translatorcomment>Warning message title indicating that an error happened removing a sync.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>同期の削除でエラーが発生しました</translation>
     </message>
     <message>
         <source>Your sync can&apos;t be removed. Reason: %1</source>
         <translatorcomment>Warning message title indicating that an error happened removing a sync. the reason is given at runtime in place of the placeholder</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>同期を削除できません。理由：%1</translation>
     </message>
     <message>
         <source>Error disabling sync</source>
         <translatorcomment>Warning message title indicating that an error happened disabling a sync.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>同期の無効化でエラーが発生しました</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
         <translatorcomment>Warning message indicating that an error happened disabling a sync. First placeholder is the sync name and second placeholder is the error message sent by SDK (reason)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>同期「%1」を無効にできません。理由：%2</translation>
     </message>
     <message>
         <source>Error adding backup %1</source>
         <translatorcomment>Error message dialog title. Placeholder shows the backup name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1のバックアップの追加でエラーが発生しました</translation>
     </message>
     <message>
         <source>Error removing backup</source>
         <translatorcomment>Error message dialog title</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>バックアップの停止でエラーが発生しました</translation>
     </message>
     <message>
         <source>Your backup can&apos;t be removed. Reason: %1</source>
         <translatorcomment>Warning message title indicating that an error happened removing a backup. the reason is given at runtime in place of the placeholder</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>バックアップを停止できません。理由：%1</translation>
     </message>
     <message>
         <source>Error moving or removing remote backup folder</source>
         <translatorcomment>Title of the dialog shown when the deletion or move of the remote backup folder failed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>MEGAバックアップフォルダの移動または削除中にエラーが発生しました</translation>
     </message>
     <message>
         <source>Failed to move or remove the remote backup folder. Reason: %1</source>
         <translatorcomment>Error text when the deletion or move of the remote backup folder failed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>MEGAバックアップフォルダを移動または削除できません。理由：%1</translation>
     </message>
     <message>
         <source>Error enabling backup</source>
         <translatorcomment>Title of the dialog shown when enabling a backup failed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>バックアップの有効化でエラーが発生しました</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; can&apos;t be enabled. Reason: %2</source>
         <translatorcomment>Error text when enabling a backup failed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>バックアップ「%1」を有効にできません。理由：%2</translation>
     </message>
     <message>
         <source>Error disabling backup</source>
         <translatorcomment>Title of the dialog shown when enabling a backup failed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>バックアップの無効化でエラーが発生しました</translation>
     </message>
     <message>
         <source>Pro Flexi</source>
         <translatorcomment>Text label indicating the Pro Flexi tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro Flexi</translation>
+        <translation>Pro Flexi</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
         <translatorcomment>Error text when disabling a backup failed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>バックアップ「%1」を無効にできません。理由：%2</translation>
+    </message>
+    <message>
+        <source>Go to backup centre</source>
+        <translatorcomment>Button text that opens backup center in webclient</translatorcomment>
+        <translation>バックアップセンターに移動</translation>
+    </message>
+    <message>
+        <source>Prevent the computer from going to sleep when transfers or syncs are in progress.</source>
+        <translatorcomment>Sleep/Active mode: Feature description label for keeping the pc awake when there are active transfers</translatorcomment>
+        <translation>転送中または同期中にコンピューターがスリープ状態にならないようにします。</translation>
     </message>
 </context>
 <context>
@@ -6065,7 +6066,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You can&apos;t backup this folder as it&apos;s already synced.</source>
         <translatorcomment>Warning message indicating that a folder can´t be backed up as it is synced.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>このフォルダはすでに同期されているため、バックアップできません。</translation>
     </message>
     <message>
         <source>Folder is already backed up. Select a different one.</source>
@@ -6085,7 +6086,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You can&apos;t backup this folder as it&apos;s already inside a synced folder.</source>
         <translatorcomment>Warning message indicating that a folder can´t be backed up as it is inside a backed up folder.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>このフォルダは同期フォルダ内にあるため、バックアップできません。</translation>
     </message>
     <message>
         <source>You can&apos;t sync folders that are inside synced folders.</source>
@@ -6100,7 +6101,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You can&apos;t backup this folder as it contains synced folders.</source>
         <translatorcomment>Warning message indicating that the selected folder for sync contains synced folders, ence it can not be synced.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>このフォルダには同期されたフォルダが含まれているため、バックアップできません。</translation>
     </message>
     <message>
         <source>You can&apos;t sync folders that contain synced folders.</source>
@@ -6120,74 +6121,76 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
         <translatorcomment>Warning message indicating that megasync is not going to be able to download anything in the selected folder.</translatorcomment>
-        <translation>MEGAsyncは、ここで何かをダウンロードすることはできません。</translation>
+        <translation>このアプリは、ここで何かをダウンロードすることはできません。</translation>
     </message>
     <message>
         <source>You can&apos;t backup this folder as it contains backed up folders.</source>
         <translatorcomment>Warning message indicating that the selected folder for backup contains backed up folders, ence it can not be backed up.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>このフォルダにはバックアップされたフォルダが含まれているため、バックアップできません。</translation>
     </message>
     <message>
         <source>You can&apos;t backup this folder as it&apos;s already inside a backed up folder.</source>
         <translatorcomment>Warning message indicating that a folder can´t be backed up as it is inside a backed up folder.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>このフォルダはすでに同期フォルダ内にあるため、バックアップできません。</translation>
     </message>
     <message>
         <source>Unable to create backup as selected folder is not valid. Try again.</source>
         <translatorcomment>Text instructing to try creating a backup again. Failure cause: node is not valid</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>選択したフォルダが有効でないため、バックアップを作成できません。もう一度やり直してください。</translation>
     </message>
     <message>
         <source>Unable to create backup. Try again and if issue continues, contact [A]Support[/A].</source>
         <translatorcomment>Text instructing to try creating a backup again. If it fails again, they should contact support</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>バックアップを作成できません。もう一度お試しください。問題が解決しない場合は、[A]サポート[/A]にご連絡ください。</translation>
     </message>
     <message>
         <source>Unable to create backup as the device you&apos;re backing up from doesn&apos;t have a name. Give your device a name and then try again. If issue continues, contact [A]Support[/A].</source>
         <translatorcomment>Text instructing to try creating a backup again.Failure cause: the device does not have a name. If it fails again, they should contact support</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>バックアップ元のコンピューターに名前がないため、バックアップを作成できません。コンピューターに名前を付けてから、やり直してください。問題が解決しない場合は、[A]サポート[/A]にご連絡ください。</translation>
     </message>
     <message>
         <source>Unable to create backup. For further information, contact [A]Support[/A].</source>
         <translatorcomment>Text instructing to try creating a backup again.They should contact support</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>バックアップを作成できません。詳細については、[A]サポート[/A]にご連絡ください。</translation>
     </message>
     <message>
         <source>You can’t backup “%1” as it’s the root folder. The root folder is either; the top-level folder on your device or computer that holds all your folders and files or the folder where the system or program is installed. We don’t allow users to back up root folders as it may cause file conflicts or errors.
 To continue, select a different folder.</source>
         <translatorcomment>Warning message displayed if user tries to backup the system main hard disk.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>「%1」はルートフォルダであるため、バックアップできません。ルートフォルダは、すべてのフォルダとファイルを保持するコンピューターの最上位フォルダか、システムまたはプログラムがインストールされているフォルダのいずれかです。ファイルの競合やエラーが発生する可能性があるため、ユーザー様がルートフォルダをバックアップすることはできません。
+続行するには、別のフォルダを選択してください。</translation>
     </message>
     <message>
         <source>You can’t sync “%1” as it’s the root folder. The root folder is either; the top-level folder on your device or computer that holds all your folders and files or the folder where the system or program is installed. We don’t allow users to sync root folders as it may cause file conflicts or errors.
 To continue, select a different folder.</source>
         <translatorcomment>Warning message displayed if user tries to sync the system main hard disk.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>「%1」はルートフォルダであるため、バックアップできません。ルートフォルダは、すべてのフォルダとファイルを保持するコンピューターの最上位フォルダか、システムまたはプログラムがインストールされているフォルダのいずれかです。ファイルの競合やエラーが発生する可能性があるため、ユーザー様がルートフォルダを同期することはできません。
+続行するには、別のフォルダを選択してください。</translation>
     </message>
     <message>
         <source>You don&apos;t have enough permissions for this remote folder.</source>
         <translatorcomment>Warning message indicating that a folder can´t be synced as it the remote folder is an incoming share and the current user doesn´t have enought permisions</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>この共有フォルダへの完全なアクセス権がないため、同期できません。</translation>
     </message>
     <message>
         <source>Invalid remote path.</source>
         <translatorcomment>The selected remote path for the sync creation is invalid</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>この MEGAフォルダは同期できません。</translation>
     </message>
     <message>
         <source>The selected MEGA folder is already synced.</source>
         <translatorcomment>Warning message indicating that the selected folder is already a synced folder.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>選択されたMEGAフォルダはすでに同期されています。</translation>
     </message>
     <message>
         <source>Folder contents already synced.</source>
         <translatorcomment>Warning message indicating that the selected folder have got an active sync bellow the selected path.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>フォルダの内容はすでに同期されています。</translation>
     </message>
     <message>
         <source>Folder already synced.</source>
         <translatorcomment>Warning message indicating that the selected folder have got a parent that is already synced.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>フォルダはすでに同期されています。</translation>
     </message>
 </context>
 <context>
@@ -6195,12 +6198,12 @@ To continue, select a different folder.</source>
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a FAT filesystem.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>FATファイルシステムでフォーマットされたローカルフォルダを同期しています。そのファイルシステムには、大きなファイルや修正時間の管理に問題があり、同期の問題を引き起こす可能性があるため（夏時間の変更など）、NTFSなどの信頼性の高いファイルシステムでフォーマットされたフォルダのみを同期することを強くお勧めいたします（詳細は[A]こちら[/A] ）。</translation>
     </message>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a local folder shared with VMWare third party app.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>VMWareと共有するローカルフォルダを同期しています。これらのフォルダはファイルシステムの通知をサポートしていないため、あなたのファイルやフォルダの変更を検出するためにこのアプリは継続的にスキャンする必要があります。可能であれば、別のフォルダを使用してCPU使用量を減らしてください。</translation>
     </message>
 </context>
 <context>
@@ -6213,7 +6216,7 @@ To continue, select a different folder.</source>
     <message>
         <source>Local Folder</source>
         <translatorcomment>Sync table header column title</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ローカルフォルダ</translation>
     </message>
     <message>
         <source>Sort by folder name</source>
@@ -6223,7 +6226,7 @@ To continue, select a different folder.</source>
     <message>
         <source>MEGA Folder</source>
         <translatorcomment>Sync table header column title</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>MEGAフォルダ</translation>
     </message>
     <message>
         <source>Sort by MEGA folder name</source>
@@ -6243,7 +6246,7 @@ To continue, select a different folder.</source>
     <message>
         <source>Click menu for more Sync actions</source>
         <translatorcomment>Menu column item tooltip.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>その他の同期操作については、メニューをクリックしてください</translation>
     </message>
 </context>
 <context>
@@ -6251,12 +6254,12 @@ To continue, select a different folder.</source>
     <message>
         <source>Open in MEGA</source>
         <translatorcomment>Context menu option that opens the folder in MEGA webclient.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>MEGAで開く</translation>
     </message>
     <message>
         <source>Remove synced folder</source>
         <translatorcomment>Context menu option that removes the sync.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>同期フォルダを削除</translation>
     </message>
 </context>
 <context>
@@ -6277,7 +6280,7 @@ To continue, select a different folder.</source>
     <message>
         <source>Add Sync</source>
         <translatorcomment>Menu option used to add sync</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>同期を追加</translation>
     </message>
     <message>
         <source>Syncs</source>
@@ -6285,14 +6288,14 @@ To continue, select a different folder.</source>
         <translation>同期</translation>
     </message>
     <message>
-        <source>Add Backups</source>
-        <translatorcomment>Menu option used to add backups</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Backups</source>
         <translatorcomment>Menu option that shows backups menu</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>バックアップ</translation>
+    </message>
+    <message>
+        <source>Add Backup</source>
+        <translatorcomment>Menu option used to add backups</translatorcomment>
+        <translation>バックアップを追加</translation>
     </message>
 </context>
 <context>
@@ -6546,7 +6549,7 @@ To continue, select a different folder.</source>
     <message>
         <source>Your MEGA account is full</source>
         <translatorcomment>Message shown when the MEGA account is full</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>あなたのMEGA PROアカウントはいっぱいです。</translation>
     </message>
     <message>
         <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left for this IP address.

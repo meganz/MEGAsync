@@ -2101,7 +2101,7 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Add Backup</source>
         <translatorcomment>Tooltip message shown while hovering backups button.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Add Backup</translation>
     </message>
 </context>
 <context>
@@ -5622,7 +5622,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Prevent the computer from going to sleep when transfers or syncs are in progress.</source>
         <translatorcomment>Sleep/Active mode: Feature description label for keeping the pc awake when there are active transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Prevent the computer from going to sleep when transfers or syncs are in progress.</translation>
     </message>
 </context>
 <context>
