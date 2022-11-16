@@ -528,8 +528,8 @@ protected:
     bool appfinished;
     bool updateAvailable;
     bool isLinux;
-    bool isFirstSyncDone;
-    bool isFirstFileSynced;
+    bool mIsFirstFileTwoWaySynced;
+    bool mIsFirstFileBackedUp;
     bool networkConnectivity;
     int nUnviewedTransfers;
     bool completedTabActive;

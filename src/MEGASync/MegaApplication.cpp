@@ -96,6 +96,8 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     QApplication(argc, argv),
     mSyncs2waysMenu(nullptr),
     mBackupsMenu(nullptr),
+    mIsFirstFileTwoWaySynced(false),
+    mIsFirstFileBackedUp(false),
     scanStageController(this),
     mDisableGfx (false)
 {
@@ -313,7 +315,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     mCurrency.reset();
     storageOverquotaDialog = NULL;
     infoWizard = NULL;
-    isFirstFileSynced = false;
     mTransferManager = nullptr;
     cleaningSchedulerExecution = 0;
     lastUserActivityExecution = 0;
@@ -1089,6 +1090,8 @@ void MegaApplication::start()
         showInfoMessage(tr("MEGAsync has been updated"));
         preferences->setFirstSyncDone();
         preferences->setFirstFileSynced();
+        preferences->setFirstBackupDone();
+        preferences->setFirstFileBackedUp();
         preferences->setFirstWebDownloadDone();
 
         if (!preferences->installationTime())
@@ -1423,6 +1426,10 @@ if (!preferences->lastExecutionTime())
         preferences->setNotifyDisabledSyncsOnLogin(false);
         model->dismissUnattendedDisabledSyncs(syncsTypesToDismiss);
     }
+
+    // Init first synced and first backed-up file states from preferences
+    mIsFirstFileTwoWaySynced = preferences->isFirstFileSynced();
+    mIsFirstFileBackedUp = preferences->isFirstFileBackedUp();
 
     createAppMenus();
 
@@ -7678,16 +7685,22 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     {
         switch (request->getNumber())
         {
-            case 99500:
+            case AppStatsEvents::EVENT_1ST_START:
                 preferences->setFirstStartDone();
                 break;
-            case 99501:
+            case AppStatsEvents::EVENT_1ST_SYNC:
                 preferences->setFirstSyncDone();
                 break;
-            case 99502:
+            case AppStatsEvents::EVENT_1ST_SYNCED_FILE:
                 preferences->setFirstFileSynced();
                 break;
-            case 99503:
+            case AppStatsEvents::EVENT_1ST_BACKUP:
+                preferences->setFirstBackupDone();
+                break;
+            case AppStatsEvents::EVENT_1ST_BACKED_UP_FILE:
+                preferences->setFirstFileBackedUp();
+                break;
+            case AppStatsEvents::EVENT_1ST_WEBCLIENT_DL:
                 preferences->setFirstWebDownloadDone();
                 break;
             default:
@@ -7890,13 +7903,68 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         addRecentFile(QString::fromUtf8(transfer->getFileName()), transfer->getNodeHandle(), localPath, publicKey);
     }
 
+    // Check if we have ot send a EVENT_1ST_***_FILE
     if (e->getErrorCode() == MegaError::API_OK
             && transfer->isSyncTransfer()
-            && !isFirstFileSynced
-            && !preferences->isFirstFileSynced())
+            && (!mIsFirstFileTwoWaySynced || !mIsFirstFileBackedUp))
     {
-        megaApi->sendEvent(AppStatsEvents::EVENT_1ST_SYNCED_FILE, "MEGAsync first synced file");
-        isFirstFileSynced = true;
+        MegaSync::SyncType type (MegaSync::SyncType::TYPE_UNKNOWN);
+
+        // Check transfer local path against configured syncs to determine the sync type
+        QString filePath (QString::fromUtf8(transfer->getPath()));
+
+#ifdef WIN32
+        if (filePath.startsWith(QString::fromUtf8("\\\\?\\")))
+        {
+            filePath = filePath.mid(4);
+        }
+#endif
+
+        filePath = QDir::fromNativeSeparators(filePath);
+
+        auto typeIt (SyncInfo::AllHandledSyncTypes.constBegin());
+        while (type == MegaSync::SyncType::TYPE_UNKNOWN
+               && typeIt != SyncInfo::AllHandledSyncTypes.constEnd())
+        {
+            const auto syncsPaths (model->getLocalFolders(*typeIt));
+            auto pathIt (syncsPaths.constBegin());
+            while (type == MegaSync::SyncType::TYPE_UNKNOWN
+                   && pathIt != syncsPaths.constEnd())
+            {
+                QString syncDir (QDir::fromNativeSeparators(*pathIt) + QLatin1Char('/'));
+                if (filePath.startsWith(syncDir))
+                {
+                    type = *typeIt;
+                }
+                pathIt++;
+            }
+            typeIt++;
+        }
+
+        // Now emit an event if necessary
+        switch (type)
+        {
+        case MegaSync::SyncType::TYPE_TWOWAY:
+        {
+            if (!mIsFirstFileTwoWaySynced && !preferences->isFirstFileSynced())
+            {
+                megaApi->sendEvent(AppStatsEvents::EVENT_1ST_SYNCED_FILE,
+                                   "MEGAsync first synced file");
+            }
+            mIsFirstFileTwoWaySynced = true;
+            break;
+        }
+        case MegaSync::SyncType::TYPE_BACKUP:
+        {
+            if (!mIsFirstFileBackedUp && !preferences->isFirstFileBackedUp())
+            {
+                megaApi->sendEvent(AppStatsEvents::EVENT_1ST_BACKED_UP_FILE,
+                                   "MEGAsync first backed-up file");
+            }
+            mIsFirstFileBackedUp = true;
+            break;
+        }
+        }
     }
 
     if (firstTransferTimer && !firstTransferTimer->isActive())

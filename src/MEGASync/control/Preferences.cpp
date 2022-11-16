@@ -364,7 +364,9 @@ const QString Preferences::disableLeftPaneIconsKey  = QString::fromAscii("disabl
 const QString Preferences::sessionKey               = QString::fromAscii("session");
 const QString Preferences::firstStartDoneKey        = QString::fromAscii("firstStartDone");
 const QString Preferences::firstSyncDoneKey         = QString::fromAscii("firstSyncDone");
+const QString Preferences::firstBackupDoneKey       = QString::fromAscii("firstBackupDone");
 const QString Preferences::firstFileSyncedKey       = QString::fromAscii("firstFileSynced");
+const QString Preferences::firstFileBackedUpKey     = QString::fromAscii("firstFileBackedUp");
 const QString Preferences::firstWebDownloadKey      = QString::fromAscii("firstWebclientDownload");
 const QString Preferences::fatWarningShownKey       = QString::fromAscii("fatWarningShown");
 const QString Preferences::installationTimeKey      = QString::fromAscii("installationTime");
@@ -1897,6 +1899,16 @@ void Preferences::setFirstSyncDone(bool value)
     setValueAndSyncConcurrent(firstSyncDoneKey, value);
 }
 
+bool Preferences::isFirstBackupDone()
+{
+    return getValueConcurrent<bool>(firstBackupDoneKey, false);
+}
+
+void Preferences::setFirstBackupDone(bool value)
+{
+    setValueAndSyncConcurrent(firstBackupDoneKey, value);
+}
+
 bool Preferences::isFirstFileSynced()
 {
     return getValueConcurrent<bool>(firstFileSyncedKey, false);
@@ -1905,6 +1917,16 @@ bool Preferences::isFirstFileSynced()
 void Preferences::setFirstFileSynced(bool value)
 {
     setValueAndSyncConcurrent(firstFileSyncedKey, value);
+}
+
+bool Preferences::isFirstFileBackedUp()
+{
+    return getValueConcurrent<bool>(firstFileBackedUpKey, false);
+}
+
+void Preferences::setFirstFileBackedUp(bool value)
+{
+    setValueAndSyncConcurrent(firstFileBackedUpKey, value);
 }
 
 bool Preferences::isFirstWebDownloadDone()
