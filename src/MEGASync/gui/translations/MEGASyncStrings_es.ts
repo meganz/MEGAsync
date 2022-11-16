@@ -6286,7 +6286,7 @@ Para continuar, selecciona una carpeta diferente.</translation>
     <message>
         <source>Add Sync</source>
         <translatorcomment>Menu option used to add sync</translatorcomment>
-        <translation>Añadir Sincronización</translation>
+        <translation>Añadir sincronización</translation>
     </message>
     <message>
         <source>Syncs</source>

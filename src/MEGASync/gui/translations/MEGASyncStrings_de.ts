@@ -5494,8 +5494,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Prevent the computer from going to sleep when transfers or syncs are in progress.</source>
         <translatorcomment>Sleep/Active mode: Feature description label for keeping the pc awake when there are active transfers</translatorcomment>
-        <translation>de
-Ruhezustand des Computers bei laufenden Übertragungen oder Synchronisierungen verhindern.</translation>
+        <translation>Ruhezustand des Computers bei laufenden Übertragungen oder Synchronisierungen verhindern.</translation>
     </message>
 </context>
 <context>
