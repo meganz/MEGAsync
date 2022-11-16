@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>310</width>
-    <height>173</height>
+    <height>178</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -46,7 +46,7 @@ margin-left: 32px;
    <property name="verticalSpacing">
     <number>10</number>
    </property>
-   <item row="2" column="0">
+   <item row="2" column="0" alignment="Qt::AlignRight">
     <widget class="QLabel" name="lLocalFolder">
      <property name="styleSheet">
       <string notr="true">QLabel
