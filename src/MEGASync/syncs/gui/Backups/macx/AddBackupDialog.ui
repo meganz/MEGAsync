@@ -141,7 +141,7 @@ margin-right: 29px;
           </property>
          </widget>
         </item>
-        <item row="1" column="0" alignment="Qt::AlignLeft|Qt::AlignTop">
+        <item row="1" column="0" alignment="Qt::AlignRight|Qt::AlignTop">
          <widget class="QLabel" name="label_3">
           <property name="text">
            <string>Backup to:</string>
