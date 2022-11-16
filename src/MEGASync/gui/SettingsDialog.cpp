@@ -48,11 +48,10 @@ using namespace mega;
 #ifdef Q_OS_MACOS
 //Const values used for macOS Settings dialog resize animation
 constexpr auto SETTING_ANIMATION_PAGE_TIMEOUT{150};//ms
-constexpr auto SETTING_ANIMATION_GENERAL_TAB_HEIGHT{677};
+constexpr auto SETTING_ANIMATION_GENERAL_TAB_HEIGHT{646};
 constexpr auto SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT{295};//px height
-constexpr auto SETTING_ANIMATION_SYNCS_TAB_HEIGHT{529};
-// FIXME: Re-evaluate size for Backup tab
-constexpr auto SETTING_ANIMATION_BACKUP_TAB_HEIGHT{529};
+constexpr auto SETTING_ANIMATION_SYNCS_TAB_HEIGHT{539};
+constexpr auto SETTING_ANIMATION_BACKUP_TAB_HEIGHT{534};
 constexpr auto SETTING_ANIMATION_SECURITY_TAB_HEIGHT{372};
 constexpr auto SETTING_ANIMATION_FOLDERS_TAB_HEIGHT{513};
 constexpr auto SETTING_ANIMATION_NETWORK_TAB_HEIGHT{205};
