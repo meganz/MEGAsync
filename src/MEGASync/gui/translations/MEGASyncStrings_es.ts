@@ -6989,7 +6989,7 @@ Para obtener más cuota, amplia tu cuenta a Pro o espera [A] hasta que haya más
     <message>
         <source>just now</source>
         <translatorcomment>Label to indicate that a transfer has finished right now</translatorcomment>
-        <translation>Justo ahora</translation>
+        <translation>justo ahora</translation>
     </message>
     <message>
         <source>TB</source>
