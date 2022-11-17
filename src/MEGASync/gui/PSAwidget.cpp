@@ -188,7 +188,7 @@ void PSAwidget::removeAnnounce()
 
 void PSAwidget::on_bMore_clicked()
 {
-    QtConcurrent::run(QDesktopServices::openUrl, QUrl(info.urlClick));
+    Utilities::openUrl(QUrl(info.urlClick));
     on_bDismiss_clicked();
 }
 

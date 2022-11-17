@@ -162,6 +162,41 @@ QPushButton:!checked {
       </widget>
      </item>
      <item>
+      <widget class="QPushButton" name="bShowBackups">
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    border: 3px solid #0078d7;
+	border-top-color: transparent;
+	border-left-color: transparent;
+	border-right-color: transparent;
+    border-radius: 0px;
+    background-color: transparent;
+    padding: -2px;
+	font-size:12px;
+}
+
+QPushButton:checked {
+	border-bottom-color:#0078d7;
+	color:#36230e;
+}
+QPushButton:!checked {
+	border-bottom-color:transparent;
+	color: #666666;
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Backups</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+       <property name="autoExclusive">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
       <spacer name="horizontalSpacer_3">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -183,6 +218,7 @@ QPushButton:!checked {
      </property>
      <widget class="NodeSelectorTreeViewWidgetCloudDrive" name="CloudDrive"/>
      <widget class="NodeSelectorTreeViewWidgetIncomingShares" name="IncomingShares"/>
+     <widget class="NodeSelectorTreeViewWidgetBackups" name="Backups"/>
     </widget>
    </item>
   </layout>
@@ -196,6 +232,12 @@ QPushButton:!checked {
   </customwidget>
   <customwidget>
    <class>NodeSelectorTreeViewWidgetIncomingShares</class>
+   <extends>QWidget</extends>
+   <header>NodeSelectorTreeViewWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>NodeSelectorTreeViewWidgetBackups</class>
    <extends>QWidget</extends>
    <header>NodeSelectorTreeViewWidget.h</header>
    <container>1</container>

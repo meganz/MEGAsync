@@ -45,6 +45,8 @@ public:
     MegaItemModel* getMegaModel();
     bool isModelProcessing() const;
 
+    virtual bool canBeDeleted() const;
+
 signals:
     void expandReady();
     void navigateReady(const QModelIndex& index);

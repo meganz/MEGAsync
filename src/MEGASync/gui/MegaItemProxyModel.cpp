@@ -151,11 +151,11 @@ void MegaItemProxyModel::removeNode(const QModelIndex& item)
 bool MegaItemProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
 {
     //qDebug()<<"lessthan:"<<QThread::currentThreadId();
-        if(qApp->thread() == QThread::currentThread())
-        {
-            qDebug()<<"MAIN THREAD:"<<
-                      left<<right;
-        }
+//        if(qApp->thread() == QThread::currentThread())
+//        {
+//            qDebug()<<"MAIN THREAD:"<<
+//                      left<<right;
+//        }
 //        else
 //        {
 //            qDebug()<<"MY THREAD:"<<
@@ -205,10 +205,10 @@ void MegaItemProxyModel::setSourceModel(QAbstractItemModel *sourceModel)
 
 bool MegaItemProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
 {
-    if(qApp->thread() == QThread::currentThread())
-    {
-        qDebug()<<"MAIN THREAD:FILTER:" << sourceParent << sourceRow;;
-    }
+//    if(qApp->thread() == QThread::currentThread())
+//    {
+//        qDebug()<<"MAIN THREAD:FILTER:" << sourceParent << sourceRow;;
+//    }
 //    else
 //    {
 //        qDebug()<<"MY THREAD:FILTER:" << sourceParent << sourceRow;
@@ -303,6 +303,11 @@ MegaItemModel *MegaItemProxyModel::getMegaModel()
 bool MegaItemProxyModel::isModelProcessing() const
 {
     return mFilterWatcher.isRunning();
+}
+
+bool MegaItemProxyModel::canBeDeleted() const
+{
+    return dynamic_cast<MegaItemModel*>(sourceModel())->canBeDeleted();
 }
 
 void MegaItemProxyModel::invalidateModel(const QModelIndexList& parents)

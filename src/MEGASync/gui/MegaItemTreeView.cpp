@@ -2,9 +2,11 @@
 #include "MegaItem.h"
 #include "MegaApplication.h"
 #include "MegaItemProxyModel.h"
+#include "Platform.h"
 #include "MegaItemModel.h"
 
 #include <QPainter>
+#include <QMenu>
 
 MegaItemTreeView::MegaItemTreeView(QWidget* parent) :
     QTreeView(parent),
@@ -74,7 +76,7 @@ void MegaItemTreeView::drawBranches(QPainter *painter, const QRect &rect, const 
 {
     QModelIndex idx = getIndexFromSourceModel(index);
     MegaItem *item = static_cast<MegaItem*>(idx.internalPointer());
-    if(item && item->isRoot())
+    if(item && (item->isRoot() || item->isVault()))
     {
         QStyleOptionViewItem opt = viewOptions();
         opt.rect = rect;
@@ -161,9 +163,10 @@ void MegaItemTreeView::contextMenuEvent(QContextMenuEvent *event)
         }
 
         QMenu customMenu;
+        Platform::initMenu(&customMenu);
         auto node = std::unique_ptr<MegaNode>(mMegaApi->getNodeByHandle(getSelectedNodeHandle()));
         auto parent = std::unique_ptr<MegaNode>(mMegaApi->getParentNode(node.get()));
-
+        auto proxyModel = static_cast<MegaItemProxyModel*>(model());
         if (parent && node)
         {
             int access = mMegaApi->getAccess(node.get());
@@ -173,7 +176,7 @@ void MegaItemTreeView::contextMenuEvent(QContextMenuEvent *event)
                 customMenu.addAction(tr("Get MEGA link"), this, SLOT(getMegaLink()));
             }
 
-            if (access >= MegaShare::ACCESS_FULL)
+            if (access >= MegaShare::ACCESS_FULL && proxyModel->canBeDeleted())
             {
                 customMenu.addAction(tr("Delete"), this, SLOT(removeNode()));
             }

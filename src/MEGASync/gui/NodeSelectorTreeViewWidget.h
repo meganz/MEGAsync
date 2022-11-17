@@ -35,6 +35,7 @@ public:
     static const int LOADING_VIEW_THRESSHOLD;
     static const char* CLD_DRIVE;
     static const char* IN_SHARES;
+    static const char* BACKUPS;
 
     explicit NodeSelectorTreeViewWidget(QWidget *parent = nullptr);
     ~NodeSelectorTreeViewWidget();
@@ -151,5 +152,19 @@ private:
     void setRootIndex_Reimplementation(const QModelIndex& source_idx) override;
     bool newFolderBtnVisibleInRoot() override {return false;}
 };
+
+class NodeSelectorTreeViewWidgetBackups : public NodeSelectorTreeViewWidget
+{
+    Q_OBJECT
+
+public:
+    explicit NodeSelectorTreeViewWidgetBackups(QWidget *parent = nullptr);
+
+private:
+    QString getRootText() override;
+    void setRootIndex_Reimplementation(const QModelIndex& source_idx) override;
+    std::unique_ptr<MegaItemModel> getModel() override;
+};
+
 #endif // NODESELECTORTREEVIEWWIDGET_H
 

@@ -1,4 +1,4 @@
-#include "model/Model.h"
+#include "syncs/control/SyncInfo.h"
 #include "Preferences.h"
 #include "platform/Platform.h"
 #include "UserAttributesRequests/FullName.h"
@@ -13,19 +13,21 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/4.7.1.0";
-const int Preferences::VERSION_CODE = 4701;
-const int Preferences::BUILD_ID = 0;
+const char Preferences::USER_AGENT[] = "MEGAsync/4.7.2.0";
+const int Preferences::VERSION_CODE = 4702;
+const int Preferences::BUILD_ID = 1;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("4.7.1");
-QString Preferences::SDK_ID = QString::fromAscii("44c0918");
+const QString Preferences::VERSION_STRING = QString::fromAscii("4.7.2");
+QString Preferences::SDK_ID = QString::fromAscii("2cad2e5e");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
-"- There is now a new transfer manager.\n"
-"- Transfer management was enhanced and reliability of downloads and uploads improved. \n"
-"- Detected crashes on Windows, Linux, and macOS fixed.\n"
-"- Translation issues fixed.\n"
-"- Performance improved.\n"
-"- UI fixed and adjusted.\n"));
+"- Added new Apple Silicon native support.\n"
+"- Added a new feature to stop sleep mode if there are active transfers.\n"
+"- Updated third-party libs.\n"
+"- Improved folders transfers.\n"
+"- Fixed detected crashes on Windows, Linux, and macOS.\n"
+"- Fixed translation issues.\n"
+"- Improved performance.\n"
+"- Fixed and adjusted UI.\n"));
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
@@ -252,16 +254,16 @@ const QString Preferences::lastNameKey              = QString::fromAscii("lastNa
 const QString Preferences::totalStorageKey          = QString::fromAscii("totalStorage");
 const QString Preferences::usedStorageKey           = QString::fromAscii("usedStorage");
 const QString Preferences::cloudDriveStorageKey     = QString::fromAscii("cloudDriveStorage");
-const QString Preferences::inboxStorageKey          = QString::fromAscii("inboxStorage");
+const QString Preferences::vaultStorageKey          = QString::fromAscii("vaultStorage");
 const QString Preferences::rubbishStorageKey        = QString::fromAscii("rubbishStorage");
 const QString Preferences::inShareStorageKey        = QString::fromAscii("inShareStorage");
 const QString Preferences::versionsStorageKey        = QString::fromAscii("versionsStorage");
 const QString Preferences::cloudDriveFilesKey       = QString::fromAscii("cloudDriveFiles");
-const QString Preferences::inboxFilesKey            = QString::fromAscii("inboxFiles");
+const QString Preferences::vaultFilesKey            = QString::fromAscii("vaultFiles");
 const QString Preferences::rubbishFilesKey          = QString::fromAscii("rubbishFiles");
 const QString Preferences::inShareFilesKey          = QString::fromAscii("inShareFiles");
 const QString Preferences::cloudDriveFoldersKey     = QString::fromAscii("cloudDriveFolders");
-const QString Preferences::inboxFoldersKey          = QString::fromAscii("inboxFolders");
+const QString Preferences::vaultFoldersKey          = QString::fromAscii("vaultFolders");
 const QString Preferences::rubbishFoldersKey        = QString::fromAscii("rubbishFolders");
 const QString Preferences::inShareFoldersKey        = QString::fromAscii("inShareFolders");
 const QString Preferences::totalBandwidthKey        = QString::fromAscii("totalBandwidth");
@@ -444,7 +446,7 @@ std::shared_ptr<Preferences> Preferences::instance()
 
 void Preferences::initialize(QString dataPath)
 {
-    this->dataPath = dataPath;
+    mDataPath = dataPath;
 #if QT_VERSION >= 0x050000
     QString lockSettingsFile = QDir::toNativeSeparators(dataPath + QString::fromAscii("/MEGAsync.cfg.lock"));
     QFile::remove(lockSettingsFile);
@@ -713,16 +715,16 @@ void Preferences::setCloudDriveStorage(long long value)
     setValueConcurrent(cloudDriveStorageKey, value);
 }
 
-long long Preferences::inboxStorage()
+long long Preferences::vaultStorage()
 {
     assert(logged());
-    return getValueConcurrent<long long>(inboxStorageKey);
+    return getValueConcurrent<long long>(vaultStorageKey);
 }
 
-void Preferences::setInboxStorage(long long value)
+void Preferences::setVaultStorage(long long value)
 {
     assert(logged());
-    setValueConcurrent(inboxStorageKey, value);
+    setValueConcurrent(vaultStorageKey, value);
 }
 
 long long Preferences::rubbishStorage()
@@ -773,16 +775,16 @@ void Preferences::setCloudDriveFiles(long long value)
     setValueConcurrent(cloudDriveFilesKey, value);
 }
 
-long long Preferences::inboxFiles()
+long long Preferences::vaultFiles()
 {
     assert(logged());
-    return getValueConcurrent<long long>(inboxFilesKey);
+    return getValueConcurrent<long long>(vaultFilesKey);
 }
 
-void Preferences::setInboxFiles(long long value)
+void Preferences::setVaultFiles(long long value)
 {
     assert(logged());
-    setValueConcurrent(inboxFilesKey, value);
+    setValueConcurrent(vaultFilesKey, value);
 }
 
 long long Preferences::rubbishFiles()
@@ -821,16 +823,16 @@ void Preferences::setCloudDriveFolders(long long value)
     setValueConcurrent(cloudDriveFoldersKey, value);
 }
 
-long long Preferences::inboxFolders()
+long long Preferences::vaultFolders()
 {
     assert(logged());
-    return getValueConcurrent<long long>(inboxFoldersKey);
+    return getValueConcurrent<long long>(vaultFoldersKey);
 }
 
-void Preferences::setInboxFolders(long long value)
+void Preferences::setVaultFolders(long long value)
 {
     assert(logged());
-    setValueConcurrent(inboxFoldersKey, value);
+    setValueConcurrent(vaultFoldersKey, value);
 }
 
 long long Preferences::rubbishFolders()
@@ -2742,7 +2744,7 @@ bool Preferences::error()
 QString Preferences::getDataPath()
 {
     mutex.lock();
-    QString ret = dataPath;
+    QString ret = mDataPath;
     mutex.unlock();
     return ret;
 }
@@ -2942,7 +2944,7 @@ void Preferences::loadExcludedSyncNames()
 }
 
 
-QMap<mega::MegaHandle, std::shared_ptr<SyncSetting> > Preferences::getLoadedSyncsMap() const
+QMap<mega::MegaHandle, std::shared_ptr<SyncSettings> > Preferences::getLoadedSyncsMap() const
 {
     return loadedSyncsMap;
 }
@@ -2960,7 +2962,7 @@ void Preferences::readFolders()
     {
         mSettings->beginGroup(i);
 
-        auto sc = std::make_shared<SyncSetting>(mSettings->value(configuredSyncsKey).value<QString>());
+        auto sc = std::make_shared<SyncSettings>(mSettings->value(configuredSyncsKey).value<QString>());
         if (sc->backupId())
         {
             loadedSyncsMap[sc->backupId()] = sc;
@@ -3138,7 +3140,7 @@ void Preferences::removeAllSyncSettings()
 }
 
 
-void Preferences::removeSyncSetting(std::shared_ptr<SyncSetting> syncSettings)
+void Preferences::removeSyncSetting(std::shared_ptr<SyncSettings> syncSettings)
 {
     QMutexLocker qm(&mutex);
     assert(logged() && syncSettings);
@@ -3160,7 +3162,7 @@ void Preferences::removeSyncSetting(std::shared_ptr<SyncSetting> syncSettings)
     mSettings->sync();
 }
 
-void Preferences::writeSyncSetting(std::shared_ptr<SyncSetting> syncSettings)
+void Preferences::writeSyncSetting(std::shared_ptr<SyncSettings> syncSettings)
 {
     if (logged())
     {

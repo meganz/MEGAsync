@@ -1,13 +1,11 @@
 #include "MegaItem.h"
 #include "QMegaMessageBox.h"
 #include "MegaApplication.h"
-#include "model/Model.h"
-#include "MegaApplication.h"
-#include "mega/utils.h"
+#include "syncs/control/SyncInfo.h"
 #include "UserAttributesRequests/FullName.h"
 #include "UserAttributesRequests/Avatar.h"
 
-#include <QByteArray>
+#include "mega/utils.h"
 
 const int MegaItem::ICON_SIZE = 17;
 
@@ -21,7 +19,9 @@ MegaItem::MegaItem(std::unique_ptr<MegaNode> node, bool showFiles, MegaItem *par
     mRequestingChildren(false),
     mShowFiles(showFiles),
     mNode(std::move(node)),
-    mOwner(nullptr)
+    mOwner(nullptr),
+    mMegaApi(MegaSyncApp->getMegaApi()),
+    mIsVault(false)
 { 
     if(mShowFiles)
     {
@@ -50,9 +50,14 @@ MegaItem::MegaItem(std::unique_ptr<MegaNode> node, bool showFiles, MegaItem *par
     }
 
     QStringList folderList;
+    if(isVault() || (parent_item && parent_item->isVault()))
+    {
+        mStatus = STATUS::BACKUP;
+        return;
+    }
     if(parent_item && parent_item->getNode()->isInShare())
     {
-        foreach(const QString& folder, Model::instance()->getCloudDriveSyncMegaFolders(false))
+        foreach(const QString& folder, SyncInfo::instance()->getCloudDriveSyncMegaFolders(false))
         {
             if(folder.startsWith(parent_item->getOwnerEmail()))
             {
@@ -64,7 +69,7 @@ MegaItem::MegaItem(std::unique_ptr<MegaNode> node, bool showFiles, MegaItem *par
     ////////////
     else
     {
-        QStringList syncList = Model::instance()->getCloudDriveSyncMegaFolders(true);
+        QStringList syncList = SyncInfo::instance()->getCloudDriveSyncMegaFolders(true);
         if(isRoot() && !syncList.isEmpty())
         {
             mStatus = STATUS::SYNC_PARENT;
@@ -141,7 +146,7 @@ MegaItem *MegaItem::getParent()
     return dynamic_cast<MegaItem*>(parent());
 }
 
-MegaItem *MegaItem::getChild(int i)
+MegaItem* MegaItem::getChild(int i)
 {
     if(mChildItems.size() <= i)
     {
@@ -177,7 +182,7 @@ int MegaItem::getNumItemChildren()
     return mChildItems.size();
 }
 
-int MegaItem::indexOf(MegaItem *item)
+int MegaItem::indexOf(MegaItem* item)
 {
     return mChildItems.indexOf(item);
 }
@@ -222,7 +227,7 @@ void MegaItem::setOwner(std::unique_ptr<mega::MegaUser> user)
 
     QStringList folderList;
     //Calculating if we have a synced childs.
-    foreach(const QString& folder, Model::instance()->getMegaFolders())
+    foreach(const QString& folder, SyncInfo::instance()->getMegaFolders(SyncInfo::AllHandledSyncTypes))
     {
         if(folder.startsWith(mOwnerEmail))
         {
@@ -287,7 +292,8 @@ bool MegaItem::isSyncable()
 {       
     return mStatus != SYNC
             && mStatus != SYNC_PARENT
-            && mStatus != SYNC_CHILD;
+            && mStatus != SYNC_CHILD
+            && mStatus != BACKUP;
 }
 
 MegaItem* MegaItem::addNode(std::shared_ptr<MegaNode>node)
@@ -315,6 +321,16 @@ MegaItem* MegaItem::removeNode(std::shared_ptr<MegaNode> node)
     }
 }
 
+void MegaItem::displayFiles(bool enable)
+{
+    mShowFiles = enable;
+}
+
+void MegaItem::setAsVaultNode()
+{
+    mIsVault = true;
+}
+
 int MegaItem::row()
 {
     if (MegaItem* parent = getParent())
@@ -326,7 +342,7 @@ int MegaItem::row()
 
 void MegaItem::calculateSyncStatus(const QStringList &folders)
 {
-    QList<mega::MegaHandle> syncedFolders = Model::instance()->getMegaFolderHandles();
+    auto syncedFolders = SyncInfo::instance()->getMegaFolderHandles(SyncInfo::AllHandledSyncTypes);
     if(syncedFolders.contains(mNode->getHandle()))
     {
         mStatus = STATUS::SYNC;
@@ -337,10 +353,9 @@ void MegaItem::calculateSyncStatus(const QStringList &folders)
     std::shared_ptr<MegaNode> n = mNode;
     parentFolders.append(QLatin1Char('/'));
     parentFolders.append(QString::fromUtf8(n->getName()));
-    MegaApi* megaApi = MegaSyncApp->getMegaApi();
-    while(n->getParentHandle() != INVALID_HANDLE)
+    while(n && n->getParentHandle () != INVALID_HANDLE)
     {
-        n = std::shared_ptr<MegaNode>(megaApi->getNodeByHandle(n->getParentHandle()));
+        n = std::shared_ptr<MegaNode>(mMegaApi->getNodeByHandle(n->getParentHandle()));
         if(n->getType() != MegaNode::TYPE_ROOT)
         {
             parentFolders.prepend(QString::fromUtf8(n->getName()));
@@ -366,4 +381,9 @@ void MegaItem::calculateSyncStatus(const QStringList &folders)
 bool MegaItem::isRoot()
 {
     return mNode->getHandle() == MegaSyncApp->getRootNode()->getHandle();
+}
+
+bool MegaItem::isVault()
+{
+    return mIsVault;
 }

@@ -19,7 +19,7 @@ ScanStageController::ScanStageController(QObject *parent)
 void ScanStageController::updateReference(InfoDialog *_infoDialog)
 {
     mInfoDialog = _infoDialog;
-    connect(mInfoDialog, &InfoDialog::cancelScanning,
+    connect(mInfoDialog.data(), &InfoDialog::cancelScanning,
             this, &ScanStageController::setDelayedCancellingStage);
 }
 
@@ -31,7 +31,7 @@ void ScanStageController::updateReference(TransferManager *_transferManager)
     {
         mTransferManager->enterBlockingState();
     }
-    connect(mTransferManager, &TransferManager::cancelScanning,
+    connect(mTransferManager.data(), &TransferManager::cancelScanning,
             this, &ScanStageController::setDelayedCancellingStage);
 }
 

@@ -4,7 +4,6 @@
 #include <QWidget>
 #include <QFileInfo>
 #include <QDateTime>
-#include <QMenu>
 #include "TransferItem.h"
 #include "megaapi.h"
 #include "TransferRemainingTime.h"

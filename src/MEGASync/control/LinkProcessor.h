@@ -41,7 +41,7 @@ protected:
     mega::MegaApi *megaApiFolders;
     QStringList linkList;
     QList<bool> linkSelected;
-    QList<std::shared_ptr<mega::MegaNode>> linkNode;
+    QList<std::shared_ptr<mega::MegaNode>> mLinkNode;
     QList<int> linkError;
     int currentIndex;
     int remainingNodes;

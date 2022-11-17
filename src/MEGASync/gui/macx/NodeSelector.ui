@@ -692,16 +692,12 @@ margin-right: 31px;
      </property>
      <widget class="NodeSelectorTreeViewWidgetCloudDrive" name="CloudDrive"/>
      <widget class="NodeSelectorTreeViewWidgetIncomingShares" name="IncomingShares"/>
+     <widget class="NodeSelectorTreeViewWidgetBackups" name="Backups"/>
     </widget>
    </item>
   </layout>
  </widget>
  <customwidgets>
-  <customwidget>
-   <class>QTabBar</class>
-   <extends>QWidget</extends>
-   <header>qtabbar.h</header>
-  </customwidget>
   <customwidget>
    <class>NodeSelectorTreeViewWidgetCloudDrive</class>
    <extends>QWidget</extends>
@@ -713,6 +709,17 @@ margin-right: 31px;
    <extends>QWidget</extends>
    <header>NodeSelectorTreeViewWidget.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>NodeSelectorTreeViewWidgetBackups</class>
+   <extends>QWidget</extends>
+   <header>NodeSelectorTreeViewWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QTabBar</class>
+   <extends>QWidget</extends>
+   <header>qtabbar.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

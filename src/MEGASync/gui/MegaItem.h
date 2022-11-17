@@ -1,23 +1,22 @@
 #ifndef MEGAITEM_H
 #define MEGAITEM_H
 
-#include "QTMegaRequestListener.h"
-
 #include <QList>
 #include <QIcon>
+
+#include "megaapi.h"
 
 #include <memory>
 
 namespace UserAttributes{
 class FullName;
 class Avatar;
-class CameraUploadFolder;
-class MyChatFilesFolder;
 }
 
 class MegaItem : public QObject
 {
     Q_OBJECT
+
 public:
     static const int ICON_SIZE;
 
@@ -54,7 +53,10 @@ public:
     bool isRoot();
     MegaItem* addNode(std::shared_ptr<mega::MegaNode> node);
     MegaItem* removeNode(std::shared_ptr<mega::MegaNode> node);
+    bool isVault();
+    void displayFiles(bool enable);
     void setChatFilesFolder();
+    void setAsVaultNode();
     int row();
 
     bool requestingChildren() const;
@@ -71,6 +73,7 @@ protected:
     long long mChildrenCounter;
     bool mShowFiles;
     bool mChildrenAreInit;
+    bool mIsVault;
 
     std::shared_ptr<mega::MegaNode> mNode;
     QList<MegaItem*> mChildItems;
@@ -82,7 +85,7 @@ private slots:
 
 private:
     void calculateSyncStatus(const QStringList& folders);
-    std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
+    mega::MegaApi* mMegaApi;
     std::shared_ptr<const UserAttributes::FullName> mFullNameAttribute;
     std::shared_ptr<const UserAttributes::Avatar> mAvatarAttribute;
 };

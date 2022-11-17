@@ -1,4 +1,5 @@
 #include "CommonMessages.h"
+#include "Utilities.h"
 
 #include <QCoreApplication>
 #include <QDateTime>
@@ -43,6 +44,11 @@ QString CommonMessages::createShellExtensionActionLabel(const QString &action, c
         label = QCoreApplication::translate("ShellExtension", action.toUtf8().constData());
     }
     return label;
+}
+
+QString CommonMessages::errorInvalidChars()
+{
+    return QCoreApplication::translate("CommonMessages", "The following characters are not allowed:\n%1").arg(Utilities::FORBIDDEN_CHARS);
 }
 
 int CommonMessages::computeDaysToExpiration(int64_t expirationTimeStampInSecs)

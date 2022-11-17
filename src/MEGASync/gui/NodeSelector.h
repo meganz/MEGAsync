@@ -32,12 +32,14 @@ public:
 
     enum TabItem{
         CLOUD_DRIVE = 0,
-        SHARES
+        SHARES,
+        VAULT,
     };
 
     static const int LABEL_ELIDE_MARGIN;
     static const char* CLD_DRIVE;
     static const char* IN_SHARES;
+    static const char* BACKUPS;
     explicit NodeSelector(int selectMode, QWidget *parent = 0);
 
     ~NodeSelector();
@@ -59,11 +61,13 @@ private slots:
     void onbOkClicked();
     void onbShowIncomingSharesClicked();
     void onbShowCloudDriveClicked();
+    void onbShowBackupsFolderClicked();
     void onTabSelected(int index);
 
 private:
     void processCloseEvent(MegaItemProxyModel *proxy, QCloseEvent* event);
     QModelIndex getParentIncomingShareByIndex(QModelIndex idx);
+    void hideSelector(TabItem item);
 
     Ui::NodeSelector *ui;
     int mSelectMode;

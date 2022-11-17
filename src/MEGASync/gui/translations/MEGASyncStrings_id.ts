@@ -626,11 +626,6 @@ Please enter a different name to identify this synced folder:</source>
         <translation>Batalkan transfer?</translation>
     </message>
     <message>
-        <source>Transfers not yet processed will be cancelled.</source>
-        <translatorcomment>Dialog messages which warns the user about the potential problems of cancelling the folder scanning</translatorcomment>
-        <translation>Transfer yang belum diproses akan dibatalkan.</translation>
-    </message>
-    <message>
         <source>No, continue</source>
         <translatorcomment>Button to continue folder scanning cancellation</translatorcomment>
         <translation>Tidak, lanjutkan</translation>
@@ -639,6 +634,15 @@ Please enter a different name to identify this synced folder:</source>
         <source>Yes, cancel</source>
         <translatorcomment>Button to abort a folder scanning</translatorcomment>
         <translation>Ya, batalkan</translation>
+    </message>
+    <message>
+        <source>All the queued transfers from your current download will be cancelled.</source>
+        <translatorcomment>Dialog messages which warns the user about the potential problems of cancelling the folder scanning</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancelling…</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -973,7 +977,7 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation>Akun anda kedaluwarsa sebagai hanya baca sampai anda melanjutkan pembayaran yang diperlukan.</translation>
+        <translation>Akun anda kedaluwarsa sebagai hanya baca sampai anda melanjutkan dengan pembayaran yang diperlukan.</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -1354,7 +1358,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Incorrect email and/or password.</source>
         <translatorcomment>Message box shown when user enters incorrect email and/or password at login</translatorcomment>
-        <translation>Email dan/atau password salah.</translation>
+        <translation>Email atau kata sandi tidak valid.</translation>
     </message>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
@@ -2316,7 +2320,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message shown to admin business account when a payment has failed. </translatorcomment>
-        <translation>Tampaknya pembayaran untuk akun Bisnis Anda gagal. Akun anda telah kedaluwarsa dan diberikan izin akses hanya-baca sampai anda melanjutkan dengan pembayaran yang diperlukan.</translation>
+        <translation>Tampaknya pembayaran untuk akun Bisnis anda gagal. Akun anda telah kedaluwarsa dan telah diberikan izin akses hanya baca hingga anda melanjutkan pembayaran yang diperlukan.</translation>
     </message>
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
@@ -2331,7 +2335,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>This month&apos;s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</source>
         <translatorcomment>Informative message shown to the user when a payment has failed for a business account.</translatorcomment>
-        <translation>Pembayaran bulan ini gagal. Harap selesaikan masalah pembayaran anda sesegera mungkin untuk menghindari penangguhan akun bisnis anda.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -2341,7 +2345,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
         <translatorcomment>Informative message shown when a business account is expired and the user can only browse data and none operation (upload, download, creation..) is allowed.</translatorcomment>
-        <translation>Akun Anda [A]kedaluwarsa[/A]. Anda hanya dapat menelusuri data anda.</translation>
+        <translation>Akun anda telah [A]kedaluwarsa[/A]. Anda hanya dapat menelusuri data anda.</translation>
     </message>
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
@@ -2614,14 +2618,6 @@ Transfer akan dilanjutkan secara otomatis saat anda membuka kembali aplikasi.</n
         <translation>Error tidak diketahui</translation>
     </message>
     <message>
-        <source>Your account has been suspended due to multiple breaches of MEGA’s Terms of Service. Please check your email inbox.</source>
-        <translation>Akun anda telah ditangguhkan karena beberapa pelanggaran Persyaratan Layanan MEGA. Silakan periksa kotak masuk email anda.</translation>
-    </message>
-    <message>
-        <source>Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
-        <translation>Akun anda dihentikan karena pelanggaran terhadap Ketentuan Layanan MEGA, seperti penyalahgunaan hak orang lain; berbagi dan / atau mengimpor data ilegal; atau penyalahgunaan sistem.</translation>
-    </message>
-    <message>
         <source>SSL verification failed</source>
         <translatorcomment>Error shown when SSL check has failed</translatorcomment>
         <translation>Verifikasi SSL gagal</translation>
@@ -2655,6 +2651,16 @@ Transfer akan dilanjutkan secara otomatis saat anda membuka kembali aplikasi.</n
         <source>Decryption error</source>
         <translatorcomment>String shown when a file/folder name can not be decrypted.</translatorcomment>
         <translation>Kesalahan dekripsi</translation>
+    </message>
+    <message>
+        <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
+        <translatorcomment>Error triggered by SDK when an account has been suspended due to copyright violations.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
+        <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2722,20 +2728,20 @@ Transfer akan dilanjutkan secara otomatis saat anda membuka kembali aplikasi.</n
         <translatorcomment>Node name column title tooltip. Sorts the order of the column by date.</translatorcomment>
         <translation>Diurutkan berdasarkan nama</translation>
     </message>
-    <message>
+    <message numerus="yes">
         <source>Today at %1</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened today. %1 represents the hour</translatorcomment>
-        <translation>Hari ini di %1</translation>
+        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened today. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
-    <message>
+    <message numerus="yes">
         <source>Yesterday at %1</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened yesterday. %1 represents the hour</translatorcomment>
-        <translation>Kemarin di %1</translation>
+        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened yesterday. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
-    <message>
+    <message numerus="yes">
         <source>%1 at %2</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was previously to yesterday. %1 represents the date (day month and year), while %2 represents the hour)</translatorcomment>
-        <translation>%1 di %2</translation>
+        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was previously to yesterday. %1 represents the date (day month and year), while %2 represents the hour). Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Recently used</source>
@@ -3124,14 +3130,6 @@ Transfer sinkronisasi yang tidak lengkap yang anda pilih tidak akan dibatalkan.<
         <source>Yes, clear</source>
         <translatorcomment>Dialog button to do the proposed actions (clear the transfers)</translatorcomment>
         <translation>Ya, hapus</translation>
-    </message>
-</context>
-<context>
-    <name>MegaUploader</name>
-    <message>
-        <source>Upload failed</source>
-        <translatorcomment>Informative message shown to the user when an upload has failed</translatorcomment>
-        <translation>Upload gagal</translation>
     </message>
 </context>
 <context>
@@ -3734,27 +3732,39 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Sync transfers cannot be cancelled individually.
 Please delete the folder sync from settings to cancel them.</source>
         <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for windows and linux)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Transfer sinkronisasi tidak dapat dibatalkan satu per satu.
+Harap hapus sinkronisasi folder dari pengaturan untuk membatalkannya.</translation>
     </message>
     <message>
         <source>Sync transfers cannot be cancelled individually.
 Please delete the folder sync from preferences to cancel them.</source>
         <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for macOS)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Transfer sinkronisasi tidak dapat dibatalkan satu per satu.
+Harap hapus sinkronisasi folder dari preferensi untuk membatalkannya.</translation>
     </message>
 </context>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- There is now a new transfer manager.
-- Transfer management was enhanced and reliability of downloads and uploads improved. 
-- Detected crashes on Windows, Linux, and macOS fixed.
-- Translation issues fixed.
-- Performance improved.
-- UI fixed and adjusted.
+        <source>- Added new Apple Silicon native support.
+- Added a new feature to stop sleep mode if there are active transfers.
+- Updated third-party libs.
+- Improved folders transfers.
+- Fixed detected crashes on Windows, Linux, and macOS.
+- Fixed translation issues.
+- Improved performance.
+- Fixed and adjusted UI.
 </source>
-        <translatorcomment>Changelog for version v4.7.0</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Changelog for version v4.7.2</translatorcomment>
+        <translation>- Menambahkan dukungan asli Apple silicon baru.
+- Menambahkan fitur baru untuk menghentikan mode tidur jika ada transfer aktif.
+- Library pihak ketiga yang diperbarui.
+- Transfer folder yang ditingkatkan.
+- Memperbaiki kerusakan yang terdeteksi di Windows, Linux, dan macOS.
+- Memperbaiki masalah terjemahan.
+- Peningkatan kinerja.
+- Memperbaiki dan menyesuaikan UI.
+</translation>
     </message>
 </context>
 <context>
@@ -4077,12 +4087,12 @@ Please delete the folder sync from preferences to cancel them.</source>
     </message>
     <message>
         <source>Shortcut</source>
-        <translatorcomment>Label for shourcut in all other platforms</translatorcomment>
+        <translatorcomment>Label used in Qt file/folder choosing dialog. Not being used at the moment.</translatorcomment>
         <translation>Jalan pintas</translation>
     </message>
     <message>
         <source>Unknown</source>
-        <translatorcomment>Name when the file or folder does not match</translatorcomment>
+        <translatorcomment>Label used in Qt file/folder choosing dialog. Not being used at the moment.</translatorcomment>
         <translation>Tidak diketahui</translation>
     </message>
     <message>
@@ -4207,12 +4217,12 @@ Apakah anda tetap ingin menghapusnya?</translation>
     </message>
     <message>
         <source>Kind</source>
-        <translatorcomment>Header name of the column that shows file kind</translatorcomment>
+        <translatorcomment>Header name of the column that shows file kind. Used by QT on QT standard dialogs. For MacOS platforms only.</translatorcomment>
         <translation>Jenis</translation>
     </message>
     <message>
         <source>Type</source>
-        <translatorcomment>Header name of the column that shows file type</translatorcomment>
+        <translatorcomment>Header name of the column that shows file type. Used by QT on QT standard dialogs. For Windows/Linux platforms.</translatorcomment>
         <translation>Tipe</translation>
     </message>
     <message>
@@ -4260,12 +4270,12 @@ Apakah anda tetap ingin menghapusnya?</translation>
     <message>
         <source>File can’t be renamed to &quot;%1&quot;</source>
         <translatorcomment>Error warning shown when a file can´t be renamed due to an error.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>File tidak dapat diganti namanya menjadi &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Folder can’t be renamed to &quot;%1&quot;</source>
         <translatorcomment>Error warning shown when a folder can´t be renamed due to an error.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Folder tidak dapat diganti namanya menjadi &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
@@ -4273,40 +4283,65 @@ Apakah anda tetap ingin menghapusnya?</translation>
     <message>
         <source>Enter new file name</source>
         <translatorcomment>Title of the rename file dialog </translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Masukkan nama file baru</translation>
     </message>
     <message>
         <source>Enter new folder name</source>
         <translatorcomment>Title of the rename folder dialog </translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Masukkan nama folder baru</translation>
     </message>
     <message>
         <source>Rename file</source>
         <translatorcomment>Dialog title for file renaming</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ganti nama file</translation>
     </message>
     <message>
         <source>Rename folder</source>
         <translatorcomment>Dialog title for folder renaming</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ganti nama folder</translation>
     </message>
 </context>
 <context>
     <name>ScanningWidget</name>
     <message>
-        <source>Cancel transfers</source>
+        <source>Cancel</source>
         <translatorcomment>Button text to cancel the scanning of transfers</translatorcomment>
-        <translation>Batalkan pemindahan</translation>
+        <translation>Batal</translation>
     </message>
     <message>
-        <source>Scanning…</source>
-        <translatorcomment>Text to let the user know that the app is scanning a folder</translatorcomment>
-        <translation>Memindai…</translation>
-    </message>
-    <message>
-        <source>Don´t exit the app</source>
-        <translatorcomment>Text below the GIF to askt he user not to close the app while it is scanning a folder</translatorcomment>
+        <source>Don&apos;t close the app. If you close, transfers not yet queued will be lost.</source>
+        <translatorcomment>Message displayed in scanning widget to warn the user of consequences of closing the app.</translatorcomment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scanning</source>
+        <translatorcomment>Label used to display when the scanning widget is on the &quot;Scanning&quot; step</translatorcomment>
+        <translation>Memindai</translation>
+    </message>
+    <message>
+        <source>Creating folders</source>
+        <translatorcomment>Label used to display when the scanning widget is on the &quot;Creating folders&quot; step</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1/%2</source>
+        <translatorcomment>Label showing the quantity of folders created (%1) with the quantity of folders to create in total (%2)</translatorcomment>
+        <translation>%1/%2</translation>
+    </message>
+    <message>
+        <source>found %1, %2</source>
+        <translatorcomment>Label used to display current status of scanning step. %1 is the string with number of folders found so far, %2 is the string with number of files found so far.</translatorcomment>
+        <translation>menemukan %1, %2</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n folder</source>
+        <translatorcomment>Part of the string used to display number of folders in scanning step. %1 is the number of folders found so far.</translatorcomment>
+        <translation><numerusform>%n folder</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n file</source>
+        <translatorcomment>Part of the string used to display number of files in scanning step. %1 is the number of files found so far.</translatorcomment>
+        <translation><numerusform>%n file</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4963,6 +4998,38 @@ Do you want to restart MEGAsync now?</source>
         <translatorcomment>Suffix text label for number of days to keep files in local cache.</translatorcomment>
         <translation><numerusform>hari</numerusform></translation>
     </message>
+    <message>
+        <source>Sleep settings</source>
+        <translatorcomment>Sleep/Active mode: Settings dialog groupbox title for keeping the pc awake when there are active transfers (WIndows and Linux)</translatorcomment>
+        <translation>Pengaturan tidur</translation>
+    </message>
+    <message>
+        <source>Prevent the computer from going to sleep when transfers or syncs are in progress.
+Computer will enter sleep mode once these are complete.</source>
+        <translatorcomment>Sleep/Active mode: Feature description label for keeping the pc awake when there are active transfers</translatorcomment>
+        <translation>Mencegah komputer dari tidur saat transfer atau sinkronisasi sedang berlangsung.
+Komputer akan memasuki mode tidur setelah ini selesai.</translation>
+    </message>
+    <message>
+        <source>Note: Some operating systems won&apos;t allow this.</source>
+        <translatorcomment>Sleep/Active mode: Warning message below the description label, as not all the computers can activate the feature to keep it awake if there are transfers active </translatorcomment>
+        <translation>Catatan: Beberapa sistem operasi tidak mengizinkan ini.</translation>
+    </message>
+    <message>
+        <source>Sleep mode:</source>
+        <translatorcomment>Sleep/Active mode: Settings dialog groupbox title for keeping the pc awake when there are active transfers (macOS)</translatorcomment>
+        <translation>Mode tidur:</translation>
+    </message>
+    <message>
+        <source>Sleep mode can&apos;t be setup</source>
+        <translatorcomment>Sleep/Active mode: Error messagebox title when the pc awake mode could not be activated after activating the feature using the checkbox.</translatorcomment>
+        <translation>Mode tidur tidak dapat diatur</translation>
+    </message>
+    <message>
+        <source>Your operating system doesn&apos;t allow its sleep setting to be overwritten.</source>
+        <translatorcomment>Sleep/Active mode: Error messagebox text when the pc awake mode could not be activated after activating the feature using the checkbox.</translatorcomment>
+        <translation>Sistem operasi anda tidak mengizinkan pengaturan tidurnya ditimpa.</translation>
+    </message>
 </context>
 <context>
     <name>SetupWizard</name>
@@ -5059,7 +5126,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Incorrect email and/or password.</source>
         <translatorcomment>Message displayed when a user is trying to loging with an incorrect email/password.</translatorcomment>
-        <translation>Email dan/atau password salah.</translation>
+        <translation>Email atau kata sandi tidak valid.</translation>
     </message>
     <message>
         <source>MEGA folder doesn&apos;t exist</source>
@@ -5574,7 +5641,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Syncing…</source>
         <translatorcomment>Transfer is being synced</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Menyinkronkan…</translation>
     </message>
     <message>
         <source>Completing</source>
@@ -5599,12 +5666,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>In queue</source>
         <translatorcomment>Transfer is active but not being processed yet</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Di antrian</translation>
     </message>
     <message>
         <source>(in queue)</source>
         <translatorcomment>Transfer is paused and no bytes have been transferred yet</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>(di antrian)</translation>
     </message>
     <message>
         <source>Retry</source>
@@ -5675,7 +5742,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>All transfers</source>
         <translatorcomment>Title for All transfers category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Semua transfer</translation>
     </message>
     <message>
         <source>Failed</source>
@@ -5690,7 +5757,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Archives</source>
         <translatorcomment>Categories for archive type transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Arsip</translation>
     </message>
     <message>
         <source>Documents</source>
@@ -5730,7 +5797,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>All paused</source>
         <translatorcomment>Message which shows that the global pause is set</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Semua dijeda</translation>
     </message>
     <message>
         <source>All</source>
@@ -5740,22 +5807,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Search:</source>
         <translatorcomment>Title to show the text used to search</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Mencari:</translation>
     </message>
     <message>
         <source>Retry all</source>
         <translatorcomment>Button text for retry all button in Failed category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Coba lagi semua</translation>
     </message>
     <message>
         <source>No uploads</source>
         <translatorcomment>Empty window message for upload category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tidak ada unggahan</translation>
     </message>
     <message>
         <source>No downloads</source>
         <translatorcomment>Empty window message for download category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tidak ada unduhan</translation>
     </message>
     <message>
         <source>No transfers</source>
@@ -5765,7 +5832,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>No search results</source>
         <translatorcomment>Empty window message for search category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tidak ada hasil pencarian</translation>
     </message>
     <message>
         <source>No completed transfers</source>
@@ -5785,7 +5852,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message numerus="yes">
         <source>%1 result found</source>
         <translatorcomment>Message shown with search results,when there are only uploads or downloads, but not both at the same time</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%1 hasil ditemukan </numerusform></translation>
     </message>
     <message>
         <source>Upgrade now</source>
@@ -5806,17 +5873,18 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left for this IP address.
 To get more quota, upgrade to a Pro account or wait for [A] until more free quota becomes available on your IP address.</source>
         <translatorcomment>Message which shows that the user reachs the overquota. [A] is the time to wait until the quota is reset in hh:mm:ss</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Anda tidak dapat melanjutkan pengunduhan karena anda tidak memiliki kuota transfer yang tersisa untuk alamat IP ini.
+Untuk mendapatkan lebih banyak kuota, tingkatkan ke akun Pro atau tunggu [A] sampai lebih banyak kuota gratis tersedia di alamat IP anda.</translation>
     </message>
     <message>
         <source>More about transfer quota</source>
         <translatorcomment>Link button to send the user to the transfer quota information blog website</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Selengkapnya tentang kuota transfer</translation>
     </message>
     <message numerus="yes">
         <source>Issue found</source>
         <translatorcomment>Message shown when there are some failed transfers/syncs/backups</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Masalah ditemukan</numerusform></translation>
     </message>
 </context>
 <context>
@@ -5824,7 +5892,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Drop to Upload</source>
         <translatorcomment>Let the user know that files can be dropped there</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Jatuhkan untuk Mengunggah</translation>
     </message>
 </context>
 <context>
@@ -5863,7 +5931,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Speed</source>
         <translatorcomment>speed table header column name of the file to transfer in All transfers and uploads/downloads categories</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Kecepatan</translation>
     </message>
     <message>
         <source>Status</source>
@@ -5873,57 +5941,57 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Time left</source>
         <translatorcomment>Time table header column name for all transfers, downloads, uploads categories (where there are only active transfers)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Waktu tersisa</translation>
     </message>
     <message>
         <source>Time completed</source>
         <translatorcomment>Time table header column name for completed transfers categories</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Waktu selesai</translation>
     </message>
     <message>
         <source>Avg. speed</source>
         <translatorcomment>speed table header column name for completed and failed transfers categories</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Kecepatan</translation>
     </message>
     <message>
         <source>Time</source>
         <translatorcomment>Time table header column name for media types and search categories</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Waktu</translation>
     </message>
     <message>
         <source>Clear all completed</source>
         <translatorcomment>Tooltip for clear button when the user is in the completed category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Hapus semua selesai</translation>
     </message>
     <message>
         <source>Clear all search results</source>
         <translatorcomment>Tooltip for clear button when the user is in the search category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Hapus semua hasil pencarian</translation>
     </message>
     <message>
         <source>Clear all audios</source>
         <translatorcomment>Tooltip for clear button when the user is in the audios category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Hapus semua audio</translation>
     </message>
     <message>
         <source>Clear all videos</source>
         <translatorcomment>Tooltip for clear button when the user is in the videos category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Hapus semua video</translation>
     </message>
     <message>
         <source>Clear all archives</source>
         <translatorcomment>Tooltip for clear button when the user is in the archives category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Hapus semua arsip</translation>
     </message>
     <message>
         <source>Clear all documents</source>
         <translatorcomment>Tooltip for clear button when the user is in the documents category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Hapus semua dokumen</translation>
     </message>
     <message>
         <source>Clear all images</source>
         <translatorcomment>Tooltip for clear button when the user is in the images category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Hapus semua gambar</translation>
     </message>
     <message>
         <source>Clear all transfers</source>
@@ -5933,47 +6001,47 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Cancel all downloads</source>
         <translatorcomment>Tooltip for cancel button when the user is in the downloads category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Batalkan semua unduhan</translation>
     </message>
     <message>
         <source>Cancel all uploads</source>
         <translatorcomment>Tooltip for cancel button when the user is in the uploads category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Batalkan semua unggahan</translation>
     </message>
     <message>
         <source>Cancel all failed</source>
         <translatorcomment>Tooltip for cancel button when the user is in the failed category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Batalkan semua gagal</translation>
     </message>
     <message>
         <source>Cancel all search results</source>
         <translatorcomment>Tooltip for cancel button when the user is in the search category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Batalkan semua hasil pencarian</translation>
     </message>
     <message>
         <source>Cancel all audios</source>
         <translatorcomment>Tooltip for cancel button when the user is in the audios category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Batalkan semua audio</translation>
     </message>
     <message>
         <source>Cancel all videos</source>
         <translatorcomment>Tooltip for cancel button when the user is in the videos category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Batalkan semua video</translation>
     </message>
     <message>
         <source>Cancel all archives</source>
         <translatorcomment>Tooltip for cancel button when the user is in the archives category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Batalkan semua arsip</translation>
     </message>
     <message>
         <source>Cancel all documents</source>
         <translatorcomment>Tooltip for cancel button when the user is in the documents category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Batalkan semua dokumen</translation>
     </message>
     <message>
         <source>Cancel all images</source>
         <translatorcomment>Tooltip for cancel button when the user is in the images category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Batalkan semua gambar</translation>
     </message>
     <message>
         <source>Cancel all transfers</source>
@@ -5983,77 +6051,77 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Cancel and clear all search results</source>
         <translatorcomment>Tooltip for cancel button when the user is in the search category and there are completed transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Batalkan dan hapus semua hasil pencarian</translation>
     </message>
     <message>
         <source>Cancel and clear all audios</source>
         <translatorcomment>Tooltip for cancel button when the user is in the audios category and there are completed transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Batalkan dan hapus semua audio</translation>
     </message>
     <message>
         <source>Cancel and clear all videos</source>
         <translatorcomment>Tooltip for cancel button when the user is in the videos category and there are completed transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Batalkan dan hapus semua video</translation>
     </message>
     <message>
         <source>Cancel and clear all archives</source>
         <translatorcomment>Tooltip for cancel button when the user is in the archives category and there are completed transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Batalkan dan hapus semua arsip</translation>
     </message>
     <message>
         <source>Cancel and clear all documents</source>
         <translatorcomment>Tooltip for cancel button when the user is in the documents category and there are completed transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Batalkan dan hapus semua dokumen</translation>
     </message>
     <message>
         <source>Cancel and clear all images</source>
         <translatorcomment>Tooltip for cancel button when the user is in the images category and there are completed transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Batalkan dan hapus semua gambar</translation>
     </message>
     <message>
         <source>Cancel and clear all transfers</source>
         <translatorcomment>Tooltip for cancel button when the user is in the all transfers category and there are completed transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Batalkan dan hapus semua transfer</translation>
     </message>
     <message>
         <source>Resume all downloads</source>
         <translatorcomment>Tooltip for Resume button when the user is in the downloads category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Lanjutkan semua unduhan</translation>
     </message>
     <message>
         <source>Resume all uploads</source>
         <translatorcomment>Tooltip for Resume button when the user is in the uploads category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Lanjutkan semua unggahan</translation>
     </message>
     <message>
         <source>Resume all search results</source>
         <translatorcomment>Tooltip for Resume button when the user is in the search category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Lanjutkan semua hasil pencarian</translation>
     </message>
     <message>
         <source>Resume all audios</source>
         <translatorcomment>Tooltip for Resume button when the user is in the audios category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Lanjutkan semua audio</translation>
     </message>
     <message>
         <source>Resume all videos</source>
         <translatorcomment>Tooltip for Resume button when the user is in the videos category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Lanjutkan semua video</translation>
     </message>
     <message>
         <source>Resume all archives</source>
         <translatorcomment>Tooltip for Resume button when the user is in the archives category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Lanjutkan semua arsip</translation>
     </message>
     <message>
         <source>Resume all documents</source>
         <translatorcomment>Tooltip for Resume button when the user is in the documents category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Lanjutkan semua dokumen</translation>
     </message>
     <message>
         <source>Resume all images</source>
         <translatorcomment>Tooltip for Resume button when the user is in the images category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Lanjutkan semua gambar</translation>
     </message>
     <message>
         <source>Resume all transfers</source>
@@ -6063,42 +6131,42 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Pause all downloads</source>
         <translatorcomment>Tooltip for Pause button when the user is in the downloads category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Jeda semua unduhan</translation>
     </message>
     <message>
         <source>Pause all uploads</source>
         <translatorcomment>Tooltip for Pause button when the user is in the uploads category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Jeda semua unggahan</translation>
     </message>
     <message>
         <source>Pause all search results</source>
         <translatorcomment>Tooltip for Pause button when the user is in the search category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Jeda semua hasil pencarian</translation>
     </message>
     <message>
         <source>Pause all audios</source>
         <translatorcomment>Tooltip for Pause button when the user is in the audios category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Jeda semua audio</translation>
     </message>
     <message>
         <source>Pause all videos</source>
         <translatorcomment>Tooltip for Pause button when the user is in the videos category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Jeda semua video</translation>
     </message>
     <message>
         <source>Pause all archives</source>
         <translatorcomment>Tooltip for Pause button when the user is in the archives category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Jeda semua arsip</translation>
     </message>
     <message>
         <source>Pause all documents</source>
         <translatorcomment>Tooltip for Pause button when the user is in the documents category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Jeda semua dokumen</translation>
     </message>
     <message>
         <source>Pause all images</source>
         <translatorcomment>Tooltip for Pause button when the user is in the images category</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Jeda semua gambar</translation>
     </message>
     <message>
         <source>Pause all transfers</source>

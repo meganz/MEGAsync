@@ -1088,7 +1088,7 @@ void TransfersModel::openInMEGA(QList<int> &rows)
                 if (handle && key)
                 {
                     QString url = QString::fromUtf8("mega://#fm/") + QString::fromUtf8(handle);
-                    QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
+                    Utilities::openUrl(QUrl(url));
                 }
                 delete [] key;
                 delete [] handle;

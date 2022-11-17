@@ -12,20 +12,31 @@ HEADERS += MEGAShellExt.h \
     mega_ext_client.h \
     mega_notify_client.h
 
+NAUTILUS_EXT = $$system(pkg-config --list-all | grep libnautilus-extension | head -n1 | cut -f1 -d\" \")
+NAUTILUS_EXT_API_VERSION = $$system(pkg-config $${NAUTILUS_EXT} --variable=extensions_api_version)
+
+isEmpty( NAUTILUS_EXT_API_VERSION ) {
+NAUTILUS_EXT_API_VERSION += 1
+}
+
+DEFINES += NAUTILUS_EXT_API_VERSION=$${NAUTILUS_EXT_API_VERSION}
+
 CONFIG += link_pkgconfig
-PKGCONFIG += libnautilus-extension
-
-# library
-target.path = $$system(pkg-config libnautilus-extension --variable=extensiondir)
-INSTALLS += target
-
-QMAKE_CLEAN += $(TARGET) lib$${TARGET}.so lib$${TARGET}.so.1 lib$${TARGET}.so.1.0
+CONFIG += nostrip
+PKGCONFIG += $${NAUTILUS_EXT}
 
 # get env variable
 DESKTOP_DESTDIR = $$(DESKTOP_DESTDIR)
 isEmpty(DESKTOP_DESTDIR) {
     DESKTOP_DESTDIR = /usr
 }
+
+# library
+EXTENSIONS_PATH = $$system(pkg-config $$NAUTILUS_EXT --variable=extensiondir | sed \"s@/usr@@\")
+target.path = $${DESKTOP_DESTDIR}$${EXTENSIONS_PATH}
+INSTALLS += target
+
+QMAKE_CLEAN += $(TARGET) lib$${TARGET}.so lib$${TARGET}.so.1 lib$${TARGET}.so.1.0
 
 HICOLOR = $$DESKTOP_DESTDIR/share/icons/hicolor
 

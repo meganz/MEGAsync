@@ -9,6 +9,7 @@
 #include "MegaItemModel.h"
 #include <NodeSelectorTreeViewWidget.h>
 
+
 #include <QMessageBox>
 #include <QPointer>
 #include <QShortcut>
@@ -19,6 +20,7 @@ const int NodeSelector::LABEL_ELIDE_MARGIN = 100;
 
 const char* NodeSelector::IN_SHARES = "Incoming shares";
 const char* NodeSelector::CLD_DRIVE = "Cloud drive";
+const char* NodeSelector::BACKUPS = "Backups";
 
 
 NodeSelector::NodeSelector(int selectMode, QWidget *parent) :
@@ -32,21 +34,35 @@ NodeSelector::NodeSelector(int selectMode, QWidget *parent) :
     setWindowModality(Qt::WindowModal);
     ui->setupUi(this);
 
-    ui->CloudDrive->setSelectionMode(mSelectMode);
-    ui->IncomingShares->setSelectionMode(mSelectMode);
-
-    connect(ui->CloudDrive, &NodeSelectorTreeViewWidget::okBtnClicked, this, &NodeSelector::onbOkClicked);
-    connect(ui->IncomingShares, &NodeSelectorTreeViewWidget::okBtnClicked, this, &NodeSelector::onbOkClicked);
-    connect(ui->CloudDrive, &NodeSelectorTreeViewWidget::cancelBtnClicked, this, &NodeSelector::reject);
-    connect(ui->IncomingShares, &NodeSelectorTreeViewWidget::cancelBtnClicked, this, &NodeSelector::reject);
+    for(int page = 0; page < ui->stackedWidget->count(); ++page)
+    {
+        auto viewContainer = dynamic_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->widget(page));
+        if(viewContainer)
+        {
+            if(page == VAULT && (mSelectMode == NodeSelector::SYNC_SELECT || mSelectMode == NodeSelector::UPLOAD_SELECT))
+            {
+                ui->stackedWidget->removeWidget(viewContainer);
+                hideSelector((NodeSelector::TabItem)page);
+                viewContainer->deleteLater();
+            }
+            else
+            {
+                viewContainer->setSelectionMode(mSelectMode);
+                connect(viewContainer, &NodeSelectorTreeViewWidget::okBtnClicked, this, &NodeSelector::onbOkClicked);
+                connect(viewContainer, &NodeSelectorTreeViewWidget::cancelBtnClicked, this, &NodeSelector::reject);
+            }
+        }
+    }
 
 #ifndef Q_OS_MAC
-    ui->bShowCloudDrive->setChecked(true);
     connect(ui->bShowIncomingShares, &QPushButton::clicked, this, &NodeSelector::onbShowIncomingSharesClicked);
-    connect(ui->bShowCloudDrive, &QPushButton::clicked,this , &NodeSelector::onbShowCloudDriveClicked);
+    connect(ui->bShowCloudDrive, &QPushButton::clicked, this, &NodeSelector::onbShowCloudDriveClicked);
+    connect(ui->bShowBackups, &QPushButton::clicked, this, &NodeSelector::onbShowBackupsFolderClicked);
 #else
     ui->tabBar->addTab(tr(CLD_DRIVE));
     ui->tabBar->addTab(tr(IN_SHARES));
+    ui->tabBar->addTab(tr(BACKUPS));
+
     connect(ui->tabBar, &QTabBar::currentChanged, this, &NodeSelector::onTabSelected);
 #endif
 
@@ -57,7 +73,6 @@ NodeSelector::NodeSelector(int selectMode, QWidget *parent) :
         QShortcut *shortcut = new QShortcut(QKeySequence(QString::fromLatin1("Ctrl+%1").arg(i+1)), this);
         QObject::connect(shortcut, &QShortcut::activated, this, [=](){ onTabSelected(i); });
     }
-    onbShowCloudDriveClicked();
 
     //TODO EKA: WE need to do this at this lvl? only for stream_select mode, switch removed
     //setWindowTitle(tr("Select items"));
@@ -75,14 +90,26 @@ NodeSelector::~NodeSelector()
 
 void NodeSelector::showDefaultUploadOption(bool show)
 {
-    ui->CloudDrive->showDefaultUploadOption(show);
-    ui->IncomingShares->showDefaultUploadOption(show);
+    for(int page = 0; page < ui->stackedWidget->count(); ++page)
+    {
+        auto viewContainer = dynamic_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->widget(page));
+        if(viewContainer)
+        {
+            viewContainer->showDefaultUploadOption(show);
+        }
+    }
 }
 
 void NodeSelector::setDefaultUploadOption(bool value)
 {
-    ui->CloudDrive->setDefaultUploadOption(value);
-    ui->IncomingShares->setDefaultUploadOption(value);
+    for(int page = 0; page < ui->stackedWidget->count(); ++page)
+    {
+        auto viewContainer = dynamic_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->widget(page));
+        if(viewContainer)
+        {
+            viewContainer->showDefaultUploadOption(value);
+        }
+    }
 }
 
 bool NodeSelector::getDefaultUploadOption()
@@ -198,6 +225,11 @@ void NodeSelector::onbShowCloudDriveClicked()
     ui->stackedWidget->setCurrentIndex(CLOUD_DRIVE);
 }
 
+void NodeSelector::onbShowBackupsFolderClicked()
+{
+    ui->stackedWidget->setCurrentIndex(VAULT);
+}
+
 void NodeSelector::onTabSelected(int index)
 {
     switch (index)
@@ -216,6 +248,14 @@ void NodeSelector::onTabSelected(int index)
             ui->tabBar->setCurrentIndex(index);
 #else
             ui->bShowIncomingShares->click();
+#endif
+            break;
+        case NodeSelector::VAULT:
+#ifdef Q_OS_MAC
+            onbShowBackupsFolderClicked();
+            ui->tabBar->setCurrentIndex(index);
+#else
+            ui->bShowBackups->click();
 #endif
             break;
         default:
@@ -237,10 +277,15 @@ QList<MegaHandle> NodeSelector::getMultiSelectionNodeHandle()
 
 void NodeSelector::closeEvent(QCloseEvent* event)
 {
-    ui->CloudDrive->abort();
-    ui->IncomingShares->abort();
-    processCloseEvent(ui->CloudDrive->getProxyModel(), event);
-    processCloseEvent(ui->IncomingShares->getProxyModel(), event);
+    for(int page = 0; page < ui->stackedWidget->count(); ++page)
+    {
+        auto viewContainer = dynamic_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->widget(page));
+        if(viewContainer)
+        {
+            viewContainer->abort();
+            processCloseEvent(viewContainer->getProxyModel(), event);
+        }
+    }
 }
 
 void NodeSelector::processCloseEvent(MegaItemProxyModel *proxy, QCloseEvent *event)
@@ -255,6 +300,39 @@ void NodeSelector::processCloseEvent(MegaItemProxyModel *proxy, QCloseEvent *eve
         });
         event->ignore();
     }
+}
+
+void NodeSelector::hideSelector(TabItem item)
+{
+    switch(item)
+    {
+        case CLOUD_DRIVE:
+        {
+#ifndef Q_OS_MAC
+            ui->bShowCloudDrive->hide();
+#endif
+            break;
+        }
+        case SHARES:
+        {
+#ifndef Q_OS_MAC
+            ui->bShowIncomingShares->hide();
+#endif
+            break;
+        }
+        case VAULT:
+        {
+#ifndef Q_OS_MAC
+            ui->bShowBackups->hide();
+#endif
+            break;
+        }
+    }
+
+#ifdef Q_OS_MAC
+    ui->tabBar->removeTab(item);
+#endif
+
 }
 
 void NodeSelector::setSelectedNodeHandle(const mega::MegaHandle &handle)
@@ -277,6 +355,7 @@ void NodeSelector::setSelectedNodeHandle(const mega::MegaHandle &handle)
     {
         onTabSelected(CLOUD_DRIVE);
     }
+
     auto tree_view_widget = static_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->currentWidget());
     tree_view_widget->setSelectedNodeHandle(handle);
 }

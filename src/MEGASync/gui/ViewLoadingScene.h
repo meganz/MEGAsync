@@ -243,8 +243,14 @@ public:
 
     ~ViewLoadingScene()
     {
-        mLoadingDelegate->deleteLater();
-        mLoadingModel->deleteLater();
+        if(mLoadingDelegate)
+        {
+            mLoadingDelegate->deleteLater();
+        }
+        if(mLoadingModel)
+        {
+            mLoadingModel->deleteLater();
+        }
     }
 
     bool isLoadingViewSet() const

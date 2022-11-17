@@ -10,6 +10,7 @@
 
 const char* NodeSelectorTreeViewWidget::IN_SHARES = "Incoming shares";
 const char* NodeSelectorTreeViewWidget::CLD_DRIVE = "Cloud drive";
+const char* NodeSelectorTreeViewWidget::BACKUPS = "Backups";
 
 const int NodeSelectorTreeViewWidget::LABEL_ELIDE_MARGIN = 100;
 const int NodeSelectorTreeViewWidget::LOADING_VIEW_THRESSHOLD = 500;
@@ -738,6 +739,7 @@ void NodeSelectorTreeViewWidget::Navigation::appendToForward(const mega::MegaHan
         forwardHandles.append(handle);
 }
 
+///////////////////////////////////////////////////////////////////
 NodeSelectorTreeViewWidgetCloudDrive::NodeSelectorTreeViewWidgetCloudDrive(QWidget *parent)
     : NodeSelectorTreeViewWidget(parent)
 {
@@ -760,6 +762,7 @@ void NodeSelectorTreeViewWidgetCloudDrive::setRootIndex_Reimplementation(const Q
     ui->tMegaFolders->header()->hideSection(MegaItemModel::COLUMN::USER);
 }
 
+/////////////////////////////////////////////////////////////////
 NodeSelectorTreeViewWidgetIncomingShares::NodeSelectorTreeViewWidgetIncomingShares(QWidget *parent)
     : NodeSelectorTreeViewWidget(parent)
 {
@@ -793,4 +796,27 @@ void NodeSelectorTreeViewWidgetIncomingShares::setRootIndex_Reimplementation(con
     {
         ui->tMegaFolders->header()->showSection(MegaItemModel::COLUMN::USER);
     }
+}
+
+/////////////////////////////////////////////////////////////////
+NodeSelectorTreeViewWidgetBackups::NodeSelectorTreeViewWidgetBackups(QWidget *parent)
+    : NodeSelectorTreeViewWidget(parent)
+{
+    setTitle(tr(BACKUPS));
+}
+
+QString NodeSelectorTreeViewWidgetBackups::getRootText()
+{
+    return tr(BACKUPS);
+}
+
+std::unique_ptr<MegaItemModel> NodeSelectorTreeViewWidgetBackups::getModel()
+{
+    return std::unique_ptr<MegaItemModelBackups>(new MegaItemModelBackups);
+}
+
+void NodeSelectorTreeViewWidgetBackups::setRootIndex_Reimplementation(const QModelIndex &source_idx)
+{
+    Q_UNUSED(source_idx)
+    ui->tMegaFolders->header()->hideSection(MegaItemModel::COLUMN::USER);
 }
