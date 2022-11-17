@@ -603,7 +603,7 @@
     <message numerus="yes">
         <source>This folder wasn&apos;t backed up. Try again.</source>
         <translatorcomment>Label that indicates that there happened an error backing up a folder/folders</translatorcomment>
-        <translation><numerusform>이 폴더들은 백업되지 않았습니다. 다시 확인하세요.</numerusform></translation>
+        <translation><numerusform>이 폴더(들)은/는 백업되지 않았습니다. 다시 확인하세요.</numerusform></translation>
     </message>
     <message>
         <source>Folder is already selected. Select a different folder.</source>
@@ -2518,7 +2518,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however you might not receive new updates.</source>
         <translatorcomment>Message shown to the user to inform that he is using an operating system that will be unsupported soon</translatorcomment>
-        <translation>앱이 계속 작동은 하지만, 새로운 업데이트를 받지 못 할 수 있습니다.</translation>
+        <translation>앱이 계속 작동할 것이지만, 새로운 업데이트를 받지 못 할 수 있습니다.</translation>
     </message>
     <message>
         <source>Password changed</source>
@@ -2673,7 +2673,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
         <translatorcomment>Informative message box shown if user is running an old OSX version (previous than Yosemite), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation>앱이 계속 작동은 하지만, 업데이트가 OS X Yosemite 이전 버전을 곧 지원하지 않을 것입니다.</translation>
+        <translation>앱은 계속 작동할 것이지만, 업데이트가 macOS Sierra 이전 버전에 대하여 지원하지 않을 것입니다.</translation>
     </message>
     <message>
         <source>Your syncs have been disabled</source>

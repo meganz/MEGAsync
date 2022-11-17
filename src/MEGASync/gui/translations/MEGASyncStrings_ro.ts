@@ -2672,7 +2672,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
         <translatorcomment>Informative message box shown if user is running an old OSX version (previous than Yosemite), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation>Aplicația va continua să funcționeze, însă, actualizările nu vor mai fi suportate în curând pentru versiunile anterioare OS X Yosemite.</translation>
+        <translation>Aplicația va continua să funcționeze, însă, actualizările nu vor mai fi suportate pentru versiunile anterioare macOS Sierra.</translation>
     </message>
     <message>
         <source>Your syncs have been disabled</source>
@@ -6208,7 +6208,7 @@ Pentru a continua, selectează un alt folder.</translation>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a local folder shared with VMWare third party app.</translatorcomment>
-        <translation>Sincronizezi un folder local partajat cu VMWare. Aceste foldere nu suportă notificări privind sistemul de fișiere, astfel încât MEGAsync va trebui să fie scanat în mod continuu pentru a detecta modificările în fișierele și folderele tale. Te rugăm să folosești un alt folder, dacă este posibil, pentru a reduce utilizarea procesorului.</translation>
+        <translation>Sincronizezi un folder local partajat cu VMWare. Aceste foldere nu suportă notificări privind sistemul de fișiere, astfel încât aplicația va trebui să fie scanată în mod continuu pentru a detecta modificările în fișierele și folderele tale. Folosește un folder diferit, dacă este posibil, pentru a reduce utilizarea procesorului.</translation>
     </message>
 </context>
 <context>

@@ -1037,12 +1037,12 @@
     <message>
         <source>MEGAsync has detected a problem. These are the details:</source>
         <translatorcomment>Label to indicate that a crash has occured and the detailed stacktrace of the problem.</translatorcomment>
-        <translation>MEGAsync telah mendeteksi masalah. Ini detailnya:</translation>
+        <translation>MEGAsync telah mendeteksi masalah.. Ini detailnya:</translation>
     </message>
     <message>
         <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
         <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
-        <translation>Anda dapat membantu kami meningkatkan MEGAsync dengan mengirimkan laporan kesalahan ini. Itu tidak mengandung informasi pribadi apa pun. Jika anda ingin memberi kami detail lebih lanjut, silakan tulis di bawah ini:</translation>
+        <translation>Anda dapat membantu kami meningkatkan MEGAsync dengan mengirimkan laporan kesalahan ini. Itu tidak mengandung informasi pribadi apa pun. Jika anda ingin memberi kami detail lebih lanjut, silahkan tulis di bawah ini:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2215,7 +2215,7 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
     <name>MegaApplication</name>
     <message>
         <source>MEGAsync</source>
-        <translation>MEGA</translation>
+        <translation>MEGAsync</translation>
     </message>
     <message>
         <source>Logging in</source>
@@ -2347,12 +2347,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
         <translatorcomment>Notification message launched when an user logged in succesfully. String as short as possible.</translatorcomment>
-        <translation>MEGAsync sekarang berjalan. Klik ikon baki sistem untuk membuka jendela status.</translation>
+        <translation>MEGAsync sekarang berjalan. Klik gambar baki sistem untuk membuka jendela status.</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
         <translatorcomment>Notification message launched when an user logged in succesfully. String as short as possible.</translatorcomment>
-        <translation>MEGAsync sekarang berjalan. Klik ikon bilah menu untuk membuka jendela status.</translation>
+        <translation>MEGAsync sekarang berjalan. Klik gambar bilah menu untuk membuka jendela status.</translation>
     </message>
     <message>
         <source>Show status</source>
@@ -2442,7 +2442,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log)</source>
         <translatorcomment>Notification message shown when the DEBUG mode is enabled.</translatorcomment>
-        <translation>Mode DEBUG diaktifkan. Log sedang dibuat di desktop anda (MEGAsync.log).</translation>
+        <translation>Mode debug diaktifkan. Sebuah log sedang dibuat di komputer anda (“MEGAsync.log”) .</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The download has been cancelled</source>
@@ -2478,7 +2478,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
         <translatorcomment>Message shown to the user to inform that MEGAsync is not able to find a systray to place tray icon</translatorcomment>
-        <translation>Tidak dapat menemukan baki sistem untuk menempatkan ikon baki MEGAsync. MEGAsync dimaksudkan untuk digunakan dengan ikon baki sistem tetapi dapat bekerja dengan baik tanpanya. Jika anda ingin membuka antarmuka, coba buka MEGAsync lagi.</translation>
+        <translation>Kami tidak dapat menemukan baki sistem untuk menempatkan ikon baki MEGAsync. MEGAsync dimaksudkan untuk digunakan dengan ikon baki sistem tetapi dapat bekerja dengan baik tanpanya. Jika anda ingin membuka antarmuka, coba buka MEGAsync lagi.</translation>
     </message>
     <message>
         <source>Error getting link:</source>
@@ -2632,7 +2632,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
         <translatorcomment>Informative message box shown if user is running an old Win version (vista or previous), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation>Aplikasi akan terus berfungsi, namun pembaruan tidak lagi didukung untuk versi sebelum Windows 7.</translation>
+        <translation>MEGAsync akan terus berfungsi, namun pembaruan tidak lagi didukung untuk versi Windows Vista dan versi sebelumnya.</translation>
     </message>
     <message>
         <source>Transferring</source>
@@ -2672,7 +2672,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
         <translatorcomment>Informative message box shown if user is running an old OSX version (previous than Yosemite), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation>MEGAsync akan terus berfungsi, namun pembaruan tidak akan lagi didukung untuk versi sebelum OS X Yosemite segera.</translation>
+        <translation>MEGAsync akan terus berfungsi, namun pembaruan tidak lagi didukung untuk versi sebelum OS X Yosemite.</translation>
     </message>
     <message>
         <source>Your syncs have been disabled</source>
@@ -2717,12 +2717,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>A new version of MEGAsync is available. Click on this message to install it</source>
         <translatorcomment>System notification to inform the user that there is a new version of MEGAsync available for update. Windows version.</translatorcomment>
-        <translation>Versi baru MEGAsync telah tersedia. Klik pada pesan ini untuk menginstalnya</translation>
+        <translation>Versi baru dari MEGAsync kini tersedia. Klik pesan ini untuk menginstalnya</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available</source>
         <translatorcomment>System notification to inform the user that there is a new version of MEGAsync available for update. macOS version cannot be installed making click so, a new string is provided</translatorcomment>
-        <translation>Versi baru MEGAsync telah tersedia</translation>
+        <translation>Versi baru dari MEGAsync kini tersedia.</translation>
     </message>
     <message>
         <source>%1 and %2 were successfully uploaded</source>
@@ -3102,7 +3102,7 @@ Transfer akan dilanjutkan secara otomatis saat anda membuka kembali aplikasi.</n
     <message>
         <source>MEGAsync</source>
         <translatorcomment>Title of MEGAsync dialog.</translatorcomment>
-        <translation>MEGA</translation>
+        <translation>MEGAsync</translation>
     </message>
     <message>
         <source>Please wait...</source>
@@ -3679,7 +3679,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>MEGAsync</source>
         <translatorcomment>Product name.</translatorcomment>
-        <translation>MEGA</translation>
+        <translation>MEGAsync</translation>
     </message>
 </context>
 <context>
@@ -5679,7 +5679,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Set up Assistant - MEGAsync</source>
         <translatorcomment>Title of the setup assistant dialog. Keep capital letters.</translatorcomment>
-        <translation>Siapkan Asisten - MEGAsync</translation>
+        <translation>Siapkan asisten - MEGAsync</translation>
     </message>
     <message>
         <source>Full sync</source>
@@ -5703,7 +5703,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>MEGAsync</source>
-        <translation>MEGA</translation>
+        <translation>MEGAsync</translation>
     </message>
     <message>
         <source>Are you sure you want to cancel this wizard and undo all changes?</source>
@@ -6208,7 +6208,7 @@ Untuk melanjutkan, pilih folder lain.</translation>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a local folder shared with VMWare third party app.</translatorcomment>
-        <translation>Anda sedang menyinkronkan folder lokal yang dibagikan dengan VMWare. Folder tersebut tidak mendukung notifikasi sistem file sehingga MEGAsync harus terus memindai untuk mendeteksi perubahan pada file dan folder anda. Silakan gunakan folder lain jika memungkinkan untuk mengurangi penggunaan CPU.</translation>
+        <translation>Anda sedang menyinkronkan folder lokal yang dibagikan dengan VMWare. Folder tersebut tidak mendukung notifikasi sistem file sehingga MEGAsync harus terus memindai untuk mendeteksi perubahan pada file dan folder anda. Gunakan folder lain jika memungkinkan untuk mengurangi penggunaan CPU.</translation>
     </message>
 </context>
 <context>

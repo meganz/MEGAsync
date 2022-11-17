@@ -2672,7 +2672,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
         <translatorcomment>Informative message box shown if user is running an old OSX version (previous than Yosemite), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation>Die App funktioniert weiterhin, in Kürze werden jedoch für Versionen vor OS X Yosemite keine Updates mehr unterstützt.</translation>
+        <translation>Die App funktioniert weiterhin, jedoch werden Updates für Versionen vor macOS Sierra nicht mehr unterstützt.</translation>
     </message>
     <message>
         <source>Your syncs have been disabled</source>

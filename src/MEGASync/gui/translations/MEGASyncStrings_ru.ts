@@ -2672,7 +2672,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
         <translatorcomment>Informative message box shown if user is running an old OSX version (previous than Yosemite), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation>Приложение продолжит работать, однако обновления для версий до OS X Yosemite больше не будут выпускаться.</translation>
+        <translation>Приложение продолжит работать, однако обновления для версий до macOS Sierra больше не будут выпускаться.</translation>
     </message>
     <message>
         <source>Your syncs have been disabled</source>
@@ -7014,7 +7014,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Bytes</source>
         <translatorcomment>Label to indicate bytes unit.</translatorcomment>
-        <translation>Байт</translation>
+        <translation>байт</translation>
     </message>
     <message>
         <source>Pro Lite</source>

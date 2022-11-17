@@ -2517,7 +2517,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however you might not receive new updates.</source>
         <translatorcomment>Message shown to the user to inform that he is using an operating system that will be unsupported soon</translatorcomment>
-        <translation>应用程序会继续运行，但您可能不会收到新的更新。</translation>
+        <translation>应用程序将会继续运行，但您可能不会收到新的更新。</translation>
     </message>
     <message>
         <source>Password changed</source>
@@ -2672,7 +2672,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
         <translatorcomment>Informative message box shown if user is running an old OSX version (previous than Yosemite), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation>应用程序将会继续运行，然而很快将对于OS X Yosemite之前的版本将不再支持更新。</translation>
+        <translation>应用程序将会继续运行，然而，对于macOS Sierra之前的版本将不再支持更新。</translation>
     </message>
     <message>
         <source>Your syncs have been disabled</source>

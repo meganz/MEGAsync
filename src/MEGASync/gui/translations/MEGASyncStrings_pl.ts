@@ -1037,12 +1037,12 @@
     <message>
         <source>MEGAsync has detected a problem. These are the details:</source>
         <translatorcomment>Label to indicate that a crash has occured and the detailed stacktrace of the problem.</translatorcomment>
-        <translation>MEGAsync wykrył problem. Oto szczegóły:</translation>
+        <translation>Aplikacja MEGA wykryła problem. Oto szczegóły:</translation>
     </message>
     <message>
         <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
         <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
-        <translation>Możesz pomóc nam poprawić MEGAsync, wysyłając ten raport o błędach. Nie zawiera on żadnych danych osobowych. Jeśli chcesz podać nam więcej szczegółów, napisz je poniżej:</translation>
+        <translation>Możesz pomóc nam poprawić aplikację MEGA, wysyłając ten raport o błędach. Nie zawiera on żadnych danych osobowych. Jeśli chcesz podać nam więcej szczegółów, napisz je poniżej:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1821,7 +1821,7 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
     <message>
         <source>Show MEGAsync options</source>
         <translatorcomment>Tooltip for the button that opens MEGAsync options menu</translatorcomment>
-        <translation>Pokaż opcje MEGAsync</translation>
+        <translation>Pokaż opcje</translation>
     </message>
     <message>
         <source>The process is taking longer than expected. Please wait...</source>
@@ -2225,7 +2225,7 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
     <message>
         <source>MEGAsync is now running. Click here to open the status window.</source>
         <translatorcomment>Notification message that MEGAsync is actually running.</translatorcomment>
-        <translation>MEGAsync jest teraz uruchomiony. Kliknij tutaj, aby otworzyć okno statusu.</translation>
+        <translation>Aplikacja jest teraz uruchomiona. Kliknij tutaj, aby otworzyć okno stanu.</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
@@ -2235,7 +2235,7 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
     <message>
         <source>About MEGAsync</source>
         <translatorcomment>Title of the dialog that displays the version code of MEGAsync.</translatorcomment>
-        <translation>O MEGAsync</translation>
+        <translation>O</translation>
     </message>
     <message>
         <source>The link has been copied to the clipboard</source>
@@ -2280,7 +2280,7 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
     <message>
         <source>MEGAsync has been updated</source>
         <translatorcomment>Notification message launched when an update has been succesfully applied.</translatorcomment>
-        <translation>MEGAsync został zaktualizowany</translation>
+        <translation>Aplikacja została zaktualizowana</translation>
     </message>
     <message>
         <source>Waiting</source>
@@ -2347,12 +2347,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
         <translatorcomment>Notification message launched when an user logged in succesfully. String as short as possible.</translatorcomment>
-        <translation>MEGAsync jest teraz uruchomiony. Kliknij ikonę zasobnika systemowego, aby otworzyć okno stanu.</translation>
+        <translation>Aplikacja jest teraz uruchomiona. Kliknij ikonę zasobnika systemowego, aby otworzyć okno stanu.</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
         <translatorcomment>Notification message launched when an user logged in succesfully. String as short as possible.</translatorcomment>
-        <translation>MEGAsync jest teraz uruchomiony. Kliknij ikonę paska menu, aby otworzyć okno statusu.</translation>
+        <translation>Aplikacja jest teraz uruchomiona. Kliknij ikonę zasobnika systemowego, aby otworzyć okno stanu.</translation>
     </message>
     <message>
         <source>Show status</source>
@@ -2372,7 +2372,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
         <translatorcomment>Notification message launched when a connectivity problem occurs.</translatorcomment>
-        <translation>MEGAsync nie może się połączyć. Proszę sprawdzić połączenie z Internetem i lokalną konfigurację zapory. Należy pamiętać, że większość oprogramowania antywirusowego zawiera zaporę ogniową.</translation>
+        <translation>Aplikacja nie może się połączyć. Proszę sprawdzić połączenie z Internetem i lokalną konfigurację zapory. Należy pamiętać, że większość oprogramowania antywirusowego zawiera zaporę ogniową.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
@@ -2442,7 +2442,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log)</source>
         <translatorcomment>Notification message shown when the DEBUG mode is enabled.</translatorcomment>
-        <translation>Tryb debug włączony. Na pulpicie tworzony jest dziennik (MEGAsync.log).</translation>
+        <translation>Tryb debugowania włączony. Na Twoim komputerze tworzony jest dziennik o nazwie “MEGAsync.log”.</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The download has been cancelled</source>
@@ -2478,7 +2478,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
         <translatorcomment>Message shown to the user to inform that MEGAsync is not able to find a systray to place tray icon</translatorcomment>
-        <translation>Nie można znaleźć zasobnika systemowego, by umieścić ikonę zasobnika MEGAsync. MEGAsync jest przeznaczony do używania z ikoną zasobnika systemowego, ale może działać dobrze bez niej. Jeśli chcesz otworzyć interfejs, po prostu spróbuj ponownie otworzyć MEGAsync.</translation>
+        <translation>Nie mogliśmy znaleźć zasobnika systemowego, w którym można umieścić ikonę zasobnika aplikacji. Spróbuj ponownie uruchomić aplikację.</translation>
     </message>
     <message>
         <source>Error getting link:</source>
@@ -2632,7 +2632,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
         <translatorcomment>Informative message box shown if user is running an old Win version (vista or previous), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation>Aplikacja będzie nadal działać, jednak aktualizacje nie będą już obsługiwane dla wersji wcześniejszych niż Windows 7.</translation>
+        <translation>MEGAsync będzie nadal działać, jednak aktualizacje nie będą już wkrótce wspierane dla Windows Vista i starszych systemów operacyjnych.</translation>
     </message>
     <message>
         <source>Transferring</source>
@@ -2717,12 +2717,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>A new version of MEGAsync is available. Click on this message to install it</source>
         <translatorcomment>System notification to inform the user that there is a new version of MEGAsync available for update. Windows version.</translatorcomment>
-        <translation>Dostępna jest nowa wersja programu MEGAsync. Kliknij na tę wiadomość, aby ją zainstalować</translation>
+        <translation>Dostępna jest nowa wersja tej aplikacji. Kliknij na tę wiadomość, aby ją zainstalować</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available</source>
         <translatorcomment>System notification to inform the user that there is a new version of MEGAsync available for update. macOS version cannot be installed making click so, a new string is provided</translatorcomment>
-        <translation>Nowa wersja MEGAsync jest już dostępna</translation>
+        <translation>Dostępna jest nowa wersja tej aplikacji.</translation>
     </message>
     <message>
         <source>%1 and %2 were successfully uploaded</source>
@@ -3883,7 +3883,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&apos;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
-        <translation>Pliki i katalogi mają właściciela i należą do grupy użytkowników. Za pomocą tego okna dialogowego możesz przyznać różne uprawnienia dostępu do nowych plików i katalogów utworzonych przez MEGAsync użytkownikom należącym do tej samej grupy i pozostałym użytkownikom w komputerze. Jeśli nie musisz ich zmieniać, pozostaw je na ustawieniach domyślnych ze względów bezpieczeństwa.</translation>
+        <translation>Pliki i katalogi mają właściciela i należą do grupy użytkowników. Za pomocą tego okna dialogowego możesz przyznać różne uprawnienia dostępu do nowych plików i katalogów utworzonych przez aplikację komputerową użytkownikom należącym do tej samej grupy i pozostałym użytkownikom w komputerze. Jeśli nie musisz ich zmieniać, pozostaw je na ustawieniach domyślnych ze względów bezpieczeństwa.</translation>
     </message>
     <message>
         <source>Owner permissions:</source>
@@ -4826,7 +4826,7 @@ Czy mimo to chcesz je usunąć?</translation>
 
 Do you want to restart MEGAsync now?</source>
         <translatorcomment>Message displayed asking for confirmation to the user to restart the application for a Full scan operation.</translatorcomment>
-        <translation>MEGAsync po uruchomieniu wykona pełne skanowanie zsynchronizowanych katalogów. Czy chcesz ponownie uruchomić MEGAsync teraz?</translation>
+        <translation>Po uruchomieniu aplikacja wykona pełne skanowanie zsynchronizowanych katalogów. Czy chcesz ponownie uruchomić aplikację teraz?</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -4896,7 +4896,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Do you want to restart MEGAsync now?</source>
         <translatorcomment>Message shown when clicking on restart MEGAsync button in Settings.</translatorcomment>
-        <translation>Czy chcesz ponownie uruchomić MEGAsync teraz?</translation>
+        <translation>Czy chcesz ponownie uruchomić aplikację teraz?</translation>
     </message>
     <message>
         <source>Permissions</source>
@@ -5256,7 +5256,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Restart MEGAsync</source>
         <translatorcomment>Title text of dialog shown when clicking on Restart application button. Keep as short as possible.</translatorcomment>
-        <translation>Uruchomić ponownie MEGAsync</translation>
+        <translation>Uruchomić ponownie</translation>
     </message>
     <message>
         <source>No limit</source>
@@ -5832,7 +5832,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Enjoy MEGAsync</source>
         <translatorcomment>Label displayed when user completes the setup wizard</translatorcomment>
-        <translation>Korzystaj z MEGAsync</translation>
+        <translation>Korzystaj z naszej aplikacji</translation>
     </message>
     <message>
         <source>We are all done</source>
@@ -6127,7 +6127,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
         <translatorcomment>Warning message indicating that megasync is not going to be able to download anything in the selected folder.</translatorcomment>
-        <translation>MEGAsync nie będzie w stanie nic tu pobrać.</translation>
+        <translation>Aplikacja nie będzie w stanie nic tu pobrać.</translation>
     </message>
     <message>
         <source>You can&apos;t backup this folder as it contains backed up folders.</source>
@@ -6209,7 +6209,7 @@ Aby kontynuować, wybierz inny katalog.</translation>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a local folder shared with VMWare third party app.</translatorcomment>
-        <translation>Synchronizujesz lokalny folder współdzielony z VMWare. Te foldery nie obsługują powiadomień systemu plików, więc MEGAsync będzie musiał stale skanować, aby wykryć zmiany w twoich plikach i folderach. Proszę użyć innego folderu, jeśli to możliwe, aby zmniejszyć zużycie procesora.</translation>
+        <translation>Synchronizujesz lokalny folder współdzielony z VMWare. Te foldery nie obsługują powiadomień systemu plików, więc aplikacja będzie musiał stale skanować, aby wykryć zmiany w twoich plikach i folderach. Proszę użyć innego folderu, jeśli to możliwe, aby zmniejszyć zużycie procesora.</translation>
     </message>
 </context>
 <context>

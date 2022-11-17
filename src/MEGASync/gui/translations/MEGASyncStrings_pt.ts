@@ -503,7 +503,7 @@
     <message>
         <source>You can back up folders from your computer to MEGA. Files will automatically back up when the desktop app is running.</source>
         <translatorcomment>Backup wizard body text</translatorcomment>
-        <translation>Você pode fazer backup de pastas do seu computador no MEGA. O back up dos arquivos será feito de forma automática quando o aplicativo para desktop estiver em execução.</translation>
+        <translation>Você pode fazer backup de pastas do seu computador no MEGA. O backup dos arquivos será feito de forma automática quando o aplicativo para desktop estiver em execução.</translation>
     </message>
     <message>
         <source>No folders available</source>
@@ -832,7 +832,7 @@
     <message>
         <source>Bug report success!</source>
         <translatorcomment>Confirmation message shown when a bug report is successfully uploaded.</translatorcomment>
-        <translation>O problema foi notificado corretamente.</translation>
+        <translation>A informação sobre o problema foi enviada.</translation>
     </message>
     <message>
         <source>Your bug report has been submitted, a confirmation email will sent to you accordingly.</source>
@@ -842,7 +842,7 @@
     <message>
         <source>Error on submitting bug report</source>
         <translatorcomment>Error message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation>Não foi possível notificar o problema.</translation>
+        <translation>Não foi possível enviar a informação sobre o problema.</translation>
     </message>
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
@@ -857,12 +857,12 @@
     <message>
         <source>Are you sure you want to exit uploading?</source>
         <translatorcomment>Confirmation message shown when the user is trying to cancel the ongoing upload report.</translatorcomment>
-        <translation>Você tem certeza de que quer cancelar a notificacao do problema?</translation>
+        <translation>Você tem certeza de que quer cancelar a o envio da informação sobre o problema?</translation>
     </message>
     <message>
         <source>The bug report will not be submitted if you exit uploading.</source>
         <translatorcomment>Informative message shown to the user to inform that if he exits the dialog the bug report upload will not be submitted.</translatorcomment>
-        <translation>Se você cancelar o envio, o problema nao será notificado.</translation>
+        <translation>Se você cancelar o envio, a informação não será enviada.</translation>
     </message>
     <message>
         <source>Continue</source>
@@ -877,7 +877,7 @@
     <message>
         <source>There is an ongoing report being uploaded.</source>
         <translatorcomment>Informative message shown when user is trying to upload a bug report while there is an ongoing upload.</translatorcomment>
-        <translation>Já há outro problema sendo notificado.</translation>
+        <translation>Já está sendo enviada a informação sobre outro problema.</translation>
     </message>
     <message>
         <source>Please wait until the current upload is completed.</source>
@@ -2672,7 +2672,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
         <translatorcomment>Informative message box shown if user is running an old OSX version (previous than Yosemite), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation>O aplicativo vai continuar funcionando, porém as atualizações para versões anteriores ao OS X Yosemite deixarão de ser oferecidas em breve.</translation>
+        <translation>O aplicativo vai continuar funcionando, porém já não serão oferecidas atualizações para versões anteriores ao macOS Sierra.</translation>
     </message>
     <message>
         <source>Your syncs have been disabled</source>
@@ -4610,12 +4610,12 @@ Você quer deletá-lo mesmo assim?</translation>
     <message>
         <source>Move folder</source>
         <translatorcomment>Radio button option label</translatorcomment>
-        <translation>Mover pasta</translation>
+        <translation>Mover a pasta</translation>
     </message>
     <message>
         <source>Move this folder from backups to another location in your cloud drive to get full access to your data. This folder will stop being backed up.</source>
         <translatorcomment>Radio button description</translatorcomment>
-        <translation>Mover esta pasta de backups para outro local em sua unidade de nuvem para obter acesso total aos seus dados. O backup dessa pasta deixará de ser realizado.</translation>
+        <translation>Mover esta pasta de backups para outro local na sua Nuvem de arquivos para obter acesso total aos seus dados. O backup dessa pasta deixará de ser feito.</translation>
     </message>
     <message>
         <source>Move to:</source>
@@ -4635,7 +4635,7 @@ Você quer deletá-lo mesmo assim?</translation>
     <message>
         <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. This action cannot be undone.</source>
         <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option.</translatorcomment>
-        <translation>A pasta será deletada do MEGA, mas não será deletada do seu computador. Essa ação não pode ser desfeita.</translation>
+        <translation>A pasta será deletada do MEGA, mas não será deletada do seu computador. Essa ação não poderá ser desfeita.</translation>
     </message>
     <message>
         <source>Confirm</source>
@@ -5159,7 +5159,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Issue report:</source>
         <translatorcomment>Label for Issue reporting in General pane.(macOS)</translatorcomment>
-        <translation>Informar problema:</translation>
+        <translation>Informe sobre problema:</translation>
     </message>
     <message>
         <source>Storage space:</source>
@@ -5284,7 +5284,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Issue report</source>
         <translatorcomment>Section title label for Issue reporting in General pane.</translatorcomment>
-        <translation>Informar problema</translation>
+        <translation>Informe sobre problema</translation>
     </message>
     <message>
         <source>Choose which files or folders you want to exclude from synchronisation.</source>
@@ -5494,7 +5494,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Prevent the computer from going to sleep when transfers or syncs are in progress.</source>
         <translatorcomment>Sleep/Active mode: Feature description label for keeping the pc awake when there are active transfers</translatorcomment>
-        <translation>Evite que o computador entre em suspensão enquanto houver transferências ou sincronizações em andamento.</translation>
+        <translation>Evitar que o computador entre em suspensão enquanto houver transferências ou sincronizações em andamento.</translation>
     </message>
 </context>
 <context>
