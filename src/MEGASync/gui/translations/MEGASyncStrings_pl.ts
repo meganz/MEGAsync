@@ -842,7 +842,7 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
     <message>
         <source>New Contact Established</source>
         <translatorcomment>Title of the notification when a contact relationship has been established.</translatorcomment>
-        <translation>Ustanowiono nowy kontakt</translation>
+        <translation>Nowy kontakt</translation>
     </message>
     <message>
         <source>New contact with [A] has been established</source>
@@ -972,12 +972,12 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>Twoje konto biznesowe wygasło</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation>Twoje konto jest wygaszone jako tylko do odczytu, dopóki nie dokonasz potrzebnych płatności.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -1308,7 +1308,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Login</source>
         <translatorcomment>Button label to start the Login process. (String as short as possible)</translatorcomment>
-        <translation>Zaloguj się</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Create account</source>
@@ -2310,7 +2310,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>Twoje konto biznesowe wygasło</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -2320,7 +2320,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message shown to admin business account when a payment has failed. </translatorcomment>
-        <translation>Wygląda na to, że płatność za Twoje konto biznesowe nie powiodła się. Twoje konto wygasło i otrzymało uprawnienia dostępu tylko do odczytu, dopóki nie dokonasz wymaganej płatności.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
@@ -2345,7 +2345,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
         <translatorcomment>Informative message shown when a business account is expired and the user can only browse data and none operation (upload, download, creation..) is allowed.</translatorcomment>
-        <translation>Twoje konto [A]wygasło[/A]. Możesz jedynie przeglądać swoje dane.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
@@ -2481,11 +2481,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>There is an active transfer. Exit the app?
 Transfer will automatically resume when you re-open the app.</source>
         <translatorcomment>Messagebox text to let the user know that there are active transfers when closing the app. The user will be able to exit and pause them, or stop the exit action.</translatorcomment>
-        <translation><numerusform>Masz aktywny transfer. Wyjdź z aplikacji? 
-Transfery zostaną automatycznie wznowione po ponownym otwarciu aplikacji.</numerusform><numerusform>Masz aktywne transfery. Wyjdź z aplikacji? 
-Transfery zostaną automatycznie wznowione po ponownym otwarciu aplikacji.</numerusform><numerusform>Masz aktywne transfery. Wyjdź z aplikacji? 
-Transfery zostaną automatycznie wznowione po ponownym otwarciu aplikacji.</numerusform><numerusform>Masz aktywne transfery. Wyjdź z aplikacji? 
-Transfery zostaną automatycznie wznowione po ponownym otwarciu aplikacji.</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Exit app</source>
@@ -2841,7 +2837,7 @@ Transfery zostaną automatycznie wznowione po ponownym otwarciu aplikacji.</nume
     <message>
         <source>Business account expired</source>
         <translatorcomment>Label to show that the current business account is expired during a SDK operation.</translatorcomment>
-        <translation>Twoje konto biznesowe wygasło</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Foreign target storage quota reached</source>
@@ -2979,7 +2975,7 @@ Transfery zostaną automatycznie wznowione po ponownym otwarciu aplikacji.</nume
     <message>
         <source>Get link</source>
         <translatorcomment>Context menu action to get transfer link</translatorcomment>
-        <translation>Pobierz link</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Open in MEGA</source>
@@ -3145,7 +3141,7 @@ Wybrane niekompletne transfery nie zostaną anulowane. Wszystkie pozostałe wybr
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a FAT filesystem.</translatorcomment>
-        <translation>Synchronizujesz folder lokalny sformatowany w systemie plików FAT. Ten system plików ma braki w zarządzaniu dużymi plikami i czasami modyfikacji, które mogą powodować problemy z synchronizacją (np. Przy zmianie czasu letniego), więc zdecydowanie zaleca się synchronizowanie tylko folderów sformatowanych przy użyciu bardziej niezawodnych systemów plików, takich jak NTFS (więcej informacji [A]tutaj[/A]).</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
@@ -3260,12 +3256,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Cloud drive</source>
         <translatorcomment>Node selector button Text. Switch the view to show only the cloud drive nodes (files and folders)</translatorcomment>
-        <translation>Dysk w chmurze</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Incoming shares</source>
         <translatorcomment>Node selector button Text. Switch the view to show only the incoming shares nodes (files and folders)</translatorcomment>
-        <translation>Przychodzące</translation>
+        <translation>Udostępnienia przychodzące</translation>
     </message>
     <message>
         <source>Error:</source>
@@ -4170,8 +4166,7 @@ Sprawdź, czy podano poprawną nazwę pliku.</translation>
         <source>&apos;%1&apos; is write protected.
 Do you want to delete it anyway?</source>
         <translatorcomment>Warning message when a write protected file is about to be delete</translatorcomment>
-        <translation>″%1″ jest zabezpieczone przed zapisem.
-Czy mimo to chcesz je usunąć?</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5868,7 +5863,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your MEGA account is full</source>
         <translatorcomment>Message shown when the MEGA account is full</translatorcomment>
-        <translation>Twoje konto MEGA jest pełne.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left for this IP address.

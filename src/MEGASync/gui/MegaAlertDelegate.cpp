@@ -14,10 +14,10 @@
 using namespace mega;
 
 MegaAlertDelegate::MegaAlertDelegate(QAlertsModel *model, bool useProxyModel, QObject *parent)
-    : QStyledItemDelegate(parent)
+    : QStyledItemDelegate(parent),
+      mAlertsModel(model),
+      mUseProxy(useProxyModel)
 {
-    this->model = model;
-    useProxy = useProxyModel;
 }
 
 void MegaAlertDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -28,7 +28,7 @@ void MegaAlertDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt
         //Map index when we are using QSortFilterProxyModel
         // if we are using QAbstractItemModel just access internalPointer casting to MegaAlert
         MegaUserAlert *alert = NULL;
-        if (useProxy)
+        if (mUseProxy)
         {
             QModelIndex actualId = ((QSortFilterProxyModel*)index.model())->mapToSource(index);
             if (!(actualId.isValid()))
@@ -51,13 +51,13 @@ void MegaAlertDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt
             return;
         }
 
-        AlertItem *ti = model->alertItems[alert->getId()];
+        AlertItem *ti = mAlertsModel->alertItems[alert->getId()];
         if (!ti)
         {
             ti = new AlertItem();
-            connect(ti, SIGNAL(refreshAlertItem(unsigned)), model, SLOT(refreshAlertItem(unsigned)));
+            connect(ti, SIGNAL(refreshAlertItem(unsigned)), mAlertsModel, SLOT(refreshAlertItem(unsigned)));
 
-            model->alertItems.insert(alert->getId(), ti);
+            mAlertsModel->alertItems.insert(alert->getId(), ti);
             ti->setAlertData(alert); //Just set when created and when updated at QAlertsModel
         }
 
@@ -97,7 +97,7 @@ bool MegaAlertDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, co
     if (QEvent::MouseButtonPress ==  event->type())
     {
         MegaUserAlert *alert = NULL;
-        if (useProxy)
+        if (mUseProxy)
         {
             QModelIndex actualId = ((QSortFilterProxyModel*)index.model())->mapToSource(index);
             if (!(actualId.isValid()))
@@ -140,7 +140,7 @@ bool MegaAlertDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, co
                             if (!strcmp(alert->getEmail(), email))
                             {
                                 found = true;
-                                QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#fm/ipc")));
+                                Utilities::openUrl(QUrl(QString::fromUtf8("mega://#fm/ipc")));
                                 break;
                             }
                         }
@@ -148,7 +148,7 @@ bool MegaAlertDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, co
 
                     if (!found)
                     {
-                        QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#fm/contacts")));
+                        Utilities::openUrl(QUrl(QString::fromUtf8("mega://#fm/contacts")));
                     }
 
                     break;
@@ -162,13 +162,13 @@ bool MegaAlertDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, co
                     MegaUser *user = api->getContact(alert->getEmail());
                     if (user && user->getVisibility() == MegaUser::VISIBILITY_VISIBLE)
                     {
-                        QtConcurrent::run(QDesktopServices::openUrl,
+                        Utilities::openUrl(
                                           QUrl(QString::fromUtf8("mega://#fm/%1").arg(QString::fromUtf8(api->userHandleToBase64(user->getHandle())))));
                         delete user;
                     }
                     else
                     {
-                        QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#fm/contacts")));
+                        Utilities::openUrl(QUrl(QString::fromUtf8("mega://#fm/contacts")));
                     }
 
                     break;
@@ -183,7 +183,7 @@ bool MegaAlertDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, co
                     MegaNode *node = api->getNodeByHandle(alert->getNodeHandle());
                     if (node)
                     {
-                        QtConcurrent::run(QDesktopServices::openUrl,
+                        Utilities::openUrl(
                                           QUrl(QString::fromUtf8("mega://#fm/%1").arg(QString::fromUtf8(node->getBase64Handle()))));
                         delete node;
                     }
@@ -195,7 +195,7 @@ bool MegaAlertDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, co
             case MegaUserAlert::TYPE_PAYMENT_FAILED:
             case MegaUserAlert::TYPE_PAYMENTREMINDER:
                 {
-                    QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#fm/account/plan")));
+                    Utilities::openUrl(QUrl(QString::fromUtf8("mega://#fm/account/plan")));
                     break;
                 }
 
@@ -217,7 +217,7 @@ bool MegaAlertDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view, co
     if (event->type() == QEvent::ToolTip)
     {
         MegaUserAlert *alert = NULL;
-        if (useProxy)
+        if (mUseProxy)
         {
             QModelIndex actualId = ((QSortFilterProxyModel*)index.model())->mapToSource(index);
             if (!(actualId.isValid()))
@@ -237,7 +237,7 @@ bool MegaAlertDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view, co
             return QStyledItemDelegate::helpEvent(event, view, option, index);
         }
 
-        AlertItem *ti = model->alertItems[alert->getId()];
+        AlertItem *ti = mAlertsModel->alertItems[alert->getId()];
         if (!ti)
         {
             return QStyledItemDelegate::helpEvent(event, view, option, index);

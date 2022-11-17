@@ -2,15 +2,21 @@
 #define MEGAITEMMODEL_H
 
 #include "MegaItem.h"
-#include <megaapi.h>
 #include "Utilities.h"
+
+#include <megaapi.h>
 
 #include <QAbstractItemModel>
 #include <QList>
 #include <QIcon>
+#include <QPointer>
 
 #include <memory>
 
+namespace UserAttributes{
+class CameraUploadFolder;
+class MyChatFilesFolder;
+}
 
 enum class MegaItemModelRoles
 {
@@ -27,7 +33,7 @@ enum class NodeRowDelegateRoles
     last
 };
 
-class MegaItemModel : public QAbstractItemModel, public mega::MegaRequestListener
+class MegaItemModel : public QAbstractItemModel
 {
     Q_OBJECT
 
@@ -65,12 +71,11 @@ public:
     QVariant getIcon(const QModelIndex &index, MegaItem* item) const;
     QVariant getText(const QModelIndex &index, MegaItem* item) const;
 
-    void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
-
     virtual ~MegaItemModel();
 
 private slots:
     void onItemInfoUpdated(int role);
+    void onMyBackupsFolderHandleSet(mega::MegaHandle h);
 
 protected:
     QList<MegaItem *> mRootItems;
@@ -81,9 +86,10 @@ protected:
 private:
     int insertPosition(const std::unique_ptr<mega::MegaNode>& node);
     QModelIndex findItemByNodeHandle(const mega::MegaHandle &handle, const QModelIndex& parent);
-    std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
-
-
+    QIcon getFolderIcon(MegaItem* item) const;
+    std::shared_ptr<const UserAttributes::CameraUploadFolder> mCameraFolderAttribute;
+    std::shared_ptr<const UserAttributes::MyChatFilesFolder> mMyChatFilesFolderAttribute;
+    mega::MegaApi* mMegaApi;
 };
 
 #endif // MEGAITEMMODEL_H

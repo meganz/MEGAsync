@@ -158,7 +158,6 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
             if(!userEmail.isEmpty())
             {
                 auto fullNameUserAttributes = UserAttributes::FullName::requestFullName(userEmail.toUtf8().constData());
-
                 if(fullNameUserAttributes && !mUserAttributes.contains(userEmail))
                 {
                     mUserAttributes.insert(userEmail, fullNameUserAttributes);
@@ -508,7 +507,7 @@ void DesktopNotifications::viewContactOnWebClient(MegaNotification::Action activ
             url = QUrl(QString::fromUtf8("mega://#fm/chat/p/%1").arg(userHandle));
         }
     }
-    QtConcurrent::run(QDesktopServices::openUrl, url);
+    Utilities::openUrl(url);
     delete userMail;
 }
 
@@ -592,7 +591,7 @@ void DesktopNotifications::redirectToUpgrade(MegaNotification::Action activation
     {
         QString url = QString::fromUtf8("mega://#pro");
         Utilities::getPROurlWithParameters(url);
-        QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
+        Utilities::openUrl(QUrl(url));
     }
 }
 
@@ -669,7 +668,7 @@ void DesktopNotifications::redirectToPayBusiness(MegaNotification::Action activa
     {
         QString url = QString::fromUtf8("mega://#repay");
         Utilities::getPROurlWithParameters(url);
-        QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
+        Utilities::openUrl(QUrl(url));
     }
 }
 
@@ -693,7 +692,7 @@ void DesktopNotifications::viewShareOnWebClient(MegaNotification::Action action)
         if (!nodeHandlerBase64.isEmpty())
         {
             const auto url = QUrl(QString::fromUtf8("mega://#fm/%1").arg(nodeHandlerBase64));
-            QtConcurrent::run(QDesktopServices::openUrl, url);
+            Utilities::openUrl(url);
         }
     }
 }

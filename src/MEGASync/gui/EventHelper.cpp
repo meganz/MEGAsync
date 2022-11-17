@@ -70,7 +70,18 @@ EventHelper* EventManager::GetHelper(QObject *obj, const QEvent::Type &eType)
 
 void EventManager::addEvent(const EventHelper::Data& data)
 {
-    if(!data.object || GetHelper(data.object, data.eventType))
+    if(!data.object)
+    {
+        return;
+    }
+
+    if(data.action == EventHelper::ACCEPT)
+    {
+        removeEvent(data.object, data.eventType);
+        return;
+    }
+
+    if(GetHelper(data.object, data.eventType))
     {
         return;
     }

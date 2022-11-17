@@ -117,7 +117,7 @@ include(gui/gui.pri)
 include(mega/bindings/qt/sdk.pri)
 include(control/control.pri)
 include(transfers/transfers.pri)
-include(model/model.pri)
+include(syncs/syncs.pri)
 include(platform/platform.pri)
 include(google_breakpad/google_breakpad.pri)
 include(qtlockedfile/qtlockedfile.pri)
@@ -149,7 +149,13 @@ SOURCES += $$PWD/MegaApplication.cpp \
     $$PWD/ScanStageController.cpp \
     $$PWD/EventUpdater.cpp \
     $$PWD/FolderTransferListener.cpp \
-    $$PWD/BlockingStageProgressController.cpp
+    $$PWD/BlockingStageProgressController.cpp \
+    $$PWD/UserAttributesRequests/Avatar.cpp \
+    $$PWD/UserAttributesRequests/CameraUploadFolder.cpp \
+    $$PWD/UserAttributesRequests/DeviceName.cpp \
+    $$PWD/UserAttributesRequests/FullName.cpp \
+    $$PWD/UserAttributesRequests/MyBackupsHandle.cpp \
+    $$PWD/UserAttributesRequests/MyChatFilesFolder.cpp
 
 HEADERS += $$PWD/MegaApplication.h \
     $$PWD/DesktopNotifications.h \
@@ -162,7 +168,13 @@ HEADERS += $$PWD/MegaApplication.h \
     $$PWD/EventUpdater.h \
     $$PWD/FolderTransferListener.h \
     $$PWD/BlockingStageProgressController.h \
-    $$PWD/FolderTransferEvents.h
+    $$PWD/FolderTransferEvents.h \
+    $$PWD/UserAttributesRequests/Avatar.h \
+    $$PWD/UserAttributesRequests/CameraUploadFolder.h \
+    $$PWD/UserAttributesRequests/DeviceName.h \
+    $$PWD/UserAttributesRequests/FullName.h \
+    $$PWD/UserAttributesRequests/MyBackupsHandle.h \
+    $$PWD/UserAttributesRequests/MyChatFilesFolder.h
 
 TRANSLATIONS = \
     gui/translations/MEGASyncStrings_ar.ts \

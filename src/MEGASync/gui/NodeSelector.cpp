@@ -7,6 +7,8 @@
 #include "MegaItemModel.h"
 #include "megaapi.h"
 #include "MegaItemDelegates.h"
+#include "UserAttributesRequests/MyBackupsHandle.h"
+
 #include "mega/utils.h"
 
 #include <QMessageBox>
@@ -19,6 +21,7 @@ const int NodeSelector::LABEL_ELIDE_MARGIN = 100;
 
 const char* NodeSelector::IN_SHARES = "Incoming shares";
 const char* NodeSelector::CLD_DRIVE = "Cloud drive";
+const char* NodeSelector::BACKUPS = "Backups";
 
 
 NodeSelector::NodeSelector(int selectMode, QWidget *parent) :
@@ -35,16 +38,36 @@ NodeSelector::NodeSelector(int selectMode, QWidget *parent) :
     setWindowModality(Qt::WindowModal);
     ui->setupUi(this);
 
+    if(showBackups())
+    {
+        auto myBackupsHandle = UserAttributes::MyBackupsHandle::requestMyBackupsHandle();
+        connect(myBackupsHandle.get(), &UserAttributes::MyBackupsHandle::attributeReady,
+                this, &NodeSelector::onMyBackupsFolderHandleSet);
+        onMyBackupsFolderHandleSet(myBackupsHandle->getMyBackupsHandle());
+    }
+    else
+    {
+        shortCutConnects(SHARES);
+    }
+
+    if(auto rootNode = std::unique_ptr<MegaNode>(mMegaApi->getRootNode()))
+    {
+        mNavCloudDrive.expandedHandles.append(rootNode->getHandle());
+    }
+
+
     ui->cbAlwaysUploadToLocation->hide();
     ui->bOk->setDefault(true);
 
 #ifndef Q_OS_MAC
     ui->bShowCloudDrive->setChecked(true);
     connect(ui->bShowIncomingShares, &QPushButton::clicked, this, &NodeSelector::onbShowIncomingSharesClicked);
-    connect(ui->bShowCloudDrive, &QPushButton::clicked,this , &NodeSelector::onbShowCloudDriveClicked);
+    connect(ui->bShowCloudDrive, &QPushButton::clicked, this, &NodeSelector::onbShowCloudDriveClicked);
+    connect(ui->bShowBackups, &QPushButton::clicked, this, &NodeSelector::onbShowBackupsFolderClicked);
 #else
     ui->tabBar->addTab(tr(CLD_DRIVE));
     ui->tabBar->addTab(tr(IN_SHARES));
+
     connect(ui->tabBar, &QTabBar::currentChanged, this, &NodeSelector::onTabSelected);
 #endif
 
@@ -61,12 +84,13 @@ NodeSelector::NodeSelector(int selectMode, QWidget *parent) :
     ui->tMegaFolders->setItemDelegate(new  NodeRowDelegate(ui->tMegaFolders));
     ui->tMegaFolders->setItemDelegateForColumn(MegaItemModel::STATUS, new IconDelegate(ui->tMegaFolders));
     ui->tMegaFolders->setItemDelegateForColumn(MegaItemModel::USER, new IconDelegate(ui->tMegaFolders));
-    ui->tMegaFolders->setExpanded(mProxyModel->getIndexFromHandle(MegaSyncApp->getRootNode()->getHandle()),true);
     ui->tMegaFolders->setTextElideMode(Qt::ElideMiddle);
     ui->tMegaFolders->sortByColumn(MegaItemModel::NODE, Qt::AscendingOrder);
     ui->bOk->setEnabled(false);
 
     ui->lFolderName->setText(tr("Cloud drive"));
+    onbShowCloudDriveClicked();
+
 
     connect(ui->tMegaFolders->selectionModel(), &QItemSelectionModel::selectionChanged, this, &NodeSelector::onSelectionChanged);
     connect(ui->tMegaFolders, &MegaItemTreeView::removeNodeClicked, this, &NodeSelector::onDeleteClicked);
@@ -78,15 +102,6 @@ NodeSelector::NodeSelector(int selectMode, QWidget *parent) :
     connect(ui->bNewFolder, &QPushButton::clicked, this, &NodeSelector::onbNewFolderClicked);
     connect(ui->bOk, &QPushButton::clicked, this, &NodeSelector::onbOkClicked);
     connect(ui->bCancel, &QPushButton::clicked, this, &QDialog::reject);
-
-
-    // Provide quick access shortcuts for the two panes via Ctrl+1,2
-    // Ctrl is auto-magically translated to CMD key by Qt on macOS
-    for (int i = 0; i < 2; ++i)
-    {
-        QShortcut *shortcut = new QShortcut(QKeySequence(QString::fromLatin1("Ctrl+%1").arg(i+1)), this);
-        QObject::connect(shortcut, &QShortcut::activated, this, [=](){ onTabSelected(i); });
-    }
 }
 
 NodeSelector::~NodeSelector()
@@ -115,6 +130,9 @@ void NodeSelector::nodesReady()
         mProxyModel->showReadOnlyFolders(false);
         mModel->showFiles(false);
         ui->bNewFolder->show();
+#ifndef Q_OS_MAC
+        ui->bShowBackups->hide();
+#endif
         break;
     case NodeSelector::DOWNLOAD_SELECT:
         ui->bNewFolder->hide();
@@ -252,19 +270,24 @@ void NodeSelector::setSelectedNodeHandle(MegaHandle selectedHandle)
     }
 }
 
-void NodeSelector::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e)
+void NodeSelector::onRequestFinish(mega::MegaApi*, mega::MegaRequest* request, mega::MegaError* e)
 {
     ui->bNewFolder->setEnabled(true);
     ui->bOk->setEnabled(true);
 
-    if (e->getErrorCode() != MegaError::API_OK)
+    auto type (request->getType());
+    auto errorCode (e->getErrorCode());
+
+    if (errorCode != mega::MegaError::API_OK)
     {
         ui->tMegaFolders->setEnabled(true);
-        QMegaMessageBox::critical(nullptr, QLatin1String("MEGAsync"), tr("Error:") + QLatin1String(" ") + QCoreApplication::translate("MegaError", e->getErrorString()));
+        QMegaMessageBox::critical(nullptr, QLatin1String("MEGAsync"),
+                                  tr("Error") + QLatin1String(": ")
+                                  + QCoreApplication::translate("MegaError", e->getErrorString()));
         return;
     }
 
-    if (request->getType() == MegaRequest::TYPE_REMOVE || request->getType() == MegaRequest::TYPE_MOVE)
+    if (type == MegaRequest::TYPE_REMOVE || type == MegaRequest::TYPE_MOVE)
     {
         if (e->getErrorCode() == MegaError::API_OK)
         {
@@ -297,7 +320,8 @@ void NodeSelector::onDeleteClicked()
                              QLatin1String("MEGAsync"),
                              tr("Are you sure that you want to delete \"%1\"?")
                                 .arg(QString::fromUtf8(node->getName())),
-                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes)
+                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
+            == QMessageBox::Yes)
     {
         if (!currentDialog)
         {
@@ -355,63 +379,53 @@ void NodeSelector::changeEvent(QEvent *event)
 
 void NodeSelector::onItemDoubleClick(const QModelIndex &index)
 {
-    if(!isAllowedToEnterInIndex(index) )
+    if(!isAllowedToEnterInIndex(index))
         return;
 
-    if(isCloudDrive())
+    switch(getSelectedTab())
     {
-        mNavCloudDrive.appendToBackward(getHandleByIndex(ui->tMegaFolders->rootIndex()));
-        mNavCloudDrive.removeFromForward(mProxyModel->getHandle(index));
+    case CLOUD_DRIVE:
+        navigateIntoOperation(mNavCloudDrive, index);
+        break;
+    case SHARES:
+        navigateIntoOperation(mNavInShares, index);
+        break;
+    case VAULT:
+        navigateIntoOperation(mNavVault, index);
+        break;
     }
-    else
-    {
-        mNavInShares.appendToBackward(getHandleByIndex(ui->tMegaFolders->rootIndex()));
-        mNavInShares.removeFromForward(mProxyModel->getHandle(index));
-    }
-
-    setRootIndex(index);
-    checkBackForwardButtons();
-    checkNewFolderButtonVisibility();
 }
 
 void NodeSelector::onGoBackClicked()
 {
-    QModelIndex indexToGo;
-    if(isCloudDrive())
+    switch(getSelectedTab())
     {
-        mNavCloudDrive.appendToForward(getHandleByIndex(ui->tMegaFolders->rootIndex()));
-        indexToGo = getIndexFromHandle(mNavCloudDrive.backwardHandles.last());
-        mNavCloudDrive.backwardHandles.removeLast();
+    case CLOUD_DRIVE:
+        navigateBackwardOperation(mNavCloudDrive);
+        break;
+    case SHARES:
+        navigateBackwardOperation(mNavInShares);
+        break;
+    case VAULT:
+        navigateBackwardOperation(mNavVault);
+        break;
     }
-    else
-    {
-        mNavInShares.appendToForward(getHandleByIndex(ui->tMegaFolders->rootIndex()));
-        indexToGo = getIndexFromHandle(mNavInShares.backwardHandles.last());
-        mNavInShares.backwardHandles.removeLast();
-    }
-    setRootIndex(indexToGo);
-    checkBackForwardButtons();
-    checkNewFolderButtonVisibility();
 }
 
 void NodeSelector::onGoForwardClicked()
 {
-    QModelIndex indexToGo;
-    if(isCloudDrive())
+    switch(getSelectedTab())
     {
-        mNavCloudDrive.appendToBackward(getHandleByIndex(ui->tMegaFolders->rootIndex()));
-        indexToGo = getIndexFromHandle(mNavCloudDrive.forwardHandles.last());
-        mNavCloudDrive.forwardHandles.removeLast();
+    case CLOUD_DRIVE:
+        navigateForwardOperation(mNavCloudDrive);
+        break;
+    case SHARES:
+        navigateForwardOperation(mNavInShares);
+        break;
+    case VAULT:
+        navigateForwardOperation(mNavVault);
+        break;
     }
-    else
-    {
-        mNavInShares.appendToBackward(getHandleByIndex(ui->tMegaFolders->rootIndex()));
-        indexToGo = getIndexFromHandle(mNavInShares.forwardHandles.last());
-        mNavInShares.forwardHandles.removeLast();
-    }
-    setRootIndex(indexToGo);
-    checkBackForwardButtons();
-    checkNewFolderButtonVisibility();
 }
 
 void NodeSelector::onbNewFolderClicked()
@@ -556,6 +570,18 @@ void NodeSelector::onbShowCloudDriveClicked()
     }
 }
 
+void NodeSelector::onbShowBackupsFolderClicked()
+{
+    if(mProxyModel)
+    {
+        saveExpandedItems();
+        mProxyModel->showOnlyVault();
+        restoreExpandedItems();
+        checkNewFolderButtonVisibility();
+        checkBackForwardButtons();
+    }
+}
+
 void NodeSelector::onTabSelected(int index)
 {
     switch (index)
@@ -576,6 +602,14 @@ void NodeSelector::onTabSelected(int index)
             ui->bShowIncomingShares->click();
 #endif
             break;
+        case NodeSelector::VAULT:
+#ifdef Q_OS_MAC
+            onbShowBackupsFolderClicked();
+            ui->tabBar->setCurrentIndex(index);
+#else
+            ui->bShowBackups->click();
+#endif
+            break;
         default:
             break;
     }
@@ -593,17 +627,28 @@ void NodeSelector::onSelectionChanged(const QItemSelection& selected, const QIte
     ui->bOk->setEnabled(false);
     foreach(auto& index, selected.indexes())
     {
+        if(index.column() != MegaItemModel::COLUMN::NODE)
+        {
+            continue;
+        }
+
         auto source_idx = mProxyModel->getIndexFromSource(index);
         MegaItem *item = static_cast<MegaItem*>(source_idx.internalPointer());
         if(item)
         {
-            if(mSelectMode == NodeSelector::STREAM_SELECT)
+            switch(mSelectMode)
             {
+            case NodeSelector::STREAM_SELECT:
                 ui->bOk->setEnabled(item->getNode()->isFile());
-            }
-            else if(mSelectMode == NodeSelector::SYNC_SELECT)
-            {
+                break;
+            case NodeSelector::SYNC_SELECT:
                 ui->bOk->setEnabled(item->isSyncable());
+                break;
+            case NodeSelector::UPLOAD_SELECT:
+                ui->bOk->setEnabled(item->getStatus() != MegaItem::BACKUP);
+                break;
+            default:
+                break;
             }
         }
     }
@@ -618,19 +663,51 @@ void NodeSelector::onSectionResized()
     }
 }
 
-void NodeSelector::saveExpandedItems()
+void NodeSelector::onMyBackupsFolderHandleSet(mega::MegaHandle h)
 {
-    auto node = mProxyModel->getNode(ui->tMegaFolders->rootIndex());
-
-    if(isCloudDrive())
+    if (h != INVALID_HANDLE)
     {
-        mNavCloudDrive.rootHandle = node? node->getHandle() : INVALID_HANDLE;
-        iterateForSaveExpanded(mNavCloudDrive.expandedHandles);
+        mNavVault.expandedHandles.append(h);
+
+#ifdef Q_OS_MAC
+        ui->tabBar->addTab(tr(BACKUPS));
+#else
+        ui->bShowBackups->show();
+#endif
+        shortCutConnects(VAULT);
     }
     else
     {
+#ifndef Q_OS_MAC
+        ui->bShowBackups->hide();
+#endif
+        shortCutConnects(SHARES);
+    }
+}
+
+void NodeSelector::saveExpandedItems()
+{
+    auto node = mProxyModel->getNode(ui->tMegaFolders->rootIndex());
+    switch(getSelectedTab())
+    {
+    case CLOUD_DRIVE:
+    {
+        mNavCloudDrive.rootHandle = node? node->getHandle() : INVALID_HANDLE;
+        iterateForSaveExpanded(mNavCloudDrive.expandedHandles);
+        break;
+    }
+    case SHARES:
+    {
         mNavInShares.rootHandle  = node? node->getHandle() : INVALID_HANDLE;
         iterateForSaveExpanded(mNavInShares.expandedHandles);
+        break;
+    }
+    case VAULT:
+    {
+        mNavVault.rootHandle  = node? node->getHandle() : INVALID_HANDLE;
+        iterateForSaveExpanded(mNavVault.expandedHandles);
+        break;
+    }
     }
 }
 
@@ -648,21 +725,33 @@ void NodeSelector::iterateForSaveExpanded(QList<MegaHandle> &saveList, const QMo
 }
 
 void NodeSelector::restoreExpandedItems()
+{   
+    switch(getSelectedTab())
+    {
+    case CLOUD_DRIVE:
+    {
+        restoreExpandedItems(mNavCloudDrive);
+        break;
+    }
+    case SHARES:
+    {
+        restoreExpandedItems(mNavInShares);
+        break;
+    }
+    case VAULT:
+    {
+        restoreExpandedItems(mNavVault);
+        break;
+    }
+    }
+}
+
+void NodeSelector::restoreExpandedItems(Navigation& nav)
 {
-    if(isCloudDrive())
-    {
-        auto idx = mProxyModel->getIndexFromHandle(mNavCloudDrive.rootHandle);
-        setRootIndex(idx);
-        iterateForRestore(mNavCloudDrive.expandedHandles);
-        mNavCloudDrive.expandedHandles.clear();
-    }
-    else
-    {
-        auto idx = mProxyModel->getIndexFromHandle(mNavInShares.rootHandle);
-        setRootIndex(idx);
-        iterateForRestore(mNavInShares.expandedHandles);
-        mNavInShares.expandedHandles.clear();
-    }
+    auto idx = mProxyModel->getIndexFromHandle(nav.rootHandle);
+    setRootIndex(idx);
+    iterateForRestore(nav.expandedHandles);
+    nav.expandedHandles.clear();
 }
 
 void NodeSelector::iterateForRestore(const QList<MegaHandle> &list, const QModelIndex &parent)
@@ -689,7 +778,11 @@ bool NodeSelector::isAllowedToEnterInIndex(const QModelIndex &idx)
     {
         if((item->getNode()->isFile())
            || (item->isRoot())
-           || (mSelectMode == NodeSelector::SYNC_SELECT && (item->getStatus() == MegaItem::SYNC || item->getStatus() == MegaItem::SYNC_CHILD)))
+           || (item->isVault())
+           || (mSelectMode == NodeSelector::UPLOAD_SELECT && item->getStatus() == MegaItem::BACKUP)
+           || (mSelectMode == NodeSelector::SYNC_SELECT && (item->getStatus() == MegaItem::SYNC
+                                                            || item->getStatus() == MegaItem::SYNC_CHILD
+                                                            || item->getStatus() == MegaItem::BACKUP)))
         {
             return false;
         }
@@ -702,7 +795,76 @@ bool NodeSelector::isCloudDrive()
     return mProxyModel ? mProxyModel->isShowOnlyCloudDrive() : true;
 }
 
-void NodeSelector::setRootIndex(const QModelIndex& proxy_idx)
+bool NodeSelector::isVault()
+{
+    if(mProxyModel)
+        return mProxyModel->isShowOnlyVault();
+
+    return false;
+}
+
+bool NodeSelector::isInShares()
+{
+    if(mProxyModel)
+        return mProxyModel->isShowOnlyInShares();
+
+    return false;
+}
+
+void NodeSelector::navigateIntoOperation(Navigation &nav, const QModelIndex &idx)
+{
+    nav.appendToBackward(getHandleByIndex(ui->tMegaFolders->rootIndex()));
+    nav.removeFromForward(mProxyModel->getHandle(idx));
+
+    setRootIndex(idx);
+    checkBackForwardButtons();
+    checkNewFolderButtonVisibility();
+}
+
+void NodeSelector::navigateBackwardOperation(Navigation &nav)
+{
+    nav.appendToForward(getHandleByIndex(ui->tMegaFolders->rootIndex()));
+    QModelIndex indexToGo = getIndexFromHandle(nav.backwardHandles.last());
+    nav.backwardHandles.removeLast();
+
+    setRootIndex(indexToGo);
+    checkBackForwardButtons();
+    checkNewFolderButtonVisibility();
+}
+
+void NodeSelector::navigateForwardOperation(Navigation &nav)
+{
+    nav.appendToBackward(getHandleByIndex(ui->tMegaFolders->rootIndex()));
+    QModelIndex indexToGo = getIndexFromHandle(nav.forwardHandles.last());
+    nav.forwardHandles.removeLast();
+
+    setRootIndex(indexToGo);
+    checkBackForwardButtons();
+    checkNewFolderButtonVisibility();
+}
+
+void NodeSelector::shortCutConnects(int loopCount)
+{
+    // Provide quick access shortcuts for the two panes via Ctrl+1,2
+    // Ctrl is auto-magically translated to CMD key by Qt on macOS
+    for (int i = 0; i <= loopCount; ++i)
+    {
+        QShortcut *shortcut = new QShortcut(QKeySequence(QString::fromLatin1("Ctrl+%1").arg(i+1)), this);
+        QObject::connect(shortcut, &QShortcut::activated, this, [=](){ onTabSelected(i); });
+    }
+}
+
+NodeSelector::TabItem NodeSelector::getSelectedTab()
+{
+    if(isInShares())
+        return SHARES;
+    if(isVault())
+        return VAULT;
+
+    return CLOUD_DRIVE;
+}
+
+void NodeSelector::setRootIndex(const QModelIndex &proxy_idx)
 {
     //In case the idx is coming from a potentially hidden column, we always take the NODE column
     //As it is the only one that have childrens
@@ -711,10 +873,24 @@ void NodeSelector::setRootIndex(const QModelIndex& proxy_idx)
     ui->tMegaFolders->setRootIndex(node_column_idx);
     if(!node_column_idx.isValid())
     {
-        if(isCloudDrive())
+        switch(getSelectedTab())
+        {
+        case CLOUD_DRIVE:
+        {
             ui->lFolderName->setText(tr(CLD_DRIVE));
-        else
+            break;
+        }
+        case SHARES:
+        {
             ui->lFolderName->setText(tr(IN_SHARES));
+            break;
+        }
+        case VAULT:
+        {
+            ui->lFolderName->setText(tr(BACKUPS));
+            break;
+        }
+        }
 
         QModelIndexList selectedIndexes = ui->tMegaFolders->selectionModel()->selectedIndexes();
         mProxyModel->showOwnerColumn(true);
@@ -790,6 +966,11 @@ void NodeSelector::setRootIndex(const QModelIndex& proxy_idx)
     }
 }
 
+bool NodeSelector::showBackups()
+{
+    return (mSelectMode != SYNC_SELECT && mSelectMode != UPLOAD_SELECT);
+}
+
 MegaHandle NodeSelector::getHandleByIndex(const QModelIndex& idx)
 {
     return mProxyModel ? mProxyModel->getHandle(idx) : mega::INVALID_HANDLE;
@@ -804,16 +985,28 @@ void NodeSelector::checkBackForwardButtons()
 {
     bool enableBackward(false);
     bool enableForward(false);
-    if(isCloudDrive())
+    switch(getSelectedTab())
+    {
+    case CLOUD_DRIVE:
     {
         enableBackward = !mNavCloudDrive.backwardHandles.isEmpty();
         enableForward = !mNavCloudDrive.forwardHandles.isEmpty();
+        break;
     }
-    else
+    case SHARES:
     {
         enableBackward = !mNavInShares.backwardHandles.isEmpty();
         enableForward = !mNavInShares.forwardHandles.isEmpty();
+        break;
     }
+    case VAULT:
+    {
+        enableBackward = !mNavVault.backwardHandles.isEmpty();
+        enableForward = !mNavVault.forwardHandles.isEmpty();
+        break;
+    }
+    }
+
     ui->bBack->setEnabled(enableBackward);
     ui->bForward->setEnabled(enableForward);
 }

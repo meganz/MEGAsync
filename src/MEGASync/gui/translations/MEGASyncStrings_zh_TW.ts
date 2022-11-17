@@ -842,7 +842,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>New Contact Established</source>
         <translatorcomment>Title of the notification when a contact relationship has been established.</translatorcomment>
-        <translation>新聯絡人已建立</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>New contact with [A] has been established</source>
@@ -972,12 +972,12 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>帳戶已停用</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation>在您處理所需要的付款前，您的帳戶已被停用並且只有唯讀功能。</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -1308,7 +1308,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Login</source>
         <translatorcomment>Button label to start the Login process. (String as short as possible)</translatorcomment>
-        <translation>登入</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Create account</source>
@@ -2310,7 +2310,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>帳戶已停用</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -2320,7 +2320,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message shown to admin business account when a payment has failed. </translatorcomment>
-        <translation>由於付款失敗，您的商業帳戶已被停用。在您付款並且重新啟用您的訂閱之前，您將無法存取儲存在您帳戶中的資料。</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
@@ -2335,7 +2335,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>This month&apos;s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</source>
         <translatorcomment>Informative message shown to the user when a payment has failed for a business account.</translatorcomment>
-        <translation>本月付款失敗。請盡快解決您的付款問題以免您的帳戶被停用。</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -2345,7 +2345,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
         <translatorcomment>Informative message shown when a business account is expired and the user can only browse data and none operation (upload, download, creation..) is allowed.</translatorcomment>
-        <translation>您的帳戶已被[A]停用[/A]。您現在只能瀏覽您的資料。</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
@@ -2481,8 +2481,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>There is an active transfer. Exit the app?
 Transfer will automatically resume when you re-open the app.</source>
         <translatorcomment>Messagebox text to let the user know that there are active transfers when closing the app. The user will be able to exit and pause them, or stop the exit action.</translatorcomment>
-        <translation><numerusform>有正在進行中的傳輸。要退出應用程式嗎？
-當您重新打開應用程式時將自動恢復傳輸。</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Exit app</source>
@@ -2838,7 +2837,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Business account expired</source>
         <translatorcomment>Label to show that the current business account is expired during a SDK operation.</translatorcomment>
-        <translation>您的商業帳戶已被停用</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Foreign target storage quota reached</source>
@@ -2976,7 +2975,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Get link</source>
         <translatorcomment>Context menu action to get transfer link</translatorcomment>
-        <translation>取得連結</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Open in MEGA</source>
@@ -3142,7 +3141,7 @@ Your selected incomplete sync transfers won&apos;t be cancelled.</source>
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a FAT filesystem.</translatorcomment>
-        <translation>您正在同步的本機資料夾是使用FAT檔案系統格式。該檔案系統於管理大型檔案和修改時間時易產生缺陷，可能導致同步發生問題（例如，在夏季日光節約時間調整更改時就很容易出錯），因此強烈建議您只同步那些使用更可靠的檔案系統的資料夾，如NTFS系統（若想瞭解更多資訊，請點[A]此處[/A]）。</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
@@ -3257,7 +3256,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Cloud drive</source>
         <translatorcomment>Node selector button Text. Switch the view to show only the cloud drive nodes (files and folders)</translatorcomment>
-        <translation>雲端硬碟</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Incoming shares</source>
@@ -3755,13 +3754,13 @@ Please delete the folder sync from preferences to cancel them.</source>
 </source>
         <translatorcomment>Changelog for version v4.7.2</translatorcomment>
         <translation>- 加入新Apple silicon的原生支援。
-- 新增當有傳輸正在進行時停止睡眠模式的新功能。
+- 新增功能，當有傳輸正在進行時可停止睡眠模式。
 - 更新第三方程式庫。
 - 改善資料夾傳輸。
 - 修復在Windows、Linux和macOS上偵測到的崩潰問題。
 - 修復翻譯問題。
 - 改進性能。
-- 修正和調整用戶介面。
+- 用戶介面修正和調整。
 </translation>
     </message>
 </context>
@@ -4167,8 +4166,7 @@ Please verify the correct file name was given.</source>
         <source>&apos;%1&apos; is write protected.
 Do you want to delete it anyway?</source>
         <translatorcomment>Warning message when a write protected file is about to be delete</translatorcomment>
-        <translation>“%1” 是防寫保護。
-您是否仍要刪除它？</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5005,8 +5003,8 @@ Do you want to restart MEGAsync now?</source>
         <source>Prevent the computer from going to sleep when transfers or syncs are in progress.
 Computer will enter sleep mode once these are complete.</source>
         <translatorcomment>Sleep/Active mode: Feature description label for keeping the pc awake when there are active transfers</translatorcomment>
-        <translation>在傳輸或同步過程中避免電腦進入睡眠狀態。
-一旦完成，電腦將進入睡眠模式。</translation>
+        <translation>在傳輸或同步過程中防止電腦進入睡眠狀態。
+一旦這些完成，電腦將進入睡眠模式。</translation>
     </message>
     <message>
         <source>Note: Some operating systems won&apos;t allow this.</source>
@@ -5026,7 +5024,7 @@ Computer will enter sleep mode once these are complete.</source>
     <message>
         <source>Your operating system doesn&apos;t allow its sleep setting to be overwritten.</source>
         <translatorcomment>Sleep/Active mode: Error messagebox text when the pc awake mode could not be activated after activating the feature using the checkbox.</translatorcomment>
-        <translation>您作業系統的睡眠設定不允許被覆寫。</translation>
+        <translation>您的作業系統的睡眠設定不允許被覆寫。</translation>
     </message>
 </context>
 <context>
@@ -5865,7 +5863,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your MEGA account is full</source>
         <translatorcomment>Message shown when the MEGA account is full</translatorcomment>
-        <translation>您的MEGA帳戶已滿。</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left for this IP address.

@@ -106,135 +106,20 @@ QStringList uploadMultipleFiles(QString uploadTitle)
 
 bool startAtLogin(bool opt)
 {
-    NSString *appPath = [[NSBundle mainBundle] bundlePath];
-    if (appPath == nil)
+    if (opt)
     {
-        return false;
-    }
-
-    CFURLRef url = (CFURLRef)[NSURL fileURLWithPath:appPath];
-    if (url == nil)
-    {
-        return false;
-    }
-
-    LSSharedFileListRef loginItems = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
-    if (loginItems == nil)
-    {
-        return false;
-    }
-
-    // Remove duplicates
-    UInt32 seed = 0U;
-    NSArray *items = (NSArray *)LSSharedFileListCopySnapshot(loginItems, &seed);
-    if (items)
-    {
-        for (id item in items)
+        //Enable start at login
+        if (!isStartAtLoginActive())
         {
-            LSSharedFileListItemRef itemRef = (LSSharedFileListItemRef)item;
-            if (itemRef)
-            {
-                CFURLRef itemURL = NULL;
-                if (LSSharedFileListItemResolve(itemRef, 0, (CFURLRef*) &itemURL, NULL) == noErr && itemURL
-                        && CFEqual(url, itemURL))
-                {
-                    // Remove duplicates with the same target URL
-                    LSSharedFileListItemRemove(loginItems, itemRef);
-                }
-                else
-                {
-                    CFStringRef itemName = LSSharedFileListItemCopyDisplayName(itemRef);
-                    if (itemName)
-                    {
-                        // Remove duplicates called "MEGAsync"
-                        if ([(NSString *)itemName isEqualToString:@"MEGAsync"])
-                        {
-                            LSSharedFileListItemRemove(loginItems, itemRef);
-                        }
-                        CFRelease(itemName);
-                    }
-                }
-
-                if (itemURL)
-                {
-                    CFRelease(itemURL);
-                }
-            }
+            addLoginItem();
         }
-        CFRelease(items);
-    }
-
-    bool result = false;
-    if (!opt)
-    {
-        //Disable start at login
-        result = true;
     }
     else
     {
-        //Enable start at login
-        //Insert an item to the login list.
-        LSSharedFileListItemRef item = LSSharedFileListInsertItemURL(loginItems, kLSSharedFileListItemLast,
-                                                                     NULL, NULL, url, NULL, NULL);
-        if (item)
-        {
-            CFRelease(item);
-            result = true;
-        }
-    }
-    CFRelease(loginItems);
-    return result;
-}
-
-bool isStartAtLoginActive()
-{
-    NSString *appPath = [[NSBundle mainBundle] bundlePath];
-    if (appPath == nil)
-    {
-        return false;
+        removeLoginItem();
     }
 
-    // This will get the path for the application
-    NSURL *url = [NSURL fileURLWithPath:appPath];
-    if (url == nil)
-    {
-        return false;
-    }
-
-    LSSharedFileListRef loginItems = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
-    if (loginItems == nil)
-    {
-        return false;
-    }
-
-    UInt32 seed = 0U;
-    Boolean foundIt = false;
-    UInt32 resolutionFlags = kLSSharedFileListNoUserInteraction | kLSSharedFileListDoNotMountVolumes;
-    NSArray *currentLoginItems = (NSArray *)LSSharedFileListCopySnapshot(loginItems, &seed);
-    if (currentLoginItems)
-    {
-        for (id itemObject in currentLoginItems)
-        {
-            LSSharedFileListItemRef item = (LSSharedFileListItemRef)itemObject;
-            if (item)
-            {
-                CFURLRef itemURL = NULL;
-                if (LSSharedFileListItemResolve(item, resolutionFlags, &itemURL, NULL) == noErr && itemURL)
-                {
-                    foundIt = CFEqual(itemURL, url);
-                    CFRelease(itemURL);
-                    if (foundIt)
-                    {
-                        break;
-                    }
-                }
-            }
-        }
-        CFRelease(currentLoginItems);
-    }
-
-    CFRelease(loginItems);
-    return (BOOL)foundIt;
+    return true;
 }
 
 void addPathToPlaces(QString path, QString pathName)
@@ -525,7 +410,7 @@ bool registerUpdateDaemon()
         return false;
     }
 
-    return p.exitCode();
+    return p.exitCode() ? false : true;
 }
 
 // Check if it's needed to start the local HTTP server
@@ -702,3 +587,92 @@ QString appBundlePath()
     return fromNSString(appPath);
 }
 
+
+bool isStartAtLoginActive()
+{
+    NSString *appPath = [[NSBundle mainBundle] bundlePath];
+    CFURLRef url = (__bridge CFURLRef)[NSURL fileURLWithPath:appPath];
+
+    LSSharedFileListRef loginItems = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
+    if (loginItems)
+    {
+        // Look for app login item
+        UInt32 seed = 0U;
+        NSArray *items = (NSArray *)CFBridgingRelease(LSSharedFileListCopySnapshot(loginItems, &seed));
+        if (items)
+        {
+            for (id item in items)
+            {
+                LSSharedFileListItemRef itemRef = (__bridge LSSharedFileListItemRef)item;
+                if (itemRef)
+                {
+                    // Resolve the item with URL
+                    if (LSSharedFileListItemResolve(itemRef, 0, (CFURLRef *)&url, NULL) == noErr)
+                    {
+                        NSString *urlPath = [(__bridge NSURL *)url path];
+                        if ([urlPath compare:appPath] == NSOrderedSame)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    return false;
+}
+
+void addLoginItem()
+{
+    NSString *appPath = [[NSBundle mainBundle] bundlePath];
+
+    // This will get the path for the application
+    // For example, /Applications/MEGAsync.app
+    CFURLRef url = (__bridge CFURLRef)[NSURL fileURLWithPath:appPath];
+
+    // Create a reference to the shared file list.
+    // Adding it to the current user only (kLSSharedFileListSessionLoginItems)
+    LSSharedFileListRef loginItems = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
+    if (loginItems)
+    {
+        // Insert an item to the login item list.
+        LSSharedFileListItemRef item = LSSharedFileListInsertItemURL(loginItems, kLSSharedFileListItemLast, NULL, NULL, url, NULL, NULL);
+        if (item)
+        {
+            CFRelease(item);
+        }
+
+        CFRelease(loginItems);
+    }    
+}
+
+void removeLoginItem()
+{
+    NSString *appPath = [[NSBundle mainBundle] bundlePath];
+    CFURLRef url = (__bridge CFURLRef)[NSURL fileURLWithPath:appPath];
+
+    // Create a reference to the shared file list.
+    LSSharedFileListRef loginItems = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
+    if (loginItems)
+    {
+        UInt32 seedValue = 0U;
+        NSArray  *items = (NSArray *)CFBridgingRelease(LSSharedFileListCopySnapshot(loginItems, &seedValue));
+        for (id item in items)
+        {
+            LSSharedFileListItemRef itemRef = (__bridge LSSharedFileListItemRef)item;
+            if (itemRef)
+            {
+                if (LSSharedFileListItemResolve(itemRef, 0, (CFURLRef *)&url, NULL) == noErr)
+                {
+                    NSString *urlPath = [(__bridge NSURL *)url path];
+                    if ([urlPath compare:appPath] == NSOrderedSame)
+                    {
+                        // Remove an item to the login item list.
+                        LSSharedFileListItemRemove(loginItems, itemRef);
+                    }
+                }
+            }
+        }
+    }
+}

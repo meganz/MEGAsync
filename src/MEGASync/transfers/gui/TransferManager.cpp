@@ -925,7 +925,7 @@ void TransferManager::on_tSeePlans_clicked()
 {
     QString url = QString::fromUtf8("mega://#pro");
     Utilities::getPROurlWithParameters(url);
-    QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
+    Utilities::openUrl(QUrl(url));
 }
 
 void TransferManager::on_bPause_toggled()

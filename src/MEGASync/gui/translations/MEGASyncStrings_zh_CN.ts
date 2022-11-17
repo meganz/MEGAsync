@@ -842,7 +842,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>New Contact Established</source>
         <translatorcomment>Title of the notification when a contact relationship has been established.</translatorcomment>
-        <translation>新联系人已建立</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>New contact with [A] has been established</source>
@@ -1308,7 +1308,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Login</source>
         <translatorcomment>Button label to start the Login process. (String as short as possible)</translatorcomment>
-        <translation>登录</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Create account</source>
@@ -2481,8 +2481,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>There is an active transfer. Exit the app?
 Transfer will automatically resume when you re-open the app.</source>
         <translatorcomment>Messagebox text to let the user know that there are active transfers when closing the app. The user will be able to exit and pause them, or stop the exit action.</translatorcomment>
-        <translation><numerusform>当前有正在进行中的传输。是否退出应用程序？
-当您重新打开应用程序时，传输将自动恢复。</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Exit app</source>
@@ -2976,7 +2975,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Get link</source>
         <translatorcomment>Context menu action to get transfer link</translatorcomment>
-        <translation>获取链接</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Open in MEGA</source>
@@ -3142,7 +3141,7 @@ Your selected incomplete sync transfers won&apos;t be cancelled.</source>
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a FAT filesystem.</translatorcomment>
-        <translation>您正在同步FAT文件系统格式的本地文件夹。该文件系统在管理大文件和修改时间方面存在问题（例如，夏令时更改），因此强烈建议您仅同步更可靠的文件系统格式的文件夹，如NTFS （点击[A]这里[/A]了解更多信息）。</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
@@ -3257,7 +3256,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Cloud drive</source>
         <translatorcomment>Node selector button Text. Switch the view to show only the cloud drive nodes (files and folders)</translatorcomment>
-        <translation>云盘</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Incoming shares</source>
@@ -3754,7 +3753,14 @@ Please delete the folder sync from preferences to cancel them.</source>
 - Fixed and adjusted UI.
 </source>
         <translatorcomment>Changelog for version v4.7.2</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- 添加了新的Apple silicon原生支持。
+- 添加新功能，当有传输正在进行时可停止睡眠模式。
+- 更新了第三方程式库。
+- 改进文件夹传输。
+- 修复在Windows、Linux和macOS上检测到的崩溃问题。
+- 修复翻译问题。
+- 改进的性能。
+- 界面修复和调整。</translation>
     </message>
 </context>
 <context>
@@ -4159,8 +4165,7 @@ Please verify the correct file name was given.</source>
         <source>&apos;%1&apos; is write protected.
 Do you want to delete it anyway?</source>
         <translatorcomment>Warning message when a write protected file is about to be delete</translatorcomment>
-        <translation>“%1”已被写保护。
-您仍然要删除它吗？</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4321,17 +4326,17 @@ Do you want to delete it anyway?</source>
     <message>
         <source>found %1, %2</source>
         <translatorcomment>Label used to display current status of scanning step. %1 is the string with number of folders found so far, %2 is the string with number of files found so far.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>找到%1，%2</translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Part of the string used to display number of folders in scanning step. %1 is the number of folders found so far.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%n个文件夹</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Part of the string used to display number of files in scanning step. %1 is the number of files found so far.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%n个文件</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4991,33 +4996,34 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Sleep settings</source>
         <translatorcomment>Sleep/Active mode: Settings dialog groupbox title for keeping the pc awake when there are active transfers (WIndows and Linux)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>睡眠模式</translation>
     </message>
     <message>
         <source>Prevent the computer from going to sleep when transfers or syncs are in progress.
 Computer will enter sleep mode once these are complete.</source>
         <translatorcomment>Sleep/Active mode: Feature description label for keeping the pc awake when there are active transfers</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>在传输或同步过程中防止计算机进入睡眠状态。
+一旦这些完成，计算机将进入睡眠模式。</translation>
     </message>
     <message>
         <source>Note: Some operating systems won&apos;t allow this.</source>
         <translatorcomment>Sleep/Active mode: Warning message below the description label, as not all the computers can activate the feature to keep it awake if there are transfers active </translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>注意：某些操作系统不允许这样做。</translation>
     </message>
     <message>
         <source>Sleep mode:</source>
         <translatorcomment>Sleep/Active mode: Settings dialog groupbox title for keeping the pc awake when there are active transfers (macOS)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>睡眠模式：</translation>
     </message>
     <message>
         <source>Sleep mode can&apos;t be setup</source>
         <translatorcomment>Sleep/Active mode: Error messagebox title when the pc awake mode could not be activated after activating the feature using the checkbox.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>无法设置睡眠模式</translation>
     </message>
     <message>
         <source>Your operating system doesn&apos;t allow its sleep setting to be overwritten.</source>
         <translatorcomment>Sleep/Active mode: Error messagebox text when the pc awake mode could not be activated after activating the feature using the checkbox.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>您的操作系统的睡眠设置不允许被重写。</translation>
     </message>
 </context>
 <context>
@@ -5856,7 +5862,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your MEGA account is full</source>
         <translatorcomment>Message shown when the MEGA account is full</translatorcomment>
-        <translation>您的MEGA帐户空间已满。</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left for this IP address.

@@ -17,8 +17,6 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/PasswordLineEdit.cpp \
     $$PWD/SetupWizard.cpp \
     $$PWD/NodeSelector.cpp \
-    $$PWD/FolderBinder.cpp \
-    $$PWD/BindFolderDialog.cpp \
     $$PWD/UploadToMegaDialog.cpp \
     $$PWD/PasteMegaLinksDialog.cpp \
     $$PWD/ImportMegaLinksDialog.cpp \
@@ -48,7 +46,6 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/UpgradeOverStorage.cpp \
     $$PWD/Login2FA.cpp \
     $$PWD/QRWidget.cpp \
-    $$PWD/QSyncItemWidget.cpp \
     $$PWD/CircularUsageProgressBar.cpp \
     $$PWD/HighDpiResize.cpp \
     $$PWD/AlertItem.cpp \
@@ -58,8 +55,6 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/FilterAlertWidget.cpp \
     $$PWD/AlertFilterType.cpp \
     $$PWD/BugReportDialog.cpp \
-    $$PWD/UserAttributesRequests/FullName.cpp \
-    $$PWD/UserAttributesRequests/Avatar.cpp \
     $$PWD/VerifyLockMessage.cpp \
     $$PWD/MegaInfoMessage.cpp \
     $$PWD/WaitingSpinnerWidget.cpp \
@@ -91,8 +86,6 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/PasswordLineEdit.h \
     $$PWD/SetupWizard.h \
     $$PWD/NodeSelector.h \
-    $$PWD/FolderBinder.h \
-    $$PWD/BindFolderDialog.h \
     $$PWD/UploadToMegaDialog.h \
     $$PWD/PasteMegaLinksDialog.h \
     $$PWD/ImportMegaLinksDialog.h \
@@ -122,7 +115,6 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/ChangePassword.h \
     $$PWD/Login2FA.h \
     $$PWD/QRWidget.h \
-    $$PWD/QSyncItemWidget.h \
     $$PWD/CircularUsageProgressBar.h \
     $$PWD/HighDpiResize.h \
     $$PWD/AlertItem.h \
@@ -132,8 +124,6 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/FilterAlertWidget.h \
     $$PWD/AlertFilterType.h \
     $$PWD/BugReportDialog.h \
-    $$PWD/UserAttributesRequests/FullName.h \
-    $$PWD/UserAttributesRequests/Avatar.h \
     $$PWD/VerifyLockMessage.h \
     $$PWD/ViewLoadingScene.h \
     $$PWD/MegaInfoMessage.h \
@@ -158,8 +148,6 @@ win32 {
     INCLUDEPATH += $$PWD/win
     FORMS    += $$PWD/win/InfoDialog.ui \
                 $$PWD/win/NodeSelector.ui \
-                $$PWD/win/FolderBinder.ui \
-                $$PWD/win/BindFolderDialog.ui \
                 $$PWD/win/UploadToMegaDialog.ui \
                 $$PWD/win/PasteMegaLinksDialog.ui \
                 $$PWD/win/ImportMegaLinksDialog.ui \
@@ -182,7 +170,6 @@ win32 {
                 $$PWD/win/UpgradeOverStorage.ui \
                 $$PWD/win/ChangePassword.ui \
                 $$PWD/win/Login2FA.ui \
-                $$PWD/win/QSyncItemWidget.ui \
                 $$PWD/win/AlertItem.ui \
                 $$PWD/win/FilterAlertWidget.ui \
                 $$PWD/win/AlertFilterType.ui \
@@ -204,8 +191,6 @@ macx {
     INCLUDEPATH += $$PWD/macx
     FORMS    += $$PWD/macx/InfoDialog.ui \
                 $$PWD/macx/NodeSelector.ui \
-                $$PWD/macx/FolderBinder.ui \
-                $$PWD/macx/BindFolderDialog.ui \
                 $$PWD/macx/UploadToMegaDialog.ui \
                 $$PWD/macx/PasteMegaLinksDialog.ui \
                 $$PWD/macx/ImportMegaLinksDialog.ui \
@@ -230,7 +215,6 @@ macx {
                 $$PWD/macx/UpgradeOverStorage.ui \
                 $$PWD/macx/ChangePassword.ui \
                 $$PWD/macx/Login2FA.ui \
-                $$PWD/macx/QSyncItemWidget.ui \
                 $$PWD/macx/AlertItem.ui \
                 $$PWD/macx/FilterAlertWidget.ui \
                 $$PWD/macx/AlertFilterType.ui \
@@ -275,8 +259,6 @@ unix:!macx {
     INCLUDEPATH += $$PWD/linux
     FORMS    += $$PWD/linux/InfoDialog.ui \
                 $$PWD/linux/NodeSelector.ui \
-                $$PWD/linux/FolderBinder.ui \
-                $$PWD/linux/BindFolderDialog.ui \
                 $$PWD/linux/UploadToMegaDialog.ui \
                 $$PWD/linux/PasteMegaLinksDialog.ui \
                 $$PWD/linux/ImportMegaLinksDialog.ui \
@@ -301,7 +283,6 @@ unix:!macx {
                 $$PWD/linux/UpgradeOverStorage.ui \
                 $$PWD/linux/ChangePassword.ui \
                 $$PWD/linux/Login2FA.ui \
-                $$PWD/linux/QSyncItemWidget.ui \
                 $$PWD/linux/AlertItem.ui \
                 $$PWD/linux/FilterAlertWidget.ui \
                 $$PWD/linux/AlertFilterType.ui \
