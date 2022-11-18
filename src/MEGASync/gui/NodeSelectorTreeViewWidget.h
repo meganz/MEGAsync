@@ -77,6 +77,7 @@ protected:
 private slots:
     void onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
     void onDeleteClicked();
+    void onRenameClicked();
     void onGenMEGALinkClicked();
     void onItemDoubleClick(const QModelIndex &index);
     void onGoForwardClicked();

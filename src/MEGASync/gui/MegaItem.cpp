@@ -340,6 +340,11 @@ int MegaItem::row()
     return 0;
 }
 
+void MegaItem::updateNode(std::shared_ptr<mega::MegaNode> node)
+{
+    mNode = node;
+}
+
 void MegaItem::calculateSyncStatus(const QStringList &folders)
 {
     auto syncedFolders = SyncInfo::instance()->getMegaFolderHandles(SyncInfo::AllHandledSyncTypes);

@@ -8,6 +8,8 @@
 #include "MegaItemModel.h"
 #include "mega/utils.h"
 
+#include "NodeNameSetterDialog/RenameNodeDialog.h"
+
 const char* NodeSelectorTreeViewWidget::IN_SHARES = "Incoming shares";
 const char* NodeSelectorTreeViewWidget::CLD_DRIVE = "Cloud drive";
 const char* NodeSelectorTreeViewWidget::BACKUPS = "Backups";
@@ -202,6 +204,7 @@ void NodeSelectorTreeViewWidget::onExpandReady()
 
         connect(ui->tMegaFolders->selectionModel(), &QItemSelectionModel::selectionChanged, this, &NodeSelectorTreeViewWidget::onSelectionChanged);
         connect(ui->tMegaFolders, &MegaItemTreeView::removeNodeClicked, this, &NodeSelectorTreeViewWidget::onDeleteClicked);
+        connect(ui->tMegaFolders, &MegaItemTreeView::renameNodeClicked, this, &NodeSelectorTreeViewWidget::onRenameClicked);
         connect(ui->tMegaFolders, &MegaItemTreeView::getMegaLinkClicked, this, &NodeSelectorTreeViewWidget::onGenMEGALinkClicked);
         connect(ui->tMegaFolders, &QTreeView::doubleClicked, this, &NodeSelectorTreeViewWidget::onItemDoubleClick);
         connect(ui->bForward, &QPushButton::clicked, this, &NodeSelectorTreeViewWidget::onGoForwardClicked);
@@ -446,6 +449,37 @@ void NodeSelectorTreeViewWidget::checkOkButton(const QModelIndexList &selected)
     ui->bOk->setEnabled(result);
 }
 
+void NodeSelectorTreeViewWidget::onRenameClicked()
+{
+    auto node = std::unique_ptr<MegaNode>(mMegaApi->getNodeByHandle(getSelectedNodeHandle()));
+    int access = mMegaApi->getAccess(node.get());
+    if (!node || access < MegaShare::ACCESS_FULL)
+    {
+        return;
+    }
+
+    QString newName;
+    bool result(QDialog::Rejected);
+
+    RenameRemoteNodeDialog dialog(std::move(node), nullptr);
+    result = dialog.show();
+    newName = dialog.getName();
+
+    if(result == QDialog::Accepted)
+    {
+        auto selectedIndex = getSelectedIndex();
+        if(selectedIndex.isValid())
+        {
+            auto sourceIndex = mProxyModel->mapToSource(selectedIndex);
+            MegaItem *item = static_cast<MegaItem*>(sourceIndex.internalPointer());
+            if(item)
+            {
+                auto updatedNode = std::shared_ptr<MegaNode>(mMegaApi->getNodeByHandle(getSelectedNodeHandle()));
+                item->updateNode(updatedNode);
+            }
+        }
+    }
+}
 
 void NodeSelectorTreeViewWidget::onDeleteClicked()
 {

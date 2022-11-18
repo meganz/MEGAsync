@@ -52,7 +52,6 @@ public:
     int getSelectMode(){ return mSelectMode;}
     void closeEvent(QCloseEvent* event) override;
 
-
 protected:
     void changeEvent(QEvent * event) override;
     void showEvent(QShowEvent* event) override;

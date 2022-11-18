@@ -36,10 +36,12 @@ protected:
 
 signals:
     void removeNodeClicked();
+    void renameNodeClicked();
     void getMegaLinkClicked();
 
 private slots:
     void removeNode();
+    void renameNode();
     void getMegaLink();
     void onNavigateReady(const QModelIndex& index);
 

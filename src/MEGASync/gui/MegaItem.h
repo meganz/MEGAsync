@@ -58,6 +58,7 @@ public:
     void setChatFilesFolder();
     void setAsVaultNode();
     int row();
+    void updateNode(std::shared_ptr<mega::MegaNode> node);
 
     bool requestingChildren() const;
     void setRequestingChildren(bool newRequestingChildren);

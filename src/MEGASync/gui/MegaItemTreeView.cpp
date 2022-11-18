@@ -148,6 +148,11 @@ void MegaItemTreeView::keyPressEvent(QKeyEvent *event)
 
     if(!bannedFromRootKeyList.contains(event->key()) || !selectedRows.contains(rootIndex))
     {
+        if(event->key() == Qt::Key_F2)
+        {
+            renameNode();
+        }
+
         QTreeView::keyPressEvent(event);
     }
 }
@@ -179,6 +184,7 @@ void MegaItemTreeView::contextMenuEvent(QContextMenuEvent *event)
             if (access >= MegaShare::ACCESS_FULL && proxyModel->canBeDeleted())
             {
                 customMenu.addAction(tr("Delete"), this, SLOT(removeNode()));
+                customMenu.addAction(tr("Rename"), this, SLOT(renameNode()));
             }
         }
 
@@ -189,6 +195,11 @@ void MegaItemTreeView::contextMenuEvent(QContextMenuEvent *event)
 void MegaItemTreeView::removeNode()
 {
     emit removeNodeClicked();
+}
+
+void MegaItemTreeView::renameNode()
+{
+    emit renameNodeClicked();
 }
 
 void MegaItemTreeView::getMegaLink()

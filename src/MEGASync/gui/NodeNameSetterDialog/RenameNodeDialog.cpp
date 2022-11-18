@@ -70,7 +70,7 @@ void RenameRemoteNodeDialog::onDialogAccepted()
     if (mNodeToRename)
     {
         std::shared_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getParentNode(mNodeToRename.get()));
-        if(!checkAlreadyExistingNode(mNodeName, parentNode))
+        if(!checkAlreadyExistingNode(getName(), parentNode))
         {
             MegaSyncApp->getMegaApi()->renameNode(mNodeToRename.get(), getName().toStdString().c_str(), mDelegateListener.get());
         }

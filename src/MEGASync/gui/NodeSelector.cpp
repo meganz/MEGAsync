@@ -9,7 +9,6 @@
 #include "MegaItemModel.h"
 #include <NodeSelectorTreeViewWidget.h>
 
-
 #include <QMessageBox>
 #include <QPointer>
 #include <QShortcut>
