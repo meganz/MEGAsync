@@ -9,11 +9,13 @@
 using namespace mega;
 
 const char* UploadToMegaDialog::NODE_PATH_PROPERTY = "node_path";
-const QString UploadToMegaDialog::DEFAULT_PATH = QLatin1String("/MEGAsync Uploads");
+const QString UploadToMegaDialog::DEFAULT_FOLDER_NAME = QLatin1String("MEGAsync Uploads");
+const QString UploadToMegaDialog::DEFAULT_PATH = QLatin1String("/") + DEFAULT_FOLDER_NAME;
 
 UploadToMegaDialog::UploadToMegaDialog(MegaApi *megaApi, QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::UploadToMegaDialog)
+    ui(new Ui::UploadToMegaDialog),
+    mNodeSelectorSelected(false)
 {
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
@@ -66,25 +68,74 @@ void UploadToMegaDialog::onRequestFinish(MegaApi *, MegaRequest *request, MegaEr
 {
     ui->bChange->setEnabled(true);
     ui->bOK->setEnabled(true);
-    MegaNode *node = megaApi->getNodeByHandle(request->getNodeHandle());
+    std::unique_ptr<MegaNode> node(megaApi->getNodeByHandle(request->getNodeHandle()));
     if (e->getErrorCode() != MegaError::API_OK || !node)
     {
         MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromAscii("Request error: %1")
                      .arg(QCoreApplication::translate("MegaError", e->getErrorString())).toUtf8().constData());
         this->reject();
-        delete node;
         return;
     }
 
     selectedHandle = node->getHandle();
-    delete node;
-    accept();
+
+    //Folder create before opening NodeSelector
+    if(mNodeSelectorSelected)
+    {
+        mNodeSelectorSelected = false;
+        showNodeSelector(std::move(node));
+    }
+    //Folder created when user clicks on Ok and the folder does not exist
+    else
+    {
+        accept();
+    }
 }
 
 void UploadToMegaDialog::on_bChange_clicked()
 {
+    mNodeSelectorSelected = true;
+    auto defaultNode = getUploadFolder();
+    if(defaultNode)
+    {
+       showNodeSelector(std::move(defaultNode));
+    }
+}
+
+void UploadToMegaDialog::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::LanguageChange)
+    {
+        ui->retranslateUi(this);
+    }
+    QDialog::changeEvent(event);
+}
+
+std::unique_ptr<MegaNode> UploadToMegaDialog::getUploadFolder()
+{
+    std::unique_ptr<MegaNode> node(megaApi->getNodeByPath(ui->eFolderPath->property(NODE_PATH_PROPERTY).toString().toUtf8().constData()));
+    if(!node && ui->eFolderPath->property(NODE_PATH_PROPERTY).toString().compare(DEFAULT_PATH) == 0)
+    {
+        auto rootNode = ((MegaApplication*)qApp)->getRootNode();
+        if (rootNode)
+        {
+            megaApi->createFolder(DEFAULT_FOLDER_NAME.toUtf8().constData(), rootNode.get(), delegateListener);
+            //Disable the UI for the moment
+            ui->bChange->setEnabled(false);
+            ui->bOK->setEnabled(false);
+        }
+
+        return nullptr;
+    }
+    else
+    {
+        return std::move(node);
+    }
+}
+
+void UploadToMegaDialog::showNodeSelector(std::unique_ptr<mega::MegaNode> defaultNode)
+{
     std::unique_ptr<NodeSelector> nodeSelector(new NodeSelector(NodeSelector::UPLOAD_SELECT, this));
-    std::unique_ptr<MegaNode> defaultNode (megaApi->getNodeByPath(ui->eFolderPath->property(NODE_PATH_PROPERTY).toString().toUtf8().constData()));
     if (defaultNode)
     {
         nodeSelector->setSelectedNodeHandle(defaultNode->getHandle());
@@ -106,42 +157,18 @@ void UploadToMegaDialog::on_bChange_clicked()
     }
 }
 
-void UploadToMegaDialog::changeEvent(QEvent *event)
-{
-    if (event->type() == QEvent::LanguageChange)
-    {
-        ui->retranslateUi(this);
-    }
-    QDialog::changeEvent(event);
-}
-
 void UploadToMegaDialog::on_bOK_clicked()
 {
-    MegaNode *node = megaApi->getNodeByPath(ui->eFolderPath->property(NODE_PATH_PROPERTY).toString().toUtf8().constData());
-    if (node && node->isFolder())
+    std::unique_ptr<MegaNode> node = getUploadFolder();
+    if (!node || !node->isFolder())
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Folder not found: %1").arg(ui->eFolderPath->property(NODE_PATH_PROPERTY).toString()).toUtf8().constData());
+        ui->eFolderPath->setText(DEFAULT_PATH);
+        ui->eFolderPath->setProperty(NODE_PATH_PROPERTY, DEFAULT_PATH);
+    }
+    else
     {
         selectedHandle = node->getHandle();
-        delete node;
         accept();
-        return;
     }
-    delete node;
-    if (!ui->eFolderPath->property(NODE_PATH_PROPERTY).toString().compare(DEFAULT_PATH))
-    {
-        ui->bChange->setEnabled(false);
-        ui->bOK->setEnabled(false);
-        auto rootNode = ((MegaApplication*)qApp)->getRootNode();
-        if (!rootNode)
-        {
-            return;
-        }
-
-        megaApi->createFolder(QString::fromUtf8("MEGAsync Uploads").toUtf8().constData(), rootNode.get(), delegateListener);
-        return;
-    }
-
-    MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Folder not found: %1").arg(ui->eFolderPath->property(NODE_PATH_PROPERTY).toString()).toUtf8().constData());
-    ui->eFolderPath->setText(DEFAULT_PATH);
-    ui->eFolderPath->setProperty(NODE_PATH_PROPERTY, DEFAULT_PATH);
-    return;
 }

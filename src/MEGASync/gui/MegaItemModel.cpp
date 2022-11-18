@@ -142,10 +142,9 @@ void NodeRequester::createBackupRootItems(mega::MegaHandle backupsHandle)
     }
 }
 
-void NodeRequester::onAddNodeRequested(std::shared_ptr<MegaNode> newNode, MegaItem *parentItem)
+void NodeRequester::onAddNodeRequested(std::shared_ptr<MegaNode> newNode, const QModelIndex& parentIndex, MegaItem *parentItem)
 {
     //Too fast to protect it agains crashes?
-    auto parentIndex = parentItem->property(INDEX_PROPERTY).toModelIndex();
     lockMutex(true);
     auto childItem = parentItem->addNode(newNode);
     lockMutex(false);
@@ -511,11 +510,10 @@ void MegaItemModel::addNode(std::shared_ptr<MegaNode> node, const QModelIndex &p
     clearIndexesNodeInfo();
 
     MegaItem *parentItem = static_cast<MegaItem*>(parent.internalPointer());
-    parentItem->setProperty(INDEX_PROPERTY, parent);
     int numchildren = parentItem->getNumChildren();
 
     beginInsertRows(parent, numchildren, numchildren);
-    emit requestAddNode(node, parentItem);
+    emit requestAddNode(node, parent, parentItem);
 }
 
 void MegaItemModel::onNodeAdded(MegaItem* childItem)
@@ -827,10 +825,17 @@ void MegaItemModel::fetchItemChildren(const QModelIndex& parent)
     if(!item->childrenAreInit() && !item->requestingChildren())
     {
         int itemNumChildren = item->getNumChildren();
-        blockSignals(true);
-        beginInsertRows(parent, 0, itemNumChildren-1);
-        blockSignals(false);
-        emit requestChildNodes(item, parent, mShowFiles);
+        if(itemNumChildren > 0)
+        {
+            blockSignals(true);
+            beginInsertRows(parent, 0, itemNumChildren-1);
+            blockSignals(false);
+            emit requestChildNodes(item, parent, mShowFiles);
+        }
+        else
+        {
+            emit blockUi(false);
+        }
     }
     else
     {

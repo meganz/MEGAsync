@@ -60,6 +60,7 @@ private slots:
 signals:
     void okBtnClicked();
     void cancelBtnClicked();
+    void onViewReady(bool isEmpty);
 
 protected:
     void showEvent(QShowEvent* ) override;

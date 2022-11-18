@@ -17,6 +17,7 @@ MyBackupsHandle::MyBackupsHandle(const QString &userEmail)
    mCreationRequested(false),
    mCreateBackupsListener(nullptr)
 {
+    qRegisterMetaType<mega::MegaHandle>("mega::MegaHandle");
 }
 
 std::shared_ptr<MyBackupsHandle> MyBackupsHandle::requestMyBackupsHandle()
@@ -52,7 +53,6 @@ void MyBackupsHandle::onRequestFinish(mega::MegaApi*, mega::MegaRequest* incomin
 
     onMyBackupsFolderReady(newValue);
 }
-
 
 void MyBackupsHandle::onMyBackupsFolderReady(mega::MegaHandle h)
 {

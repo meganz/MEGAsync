@@ -246,7 +246,7 @@ QString SyncController::getIsLocalFolderAllowedForSyncMsg(const QString& path, c
         }
         else
         {
-            message = tr("You can’t sync “name of folder” as it’s the root folder. "
+            message = tr("You can’t sync “%1” as it’s the root folder. "
                          "The root folder is either; the top-level folder on your "
                          "device or computer that holds all your folders and files"
                          " or the folder where the system or program is installed."
@@ -334,13 +334,13 @@ SyncController::Syncability SyncController::isRemoteFolderSyncable(std::shared_p
         {
         case SyncError::SHARE_NON_FULL_ACCESS:
         {
-            message = tr("You don't have enough permissions for this remote folder");
+            message = tr("You don't have enough permissions for this remote folder.");
             break;
         }
         case SyncError::REMOTE_NODE_INSIDE_RUBBISH:
         case SyncError::INVALID_REMOTE_TYPE:
         {
-            message = tr("Invalid remote path");
+            message = tr("Invalid remote path.");
             break;
         }
         }
@@ -352,17 +352,17 @@ SyncController::Syncability SyncController::isRemoteFolderSyncable(std::shared_p
         {
         case SyncError::ACTIVE_SYNC_SAME_PATH:
         {
-            message = tr("The selected MEGA folder is already synced");
+            message = tr("The selected MEGA folder is already synced.");
             break;
         }
         case SyncError::ACTIVE_SYNC_BELOW_PATH:
         {
-            message = tr("Folder contents already synced");
+            message = tr("Folder contents already synced.");
             break;
         }
         case SyncError::ACTIVE_SYNC_ABOVE_PATH:
         {
-            message = tr("Folder already synced");
+            message = tr("Folder already synced.");
             break;
         }
         }
@@ -372,7 +372,7 @@ SyncController::Syncability SyncController::isRemoteFolderSyncable(std::shared_p
     case MegaError::API_EARGS:
     default:
     {
-        message = tr("Invalid remote path");
+        message = tr("Invalid remote path.");
         break;
     }
     }

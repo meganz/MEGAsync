@@ -60,7 +60,7 @@ public slots:
     void createIncomingSharesRootItems(std::shared_ptr<mega::MegaNodeList> nodeList);
     void createBackupRootItems(mega::MegaHandle backupsHandle);
 
-    void onAddNodeRequested(std::shared_ptr<mega::MegaNode> newNode, MegaItem* parentItem);
+    void onAddNodeRequested(std::shared_ptr<mega::MegaNode> newNode, const QModelIndex& parentIndex, MegaItem* parentItem);
     void removeItem(MegaItem *item);
     void removeRootItem(MegaItem* item);
     void abort();
@@ -150,7 +150,7 @@ signals:
     void requestChildNodes(MegaItem* parent, const QModelIndex& parentIndex,
                            int nodeType) const;
     void firstLoadFinished(const QModelIndex& parent);
-    void requestAddNode(std::shared_ptr<mega::MegaNode> newNode, MegaItem* parent);
+    void requestAddNode(std::shared_ptr<mega::MegaNode> newNode, const QModelIndex& parentIndex, MegaItem* parent);
     void removeItem(MegaItem* items);
     void removeRootItem(MegaItem* items);
     void deleteWorker();

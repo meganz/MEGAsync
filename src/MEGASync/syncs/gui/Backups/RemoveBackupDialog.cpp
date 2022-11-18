@@ -26,6 +26,7 @@ RemoveBackupDialog::RemoveBackupDialog(std::shared_ptr<SyncSettings> backup, QWi
     mUi->lTarget->setText(QCoreApplication::translate("MegaNodeNames",
                                                       MegaSyncApp->getRootNode()->getName())
                           .append(QLatin1Char('/')));
+    adjustSize();
 }
 
 RemoveBackupDialog::~RemoveBackupDialog()

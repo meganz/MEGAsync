@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>635</width>
-    <height>143</height>
+    <height>153</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -38,7 +38,7 @@ margin-left: 32px;
     <number>25</number>
    </property>
    <property name="bottomMargin">
-    <number>5</number>
+    <number>15</number>
    </property>
    <property name="horizontalSpacing">
     <number>12</number>
@@ -46,7 +46,7 @@ margin-left: 32px;
    <property name="verticalSpacing">
     <number>5</number>
    </property>
-   <item row="2" column="0">
+   <item row="2" column="0" alignment="Qt::AlignRight">
     <widget class="QLabel" name="lLocalFolder">
      <property name="styleSheet">
       <string notr="true">QLabel
@@ -71,7 +71,7 @@ color: #04101E;
 }</string>
      </property>
      <property name="placeholderText">
-      <string>Rename backup folder </string>
+      <string>Rename backup folder</string>
      </property>
     </widget>
    </item>

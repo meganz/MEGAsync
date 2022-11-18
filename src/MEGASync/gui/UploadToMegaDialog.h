@@ -6,6 +6,8 @@
 #include "QTMegaRequestListener.h"
 #include "HighDpiResize.h"
 
+#include <memory>
+
 namespace Ui {
 class UploadToMegaDialog;
 }
@@ -17,6 +19,7 @@ class UploadToMegaDialog : public QDialog, public mega::MegaRequestListener
 public:
 
     static const char* NODE_PATH_PROPERTY;
+    static const QString DEFAULT_FOLDER_NAME;
     static const QString DEFAULT_PATH;
 
     explicit UploadToMegaDialog(mega::MegaApi *megaApi, QWidget *parent = 0);
@@ -35,11 +38,16 @@ protected:
     void changeEvent(QEvent * event);
 
 private:
+    std::unique_ptr<mega::MegaNode> getUploadFolder();
+    void showNodeSelector(std::unique_ptr<mega::MegaNode> node);
+
     Ui::UploadToMegaDialog *ui;
     mega::MegaApi *megaApi;
     mega::MegaHandle selectedHandle;
     mega::QTMegaRequestListener *delegateListener;
     HighDpiResize highDpiResize;
+
+    bool mNodeSelectorSelected;
 };
 
 #endif // UPLOADTOMEGADIALOG_H

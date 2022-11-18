@@ -48,11 +48,10 @@ using namespace mega;
 #ifdef Q_OS_MACOS
 //Const values used for macOS Settings dialog resize animation
 constexpr auto SETTING_ANIMATION_PAGE_TIMEOUT{150};//ms
-constexpr auto SETTING_ANIMATION_GENERAL_TAB_HEIGHT{657};
+constexpr auto SETTING_ANIMATION_GENERAL_TAB_HEIGHT{646};
 constexpr auto SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT{295};//px height
-constexpr auto SETTING_ANIMATION_SYNCS_TAB_HEIGHT{529};
-// FIXME: Re-evaluate size for Backup tab
-constexpr auto SETTING_ANIMATION_BACKUP_TAB_HEIGHT{529};
+constexpr auto SETTING_ANIMATION_SYNCS_TAB_HEIGHT{539};
+constexpr auto SETTING_ANIMATION_BACKUP_TAB_HEIGHT{534};
 constexpr auto SETTING_ANIMATION_SECURITY_TAB_HEIGHT{372};
 constexpr auto SETTING_ANIMATION_FOLDERS_TAB_HEIGHT{513};
 constexpr auto SETTING_ANIMATION_NETWORK_TAB_HEIGHT{205};
@@ -572,7 +571,7 @@ void SettingsDialog::loadSettings()
 
     //Update name in case it changes
     auto FullNameRequest = UserAttributes::FullName::requestFullName();
-    connect(FullNameRequest.get(), &UserAttributes::FullName::attributeReady, this, [this](const QString& fullName){
+    connect(FullNameRequest.get(), &UserAttributes::FullName::fullNameReady, this, [this](const QString& fullName){
         mUi->lName->setText(fullName);
     });
 
@@ -1440,14 +1439,14 @@ void SettingsDialog::connectSyncHandlers()
             Text::Decorator dec(&link);
             QString msg = errorMsg;
             dec.process(msg);
-            QMegaMessageBox::critical(nullptr, tr("Error adding sync"), msg, QMessageBox::Ok, QMessageBox::NoButton, QMap<QMessageBox::StandardButton, QString>(), Qt::RichText);
+            QMegaMessageBox::warning(nullptr, tr("Error adding sync"), msg, QMessageBox::Ok, QMessageBox::NoButton, QMap<QMessageBox::StandardButton, QString>(), Qt::RichText);
         }
     });
 
     connect(&mSyncController, &SyncController::syncRemoveError, this, [this](std::shared_ptr<mega::MegaError> err)
     {
         onSavingSyncsCompleted(SAVING_SYNCS_FINISHED);
-        QMegaMessageBox::critical(nullptr, tr("Error removing sync"),
+        QMegaMessageBox::warning(nullptr, tr("Error removing sync"),
                                   tr("Your sync can't be removed. Reason: %1")
                                   .arg(QCoreApplication::translate("MegaError", err->getErrorString())));
 
@@ -1456,7 +1455,7 @@ void SettingsDialog::connectSyncHandlers()
     connect(&mSyncController, &SyncController::syncEnableError, this, [this](std::shared_ptr<SyncSettings> sync)
     {
         onSavingSyncsCompleted(SAVING_SYNCS_FINISHED);
-        QMegaMessageBox::critical(nullptr, tr("Error enabling sync"),
+        QMegaMessageBox::warning(nullptr, tr("Error enabling sync"),
                                   tr("Your sync \"%1\" can't be enabled. Reason: %2")
                                   .arg(sync->name())
                                   .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(sync->getError()))));
@@ -1466,7 +1465,7 @@ void SettingsDialog::connectSyncHandlers()
     connect(&mSyncController, &SyncController::syncDisableError, this, [this](std::shared_ptr<SyncSettings> sync)
     {
         onSavingSyncsCompleted(SAVING_SYNCS_FINISHED);
-        QMegaMessageBox::critical(nullptr, tr("Error disabling sync"),
+        QMegaMessageBox::warning(nullptr, tr("Error disabling sync"),
                                   tr("Your sync \"%1\" can't be disabled. Reason: %2")
                                   .arg(sync->name())
                                   .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(sync->getError()))));
@@ -1724,7 +1723,7 @@ void SettingsDialog::connectBackupHandlers()
     {
         onSavingSyncsCompleted(SyncStateInformation::SAVING_BACKUPS_FINISHED);
         QMegaMessageBox::warning(nullptr, tr("Error disabling backup"),
-                                  tr("Your sync \"%1\" can't be disabled. Reason: %2")
+                                  tr("Your backup \"%1\" can't be disabled. Reason: %2")
                                   .arg(sync->name())
                                   .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(sync->getError()))));
 

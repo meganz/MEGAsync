@@ -48,6 +48,7 @@ bool BackupRenameWidget::isNewNameValid(QStringList& backupNames)
 
     ui->lError->setText(errText);
     ui->lError->setVisible(error);
+    ui->lError->updateGeometry();
 
     return !error;
 }

@@ -50,7 +50,9 @@ NodeSelector::NodeSelector(int selectMode, QWidget *parent) :
                 viewContainer->setSelectionMode(mSelectMode);
                 connect(viewContainer, &NodeSelectorTreeViewWidget::okBtnClicked, this, &NodeSelector::onbOkClicked);
                 connect(viewContainer, &NodeSelectorTreeViewWidget::cancelBtnClicked, this, &NodeSelector::reject);
+                connect(viewContainer, &NodeSelectorTreeViewWidget::onViewReady, this, &NodeSelector::onViewReady);
             }
+
         }
     }
 
@@ -66,21 +68,12 @@ NodeSelector::NodeSelector(int selectMode, QWidget *parent) :
     connect(ui->tabBar, &QTabBar::currentChanged, this, &NodeSelector::onTabSelected);
 #endif
 
-    // Provide quick access shortcuts for the two panes via Ctrl+1,2
-    // Ctrl is auto-magically translated to CMD key by Qt on macOS
-    for (int i = 0; i < 2; ++i)
-    {
-        QShortcut *shortcut = new QShortcut(QKeySequence(QString::fromLatin1("Ctrl+%1").arg(i+1)), this);
-        QObject::connect(shortcut, &QShortcut::activated, this, [=](){ onTabSelected(i); });
-    }
-
     //TODO EKA: WE need to do this at this lvl? only for stream_select mode, switch removed
     //setWindowTitle(tr("Select items"));
     if(mSelectMode == STREAM_SELECT)
     {
         setWindowTitle(tr("Select items"));
     }
-
 }
 
 NodeSelector::~NodeSelector()
@@ -260,6 +253,34 @@ void NodeSelector::onTabSelected(int index)
             break;
         default:
             break;
+    }
+}
+
+void NodeSelector::onViewReady(bool isEmpty)
+{
+    if(sender() == ui->Backups && isEmpty)
+    {
+        hideSelector(VAULT);
+        shortCutConnects(VAULT);
+    }
+    else if(sender() == ui->IncomingShares && isEmpty)
+    {
+        hideSelector(SHARES);
+        shortCutConnects(SHARES);
+    }
+}
+
+void NodeSelector::shortCutConnects(int ignoreThis)
+{
+    // Provide quick access shortcuts for the two panes via Ctrl+1,2
+    // Ctrl is auto-magically translated to CMD key by Qt on macOS
+    for (int i = 0; i <= VAULT; ++i)
+    {
+        if(i != ignoreThis)
+        {
+            QShortcut *shortcut = new QShortcut(QKeySequence(QString::fromLatin1("Ctrl+%1").arg(i+1)), this);
+            QObject::connect(shortcut, &QShortcut::activated, this, [=](){ onTabSelected(i); });
+        }
     }
 }
 

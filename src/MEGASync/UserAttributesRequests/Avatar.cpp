@@ -62,7 +62,7 @@ void Avatar::onRequestFinish(mega::MegaApi*, mega::MegaRequest* incoming_request
             }
             if (mFullName)
             {
-                disconnect(mFullName.get(), &FullName::attributeReady, this, &Avatar::onFullNameAttributeReady);
+                disconnect(mFullName.get(), &FullName::fullNameReady, this, &Avatar::onFullNameAttributeReady);
             }
         }
         else
@@ -77,7 +77,7 @@ void Avatar::onRequestFinish(mega::MegaApi*, mega::MegaRequest* incoming_request
             {
                 mFullName = FullName::requestFullName(getEmail().toUtf8().constData());
             }
-            connect(mFullName.get(), &FullName::attributeReady, this, &Avatar::onFullNameAttributeReady);
+            connect(mFullName.get(), &FullName::fullNameReady, this, &Avatar::onFullNameAttributeReady, Qt::UniqueConnection);
             onFullNameAttributeReady();
         }
 
@@ -100,9 +100,7 @@ AttributeRequest::RequestInfo Avatar::fillRequestInfo()
         MegaSyncApp->getMegaApi()->getUserAvatar(email.isEmpty() ? nullptr : email.toUtf8().constData(),
                                                  avatarPath.toUtf8().constData());
     };
-    QSharedPointer<ParamInfo> avatarParamInfo(new ParamInfo(avatarRequestFunc, QList<int>()
-                                                            << mega::MegaError::API_OK
-                                                            << mega::MegaError::API_ENOENT));
+    QSharedPointer<ParamInfo> avatarParamInfo(new ParamInfo(avatarRequestFunc));
     ParamInfoMap paramInfo({{mega::MegaApi::USER_ATTR_AVATAR, avatarParamInfo}});
     RequestInfo ret(paramInfo, QMap<int, int>({{mega::MegaUser::CHANGE_TYPE_AVATAR,
                                                 mega::MegaApi::USER_ATTR_AVATAR}}));
