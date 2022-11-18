@@ -214,7 +214,7 @@ QPushButton:!checked {
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="NodeSelectorTreeViewWidgetCloudDrive" name="CloudDrive"/>
      <widget class="NodeSelectorTreeViewWidgetIncomingShares" name="IncomingShares"/>

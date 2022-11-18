@@ -355,27 +355,32 @@ void NodeSelector::hideSelector(TabItem item)
 
 }
 
-void NodeSelector::setSelectedNodeHandle(const mega::MegaHandle &handle)
+void NodeSelector::setSelectedNodeHandle(std::shared_ptr<MegaNode> node)
 {
-    auto parent_node = std::unique_ptr<MegaNode>(mMegaApi->getNodeByHandle(handle));
-    while(parent_node && parent_node->getParentHandle() != INVALID_HANDLE)
+    if(!node)
     {
-        parent_node = std::unique_ptr<MegaNode>(mMegaApi->getNodeByHandle(parent_node->getParentHandle()));
+        node = std::shared_ptr<MegaNode>(mMegaApi->getRootNode());
     }
 
-    if(!parent_node)
-    {
-        return;
-    }
-    if(parent_node->isInShare())
-    {
-        onTabSelected(SHARES);
-    }
-    else
-    {
-        onTabSelected(CLOUD_DRIVE);
-    }
 
-    auto tree_view_widget = static_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->currentWidget());
-    tree_view_widget->setSelectedNodeHandle(handle);
+    if(node)
+    {
+        mega::MegaHandle originHandle = node->getHandle();
+        while(node->getParentHandle() != INVALID_HANDLE)
+        {
+            node = std::unique_ptr<MegaNode>(mMegaApi->getNodeByHandle(node->getParentHandle()));
+        }
+
+        if(node->isInShare())
+        {
+            onTabSelected(SHARES);
+        }
+        else
+        {
+            onTabSelected(CLOUD_DRIVE);
+        }
+
+        auto tree_view_widget = static_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->currentWidget());
+        tree_view_widget->setSelectedNodeHandle(originHandle);
+    }
 }

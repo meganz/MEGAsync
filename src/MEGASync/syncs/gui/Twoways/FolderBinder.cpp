@@ -109,12 +109,8 @@ void FolderBinder::on_bLocalFolder_clicked()
 void FolderBinder::on_bMegaFolder_clicked()
 {
     QPointer<NodeSelector> nodeSelector = new NodeSelector(NodeSelector::SYNC_SELECT, this);
-    MegaNode *defaultNode = megaApi->getNodeByPath(ui->eMegaFolder->text().toUtf8().constData());
-    if (defaultNode)
-    {
-        nodeSelector->setSelectedNodeHandle(defaultNode->getHandle());
-        delete defaultNode;
-    }
+    std::shared_ptr<MegaNode> defaultNode(megaApi->getNodeByPath(ui->eMegaFolder->text().toUtf8().constData()));
+    nodeSelector->setSelectedNodeHandle(defaultNode);
 
     int result = nodeSelector->exec();
     if (!nodeSelector || result != QDialog::Accepted)

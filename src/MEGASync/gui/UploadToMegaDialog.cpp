@@ -133,16 +133,8 @@ void UploadToMegaDialog::showNodeSelector()
 {
     std::unique_ptr<NodeSelector> nodeSelector(new NodeSelector(NodeSelector::UPLOAD_SELECT, this));
 
-    std::unique_ptr<MegaNode> defaultNode(megaApi->getNodeByPath(ui->eFolderPath->property(NODE_PATH_PROPERTY).toString().toUtf8().constData()));
-    if (defaultNode)
-    {
-        nodeSelector->setSelectedNodeHandle(defaultNode->getHandle());
-    }
-    else
-    {
-        std::unique_ptr<MegaNode> rootNode(megaApi->getRootNode());
-        nodeSelector->setSelectedNodeHandle(rootNode->getHandle());
-    }
+    std::shared_ptr<MegaNode> defaultNode(megaApi->getNodeByPath(ui->eFolderPath->property(NODE_PATH_PROPERTY).toString().toUtf8().constData()));
+    nodeSelector->setSelectedNodeHandle(defaultNode);
 
     int result = nodeSelector->exec();
     if (nodeSelector && result == QDialog::Accepted)

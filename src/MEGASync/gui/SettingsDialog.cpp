@@ -1991,13 +1991,8 @@ void SettingsDialog::on_bFolders_clicked()
 void SettingsDialog::on_bUploadFolder_clicked()
 {
     QPointer<NodeSelector> nodeSelector = new NodeSelector(NodeSelector::UPLOAD_SELECT, this);
-    MegaNode* defaultNode = mMegaApi->getNodeByPath(mUi->eUploadFolder->text()
-                                                    .toUtf8().constData());
-    if (defaultNode)
-    {
-            nodeSelector->setSelectedNodeHandle(defaultNode->getHandle());
-            delete defaultNode;
-    }
+    std::shared_ptr<mega::MegaNode> defaultNode(mMegaApi->getNodeByPath(mUi->eUploadFolder->text()
+    nodeSelector->setSelectedNodeHandle(defaultNode);
 
     nodeSelector->setDefaultUploadOption(mHasDefaultUploadOption);
     nodeSelector->showDefaultUploadOption();

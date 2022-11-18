@@ -183,8 +183,8 @@ void MegaItemTreeView::contextMenuEvent(QContextMenuEvent *event)
 
             if (access >= MegaShare::ACCESS_FULL && proxyModel->canBeDeleted())
             {
-                customMenu.addAction(tr("Delete"), this, SLOT(removeNode()));
                 customMenu.addAction(tr("Rename"), this, SLOT(renameNode()));
+                customMenu.addAction(tr("Delete"), this, SLOT(removeNode()));
             }
         }
 
