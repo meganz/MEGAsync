@@ -5083,7 +5083,7 @@ margin-right: 32px;</string>
   <customwidget>
    <class>NotificationsSettings</class>
    <extends>QWidget</extends>
-   <header location="global">NotificationsSettings.h</header>
+   <header>NotificationsSettings.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

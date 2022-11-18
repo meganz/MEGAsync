@@ -8,7 +8,7 @@ Unicode true
 
 
 #!define BUILD_UNINSTALLER
-!define BUILD_X64_VERSION
+#!define BUILD_X64_VERSION
 #!define ENABLE_DEBUG_MESSAGES
 
 !macro DEBUG_MSG message
@@ -27,10 +27,10 @@ VIAddVersionKey "LegalCopyright" "MEGA Limited 2022"
 VIAddVersionKey "ProductName" "MEGAsync"
 
 ; Version info
-VIProductVersion "4.7.2.0"
-VIAddVersionKey "FileVersion" "4.7.2.0"
-VIAddVersionKey "ProductVersion" "4.7.2.0"
-!define PRODUCT_VERSION "4.7.2"
+VIProductVersion "4.7.3.0"
+VIAddVersionKey "FileVersion" "4.7.3.0"
+VIAddVersionKey "ProductVersion" "4.7.3.0"
+!define PRODUCT_VERSION "4.7.3"
 
 !define PRODUCT_PUBLISHER "Mega Limited"
 !define PRODUCT_WEB_SITE "http://www.mega.nz"
