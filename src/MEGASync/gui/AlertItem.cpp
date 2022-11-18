@@ -54,7 +54,7 @@ void AlertItem::setAlertData(MegaUserAlert *alert)
 
         if(mFullNameAttributes)
         {
-            connect(mFullNameAttributes.get(), &UserAttributes::FullName::attributeReady, this, &AlertItem::onAttributesReady);
+            connect(mFullNameAttributes.get(), &UserAttributes::FullName::fullNameReady, this, &AlertItem::onAttributesReady);
         }
 
         ui->wAvatarContact->setUserEmail(alert->getEmail());

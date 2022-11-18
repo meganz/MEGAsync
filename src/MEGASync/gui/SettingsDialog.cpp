@@ -41,7 +41,7 @@ using namespace mega;
 #ifdef Q_OS_MACOS
 //Const values used for macOS Settings dialog resize animation
 constexpr auto SETTING_ANIMATION_PAGE_TIMEOUT{150};//ms
-constexpr auto SETTING_ANIMATION_GENERAL_TAB_HEIGHT{657};
+constexpr auto SETTING_ANIMATION_GENERAL_TAB_HEIGHT{677};
 constexpr auto SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT{295};//px height
 constexpr auto SETTING_ANIMATION_SYNCS_TAB_HEIGHT{529};
 constexpr auto SETTING_ANIMATION_FOLDERS_TAB_HEIGHT{525};
@@ -548,7 +548,7 @@ void SettingsDialog::loadSettings()
 
     //Update name in case it changes
     auto FullNameRequest = UserAttributes::FullName::requestFullName(mPreferences->email().toStdString().c_str());
-    connect(FullNameRequest.get(), &UserAttributes::FullName::attributeReady, this, [this](const QString& fullName){
+    connect(FullNameRequest.get(), &UserAttributes::FullName::fullNameReady, this, [this](const QString& fullName){
         mUi->lName->setText(fullName);
     });
 

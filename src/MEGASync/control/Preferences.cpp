@@ -13,11 +13,11 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/4.7.2.0";
-const int Preferences::VERSION_CODE = 4702;
-const int Preferences::BUILD_ID = 1;
+const char Preferences::USER_AGENT[] = "MEGAsync/4.7.3.0";
+const int Preferences::VERSION_CODE = 4703;
+const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("4.7.2");
+const QString Preferences::VERSION_STRING = QString::fromAscii("4.7.3");
 QString Preferences::SDK_ID = QString::fromAscii("2cad2e5e");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
 "- Added new Apple Silicon native support.\n"
@@ -3253,24 +3253,27 @@ void Preferences::overridePreferences(const QSettings &settings)
     overridePreference(settings, QString::fromUtf8("MUTEX_STEALER_PERIOD_ONLY_ONCE"), Preferences::MUTEX_STEALER_PERIOD_ONLY_ONCE);
 }
 
-void Preferences::updateFullName(QString)
+void Preferences::updateFullName()
 {
     auto fullNameRequest (UserAttributes::UserAttributesManager::instance()
                       .requestAttribute<UserAttributes::FullName>(email().toUtf8().constData()));
-    connect(fullNameRequest.get(), &UserAttributes::FullName::attributeReady,
-            this, &Preferences::updateFullName, Qt::UniqueConnection);
+    connect(fullNameRequest.get(), &UserAttributes::FullName::separateNamesReady,
+            this, &Preferences::setFullName, Qt::UniqueConnection);
 
-    if (fullNameRequest->isAttributeReady())
+    if(fullNameRequest->isAttributeReady())
     {
-        auto newFirstName (fullNameRequest->getFirstName());
-        auto newLastName (fullNameRequest->getLastName());
-        if (newFirstName != firstName())
-        {
-            setFirstName(newFirstName);
-        }
-        if (newLastName != lastName())
-        {
-            setLastName(newLastName);
-        }
+        setFullName(fullNameRequest->getFirstName(), fullNameRequest->getLastName());
+    }
+}
+
+void Preferences::setFullName(const QString& newFirstName, const QString& newLastName)
+{
+    if (newFirstName != firstName())
+    {
+        setFirstName(newFirstName);
+    }
+    if (newLastName != lastName())
+    {
+        setLastName(newLastName);
     }
 }

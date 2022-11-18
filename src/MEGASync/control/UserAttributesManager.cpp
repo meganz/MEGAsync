@@ -35,7 +35,12 @@ void UserAttributesManager::onRequestFinish(mega::MegaApi *api, mega::MegaReques
                 paramInfo->setPending(false);
                 request->onRequestFinish(api, incoming_request, e);
             }
-        }   
+        }
+
+        if(e && e->getErrorCode() != mega::MegaError::API_OK)
+        {
+            mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error requesting user attribute. User: %1 Attribute: %2 Error: %3").arg(userEmail).arg(incoming_request->getParamType()).arg(e->getErrorCode()).toUtf8().constData());
+        }
     }
 }
 
@@ -71,7 +76,7 @@ void UserAttributesManager::onUsersUpdate(mega::MegaApi*, mega::MegaUserList *us
 
 void AttributeRequest::RequestInfo::ParamInfo::setNeedsRetry(int errCode)
 {
-   mNeedsRetry = !mNoRetryErrCodes.contains(errCode);
+    mNeedsRetry = !mNoRetryErrCodes.isEmpty() &&!mNoRetryErrCodes.contains(errCode);
 }
 
 void AttributeRequest::RequestInfo::ParamInfo::setPending(bool isPending)

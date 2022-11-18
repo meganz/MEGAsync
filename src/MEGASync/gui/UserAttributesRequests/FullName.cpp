@@ -10,12 +10,11 @@ namespace UserAttributes
 // FULL NAME REQUEST
 //
 // The Full Name comprises the First Name AND the Last Name.
-// The attribute is not considered resady while we don't have both.
+// The attribute is not considered resady while we don't have received the answer to both requests
 // In case of error, and as a placeholder while we don't have both, the email is returned.
 //
 // The attributeReady() signal is sent when:
-// - the attribute becomes ready (i.e. we just received either first or last name and we have both)
-// - there was an error retrieving both the first name and the last name
+// - the attribute becomes ready (i.e. we received both first and last name, correctly or with fail)
 //
 
 void FullName::onRequestFinish(mega::MegaApi*, mega::MegaRequest* incoming_request, mega::MegaError* e)
@@ -37,10 +36,13 @@ void FullName::onRequestFinish(mega::MegaApi*, mega::MegaRequest* incoming_reque
             }
         }
 
-        if (isAttributeReady() || !isRequestPending())
+        if (isAttributeReady())
         {
-            emit attributeReady(getFullName());
-            emit attributeReadyRichText(getRichFullName());
+            emit fullNameReady(getFullName());
+            emit fullNameReadyRichText(getRichFullName());
+
+            emit separateNamesReady(getFirstName(), getLastName());
+            emit separateNamesReadyRichText(getFirstName().toHtmlEscaped(), getLastName().toHtmlEscaped());
         }
     }
 }
@@ -64,9 +66,8 @@ AttributeRequest::RequestInfo FullName::fillRequestInfo()
         MegaSyncApp->getMegaApi()->getUserAttribute(getEmail().toUtf8().constData(), mega::MegaApi::USER_ATTR_LASTNAME);
     };
 
-    auto dontRetryOnErr = QList<int>() << mega::MegaError::API_OK << mega::MegaError::API_EACCESS;
-    QSharedPointer<ParamInfo> firstNameInfo(new ParamInfo(firstNameRequest, dontRetryOnErr));
-    QSharedPointer<ParamInfo> lastNameInfo(new ParamInfo(lastNameRequest, dontRetryOnErr));
+    QSharedPointer<ParamInfo> firstNameInfo(new ParamInfo(firstNameRequest));
+    QSharedPointer<ParamInfo> lastNameInfo(new ParamInfo(lastNameRequest));
 
     ParamInfoMap paramInfo({{mega::MegaApi::USER_ATTR_FIRSTNAME, firstNameInfo},
                             {mega::MegaApi::USER_ATTR_LASTNAME, lastNameInfo}});
@@ -78,28 +79,27 @@ AttributeRequest::RequestInfo FullName::fillRequestInfo()
 
 QString FullName::getFullName() const
 {
-    if(!isAttributeReady())
+    if(!isAttributeReady() || (mFirstName.isEmpty() && mLastName.isEmpty()))
     {
         return getEmail();
     }
 
-    return QString::fromUtf8("%1 %2").arg(mFirstName).arg(mLastName);
+    return createFullName();
 }
 
 QString FullName::getRichFullName() const
 {
-    if(!isAttributeReady())
+    if(!isAttributeReady() || (mFirstName.isEmpty() && mLastName.isEmpty()))
     {
         return getEmail();
     }
 
-    auto text = QString::fromUtf8("%1 %2").arg(mFirstName).arg(mLastName);
-    return text.toHtmlEscaped();
+    return createFullName().toHtmlEscaped();
 }
 
 bool FullName::isAttributeReady() const
 {
-    return !mFirstName.isEmpty() && !mLastName.isEmpty();
+    return !isRequestPending();
 }
 
 const QString &FullName::getFirstName() const
@@ -110,6 +110,27 @@ const QString &FullName::getFirstName() const
 const QString &FullName::getLastName() const
 {
     return mLastName;
+}
+
+QString FullName::createFullName() const
+{
+    QString fullName;
+
+    if(!mFirstName.isEmpty())
+    {
+        fullName = mFirstName;
+
+        if(!mLastName.isEmpty())
+        {
+            fullName.append(QString::fromUtf8(" %1").arg(mLastName));
+        }
+    }
+    else
+    {
+        fullName = mLastName;
+    }
+
+    return fullName;
 }
 
 std::shared_ptr<const FullName> FullName::requestFullName(const char *user_email)
