@@ -39,15 +39,13 @@ protected:
 
 private:
     std::unique_ptr<mega::MegaNode> getUploadFolder();
-    void showNodeSelector(std::unique_ptr<mega::MegaNode> node);
+    void showNodeSelector();
 
     Ui::UploadToMegaDialog *ui;
     mega::MegaApi *megaApi;
     mega::MegaHandle selectedHandle;
     mega::QTMegaRequestListener *delegateListener;
     HighDpiResize highDpiResize;
-
-    bool mNodeSelectorSelected;
 };
 
 #endif // UPLOADTOMEGADIALOG_H
