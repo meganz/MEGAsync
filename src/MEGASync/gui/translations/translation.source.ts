@@ -3714,59 +3714,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
 </context>
 <context>
-    <name>NodeSelectorTreeViewWidget</name>
-    <message>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Always upload to this destination</source>
-        <translation type="unfinished">Always upload to this destination</translation>
-    </message>
-    <message>
-        <source>New folder</source>
-        <translation type="unfinished">New folder</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation type="unfinished">OK</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Cancel</translation>
-    </message>
-    <message>
-        <source>CLD_DRIVE</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select items</source>
-        <translation type="unfinished">Select items</translation>
-    </message>
-    <message>
-        <source>Are you sure that you want to delete &quot;%1&quot;?</source>
-        <translation type="unfinished">Are you sure that you want to delete “%1”?</translation>
-    </message>
-    <message>
-        <source>Error:</source>
-        <translation type="unfinished">Error:</translation>
-    </message>
-</context>
-<context>
-    <name>NodeSelectorTreeViewWidgetCloudDrive</name>
-    <message>
-        <source>Cloud drive</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>NodeSelectorTreeViewWidgetIncomingShares</name>
-    <message>
-        <source>Incoming shares</source>
-        <translation type="unfinished">Incoming shares</translation>
-    </message>
-</context>
-<context>
     <name>NotificationsSettings</name>
     <message>
         <source>Shares</source>

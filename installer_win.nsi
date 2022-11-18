@@ -8,7 +8,7 @@ Unicode true
 
 
 #!define BUILD_UNINSTALLER
-!define BUILD_X64_VERSION
+#!define BUILD_X64_VERSION
 #!define ENABLE_DEBUG_MESSAGES
 
 !macro DEBUG_MSG message

@@ -2631,7 +2631,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
         <translatorcomment>Informative message box shown if user is running an old Win version (vista or previous), informing that app updates for such systems will cease soon.</translatorcomment>
+<<<<<<< HEAD
         <translation>L&apos;app continuerà a lavorare, però gli aggiornamenti non saranno più supportati per le versioni precedenti a Windows 7.</translation>
+=======
+        <translation>L&apos;app continuerà a lavorare, però gli aggiornamenti non saranno più supportati dalle versioni precedenti di Windows 7.</translation>
+>>>>>>> origin/develop
     </message>
     <message>
         <source>Transferring</source>
@@ -2671,7 +2675,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
         <translatorcomment>Informative message box shown if user is running an old OSX version (previous than Yosemite), informing that app updates for such systems will cease soon.</translatorcomment>
+<<<<<<< HEAD
         <translation>L&apos;app continuerà a lavorare, però gli aggiornamenti non saranno più supportati dalle versioni precedenti di OS X Yosemite.</translation>
+=======
+        <translation>L&apos;app continuerà a lavorare, però gli aggiornamenti non saranno più supportati dalle versioni precedenti di macOS Sierra.</translation>
+>>>>>>> origin/develop
     </message>
     <message>
         <source>Your syncs have been disabled</source>
@@ -4600,7 +4608,11 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
     <message>
         <source>Stop backing up folder?</source>
         <translatorcomment>Backup removal dialog title</translatorcomment>
+<<<<<<< HEAD
         <translation>Fermare il backup delle cartelle?</translation>
+=======
+        <translation>Fermare il backup della cartella?</translation>
+>>>>>>> origin/develop
     </message>
     <message>
         <source>To stop backing up this folder, you need to either move it or delete it.</source>
