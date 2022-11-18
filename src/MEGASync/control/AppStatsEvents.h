@@ -37,6 +37,8 @@ enum AppStatsEvents
     EVENT_PAYWALL_NOTIF                     = 99530,
     EVENT_SYNC_ADD_FAIL_API_EACCESS         = 99531,
     EVENT_TRSF_ALMOST_OVERQUOTA_NOTIF       = 99532,
+    EVENT_1ST_BACKUP                        = 99533,
+    EVENT_1ST_BACKED_UP_FILE                = 99534,
 };
 
 #endif // APPSTATSEVENTS_H

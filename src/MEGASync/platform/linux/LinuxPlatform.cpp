@@ -563,7 +563,5 @@ void LinuxPlatform::initMenu(QMenu* m)
 }
 // Platform-specific strings
 const char* LinuxPlatform::settingsString {QT_TRANSLATE_NOOP("Platform", "Settings")};
-const char* LinuxPlatform::openSettingsString {QT_TRANSLATE_NOOP("Platform", "Open settings")};
-const char* LinuxPlatform::goToSettingsToEnableSyncsString {QT_TRANSLATE_NOOP("Platform", "Go to settings to enable them again.")};
 const char* LinuxPlatform::exitString {QT_TRANSLATE_NOOP("Platform", "Exit")};
 const char* LinuxPlatform::fileExplorerString {QT_TRANSLATE_NOOP("Platform", "Show in folder")};

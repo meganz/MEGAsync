@@ -38,18 +38,6 @@ NodeSelector::NodeSelector(int selectMode, QWidget *parent) :
     setWindowModality(Qt::WindowModal);
     ui->setupUi(this);
 
-    if(showBackups())
-    {
-        auto myBackupsHandle = UserAttributes::MyBackupsHandle::requestMyBackupsHandle();
-        connect(myBackupsHandle.get(), &UserAttributes::MyBackupsHandle::attributeReady,
-                this, &NodeSelector::onMyBackupsFolderHandleSet);
-        onMyBackupsFolderHandleSet(myBackupsHandle->getMyBackupsHandle());
-    }
-    else
-    {
-        shortCutConnects(SHARES);
-    }
-
     if(auto rootNode = std::unique_ptr<MegaNode>(mMegaApi->getRootNode()))
     {
         mNavCloudDrive.expandedHandles.append(rootNode->getHandle());
@@ -70,6 +58,18 @@ NodeSelector::NodeSelector(int selectMode, QWidget *parent) :
 
     connect(ui->tabBar, &QTabBar::currentChanged, this, &NodeSelector::onTabSelected);
 #endif
+
+    if(showBackups())
+    {
+        auto myBackupsHandle = UserAttributes::MyBackupsHandle::requestMyBackupsHandle();
+        connect(myBackupsHandle.get(), &UserAttributes::MyBackupsHandle::attributeReady,
+                this, &NodeSelector::onMyBackupsFolderHandleSet);
+        onMyBackupsFolderHandleSet(myBackupsHandle->getMyBackupsHandle());
+    }
+    else
+    {
+        shortCutConnects(SHARES);
+    }
 
     nodesReady();
 
