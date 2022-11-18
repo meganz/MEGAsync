@@ -1,22 +1,23 @@
 #ifndef PREFERENCES_H
 #define PREFERENCES_H
 
-#include <iostream>
+#include "megaapi.h"
+#include "control/EncryptedSettings.h"
+#include "syncs/control/SyncInfo.h"
+
 #include <QLocale>
 #include <QStringList>
 #include <QMutex>
 #include <QDataStream>
 
-#include "control/EncryptedSettings.h"
-#include "model/Model.h"
+#include <iostream>
 #include <assert.h>
-#include "megaapi.h"
 #include <chrono>
 #include <type_traits>
 
 Q_DECLARE_METATYPE(QList<long long>)
 
-class SyncSetting;
+class SyncSettings;
 struct SyncData;
 class Preferences : public QObject
 {
@@ -63,8 +64,8 @@ public:
 
     long long cloudDriveStorage();
     void setCloudDriveStorage(long long value);
-    long long inboxStorage();
-    void setInboxStorage(long long value);
+    long long vaultStorage();
+    void setVaultStorage(long long value);
     long long rubbishStorage();
     void setRubbishStorage(long long value);
     long long inShareStorage();
@@ -74,8 +75,8 @@ public:
 
     long long cloudDriveFiles();
     void setCloudDriveFiles(long long value);
-    long long inboxFiles();
-    void setInboxFiles(long long value);
+    long long vaultFiles();
+    void setVaultFiles(long long value);
     long long rubbishFiles();
     void setRubbishFiles(long long value);
     long long inShareFiles();
@@ -83,8 +84,8 @@ public:
 
     long long cloudDriveFolders();
     void setCloudDriveFolders(long long value);
-    long long inboxFolders();
-    void setInboxFolders(long long value);
+    long long vaultFolders();
+    void setVaultFolders(long long value);
     long long rubbishFolders();
     void setRubbishFolders(long long value);
     long long inShareFolders();
@@ -254,8 +255,12 @@ public:
     void setFirstStartDone(bool value = true);
     bool isFirstSyncDone();
     void setFirstSyncDone(bool value = true);
+    bool isFirstBackupDone();
+    void setFirstBackupDone(bool value = true);
     bool isFirstFileSynced();
     void setFirstFileSynced(bool value = true);
+    bool isFirstFileBackedUp();
+    void setFirstFileBackedUp(bool value = true);
     bool isFirstWebDownloadDone();
     void setFirstWebDownloadDone(bool value = true);
     bool isFatWarningShown();
@@ -289,10 +294,10 @@ public:
     void setNeverCreateLink(bool value);
 
     // sync related
-    void writeSyncSetting(std::shared_ptr<SyncSetting> syncSettings); //write sync into cache
+    void writeSyncSetting(std::shared_ptr<SyncSettings> syncSettings); //write sync into cache
     void removeAllSyncSettings(); //remove all sync from cache
-    void removeSyncSetting(std::shared_ptr<SyncSetting> syncSettings); //remove one sync from cache
-    QMap<mega::MegaHandle, std::shared_ptr<SyncSetting> > getLoadedSyncsMap() const; //return loaded syncs when loggedin/entered user
+    void removeSyncSetting(std::shared_ptr<SyncSettings> syncSettings); //remove one sync from cache
+    QMap<mega::MegaHandle, std::shared_ptr<SyncSettings> > getLoadedSyncsMap() const; //return loaded syncs when loggedin/entered user
     void removeAllFolders(); //remove all syncs from cache
     // old cache transition related:
     void removeOldCachedSync(int position, QString email = QString());
@@ -408,7 +413,8 @@ public:
         ACCOUNT_TYPE_PROII = 2,
         ACCOUNT_TYPE_PROIII = 3,
         ACCOUNT_TYPE_LITE = 4,
-        ACCOUNT_TYPE_BUSINESS = 100
+        ACCOUNT_TYPE_BUSINESS = 100,
+        ACCOUNT_TYPE_PRO_FLEXI = 101
     };
 
     enum {
@@ -546,7 +552,7 @@ protected:
     // loaded syncs when loggedin/entered user. This is intended to be used to load values that are not stored in the sdk (like sync name/last known remote path)
     // the actual SyncSettings model is stored in Model::configuredSyncsMap. That one is the one that will be updated and persistent accordingly
     // These are only used for retrieving values or removing at uninstall
-    QMap<mega::MegaHandle, std::shared_ptr<SyncSetting>> loadedSyncsMap;
+    QMap<mega::MegaHandle, std::shared_ptr<SyncSettings>> loadedSyncsMap;
 
     QStringList excludedSyncNames;
     QStringList excludedSyncPaths;
@@ -554,7 +560,7 @@ protected:
     long long tempBandwidth;
     int tempBandwidthInterval;
     bool isTempBandwidthValid;
-    QString dataPath;
+    QString mDataPath;
     long long diffTimeWithSDK;
     std::chrono::system_clock::time_point transferOverQuotaDialogDisabledUntil;
     std::chrono::system_clock::time_point transferOverQuotaOsNotificationDisabledUntil;
@@ -580,16 +586,16 @@ protected:
     static const QString totalStorageKey;
     static const QString usedStorageKey;
     static const QString cloudDriveStorageKey;
-    static const QString inboxStorageKey;
+    static const QString vaultStorageKey;
     static const QString rubbishStorageKey;
     static const QString inShareStorageKey;
     static const QString versionsStorageKey;
     static const QString cloudDriveFilesKey;
-    static const QString inboxFilesKey;
+    static const QString vaultFilesKey;
     static const QString rubbishFilesKey;
     static const QString inShareFilesKey;
     static const QString cloudDriveFoldersKey;
-    static const QString inboxFoldersKey;
+    static const QString vaultFoldersKey;
     static const QString rubbishFoldersKey;
     static const QString inShareFoldersKey;
     static const QString totalBandwidthKey;
@@ -677,7 +683,9 @@ protected:
     static const QString sessionKey;
     static const QString firstStartDoneKey;
     static const QString firstSyncDoneKey;
+    static const QString firstBackupDoneKey;
     static const QString firstFileSyncedKey;
+    static const QString firstFileBackedUpKey;
     static const QString firstWebDownloadKey;
     static const QString fatWarningShownKey;
     static const QString installationTimeKey;

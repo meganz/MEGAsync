@@ -56,6 +56,8 @@ public:
     static bool shouldRunHttpsServer();
     static bool isUserActive();
     static double getUpTime();
+    static QString getDeviceName();
+    static void initMenu(QMenu* m);
 
     static const char* settingsString;
     static const char* exitString;

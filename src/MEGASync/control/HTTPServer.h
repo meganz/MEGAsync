@@ -72,6 +72,7 @@ class HTTPServer: public QTcpServer
         EXTERNAL_UPLOAD_SELECTION_STATUS_START,
         EXTERNAL_TRANSFER_QUERY_PROGRESS_START,
         EXTERNAL_SHOW_IN_FOLDER,
+        EXTERNAL_ADD_BACKUP,
         UNKNOWN_REQUEST,
     };
 
@@ -80,11 +81,8 @@ class HTTPServer: public QTcpServer
 
         HTTPServer(mega::MegaApi *megaApi, quint16 port, bool sslEnabled);
         ~HTTPServer();
-#if QT_VERSION >= 0x050000
+
         void incomingConnection(qintptr socket);
-#else
-        void incomingConnection(int socket);
-#endif
         void pause();
         void resume();
 
@@ -103,6 +101,7 @@ class HTTPServer: public QTcpServer
         void onExternalFolderSyncRequested(qlonglong targetHandle);
         void onExternalOpenTransferManagerRequested(int tab);
         void onExternalShowInFolderRequested(QString path);
+        void onExternalAddBackup();
         void onConnectionError();
 
     private slots:
@@ -146,6 +145,7 @@ class HTTPServer: public QTcpServer
         void externalUploadSelectionStatus(QString& response, const HTTPRequest& request);
         void externalTransferQueryProgress(QString& response, const HTTPRequest& request);
         void externalShowInFolder(QString& response, const HTTPRequest& request);
+        void externalAddBackup(QString& response, const HTTPRequest& request);
 
         void endProcessRequest(QPointer<QAbstractSocket> socket, const HTTPRequest &request, QString response);
 

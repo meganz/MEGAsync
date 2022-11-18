@@ -34,9 +34,9 @@
 #include "control/UpdateTask.h"
 #include "control/MegaSyncLogger.h"
 #include "control/ThreadPool.h"
-#include "control/MegaController.h"
 #include "control/Utilities.h"
-#include "model/Model.h"
+#include "syncs/control/SyncInfo.h"
+#include "syncs/control/SyncController.h"
 #include "megaapi.h"
 #include "QTMegaListener.h"
 #include "gui/QFilterAlertsModel.h"
@@ -132,7 +132,6 @@ public:
     void showAddSyncError(mega::MegaRequest *request, mega::MegaError* e, QString localpath, QString remotePath = QString());
     void showAddSyncError(int errorCode, QString localpath, QString remotePath = QString());
 
-
     /**
      * @brief Migrate sync configuration to sdk cache
      * @param email of sync configuration to migrate from previous sessions
@@ -182,7 +181,7 @@ public:
     bool hasNotifications();
     bool hasNotificationsOfType(int type);
     std::shared_ptr<mega::MegaNode> getRootNode(bool forceReset = false);
-    std::shared_ptr<mega::MegaNode> getInboxNode(bool forceReset = false);
+    std::shared_ptr<mega::MegaNode> getVaultNode(bool forceReset = false);
     std::shared_ptr<mega::MegaNode> getRubbishNode(bool forceReset = false);
 
     MegaSyncLogger& getLogger() const;
@@ -232,6 +231,7 @@ signals:
     void blocked();
     void storageStateChanged(int);
     void pauseStateChanged();
+    void addBackup();
 
 public slots:
     void unlink(bool keepLogs = false);
@@ -267,6 +267,7 @@ public slots:
     void externalFileUpload(qlonglong targetFolder);
     void externalFolderUpload(qlonglong targetFolder);
     void externalFolderSync(qlonglong targetFolder);
+    void externalAddBackup();
     void externalOpenTransferManager(int tab);
     void internalDownload(long long handle);
     void onLinkImportFinished();
@@ -331,10 +332,11 @@ private slots:
     void openFolderPath(QString path);
     void registerUserActivity();
     void PSAseen(int id);
-    void onSyncStateChanged(std::shared_ptr<SyncSetting> syncSettings);
-    void onSyncDeleted(std::shared_ptr<SyncSetting> syncSettings);
-    void onSyncDisabled(std::shared_ptr<SyncSetting> syncSetting);
-    void onSyncEnabled(std::shared_ptr<SyncSetting> syncSetting);
+    void onSyncStateChanged(std::shared_ptr<SyncSettings> syncSettings);
+    void onSyncDeleted(std::shared_ptr<SyncSettings> syncSettings);
+    void onSyncDisabled(std::shared_ptr<SyncSettings> syncSetting);
+    void showSingleSyncDisabledNotification(std::shared_ptr<SyncSettings> syncSetting);
+    void onSyncEnabled(std::shared_ptr<SyncSettings> syncSetting);
     void onBlocked();
     void onUnblocked();
     void onTransfersModelUpdate();
@@ -392,8 +394,6 @@ protected:
     QPointer<QMenu> infoDialogMenu;
     QPointer<QMenu> guestMenu;
     QMenu emptyMenu;
-    QPointer<QMenu> syncsMenu;
-    QSignalMapper *menuSignalMapper;
 
     MenuItemAction *exitAction;
     MenuItemAction *settingsAction;
@@ -402,11 +402,11 @@ protected:
     MenuItemAction *downloadAction;
     MenuItemAction *streamAction;
     MenuItemAction *myCloudAction;
-    MenuItemAction *addSyncAction;
-
     MenuItemAction *updateAction;
     MenuItemAction *aboutAction;
     QAction *showStatusAction;
+    QPointer<SyncsMenu> mSyncs2waysMenu;
+    QPointer<SyncsMenu> mBackupsMenu;
 
     MenuItemAction *exitActionGuest;
     MenuItemAction *settingsActionGuest;
@@ -426,8 +426,7 @@ protected:
     SettingsDialog *settingsDialog;
     QPointer<InfoDialog> infoDialog;
     std::shared_ptr<Preferences> preferences;
-    Model *model;
-    Controller *controller;
+    SyncInfo *model;
     mega::MegaApi *megaApi;
     mega::MegaApi *megaApiFolders;
     QFilterAlertsModel *notificationsProxyModel;
@@ -455,7 +454,7 @@ protected:
 
     ThreadPool* mThreadPool;
     std::shared_ptr<mega::MegaNode> mRootNode;
-    std::shared_ptr<mega::MegaNode> mInboxNode;
+    std::shared_ptr<mega::MegaNode> mVaultNode;
     std::shared_ptr<mega::MegaNode> mRubbishNode;
     bool mFetchingNodes = false;
     bool mQueringWhyAmIBlocked = false;
@@ -529,8 +528,8 @@ protected:
     bool appfinished;
     bool updateAvailable;
     bool isLinux;
-    bool isFirstSyncDone;
-    bool isFirstFileSynced;
+    bool mIsFirstFileTwoWaySynced;
+    bool mIsFirstFileBackedUp;
     bool networkConnectivity;
     int nUnviewedTransfers;
     bool completedTabActive;
@@ -549,6 +548,8 @@ protected:
     std::shared_ptr<DesktopNotifications> mOsNotifications;
     QMutex mMutexOpenUrls;
     QMap<QString, std::chrono::system_clock::time_point> mOpenUrlsClusterTs;
+
+    std::unique_ptr<SyncController> mSyncController;
 
     QPointer<TransfersModel> mTransfersModel;
 
@@ -613,7 +614,6 @@ private:
 
     static void logInfoDialogCoordinates(const char* message, const QRect& screenGeometry, const QString& otherInformation);
 
-    void destroyInfoDialogMenus();
     bool dontAskForExitConfirmation(bool force);
     void exitApplication();
 

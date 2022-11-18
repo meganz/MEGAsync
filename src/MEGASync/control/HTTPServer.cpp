@@ -59,11 +59,7 @@ HTTPServer::~HTTPServer()
 
 }
 
-#if QT_VERSION >= 0x050000
 void HTTPServer::incomingConnection(qintptr socket)
-#else
-void HTTPServer::incomingConnection(int socket)
-#endif
 {
     if (disabled)
     {
@@ -105,7 +101,6 @@ void HTTPServer::incomingConnection(int socket)
             return;
         }
 
-#if QT_VERSION >= 0x050100
         QList<QSslCertificate> certificates;
         certificates.append(QSslCertificate(preferences->getHttpsCert().toUtf8(), QSsl::Pem));
         QStringList intermediates = preferences->getHttpsCertIntermediate().split(QString::fromUtf8(";"), QString::SkipEmptyParts);
@@ -114,9 +109,6 @@ void HTTPServer::incomingConnection(int socket)
             certificates.append(QSslCertificate(intermediates.at(i).toUtf8(), QSsl::Pem));
         }
         sslSocket->setLocalCertificateChain(certificates);
-#else
-        sslSocket->setLocalCertificate(QSslCertificate(preferences->getHttpsCert().toUtf8(), QSsl::Pem));
-#endif
         sslSocket->setPrivateKey(key);
         sslSocket->startServerEncryption();
     }
@@ -349,6 +341,9 @@ void HTTPServer::processRequest(QPointer<QAbstractSocket> socket, HTTPRequest re
         break;
     case EXTERNAL_SHOW_IN_FOLDER:
         externalShowInFolder(response, request);
+        break;
+    case EXTERNAL_ADD_BACKUP:
+        externalAddBackup(response, request);
         break;
     case UNKNOWN_REQUEST:
     default:
@@ -896,19 +891,53 @@ void HTTPServer::externalShowInFolder(QString &response, const HTTPRequest& requ
     }
 }
 
+void HTTPServer::externalAddBackup(QString &response, const HTTPRequest& request)
+{
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Add backup command received from the webclient");
+    QString userHandle(Utilities::extractJSONString(request.data, QLatin1String("u")));
+    MegaHandle handle = INVALID_HANDLE;
+
+    if (userHandle.size())
+    {
+        handle = MegaApi::base64ToUserHandle(userHandle.toLatin1().constData());
+    }
+
+    if (handle == ::mega::INVALID_HANDLE)
+    {
+        response = QString::number(MegaError::API_EARGS);
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Add backup command received from the webclient: invalid handle");
+    }
+    else
+    {
+        MegaHandle appUser (megaApi->getMyUserHandleBinary());
+
+        if (handle != appUser && appUser != ::mega::INVALID_HANDLE)
+        {
+            response = QString::number(MegaError::API_EACCESS);
+            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Add backup command received from the webclient: user mismatch");
+        }
+        else
+        {
+            emit onExternalAddBackup();
+            response = QString::number(MegaError::API_OK);
+        }
+    }
+}
+
 HTTPServer::RequestType HTTPServer::GetRequestType(const HTTPRequest &request)
 {
-    static QString openLinkRequestStart(QString::fromUtf8("{\"a\":\"l\","));
-    static QString externalDownloadRequestStart(QString::fromUtf8("{\"a\":\"d\","));
-    static QString externalFileUploadRequestStart(QString::fromUtf8("{\"a\":\"ufi\","));
-    static QString externalFolderUploadRequestStart(QString::fromUtf8("{\"a\":\"ufo\","));
-    static QString externalFolderSyncRequestStart(QString::fromUtf8("{\"a\":\"s\","));
-    static QString externalFolderSyncCheckStart(QString::fromUtf8("{\"a\":\"sp\","));
-    static QString externalOpenTransferManagerStart(QString::fromUtf8("{\"a\":\"tm\","));
-    static QString externalUploadSelectionStatusStart(QString::fromUtf8("{\"a\":\"uss\","));
-    static QString externalTransferQueryProgressStart(QString::fromUtf8("{\"a\":\"t\","));
-    static QString externalShowInFolder(QString::fromUtf8("{\"a\":\"sf\","));
-    static QString versionCommand(QString::fromUtf8("{\"a\":\"v\"}"));
+    static const QString openLinkRequestStart(QLatin1String("{\"a\":\"l\","));
+    static const QString externalDownloadRequestStart(QLatin1String("{\"a\":\"d\","));
+    static const QString externalFileUploadRequestStart(QLatin1String("{\"a\":\"ufi\","));
+    static const QString externalFolderUploadRequestStart(QLatin1String("{\"a\":\"ufo\","));
+    static const QString externalFolderSyncRequestStart(QLatin1String("{\"a\":\"s\","));
+    static const QString externalFolderSyncCheckStart(QLatin1String("{\"a\":\"sp\","));
+    static const QString externalOpenTransferManagerStart(QLatin1String("{\"a\":\"tm\","));
+    static const QString externalUploadSelectionStatusStart(QLatin1String("{\"a\":\"uss\","));
+    static const QString externalTransferQueryProgressStart(QLatin1String("{\"a\":\"t\","));
+    static const QString externalShowInFolder(QLatin1String("{\"a\":\"sf\","));
+    static const QString versionCommand(QLatin1String("{\"a\":\"v\"}"));
+    static const QString externalAddBackup(QLatin1String("{\"a\":\"ab\",\"u\":\""));
 
     if(request.data == versionCommand)
     {
@@ -953,6 +982,10 @@ HTTPServer::RequestType HTTPServer::GetRequestType(const HTTPRequest &request)
     else if(request.data.startsWith(externalTransferQueryProgressStart))
     {
         return EXTERNAL_TRANSFER_QUERY_PROGRESS_START;
+    }
+    else if(request.data.startsWith(externalAddBackup))
+    {
+        return EXTERNAL_ADD_BACKUP;
     }
     return UNKNOWN_REQUEST;
 }

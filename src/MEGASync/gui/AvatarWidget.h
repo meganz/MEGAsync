@@ -16,7 +16,7 @@ class AvatarWidget : public QWidget
 public:
     explicit AvatarWidget(QWidget* parent = 0);
 
-    void setUserEmail(const char *userEmail);
+    void setUserEmail(const char *userEmail = nullptr);
     void clearData();
 
     QSize minimumSizeHint() const;

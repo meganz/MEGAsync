@@ -12,6 +12,7 @@
 #include <QThread>
 #include <QDir>
 #include <QProcess>
+#include <QMenu>
 
 #include <queue>
 
@@ -57,6 +58,8 @@ public:
     static bool shouldRunHttpServer();
     static bool shouldRunHttpsServer();
     static bool isUserActive();
+    static QString getDeviceName();
+    static void initMenu(QMenu* m);
 
     static const char* settingsString;
     static const char* exitString;

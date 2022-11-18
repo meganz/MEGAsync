@@ -18,8 +18,8 @@ public:
     bool helpEvent(QHelpEvent *event, QAbstractItemView *view, const QStyleOptionViewItem &option, const QModelIndex &index);
 
 protected:
-    QAlertsModel *model;
-    bool useProxy;
+    QAlertsModel* mAlertsModel;
+    bool mUseProxy;
 };
 
 #endif // MEGAALERTDELEGATE_H
