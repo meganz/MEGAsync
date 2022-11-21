@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>375</width>
-    <height>128</height>
+    <width>450</width>
+    <height>150</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -62,7 +62,7 @@ height: 20px;
      <property name="verticalSpacing">
       <number>15</number>
      </property>
-     <item row="0" column="0">
+     <item row="0" column="0" alignment="Qt::AlignRight">
       <widget class="QLabel" name="label_2">
        <property name="text">
         <string>Backup folder:</string>

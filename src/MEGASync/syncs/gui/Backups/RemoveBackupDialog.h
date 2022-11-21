@@ -21,6 +21,8 @@ public:
 
     std::shared_ptr<SyncSettings> backupToRemove();
     mega::MegaHandle targetFolder();
+    QSize sizeHint() const override{return QSize(540, 340);}
+
 
 private slots:
     void OnDeleteSelected();

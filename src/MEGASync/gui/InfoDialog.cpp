@@ -1124,26 +1124,12 @@ void InfoDialog::addBackup()
             setupSyncController();
 
             mAddBackupDialog = new AddBackupDialog();
-
-//            auto myBackupsHandle = UserAttributes::MyBackupsHandle::requestMyBackupsHandle();
-//            connect(request.get(), &UserAttributes::MyBackupsHandle::attributeReady, this, [request, this]()
-//            {
-//                emit myBackupsHandle(request->getMyBackupsHandle());
-//            });
-
-//            if(request->isAttributeReady())
-//            {
-//                emit myBackupsHandle(request->getMyBackupsHandle());
-//            }
-
-//            mSyncController->getMyBackupsHandle();
-
             mAddBackupDialog->setAttribute(Qt::WA_DeleteOnClose);
             mAddBackupDialog->setWindowModality(Qt::ApplicationModal);
 
             mAddBackupDialog->show();
 
-            connect(mAddBackupDialog, &AddBackupDialog::accepted, this, [this]()
+            connect(mAddBackupDialog.data(), &AddBackupDialog::accepted, this, [this]()
             {
                 if(mAddBackupDialog)
                 {

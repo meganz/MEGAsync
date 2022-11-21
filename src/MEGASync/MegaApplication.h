@@ -333,6 +333,7 @@ private slots:
     void onSyncStateChanged(std::shared_ptr<SyncSettings> syncSettings);
     void onSyncDeleted(std::shared_ptr<SyncSettings> syncSettings);
     void onSyncDisabled(std::shared_ptr<SyncSettings> syncSetting);
+    void showSingleSyncDisabledNotification(std::shared_ptr<SyncSettings> syncSetting);
     void onSyncEnabled(std::shared_ptr<SyncSettings> syncSetting);
     void onBlocked();
     void onUnblocked();
@@ -525,8 +526,8 @@ protected:
     bool appfinished;
     bool updateAvailable;
     bool isLinux;
-    bool isFirstSyncDone;
-    bool isFirstFileSynced;
+    bool mIsFirstFileTwoWaySynced;
+    bool mIsFirstFileBackedUp;
     bool networkConnectivity;
     int nUnviewedTransfers;
     bool completedTabActive;

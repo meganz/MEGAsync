@@ -1,16 +1,17 @@
 #ifndef PREFERENCES_H
 #define PREFERENCES_H
 
-#include <iostream>
+#include "megaapi.h"
+#include "control/EncryptedSettings.h"
+#include "syncs/control/SyncInfo.h"
+
 #include <QLocale>
 #include <QStringList>
 #include <QMutex>
 #include <QDataStream>
 
-#include "control/EncryptedSettings.h"
-#include "syncs/control/SyncInfo.h"
+#include <iostream>
 #include <assert.h>
-#include "megaapi.h"
 #include <chrono>
 #include <type_traits>
 #include <memory>
@@ -255,8 +256,12 @@ public:
     void setFirstStartDone(bool value = true);
     bool isFirstSyncDone();
     void setFirstSyncDone(bool value = true);
+    bool isFirstBackupDone();
+    void setFirstBackupDone(bool value = true);
     bool isFirstFileSynced();
     void setFirstFileSynced(bool value = true);
+    bool isFirstFileBackedUp();
+    void setFirstFileBackedUp(bool value = true);
     bool isFirstWebDownloadDone();
     void setFirstWebDownloadDone(bool value = true);
     bool isFatWarningShown();
@@ -679,7 +684,9 @@ protected:
     static const QString sessionKey;
     static const QString firstStartDoneKey;
     static const QString firstSyncDoneKey;
+    static const QString firstBackupDoneKey;
     static const QString firstFileSyncedKey;
+    static const QString firstFileBackedUpKey;
     static const QString firstWebDownloadKey;
     static const QString fatWarningShownKey;
     static const QString installationTimeKey;
@@ -757,8 +764,11 @@ protected:
     static const bool defaultImportMegaLinksEnabled;
     static const bool defaultDownloadMegaLinksEnabled;
 
+private:
+    void updateFullName();
+
 private slots:
-    void updateFullName(QString fullName = QString());
+    void setFullName(const QString& newFirstName, const QString& newLastName);
 
 };
 
