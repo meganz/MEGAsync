@@ -190,7 +190,7 @@ endif()
 
 set(_generator "")
 if(WIN32)
-    set(_generator "-G Visual Studio 16 2019")
+    set(_generator "-G" "Visual Studio 16 2019")
 else()
     if (CMAKEGENERATOR)
         set(_generator "-G ${CMAKEGENERATOR}")

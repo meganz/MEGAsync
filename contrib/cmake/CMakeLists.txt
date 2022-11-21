@@ -66,8 +66,9 @@ set (USE_QT 1 CACHE STRING "")
 set (ENABLE_LOG_PERFORMANCE 1 CACHE STRING "")
 set (NO_READLINE 1 CACHE STRING "")
 set (USE_DRIVE_NOTIFICATIONS 1 CACHE STRING "")
+set (USE_PCRE 0 CACHE STRING "")
 if (WIN32)
-set (MEGA_LINK_DYNAMIC_CRT 1)  # since we are linking with QT official DLLs
+    set (MEGA_LINK_DYNAMIC_CRT 1)  # since we are linking with QT official DLLs
 else()
     set(USE_PTHREAD 1 CACHE STRING "")
 endif()
@@ -354,7 +355,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/syncs/gui/Backups/AddBackupDialog.h
     ${MEGAsyncDir}/syncs/gui/Backups/RemoveBackupDialog.h
     ${MEGAsyncDir}/syncs/gui/Backups/BackupsWizard.h
-    ${MEGAsyncDir}/syncs/gui/Backups/BackupRenameWidget.h	
+    ${MEGAsyncDir}/syncs/gui/Backups/BackupRenameWidget.h
     ${MEGAsyncDir}/syncs/gui/Backups/BackupNameConflictDialog.h
     ${MEGAsyncDir}/syncs/model/BackupItemModel.h
     ${MEGAsyncDir}/syncs/model/SyncItemModel.h
@@ -609,7 +610,7 @@ set (SRCS
     ${MEGAsyncDir}/stalled_issues/gui/StalledIssuesView.cpp
     ${MEGAsyncDir}/stalled_issues/gui/StalledIssueDelegate.cpp
     ${MEGAsyncDir}/stalled_issues/gui/StalledIssuesDelegateWidgetsCache.cpp
-    
+
     ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/NameConflict.cpp
     ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/LocalAndRemoteDifferentWidget.cpp
     ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/LocalAndRemoteNameConflicts.cpp
@@ -787,7 +788,7 @@ else()
 
         ${MEGAsyncDir}/platform/macx/MacXPlatform.cpp
         ${MEGAsyncDir}/platform/macx/PlatformStrings.cpp
-        ${MEGAsyncDir}/platform/macx/PowerOptions.cpp
+        ${MEGAsyncDir}/platform/macx/PowerOptions.mm
         ${MEGAsyncDir}/platform/macx/MacXFunctions.mm
         ${MEGAsyncDir}/platform/macx/macnotificationhandler.mm
         ${MEGAsyncDir}/platform/macx/NotificationDelegate.mm
@@ -860,6 +861,7 @@ else()
 
 if (CMAKE_HOST_APPLE)
     set_source_files_properties(app.icns folder.icns folder_yosemite.icns appicon32.tiff PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
+    set(TARGET_LINK_LIBRARIES_PLATFORM ${TARGET_LINK_LIBRARIES_PLATFORM} "-framework IOKit")
     endif()
 
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
