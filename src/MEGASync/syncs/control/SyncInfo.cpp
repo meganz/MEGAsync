@@ -269,7 +269,7 @@ std::shared_ptr<SyncSettings> SyncInfo::updateSyncSettings(MegaSync *sync)
         activateSync(cs);
     }
 
-    if (!cs->isActive() && wasActive )
+    if (!cs->isActive() && wasActive)
     {
         deactivateSync(cs);
     }

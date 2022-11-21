@@ -60,8 +60,8 @@ public:
 signals:
     void syncAddStatus(int errorCode, QString errorMsg, QString name);
     void syncRemoveError(std::shared_ptr<mega::MegaError> err);
-    void syncEnableError(std::shared_ptr<SyncSettings> sync);
-    void syncDisableError(std::shared_ptr<SyncSettings> sync);
+    void syncEnableError(std::shared_ptr<SyncSettings> sync, mega::MegaSync::Error errorCode);
+    void syncDisableError(std::shared_ptr<SyncSettings> sync, mega::MegaSync::Error errorCode);
     void backupMoveOrRemoveRemoteFolderError(std::shared_ptr<mega::MegaError> err);
 
 protected:
@@ -80,3 +80,4 @@ private:
 };
 
 Q_DECLARE_METATYPE(std::shared_ptr<mega::MegaError>)
+Q_DECLARE_METATYPE(mega::MegaSync::Error)
