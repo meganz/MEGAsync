@@ -19,9 +19,7 @@ const char* INDEX_PROPERTY = "INDEX";
 NodeRequester::NodeRequester(MegaItemModel *model)
     : mModel(model),
       mCancelToken(MegaCancelToken::createInstance())
-{
-
-}
+{}
 
 void NodeRequester::lockMutex(bool state) const
 {
@@ -41,16 +39,11 @@ void NodeRequester::requestNodeAndCreateChildren(MegaItem* item, const QModelInd
             MegaApi* megaApi = MegaSyncApp->getMegaApi();
 
             auto childNodesFiltered = MegaNodeList::createInstance();
-            if(!showFiles)
-            {
-                childNodesFiltered = megaApi->getChildrenFromType(item->getNode().get(), MegaNode::TYPE_FOLDER, MegaApi::ORDER_NONE, mCancelToken.get());
-            }
-            else
-            {
-                childNodesFiltered = megaApi->getChildren(node.get(), MegaApi::ORDER_NONE, mCancelToken.get());
-            }
+            showFiles ?
+                childNodesFiltered = megaApi->getChildren(node.get(), MegaApi::ORDER_NONE, mCancelToken.get())
+                    : childNodesFiltered = megaApi->getChildrenFromType(item->getNode().get(), MegaNode::TYPE_FOLDER, MegaApi::ORDER_NONE, mCancelToken.get());
 
-            if(!mAborted && !mCancelToken->isCancelled())
+            if(!isAborted())
             {
                 lockMutex(true);
                 item->createChildItems(std::unique_ptr<mega::MegaNodeList>(childNodesFiltered));
@@ -63,18 +56,13 @@ void NodeRequester::requestNodeAndCreateChildren(MegaItem* item, const QModelInd
 
 void NodeRequester::createCloudDriveRootItem()
 {
-    MegaApi* megaApi = MegaSyncApp->getMegaApi();
-    auto root = std::unique_ptr<MegaNode>(megaApi->getRootNode());
-    auto item = new MegaItem(std::move(root), mShowFiles);
+    auto root = std::unique_ptr<MegaNode>(MegaSyncApp->getMegaApi()->getRootNode());
 
-    if(!mAborted)
+    if(!isAborted())
     {
+        auto item = new MegaItem(std::move(root), mShowFiles);
         mRootItems.append(item);
         emit megaCloudDriveRootItemCreated(item);
-    }
-    else
-    {
-        removeItem(item);
     }
 }
 
@@ -83,35 +71,33 @@ void NodeRequester::createIncomingSharesRootItems(std::shared_ptr<mega::MegaNode
     QList<MegaItem*> items;
     for(int i = 0; i < nodeList->size(); i++)
     {
+        if(isAborted())
+        {
+            break;
+        }
+
         auto node = nodeList->get(i)->copy();
         auto user = std::unique_ptr<MegaUser>(MegaSyncApp->getMegaApi()->getUserFromInShare(node));
         MegaItem* item = new MegaItem(std::unique_ptr<MegaNode>(node), mShowFiles);
         items.append(item);
 
-        if(!mAborted)
+        auto incomingSharesModel = dynamic_cast<MegaItemModelIncomingShares*>(mModel);
+        if(incomingSharesModel)
         {
-            auto incomingSharesModel = dynamic_cast<MegaItemModelIncomingShares*>(mModel);
-            if(incomingSharesModel)
-            {
-                item->setProperty(INDEX_PROPERTY, incomingSharesModel->index(0,i));
-                connect(item, &MegaItem::infoUpdated, incomingSharesModel, &MegaItemModelIncomingShares::onItemInfoUpdated);
-                item->setOwner(move(user));
-            }
-        }
-        else
-        {
-            break;
+            item->setProperty(INDEX_PROPERTY, incomingSharesModel->index(0,i));
+            connect(item, &MegaItem::infoUpdated, incomingSharesModel, &MegaItemModelIncomingShares::onItemInfoUpdated);
+            item->setOwner(move(user));
         }
     }
 
-    if(!mAborted)
+    if(isAborted())
     {
-        mRootItems.append(items);
-        emit megaIncomingSharesRootItemsCreated(items);
+        qDeleteAll(items);
     }
     else
     {
-        qDeleteAll(items);
+        mRootItems.append(items);
+        emit megaIncomingSharesRootItemsCreated(items);
     }
 }
 
@@ -122,17 +108,12 @@ void NodeRequester::createBackupRootItems(mega::MegaHandle backupsHandle)
         std::unique_ptr<mega::MegaNode> backupsNode(MegaSyncApp->getMegaApi()->getNodeByHandle(backupsHandle));
         if(backupsNode)
         {
-            MegaItem* item = new MegaItem(std::move(backupsNode), mShowFiles);
-
-            if(!mAborted)
+            if(!isAborted())
             {
+                MegaItem* item = new MegaItem(std::move(backupsNode), mShowFiles);
                 item->setAsVaultNode();
                 mRootItems.append(item);
                 emit megaBackupRootItemsCreated(item);
-            }
-            else
-            {
-                removeItem(item);
             }
         }
     }
@@ -144,13 +125,12 @@ void NodeRequester::createBackupRootItems(mega::MegaHandle backupsHandle)
 
 void NodeRequester::onAddNodeRequested(std::shared_ptr<MegaNode> newNode, const QModelIndex& parentIndex, MegaItem *parentItem)
 {
-    //Too fast to protect it agains crashes?
     lockMutex(true);
     auto childItem = parentItem->addNode(newNode);
     lockMutex(false);
     childItem->setProperty(INDEX_PROPERTY, mModel->index(parentItem->getNumChildren() -1 ,0, parentIndex));
 
-    if(!mAborted)
+    if(!isAborted())
     {
         emit nodeAdded(childItem);
     }
@@ -162,11 +142,13 @@ void NodeRequester::onAddNodeRequested(std::shared_ptr<MegaNode> newNode, const 
 
 void NodeRequester::removeItem(MegaItem* item)
 {
+    QMutexLocker lock(&mMutex);
     item->deleteLater();
 }
 
 void NodeRequester::removeRootItem(MegaItem* item)
 {
+    QMutexLocker lock(&mMutex);
     item->deleteLater();
     mRootItems.removeOne(item);
 }
@@ -208,6 +190,11 @@ void NodeRequester::finishWorker()
     thread()->quit();
 }
 
+bool NodeRequester::isAborted()
+{
+    return mAborted || (mCancelToken && mCancelToken->isCancelled());
+}
+
 void NodeRequester::setShowFiles(bool newShowFiles)
 {
     mShowFiles = newShowFiles;
@@ -218,6 +205,8 @@ void NodeRequester::abort()
     mAborted = true;
     finishWorker();
 }
+
+/* ------------------- MODEL ------------------------- */
 
 const int MegaItemModel::ROW_HEIGHT = 20;
 
@@ -237,7 +226,7 @@ MegaItemModel::MegaItemModel(QObject *parent) :
     mNodeRequesterThread->start();
 
     connect(this, &MegaItemModel::requestChildNodes, mNodeRequesterWorker, &NodeRequester::requestNodeAndCreateChildren, Qt::QueuedConnection);
-    connect(this, &MegaItemModel::requestAddNode, mNodeRequesterWorker, &NodeRequester::onAddNodeRequested);
+    connect(this, &MegaItemModel::requestAddNode, mNodeRequesterWorker, &NodeRequester::onAddNodeRequested, Qt::QueuedConnection);
     connect(this, &MegaItemModel::removeItem, mNodeRequesterWorker, &NodeRequester::removeItem);
     connect(this, &MegaItemModel::removeRootItem, mNodeRequesterWorker, &NodeRequester::removeRootItem);
     connect(this, &MegaItemModel::deleteWorker, mNodeRequesterWorker, &NodeRequester::abort);
@@ -261,91 +250,87 @@ int MegaItemModel::columnCount(const QModelIndex &) const
 
 QVariant MegaItemModel::data(const QModelIndex &index, int role) const
 {
-    if (!index.isValid())
+    if (index.isValid())
     {
-        return QVariant();
-    }
-
-    MegaItem *item = static_cast<MegaItem*>(index.internalPointer());
-    if (!item)
-    {
-        return QVariant();
-    }
-
-    switch(role)
-    {
-        case Qt::DecorationRole:
+        MegaItem* item = static_cast<MegaItem*>(index.internalPointer());
+        if (item)
         {
-            return getIcon(index, item);
-        }
-        case Qt::DisplayRole:
-        {
-            return getText(index, item);
-        }
-        case Qt::SizeHintRole:
-        {
-            return QSize(0, ROW_HEIGHT);
-        }
-        case  Qt::TextAlignmentRole:
-        {
-            if(index.column() == STATUS || index.column() == USER)
+            switch(role)
             {
-                return QVariant::fromValue<Qt::Alignment>(Qt::AlignHCenter | Qt::AlignCenter);
-            }
-            break;
-        }
-        case Qt::ToolTipRole:
-        {
-            if(index.column() == USER)
-            {
-                return item->getOwnerName();
-            }
-            else if(mSyncSetupMode)
-            {
-                if((item->getStatus() == MegaItem::SYNC)
-                                      || (item->getStatus() == MegaItem::SYNC_CHILD))
+                case Qt::DecorationRole:
                 {
-                    return tr("Folder already synced");
+                    return getIcon(index, item);
                 }
-                else if(item->getStatus() == MegaItem::SYNC_PARENT)
+                case Qt::DisplayRole:
                 {
-                    return tr("Folder contents already synced");
+                    return getText(index, item);
                 }
-                QToolTip::hideText();
-            }
-            break;
+                case Qt::SizeHintRole:
+                {
+                    return QSize(0, ROW_HEIGHT);
+                }
+                case  Qt::TextAlignmentRole:
+                {
+                    if(index.column() == STATUS || index.column() == USER)
+                    {
+                        return QVariant::fromValue<Qt::Alignment>(Qt::AlignHCenter | Qt::AlignCenter);
+                    }
+                    break;
+                }
+                case Qt::ToolTipRole:
+                {
+                    if(index.column() == USER)
+                    {
+                        return item->getOwnerName();
+                    }
+                    else if(mSyncSetupMode)
+                    {
+                        if((item->getStatus() == MegaItem::SYNC)
+                                || (item->getStatus() == MegaItem::SYNC_CHILD))
+                        {
+                            return tr("Folder already synced");
+                        }
+                        else if(item->getStatus() == MegaItem::SYNC_PARENT)
+                        {
+                            return tr("Folder contents already synced");
+                        }
+                        QToolTip::hideText();
+                    }
+                    break;
+                }
+                case toInt(MegaItemModelRoles::DATE_ROLE):
+                {
+                    return QVariant::fromValue(item->getNode()->getCreationTime());
+                }
+                case toInt(MegaItemModelRoles::IS_FILE_ROLE):
+                {
+                    return QVariant::fromValue(item->getNode()->isFile());
+                }
+                case toInt(MegaItemModelRoles::STATUS_ROLE):
+                {
+                    return QVariant::fromValue(item->getStatus());
+                }
+                case toInt(NodeRowDelegateRoles::ENABLED_ROLE):
+                {
+                    if(mSyncSetupMode)
+                    {
+                        return item->isSyncable();
+                    }
+                    return true;
+                }
+                case toInt(NodeRowDelegateRoles::INDENT_ROLE):
+                {
+                    return item->isRoot() || item->isVault()? -10 : 0;
+                }
+                case toInt(NodeRowDelegateRoles::INIT_ROLE):
+                {
+                    return item->childrenAreInit();
+                }
+                default:
+                {
+                    break;
+                }
         }
-        case toInt(MegaItemModelRoles::DATE_ROLE):
-        {
-            return QVariant::fromValue(item->getNode()->getCreationTime());
-        }
-        case toInt(MegaItemModelRoles::IS_FILE_ROLE):
-        {
-            return QVariant::fromValue(item->getNode()->isFile());
-        }
-        case toInt(MegaItemModelRoles::STATUS_ROLE):
-        {
-            return QVariant::fromValue(item->getStatus());
-        }
-        case toInt(NodeRowDelegateRoles::ENABLED_ROLE):
-        {
-            if(mSyncSetupMode)
-            {
-                return item->isSyncable();
-            }
-            return true;
-        }
-        case toInt(NodeRowDelegateRoles::INDENT_ROLE):
-        {
-            return item->isRoot() || item->isVault()? -10 : 0;
-        }
-        case toInt(NodeRowDelegateRoles::INIT_ROLE):
-        {
-            return item->childrenAreInit();
-        }
-        default:
-        {
-            break;
         }
     }
     return QVariant();
@@ -353,65 +338,69 @@ QVariant MegaItemModel::data(const QModelIndex &index, int role) const
 
 QModelIndex MegaItemModel::index(int row, int column, const QModelIndex &parent) const
 {
-    if (!hasIndex(row, column, parent))
+    QModelIndex index;
+
+    if (hasIndex(row, column, parent))
     {
-        return QModelIndex();
+        if (parent.isValid())
+        {
+            mNodeRequesterWorker->lockMutex(true);
+            MegaItem* item(static_cast<MegaItem*>(parent.internalPointer()));
+            if(item)
+            {
+                index =  createIndex(row, column, item->getChild(row).data());
+            }
+            mNodeRequesterWorker->lockMutex(false);
+        }
+        else if(mNodeRequesterWorker->rootIndexSize() > row)
+        {
+            auto rootItem = mNodeRequesterWorker->getRootItem(row);
+            index = createIndex(row, column, rootItem);
+        }
     }
 
-    if (parent.isValid())
-    {
-        mNodeRequesterWorker->lockMutex(true);
-        MegaItem* item = static_cast<MegaItem*>(parent.internalPointer());
-        mNodeRequesterWorker->lockMutex(false);
-        return createIndex(row, column, item->getChild(row));
-    }
-    else if(mNodeRequesterWorker->rootIndexSize() > row)
-    {
-        return createIndex(row, column, mNodeRequesterWorker->getRootItem(row));
-    }
-    return QModelIndex();
+    return index;
 }
 
 QModelIndex MegaItemModel::parent(const QModelIndex &index) const
 {
-    if(!index.isValid())
+    QModelIndex parentIndex;
+
+    if(index.isValid())
     {
-        return QModelIndex();
+        MegaItem* item = static_cast<MegaItem*>(index.internalPointer());
+        if(item)
+        {
+            MegaItem* parent = item->getParent();
+            if (parent)
+            {
+                auto indexOfParent = mNodeRequesterWorker->rootIndexOf(parent);
+                if(indexOfParent >= 0)
+                {
+                    parentIndex = createIndex(indexOfParent, 0, parent);
+                }
+                else
+                {
+                    parentIndex = createIndex(parent->row(), 0, parent);
+                }
+            }
+        }
     }
-    MegaItem *item = static_cast<MegaItem*>(index.internalPointer());
-    MegaItem *parent = item->getParent();
-    if (!parent)
-    {
-        return QModelIndex();
-    }
-    auto indexOfParent = mNodeRequesterWorker->rootIndexOf(parent);
-    if(indexOfParent >= 0)
-    {
-        return createIndex(indexOfParent, 0, parent);
-    }
-    return createIndex(parent->row(), 0, parent);
+
+    return parentIndex;
 }
 
 int MegaItemModel::rowCount(const QModelIndex &parent) const
 {
     if (parent.isValid())
     {
-        MegaItem *item = static_cast<MegaItem*>(parent.internalPointer());
-        return item ? item->getNumItemChildren() : 0;
+        mNodeRequesterWorker->lockMutex(true);
+        MegaItem* item = static_cast<MegaItem*>(parent.internalPointer());
+        auto rows = item ? item->getNumChildren() : 0;
+        mNodeRequesterWorker->lockMutex(false);
+        return rows;
     }
     return mNodeRequesterWorker->rootIndexSize();
-}
-
-int MegaItemModel::countTotalRows(const QModelIndex& idx)
-{
-    int count = 0;
-    int rowCounter = rowCount(idx);
-    count += rowCounter;
-    for( int r = 0; r < rowCounter; ++r )
-    {
-        count += countTotalRows(index(r,0,idx));
-    }
-    return count;
 }
 
 bool MegaItemModel::hasChildren(const QModelIndex &parent) const
@@ -431,13 +420,18 @@ bool MegaItemModel::hasChildren(const QModelIndex &parent) const
         return false;
     }
 
-    MegaItem *item = static_cast<MegaItem*>(parent.internalPointer());
+    MegaItem* item = static_cast<MegaItem*>(parent.internalPointer());
     if(item && item->getNode())
     {
-        return item->getNumChildren() > 0;
+        mNodeRequesterWorker->lockMutex(true);
+        auto numChild = item->getNumChildren() > 0;
+        mNodeRequesterWorker->lockMutex(false);
+        return numChild;
     }
-
-    return QAbstractItemModel::hasChildren(parent);
+    else
+    {
+        return QAbstractItemModel::hasChildren(parent);
+    }
 }
 
 QVariant MegaItemModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -507,13 +501,18 @@ void MegaItemModel::setSyncSetupMode(bool value)
 
 void MegaItemModel::addNode(std::shared_ptr<MegaNode> node, const QModelIndex &parent)
 {
-    clearIndexesNodeInfo();
+    MegaItem* parentItem = static_cast<MegaItem*>(parent.internalPointer());
+    if(parentItem)
+    {
+        clearIndexesNodeInfo();
 
-    MegaItem *parentItem = static_cast<MegaItem*>(parent.internalPointer());
-    int numchildren = parentItem->getNumChildren();
+        mNodeRequesterWorker->lockMutex(true);
+        int numchildren = parentItem->getNumChildren();
+        mNodeRequesterWorker->lockMutex(false);
 
-    beginInsertRows(parent, numchildren, numchildren);
-    emit requestAddNode(node, parent, parentItem);
+        beginInsertRows(parent, numchildren, numchildren);
+        emit requestAddNode(node, parent, parentItem);
+    }
 }
 
 void MegaItemModel::onNodeAdded(MegaItem* childItem)
@@ -529,56 +528,52 @@ void MegaItemModel::onNodeAdded(MegaItem* childItem)
 }
 
 
-void MegaItemModel::removeNode(const QModelIndex &item)
+void MegaItemModel::removeNode(const QModelIndex &index)
 {
-    if(!item.isValid())
+    if(!index.isValid())
     {
         return;
     }
-    std::shared_ptr<MegaNode> node = (static_cast<MegaItem*>(item.internalPointer()))->getNode();
-    MegaItem *parent = static_cast<MegaItem*>(item.parent().internalPointer());
-    if (!node)
+    auto item = static_cast<MegaItem*>(index.internalPointer());
+    if(item)
     {
-        return;
+        std::shared_ptr<MegaNode> node = item->getNode();
+        if (node)
+        {
+            MegaItem* parent = static_cast<MegaItem*>(index.parent().internalPointer());
+            if(parent)
+            {
+                auto item = static_cast<MegaItem*>(index.internalPointer());
+                if(item)
+                {
+                    int row = parent->indexOf(item);
+                    beginRemoveRows(index.parent(), row, row);
+                    mNodeRequesterWorker->lockMutex(true);
+                    auto itemToRemove = parent->findChildNode(node);
+                    mNodeRequesterWorker->lockMutex(false);
+                    emit removeItem(itemToRemove);
+                    endRemoveRows();
+                }
+            }
+            else
+            {
+                int row = index.row();
+                auto item(static_cast<MegaItem*>(index.internalPointer()));
+                if(item)
+                {
+                    beginRemoveRows(index.parent(), row, row);
+                    emit removeRootItem(item);
+                    endRemoveRows();
+                }
+            }
+        }
     }
-
-    if(parent)
-    {
-        int index = parent->indexOf(static_cast<MegaItem*>(item.internalPointer()));
-        beginRemoveRows(item.parent(), index, index);
-        auto itemToRemove = parent->removeNode(node);
-        emit removeItem(itemToRemove);
-    }
-    else
-    {
-        int index = item.row();
-        beginRemoveRows(item.parent(), index, index);
-        auto itemToRemove = static_cast<MegaItem*>(item.internalPointer());
-        emit removeRootItem(itemToRemove);
-    }
-
-    endRemoveRows();
 }
 
 void MegaItemModel::showFiles(bool show)
 {
     mShowFiles = show;
     mNodeRequesterWorker->setShowFiles(mShowFiles);
-}
-
-std::shared_ptr<MegaNode> MegaItemModel::getNode(const QModelIndex &index) const
-{
-    if(index.model()!=this)
-    {
-        return nullptr;
-    }
-
-    MegaItem *item = static_cast<MegaItem*>(index.internalPointer());
-    if (!item)
-    {
-        return nullptr;
-    }
-    return item->getNode();
 }
 
 QVariant MegaItemModel::getIcon(const QModelIndex &index, MegaItem* item) const
@@ -697,17 +692,18 @@ bool MegaItemModel::canBeDeleted() const
 int MegaItemModel::insertPosition(const std::unique_ptr<MegaNode>& node)
 {
     int type = node->getType();
-    int i;
-    for (i = 0; i < mNodeRequesterWorker->rootIndexSize(); ++i)
+
+    for (auto i = 0; i < mNodeRequesterWorker->rootIndexSize(); ++i)
     {
         std::shared_ptr<MegaNode> otherNode = mNodeRequesterWorker->getRootItem(i)->getNode();
         int otherNodeType = otherNode->getType();
         if (type >= otherNodeType && qstricmp(node->getName(), otherNode->getName()) <= 0)
         {
-            break;
+            return i;
         }
     }
-    return i;
+
+    return -1;
 }
 
 void MegaItemModel::loadTreeFromNode(const std::shared_ptr<mega::MegaNode> node)
@@ -764,24 +760,23 @@ bool MegaItemModel::fetchMoreRecursively(const QModelIndex& parentIndex)
 
 QModelIndex MegaItemModel::getIndexFromNode(const std::shared_ptr<mega::MegaNode> node, const QModelIndex &parent)
 {
-    if(!node)
+    if(node)
     {
-        return QModelIndex();
-    }
-
-    auto childrenCount = rowCount(parent);
-    for(int row = 0; row < childrenCount; ++row)
-    {
-        auto indexToCheck = index(row,0,parent);
-        MegaItem *item = static_cast<MegaItem*>(indexToCheck.internalPointer());
-        if(item)
+        auto childrenCount = rowCount(parent);
+        for(int row = 0; row < childrenCount; ++row)
         {
-            if(item->getNode()->getHandle() == node->getHandle())
+            auto indexToCheck = index(row,0,parent);
+            MegaItem* item = static_cast<MegaItem*>(indexToCheck.internalPointer());
+            if(item)
             {
-                return indexToCheck;
+                if(item->getNode()->getHandle() == node->getHandle())
+                {
+                    return indexToCheck;
+                }
             }
         }
     }
+
     return QModelIndex();
 }
 
@@ -805,7 +800,7 @@ void MegaItemModel::loadLevelFinished()
 
 bool MegaItemModel::canFetchMore(const QModelIndex &parent) const
 {
-    MegaItem *item = static_cast<MegaItem*>(parent.internalPointer());
+    MegaItem* item = static_cast<MegaItem*>(parent.internalPointer());
     if(item)
     {
         return item->canFetchMore();
@@ -820,7 +815,7 @@ void MegaItemModel::fetchItemChildren(const QModelIndex& parent)
 {
     emit blockUi(true);
 
-    MegaItem *item = static_cast<MegaItem*>(parent.internalPointer());
+    MegaItem* item = static_cast<MegaItem*>(parent.internalPointer());
 
     if(!item->childrenAreInit() && !item->requestingChildren())
     {
@@ -879,7 +874,6 @@ QModelIndex MegaItemModel::findItemByNodeHandle(const mega::MegaHandle& handle, 
         QModelIndex idx = index(i, COLUMN::NODE, parent);
         if(idx.isValid())
         {
-            QString name = idx.data(Qt::DisplayRole).toString();
             if(MegaItem* chkItem = static_cast<MegaItem*>(idx.internalPointer()))
             {
                 if(chkItem->getNode()->isFolder() && chkItem->getNode()->getHandle() == handle)
@@ -901,152 +895,108 @@ QModelIndex MegaItemModel::findItemByNodeHandle(const mega::MegaHandle& handle, 
           }
         }
     }
+
     return QModelIndex();
 }
 
 QIcon MegaItemModel::getFolderIcon(MegaItem *item) const
 {
-    if(!item)
+    if(item)
     {
-        return QIcon();
-    }
-    auto node = item->getNode();
+        auto node = item->getNode();
 
-    if(!node)
-    {
-        return QIcon();
-    }
-    if (node->getType() >= MegaNode::TYPE_FOLDER)
-    {
-        if(node->getHandle() == mCameraFolderAttribute->getCameraUploadFolderHandle()
-           || node->getHandle() == mCameraFolderAttribute->getCameraUploadFolderSecondaryHandle())
+        if(node)
         {
-            QIcon icon;
-            icon.addFile(QLatin1String("://images/icons/folder/small-camera-sync.png"), QSize(), QIcon::Normal);
-            icon.addFile(QLatin1String("://images/icons/folder/small-folder-camera-sync-disabled.png"), QSize(), QIcon::Disabled);
-            return icon;;
-        }
-        else if(node->getHandle() == mMyChatFilesFolderAttribute->getMyChatFilesFolderHandle())
-        {
-            QIcon icon;
-            icon.addFile(QLatin1String("://images/icons/folder/small-chat-files.png"), QSize(), QIcon::Normal);
-            icon.addFile(QLatin1String("://images/icons/folder/small-chat-files-disabled.png"), QSize(), QIcon::Disabled);
-            return icon;
-        }
-        else if (node->isInShare())
-        {
-            QIcon icon;
-            icon.addFile(QLatin1String("://images/icons/folder/small-folder-incoming.png"), QSize(), QIcon::Normal);
-            icon.addFile(QLatin1String("://images/icons/folder/small-folder-incoming-disabled.png"), QSize(), QIcon::Disabled);
-            return icon;
-        }
-        else if (node->isOutShare())
-        {
-            QIcon icon;
-            icon.addFile(QLatin1String("://images/icons/folder/small-folder-outgoing.png"), QSize(), QIcon::Normal);
-            icon.addFile(QLatin1String("://images/icons/folder/small-folder-outgoing_disabled.png"), QSize(), QIcon::Disabled);
-            return icon;
-        }
-        else if(node->getHandle() == MegaSyncApp->getRootNode()->getHandle())
-        {
-            QIcon icon;
-            icon.addFile(QLatin1String("://images/ico-cloud-drive.png"));
-            return icon;
-        }
-        else if(item->isVault())
-        {
-            QIcon icon;
-            icon.addFile(QLatin1String("://images/node_selector/Backups_small_ico.png"));
-            return icon;
-        }
-        else
-        {
-            QString nodeDeviceId (QString::fromUtf8(node->getDeviceId()));
-            if (!nodeDeviceId.isEmpty())
+            if (node->getType() >= MegaNode::TYPE_FOLDER)
             {
-                std::unique_ptr<mega::MegaNode> parent (MegaSyncApp->getMegaApi()->getNodeByHandle(node->getParentHandle()));
-                if (parent)
+                if(node->getHandle() == mCameraFolderAttribute->getCameraUploadFolderHandle()
+                        || node->getHandle() == mCameraFolderAttribute->getCameraUploadFolderSecondaryHandle())
                 {
-                    QString parentDeviceId (QString::fromUtf8(parent->getDeviceId()));
-                    if (parentDeviceId.isEmpty())
+                    QIcon icon;
+                    icon.addFile(QLatin1String("://images/icons/folder/small-camera-sync.png"), QSize(), QIcon::Normal);
+                    icon.addFile(QLatin1String("://images/icons/folder/small-folder-camera-sync-disabled.png"), QSize(), QIcon::Disabled);
+                    return icon;;
+                }
+                else if(node->getHandle() == mMyChatFilesFolderAttribute->getMyChatFilesFolderHandle())
+                {
+                    QIcon icon;
+                    icon.addFile(QLatin1String("://images/icons/folder/small-chat-files.png"), QSize(), QIcon::Normal);
+                    icon.addFile(QLatin1String("://images/icons/folder/small-chat-files-disabled.png"), QSize(), QIcon::Disabled);
+                    return icon;
+                }
+                else if (node->isInShare())
+                {
+                    QIcon icon;
+                    icon.addFile(QLatin1String("://images/icons/folder/small-folder-incoming.png"), QSize(), QIcon::Normal);
+                    icon.addFile(QLatin1String("://images/icons/folder/small-folder-incoming-disabled.png"), QSize(), QIcon::Disabled);
+                    return icon;
+                }
+                else if (node->isOutShare())
+                {
+                    QIcon icon;
+                    icon.addFile(QLatin1String("://images/icons/folder/small-folder-outgoing.png"), QSize(), QIcon::Normal);
+                    icon.addFile(QLatin1String("://images/icons/folder/small-folder-outgoing_disabled.png"), QSize(), QIcon::Disabled);
+                    return icon;
+                }
+                else if(node->getHandle() == MegaSyncApp->getRootNode()->getHandle())
+                {
+                    QIcon icon;
+                    icon.addFile(QLatin1String("://images/ico-cloud-drive.png"));
+                    return icon;
+                }
+                else if(item->isVault())
+                {
+                    QIcon icon;
+                    icon.addFile(QLatin1String("://images/node_selector/Backups_small_ico.png"));
+                    return icon;
+                }
+                else
+                {
+                    QString nodeDeviceId (QString::fromUtf8(node->getDeviceId()));
+                    if (!nodeDeviceId.isEmpty())
                     {
-                        // TODO, future: choose icon according to host OS
-                        if (nodeDeviceId == QString::fromUtf8(MegaSyncApp->getMegaApi()->getDeviceId()))
+                        std::unique_ptr<mega::MegaNode> parent (MegaSyncApp->getMegaApi()->getNodeByHandle(node->getParentHandle()));
+                        if (parent)
                         {
-                            #ifdef Q_OS_WINDOWS
-                            const QIcon thisDeviceIcon (QLatin1String("://images/icons/pc/pc-win_24.png"));
-                            #elif defined(Q_OS_MACOS)
-                            const QIcon thisDeviceIcon (QLatin1String("://images/icons/pc/pc-mac_24.png"));
-                            #elif defined(Q_OS_LINUX)
-                            const QIcon thisDeviceIcon (QLatin1String("://images/icons/pc/pc-linux_24.png"));
-                            #endif
-                            return thisDeviceIcon;
+                            QString parentDeviceId (QString::fromUtf8(parent->getDeviceId()));
+                            if (parentDeviceId.isEmpty())
+                            {
+                                // TODO, future: choose icon according to host OS
+                                if (nodeDeviceId == QString::fromUtf8(MegaSyncApp->getMegaApi()->getDeviceId()))
+                                {
+#ifdef Q_OS_WINDOWS
+                                    const QIcon thisDeviceIcon (QLatin1String("://images/icons/pc/pc-win_24.png"));
+#elif defined(Q_OS_MACOS)
+                                    const QIcon thisDeviceIcon (QLatin1String("://images/icons/pc/pc-mac_24.png"));
+#elif defined(Q_OS_LINUX)
+                                    const QIcon thisDeviceIcon (QLatin1String("://images/icons/pc/pc-linux_24.png"));
+#endif
+                                    return thisDeviceIcon;
+                                }
+                                return QIcon(QLatin1String("://images/icons/pc/pc_24.png"));
+                            }
                         }
-                        return QIcon(QLatin1String("://images/icons/pc/pc_24.png"));
                     }
+                    QIcon icon;
+                    icon.addFile(QLatin1String("://images/icons/folder/small-folder.png"), QSize(), QIcon::Normal);
+                    icon.addFile(QLatin1String("://images/icons/folder/small-folder-disabled.png"), QSize(), QIcon::Disabled);
+                    return icon;
                 }
             }
-            QIcon icon;
-            icon.addFile(QLatin1String("://images/icons/folder/small-folder.png"), QSize(), QIcon::Normal);
-            icon.addFile(QLatin1String("://images/icons/folder/small-folder-disabled.png"), QSize(), QIcon::Disabled);
-            return icon;
+            else
+            {
+                return Utilities::getExtensionPixmapSmall(QString::fromUtf8(node->getName()));
+            }
         }
     }
-    else
-    {
-        return Utilities::getExtensionPixmapSmall(QString::fromUtf8(node->getName()));
-    }
+
+    return QIcon();
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 MegaItemModelCloudDrive::MegaItemModelCloudDrive(QObject *parent)
     : MegaItemModel(parent)
-    , mDelegateListener(mega::make_unique<QTMegaRequestListener>(MegaSyncApp->getMegaApi(), this))
 {
-    MegaApi* megaApi = MegaSyncApp->getMegaApi();
-    megaApi->getCameraUploadsFolder(mDelegateListener.get());
-    megaApi->getCameraUploadsFolderSecondary(mDelegateListener.get());
-    megaApi->getMyChatFilesFolder(mDelegateListener.get());
-}
-
-MegaItemModelCloudDrive::~MegaItemModelCloudDrive()
-{
-}
-
-void MegaItemModelCloudDrive::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e)
-{
-    Q_UNUSED(api);
-    if (e->getErrorCode() != MegaError::API_OK)
-    {
-        return;
-    }
-    if(request->getType() == mega::MegaRequest::TYPE_GET_ATTR_USER)
-    {
-        switch(request->getParamType())
-        {
-        case mega::MegaApi::USER_ATTR_CAMERA_UPLOADS_FOLDER:
-        case mega::MegaApi::USER_ATTR_MY_CHAT_FILES_FOLDER:
-        {
-            //TODO EKA: DO IT BY ANOTHER WAY AS THIS LOADS ALL THE TREE
-//            QModelIndex idx = findItemByNodeHandle(request->getNodeHandle(), index(0, 0));
-//            if(idx.isValid())
-//            {
-//                if(MegaItem* item = static_cast<MegaItem*>(idx.internalPointer()))
-//                {
-//                    request->getParamType() == mega::MegaApi::USER_ATTR_CAMERA_UPLOADS_FOLDER
-//                            ? item->setCameraFolder() : item->setChatFilesFolder();
-//                }
-//            }
-
-            QVector<int> roles;
-            roles.append(Qt::DecorationRole);
-           // emit dataChanged(idx, idx, roles);
-            return;
-        }
-        default:
-            break;
-        }
-    }
 }
 
 void MegaItemModelCloudDrive::createRootNodes()
@@ -1097,26 +1047,26 @@ MegaItemModelIncomingShares::MegaItemModelIncomingShares(QObject *parent)
 
 void MegaItemModelIncomingShares::onItemInfoUpdated(int role)
 {
-//    if(MegaItem* item = static_cast<MegaItem*>(sender()))
-//    {
-//        for(int i = 0; i < rowCount(); ++i)
-//        {
-//            QModelIndex idx = index(i, COLUMN::USER); //we only update this column because we retrieve the data in async mode
-//            if(idx.isValid())                         //so it is possible that we doesn´t have the information from the start
-//            {
-//                if(MegaItem* chkItem = static_cast<MegaItem*>(idx.internalPointer()))
-//                {
-//                    if(chkItem == item)
-//                    {
-//                        QVector<int> roles;
-//                        roles.append(role);
-//                        emit dataChanged(idx, idx, roles);
-//                        return;
-//                    }
-//                }
-//            }
-//        }
-    //    }
+    if(MegaItem* item = static_cast<MegaItem*>(sender()))
+    {
+        for(int i = 0; i < rowCount(); ++i)
+        {
+            QModelIndex idx = index(i, COLUMN::USER); //we only update this column because we retrieve the data in async mode
+            if(idx.isValid())                         //so it is possible that we doesn´t have the information from the start
+            {
+                if(MegaItem* chkItem = static_cast<MegaItem*>(idx.internalPointer()))
+                {
+                    if(chkItem == item)
+                    {
+                        QVector<int> roles;
+                        roles.append(role);
+                        emit dataChanged(idx, idx, roles);
+                        break;
+                    }
+                }
+            }
+        }
+    }
 }
 
 void MegaItemModelIncomingShares::onRootItemsCreated(QList<MegaItem *> items)
@@ -1135,10 +1085,6 @@ void MegaItemModelIncomingShares::onRootItemsCreated(QList<MegaItem *> items)
     {
         loadLevelFinished();
     }
-}
-
-MegaItemModelIncomingShares::~MegaItemModelIncomingShares()
-{
 }
 
 void MegaItemModelIncomingShares::createRootNodes()

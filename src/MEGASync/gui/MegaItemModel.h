@@ -74,8 +74,9 @@ signals:
 
 private:
      void finishWorker();
+     bool isAborted();
 
-     bool mShowFiles = true;
+     std::atomic<bool> mShowFiles{true};
      std::atomic<bool> mAborted{false};
      MegaItemModel* mModel;
      QList<MegaItem*> mRootItems;
@@ -121,11 +122,9 @@ public:
     void setDisableFolders(bool option);
     void setSyncSetupMode(bool value);
     void addNode(std::shared_ptr<mega::MegaNode> node, const QModelIndex &parent);
-    void removeNode(const QModelIndex &item);
+    void removeNode(const QModelIndex &index);
     void showFiles(bool show);
-    int countTotalRows(const QModelIndex &index = QModelIndex());
 
-    std::shared_ptr<mega::MegaNode> getNode(const QModelIndex &index) const;
     QVariant getIcon(const QModelIndex &index, MegaItem* item) const;
     QVariant getText(const QModelIndex &index, MegaItem* item) const;
     void setFetchStep(int step);
@@ -199,9 +198,8 @@ class MegaItemModelCloudDrive : public MegaItemModel , public mega::MegaRequestL
 
 public:
     explicit MegaItemModelCloudDrive(QObject *parent = 0);
-    virtual ~MegaItemModelCloudDrive();
+    virtual ~MegaItemModelCloudDrive() = default;
 
-    void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
     void createRootNodes() override;
     int rootItemsCount() const override;
 
@@ -215,7 +213,6 @@ private slots:
     void onRootItemCreated(MegaItem*item);
 
 private:
-    std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
     bool mLoadingRoot;
 };
 
@@ -225,7 +222,7 @@ class MegaItemModelIncomingShares : public MegaItemModel
 
 public:
     explicit MegaItemModelIncomingShares(QObject *parent = 0);
-    virtual ~MegaItemModelIncomingShares();
+    virtual ~MegaItemModelIncomingShares() = default;
 
     void createRootNodes() override;
     int rootItemsCount() const override;

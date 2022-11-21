@@ -38,9 +38,8 @@ public:
 
     bool canFetchMore();
 
-    MegaItem *getParent();
-    MegaItem *getChild(int i);
-    int getNumItemChildren();
+    QPointer<MegaItem> getParent();
+    QPointer<MegaItem> getChild(int i);
     int getNumChildren();
     int indexOf(MegaItem *item);
     QString getOwnerName();
@@ -51,8 +50,8 @@ public:
     int getStatus();
     bool isSyncable();
     bool isRoot();
-    MegaItem* addNode(std::shared_ptr<mega::MegaNode> node);
-    MegaItem* removeNode(std::shared_ptr<mega::MegaNode> node);
+    QPointer<MegaItem> addNode(std::shared_ptr<mega::MegaNode> node);
+    QPointer<MegaItem> findChildNode(std::shared_ptr<mega::MegaNode> node);
     bool isVault();
     void displayFiles(bool enable);
     void setChatFilesFolder();
@@ -77,7 +76,7 @@ protected:
     bool mIsVault;
 
     std::shared_ptr<mega::MegaNode> mNode;
-    QList<MegaItem*> mChildItems;
+    QList<QPointer<MegaItem>> mChildItems;
     std::unique_ptr<mega::MegaUser> mOwner;
 
 private slots:
