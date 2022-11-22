@@ -112,7 +112,7 @@ SyncSettings::SyncSettings(const SyncData &osd, bool/* loadedFromPreviousSession
     // did not deActivate syncs when logging out, we dont need to consider this
     // keeping the parameter and the code in case we consider fixing that. Uncoment the /**/ in that case.
     mActive = /*!loadedFromPreviousSessions && */osd.mEnabled && !osd.mTemporarilyDisabled;
-
+    mSync.reset(new MegaSync()); // MegaSync getters return fair enough defaults
 }
 
 QString SyncSettings::toString()
@@ -209,5 +209,13 @@ void SyncSettings::setBackupId(MegaHandle backupId)
 
 MegaSync::SyncType SyncSettings::getType()
 {
-    return static_cast<MegaSync::SyncType>(mSync->getType());
+    auto type = static_cast<MegaSync::SyncType>(mSync->getType());
+
+    //There is not TYPE_UNKNOWN syncs, at least it is TWO WAY
+    if(type == MegaSync::TYPE_UNKNOWN)
+    {
+        type = MegaSync::TYPE_TWOWAY;
+    }
+
+    return type;
 }
