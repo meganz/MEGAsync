@@ -234,12 +234,5 @@ void BackupNameConflictDialog::updateScrollHeight()
         auto conflict = conflicts.at(index);
         minHeight += conflict->sizeHint().height();
     }
-
     ui->scrollArea->setMinimumHeight(minHeight);
-
-#ifdef Q_OS_LINUX
-    //It is the only OS where the bottom buttons will be over the conflict zone
-    adjustSize();
-    setMinimumHeight(sizeHint().height());
-#endif
 }
