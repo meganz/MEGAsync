@@ -222,7 +222,8 @@ std::shared_ptr<SyncSettings> SyncInfo::updateSyncSettings(MegaSync *sync)
 
         //move into the configuredSyncsMap
         configuredSyncsMap.insert(sync->getBackupId(), cs);
-        configuredSyncs[cs->getType()].append(sync->getBackupId());
+        MegaSync::SyncType type = static_cast<MegaSync::SyncType>(sync->getType());
+        configuredSyncs[type].append(sync->getBackupId());
 
         // remove from picked
         syncsSettingPickedFromOldConfig.erase(oldcsitr);
@@ -300,11 +301,9 @@ void SyncInfo::pickInfoFromOldSync(const SyncData &osd, MegaHandle backupId, boo
 {
     QMutexLocker qm(&syncMutex);
     assert(preferences->logged() || loadedFromPreviousSessions);
-    std::shared_ptr<SyncSettings> cs;
-
     assert (!configuredSyncsMap.contains(backupId) && "picking already configured sync!"); //this should always be the case
 
-    cs = syncsSettingPickedFromOldConfig[backupId] = std::make_shared<SyncSettings>(osd, loadedFromPreviousSessions);
+    std::shared_ptr<SyncSettings> cs = syncsSettingPickedFromOldConfig[backupId] = std::make_shared<SyncSettings>(osd, loadedFromPreviousSessions);
 
     cs->setBackupId(backupId); //assign the new tag given by the sdk
 
