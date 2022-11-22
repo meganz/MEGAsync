@@ -42,6 +42,9 @@ NodeSelector::NodeSelector(int selectMode, QWidget *parent) :
     ui->tabBar->addTab(tr(IN_SHARES));
     ui->tabBar->addTab(tr(BACKUPS));
 
+    connect(ui->tabBar, &QTabBar::currentChanged, this, &NodeSelector::onOptionSelected);
+#endif
+
     for(int page = 0; page < ui->stackedWidget->count(); ++page)
     {
         auto viewContainer = dynamic_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->widget(page));
@@ -63,9 +66,6 @@ NodeSelector::NodeSelector(int selectMode, QWidget *parent) :
 
         }
     }
-
-    connect(ui->tabBar, &QTabBar::currentChanged, this, &NodeSelector::onOptionSelected);
-#endif
 
     //TODO EKA: WE need to do this at this lvl? only for stream_select mode, switch removed
     //setWindowTitle(tr("Select items"));
