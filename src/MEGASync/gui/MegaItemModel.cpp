@@ -50,6 +50,11 @@ void NodeRequester::requestNodeAndCreateChildren(MegaItem* item, const QModelInd
                 lockMutex(false);
                 emit nodesReady(item);
             }
+            else
+            {
+                delete childNodesFiltered;
+            }
+
         }
     }
 }

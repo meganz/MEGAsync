@@ -61,13 +61,19 @@ private slots:
     void onbShowIncomingSharesClicked();
     void onbShowCloudDriveClicked();
     void onbShowBackupsFolderClicked();
+    void onOptionSelected(int index);
+#ifdef Q_OS_MAC
     void onTabSelected(int index);
+#endif
     void onViewReady(bool isEmpty);
 
 private:
     void processCloseEvent(MegaItemProxyModel *proxy, QCloseEvent* event);
     QModelIndex getParentIncomingShareByIndex(QModelIndex idx);
     void hideSelector(TabItem item);
+#ifdef Q_OS_MAC
+    void hideTabSelector(const QString& tabText);
+#endif
     void shortCutConnects(int ignoreThis);
 
     Ui::NodeSelector *ui;

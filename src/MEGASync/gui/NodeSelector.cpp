@@ -33,6 +33,15 @@ NodeSelector::NodeSelector(int selectMode, QWidget *parent) :
     setWindowModality(Qt::WindowModal);
     ui->setupUi(this);
 
+#ifndef Q_OS_MAC
+    connect(ui->bShowIncomingShares, &QPushButton::clicked, this, &NodeSelector::onbShowIncomingSharesClicked);
+    connect(ui->bShowCloudDrive, &QPushButton::clicked, this, &NodeSelector::onbShowCloudDriveClicked);
+    connect(ui->bShowBackups, &QPushButton::clicked, this, &NodeSelector::onbShowBackupsFolderClicked);
+#else
+    ui->tabBar->addTab(tr(CLD_DRIVE));
+    ui->tabBar->addTab(tr(IN_SHARES));
+    ui->tabBar->addTab(tr(BACKUPS));
+
     for(int page = 0; page < ui->stackedWidget->count(); ++page)
     {
         auto viewContainer = dynamic_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->widget(page));
@@ -55,16 +64,7 @@ NodeSelector::NodeSelector(int selectMode, QWidget *parent) :
         }
     }
 
-#ifndef Q_OS_MAC
-    connect(ui->bShowIncomingShares, &QPushButton::clicked, this, &NodeSelector::onbShowIncomingSharesClicked);
-    connect(ui->bShowCloudDrive, &QPushButton::clicked, this, &NodeSelector::onbShowCloudDriveClicked);
-    connect(ui->bShowBackups, &QPushButton::clicked, this, &NodeSelector::onbShowBackupsFolderClicked);
-#else
-    ui->tabBar->addTab(tr(CLD_DRIVE));
-    ui->tabBar->addTab(tr(IN_SHARES));
-    ui->tabBar->addTab(tr(BACKUPS));
-
-    connect(ui->tabBar, &QTabBar::currentChanged, this, &NodeSelector::onTabSelected);
+    connect(ui->tabBar, &QTabBar::currentChanged, this, &NodeSelector::onOptionSelected);
 #endif
 
     //TODO EKA: WE need to do this at this lvl? only for stream_select mode, switch removed
@@ -207,52 +207,65 @@ void NodeSelector::onbOkClicked()
     correctNodeSelected ? accept() : reject();
 }
 
-void NodeSelector::onbShowIncomingSharesClicked()
+void NodeSelector::onOptionSelected(int index)
 {
-    ui->stackedWidget->setCurrentIndex(SHARES);
+#ifdef Q_OS_MAC
+    onTabSelected(index);
+#else
+    switch (index)
+    {
+        case NodeSelector::CLOUD_DRIVE:
+            ui->bShowCloudDrive->click();
+            break;
+        case NodeSelector::SHARES:
+            ui->bShowIncomingShares->click();
+            break;
+        case NodeSelector::VAULT:
+            ui->bShowBackups->click();
+            break;
+        default:
+            break;
+    }
+#endif
+
 }
+
+#ifdef Q_OS_MAC
+void NodeSelector::onTabSelected(int index)
+{
+    auto tabText = ui->tabBar->tabText(index);
+    if(tabText == tr(CLD_DRIVE))
+    {
+        onbShowCloudDriveClicked();
+    }
+    else if(tabText == tr(IN_SHARES))
+    {
+        onbShowIncomingSharesClicked();
+    }
+    else if(tabText == tr(BACKUPS))
+    {
+        onbShowBackupsFolderClicked();
+    }
+
+    ui->tabBar->setCurrentIndex(index);
+}
+#endif
 
 void NodeSelector::onbShowCloudDriveClicked()
 {
     ui->stackedWidget->setCurrentIndex(CLOUD_DRIVE);
 }
 
-void NodeSelector::onbShowBackupsFolderClicked()
+void NodeSelector::onbShowIncomingSharesClicked()
 {
-    ui->stackedWidget->setCurrentIndex(VAULT);
+    ui->stackedWidget->setCurrentIndex(SHARES);
 }
 
-void NodeSelector::onTabSelected(int index)
+void NodeSelector::onbShowBackupsFolderClicked()
 {
-    switch (index)
-    {
-        case NodeSelector::CLOUD_DRIVE:
-#ifdef Q_OS_MAC
-            onbShowCloudDriveClicked();
-            ui->tabBar->setCurrentIndex(index);
-#else
-            ui->bShowCloudDrive->click();
-#endif
-            break;
-        case NodeSelector::SHARES:
-#ifdef Q_OS_MAC
-            onbShowIncomingSharesClicked();
-            ui->tabBar->setCurrentIndex(index);
-#else
-            ui->bShowIncomingShares->click();
-#endif
-            break;
-        case NodeSelector::VAULT:
-#ifdef Q_OS_MAC
-            onbShowBackupsFolderClicked();
-            ui->tabBar->setCurrentIndex(index);
-#else
-            ui->bShowBackups->click();
-#endif
-            break;
-        default:
-            break;
-    }
+    qDebug() << ui->stackedWidget->currentIndex() << VAULT;
+    ui->stackedWidget->setCurrentIndex(VAULT);
+    qDebug() << ui->stackedWidget->currentIndex();
 }
 
 void NodeSelector::onViewReady(bool isEmpty)
@@ -278,7 +291,7 @@ void NodeSelector::shortCutConnects(int ignoreThis)
         if(i != ignoreThis)
         {
             QShortcut *shortcut = new QShortcut(QKeySequence(QString::fromLatin1("Ctrl+%1").arg(i+1)), this);
-            QObject::connect(shortcut, &QShortcut::activated, this, [=](){ onTabSelected(i); });
+            QObject::connect(shortcut, &QShortcut::activated, this, [=](){ onOptionSelected(i); });
         }
     }
 }
@@ -330,6 +343,8 @@ void NodeSelector::hideSelector(TabItem item)
         {
 #ifndef Q_OS_MAC
             ui->bShowCloudDrive->hide();
+#else
+            hideTabSelector(tr(CLD_DRIVE));
 #endif
             break;
         }
@@ -337,6 +352,8 @@ void NodeSelector::hideSelector(TabItem item)
         {
 #ifndef Q_OS_MAC
             ui->bShowIncomingShares->hide();
+#else
+            hideTabSelector(tr(IN_SHARES));
 #endif
             break;
         }
@@ -344,16 +361,27 @@ void NodeSelector::hideSelector(TabItem item)
         {
 #ifndef Q_OS_MAC
             ui->bShowBackups->hide();
+#else
+            hideTabSelector(tr(BACKUPS));
 #endif
             break;
         }
     }
+}
 
 #ifdef Q_OS_MAC
-    ui->tabBar->removeTab(item);
-#endif
-
+void NodeSelector::hideTabSelector(const QString& tabText)
+{
+    for(int index = 0; index < ui->tabBar->count(); ++index)
+    {
+        if(ui->tabBar->tabText(index) == tabText)
+        {
+            ui->tabBar->removeTab(index);
+            break;
+        }
+    }
 }
+#endif
 
 void NodeSelector::setSelectedNodeHandle(std::shared_ptr<MegaNode> node)
 {
@@ -361,7 +389,6 @@ void NodeSelector::setSelectedNodeHandle(std::shared_ptr<MegaNode> node)
     {
         node = std::shared_ptr<MegaNode>(mMegaApi->getRootNode());
     }
-
 
     if(node)
     {
@@ -373,11 +400,11 @@ void NodeSelector::setSelectedNodeHandle(std::shared_ptr<MegaNode> node)
 
         if(node->isInShare())
         {
-            onTabSelected(SHARES);
+            onOptionSelected(SHARES);
         }
         else
         {
-            onTabSelected(CLOUD_DRIVE);
+            onOptionSelected(CLOUD_DRIVE);
         }
 
         auto tree_view_widget = static_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->currentWidget());
