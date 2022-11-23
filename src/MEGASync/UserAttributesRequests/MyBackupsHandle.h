@@ -4,6 +4,8 @@
 #include <control/UserAttributesManager.h>
 #include <mega/bindings/qt/QTMegaRequestListener.h>
 
+Q_DECLARE_METATYPE(mega::MegaHandle)
+
 namespace UserAttributes
 {
 class CreateMyBackupsListener;

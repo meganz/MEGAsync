@@ -40,6 +40,8 @@ private slots:
     void onDeviceNameSet(QString name);
 
 private:
+    QString getAddText();
+    QString getMenuText();
     void refresh();
     void highLightMenuEntry(QAction *action);
 

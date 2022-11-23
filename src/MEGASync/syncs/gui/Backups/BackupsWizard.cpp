@@ -897,7 +897,7 @@ bool ProxyModel::filterAcceptsRow(int source_row, const QModelIndex &source_pare
 {
     Q_UNUSED(source_parent);
     return !mShowOnlyChecked
-            || sourceModel()->index(source_row, 0).data(Qt::CheckStateRole).toBool();
+            || sourceModel()->index(source_row, 0).data(Qt::CheckStateRole).value<Qt::CheckState>() == Qt::Checked;
 }
 
 QVariant ProxyModel::data(const QModelIndex &index, int role) const
@@ -942,7 +942,8 @@ void WizardDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
 {
     painter->save();
     QStyleOptionViewItem optCopy(option);
-    bool isS1(option.widget->objectName() == QLatin1String("lvFoldersStep1"));
+    optCopy.index = index;
+    bool isS1(isStep1(optCopy.widget));
 
     // draw the checkbox
     if(isS1 && index.flags().testFlag(Qt::ItemIsUserCheckable))
@@ -951,10 +952,11 @@ void WizardDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
         optCopy.state = optCopy.state & ~QStyle::State_HasFocus;
 
         // sets the state
-        optCopy.state |= index.data(Qt::CheckStateRole).toBool() ? QStyle::State_On : QStyle::State_Off;
+        optCopy.state |= index.data(Qt::CheckStateRole).value<Qt::CheckState>() == Qt::Checked ? QStyle::State_On : QStyle::State_Off;
 
         QRect checkBoxRect = QApplication::style()->subElementRect(QStyle::SE_ItemViewItemCheckIndicator, &optCopy, optCopy.widget);
         optCopy.rect = checkBoxRect;
+
         auto oldAlignment (optCopy.displayAlignment);
         optCopy.displayAlignment |= Qt::AlignVCenter;
         QApplication::style()->drawPrimitive(QStyle::PE_IndicatorItemViewItemCheck, &optCopy, painter, optCopy.widget);
@@ -967,18 +969,10 @@ void WizardDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
         mode = QIcon::Disabled;
     else if (optCopy.state & QStyle::State_Selected)
         mode = QIcon::Selected;
-    QIcon::State state = optCopy.state & QStyle::State_Open ? QIcon::On : QIcon::Off;
-    QIcon icon =  qvariant_cast<QIcon>(index.data(Qt::DecorationRole));
-    if(!icon.isNull())
-    {
-        optCopy.features |= QStyleOptionViewItem::HasDecoration;
-    }
-    optCopy.icon = icon;
-    QRect iconRect = QApplication::style()->subElementRect(QStyle::SE_ItemViewItemDecoration, &optCopy, optCopy.widget);
-    int offset = isS1 ? ICON_POSITION_STEP_1 : ICON_POSITION_STEP_2;
-    iconRect.moveTo(QPoint(offset, iconRect.y()));
+
+    QRect iconRect = calculateIconRect(optCopy);
     optCopy.rect = iconRect;
-    optCopy.icon.paint(painter, optCopy.rect, optCopy.decorationAlignment, mode, state);
+    optCopy.icon.paint(painter, optCopy.rect, optCopy.decorationAlignment, mode, optCopy.state & QStyle::State_Open ? QIcon::On : QIcon::Off);
 
     // draw the text
     QString text = qvariant_cast<QString>(index.data(Qt::DisplayRole));
@@ -986,19 +980,89 @@ void WizardDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
     {
         optCopy.text = text;
         QPalette::ColorGroup cg = optCopy.state & QStyle::State_Enabled
-                              ? QPalette::Normal : QPalette::Disabled;
+                ? QPalette::Normal : QPalette::Disabled;
 
         if (cg == QPalette::Normal && !(optCopy.state & QStyle::State_Active))
             cg = QPalette::Inactive;
 
         optCopy.rect = option.rect;
         painter->setPen(optCopy.palette.color(cg, QPalette::Text));
-        QRect textRect = QApplication::style()->subElementRect(QStyle::SE_ItemViewItemText, &optCopy, optCopy.widget);
-        textRect.moveTo(iconRect.right() + TEXT_MARGIN, textRect.y());
-        textRect.setRight(option.rect.right());
+        QRect textRect = calculateTextRect(optCopy, iconRect);
         QString elidedText = painter->fontMetrics().elidedText(optCopy.text, Qt::ElideMiddle, textRect.width() - TEXT_MARGIN);
         painter->drawText(textRect, elidedText, QTextOption(Qt::AlignVCenter | Qt::AlignLeft));
     }
 
-  painter->restore();
+    painter->restore();
+}
+
+bool WizardDelegate::editorEvent(QEvent *event,
+                            QAbstractItemModel *model,
+                            const QStyleOptionViewItem &option,
+                            const QModelIndex &index)
+{
+    //Hack to toggle the checkbox when pressing in the row
+    if (event->type() == QEvent::MouseButtonRelease)
+    {
+        Qt::CheckState newState = index.data(Qt::CheckStateRole).value<Qt::CheckState>() == Qt::Checked ? Qt::Unchecked : Qt::Checked;
+        model->setData(index, newState, Qt::CheckStateRole);
+
+        //do not call the base implementation, as it will toggle again the checkbox if the user presses just on the checkbox
+        return true;
+    }
+
+    return QStyledItemDelegate::editorEvent(event, model, option, index);
+}
+
+bool WizardDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view, const QStyleOptionViewItem &option, const QModelIndex &index)
+{
+    QStyleOptionViewItem optCopy(option);
+    optCopy.index = index;
+
+    QRect iconRect = calculateIconRect(optCopy);
+    QRect textRect = calculateTextRect(optCopy, iconRect);
+    QString text = qvariant_cast<QString>(index.data(Qt::DisplayRole));
+    auto textBoundingRect = option.fontMetrics.boundingRect(text);
+    textRect.setWidth(textBoundingRect.width());
+
+    if(!textRect.contains(event->pos()))
+    {
+        event->accept();
+        return true;
+    }
+
+    return QStyledItemDelegate::helpEvent(event, view, option, index);
+}
+
+QRect WizardDelegate::calculateIconRect(QStyleOptionViewItem &option) const
+{
+    QIcon icon =  qvariant_cast<QIcon>(option.index.data(Qt::DecorationRole));
+    if(!icon.isNull())
+    {
+        option.features |= QStyleOptionViewItem::HasDecoration;
+    }
+    option.icon = icon;
+
+    bool isS1(isStep1(option.widget));
+    QRect iconRect = QApplication::style()->subElementRect(QStyle::SE_ItemViewItemDecoration, &option, option.widget);
+    int offset = isS1 ? ICON_POSITION_STEP_1 : ICON_POSITION_STEP_2;
+    iconRect.moveTo(QPoint(offset, iconRect.y()));
+    return iconRect;
+}
+
+QRect WizardDelegate::calculateTextRect(QStyleOptionViewItem &option, QRect iconRect) const
+{
+    QRect textRect = QApplication::style()->subElementRect(QStyle::SE_ItemViewItemText, &option, option.widget);
+    if(iconRect.isEmpty())
+    {
+        iconRect = calculateIconRect(option);
+    }
+    textRect.moveTo(iconRect.right() + TEXT_MARGIN, textRect.y());
+    textRect.setRight(option.rect.right());
+
+    return textRect;
+}
+
+bool WizardDelegate::isStep1(const QWidget *view) const
+{
+    return view->objectName() == QLatin1String("lvFoldersStep1");
 }
