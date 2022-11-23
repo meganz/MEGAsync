@@ -472,7 +472,7 @@
     <message>
         <source>Backup folder:</source>
         <translatorcomment>In the right of this label the line edit will be displayed. This line edit will be used by the user to change the backup name.</translatorcomment>
-        <translation>Folder kopii zapasowej:</translation>
+        <translation>Katalog kopii zapasowej:</translation>
     </message>
     <message>
         <source>A folder named &quot;%1&quot; already exists in your Backups. Rename the new folder to continue with the backup.</source>
@@ -1226,7 +1226,7 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
     <message>
         <source>Show in folder</source>
         <translatorcomment>Button label of system notification to open the selected completed transfer using the specific file browser</translatorcomment>
-        <translation>Pokaż w folderze</translation>
+        <translation>Pokaż w katalogu</translation>
     </message>
     <message>
         <source>Payment Failed</source>
@@ -1415,7 +1415,7 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
     <message>
         <source>Skip this folder</source>
         <translatorcomment>Button text for the skip action for folders</translatorcomment>
-        <translation>Pomiń ten folder</translation>
+        <translation>Pomiń ten katalog</translation>
     </message>
     <message>
         <source>Merge</source>
@@ -2058,7 +2058,7 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
     <message>
         <source>Show in folder</source>
         <translatorcomment>Tooltip for show transfer in folder</translatorcomment>
-        <translation>Pokaż w folderze</translation>
+        <translation>Pokaż w katalogu</translation>
     </message>
     <message>
         <source>Retry</source>
@@ -3021,12 +3021,12 @@ Transfery zostaną automatycznie wznowione po ponownym otwarciu aplikacji.</nume
     <message>
         <source>Folder already synced</source>
         <translatorcomment>Tooltip text to notify the user that this folder is already synced.</translatorcomment>
-        <translation>Folder już zsynchronizowany</translation>
+        <translation>Katalog już zsynchronizowany</translation>
     </message>
     <message>
         <source>Folder contents already synced</source>
         <translatorcomment>Tooltip text to notify the user that some folder inside the folder that he is hovering with mouse is already synced.</translatorcomment>
-        <translation>Zawartość folderu już zsynchronizowana</translation>
+        <translation>Zawartość katalogu już zsynchronizowana</translation>
     </message>
     <message>
         <source>Name</source>
@@ -3263,7 +3263,7 @@ Transfery zostaną automatycznie wznowione po ponownym otwarciu aplikacji.</nume
     <message>
         <source>Account expired (business or Pro Flexi)</source>
         <translatorcomment>Label to show that the current account (either business or Pro Flexi) is expired during a SDK operation.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Konto dezaktywowane</translation>
     </message>
 </context>
 <context>
@@ -3559,7 +3559,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Select a MEGA folder</source>
         <translatorcomment>Node selector dialog title</translatorcomment>
-        <translation>Wybierz folder MEGA</translation>
+        <translation>Wybierz katalog MEGA</translation>
     </message>
     <message numerus="yes">
         <source>You no longer have access to this item. Ask the owner to share again.</source>
@@ -4265,7 +4265,7 @@ Please delete the folder sync from preferences to cancel them.</source>
     <message>
         <source>Create New Folder</source>
         <translatorcomment>Button for creating a new folder</translatorcomment>
-        <translation>Utwórz nowy folder</translation>
+        <translation>Utwórz nowy katalog</translation>
     </message>
     <message>
         <source>Create a New Folder</source>
@@ -4632,7 +4632,7 @@ Czy mimo to chcesz je usunąć?</translation>
     <message>
         <source>Delete folder permanently</source>
         <translatorcomment>Radio button option text</translatorcomment>
-        <translation>Usuń folder na stałe</translation>
+        <translation>Usuń katalog na stałe</translation>
     </message>
     <message>
         <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. This action cannot be undone.</source>
@@ -4673,7 +4673,7 @@ Czy mimo to chcesz je usunąć?</translation>
     <message>
         <source>Enter new folder name</source>
         <translatorcomment>Title of the rename folder dialog </translatorcomment>
-        <translation>Wprowadź nową nazwę folderu</translation>
+        <translation>Wprowadź nową nazwę katalogu</translation>
     </message>
     <message>
         <source>Rename file</source>
@@ -4683,7 +4683,7 @@ Czy mimo to chcesz je usunąć?</translation>
     <message>
         <source>Rename folder</source>
         <translatorcomment>Dialog title for folder renaming</translatorcomment>
-        <translation>Zmień nazwę folderu</translation>
+        <translation>Zmień nazwę katalogu</translation>
     </message>
 </context>
 <context>
@@ -5554,7 +5554,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>MEGA folder:</source>
         <translatorcomment>Label displayed to show the MEGA folder synchronized.</translatorcomment>
-        <translation>Folder na MEGA:</translation>
+        <translation>Katalog MEGA:</translation>
     </message>
     <message>
         <source>Change</source>
@@ -6265,7 +6265,7 @@ Aby kontynuować, wybierz inny katalog.</translation>
     <message>
         <source>Remove synced folder</source>
         <translatorcomment>Context menu option that removes the sync.</translatorcomment>
-        <translation>Usuń zsynchronizowany folder</translation>
+        <translation>Usuń zsynchronizowany katalog</translation>
     </message>
 </context>
 <context>
@@ -6953,7 +6953,7 @@ Aby uzyskać więcej limitu, uaktualnij konto do wersji Pro lub poczekaj [A], a�
     <message>
         <source>MEGA folder:</source>
         <translatorcomment>Label to indicate the user the MEGA folder in which the selected files/folders will be uploaded (String short as possible)</translatorcomment>
-        <translation>Folder na MEGA:</translation>
+        <translation>Katalog MEGA:</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>

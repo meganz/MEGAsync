@@ -4332,7 +4332,7 @@ Please delete the folder sync from preferences to cancel them.</source>
     <message>
         <source>All Files (*)</source>
         <translatorcomment>File of type option for not filtering files by extension</translatorcomment>
-        <translation>所有文件（*）</translation>
+        <translation>所有文件 (*)</translation>
     </message>
     <message>
         <source>Show </source>
@@ -4342,7 +4342,7 @@ Please delete the folder sync from preferences to cancel them.</source>
     <message>
         <source>All files (*)</source>
         <translatorcomment>File of type option for not filtering files by extension</translatorcomment>
-        <translation>所有文件（*）</translation>
+        <translation>所有文件 (*)</translation>
     </message>
     <message>
         <source>Directories</source>
