@@ -3089,14 +3089,19 @@ Transfers will automatically resume when you re-open the app.</numerusform>
 <context>
     <name>MegaNodeNames</name>
     <message>
-        <source>Cloud Drive</source>
-        <translatorcomment>Title of the Cloud Drive section</translatorcomment>
-        <translation>Cloud Drive</translation>
-    </message>
-    <message>
         <source>Backups</source>
         <translatorcomment>Title of the Backups root node</translatorcomment>
         <translation>Backups</translation>
+    </message>
+    <message>
+        <source>Incoming shares</source>
+        <translatorcomment>Title of the Incoming shares root node</translatorcomment>
+        <translation type="unfinished">Incoming shares</translation>
+    </message>
+    <message>
+        <source>Cloud Drive</source>
+		<translatorcomment>Title of the Cloud Drive root node</translatorcomment>
+        <translation type="unfinished">Cloud Drive</translation>
     </message>
 </context>
 <context>
@@ -3571,16 +3576,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
             <numerusform>You no longer have access to these items. Ask the owner to share again.</numerusform>
         </translation>
     </message>
-    <message>
-        <source>Cloud drive</source>
-        <translatorcomment>Node selector button Text. Switch the view to show only the cloud drive nodes (files and folders)</translatorcomment>
-        <translation>Cloud Drive</translation>
-    </message>
-    <message>
-        <source>Incoming shares</source>
-        <translatorcomment>Node selector button Text. Switch the view to show only the incoming shares nodes (files and folders)</translatorcomment>
-        <translation>Incoming shares</translation>
-    </message>
     <message numerus="yes">
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
@@ -3606,11 +3601,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
             <numerusform>%1. %2 has been removed. To reselect, close this window and try again.</numerusform>
             <numerusform>%1. %2 have been removed. To reselect, close this window and try again.</numerusform>
         </translation>
-    </message>
-    <message>
-        <source>Backups</source>
-        <translatorcomment>Title of the Backups section</translatorcomment>
-        <translation>Backups</translation>
     </message>
 </context>
 <context>

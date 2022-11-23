@@ -29,10 +29,7 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;
     void contextMenuEvent(QContextMenuEvent *event) override;
-    bool eventFilter(QObject* obj, QEvent* evnt) override;
     bool viewportEvent(QEvent *event) override;
-
-    void verticalScrollbarValueChanged(int value) override;
 
 signals:
     void removeNodeClicked();
@@ -47,9 +44,10 @@ private slots:
 
 private:
     bool mousePressorReleaseEvent(QMouseEvent* event);
+    bool handleStandardMouseEvent(QMouseEvent* event);
     QModelIndex getIndexFromSourceModel(const QModelIndex& index) const;
     NodeSelectorProxyModel* proxyModel() const;
-    //QModelIndex mIndexToEnter;
+
     MegaApi* mMegaApi;
 
 };

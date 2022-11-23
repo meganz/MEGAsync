@@ -34,7 +34,7 @@ public:
     std::shared_ptr<mega::MegaNode> getNode() const;
 
     void createChildItems(std::unique_ptr<mega::MegaNodeList> nodeList);
-    bool childrenAreInit();
+    bool areChildrenInitialized();
 
     bool canFetchMore();
 
@@ -49,7 +49,7 @@ public:
     QIcon getStatusIcons();
     int getStatus();
     bool isSyncable();
-    bool isRoot();
+    bool isCloudDrive();
     QPointer<NodeSelectorModelItem> addNode(std::shared_ptr<mega::MegaNode> node);
     QPointer<NodeSelectorModelItem> findChildNode(std::shared_ptr<mega::MegaNode> node);
     bool isVault();

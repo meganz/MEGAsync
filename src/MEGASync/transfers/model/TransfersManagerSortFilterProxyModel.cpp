@@ -138,18 +138,20 @@ void TransfersManagerSortFilterProxyModel::invalidateModel()
 
 void TransfersManagerSortFilterProxyModel::startProcessingInOtherThread()
 {
-    auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
-    sourceM->lockModelMutex(true);
-    sourceM->blockModelSignals(true);
-    blockSignals(true);
+    blockMutexesAndSignals(true);
 }
 
 void TransfersManagerSortFilterProxyModel::finishProcessingInOtherThread()
 {
+    blockMutexesAndSignals(false);
+}
+
+void TransfersManagerSortFilterProxyModel::blockMutexesAndSignals(bool value)
+{
     auto sourceM = qobject_cast<TransfersModel*>(sourceModel());
-    sourceM->lockModelMutex(false);
-    sourceM->blockModelSignals(false);
-    blockSignals(false);
+    sourceM->lockModelMutex(value);
+    sourceM->blockModelSignals(value);
+    blockSignals(value);
 }
 
 void TransfersManagerSortFilterProxyModel::onModelSortedFiltered()

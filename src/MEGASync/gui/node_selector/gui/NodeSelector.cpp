@@ -8,6 +8,7 @@
 #include "../model/NodeSelectorProxyModel.h"
 #include "../model/NodeSelectorModel.h"
 #include "NodeSelectorTreeViewWidget.h"
+#include "MegaNodeNames.h"
 
 #include <QMessageBox>
 #include <QPointer>
@@ -17,11 +18,6 @@ using namespace mega;
 
 const int NodeSelector::LABEL_ELIDE_MARGIN = 100;
 
-const char* NodeSelector::IN_SHARES = "Incoming shares";
-const char* NodeSelector::CLD_DRIVE = "Cloud drive";
-const char* NodeSelector::BACKUPS = "Backups";
-
-
 NodeSelector::NodeSelector(int selectMode, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::NodeSelector),
@@ -29,8 +25,8 @@ NodeSelector::NodeSelector(int selectMode, QWidget *parent) :
     mMegaApi(MegaSyncApp->getMegaApi())
 {
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-
     setWindowModality(Qt::WindowModal);
+
     ui->setupUi(this);
 
 #ifndef Q_OS_MAC
@@ -38,11 +34,32 @@ NodeSelector::NodeSelector(int selectMode, QWidget *parent) :
     connect(ui->bShowCloudDrive, &QPushButton::clicked, this, &NodeSelector::onbShowCloudDriveClicked);
     connect(ui->bShowBackups, &QPushButton::clicked, this, &NodeSelector::onbShowBackupsFolderClicked);
 #else
-    ui->tabBar->addTab(tr(CLD_DRIVE));
-    ui->tabBar->addTab(tr(IN_SHARES));
-    ui->tabBar->addTab(tr(BACKUPS));
-
     connect(ui->tabBar, &QTabBar::currentChanged, this, &NodeSelector::onOptionSelected);
+#endif
+
+    updateNodeSelectorTabs();
+
+    if(mSelectMode == STREAM_SELECT)
+    {
+        setWindowTitle(tr("Select items"));
+    }
+}
+
+NodeSelector::~NodeSelector()
+{
+    delete ui;
+}
+
+void NodeSelector::updateNodeSelectorTabs()
+{
+#ifndef Q_OS_MAC
+    ui->bShowCloudDrive->setText(MegaNodeNames::getCloudDriveName());
+    ui->bShowIncomingShares->setText(MegaNodeNames::getIncomingSharesName());
+    ui->bShowBackups->setText(MegaNodeNames::getBackupsName());
+#else
+    ui->tabBar->addTab(MegaNodeNames::getCloudDriveName());
+    ui->tabBar->addTab(MegaNodeNames::getIncomingSharesName());
+    ui->tabBar->addTab(MegaNodeNames::getBackupsName());
 #endif
 
     for(int page = 0; page < ui->stackedWidget->count(); ++page)
@@ -59,25 +76,12 @@ NodeSelector::NodeSelector(int selectMode, QWidget *parent) :
             else
             {
                 viewContainer->setSelectionMode(mSelectMode);
-                connect(viewContainer, &NodeSelectorTreeViewWidget::okBtnClicked, this, &NodeSelector::onbOkClicked);
-                connect(viewContainer, &NodeSelectorTreeViewWidget::cancelBtnClicked, this, &NodeSelector::reject);
-                connect(viewContainer, &NodeSelectorTreeViewWidget::onViewReady, this, &NodeSelector::onViewReady);
+                connect(viewContainer, &NodeSelectorTreeViewWidget::okBtnClicked, this, &NodeSelector::onbOkClicked, Qt::UniqueConnection);
+                connect(viewContainer, &NodeSelectorTreeViewWidget::cancelBtnClicked, this, &NodeSelector::reject, Qt::UniqueConnection);
+                connect(viewContainer, &NodeSelectorTreeViewWidget::onViewReady, this, &NodeSelector::onViewReady, Qt::UniqueConnection);
             }
-
         }
     }
-
-    //TODO EKA: WE need to do this at this lvl? only for stream_select mode, switch removed
-    //setWindowTitle(tr("Select items"));
-    if(mSelectMode == STREAM_SELECT)
-    {
-        setWindowTitle(tr("Select items"));
-    }
-}
-
-NodeSelector::~NodeSelector()
-{
-    delete ui;
 }
 
 void NodeSelector::showDefaultUploadOption(bool show)
@@ -114,6 +118,7 @@ void NodeSelector::changeEvent(QEvent *event)
     if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
+        updateNodeSelectorTabs();
     }
     QDialog::changeEvent(event);
 }
@@ -234,15 +239,15 @@ void NodeSelector::onOptionSelected(int index)
 void NodeSelector::onTabSelected(int index)
 {
     auto tabText = ui->tabBar->tabText(index);
-    if(tabText == tr(CLD_DRIVE))
+    if(tabText == MegaNodeNames::getCloudDriveName())
     {
         onbShowCloudDriveClicked();
     }
-    else if(tabText == tr(IN_SHARES))
+    else if(tabText == MegaNodeNames::getIncomingSharesName())
     {
         onbShowIncomingSharesClicked();
     }
-    else if(tabText == tr(BACKUPS))
+    else if(tabText == MegaNodeNames::getBackupsName())
     {
         onbShowBackupsFolderClicked();
     }
@@ -263,9 +268,7 @@ void NodeSelector::onbShowIncomingSharesClicked()
 
 void NodeSelector::onbShowBackupsFolderClicked()
 {
-    qDebug() << ui->stackedWidget->currentIndex() << VAULT;
     ui->stackedWidget->setCurrentIndex(VAULT);
-    qDebug() << ui->stackedWidget->currentIndex();
 }
 
 void NodeSelector::onViewReady(bool isEmpty)
@@ -344,7 +347,7 @@ void NodeSelector::hideSelector(TabItem item)
 #ifndef Q_OS_MAC
             ui->bShowCloudDrive->hide();
 #else
-            hideTabSelector(tr(CLD_DRIVE));
+            hideTabSelector(MegaNodeNames::getCloudDriveName());
 #endif
             break;
         }
@@ -353,7 +356,7 @@ void NodeSelector::hideSelector(TabItem item)
 #ifndef Q_OS_MAC
             ui->bShowIncomingShares->hide();
 #else
-            hideTabSelector(tr(IN_SHARES));
+            hideTabSelector(MegaNodeNames::getIncomingSharesName());
 #endif
             break;
         }
@@ -362,7 +365,7 @@ void NodeSelector::hideSelector(TabItem item)
 #ifndef Q_OS_MAC
             ui->bShowBackups->hide();
 #else
-            hideTabSelector(tr(BACKUPS));
+            hideTabSelector(MegaNodeNames::getBackupsName());
 #endif
             break;
         }
@@ -398,14 +401,8 @@ void NodeSelector::setSelectedNodeHandle(std::shared_ptr<MegaNode> node)
             node = std::unique_ptr<MegaNode>(mMegaApi->getNodeByHandle(node->getParentHandle()));
         }
 
-        if(node->isInShare())
-        {
-            onOptionSelected(SHARES);
-        }
-        else
-        {
-            onOptionSelected(CLOUD_DRIVE);
-        }
+        TabItem option = node->isInShare() ? SHARES : CLOUD_DRIVE;
+        onOptionSelected(option);
 
         auto tree_view_widget = static_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->currentWidget());
         tree_view_widget->setSelectedNodeHandle(originHandle);

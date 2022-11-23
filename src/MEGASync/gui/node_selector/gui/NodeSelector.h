@@ -37,9 +37,6 @@ public:
     };
 
     static const int LABEL_ELIDE_MARGIN;
-    static const char* CLD_DRIVE;
-    static const char* IN_SHARES;
-    static const char* BACKUPS;
     explicit NodeSelector(int selectMode, QWidget *parent = 0);
 
     ~NodeSelector();
@@ -62,6 +59,8 @@ private slots:
     void onbShowCloudDriveClicked();
     void onbShowBackupsFolderClicked();
     void onOptionSelected(int index);
+    void updateNodeSelectorTabs();
+
 #ifdef Q_OS_MAC
     void onTabSelected(int index);
 #endif

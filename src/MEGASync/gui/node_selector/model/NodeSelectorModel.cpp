@@ -7,6 +7,7 @@
 #include "UserAttributesRequests/CameraUploadFolder.h"
 #include "UserAttributesRequests/MyChatFilesFolder.h"
 #include "UserAttributesRequests/MyBackupsHandle.h"
+#include "MegaNodeNames.h"
 
 #include "mega/types.h"
 
@@ -34,7 +35,7 @@ void NodeRequester::requestNodeAndCreateChildren(NodeSelectorModelItem* item, co
         auto node = item->getNode();
         item->setProperty(INDEX_PROPERTY, parentIndex);
 
-        if(!item->requestingChildren() && !item->childrenAreInit())
+        if(!item->requestingChildren() && !item->areChildrenInitialized())
         {
             item->setRequestingChildren(true);
             MegaApi* megaApi = MegaSyncApp->getMegaApi();
@@ -325,11 +326,11 @@ QVariant NodeSelectorModel::data(const QModelIndex &index, int role) const
                 }
                 case toInt(NodeRowDelegateRoles::INDENT_ROLE):
                 {
-                    return item->isRoot() || item->isVault()? -10 : 0;
+                    return item->isCloudDrive() || item->isVault()? -10 : 0;
                 }
                 case toInt(NodeRowDelegateRoles::INIT_ROLE):
                 {
-                    return item->childrenAreInit();
+                    return item->areChildrenInitialized();
                 }
                 default:
                 {
@@ -613,13 +614,9 @@ QVariant NodeSelectorModel::getText(const QModelIndex &index, NodeSelectorModelI
     {
         case COLUMN::NODE:
         {
-            if(item->isVault())
+            if(item->isVault() || item->isCloudDrive())
             {
-                return QCoreApplication::translate("MegaNodeNames", UserAttributes::MyBackupsHandle::DEFAULT_BACKUPS_ROOT_DIRNAME);
-            }
-            else if(item->isRoot())
-            {
-                return QApplication::translate("MegaNodeNames", item->getNode()->getName());
+                return MegaNodeNames::getNodeName(item->getNode()->getName());
             }
 
             QString nodeName = QString::fromUtf8(item->getNode()->getName());
@@ -633,7 +630,7 @@ QVariant NodeSelectorModel::getText(const QModelIndex &index, NodeSelectorModelI
         }
         case COLUMN::DATE:
         {
-            if(item->isRoot() || item->isVault())
+            if(item->isCloudDrive() || item->isVault())
             {
                 return QVariant();
             }
@@ -822,7 +819,7 @@ void NodeSelectorModel::fetchItemChildren(const QModelIndex& parent)
 
     NodeSelectorModelItem* item = static_cast<NodeSelectorModelItem*>(parent.internalPointer());
 
-    if(!item->childrenAreInit() && !item->requestingChildren())
+    if(!item->areChildrenInitialized() && !item->requestingChildren())
     {
         int itemNumChildren = item->getNumChildren();
         if(itemNumChildren > 0)

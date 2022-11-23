@@ -110,7 +110,7 @@ height: 16px;
         <string notr="true"/>
        </property>
        <property name="text">
-        <string>Cloud drive</string>
+        <string notr="true">Cloud drive</string>
        </property>
        <property name="checkable">
         <bool>true</bool>
@@ -132,7 +132,7 @@ height: 16px;
         <string notr="true"/>
        </property>
        <property name="text">
-        <string>Incoming shares</string>
+        <string notr="true">Incoming shares</string>
        </property>
        <property name="checkable">
         <bool>true</bool>
@@ -151,7 +151,7 @@ height: 16px;
         </size>
        </property>
        <property name="text">
-        <string>Backups</string>
+        <string notr="true">Backups</string>
        </property>
        <property name="checkable">
         <bool>true</bool>
@@ -677,19 +677,19 @@ height: 16px;
   <customwidget>
    <class>NodeSelectorTreeViewWidgetCloudDrive</class>
    <extends>QWidget</extends>
-   <header>NodeSelectorTreeViewWidget.h</header>
+   <header>NodeSelectorTreeViewWidgetSpecializations.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>NodeSelectorTreeViewWidgetIncomingShares</class>
    <extends>QWidget</extends>
-   <header>NodeSelectorTreeViewWidget.h</header>
+   <header>NodeSelectorTreeViewWidgetSpecializations.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>NodeSelectorTreeViewWidgetBackups</class>
    <extends>QWidget</extends>
-   <header>NodeSelectorTreeViewWidget.h</header>
+   <header>NodeSelectorTreeViewWidgetSpecializations.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

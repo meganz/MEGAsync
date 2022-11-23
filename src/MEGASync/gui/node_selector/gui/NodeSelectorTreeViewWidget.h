@@ -32,9 +32,6 @@ public:
 
     static const int LABEL_ELIDE_MARGIN;
     static const int LOADING_VIEW_THRESSHOLD;
-    static const char* CLD_DRIVE;
-    static const char* IN_SHARES;
-    static const char* BACKUPS;
 
     explicit NodeSelectorTreeViewWidget(QWidget *parent = nullptr);
     ~NodeSelectorTreeViewWidget();
@@ -112,7 +109,7 @@ private:
     QModelIndex getSelectedIndex();
     void checkBackForwardButtons();
     void setRootIndex(const QModelIndex& proxy_idx);
-    virtual void setRootIndex_Reimplementation(const QModelIndex& source_idx){Q_UNUSED(source_idx)};
+    virtual void onRootIndexChanged(const QModelIndex& source_idx){Q_UNUSED(source_idx)};
     mega::MegaHandle getHandleByIndex(const QModelIndex& idx);
     QModelIndex getIndexFromHandle(const mega::MegaHandle &handle);
     void checkNewFolderButtonVisibility();

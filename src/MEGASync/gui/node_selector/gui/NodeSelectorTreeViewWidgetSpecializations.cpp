@@ -1,6 +1,8 @@
 #include "NodeSelectorTreeViewWidgetSpecializations.h"
 #include "ui_NodeSelectorTreeViewWidget.h"
 
+#include "MegaNodeNames.h"
+#include "NodeSelector.h"
 #include "../model/NodeSelectorModel.h"
 #include "../model/NodeSelectorModelSpecialised.h"
 
@@ -8,12 +10,12 @@
 NodeSelectorTreeViewWidgetCloudDrive::NodeSelectorTreeViewWidgetCloudDrive(QWidget *parent)
     : NodeSelectorTreeViewWidget(parent)
 {
-    setTitle(tr(CLD_DRIVE));
+    setTitle(MegaNodeNames::getCloudDriveName());
 }
 
 QString NodeSelectorTreeViewWidgetCloudDrive::getRootText()
 {
-    return tr(CLD_DRIVE);
+    return MegaNodeNames::getCloudDriveName();
 }
 
 std::unique_ptr<NodeSelectorModel> NodeSelectorTreeViewWidgetCloudDrive::getModel()
@@ -21,7 +23,7 @@ std::unique_ptr<NodeSelectorModel> NodeSelectorTreeViewWidgetCloudDrive::getMode
     return std::unique_ptr<NodeSelectorModelCloudDrive>(new NodeSelectorModelCloudDrive);
 }
 
-void NodeSelectorTreeViewWidgetCloudDrive::setRootIndex_Reimplementation(const QModelIndex &source_idx)
+void NodeSelectorTreeViewWidgetCloudDrive::onRootIndexChanged(const QModelIndex &source_idx)
 {
     Q_UNUSED(source_idx)
     ui->tMegaFolders->header()->hideSection(NodeSelectorModel::COLUMN::USER);
@@ -31,12 +33,12 @@ void NodeSelectorTreeViewWidgetCloudDrive::setRootIndex_Reimplementation(const Q
 NodeSelectorTreeViewWidgetIncomingShares::NodeSelectorTreeViewWidgetIncomingShares(QWidget *parent)
     : NodeSelectorTreeViewWidget(parent)
 {
-    setTitle(tr(IN_SHARES));
+    setTitle(MegaNodeNames::getIncomingSharesName());
 }
 
 QString NodeSelectorTreeViewWidgetIncomingShares::getRootText()
 {
-    return tr(IN_SHARES);
+    return MegaNodeNames::getIncomingSharesName();
 }
 
 std::unique_ptr<NodeSelectorModel> NodeSelectorTreeViewWidgetIncomingShares::getModel()
@@ -44,7 +46,7 @@ std::unique_ptr<NodeSelectorModel> NodeSelectorTreeViewWidgetIncomingShares::get
     return std::unique_ptr<NodeSelectorModelIncomingShares>(new NodeSelectorModelIncomingShares);
 }
 
-void NodeSelectorTreeViewWidgetIncomingShares::setRootIndex_Reimplementation(const QModelIndex &source_idx)
+void NodeSelectorTreeViewWidgetIncomingShares::onRootIndexChanged(const QModelIndex &source_idx)
 {
     if(source_idx.isValid())
     {
@@ -67,12 +69,12 @@ void NodeSelectorTreeViewWidgetIncomingShares::setRootIndex_Reimplementation(con
 NodeSelectorTreeViewWidgetBackups::NodeSelectorTreeViewWidgetBackups(QWidget *parent)
     : NodeSelectorTreeViewWidget(parent)
 {
-    setTitle(tr(BACKUPS));
+    setTitle(MegaNodeNames::getBackupsName());
 }
 
 QString NodeSelectorTreeViewWidgetBackups::getRootText()
 {
-    return tr(BACKUPS);
+    return MegaNodeNames::getBackupsName();
 }
 
 std::unique_ptr<NodeSelectorModel> NodeSelectorTreeViewWidgetBackups::getModel()
@@ -80,7 +82,7 @@ std::unique_ptr<NodeSelectorModel> NodeSelectorTreeViewWidgetBackups::getModel()
     return std::unique_ptr<NodeSelectorModelBackups>(new NodeSelectorModelBackups);
 }
 
-void NodeSelectorTreeViewWidgetBackups::setRootIndex_Reimplementation(const QModelIndex &source_idx)
+void NodeSelectorTreeViewWidgetBackups::onRootIndexChanged(const QModelIndex &source_idx)
 {
     Q_UNUSED(source_idx)
     ui->tMegaFolders->header()->hideSection(NodeSelectorModel::COLUMN::USER);

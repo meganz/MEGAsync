@@ -266,7 +266,7 @@ QModelIndex NodeSelectorProxyModel::getIndexFromNode(const std::shared_ptr<mega:
         p_node.reset(megaApi->getParentNode(root_p_node.get()));
     }
 
-    QVector<QModelIndex> indexList = getRelatedModelIndexes(node/*, root_p_node->isInShare()*/);
+    QVector<QModelIndex> indexList = getRelatedModelIndexes(node);
     if(!indexList.isEmpty())
     {
         return indexList.last();

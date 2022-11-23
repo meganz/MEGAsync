@@ -90,7 +90,6 @@ void TransfersWidget::configureTransferView()
     ui->tvTransfers->setHeader(nullptr);
 
     mLoadingScene.setView(ui->tvTransfers);
-    //mLoadingScene.setDelayTimeToShowInMs(100);
     mDelegateHoverManager.setView(ui->tvTransfers);
 }
 

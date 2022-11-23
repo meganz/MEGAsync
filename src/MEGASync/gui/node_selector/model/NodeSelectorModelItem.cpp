@@ -64,7 +64,7 @@ NodeSelectorModelItem::NodeSelectorModelItem(std::unique_ptr<MegaNode> node, boo
     else
     {
         QStringList syncList = SyncInfo::instance()->getCloudDriveSyncMegaFolders(true);
-        if(isRoot() && !syncList.isEmpty())
+        if(isCloudDrive() && !syncList.isEmpty())
         {
             mStatus = STATUS::SYNC_PARENT;
             return;
@@ -99,7 +99,7 @@ void NodeSelectorModelItem::createChildItems(std::unique_ptr<mega::MegaNodeList>
     }
 }
 
-bool NodeSelectorModelItem::childrenAreInit()
+bool NodeSelectorModelItem::areChildrenInitialized()
 {
     return mChildrenAreInit;
 }
@@ -110,17 +110,12 @@ bool NodeSelectorModelItem::canFetchMore()
     {
         return true;
     }
-    else
+    else if(mChildrenCounter == 0)
     {
-        if(mChildrenCounter == 0)
-        {
-            return false;
-        }
-        else
-        {
-            return mChildItems.isEmpty();
-        }
+        return false;
     }
+
+    return mChildItems.isEmpty();
 }
 
 bool NodeSelectorModelItem::requestingChildren() const
@@ -154,14 +149,12 @@ int NodeSelectorModelItem::getNumChildren()
     {
         return 0;
     }
-    else if(!childrenAreInit())
+    else if(!areChildrenInitialized())
     {
         return mChildrenCounter;
     }
-    else
-    {
-        return mChildItems.size();
-    }
+
+    return mChildItems.size();
 }
 
 int NodeSelectorModelItem::indexOf(NodeSelectorModelItem* item)
@@ -367,7 +360,7 @@ void NodeSelectorModelItem::calculateSyncStatus(const QStringList &folders)
     }
 }
 
-bool NodeSelectorModelItem::isRoot()
+bool NodeSelectorModelItem::isCloudDrive()
 {
     return mNode->getHandle() == MegaSyncApp->getRootNode()->getHandle();
 }

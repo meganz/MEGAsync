@@ -2003,7 +2003,6 @@ void SettingsDialog::on_bUploadFolder_clicked()
         return;
     }
 
-    //TODO EKA: FIX THIS
     MegaHandle selectedMegaFolderHandle = nodeSelector->getSelectedNodeHandle();
     MegaNode* node = mMegaApi->getNodeByHandle(selectedMegaFolderHandle);
     if (!node)

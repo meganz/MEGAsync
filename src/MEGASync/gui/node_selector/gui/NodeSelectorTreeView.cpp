@@ -10,7 +10,6 @@
 
 NodeSelectorTreeView::NodeSelectorTreeView(QWidget* parent) :
     QTreeView(parent),
-    //mIndexToEnter(QModelIndex()),
     mMegaApi(MegaSyncApp->getMegaApi())
 {
     installEventFilter(this);
@@ -48,35 +47,16 @@ void NodeSelectorTreeView::setModel(QAbstractItemModel *model)
     connect(proxyModel(), &NodeSelectorProxyModel::navigateReady, this, &NodeSelectorTreeView::onNavigateReady);
 }
 
-void NodeSelectorTreeView::verticalScrollbarValueChanged(int value)
-{
-//    if (verticalScrollBar()->maximum() / 2 < value)
-//    {
-//        value = verticalScrollBar()->maximum();
-//        QTreeView::verticalScrollbarValueChanged(value);
-//    }
-    QTreeView::verticalScrollbarValueChanged(value);
-}
-
-bool NodeSelectorTreeView::eventFilter(QObject *obj, QEvent *evnt)
-{
-    return QTreeView::eventFilter(obj, evnt);
-}
-
 bool NodeSelectorTreeView::viewportEvent(QEvent *event)
 {
-    if(signalsBlocked())
-    {
-        return true;
-    }
-    return QTreeView::viewportEvent(event);
+     return signalsBlocked() ? true : QTreeView::viewportEvent(event);
 }
 
 void NodeSelectorTreeView::drawBranches(QPainter *painter, const QRect &rect, const QModelIndex &index) const
 {
     QModelIndex idx = getIndexFromSourceModel(index);
     NodeSelectorModelItem *item = static_cast<NodeSelectorModelItem*>(idx.internalPointer());
-    if(item && (item->isRoot() || item->isVault()))
+    if(item && (item->isCloudDrive() || item->isVault()))
     {
         QStyleOptionViewItem opt = viewOptions();
         opt.rect = rect;
@@ -225,17 +205,9 @@ bool NodeSelectorTreeView::mousePressorReleaseEvent(QMouseEvent *event)
     QPoint pos = event->pos();
     QModelIndex index = getIndexFromSourceModel(indexAt(pos));
     NodeSelectorModelItem *item = static_cast<NodeSelectorModelItem*>(index.internalPointer());
-    if(item && item->isRoot())
+    if(item && item->isCloudDrive())
     {   //this line avoid to cloud drive being collapsed and at same time it allows to select it.
-        if(event->type() == QMouseEvent::MouseButtonPress)
-        {
-            QAbstractItemView::mousePressEvent(event);
-        }
-        else if(event->type() == QMouseEvent::MouseButtonRelease)
-        {
-            QAbstractItemView::mouseReleaseEvent(event);
-        }
-        return false;
+       return handleStandardMouseEvent(event);
     }
     else
     {
@@ -266,21 +238,27 @@ bool NodeSelectorTreeView::mousePressorReleaseEvent(QMouseEvent *event)
                         proxyModel()->sourceModel()->fetchMore(sourceIndexToExpand);
                     }
 
-                    if(event->type() == QMouseEvent::MouseButtonPress)
-                    {
-                        QAbstractItemView::mousePressEvent(event);
-                    }
-                    else if(event->type() == QMouseEvent::MouseButtonRelease)
-                    {
-                        QAbstractItemView::mouseReleaseEvent(event);
-                    }
-                    return false;
+                    return handleStandardMouseEvent(event);
                 }
             }
 
         }
     }
     return true;
+}
+
+bool NodeSelectorTreeView::handleStandardMouseEvent(QMouseEvent* event)
+{
+    if(event->type() == QMouseEvent::MouseButtonPress)
+    {
+        QAbstractItemView::mousePressEvent(event);
+    }
+    else if(event->type() == QMouseEvent::MouseButtonRelease)
+    {
+        QAbstractItemView::mouseReleaseEvent(event);
+    }
+
+    return false;
 }
 
 NodSelectorTreeViewHeaderView::NodSelectorTreeViewHeaderView(Qt::Orientation orientation, QWidget *parent) :

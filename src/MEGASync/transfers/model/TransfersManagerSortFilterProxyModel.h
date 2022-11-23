@@ -115,6 +115,7 @@ private:
 
         void startProcessingInOtherThread();
         void finishProcessingInOtherThread();
+        void blockMutexesAndSignals(bool value);
 
         void invalidateModel();
 

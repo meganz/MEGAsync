@@ -104,7 +104,7 @@ QPushButton:!checked {
 </string>
        </property>
        <property name="text">
-        <string>Cloud drive</string>
+        <string notr="true">Cloud drive</string>
        </property>
        <property name="iconSize">
         <size>
@@ -151,7 +151,7 @@ QPushButton:!checked {
 </string>
        </property>
        <property name="text">
-        <string>Incoming shares</string>
+        <string notr="true">Incoming shares</string>
        </property>
        <property name="checkable">
         <bool>true</bool>
@@ -186,7 +186,7 @@ QPushButton:!checked {
 </string>
        </property>
        <property name="text">
-        <string>Backups</string>
+        <string notr="true">Backups</string>
        </property>
        <property name="checkable">
         <bool>true</bool>

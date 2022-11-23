@@ -10,10 +10,6 @@
 
 #include "NodeNameSetterDialog/RenameNodeDialog.h"
 
-const char* NodeSelectorTreeViewWidget::IN_SHARES = "Incoming shares";
-const char* NodeSelectorTreeViewWidget::CLD_DRIVE = "Cloud drive";
-const char* NodeSelectorTreeViewWidget::BACKUPS = "Backups";
-
 const int NodeSelectorTreeViewWidget::LABEL_ELIDE_MARGIN = 100;
 const int NodeSelectorTreeViewWidget::LOADING_VIEW_THRESSHOLD = 500;
 
@@ -54,7 +50,6 @@ void NodeSelectorTreeViewWidget::changeEvent(QEvent *event)
     {
         if(!ui->tMegaFolders->rootIndex().isValid())
         {
-            //TODO SET CORRECT TEXT
             ui->lFolderName->setText(getRootText());
         }
     }
@@ -63,7 +58,6 @@ void NodeSelectorTreeViewWidget::changeEvent(QEvent *event)
 
 void NodeSelectorTreeViewWidget::setSelectionMode(int selectMode)
 {
-    //setLoadingSceneVisible(true);
     if(mSelectMode != -1)
     {
         return;
@@ -87,9 +81,12 @@ void NodeSelectorTreeViewWidget::setSelectionMode(int selectMode)
         case NodeSelector::DOWNLOAD_SELECT:
             ui->bNewFolder->hide();
             ui->tMegaFolders->setSelectionMode(QAbstractItemView::ExtendedSelection);
+            mProxyModel->showReadOnlyFolders(true);
+            mModel->showFiles(true);
             break;
         case NodeSelector::STREAM_SELECT:
             ui->bNewFolder->hide();
+            mProxyModel->showReadOnlyFolders(true);
             mModel->showFiles(true);
             setWindowTitle(tr("Select items"));
             break;
@@ -330,7 +327,7 @@ bool NodeSelectorTreeViewWidget::isAllowedToEnterInIndex(const QModelIndex &idx)
     if(item)
     {
         if((item->getNode()->isFile())
-           || (item->isRoot())
+           || (item->isCloudDrive())
            || (mSelectMode == NodeSelector::SYNC_SELECT && (item->getStatus() == NodeSelectorModelItem::SYNC || item->getStatus() == NodeSelectorModelItem::SYNC_CHILD)))
         {
             return false;
@@ -363,16 +360,8 @@ void NodeSelectorTreeViewWidget::checkNewFolderButtonVisibility()
 
 void NodeSelectorTreeViewWidget::setLoadingSceneVisible(bool blockUi)
 {
-    if(blockUi)
-    {
-        ui->tMegaFolders->blockSignals(true);
-        ui->tMegaFolders->header()->blockSignals(true);
-    }
-    else
-    {
-        ui->tMegaFolders->blockSignals(false);
-        ui->tMegaFolders->header()->blockSignals(false);
-    }
+    ui->tMegaFolders->blockSignals(blockUi);
+    ui->tMegaFolders->header()->blockSignals(blockUi);
 
     mLoadingScene.changeLoadingSceneStatus(blockUi);
 }
@@ -560,7 +549,7 @@ void NodeSelectorTreeViewWidget::setSelectedNodeHandle(const MegaHandle& selecte
     {
         return;
     }
-    //iterar los nodos recogiendo todos los padres y luego para bajo cogiendo los qmodelindex
+
     auto node = std::shared_ptr<MegaNode>(mMegaApi->getNodeByHandle(selectedHandle));
     if (!node)
         return;
@@ -612,7 +601,7 @@ void NodeSelectorTreeViewWidget::setRootIndex(const QModelIndex &proxy_idx)
     ui->tMegaFolders->setRootIndex(node_column_idx);
 
     auto source_idx = mProxyModel->getIndexFromSource(node_column_idx);
-    setRootIndex_Reimplementation(source_idx);
+    onRootIndexChanged(source_idx);
 
     if(!node_column_idx.isValid())
     {
