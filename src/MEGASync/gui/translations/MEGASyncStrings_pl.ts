@@ -318,7 +318,7 @@
     <message>
         <source>[A] has left the shared folder</source>
         <translatorcomment>Label to indicate that [A] has left a shared folder. Placeholder will be replaced by email of the user that left the folder.</translatorcomment>
-        <translation>[A] opuścił folder współdzielony</translation>
+        <translation>[A] opuścił katalog współdzielony</translation>
     </message>
     <message>
         <source>Your payment for the [A] plan was received</source>
@@ -393,7 +393,7 @@
     <message>
         <source>New shared folder from [A]</source>
         <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
-        <translation>Nowy folder współdzielony z [A]</translation>
+        <translation>Nowy katalog współdzielony z [A]</translation>
     </message>
 </context>
 <context>
@@ -1066,7 +1066,7 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
     <message>
         <source>[A] has left the shared folder</source>
         <translatorcomment>Label to indicate that [A] has left a shared folder. Placeholder will be replaced by email of the user that left the folder.</translatorcomment>
-        <translation>[A] opuścił folder współdzielony</translation>
+        <translation>[A] opuścił katalog współdzielony</translation>
     </message>
     <message>
         <source>Access to shared folder was removed</source>
@@ -1286,7 +1286,7 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
     <message>
         <source>New shared folder from [A]</source>
         <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
-        <translation>Nowy folder współdzielony z [A]</translation>
+        <translation>Nowy katalog współdzielony z [A]</translation>
     </message>
 </context>
 <context>
@@ -1352,7 +1352,7 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
     <message>
         <source>The new folder will be merged with the folder at this destination.</source>
         <translatorcomment>Text explaining the result of the folder merge action</translatorcomment>
-        <translation>Nowy folder zostanie połączony z folderem w tym miejscu docelowym.</translation>
+        <translation>Nowy katalog zostanie połączony z katalogiem w tym miejscu docelowym.</translation>
     </message>
     <message>
         <source>The folder at this destination will be maintained.</source>
@@ -2020,7 +2020,7 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
     <message>
         <source>Folder can&apos;t be opened. Check that the folder in your local drive hasn&apos;t been deleted or moved.</source>
         <translatorcomment>Warning message text to let the user know that the local folder could not be opened</translatorcomment>
-        <translation>Folder nie może być otwarty. Sprawdź, czy folder na dysku lokalnym nie został usunięty lub przeniesiony.</translation>
+        <translation>Katalog nie może być otwarty. Sprawdź, czy katalog na dysku lokalnym nie został usunięty lub przeniesiony.</translation>
     </message>
     <message>
         <source>Some syncs and backups have been disabled</source>
@@ -3173,7 +3173,7 @@ Transfery zostaną automatycznie wznowione po ponownym otwarciu aplikacji.</nume
     <message>
         <source>Remote path has changed</source>
         <translatorcomment>Label to show that remote path has changed for a sync during a SDK operation.</translatorcomment>
-        <translation>Zmieniła się ścieżka zdalnego folderu synchronizacji</translation>
+        <translation>Zmieniła się ścieżka zdalnego katalogu synchronizacji</translation>
     </message>
     <message>
         <source>Remote node moved to Rubbish Bin</source>
@@ -3208,7 +3208,7 @@ Transfery zostaną automatycznie wznowione po ponownym otwarciu aplikacji.</nume
     <message>
         <source>Remote node has been deleted</source>
         <translatorcomment>SDK error label shown when remote node has been deleted</translatorcomment>
-        <translation>Folder zdalnej synchronizacji został usunięty</translation>
+        <translation>Katalog zdalnej synchronizacji został usunięty</translation>
     </message>
     <message>
         <source>Remote node is inside Rubbish Bin</source>
@@ -3467,7 +3467,7 @@ Twoje wybrane niekompletne transfery synchronizacyjne nie zostaną anulowane. Ws
     <message>
         <source>Enter the new folder name</source>
         <translatorcomment>Dialog text to ask the user to enter a new name for the folder</translatorcomment>
-        <translation>Wprowadź nazwę nowego folderu</translation>
+        <translation>Wprowadź nazwę nowego katalogu</translation>
     </message>
     <message>
         <source>New folder</source>
@@ -3526,7 +3526,7 @@ Twoje wybrane niekompletne transfery synchronizacyjne nie zostaną anulowane. Ws
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation>Nieprawidłowy folder do synchronizacji. Upewnij się, że w nazwach folderów nie używasz znaków takich jak „\”, „/” lub „:”.</translation>
+        <translation>Nieprawidłowy katalog do synchronizacji. Upewnij się, że w nazwach katalogów nie używasz znaków takich jak “\”, “/” lub “:”.</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -3619,7 +3619,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Access to a shared folder was removed</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation>Usunięto dostęp do folderu współdzielonego</translation>
+        <translation>Usunięto dostęp do katalogu współdzielonego</translation>
     </message>
     <message>
         <source>Contacts</source>
@@ -4660,7 +4660,7 @@ Czy mimo to chcesz je usunąć?</translation>
     <message>
         <source>Folder can’t be renamed to &quot;%1&quot;</source>
         <translatorcomment>Error warning shown when a folder can´t be renamed due to an error.</translatorcomment>
-        <translation>Nie można zmienić nazwy folderu na &quot;%1&quot;</translation>
+        <translation>Nie można zmienić nazwy katalogu na &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
@@ -5186,7 +5186,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Excluded file and folder names:</source>
         <translatorcomment>Label for controls to indicate the file and folder names excluded from synchronization.(macOS)</translatorcomment>
-        <translation>Wykluczone nazwy plików i folderów:</translation>
+        <translation>Wykluczone nazwy plików i katalogów:</translation>
     </message>
     <message>
         <source>Exclude by size:</source>
@@ -5456,7 +5456,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Error moving or removing remote backup folder</source>
         <translatorcomment>Title of the dialog shown when the deletion or move of the remote backup folder failed</translatorcomment>
-        <translation>Błąd przenoszenia lub usuwania folderu kopii zapasowej MEGA</translation>
+        <translation>Błąd przenoszenia lub usuwania katalogu kopii zapasowej MEGA</translation>
     </message>
     <message>
         <source>Failed to move or remove the remote backup folder. Reason: %1</source>
@@ -5654,12 +5654,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Please, select a local folder</source>
         <translatorcomment>Label displayed when the user has not select a local folder.</translatorcomment>
-        <translation>Wybierz lokalny folder</translation>
+        <translation>Wybierz lokalny katalog</translation>
     </message>
     <message>
         <source>Please, select a MEGA folder</source>
         <translatorcomment>Label displayed when the user has not select a MEGA folder.</translatorcomment>
-        <translation>Wybierz folder MEGA</translation>
+        <translation>Wybierz katalog MEGA</translation>
     </message>
     <message>
         <source>Select local folder</source>
