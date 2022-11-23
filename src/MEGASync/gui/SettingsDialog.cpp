@@ -48,11 +48,10 @@ using namespace mega;
 #ifdef Q_OS_MACOS
 //Const values used for macOS Settings dialog resize animation
 constexpr auto SETTING_ANIMATION_PAGE_TIMEOUT{150};//ms
-constexpr auto SETTING_ANIMATION_GENERAL_TAB_HEIGHT{677};
+constexpr auto SETTING_ANIMATION_GENERAL_TAB_HEIGHT{646};
 constexpr auto SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT{295};//px height
-constexpr auto SETTING_ANIMATION_SYNCS_TAB_HEIGHT{529};
-// FIXME: Re-evaluate size for Backup tab
-constexpr auto SETTING_ANIMATION_BACKUP_TAB_HEIGHT{529};
+constexpr auto SETTING_ANIMATION_SYNCS_TAB_HEIGHT{539};
+constexpr auto SETTING_ANIMATION_BACKUP_TAB_HEIGHT{534};
 constexpr auto SETTING_ANIMATION_SECURITY_TAB_HEIGHT{372};
 constexpr auto SETTING_ANIMATION_FOLDERS_TAB_HEIGHT{513};
 constexpr auto SETTING_ANIMATION_NETWORK_TAB_HEIGHT{205};
@@ -1460,17 +1459,16 @@ void SettingsDialog::connectSyncHandlers()
             Text::Decorator dec(&link);
             QString msg = errorMsg;
             dec.process(msg);
-            QMegaMessageBox::critical(nullptr, tr("Error adding sync"), msg, QMessageBox::Ok, QMessageBox::NoButton, QMap<QMessageBox::StandardButton, QString>(), Qt::RichText);
+            QMegaMessageBox::warning(nullptr, tr("Error adding sync"), msg, QMessageBox::Ok, QMessageBox::NoButton, QMap<QMessageBox::StandardButton, QString>(), Qt::RichText);
         }
     });
 
     connect(&mSyncController, &SyncController::syncRemoveError, this, [this](std::shared_ptr<mega::MegaError> err)
     {
         onSavingSyncsCompleted(SAVING_SYNCS_FINISHED);
-        QMegaMessageBox::critical(nullptr, tr("Error removing sync"),
+        QMegaMessageBox::warning(nullptr, tr("Error removing sync"),
                                   tr("Your sync can't be removed. Reason: %1")
                                   .arg(QCoreApplication::translate("MegaError", err->getErrorString())));
-
     });
 
 }
@@ -1745,7 +1743,6 @@ void SettingsDialog::connectBackupHandlers()
         QMegaMessageBox::warning(nullptr, tr("Error removing backup"),
                                   tr("Your backup can't be removed. Reason: %1")
                                   .arg(QCoreApplication::translate("MegaError", err->getErrorString())));
-
     });
 
     connect(&mBackupController, &SyncController::backupMoveOrRemoveRemoteFolderError, this, [this](std::shared_ptr<mega::MegaError> err)

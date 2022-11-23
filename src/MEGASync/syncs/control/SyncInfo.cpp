@@ -32,13 +32,20 @@ SyncInfo *SyncInfo::instance()
 
 SyncInfo::SyncInfo() : QObject(),
     preferences (Preferences::instance()),
+    mIsFirstTwoWaySyncDone (preferences->isFirstSyncDone()),
+    mIsFirstBackupDone (preferences->isFirstBackupDone()),
     syncMutex (QMutex::Recursive)
 {
 }
 
 bool SyncInfo::hasUnattendedDisabledSyncs(const QVector<SyncType>& types) const
-{    
+{
     return std::any_of(types.cbegin(), types.cend(), [this](SyncType t){return !unattendedDisabledSyncs[t].isEmpty();});
+}
+
+const QSet<MegaHandle> SyncInfo::getUnattendedDisabledSyncs(const SyncType &type) const
+{
+    return unattendedDisabledSyncs[type];
 }
 
 void SyncInfo::removeSyncedFolderByBackupId(MegaHandle backupId)
@@ -121,13 +128,32 @@ void SyncInfo::activateSync(std::shared_ptr<SyncSettings> syncSetting)
         syncSetting->setSyncID(QUuid::createUuid().toString().toUpper());
     }
 
-    //send event for the first sync
-    if (!isFirstSyncDone && !preferences->isFirstSyncDone())
+    //send event for the first sync/backup
+    switch (syncSetting->getType())
     {
-        MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_1ST_SYNC,
-                                             "MEGAsync first sync");
+    case mega::MegaSync::SyncType::TYPE_TWOWAY:
+    {
+        // Send event for the first sync
+        if (!mIsFirstTwoWaySyncDone && !preferences->isFirstSyncDone())
+        {
+            MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_1ST_SYNC,
+                                                 "MEGAsync first sync");
+        }
+        mIsFirstTwoWaySyncDone = true;
+        break;
     }
-    isFirstSyncDone = true;
+    case mega::MegaSync::SyncType::TYPE_BACKUP:
+    {
+        // Send event for the first backup
+        if (!mIsFirstBackupDone && !preferences->isFirstBackupDone())
+        {
+            MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_1ST_BACKUP,
+                                                 "MEGAsync first backup");
+        }
+        mIsFirstBackupDone = true;
+        break;
+    }
+    }
 
     // TODO: extract the QMegaMessageBoxes from the model, use signal to send message
 
@@ -137,9 +163,13 @@ void SyncInfo::activateSync(std::shared_ptr<SyncSettings> syncSetting)
     if (!preferences->isFatWarningShown() && syncSetting->getError() == MegaSync::Warning::LOCAL_IS_FAT)
     {
         QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"),
-         tr("You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it's strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).")
+         tr("You are syncing a local folder formatted with a FAT filesystem. "
+            "That filesystem has deficiencies managing big files and modification"
+            " times that can cause synchronization problems (e.g. when daylight "
+            "saving changes), so it's strongly recommended that you only sync "
+            "folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).")
          .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"https://help.mega.nz/megasync/syncing.html#can-i-sync-fat-fat32-partitions-under-windows\">"))
-         .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</a>")));
+         .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</a>")), QMessageBox::Ok, QMessageBox::NoButton, QMap<QMessageBox::StandardButton, QString>(), Qt::RichText);
         preferences->setFatWarningShown();
     }
     else if (!preferences->isOneTimeActionDone(Preferences::ONE_TIME_ACTION_HGFS_WARNING) && syncSetting->getError() == MegaSync::Warning::LOCAL_IS_HGFS)
@@ -191,7 +221,8 @@ std::shared_ptr<SyncSettings> SyncInfo::updateSyncSettings(MegaSync *sync)
 
         //move into the configuredSyncsMap
         configuredSyncsMap.insert(sync->getBackupId(), cs);
-        configuredSyncs[cs->getType()].append(sync->getBackupId());
+        MegaSync::SyncType type = static_cast<MegaSync::SyncType>(sync->getType());
+        configuredSyncs[type].append(sync->getBackupId());
 
         // remove from picked
         syncsSettingPickedFromOldConfig.erase(oldcsitr);
@@ -241,7 +272,6 @@ std::shared_ptr<SyncSettings> SyncInfo::updateSyncSettings(MegaSync *sync)
     }
 
     preferences->writeSyncSetting(cs); // we store MEGAsync specific fields into cache
-
     emit syncStateChanged(cs);
     return cs;
 }
@@ -266,11 +296,9 @@ void SyncInfo::pickInfoFromOldSync(const SyncData &osd, MegaHandle backupId, boo
 {
     QMutexLocker qm(&syncMutex);
     assert(preferences->logged() || loadedFromPreviousSessions);
-    std::shared_ptr<SyncSettings> cs;
-
     assert (!configuredSyncsMap.contains(backupId) && "picking already configured sync!"); //this should always be the case
 
-    cs = syncsSettingPickedFromOldConfig[backupId] = std::make_shared<SyncSettings>(osd, loadedFromPreviousSessions);
+    std::shared_ptr<SyncSettings> cs = syncsSettingPickedFromOldConfig[backupId] = std::make_shared<SyncSettings>(osd, loadedFromPreviousSessions);
 
     cs->setBackupId(backupId); //assign the new tag given by the sdk
 
@@ -284,7 +312,8 @@ void SyncInfo::reset()
     configuredSyncsMap.clear();
     syncsSettingPickedFromOldConfig.clear();
     unattendedDisabledSyncs.clear();
-    isFirstSyncDone = false;
+    mIsFirstTwoWaySyncDone = false;
+    mIsFirstBackupDone = false;
 }
 
 int SyncInfo::getNumSyncedFolders(const QVector<SyncType>& types)

@@ -332,7 +332,7 @@ stop: 0 #ffffff, stop: 1 #fafafa);
                   <cursorShape>PointingHandCursor</cursorShape>
                  </property>
                  <property name="toolTip">
-                  <string>Add Backups</string>
+                  <string>Add Backup</string>
                  </property>
                  <property name="text">
                   <string/>

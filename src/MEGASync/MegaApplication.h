@@ -334,6 +334,7 @@ private slots:
     void PSAseen(int id);
     void onSyncStateChanged(std::shared_ptr<SyncSettings> syncSettings);
     void onSyncDeleted(std::shared_ptr<SyncSettings> syncSettings);
+    void showSingleSyncDisabledNotification(std::shared_ptr<SyncSettings> syncSetting);
     void onBlocked();
     void onUnblocked();
     void onTransfersModelUpdate();
@@ -526,8 +527,8 @@ protected:
     bool appfinished;
     bool updateAvailable;
     bool isLinux;
-    bool isFirstSyncDone;
-    bool isFirstFileSynced;
+    bool mIsFirstFileTwoWaySynced;
+    bool mIsFirstFileBackedUp;
     bool networkConnectivity;
     int nUnviewedTransfers;
     bool completedTabActive;

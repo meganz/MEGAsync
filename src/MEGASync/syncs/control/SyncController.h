@@ -84,3 +84,4 @@ private:
 };
 
 Q_DECLARE_METATYPE(std::shared_ptr<mega::MegaError>)
+Q_DECLARE_METATYPE(mega::MegaSync::Error)

@@ -29,9 +29,6 @@ private:
     mega::MegaHandle mBackupId = ::mega::INVALID_HANDLE; //identifier given by the api
     QString mSyncID; //some id for platform specific settings
 
-    bool mEnabled = false;
-    bool mActive = false;
-
     QString mMegaFolder; //cached (in memory) value of the remote path
 
     static constexpr int CACHE_VERSION = 1;
@@ -51,8 +48,6 @@ public:
     void setBackupId(mega::MegaHandle backupId);
     // returns sync name verbatim or removing problematic chars (if removeUnsupportedChars = true)
     QString name(bool removeUnsupportedChars = false) const;
-
-    void setEnabled(bool value);
 
     void setSync(mega::MegaSync *sync);
 

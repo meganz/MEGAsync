@@ -36,15 +36,11 @@ SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type, QObject *parent) : QObject(p
     {
         case mega::MegaSync::TYPE_TWOWAY:
         {
-            textAdd = tr("Add Sync");
-            textMenu = tr("Syncs");
             iconMenu = QIcon(QLatin1String("://images/icons/ico_sync.png"));
             break;
         }
         case mega::MegaSync::TYPE_BACKUP:
         {
-            textAdd = tr("Add Backups");
-            textMenu = tr("Backups");
             iconMenu = QIcon(QLatin1String("://images/icons/ico_backup.png"));
             mDeviceNameRequest = UserAttributes::DeviceName::requestDeviceName();
             mMyBackupsHandleRequest = UserAttributes::MyBackupsHandle::requestMyBackupsHandle();
@@ -57,12 +53,12 @@ SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type, QObject *parent) : QObject(p
             break;
         }
     }
-    mAddAction->setLabelText(textAdd);
+    mAddAction->setLabelText(getAddText());
     mAddAction->setParent(this);
     connect(mAddAction.get(), &MenuItemAction::triggered,
             this, &SyncsMenu::onAddSync);
 
-    mMenuAction->setLabelText(textMenu);
+    mMenuAction->setLabelText(getMenuText());
     mMenuAction->setIcon(iconMenu);
     mMenuAction->setParent(this);
 
@@ -235,6 +231,11 @@ bool SyncsMenu::eventFilter(QObject* obj, QEvent* e)
         }
         return true;
     }
+    else if(obj == mMenu.get() && e->type() == QEvent::LanguageChange)
+    {
+        mMenuAction->setLabelText(getMenuText());
+        mAddAction->setLabelText(getAddText());
+    }
     return QObject::eventFilter(obj, e);
 }
 
@@ -258,6 +259,52 @@ void SyncsMenu::onDeviceNameSet(QString name)
             mMenu->insertAction(actions.at(idxNext), mDevNameAction.get());
         }
     }
+}
+
+QString SyncsMenu::getAddText()
+{
+    QString textAdd;
+    switch (mType)
+    {
+        case mega::MegaSync::TYPE_TWOWAY:
+        {
+            textAdd = tr("Add Sync");
+            break;
+        }
+        case mega::MegaSync::TYPE_BACKUP:
+        {
+            textAdd = tr("Add Backup");
+            break;
+        }
+        default:
+        {
+            break;
+        }
+    }
+    return textAdd;
+}
+
+QString SyncsMenu::getMenuText()
+{
+    QString textMenu;
+    switch (mType)
+    {
+        case mega::MegaSync::TYPE_TWOWAY:
+        {
+            textMenu = tr("Syncs");
+            break;
+        }
+        case mega::MegaSync::TYPE_BACKUP:
+        {
+            textMenu = tr("Backups");
+            break;
+        }
+        default:
+        {
+            break;
+        }
+    }
+    return textMenu;
 }
 
 void SyncsMenu::highLightMenuEntry(QAction* action)

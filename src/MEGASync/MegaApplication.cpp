@@ -97,6 +97,8 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     QApplication(argc, argv),
     mSyncs2waysMenu(nullptr),
     mBackupsMenu(nullptr),
+    mIsFirstFileTwoWaySynced(false),
+    mIsFirstFileBackedUp(false),
     scanStageController(this),
     mDisableGfx (false)
 {
@@ -316,7 +318,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     mCurrency.reset();
     storageOverquotaDialog = NULL;
     infoWizard = NULL;
-    isFirstFileSynced = false;
     mTransferManager = nullptr;
     cleaningSchedulerExecution = 0;
     lastUserActivityExecution = 0;
@@ -1098,6 +1099,8 @@ void MegaApplication::start()
         showInfoMessage(tr("MEGAsync has been updated"));
         preferences->setFirstSyncDone();
         preferences->setFirstFileSynced();
+        preferences->setFirstBackupDone();
+        preferences->setFirstFileBackedUp();
         preferences->setFirstWebDownloadDone();
 
         if (!preferences->installationTime())
@@ -1399,26 +1402,25 @@ if (!preferences->lastExecutionTime())
         if (haveSyncs && haveBackups)
         {
             syncsTypesToDismiss = {MegaSync::TYPE_TWOWAY, MegaSync::TYPE_BACKUP};
-            message = tr("Some syncs and backups have been disabled.");
+            message = PlatformStrings::syncsAndBackupsDisableWarning();
         }
         else if (haveBackups)
         {
             settingsTabToOpen = SettingsDialog::BACKUP_TAB;
             syncsTypesToDismiss = {MegaSync::TYPE_BACKUP};
-            message = tr("One or more backups have been disabled.");
+            message = PlatformStrings::backupsDisableWarning();
         }
         else if (haveSyncs)
         {
             syncsTypesToDismiss = {MegaSync::TYPE_TWOWAY};
-            message = tr("One or more syncs have been disabled.");
+            message = PlatformStrings::syncsDisableWarning();
         }
 
         // Display the message if it has been set
         if (!message.isEmpty())
         {
-            message += QLatin1Char(' ') + QCoreApplication::translate("Platform", Platform::goToSettingsToEnableSyncsString);
             QMessageBox msgBox (QMessageBox::Warning, QCoreApplication::applicationName(), message);
-            QString buttonText (QCoreApplication::translate("Platform", Platform::openSettingsString));
+            QString buttonText (PlatformStrings::openSettings());
             QPushButton *openPreferences = msgBox.addButton(buttonText, QMessageBox::YesRole);
 
             msgBox.addButton(tr("Dismiss"), QMessageBox::NoRole);
@@ -1433,6 +1435,10 @@ if (!preferences->lastExecutionTime())
         preferences->setNotifyDisabledSyncsOnLogin(false);
         model->dismissUnattendedDisabledSyncs(syncsTypesToDismiss);
     }
+
+    // Init first synced and first backed-up file states from preferences
+    mIsFirstFileTwoWaySynced = preferences->isFirstFileSynced();
+    mIsFirstFileBackedUp = preferences->isFirstFileBackedUp();
 
     createAppMenus();
 
@@ -2746,7 +2752,7 @@ void MegaApplication::createInfoDialog()
     connect(transferQuota.get(), &TransferQuota::overQuotaMessageNeedsToBeShown, infoDialog.data(), &InfoDialog::enableTransferOverquotaAlert);
     connect(transferQuota.get(), &TransferQuota::almostOverQuotaMessageNeedsToBeShown, infoDialog.data(), &InfoDialog::enableTransferAlmostOverquotaAlert);
     connect(infoDialog, SIGNAL(cancelScanning()), this, SLOT(cancelScanningStage()));
-    connect(this, &MegaApplication::addBackup, infoDialog, &InfoDialog::onAddBackup);
+    connect(this, &MegaApplication::addBackup, infoDialog.data(), &InfoDialog::onAddBackup);
     scanStageController.updateReference(infoDialog);
 }
 
@@ -6340,6 +6346,8 @@ void MegaApplication::openSettings(int tab)
             settingsDialog->setProxyOnly(proxyOnly);
             //and visible -> show it
             settingsDialog->show();
+            settingsDialog->activateWindow();
+            settingsDialog->raise();
             return;
         }
 
@@ -6555,16 +6563,16 @@ void MegaApplication::createInfoDialogMenus()
     if (!mSyncs2waysMenu)
     {
         mSyncs2waysMenu = new SyncsMenu(MegaSync::TYPE_TWOWAY, infoDialog);
-        connect(mSyncs2waysMenu, &SyncsMenu::addSync,
-                infoDialog, &InfoDialog::onAddSync);
+        connect(mSyncs2waysMenu.data(), &SyncsMenu::addSync,
+                infoDialog.data(), &InfoDialog::onAddSync);
         mSyncs2waysMenu->setEnabled(exitAction->isEnabled());
     }
 
     if (!mBackupsMenu)
     {
         mBackupsMenu = new SyncsMenu(MegaSync::TYPE_BACKUP, infoDialog);
-        connect(mBackupsMenu, &SyncsMenu::addSync,
-                infoDialog, &InfoDialog::onAddSync);
+        connect(mBackupsMenu.data(), &SyncsMenu::addSync,
+                infoDialog.data(), &InfoDialog::onAddSync);
         mBackupsMenu->setEnabled(exitAction->isEnabled());
     }
 
@@ -6826,21 +6834,38 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
     }
     else if (event->getType() == MegaEvent::EVENT_SYNCS_DISABLED && event->getNumber() != MegaSync::Error::LOGGED_OUT)
     {
-        if (model->hasUnattendedDisabledSyncs(MegaSync::TYPE_TWOWAY)
-            && model->hasUnattendedDisabledSyncs(MegaSync::TYPE_BACKUP))
+        auto syncsUnattended = model->getUnattendedDisabledSyncs(MegaSync::TYPE_TWOWAY);
+        auto backupsUnattended = model->getUnattendedDisabledSyncs(MegaSync::TYPE_BACKUP);
+
+        if((syncsUnattended.size() + backupsUnattended.size()) == 1)
         {
-            showErrorMessage(tr("Your syncs and backups have been disabled").append(QString::fromUtf8(": "))
-                             .append(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(eventNumber))));
+            if(syncsUnattended.size() == 1)
+            {
+                showSingleSyncDisabledNotification(model->getSyncSettingByTag(*syncsUnattended.begin()));
+            }
+            else if(backupsUnattended.size() == 1)
+            {
+                showSingleSyncDisabledNotification(model->getSyncSettingByTag(*backupsUnattended.begin()));
+            }
         }
-        else if (model->hasUnattendedDisabledSyncs(MegaSync::TYPE_BACKUP))
+        else if(!syncsUnattended.isEmpty() || !backupsUnattended.isEmpty())
         {
-            showErrorMessage(tr("Your backups have been disabled").append(QString::fromUtf8(": "))
-                             .append(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(eventNumber))));
-        }
-        else
-        {
-            showErrorMessage(tr("Your syncs have been disabled").append(QString::fromUtf8(": "))
-                             .append(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(eventNumber))));
+            if (!syncsUnattended.isEmpty()
+                    && !backupsUnattended.isEmpty())
+            {
+                showErrorMessage(tr("Your syncs and backups have been disabled").append(QString::fromUtf8(": "))
+                                 .append(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(eventNumber))));
+            }
+            else if (!backupsUnattended.isEmpty())
+            {
+                showErrorMessage(tr("Your backups have been disabled").append(QString::fromUtf8(": "))
+                                 .append(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(eventNumber))));
+            }
+            else
+            {
+                showErrorMessage(tr("Your syncs have been disabled").append(QString::fromUtf8(": "))
+                                 .append(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(eventNumber))));
+            }
         }
     }
     else if (event->getType() == MegaEvent::EVENT_ACCOUNT_BLOCKED)
@@ -7677,16 +7702,22 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     {
         switch (request->getNumber())
         {
-            case 99500:
+            case AppStatsEvents::EVENT_1ST_START:
                 preferences->setFirstStartDone();
                 break;
-            case 99501:
+            case AppStatsEvents::EVENT_1ST_SYNC:
                 preferences->setFirstSyncDone();
                 break;
-            case 99502:
+            case AppStatsEvents::EVENT_1ST_SYNCED_FILE:
                 preferences->setFirstFileSynced();
                 break;
-            case 99503:
+            case AppStatsEvents::EVENT_1ST_BACKUP:
+                preferences->setFirstBackupDone();
+                break;
+            case AppStatsEvents::EVENT_1ST_BACKED_UP_FILE:
+                preferences->setFirstFileBackedUp();
+                break;
+            case AppStatsEvents::EVENT_1ST_WEBCLIENT_DL:
                 preferences->setFirstWebDownloadDone();
                 break;
             default:
@@ -7889,13 +7920,68 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         addRecentFile(QString::fromUtf8(transfer->getFileName()), transfer->getNodeHandle(), localPath, publicKey);
     }
 
+    // Check if we have ot send a EVENT_1ST_***_FILE
     if (e->getErrorCode() == MegaError::API_OK
             && transfer->isSyncTransfer()
-            && !isFirstFileSynced
-            && !preferences->isFirstFileSynced())
+            && (!mIsFirstFileTwoWaySynced || !mIsFirstFileBackedUp))
     {
-        megaApi->sendEvent(AppStatsEvents::EVENT_1ST_SYNCED_FILE, "MEGAsync first synced file");
-        isFirstFileSynced = true;
+        MegaSync::SyncType type (MegaSync::SyncType::TYPE_UNKNOWN);
+
+        // Check transfer local path against configured syncs to determine the sync type
+        QString filePath (QString::fromUtf8(transfer->getPath()));
+
+#ifdef WIN32
+        if (filePath.startsWith(QString::fromUtf8("\\\\?\\")))
+        {
+            filePath = filePath.mid(4);
+        }
+#endif
+
+        filePath = QDir::fromNativeSeparators(filePath);
+
+        auto typeIt (SyncInfo::AllHandledSyncTypes.constBegin());
+        while (type == MegaSync::SyncType::TYPE_UNKNOWN
+               && typeIt != SyncInfo::AllHandledSyncTypes.constEnd())
+        {
+            const auto syncsPaths (model->getLocalFolders(*typeIt));
+            auto pathIt (syncsPaths.constBegin());
+            while (type == MegaSync::SyncType::TYPE_UNKNOWN
+                   && pathIt != syncsPaths.constEnd())
+            {
+                QString syncDir (QDir::fromNativeSeparators(*pathIt) + QLatin1Char('/'));
+                if (filePath.startsWith(syncDir))
+                {
+                    type = *typeIt;
+                }
+                pathIt++;
+            }
+            typeIt++;
+        }
+
+        // Now emit an event if necessary
+        switch (type)
+        {
+        case MegaSync::SyncType::TYPE_TWOWAY:
+        {
+            if (!mIsFirstFileTwoWaySynced && !preferences->isFirstFileSynced())
+            {
+                megaApi->sendEvent(AppStatsEvents::EVENT_1ST_SYNCED_FILE,
+                                   "MEGAsync first synced file");
+            }
+            mIsFirstFileTwoWaySynced = true;
+            break;
+        }
+        case MegaSync::SyncType::TYPE_BACKUP:
+        {
+            if (!mIsFirstFileBackedUp && !preferences->isFirstFileBackedUp())
+            {
+                megaApi->sendEvent(AppStatsEvents::EVENT_1ST_BACKED_UP_FILE,
+                                   "MEGAsync first backed-up file");
+            }
+            mIsFirstFileBackedUp = true;
+            break;
+        }
+        }
     }
 
     if (firstTransferTimer && !firstTransferTimer->isActive())
@@ -8251,138 +8337,15 @@ void MegaApplication::onSyncStateChanged(MegaApi *api, MegaSync *sync)
         return;
     }
 
-    if (knownSyncStates.find(sync->getBackupId()) == knownSyncStates.end())
+    if (sync->getRunState() == MegaSync::RUNSTATE_DISABLED)
     {
-        knownSyncStates[sync->getBackupId()].reset(sync->copy());
-    }
-    auto& curSyncState = knownSyncStates[sync->getBackupId()];
-
-
-    if (curSyncState->getRunState() != sync->getRunState())
-    {
-        switch (sync->getRunState())
+        if (sync->getError())
         {
-            case MegaSync::RUNSTATE_RUNNING:
-            case MegaSync::RUNSTATE_PAUSED:
-            {
-                // todo: distinguish between run/pause:
-
-                MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Your sync \"%1\" has been re-enabled. Error = %2")
-                    .arg(QString::fromUtf8(sync->getName())).arg(sync->getError()).toUtf8().constData());
-
-
-                // MEGAsync should not bother the user with messages about successful expected things:
-                //showErrorMessage(tr("Your sync \"%1\" has been enabled")
-                //    .arg(QString::fromUtf8(sync->getName())));
-
-                model->removeUnattendedDisabledSync(sync->getBackupId(), ::mega::MegaSync::SyncType(sync->getType()));
-            }
-            break;
-
-            case MegaSync::RUNSTATE_SUSPENDED:
-            case MegaSync::RUNSTATE_DISABLED:
-            {
-                // todo: distinguish between disable/suspend
-
-                if (sync->getError() == MegaSync::Error::NO_SYNC_ERROR)
-                {
-                    break;
-                }
-
-                MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("Your sync \"%1\" has been suspended/disabled. Error = %2")
-                    .arg(QString::fromUtf8(sync->getName())).arg(sync->getError()).toUtf8().constData());
-
-                switch(sync->getError())
-                {
-                case MegaSync::Error::LOGGED_OUT:
-                {
-                    auto m = sync->getRunState() == MegaSync::RUNSTATE_DISABLED ?
-                        tr("Your sync \"%1\" has been temporarily disabled") :
-                        tr("Your sync \"%1\" has been temporarily suspended");
-
-                    showErrorMessage(m.arg(QString::fromUtf8(sync->getName())).append(QString::fromUtf8(": "))
-                        .append(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(sync->getError()))));
-                    break;
-                }
-                case MegaSync::Error::LOCAL_PATH_UNAVAILABLE:
-                {
-                    auto m = sync->getRunState() == MegaSync::RUNSTATE_DISABLED ?
-                        tr("Your sync \"%1\" has been disabled because the local folder doesn't exist") :
-                        tr("Your sync \"%1\" has been suspended because the local folder doesn't exist");
-
-                    showErrorMessage(m
-                        .arg(QString::fromUtf8(sync->getName())));
-
-                    break;
-                }
-                case MegaSync::Error::REMOTE_NODE_NOT_FOUND:
-                {
-                    auto m = sync->getRunState() == MegaSync::RUNSTATE_DISABLED ?
-                        tr("Your sync \"%1\" has been disabled because the remote folder doesn't exist") :
-                        tr("Your sync \"%1\" has been suspended because the remote folder doesn't exist");
-
-                    showErrorMessage(m
-                        .arg(QString::fromUtf8(sync->getName())));
-                    break;
-                }
-                case MegaSync::Error::VBOXSHAREDFOLDER_UNSUPPORTED:
-                {
-                    auto m = sync->getRunState() == MegaSync::RUNSTATE_DISABLED ?
-                        tr("Your sync \"%1\" has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.") :
-                        tr("Your sync \"%1\" has been suspended because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.");
-
-                    showErrorMessage(m
-                        .arg(QString::fromUtf8(sync->getName())));
-                    break;
-                }
-                case MegaSync::Error::REMOTE_NODE_MOVED_TO_RUBBISH:
-                {
-                    auto m = sync->getRunState() == MegaSync::RUNSTATE_DISABLED ?
-                        tr("Your sync \"%1\" has been disabled because the remote folder is in the rubbish bin") :
-                        tr("Your sync \"%1\" has been suspended because the remote folder is in the rubbish bin");
-
-                    showErrorMessage(m
-                        .arg(QString::fromUtf8(sync->getName())));
-                    break;
-                }
-                case MegaSync::Error::SHARE_NON_FULL_ACCESS:
-                {
-                    auto m = sync->getRunState() == MegaSync::RUNSTATE_DISABLED ?
-                        tr("Your sync \"%1\" has been disabled. The remote folder (or part of it) doesn't have full access") :
-                        tr("Your sync \"%1\" has been suspended. The remote folder (or part of it) doesn't have full access");
-
-                    showErrorMessage(m
-                        .arg(QString::fromUtf8(sync->getName())));
-                    break;
-                }
-                case MegaSync::Error::LOCAL_FILESYSTEM_MISMATCH:
-                {
-                    auto m = sync->getRunState() == MegaSync::RUNSTATE_DISABLED ?
-                        tr("Your sync \"%1\" has been disabled because the local folder has changed") :
-                        tr("Your sync \"%1\" has been suspended because the local folder has changed");
-
-                    showErrorMessage(m
-                        .arg(QString::fromUtf8(sync->getName())));
-                    break;
-                }
-                case MegaSync::Error::PUT_NODES_ERROR:
-                default:
-                {
-                    auto m = sync->getRunState() == MegaSync::RUNSTATE_DISABLED ?
-                        tr("Your sync \"%1\" has been disabled. Reason: %2") :
-                        tr("Your sync \"%1\" has been suspended. Reason: %2");
-
-                    showErrorMessage(m.arg(QString::fromUtf8(sync->getName()))
-                        .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(sync->getError()))));
-                    break;
-                }
-                }
-            }
-            break;
-         }
-
+            model->addUnattendedDisabledSync(sync->getBackupId(),
+                                             static_cast<MegaSync::SyncType>(sync->getType()));
+        }
+        onSyncDisabled(model->getSyncSettingByTag(sync->getBackupId()));
     }
-    curSyncState.reset(sync->copy());
 
     model->updateSyncSettings(sync); //Note, we are not updating the remote sync path
     // we asume that cannot change for existing syncs.
@@ -8410,7 +8373,6 @@ void MegaApplication::onSyncFileStateChanged(MegaApi *, MegaSync *, string *loca
 #endif
 }
 
-/*
 void MegaApplication::onSyncDisabled(std::shared_ptr<SyncSettings> syncSetting)
 {
     if (!syncSetting)
@@ -8420,181 +8382,179 @@ void MegaApplication::onSyncDisabled(std::shared_ptr<SyncSettings> syncSetting)
         return;
     }
 
-    QString syncName (syncSetting->name());
     auto errorCode (syncSetting->getError());
     auto syncType (syncSetting->getType());
 
-    if (syncType == MegaSync::TYPE_TWOWAY)
+    if (errorCode != MegaError::API_OK)
     {
-        MegaApi::log(MegaApi::LOG_LEVEL_WARNING,
-                     QString::fromUtf8("Your sync \"%1\" has been disabled. Error = %2")
-                     .arg(syncName, QString(errorCode)).toUtf8().constData());
-
-        if (syncSetting->isTemporaryDisabled()
-            && errorCode != MegaSync::Error::LOGGED_OUT)
-        {
-            QString errMsg(tr("Your sync \"%1\" has been temporarily disabled").arg(syncName));
-            errMsg += QLatin1String(": ");
-            errMsg += QCoreApplication::translate("MegaSyncError",
-                                                  MegaSync::getMegaSyncErrorCode(errorCode));
-            showErrorMessage(errMsg);
-        }
-        else if (errorCode != MegaSync::NO_SYNC_ERROR
-                 && errorCode != MegaSync::Error::LOGGED_OUT)
-        {
-            switch(errorCode)
-            {
-                case MegaSync::Error::NO_SYNC_ERROR:
-                {
-                    assert(false && "unexpected no error after onSyncAdded failed");
-                    return;
-                }
-                case MegaSync::Error::LOCAL_PATH_UNAVAILABLE:
-                {
-                    showErrorMessage(tr("Your sync \"%1\" has been disabled because the local folder doesn't exist")
-                                     .arg(syncName));
-                    break;
-                }
-                case MegaSync::Error::REMOTE_NODE_NOT_FOUND:
-                {
-                    showErrorMessage(tr("Your sync \"%1\" has been disabled because the remote folder doesn't exist")
-                                     .arg(syncName));
-                    break;
-                }
-                case MegaSync::Error::VBOXSHAREDFOLDER_UNSUPPORTED:
-                {
-                    showErrorMessage(tr("Your sync \"%1\" has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.")
-                                     .arg(syncName));
-                    break;
-                }
-                case MegaSync::Error::REMOTE_NODE_MOVED_TO_RUBBISH:
-                {
-                    showErrorMessage(tr("Your sync \"%1\" has been disabled because the remote folder is in the rubbish bin")
-                                     .arg(syncName));
-                    break;
-                }
-                case MegaSync::Error::SHARE_NON_FULL_ACCESS:
-                {
-                    showErrorMessage(tr("Your sync \"%1\" has been disabled. The remote folder (or part of it) doesn't have full access")
-                                     .arg(syncName));
-                    break;
-                }
-                case MegaSync::Error::LOCAL_FILESYSTEM_MISMATCH:
-                {
-                    showErrorMessage(tr("Your sync \"%1\" has been disabled because the local folder has changed")
-                                     .arg(syncName));
-                    break;
-                }
-                case MegaSync::Error::PUT_NODES_ERROR:
-                default:
-                {
-                    showErrorMessage(tr("Your sync \"%1\" has been disabled. Reason: %2").arg(syncName,
-                                                                                              QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(errorCode))));
-                    break;
-                }
-            }
-        }
-    }
-    else if (syncType == MegaSync::TYPE_BACKUP)
-    {
-        MegaApi::log(MegaApi::LOG_LEVEL_WARNING,
-                     QString::fromUtf8("Your backup \"%1\" has been disabled. Error = %2")
-                     .arg(syncName, QString(errorCode)).toUtf8().constData());
-        if (syncSetting->isTemporaryDisabled()
-            && errorCode != MegaSync::Error::LOGGED_OUT)
-        {
-            QString errMsg (tr("Your backup \"%1\" has been temporarily disabled").arg(syncName));
-            errMsg += QLatin1String(": ");
-            errMsg += QCoreApplication::translate("MegaSyncError",
-                                                  MegaSync::getMegaSyncErrorCode(errorCode));
-            showErrorMessage(errMsg);
-        }
-        else if (errorCode != MegaSync::NO_SYNC_ERROR
-                 && errorCode != MegaSync::Error::LOGGED_OUT)
-        {
-            switch(errorCode)
-            {
-                case MegaSync::Error::NO_SYNC_ERROR:
-                {
-                    assert(false && "unexpected no error after onSyncAdded failed");
-                    return;
-                }
-                case MegaSync::Error::LOCAL_PATH_UNAVAILABLE:
-                {
-                    showErrorMessage(tr("Your backup \"%1\" has been disabled because the local folder doesn't exist")
-                                     .arg(syncName));
-                    break;
-                }
-                case MegaSync::Error::REMOTE_NODE_NOT_FOUND:
-                {
-                    // We don't want to show a notification here because the removal of the remote
-                    // folder means that the backup has been deleted from the Backups Center
-                    break;
-                }
-                case MegaSync::Error::VBOXSHAREDFOLDER_UNSUPPORTED:
-                {
-                    showErrorMessage(tr("Your backup \"%1\" has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.")
-                                     .arg(syncName));
-                    break;
-                }
-                case MegaSync::Error::REMOTE_NODE_MOVED_TO_RUBBISH:
-                {
-                    showErrorMessage(tr("Your backup \"%1\" has been disabled because the remote folder is in the rubbish bin")
-                                     .arg(syncName));
-                    break;
-                }
-                case MegaSync::Error::SHARE_NON_FULL_ACCESS:
-                {
-                    showErrorMessage(tr("Your backup \"%1\" has been disabled. The remote folder (or part of it) doesn't have full access")
-                                     .arg(syncName));
-                    break;
-                }
-                case MegaSync::Error::LOCAL_FILESYSTEM_MISMATCH:
-                {
-                    showErrorMessage(tr("Your backup \"%1\" has been disabled because the local folder has changed")
-                                     .arg(syncName));
-                    break;
-                }
-                case MegaSync::Error::BACKUP_MODIFIED:
-                {
-                    showErrorMessage(tr("Your backup \"%1\" has been disabled because the remote folder has changed")
-                                     .arg(syncName));
-                    break;
-                }
-                case MegaSync::Error::PUT_NODES_ERROR:
-                default:
-                {
-                    showErrorMessage(tr("Your backup \"%1\" has been disabled. Reason: %2").arg(syncName,
-                                                                                              QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(errorCode))));
-                    break;
-                }
-            }
-        }
-    }
-    else
-    {
-        MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
-                     QString::fromLatin1("Unknown type of sync: %1")
-                     .arg(syncType).toUtf8().constData());
+        model->addUnattendedDisabledSync(syncSetting->backupId(),
+                                         static_cast<MegaSync::SyncType>(syncType));
     }
 }
 
-void MegaApplication::onSyncDisabled(MegaApi*, MegaSync* sync)
+void MegaApplication::showSingleSyncDisabledNotification(std::shared_ptr<SyncSettings> syncSetting)
 {
-    if (appfinished || !sync)
+    if(syncSetting)
     {
-        return;
-    }
+        auto errorCode (syncSetting->getError());
+        auto syncType (syncSetting->getType());
+        QString syncName (syncSetting->name());
 
-    if (sync->getError())
-    {
-        model->addUnattendedDisabledSync(sync->getBackupId(),
-                                         static_cast<MegaSync::SyncType>(sync->getType()));
-    }
+        if (syncType == MegaSync::TYPE_TWOWAY)
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                         QString::fromUtf8("Sync \"%1\" Path: %2 disabled: %3")
+                         .arg(syncName, syncSetting->getLocalFolder(), QString::number(errorCode)).toUtf8().constData());
 
-    onSyncDisabled(model->getSyncSettingByTag(sync->getBackupId()));
+            if (!syncSetting->isEnabled()
+                    && errorCode != MegaSync::Error::LOGGED_OUT)
+            {
+                QString errMsg(tr("Your sync \"%1\" has been temporarily disabled").arg(syncName));
+                errMsg += QLatin1String(": ");
+                errMsg += QCoreApplication::translate("MegaSyncError",
+                                                      MegaSync::getMegaSyncErrorCode(errorCode));
+                showErrorMessage(errMsg);
+            }
+            else if (errorCode != MegaSync::NO_SYNC_ERROR
+                     && errorCode != MegaSync::Error::LOGGED_OUT)
+            {
+                switch(errorCode)
+                {
+                    case MegaSync::Error::NO_SYNC_ERROR:
+                    {
+                        assert(false && "unexpected no error after onSyncAdded failed");
+                        return;
+                    }
+                    case MegaSync::Error::LOCAL_PATH_UNAVAILABLE:
+                    {
+                        showErrorMessage(tr("Your sync \"%1\" has been disabled because the local folder doesn't exist")
+                                         .arg(syncName));
+                        break;
+                    }
+                    case MegaSync::Error::REMOTE_NODE_NOT_FOUND:
+                    {
+                        showErrorMessage(tr("Your sync \"%1\" has been disabled because the remote folder doesn't exist")
+                                         .arg(syncName));
+                        break;
+                    }
+                    case MegaSync::Error::VBOXSHAREDFOLDER_UNSUPPORTED:
+                    {
+                        showErrorMessage(tr("Your sync \"%1\" has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.")
+                                         .arg(syncName));
+                        break;
+                    }
+                    case MegaSync::Error::REMOTE_NODE_MOVED_TO_RUBBISH:
+                    {
+                        showErrorMessage(tr("Your sync \"%1\" has been disabled because the remote folder is in the rubbish bin")
+                                         .arg(syncName));
+                        break;
+                    }
+                    case MegaSync::Error::SHARE_NON_FULL_ACCESS:
+                    {
+                        showErrorMessage(tr("Your sync \"%1\" has been disabled. The remote folder (or part of it) doesn't have full access")
+                                         .arg(syncName));
+                        break;
+                    }
+                    case MegaSync::Error::LOCAL_FILESYSTEM_MISMATCH:
+                    {
+                        showErrorMessage(tr("Your sync \"%1\" has been disabled because the local folder has changed")
+                                         .arg(syncName));
+                        break;
+                    }
+                    case MegaSync::Error::PUT_NODES_ERROR:
+                    default:
+                    {
+                        showErrorMessage(tr("Your sync \"%1\" has been disabled. Reason: %2").arg(syncName,
+                                                                                                  QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(errorCode))));
+                        break;
+                    }
+                }
+            }
+        }
+        else if (syncType == MegaSync::TYPE_BACKUP)
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                         QString::fromUtf8("Backup \"%1\" Path: %2 disabled: %3")
+                         .arg(syncName, syncSetting->getLocalFolder(), QString::number(errorCode)).toUtf8().constData());
+            if (!syncSetting->isEnabled()
+                    && errorCode != MegaSync::Error::LOGGED_OUT)
+            {
+                QString errMsg (tr("Your backup \"%1\" has been temporarily disabled").arg(syncName));
+                errMsg += QLatin1String(": ");
+                errMsg += QCoreApplication::translate("MegaSyncError",
+                                                      MegaSync::getMegaSyncErrorCode(errorCode));
+                showErrorMessage(errMsg);
+            }
+            else if (errorCode != MegaSync::NO_SYNC_ERROR
+                     && errorCode != MegaSync::Error::LOGGED_OUT)
+            {
+                switch(errorCode)
+                {
+                    case MegaSync::Error::NO_SYNC_ERROR:
+                    {
+                        assert(false && "unexpected no error after onSyncAdded failed");
+                        return;
+                    }
+                    case MegaSync::Error::LOCAL_PATH_UNAVAILABLE:
+                    {
+                        showErrorMessage(tr("Your backup \"%1\" has been disabled because the local folder doesn't exist")
+                                         .arg(syncName));
+                        break;
+                    }
+                    case MegaSync::Error::REMOTE_NODE_NOT_FOUND:
+                    {
+                        // We don't want to show a notification here because the removal of the remote
+                        // folder means that the backup has been deleted from the Backups Center
+                        break;
+                    }
+                    case MegaSync::Error::VBOXSHAREDFOLDER_UNSUPPORTED:
+                    {
+                        showErrorMessage(tr("Your backup \"%1\" has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.")
+                                         .arg(syncName));
+                        break;
+                    }
+                    case MegaSync::Error::REMOTE_NODE_MOVED_TO_RUBBISH:
+                    {
+                        showErrorMessage(tr("Your backup \"%1\" has been disabled because the remote folder is in the rubbish bin")
+                                         .arg(syncName));
+                        break;
+                    }
+                    case MegaSync::Error::SHARE_NON_FULL_ACCESS:
+                    {
+                        showErrorMessage(tr("Your backup \"%1\" has been disabled. The remote folder (or part of it) doesn't have full access")
+                                         .arg(syncName));
+                        break;
+                    }
+                    case MegaSync::Error::LOCAL_FILESYSTEM_MISMATCH:
+                    {
+                        showErrorMessage(tr("Your backup \"%1\" has been disabled because the local folder has changed")
+                                         .arg(syncName));
+                        break;
+                    }
+                    case MegaSync::Error::BACKUP_MODIFIED:
+                    {
+                        showErrorMessage(tr("Your backup \"%1\" has been disabled because the remote folder has changed")
+                                         .arg(syncName));
+                        break;
+                    }
+                    case MegaSync::Error::PUT_NODES_ERROR:
+                    default:
+                    {
+                        showErrorMessage(tr("Your backup \"%1\" has been disabled. Reason: %2").arg(syncName,
+                                                                                                    QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(errorCode))));
+                        break;
+                    }
+                }
+            }
+        }
+        else
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                         QString::fromLatin1("Unknown type of sync: %1")
+                         .arg(syncType).toUtf8().constData());
+        }
+    }
 }
-
 
 void MegaApplication::onSyncEnabled(std::shared_ptr<SyncSettings> syncSetting)
 {
@@ -8614,24 +8574,7 @@ void MegaApplication::onSyncEnabled(std::shared_ptr<SyncSettings> syncSetting)
     model->removeUnattendedDisabledSync(syncSetting->backupId(), syncSetting->getType());
 }
 
-void MegaApplication::onSyncEnabled(MegaApi* , MegaSync* sync)
-{
-    if (appfinished || !sync)
-    {
-        return;
-    }
-
-    onSyncEnabled(model->getSyncSettingByTag(sync->getBackupId()));
-}
-*/
-
 void MegaApplication::onSyncAdded(MegaApi *api, MegaSync *sync)
-{
-    if (appfinished || !sync)
-    {
-        return;
-    }
-
     auto syncSetting = model->updateSyncSettings(sync);
 
     onGlobalSyncStateChanged(api);

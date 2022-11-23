@@ -1504,8 +1504,6 @@ void WindowsPlatform::initMenu(QMenu* m)
 
 // Platform-specific strings
 const char* WindowsPlatform::settingsString {QT_TRANSLATE_NOOP("Platform", "Settings")};
-const char* WindowsPlatform::openSettingsString {QT_TRANSLATE_NOOP("Platform", "Open settings")};
-const char* WindowsPlatform::goToSettingsToEnableSyncsString {QT_TRANSLATE_NOOP("Platform", "Go to settings to enable them again.")};
 const char* WindowsPlatform::exitString {QT_TRANSLATE_NOOP("Platform", "Exit")};
 const char* WindowsPlatform::fileExplorerString {QT_TRANSLATE_NOOP("Platform", "Show in Explorer")};
 

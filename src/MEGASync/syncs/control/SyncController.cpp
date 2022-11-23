@@ -392,13 +392,13 @@ SyncController::Syncability SyncController::isRemoteFolderSyncable(std::shared_p
         {
         case SyncError::SHARE_NON_FULL_ACCESS:
         {
-            message = tr("You don't have enough permissions for this remote folder");
+            message = tr("You don't have enough permissions for this remote folder.");
             break;
         }
         case SyncError::REMOTE_NODE_INSIDE_RUBBISH:
         case SyncError::INVALID_REMOTE_TYPE:
         {
-            message = tr("Invalid remote path");
+            message = tr("Invalid remote path.");
             break;
         }
         }
@@ -410,17 +410,17 @@ SyncController::Syncability SyncController::isRemoteFolderSyncable(std::shared_p
         {
         case SyncError::ACTIVE_SYNC_SAME_PATH:
         {
-            message = tr("The selected MEGA folder is already synced");
+            message = tr("The selected MEGA folder is already synced.");
             break;
         }
         case SyncError::ACTIVE_SYNC_BELOW_PATH:
         {
-            message = tr("Folder contents already synced");
+            message = tr("Folder contents already synced.");
             break;
         }
         case SyncError::ACTIVE_SYNC_ABOVE_PATH:
         {
-            message = tr("Folder already synced");
+            message = tr("Folder already synced.");
             break;
         }
         }
@@ -430,7 +430,7 @@ SyncController::Syncability SyncController::isRemoteFolderSyncable(std::shared_p
     case MegaError::API_EARGS:
     default:
     {
-        message = tr("Invalid remote path");
+        message = tr("Invalid remote path.");
         break;
     }
     }
@@ -543,39 +543,39 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
 
     switch(req->getType())
     {
-    case MegaRequest::TYPE_ADD_SYNC:
-    {
-        int syncErrorCode (req->getNumDetails());
-        QString errorMsg;
-
-        bool error = false;
-
-        if (syncErrorCode != MegaSync::NO_SYNC_ERROR)
+        case MegaRequest::TYPE_ADD_SYNC:
         {
-            errorMsg = QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(syncErrorCode));
-            error = true;
-        }
-        else if (errorCode != MegaError::API_OK)
-        {
-            errorMsg = getSyncAPIErrorMsg(errorCode);
-            if(errorMsg.isEmpty())
-                errorMsg = QCoreApplication::translate("MegaError", e->getErrorString());
-            error = true;
-        }
+            int syncErrorCode (req->getNumDetails());
+            QString errorMsg;
 
-        if(error)
-        {
-            std::shared_ptr<MegaNode> remoteNode(api->getNodeByHandle(req->getNodeHandle()));
-            QString logMsg = QString::fromUtf8("Error adding sync (%1) \"%2\" for \"%3\" to \"%4\" (request error): %5").arg(
-                             getSyncTypeString(static_cast<MegaSync::SyncType>(req->getParamType())),
-                             QString::fromUtf8(req->getName()),
-                             QString::fromUtf8(req->getFile()),
-                             QString::fromUtf8(api->getNodePath(remoteNode.get())),
-                             errorMsg);
-            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, logMsg.toUtf8().constData());
+            bool error = false;
+
+            if (syncErrorCode != MegaSync::NO_SYNC_ERROR)
+            {
+                errorMsg = QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(syncErrorCode));
+                error = true;
+            }
+            else if (errorCode != MegaError::API_OK)
+            {
+                errorMsg = getSyncAPIErrorMsg(errorCode);
+                if(errorMsg.isEmpty())
+                    errorMsg = QCoreApplication::translate("MegaError", e->getErrorString());
+                error = true;
+            }
+
+            if(error)
+            {
+                std::shared_ptr<MegaNode> remoteNode(api->getNodeByHandle(req->getNodeHandle()));
+                QString logMsg = QString::fromUtf8("Error adding sync (%1) \"%2\" for \"%3\" to \"%4\" (request error): %5").arg(
+                                 getSyncTypeString(static_cast<MegaSync::SyncType>(req->getParamType())),
+                                 QString::fromUtf8(req->getName()),
+                                 QString::fromUtf8(req->getFile()),
+                                 QString::fromUtf8(api->getNodePath(remoteNode.get())),
+                                 errorMsg);
+                MegaApi::log(MegaApi::LOG_LEVEL_ERROR, logMsg.toUtf8().constData());
+            }
+            emit syncAddStatus(errorCode, errorMsg, QString::fromUtf8(req->getFile()));
+            break;
         }
-        emit syncAddStatus(errorCode, errorMsg, QString::fromUtf8(req->getFile()));
-        break;
-    }
     }
 }

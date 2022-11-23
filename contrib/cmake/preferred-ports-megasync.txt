@@ -47,13 +47,13 @@ pdfium/5247
 pdfium-freetype/2-12-1
 
 # dependencies of pdfium
-icu/979a5197b3389cfdf91d0ac5d98b6066ce73fd7a all:off osx:on linux:on
-icu/cb91b416cb8f85f0a55853baad23fb18d306148a all:on osx:off linux:off
+icu/979a5197b3389cfdf91d0ac5d98b6066ce73fd7a all:off osx:on
+icu/cb91b416cb8f85f0a55853baad23fb18d306148a all:on osx:off
 lcms/c303dd024e2dc03a0665ddffbb12a1077933e649
-#libjpeg-turbo already added above for freeimage
-#openjpeg already added above for freeimage
+#libjpeg-turbo already added for freeimage
+#openjpeg already added for freeimage
 bzip2/c303dd024e2dc03a0665ddffbb12a1077933e649
-#libpng already added above for freeimage
+#libpng already added for freeimage
 
 # for the tests, just to get the build through
 gtest/c303dd024e2dc03a0665ddffbb12a1077933e649 all:gtest-warnings-are-not-errors.patch

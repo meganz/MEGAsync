@@ -17,7 +17,8 @@ SyncSettings::~SyncSettings()
 
 SyncSettings::SyncSettings(const SyncSettings& a) :
     mSync(a.getSync()->copy()), mBackupId(a.backupId()),
-    mSyncID(a.getSyncID()), mMegaFolder(a.mMegaFolder)
+    mSyncID(a.getSyncID()),
+    mMegaFolder(a.mMegaFolder)
 {
 }
 
@@ -62,11 +63,6 @@ QString SyncSettings::name(bool removeUnsupportedChars) const
                                   : QString::fromUtf8(mSync->getName());
 }
 
-void SyncSettings::setEnabled(bool value)
-{
-    mEnabled = value;
-}
-
 MegaSync * SyncSettings::getSync() const
 {
     return mSync.get();
@@ -103,13 +99,7 @@ SyncSettings::SyncSettings(QString initializer)
 SyncSettings::SyncSettings(const SyncData &osd, bool/* loadedFromPreviousSessions*/)
 {
     mSyncID = osd.mSyncID;
-    mEnabled = osd.mEnabled;
-
-    // Although mActive should be false for loadedFromPreviousSessions, since MEGAsync versions with old cache
-    // did not deActivate syncs when logging out, we dont need to consider this
-    // keeping the parameter and the code in case we consider fixing that. Uncoment the /**/ in that case.
-    mActive = /*!loadedFromPreviousSessions && */osd.mEnabled && !osd.mTemporarilyDisabled;
-
+    mSync.reset(new MegaSync()); // MegaSync getters return fair enough defaults
 }
 
 QString SyncSettings::toString()
@@ -209,5 +199,13 @@ void SyncSettings::setBackupId(MegaHandle backupId)
 
 MegaSync::SyncType SyncSettings::getType()
 {
-    return static_cast<MegaSync::SyncType>(mSync->getType());
+    auto type = static_cast<MegaSync::SyncType>(mSync->getType());
+
+    //There is not TYPE_UNKNOWN syncs, at least it is TWO WAY
+    if(type == MegaSync::TYPE_UNKNOWN)
+    {
+        type = MegaSync::TYPE_TWOWAY;
+    }
+
+    return type;
 }
