@@ -39,7 +39,7 @@ SyncInfo::SyncInfo() : QObject(),
 }
 
 bool SyncInfo::hasUnattendedDisabledSyncs(const QVector<SyncType>& types) const
-{    
+{
     return std::any_of(types.cbegin(), types.cend(), [this](SyncType t){return !unattendedDisabledSyncs[t].isEmpty();});
 }
 
@@ -201,7 +201,7 @@ void SyncInfo::updateMegaFolder(QString newRemotePath, std::shared_ptr<SyncSetti
     }
 }
 
-std::shared_ptr<SyncSettings> SyncInfo::updateSyncSettings(MegaSync *sync, int addingState)
+std::shared_ptr<SyncSettings> SyncInfo::updateSyncSettings(MegaSync *sync)
 {
     if (!sync)
     {
@@ -222,7 +222,8 @@ std::shared_ptr<SyncSettings> SyncInfo::updateSyncSettings(MegaSync *sync, int a
 
         //move into the configuredSyncsMap
         configuredSyncsMap.insert(sync->getBackupId(), cs);
-        configuredSyncs[cs->getType()].append(sync->getBackupId());
+        MegaSync::SyncType type = static_cast<MegaSync::SyncType>(sync->getType());
+        configuredSyncs[type].append(sync->getBackupId());
 
         // remove from picked
         syncsSettingPickedFromOldConfig.erase(oldcsitr);
@@ -235,14 +236,12 @@ std::shared_ptr<SyncSettings> SyncInfo::updateSyncSettings(MegaSync *sync, int a
     if (cs)
     {
         wasActive = cs->isActive();
-        wasInactive = !cs->isActive();
+        wasInactive = !wasActive;
 
         cs->setSync(sync);
     }
     else //new configuration (new or resumed)
     {
-        assert(addingState && "!addingState and didn't find previously configured sync");
-
         auto loaded = preferences->getLoadedSyncsMap();
         if (loaded.contains(sync->getBackupId())) //existing configuration from previous executions (we get the data that the sdk might not be providing from our cache)
         {
@@ -266,39 +265,17 @@ std::shared_ptr<SyncSettings> SyncInfo::updateSyncSettings(MegaSync *sync, int a
 
     });// end of thread pool function
 
-
-    if (addingState) //new or resumed
-    {
-        wasActive = (addingState == MegaSync::SyncAdded::FROM_CACHE && cs->isActive() )
-                || addingState == MegaSync::SyncAdded::FROM_CACHE_FAILED_TO_RESUME;
-
-        wasInactive =  (addingState == MegaSync::SyncAdded::FROM_CACHE && !cs->isActive() )
-                || addingState == MegaSync::SyncAdded::NEW || addingState == MegaSync::SyncAdded::FROM_CACHE_REENABLED
-                || addingState == MegaSync::SyncAdded::REENABLED_FAILED;
-    }
-
     if (cs->isActive() && wasInactive)
     {
         activateSync(cs);
     }
 
-    if (!cs->isActive() && wasActive )
+    if (!cs->isActive() && wasActive)
     {
         deactivateSync(cs);
     }
 
     preferences->writeSyncSetting(cs); // we store MEGAsync specific fields into cache
-
-#ifdef WIN32
-    // handle transition from MEGAsync <= 3.0.1.
-    // if resumed from cache and the previous version did not have left pane icons, add them
-    if (MegaSyncApp->getPrevVersion() && MegaSyncApp->getPrevVersion() <= 3001
-            && !preferences->leftPaneIconsDisabled()
-            && addingState == MegaSync::SyncAdded::FROM_CACHE && cs->isActive())
-    {
-        Platform::addSyncToLeftPane(cs->getLocalFolder(), cs->name(), cs->getSyncID());
-    }
-#endif
 
     emit syncStateChanged(cs);
     return cs;
@@ -324,11 +301,9 @@ void SyncInfo::pickInfoFromOldSync(const SyncData &osd, MegaHandle backupId, boo
 {
     QMutexLocker qm(&syncMutex);
     assert(preferences->logged() || loadedFromPreviousSessions);
-    std::shared_ptr<SyncSettings> cs;
-
     assert (!configuredSyncsMap.contains(backupId) && "picking already configured sync!"); //this should always be the case
 
-    cs = syncsSettingPickedFromOldConfig[backupId] = std::make_shared<SyncSettings>(osd, loadedFromPreviousSessions);
+    std::shared_ptr<SyncSettings> cs = syncsSettingPickedFromOldConfig[backupId] = std::make_shared<SyncSettings>(osd, loadedFromPreviousSessions);
 
     cs->setBackupId(backupId); //assign the new tag given by the sdk
 
