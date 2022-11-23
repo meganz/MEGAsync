@@ -110,7 +110,7 @@ public:
         return request;
     }
 
-    void updateAllRequestByUser(const char* user_email);
+    void updateEmptyAttributesByUser(const char* user_email);
 
 private:
     friend class AttributeRequest;

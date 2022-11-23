@@ -357,7 +357,7 @@ void DesktopNotifications::replayIncomingPendingRequest(MegaNotification::Action
                                                            new mega::OnFinishOneShot(megaApp->getMegaApi(), [=](const mega::MegaError& e){
                     if (e.getErrorCode() == mega::MegaError::API_OK)
                     {
-                        UserAttributes::UserAttributesManager::instance().updateAllRequestByUser(sourceEmail.toStdString().c_str());
+                        UserAttributes::UserAttributesManager::instance().updateEmptyAttributesByUser(sourceEmail.toStdString().c_str());
                     }
                 }));
             }

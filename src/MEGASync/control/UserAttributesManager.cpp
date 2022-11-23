@@ -21,15 +21,15 @@ void UserAttributesManager::reset()
     mRequests.clear();
 }
 
-void UserAttributesManager::updateAllRequestByUser(const char *user_email)
+void UserAttributesManager::updateEmptyAttributesByUser(const char *user_email)
 {
     QString userEmail = QString::fromUtf8(user_email);
     auto requests = mRequests.values(userEmail);
     foreach(auto request, requests)
-    {
-        request->forceRequestAttribute();
+        {
+            request->forceRequestAttribute();
+        }
     }
-}
 
 void UserAttributesManager::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *incoming_request, mega::MegaError *e)
 {
