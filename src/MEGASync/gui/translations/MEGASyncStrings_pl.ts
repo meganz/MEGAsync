@@ -628,7 +628,7 @@
     <message>
         <source>Are you sure you want to cancel? All changes will be lost.</source>
         <translatorcomment>Warning dialog that appears when user click in cancel button in backup wizard and it will be closed.</translatorcomment>
-        <translation>Czy na pewno chcesz zrezygnować? Wszystkie zmiany zostaną utracone.</translation>
+        <translation>Chcesz zrezygnować? Wszystkie zmiany zostaną utracone.</translation>
     </message>
     <message>
         <source>Choose directory</source>
@@ -643,7 +643,7 @@
     <message>
         <source>View in backup centre</source>
         <translatorcomment>Text for a button allowing the user to view the newly created backup i nthe Backup center (in the webclient)</translatorcomment>
-        <translation>Pokaż w kopiach zapasowych</translation>
+        <translation>Pokaż w centrum kopii zapasowych</translation>
     </message>
 </context>
 <context>
@@ -857,7 +857,7 @@
     <message>
         <source>Are you sure you want to exit uploading?</source>
         <translatorcomment>Confirmation message shown when the user is trying to cancel the ongoing upload report.</translatorcomment>
-        <translation>Czy na pewno chcesz anulować przesyłanie zgłoszonego problemu?</translation>
+        <translation>Chcesz zrezygnować z przesyłania zgłoszonej sprawy?</translation>
     </message>
     <message>
         <source>The bug report will not be submitted if you exit uploading.</source>
@@ -3263,7 +3263,7 @@ Transfery zostaną automatycznie wznowione po ponownym otwarciu aplikacji.</nume
     <message>
         <source>Account expired (business or Pro Flexi)</source>
         <translatorcomment>Label to show that the current account (either business or Pro Flexi) is expired during a SDK operation.</translatorcomment>
-        <translation>Konto wygasło</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3271,7 +3271,7 @@ Transfery zostaną automatycznie wznowione po ponownym otwarciu aplikacji.</nume
     <message>
         <source>Move to top</source>
         <translatorcomment>Label of context menu option to move selected transfer to top of the list and give it highest priority</translatorcomment>
-        <translation>przenieś do góry</translation>
+        <translation>Przenieś do góry</translation>
     </message>
     <message>
         <source>Move up</source>
@@ -4355,7 +4355,7 @@ Please delete the folder sync from preferences to cancel them.</source>
     <message>
         <source>New Folder</source>
         <translatorcomment>Default folder new when creating a new folder</translatorcomment>
-        <translation>Nowy folder</translation>
+        <translation>Nowy katalog</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -4400,7 +4400,7 @@ Please delete the folder sync from preferences to cancel them.</source>
     <message>
         <source>File Folder</source>
         <translatorcomment>Label to desing a folder matching Windows Explorer case</translatorcomment>
-        <translation>Aktówka</translation>
+        <translation>Katalog</translation>
     </message>
     <message>
         <source>Folder</source>
@@ -5709,7 +5709,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Are you sure you want to cancel this wizard and undo all changes?</source>
         <translatorcomment>Message shown when an user cancel the Setup Wizard.</translatorcomment>
-        <translation>Czy na pewno chcesz anulować kreatora i wycofać zmiany?</translation>
+        <translation>Chcesz zrezygnować z przesyłania zgłoszonej sprawy?</translation>
     </message>
     <message>
         <source>Skip</source>
