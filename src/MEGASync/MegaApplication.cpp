@@ -6331,6 +6331,8 @@ void MegaApplication::openSettings(int tab)
             settingsDialog->setProxyOnly(proxyOnly);
             //and visible -> show it
             settingsDialog->show();
+            settingsDialog->activateWindow();
+            settingsDialog->raise();
             return;
         }
 
