@@ -8316,6 +8316,16 @@ void MegaApplication::onSyncStateChanged(MegaApi *api, MegaSync *sync)
         return;
     }
 
+    if (sync->getRunState() == MegaSync::RUNSTATE_DISABLED)
+    {
+        if (sync->getError())
+        {
+            model->addUnattendedDisabledSync(sync->getBackupId(),
+                                             static_cast<MegaSync::SyncType>(sync->getType()));
+        }
+        onSyncDisabled(model->getSyncSettingByTag(sync->getBackupId()));
+    }
+
     model->updateSyncSettings(sync); //Note, we are not updating the remote sync path
     // we asume that cannot change for existing syncs.
 
@@ -8375,7 +8385,7 @@ void MegaApplication::showSingleSyncDisabledNotification(std::shared_ptr<SyncSet
                          QString::fromUtf8("Sync \"%1\" Path: %2 disabled: %3")
                          .arg(syncName, syncSetting->getLocalFolder(), QString::number(errorCode)).toUtf8().constData());
 
-            if (syncSetting->isTemporaryDisabled()
+            if (!syncSetting->isEnabled()
                     && errorCode != MegaSync::Error::LOGGED_OUT)
             {
                 QString errMsg(tr("Your sync \"%1\" has been temporarily disabled").arg(syncName));
@@ -8445,7 +8455,7 @@ void MegaApplication::showSingleSyncDisabledNotification(std::shared_ptr<SyncSet
             MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
                          QString::fromUtf8("Backup \"%1\" Path: %2 disabled: %3")
                          .arg(syncName, syncSetting->getLocalFolder(), QString::number(errorCode)).toUtf8().constData());
-            if (syncSetting->isTemporaryDisabled()
+            if (!syncSetting->isEnabled()
                     && errorCode != MegaSync::Error::LOGGED_OUT)
             {
                 QString errMsg (tr("Your backup \"%1\" has been temporarily disabled").arg(syncName));
@@ -8525,16 +8535,6 @@ void MegaApplication::showSingleSyncDisabledNotification(std::shared_ptr<SyncSet
     }
 }
 
-void MegaApplication::onSyncDisabled(MegaApi*, MegaSync* sync)
-{
-    if (appfinished || !sync)
-    {
-        return;
-    }
-
-    onSyncDisabled(model->getSyncSettingByTag(sync->getBackupId()));
-}
-
 void MegaApplication::onSyncEnabled(std::shared_ptr<SyncSettings> syncSetting)
 {
     if (!syncSetting)
@@ -8553,30 +8553,14 @@ void MegaApplication::onSyncEnabled(std::shared_ptr<SyncSettings> syncSetting)
     model->removeUnattendedDisabledSync(syncSetting->backupId(), syncSetting->getType());
 }
 
-void MegaApplication::onSyncEnabled(MegaApi* , MegaSync* sync)
+void MegaApplication::onSyncAdded(MegaApi *api, MegaSync *sync)
 {
     if (appfinished || !sync)
     {
         return;
     }
 
-    onSyncEnabled(model->getSyncSettingByTag(sync->getBackupId()));
-}
-
-void MegaApplication::onSyncAdded(MegaApi *api, MegaSync *sync, int additionState)
-{
-    if (appfinished || !sync)
-    {
-        return;
-    }
-
-    auto syncSetting = model->updateSyncSettings(sync, additionState);
-
-    if (additionState == MegaSync::SyncAdded::FROM_CACHE_FAILED_TO_RESUME
-            || additionState == MegaSync::SyncAdded::NEW_TEMP_DISABLED)
-    {
-        onSyncDisabled(syncSetting);
-    }
+    auto syncSetting = model->updateSyncSettings(sync);
 
     onGlobalSyncStateChanged(api);
 }

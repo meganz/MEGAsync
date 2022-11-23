@@ -17,8 +17,8 @@ SyncSettings::~SyncSettings()
 
 SyncSettings::SyncSettings(const SyncSettings& a) :
     mSync(a.getSync()->copy()), mBackupId(a.backupId()),
-    mSyncID(a.getSyncID()), mEnabled(a.isEnabled()),
-    mActive(a.isActive()), mMegaFolder(a.mMegaFolder)
+    mSyncID(a.getSyncID()),
+    mMegaFolder(a.mMegaFolder)
 {
 }
 
@@ -27,8 +27,6 @@ SyncSettings& SyncSettings::operator=(const SyncSettings& a)
     mSync.reset(a.getSync()->copy());
     mBackupId = a.backupId();
     mSyncID = a.getSyncID();
-    mEnabled = a.isEnabled();
-    mActive = a.isActive();
     mMegaFolder = a.mMegaFolder;
     return *this;
 }
@@ -63,11 +61,6 @@ QString SyncSettings::name(bool removeUnsupportedChars) const
     //Provide name removing ':' to avoid possible issues during communications with shell extension
     return removeUnsupportedChars ? QString::fromUtf8(mSync->getName()).remove(QChar::fromAscii(':'))
                                   : QString::fromUtf8(mSync->getName());
-}
-
-void SyncSettings::setEnabled(bool value)
-{
-    mEnabled = value;
 }
 
 MegaSync * SyncSettings::getSync() const
@@ -106,12 +99,6 @@ SyncSettings::SyncSettings(QString initializer)
 SyncSettings::SyncSettings(const SyncData &osd, bool/* loadedFromPreviousSessions*/)
 {
     mSyncID = osd.mSyncID;
-    mEnabled = osd.mEnabled;
-
-    // Although mActive should be false for loadedFromPreviousSessions, since MEGAsync versions with old cache
-    // did not deActivate syncs when logging out, we dont need to consider this
-    // keeping the parameter and the code in case we consider fixing that. Uncoment the /**/ in that case.
-    mActive = /*!loadedFromPreviousSessions && */osd.mEnabled && !osd.mTemporarilyDisabled;
     mSync.reset(new MegaSync()); // MegaSync getters return fair enough defaults
 }
 
@@ -133,9 +120,6 @@ void SyncSettings::setSync(MegaSync *sync)
 
         assert(mBackupId == INVALID_HANDLE || mBackupId == sync->getBackupId());
         mBackupId = sync->getBackupId();
-        mEnabled = sync->isEnabled();
-
-        mActive = sync->isActive(); //override active with the actual value
     }
     else
     {
@@ -179,17 +163,12 @@ MegaHandle SyncSettings::getMegaHandle()  const
 
 bool SyncSettings::isEnabled()  const
 {
-    return mEnabled;
+    return getSync()->getRunState() == ::mega::MegaSync::RUNSTATE_RUNNING;
 }
 
 bool SyncSettings::isActive()  const
 {
-    return mActive;
-}
-
-bool SyncSettings::isTemporaryDisabled()  const
-{
-    return mSync->isTemporaryDisabled();
+    return getSync()->getRunState() == ::mega::MegaSync::RUNSTATE_RUNNING;
 }
 
 int SyncSettings::getError() const
