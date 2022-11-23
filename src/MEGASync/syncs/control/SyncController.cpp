@@ -179,8 +179,42 @@ void SyncController::disableSync(std::shared_ptr<SyncSettings> syncSetting)
                  .arg(getSyncTypeString(syncSetting->getType()), syncSetting->getLocalFolder(), syncSetting->getMegaFolder())
                  .toUtf8().constData());
 
-    // We do not provide a callback here because the answer is always OK.
-    mApi->setSyncRunState(syncSetting->backupId(), MegaSync::RUNSTATE_DISABLED);
+    mApi->setSyncRunState(syncSetting->backupId(), MegaSync::RUNSTATE_DISABLED,
+                          new OnFinishOneShot(mApi, [=](const MegaError& e){
+        // NOTE: As of sdk commit 94e2b9dd1db6a886e21cc1ee826bda58c8c33f99, this never fails
+        // and errorCode is always MegaError::API_OK.
+        auto errorCode (e.getErrorCode());
+        if (errorCode != MegaError::API_OK)
+        {
+            auto syncErrorCode (static_cast<MegaSync::Error>(e.getSyncError()));
+
+            if (syncSetting && (syncErrorCode != MegaSync::NO_SYNC_ERROR))
+            {
+                QString logMsg = QString::fromUtf8("Error disabling sync (%1) \"%2\" for \"%3\" to \"%4\": %5").arg(
+                            getSyncTypeString(syncSetting->getType()),
+                            syncSetting->name(),
+                            syncSetting->getLocalFolder(),
+                            syncSetting->getMegaFolder(),
+                            QString::fromUtf8(MegaSync::getMegaSyncErrorCode(syncErrorCode)));
+                MegaApi::log(MegaApi::LOG_LEVEL_ERROR, logMsg.toUtf8().constData());
+
+                emit syncDisableError(syncSetting, syncErrorCode);
+            }
+            else
+            {
+                QString errorMsg = getSyncAPIErrorMsg(errorCode);
+                if (errorMsg.isEmpty())
+                {
+                    errorMsg = QString::fromUtf8(e.getErrorString());
+                }
+
+                QString logMsg = QString::fromUtf8("Error disabling sync (%1) (request error): %2").arg(
+                            getSyncTypeString(syncSetting ? syncSetting->getType() : MegaSync::SyncType::TYPE_UNKNOWN),
+                            errorMsg);
+                MegaApi::log(MegaApi::LOG_LEVEL_ERROR, logMsg.toUtf8().constData());
+            }
+        }
+    }));
 }
 
 // Checks if a path belongs is in an existing sync or backup tree; and if the selected

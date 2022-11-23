@@ -1459,6 +1459,15 @@ void SettingsDialog::connectSyncHandlers()
                                   .arg(sync->name())
                                   .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(errorCode))));
     });
+
+    connect(&mSyncController, &SyncController::syncDisableError, this, [this](std::shared_ptr<SyncSettings> sync, mega::MegaSync::Error errorCode)
+    {
+        onSavingSyncsCompleted(SAVING_SYNCS_FINISHED);
+        QMegaMessageBox::warning(nullptr, tr("Error disabling sync"),
+                                  tr("Your sync \"%1\" can't be disabled. Reason: %2")
+                                  .arg(sync->name())
+                                  .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(errorCode))));
+    });
 }
 
 void SettingsDialog::loadSyncSettings()
@@ -1700,6 +1709,15 @@ void SettingsDialog::connectBackupHandlers()
         onSavingSyncsCompleted(SyncStateInformation::SAVING_BACKUPS_FINISHED);
         QMegaMessageBox::warning(nullptr, tr("Error enabling backup"),
                                   tr("Your backup \"%1\" can't be enabled. Reason: %2")
+                                  .arg(sync->name())
+                                  .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(errorCode))));
+    });
+
+    connect(&mBackupController, &SyncController::syncDisableError, this, [this](std::shared_ptr<SyncSettings> sync, mega::MegaSync::Error errorCode)
+    {
+        onSavingSyncsCompleted(SyncStateInformation::SAVING_BACKUPS_FINISHED);
+        QMegaMessageBox::warning(nullptr, tr("Error disabling backup"),
+                                  tr("Your backup \"%1\" can't be disabled. Reason: %2")
                                   .arg(sync->name())
                                   .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(errorCode))));
     });
