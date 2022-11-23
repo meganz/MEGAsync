@@ -100,6 +100,7 @@ set(3RDPARTY_RUNTIME_PATH "PATH=%PATH%" "${Mega3rdPartyDir}/vcpkg/installed/${VC
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOUIC_SEARCH_PATHS "${MEGAsyncDir}/gui/${UiDir}"
+							   "${MEGAsyncDir}/gui/node_selector/gui/${UiDir}"
                                "${MEGAsyncDir}/transfers/gui/${UiDir}"
                                "${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/${UiDir}"
                                "${MEGAsyncDir}/syncs/gui/Backups/${UiDir}"
@@ -119,6 +120,8 @@ include_directories( "${MEGAsyncDir}/mega/bindings/qt" )
 include_directories( "${MEGAsyncDir}/control" )
 include_directories( "${MEGAsyncDir}/model" )
 include_directories( "${MEGAsyncDir}/gui" )
+include_directories( "${MEGAsyncDir}/gui/node_selector/gui/${UiDir}")
+include_directories( "${MEGAsyncDir}/gui/node_selector" )
 include_directories( "${MEGAsyncDir}/platform" )
 include_directories( "${MEGAsyncDir}/gui/${UiDir}" )
 include_directories( "${MEGAsyncDir}/transfers/model" )
@@ -329,7 +332,7 @@ set (MOC_INPUT
 	${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorLoadingDelegate.h
 	${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorTreeViewWidgetSpecializations.h
 	${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorTreeViewWidget.h
-	${MEGAsyncDir}/gui/node_selector/gui/MegaItemTreeView.h
+	${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorTreeView.h
 	${MEGAsyncDir}/gui/node_selector/model/NodeSelectorDelegates.h
 	${MEGAsyncDir}/gui/node_selector/model/NodeSelectorModel.h
 	${MEGAsyncDir}/gui/node_selector/model/NodeSelectorModelItem.h
@@ -532,7 +535,7 @@ set (SRCS
 	${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorLoadingDelegate.cpp
 	${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorTreeViewWidgetSpecializations.cpp
 	${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorTreeViewWidget.cpp
-	${MEGAsyncDir}/gui/node_selector/gui/MegaItemTreeView.cpp
+	${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorTreeView.cpp
 	${MEGAsyncDir}/gui/node_selector/model/NodeSelectorDelegates.cpp
 	${MEGAsyncDir}/gui/node_selector/model/NodeSelectorModel.cpp
 	${MEGAsyncDir}/gui/node_selector/model/NodeSelectorModelItem.cpp
@@ -792,6 +795,8 @@ endif()
 
 target_include_directories(MEGAsync PRIVATE
                                     ${MEGAsyncDir}
+                                    ${MEGAsyncDir}/gui/node_selector/gui
+                                    ${MEGAsyncDir}/gui/node_selector/model
                                     ${MEGAsyncDir}/transfers
                                     ${MEGAsyncDir}/transfers/gui
                                     ${MEGAsyncDir}/transfers/model
