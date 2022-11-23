@@ -11,8 +11,8 @@
 #include <memory>
 
 
-class MegaItemProxyModel;
-class MegaItemModel;
+class NodeSelectorProxyModel;
+class NodeSelectorModel;
 
 namespace Ui {
 class NodeSelector;
@@ -68,7 +68,7 @@ private slots:
     void onViewReady(bool isEmpty);
 
 private:
-    void processCloseEvent(MegaItemProxyModel *proxy, QCloseEvent* event);
+    void processCloseEvent(NodeSelectorProxyModel *proxy, QCloseEvent* event);
     QModelIndex getParentIncomingShareByIndex(QModelIndex idx);
     void hideSelector(TabItem item);
 #ifdef Q_OS_MAC

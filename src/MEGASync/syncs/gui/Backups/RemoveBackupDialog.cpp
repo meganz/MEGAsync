@@ -1,7 +1,7 @@
 #include "RemoveBackupDialog.h"
 #include "ui_RemoveBackupDialog.h"
 #include "MegaApplication.h"
-#include "NodeSelector.h"
+#include "node_selector/gui/NodeSelector.h"
 #include <QButtonGroup>
 
 RemoveBackupDialog::RemoveBackupDialog(std::shared_ptr<SyncSettings> backup, QWidget *parent) :

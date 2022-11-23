@@ -1,6 +1,6 @@
 #include "UploadToMegaDialog.h"
 #include "ui_UploadToMegaDialog.h"
-#include "gui/NodeSelector.h"
+#include "gui/node_selector/gui/NodeSelector.h"
 #include "control/Utilities.h"
 #include "MegaApplication.h"
 

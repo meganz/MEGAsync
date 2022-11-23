@@ -1,10 +1,9 @@
 #ifndef NODESELECTORTREEVIEWWIDGET_H
 #define NODESELECTORTREEVIEWWIDGET_H
 
-
 #include "QTMegaRequestListener.h"
 #include <megaapi.h>
-#include <NodeSelectorLoadingDelegate.h>
+#include "NodeSelectorLoadingDelegate.h"
 #include <ViewLoadingScene.h>
 
 #include <QWidget>
@@ -12,8 +11,8 @@
 #include <memory>
 
 
-class MegaItemProxyModel;
-class MegaItemModel;
+class NodeSelectorProxyModel;
+class NodeSelectorModel;
 
 namespace Ui {
 class NodeSelectorTreeViewWidget;
@@ -48,7 +47,7 @@ public:
     bool getDefaultUploadOption();
     void showDefaultUploadOption(bool show);
     void abort();
-    MegaItemProxyModel* getProxyModel();
+    NodeSelectorProxyModel* getProxyModel();
 
 public slots:
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
@@ -71,7 +70,7 @@ protected:
     QModelIndex getParentIncomingShareByIndex(QModelIndex idx);
 
     Ui::NodeSelectorTreeViewWidget *ui;
-    std::unique_ptr<MegaItemProxyModel> mProxyModel;
+    std::unique_ptr<NodeSelectorProxyModel> mProxyModel;
 
 
 private slots:
@@ -107,7 +106,7 @@ private:
     bool mManuallyResizedColumn;
     Navigation mNavigationInfo;
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
-    std::unique_ptr<MegaItemModel> mModel;
+    std::unique_ptr<NodeSelectorModel> mModel;
 
     bool isAllowedToEnterInIndex(const QModelIndex &idx);
     QModelIndex getSelectedIndex();
@@ -118,7 +117,7 @@ private:
     QModelIndex getIndexFromHandle(const mega::MegaHandle &handle);
     void checkNewFolderButtonVisibility();
     virtual QString getRootText() = 0;
-    virtual std::unique_ptr<MegaItemModel> getModel() = 0;
+    virtual std::unique_ptr<NodeSelectorModel> getModel() = 0;
     virtual bool newFolderBtnVisibleInRoot(){return true;}
     void checkOkButton(const QModelIndexList& selected);
 
@@ -126,46 +125,6 @@ private:
     bool mUiBlocked;
     mega::MegaHandle mNodeHandleToSelect;
     ViewLoadingScene<NodeSelectorLoadingDelegate> mLoadingScene;
-};
-
-class NodeSelectorTreeViewWidgetCloudDrive : public NodeSelectorTreeViewWidget
-{
-    Q_OBJECT
-
-public:
-    explicit NodeSelectorTreeViewWidgetCloudDrive(QWidget *parent = nullptr);
-
-private:
-    QString getRootText() override;
-    void setRootIndex_Reimplementation(const QModelIndex& source_idx) override;
-    std::unique_ptr<MegaItemModel> getModel() override;
-};
-
-class NodeSelectorTreeViewWidgetIncomingShares : public NodeSelectorTreeViewWidget
-{
-    Q_OBJECT
-
-public:
-    explicit NodeSelectorTreeViewWidgetIncomingShares(QWidget *parent = nullptr);
-
-private:
-    QString getRootText() override;
-    std::unique_ptr<MegaItemModel> getModel() override;
-    void setRootIndex_Reimplementation(const QModelIndex& source_idx) override;
-    bool newFolderBtnVisibleInRoot() override {return false;}
-};
-
-class NodeSelectorTreeViewWidgetBackups : public NodeSelectorTreeViewWidget
-{
-    Q_OBJECT
-
-public:
-    explicit NodeSelectorTreeViewWidgetBackups(QWidget *parent = nullptr);
-
-private:
-    QString getRootText() override;
-    void setRootIndex_Reimplementation(const QModelIndex& source_idx) override;
-    std::unique_ptr<MegaItemModel> getModel() override;
 };
 
 #endif // NODESELECTORTREEVIEWWIDGET_H

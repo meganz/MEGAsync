@@ -1,6 +1,7 @@
-#ifndef MEGAITEMPROXYMODEL_H
-#define MEGAITEMPROXYMODEL_H
-#include "NodeSelector.h"
+#ifndef NODESELECTORPROXYMODEL_H
+#define NODESELECTORPROXYMODEL_H
+
+#include "../gui/NodeSelector.h"
 
 #include <QSortFilterProxyModel>
 #include <QCollator>
@@ -11,9 +12,9 @@
 namespace mega{
 class MegaNode;
 }
-class MegaItemModel;
+class NodeSelectorModel;
 
-class MegaItemProxyModel : public QSortFilterProxyModel
+class NodeSelectorProxyModel : public QSortFilterProxyModel
 {
     Q_OBJECT
 
@@ -25,7 +26,7 @@ public:
                     showReadWriteFolders(true){};
     };
 
-    explicit MegaItemProxyModel(QObject* parent = nullptr);
+    explicit NodeSelectorProxyModel(QObject* parent = nullptr);
 
     void showReadOnlyFolders(bool value);
     void showReadWriteFolders(bool value);
@@ -42,7 +43,7 @@ public:
     bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
     void setSourceModel(QAbstractItemModel *sourceModel) override;
     void setExpandMapped(bool value){mExpandMapped = value;}
-    MegaItemModel* getMegaModel();
+    NodeSelectorModel* getMegaModel();
     bool isModelProcessing() const;
 
     virtual bool canBeDeleted() const;
@@ -72,4 +73,4 @@ private slots:
     void onModelSortedFiltered();
 };
 
-#endif // MEGAITEMPROXYMODEL_H
+#endif // NODESELECTORPROXYMODEL_H

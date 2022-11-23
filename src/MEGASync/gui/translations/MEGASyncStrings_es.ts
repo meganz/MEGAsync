@@ -406,11 +406,7 @@
     <message>
         <source>Local Folder</source>
         <translatorcomment>Local folder column header name for backlups table in settings dialog</translatorcomment>
-<<<<<<< HEAD
-        <translation>Carpetas locales</translation>
-=======
         <translation>Carpeta local</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Sort by name</source>
@@ -489,11 +485,7 @@
     <message>
         <source>Open in MEGA</source>
         <translatorcomment>Menu action that opens MEGA webclient to show this backup</translatorcomment>
-<<<<<<< HEAD
-        <translation>Open in browser</translation>
-=======
         <translation>Abrir en MEGA</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Remove backup</source>
@@ -541,11 +533,7 @@
     <message>
         <source>Folders will be stored in backups and you can check the status of your backups in backup centre.</source>
         <translatorcomment>Successfull dialog text</translatorcomment>
-<<<<<<< HEAD
-        <translation>Las carpetas se almacenarán en Backups y podrás comprobar su estado en el Centro de backup</translation>
-=======
         <translation>Las carpetas se almacenarán en Backups y podrás comprobar su estado en el Centro de backup.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Show more…</source>
@@ -630,20 +618,12 @@
     <message>
         <source>1. [B]Select[/B] folders to backup</source>
         <translatorcomment>Title for the first step of the backups wizard, instructing the user to select folders to backup</translatorcomment>
-<<<<<<< HEAD
-        <translation>1. [B]Selecciona[/B] las carpetas de las que quieres hacer el backup</translation>
-=======
         <translation>1. [B]Selecciona[/B] las carpetas para el backup</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>2. [B]Confirm[/B] backup settings</source>
         <translatorcomment>Title for the second step of the backups wizard, instructing the user to confirm his choice</translatorcomment>
-<<<<<<< HEAD
-        <translation>2. [B]Confirma[/B] los ajustes del backup</translation>
-=======
         <translation>2. [B]Confirma[/B] la configuración del backup</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Are you sure you want to cancel? All changes will be lost.</source>
@@ -2693,11 +2673,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
         <translatorcomment>Informative message box shown if user is running an old OSX version (previous than Yosemite), informing that app updates for such systems will cease soon.</translatorcomment>
-<<<<<<< HEAD
-        <translation>La aplicación seguirá funcionando; sin embargo, las actualizaciones pronto no serán compatibles con versiones anteriores a OS X Yosemite.</translation>
-=======
         <translation>La aplicación seguirá funcionando, sin embargo, las actualizaciones ya no serán compatibles con versiones anteriores a macOS Sierra.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Your syncs have been disabled</source>
@@ -4640,11 +4616,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Move this folder from backups to another location in your cloud drive to get full access to your data. This folder will stop being backed up.</source>
         <translatorcomment>Radio button description</translatorcomment>
-<<<<<<< HEAD
-        <translation>Mueva esta carpeta desde Backups a otra ubicación en tu nube para obtener acceso completo a tus datos. Esta carpeta dejará de tener un backup.</translation>
-=======
         <translation>Mueve esta carpeta desde Backups a otra ubicación en tu nube para obtener acceso completo a tus datos. Esta carpeta dejará de tener un backup.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Move to:</source>
@@ -4664,11 +4636,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. This action cannot be undone.</source>
         <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option.</translatorcomment>
-<<<<<<< HEAD
-        <translation>La carpeta se eliminará de MEGA. No se eliminará de tu ordenador. Esta acción no se puede deshacer.</translation>
-=======
         <translation>La carpeta se eliminará de MEGA pero no se eliminará de tu ordenador. Esta acción no se puede deshacer.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Confirm</source>
@@ -5522,11 +5490,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Go to backup centre</source>
         <translatorcomment>Button text that opens backup center in webclient</translatorcomment>
-<<<<<<< HEAD
-        <translation>Ir al centro de backup</translation>
-=======
         <translation>Ir al Centro de backup</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Prevent the computer from going to sleep when transfers or syncs are in progress.</source>
@@ -6258,11 +6222,7 @@ Para continuar, selecciona una carpeta diferente.</translation>
     <message>
         <source>Local Folder</source>
         <translatorcomment>Sync table header column title</translatorcomment>
-<<<<<<< HEAD
-        <translation>Carpetas locales</translation>
-=======
         <translation>Carpeta local</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Sort by folder name</source>
@@ -6300,11 +6260,7 @@ Para continuar, selecciona una carpeta diferente.</translation>
     <message>
         <source>Open in MEGA</source>
         <translatorcomment>Context menu option that opens the folder in MEGA webclient.</translatorcomment>
-<<<<<<< HEAD
-        <translation>Open in browser</translation>
-=======
         <translation>Abrir en MEGA</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Remove synced folder</source>

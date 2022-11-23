@@ -5,9 +5,9 @@
 #include "control/Utilities.h"
 #include "megaapi.h"
 #include "mega/utils.h"
-#include "MegaItemProxyModel.h"
-#include "MegaItemModel.h"
-#include <NodeSelectorTreeViewWidget.h>
+#include "../model/NodeSelectorProxyModel.h"
+#include "../model/NodeSelectorModel.h"
+#include "NodeSelectorTreeViewWidget.h"
 
 #include <QMessageBox>
 #include <QPointer>
@@ -321,11 +321,11 @@ void NodeSelector::closeEvent(QCloseEvent* event)
     }
 }
 
-void NodeSelector::processCloseEvent(MegaItemProxyModel *proxy, QCloseEvent *event)
+void NodeSelector::processCloseEvent(NodeSelectorProxyModel *proxy, QCloseEvent *event)
 {
     if(proxy->isModelProcessing())
     {
-        connect(proxy->getMegaModel(), &MegaItemModel::blockUi, this, [this](bool blocked){
+        connect(proxy->getMegaModel(), &NodeSelectorModel::blockUi, this, [this](bool blocked){
             if(!blocked)
             {
                 close();

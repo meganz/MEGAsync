@@ -1,7 +1,7 @@
 #include "mega/types.h"
 #include "StreamingFromMegaDialog.h"
 #include "ui_StreamingFromMegaDialog.h"
-#include "NodeSelector.h"
+#include "node_selector/gui/NodeSelector.h"
 
 #include "QMegaMessageBox.h"
 #include "platform/Platform.h"

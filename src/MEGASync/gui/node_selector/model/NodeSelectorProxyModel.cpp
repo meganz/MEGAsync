@@ -1,13 +1,13 @@
-﻿#include "MegaItemProxyModel.h"
-#include "MegaItem.h"
+﻿#include "NodeSelectorProxyModel.h"
+#include "NodeSelectorModelItem.h"
 #include "megaapi.h"
-#include "MegaItemModel.h"
+#include "NodeSelectorModel.h"
 #include "MegaApplication.h"
 #include "QThread"
 
-MegaItemProxyModel::MegaItemProxyModel(QObject* parent) :
+NodeSelectorProxyModel::NodeSelectorProxyModel(QObject* parent) :
     QSortFilterProxyModel(parent),
-    mSortColumn(MegaItemModel::NODE),
+    mSortColumn(NodeSelectorModel::NODE),
     mOrder(Qt::AscendingOrder),
     mExpandMapped(true)
 {
@@ -16,23 +16,23 @@ MegaItemProxyModel::MegaItemProxyModel(QObject* parent) :
     mCollator.setIgnorePunctuation(false);
 
     connect(&mFilterWatcher, &QFutureWatcher<void>::finished,
-            this, &MegaItemProxyModel::onModelSortedFiltered);
+            this, &NodeSelectorProxyModel::onModelSortedFiltered);
 
 }
 
-void MegaItemProxyModel::showReadOnlyFolders(bool value)
+void NodeSelectorProxyModel::showReadOnlyFolders(bool value)
 {
     mFilter.showReadOnly = value;
     invalidateFilter();
 }
 
-void MegaItemProxyModel::showReadWriteFolders(bool value)
+void NodeSelectorProxyModel::showReadWriteFolders(bool value)
 {
     mFilter.showReadWriteFolders = value;
     invalidateFilter();
 }
 
-void MegaItemProxyModel::sort(int column, Qt::SortOrder order)
+void NodeSelectorProxyModel::sort(int column, Qt::SortOrder order)
 {
     mOrder = order;
     mSortColumn = column;
@@ -43,7 +43,7 @@ void MegaItemProxyModel::sort(int column, Qt::SortOrder order)
     if(mFilterWatcher.isFinished())
     {
         QFuture<void> filtered = QtConcurrent::run([this, column, order](){
-            auto itemModel = dynamic_cast<MegaItemModel*>(sourceModel());
+            auto itemModel = dynamic_cast<NodeSelectorModel*>(sourceModel());
             if(itemModel)
             {
                 blockSignals(true);
@@ -63,18 +63,18 @@ void MegaItemProxyModel::sort(int column, Qt::SortOrder order)
     }
 }
 
-mega::MegaHandle MegaItemProxyModel::getHandle(const QModelIndex &index)
+mega::MegaHandle NodeSelectorProxyModel::getHandle(const QModelIndex &index)
 {
     auto node = getNode(index);
     return node ? node->getHandle() : mega::INVALID_HANDLE;
 }
 
-QModelIndex MegaItemProxyModel::getIndexFromSource(const QModelIndex& index)
+QModelIndex NodeSelectorProxyModel::getIndexFromSource(const QModelIndex& index)
 {
     return mapToSource(index);
 }
 
-QModelIndex MegaItemProxyModel::getIndexFromHandle(const mega::MegaHandle& handle)
+QModelIndex NodeSelectorProxyModel::getIndexFromHandle(const mega::MegaHandle& handle)
 {
     if(handle == mega::INVALID_HANDLE)
     {
@@ -87,7 +87,7 @@ QModelIndex MegaItemProxyModel::getIndexFromHandle(const mega::MegaHandle& handl
     return ret;
 }
 
-QVector<QModelIndex> MegaItemProxyModel::getRelatedModelIndexes(const std::shared_ptr<mega::MegaNode> node)
+QVector<QModelIndex> NodeSelectorProxyModel::getRelatedModelIndexes(const std::shared_ptr<mega::MegaNode> node)
 {
     QVector<QModelIndex> ret;
 
@@ -113,7 +113,7 @@ QVector<QModelIndex> MegaItemProxyModel::getRelatedModelIndexes(const std::share
     return ret;
 }
 
-std::shared_ptr<mega::MegaNode> MegaItemProxyModel::getNode(const QModelIndex &index)
+std::shared_ptr<mega::MegaNode> NodeSelectorProxyModel::getNode(const QModelIndex &index)
 {
     if(!index.isValid())
     {
@@ -124,7 +124,7 @@ std::shared_ptr<mega::MegaNode> MegaItemProxyModel::getNode(const QModelIndex &i
     {
         return nullptr;
     }
-    MegaItem *item = static_cast<MegaItem*>(source_idx.internalPointer());
+    NodeSelectorModelItem *item = static_cast<NodeSelectorModelItem*>(source_idx.internalPointer());
     if (!item)
     {
         return nullptr;
@@ -132,38 +132,26 @@ std::shared_ptr<mega::MegaNode> MegaItemProxyModel::getNode(const QModelIndex &i
     return item->getNode();
 }
 
-void MegaItemProxyModel::addNode(std::unique_ptr<mega::MegaNode> node, const QModelIndex &parent)
+void NodeSelectorProxyModel::addNode(std::unique_ptr<mega::MegaNode> node, const QModelIndex &parent)
 {
-    if(MegaItemModel* megaModel = getMegaModel())
+    if(NodeSelectorModel* megaModel = getMegaModel())
     {
         megaModel->addNode(move(node), mapToSource(parent));
     }
 }
 
-void MegaItemProxyModel::removeNode(const QModelIndex& item)
+void NodeSelectorProxyModel::removeNode(const QModelIndex& item)
 {
-    if(MegaItemModel* megaModel = getMegaModel())
+    if(NodeSelectorModel* megaModel = getMegaModel())
     {
         megaModel->removeNode(mapToSource(item));
     }
 }
 
-bool MegaItemProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
+bool NodeSelectorProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
 {
-    //qDebug()<<"lessthan:"<<QThread::currentThreadId();
-//        if(qApp->thread() == QThread::currentThread())
-//        {
-//            qDebug()<<"MAIN THREAD:"<<
-//                      left<<right;
-//        }
-//        else
-//        {
-//            qDebug()<<"MY THREAD:"<<
-//                      left<<right;
-//        }
-
-    bool lIsFile = left.data(toInt(MegaItemModelRoles::IS_FILE_ROLE)).toBool();
-    bool rIsFile = right.data(toInt(MegaItemModelRoles::IS_FILE_ROLE)).toBool();
+    bool lIsFile = left.data(toInt(NodeSelectorModelRoles::IS_FILE_ROLE)).toBool();
+    bool rIsFile = right.data(toInt(NodeSelectorModelRoles::IS_FILE_ROLE)).toBool();
 
     if(lIsFile && !rIsFile)
     {
@@ -174,14 +162,14 @@ bool MegaItemProxyModel::lessThan(const QModelIndex &left, const QModelIndex &ri
         return sortOrder() != Qt::DescendingOrder;
     }
 
-    if(left.column() == MegaItemModel::DATE && right.column() == MegaItemModel::DATE)
+    if(left.column() == NodeSelectorModel::DATE && right.column() == NodeSelectorModel::DATE)
     {
-        return left.data(toInt(MegaItemModelRoles::DATE_ROLE)) < right.data(toInt(MegaItemModelRoles::DATE_ROLE));
+        return left.data(toInt(NodeSelectorModelRoles::DATE_ROLE)) < right.data(toInt(NodeSelectorModelRoles::DATE_ROLE));
     }
-    if(left.column() == MegaItemModel::STATUS && right.column() == MegaItemModel::STATUS)
+    if(left.column() == NodeSelectorModel::STATUS && right.column() == NodeSelectorModel::STATUS)
     {
-      int lStatus = left.data(toInt(MegaItemModelRoles::STATUS_ROLE)).toInt();
-      int rStatus = right.data(toInt(MegaItemModelRoles::STATUS_ROLE)).toInt();
+      int lStatus = left.data(toInt(NodeSelectorModelRoles::STATUS_ROLE)).toInt();
+      int rStatus = right.data(toInt(NodeSelectorModelRoles::STATUS_ROLE)).toInt();
       if(lStatus != rStatus)
       {
         return lStatus < rStatus;
@@ -192,35 +180,26 @@ bool MegaItemProxyModel::lessThan(const QModelIndex &left, const QModelIndex &ri
                              right.data(Qt::DisplayRole).toString())<0;
 }
 
-void MegaItemProxyModel::setSourceModel(QAbstractItemModel *sourceModel)
+void NodeSelectorProxyModel::setSourceModel(QAbstractItemModel *sourceModel)
 {
     QSortFilterProxyModel::setSourceModel(sourceModel);
 
-    if(auto megaItemModel = dynamic_cast<MegaItemModel*>(sourceModel))
+    if(auto nodeSelectorModel = dynamic_cast<NodeSelectorModel*>(sourceModel))
     {
-        connect(megaItemModel, &MegaItemModel::levelsAdded, this, &MegaItemProxyModel::invalidateModel);
-        megaItemModel->firstLoad();
+        connect(nodeSelectorModel, &NodeSelectorModel::levelsAdded, this, &NodeSelectorProxyModel::invalidateModel);
+        nodeSelectorModel->firstLoad();
     }
 }
 
-bool MegaItemProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
+bool NodeSelectorProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
 {
-//    if(qApp->thread() == QThread::currentThread())
-//    {
-//        qDebug()<<"MAIN THREAD:FILTER:" << sourceParent << sourceRow;;
-//    }
-//    else
-//    {
-//        qDebug()<<"MY THREAD:FILTER:" << sourceParent << sourceRow;
-//    }
-
     QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
 
     if(index.isValid())
     {
-        if(MegaItem* megaItem = static_cast<MegaItem*>(index.internalPointer()))
+        if(NodeSelectorModelItem* item = static_cast<NodeSelectorModelItem*>(index.internalPointer()))
         {
-            if(std::shared_ptr<mega::MegaNode> node = megaItem->getNode())
+            if(std::shared_ptr<mega::MegaNode> node = item->getNode())
             {
                if(node->isInShare())
                {
@@ -239,7 +218,7 @@ bool MegaItemProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sour
     return QSortFilterProxyModel::filterAcceptsRow(sourceRow, sourceParent);
 }
 
-QVector<QModelIndex> MegaItemProxyModel::forEach(std::shared_ptr<mega::MegaNodeList> parentNodeList, QModelIndex parent)
+QVector<QModelIndex> NodeSelectorProxyModel::forEach(std::shared_ptr<mega::MegaNodeList> parentNodeList, QModelIndex parent)
 {
     QVector<QModelIndex> ret;
 
@@ -250,9 +229,9 @@ QVector<QModelIndex> MegaItemProxyModel::forEach(std::shared_ptr<mega::MegaNodeL
         {
             QModelIndex index = sourceModel()->index(i, 0, parent);
 
-            if(MegaItem* megaItem = static_cast<MegaItem*>(index.internalPointer()))
+            if(NodeSelectorModelItem* item = static_cast<NodeSelectorModelItem*>(index.internalPointer()))
             {
-                if(handle == megaItem->getNode()->getHandle())
+                if(handle == item->getNode()->getHandle())
                 {
                     ret.append(mapFromSource(index));
 
@@ -271,7 +250,7 @@ QVector<QModelIndex> MegaItemProxyModel::forEach(std::shared_ptr<mega::MegaNodeL
     return ret;
 }
 
-QModelIndex MegaItemProxyModel::getIndexFromNode(const std::shared_ptr<mega::MegaNode> node)
+QModelIndex NodeSelectorProxyModel::getIndexFromNode(const std::shared_ptr<mega::MegaNode> node)
 {
     if(!node)
     {
@@ -295,28 +274,28 @@ QModelIndex MegaItemProxyModel::getIndexFromNode(const std::shared_ptr<mega::Meg
     return QModelIndex();
 }
 
-MegaItemModel *MegaItemProxyModel::getMegaModel()
+NodeSelectorModel *NodeSelectorProxyModel::getMegaModel()
 {
-    return dynamic_cast<MegaItemModel*>(sourceModel());
+    return dynamic_cast<NodeSelectorModel*>(sourceModel());
 }
 
-bool MegaItemProxyModel::isModelProcessing() const
+bool NodeSelectorProxyModel::isModelProcessing() const
 {
     return mFilterWatcher.isRunning();
 }
 
-bool MegaItemProxyModel::canBeDeleted() const
+bool NodeSelectorProxyModel::canBeDeleted() const
 {
-    return dynamic_cast<MegaItemModel*>(sourceModel())->canBeDeleted();
+    return dynamic_cast<NodeSelectorModel*>(sourceModel())->canBeDeleted();
 }
 
-void MegaItemProxyModel::invalidateModel(const QModelIndexList& parents)
+void NodeSelectorProxyModel::invalidateModel(const QModelIndexList& parents)
 {
     itemsToMap = parents;
     sort(mSortColumn, mOrder);
 }
 
-void MegaItemProxyModel::onModelSortedFiltered()
+void NodeSelectorProxyModel::onModelSortedFiltered()
 {
     emit layoutChanged();
 
@@ -327,9 +306,9 @@ void MegaItemProxyModel::onModelSortedFiltered()
     else
     {
         emit navigateReady(itemsToMap.isEmpty() ? QModelIndex() : mapFromSource(itemsToMap.first()));
-        if(auto megaItemModel = dynamic_cast<MegaItemModel*>(sourceModel()))
+        if(auto nodeSelectorModel = dynamic_cast<NodeSelectorModel*>(sourceModel()))
         {
-            megaItemModel->clearIndexesNodeInfo();
+            nodeSelectorModel->clearIndexesNodeInfo();
         }
     }
 

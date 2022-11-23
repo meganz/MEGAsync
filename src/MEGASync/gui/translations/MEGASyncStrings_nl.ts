@@ -107,12 +107,12 @@
     <message>
         <source>Choose File</source>
         <translatorcomment>Label of button that pop up a selection dialog to choose a file to be excluded for the synchonization</translatorcomment>
-        <translation>Kies bestand</translation>
+        <translation>Kies Bestand</translation>
     </message>
     <message>
         <source>Choose Folder</source>
         <translatorcomment>Label of button that pop up a selection dialog to choose a folder to be excluded for the synchonization</translatorcomment>
-        <translation>Kies map</translation>
+        <translation>Kies Map</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -175,7 +175,7 @@
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Label to indicate that the application is showing only incoming share notifications</translatorcomment>
-        <translation>Binnenkomende delingen</translation>
+        <translation>Binnenkomende Delingen</translation>
     </message>
 </context>
 <context>
@@ -193,7 +193,7 @@
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Label title for Incoming shares category of a notification</translatorcomment>
-        <translation>Binnenkomende delingen</translation>
+        <translation>Binnenkomende Delingen</translation>
     </message>
     <message>
         <source>Payment</source>
@@ -353,7 +353,7 @@
     <message>
         <source>Shared Folder Activity</source>
         <translatorcomment>Generic label to indicate that there is activity in a shared folder but the name of the shared folder is not available.</translatorcomment>
-        <translation>Gedeelde map activiteit</translation>
+        <translation>Gedeelde Map Activiteit</translation>
     </message>
     <message>
         <source>Access to shared folder was removed</source>
@@ -449,11 +449,7 @@
     <message>
         <source>Rename and backup</source>
         <translatorcomment>Text for the button to apply the name conflict resolution in the backup name conflict resolution dialog</translatorcomment>
-<<<<<<< HEAD
-        <translation>Naam wijzigen en back-up maken</translation>
-=======
         <translation>Hernoemen en back-up maken</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
@@ -494,11 +490,7 @@
     <message>
         <source>Remove backup</source>
         <translatorcomment>Menu action removes the backup</translatorcomment>
-<<<<<<< HEAD
-        <translation>Back-up verwijderen</translation>
-=======
         <translation>Back-up stoppen</translation>
->>>>>>> origin/develop
     </message>
 </context>
 <context>
@@ -541,20 +533,12 @@
     <message>
         <source>Folders will be stored in backups and you can check the status of your backups in backup centre.</source>
         <translatorcomment>Successfull dialog text</translatorcomment>
-<<<<<<< HEAD
-        <translation>Mappen worden opgeslagen in back-ups en u kunt de status van uw back-ups controleren in het back-up centrum.</translation>
-=======
         <translation>Mappen worden opgeslagen in Back-ups en u kunt de status van uw back-ups controleren in het Back-up centrum.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Show more…</source>
         <translatorcomment>Button text that expands failed backup list</translatorcomment>
-<<<<<<< HEAD
-        <translation>Meer weergeven...</translation>
-=======
         <translation>Meer weergeven</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Back</source>
@@ -619,11 +603,7 @@
     <message numerus="yes">
         <source>This folder wasn&apos;t backed up. Try again.</source>
         <translatorcomment>Label that indicates that there happened an error backing up a folder/folders</translatorcomment>
-<<<<<<< HEAD
-        <translation><numerusform>Er is geen back-up gemaakt van deze map. Probeer het nog eens.</numerusform><numerusform>Van deze mappen is geen back-up gemaakt. Probeer het nog eens.</numerusform></translation>
-=======
         <translation><numerusform>Er is geen back-up gemaakt van deze map. Probeer het nogmaals.</numerusform><numerusform>Van deze mappen is geen back-up gemaakt. Probeer het nogmaals.</numerusform></translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Folder is already selected. Select a different folder.</source>
@@ -648,11 +628,7 @@
     <message>
         <source>Are you sure you want to cancel? All changes will be lost.</source>
         <translatorcomment>Warning dialog that appears when user click in cancel button in backup wizard and it will be closed.</translatorcomment>
-<<<<<<< HEAD
-        <translation>Weet u zeker dat u wilt annuleren? Alle wijzigingen gaan verloren.</translation>
-=======
         <translation>Wilt u annuleren? Alle wijzigingen gaan verloren.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Choose directory</source>
@@ -667,11 +643,7 @@
     <message>
         <source>View in backup centre</source>
         <translatorcomment>Text for a button allowing the user to view the newly created backup i nthe Backup center (in the webclient)</translatorcomment>
-<<<<<<< HEAD
-        <translation>Weergeven in back-up centrum</translation>
-=======
         <translation>Weergeven in Back-up centrum</translation>
->>>>>>> origin/develop
     </message>
 </context>
 <context>
@@ -1054,13 +1026,6 @@
         <translation>De volgende tekens zijn niet toegestaan:
 %1</translation>
     </message>
-    <message>
-        <source>The following characters are not allowed:
-%1</source>
-        <translatorcomment>Text introducing the prohibited characters (the list replaces the placeholder)</translatorcomment>
-        <translation>De volgende tekens zijn niet toegestaan:
-%1</translation>
-    </message>
 </context>
 <context>
     <name>CrashReportDialog</name>
@@ -1072,20 +1037,12 @@
     <message>
         <source>MEGAsync has detected a problem. These are the details:</source>
         <translatorcomment>Label to indicate that a crash has occured and the detailed stacktrace of the problem.</translatorcomment>
-<<<<<<< HEAD
-        <translation>De MEGA-app heeft een probleem gedetecteerd. Dit zijn de details:</translation>
-=======
         <translation>De MEGA-applicatie heeft een probleem gedetecteerd. Dit zijn de details:</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
         <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
-<<<<<<< HEAD
-        <translation>U kunt ons helpen de MEGAsync te verbeteren door dit foutrapport te verzenden. Het bevat geen persoonlijke informatie. Als u ons meer details wilt geven, schrijf ze dan hieronder:</translation>
-=======
         <translation>U kunt ons helpen de MEGA Applicatie te verbeteren door dit foutrapport te verzenden. Het bevat geen persoonlijke informatie. Als u ons meer details wilt geven, schrijf ze dan hieronder:</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Cancel</source>
@@ -2147,20 +2104,12 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     <message>
         <source>Login or create an account to start using MEGA Desktop app.</source>
         <translatorcomment>Description label to inform the user about next step in order to use MEGA Desktop app. Users will need to login or create an account.</translatorcomment>
-<<<<<<< HEAD
-        <translation>Inloggen of creëer een account om de MEGA Desktop Applicatie te gaan gebruiken.</translation>
-=======
         <translation>Inloggen of creëer een account om onze applicatie te gaan gebruiken.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>You need to log into MEGA account to use the MEGA desktop app.</source>
         <translatorcomment>Description label to indicate the user needs to log in in order to fully use MEGA desktop app.</translatorcomment>
-<<<<<<< HEAD
-        <translation>U zult moeten inloggen op uw MEGA-account om de MEGA Desktop Applicatie te gebruiken.</translation>
-=======
         <translation>U zult moeten inloggen op uw MEGA-account om onze applicatie te gebruiken.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Create account</source>
@@ -2276,11 +2225,7 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     <message>
         <source>MEGAsync is now running. Click here to open the status window.</source>
         <translatorcomment>Notification message that MEGAsync is actually running.</translatorcomment>
-<<<<<<< HEAD
-        <translation>MEGAsync is nu actief. Klik hier om het statusvenster te openen.</translation>
-=======
         <translation>De applicatie is nu actief. Klik hier om het statusvenster te openen.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
@@ -2402,20 +2347,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
         <translatorcomment>Notification message launched when an user logged in succesfully. String as short as possible.</translatorcomment>
-<<<<<<< HEAD
-        <translation>MEGAsync is nu actief. Klik het pictogramicoon om het statusvenster te openen.</translation>
-=======
         <translation>De applicatie is nu actief. Klik het pictogramicoon om het statusvenster te openen.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
         <translatorcomment>Notification message launched when an user logged in succesfully. String as short as possible.</translatorcomment>
-<<<<<<< HEAD
-        <translation>MEGAsync is nu actief. Klik het menubalk om het statusvenster te openen.</translation>
-=======
         <translation>De applicatie is nu actief. Klik het menubalk om het statusvenster te openen.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Show status</source>
@@ -2435,11 +2372,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
         <translatorcomment>Notification message launched when a connectivity problem occurs.</translatorcomment>
-<<<<<<< HEAD
-        <translation>MEGAsync kan geen verbinding maken. Controleer uw internetverbinding en lokale firewallconfiguratie. Noteer dat de meeste antivirussoftware een firewall bevatten.</translation>
-=======
         <translation>De applicatie kan geen verbinding maken. Controleer uw Internetverbinding en lokale firewallconfiguratie. Noteer dat de meeste antivirussoftware een firewall bevatten.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
@@ -2509,11 +2442,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log)</source>
         <translatorcomment>Notification message shown when the DEBUG mode is enabled.</translatorcomment>
-<<<<<<< HEAD
-        <translation>DEBUG-modus ingeschakeld. Er wordt een log aangemaakt op uw bureaublad (MEGAsync.log).</translation>
-=======
         <translation>Foutopsporingsmodus ingeschakeld. Er wordt een logboek met de naam “MEGAsync.log” op uw computer gemaakt.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Error: Invalid destination folder. The download has been cancelled</source>
@@ -2549,11 +2478,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
         <translatorcomment>Message shown to the user to inform that MEGAsync is not able to find a systray to place tray icon</translatorcomment>
-<<<<<<< HEAD
-        <translation>Kon geen systeemvak vinden om het MEGAsync-systeemvak pictogram te plaatsen. MEGAsync is bedoeld om te worden gebruikt met een systeemvakpictogram, maar het kan prima zonder werken. Als u de interface wilt openen, probeer dan MEGAsync opnieuw te openen.</translation>
-=======
         <translation>We konden geen systeemvak vinden om het applicatie-vakpictogram in te plaatsen. Probeer de applicatie opnieuw te starten.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Error getting link:</source>
@@ -2592,11 +2517,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however you might not receive new updates.</source>
         <translatorcomment>Message shown to the user to inform that he is using an operating system that will be unsupported soon</translatorcomment>
-<<<<<<< HEAD
-        <translation>MEGAsync blijft werken, maar u ontvangt mogelijk geen nieuwe updates.</translation>
-=======
         <translation>De applicatie blijft werken, maar u ontvangt mogelijk geen nieuwe updates.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Password changed</source>
@@ -2656,11 +2577,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message shown to admin business account when a payment has failed. </translatorcomment>
-<<<<<<< HEAD
-        <translation>Het lijkt dat de betaling voor uw Zakelijke account is mislukt. Uw account is verlopen en heeft alleen-lezen toestemming totdat u doorgaat met de nodige betalingen.</translation>
-=======
         <translation>Uw Business-account is gedeactiveerd vanwege een mislukte betaling. U heeft pas toegang tot de gegevens die in uw account zijn opgeslagen nadat u een betaling heeft gedaan en uw abonnement opnieuw heeft geactiveerd.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
@@ -2715,11 +2632,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
         <translatorcomment>Informative message box shown if user is running an old Win version (vista or previous), informing that app updates for such systems will cease soon.</translatorcomment>
-<<<<<<< HEAD
-        <translation>MEGAsync blijft werken, maar updates worden binnenkort niet meer ondersteund voor versies vóór Windows 7.</translation>
-=======
         <translation>De applicatie blijft werken, maar updates worden binnenkort niet meer ondersteund voor versies vóór Windows 7.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Transferring</source>
@@ -2759,11 +2672,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
         <translatorcomment>Informative message box shown if user is running an old OSX version (previous than Yosemite), informing that app updates for such systems will cease soon.</translatorcomment>
-<<<<<<< HEAD
-        <translation>MEGAsync blijft werken, maar updates worden binnenkort niet meer ondersteund voor versies vóór OS X Yosemite.</translation>
-=======
         <translation>De applicatie blijft werken, maar updates worden binnenkort niet meer ondersteund voor versies vóór macOS Sierra.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Your syncs have been disabled</source>
@@ -2808,20 +2717,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>A new version of MEGAsync is available. Click on this message to install it</source>
         <translatorcomment>System notification to inform the user that there is a new version of MEGAsync available for update. Windows version.</translatorcomment>
-<<<<<<< HEAD
-        <translation>Er is een nieuwe versie van MEGAsync beschikbaar. Klik op dit bericht om het te installeren.</translation>
-=======
         <translation>Er is een nieuwe versie van deze applicatie beschikbaar. Klik op dit bericht om het te installeren.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>A new version of MEGAsync is available</source>
         <translatorcomment>System notification to inform the user that there is a new version of MEGAsync available for update. macOS version cannot be installed making click so, a new string is provided</translatorcomment>
-<<<<<<< HEAD
-        <translation>Er is een nieuwe versie van MEGasync beschikbaar.</translation>
-=======
         <translation>Er is een nieuwe versie van deze applicatie beschikbaar.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>%1 and %2 were successfully uploaded</source>
@@ -2879,20 +2780,12 @@ Overdrachten worden automatisch hervat wanneer u de applicatie heropend.</numeru
     <message>
         <source>Your backup &quot;%1&quot; has been temporarily disabled</source>
         <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder displays backup name</translatorcomment>
-<<<<<<< HEAD
-        <translation>Uw back-up &quot;%1&quot; is tijdelijk uitgeschakeld</translation>
-=======
         <translation>Uw back-up &quot;%1&quot; is tijdelijk uitgeschakeld:</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-<<<<<<< HEAD
-        <translation>Uw back-up &quot;%1&quot; is uitgeschakeld omdat de lokale map niet bestaat</translation>
-=======
         <translation>Uw back-up &quot;%1&quot; is uitgeschakeld omdat de lokale map niet bestaat.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
@@ -2902,38 +2795,22 @@ Overdrachten worden automatisch hervat wanneer u de applicatie heropend.</numeru
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-<<<<<<< HEAD
-        <translation>Uw back-up &quot;%1&quot; was uitgeschakeld omdat de externe map in de prullenbak is.</translation>
-=======
         <translation>Uw back-up &quot;%1&quot; was uitgeschakeld omdat de MEGA map in de prullenbak is.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-<<<<<<< HEAD
-        <translation>Uw back-up “%1” is uitgeschakeld. De externe map (of een deel ervan) heeft geen volledige toegang</translation>
-=======
         <translation>Uw back-up “%1” is uitgeschakeld. De MEGA map (of een deel ervan) heeft geen volledige toegang.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder has changed</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-<<<<<<< HEAD
-        <translation>Uw back-up &quot;%1&quot; is uitgeschakeld omdat de lokale map is gewijzigd</translation>
-=======
         <translation>Uw back-up &quot;%1&quot; is uitgeschakeld omdat de lokale map is gewijzigd.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder has changed</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-<<<<<<< HEAD
-        <translation>Uw back-up &quot;%1&quot; is uitgeschakeld omdat de lokale map is gewijzigd</translation>
-=======
         <translation>Uw back-up &quot;%1&quot; is uitgeschakeld omdat de MEGA map is gewijzigd.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled. Reason: %2</source>
@@ -3101,11 +2978,7 @@ Overdrachten worden automatisch hervat wanneer u de applicatie heropend.</numeru
     <message>
         <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
         <translatorcomment>Error triggered by SDK when an account has been suspended due to copyright violations.</translatorcomment>
-<<<<<<< HEAD
-        <translation>Uw account is geschorst vanwege copyright overtredingen. Controleer uw e-mailinbox.</translation>
-=======
         <translation>Uw account is geschorst vanwege copyright overtredingen. We hebben u hierover een e-mail gestuurd met meer informatie.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
@@ -3388,11 +3261,7 @@ Overdrachten worden automatisch hervat wanneer u de applicatie heropend.</numeru
     <message>
         <source>Account expired (business or Pro Flexi)</source>
         <translatorcomment>Label to show that the current account (either business or Pro Flexi) is expired during a SDK operation.</translatorcomment>
-<<<<<<< HEAD
-        <translation>Account verlopen (Zakelijk of Pro Flexi)</translation>
-=======
         <translation>Account verlopen</translation>
->>>>>>> origin/develop
     </message>
 </context>
 <context>
@@ -4203,26 +4072,6 @@ Om de synchronisatie te verwijderen, gaat u naar Voorkeuren in de desktop-applic
         <translatorcomment>Warning message shown when some backups and syncs are disabled. Tell the userto go to settings to solve the issue (mac)</translatorcomment>
         <translation>Sommige synchronisaties en back-ups zijn uitgeschakeld. Ga naar Voorkeuren om ze weer in te schakelen.</translation>
     </message>
-    <message>
-        <source>One or more backups have been disabled. Go to settings to enable them again.</source>
-        <translatorcomment>Warning message shown when some backups are disabled. Tell the userto go to settings to solve the issue (win/linux)</translatorcomment>
-        <translation>Één of meer back-ups zijn uitgeschakeld. Ga naar instellingen om ze weer in te schakelen.</translation>
-    </message>
-    <message>
-        <source>Some syncs and backups have been disabled. Go to settings to enable them again.</source>
-        <translatorcomment>Warning message shown when some backups and syncs are disabled. Tell the userto go to settings to solve the issue (win/linux)</translatorcomment>
-        <translation>Sommige synchronisaties en back-ups zijn uitgeschakeld. Ga naar Instellingen om ze weer in te schakelen.</translation>
-    </message>
-    <message>
-        <source>One or more backups have been disabled. Go to preferences to enable them again.</source>
-        <translatorcomment>Warning message shown when some backups are disabled. Tell the userto go to settings to solve the issue (mac)</translatorcomment>
-        <translation>Één of meer back-ups zijn uitgeschakeld. Ga naar voorkeuren om ze weer in te schakelen.</translation>
-    </message>
-    <message>
-        <source>Some syncs and backups have been disabled. Go to preferences to enable them again.</source>
-        <translatorcomment>Warning message shown when some backups and syncs are disabled. Tell the userto go to settings to solve the issue (mac)</translatorcomment>
-        <translation>Sommige synchronisaties en back-ups zijn uitgeschakeld. Ga naar voorkeuren om ze weer in te schakelen.</translation>
-    </message>
 </context>
 <context>
     <name>Preferences</name>
@@ -4238,11 +4087,7 @@ Om de synchronisatie te verwijderen, gaat u naar Voorkeuren in de desktop-applic
         <translation>- Ondersteuning voor Flexi Pro-accounts.
 - Nieuwe back-up functie.
 - Opgeloste problemen gedetecteerd met macOS Ventura.
-<<<<<<< HEAD
-- Vaste gedetecteerde crashes op Windows, Linux en macOS opgelost.
-=======
 - Gedetecteerde crashes op Windows, Linux en macOS opgelost.
->>>>>>> origin/develop
 - Vertaalproblemen opgelost.
 - Verbeterde prestatie.
 </translation>
@@ -4980,11 +4825,7 @@ Wilt u deze toch verwijderen?</translation>
 
 Do you want to restart MEGAsync now?</source>
         <translatorcomment>Message displayed asking for confirmation to the user to restart the application for a Full scan operation.</translatorcomment>
-<<<<<<< HEAD
-        <translation>MEGA verricht een volledige scan van uw gesynchroniseerde mappen wanneer het opstart. Wilt u MEGA nu herstarten?</translation>
-=======
         <translation>De applicatie verricht een volledige scan van uw gesynchroniseerde mappen wanneer het opstart. Wilt u de applicatie nu herstarten?</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Choose</source>
@@ -5029,11 +4870,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
         <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
-<<<<<<< HEAD
-        <translation>Houd altijd fysieke controle over uw herstelsleutel (bijv. op een klant apparaat, externe opslag of print).</translation>
-=======
         <translation>Houd altijd fysieke controle over uw Herstelsleutel (bijv. op een klant apparaat, externe opslag of print).</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Exclude by size</source>
@@ -5058,11 +4895,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Do you want to restart MEGAsync now?</source>
         <translatorcomment>Message shown when clicking on restart MEGAsync button in Settings.</translatorcomment>
-<<<<<<< HEAD
-        <translation>Wilt u de MEGAsync nu opnieuw starten?</translation>
-=======
         <translation>Wilt u de applicatie nu opnieuw starten?</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Permissions</source>
@@ -5277,11 +5110,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Restart MEGA Desktop App to apply changes.</source>
         <translatorcomment>Informative text shown in Folders pane, letting the user know that an application restart is required to apply the changes he just made.</translatorcomment>
-<<<<<<< HEAD
-        <translation>Start de MEGA Desktop applicatie opnieuw om de wijzigingen toe te passen.</translation>
-=======
         <translation>Herstart de applicatie om de wijzigingen toe te passen.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Change Settings…</source>
@@ -5426,11 +5255,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Restart MEGAsync</source>
         <translatorcomment>Title text of dialog shown when clicking on Restart application button. Keep as short as possible.</translatorcomment>
-<<<<<<< HEAD
-        <translation>Start MEGAsync opnieuw</translation>
-=======
         <translation>Herstarten</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>No limit</source>
@@ -5515,11 +5340,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Sleep settings</source>
         <translatorcomment>Sleep/Active mode: Settings dialog groupbox title for keeping the pc awake when there are active transfers (WIndows and Linux)</translatorcomment>
-<<<<<<< HEAD
-        <translation>Slaap instellingen</translation>
-=======
         <translation>Slaap modus</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Sleep mode:</source>
@@ -5549,11 +5370,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Backup Folder</source>
         <translatorcomment>Groupbox title, inside the remote backup folder path will be displayed (Linux and windows)</translatorcomment>
-<<<<<<< HEAD
-        <translation>Back-up Map</translation>
-=======
         <translation>Back-up map</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>View in MEGA</source>
@@ -5578,38 +5395,22 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Synchronizations and backups will stop working.</source>
         <translatorcomment>Warning message displayed on logout if there are active syncs and backups</translatorcomment>
-<<<<<<< HEAD
-        <translation>Synchronisaties en back-ups stoppen met werken.</translation>
-=======
         <translation>Synchronisaties en back-ups worden uitgeschakeld.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Backups will stop working.</source>
         <translatorcomment>Warning message displayed on logout if there are active backups (not syncs)</translatorcomment>
-<<<<<<< HEAD
-        <translation>Back-ups werken niet meer.</translation>
-=======
         <translation>Back-ups worden uitgeschakeld.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Synchronizations will stop working.</source>
         <translatorcomment>Warning message displayed on logout if there are active syncs (not backups)</translatorcomment>
-<<<<<<< HEAD
-        <translation>Synchronizations will stop working.</translation>
-=======
         <translation>Synchronisaties worden uitgeschakeld</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Are you sure?</source>
         <translatorcomment>Warning message second part asking if you are sure about continuing with the logout.</translatorcomment>
-<<<<<<< HEAD
-        <translation>Weet u het zeker?</translation>
-=======
         <translation>Wilt u uitloggen?</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Error adding sync</source>
@@ -5654,20 +5455,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Error moving or removing remote backup folder</source>
         <translatorcomment>Title of the dialog shown when the deletion or move of the remote backup folder failed</translatorcomment>
-<<<<<<< HEAD
-        <translation>Fout bij verplaatsen of verwijderen van externe back-up map</translation>
-=======
         <translation>Fout bij verplaatsen of verwijderen van MEGA back-up map</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Failed to move or remove the remote backup folder. Reason: %1</source>
         <translatorcomment>Error text when the deletion or move of the remote backup folder failed</translatorcomment>
-<<<<<<< HEAD
-        <translation>Kan de externe back-up map niet verplaatsen of verwijderen. Reden: %1</translation>
-=======
         <translation>Kan de MEGA back-up map niet verplaatsen of verwijderen. Reden: %1</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Error enabling backup</source>
@@ -5687,11 +5480,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Pro Flexi</source>
         <translatorcomment>Text label indicating the Pro Flexi tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-<<<<<<< HEAD
-        <translation>Pro Flexi</translation>
-=======
         <translation>Pro Flexi</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Your backup &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
@@ -5701,11 +5490,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Go to backup centre</source>
         <translatorcomment>Button text that opens backup center in webclient</translatorcomment>
-<<<<<<< HEAD
-        <translation>Ga naar back-up centrum</translation>
-=======
         <translation>Ga naar Back-up centrum</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Prevent the computer from going to sleep when transfers or syncs are in progress.</source>
@@ -5894,11 +5679,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Set up Assistant - MEGAsync</source>
         <translatorcomment>Title of the setup assistant dialog. Keep capital letters.</translatorcomment>
-<<<<<<< HEAD
-        <translation>Assistent instellen - MEGAsync</translation>
-=======
         <translation>Assistent instellen</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Full sync</source>
@@ -5908,11 +5689,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
         <translatorcomment>Label to inform the user that the synchronization stablished will be automatically synchronized.</translatorcomment>
-<<<<<<< HEAD
-        <translation>Uw lokale map en uw MEGA Cloud Schijf zullen automatisch worden gesynchroniseerd.</translation>
-=======
         <translation>Uw lokale map en uw MEGA cloud schijf zullen automatisch worden gesynchroniseerd.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Do you want to continue?</source>
@@ -6324,11 +6101,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You can&apos;t sync folders that are inside backed up folders.</source>
         <translatorcomment>Warning message indicating that a folder can´t be synced as it is inside a backed up folder.</translatorcomment>
-<<<<<<< HEAD
-        <translation>U kunt geen mappen synchroniseren die zich in geback-upte mappen bevinden.</translation>
-=======
         <translation>U kunt geen mappen synchroniseren die zich in mappen bevinden waarvan een back-up is gemaakt.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>You can&apos;t backup this folder as it contains synced folders.</source>
@@ -6343,11 +6116,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You can&apos;t sync folders that contain backed up folders.</source>
         <translatorcomment>Warning message indicating that a folder can´t be synced as it contains backed up folders.</translatorcomment>
-<<<<<<< HEAD
-        <translation>U kunt geen mappen synchroniseren die geback-upte mappen bevatten.</translation>
-=======
         <translation>U kunt geen mappen synchroniseren die mappen bevatten waarvan een back-up is gemaakt.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
@@ -6357,11 +6126,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
         <translatorcomment>Warning message indicating that megasync is not going to be able to download anything in the selected folder.</translatorcomment>
-<<<<<<< HEAD
-        <translation>MEGAsync is niet in staat hier te downloaden.</translation>
-=======
         <translation>De applicatie is niet in staat hier te downloaden.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>You can&apos;t backup this folder as it contains backed up folders.</source>
@@ -6381,39 +6146,23 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Unable to create backup. Try again and if issue continues, contact [A]Support[/A].</source>
         <translatorcomment>Text instructing to try creating a backup again. If it fails again, they should contact support</translatorcomment>
-<<<<<<< HEAD
-        <translation>Kan geen back-up maken. Probeer het opnieuw en als het probleem aanhoudt, neem dan contact op met de [A]Ondersteuning[/A].</translation>
-=======
         <translation>Kan geen back-up creëren. Probeer het opnieuw en als het probleem aanhoudt, neem dan contact op met de [A]Ondersteuning[/A].</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Unable to create backup as the device you&apos;re backing up from doesn&apos;t have a name. Give your device a name and then try again. If issue continues, contact [A]Support[/A].</source>
         <translatorcomment>Text instructing to try creating a backup again.Failure cause: the device does not have a name. If it fails again, they should contact support</translatorcomment>
-<<<<<<< HEAD
-        <translation>Kan geen back-up maken omdat het apparaat waarvan u een back-up maakt geen naam heeft. Geef uw apparaat een naam en probeer het opnieuw. Neem contact op met de [A]Ondersteuning[/A] als het probleem zich blijft voordoen.</translation>
-=======
         <translation>Kan geen back-up creëren omdat de computer waarvan u een back-up maakt geen naam heeft. Geef uw computer een naam en probeer het nogmaals. Neem contact op met de [A]Ondersteuning[/A] als het probleem aanhoudt.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Unable to create backup. For further information, contact [A]Support[/A].</source>
         <translatorcomment>Text instructing to try creating a backup again.They should contact support</translatorcomment>
-<<<<<<< HEAD
-        <translation>Kan geen back-up maken. Neem voor meer informatie contact op met [A]Ondersteuning[/A].</translation>
-=======
         <translation>Kan geen back-up creëren. Neem voor meer informatie contact op met [A]Ondersteuning[/A].</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>You can’t backup “%1” as it’s the root folder. The root folder is either; the top-level folder on your device or computer that holds all your folders and files or the folder where the system or program is installed. We don’t allow users to back up root folders as it may cause file conflicts or errors.
 To continue, select a different folder.</source>
         <translatorcomment>Warning message displayed if user tries to backup the system main hard disk.</translatorcomment>
-<<<<<<< HEAD
-        <translation>U kunt geen back-up maken van “%1”  omdat dit de hoofdmap is. De hoofdmap is ofwel; de map op het hoogste niveau op uw apparaat of computer die al uw mappen en bestanden bevat of de map waarin het systeem of programma is geïnstalleerd. We staan ​​niet toe dat gebruikers een back-up maken van hoofdmappen, omdat dit bestandsconflicten of fouten kan veroorzaken.
-=======
         <translation>U kunt geen back-up creëren van “%1”  omdat dit de hoofdmap is. De hoofdmap is ofwel; de map op het hoogste niveau op uw apparaat of computer die al uw mappen en bestanden bevat of de map waarin het systeem of programma is geïnstalleerd. We staan ​​niet toe dat gebruikers een back-up creëren van hoofdmappen, omdat dit bestandsconflicten of fouten kan veroorzaken.
->>>>>>> origin/develop
 Selecteer een andere map om door te gaan.</translation>
     </message>
     <message>

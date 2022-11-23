@@ -503,11 +503,7 @@
     <message>
         <source>You can back up folders from your computer to MEGA. Files will automatically back up when the desktop app is running.</source>
         <translatorcomment>Backup wizard body text</translatorcomment>
-<<<<<<< HEAD
-        <translation>Você pode fazer backup de pastas do seu computador no MEGA. O back up dos arquivos será feito de forma automática quando o aplicativo para desktop estiver em execução.</translation>
-=======
         <translation>Você pode fazer backup de pastas do seu computador no MEGA. O backup dos arquivos será feito de forma automática quando o aplicativo para desktop estiver em execução.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>No folders available</source>
@@ -2676,11 +2672,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
         <translatorcomment>Informative message box shown if user is running an old OSX version (previous than Yosemite), informing that app updates for such systems will cease soon.</translatorcomment>
-<<<<<<< HEAD
-        <translation>O aplicativo vai continuar funcionando, porém as atualizações para versões anteriores ao OS X Yosemite deixarão de ser oferecidas em breve.</translation>
-=======
         <translation>O aplicativo vai continuar funcionando, porém já não serão oferecidas atualizações para versões anteriores ao macOS Sierra.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Your syncs have been disabled</source>
@@ -4618,20 +4610,12 @@ Você quer deletá-lo mesmo assim?</translation>
     <message>
         <source>Move folder</source>
         <translatorcomment>Radio button option label</translatorcomment>
-<<<<<<< HEAD
-        <translation>Mover pasta</translation>
-=======
         <translation>Mover a pasta</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Move this folder from backups to another location in your cloud drive to get full access to your data. This folder will stop being backed up.</source>
         <translatorcomment>Radio button description</translatorcomment>
-<<<<<<< HEAD
-        <translation>Mover esta pasta de backups para outro local em sua unidade de nuvem para obter acesso total aos seus dados. O backup dessa pasta deixará de ser realizado.</translation>
-=======
         <translation>Mover esta pasta de backups para outro local na sua Nuvem de arquivos para obter acesso total aos seus dados. O backup dessa pasta deixará de ser feito.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Move to:</source>
@@ -4651,11 +4635,7 @@ Você quer deletá-lo mesmo assim?</translation>
     <message>
         <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. This action cannot be undone.</source>
         <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option.</translatorcomment>
-<<<<<<< HEAD
-        <translation>A pasta será deletada do MEGA, mas não será deletada do seu computador. Essa ação não pode ser desfeita.</translation>
-=======
         <translation>A pasta será deletada do MEGA, mas não será deletada do seu computador. Essa ação não poderá ser desfeita.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Confirm</source>
@@ -5304,11 +5284,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Issue report</source>
         <translatorcomment>Section title label for Issue reporting in General pane.</translatorcomment>
-<<<<<<< HEAD
-        <translation>Informar problema</translation>
-=======
         <translation>Informe sobre problema</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Choose which files or folders you want to exclude from synchronisation.</source>
@@ -5518,11 +5494,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Prevent the computer from going to sleep when transfers or syncs are in progress.</source>
         <translatorcomment>Sleep/Active mode: Feature description label for keeping the pc awake when there are active transfers</translatorcomment>
-<<<<<<< HEAD
-        <translation>Evite que o computador entre em suspensão enquanto houver transferências ou sincronizações em andamento.</translation>
-=======
         <translation>Evitar que o computador entre em suspensão enquanto houver transferências ou sincronizações em andamento.</translation>
->>>>>>> origin/develop
     </message>
 </context>
 <context>

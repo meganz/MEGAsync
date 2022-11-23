@@ -1,5 +1,5 @@
-#ifndef MEGAITEM_H
-#define MEGAITEM_H
+#ifndef MODELSELECTORMODELITEM_H
+#define MODELSELECTORMODELITEM_H
 
 #include <QList>
 #include <QIcon>
@@ -13,7 +13,7 @@ class FullName;
 class Avatar;
 }
 
-class MegaItem : public QObject
+class NodeSelectorModelItem : public QObject
 {
     Q_OBJECT
 
@@ -28,8 +28,8 @@ public:
         NONE,
     };
 
-    explicit MegaItem(std::unique_ptr<mega::MegaNode> node, bool showFiles, MegaItem *parentItem = 0);
-    ~MegaItem();
+    explicit NodeSelectorModelItem(std::unique_ptr<mega::MegaNode> node, bool showFiles, NodeSelectorModelItem *parentItem = 0);
+    ~NodeSelectorModelItem();
 
     std::shared_ptr<mega::MegaNode> getNode() const;
 
@@ -38,10 +38,10 @@ public:
 
     bool canFetchMore();
 
-    QPointer<MegaItem> getParent();
-    QPointer<MegaItem> getChild(int i);
+    QPointer<NodeSelectorModelItem> getParent();
+    QPointer<NodeSelectorModelItem> getChild(int i);
     int getNumChildren();
-    int indexOf(MegaItem *item);
+    int indexOf(NodeSelectorModelItem *item);
     QString getOwnerName();
     QString getOwnerEmail();
     void setOwner(std::unique_ptr<mega::MegaUser> user);
@@ -50,8 +50,8 @@ public:
     int getStatus();
     bool isSyncable();
     bool isRoot();
-    QPointer<MegaItem> addNode(std::shared_ptr<mega::MegaNode> node);
-    QPointer<MegaItem> findChildNode(std::shared_ptr<mega::MegaNode> node);
+    QPointer<NodeSelectorModelItem> addNode(std::shared_ptr<mega::MegaNode> node);
+    QPointer<NodeSelectorModelItem> findChildNode(std::shared_ptr<mega::MegaNode> node);
     bool isVault();
     void displayFiles(bool enable);
     void setChatFilesFolder();
@@ -76,7 +76,7 @@ protected:
     bool mIsVault;
 
     std::shared_ptr<mega::MegaNode> mNode;
-    QList<QPointer<MegaItem>> mChildItems;
+    QList<QPointer<NodeSelectorModelItem>> mChildItems;
     std::unique_ptr<mega::MegaUser> mOwner;
 
 private slots:
@@ -90,4 +90,4 @@ private:
     std::shared_ptr<const UserAttributes::Avatar> mAvatarAttribute;
 };
 
-#endif // MEGAITEM_H
+#endif // MODELSELECTORMODELITEM_H

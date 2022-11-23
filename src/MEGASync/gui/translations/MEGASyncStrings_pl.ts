@@ -434,11 +434,7 @@
     <message>
         <source>Rename folder</source>
         <translatorcomment>Title of the dialog prompting the user to resolve backup name conflicts by renaming them</translatorcomment>
-<<<<<<< HEAD
-        <translation>Zmień nazwę folderu</translation>
-=======
         <translation>Zmień nazwę katalogu</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>A folder named &quot;%1&quot; already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
@@ -1041,20 +1037,12 @@
     <message>
         <source>MEGAsync has detected a problem. These are the details:</source>
         <translatorcomment>Label to indicate that a crash has occured and the detailed stacktrace of the problem.</translatorcomment>
-<<<<<<< HEAD
-        <translation>MEGAsync wykrył problem. Oto szczegóły:</translation>
-=======
         <translation>Aplikacja MEGA wykryła problem. Oto szczegóły:</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
         <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
-<<<<<<< HEAD
-        <translation>Możesz pomóc nam poprawić MEGAsync, wysyłając ten raport o błędach. Nie zawiera on żadnych danych osobowych. Jeśli chcesz podać nam więcej szczegółów, napisz je poniżej:</translation>
-=======
         <translation>Możesz pomóc nam poprawić aplikację MEGA, wysyłając ten raport o błędach. Nie zawiera on żadnych danych osobowych. Jeśli chcesz podać nam więcej szczegółów, napisz je poniżej:</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Cancel</source>
@@ -1258,11 +1246,7 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-<<<<<<< HEAD
-        <translation>Konto biznesowe wygasło</translation>
-=======
         <translation>Konto dezaktywowane</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
@@ -1837,11 +1821,7 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
     <message>
         <source>Show MEGAsync options</source>
         <translatorcomment>Tooltip for the button that opens MEGAsync options menu</translatorcomment>
-<<<<<<< HEAD
-        <translation>Pokaż opcje MEGAsync</translation>
-=======
         <translation>Pokaż opcje</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>The process is taking longer than expected. Please wait...</source>
@@ -2124,20 +2104,12 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
     <message>
         <source>Login or create an account to start using MEGA Desktop app.</source>
         <translatorcomment>Description label to inform the user about next step in order to use MEGA Desktop app. Users will need to login or create an account.</translatorcomment>
-<<<<<<< HEAD
-        <translation>Zaloguj się lub utwórz konto, aby rozpocząć korzystanie z aplikacji MEGA Desktop App.</translation>
-=======
         <translation>Zaloguj się lub załóż konto, aby zacząć korzystać z naszej aplikacji.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>You need to log into MEGA account to use the MEGA desktop app.</source>
         <translatorcomment>Description label to indicate the user needs to log in in order to fully use MEGA desktop app.</translatorcomment>
-<<<<<<< HEAD
-        <translation>Aby korzystać z aplikacji desktopowej MEGA należy zalogować się na konto MEGA.</translation>
-=======
         <translation>Zaloguj się na swoje konto MEGA, aby korzystać z naszej aplikacji.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Create account</source>
@@ -2253,11 +2225,7 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
     <message>
         <source>MEGAsync is now running. Click here to open the status window.</source>
         <translatorcomment>Notification message that MEGAsync is actually running.</translatorcomment>
-<<<<<<< HEAD
-        <translation>MEGAsync jest teraz uruchomiony. Kliknij tutaj, aby otworzyć okno statusu.</translation>
-=======
         <translation>Aplikacja jest teraz uruchomiona. Kliknij tutaj, aby otworzyć okno statusu.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
@@ -2267,11 +2235,7 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
     <message>
         <source>About MEGAsync</source>
         <translatorcomment>Title of the dialog that displays the version code of MEGAsync.</translatorcomment>
-<<<<<<< HEAD
-        <translation>O MEGAsync</translation>
-=======
         <translation>O aplikacji</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>The link has been copied to the clipboard</source>
@@ -2383,20 +2347,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
         <translatorcomment>Notification message launched when an user logged in succesfully. String as short as possible.</translatorcomment>
-<<<<<<< HEAD
-        <translation>MEGAsync jest teraz uruchomiony. Kliknij ikonę zasobnika systemowego, aby otworzyć okno stanu.</translation>
-=======
         <translation>Aplikacja jest teraz uruchomiona. Kliknij ikonę zasobnika systemowego, aby otworzyć okno stanu.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
         <translatorcomment>Notification message launched when an user logged in succesfully. String as short as possible.</translatorcomment>
-<<<<<<< HEAD
-        <translation>MEGAsync jest teraz uruchomiony. Kliknij ikonę paska menu, aby otworzyć okno statusu.</translation>
-=======
         <translation>Aplikacja jest teraz uruchomiona. Kliknij ikonę zasobnika systemowego, aby otworzyć okno stanu.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Show status</source>
@@ -2416,11 +2372,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
         <translatorcomment>Notification message launched when a connectivity problem occurs.</translatorcomment>
-<<<<<<< HEAD
-        <translation>MEGAsync nie może się połączyć. Proszę sprawdzić połączenie z Internetem i lokalną konfigurację zapory. Należy pamiętać, że większość oprogramowania antywirusowego zawiera zaporę ogniową.</translation>
-=======
         <translation>Aplikacja nie może się połączyć. Proszę sprawdzić połączenie z Internetem i lokalną konfigurację zapory. Należy pamiętać, że większość oprogramowania antywirusowego zawiera zaporę ogniową.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
@@ -2490,11 +2442,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log)</source>
         <translatorcomment>Notification message shown when the DEBUG mode is enabled.</translatorcomment>
-<<<<<<< HEAD
-        <translation>Tryb debug włączony. Na pulpicie tworzony jest dziennik (MEGAsync.log).</translation>
-=======
         <translation>Tryb debugowania włączony. Na Twoim komputerze tworzony jest dziennik o nazwie “MEGAsync.log”.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Error: Invalid destination folder. The download has been cancelled</source>
@@ -2530,11 +2478,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
         <translatorcomment>Message shown to the user to inform that MEGAsync is not able to find a systray to place tray icon</translatorcomment>
-<<<<<<< HEAD
-        <translation>Nie można znaleźć zasobnika systemowego, by umieścić ikonę zasobnika MEGAsync. MEGAsync jest przeznaczony do używania z ikoną zasobnika systemowego, ale może działać dobrze bez niej. Jeśli chcesz otworzyć interfejs, po prostu spróbuj ponownie otworzyć MEGAsync.</translation>
-=======
         <translation>Nie mogliśmy znaleźć zasobnika systemowego, w którym można umieścić ikonę zasobnika aplikacji. Spróbuj ponownie uruchomić aplikację.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Error getting link:</source>
@@ -2623,11 +2567,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-<<<<<<< HEAD
-        <translation>Konto biznesowe wygasło</translation>
-=======
         <translation>Konto dezaktywowane</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Dismiss</source>
@@ -2652,11 +2592,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>This month&apos;s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</source>
         <translatorcomment>Informative message shown to the user when a payment has failed for a business account.</translatorcomment>
-<<<<<<< HEAD
-        <translation>Płatność w tym miesiącu nie powiodła się. Prosimy o jak najszybsze rozwiązanie problemu płatności, aby uniknąć zawieszenia konta biznesowego.</translation>
-=======
         <translation>Płatność w tym miesiącu nie powiodła się. Prosimy o jak najszybsze rozwiązanie problemu płatności, aby uniknąć dezaktywacji konta.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Account Suspended</source>
@@ -2696,11 +2632,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
         <translatorcomment>Informative message box shown if user is running an old Win version (vista or previous), informing that app updates for such systems will cease soon.</translatorcomment>
-<<<<<<< HEAD
-        <translation>Aplikacja będzie nadal działać, jednak aktualizacje nie będą już obsługiwane dla wersji wcześniejszych niż Windows 7.</translation>
-=======
         <translation>Aplikacja będzie nadal działać, jednak aktualizacje nie będą już wspierane dla wersji wcześniejszych niż Windows 7.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Transferring</source>
@@ -2740,11 +2672,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
         <translatorcomment>Informative message box shown if user is running an old OSX version (previous than Yosemite), informing that app updates for such systems will cease soon.</translatorcomment>
-<<<<<<< HEAD
-        <translation>MEGAsync będzie nadal działać, jednak aktualizacje nie będą już wspierane dla wersji wcześniejszych niż OS X Yosemite wkrótce.</translation>
-=======
         <translation>Aplikacja będzie nadal działać, jednak aktualizacje nie będą już wspierane dla wersji wcześniejszych niż macOS Sierra.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Your syncs have been disabled</source>
@@ -3052,20 +2980,12 @@ Transfery zostaną automatycznie wznowione po ponownym otwarciu aplikacji.</nume
     <message>
         <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
         <translatorcomment>Error triggered by SDK when an account has been suspended due to copyright violations.</translatorcomment>
-<<<<<<< HEAD
-        <translation>Twoje konto zostało zawieszone z powodu naruszenia praw autorskich. Proszę sprawdzić swoją skrzynkę pocztową.</translation>
-=======
         <translation>Konto zawieszone z powodu naruszenia praw autorskich. Wysłaliśmy do Ciebie maila z większą ilością informacji na ten temat.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
-<<<<<<< HEAD
-        <translation>Twoje konto zostało usunięte z powodu naruszenia warunków korzystania z usług firmy MEGA, takich jak nadużywanie praw innych osób, udostępnianie i/lub importowanie nielegalnych danych lub nadużywanie systemu.</translation>
-=======
         <translation>Konto zostało usunięte z powodu naruszenia Warunków korzystania z usług firmy MEGA, takich jak nadużywanie praw innych osób, udostępnianie i importowanie nielegalnych danych lub nadużywanie systemu.</translation>
->>>>>>> origin/develop
     </message>
 </context>
 <context>
@@ -3343,11 +3263,7 @@ Transfery zostaną automatycznie wznowione po ponownym otwarciu aplikacji.</nume
     <message>
         <source>Account expired (business or Pro Flexi)</source>
         <translatorcomment>Label to show that the current account (either business or Pro Flexi) is expired during a SDK operation.</translatorcomment>
-<<<<<<< HEAD
-        <translation>Konto wygasło (biznesowe lub Pro Flexi)</translation>
-=======
         <translation>Konto wygasło</translation>
->>>>>>> origin/develop
     </message>
 </context>
 <context>
@@ -3967,11 +3883,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&apos;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
-<<<<<<< HEAD
-        <translation>Pliki i katalogi mają właściciela i należą do grupy użytkowników. Za pomocą tego okna dialogowego możesz przyznać różne uprawnienia dostępu do nowych plików i katalogów utworzonych przez MEGAsync użytkownikom należącym do tej samej grupy i pozostałym użytkownikom w komputerze. Jeśli nie musisz ich zmieniać, pozostaw je na ustawieniach domyślnych ze względów bezpieczeństwa.</translation>
-=======
         <translation>Pliki i katalogi mają właściciela i należą do grupy użytkowników. Za pomocą tego okna dialogowego możesz przyznać różne uprawnienia dostępu do nowych plików i katalogów utworzonych przez aplikację komputerową użytkownikom należącym do tej samej grupy i pozostałym użytkownikom w komputerze. Jeśli nie musisz ich zmieniać, pozostaw je na ustawieniach domyślnych ze względów bezpieczeństwa.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Owner permissions:</source>
@@ -4122,7 +4034,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Open preferences</source>
         <translatorcomment>Button label to open MEGAsync preferences dialog (MacOS).</translatorcomment>
-        <translation>Otwórz Preferencje</translation>
+        <translation>Otwórz ustawienia</translation>
     </message>
     <message>
         <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
@@ -4161,26 +4073,6 @@ Please delete the folder sync from preferences to cancel them.</source>
         <translatorcomment>Warning message shown when some backups and syncs are disabled. Tell the userto go to settings to solve the issue (mac)</translatorcomment>
         <translation>Niektóre synchronizacje i kopie zapasowe zostały wyłączone. Przejdź do preferencji, aby włączyć je ponownie.</translation>
     </message>
-    <message>
-        <source>One or more backups have been disabled. Go to settings to enable them again.</source>
-        <translatorcomment>Warning message shown when some backups are disabled. Tell the userto go to settings to solve the issue (win/linux)</translatorcomment>
-        <translation>Jedna lub więcej kopii zapasowych zostało wyłączonych. Przejdź do ustawień, aby włączyć je ponownie.</translation>
-    </message>
-    <message>
-        <source>Some syncs and backups have been disabled. Go to settings to enable them again.</source>
-        <translatorcomment>Warning message shown when some backups and syncs are disabled. Tell the userto go to settings to solve the issue (win/linux)</translatorcomment>
-        <translation>Niektóre synchronizacje i kopie zapasowe zostały wyłączone. Przejdź do ustawień, aby włączyć je ponownie.</translation>
-    </message>
-    <message>
-        <source>One or more backups have been disabled. Go to preferences to enable them again.</source>
-        <translatorcomment>Warning message shown when some backups are disabled. Tell the userto go to settings to solve the issue (mac)</translatorcomment>
-        <translation>Jedna lub więcej kopii zapasowych zostało wyłączonych. Przejdź do preferencji, aby włączyć je ponownie.</translation>
-    </message>
-    <message>
-        <source>Some syncs and backups have been disabled. Go to preferences to enable them again.</source>
-        <translatorcomment>Warning message shown when some backups and syncs are disabled. Tell the userto go to settings to solve the issue (mac)</translatorcomment>
-        <translation>Niektóre synchronizacje i kopie zapasowe zostały wyłączone. Przejdź do preferencji, aby włączyć je ponownie.</translation>
-    </message>
 </context>
 <context>
     <name>Preferences</name>
@@ -4193,19 +4085,11 @@ Please delete the folder sync from preferences to cancel them.</source>
 - Improved performance.
 </source>
         <translatorcomment>Changelog for v4.8.0 version</translatorcomment>
-<<<<<<< HEAD
-        <translation>- Wsparcie dla kont Flexi Pro.
-- Nowa funkcja tworzenia kopii zapasowych.
-- Naprawiono błędy wykryte w systemie macOS Ventura.
-- Naprawiono wykryte błędy w systemach Windows, Linux i macOS.
-- Naprawiono problemy z tłumaczeniem.
-=======
         <translation>- Dodano obsługę kont Pro Flexi.
 - Dodano nową funkcję tworzenia kopii zapasowych.
 - Naprawiono błędy wykryte w systemie macOS Ventura.
 - Naprawiono wykryte awarie w systemach Windows, Linux i macOS.
 - Poprawiono problemy z tłumaczeniem.
->>>>>>> origin/develop
 - Poprawiono wydajność.
 </translation>
     </message>
@@ -4942,11 +4826,7 @@ Czy mimo to chcesz je usunąć?</translation>
 
 Do you want to restart MEGAsync now?</source>
         <translatorcomment>Message displayed asking for confirmation to the user to restart the application for a Full scan operation.</translatorcomment>
-<<<<<<< HEAD
-        <translation>MEGAsync po uruchomieniu wykona pełne skanowanie zsynchronizowanych katalogów. Czy chcesz ponownie uruchomić MEGAsync teraz?</translation>
-=======
         <translation>Po uruchomieniu aplikacja przeprowadzi pełne skanowanie zsynchronizowanych folderów. Czy chcesz teraz ponownie uruchomić aplikację?</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Choose</source>
@@ -4991,11 +4871,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
         <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
-<<<<<<< HEAD
-        <translation>Zawsze zachowaj fizyczną kontrolę nad swoim kluczem odzyskiwania (np. na urządzeniu klienckim, pamięci zewnętrznej lub wydruku).</translation>
-=======
         <translation>Zawsze zachowaj fizyczną kontrolę nad swoim kluczem odzyskiwania (np. na komputerze, zewnętrznym nośniku danych lub wydruku).</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Exclude by size</source>
@@ -5020,11 +4896,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Do you want to restart MEGAsync now?</source>
         <translatorcomment>Message shown when clicking on restart MEGAsync button in Settings.</translatorcomment>
-<<<<<<< HEAD
-        <translation>Czy chcesz ponownie uruchomić MEGAsync teraz?</translation>
-=======
         <translation>Czy chcesz ponownie uruchomić aplikację teraz?</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Permissions</source>
@@ -5384,11 +5256,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Restart MEGAsync</source>
         <translatorcomment>Title text of dialog shown when clicking on Restart application button. Keep as short as possible.</translatorcomment>
-<<<<<<< HEAD
-        <translation>Uruchomić ponownie MEGAsync</translation>
-=======
         <translation>Zrestartuj</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>No limit</source>
@@ -5503,11 +5371,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Backup Folder</source>
         <translatorcomment>Groupbox title, inside the remote backup folder path will be displayed (Linux and windows)</translatorcomment>
-<<<<<<< HEAD
-        <translation>Folder kopii zapasowej</translation>
-=======
         <translation>Katalog kopii zapasowej</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>View in MEGA</source>
@@ -5532,38 +5396,22 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Synchronizations and backups will stop working.</source>
         <translatorcomment>Warning message displayed on logout if there are active syncs and backups</translatorcomment>
-<<<<<<< HEAD
-        <translation>Synchronizacje i kopie zapasowe przestaną działać.</translation>
-=======
         <translation>Synchronizacje i kopie zapasowe zostaną wyłączone.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Backups will stop working.</source>
         <translatorcomment>Warning message displayed on logout if there are active backups (not syncs)</translatorcomment>
-<<<<<<< HEAD
-        <translation>Kopie zapasowe przestaną działać.</translation>
-=======
         <translation>Kopie zapasowe zostaną wyłączone.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Synchronizations will stop working.</source>
         <translatorcomment>Warning message displayed on logout if there are active syncs (not backups)</translatorcomment>
-<<<<<<< HEAD
-        <translation>Synchronizacje przestaną działać.</translation>
-=======
         <translation>Synchronizacje zostaną wyłączone.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Are you sure?</source>
         <translatorcomment>Warning message second part asking if you are sure about continuing with the logout.</translatorcomment>
-<<<<<<< HEAD
-        <translation>Czy na pewno?</translation>
-=======
         <translation>Chcesz się wylogować?</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Error adding sync</source>
@@ -5603,20 +5451,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your backup can&apos;t be removed. Reason: %1</source>
         <translatorcomment>Warning message title indicating that an error happened removing a backup. the reason is given at runtime in place of the placeholder</translatorcomment>
-<<<<<<< HEAD
-        <translation>Twoja kopia zapasowa nie może zostać usunięta. Powód: %1</translation>
-=======
         <translation>Twoja kopia zapasowa nie może zostać zatrzymana. Powód: %1</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Error moving or removing remote backup folder</source>
         <translatorcomment>Title of the dialog shown when the deletion or move of the remote backup folder failed</translatorcomment>
-<<<<<<< HEAD
-        <translation>Błąd przenoszenia lub usuwania folderu zdalnej kopii zapasowej</translation>
-=======
         <translation>Błąd przenoszenia lub usuwania folderu kopii zapasowej MEGA</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Failed to move or remove the remote backup folder. Reason: %1</source>
@@ -5651,11 +5491,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Go to backup centre</source>
         <translatorcomment>Button text that opens backup center in webclient</translatorcomment>
-<<<<<<< HEAD
-        <translation>Przejdź do kopii</translation>
-=======
         <translation>Przejdź do Centrum kopii zapasowych</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Prevent the computer from going to sleep when transfers or syncs are in progress.</source>
@@ -6291,11 +6127,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
         <translatorcomment>Warning message indicating that megasync is not going to be able to download anything in the selected folder.</translatorcomment>
-<<<<<<< HEAD
-        <translation>MEGAsync nie będzie w stanie nic tu pobrać.</translation>
-=======
         <translation>Aplikacja nie będzie w stanie nic tu pobrać.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>You can&apos;t backup this folder as it contains backed up folders.</source>
@@ -6320,11 +6152,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Unable to create backup as the device you&apos;re backing up from doesn&apos;t have a name. Give your device a name and then try again. If issue continues, contact [A]Support[/A].</source>
         <translatorcomment>Text instructing to try creating a backup again.Failure cause: the device does not have a name. If it fails again, they should contact support</translatorcomment>
-<<<<<<< HEAD
-        <translation>Nie można utworzyć kopii zapasowej, ponieważ urządzenie, z którego tworzona jest kopia zapasowa, nie ma nazwy. Nadaj urządzeniu nazwę, a następnie spróbuj ponownie. Jeśli problem nadal występuje, skontaktuj się z [A]Pomocą techniczną[/A].</translation>
-=======
         <translation>Nie można utworzyć kopii zapasowej, ponieważ komputer, z którego tworzona jest kopia zapasowa, nie ma nazwy. Nadaj komputerowi nazwę, a następnie spróbuj ponownie. Jeśli problem nadal występuje, skontaktuj się z [A]Pomocą techniczną[/A].</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Unable to create backup. For further information, contact [A]Support[/A].</source>
@@ -6342,48 +6170,28 @@ Aby kontynuować, wybierz inny katalog.</translation>
         <source>You can’t sync “%1” as it’s the root folder. The root folder is either; the top-level folder on your device or computer that holds all your folders and files or the folder where the system or program is installed. We don’t allow users to sync root folders as it may cause file conflicts or errors.
 To continue, select a different folder.</source>
         <translatorcomment>Warning message displayed if user tries to sync the system main hard disk.</translatorcomment>
-<<<<<<< HEAD
-        <translation>Nie można zsynchronizować “%1”, ponieważ jest to katalog główny. Katalog główny to: katalog najwyższego poziomu w urządzeniu lub komputerze, w którym znajdują się wszystkie katalogi i pliki, lub katalog, w którym zainstalowano system lub program. Nie pozwalamy użytkownikom synchronizować katalogów głównych, ponieważ może to powodować konflikty plików lub błędy.
-=======
         <translation>Nie można zsynchronizować “%1”, ponieważ jest to katalog główny. Katalog główny to katalog najwyższego poziomu na komputerze, w którym znajdują się wszystkie katalogi i pliki, lub katalog, w którym zainstalowano system lub program. Nie zezwalamy użytkownikom na synchronizację katalogów głównych, ponieważ może to powodować konflikty plików lub błędy.
->>>>>>> origin/develop
 Aby kontynuować, wybierz inny katalog.</translation>
     </message>
     <message>
         <source>You don&apos;t have enough permissions for this remote folder.</source>
         <translatorcomment>Warning message indicating that a folder can´t be synced as it the remote folder is an incoming share and the current user doesn´t have enought permisions</translatorcomment>
-<<<<<<< HEAD
-        <translation>Nie masz wystarczających uprawnień do tego zdalnego katalogu.</translation>
-=======
         <translation>Nie masz pełnego dostępu do tego katalogu udostępnionego i nie możesz go zsynchronizować.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Invalid remote path.</source>
         <translatorcomment>The selected remote path for the sync creation is invalid</translatorcomment>
-<<<<<<< HEAD
-        <translation>Nieprawidłowa ścieżka zdalna.</translation>
-=======
         <translation>Ten MEGA katalog nie może być zsynchronizowany.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>The selected MEGA folder is already synced.</source>
         <translatorcomment>Warning message indicating that the selected folder is already a synced folder.</translatorcomment>
-<<<<<<< HEAD
-        <translation>Wybrany katalog MEGA jest już zsynchronizowany.</translation>
-=======
         <translation>Wybrany katalog MEGA został już zsynchronizowany.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Folder contents already synced.</source>
         <translatorcomment>Warning message indicating that the selected folder have got an active sync bellow the selected path.</translatorcomment>
-<<<<<<< HEAD
-        <translation>Zawartość katalogu już zsynchronizowana.</translation>
-=======
         <translation>Zawartość katalogu została już zsynchronizowana.</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Folder already synced.</source>
@@ -6401,11 +6209,7 @@ Aby kontynuować, wybierz inny katalog.</translation>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a local folder shared with VMWare third party app.</translatorcomment>
-<<<<<<< HEAD
-        <translation>Synchronizujesz lokalny folder współdzielony z VMWare. Te foldery nie obsługują powiadomień systemu plików, więc MEGAsync będzie musiał stale skanować, aby wykryć zmiany w twoich plikach i folderach. Proszę użyć innego folderu, jeśli to możliwe, aby zmniejszyć zużycie procesora.</translation>
-=======
         <translation>Synchronizujesz lokalny katalog współdzielony z VMWare. Te katalogi nie obsługują powiadomień o systemie plików, więc aplikacja będzie musiała stale skanować, aby wykryć zmiany w plikach i katalogach. Jeśli to możliwe, użyj innego katalogu, aby zmniejszyć zużycie procesora.</translation>
->>>>>>> origin/develop
     </message>
 </context>
 <context>
@@ -6428,11 +6232,7 @@ Aby kontynuować, wybierz inny katalog.</translation>
     <message>
         <source>MEGA Folder</source>
         <translatorcomment>Sync table header column title</translatorcomment>
-<<<<<<< HEAD
-        <translation>MEGA Folder</translation>
-=======
         <translation>MEGA katalog</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Sort by MEGA folder name</source>
@@ -6452,11 +6252,7 @@ Aby kontynuować, wybierz inny katalog.</translation>
     <message>
         <source>Click menu for more Sync actions</source>
         <translatorcomment>Menu column item tooltip.</translatorcomment>
-<<<<<<< HEAD
-        <translation>Kliknij menu, aby uzyskać więcej czynności związanych z synchronizacją</translation>
-=======
         <translation>Kliknij menu, aby uzyskać więcej opcji związanych z synchronizacją</translation>
->>>>>>> origin/develop
     </message>
 </context>
 <context>

@@ -1,11 +1,11 @@
 #include "NodeSelectorTreeViewWidget.h"
 #include "ui_NodeSelectorTreeViewWidget.h"
-#include "MegaItemModel.h"
-#include "MegaItemDelegates.h"
+#include "../model/NodeSelectorModel.h"
+#include "../model/NodeSelectorDelegates.h"
 #include "MegaApplication.h"
 #include "QMegaMessageBox.h"
-#include "MegaItemProxyModel.h"
-#include "MegaItemModel.h"
+#include "../model/NodeSelectorProxyModel.h"
+#include "../model/NodeSelectorModel.h"
 #include "mega/utils.h"
 
 #include "NodeNameSetterDialog/RenameNodeDialog.h"
@@ -55,7 +55,7 @@ void NodeSelectorTreeViewWidget::changeEvent(QEvent *event)
         if(!ui->tMegaFolders->rootIndex().isValid())
         {
             //TODO SET CORRECT TEXT
-            ui->lFolderName->setText(tr("CLD_DRIVE"));
+            ui->lFolderName->setText(getRootText());
         }
     }
     QWidget::changeEvent(event);
@@ -71,7 +71,7 @@ void NodeSelectorTreeViewWidget::setSelectionMode(int selectMode)
 
     mSelectMode = selectMode;
 
-    mProxyModel = std::unique_ptr<MegaItemProxyModel>(new MegaItemProxyModel(this));
+    mProxyModel = std::unique_ptr<NodeSelectorProxyModel>(new NodeSelectorProxyModel(this));
     mModel = getModel();
 
     switch(mSelectMode)
@@ -95,7 +95,7 @@ void NodeSelectorTreeViewWidget::setSelectionMode(int selectMode)
             break;
     }
 
-    connect(mProxyModel.get(), &MegaItemProxyModel::expandReady, this, &NodeSelectorTreeViewWidget::onExpandReady);
+    connect(mProxyModel.get(), &NodeSelectorProxyModel::expandReady, this, &NodeSelectorTreeViewWidget::onExpandReady);
 
     ui->tMegaFolders->setSortingEnabled(true);
     mProxyModel->setSourceModel(mModel.get());
@@ -115,7 +115,7 @@ void NodeSelectorTreeViewWidget::abort()
     mModel->abort();
 }
 
-MegaItemProxyModel* NodeSelectorTreeViewWidget::getProxyModel()
+NodeSelectorProxyModel* NodeSelectorTreeViewWidget::getProxyModel()
 {
     return mProxyModel.get();
 }
@@ -149,14 +149,14 @@ void NodeSelectorTreeViewWidget::mousePressEvent(QMouseEvent *event)
 
 void NodeSelectorTreeViewWidget::showEvent(QShowEvent* )
 {
-    ui->tMegaFolders->setColumnWidth(MegaItemModel::COLUMN::NODE, qRound(ui->tMegaFolders->width() * 0.57));
+    ui->tMegaFolders->setColumnWidth(NodeSelectorModel::COLUMN::NODE, qRound(ui->tMegaFolders->width() * 0.57));
 }
 
 void NodeSelectorTreeViewWidget::resizeEvent(QResizeEvent *)
 {
     if(!mManuallyResizedColumn)
     {
-        ui->tMegaFolders->setColumnWidth(MegaItemModel::COLUMN::NODE, qRound(ui->tMegaFolders->width() * 0.57));
+        ui->tMegaFolders->setColumnWidth(NodeSelectorModel::COLUMN::NODE, qRound(ui->tMegaFolders->width() * 0.57));
     }
 }
 
@@ -184,35 +184,35 @@ void NodeSelectorTreeViewWidget::onExpandReady()
     {
         ui->tMegaFolders->setContextMenuPolicy(Qt::DefaultContextMenu);
         ui->tMegaFolders->setExpandsOnDoubleClick(false);
-        ui->tMegaFolders->setHeader(new MegaItemHeaderView(Qt::Horizontal));
+        ui->tMegaFolders->setHeader(new NodSelectorTreeViewHeaderView(Qt::Horizontal));
         ui->tMegaFolders->setItemDelegate(new NodeRowDelegate(ui->tMegaFolders));
-        ui->tMegaFolders->setItemDelegateForColumn(MegaItemModel::STATUS, new IconDelegate(ui->tMegaFolders));
-        ui->tMegaFolders->setItemDelegateForColumn(MegaItemModel::USER, new IconDelegate(ui->tMegaFolders));
+        ui->tMegaFolders->setItemDelegateForColumn(NodeSelectorModel::STATUS, new IconDelegate(ui->tMegaFolders));
+        ui->tMegaFolders->setItemDelegateForColumn(NodeSelectorModel::USER, new IconDelegate(ui->tMegaFolders));
         ui->tMegaFolders->setTextElideMode(Qt::ElideMiddle);
 
-        ui->tMegaFolders->sortByColumn(MegaItemModel::NODE, Qt::AscendingOrder);
+        ui->tMegaFolders->sortByColumn(NodeSelectorModel::NODE, Qt::AscendingOrder);
         ui->tMegaFolders->setModel(mProxyModel.get());
 
         ui->tMegaFolders->header()->show();
-        ui->tMegaFolders->header()->setFixedHeight(MegaItemModel::ROW_HEIGHT);
-        ui->tMegaFolders->header()->moveSection(MegaItemModel::STATUS, MegaItemModel::NODE);
-        ui->tMegaFolders->setColumnWidth(MegaItemModel::COLUMN::STATUS, MegaItemModel::ROW_HEIGHT * 2);
+        ui->tMegaFolders->header()->setFixedHeight(NodeSelectorModel::ROW_HEIGHT);
+        ui->tMegaFolders->header()->moveSection(NodeSelectorModel::STATUS, NodeSelectorModel::NODE);
+        ui->tMegaFolders->setColumnWidth(NodeSelectorModel::COLUMN::STATUS, NodeSelectorModel::ROW_HEIGHT * 2);
         ui->tMegaFolders->header()->setProperty("HeaderIconCenter", true);
         showEvent(nullptr);
 
         //those connects needs to be done after the model is set, do not move them
 
         connect(ui->tMegaFolders->selectionModel(), &QItemSelectionModel::selectionChanged, this, &NodeSelectorTreeViewWidget::onSelectionChanged);
-        connect(ui->tMegaFolders, &MegaItemTreeView::removeNodeClicked, this, &NodeSelectorTreeViewWidget::onDeleteClicked);
-        connect(ui->tMegaFolders, &MegaItemTreeView::renameNodeClicked, this, &NodeSelectorTreeViewWidget::onRenameClicked);
-        connect(ui->tMegaFolders, &MegaItemTreeView::getMegaLinkClicked, this, &NodeSelectorTreeViewWidget::onGenMEGALinkClicked);
+        connect(ui->tMegaFolders, &NodeSelectorTreeView::removeNodeClicked, this, &NodeSelectorTreeViewWidget::onDeleteClicked);
+        connect(ui->tMegaFolders, &NodeSelectorTreeView::renameNodeClicked, this, &NodeSelectorTreeViewWidget::onRenameClicked);
+        connect(ui->tMegaFolders, &NodeSelectorTreeView::getMegaLinkClicked, this, &NodeSelectorTreeViewWidget::onGenMEGALinkClicked);
         connect(ui->tMegaFolders, &QTreeView::doubleClicked, this, &NodeSelectorTreeViewWidget::onItemDoubleClick);
         connect(ui->bForward, &QPushButton::clicked, this, &NodeSelectorTreeViewWidget::onGoForwardClicked);
         connect(ui->bBack, &QPushButton::clicked, this, &NodeSelectorTreeViewWidget::onGoBackClicked);
         connect(ui->tMegaFolders->header(), &QHeaderView::sectionResized, this, &NodeSelectorTreeViewWidget::onSectionResized);
         connect(mModel.get(), &QAbstractItemModel::rowsInserted, this, &NodeSelectorTreeViewWidget::onRowsInserted);
 
-        connect(mModel.get(), &MegaItemModel::blockUi, this, &NodeSelectorTreeViewWidget::setLoadingSceneVisible);
+        connect(mModel.get(), &NodeSelectorModel::blockUi, this, &NodeSelectorTreeViewWidget::setLoadingSceneVisible);
 
         setRootIndex(QModelIndex());
         checkNewFolderButtonVisibility();
@@ -326,12 +326,12 @@ void NodeSelectorTreeViewWidget::oncbAlwaysUploadToLocationChanged(bool value)
 bool NodeSelectorTreeViewWidget::isAllowedToEnterInIndex(const QModelIndex &idx)
 {
     auto source_idx = mProxyModel->getIndexFromSource(idx);
-    MegaItem *item = static_cast<MegaItem*>(source_idx.internalPointer());
+    NodeSelectorModelItem *item = static_cast<NodeSelectorModelItem*>(source_idx.internalPointer());
     if(item)
     {
         if((item->getNode()->isFile())
            || (item->isRoot())
-           || (mSelectMode == NodeSelector::SYNC_SELECT && (item->getStatus() == MegaItem::SYNC || item->getStatus() == MegaItem::SYNC_CHILD)))
+           || (mSelectMode == NodeSelector::SYNC_SELECT && (item->getStatus() == NodeSelectorModelItem::SYNC || item->getStatus() == NodeSelectorModelItem::SYNC_CHILD)))
         {
             return false;
         }
@@ -428,7 +428,7 @@ void NodeSelectorTreeViewWidget::checkOkButton(const QModelIndexList &selected)
             foreach(auto& index, selected)
             {
                 auto source_idx = mProxyModel->getIndexFromSource(index);
-                MegaItem *item = static_cast<MegaItem*>(source_idx.internalPointer());
+                NodeSelectorModelItem *item = static_cast<NodeSelectorModelItem*>(source_idx.internalPointer());
                 if(item)
                 {
                     if(mSelectMode == NodeSelector::STREAM_SELECT)
@@ -471,7 +471,7 @@ void NodeSelectorTreeViewWidget::onRenameClicked()
         if(selectedIndex.isValid())
         {
             auto sourceIndex = mProxyModel->mapToSource(selectedIndex);
-            MegaItem *item = static_cast<MegaItem*>(sourceIndex.internalPointer());
+            NodeSelectorModelItem *item = static_cast<NodeSelectorModelItem*>(sourceIndex.internalPointer());
             if(item)
             {
                 auto updatedNode = std::shared_ptr<MegaNode>(mMegaApi->getNodeByHandle(getSelectedNodeHandle()));
@@ -607,7 +607,7 @@ void NodeSelectorTreeViewWidget::setRootIndex(const QModelIndex &proxy_idx)
 {
     //In case the idx is coming from a potentially hidden column, we always take the NODE column
     //As it is the only one that have childrens
-    auto node_column_idx = proxy_idx.sibling(proxy_idx.row(), MegaItemModel::COLUMN::NODE);
+    auto node_column_idx = proxy_idx.sibling(proxy_idx.row(), NodeSelectorModel::COLUMN::NODE);
 
     ui->tMegaFolders->setRootIndex(node_column_idx);
 
@@ -639,16 +639,16 @@ void NodeSelectorTreeViewWidget::setRootIndex(const QModelIndex &proxy_idx)
     }
 
     //Taking the sync icon
-    auto status_column_idx = proxy_idx.sibling(proxy_idx.row(), MegaItemModel::COLUMN::STATUS);
+    auto status_column_idx = proxy_idx.sibling(proxy_idx.row(), NodeSelectorModel::COLUMN::STATUS);
     QIcon syncIcon = qvariant_cast<QIcon>(status_column_idx.data(Qt::DecorationRole));
 
-    MegaItem *item = static_cast<MegaItem*>(source_idx.internalPointer());
+    NodeSelectorModelItem *item = static_cast<NodeSelectorModelItem*>(source_idx.internalPointer());
     if(!item)
         return;
 
     if(!syncIcon.isNull())
     {
-        QPixmap pm = syncIcon.pixmap(QSize(MegaItem::ICON_SIZE, MegaItem::ICON_SIZE), QIcon::Normal);
+        QPixmap pm = syncIcon.pixmap(QSize(NodeSelectorModelItem::ICON_SIZE, NodeSelectorModelItem::ICON_SIZE), QIcon::Normal);
         ui->lIcon->setPixmap(pm);
         ui->syncSpacer->spacerItem()->changeSize(10, 0);
     }
@@ -683,7 +683,7 @@ QModelIndex NodeSelectorTreeViewWidget::getParentIncomingShareByIndex(QModelInde
 {
     while(idx.isValid())
     {
-        if(MegaItem *item = static_cast<MegaItem*>(idx.internalPointer()))
+        if(NodeSelectorModelItem *item = static_cast<NodeSelectorModelItem*>(idx.internalPointer()))
         {
             if(item->getNode()->isInShare())
             {
@@ -773,86 +773,4 @@ void NodeSelectorTreeViewWidget::Navigation::appendToForward(const mega::MegaHan
 {
     if(!forwardHandles.contains(handle))
         forwardHandles.append(handle);
-}
-
-///////////////////////////////////////////////////////////////////
-NodeSelectorTreeViewWidgetCloudDrive::NodeSelectorTreeViewWidgetCloudDrive(QWidget *parent)
-    : NodeSelectorTreeViewWidget(parent)
-{
-    setTitle(tr("Cloud drive"));
-}
-
-QString NodeSelectorTreeViewWidgetCloudDrive::getRootText()
-{
-    return tr(CLD_DRIVE);
-}
-
-std::unique_ptr<MegaItemModel> NodeSelectorTreeViewWidgetCloudDrive::getModel()
-{
-    return std::unique_ptr<MegaItemModelCloudDrive>(new MegaItemModelCloudDrive);
-}
-
-void NodeSelectorTreeViewWidgetCloudDrive::setRootIndex_Reimplementation(const QModelIndex &source_idx)
-{
-    Q_UNUSED(source_idx)
-    ui->tMegaFolders->header()->hideSection(MegaItemModel::COLUMN::USER);
-}
-
-/////////////////////////////////////////////////////////////////
-NodeSelectorTreeViewWidgetIncomingShares::NodeSelectorTreeViewWidgetIncomingShares(QWidget *parent)
-    : NodeSelectorTreeViewWidget(parent)
-{
-    setTitle(tr("Incoming shares"));
-}
-
-QString NodeSelectorTreeViewWidgetIncomingShares::getRootText()
-{
-    return tr(IN_SHARES);
-}
-
-std::unique_ptr<MegaItemModel> NodeSelectorTreeViewWidgetIncomingShares::getModel()
-{
-    return std::unique_ptr<MegaItemModelIncomingShares>(new MegaItemModelIncomingShares);
-}
-
-void NodeSelectorTreeViewWidgetIncomingShares::setRootIndex_Reimplementation(const QModelIndex &source_idx)
-{
-    if(source_idx.isValid())
-    {
-        QModelIndex in_share_idx = getParentIncomingShareByIndex(source_idx);
-        in_share_idx = in_share_idx.sibling(in_share_idx.row(), MegaItemModel::COLUMN::USER);
-        QPixmap pm = qvariant_cast<QPixmap>(in_share_idx.data(Qt::DecorationRole));
-        QString tooltip = in_share_idx.data(Qt::ToolTipRole).toString();
-        ui->lOwnerIcon->setToolTip(tooltip);
-        ui->lOwnerIcon->setPixmap(pm);
-        ui->avatarSpacer->spacerItem()->changeSize(10, 0);
-        ui->tMegaFolders->header()->hideSection(MegaItemModel::COLUMN::USER);
-    }
-    else
-    {
-        ui->tMegaFolders->header()->showSection(MegaItemModel::COLUMN::USER);
-    }
-}
-
-/////////////////////////////////////////////////////////////////
-NodeSelectorTreeViewWidgetBackups::NodeSelectorTreeViewWidgetBackups(QWidget *parent)
-    : NodeSelectorTreeViewWidget(parent)
-{
-    setTitle(tr(BACKUPS));
-}
-
-QString NodeSelectorTreeViewWidgetBackups::getRootText()
-{
-    return tr(BACKUPS);
-}
-
-std::unique_ptr<MegaItemModel> NodeSelectorTreeViewWidgetBackups::getModel()
-{
-    return std::unique_ptr<MegaItemModelBackups>(new MegaItemModelBackups);
-}
-
-void NodeSelectorTreeViewWidgetBackups::setRootIndex_Reimplementation(const QModelIndex &source_idx)
-{
-    Q_UNUSED(source_idx)
-    ui->tMegaFolders->header()->hideSection(MegaItemModel::COLUMN::USER);
 }

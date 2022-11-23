@@ -214,7 +214,7 @@ QPushButton:!checked {
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="NodeSelectorTreeViewWidgetCloudDrive" name="CloudDrive"/>
      <widget class="NodeSelectorTreeViewWidgetIncomingShares" name="IncomingShares"/>
@@ -227,19 +227,19 @@ QPushButton:!checked {
   <customwidget>
    <class>NodeSelectorTreeViewWidgetCloudDrive</class>
    <extends>QWidget</extends>
-   <header>NodeSelectorTreeViewWidget.h</header>
+   <header>NodeSelectorTreeViewWidgetSpecializations.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>NodeSelectorTreeViewWidgetIncomingShares</class>
    <extends>QWidget</extends>
-   <header>NodeSelectorTreeViewWidget.h</header>
+   <header>NodeSelectorTreeViewWidgetSpecializations.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>NodeSelectorTreeViewWidgetBackups</class>
    <extends>QWidget</extends>
-   <header>NodeSelectorTreeViewWidget.h</header>
+   <header>NodeSelectorTreeViewWidgetSpecializations.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

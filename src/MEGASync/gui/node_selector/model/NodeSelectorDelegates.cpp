@@ -1,6 +1,6 @@
-#include "MegaItemDelegates.h"
+#include "NodeSelectorDelegates.h"
 #include "MegaApplication.h"
-#include "MegaItemModel.h"
+#include "NodeSelectorModel.h"
 
 #include <QBitmap>
 #include <QPainter>
@@ -61,7 +61,7 @@ bool NodeRowDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view, cons
         QFontMetrics fm = option.fontMetrics;
 
         int margin = MARGIN;
-        if(index.column() == MegaItemModel::NODE)
+        if(index.column() == NodeSelectorModel::NODE)
         {
             margin = ICON_MARGIN;
         }

@@ -2233,11 +2233,7 @@
     <message>
         <source>About MEGAsync</source>
         <translatorcomment>Title of the dialog that displays the version code of MEGAsync.</translatorcomment>
-<<<<<<< HEAD
-        <translation>MEGAsyncについて</translation>
-=======
         <translation>概要</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>The link has been copied to the clipboard</source>
@@ -2674,11 +2670,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
         <translatorcomment>Informative message box shown if user is running an old OSX version (previous than Yosemite), informing that app updates for such systems will cease soon.</translatorcomment>
-<<<<<<< HEAD
-        <translation>アプリは引き続き動作しますが、OS X Yosemiteより前のバージョンのアップデートは間もなくサポートされなくなります。</translation>
-=======
         <translation>アプリは引き続き動作しますが、macOS Sierraより前のバージョンの更新はサポートされなくなります。</translation>
->>>>>>> origin/develop
     </message>
     <message>
         <source>Your syncs have been disabled</source>

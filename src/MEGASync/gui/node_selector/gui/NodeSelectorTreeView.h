@@ -1,21 +1,21 @@
-#ifndef MEGAITEMTREEVIEW_H
-#define MEGAITEMTREEVIEW_H
+#ifndef NODESELECTORTREEVIEW_H
+#define NODESELECTORTREEVIEW_H
 
 #include "megaapi.h"
 
 #include <QTreeView>
 #include <QHeaderView>
 
-class MegaItemProxyModel;
+class NodeSelectorProxyModel;
 
 
 using namespace  mega;
-class MegaItemTreeView : public QTreeView
+class NodeSelectorTreeView : public QTreeView
 {
     Q_OBJECT
 
 public:
-    explicit MegaItemTreeView(QWidget *parent = nullptr);
+    explicit NodeSelectorTreeView(QWidget *parent = nullptr);
     MegaHandle getSelectedNodeHandle();
     void setModel(QAbstractItemModel *model) override;
 
@@ -48,21 +48,21 @@ private slots:
 private:
     bool mousePressorReleaseEvent(QMouseEvent* event);
     QModelIndex getIndexFromSourceModel(const QModelIndex& index) const;
-    MegaItemProxyModel* proxyModel() const;
+    NodeSelectorProxyModel* proxyModel() const;
     //QModelIndex mIndexToEnter;
     MegaApi* mMegaApi;
 
 };
 
-class MegaItemHeaderView : public QHeaderView
+class NodSelectorTreeViewHeaderView : public QHeaderView
 {
     Q_OBJECT
 public:
-    explicit MegaItemHeaderView(Qt::Orientation orientation, QWidget* parent = nullptr);
+    explicit NodSelectorTreeViewHeaderView(Qt::Orientation orientation, QWidget* parent = nullptr);
 
 protected:
     void paintSection(QPainter *painter, const QRect &rect, int logicalIndex) const override;
 
 };
 
-#endif // MEGAITEMTREEVIEW_H
+#endif // NODESELECTORTREEVIEW_H

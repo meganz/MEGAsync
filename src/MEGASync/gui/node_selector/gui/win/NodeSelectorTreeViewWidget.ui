@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -45,7 +45,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="Resources_win.qrc">
+        <iconset resource="../../../Resources_win.qrc">
          <normaloff>:/images/node_selector/arrow-left-ico.png</normaloff>
          <disabledoff>:/images/node_selector/arrow-left-disabled-ico.png</disabledoff>:/images/node_selector/arrow-left-ico.png</iconset>
        </property>
@@ -76,7 +76,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="Resources_win.qrc">
+        <iconset resource="../../../Resources_win.qrc">
          <normaloff>:/images/node_selector/arrow-right-ico.png</normaloff>
          <disabledoff>:/images/node_selector/arrow-right-disabled-ico.png</disabledoff>:/images/node_selector/arrow-right-ico.png</iconset>
        </property>
@@ -222,7 +222,7 @@ font-size:17px;
     </layout>
    </item>
    <item>
-    <widget class="MegaItemTreeView" name="tMegaFolders">
+    <widget class="NodeSelectorTreeView" name="tMegaFolders">
      <property name="font">
       <font>
        <pointsize>-1</pointsize>
@@ -438,14 +438,13 @@ padding-right:10px;
  </widget>
  <customwidgets>
   <customwidget>
-   <class>MegaItemTreeView</class>
+   <class>NodeSelectorTreeView</class>
    <extends>QTreeView</extends>
-   <header>MegaItemTreeView.h</header>
+   <header>NodeSelectorTreeView.h</header>
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="Resources_win.qrc"/>
-  <include location="Resources_win.qrc"/>
+  <include location="../../../Resources_win.qrc"/>
  </resources>
  <connections/>
 </ui>

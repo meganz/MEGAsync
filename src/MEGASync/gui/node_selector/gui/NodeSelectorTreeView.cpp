@@ -1,14 +1,14 @@
-#include "MegaItemTreeView.h"
-#include "MegaItem.h"
+#include "NodeSelectorTreeView.h"
+#include "../model/NodeSelectorModelItem.h"
 #include "MegaApplication.h"
-#include "MegaItemProxyModel.h"
+#include "../model/NodeSelectorProxyModel.h"
 #include "Platform.h"
-#include "MegaItemModel.h"
+#include "../model/NodeSelectorModel.h"
 
 #include <QPainter>
 #include <QMenu>
 
-MegaItemTreeView::MegaItemTreeView(QWidget* parent) :
+NodeSelectorTreeView::NodeSelectorTreeView(QWidget* parent) :
     QTreeView(parent),
     //mIndexToEnter(QModelIndex()),
     mMegaApi(MegaSyncApp->getMegaApi())
@@ -16,7 +16,7 @@ MegaItemTreeView::MegaItemTreeView(QWidget* parent) :
     installEventFilter(this);
 }
 
-QModelIndex MegaItemTreeView::getIndexFromSourceModel(const QModelIndex& index) const
+QModelIndex NodeSelectorTreeView::getIndexFromSourceModel(const QModelIndex& index) const
 {
     if(!index.isValid())
     {
@@ -25,13 +25,13 @@ QModelIndex MegaItemTreeView::getIndexFromSourceModel(const QModelIndex& index) 
     return proxyModel()->getIndexFromSource(index);
 }
 
-MegaItemProxyModel *MegaItemTreeView::proxyModel() const
+NodeSelectorProxyModel *NodeSelectorTreeView::proxyModel() const
 {
-    return static_cast<MegaItemProxyModel*>(model());
+    return static_cast<NodeSelectorProxyModel*>(model());
 }
 
 //Only used for single selection mode
-MegaHandle MegaItemTreeView::getSelectedNodeHandle()
+MegaHandle NodeSelectorTreeView::getSelectedNodeHandle()
 {
     MegaHandle ret = INVALID_HANDLE;
     if(selectionModel()->selectedRows().size() == 1)
@@ -42,13 +42,13 @@ MegaHandle MegaItemTreeView::getSelectedNodeHandle()
     return ret;
 }
 
-void MegaItemTreeView::setModel(QAbstractItemModel *model)
+void NodeSelectorTreeView::setModel(QAbstractItemModel *model)
 {
     QTreeView::setModel(model);
-    connect(proxyModel(), &MegaItemProxyModel::navigateReady, this, &MegaItemTreeView::onNavigateReady);
+    connect(proxyModel(), &NodeSelectorProxyModel::navigateReady, this, &NodeSelectorTreeView::onNavigateReady);
 }
 
-void MegaItemTreeView::verticalScrollbarValueChanged(int value)
+void NodeSelectorTreeView::verticalScrollbarValueChanged(int value)
 {
 //    if (verticalScrollBar()->maximum() / 2 < value)
 //    {
@@ -58,12 +58,12 @@ void MegaItemTreeView::verticalScrollbarValueChanged(int value)
     QTreeView::verticalScrollbarValueChanged(value);
 }
 
-bool MegaItemTreeView::eventFilter(QObject *obj, QEvent *evnt)
+bool NodeSelectorTreeView::eventFilter(QObject *obj, QEvent *evnt)
 {
     return QTreeView::eventFilter(obj, evnt);
 }
 
-bool MegaItemTreeView::viewportEvent(QEvent *event)
+bool NodeSelectorTreeView::viewportEvent(QEvent *event)
 {
     if(signalsBlocked())
     {
@@ -72,10 +72,10 @@ bool MegaItemTreeView::viewportEvent(QEvent *event)
     return QTreeView::viewportEvent(event);
 }
 
-void MegaItemTreeView::drawBranches(QPainter *painter, const QRect &rect, const QModelIndex &index) const
+void NodeSelectorTreeView::drawBranches(QPainter *painter, const QRect &rect, const QModelIndex &index) const
 {
     QModelIndex idx = getIndexFromSourceModel(index);
-    MegaItem *item = static_cast<MegaItem*>(idx.internalPointer());
+    NodeSelectorModelItem *item = static_cast<NodeSelectorModelItem*>(idx.internalPointer());
     if(item && (item->isRoot() || item->isVault()))
     {
         QStyleOptionViewItem opt = viewOptions();
@@ -90,7 +90,7 @@ void MegaItemTreeView::drawBranches(QPainter *painter, const QRect &rect, const 
     QTreeView::drawBranches(painter, rect, index);
 }
 
-void MegaItemTreeView::mousePressEvent(QMouseEvent *event)
+void NodeSelectorTreeView::mousePressEvent(QMouseEvent *event)
 {
     bool accept = true;
     if (style()->styleHint(QStyle::SH_ListViewExpand_SelectMouseType, 0, this) == QEvent::MouseButtonPress)
@@ -105,7 +105,7 @@ void MegaItemTreeView::mousePressEvent(QMouseEvent *event)
 }
 
 
-void MegaItemTreeView::mouseReleaseEvent(QMouseEvent *event)
+void NodeSelectorTreeView::mouseReleaseEvent(QMouseEvent *event)
 {
     bool accept = true;
 
@@ -119,7 +119,7 @@ void MegaItemTreeView::mouseReleaseEvent(QMouseEvent *event)
     }
 }
 
-void MegaItemTreeView::mouseDoubleClickEvent(QMouseEvent *event)
+void NodeSelectorTreeView::mouseDoubleClickEvent(QMouseEvent *event)
 {
     if(event->button() != Qt::RightButton)
     {
@@ -138,7 +138,7 @@ void MegaItemTreeView::mouseDoubleClickEvent(QMouseEvent *event)
     }
 }
 
-void MegaItemTreeView::keyPressEvent(QKeyEvent *event)
+void NodeSelectorTreeView::keyPressEvent(QKeyEvent *event)
 {
     QModelIndexList selectedRows = selectionModel()->selectedRows();
 
@@ -157,7 +157,7 @@ void MegaItemTreeView::keyPressEvent(QKeyEvent *event)
     }
 }
 
-void MegaItemTreeView::contextMenuEvent(QContextMenuEvent *event)
+void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent *event)
 {
         if(selectionModel()->selectedRows().size() > 1)
             return;
@@ -171,7 +171,7 @@ void MegaItemTreeView::contextMenuEvent(QContextMenuEvent *event)
         Platform::initMenu(&customMenu);
         auto node = std::unique_ptr<MegaNode>(mMegaApi->getNodeByHandle(getSelectedNodeHandle()));
         auto parent = std::unique_ptr<MegaNode>(mMegaApi->getParentNode(node.get()));
-        auto proxyModel = static_cast<MegaItemProxyModel*>(model());
+        auto proxyModel = static_cast<NodeSelectorProxyModel*>(model());
         if (parent && node)
         {
             int access = mMegaApi->getAccess(node.get());
@@ -192,22 +192,22 @@ void MegaItemTreeView::contextMenuEvent(QContextMenuEvent *event)
             customMenu.exec(mapToGlobal(event->pos()));
 }
 
-void MegaItemTreeView::removeNode()
+void NodeSelectorTreeView::removeNode()
 {
     emit removeNodeClicked();
 }
 
-void MegaItemTreeView::renameNode()
+void NodeSelectorTreeView::renameNode()
 {
     emit renameNodeClicked();
 }
 
-void MegaItemTreeView::getMegaLink()
+void NodeSelectorTreeView::getMegaLink()
 {
     emit getMegaLinkClicked();
 }
 
-void MegaItemTreeView::onNavigateReady(const QModelIndex &index)
+void NodeSelectorTreeView::onNavigateReady(const QModelIndex &index)
 {
     if(index.isValid())
     {
@@ -220,11 +220,11 @@ void MegaItemTreeView::onNavigateReady(const QModelIndex &index)
     }
 }
 
-bool MegaItemTreeView::mousePressorReleaseEvent(QMouseEvent *event)
+bool NodeSelectorTreeView::mousePressorReleaseEvent(QMouseEvent *event)
 {
     QPoint pos = event->pos();
     QModelIndex index = getIndexFromSourceModel(indexAt(pos));
-    MegaItem *item = static_cast<MegaItem*>(index.internalPointer());
+    NodeSelectorModelItem *item = static_cast<NodeSelectorModelItem*>(index.internalPointer());
     if(item && item->isRoot())
     {   //this line avoid to cloud drive being collapsed and at same time it allows to select it.
         if(event->type() == QMouseEvent::MouseButtonPress)
@@ -283,7 +283,7 @@ bool MegaItemTreeView::mousePressorReleaseEvent(QMouseEvent *event)
     return true;
 }
 
-MegaItemHeaderView::MegaItemHeaderView(Qt::Orientation orientation, QWidget *parent) :
+NodSelectorTreeViewHeaderView::NodSelectorTreeViewHeaderView(Qt::Orientation orientation, QWidget *parent) :
     QHeaderView(orientation, parent)
 {
     setDefaultAlignment(Qt::AlignLeft);
@@ -291,12 +291,12 @@ MegaItemHeaderView::MegaItemHeaderView(Qt::Orientation orientation, QWidget *par
     setDefaultSectionSize(35);
 }
 
-void MegaItemHeaderView::paintSection(QPainter *painter, const QRect &rect, int logicalIndex) const
+void NodSelectorTreeViewHeaderView::paintSection(QPainter *painter, const QRect &rect, int logicalIndex) const
 {
     QRect vrect = rect; 
 
 #ifdef _WIN32
-    if(logicalIndex == MegaItemModel::USER)
+    if(logicalIndex == NodeSelectorModel::USER)
         vrect.moveTo(vrect.x() - 2,vrect.y());
 #endif
 
