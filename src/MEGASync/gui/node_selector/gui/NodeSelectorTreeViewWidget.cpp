@@ -18,7 +18,7 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::NodeSelectorTreeViewWidget),
     mProxyModel(nullptr),
-    mSelectMode(-1),
+    mSelectMode(UNINITIALIZED_SELECT),
     mMegaApi(MegaSyncApp->getMegaApi()),
     mManuallyResizedColumn(false),
     mDelegateListener(mega::make_unique<QTMegaRequestListener>(mMegaApi, this)),
@@ -56,9 +56,9 @@ void NodeSelectorTreeViewWidget::changeEvent(QEvent *event)
     QWidget::changeEvent(event);
 }
 
-void NodeSelectorTreeViewWidget::setSelectionMode(int selectMode)
+void NodeSelectorTreeViewWidget::setSelectionMode(Type selectMode)
 {
-    if(mSelectMode != -1)
+    if(mSelectMode != UNINITIALIZED_SELECT)
     {
         return;
     }
@@ -70,21 +70,21 @@ void NodeSelectorTreeViewWidget::setSelectionMode(int selectMode)
 
     switch(mSelectMode)
     {
-        case NodeSelector::SYNC_SELECT:
+        case SYNC_SELECT:
             mModel->setSyncSetupMode(true);
             // fall through
-        case NodeSelector::UPLOAD_SELECT:
+        case UPLOAD_SELECT:
             ui->bNewFolder->show();
             mProxyModel->showReadOnlyFolders(false);
             mModel->showFiles(false);
             break;
-        case NodeSelector::DOWNLOAD_SELECT:
+        case DOWNLOAD_SELECT:
             ui->bNewFolder->hide();
             ui->tMegaFolders->setSelectionMode(QAbstractItemView::ExtendedSelection);
             mProxyModel->showReadOnlyFolders(true);
             mModel->showFiles(true);
             break;
-        case NodeSelector::STREAM_SELECT:
+        case STREAM_SELECT:
             ui->bNewFolder->hide();
             mProxyModel->showReadOnlyFolders(true);
             mModel->showFiles(true);
@@ -121,7 +121,6 @@ void NodeSelectorTreeViewWidget::setDefaultUploadOption(bool value)
 {
     ui->cbAlwaysUploadToLocation->setChecked(value);
 }
-
 
 bool NodeSelectorTreeViewWidget::getDefaultUploadOption()
 {
@@ -328,7 +327,9 @@ bool NodeSelectorTreeViewWidget::isAllowedToEnterInIndex(const QModelIndex &idx)
     {
         if((item->getNode()->isFile())
            || (item->isCloudDrive())
-           || (mSelectMode == NodeSelector::SYNC_SELECT && (item->getStatus() == NodeSelectorModelItem::SYNC || item->getStatus() == NodeSelectorModelItem::SYNC_CHILD)))
+           || (mSelectMode == SYNC_SELECT
+               && (item->getStatus() == NodeSelectorModelItem::SYNC
+                   || item->getStatus() == NodeSelectorModelItem::SYNC_CHILD)))
         {
             return false;
         }
@@ -420,11 +421,11 @@ void NodeSelectorTreeViewWidget::checkOkButton(const QModelIndexList &selected)
                 NodeSelectorModelItem *item = static_cast<NodeSelectorModelItem*>(source_idx.internalPointer());
                 if(item)
                 {
-                    if(mSelectMode == NodeSelector::STREAM_SELECT)
+                    if(mSelectMode == STREAM_SELECT)
                     {
                         item->getNode()->isFile() ? correctSelected++ : correctSelected;
                     }
-                    else if(mSelectMode == NodeSelector::SYNC_SELECT)
+                    else if(mSelectMode == SYNC_SELECT)
                     {
                         item->getNode()->isFolder() ? correctSelected++ : correctSelected;
                     }

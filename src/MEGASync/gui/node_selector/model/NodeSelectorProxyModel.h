@@ -1,12 +1,14 @@
 #ifndef NODESELECTORPROXYMODEL_H
 #define NODESELECTORPROXYMODEL_H
 
-#include "../gui/NodeSelector.h"
+#include "megaapi.h"
 
 #include <QSortFilterProxyModel>
 #include <QCollator>
 #include <QFutureWatcher>
 #include <QEventLoop>
+
+#include <memory>
 
 
 namespace mega{

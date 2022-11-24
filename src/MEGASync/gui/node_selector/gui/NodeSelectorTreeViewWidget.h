@@ -24,10 +24,11 @@ class NodeSelectorTreeViewWidget : public QWidget,  public mega::MegaRequestList
 
 public:
     enum Type{
-        UPLOAD_SELECT = 0,
+        UNINITIALIZED_SELECT = 0,
+        UPLOAD_SELECT,
         DOWNLOAD_SELECT,
         SYNC_SELECT,
-        STREAM_SELECT,
+        STREAM_SELECT
     };
 
     static const int LABEL_ELIDE_MARGIN;
@@ -39,7 +40,7 @@ public:
     QList<mega::MegaHandle> getMultiSelectionNodeHandle();
     void setSelectedNodeHandle(const mega::MegaHandle &selectedHandle);
     void setFutureSelectedNodeHandle(const mega::MegaHandle &selectedHandle);
-    void setSelectionMode(int selectionMode);
+    void setSelectionMode(Type selectionMode);
     void setDefaultUploadOption(bool value);
     bool getDefaultUploadOption();
     void showDefaultUploadOption(bool show);
@@ -98,7 +99,7 @@ private:
       void appendToForward(const mega::MegaHandle& handle);
     };
 
-    int mSelectMode;
+    Type mSelectMode;
     mega::MegaApi* mMegaApi;
     bool mManuallyResizedColumn;
     Navigation mNavigationInfo;

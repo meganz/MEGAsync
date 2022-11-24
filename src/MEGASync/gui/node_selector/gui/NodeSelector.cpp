@@ -7,7 +7,7 @@
 #include "mega/utils.h"
 #include "../model/NodeSelectorProxyModel.h"
 #include "../model/NodeSelectorModel.h"
-#include "NodeSelectorTreeViewWidget.h"
+
 #include "MegaNodeNames.h"
 
 #include <QMessageBox>
@@ -18,7 +18,7 @@ using namespace mega;
 
 const int NodeSelector::LABEL_ELIDE_MARGIN = 100;
 
-NodeSelector::NodeSelector(int selectMode, QWidget *parent) :
+NodeSelector::NodeSelector(NodeSelectorTreeViewWidget::Type selectMode, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::NodeSelector),
     mSelectMode(selectMode),
@@ -38,11 +38,6 @@ NodeSelector::NodeSelector(int selectMode, QWidget *parent) :
 #endif
 
     updateNodeSelectorTabs();
-
-    if(mSelectMode == STREAM_SELECT)
-    {
-        setWindowTitle(tr("Select items"));
-    }
 }
 
 NodeSelector::~NodeSelector()
@@ -72,7 +67,7 @@ void NodeSelector::updateNodeSelectorTabs()
         auto viewContainer = dynamic_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->widget(page));
         if(viewContainer)
         {
-            if(page == VAULT && (mSelectMode == NodeSelector::SYNC_SELECT || mSelectMode == NodeSelector::UPLOAD_SELECT))
+            if(page == VAULT && (mSelectMode == NodeSelectorTreeViewWidget::SYNC_SELECT || mSelectMode == NodeSelectorTreeViewWidget::UPLOAD_SELECT))
             {
                 ui->stackedWidget->removeWidget(viewContainer);
                 hideSelector((NodeSelector::TabItem)page);
@@ -137,7 +132,7 @@ void NodeSelector::onbOkClicked()
 {
     bool correctNodeSelected(true);
 
-    if(mSelectMode == NodeSelector::DOWNLOAD_SELECT)
+    if(mSelectMode == NodeSelectorTreeViewWidget::DOWNLOAD_SELECT)
     {
         auto treeViewWidget = static_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->currentWidget());
         QList<MegaHandle> nodes = treeViewWidget->getMultiSelectionNodeHandle();
@@ -184,22 +179,22 @@ void NodeSelector::onbOkClicked()
         else
         {
             int access = mMegaApi->getAccess(node.get());
-            if ((mSelectMode == NodeSelector::UPLOAD_SELECT) && ((access < MegaShare::ACCESS_READWRITE)))
+            if ((mSelectMode == NodeSelectorTreeViewWidget::UPLOAD_SELECT) && ((access < MegaShare::ACCESS_READWRITE)))
             {
                 QMegaMessageBox::warning(nullptr, tr("Error"), tr("You need Read & Write or Full access rights to be able to upload to the selected folder."), QMessageBox::Ok);
                 correctNodeSelected = false;
             }
-            else if ((mSelectMode == NodeSelector::SYNC_SELECT) && (access < MegaShare::ACCESS_FULL))
+            else if ((mSelectMode == NodeSelectorTreeViewWidget::SYNC_SELECT) && (access < MegaShare::ACCESS_FULL))
             {
                 QMegaMessageBox::warning(nullptr, tr("Error"), tr("You need Full access right to be able to sync the selected folder."), QMessageBox::Ok);
                 correctNodeSelected = false;
             }
-            else if ((mSelectMode == NodeSelector::STREAM_SELECT) && node->isFolder())
+            else if ((mSelectMode == NodeSelectorTreeViewWidget::STREAM_SELECT) && node->isFolder())
             {
                 QMegaMessageBox::warning(nullptr, tr("Error"), tr("Only files can be used for streaming."), QMessageBox::Ok);
                 correctNodeSelected = false;
             }
-            else if (mSelectMode == NodeSelector::SYNC_SELECT)
+            else if (mSelectMode == NodeSelectorTreeViewWidget::SYNC_SELECT)
             {
                 const char* path = mMegaApi->getNodePath(node.get());
                 auto check = std::unique_ptr<MegaNode>(mMegaApi->getNodeByPath(path));
