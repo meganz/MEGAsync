@@ -562,9 +562,13 @@ QMenu* MegaTransferView::createContextMenu()
     bool isBottomIndex(false);
     bool showLink (false);
     bool showOpen (false);
-    bool showShowInFolder (false);
 
     QModelIndexList indexes = selectedIndexes();
+
+    TransferData::TransferStates overallState;
+    TransferData::TransferTypes overallType;
+    long long int movableUploadTransfers(0);
+    long long int movableDownloadTransfers(0);
 
     for (auto index : qAsConst(indexes))
     {
@@ -585,51 +589,73 @@ QMenu* MegaTransferView::createContextMenu()
             case TransferData::TRANSFER_QUEUED:
             case TransferData::TRANSFER_RETRYING:
             {
-                enablePause = true;
-                enableMove = true;
-                enableCancel |= !(d->mType & TransferData::TRANSFER_SYNC);
-                break;
-            }
-            case TransferData::TRANSFER_PAUSED:
-            {
-                enableResume = true;
-                enableMove = true;
-                enableCancel |= !(d->mType & TransferData::TRANSFER_SYNC);
-                break;
-            }
-            case TransferData::TRANSFER_FAILED:
-            {
-                enableCancel |= !(d->mType & TransferData::TRANSFER_SYNC);
-                enableClear = true;
-                break;
-            }
-            case TransferData::TRANSFER_COMPLETED:
-            {
-                showLink = true;
-                showOpen = true;
-                showShowInFolder = true;
-                enableClear = true;
-                break;
-            }
-                //Never used, as cancelled transfers are automatically removed from the model
-            case TransferData::TRANSFER_CANCELLED:
-            {
-                enableClear = true;
+                overallState |= TransferData::TRANSFER_ACTIVE;
+                if(d->mType == TransferData::TRANSFER_UPLOAD)
+                {
+                    movableUploadTransfers++;
+                }
+                else if(d->mType == TransferData::TRANSFER_DOWNLOAD)
+                {
+                    movableDownloadTransfers++;
+                }
                 break;
             }
             default:
-                break;
+                overallState |= d->getState();
         }
 
-        if (d->mType & TransferData::TRANSFER_UPLOAD)
+        overallType |= d->mType;
+    }
+
+    auto checkActionByType = [overallType](bool& showOpen, bool& showLink)
+    {
+        if(overallType == TransferData::TRANSFER_UPLOAD)
         {
             showOpen = true;
-            showShowInFolder = true;
         }
-        else if (d->mType & TransferData::TRANSFER_DOWNLOAD)
+        else if(overallType == TransferData::TRANSFER_DOWNLOAD)
         {
             showLink = true;
         }
+    };
+
+    //Are all completed
+    if(overallState == TransferData::TRANSFER_COMPLETED)
+    {
+        enableClear = true;
+        showLink = true;
+        showOpen = true;
+    }
+    else if(overallState == TransferData::TRANSFER_FAILED)
+    {
+        enableClear = true;
+        checkActionByType(showOpen, showLink);
+    }
+    else if(overallState & TransferData::TRANSFER_PAUSED || overallState & TransferData::TRANSFER_ACTIVE)
+    {
+        if(overallState & TransferData::TRANSFER_COMPLETED)
+        {
+            enableClear = true;
+        }
+        else
+        {
+            if(movableUploadTransfers > 1 || movableDownloadTransfers > 1)
+            {
+                enableMove = true;
+            }
+
+            if(overallState & TransferData::TRANSFER_ACTIVE)
+            {
+                enablePause = true;
+            }
+            if(overallState & TransferData::TRANSFER_PAUSED)
+            {
+                enableResume = true;
+            }
+        }
+
+        enableCancel |= !(overallType & TransferData::TRANSFER_SYNC);
+        checkActionByType(showOpen, showLink);
     }
 
     bool addSeparator(false);
@@ -664,11 +690,7 @@ QMenu* MegaTransferView::createContextMenu()
         connect(openItemAction, &QAction::triggered, this, &MegaTransferView::openItemClicked);
 
         contextMenu->addAction(openItemAction);
-        addSeparator = true;
-    }
 
-    if(showShowInFolder)
-    {
         //Ico not included in transfer manager folder as it is also used by settingsDialog
         auto showInFolderAction = new MenuItemAction(tr("Show in folder"), QIcon(QLatin1String(":/images/show_in_folder_ico.png")),
                                            contextMenu);
@@ -678,6 +700,8 @@ QMenu* MegaTransferView::createContextMenu()
         addSeparator = true;
     }
 
+    addSeparatorToContextMenu(addSeparator, contextMenu);
+
     if(showLink)
     {
         //Ico not included in transfer manager folder as it is also used by settingsDialog
@@ -685,13 +709,7 @@ QMenu* MegaTransferView::createContextMenu()
         connect(openInMEGAAction, &QAction::triggered, this, &MegaTransferView::openInMEGAClicked);
 
         contextMenu->addAction(openInMEGAAction);
-        addSeparator = true;
-    }
 
-    addSeparatorToContextMenu(addSeparator, contextMenu);
-
-    if(showLink)
-    {
         auto getLinkAction = new MenuItemAction(tr("Get link"), QIcon(QLatin1String(":/images/transfer_manager/context_menu/get_link_ico.png")));
         connect(getLinkAction, &QAction::triggered, this, &MegaTransferView::getLinkClicked);
 
