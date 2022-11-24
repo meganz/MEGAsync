@@ -1,7 +1,7 @@
 #ifndef NODESELECTORMODELSPECIALISED_H
 #define NODESELECTORMODELSPECIALISED_H
 
-#include "NodeSelectorModel.H"
+#include "NodeSelectorModel.h"
 
 #include <memory>
 

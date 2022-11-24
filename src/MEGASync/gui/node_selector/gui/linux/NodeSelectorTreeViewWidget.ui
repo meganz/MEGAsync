@@ -391,7 +391,7 @@ QTreeView::branch:!selected:open:has-children:adjoins-item {
   <customwidget>
    <class>NodeSelectorTreeView</class>
    <extends>QTreeView</extends>
-   <header>NodeSelectorTreeView.h</header>
+   <header>node_selector/gui/NodeSelectorTreeView.h</header>
   </customwidget>
  </customwidgets>
  <resources>

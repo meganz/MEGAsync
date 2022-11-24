@@ -664,7 +664,7 @@ height: 16px;
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="NodeSelectorTreeViewWidgetCloudDrive" name="CloudDrive"/>
      <widget class="NodeSelectorTreeViewWidgetIncomingShares" name="IncomingShares"/>
@@ -677,19 +677,19 @@ height: 16px;
   <customwidget>
    <class>NodeSelectorTreeViewWidgetCloudDrive</class>
    <extends>QWidget</extends>
-   <header>NodeSelectorTreeViewWidgetSpecializations.h</header>
+   <header>node_selector/gui/NodeSelectorTreeViewWidgetSpecializations.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>NodeSelectorTreeViewWidgetIncomingShares</class>
    <extends>QWidget</extends>
-   <header>NodeSelectorTreeViewWidgetSpecializations.h</header>
+   <header>node_selector/gui/NodeSelectorTreeViewWidgetSpecializations.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>NodeSelectorTreeViewWidgetBackups</class>
    <extends>QWidget</extends>
-   <header>NodeSelectorTreeViewWidgetSpecializations.h</header>
+   <header>node_selector/gui/NodeSelectorTreeViewWidgetSpecializations.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
