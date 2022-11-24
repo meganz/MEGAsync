@@ -24,7 +24,8 @@ class NodeSelector : public QDialog, public mega::MegaRequestListener
 
 public:
     enum Type{
-        UPLOAD_SELECT = 0,
+        UNINITIALIZED_SELECT = 0,
+        UPLOAD_SELECT,
         DOWNLOAD_SELECT,
         SYNC_SELECT,
         STREAM_SELECT,
@@ -37,7 +38,7 @@ public:
     };
 
     static const int LABEL_ELIDE_MARGIN;
-    explicit NodeSelector(int selectMode, QWidget *parent = 0);
+    explicit NodeSelector(NodeSelector::Type selectMode, QWidget *parent = 0);
 
     ~NodeSelector();
     void showDefaultUploadOption(bool show = true);
@@ -76,7 +77,7 @@ private:
     void shortCutConnects(int ignoreThis);
 
     Ui::NodeSelector *ui;
-    int mSelectMode;
+    NodeSelector::Type mSelectMode;
 
     mega::MegaApi* mMegaApi;
     bool mManuallyResizedColumn;

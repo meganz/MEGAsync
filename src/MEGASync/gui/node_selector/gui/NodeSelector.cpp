@@ -18,7 +18,7 @@ using namespace mega;
 
 const int NodeSelector::LABEL_ELIDE_MARGIN = 100;
 
-NodeSelector::NodeSelector(int selectMode, QWidget *parent) :
+NodeSelector::NodeSelector(NodeSelector::Type selectMode, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::NodeSelector),
     mSelectMode(selectMode),

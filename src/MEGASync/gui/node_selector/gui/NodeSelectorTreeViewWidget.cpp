@@ -18,7 +18,7 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::NodeSelectorTreeViewWidget),
     mProxyModel(nullptr),
-    mSelectMode(-1),
+    mSelectMode(NodeSelector::UNINITIALIZED_SELECT),
     mMegaApi(MegaSyncApp->getMegaApi()),
     mManuallyResizedColumn(false),
     mDelegateListener(mega::make_unique<QTMegaRequestListener>(mMegaApi, this)),
@@ -56,9 +56,9 @@ void NodeSelectorTreeViewWidget::changeEvent(QEvent *event)
     QWidget::changeEvent(event);
 }
 
-void NodeSelectorTreeViewWidget::setSelectionMode(int selectMode)
+void NodeSelectorTreeViewWidget::setSelectionMode(NodeSelector::Type selectMode)
 {
-    if(mSelectMode != -1)
+    if(mSelectMode != NodeSelector::UNINITIALIZED_SELECT)
     {
         return;
     }
@@ -121,7 +121,6 @@ void NodeSelectorTreeViewWidget::setDefaultUploadOption(bool value)
 {
     ui->cbAlwaysUploadToLocation->setChecked(value);
 }
-
 
 bool NodeSelectorTreeViewWidget::getDefaultUploadOption()
 {
@@ -328,7 +327,9 @@ bool NodeSelectorTreeViewWidget::isAllowedToEnterInIndex(const QModelIndex &idx)
     {
         if((item->getNode()->isFile())
            || (item->isCloudDrive())
-           || (mSelectMode == NodeSelector::SYNC_SELECT && (item->getStatus() == NodeSelectorModelItem::SYNC || item->getStatus() == NodeSelectorModelItem::SYNC_CHILD)))
+           || (mSelectMode == NodeSelector::SYNC_SELECT
+               && (item->getStatus() == NodeSelectorModelItem::SYNC
+                   || item->getStatus() == NodeSelectorModelItem::SYNC_CHILD)))
         {
             return false;
         }

@@ -4,6 +4,7 @@
 #include "QTMegaRequestListener.h"
 #include <megaapi.h>
 #include "NodeSelectorLoadingDelegate.h"
+#include "../gui/NodeSelector.h"
 #include <ViewLoadingScene.h>
 
 #include <QWidget>
@@ -39,7 +40,7 @@ public:
     QList<mega::MegaHandle> getMultiSelectionNodeHandle();
     void setSelectedNodeHandle(const mega::MegaHandle &selectedHandle);
     void setFutureSelectedNodeHandle(const mega::MegaHandle &selectedHandle);
-    void setSelectionMode(int selectionMode);
+    void setSelectionMode(NodeSelector::Type selectionMode);
     void setDefaultUploadOption(bool value);
     bool getDefaultUploadOption();
     void showDefaultUploadOption(bool show);
@@ -98,7 +99,7 @@ private:
       void appendToForward(const mega::MegaHandle& handle);
     };
 
-    int mSelectMode;
+    NodeSelector::Type mSelectMode;
     mega::MegaApi* mMegaApi;
     bool mManuallyResizedColumn;
     Navigation mNavigationInfo;
