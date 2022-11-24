@@ -1345,7 +1345,7 @@ color:#666666;
        <item>
         <widget class="QPushButton" name="bViewInBackupCentre">
          <property name="text">
-          <string>View in Backup Centre</string>
+          <string>View in backup centre</string>
          </property>
         </widget>
        </item>

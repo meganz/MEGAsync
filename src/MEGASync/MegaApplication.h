@@ -121,9 +121,7 @@ public:
     void onSyncStateChanged(mega::MegaApi *api,  mega::MegaSync *sync) override;
     void onSyncFileStateChanged(mega::MegaApi *api, mega::MegaSync *sync, std::string *localPath, int newState) override;
 
-    void onSyncAdded(mega::MegaApi *api, mega::MegaSync *sync, int additionState) override;
-    void onSyncDisabled(mega::MegaApi *api, mega::MegaSync *sync) override;
-    void onSyncEnabled(mega::MegaApi *api, mega::MegaSync *sync) override;
+    void onSyncAdded(mega::MegaApi *api, mega::MegaSync *sync) override;
     void onSyncDeleted(mega::MegaApi *api, mega::MegaSync *sync) override;
 
     virtual void onCheckDeferredPreferencesSync(bool timeout);
@@ -335,6 +333,7 @@ private slots:
     void onSyncStateChanged(std::shared_ptr<SyncSettings> syncSettings);
     void onSyncDeleted(std::shared_ptr<SyncSettings> syncSettings);
     void onSyncDisabled(std::shared_ptr<SyncSettings> syncSetting);
+    void showSingleSyncDisabledNotification(std::shared_ptr<SyncSettings> syncSetting);
     void onSyncEnabled(std::shared_ptr<SyncSettings> syncSetting);
     void onBlocked();
     void onUnblocked();
@@ -527,8 +526,8 @@ protected:
     bool appfinished;
     bool updateAvailable;
     bool isLinux;
-    bool isFirstSyncDone;
-    bool isFirstFileSynced;
+    bool mIsFirstFileTwoWaySynced;
+    bool mIsFirstFileBackedUp;
     bool networkConnectivity;
     int nUnviewedTransfers;
     bool completedTabActive;

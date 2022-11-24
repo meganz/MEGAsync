@@ -9,11 +9,6 @@
         <translation>Détails sur l’utilisation du compte</translation>
     </message>
     <message>
-        <source>Inbox</source>
-        <translatorcomment>Label for Inbox space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation>Boîte de réception</translation>
-    </message>
-    <message>
         <source>Loading...</source>
         <translatorcomment>Label to show when an account detail request is waiting for the server response.</translatorcomment>
         <translation>Chargement…</translation>
@@ -47,6 +42,54 @@
         <source>Available storage</source>
         <translatorcomment>Label for Available storage space used. Maintain capital letter in first word.(Max 18 characters)</translatorcomment>
         <translation>Espace de stockage libre</translation>
+    </message>
+    <message>
+        <source>Backups</source>
+        <translatorcomment>Label for Backups storage space used. Maintain capital letter in first word.(Max 18 characters)</translatorcomment>
+        <translation>Sauvegardes</translation>
+    </message>
+</context>
+<context>
+    <name>AddBackupDialog</name>
+    <message>
+        <source>Add backup folder</source>
+        <translatorcomment>Window title for add backup dialog (not backup wizard)</translatorcomment>
+        <translation>Ajouter un dossier de sauvegarde</translation>
+    </message>
+    <message>
+        <source>Backup folder:</source>
+        <translatorcomment>Line edit title label that shows the path that is going to be backed up</translatorcomment>
+        <translation>Dossier de sauvegarde :</translation>
+    </message>
+    <message>
+        <source>Choose folder</source>
+        <translatorcomment>Line edit placeholder, here the path of the backup will be displayed once the user select it</translatorcomment>
+        <translation>Choisir un dossier</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translatorcomment>Button text that opens a dialog to choose a folder</translatorcomment>
+        <translation>Choisir</translation>
+    </message>
+    <message>
+        <source>Backup to:</source>
+        <translatorcomment>Remote path where the backup is going to be stored</translatorcomment>
+        <translation>Sauvegarder vers :</translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translatorcomment>Button text to add a backup</translatorcomment>
+        <translation>Ajouter</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Button text to cancel the addition of a backup</translatorcomment>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Do you want to continue?</source>
+        <translatorcomment>Warning dialog body text that show up a warning message but allows you to continue.</translatorcomment>
+        <translation>Voulez-vous poursuivre ?</translation>
     </message>
 </context>
 <context>
@@ -354,6 +397,256 @@
     </message>
 </context>
 <context>
+    <name>BackupItemModel</name>
+    <message>
+        <source>Sort by state</source>
+        <translatorcomment>Backup table header label tooltip that indicates that if you click here the column will be sorted by check state</translatorcomment>
+        <translation>Trier par état</translation>
+    </message>
+    <message>
+        <source>Local Folder</source>
+        <translatorcomment>Local folder column header name for backlups table in settings dialog</translatorcomment>
+        <translation>Dossier local</translation>
+    </message>
+    <message>
+        <source>Sort by name</source>
+        <translatorcomment>Backup table header label tooltip that indicates that if you click here the column will be sorted by name</translatorcomment>
+        <translation>Trier par nom</translation>
+    </message>
+    <message>
+        <source>Backup is enabled</source>
+        <translatorcomment>Checkbox tooltip that is displayed when it is checked.(Backup enabled)</translatorcomment>
+        <translation>La sauvegarde est activée</translation>
+    </message>
+    <message>
+        <source>Backup is disabled</source>
+        <translatorcomment>Checkbox tooltip that is displayed when it is unchecked.(Backup disabled)</translatorcomment>
+        <translation>La sauvegarde est désactivée</translation>
+    </message>
+    <message>
+        <source>Click menu for more Backup actions</source>
+        <translatorcomment>Menu column tooltip (three dots in the table)</translatorcomment>
+        <translation>Cliquez sur le menu pour plus d’actions de sauvegarde</translation>
+    </message>
+</context>
+<context>
+    <name>BackupNameConflictDialog</name>
+    <message>
+        <source>Rename folder</source>
+        <translatorcomment>Title of the dialog prompting the user to resolve backup name conflicts by renaming them</translatorcomment>
+        <translation>Renommer le dossier</translation>
+    </message>
+    <message>
+        <source>A folder named &quot;%1&quot; already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
+        <translatorcomment>Text shown to the user if there is a name conflict with a folder in the Backups remote folder for the current device</translatorcomment>
+        <translation>Un dossier du même nom « %1 » existe déjà dans vos Sauvegardes. Renommez le nouveau dossier pour poursuivre la sauvegarde. Le nom de dossier ne changera pas sur votre ordinateur.</translation>
+    </message>
+    <message>
+        <source>If you don&apos;t want to rename the new folder, stop the backup in the [A]Backup centre[/A] for the existing folder. Then setup the backup for the new folder again.</source>
+        <translatorcomment>Text instructing the user to go to the backup center to solve the backup name conflict</translatorcomment>
+        <translation>Si vous ne voulez pas renommer le nouveau dossier, arrêtez la sauvegarde pour le dossier existant dans le [A]Centre de sauvegarde[/A]. Ensuite, configurez de nouveau la sauvegarde du nouveau dossier.</translation>
+    </message>
+    <message>
+        <source>Rename and backup</source>
+        <translatorcomment>Text for the button to apply the name conflict resolution in the backup name conflict resolution dialog</translatorcomment>
+        <translation>Renommer et sauvegarder</translation>
+    </message>
+    <message>
+        <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
+        <translatorcomment>Text informing the user that they can&amp;apos;t have duplicated backup names and instructing them to rename them</translatorcomment>
+        <translation>Vous ne pouvez pas sauvegarder des dossiers qui portent le même nom. Renommez-les afin de poursuivre la sauvegarde. Les noms de dossiers ne changeront pas sur votre ordinateur.</translation>
+    </message>
+</context>
+<context>
+    <name>BackupRenameWidget</name>
+    <message>
+        <source>Local folder %1:</source>
+        <translatorcomment>Backup rename widget dialog label. Placeholder will display the conflict count. In the right of the label the local folder path will be displayed</translatorcomment>
+        <translation>Dossier local %1 :</translation>
+    </message>
+    <message>
+        <source>Rename backup folder</source>
+        <translatorcomment>Placeholder for the backup rename widget line edit.</translatorcomment>
+        <translation>Renommez le dossier de sauvegarde</translation>
+    </message>
+    <message>
+        <source>Backup folder:</source>
+        <translatorcomment>In the right of this label the line edit will be displayed. This line edit will be used by the user to change the backup name.</translatorcomment>
+        <translation>Dossier de sauvegarde :</translation>
+    </message>
+    <message>
+        <source>A folder named &quot;%1&quot; already exists in your Backups. Rename the new folder to continue with the backup.</source>
+        <translatorcomment>Error message displayed in the top of the rename backup dialog. It indicates that a backup with that name already exists.</translatorcomment>
+        <translation>Un dossier du même nom « %1 » existe déjà dans vos Sauvegardes. Renommez le nouveau dossier pour poursuivre la sauvegarde.</translation>
+    </message>
+</context>
+<context>
+    <name>BackupTableView</name>
+    <message>
+        <source>Open in MEGA</source>
+        <translatorcomment>Menu action that opens MEGA webclient to show this backup</translatorcomment>
+        <translation>Ouvrir dans MEGA</translation>
+    </message>
+    <message>
+        <source>Remove backup</source>
+        <translatorcomment>Menu action removes the backup</translatorcomment>
+        <translation>Arrêter la sauvegarde</translation>
+    </message>
+</context>
+<context>
+    <name>BackupsWizard</name>
+    <message>
+        <source>Setup backups</source>
+        <translatorcomment>Backup wizard window title</translatorcomment>
+        <translation>Configurer des sauvegardes</translation>
+    </message>
+    <message>
+        <source>You can back up folders from your computer to MEGA. Files will automatically back up when the desktop app is running.</source>
+        <translatorcomment>Backup wizard body text</translatorcomment>
+        <translation>Vous ne pouvez pas sauvegarder des dossiers de votre ordinateur vers MEGA. Les fichiers seront sauvegardés automatiquement quand l’appli pour ordinateur sera en fonction.</translation>
+    </message>
+    <message>
+        <source>No folders available</source>
+        <translatorcomment>Backup wizard text that indicates that here aren´t any folder available for backup.</translatorcomment>
+        <translation>Aucun dossier n’est proposé</translation>
+    </message>
+    <message>
+        <source>More folders</source>
+        <translatorcomment>Button text that opens a window where you can choose a folder to backup</translatorcomment>
+        <translation>Plus de dossiers</translation>
+    </message>
+    <message>
+        <source>All folders have been synced or backed up.</source>
+        <translatorcomment>Label that indicates that all the folders in the system have been synced or backed up</translatorcomment>
+        <translation>Tous les dossiers ont été synchronisés ou sauvegardés.</translation>
+    </message>
+    <message>
+        <source>Selected backup folders</source>
+        <translatorcomment>This is the title for a table that shows the full list of selected folders for backup</translatorcomment>
+        <translation>Dossiers de sauvegarde sélectionnés</translation>
+    </message>
+    <message>
+        <source>Backup to</source>
+        <translatorcomment>Line edit title, in this line edit the remote folder for backups will be displayed</translatorcomment>
+        <translation>Sauvegarder vers</translation>
+    </message>
+    <message>
+        <source>Folders will be stored in backups and you can check the status of your backups in backup centre.</source>
+        <translatorcomment>Successfull dialog text</translatorcomment>
+        <translation>Les dossiers seront stockés dans Sauvegardes et vous pourrez vérifier l’état de vos sauvegardes dans le Centre de sauvegarde.</translation>
+    </message>
+    <message>
+        <source>Show more…</source>
+        <translatorcomment>Button text that expands failed backup list</translatorcomment>
+        <translation>Afficher plus</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translatorcomment>Button text to navigate back in the backup wizard</translatorcomment>
+        <translation>Précédent</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Button text to cancel the creation of backups</translatorcomment>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Next</source>
+        <translatorcomment>Button text to navigate back in the backup wizard</translatorcomment>
+        <translation>Suivant</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translatorcomment>Button text shown in error dialog, it allows the user to go to first step on backup wizard and start the process again</translatorcomment>
+        <translation>Réessayer</translation>
+    </message>
+    <message>
+        <source>Dismiss</source>
+        <translatorcomment>Button text shown in success dialog, it closes the dialog.</translatorcomment>
+        <translation>Fermer</translation>
+    </message>
+    <message>
+        <source>Setup</source>
+        <translatorcomment>Step 2 button text that will initiate the creation of the backups.</translatorcomment>
+        <translation>Configurer</translation>
+    </message>
+    <message>
+        <source>Collapse</source>
+        <translatorcomment>Error dialog button text that will collapse the list of failed backups.</translatorcomment>
+        <translation>Replier</translation>
+    </message>
+    <message>
+        <source>Add folders</source>
+        <translatorcomment>Button Text, the user will be able to select new folders to backup if clicks here.</translatorcomment>
+        <translation>Ajouter des dossiers</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n folder</source>
+        <translatorcomment>Label that indicates the number of folders that are going to be backed up.</translatorcomment>
+        <translation><numerusform>%n dossier</numerusform><numerusform>%n dossiers</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Backup created</source>
+        <translatorcomment>Backup successfully created dialog title</translatorcomment>
+        <translation><numerusform>La sauvegarde a été créée</numerusform><numerusform>Les sauvegardes ont été créées</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>We&apos;re backing up your folder. The time this takes depends on the files in this folder.</source>
+        <translatorcomment>Label indicating that the backup configuration was successfull and it is being uploaded.</translatorcomment>
+        <translation><numerusform>Nous sauvegardons votre dossier. Le temps nécessaire dépendra du nombre de fichiers dans ce dossier.</numerusform><numerusform>Nous sauvegardons vos dossiers. Le temps nécessaire dépendra des fichiers dans les dossiers.</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Problem backing up folder</source>
+        <translatorcomment>Label that indicates that there happened an error backing up a folder/folders</translatorcomment>
+        <translation><numerusform>Problème de sauvegarde de votre dossier</numerusform><numerusform>Problème de sauvegarde de vos dossiers</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>This folder wasn&apos;t backed up. Try again.</source>
+        <translatorcomment>Label that indicates that there happened an error backing up a folder/folders</translatorcomment>
+        <translation><numerusform>Ce dossier n’a pas été sauvegardé. Réessayez.</numerusform><numerusform>Ces dossiers n’ont pas été sauvegardés. Réessayez.</numerusform></translation>
+    </message>
+    <message>
+        <source>Folder is already selected. Select a different folder.</source>
+        <translatorcomment>Warning message that indicates that the folder that the user is trying to select is already selected</translatorcomment>
+        <translation>Le dossier est déjà sélectionné. Sélectionnez un dossier différent.</translation>
+    </message>
+    <message>
+        <source>Do you want to continue?</source>
+        <translatorcomment>Text shown at the end of a warning dialog, asking the user if they want to proceed with the action in spite of the warning</translatorcomment>
+        <translation>Voulez-vous poursuivre ?</translation>
+    </message>
+    <message>
+        <source>1. [B]Select[/B] folders to backup</source>
+        <translatorcomment>Title for the first step of the backups wizard, instructing the user to select folders to backup</translatorcomment>
+        <translation>1. [B]Sélectionner[/B] les dossiers à sauvegarder</translation>
+    </message>
+    <message>
+        <source>2. [B]Confirm[/B] backup settings</source>
+        <translatorcomment>Title for the second step of the backups wizard, instructing the user to confirm his choice</translatorcomment>
+        <translation>2. [B]Confirmer[/B] les paramètres de sauvegarde</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to cancel? All changes will be lost.</source>
+        <translatorcomment>Warning dialog that appears when user click in cancel button in backup wizard and it will be closed.</translatorcomment>
+        <translation>Voulez-vous annuler ? Tous les changements seront perdus.</translation>
+    </message>
+    <message>
+        <source>Choose directory</source>
+        <translatorcomment>Folder selector window title text</translatorcomment>
+        <translation>Sélectionner un dossier</translation>
+    </message>
+    <message>
+        <source>Error: %1</source>
+        <translatorcomment>Placeholder will show the error message, this is being shown in a tooltip</translatorcomment>
+        <translation>Erreur : %1</translation>
+    </message>
+    <message>
+        <source>View in backup centre</source>
+        <translatorcomment>Text for a button allowing the user to view the newly created backup i nthe Backup center (in the webclient)</translatorcomment>
+        <translation>Afficher dans le Centre de sauvegarde</translation>
+    </message>
+</context>
+<context>
     <name>BandwidthSettings</name>
     <message>
         <source>Bandwidth</source>
@@ -459,40 +752,9 @@
         <translation>Veuillez sélectionner un dossier local et un dossier MEGA</translation>
     </message>
     <message>
-        <source>The selected local folder is already synced</source>
-        <translatorcomment>Message displayed when an user is adding a local folder wich is already synced.</translatorcomment>
-        <translation>Le dossier local sélectionné est déjà synchronisé</translation>
-    </message>
-    <message>
-        <source>A synced folder cannot be inside another synced folder</source>
-        <translatorcomment>Message displayed when an user is adding nested local folders for synchronization.</translatorcomment>
-        <translation>Un dossier synchronisé ne peut pas se trouver dans un autre dossier synchronisé</translation>
-    </message>
-    <message>
-        <source>The selected MEGA folder is already synced</source>
-        <translatorcomment>Message displayed when an user is adding an already synchronized remote folder.</translatorcomment>
-        <translation>Le dossier MEGA sélectionné est déjà synchronisé</translation>
-    </message>
-    <message>
-        <source>Sync name</source>
-        <translatorcomment>Title of the dialog displayed when a user is using a name for a local folder that is already used.</translatorcomment>
-        <translation>Nom de la synchronisation</translation>
-    </message>
-    <message>
-        <source>The name &quot;%1&quot; is already in use for another sync
-Please enter a different name to identify this synced folder:</source>
-        <translatorcomment>Detailed message displayed when a user is using a name for a local folder that is already used. Preserve &quot;%1&quot; code because is used to indicate the local folder at runtime.</translatorcomment>
-        <translation>Le nom « %1 » est déjà utilisé pour une autre synchronisation. Veuillez saisir un nom différent pour identifier ce dossier synchronisé :</translation>
-    </message>
-    <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
         <translation>Annuler</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Label for status of an error performing an operation.</translatorcomment>
-        <translation>Erreur</translation>
     </message>
     <message>
         <source>Add folder</source>
@@ -513,6 +775,11 @@ Please enter a different name to identify this synced folder:</source>
         <source>Add synchronised folder:</source>
         <translatorcomment>Label to indicate the user to add synchronised folder (macOS)</translatorcomment>
         <translation>Ajouter un dossier synchronisé :</translation>
+    </message>
+    <message>
+        <source>Do you want to continue?</source>
+        <translatorcomment>Warning dialog body text that show up a warning message but allows you to continue.</translatorcomment>
+        <translation>Voulez-vous poursuivre ?</translation>
     </message>
 </context>
 <context>
@@ -638,11 +905,11 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>All the queued transfers from your current download will be cancelled.</source>
         <translatorcomment>Dialog messages which warns the user about the potential problems of cancelling the folder scanning</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tous les transferts en attente de votre téléchargement actuel seront perdus.</translation>
     </message>
     <message>
         <source>Cancelling…</source>
-        <translation type="unfinished"></translation>
+        <translation>Annulation…</translation>
     </message>
 </context>
 <context>
@@ -752,6 +1019,13 @@ Please enter a different name to identify this synced folder:</source>
         <translatorcomment>Label to indicate that the PRO membership expired %n days ago. Placeholder will be replaced by the days from the expiration of the PRO membership.</translatorcomment>
         <translation><numerusform>Votre abonnement Pro a expiré il y a %n jour</numerusform><numerusform>Votre abonnement Pro a expiré il y a %n jours</numerusform></translation>
     </message>
+    <message>
+        <source>The following characters are not allowed:
+%1</source>
+        <translatorcomment>Text introducing the prohibited characters (the list replaces the placeholder)</translatorcomment>
+        <translation>Les caractères suivants ne sont pas autorisés :
+%1 </translation>
+    </message>
 </context>
 <context>
     <name>CrashReportDialog</name>
@@ -763,12 +1037,12 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>MEGAsync has detected a problem. These are the details:</source>
         <translatorcomment>Label to indicate that a crash has occured and the detailed stacktrace of the problem.</translatorcomment>
-        <translation>MEGAsync a détecté un problème. En voici les détails :</translation>
+        <translation>L’appli MEGA a détecté un problème. En voici les détails :</translation>
     </message>
     <message>
         <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
         <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
-        <translation>Vous pouvez nous aider à améliorer MEGAsync en envoyant ce rapport d’erreur. Il ne comprend aucun renseignement personnel. Si vous voulez nous donner davantage de détails, veuillez les saisir ci-dessous :</translation>
+        <translation>Vous pouvez nous aider à améliorer l’appli MEGA en envoyant ce relevé d’erreurs. Il ne contient aucun renseignement personnel. Si vous voulez nous donner plus de détails, veuillez les écrire ci-dessous :</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -972,12 +1246,12 @@ Dans certains cas, ils pourraient comprendre des détails sur vos données, tels
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Votre compte d’entreprise est expiré</translation>
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Votre compte a été désactivé, en lecture seule, jusqu’à ce que vous versiez les paiements requis.</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -1249,7 +1523,7 @@ Dans certains cas, ils pourraient comprendre des détails sur vos données, tels
     <message>
         <source>MEGA folder:</source>
         <translatorcomment>Label to indicate the user the MEGA folder for a synchronization (String short as possible)</translatorcomment>
-        <translation>Dossier MEGA :</translation>
+        <translation>Dossier sur MEGA :</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -1260,33 +1534,6 @@ Dans certains cas, ils pourraient comprendre des détails sur vos données, tels
         <source>Choose</source>
         <translatorcomment>Button label to select the folders (local and remote) for a synchronization (String as short as possible) (macOS)</translatorcomment>
         <translation>Choisir</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translatorcomment>Label to indicate a waring during the process of stablish a synchronization.</translatorcomment>
-        <translation>Avertissement</translation>
-    </message>
-    <message>
-        <source>MEGAsync won&apos;t be able to download anything here.</source>
-        <translatorcomment>Label to indicate that MEGAsync won&apos;t be able to download anything due to the user doesn&apos;t have writhe permissions on the local selected folder.</translatorcomment>
-        <translation>MEGAsync ne pourra pas rien télécharger ici.</translation>
-    </message>
-    <message>
-        <source>Do you want to continue?</source>
-        <translatorcomment>Label to indicate if the user wants to continue in spite of the problem occured.</translatorcomment>
-        <translation>Voulez-vous poursuivre ?</translation>
-    </message>
-    <message>
-        <source>You don&apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder for a synchronization.</translatorcomment>
-        <translation>Vous n’avez pas le droit d’écriture sur ce dossier local.</translation>
-    </message>
-    <message>
-        <source>You are trying to sync an extremely large folder.
-To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
-we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translatorcomment>Label to inform a user about the fact of syncing a extremely large folder and the possible drawbacks that could arise.</translatorcomment>
-        <translation>Vous tentez de synchroniser un dossier extrêmement volumineux. Pour empêcher la synchronisation de volumes d’amorçage entiers, ce qui est inefficace et dangereux, nous vous demandons de commencer avec un dossier plus petit et d’ajouter des données alors que MEGAsync fonctionne.</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1308,7 +1555,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Login</source>
         <translatorcomment>Button label to start the Login process. (String as short as possible)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Connexion</translation>
     </message>
     <message>
         <source>Create account</source>
@@ -1547,11 +1794,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 <context>
     <name>InfoDialog</name>
     <message>
-        <source>Syncs</source>
-        <translatorcomment>Button label to show all synchronizations that the user has stablish (String as short as possible).</translatorcomment>
-        <translation>Synchros</translation>
-    </message>
-    <message>
         <source>Add Sync</source>
         <translatorcomment>Button label to add a new synchronization (String as short as possible)</translatorcomment>
         <translation>Ajouter une synchronisation</translation>
@@ -1579,7 +1821,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Show MEGAsync options</source>
         <translatorcomment>Tooltip for the button that opens MEGAsync options menu</translatorcomment>
-        <translation>Afficher les options de MEGAsync</translation>
+        <translation>Afficher les options</translation>
     </message>
     <message>
         <source>The process is taking longer than expected. Please wait...</source>
@@ -1629,11 +1871,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Upload</source>
         <translatorcomment>Label to indicate an upload.</translatorcomment>
         <translation>Téléverser</translation>
-    </message>
-    <message>
-        <source>Download</source>
-        <translatorcomment>Label to indicate a download.</translatorcomment>
-        <translation>Télécharger</translation>
     </message>
     <message>
         <source>Transfers</source>
@@ -1753,7 +1990,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Open Settings</source>
         <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
-        <translation>Ouvrir les paramètres</translation>
+        <translation>Ouvrir Paramètres</translation>
     </message>
     <message>
         <source>Your data is at risk</source>
@@ -1784,6 +2021,36 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Folder can&apos;t be opened. Check that the folder in your local drive hasn&apos;t been deleted or moved.</source>
         <translatorcomment>Warning message text to let the user know that the local folder could not be opened</translatorcomment>
         <translation>Impossible d’ouvrir le dossier. Vérifiez que le dossier sur votre disque local n’a pas été supprimé ou déplacé.</translation>
+    </message>
+    <message>
+        <source>Some syncs and backups have been disabled</source>
+        <translatorcomment>Warning message title shown on info dialog</translatorcomment>
+        <translation>Certaines synchronisations et sauvegardes ont été désactivées</translation>
+    </message>
+    <message>
+        <source>Something went wrong while trying to backup and sync your folders.</source>
+        <translatorcomment>Warning message body shown on info dialog</translatorcomment>
+        <translation>Un problème est survenu en tentant de sauvegarder et synchroniser vos dossiers.</translation>
+    </message>
+    <message>
+        <source>One or more backups have been disabled</source>
+        <translatorcomment>Warning message title shown on info dialog</translatorcomment>
+        <translation>Une ou plusieurs sauvegardes ont été désactivées</translation>
+    </message>
+    <message>
+        <source>Something went wrong while trying to backup your folders.</source>
+        <translatorcomment>Warning message body shown on info dialog</translatorcomment>
+        <translation>Un problème est survenu en tentant de sauvegarder vos dossiers.</translation>
+    </message>
+    <message>
+        <source>Error adding %1:</source>
+        <translatorcomment>Error label displayed when it fails adding a sync or backup. Placeholder will show the name of the sync. After the two dots an error message is displayed</translatorcomment>
+        <translation>Erreur en ajoutant %1 :</translation>
+    </message>
+    <message>
+        <source>Add Backup</source>
+        <translatorcomment>Tooltip message shown while hovering backups button.</translatorcomment>
+        <translation>Ajouter une sauvegarde</translation>
     </message>
 </context>
 <context>
@@ -1837,12 +2104,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Login or create an account to start using MEGA Desktop app.</source>
         <translatorcomment>Description label to inform the user about next step in order to use MEGA Desktop app. Users will need to login or create an account.</translatorcomment>
-        <translation>Connectez-vous ou créez un compte pour commencer à utiliser l’appli MEGA pour ordinateur.</translation>
+        <translation>Connectez-vous ou créez un compte pour commencer à utiliser notre appli.</translation>
     </message>
     <message>
         <source>You need to log into MEGA account to use the MEGA desktop app.</source>
         <translatorcomment>Description label to indicate the user needs to log in in order to fully use MEGA desktop app.</translatorcomment>
-        <translation>Vous devez vous connecter à votre compte MEGA pour utiliser l’appli MEGA pour ordinateur.</translation>
+        <translation>Connectez-vous à votre compte MEGA pour utiliser notre appli.</translation>
     </message>
     <message>
         <source>Create account</source>
@@ -1857,7 +2124,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Know more about MEGA desktop app. [A]Read more[/A]</source>
         <translatorcomment>Label with hyperlink to sync client webpage to know more about MEGA desktop app. Keep placeholders.</translatorcomment>
-        <translation>Apprenez-en davantage sur l’appli MEGA pour ordinateur. [A]Plus de précisions[/A]</translation>
+        <translation>Apprenez-en davantage sur notre appli. [A]Plus de précisions[/A]</translation>
     </message>
 </context>
 <context>
@@ -1948,7 +2215,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <name>MegaApplication</name>
     <message>
         <source>MEGAsync</source>
-        <translation>MEGAsync</translation>
+        <translation>MEGA</translation>
     </message>
     <message>
         <source>Logging in</source>
@@ -1958,7 +2225,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>MEGAsync is now running. Click here to open the status window.</source>
         <translatorcomment>Notification message that MEGAsync is actually running.</translatorcomment>
-        <translation>MEGAsync est maintenant en fonction. Cliquer ici pour ouvrir la fenêtre d’état.</translation>
+        <translation>L’appli est en cours de fonctionnement. Cliquez ici pour ouvrir la fenêtre d’état.</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
@@ -1968,7 +2235,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>About MEGAsync</source>
         <translatorcomment>Title of the dialog that displays the version code of MEGAsync.</translatorcomment>
-        <translation>À propos de MEGAsync</translation>
+        <translation>À propos</translation>
     </message>
     <message>
         <source>The link has been copied to the clipboard</source>
@@ -2013,7 +2280,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>MEGAsync has been updated</source>
         <translatorcomment>Notification message launched when an update has been succesfully applied.</translatorcomment>
-        <translation>MEGAsync a été mis à jour</translation>
+        <translation>L’appli a été mise à jour</translation>
     </message>
     <message>
         <source>Waiting</source>
@@ -2080,12 +2347,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
         <translatorcomment>Notification message launched when an user logged in succesfully. String as short as possible.</translatorcomment>
-        <translation>MEGAsync est maintenant en fonction. Cliquer sur l’icône de la zone de notification pour ouvrir la fenêtre d’état.</translation>
+        <translation>L’appli est en cours de fonctionnement. Cliquez ici pour ouvrir la fenêtre d’état.</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
         <translatorcomment>Notification message launched when an user logged in succesfully. String as short as possible.</translatorcomment>
-        <translation>MEGAsync est maintenant en fonction. Cliquez sur l’icône de la barre de menus pour ouvrir la fenêtre d’état.</translation>
+        <translation>L’appli est en cours de fonctionnement. Cliquez ici pour ouvrir la fenêtre d’état.</translation>
     </message>
     <message>
         <source>Show status</source>
@@ -2105,7 +2372,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
         <translatorcomment>Notification message launched when a connectivity problem occurs.</translatorcomment>
-        <translation>MEGAsync ne peut pas se connecter. Veuillez vérifier votre connexion à Internet et la configuration de votre pare-feu local. Notez que la plupart des logiciels antivirus comprennent un pare-feu.</translation>
+        <translation>L’appli n’arrive pas à se connecter. Veuillez vérifier votre connexion à internet et la configuration de votre pare-feu local. Noter que la plupart des logiciels antivirus comprennent un pare-feu.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
@@ -2170,12 +2437,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>DEBUG mode disabled</source>
         <translatorcomment>Notification message shown when the DEBUG mode is disabled.</translatorcomment>
-        <translation>Le mode de DÉBOGAGE est désactivé</translation>
+        <translation>Le mode de débogage est désactivé</translation>
     </message>
     <message>
         <source>DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log)</source>
         <translatorcomment>Notification message shown when the DEBUG mode is enabled.</translatorcomment>
-        <translation>Le mode de DÉBOGAGE est activé. Un journal est en cours de création sur votre bureau (MEGAsync.log).</translation>
+        <translation>Le mode de débogage est activé. Un journal « MEGAsync.log » est en cours de création dans votre ordinateur.</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The download has been cancelled</source>
@@ -2211,7 +2478,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
         <translatorcomment>Message shown to the user to inform that MEGAsync is not able to find a systray to place tray icon</translatorcomment>
-        <translation>Impossible de trouver une zone de notification pour y placer l’icône de notification de MEGAsync. MEGAsync est prévue pour être utilisée avec une icône de notification, mais peut très bien fonctionner sans. Si vous voulez ouvrir l’interface, essayez juste de relancer MEGAsync.</translation>
+        <translation>Impossible de trouver une zone de notification pour y placer l’icône de l’appli. Essayez de relancer l’appli.</translation>
     </message>
     <message>
         <source>Error getting link:</source>
@@ -2250,7 +2517,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however you might not receive new updates.</source>
         <translatorcomment>Message shown to the user to inform that he is using an operating system that will be unsupported soon</translatorcomment>
-        <translation>MEGAsync continuera à fonctionner, cependant vous pourriez ne pas recevoir les nouvelles mises à jour.</translation>
+        <translation>L’appli continuera à fonctionner, cependant vous ne pourriez ne pas recevoir de nouvelles mises à jour.</translation>
     </message>
     <message>
         <source>Password changed</source>
@@ -2283,16 +2550,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Téléchargement d’un fichier</translation>
     </message>
     <message>
-        <source>Add Sync</source>
-        <translatorcomment>Menu item to add a new synchronization</translatorcomment>
-        <translation>Ajouter une synchronisation</translation>
-    </message>
-    <message>
-        <source>Syncs</source>
-        <translatorcomment>Menu item to show current synchronizations</translatorcomment>
-        <translation>Synchros</translation>
-    </message>
-    <message>
         <source>Cloud drive</source>
         <translatorcomment>Label of context menu to reach Cloud drive section at webclient. It will open your webbrowser and redirects to your cloud drive.</translatorcomment>
         <translation>Disque nuagique</translation>
@@ -2310,7 +2567,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Votre compte d’entreprise est expiré</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -2320,7 +2577,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message shown to admin business account when a payment has failed. </translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Votre compte d’entreprise a été désactivé pour défaut de paiement. Vous ne pourrez plus accéder aux données stockées dans votre compte tant que vous n’aurez pas effectué de paiement et réactivé votre abonnement.</translation>
     </message>
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
@@ -2335,7 +2592,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>This month&apos;s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</source>
         <translatorcomment>Informative message shown to the user when a payment has failed for a business account.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Le paiement de ce mois a échoué. Veuillez résoudre votre problème de paiement dès que possible afin d’éviter toute désactivation de votre compte.</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -2345,7 +2602,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
         <translatorcomment>Informative message shown when a business account is expired and the user can only browse data and none operation (upload, download, creation..) is allowed.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Votre compte est [A]a été désactivé[/A]. Vous ne pouvez que parcourir vos données.</translation>
     </message>
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
@@ -2375,7 +2632,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
         <translatorcomment>Informative message box shown if user is running an old Win version (vista or previous), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation>MEGAsync continuera à fonctionner, cependant les mises à jour ne seront bientôt plus prises en charge pour les versions antérieures à Windows 7.</translation>
+        <translation>L’appli continuera à fonctionner, cependant les mises à jour ne seront bientôt plus prises en charge pour les versions antérieures à Windows 7.</translation>
     </message>
     <message>
         <source>Transferring</source>
@@ -2415,7 +2672,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
         <translatorcomment>Informative message box shown if user is running an old OSX version (previous than Yosemite), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation>MEGAsync continuera à fonctionner, cependant les mises à jour ne seront bientôt plus prises en charge pour les versions antérieures à OS X Yosemite.</translation>
+        <translation>L’appli continuera à fonctionner, cependant les mises à jour ne seront bientôt plus prises en charge pour les versions antérieures à macOS Sierra.</translation>
     </message>
     <message>
         <source>Your syncs have been disabled</source>
@@ -2460,12 +2717,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>A new version of MEGAsync is available. Click on this message to install it</source>
         <translatorcomment>System notification to inform the user that there is a new version of MEGAsync available for update. Windows version.</translatorcomment>
-        <translation>Une nouvelle version de MEGAsync est proposée. Cliquez sur ce message pour l’installer</translation>
+        <translation>Une nouvelle version de l’appli est proposée. Cliquez sur ce message pour l’installer.</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available</source>
         <translatorcomment>System notification to inform the user that there is a new version of MEGAsync available for update. macOS version cannot be installed making click so, a new string is provided</translatorcomment>
-        <translation>Une nouvelle version de MEGAsync est proposée</translation>
+        <translation>Une nouvelle version de cette appli est proposée.</translation>
     </message>
     <message>
         <source>%1 and %2 were successfully uploaded</source>
@@ -2481,7 +2738,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>There is an active transfer. Exit the app?
 Transfer will automatically resume when you re-open the app.</source>
         <translatorcomment>Messagebox text to let the user know that there are active transfers when closing the app. The user will be able to exit and pause them, or stop the exit action.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Un transfert est actif. Fermer l’appli ?
+Le transfert reprendra automatiquement quand vous rouvrirez l’appli.</numerusform><numerusform>Des transferts sont actifs. Fermer l’appli ?
+Les transferts reprendront automatiquement quand vous rouvrirez l’appli.</numerusform></translation>
     </message>
     <message>
         <source>Exit app</source>
@@ -2492,6 +2751,71 @@ Transfer will automatically resume when you re-open the app.</source>
         <source>Stay in app</source>
         <translatorcomment>One of the messagebox options: Keep the app open and continue with the active transfers</translatorcomment>
         <translation>Rester dans l’appli</translation>
+    </message>
+    <message>
+        <source>Some syncs and backups have been disabled</source>
+        <translatorcomment>Tooltip message for tray icon when some syncs and backups are disabled</translatorcomment>
+        <translation>Certaines synchronisations et sauvegardes ont été désactivées</translation>
+    </message>
+    <message>
+        <source>One or more backups have been disabled</source>
+        <translatorcomment>Tooltip message for tray icon when some backups are disabled</translatorcomment>
+        <translation>Une ou plusieurs sauvegardes ont été désactivées</translation>
+    </message>
+    <message>
+        <source>Error adding %1:</source>
+        <translatorcomment>Error label displayed when it fails adding a sync or backup. Placeholder will show the name of the sync. After the two dots an error message is displayed</translatorcomment>
+        <translation>Erreur en ajoutant %1 :</translation>
+    </message>
+    <message>
+        <source>Your syncs and backups have been disabled</source>
+        <translatorcomment>Warning message shown when  all the syncs and backups have been disabled</translatorcomment>
+        <translation>Vos synchronisations et sauvegardes ont été désactivées :</translation>
+    </message>
+    <message>
+        <source>Your backups have been disabled</source>
+        <translatorcomment>Warning message shown when all the backups have been disabled</translatorcomment>
+        <translation>Vos sauvegardes ont été désactivées :</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been temporarily disabled</source>
+        <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder displays backup name</translatorcomment>
+        <translation>Votre sauvegarde « %1 » a été désactivée temporairement :</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
+        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
+        <translation>Votre sauvegarde « %1 » a été désactivée, car le dossier local n’existe pas.</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
+        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
+        <translation>Votre sauvegarde « %1 » a été désactivée, car la sauvegarde de dossiers partagés VirtualBox n’est pas prise en charge en raison de lacunes de ce système de fichiers.</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
+        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
+        <translation>Votre sauvegarde « %1 » a été désactivée, car le dossier MEGA est dans la corbeille.</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
+        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
+        <translation>Votre sauvegarde « %1 » a été désactivée. Le dossier MEGA (ou l’une de ces parties) n’a pas l’accès total.</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the local folder has changed</source>
+        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
+        <translation>Votre sauvegarde « %1 » a été désactivée, car le dossier local a été modifié.</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled because the remote folder has changed</source>
+        <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
+        <translation>Votre sauvegarde « %1 » a été désactivée, car le dossier MEGA a été modifié.</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been disabled. Reason: %2</source>
+        <translatorcomment>Notification message launched when a backup is disabled. Keep &amp;quot;%1&amp;quot; code because is filled with the name of the backup at runtime and %2 with the reason of the error.</translatorcomment>
+        <translation>Votre sauvegarde « %1 » a été désactivée. Raison : %2</translation>
     </message>
 </context>
 <context>
@@ -2654,12 +2978,12 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
         <translatorcomment>Error triggered by SDK when an account has been suspended due to copyright violations.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Votre compte a été désactivé en raison de violations du droit d’auteur. Nous vous avons envoyé un courriel avec de plus amples renseignements à ce sujet.</translation>
     </message>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Votre compte a été résilié à la suite d’un non-respect des Conditions générales d’utilisation de MEGA, tel qu’une violation des droits d’autrui, le partage ou l’importation de données illégales, ou un abus du système.</translation>
     </message>
 </context>
 <context>
@@ -2730,17 +3054,17 @@ Transfer will automatically resume when you re-open the app.</source>
     <message numerus="yes">
         <source>Today at %1</source>
         <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened today. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Aujourd’hui à %1</numerusform><numerusform>Aujourd’hui à %1</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Yesterday at %1</source>
         <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened yesterday. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Hier à %1</numerusform><numerusform>Hier à %1</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 at %2</source>
         <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was previously to yesterday. %1 represents the date (day month and year), while %2 represents the hour). Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 à %2</numerusform><numerusform>%1 à %2</numerusform></translation>
     </message>
     <message>
         <source>Recently used</source>
@@ -2768,13 +3092,18 @@ Transfer will automatically resume when you re-open the app.</source>
         <translatorcomment>Title of the Cloud Drive section</translatorcomment>
         <translation>Disque nuagique</translation>
     </message>
+    <message>
+        <source>Backups</source>
+        <translatorcomment>Title of the Backups root node</translatorcomment>
+        <translation>Sauvegardes</translation>
+    </message>
 </context>
 <context>
     <name>MegaProgressCustomDialog</name>
     <message>
         <source>MEGAsync</source>
         <translatorcomment>Title of MEGAsync dialog.</translatorcomment>
-        <translation>MEGAsync</translation>
+        <translation>MEGA</translation>
     </message>
     <message>
         <source>Please wait...</source>
@@ -2833,11 +3162,6 @@ Transfer will automatically resume when you re-open the app.</source>
         <source>Reached storage quota limit</source>
         <translatorcomment>Label to show that the account reached storage limit during a SDK operation.</translatorcomment>
         <translation>Le quota d’espace de stockage a été dépassé</translation>
-    </message>
-    <message>
-        <source>Business account expired</source>
-        <translatorcomment>Label to show that the current business account is expired during a SDK operation.</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Foreign target storage quota reached</source>
@@ -2932,7 +3256,12 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>You can&apos;t run MEGA Desktop App from this location. Move it into the Applications folder then run it.</source>
         <translatorcomment>Error message shown when the user is trying to run MEGA Desktop App from a path different than Applications. Only affects to macOS.</translatorcomment>
-        <translation>Vous ne pouvez pas exécuter l’appli MEGA pour ordinateur de cet emplacement. Déplacez-la dans le dossier Applications, puis exécutez-la.</translation>
+        <translation>Vous ne pouvez pas exécuter l’appli pour ordinateur de cet emplacement. Déplacez-la dans le dossier Applications, puis exécutez-la.</translation>
+    </message>
+    <message>
+        <source>Account expired (business or Pro Flexi)</source>
+        <translatorcomment>Label to show that the current account (either business or Pro Flexi) is expired during a SDK operation.</translatorcomment>
+        <translation>Le compte est expiré</translation>
     </message>
 </context>
 <context>
@@ -2975,7 +3304,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Get link</source>
         <translatorcomment>Context menu action to get transfer link</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Obtenir le lien</translation>
     </message>
     <message>
         <source>Open in MEGA</source>
@@ -3133,24 +3462,6 @@ Tous les autres transferts sélectionnés seront annulés.</translation>
     </message>
 </context>
 <context>
-    <name>Model</name>
-    <message>
-        <source>MEGAsync</source>
-        <translatorcomment>Label used for title of a system message box.</translatorcomment>
-        <translation>MEGAsync</translation>
-    </message>
-    <message>
-        <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
-        <translatorcomment>Informative message shown when a user is trying to sync using a FAT filesystem.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
-        <translatorcomment>Informative message shown when a user is trying to sync using a local folder shared with VMWare third party app.</translatorcomment>
-        <translation>Vous synchronisez un dossier local partagé avec VMware. Ces dossiers ne prennent pas en charge les notifications du système de fichiers. MEGAsync devra donc analyser continuellement pour détecter les changements dans vos fichiers et dossiers. Veuillez si possible utiliser un dossier différent pour réduire l’utilisation de l’UCT.</translation>
-    </message>
-</context>
-<context>
     <name>NewFolderDialog</name>
     <message>
         <source>Enter the new folder name</source>
@@ -3183,7 +3494,7 @@ Tous les autres transferts sélectionnés seront annulés.</translation>
     <message>
         <source>Select a MEGA folder:</source>
         <translatorcomment>Label to indicate the user to select a MEGA folder for a synchronization (String short as possible). Keep capital letters.</translatorcomment>
-        <translation>Sélectionner un dossier MEGA :</translation>
+        <translation>Sélectionner un dossier sur MEGA :</translation>
     </message>
     <message>
         <source>New folder</source>
@@ -3247,7 +3558,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Select a MEGA folder</source>
         <translatorcomment>Node selector dialog title</translatorcomment>
-        <translation>Sélectionner un dossier MEGA</translation>
+        <translation>Sélectionner un dossier sur MEGA</translation>
     </message>
     <message numerus="yes">
         <source>You no longer have access to this item. Ask the owner to share again.</source>
@@ -3257,16 +3568,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Cloud drive</source>
         <translatorcomment>Node selector button Text. Switch the view to show only the cloud drive nodes (files and folders)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Disque nuagique</translation>
     </message>
     <message>
         <source>Incoming shares</source>
         <translatorcomment>Node selector button Text. Switch the view to show only the incoming shares nodes (files and folders)</translatorcomment>
         <translation>Partages entrants</translation>
-    </message>
-    <message>
-        <source>Error:</source>
-        <translation>Erreur :</translation>
     </message>
     <message numerus="yes">
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
@@ -3284,6 +3591,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
                            Second and last part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
         <translation><numerusform>%1. %2 a été supprimé. Pour resélectionner, fermez cette fenêtre et réessayez.</numerusform><numerusform>%1. %2 ont été supprimés. Pour resélectionner, fermez cette fenêtre et réessayez.</numerusform></translation>
+    </message>
+    <message>
+        <source>Backups</source>
+        <translatorcomment>Title of the Backups section</translatorcomment>
+        <translation>Sauvegardes</translation>
     </message>
 </context>
 <context>
@@ -3369,7 +3681,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>MEGAsync</source>
         <translatorcomment>Product name.</translatorcomment>
-        <translation>MEGAsync</translation>
+        <translation>MEGA</translation>
     </message>
 </context>
 <context>
@@ -3570,7 +3882,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&apos;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
-        <translation>Les fichiers et dossiers ont un propriétaire et appartiennent à un groupe d’utilisateurs. Pour les nouveaux fichiers et dossiers créés par MEGAsync, cette fenêtre de dialogue vous permet d’accorder différents droits d’accès aux utilisateurs qui appartiennent au même groupe, ainsi qu’aux autres utilisateurs de l’ordinateur. Pour des raisons de sécurité, si vous n’avez pas besoin de changer ces droits, veuillez les laisser à leur valeur par défaut.</translation>
+        <translation>Les fichiers et dossiers ont un propriétaire et appartiennent à un groupe d’utilisateurs. Grâce à cette fenêtre de dialogue, vous pouvez accorder différents droits d’accès aux nouveaux fichiers et dossiers créés par l’appli pour ordinateur, pour les utilisateurs qui appartiennent au même groupe et pour les autres utilisateurs de l’ordinateur. Pour des raisons de sécurité, si vous n’avez pas besoin de changer ces droits, veuillez les laisser à leur valeur par défaut.</translation>
     </message>
     <message>
         <source>Owner permissions:</source>
@@ -3740,28 +4052,44 @@ Please delete the folder sync from preferences to cancel them.</source>
         <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for macOS)</translatorcomment>
         <translation>Les transferts de synchronisation ne peuvent pas être annulés individuellement. Pour supprimer la synchronisation, accédez aux Préférences de l’appli pour ordinateur et supprimez le dossier synchronisé.</translation>
     </message>
+    <message>
+        <source>One or more backups have been disabled. Go to settings to enable them again.</source>
+        <translatorcomment>Warning message shown when some backups are disabled. Tell the userto go to settings to solve the issue (win/linux)</translatorcomment>
+        <translation>Une ou plusieurs sauvegardes ont été désactivées. Accédez aux Paramètres pour les réactiver.</translation>
+    </message>
+    <message>
+        <source>Some syncs and backups have been disabled. Go to settings to enable them again.</source>
+        <translatorcomment>Warning message shown when some backups and syncs are disabled. Tell the userto go to settings to solve the issue (win/linux)</translatorcomment>
+        <translation>Certaines synchronisations ou sauvegardes ont été désactivées. Accédez aux Paramètres pour les réactiver.</translation>
+    </message>
+    <message>
+        <source>One or more backups have been disabled. Go to preferences to enable them again.</source>
+        <translatorcomment>Warning message shown when some backups are disabled. Tell the userto go to settings to solve the issue (mac)</translatorcomment>
+        <translation>Une ou plusieurs sauvegardes ont été désactivées. Accédez aux Paramètres pour les réactiver.</translation>
+    </message>
+    <message>
+        <source>Some syncs and backups have been disabled. Go to preferences to enable them again.</source>
+        <translatorcomment>Warning message shown when some backups and syncs are disabled. Tell the userto go to settings to solve the issue (mac)</translatorcomment>
+        <translation>Certaines synchronisations ou sauvegardes ont été désactivées. Accédez aux Préférences pour les réactiver.</translation>
+    </message>
 </context>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Added new Apple Silicon native support.
-- Added a new feature to stop sleep mode if there are active transfers.
-- Updated third-party libs.
-- Improved folders transfers.
+        <source>- Support for Flexi Pro accounts.
+- New backups feature.
+- Fixed issues detected with macOS Ventura.
 - Fixed detected crashes on Windows, Linux, and macOS.
 - Fixed translation issues.
 - Improved performance.
-- Fixed and adjusted UI.
 </source>
-        <translatorcomment>Changelog for version v4.7.2</translatorcomment>
-        <translation>– Prise en charge native du nouveau Apple silicon.
-– Ajout d’une nouvelle fonction pour désactiver la mise en veille si des transferts sont actifs.
-– Mise à jour de bibliothèques tierces.
-– Amélioration des transferts de dossiers.
-– Correctif des plantages détectés sous Windows, Linux et macOS.
-– Correctif de problèmes de traduction.
-– Amélioration des performances.
-– Correctif et peaufinage de l’IU.</translation>
+        <translatorcomment>Changelog for v4.8.0 version</translatorcomment>
+        <translation>– Prise en charge des comptes Pro Flexi.
+– Ajout d’une nouvelle fonction de sauvegarde.
+– Correction de problèmes détectés sous macOS Ventura.
+– Correction de plantages détectés sous Windows, Linux et macOS.
+– Correction de problèmes de traduction.
+– Amélioration des performances.</translation>
     </message>
 </context>
 <context>
@@ -4166,7 +4494,8 @@ Veuillez confirmer que le bon nom de fichier a été donné.</translation>
         <source>&apos;%1&apos; is write protected.
 Do you want to delete it anyway?</source>
         <translatorcomment>Warning message when a write protected file is about to be delete</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>« %1 » est protégé en écriture.
+Voulez-vous le supprimer quand même ?</translation>
     </message>
 </context>
 <context>
@@ -4262,6 +4591,64 @@ Do you want to delete it anyway?</source>
     </message>
 </context>
 <context>
+    <name>RemoveBackupDialog</name>
+    <message>
+        <source>Stop backup</source>
+        <translatorcomment>Backup removal dialog window title (Linux and windows)</translatorcomment>
+        <translation>Arrêter la sauvegarde</translation>
+    </message>
+    <message>
+        <source>Stop backing up folder?</source>
+        <translatorcomment>Backup removal dialog title</translatorcomment>
+        <translation>Arrêter de sauvegarder le dossier ?</translation>
+    </message>
+    <message>
+        <source>To stop backing up this folder, you need to either move it or delete it.</source>
+        <translatorcomment>Backup removal title description</translatorcomment>
+        <translation>Pour cesser de sauvegarder ce dossier, vous devez soit le déplacer soit le supprimer.</translation>
+    </message>
+    <message>
+        <source>Move folder</source>
+        <translatorcomment>Radio button option label</translatorcomment>
+        <translation>Déplacer le dossier</translation>
+    </message>
+    <message>
+        <source>Move this folder from backups to another location in your cloud drive to get full access to your data. This folder will stop being backed up.</source>
+        <translatorcomment>Radio button description</translatorcomment>
+        <translation>Déplacer ce dossier des sauvegardes vers un autre emplacement de votre disque nuagique pour un accès complet à vos données. Ce dossier ne sera plus sauvegardé.</translation>
+    </message>
+    <message>
+        <source>Move to:</source>
+        <translatorcomment>Label in the left of a line edit where the target location will be displayed</translatorcomment>
+        <translation>Déplacer vers :</translation>
+    </message>
+    <message>
+        <source>Change</source>
+        <translatorcomment>Button text to change the target folder</translatorcomment>
+        <translation>Changer</translation>
+    </message>
+    <message>
+        <source>Delete folder permanently</source>
+        <translatorcomment>Radio button option text</translatorcomment>
+        <translation>Supprimer le dossier définitivement</translation>
+    </message>
+    <message>
+        <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. This action cannot be undone.</source>
+        <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option.</translatorcomment>
+        <translation>Le dossier sera supprimé de MEGA. Il ne sera pas supprimé de votre ordinateur. Cette action est irréversible.</translation>
+    </message>
+    <message>
+        <source>Confirm</source>
+        <translatorcomment>Button text that accepts</translatorcomment>
+        <translation>Confirmer</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Button text that cancels</translatorcomment>
+        <translation>Annuler</translation>
+    </message>
+</context>
+<context>
     <name>RenameLocalNodeDialog</name>
     <message>
         <source>File can’t be renamed to &quot;%1&quot;</source>
@@ -4307,17 +4694,17 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Don&apos;t close the app. If you close, transfers not yet queued will be lost.</source>
         <translatorcomment>Message displayed in scanning widget to warn the user of consequences of closing the app.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ne fermez pas l’appli. Si vous la fermez, les transferts qui ne sont pas déjà dans la file d’attente seront perdus.</translation>
     </message>
     <message>
         <source>Scanning</source>
         <translatorcomment>Label used to display when the scanning widget is on the &quot;Scanning&quot; step</translatorcomment>
-        <translation>Analyse</translation>
+        <translation>Analyse…</translation>
     </message>
     <message>
         <source>Creating folders</source>
         <translatorcomment>Label used to display when the scanning widget is on the &quot;Creating folders&quot; step</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Création des dossiers…</translation>
     </message>
     <message>
         <source>%1/%2</source>
@@ -4398,16 +4785,6 @@ Do you want to delete it anyway?</source>
         <translation>Ajouter</translation>
     </message>
     <message>
-        <source>Local Folder</source>
-        <translatorcomment>Label to indicate the local folder column for sync table. String as short as possible.</translatorcomment>
-        <translation>Dossier local</translation>
-    </message>
-    <message>
-        <source>MEGA folder</source>
-        <translatorcomment>Label to indicate the MEGA folder column for sync table. String as short as possible.</translatorcomment>
-        <translation>Dossier MEGA</translation>
-    </message>
-    <message>
         <source>Auto</source>
         <translatorcomment>Label to indicate that management of rate upload limit is automatic.</translatorcomment>
         <translation>Automatique</translation>
@@ -4447,7 +4824,7 @@ Do you want to delete it anyway?</source>
 
 Do you want to restart MEGAsync now?</source>
         <translatorcomment>Message displayed asking for confirmation to the user to restart the application for a Full scan operation.</translatorcomment>
-        <translation>MEGAsync effectuera une analyse complète de vos dossiers synchronisés au démarrage. Voulez-vous redémarrer MEGAsync maintenant ?</translation>
+        <translation>L’appli effectuera une analyse complète de vos dossiers synchronisés au démarrage. Voulez-vous redémarrer l’appli maintenant ?</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -4468,11 +4845,6 @@ Do you want to restart MEGAsync now?</source>
         <source>Downloads:</source>
         <translatorcomment>Label to indicate the default folder for downloads.</translatorcomment>
         <translation>Téléchargements :</translation>
-    </message>
-    <message>
-        <source>Enable / disable</source>
-        <translatorcomment>Tooltip for checkbox to let the user enable/disable a specific synchronization.</translatorcomment>
-        <translation>Activer/désactiver</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
@@ -4497,7 +4869,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
         <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
-        <translation>Assurez toujours le contrôle physique de votre Clé de récupération (p. ex. sur un dispositif client, une mémoire externe ou encore imprimée).</translation>
+        <translation>Assurez toujours le contrôle physique de votre Clé de récupération (p. ex. sur votre ordinateur, une mémoire externe ou encore imprimée).</translation>
     </message>
     <message>
         <source>Exclude by size</source>
@@ -4522,7 +4894,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Do you want to restart MEGAsync now?</source>
         <translatorcomment>Message shown when clicking on restart MEGAsync button in Settings.</translatorcomment>
-        <translation>Voulez-vous redémarrer MEGAsync maintenant ?</translation>
+        <translation>Voulez-vous redémarrer l’appli maintenant ?</translation>
     </message>
     <message>
         <source>Permissions</source>
@@ -4562,7 +4934,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Folder in MEGA with a backup of files deleted in the local computer</source>
         <translatorcomment>Tooltip shown when hovering remote SyncDebris label.</translatorcomment>
-        <translation>Un dossier dans MEGA contenant une sauvegarde des fichiers supprimés sur l’ordinateur local</translation>
+        <translation>Un dossier sur MEGA contenant une sauvegarde des fichiers supprimés sur l’ordinateur local</translation>
     </message>
     <message>
         <source>Disabling file versioning will prevent the creation and storage of new file versions. Do you want to continue?</source>
@@ -4583,11 +4955,6 @@ Do you want to restart MEGAsync now?</source>
         <source>MEGA-RECOVERYKEY</source>
         <translatorcomment>File name of file exported containing the recovery key.</translatorcomment>
         <translation>MEGA-CLÉdeRÉCUPÉRATION</translation>
-    </message>
-    <message>
-        <source>Unexpected error disabling sync %1</source>
-        <translatorcomment>Error message shown when an error occurs while trying to disable a sync named %1.</translatorcomment>
-        <translation>Erreur inattendue de désactivation de la synchronisation %1</translation>
     </message>
     <message>
         <source>Error enabling sync</source>
@@ -4742,7 +5109,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Restart MEGA Desktop App to apply changes.</source>
         <translatorcomment>Informative text shown in Folders pane, letting the user know that an application restart is required to apply the changes he just made.</translatorcomment>
-        <translation>Redémarrez l’appli MEGA pour ordinateur pour appliquer les changements.</translation>
+        <translation>Redémarrez l’appli pour appliquer les changements.</translation>
     </message>
     <message>
         <source>Change Settings…</source>
@@ -4885,29 +5252,9 @@ Do you want to restart MEGAsync now?</source>
         <translation>Pour entreprise</translation>
     </message>
     <message>
-        <source>Synchronization will stop working. Are you sure?</source>
-        <translatorcomment>Message label indicating that the synchronizations will stop if the user logs out. Ask for confirmation.</translatorcomment>
-        <translation>La synchronisation s’arrêtera. Confirmez-vous ?</translation>
-    </message>
-    <message>
-        <source>Open in MEGA</source>
-        <translatorcomment>Text label for action menu item to open the selected Sync folder in MEGA web app File Manager. Keep string as short as possible, as this shows up in menu similar to a context menu.</translatorcomment>
-        <translation>Ouvrir dans MEGA</translation>
-    </message>
-    <message>
-        <source>Remove synced folder</source>
-        <translatorcomment>Text label for action menu item to remove the synchronization for the selected folder. Keep string as short as possible, as this shows up in menu similar to a context menu.</translatorcomment>
-        <translation>Retirer le dossier synchronisé</translation>
-    </message>
-    <message>
-        <source>Saving Sync settings</source>
-        <translatorcomment>Not used currently. Might get removed in a future refactoring.</translatorcomment>
-        <translation>Enregistrement des paramètres de synchronisation</translation>
-    </message>
-    <message>
         <source>Restart MEGAsync</source>
         <translatorcomment>Title text of dialog shown when clicking on Restart application button. Keep as short as possible.</translatorcomment>
-        <translation>Redémarrer MEGAsync</translation>
+        <translation>Redémarrer</translation>
     </message>
     <message>
         <source>No limit</source>
@@ -4938,11 +5285,6 @@ Do you want to restart MEGAsync now?</source>
         <source>Issue report</source>
         <translatorcomment>Section title label for Issue reporting in General pane.</translatorcomment>
         <translation>Signalement de problème</translation>
-    </message>
-    <message>
-        <source>MEGA Folder</source>
-        <translatorcomment>Label to indicate the MEGA folder column for sync table. String as short as possible.</translatorcomment>
-        <translation>Dossier MEGA</translation>
     </message>
     <message>
         <source>Choose which files or folders you want to exclude from synchronisation.</source>
@@ -5000,18 +5342,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Paramètres de mise en veille</translation>
     </message>
     <message>
-        <source>Prevent the computer from going to sleep when transfers or syncs are in progress.
-Computer will enter sleep mode once these are complete.</source>
-        <translatorcomment>Sleep/Active mode: Feature description label for keeping the pc awake when there are active transfers</translatorcomment>
-        <translation>Empêcher la mise en veille de l’ordinateur tant que les transferts ou synchronisations sont en cours.
-L’ordinateur se mettra en veille une fois qu’ils seront terminés.</translation>
-    </message>
-    <message>
-        <source>Note: Some operating systems won&apos;t allow this.</source>
-        <translatorcomment>Sleep/Active mode: Warning message below the description label, as not all the computers can activate the feature to keep it awake if there are transfers active </translatorcomment>
-        <translation>Note : Certains systèmes d’exploitation ne le permettent pas.</translation>
-    </message>
-    <message>
         <source>Sleep mode:</source>
         <translatorcomment>Sleep/Active mode: Settings dialog groupbox title for keeping the pc awake when there are active transfers (macOS)</translatorcomment>
         <translation>Mise en veille :</translation>
@@ -5025,6 +5355,146 @@ L’ordinateur se mettra en veille une fois qu’ils seront terminés.</translat
         <source>Your operating system doesn&apos;t allow its sleep setting to be overwritten.</source>
         <translatorcomment>Sleep/Active mode: Error messagebox text when the pc awake mode could not be activated after activating the feature using the checkbox.</translatorcomment>
         <translation>Votre système d’exploitation ne permet pas la modification de ses paramètres de mise en veille.</translation>
+    </message>
+    <message>
+        <source>Backup</source>
+        <translatorcomment>Toolbar button text</translatorcomment>
+        <translation>Sauvegarder</translation>
+    </message>
+    <message>
+        <source>Backups</source>
+        <translatorcomment>Backups table title</translatorcomment>
+        <translation>Sauvegardes</translation>
+    </message>
+    <message>
+        <source>Backup Folder</source>
+        <translatorcomment>Groupbox title, inside the remote backup folder path will be displayed (Linux and windows)</translatorcomment>
+        <translation>Dossier de sauvegarde</translation>
+    </message>
+    <message>
+        <source>View in MEGA</source>
+        <translatorcomment>Button text that opens backups folder in webclient</translatorcomment>
+        <translation>Visualiser sur MEGA</translation>
+    </message>
+    <message>
+        <source>Saving backups…</source>
+        <translatorcomment>Label text displayed while backups settings are being saved</translatorcomment>
+        <translation>Enregistrement des sauvegardes…</translation>
+    </message>
+    <message>
+        <source>Some folders have not backed up. For more information please hover over the yellow warning icon.</source>
+        <translatorcomment>Warning message displayed inside settings dialog indicating that there is a problem with a backup.</translatorcomment>
+        <translation>Certains fichiers n’ont pas été sauvegardés. Pour plus de précisions, survolez l’icône jaune d’avertissement.</translation>
+    </message>
+    <message>
+        <source>Backup folder:</source>
+        <translatorcomment>Line edit title, remote backup folder path will be displayed (macOS)</translatorcomment>
+        <translation>Dossier de sauvegarde :</translation>
+    </message>
+    <message>
+        <source>Synchronizations and backups will stop working.</source>
+        <translatorcomment>Warning message displayed on logout if there are active syncs and backups</translatorcomment>
+        <translation>Les synchronisations et sauvegardes seront désactivées.</translation>
+    </message>
+    <message>
+        <source>Backups will stop working.</source>
+        <translatorcomment>Warning message displayed on logout if there are active backups (not syncs)</translatorcomment>
+        <translation>Les sauvegardes seront désactivées.</translation>
+    </message>
+    <message>
+        <source>Synchronizations will stop working.</source>
+        <translatorcomment>Warning message displayed on logout if there are active syncs (not backups)</translatorcomment>
+        <translation>Les synchronisations seront désactivées.</translation>
+    </message>
+    <message>
+        <source>Are you sure?</source>
+        <translatorcomment>Warning message second part asking if you are sure about continuing with the logout.</translatorcomment>
+        <translation>Confirmez-vous ?</translation>
+    </message>
+    <message>
+        <source>Error adding sync</source>
+        <translatorcomment>Warning message title indicating that an error happened adding a sync.</translatorcomment>
+        <translation>Erreur d’ajout de la synchronisation</translation>
+    </message>
+    <message>
+        <source>Error removing sync</source>
+        <translatorcomment>Warning message title indicating that an error happened removing a sync.</translatorcomment>
+        <translation>Erreur de suppression de la synchronisation</translation>
+    </message>
+    <message>
+        <source>Your sync can&apos;t be removed. Reason: %1</source>
+        <translatorcomment>Warning message title indicating that an error happened removing a sync. the reason is given at runtime in place of the placeholder</translatorcomment>
+        <translation>Votre synchronisation ne peut pas être supprimée. Raison : %1</translation>
+    </message>
+    <message>
+        <source>Error disabling sync</source>
+        <translatorcomment>Warning message title indicating that an error happened disabling a sync.</translatorcomment>
+        <translation>Erreur de désactivation de la synchronisation</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
+        <translatorcomment>Warning message indicating that an error happened disabling a sync. First placeholder is the sync name and second placeholder is the error message sent by SDK (reason)</translatorcomment>
+        <translation>Votre synchronisation « %1 » ne peut pas être désactivée. Raison : %2</translation>
+    </message>
+    <message>
+        <source>Error adding backup %1</source>
+        <translatorcomment>Error message dialog title. Placeholder shows the backup name</translatorcomment>
+        <translation>Erreur en ajoutant la sauvegarde %1</translation>
+    </message>
+    <message>
+        <source>Error removing backup</source>
+        <translatorcomment>Error message dialog title</translatorcomment>
+        <translation>Erreur d’arrêt de la sauvegarde</translation>
+    </message>
+    <message>
+        <source>Your backup can&apos;t be removed. Reason: %1</source>
+        <translatorcomment>Warning message title indicating that an error happened removing a backup. the reason is given at runtime in place of the placeholder</translatorcomment>
+        <translation>Votre sauvegarde ne peut pas être arrêtée. Raison : %1</translation>
+    </message>
+    <message>
+        <source>Error moving or removing remote backup folder</source>
+        <translatorcomment>Title of the dialog shown when the deletion or move of the remote backup folder failed</translatorcomment>
+        <translation>Erreur de déplacement ou de suppression du dossier de sauvegarde MEGA</translation>
+    </message>
+    <message>
+        <source>Failed to move or remove the remote backup folder. Reason: %1</source>
+        <translatorcomment>Error text when the deletion or move of the remote backup folder failed</translatorcomment>
+        <translation>Impossible de déplacer ou de supprimer le dossier de sauvegarde sur MEGA. Raison : %1</translation>
+    </message>
+    <message>
+        <source>Error enabling backup</source>
+        <translatorcomment>Title of the dialog shown when enabling a backup failed</translatorcomment>
+        <translation>Erreur d’activation de la sauvegarde</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; can&apos;t be enabled. Reason: %2</source>
+        <translatorcomment>Error text when enabling a backup failed</translatorcomment>
+        <translation>Votre sauvegarde « %1 » ne peut pas être activée. Raison : %2</translation>
+    </message>
+    <message>
+        <source>Error disabling backup</source>
+        <translatorcomment>Title of the dialog shown when enabling a backup failed</translatorcomment>
+        <translation>Erreur de désactivation de la sauvegarde</translation>
+    </message>
+    <message>
+        <source>Pro Flexi</source>
+        <translatorcomment>Text label indicating the Pro Flexi tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
+        <translation>Pro Flexi</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
+        <translatorcomment>Error text when disabling a backup failed</translatorcomment>
+        <translation>Votre sauvegarde « %1 » ne peut pas être désactivée. Raison : %2</translation>
+    </message>
+    <message>
+        <source>Go to backup centre</source>
+        <translatorcomment>Button text that opens backup center in webclient</translatorcomment>
+        <translation>Accéder au Centre de sauvegarde</translation>
+    </message>
+    <message>
+        <source>Prevent the computer from going to sleep when transfers or syncs are in progress.</source>
+        <translatorcomment>Sleep/Active mode: Feature description label for keeping the pc awake when there are active transfers</translatorcomment>
+        <translation>Empêcher la mise en veille de l’ordinateur tant que les transferts ou synchronisations sont en cours.</translation>
     </message>
 </context>
 <context>
@@ -5082,7 +5552,7 @@ L’ordinateur se mettra en veille une fois qu’ils seront terminés.</translat
     <message>
         <source>MEGA folder:</source>
         <translatorcomment>Label displayed to show the MEGA folder synchronized.</translatorcomment>
-        <translation>Dossier MEGA :</translation>
+        <translation>Dossier sur MEGA :</translation>
     </message>
     <message>
         <source>Change</source>
@@ -5127,7 +5597,7 @@ L’ordinateur se mettra en veille une fois qu’ils seront terminés.</translat
     <message>
         <source>MEGA folder doesn&apos;t exist</source>
         <translatorcomment>Label displayed when an error occurs with a remote folder.</translatorcomment>
-        <translation>Le dossier MEGA n’existe pas</translation>
+        <translation>Le dossier n’existe pas sur MEGA</translation>
     </message>
     <message>
         <source>Finish</source>
@@ -5187,7 +5657,7 @@ L’ordinateur se mettra en veille une fois qu’ils seront terminés.</translat
     <message>
         <source>Please, select a MEGA folder</source>
         <translatorcomment>Label displayed when the user has not select a MEGA folder.</translatorcomment>
-        <translation>Veuillez sélectionner un dossier MEGA</translation>
+        <translation>Veuillez sélectionner un dossier sur MEGA</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -5200,13 +5670,6 @@ L’ordinateur se mettra en veille une fois qu’ils seront terminés.</translat
         <translation>Connexion…</translation>
     </message>
     <message>
-        <source>You are trying to sync an extremely large folder.
-To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
-we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translatorcomment>Message displayed to advise the user that is trying to sync an extremely large folder.</translatorcomment>
-        <translation>Vous tentez de synchroniser un dossier extrêmement volumineux. Pour empêcher la synchronisation de volumes d’amorçage entiers, ce qui est inefficace et dangereux, nous vous demandons de commencer avec un dossier plus petit et d’ajouter des données alors que MEGAsync fonctionne.</translation>
-    </message>
-    <message>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when a problem occurs while fetching filesystem from the cloud drive.</translatorcomment>
@@ -5215,7 +5678,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Set up Assistant - MEGAsync</source>
         <translatorcomment>Title of the setup assistant dialog. Keep capital letters.</translatorcomment>
-        <translation>Assistant d’installation – MEGAsync</translation>
+        <translation>Assistant de configuration</translation>
     </message>
     <message>
         <source>Full sync</source>
@@ -5226,16 +5689,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
         <translatorcomment>Label to inform the user that the synchronization stablished will be automatically synchronized.</translatorcomment>
         <translation>Votre dossier local et votre Disque nuagique MEGA seront synchronisés automatiquement.</translation>
-    </message>
-    <message>
-        <source>You don&apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
-        <translation>Vous n’avez pas le droit d’écriture sur ce dossier local.</translation>
-    </message>
-    <message>
-        <source>MEGAsync won&apos;t be able to download anything here.</source>
-        <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
-        <translation>MEGAsync ne pourra pas rien télécharger ici.</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
@@ -5249,7 +5702,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>MEGAsync</source>
-        <translation>MEGAsync</translation>
+        <translation>MEGA</translation>
     </message>
     <message>
         <source>Are you sure you want to cancel this wizard and undo all changes?</source>
@@ -5260,11 +5713,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Skip</source>
         <translatorcomment>Button label to skip the Setup Wizard configuration.</translatorcomment>
         <translation>Ignorer</translation>
-    </message>
-    <message>
-        <source>Creating folder...</source>
-        <translatorcomment>Label shown when an user is creating a remote folder.</translatorcomment>
-        <translation>Création du dossier…</translation>
     </message>
     <message>
         <source>Logging out...</source>
@@ -5382,12 +5830,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Enjoy MEGAsync</source>
         <translatorcomment>Label displayed when user completes the setup wizard</translatorcomment>
-        <translation>Profitez de MEGAsync</translation>
+        <translation>Profitez bien de notre appli</translation>
     </message>
     <message>
         <source>We are all done</source>
         <translatorcomment>Label shown when the user completes the initial setup wizard</translatorcomment>
         <translation>Nous avons terminé</translation>
+    </message>
+    <message>
+        <source>Creating folder…</source>
+        <translatorcomment>Label shown when an user is creating a remote folder.</translatorcomment>
+        <translation>Création du dossier…</translation>
     </message>
 </context>
 <context>
@@ -5610,6 +6063,243 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Off</source>
         <translatorcomment>Unchecked state of a swith button</translatorcomment>
         <translation>Désactivées</translation>
+    </message>
+</context>
+<context>
+    <name>SyncController</name>
+    <message>
+        <source>You can&apos;t backup this folder as it&apos;s already synced.</source>
+        <translatorcomment>Warning message indicating that a folder can´t be backed up as it is synced.</translatorcomment>
+        <translation>Vous ne pouvez pas sauvegarder ce dossier, car il est déjà synchronisé.</translation>
+    </message>
+    <message>
+        <source>Folder is already backed up. Select a different one.</source>
+        <translatorcomment>Warning message indicating that a folder can´t be backed up as it is already backed up.</translatorcomment>
+        <translation>Ce dossier est déjà sauvegardé. Sélectionnez-en un autre.</translation>
+    </message>
+    <message>
+        <source>You can&apos;t sync this folder as it&apos;s already synced.</source>
+        <translatorcomment>Warning message indicating that a folder can´t be synced again as it is already synced.</translatorcomment>
+        <translation>Vous ne pouvez pas synchroniser ce dossier, car il est déjà synchronisé.</translation>
+    </message>
+    <message>
+        <source>You can&apos;t sync this folder as it&apos;s already backed up.</source>
+        <translatorcomment>Warning message indicating that a folder can´t be synced as it is backed up.</translatorcomment>
+        <translation>Vous ne pouvez pas synchroniser ce dossier, car il est déjà sauvegardé.</translation>
+    </message>
+    <message>
+        <source>You can&apos;t backup this folder as it&apos;s already inside a synced folder.</source>
+        <translatorcomment>Warning message indicating that a folder can´t be backed up as it is inside a backed up folder.</translatorcomment>
+        <translation>Vous ne pouvez pas sauvegarder ce dossier, car il se trouve dans un dossier synchronisé.</translation>
+    </message>
+    <message>
+        <source>You can&apos;t sync folders that are inside synced folders.</source>
+        <translatorcomment>Warning message indicating that a folder can´t be synced as it is inside a synced folder.</translatorcomment>
+        <translation>Vous ne pouvez pas synchroniser des dossiers qui se trouvent dans des dossiers synchronisés.</translation>
+    </message>
+    <message>
+        <source>You can&apos;t sync folders that are inside backed up folders.</source>
+        <translatorcomment>Warning message indicating that a folder can´t be synced as it is inside a backed up folder.</translatorcomment>
+        <translation>Vous ne pouvez pas synchroniser des dossiers qui se trouvent dans des dossiers sauvegardés.</translation>
+    </message>
+    <message>
+        <source>You can&apos;t backup this folder as it contains synced folders.</source>
+        <translatorcomment>Warning message indicating that the selected folder for sync contains synced folders, ence it can not be synced.</translatorcomment>
+        <translation>Vous ne pouvez pas sauvegarder ce dossier, car il comprend des dossiers synchronisés.</translation>
+    </message>
+    <message>
+        <source>You can&apos;t sync folders that contain synced folders.</source>
+        <translatorcomment>Warning message indicating that the selected folder for sync contains synced folders, hence it can not be synced.</translatorcomment>
+        <translation>Vous ne pouvez pas synchroniser des dossiers qui comprennent des dossiers synchronisés.</translation>
+    </message>
+    <message>
+        <source>You can&apos;t sync folders that contain backed up folders.</source>
+        <translatorcomment>Warning message indicating that a folder can´t be synced as it contains backed up folders.</translatorcomment>
+        <translation>Vous ne pouvez pas synchroniser des dossiers qui comprennent des dossiers sauvegardés.</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translatorcomment>Warning message indicating that the user doesn´t have write permissions on that folder</translatorcomment>
+        <translation>Vous n’avez pas le droit d’écriture sur ce dossier local.</translation>
+    </message>
+    <message>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <translatorcomment>Warning message indicating that megasync is not going to be able to download anything in the selected folder.</translatorcomment>
+        <translation>L’appli ne pourra pas rien télécharger ici.</translation>
+    </message>
+    <message>
+        <source>You can&apos;t backup this folder as it contains backed up folders.</source>
+        <translatorcomment>Warning message indicating that the selected folder for backup contains backed up folders, ence it can not be backed up.</translatorcomment>
+        <translation>Vous ne pouvez pas sauvegarder ce dossier, car il comprend des dossiers sauvegardés.</translation>
+    </message>
+    <message>
+        <source>You can&apos;t backup this folder as it&apos;s already inside a backed up folder.</source>
+        <translatorcomment>Warning message indicating that a folder can´t be backed up as it is inside a backed up folder.</translatorcomment>
+        <translation>Vous ne pouvez pas sauvegarder ce dossier, car il se trouve dans un dossier déjà sauvegardé.</translation>
+    </message>
+    <message>
+        <source>Unable to create backup as selected folder is not valid. Try again.</source>
+        <translatorcomment>Text instructing to try creating a backup again. Failure cause: node is not valid</translatorcomment>
+        <translation>Impossible de créer la sauvegarde, car le dossier sélectionné n’est pas valide. Réessayez.</translation>
+    </message>
+    <message>
+        <source>Unable to create backup. Try again and if issue continues, contact [A]Support[/A].</source>
+        <translatorcomment>Text instructing to try creating a backup again. If it fails again, they should contact support</translatorcomment>
+        <translation>Impossible de créer la sauvegarde. Réessayez et si le problème persiste, contactez [A]l’assistance[/A].</translation>
+    </message>
+    <message>
+        <source>Unable to create backup as the device you&apos;re backing up from doesn&apos;t have a name. Give your device a name and then try again. If issue continues, contact [A]Support[/A].</source>
+        <translatorcomment>Text instructing to try creating a backup again.Failure cause: the device does not have a name. If it fails again, they should contact support</translatorcomment>
+        <translation>Impossible de créer la sauvegarde, car l’ordinateur à partir duquel vous sauvegardez n’a pas de nom. Donnez un nom à votre ordinateur, puis réessayez. Si le problème persiste, contactez l’[A]assistance[/A].</translation>
+    </message>
+    <message>
+        <source>Unable to create backup. For further information, contact [A]Support[/A].</source>
+        <translatorcomment>Text instructing to try creating a backup again.They should contact support</translatorcomment>
+        <translation>Impossible de créer la sauvegarde. Pour de plus amples renseignements contacter l’[A]assistance[/A].</translation>
+    </message>
+    <message>
+        <source>You can’t backup “%1” as it’s the root folder. The root folder is either; the top-level folder on your device or computer that holds all your folders and files or the folder where the system or program is installed. We don’t allow users to back up root folders as it may cause file conflicts or errors.
+To continue, select a different folder.</source>
+        <translatorcomment>Warning message displayed if user tries to backup the system main hard disk.</translatorcomment>
+        <translation>Vous ne pouvez pas sauvegarder « %1 », car c’est le dossier racine. Le dossier racine est soit le dossier de plus haut niveau sur votre ordinateur, qui contient tous vos dossiers et fichiers, soit le dossier ou le système ou le programme est installé. Nous ne permettons pas aux utilisateurs de sauvegarder les dossiers racine, car cela pourrait entraîner des conflits de fichier ou des erreurs.
+Afin de poursuivre, sélectionner un dossier différent.</translation>
+    </message>
+    <message>
+        <source>You can’t sync “%1” as it’s the root folder. The root folder is either; the top-level folder on your device or computer that holds all your folders and files or the folder where the system or program is installed. We don’t allow users to sync root folders as it may cause file conflicts or errors.
+To continue, select a different folder.</source>
+        <translatorcomment>Warning message displayed if user tries to sync the system main hard disk.</translatorcomment>
+        <translation>Vous ne pouvez pas synchroniser « %1 », car c’est le dossier racine. Le dossier racine est soit le dossier de plus haut niveau sur votre ordinateur, qui contient tous vos dossiers et fichiers, soit le dossier ou le système ou le programme est installé. Nous ne permettons pas aux utilisateurs de synchroniser les dossiers racine, car cela pourrait entraîner des conflits de fichier ou des erreurs.
+Afin de poursuivre, sélectionner un dossier différent.</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have enough permissions for this remote folder.</source>
+        <translatorcomment>Warning message indicating that a folder can´t be synced as it the remote folder is an incoming share and the current user doesn´t have enought permisions</translatorcomment>
+        <translation>Vous n’avez pas le droit d’accès total pour ce dossier partagé et ne pouvez pas le synchroniser.</translation>
+    </message>
+    <message>
+        <source>Invalid remote path.</source>
+        <translatorcomment>The selected remote path for the sync creation is invalid</translatorcomment>
+        <translation>Ce dossier MEGA ne peut pas être synchronisé.</translation>
+    </message>
+    <message>
+        <source>The selected MEGA folder is already synced.</source>
+        <translatorcomment>Warning message indicating that the selected folder is already a synced folder.</translatorcomment>
+        <translation>Le dossier MEGA sélectionné a déjà été synchronisé.</translation>
+    </message>
+    <message>
+        <source>Folder contents already synced.</source>
+        <translatorcomment>Warning message indicating that the selected folder have got an active sync bellow the selected path.</translatorcomment>
+        <translation>Les contenus des dossiers ont déjà été synchronisés.</translation>
+    </message>
+    <message>
+        <source>Folder already synced.</source>
+        <translatorcomment>Warning message indicating that the selected folder have got a parent that is already synced.</translatorcomment>
+        <translation>Le dossier a déjà été synchronisé.</translation>
+    </message>
+</context>
+<context>
+    <name>SyncInfo</name>
+    <message>
+        <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
+        <translatorcomment>Informative message shown when a user is trying to sync using a FAT filesystem.</translatorcomment>
+        <translation>Vous synchronisez un dossier local formaté avec le système de fichiers FAT. Ce système de fichiers présente des lacunes de gestion des fichiers volumineux et des heures de modification qui peuvent causer des problèmes de synchronisations (p. ex. lors des passages à l’heure avancée), et il est fortement recommandé de ne synchroniser que des dossiers formatés avec des systèmes de fichiers plus fiables comme NTFS (plus de renseignements [A]ici[/A]).</translation>
+    </message>
+    <message>
+        <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
+        <translatorcomment>Informative message shown when a user is trying to sync using a local folder shared with VMWare third party app.</translatorcomment>
+        <translation>Vous synchronisez un dossier local partagé avec VMware. Ces dossiers ne prennent pas en charge les notifications du système de fichiers. L’appli devra donc analyser continuellement pour détecter les changements dans vos fichiers et dossiers. Si possible, utilisez un dossier différent pour réduire l’utilisation de l’UCT.</translation>
+    </message>
+</context>
+<context>
+    <name>SyncItemModel</name>
+    <message>
+        <source>Sort by state</source>
+        <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by state in case the user clicks.</translatorcomment>
+        <translation>Trier par état</translation>
+    </message>
+    <message>
+        <source>Local Folder</source>
+        <translatorcomment>Sync table header column title</translatorcomment>
+        <translation>Dossier local</translation>
+    </message>
+    <message>
+        <source>Sort by folder name</source>
+        <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by folder name in case the user clicks.</translatorcomment>
+        <translation>Trier par nom de dossier</translation>
+    </message>
+    <message>
+        <source>MEGA Folder</source>
+        <translatorcomment>Sync table header column title</translatorcomment>
+        <translation>Dossier sur MEGA</translation>
+    </message>
+    <message>
+        <source>Sort by MEGA folder name</source>
+        <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by MEGA folder name in case the user clicks.</translatorcomment>
+        <translation>Trier par nom de dossier sur MEGA</translation>
+    </message>
+    <message>
+        <source>Sync is enabled</source>
+        <translatorcomment>Checkbox tooltip in case the sync is enabled.</translatorcomment>
+        <translation>La synchronisation est activée</translation>
+    </message>
+    <message>
+        <source>Sync is disabled</source>
+        <translatorcomment>Checkbox tooltip in case the sync is disabled.</translatorcomment>
+        <translation>La synchronisation est désactivée</translation>
+    </message>
+    <message>
+        <source>Click menu for more Sync actions</source>
+        <translatorcomment>Menu column item tooltip.</translatorcomment>
+        <translation>Cliquez sur le menu pour plus d’actions de synchronisation</translation>
+    </message>
+</context>
+<context>
+    <name>SyncTableView</name>
+    <message>
+        <source>Open in MEGA</source>
+        <translatorcomment>Context menu option that opens the folder in MEGA webclient.</translatorcomment>
+        <translation>Ouvrir dans MEGA</translation>
+    </message>
+    <message>
+        <source>Remove synced folder</source>
+        <translatorcomment>Context menu option that removes the sync.</translatorcomment>
+        <translation>Retirer le dossier synchronisé</translation>
+    </message>
+</context>
+<context>
+    <name>SyncTooltip</name>
+    <message>
+        <source>Local path:</source>
+        <translatorcomment>Part of the tooltip text. It indicates that it will be followed by the local path of the sync.</translatorcomment>
+        <translation>Chemin local :</translation>
+    </message>
+    <message>
+        <source>MEGA path:</source>
+        <translatorcomment>Part of the tooltip text. It indicates that it will be followed by the remote path of the sync.</translatorcomment>
+        <translation>Chemin sur MEGA :</translation>
+    </message>
+</context>
+<context>
+    <name>SyncsMenu</name>
+    <message>
+        <source>Add Sync</source>
+        <translatorcomment>Menu option used to add sync</translatorcomment>
+        <translation>Ajouter une synchronisation</translation>
+    </message>
+    <message>
+        <source>Syncs</source>
+        <translatorcomment>Menu option that shows syncs menu</translatorcomment>
+        <translation>Synchronisations</translation>
+    </message>
+    <message>
+        <source>Backups</source>
+        <translatorcomment>Menu option that shows backups menu</translatorcomment>
+        <translation>Sauvegardes</translation>
+    </message>
+    <message>
+        <source>Add Backup</source>
+        <translatorcomment>Menu option used to add backups</translatorcomment>
+        <translation>Ajouter une sauvegarde</translation>
     </message>
 </context>
 <context>
@@ -5863,7 +6553,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your MEGA account is full</source>
         <translatorcomment>Message shown when the MEGA account is full</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Votre compte MEGA est saturé.</translation>
     </message>
     <message>
         <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left for this IP address.
@@ -5967,12 +6657,12 @@ Pour en obtenir davantage, passez à un compte Pro ou attendez [A] pour qu’un 
     <message>
         <source>Clear all audios</source>
         <translatorcomment>Tooltip for clear button when the user is in the audios category</translatorcomment>
-        <translation>Effacer tous les fichiers audio</translation>
+        <translation>Effacer tous les transferts dans Audio</translation>
     </message>
     <message>
         <source>Clear all videos</source>
         <translatorcomment>Tooltip for clear button when the user is in the videos category</translatorcomment>
-        <translation>Effacer tous les fichiers vidéo</translation>
+        <translation>Effacer tous les transferts dans Vidéos</translation>
     </message>
     <message>
         <source>Clear all archives</source>
@@ -6017,12 +6707,12 @@ Pour en obtenir davantage, passez à un compte Pro ou attendez [A] pour qu’un 
     <message>
         <source>Cancel all audios</source>
         <translatorcomment>Tooltip for cancel button when the user is in the audios category</translatorcomment>
-        <translation>Annuler tous les fichiers audio</translation>
+        <translation>Annuler tous les transferts dans Audio</translation>
     </message>
     <message>
         <source>Cancel all videos</source>
         <translatorcomment>Tooltip for cancel button when the user is in the videos category</translatorcomment>
-        <translation>Annuler tous les fichiers vidéo</translation>
+        <translation>Annuler tous les transferts dans Vidéos</translation>
     </message>
     <message>
         <source>Cancel all archives</source>
@@ -6261,7 +6951,7 @@ Pour en obtenir davantage, passez à un compte Pro ou attendez [A] pour qu’un 
     <message>
         <source>MEGA folder:</source>
         <translatorcomment>Label to indicate the user the MEGA folder in which the selected files/folders will be uploaded (String short as possible)</translatorcomment>
-        <translation>Dossier MEGA :</translation>
+        <translation>Dossier sur MEGA :</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -6282,6 +6972,14 @@ Pour en obtenir davantage, passez à un compte Pro ou attendez [A] pour qu’un 
         <source>Choose</source>
         <translatorcomment>Button label to select the upload folder (String as short as possible)</translatorcomment>
         <translation>Choisir</translation>
+    </message>
+</context>
+<context>
+    <name>UserAttributes::DeviceName</name>
+    <message>
+        <source>My computer</source>
+        <translatorcomment>Text that will be used as the folder name of the backup in case the device name couldn´t be fetched correctly.</translatorcomment>
+        <translation>Mon ordinateur</translation>
     </message>
 </context>
 <context>
@@ -6319,7 +7017,7 @@ Pour en obtenir davantage, passez à un compte Pro ou attendez [A] pour qu’un 
     <message>
         <source>Pro Lite</source>
         <translatorcomment>Label to refer Pro Lite tier</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Pro Lite</translation>
     </message>
     <message>
         <source>Pro I</source>
@@ -6450,7 +7148,7 @@ Do you want to create one?</source>
     <message>
         <source>MEGA synced folder</source>
         <translatorcomment>Label to indicate the synced MEGA folder.</translatorcomment>
-        <translation>Dossier synchronisé avec MEGA</translation>
+        <translation>Dossier sur MEGA synchronisé</translation>
     </message>
 </context>
 </TS>
