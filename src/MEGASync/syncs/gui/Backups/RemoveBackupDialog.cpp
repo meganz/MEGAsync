@@ -63,7 +63,7 @@ void RemoveBackupDialog::OnChangeButtonClicked()
 {
     if (!mNodeSelector)
     {
-        mNodeSelector = new NodeSelector(NodeSelector::UPLOAD_SELECT, this);
+        mNodeSelector = new NodeSelector(NodeSelectorTreeViewWidget::UPLOAD_SELECT, this);
     }
     int result = mNodeSelector->exec();
     if (!mNodeSelector || result != QDialog::Accepted)

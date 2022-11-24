@@ -3,6 +3,7 @@
 
 #include "QTMegaRequestListener.h"
 #include "NodeNameSetterDialog/NewFolderDialog.h"
+#include "NodeSelectorTreeViewWidget.h"
 
 #include <QDialog>
 #include <QItemSelection>
@@ -23,14 +24,6 @@ class NodeSelector : public QDialog, public mega::MegaRequestListener
     Q_OBJECT
 
 public:
-    enum Type{
-        UNINITIALIZED_SELECT = 0,
-        UPLOAD_SELECT,
-        DOWNLOAD_SELECT,
-        SYNC_SELECT,
-        STREAM_SELECT,
-    };
-
     enum TabItem{
         CLOUD_DRIVE = 0,
         SHARES,
@@ -38,7 +31,7 @@ public:
     };
 
     static const int LABEL_ELIDE_MARGIN;
-    explicit NodeSelector(NodeSelector::Type selectMode, QWidget *parent = 0);
+    explicit NodeSelector(NodeSelectorTreeViewWidget::Type selectMode, QWidget *parent = 0);
 
     ~NodeSelector();
     void showDefaultUploadOption(bool show = true);
@@ -47,7 +40,7 @@ public:
     void setSelectedNodeHandle(std::shared_ptr<mega::MegaNode> node = nullptr);
     mega::MegaHandle getSelectedNodeHandle();
     QList<mega::MegaHandle> getMultiSelectionNodeHandle();
-    int getSelectMode(){ return mSelectMode;}
+    NodeSelectorTreeViewWidget::Type getSelectMode(){ return mSelectMode;}
     void closeEvent(QCloseEvent* event) override;
 
 protected:
@@ -77,7 +70,7 @@ private:
     void shortCutConnects(int ignoreThis);
 
     Ui::NodeSelector *ui;
-    NodeSelector::Type mSelectMode;
+    NodeSelectorTreeViewWidget::Type mSelectMode;
 
     mega::MegaApi* mMegaApi;
     bool mManuallyResizedColumn;

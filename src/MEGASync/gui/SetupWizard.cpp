@@ -744,7 +744,7 @@ void SetupWizard::on_bLocalFolder_clicked()
 
 void SetupWizard::on_bMegaFolder_clicked()
 {
-    QPointer<NodeSelector> nodeSelector = new NodeSelector(NodeSelector::SYNC_SELECT, this);
+    QPointer<NodeSelector> nodeSelector = new NodeSelector(NodeSelectorTreeViewWidget::SYNC_SELECT, this);
 #ifdef Q_OS_LINUX
     nodeSelector->setWindowFlags(nodeSelector->windowFlags() | (Qt::Tool));
 #endif
