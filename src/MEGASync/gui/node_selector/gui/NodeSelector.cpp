@@ -57,6 +57,11 @@ void NodeSelector::updateNodeSelectorTabs()
     ui->bShowIncomingShares->setText(MegaNodeNames::getIncomingSharesName());
     ui->bShowBackups->setText(MegaNodeNames::getBackupsName());
 #else
+    for(int index = ui->tabBar->count() - 1; index >= 0; --index)
+    {
+        ui->tabBar->removeTab(index);
+    }
+
     ui->tabBar->addTab(MegaNodeNames::getCloudDriveName());
     ui->tabBar->addTab(MegaNodeNames::getIncomingSharesName());
     ui->tabBar->addTab(MegaNodeNames::getBackupsName());

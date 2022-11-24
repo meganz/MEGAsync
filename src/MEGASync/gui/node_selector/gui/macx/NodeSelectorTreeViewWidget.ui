@@ -445,7 +445,7 @@ image: url(://images/node_selector/Icon-Small-Arrow-Down.png) ;
   <customwidget>
    <class>NodeSelectorTreeView</class>
    <extends>QTreeView</extends>
-   <header>NodeSelectorTreeView.h</header>
+   <header>node_selector/gui/NodeSelectorTreeView.h</header>
   </customwidget>
  </customwidgets>
  <resources>

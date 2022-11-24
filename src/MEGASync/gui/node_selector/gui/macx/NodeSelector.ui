@@ -701,19 +701,19 @@ margin-right: 31px;
   <customwidget>
    <class>NodeSelectorTreeViewWidgetCloudDrive</class>
    <extends>QWidget</extends>
-   <header>NodeSelectorTreeViewWidgetSpecializations.h</header>
+   <header>node_selector/gui/NodeSelectorTreeViewWidgetSpecializations.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>NodeSelectorTreeViewWidgetIncomingShares</class>
    <extends>QWidget</extends>
-   <header>NodeSelectorTreeViewWidgetSpecializations.h</header>
+   <header>node_selector/gui/NodeSelectorTreeViewWidgetSpecializations.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>NodeSelectorTreeViewWidgetBackups</class>
    <extends>QWidget</extends>
-   <header>NodeSelectorTreeViewWidgetSpecializations.h</header>
+   <header>node_selector/gui/NodeSelectorTreeViewWidgetSpecializations.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
