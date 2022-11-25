@@ -128,16 +128,17 @@ void SyncSettings::setSync(MegaSync *sync)
     }
 }
 
-QString SyncSettings::getLocalFolder() const
+QString SyncSettings::getLocalFolder(bool normalizeDisplay) const
 {
     auto toret = QString::fromUtf8(mSync->getLocalFolder());
+
 #ifdef WIN32
     if (toret.startsWith(QString::fromAscii("\\\\?\\")))
     {
         toret = toret.mid(4);
     }
 #endif
-    return toret;
+    return normalizeDisplay ? toret.normalized(QString::NormalizationForm_C) : toret;
 }
 
 long long SyncSettings::getLocalFingerprint()  const
