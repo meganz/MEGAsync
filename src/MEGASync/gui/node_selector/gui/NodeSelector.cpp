@@ -103,7 +103,7 @@ void NodeSelector::setDefaultUploadOption(bool value)
         auto viewContainer = dynamic_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->widget(page));
         if(viewContainer)
         {
-            viewContainer->showDefaultUploadOption(value);
+            viewContainer->setDefaultUploadOption(value);
         }
     }
 }
