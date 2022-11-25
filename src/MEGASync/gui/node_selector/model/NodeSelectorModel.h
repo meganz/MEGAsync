@@ -3,9 +3,7 @@
 
 #include "NodeSelectorModelItem.h"
 #include "Utilities.h"
-
 #include <megaapi.h>
-#include <QTMegaRequestListener.h>
 
 #include <QAbstractItemModel>
 #include <QList>
@@ -147,14 +145,13 @@ public:
 signals:
     void levelsAdded(const QModelIndexList& parent);
     void requestChildNodes(NodeSelectorModelItem* parent, const QModelIndex& parentIndex,
-                           int nodeType) const;
+                           int nodeType);
     void firstLoadFinished(const QModelIndex& parent);
     void requestAddNode(std::shared_ptr<mega::MegaNode> newNode, const QModelIndex& parentIndex, NodeSelectorModelItem* parent);
     void removeItem(NodeSelectorModelItem* items);
     void removeRootItem(NodeSelectorModelItem* items);
     void deleteWorker();
-
-    void blockUi(bool state) const;
+    void blockUi(bool state);
 
 protected:
     QModelIndex findItemByNodeHandle(const mega::MegaHandle &handle, const QModelIndex& parent);
@@ -176,8 +173,6 @@ private slots:
     void onNodeAdded(NodeSelectorModelItem* childItem);
 
 private:
-    int insertPosition(const std::unique_ptr<mega::MegaNode>& node);
-
     virtual void createRootNodes() = 0;
     virtual int rootItemsCount() const = 0;
     void createChildItems(std::shared_ptr<mega::MegaNodeList> childNodes, const QModelIndex& index, NodeSelectorModelItem* parent);

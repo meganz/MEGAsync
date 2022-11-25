@@ -241,7 +241,6 @@ bool NodeSelectorTreeView::mousePressorReleaseEvent(QMouseEvent *event)
                     return handleStandardMouseEvent(event);
                 }
             }
-
         }
     }
     return true;

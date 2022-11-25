@@ -1,7 +1,6 @@
 #ifndef NODESELECTOR_H
 #define NODESELECTOR_H
 
-#include "QTMegaRequestListener.h"
 #include "NodeNameSetterDialog/NewFolderDialog.h"
 #include "NodeSelectorTreeViewWidget.h"
 
@@ -19,7 +18,7 @@ namespace Ui {
 class NodeSelector;
 }
 
-class NodeSelector : public QDialog, public mega::MegaRequestListener
+class NodeSelector : public QDialog
 {
     Q_OBJECT
 

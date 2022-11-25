@@ -1,6 +1,4 @@
 #include "NodeSelectorDelegates.h"
-#include "MegaApplication.h"
-#include "NodeSelectorModel.h"
 
 #include <QBitmap>
 #include <QPainter>

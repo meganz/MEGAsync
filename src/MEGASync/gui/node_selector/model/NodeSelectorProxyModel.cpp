@@ -175,6 +175,12 @@ bool NodeSelectorProxyModel::lessThan(const QModelIndex &left, const QModelIndex
         return lStatus < rStatus;
       }
     }
+    if(left.column() == NodeSelectorModel::USER && right.column() == NodeSelectorModel::USER)
+    {
+        return mCollator.compare(left.data(Qt::ToolTipRole).toString(),
+                                 right.data(Qt::ToolTipRole).toString()) < 0;
+    }
+
 
     return mCollator.compare(left.data(Qt::DisplayRole).toString(),
                              right.data(Qt::DisplayRole).toString())<0;
