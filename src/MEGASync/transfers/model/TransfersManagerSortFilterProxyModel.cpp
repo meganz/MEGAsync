@@ -288,16 +288,12 @@ bool TransfersManagerSortFilterProxyModel::filterAcceptsRow(int sourceRow, const
             //As the active state can change in time, add both logics to add or remove
             if(d->isActiveOrPending())
             {
-                if(!mActiveTransfers.contains(d->mTag))
-                {
-                    mActiveTransfers.insert(d->mTag);
-                }
-
+                mActiveTransfers.insert(d->mTag);
                 isActive = true;
             }
 
             //As the No sync does not change in time, the remove logic is not added
-            if(!d->isSyncTransfer() && !mNoSyncTransfers.contains(d->mTag))
+            if(!d->isSyncTransfer())
             {
                 mNoSyncTransfers.insert(d->mTag);
             }
@@ -310,10 +306,7 @@ bool TransfersManagerSortFilterProxyModel::filterAcceptsRow(int sourceRow, const
 
         if(accept && (d->isActiveOrPending() && d->isCompleting()))
         {
-            if(!mCompletingTransfers.contains(d->mTag))
-            {
-                mCompletingTransfers.insert(d->mTag);
-            }
+            mCompletingTransfers.insert(d->mTag);
         }
         else
         {
@@ -322,10 +315,7 @@ bool TransfersManagerSortFilterProxyModel::filterAcceptsRow(int sourceRow, const
 
         if(accept && d->isPaused())
         {
-            if(!mPausedTransfers.contains(d->mTag))
-            {
-                mPausedTransfers.insert(d->mTag);
-            }
+            mPausedTransfers.insert(d->mTag);
         }
         else
         {
@@ -334,10 +324,7 @@ bool TransfersManagerSortFilterProxyModel::filterAcceptsRow(int sourceRow, const
 
         if(accept && ((d->isCompleted() && !d->isFailed())))
         {
-            if(!mCompletedTransfers.contains(d->mTag))
-            {
-                mCompletedTransfers.insert(d->mTag);
-            }
+            mCompletedTransfers.insert(d->mTag);
         }
         else
         {
@@ -346,10 +333,7 @@ bool TransfersManagerSortFilterProxyModel::filterAcceptsRow(int sourceRow, const
 
         if(accept && d->isFailed())
         {
-            if(!mFailedTransfers.contains(d->mTag))
-            {
-                mFailedTransfers.insert(d->mTag);
-            }
+            mFailedTransfers.insert(d->mTag);
         }
         else
         {
@@ -469,50 +453,32 @@ bool TransfersManagerSortFilterProxyModel::updateTransfersCounterFromTag(QExplic
 
 void TransfersManagerSortFilterProxyModel::removeActiveTransferFromCounter(TransferTag tag) const
 {
-    if(mActiveTransfers.contains(tag))
-    {
-        mActiveTransfers.remove(tag);
-    }
+    mActiveTransfers.remove(tag);
 }
 
 void TransfersManagerSortFilterProxyModel::removePausedTransferFromCounter(TransferTag tag) const
 {
-    if(mPausedTransfers.contains(tag))
-    {
-        mPausedTransfers.remove(tag);
-    }
+    mPausedTransfers.remove(tag);
 }
 
 void TransfersManagerSortFilterProxyModel::removeNonSyncedTransferFromCounter(TransferTag tag) const
 {
-    if(mNoSyncTransfers.contains(tag))
-    {
-        mNoSyncTransfers.remove(tag);
-    }
+    mNoSyncTransfers.remove(tag);
 }
 
 void TransfersManagerSortFilterProxyModel::removeCompletedTransferFromCounter(TransferTag tag) const
 {
-    if(mCompletedTransfers.contains(tag))
-    {
-        mCompletedTransfers.remove(tag);
-    }
+    mCompletedTransfers.remove(tag);
 }
 
 void TransfersManagerSortFilterProxyModel::removeFailedTransferFromCounter(TransferTag tag) const
 {
-    if(mFailedTransfers.contains(tag))
-    {
-        mFailedTransfers.remove(tag);
-    }
+    mFailedTransfers.remove(tag);
 }
 
 void TransfersManagerSortFilterProxyModel::removeCompletingTransferFromCounter(TransferTag tag) const
 {
-    if(mCompletingTransfers.contains(tag))
-    {
-        mCompletingTransfers.remove(tag);
-    }
+    mCompletingTransfers.remove(tag);
 }
 
 QMimeData *TransfersManagerSortFilterProxyModel::mimeData(const QModelIndexList &indexes) const
