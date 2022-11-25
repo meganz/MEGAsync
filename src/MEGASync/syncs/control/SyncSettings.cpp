@@ -166,6 +166,11 @@ int SyncSettings::getError() const
     return mSync->getError();
 }
 
+int SyncSettings::getWarning() const
+{
+    return mSync->getWarning();
+}
+
 QString SyncSettings::getRunStateAsString() const
 {
     switch (mSync->getRunState())

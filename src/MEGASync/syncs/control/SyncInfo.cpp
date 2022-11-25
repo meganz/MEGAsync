@@ -160,7 +160,7 @@ void SyncInfo::activateSync(std::shared_ptr<SyncSettings> syncSetting)
     // TODO: this never would have worked, comparing an error code to a warning code.
     // maybe implement properly, not as warning but specifically is-on-fat or not, etc.
 
-    if (!preferences->isFatWarningShown() && syncSetting->getError() == MegaSync::Warning::LOCAL_IS_FAT)
+    if (!preferences->isFatWarningShown() && syncSetting->getWarning() == MegaSync::Warning::LOCAL_IS_FAT)
     {
         QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"),
          tr("You are syncing a local folder formatted with a FAT filesystem. "

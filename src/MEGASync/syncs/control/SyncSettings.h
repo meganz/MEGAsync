@@ -56,6 +56,7 @@ public:
     QString getMegaFolder() const;
     mega::MegaHandle getMegaHandle() const;
     int getError() const;
+    int getWarning() const;
 
     QString getRunStateAsString() const;
 
