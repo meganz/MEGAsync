@@ -1,9 +1,11 @@
 #include "NodeSelectorDelegates.h"
+#include "NodeSelectorModel.h"
 
 #include <QBitmap>
 #include <QPainter>
 #include <QToolTip>
 #include <QFontMetrics>
+#include <QAbstractItemView>>
 
 
 IconDelegate::IconDelegate(QObject* parent) :
