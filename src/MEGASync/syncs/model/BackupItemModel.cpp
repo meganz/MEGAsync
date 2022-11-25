@@ -92,7 +92,7 @@ QVariant BackupItemModel::data(const QModelIndex &index, int role) const
         }
         else if(role == Qt::DisplayRole)
         {
-            return SyncController::getSyncNameFromPath(sync->getLocalFolder());
+            return SyncController::getSyncNameFromPath(sync->getLocalFolder(true));
         }
         else if(role == Qt::ToolTipRole)
         {
@@ -102,7 +102,7 @@ QVariant BackupItemModel::data(const QModelIndex &index, int role) const
                 toolTip += QCoreApplication::translate("MegaSyncError", mega::MegaSync::getMegaSyncErrorCode(sync->getError()));
                 toolTip += QChar::LineSeparator;
             }
-            toolTip += SyncTooltipCreator::createForLocal(sync->getLocalFolder());
+            toolTip += SyncTooltipCreator::createForLocal(sync->getLocalFolder(true));
             toolTip += QChar::LineSeparator;
             toolTip += SyncTooltipCreator::createForRemote(
                         mMyBackupsHandleRequest->getNodeLocalizedPath(sync->getMegaFolder()));

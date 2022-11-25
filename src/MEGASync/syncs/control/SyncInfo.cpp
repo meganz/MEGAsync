@@ -121,7 +121,6 @@ void SyncInfo::activateSync(std::shared_ptr<SyncSettings> syncSetting)
         }
 #endif
         auto slc = QDir::toNativeSeparators(QFileInfo(sl).canonicalFilePath());
-        assert(sl == slc);
     }
 #endif
 
