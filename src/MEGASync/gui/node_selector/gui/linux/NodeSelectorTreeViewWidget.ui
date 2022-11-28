@@ -1,268 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>NodeSelector</class>
- <widget class="QDialog" name="NodeSelector">
-  <property name="windowModality">
-   <enum>Qt::WindowModal</enum>
-  </property>
+ <class>NodeSelectorTreeViewWidget</class>
+ <widget class="QWidget" name="NodeSelectorTreeViewWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>590</width>
-    <height>580</height>
+    <width>440</width>
+    <height>433</height>
    </rect>
   </property>
-  <property name="minimumSize">
-   <size>
-    <width>540</width>
-    <height>530</height>
-   </size>
-  </property>
-  <property name="focusPolicy">
-   <enum>Qt::StrongFocus</enum>
-  </property>
   <property name="windowTitle">
-   <string>Select a MEGA folder</string>
-  </property>
-  <property name="styleSheet">
-   <string notr="true">QWidget
-{
-font-size: 12px;
-}
-
-QPushButton
-{
-padding-left: 10px;
-padding-right: 10px;
-height: 20px;
-}
-
-QCheckBox::indicator {
-     width: 16px;
-     height: 16px;
- }
-
-QRadioButton::indicator {
-     width: 16px;
-     height: 16px;
- }
-
-QScrollBar:horizontal {
-height: 16px;
-}
-
-#cbAlwaysUploadToLocation
-{
-    spacing: 10px;
-}
-</string>
-  </property>
-  <property name="modal">
-   <bool>true</bool>
+   <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
-   <property name="spacing">
-    <number>6</number>
-   </property>
-   <property name="leftMargin">
-    <number>12</number>
-   </property>
-   <property name="rightMargin">
-    <number>12</number>
-   </property>
    <property name="bottomMargin">
-    <number>0</number>
+    <number>5</number>
    </property>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
-     <property name="spacing">
-      <number>0</number>
-     </property>
-     <property name="topMargin">
-      <number>6</number>
-     </property>
-     <property name="bottomMargin">
-      <number>6</number>
-     </property>
-     <item>
-      <spacer name="horizontalSpacer_2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QPushButton" name="bShowCloudDrive">
-       <property name="minimumSize">
-        <size>
-         <width>140</width>
-         <height>20</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true"/>
-       </property>
-       <property name="text">
-        <string>Cloud drive</string>
-       </property>
-       <property name="checkable">
-        <bool>true</bool>
-       </property>
-       <property name="autoExclusive">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="bShowIncomingShares">
-       <property name="minimumSize">
-        <size>
-         <width>140</width>
-         <height>20</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true"/>
-       </property>
-       <property name="text">
-        <string>Incoming shares</string>
-       </property>
-       <property name="checkable">
-        <bool>true</bool>
-       </property>
-       <property name="autoExclusive">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="bShowBackups">
-       <property name="minimumSize">
-        <size>
-         <width>140</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Backups</string>
-       </property>
-       <property name="checkable">
-        <bool>true</bool>
-       </property>
-       <property name="autoExclusive">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer_3">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <widget class="Line" name="line">
-     <property name="palette">
-      <palette>
-       <active>
-        <colorrole role="Window">
-         <brush brushstyle="SolidPattern">
-          <color alpha="255">
-           <red>250</red>
-           <green>250</green>
-           <blue>250</blue>
-          </color>
-         </brush>
-        </colorrole>
-        <colorrole role="NoRole">
-         <brush brushstyle="SolidPattern">
-          <color alpha="255">
-           <red>0</red>
-           <green>0</green>
-           <blue>0</blue>
-          </color>
-         </brush>
-        </colorrole>
-       </active>
-       <inactive>
-        <colorrole role="Window">
-         <brush brushstyle="SolidPattern">
-          <color alpha="255">
-           <red>46</red>
-           <green>47</green>
-           <blue>48</blue>
-          </color>
-         </brush>
-        </colorrole>
-        <colorrole role="NoRole">
-         <brush brushstyle="NoBrush">
-          <color alpha="255">
-           <red>0</red>
-           <green>0</green>
-           <blue>0</blue>
-          </color>
-         </brush>
-        </colorrole>
-       </inactive>
-       <disabled>
-        <colorrole role="Window">
-         <brush brushstyle="SolidPattern">
-          <color alpha="255">
-           <red>250</red>
-           <green>250</green>
-           <blue>250</blue>
-          </color>
-         </brush>
-        </colorrole>
-        <colorrole role="NoRole">
-         <brush brushstyle="NoBrush">
-          <color alpha="255">
-           <red>0</red>
-           <green>0</green>
-           <blue>0</blue>
-          </color>
-         </brush>
-        </colorrole>
-       </disabled>
-      </palette>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>-1</pointsize>
-       <kerning>false</kerning>
-      </font>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Plain</enum>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_3">
      <property name="spacing">
       <number>0</number>
      </property>
      <property name="topMargin">
-      <number>6</number>
+      <number>0</number>
      </property>
      <property name="bottomMargin">
       <number>6</number>
@@ -275,17 +36,26 @@ height: 16px;
          <height>16777215</height>
         </size>
        </property>
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
        <property name="text">
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../Resources_linux.qrc">
+        <iconset resource="../../../Resources_linux.qrc">
          <normaloff>:/images/node_selector/arrow-left-ico.png</normaloff>
          <disabledoff>:/images/node_selector/arrow-left-disabled-ico.png</disabledoff>:/images/node_selector/arrow-left-ico.png</iconset>
        </property>
+       <property name="iconSize">
+        <size>
+         <width>16</width>
+         <height>16</height>
+        </size>
+       </property>
       </widget>
      </item>
-     <item>
+     <item alignment="Qt::AlignVCenter">
       <widget class="QPushButton" name="bForward">
        <property name="maximumSize">
         <size>
@@ -297,9 +67,15 @@ height: 16px;
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../Resources_linux.qrc">
+        <iconset resource="../../../Resources_linux.qrc">
          <normaloff>:/images/node_selector/arrow-right-ico.png</normaloff>
          <disabledoff>:/images/node_selector/arrow-right-disabled-ico.png</disabledoff>:/images/node_selector/arrow-right-ico.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>16</width>
+         <height>16</height>
+        </size>
        </property>
       </widget>
      </item>
@@ -324,7 +100,15 @@ height: 16px;
        <property name="font">
         <font>
          <pointsize>-1</pointsize>
+         <bold>false</bold>
+         <strikeout>false</strikeout>
+         <kerning>false</kerning>
         </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLabel{
+font-size:17px;
+}</string>
        </property>
        <property name="text">
         <string notr="true">FolderName</string>
@@ -349,6 +133,18 @@ height: 16px;
      </item>
      <item>
       <widget class="QLabel" name="lIcon">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="text">
         <string/>
        </property>
@@ -373,7 +169,7 @@ height: 16px;
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>7</width>
+         <width>10</width>
          <height>20</height>
         </size>
        </property>
@@ -381,8 +177,23 @@ height: 16px;
      </item>
      <item>
       <widget class="QLabel" name="lOwnerIcon">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="text">
         <string/>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+       <property name="margin">
+        <number>0</number>
+       </property>
+       <property name="indent">
+        <number>-1</number>
        </property>
       </widget>
      </item>
@@ -402,14 +213,11 @@ height: 16px;
     </layout>
    </item>
    <item>
-    <widget class="MegaItemTreeView" name="tMegaFolders">
+    <widget class="NodeSelectorTreeView" name="tMegaFolders">
      <property name="font">
       <font>
        <pointsize>-1</pointsize>
       </font>
-     </property>
-     <property name="mouseTracking">
-      <bool>false</bool>
      </property>
      <property name="focusPolicy">
       <enum>Qt::StrongFocus</enum>
@@ -418,18 +226,9 @@ height: 16px;
       <string notr="true">QTreeView {
     show-decoration-selected: 1;
 	selection-background-color: #3393df;
-	 font-size: 14px;
+	 font-size: 12px;
  	qproperty-indentation: 18; 
-	outline:none;
-}
-
-QHeaderView
-{
-	font-size:14px;
-}
-
-QTreeView::item {
-	background-color:transparent;
+	outline:0;
 }
 
 QTreeView::item:disabled
@@ -438,18 +237,15 @@ QTreeView::item:disabled
 }
 
 QTreeView::item:hover {
-    background-color:transparent;
+   background-color:transparent;
 }
 
-
-
-
 QTreeView::branch:hover {
-	background-color:transparent;
+background-color:transparent;
 }
 
 QTreeView::branch:selected {
-    background-color: #3393df;
+background-color: #3393df;
 }
 
 QTreeView::item:selected {
@@ -483,6 +279,12 @@ QTreeView::branch:!selected:open:has-children:adjoins-item {
 
 </string>
      </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Plain</enum>
+     </property>
      <property name="alternatingRowColors">
       <bool>true</bool>
      </property>
@@ -491,8 +293,8 @@ QTreeView::branch:!selected:open:has-children:adjoins-item {
      </property>
      <property name="iconSize">
       <size>
-       <width>24</width>
-       <height>24</height>
+       <width>22</width>
+       <height>22</height>
       </size>
      </property>
      <property name="autoExpandDelay">
@@ -504,14 +306,17 @@ QTreeView::branch:!selected:open:has-children:adjoins-item {
      <property name="animated">
       <bool>true</bool>
      </property>
+     <property name="allColumnsShowFocus">
+      <bool>false</bool>
+     </property>
      <property name="expandsOnDoubleClick">
       <bool>false</bool>
      </property>
      <attribute name="headerMinimumSectionSize">
-      <number>30</number>
+      <number>35</number>
      </attribute>
      <attribute name="headerDefaultSectionSize">
-      <number>30</number>
+      <number>35</number>
      </attribute>
     </widget>
    </item>
@@ -527,33 +332,24 @@ QTreeView::branch:!selected:open:has-children:adjoins-item {
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>16777215</height>
+       <height>26</height>
       </size>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
-      <property name="spacing">
-       <number>6</number>
-      </property>
       <property name="leftMargin">
        <number>0</number>
       </property>
       <property name="topMargin">
-       <number>12</number>
+       <number>4</number>
       </property>
       <property name="rightMargin">
        <number>0</number>
       </property>
       <property name="bottomMargin">
-       <number>12</number>
+       <number>0</number>
       </property>
       <item>
        <widget class="QPushButton" name="bNewFolder">
-        <property name="minimumSize">
-         <size>
-          <width>100</width>
-          <height>20</height>
-         </size>
-        </property>
         <property name="text">
          <string>New folder</string>
         </property>
@@ -574,12 +370,6 @@ QTreeView::branch:!selected:open:has-children:adjoins-item {
       </item>
       <item>
        <widget class="QPushButton" name="bOk">
-        <property name="minimumSize">
-         <size>
-          <width>80</width>
-          <height>20</height>
-         </size>
-        </property>
         <property name="text">
          <string>OK</string>
         </property>
@@ -587,17 +377,6 @@ QTreeView::branch:!selected:open:has-children:adjoins-item {
       </item>
       <item>
        <widget class="QPushButton" name="bCancel">
-        <property name="minimumSize">
-         <size>
-          <width>80</width>
-          <height>20</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>-1</pointsize>
-         </font>
-        </property>
         <property name="text">
          <string>Cancel</string>
         </property>
@@ -610,13 +389,13 @@ QTreeView::branch:!selected:open:has-children:adjoins-item {
  </widget>
  <customwidgets>
   <customwidget>
-   <class>MegaItemTreeView</class>
+   <class>NodeSelectorTreeView</class>
    <extends>QTreeView</extends>
-   <header>MegaItemTreeView.h</header>
+   <header>node_selector/gui/NodeSelectorTreeView.h</header>
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../../../Resources_linux.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -31,8 +31,6 @@ public:
 
     void createMyBackupsFolderIfNeeded();
 
-    static const char* DEFAULT_BACKUPS_ROOT_DIRNAME;
-
 signals:
     void attributeReady(mega::MegaHandle h);
 

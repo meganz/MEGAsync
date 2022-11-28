@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>NodeSelector</class>
+ <widget class="QDialog" name="NodeSelector">
+  <property name="windowModality">
+   <enum>Qt::WindowModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>600</width>
+    <height>590</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>540</width>
+    <height>530</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Select a MEGA folder</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QDialog
+{
+background:#FFFFFF;
+}
+
+#cbAlwaysUploadToLocation
+{
+    spacing: 10px;
+}
+
+QWidget
+{
+font-size: 11px;
+}
+
+QScrollBar:horizontal {
+height: 16px;
+}
+</string>
+  </property>
+  <property name="modal">
+   <bool>true</bool>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>9</number>
+   </property>
+   <property name="leftMargin">
+    <number>15</number>
+   </property>
+   <property name="topMargin">
+    <number>10</number>
+   </property>
+   <property name="rightMargin">
+    <number>15</number>
+   </property>
+   <property name="bottomMargin">
+    <number>15</number>
+   </property>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <property name="spacing">
+      <number>10</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>5</number>
+     </property>
+     <item>
+      <widget class="QPushButton" name="bShowCloudDrive">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    border: 3px solid #0078d7;
+	border-top-color: transparent;
+	border-left-color: transparent;
+	border-right-color: transparent;
+    border-radius: 0px;
+    background-color: transparent;
+    padding: -2px;
+	font-size:12px;
+}
+
+QPushButton:checked {
+	border-bottom-color:#0078d7;
+	color:#36230e;
+}
+QPushButton:!checked {
+	border-bottom-color:transparent;
+	color: #666666;
+}
+</string>
+       </property>
+       <property name="text">
+        <string notr="true">Cloud drive</string>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+       <property name="autoExclusive">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="bShowIncomingShares">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    border: 3px solid #0078d7;
+	border-top-color: transparent;
+	border-left-color: transparent;
+	border-right-color: transparent;
+    border-radius: 0px;
+    background-color: transparent;
+    padding: -2px;
+	font-size:12px;
+}
+
+QPushButton:checked {
+	border-bottom-color:#0078d7;
+	color:#36230e;
+}
+QPushButton:!checked {
+	border-bottom-color:transparent;
+	color: #666666;
+}
+</string>
+       </property>
+       <property name="text">
+        <string notr="true">Incoming shares</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+       <property name="autoExclusive">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="bShowBackups">
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    border: 3px solid #0078d7;
+	border-top-color: transparent;
+	border-left-color: transparent;
+	border-right-color: transparent;
+    border-radius: 0px;
+    background-color: transparent;
+    padding: -2px;
+	font-size:12px;
+}
+
+QPushButton:checked {
+	border-bottom-color:#0078d7;
+	color:#36230e;
+}
+QPushButton:!checked {
+	border-bottom-color:transparent;
+	color: #666666;
+}
+</string>
+       </property>
+       <property name="text">
+        <string notr="true">Backups</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+       <property name="autoExclusive">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_3">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>0</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QStackedWidget" name="stackedWidget">
+     <property name="currentIndex">
+      <number>2</number>
+     </property>
+     <widget class="NodeSelectorTreeViewWidgetCloudDrive" name="CloudDrive"/>
+     <widget class="NodeSelectorTreeViewWidgetIncomingShares" name="IncomingShares"/>
+     <widget class="NodeSelectorTreeViewWidgetBackups" name="Backups"/>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>NodeSelectorTreeViewWidgetCloudDrive</class>
+   <extends>QWidget</extends>
+   <header>NodeSelectorTreeViewWidgetSpecializations.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>NodeSelectorTreeViewWidgetIncomingShares</class>
+   <extends>QWidget</extends>
+   <header>NodeSelectorTreeViewWidgetSpecializations.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>NodeSelectorTreeViewWidgetBackups</class>
+   <extends>QWidget</extends>
+   <header>NodeSelectorTreeViewWidgetSpecializations.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
