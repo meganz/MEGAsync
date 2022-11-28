@@ -64,7 +64,8 @@ void SyncController::addSync(const QString& localFolder, const MegaHandle& remot
 
     mApi->syncFolder(type, localFolder.toUtf8().constData(),
                      syncName.isEmpty() ? nullptr : syncName.toUtf8().constData(),
-                     remoteHandle, nullptr, mDelegateListener);
+                     remoteHandle, nullptr, mDelegateListener,
+                     MegaApplication::applicationDataPath().toUtf8());  // avoid syncing our own folder that is writing logs and database updates all the time
 }
 
 void SyncController::removeSync(std::shared_ptr<SyncSettings> syncSetting, const MegaHandle& remoteHandle)
