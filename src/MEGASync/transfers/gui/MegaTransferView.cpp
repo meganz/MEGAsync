@@ -601,7 +601,7 @@ QMenu* MegaTransferView::createContextMenu()
         {
             if(localFoldersToOpenByContextMenu.size() <= MAX_ITEMS_FOR_CONTEXT_MENU || localFilesToOpenByContextMenu.size() <= MAX_ITEMS_FOR_CONTEXT_MENU)
             {
-                QFileInfo fileInfo = mParentTransferWidget->getModel()->getFileInfoByRow(index);
+                QFileInfo fileInfo = mParentTransferWidget->getModel()->getFileInfoByIndex(index);
                 if(localFilesToOpenByContextMenu.size() <= MAX_ITEMS_FOR_CONTEXT_MENU && !localFilesToOpenByContextMenu.contains(fileInfo))
                 {
                     localFilesToOpenByContextMenu.append(fileInfo);
@@ -1200,13 +1200,7 @@ void MegaTransferView::openItemClicked()
 void MegaTransferView::showInFolderClicked()
 {
     const QModelIndexList selection (selectedIndexes());
-    for (auto index : selection)
-    {
-        if (index.isValid())
-        {
-            mParentTransferWidget->getModel()->openFolderByIndex(index);
-        }
-    }
+    mParentTransferWidget->getModel()->openFoldersByIndexes(selection);
     clearSelection();
 }
 

@@ -203,8 +203,9 @@ public:
     void openInMEGA(const QList<int>& rows);
     std::unique_ptr<mega::MegaNode> getNodeToOpenByRow(int row);
     std::unique_ptr<mega::MegaNode> getParentNodeToOpenByRow(int row);
-    QFileInfo getFileInfoByRow(const QModelIndex &index);
+    QFileInfo getFileInfoByIndex(const QModelIndex &index);
     void openFolderByIndex(const QModelIndex& index);
+    void openFoldersByIndexes(const QModelIndexList& indexes);
     void openFolderByTag(TransferTag tag);
 
     void retryTransferByIndex(const QModelIndex& index);
@@ -320,6 +321,8 @@ private:
 
     int performPauseResumeAllTransfers(int activeTransfers, bool useEventUpdater);
     int performPauseResumeVisibleTransfers(const QModelIndexList& indexes, bool pauseState, bool useEventUpdater);
+
+    void openFolder(const QFileInfo& info);
 
 private:
     mega::MegaApi* mMegaApi;

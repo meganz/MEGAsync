@@ -1114,12 +1114,36 @@ std::unique_ptr<MegaNode> TransfersModel::getParentNodeToOpenByRow(int row)
 
 void TransfersModel::openFolderByIndex(const QModelIndex& index)
 {
-    QFileInfo fileInfo = getFileInfoByRow(index);
-    if(fileInfo.exists())
+    QFileInfo fileInfo = getFileInfoByIndex(index);
+    openFolder(fileInfo);
+}
+
+void TransfersModel::openFoldersByIndexes(const QModelIndexList &indexes)
+{
+    QStringList openedFolders;
+
+    for (auto index : indexes)
     {
-        QtConcurrent::run([this, fileInfo]
+        if (index.isValid())
         {
-            emit showInFolderFinished(Platform::showInFolder(fileInfo.filePath()));
+            QFileInfo fileInfo = getFileInfoByIndex(index);
+            auto path(fileInfo.path());
+            if(!openedFolders.contains(path))
+            {
+                openedFolders.append(path);
+                openFolder(fileInfo);
+            }
+        }
+    }
+}
+
+void TransfersModel::openFolder(const QFileInfo& info)
+{
+    if(info.exists())
+    {
+        QtConcurrent::run([this, info]
+        {
+            emit showInFolderFinished(Platform::showInFolder(info.filePath()));
         });
     }
     else
@@ -1128,7 +1152,7 @@ void TransfersModel::openFolderByIndex(const QModelIndex& index)
     }
 }
 
-QFileInfo TransfersModel::getFileInfoByRow(const QModelIndex& index)
+QFileInfo TransfersModel::getFileInfoByIndex(const QModelIndex& index)
 {
     QMutexLocker lock(&mModelMutex);
 
