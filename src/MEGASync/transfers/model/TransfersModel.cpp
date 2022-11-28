@@ -1002,7 +1002,7 @@ void TransfersModel::processSyncFailedTransfers()
     }
 }
 
-void TransfersModel::getLinks(QList<int>& rows)
+void TransfersModel::getLinks(const QList<int> &rows)
 {
     if (!rows.isEmpty())
     {
@@ -1015,38 +1015,28 @@ void TransfersModel::getLinks(QList<int>& rows)
         {
             auto d (getTransfer(row));
 
-            MegaNode *node (nullptr);
-
-            if (d->getState() == TransferData::TRANSFER_FAILED)
-            {
-                auto transfer = mMegaApi->getTransferByTag(d->mTag);
-                if(transfer)
-                {
-                    node = transfer->getPublicMegaNode();
-                }
-            }
-            else if(d->mNodeHandle)
-            {
-                node = ((MegaApplication*)qApp)->getMegaApi()->getNodeByHandle(d->mNodeHandle);
-            }
+            std::unique_ptr<MegaNode> node(getNodeToOpenByRow(row));
 
             if (!node || !node->isPublic())
             {
-                exportList.push_back(d->mNodeHandle);
+                if(!exportList.contains(d->mNodeHandle))
+                {
+                    exportList.push_back(d->mNodeHandle);
+                }
             }
             else if (node)
             {
-                char *handle = node->getBase64Handle();
-                char *key = node->getBase64Key();
+                std::unique_ptr<char[]> handle(node->getBase64Handle());
+                std::unique_ptr<char[]>key(node->getBase64Key());
                 if (handle && key)
                 {
                     QString link = Preferences::BASE_URL + QString::fromUtf8("/#!%1!%2")
-                            .arg(QString::fromUtf8(handle), QString::fromUtf8(key));
-                    linkList.push_back(link);
+                            .arg(QString::fromUtf8(handle.get()), QString::fromUtf8(key.get()));
+                    if(!linkList.contains(link))
+                    {
+                        linkList.push_back(link);
+                    }
                 }
-                delete [] key;
-                delete [] handle;
-                delete node;
             }
         }
         if (exportList.size() || linkList.size())
@@ -1056,52 +1046,89 @@ void TransfersModel::getLinks(QList<int>& rows)
     }
 }
 
-void TransfersModel::openInMEGA(QList<int> &rows)
+void TransfersModel::openInMEGA(const QList<int> &rows)
 {
     if (!rows.isEmpty())
     {
         QMutexLocker lock(&mModelMutex);
+        QStringList urlsOpened;
 
         for (auto row : rows)
         {
-            auto d (getTransfer(row));
-
-            std::unique_ptr<MegaNode> node;
-
-            if (d->getState() == TransferData::TRANSFER_FAILED)
-            {
-                auto transfer = mMegaApi->getTransferByTag(d->mTag);
-                if(transfer)
-                {
-                    node.reset(transfer->getPublicMegaNode()->copy());
-                }
-            }
-            else if(d->mNodeHandle)
-            {
-                node.reset(mMegaApi->getNodeByHandle(d->mNodeHandle));
-            }
+            auto node = getParentNodeToOpenByRow(row);
 
             if (node)
             {
-                auto openURL = [](std::unique_ptr<mega::MegaNode> node)
+                std::unique_ptr<char[]> handle(node->getBase64Handle());
+                std::unique_ptr<char[]> key(node->getBase64Key());
+                if (handle && key)
                 {
-                    std::unique_ptr<char[]> handle(node->getBase64Handle());
-                    std::unique_ptr<char[]> key(node->getBase64Key());
-                    if (handle && key)
+                    QString url = QString::fromUtf8("mega://#fm/") + QString::fromUtf8(handle.get());
+                    if(!urlsOpened.contains(url))
                     {
-                        QString url = QString::fromUtf8("mega://#fm/") + QString::fromUtf8(handle.get());
+                        urlsOpened.append(url);
                         Utilities::openUrl(QUrl(url));
                     }
-                };
-
-                std::unique_ptr<mega::MegaNode> parentNode(mMegaApi->getParentNode(node.get()));
-                parentNode ? openURL(std::move(parentNode)) : openURL(std::move(node));
+                }
             }
         }
     }
 }
 
+std::unique_ptr<MegaNode> TransfersModel::getNodeToOpenByRow(int row)
+{
+    auto d (getTransfer(row));
+
+    std::unique_ptr<MegaNode> node;
+
+    if (d->getState() == TransferData::TRANSFER_FAILED)
+    {
+        auto transfer = mMegaApi->getTransferByTag(d->mTag);
+        if(transfer)
+        {
+            node.reset(transfer->getPublicMegaNode()->copy());
+        }
+    }
+    else if(d->mNodeHandle)
+    {
+        node.reset(mMegaApi->getNodeByHandle(d->mNodeHandle));
+    }
+
+    return node;
+}
+
+//Returns the node if the parent node does not exist
+std::unique_ptr<MegaNode> TransfersModel::getParentNodeToOpenByRow(int row)
+{
+    auto node = getNodeToOpenByRow(row);
+    std::unique_ptr<mega::MegaNode> parentNode(mMegaApi->getParentNode(node.get()));
+    if(parentNode)
+    {
+        return parentNode;
+    }
+    else
+    {
+        return node;
+    }
+}
+
 void TransfersModel::openFolderByIndex(const QModelIndex& index)
+{
+    QFileInfo fileInfo = getFileInfoByRow(index);
+    if(fileInfo.exists())
+    {
+        QtConcurrent::run([this, fileInfo]
+        {
+            emit showInFolderFinished(Platform::showInFolder(fileInfo.filePath()));
+        });
+    }
+    else
+    {
+        emit showInFolderFinished(false);
+    }
+}
+
+QFileInfo TransfersModel::getFileInfoByRow(const QModelIndex& index)
 {
     QMutexLocker lock(&mModelMutex);
 
@@ -1109,21 +1136,7 @@ void TransfersModel::openFolderByIndex(const QModelIndex& index)
                 qvariant_cast<TransferItem>(index.data(Qt::DisplayRole)));
     auto d (transferItem.getTransferData());
     auto path = d->path();
-    if (d && !path.isEmpty())
-    {
-        QFileInfo fileInfo(path);
-        if(fileInfo.exists())
-        {
-            QtConcurrent::run([this, path]
-            {
-                emit showInFolderFinished(Platform::showInFolder(path));
-            });
-        }
-        else
-        {
-            emit showInFolderFinished(false);
-        }
-    }
+    return QFileInfo(path);
 }
 
 void TransfersModel::retryTransferByIndex(const QModelIndex& index)
@@ -1147,7 +1160,6 @@ void TransfersModel::retryTransferByIndex(const QModelIndex& index)
             mMegaApi->retryTransfer(failedTransferCopy);
             delete failedTransferCopy;
         });
-
     }
     else
     {
