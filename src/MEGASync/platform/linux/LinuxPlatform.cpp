@@ -16,6 +16,7 @@ static xcb_atom_t getAtom(xcb_connection_t * const connection, const char *name)
 
 ExtServer *LinuxPlatform::ext_server = NULL;
 NotifyServer *LinuxPlatform::notify_server = NULL;
+std::shared_ptr<AbstractShellNotifier> LinuxPlatform::mShellNotifier = nullptr;
 
 static QString autostart_dir = QDir::homePath() + QString::fromAscii("/.config/autostart/");
 
@@ -26,6 +27,7 @@ QString LinuxPlatform::custom_icon = QString::fromUtf8("/usr/share/icons/hicolor
 
 void LinuxPlatform::initialize(int /*argc*/, char** /*argv*/)
 {
+    mShellNotifier = std::make_shared<SignalShellNotifier>();
 }
 
 void LinuxPlatform::prepareForSync()
@@ -38,13 +40,14 @@ bool LinuxPlatform::enableTrayIcon(QString /*executable*/)
     return false;
 }
 
-void LinuxPlatform::notifyItemChange(string *localPath, int)
+void LinuxPlatform::notifyItemChange(const QString& path, int newState)
 {
-    if (notify_server && localPath && localPath->size()
-            && !Preferences::instance()->overlayIconsDisabled())
-    {
-        notify_server->notifyItemChange(localPath);
-    }
+    notifyItemChange(path.toUtf8().constData(), newState);
+}
+
+void LinuxPlatform::notifySyncFileChange(std::string *localPath, int newState)
+{
+    notifyItemChange(localPath, newState);
 }
 
 // enable or disable MEGASync launching at startup
@@ -561,6 +564,24 @@ void LinuxPlatform::initMenu(QMenu* m)
         m->ensurePolished();
     }
 }
+
+std::shared_ptr<AbstractShellNotifier> LinuxPlatform::getShellNotifier()
+{
+    return mShellNotifier;
+}
+
+void LinuxPlatform::notifyItemChange(string *localPath, int)
+{
+    if (localPath && localPath->size())
+    {
+        if (notify_server && !Preferences::instance()->overlayIconsDisabled())
+        {
+            notify_server->notifyItemChange(localPath);
+        }
+        mShellNotifier->notify(*localPath);
+    }
+}
+
 // Platform-specific strings
 const char* LinuxPlatform::settingsString {QT_TRANSLATE_NOOP("Platform", "Settings")};
 const char* LinuxPlatform::exitString {QT_TRANSLATE_NOOP("Platform", "Exit")};

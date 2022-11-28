@@ -213,6 +213,7 @@ public:
     void reloadSyncsInSettings();
 
     void raiseInfoDialog();
+    bool isShellNotificationProcessingOngoing();
 
 signals:
     void startUpdaterThread();
@@ -230,6 +231,7 @@ signals:
     void storageStateChanged(int);
     void pauseStateChanged();
     void addBackup();
+    void shellNotificationsProcessed();
 
 public slots:
     void unlink(bool keepLogs = false);
@@ -314,7 +316,7 @@ public slots:
     void onCompletedTransfersTabActive(bool active);
     void checkFirstTransfer();
     void checkOperatingSystem();
-    void notifyItemChange(QString path, int newState);
+    void notifyChangeToAllFolders();
     int getPrevVersion();
     void onDismissStorageOverquota(bool overStorage);
     void showNotificationFinishedTransfers(unsigned long long appDataId);
@@ -558,9 +560,6 @@ protected:
     bool mDisableGfx;
 
 private:
-#ifdef _WIN32
-    std::shared_ptr<ShellNotifier> mShellNotifier;
-#endif
     void loadSyncExclusionRules(QString email = QString());
 
     static std::pair<QString,QString> buildFinishedTransferTitleAndMessage(const TransferMetaData *data);
@@ -603,6 +602,7 @@ private:
 
     bool noUploadedStarted = true;
     bool mProcessingUploadQueue = false;
+    int mProcessingShellNotifications = 0;
 
     void ConnectServerSignals(HTTPServer* server);
 
@@ -666,6 +666,7 @@ private:
 
 private slots:
     void onFolderTransferUpdate(FolderTransferUpdateEvent event);
+    void onNotificationProcessed();
 };
 
 class DeferPreferencesSyncForScope

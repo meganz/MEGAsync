@@ -183,7 +183,7 @@ void SyncInfo::activateSync(std::shared_ptr<SyncSettings> syncSetting)
 void SyncInfo::deactivateSync(std::shared_ptr<SyncSettings> syncSetting)
 {
     Platform::syncFolderRemoved(syncSetting->getLocalFolder(), syncSetting->name(true), syncSetting->getSyncID());
-    MegaSyncApp->notifyItemChange(syncSetting->getLocalFolder(), MegaApi::STATE_NONE);
+    Platform::notifyItemChange(syncSetting->getLocalFolder(), MegaApi::STATE_NONE);
 }
 
 void SyncInfo::updateMegaFolder(QString newRemotePath, std::shared_ptr<SyncSettings> cs)

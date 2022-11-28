@@ -1,15 +1,18 @@
 DEPENDPATH += $$PWD
 INCLUDEPATH += $$PWD
 
-SOURCES += $$PWD/notificator.cpp
+SOURCES += $$PWD/notificator.cpp \
+    $$PWD/ShellNotifier.cpp
 
 HEADERS +=  $$PWD/Platform.h \
+            $$PWD/ShellNotifier.h \
             $$PWD/notificator.h \
             $$PWD/PowerOptions.h \
             $$PWD/PlatformStrings.h
-
 win32 {
     SOURCES +=	$$PWD/win/WindowsPlatform.cpp \
+    $$PWD/win/RecursiveShellNotifier.cpp \
+    $$PWD/win/ThreadedQueueShellNotifier.cpp \
 		$$PWD/win/WinShellDispatcherTask.cpp \
                 $$PWD/win/WinTrayReceiver.cpp \
                 $$PWD/win/wintoastlib.cpp \
@@ -17,10 +20,13 @@ win32 {
                 $$PWD/win/PlatformStrings.cpp
 
     HEADERS  += $$PWD/win/WindowsPlatform.h \
+    $$PWD/win/RecursiveShellNotifier.h \
+    $$PWD/win/ThreadedQueueShellNotifier.h \
 		$$PWD/win/WinShellDispatcherTask.h \
                 $$PWD/win/WinTrayReceiver.h \
                 $$PWD/win/wintoastlib.h \
-                $$PWD/win/WintoastCompat.h
+                $$PWD/win/WintoastCompat.h \
+                $$PWD/win/WinAPIShell.h
 
     LIBS += -lole32 -lShell32 -lcrypt32 -ltaskschd -lPowrprof
     DEFINES += UNICODE _UNICODE NTDDI_VERSION=0x06010000 _WIN32_WINNT=0x0601

@@ -4,6 +4,7 @@
 #include "MacXFunctions.h"
 #include "MacXSystemServiceTask.h"
 #include "MacXExtServerService.h"
+#include "ShellNotifier.h"
 
 #include <QApplication>
 #include <QString>
@@ -27,6 +28,7 @@ public:
     static void prepareForSync();
     static QStringList multipleUpload(QString uploadTitle);
     static bool enableTrayIcon(QString);
+    void notifyItemChange(const QString& path, int newState);
     static void notifyItemChange(std::string *localPath, int newState);
     static bool startOnStartup(bool value);
     static bool isStartOnStartupActive();
@@ -58,13 +60,17 @@ public:
     static double getUpTime();
     static QString getDeviceName();
     static void initMenu(QMenu* m);
+    static std::shared_ptr<AbstractShellNotifier> getShellNotifier();
 
     static const char* settingsString;
     static const char* exitString;
     static const char* fileExplorerString;
+    static std::shared_ptr<AbstractShellNotifier> mShellNotifier;
 
 private:
     static void disableSignalHandler();
+
+    static void notifySyncFileChange(std::string *localPath, int newState);
 
 };
 
