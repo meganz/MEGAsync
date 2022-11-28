@@ -6,6 +6,7 @@ using namespace std;
 
 MacXSystemServiceTask* MacXPlatform::systemServiceTask = NULL;
 QPointer<MacXExtServerService> MacXPlatform::extService;
+std::shared_ptr<AbstractShellNotifier> MacXPlatform::mShellNotifier = nullptr;
 
 static const QString kFinderSyncBundleId = QString::fromUtf8("mega.mac.MEGAShellExtFinder");
 static const QString kFinderSyncPath = QString::fromUtf8("/Applications/MEGAsync.app/Contents/PlugIns/MEGAShellExtFinder.appex/");
@@ -13,6 +14,7 @@ static const QString kFinderSyncPath = QString::fromUtf8("/Applications/MEGAsync
 void MacXPlatform::initialize(int /*argc*/, char *[] /*argv*/)
 {
     setMacXActivationPolicy();
+    mShellNotifier = std::make_shared<SignalShellNotifier>();
 }
 
 void MacXPlatform::prepareForSync()
@@ -165,12 +167,14 @@ void MacXPlatform::stopShellDispatcher()
     }
 }
 
-void MacXPlatform::notifyItemChange(string *localPath, int newState)
+void MacXPlatform::notifyItemChange(const QString& path, int newState)
 {
-    if (extService && localPath && localPath->size())
-    {
-        emit extService->itemChange(QString::fromStdString(*localPath), newState);
-    }
+    notifyItemChange(path.toUtf8().constData(), newState);
+}
+
+void MacXPlatform::notifySyncFileChange(std::string *localPath, int newState)
+{
+    notifyItemChange(localPath, newState);
 }
 
 void MacXPlatform::syncFolderAdded(QString syncPath, QString syncName, QString syncID)
@@ -349,6 +353,23 @@ void MacXPlatform::initMenu(QMenu* m)
         m->setAttribute(Qt::WA_TranslucentBackground);
         m->setWindowFlags(m->windowFlags() | Qt::FramelessWindowHint);
         m->ensurePolished();
+    }
+}
+
+std::shared_ptr<AbstractShellNotifier> MacXPlatform::getShellNotifier()
+{
+    return mShellNotifier;
+}
+
+void MacXPlatform::notifyItemChange(string *localPath, int newState)
+{
+    if (localPath && localPath->size())
+    {
+        if (extService)
+        {
+            emit extService->itemChange(QString::fromStdString(*localPath), newState);
+        }
+        mShellNotifier->notify(*localPath);
     }
 }
 
