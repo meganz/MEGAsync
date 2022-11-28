@@ -659,11 +659,11 @@ QMenu* MegaTransferView::createContextMenu()
 
     auto checkActionByType = [overallType, &actionFlag]()
     {
-        if(overallType & TransferData::TRANSFER_UPLOAD)
+        if((overallType & TransferData::TRANSFER_UPLOAD) && !(overallType & (TransferData::TRANSFER_DOWNLOAD | TransferData::TRANSFER_LTCPDOWNLOAD)))
         {
             actionFlag |= EnableAction::OPEN;
         }
-        else if(overallType & TransferData::TRANSFER_DOWNLOAD)
+        else if((overallType & TransferData::TRANSFER_DOWNLOAD) && !(overallType & TransferData::TRANSFER_UPLOAD))
         {
             actionFlag |= EnableAction::LINK;
         }
