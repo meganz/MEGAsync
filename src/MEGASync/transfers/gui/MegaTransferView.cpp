@@ -553,15 +553,9 @@ QMenu* MegaTransferView::createContextMenu()
     contextMenu->setWindowFlags(contextMenu->windowFlags() | Qt::NoDropShadowWindowHint);
     Platform::initMenu(contextMenu);
 
-    bool enablePause = false;
-    bool enableResume = false;
-    bool enableCancel = false;
-    bool enableClear = false;
-    bool enableMove = false;
-    bool isTopIndex(false);
-    bool isBottomIndex(false);
-    bool showLink (false);
-    bool showOpen (false);
+
+    bool isTopIndex = false;
+    bool isBottomIndex = false;
 
     QModelIndexList indexes = selectedIndexes();
 
@@ -607,60 +601,84 @@ QMenu* MegaTransferView::createContextMenu()
         overallType |= d->mType;
     }
 
-    auto checkActionByType = [overallType](bool& showOpen, bool& showLink)
+    enum EnableAction
+    {
+        NONE = 0,
+        PAUSE = 0x1,
+        RESUME = 0x2,
+        CANCEL = 0x4,
+        CLEAR = 0x8,
+        MOVE = 0x10,
+        LINK = 0x20,
+        OPEN = 0x40
+    };
+    Q_DECLARE_FLAGS(EnableActions, EnableAction);
+
+    EnableActions actionFlag(EnableAction::NONE);
+
+    auto checkActionByType = [overallType, &actionFlag]()
     {
         if(overallType == TransferData::TRANSFER_UPLOAD)
         {
-            showOpen = true;
+            actionFlag |= EnableAction::OPEN;
         }
         else if(overallType == TransferData::TRANSFER_DOWNLOAD)
         {
-            showLink = true;
+            actionFlag |= EnableAction::LINK;
         }
     };
 
     //Are all completed
     if(overallState == TransferData::TRANSFER_COMPLETED)
     {
-        enableClear = true;
-        showLink = true;
-        showOpen = true;
+        actionFlag |= EnableAction::CLEAR;
+
+        //To avoid collapsing the system opening too many tabs on the internet explorer or in the local filesystem
+        if(indexes.size() <= 10)
+        {
+            actionFlag |= EnableAction::LINK;
+            actionFlag |= EnableAction::OPEN;
+        }
     }
     else if(overallState == TransferData::TRANSFER_FAILED)
     {
-        enableClear = true;
-        checkActionByType(showOpen, showLink);
+        actionFlag |= EnableAction::CLEAR;
+        checkActionByType();
     }
     else if(overallState & TransferData::TRANSFER_PAUSED || overallState & TransferData::TRANSFER_ACTIVE)
     {
         if(overallState & TransferData::TRANSFER_COMPLETED)
         {
-            enableClear = true;
+            actionFlag |= EnableAction::CLEAR;
         }
         else
         {
             if(movableUploadTransfers > 1 || movableDownloadTransfers > 1)
             {
-                enableMove = true;
+                actionFlag |= EnableAction::MOVE;
             }
 
             if(overallState & TransferData::TRANSFER_ACTIVE)
             {
-                enablePause = true;
+                actionFlag |= EnableAction::PAUSE;
             }
             if(overallState & TransferData::TRANSFER_PAUSED)
             {
-                enableResume = true;
+                actionFlag |= EnableAction::RESUME;
             }
         }
 
-        enableCancel |= !(overallType & TransferData::TRANSFER_SYNC);
-        checkActionByType(showOpen, showLink);
+        if(!(overallType & TransferData::TRANSFER_SYNC))
+        {
+            actionFlag |= EnableAction::CANCEL;
+        }
+
+        checkActionByType();
     }
 
     bool addSeparator(false);
 
-    if(enablePause)
+    if(actionFlag & EnableAction::PAUSE)
     {
         auto pauseAction = new MenuItemAction(pauseActionText(indexes.size()),QIcon(QLatin1String(":/images/transfer_manager/context_menu/pause_ico.png")), contextMenu);
         connect(pauseAction, &QAction::triggered,
@@ -670,7 +688,7 @@ QMenu* MegaTransferView::createContextMenu()
         addSeparator = true;
     }
 
-    if(enableResume)
+    if(actionFlag & EnableAction::RESUME)
     {
         auto resumeAction = new MenuItemAction(resumeActionText(indexes.size()), QIcon(QLatin1String(":/images/transfer_manager/context_menu/resume_ico.png")), contextMenu);
         connect(resumeAction, &QAction::triggered,
@@ -683,7 +701,7 @@ QMenu* MegaTransferView::createContextMenu()
 
     addSeparatorToContextMenu(addSeparator, contextMenu);
 
-    if(showOpen)
+    if(actionFlag & EnableAction::OPEN)
     {
         auto openItemAction = new MenuItemAction(tr("Open"), QIcon(QLatin1String(":/images/transfer_manager/context_menu/open_file_ico.png")), contextMenu);
         connect(openItemAction, &QAction::triggered, this, &MegaTransferView::openItemClicked);
@@ -701,7 +719,7 @@ QMenu* MegaTransferView::createContextMenu()
 
     addSeparatorToContextMenu(addSeparator, contextMenu);
 
-    if(showLink)
+    if(actionFlag & EnableAction::LINK)
     {
         //Ico not included in transfer manager folder as it is also used by settingsDialog
         auto openInMEGAAction = new MenuItemAction(tr("Open in MEGA"), QIcon(QLatin1String(":/images/ico_open_MEGA.png")), contextMenu);
@@ -718,7 +736,7 @@ QMenu* MegaTransferView::createContextMenu()
 
     addSeparatorToContextMenu(addSeparator, contextMenu);
 
-    if(enableMove)
+    if(actionFlag & EnableAction::MOVE)
     {
         if(!isTopIndex)
         {
@@ -751,10 +769,10 @@ QMenu* MegaTransferView::createContextMenu()
         addSeparatorToContextMenu(addSeparator, contextMenu);
     }
 
-    if(enableCancel)
+    if(actionFlag & EnableAction::CANCEL)
     {
-        auto cancelAction = new MenuItemAction(enableClear ? cancelAndClearActionText(indexes.size()) : cancelActionText(indexes.size()),
-                                               QIcon(QLatin1String(":/images/transfer_manager/context_menu/cancel_transfer_ico.png")), contextMenu);
+        auto cancelAction = new MenuItemAction(actionFlag & EnableAction::CLEAR ? cancelAndClearActionText(indexes.size()) : cancelActionText(indexes.size()),
+                                               QIcon(QLatin1String(":/images/transfer_manager/context_menu/cancel_transfer_ico.png"), contextMenu));
         connect(cancelAction, &QAction::triggered,
                 this, &MegaTransferView::cancelSelectedClicked);
 
@@ -763,7 +781,7 @@ QMenu* MegaTransferView::createContextMenu()
         // Set default action to have it painted red
         contextMenu->setDefaultAction(cancelAction);
     }
-    else if(enableClear)
+    else if(actionFlag & EnableAction::CLEAR)
     {
         auto clearAction = new MenuItemAction(tr("Clear"), QIcon(QLatin1String(":/images/transfer_manager/context_menu/ico_clear.png")), contextMenu);
         connect(clearAction, &QAction::triggered,
@@ -774,6 +792,7 @@ QMenu* MegaTransferView::createContextMenu()
 
     return contextMenu;
 }
+
 
 void MegaTransferView::addSeparatorToContextMenu(bool& addSeparator, QMenu* contextMenu)
 {
@@ -1156,6 +1175,7 @@ void MegaTransferView::showInMegaClicked()
             const auto transferItem (
                         qvariant_cast<TransferItem>(index.data(Qt::DisplayRole)));
             auto d (transferItem.getTransferData());
+
             if (d->mParentHandle != mega::INVALID_HANDLE)
             {
                 qobject_cast<MegaApplication*>(qApp)->shellViewOnMega(d->mParentHandle, false);
