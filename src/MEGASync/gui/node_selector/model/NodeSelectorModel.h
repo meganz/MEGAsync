@@ -187,4 +187,7 @@ private:
     QThread* mNodeRequesterThread;
 };
 
+Q_DECLARE_METATYPE(std::shared_ptr<mega::MegaNodeList>)
+Q_DECLARE_METATYPE(std::shared_ptr<mega::MegaNode>)
+
 #endif // NODESELECTORMODEL_H
