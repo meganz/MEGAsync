@@ -5,8 +5,7 @@
 #include <QPainter>
 #include <QToolTip>
 #include <QFontMetrics>
-#include <QAbstractItemView>>
-
+#include <QAbstractItemView>
 
 IconDelegate::IconDelegate(QObject* parent) :
     QStyledItemDelegate(parent)

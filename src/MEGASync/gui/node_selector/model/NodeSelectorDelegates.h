@@ -2,6 +2,7 @@
 #define NODESELECTORDELEGATES_H
 
 #include <QStyledItemDelegate>
+#include <QHelpEvent>
 
 class IconDelegate : public QStyledItemDelegate
 {
