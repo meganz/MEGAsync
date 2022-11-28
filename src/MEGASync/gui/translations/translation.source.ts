@@ -3100,7 +3100,7 @@ Transfers will automatically resume when you re-open the app.</numerusform>
     </message>
     <message>
         <source>Cloud Drive</source>
-		<translatorcomment>Title of the Cloud Drive root node</translatorcomment>
+        <translatorcomment>Title of the Cloud Drive root node</translatorcomment>
         <translation type="unfinished">Cloud Drive</translation>
     </message>
 </context>
@@ -3560,10 +3560,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Only files can be used for streaming.</translation>
     </message>
     <message>
-        <source>Select items</source>
-        <translation>Select items</translation>
-    </message>
-    <message>
         <source>Select a MEGA folder</source>
         <translatorcomment>Node selector dialog title</translatorcomment>
         <translation>Select a MEGA folder</translation>
@@ -3709,11 +3705,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
         <translation>Cancel</translation>
-    </message>
-    <message>
-        <source>Select items</source>
-        <translatorcomment>Window title</translatorcomment>
-        <translation type="unfinished">Select items</translation>
     </message>
     <message>
         <source>Are you sure that you want to delete &quot;%1&quot;?</source>
@@ -4783,19 +4774,6 @@ Do you want to delete it anyway?</translation>
         <source>Cancel</source>
         <translatorcomment>Button text that cancels</translatorcomment>
         <translation>Cancel</translation>
-    </message>
-</context>
-<context>
-    <name>RenameLocalNodeDialog</name>
-    <message>
-        <source>File can’t be renamed to &quot;%1&quot;</source>
-        <translatorcomment>Error warning shown when a file can´t be renamed due to an error.</translatorcomment>
-        <translation>File can’t be renamed to &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <source>Folder can’t be renamed to &quot;%1&quot;</source>
-        <translatorcomment>Error warning shown when a folder can´t be renamed due to an error.</translatorcomment>
-        <translation>Folder can’t be renamed to &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
@@ -6205,6 +6183,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Please wait...</source>
         <translatorcomment>Message shown while waiting for the server request with the file info to stream</translatorcomment>
         <translation>Please wait…</translation>
+    </message>
+    <message>
+        <source>Select items</source>
+        <translatorcomment>Window title for node selector when is openned in stream mode</translatorcomment>
+        <translation type="unfinished">Select items</translation>
     </message>
 </context>
 <context>

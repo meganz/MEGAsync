@@ -86,7 +86,6 @@ void NodeSelectorTreeViewWidget::setSelectionMode(Type selectMode)
             ui->bNewFolder->hide();
             mProxyModel->showReadOnlyFolders(true);
             mModel->showFiles(true);
-            setWindowTitle(tr("Select items"));
             break;
         default:
             break;

@@ -3,6 +3,7 @@
 
 #include "NodeNameSetterDialog/NewFolderDialog.h"
 #include "NodeSelectorTreeViewWidget.h"
+#include "megaapi.h"
 
 #include <QDialog>
 #include <QItemSelection>
