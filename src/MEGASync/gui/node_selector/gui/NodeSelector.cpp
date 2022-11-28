@@ -4,7 +4,6 @@
 #include "QMegaMessageBox.h"
 #include "control/Utilities.h"
 #include "megaapi.h"
-#include "mega/utils.h"
 #include "../model/NodeSelectorProxyModel.h"
 #include "../model/NodeSelectorModel.h"
 
@@ -395,16 +394,11 @@ void NodeSelector::setSelectedNodeHandle(std::shared_ptr<MegaNode> node)
 
     if(node)
     {
-        mega::MegaHandle originHandle = node->getHandle();
-        while(node->getParentHandle() != INVALID_HANDLE)
-        {
-            node = std::unique_ptr<MegaNode>(mMegaApi->getNodeByHandle(node->getParentHandle()));
-        }
-
-        TabItem option = node->isInShare() ? SHARES : CLOUD_DRIVE;
+        TabItem option = mMegaApi->isInCloud(node.get()) ? CLOUD_DRIVE : SHARES;
         onOptionSelected(option);
 
         auto tree_view_widget = static_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->currentWidget());
-        tree_view_widget->setSelectedNodeHandle(originHandle);
+        tree_view_widget->setSelectedNodeHandle(node->getHandle());
+
     }
 }

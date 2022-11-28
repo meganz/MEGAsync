@@ -215,17 +215,13 @@ bool NodeSelectorTreeView::mousePressorReleaseEvent(QMouseEvent *event)
         if(clickedIndex.isValid() && !clickedIndex.data(toInt(NodeRowDelegateRoles::INIT_ROLE)).toBool())
         {
             int position = columnViewportPosition(0);
-            int height = rowHeight(clickedIndex);
-            int level = 0;
-            QModelIndex idx = clickedIndex;
-            idx = idx.parent();
+            QModelIndex idx = clickedIndex.parent();
             while(rootIndex() != idx)
             {
-                level++;
+                position += indentation();
                 idx = idx.parent();
             }
-            int identation = indentation() * level;
-            QRect rect(position + identation, event->pos().y(), indentation(), height);
+            QRect rect(position, event->pos().y(), indentation(), rowHeight(clickedIndex));
 
             if(rect.contains(event->pos()))
             {

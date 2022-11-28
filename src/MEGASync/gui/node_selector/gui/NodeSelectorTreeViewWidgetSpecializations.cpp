@@ -2,7 +2,6 @@
 #include "ui_NodeSelectorTreeViewWidget.h"
 
 #include "MegaNodeNames.h"
-#include "NodeSelector.h"
 #include "../model/NodeSelectorModel.h"
 #include "../model/NodeSelectorModelSpecialised.h"
 

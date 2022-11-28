@@ -6,8 +6,6 @@
 #include "QMegaMessageBox.h"
 #include "../model/NodeSelectorProxyModel.h"
 #include "../model/NodeSelectorModel.h"
-#include "mega/utils.h"
-
 #include "NodeNameSetterDialog/RenameNodeDialog.h"
 
 const int NodeSelectorTreeViewWidget::LABEL_ELIDE_MARGIN = 100;
@@ -21,7 +19,7 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(QWidget *parent) :
     mSelectMode(UNINITIALIZED_SELECT),
     mMegaApi(MegaSyncApp->getMegaApi()),
     mManuallyResizedColumn(false),
-    mDelegateListener(mega::make_unique<QTMegaRequestListener>(mMegaApi, this)),
+    mDelegateListener(new QTMegaRequestListener(mMegaApi, this)),
     mModel(nullptr),
     first(true),
     mUiBlocked(false),
@@ -65,7 +63,7 @@ void NodeSelectorTreeViewWidget::setSelectionMode(Type selectMode)
 
     mSelectMode = selectMode;
 
-    mProxyModel = std::unique_ptr<NodeSelectorProxyModel>(new NodeSelectorProxyModel(this));
+    mProxyModel = std::unique_ptr<NodeSelectorProxyModel>(new NodeSelectorProxyModel());
     mModel = getModel();
 
     switch(mSelectMode)
@@ -89,6 +87,8 @@ void NodeSelectorTreeViewWidget::setSelectionMode(Type selectMode)
             mProxyModel->showReadOnlyFolders(true);
             mModel->showFiles(true);
             setWindowTitle(tr("Select items"));
+            break;
+        default:
             break;
     }
 
@@ -432,7 +432,7 @@ void NodeSelectorTreeViewWidget::checkOkButton(const QModelIndexList &selected)
                 }
             }
 
-            result = correctSelected == selected.size() ? true : false;
+            result = correctSelected == selected.size();
         }
     }
 
@@ -708,7 +708,7 @@ NodeSelectorTreeViewWidget::~NodeSelectorTreeViewWidget()
 
 void NodeSelectorTreeViewWidget::Navigation::removeFromForward(const mega::MegaHandle &handle)
 {
-    if(forwardHandles.size() == 0)
+    if(forwardHandles.isEmpty())
         return;
 
     auto megaApi = MegaSyncApp->getMegaApi();

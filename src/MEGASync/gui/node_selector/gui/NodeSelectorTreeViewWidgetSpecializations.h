@@ -1,13 +1,13 @@
 #ifndef NODESELECTORTREEVIEWWIDGETSPECIALIZATIONS_H
 #define NODESELECTORTREEVIEWWIDGETSPECIALIZATIONS_H
 
-#include "QTMegaRequestListener.h"
-#include <megaapi.h>
 #include "NodeSelectorTreeViewWidget.h"
 
 #include <QWidget>
-#include <QItemSelectionModel>
+#include <QModelIndex>
+
 #include <memory>
+
 
 
 class NodeSelectorProxyModel;

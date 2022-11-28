@@ -655,7 +655,7 @@ QVariant NodeSelectorModel::getText(const QModelIndex &index, NodeSelectorModelI
         default:
             break;
     }
-    return QVariant(QString());
+    return QVariant();
 }
 
 NodeSelectorModel::IndexesActionInfo NodeSelectorModel::needsToBeExpandedAndSelected()
