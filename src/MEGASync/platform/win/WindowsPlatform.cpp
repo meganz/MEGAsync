@@ -209,8 +209,8 @@ void WindowsPlatform::notifySyncFileChange(std::string *localPath, int)
 
 void WindowsPlatform::notifyItemChange(const QString& localPath, AbstractShellNotifier *notifier)
 {
-    std::string path = getPreparedPath(localPath);
-    if (path != "")
+    QString path = getPreparedPath(localPath);
+    if (!path.isEmpty())
     {
         notifier->notify(path);
     }
