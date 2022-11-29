@@ -1,15 +1,10 @@
 #include "MyBackupsHandle.h"
 #include "megaapi.h"
 #include "MegaApplication.h"
+#include "MegaNodeNames.h"
 
 namespace UserAttributes
 {
-
-const char* MyBackupsHandle::DEFAULT_BACKUPS_ROOT_DIRNAME = "Backups";
-#if 0
-QT_TRANSLATE_NOOP("MegaNodeNames", "Backups");
-#endif
-
 MyBackupsHandle::MyBackupsHandle(const QString &userEmail)
  : AttributeRequest(userEmail),
    mMyBackupsFolderHandle(mega::INVALID_HANDLE),
@@ -95,16 +90,16 @@ bool MyBackupsHandle::isAttributeReady() const
     return mMyBackupsFolderHandle != mega::INVALID_HANDLE;
 }
 
-// The path looks like "/Backups" (but localized), without the "/Vault" root
-// Note: if the node exists, its name is ignored and we always display the localized version,
-// as per requirements.
 QString MyBackupsHandle::getMyBackupsLocalizedPath()
 {
-    return QLatin1Char('/') + QApplication::translate("MegaNodeNames", MyBackupsHandle::DEFAULT_BACKUPS_ROOT_DIRNAME);
+    return QLatin1Char('/') + MegaNodeNames::getBackupsName();
 }
 
 QString MyBackupsHandle::getNodeLocalizedPath(QString path) const
 {
+// The path looks like "/Backups" (but localized), without the "/Vault" root
+// Note: if the node exists, its name is ignored and we always display the localized version,
+// as per requirements.
     QString localizedPath (path);
     if (mMyBackupsFolderHandle != mega::INVALID_HANDLE)
     {
@@ -120,7 +115,7 @@ void MyBackupsHandle::createMyBackupsFolderIfNeeded()
             && !isAttributeRequestPending(mega::MegaApi::USER_ATTR_MY_BACKUPS_FOLDER)
             && !attributeRequestNeedsRetry(mega::MegaApi::USER_ATTR_MY_BACKUPS_FOLDER))
     {
-        QString name = QApplication::translate("MegaNodeNames", MyBackupsHandle::DEFAULT_BACKUPS_ROOT_DIRNAME);
+        QString name = MegaNodeNames::getBackupsName();
         mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO, "Creating MyBackups folder");
         if (!mCreateBackupsListener)
         {

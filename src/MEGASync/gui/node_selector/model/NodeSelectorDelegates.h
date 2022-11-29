@@ -1,7 +1,8 @@
-#ifndef MEGAITEMDELEGATES_H
-#define MEGAITEMDELEGATES_H
+#ifndef NODESELECTORDELEGATES_H
+#define NODESELECTORDELEGATES_H
 
 #include <QStyledItemDelegate>
+#include <QHelpEvent>
 
 class IconDelegate : public QStyledItemDelegate
 {
@@ -35,4 +36,4 @@ private:
                          const QModelIndex &index) const override;
 };
 
-#endif // MEGAITEMDELEGATES_H
+#endif // NODESELECTORDELEGATES_H

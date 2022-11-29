@@ -245,6 +245,9 @@ margin: 4px;
    <property name="spacing">
     <number>25</number>
    </property>
+   <property name="sizeConstraint">
+    <enum>QLayout::SetMaximumSize</enum>
+   </property>
    <property name="leftMargin">
     <number>24</number>
    </property>

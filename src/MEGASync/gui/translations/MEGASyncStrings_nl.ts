@@ -857,7 +857,7 @@
     <message>
         <source>Are you sure you want to exit uploading?</source>
         <translatorcomment>Confirmation message shown when the user is trying to cancel the ongoing upload report.</translatorcomment>
-        <translation>Weet u zeker dat u uw gerapporteerde probleem wilt annuleren?</translation>
+        <translation>Weet u zeker dat u het uploaden van uw gemelde probleem wilt annuleren?</translation>
     </message>
     <message>
         <source>The bug report will not be submitted if you exit uploading.</source>
@@ -3261,7 +3261,7 @@ Overdrachten worden automatisch hervat wanneer u de applicatie heropend.</numeru
     <message>
         <source>Account expired (business or Pro Flexi)</source>
         <translatorcomment>Label to show that the current account (either business or Pro Flexi) is expired during a SDK operation.</translatorcomment>
-        <translation>Account verlopen</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4399,7 +4399,7 @@ Om de synchronisatie te verwijderen, gaat u naar Voorkeuren in de desktop-applic
     <message>
         <source>File Folder</source>
         <translatorcomment>Label to desing a folder matching Windows Explorer case</translatorcomment>
-        <translation>Bestand map</translation>
+        <translation>Map</translation>
     </message>
     <message>
         <source>Folder</source>

@@ -1,7 +1,9 @@
 #include "RemoveBackupDialog.h"
 #include "ui_RemoveBackupDialog.h"
 #include "MegaApplication.h"
-#include "NodeSelector.h"
+#include "node_selector/gui/NodeSelector.h"
+#include "MegaNodeNames.h"
+
 #include <QButtonGroup>
 
 RemoveBackupDialog::RemoveBackupDialog(std::shared_ptr<SyncSettings> backup, QWidget *parent) :
@@ -23,8 +25,7 @@ RemoveBackupDialog::RemoveBackupDialog(std::shared_ptr<SyncSettings> backup, QWi
 
     mUi->bConfirm->setEnabled(false);
     mUi->moveToContainer->setEnabled(false);
-    mUi->lTarget->setText(QCoreApplication::translate("MegaNodeNames",
-                                                      MegaSyncApp->getRootNode()->getName())
+    mUi->lTarget->setText(MegaNodeNames::getNodeName(MegaSyncApp->getRootNode()->getName())
                           .append(QLatin1Char('/')));
     adjustSize();
 }
@@ -62,7 +63,7 @@ void RemoveBackupDialog::OnChangeButtonClicked()
 {
     if (!mNodeSelector)
     {
-        mNodeSelector = new NodeSelector(NodeSelector::Type::UPLOAD_SELECT, this);
+        mNodeSelector = new NodeSelector(NodeSelectorTreeViewWidget::UPLOAD_SELECT, this);
     }
     int result = mNodeSelector->exec();
     if (!mNodeSelector || result != QDialog::Accepted)
@@ -73,6 +74,6 @@ void RemoveBackupDialog::OnChangeButtonClicked()
     auto targetNode = std::unique_ptr<mega::MegaNode>(mMegaApi->getNodeByHandle(mTargetFolder));
     auto targetRoot = std::unique_ptr<mega::MegaNode>(mMegaApi->getRootNode(targetNode.get()));
 
-    mUi->lTarget->setText(QCoreApplication::translate("MegaNodeNames", targetRoot->getName())
+    mUi->lTarget->setText(MegaNodeNames::getNodeName(targetRoot->getName())
                           + QString::fromUtf8(mMegaApi->getNodePath(targetNode.get())));
 }
