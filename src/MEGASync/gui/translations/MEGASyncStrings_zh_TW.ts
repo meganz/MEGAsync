@@ -857,7 +857,7 @@
     <message>
         <source>Are you sure you want to exit uploading?</source>
         <translatorcomment>Confirmation message shown when the user is trying to cancel the ongoing upload report.</translatorcomment>
-        <translation>您確定要取消問題報告上傳嗎？</translation>
+        <translation>想要取消上傳您報告的問題嗎？</translation>
     </message>
     <message>
         <source>The bug report will not be submitted if you exit uploading.</source>
@@ -3260,7 +3260,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Account expired (business or Pro Flexi)</source>
         <translatorcomment>Label to show that the current account (either business or Pro Flexi) is expired during a SDK operation.</translatorcomment>
-        <translation>帳戶已過期</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4332,7 +4332,7 @@ Please delete the folder sync from preferences to cancel them.</source>
     <message>
         <source>All Files (*)</source>
         <translatorcomment>File of type option for not filtering files by extension</translatorcomment>
-        <translation>所有檔案（*）</translation>
+        <translation>所有檔案 (*)</translation>
     </message>
     <message>
         <source>Show </source>
@@ -4342,7 +4342,7 @@ Please delete the folder sync from preferences to cancel them.</source>
     <message>
         <source>All files (*)</source>
         <translatorcomment>File of type option for not filtering files by extension</translatorcomment>
-        <translation>所有檔案（*）</translation>
+        <translation>所有檔案 (*)</translation>
     </message>
     <message>
         <source>Directories</source>
@@ -5243,7 +5243,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Pro Lite</source>
         <translatorcomment>Text label indicating the Pro Lite tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro Lite</translation>
+        <translation>Pro Lite</translation>
     </message>
     <message>
         <source>Business</source>
@@ -5706,7 +5706,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Are you sure you want to cancel this wizard and undo all changes?</source>
         <translatorcomment>Message shown when an user cancel the Setup Wizard.</translatorcomment>
-        <translation>您確定想要取消執行小精靈並恢復所有變更?</translation>
+        <translation>想要取消這個設定精靈並還原所有變更嗎？</translation>
     </message>
     <message>
         <source>Skip</source>

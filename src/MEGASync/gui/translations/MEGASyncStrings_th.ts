@@ -857,7 +857,7 @@
     <message>
         <source>Are you sure you want to exit uploading?</source>
         <translatorcomment>Confirmation message shown when the user is trying to cancel the ongoing upload report.</translatorcomment>
-        <translation>คุณแน่ใจหรือไม่ว่าต้องการยกเลิกการอัปโหลดปัญหาที่รายงาน</translation>
+        <translation>ต้องการยกเลิกอัปโหลดรายงานปัญหาที่คุณรายงานหรือไม่</translation>
     </message>
     <message>
         <source>The bug report will not be submitted if you exit uploading.</source>
@@ -3260,7 +3260,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Account expired (business or Pro Flexi)</source>
         <translatorcomment>Label to show that the current account (either business or Pro Flexi) is expired during a SDK operation.</translatorcomment>
-        <translation>บัญชีหมดอายุแล้ว</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4397,7 +4397,7 @@ Please delete the folder sync from preferences to cancel them.</source>
     <message>
         <source>File Folder</source>
         <translatorcomment>Label to desing a folder matching Windows Explorer case</translatorcomment>
-        <translation>ไฟล์ โฟลเดอร์</translation>
+        <translation>โฟลเดอร์</translation>
     </message>
     <message>
         <source>Folder</source>
@@ -5526,7 +5526,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Please verify your account using the confirmation link that we have sent to your email account</source>
         <translatorcomment>Label displayed at last step of creation account process to inform the user to verify the new created account.</translatorcomment>
-        <translation>โปรดตรวจสอบบัญชีของคุณโดยใช้ลิงก์ยืนยันที่เราส่งไปยังบัญชีอีเมลของคุณ</translation>
+        <translation>กรุณาตรวจสอบบัญชีของคุณผ่านลิงก์ยืนยันที่เราส่งไปยังอีเมลของคุณ</translation>
     </message>
     <message>
         <source>Choose install type</source>
@@ -5706,7 +5706,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Are you sure you want to cancel this wizard and undo all changes?</source>
         <translatorcomment>Message shown when an user cancel the Setup Wizard.</translatorcomment>
-        <translation>คุณแน่ใจหรือว่าจะยกเลิกตัวช่วยสร้างและยกเลิกการเปลี่ยนแปลงทั้งหมดนี้</translation>
+        <translation>ต้องการยกเลิกตัวช่วยสร้างและการเปลี่ยนแปลงทั้งหมดนี้หรือไม่</translation>
     </message>
     <message>
         <source>Skip</source>

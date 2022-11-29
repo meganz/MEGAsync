@@ -69,7 +69,7 @@
     <message>
         <source>Choose</source>
         <translatorcomment>Button text that opens a dialog to choose a folder</translatorcomment>
-        <translation>選ぶ</translation>
+        <translation>選択</translation>
     </message>
     <message>
         <source>Backup to:</source>
@@ -278,7 +278,7 @@
     <message>
         <source>[A] has been deleted/deactivated</source>
         <translatorcomment>Label to indicate that [A] has been deleted from your contacts. Placeholder will be replaced by email of user deleted</translatorcomment>
-        <translation>[A]さんは削除/無効化されました</translation>
+        <translation>[A]さんは削除または無効化されました</translation>
     </message>
     <message>
         <source>[A] established you as a contact</source>
@@ -633,7 +633,7 @@
     <message>
         <source>Choose directory</source>
         <translatorcomment>Folder selector window title text</translatorcomment>
-        <translation>ディレクトリを選択</translation>
+        <translation>フォルダを選択</translation>
     </message>
     <message>
         <source>Error: %1</source>
@@ -681,7 +681,7 @@
     <message>
         <source>(Max. 90% of available bandwidth)</source>
         <translatorcomment>Label to indicate that auto rate option will take a maximum of 90% of the available bandwidth.</translatorcomment>
-        <translation>（利用可能な帯域幅の最大90 %）</translation>
+        <translation>（利用可能な帯域幅の最大90％）</translation>
     </message>
     <message>
         <source>Download rate limit</source>
@@ -999,7 +999,7 @@
     <message>
         <source>[A]%</source>
         <translatorcomment>Percent sign style. Form and spacing between digit and sign is different in each language.</translatorcomment>
-        <translation>[A] %</translation>
+        <translation>[A]％</translation>
     </message>
 </context>
 <context>
@@ -1114,7 +1114,7 @@
     <message>
         <source>New Contact Established</source>
         <translatorcomment>Title of the notification when a contact relationship has been established.</translatorcomment>
-        <translation>新しい連絡先が確立されました</translation>
+        <translation>新しい連絡先</translation>
     </message>
     <message>
         <source>New contact with [A] has been established</source>
@@ -1244,12 +1244,12 @@
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>お客様のビジネスアカウントは期限切れです</translation>
+        <translation>アカウントが無効化されました</translation>
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation>ご必要なお支払いをしていただくまで、アカウントは期限切れとなり、読み取り専用になります。</translation>
+        <translation>ご必要なお支払いをしていただくまで、アカウントは無効化され、読み取り専用になります。</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -1438,12 +1438,12 @@
     <message>
         <source>loading time…</source>
         <translatorcomment>Text shown while the local file/folder modified time is calculated</translatorcomment>
-        <translation>時間を読み込んでいます...</translation>
+        <translation>時間を計算しています...</translation>
     </message>
     <message>
         <source>loading size…</source>
         <translatorcomment>Text shown while the local file/folder size is calculated</translatorcomment>
-        <translation>サイズを読み込んでいます...</translation>
+        <translation>サイズを計算しています...</translation>
     </message>
     <message>
         <source>Learn more</source>
@@ -2071,7 +2071,7 @@
     <message>
         <source>Copy link to file</source>
         <translatorcomment>Tooltip for copy linr</translatorcomment>
-        <translation>ファイルへのリンクをコピー</translation>
+        <translation>リンクをクリップボードにコピー</translation>
     </message>
     <message>
         <source>Added [A]</source>
@@ -2565,7 +2565,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>お客様のビジネスアカウントは期限切れです</translation>
+        <translation>アカウントが無効化されました</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -2575,7 +2575,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message shown to admin business account when a payment has failed. </translatorcomment>
-        <translation>ビジネスアカウントのお支払いが失敗したようです。お客様のアカウントは有効期限が切れており、ご必要なお支払いをしていただくまで、読み取り専用のアクセス権限が付与されています。</translation>
+        <translation>お支払いが失敗したため、ビジネスアカウントが無効になりました。お支払いを行ってサブスクリプションを再開されるまで、アカウントに保管されているデータにアクセスすることはできません。</translation>
     </message>
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
@@ -2590,7 +2590,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>This month&apos;s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</source>
         <translatorcomment>Informative message shown to the user when a payment has failed for a business account.</translatorcomment>
-        <translation>今月のお支払いが失敗しました。お支払いの問題をできるだけ早く解決し、お客様のビジネスアカウントの一時停止を回避してください。</translation>
+        <translation>今月のお支払いが失敗しました。お支払いの問題をできるだけ早く解決し、お客様のアカウントが無効化されないようにしてください。</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -2792,12 +2792,12 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>リモートフォルダがごみ箱に入っているため、バックアップ「%1」は無効となっています</translation>
+        <translation>MEGAフォルダがごみ箱に入っているため、バックアップ「%1」は無効となっています</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>バックアップ「%1」が無効になっています。リモートフォルダ（またはその一部）にフルアクセス権がありません</translation>
+        <translation>バックアップ「%1」が無効になっています。MEGAフォルダ（またはその一部）にフルアクセス権がありません</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder has changed</source>
@@ -2955,7 +2955,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Not accessible due to ToS/AUP violation</source>
         <translatorcomment>Error shown when import a link that has violated ToS/AUP.</translatorcomment>
-        <translation>ToS/AUP違反のためアクセスできません</translation>
+        <translation>当社のご利用規約に違反しているためアクセスできません</translation>
     </message>
     <message>
         <source>Upload produces recursivity</source>
@@ -2975,12 +2975,12 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
         <translatorcomment>Error triggered by SDK when an account has been suspended due to copyright violations.</translatorcomment>
-        <translation>あなたのアカウントは、著作権侵害のため凍結されました。メールの受信トレイを確認してください。</translation>
+        <translation>著作権侵害によりアカウントが停止しました。これに関する詳細情報を記載したメールをお送りしました。</translation>
     </message>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
-        <translation>あなたのアカウントは、他人の権利の乱用、違法データの共有やインポート、システムの乱用など、MEGAのご利用規約に違反したため終了しました。</translation>
+        <translation>他人の権利の乱用、違法データの共有やインポート、システムの乱用など、MEGAのご利用規約に違反したため、アカウントは終了しました。</translation>
     </message>
 </context>
 <context>
@@ -3258,7 +3258,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Account expired (business or Pro Flexi)</source>
         <translatorcomment>Label to show that the current account (either business or Pro Flexi) is expired during a SDK operation.</translatorcomment>
-        <translation>アカウントの有効期限切れ（ビジネスまたはPro Flexi）</translation>
+        <translation>アカウントが無効化されました</translation>
     </message>
 </context>
 <context>
@@ -3476,7 +3476,8 @@ Your selected incomplete sync transfers won&apos;t be cancelled.</source>
         <source>The following characters are not allowed:
 %1</source>
         <translatorcomment>Message shown when the user has entered a not allowed character</translatorcomment>
-        <translation>次の文字は許可されていません：%1</translation>
+        <translation>次の文字は許可されていません：
+%1</translation>
     </message>
 </context>
 <context>
@@ -4023,7 +4024,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
         <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (Windows and Linux)</translatorcomment>
-        <translation>1つ以上の同期が無効になっています。設定に移動して、再度有効にします。</translation>
+        <translation>1つ以上の同期が無効になっています。設定に移動して、再有効化します。</translation>
     </message>
     <message>
         <source>Open preferences</source>
@@ -4033,7 +4034,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
         <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (macOS)</translatorcomment>
-        <translation>1つ以上の同期が無効になっています。環境設定に移動して、再度有効にします。</translation>
+        <translation>1つ以上の同期が無効になっています。環境設定に移動して、再有効化します。</translation>
     </message>
     <message>
         <source>Sync transfers cannot be cancelled individually.
@@ -4329,7 +4330,7 @@ Please delete the folder sync from preferences to cancel them.</source>
     <message>
         <source>All Files (*)</source>
         <translatorcomment>File of type option for not filtering files by extension</translatorcomment>
-        <translation>すべてのファイル（*）</translation>
+        <translation>すべてのファイル (*)</translation>
     </message>
     <message>
         <source>Show </source>
@@ -4339,7 +4340,7 @@ Please delete the folder sync from preferences to cancel them.</source>
     <message>
         <source>All files (*)</source>
         <translatorcomment>File of type option for not filtering files by extension</translatorcomment>
-        <translation>すべてのファイル（*）</translation>
+        <translation>すべてのファイル (*)</translation>
     </message>
     <message>
         <source>Directories</source>
@@ -4394,7 +4395,7 @@ Please delete the folder sync from preferences to cancel them.</source>
     <message>
         <source>File Folder</source>
         <translatorcomment>Label to desing a folder matching Windows Explorer case</translatorcomment>
-        <translation>ファイルフォルダ</translation>
+        <translation>フォルダ</translation>
     </message>
     <message>
         <source>Folder</source>
@@ -4733,7 +4734,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Bandwidth</source>
         <translatorcomment>Tab label of Bandwidth dialog. Max 15 characters.</translatorcomment>
-        <translation>データ帯域</translation>
+        <translation>帯域幅</translation>
     </message>
     <message>
         <source>Help</source>
@@ -4793,7 +4794,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>%1 (%2%) of %3 used</source>
         <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically.</translatorcomment>
-        <translation>%1 (%2 %) / %3 使用済み</translation>
+        <translation>%3中%1（%2％）使用済み</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -5240,7 +5241,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Pro Lite</source>
         <translatorcomment>Text label indicating the Pro Lite tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro Lite</translation>
+        <translation>Pro Lite</translation>
     </message>
     <message>
         <source>Business</source>
@@ -5295,17 +5296,17 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Pro I</source>
         <translatorcomment>Text label indicating the Pro I tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro I</translation>
+        <translation>Pro I</translation>
     </message>
     <message>
         <source>Pro II</source>
         <translatorcomment>Text label indicating the Pro II tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro II</translation>
+        <translation>Pro II</translation>
     </message>
     <message>
         <source>Pro III</source>
         <translatorcomment>Text label indicating the Pro III tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro III</translation>
+        <translation>Pro III</translation>
     </message>
     <message>
         <source>Export Key</source>
@@ -5618,7 +5619,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Please, enter your name</source>
         <translatorcomment>Label displayed when the user has not filled the name field.</translatorcomment>
-        <translation>あなたの名前を入力してください</translation>
+        <translation>名前を入力してください</translation>
     </message>
     <message>
         <source>Please, enter a stronger password</source>
@@ -5703,7 +5704,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Are you sure you want to cancel this wizard and undo all changes?</source>
         <translatorcomment>Message shown when an user cancel the Setup Wizard.</translatorcomment>
-        <translation>このウィザードをキャンセルして、すべての変更を元に戻しますか?</translation>
+        <translation>このウィザードをキャンセルして、変更をすべて取り消しますか？</translation>
     </message>
     <message>
         <source>Skip</source>
@@ -6653,27 +6654,27 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Clear all audios</source>
         <translatorcomment>Tooltip for clear button when the user is in the audios category</translatorcomment>
-        <translation>すべての音声をクリア</translation>
+        <translation>音声の転送をすべてクリア</translation>
     </message>
     <message>
         <source>Clear all videos</source>
         <translatorcomment>Tooltip for clear button when the user is in the videos category</translatorcomment>
-        <translation>すべての動画をクリア</translation>
+        <translation>動画の転送をすべてクリア</translation>
     </message>
     <message>
         <source>Clear all archives</source>
         <translatorcomment>Tooltip for clear button when the user is in the archives category</translatorcomment>
-        <translation>すべてのアーカイブをクリア</translation>
+        <translation>アーカイブの転送をすべてクリア</translation>
     </message>
     <message>
         <source>Clear all documents</source>
         <translatorcomment>Tooltip for clear button when the user is in the documents category</translatorcomment>
-        <translation>すべてのドキュメントをクリア</translation>
+        <translation>ドキュメントの転送をすべてクリア</translation>
     </message>
     <message>
         <source>Clear all images</source>
         <translatorcomment>Tooltip for clear button when the user is in the images category</translatorcomment>
-        <translation>すべての画像をクリア</translation>
+        <translation>画像の転送をすべてクリア</translation>
     </message>
     <message>
         <source>Clear all transfers</source>
@@ -6683,17 +6684,17 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Cancel all downloads</source>
         <translatorcomment>Tooltip for cancel button when the user is in the downloads category</translatorcomment>
-        <translation>すべてのダウンロードをキャンセル</translation>
+        <translation>ダウンロードの転送をすべてキャンセル</translation>
     </message>
     <message>
         <source>Cancel all uploads</source>
         <translatorcomment>Tooltip for cancel button when the user is in the uploads category</translatorcomment>
-        <translation>すべてのアップロードをキャンセル</translation>
+        <translation>アップロードの転送をすべてキャンセル</translation>
     </message>
     <message>
         <source>Cancel all failed</source>
         <translatorcomment>Tooltip for cancel button when the user is in the failed category</translatorcomment>
-        <translation>失敗したものをすべてキャンセル</translation>
+        <translation>失敗したものの転送をすべてキャンセル</translation>
     </message>
     <message>
         <source>Cancel all search results</source>
@@ -6703,27 +6704,27 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Cancel all audios</source>
         <translatorcomment>Tooltip for cancel button when the user is in the audios category</translatorcomment>
-        <translation>すべての音声をキャンセル</translation>
+        <translation>音声の転送をすべてキャンセル</translation>
     </message>
     <message>
         <source>Cancel all videos</source>
         <translatorcomment>Tooltip for cancel button when the user is in the videos category</translatorcomment>
-        <translation>すべての動画をキャンセル</translation>
+        <translation>動画の転送をすべてキャンセル</translation>
     </message>
     <message>
         <source>Cancel all archives</source>
         <translatorcomment>Tooltip for cancel button when the user is in the archives category</translatorcomment>
-        <translation>すべてのアーカイブをキャンセル</translation>
+        <translation>アーカイブの転送をすべてキャンセル</translation>
     </message>
     <message>
         <source>Cancel all documents</source>
         <translatorcomment>Tooltip for cancel button when the user is in the documents category</translatorcomment>
-        <translation>すべてのドキュメントをキャンセル</translation>
+        <translation>ドキュメントの転送をすべてキャンセル</translation>
     </message>
     <message>
         <source>Cancel all images</source>
         <translatorcomment>Tooltip for cancel button when the user is in the images category</translatorcomment>
-        <translation>すべての画像をキャンセル</translation>
+        <translation>画像の転送をすべてキャンセル</translation>
     </message>
     <message>
         <source>Cancel all transfers</source>
@@ -7013,22 +7014,22 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Pro Lite</source>
         <translatorcomment>Label to refer Pro Lite tier</translatorcomment>
-        <translation>Pro Lite</translation>
+        <translation>Pro Lite</translation>
     </message>
     <message>
         <source>Pro I</source>
         <translatorcomment>Label to refer Pro I tier</translatorcomment>
-        <translation>Pro I</translation>
+        <translation>Pro I</translation>
     </message>
     <message>
         <source>Pro II</source>
         <translatorcomment>Label to refer Pro II tier</translatorcomment>
-        <translation>Pro II</translation>
+        <translation>Pro II</translation>
     </message>
     <message>
         <source>Pro III</source>
         <translatorcomment>Label to refer Pro III tier</translatorcomment>
-        <translation>Pro III</translation>
+        <translation>Pro III</translation>
     </message>
     <message numerus="yes">
         <source>%n second ago</source>

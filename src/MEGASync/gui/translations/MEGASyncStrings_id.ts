@@ -533,7 +533,7 @@
     <message>
         <source>Folders will be stored in backups and you can check the status of your backups in backup centre.</source>
         <translatorcomment>Successfull dialog text</translatorcomment>
-        <translation>Folder akan disimpan dalam cadangan dan anda dapat memeriksa status cadangan anda di pusat pencadangan.</translation>
+        <translation>Folder akan disimpan dalam Cadangan dan anda dapat memeriksa status cadangan anda di pusat Pencadangan.</translation>
     </message>
     <message>
         <source>Show more…</source>
@@ -643,7 +643,7 @@
     <message>
         <source>View in backup centre</source>
         <translatorcomment>Text for a button allowing the user to view the newly created backup i nthe Backup center (in the webclient)</translatorcomment>
-        <translation>Lihat di pusat pencadangan</translation>
+        <translation>Lihat di pusat Pencadangan</translation>
     </message>
 </context>
 <context>
@@ -857,7 +857,7 @@
     <message>
         <source>Are you sure you want to exit uploading?</source>
         <translatorcomment>Confirmation message shown when the user is trying to cancel the ongoing upload report.</translatorcomment>
-        <translation>Apakah anda yakin ingin membatalkan mengunggah masalah yang anda laporkan?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>The bug report will not be submitted if you exit uploading.</source>
@@ -3260,7 +3260,7 @@ Transfer akan dilanjutkan secara otomatis saat anda membuka kembali aplikasi.</n
     <message>
         <source>Account expired (business or Pro Flexi)</source>
         <translatorcomment>Label to show that the current account (either business or Pro Flexi) is expired during a SDK operation.</translatorcomment>
-        <translation>Akun kedaluwarsa (bisnis atau Pro Flexi)</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4399,7 +4399,7 @@ Harap hapus sinkronisasi folder dari preferensi untuk membatalkannya.</translati
     <message>
         <source>File Folder</source>
         <translatorcomment>Label to desing a folder matching Windows Explorer case</translatorcomment>
-        <translation>Folder File</translation>
+        <translation>Folder</translation>
     </message>
     <message>
         <source>Folder</source>
@@ -5490,7 +5490,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Go to backup centre</source>
         <translatorcomment>Button text that opens backup center in webclient</translatorcomment>
-        <translation>Pergi ke pusat cadangan</translation>
+        <translation>Pergi ke pusat Pencadangan</translation>
     </message>
     <message>
         <source>Prevent the computer from going to sleep when transfers or syncs are in progress.</source>
@@ -5708,7 +5708,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Are you sure you want to cancel this wizard and undo all changes?</source>
         <translatorcomment>Message shown when an user cancel the Setup Wizard.</translatorcomment>
-        <translation>Apakah anda yakin anda ingin membatalkan wizard ini dan membalikan seluruh perubahan?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Skip</source>
