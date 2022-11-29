@@ -444,7 +444,7 @@
     <message>
         <source>If you don&apos;t want to rename the new folder, stop the backup in the [A]Backup centre[/A] for the existing folder. Then setup the backup for the new folder again.</source>
         <translatorcomment>Text instructing the user to go to the backup center to solve the backup name conflict</translatorcomment>
-        <translation>Если вы не хотите переименовывать новую папку, остановите резервное копирование в [A]центре резервного копирования[/A] для существующей папки. Затем снова настройте резервное копирование для новой папки.</translation>
+        <translation>Если вы не хотите переименовывать новую папку, остановите резервное копирование в [A]Центре резервного копирования[/A] для существующей папки. Затем снова настройте резервное копирование для новой папки.</translation>
     </message>
     <message>
         <source>Rename and backup</source>
@@ -533,7 +533,7 @@
     <message>
         <source>Folders will be stored in backups and you can check the status of your backups in backup centre.</source>
         <translatorcomment>Successfull dialog text</translatorcomment>
-        <translation>Папки будут храниться в резервных копиях, и вы сможете проверить состояние своих резервных копий в центре резервного копирования.</translation>
+        <translation>Папки будут храниться в «Резервных копиях», и вы сможете проверить состояние своих резервных копий в «Центре резервного копирования».</translation>
     </message>
     <message>
         <source>Show more…</source>
@@ -628,7 +628,7 @@
     <message>
         <source>Are you sure you want to cancel? All changes will be lost.</source>
         <translatorcomment>Warning dialog that appears when user click in cancel button in backup wizard and it will be closed.</translatorcomment>
-        <translation>Хотите отменить? Все изменения будут потеряны.</translation>
+        <translation>Отменить? Все изменения будут потеряны.</translation>
     </message>
     <message>
         <source>Choose directory</source>
@@ -643,7 +643,7 @@
     <message>
         <source>View in backup centre</source>
         <translatorcomment>Text for a button allowing the user to view the newly created backup i nthe Backup center (in the webclient)</translatorcomment>
-        <translation>Просмотреть в центре резервного копирования</translation>
+        <translation>Просмотреть в Центре резервного копирования</translation>
     </message>
 </context>
 <context>
@@ -857,7 +857,7 @@
     <message>
         <source>Are you sure you want to exit uploading?</source>
         <translatorcomment>Confirmation message shown when the user is trying to cancel the ongoing upload report.</translatorcomment>
-        <translation>Вы уверены, что хотите отменить загрузку сообщения об ошибке?</translation>
+        <translation>Отменить загрузку сообщения об ошибке?</translation>
     </message>
     <message>
         <source>The bug report will not be submitted if you exit uploading.</source>
@@ -2517,7 +2517,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however you might not receive new updates.</source>
         <translatorcomment>Message shown to the user to inform that he is using an operating system that will be unsupported soon</translatorcomment>
-        <translation>Приложение продолжит работу, однако вы не сможете получать будущие обновления.</translation>
+        <translation>Приложение продолжит работать, однако вы не сможете получать будущие обновления.</translation>
     </message>
     <message>
         <source>Password changed</source>
@@ -3263,7 +3263,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Account expired (business or Pro Flexi)</source>
         <translatorcomment>Label to show that the current account (either business or Pro Flexi) is expired during a SDK operation.</translatorcomment>
-        <translation>Срок действия аккаунта истёк</translation>
+        <translation>Аккаунт деактивирован</translation>
     </message>
 </context>
 <context>
@@ -5491,7 +5491,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Go to backup centre</source>
         <translatorcomment>Button text that opens backup center in webclient</translatorcomment>
-        <translation>Перейти в центр резервного копирования</translation>
+        <translation>Перейти в Центре резервного копирования</translation>
     </message>
     <message>
         <source>Prevent the computer from going to sleep when transfers or syncs are in progress.</source>
@@ -5709,7 +5709,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Are you sure you want to cancel this wizard and undo all changes?</source>
         <translatorcomment>Message shown when an user cancel the Setup Wizard.</translatorcomment>
-        <translation>Вы действительно хотите выйти из мастера установки и отменить все действия?</translation>
+        <translation>Выйти из мастера установки и отменить все действия?</translation>
     </message>
     <message>
         <source>Skip</source>

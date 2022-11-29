@@ -444,7 +444,7 @@
     <message>
         <source>If you don&apos;t want to rename the new folder, stop the backup in the [A]Backup centre[/A] for the existing folder. Then setup the backup for the new folder again.</source>
         <translatorcomment>Text instructing the user to go to the backup center to solve the backup name conflict</translatorcomment>
-        <translation>Se non vuoi rinominare la cartella, ferma il backup nel [A]Centro backup[/A] per la cartella esistente. Successivamente imposta il backup della nuova cartella nuovamente.</translation>
+        <translation>Se non vuoi rinominare la cartella, ferma il backup nel [A]Centro dei backup[/A] per la cartella esistente. Successivamente imposta il backup della nuova cartella nuovamente.</translation>
     </message>
     <message>
         <source>Rename and backup</source>
@@ -533,7 +533,7 @@
     <message>
         <source>Folders will be stored in backups and you can check the status of your backups in backup centre.</source>
         <translatorcomment>Successfull dialog text</translatorcomment>
-        <translation>Le cartelle verranno archiviate in dei backup e potrai controllare lo stato dei tuoi backup nel Centro backup.</translation>
+        <translation>Le cartelle verranno archiviate in Backup e potrai controllare lo stato dei tuoi backup nel Centro dei backup.</translation>
     </message>
     <message>
         <source>Show more…</source>
@@ -857,7 +857,7 @@
     <message>
         <source>Are you sure you want to exit uploading?</source>
         <translatorcomment>Confirmation message shown when the user is trying to cancel the ongoing upload report.</translatorcomment>
-        <translation>Sei sicuro di voler annullare il caricamento della tua segnalazione?</translation>
+        <translation>Vuoi annullare il caricamento di questo report del problema?</translation>
     </message>
     <message>
         <source>The bug report will not be submitted if you exit uploading.</source>
@@ -3260,7 +3260,7 @@ I trasferimenti riprenderanno automaticamente quando riaprirai l&apos;app.</nume
     <message>
         <source>Account expired (business or Pro Flexi)</source>
         <translatorcomment>Label to show that the current account (either business or Pro Flexi) is expired during a SDK operation.</translatorcomment>
-        <translation>Account scaduto</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4398,7 +4398,7 @@ Per favore, elimina la cartella di sincronizzazione dalle Preferenze per annulla
     <message>
         <source>File Folder</source>
         <translatorcomment>Label to desing a folder matching Windows Explorer case</translatorcomment>
-        <translation>Cartella di file</translation>
+        <translation>Cartella</translation>
     </message>
     <message>
         <source>Folder</source>
@@ -5707,7 +5707,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Are you sure you want to cancel this wizard and undo all changes?</source>
         <translatorcomment>Message shown when an user cancel the Setup Wizard.</translatorcomment>
-        <translation>Sei sicuro di voler annullare la procedura guidata e annullare tutte le modifiche?</translation>
+        <translation>Vuoi annullare questa azione e tutti i cambiamenti?</translation>
     </message>
     <message>
         <source>Skip</source>
