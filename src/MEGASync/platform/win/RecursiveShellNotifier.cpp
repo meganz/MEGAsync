@@ -7,16 +7,16 @@ RecursiveShellNotifier::RecursiveShellNotifier(std::shared_ptr<AbstractShellNoti
 {
 }
 
-void RecursiveShellNotifier::notify(const std::string &path)
+void RecursiveShellNotifier::notify(const QString& path)
 {
     mBaseNotifier->notify(path);
 
     QStringList foldersToNotify;
-    findFoldersRecursively(toQstring(path), foldersToNotify);
+    findFoldersRecursively(path, foldersToNotify);
 
     for (const auto& folder : qAsConst(foldersToNotify))
     {
-        mBaseNotifier->notify(toStdString(folder));
+        mBaseNotifier->notify(folder);
     }
 
     emit shellNotificationProcessed();

@@ -69,8 +69,8 @@ public:
     static const char* fileExplorerString;
 
 private:
-    static void notifyItemChange(std::string *localPath, AbstractShellNotifier* notifier);
-    static std::string getPreparedPath(std::string* localPath);
+    static void notifyItemChange(const QString &localPath, AbstractShellNotifier* notifier);
+    static QString getPreparedPath(const QString& localPath);
 
     static std::shared_ptr<AbstractShellNotifier> mSyncFileNotifier;
     static std::shared_ptr<AbstractShellNotifier> mGeneralNotifier;

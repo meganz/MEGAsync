@@ -10,7 +10,7 @@ class AbstractShellNotifier : public QObject
 public:
     AbstractShellNotifier();
 
-    virtual void notify(const std::string& path) = 0;
+    virtual void notify(const QString& path) = 0;
 
 signals:
     void shellNotificationProcessed();
@@ -32,7 +32,7 @@ public:
     SignalShellNotifier() = default;
     virtual ~SignalShellNotifier() = default;
 
-    void notify(const std::string& path) override;
+    void notify(const QString& path) override;
 };
 
 #endif // SHELLNOTIFIER_H

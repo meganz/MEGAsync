@@ -10,7 +10,7 @@ ShellNotifierDecorator::ShellNotifierDecorator(std::shared_ptr<AbstractShellNoti
 {
 }
 
-void SignalShellNotifier::notify(const std::string&)
+void SignalShellNotifier::notify(const QString &)
 {
     emit shellNotificationProcessed();
 }
