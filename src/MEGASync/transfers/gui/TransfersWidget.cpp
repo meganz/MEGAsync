@@ -36,6 +36,7 @@ TransfersWidget::TransfersWidget(QWidget* parent) :
 
     ui->tCancelClearVisible->installEventFilter(this);
     ui->tPauseResumeVisible->installEventFilter(this);
+    ui->tvTransfers->installEventFilter(this);
 
     auto leftPaneButtons = ui->wTableHeader->findChildren<QAbstractButton*>();
     foreach(auto& button, leftPaneButtons)
@@ -64,7 +65,7 @@ void TransfersWidget::setupTransfers()
 
 TransfersWidget::~TransfersWidget()
 {
-    mLoadingScene.setLoadingScene(false);
+    mLoadingScene.changeLoadingSceneStatus(false);
     delete ui;
     if (tDelegate) delete tDelegate;
     if (mProxyModel) delete mProxyModel;
@@ -86,6 +87,7 @@ void TransfersWidget::configureTransferView()
     ui->tvTransfers->setDropIndicatorShown(true);
     ui->tvTransfers->setDragDropMode(QAbstractItemView::InternalMove);
     ui->tvTransfers->enableContextMenu();
+    ui->tvTransfers->setHeader(nullptr);
 
     mLoadingScene.setView(ui->tvTransfers);
     mDelegateHoverManager.setView(ui->tvTransfers);
@@ -385,10 +387,13 @@ bool TransfersWidget::eventFilter(QObject *watched, QEvent *event)
     {
         updateCancelClearButtonTooltip();
     }
-
-    if(watched == ui->tPauseResumeVisible && event->type() == QEvent::ToolTip)
+    else if(watched == ui->tPauseResumeVisible && event->type() == QEvent::ToolTip)
     {
         updatePauseResumeButtonTooltip();
+    }
+    else if(watched == ui->tvTransfers && event->type() == QEvent::Show)
+    {
+        onVerticalScrollBarVisibilityChanged(ui->tvTransfers->verticalScrollBar()->isVisible());
     }
 
     return QWidget::eventFilter(watched, event);
@@ -415,7 +420,10 @@ void TransfersWidget::setScanningWidgetVisible(bool state)
 
 void TransfersWidget::onUiBlocked()
 {
-    mLoadingScene.setLoadingScene(true);
+    ui->tvTransfers->blockSignals(true);
+    ui->tvTransfers->header()->blockSignals(true);
+
+    mLoadingScene.changeLoadingSceneStatus(true);
 
     if(!mScanningIsActive)
     {
@@ -425,7 +433,11 @@ void TransfersWidget::onUiBlocked()
 
 void TransfersWidget::onUiUnblocked()
 {
-    mLoadingScene.setLoadingScene(false);
+    ui->tvTransfers->header()->blockSignals(false);
+    ui->tvTransfers->blockSignals(false);
+
+    mLoadingScene.changeLoadingSceneStatus(false);
+
     emit disableTransferManager(false);
 
     mModel->uiUnblocked();
@@ -443,7 +455,6 @@ void TransfersWidget::onModelAboutToBeChanged()
 {
     onUiBlocked();
 }
-
 
 void TransfersWidget::onModelChanged()
 {
@@ -538,19 +549,22 @@ void TransfersWidget::on_tPauseResumeVisible_toggled(bool state)
 
 void TransfersWidget::onVerticalScrollBarVisibilityChanged(bool state)
 {
-    if(state)
+    if(ui->tvTransfers->isVisible())
     {
-        int sliderWidth = ui->tvTransfers->verticalScrollBar()->width();
-        ui->rightMargin->changeSize(sliderWidth,0,QSizePolicy::Fixed, QSizePolicy::Preferred);
-    }
-    else
-    {
-        ui->rightMargin->changeSize(0,0,QSizePolicy::Fixed, QSizePolicy::Preferred);
-    }
+        if(state)
+        {
+            int sliderWidth = ui->tvTransfers->verticalScrollBar()->width();
+            ui->rightMargin->changeSize(sliderWidth,0,QSizePolicy::Fixed, QSizePolicy::Preferred);
+        }
+        else
+        {
+            ui->rightMargin->changeSize(0,0,QSizePolicy::Fixed, QSizePolicy::Preferred);
+        }
 
-    if(ui->wTableHeaderLayout)
-    {
-        ui->wTableHeaderLayout->invalidate();
+        if(ui->wTableHeaderLayout)
+        {
+            ui->wTableHeaderLayout->invalidate();
+        }
     }
 }
 

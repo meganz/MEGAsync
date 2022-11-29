@@ -698,6 +698,9 @@ void MegaApplication::initialize()
     mTransfersModel = new TransfersModel(nullptr);
 
     connect(mTransfersModel.data(), &TransfersModel::transfersCountUpdated, this, &MegaApplication::onTransfersModelUpdate);
+
+    connect(Platform::getShellNotifier().get(), &AbstractShellNotifier::shellNotificationProcessed,
+            this, &MegaApplication::onNotificationProcessed);
 }
 
 QString MegaApplication::applicationFilePath()
@@ -2234,7 +2237,7 @@ void MegaApplication::cleanAll()
 
     for (auto localFolder : model->getLocalFolders(SyncInfo::AllHandledSyncTypes))
     {
-        notifyItemChange(localFolder, MegaApi::STATE_NONE);
+        Platform::notifyItemChange(localFolder, MegaApi::STATE_NONE);
     }
 
     mSyncController.reset();
@@ -2408,6 +2411,11 @@ void MegaApplication::raiseInfoDialog()
         infoDialog->activateWindow();
         infoDialog->highDpiResize.queueRedraw();
     }
+}
+
+bool MegaApplication::isShellNotificationProcessingOngoing()
+{
+    return mProcessingShellNotifications > 0;
 }
 
 void MegaApplication::showInfoDialog()
@@ -3604,6 +3612,15 @@ void MegaApplication::onFolderTransferUpdate(FolderTransferUpdateEvent event)
     }
 }
 
+void MegaApplication::onNotificationProcessed()
+{
+    --mProcessingShellNotifications;
+    if (mProcessingShellNotifications <= 0)
+    {
+        emit shellNotificationsProcessed();
+    }
+}
+
 void MegaApplication::setupWizardFinished(int result)
 {
     if (appfinished)
@@ -4267,20 +4284,13 @@ void MegaApplication::checkOperatingSystem()
     }
 }
 
-void MegaApplication::notifyItemChange(QString path, int newState)
+void MegaApplication::notifyChangeToAllFolders()
 {
-    string localPath;
-#ifdef _WIN32
-    if (path.startsWith(QString::fromUtf8("\\\\?\\")))
+    for (auto localFolder : model->getLocalFolders(SyncInfo::AllHandledSyncTypes))
     {
-        path = path.mid(4);
+        ++mProcessingShellNotifications;
+        Platform::notifyItemChange(localFolder, MegaApi::STATE_NONE);
     }
-
-    localPath.assign((const char *)path.utf16(), path.size() * sizeof(wchar_t));
-#else
-    localPath = path.toUtf8().constData();
-#endif
-    Platform::notifyItemChange(&localPath, newState);
 }
 
 int MegaApplication::getPrevVersion()
@@ -5103,7 +5113,8 @@ void MegaApplication::downloadActionClicked()
         return;
     }
 
-    downloadNodeSelector = new NodeSelector(NodeSelector::DOWNLOAD_SELECT, NULL);
+    downloadNodeSelector = new NodeSelector(NodeSelectorTreeViewWidget::DOWNLOAD_SELECT, NULL);
+    downloadNodeSelector->setSelectedNodeHandle();
     int result = downloadNodeSelector->exec();
     if (!downloadNodeSelector)
     {
@@ -8318,6 +8329,16 @@ void MegaApplication::onSyncStateChanged(MegaApi *api, MegaSync *sync)
         return;
     }
 
+    if (sync->getRunState() == MegaSync::RUNSTATE_DISABLED)
+    {
+        if (sync->getError())
+        {
+            model->addUnattendedDisabledSync(sync->getBackupId(),
+                                             static_cast<MegaSync::SyncType>(sync->getType()));
+        }
+        onSyncDisabled(model->getSyncSettingByTag(sync->getBackupId()));
+    }
+
     model->updateSyncSettings(sync); //Note, we are not updating the remote sync path
     // we asume that cannot change for existing syncs.
 
@@ -8331,17 +8352,7 @@ void MegaApplication::onSyncFileStateChanged(MegaApi *, MegaSync *, string *loca
         return;
     }
 
-#ifdef _WIN32
-    if (!mShellNotifier)
-    {
-        mShellNotifier = make_shared<ShellNotifier>();
-    }
-
-    Platform::notifyItemChange(localPath, newState, mShellNotifier);
-
-#else
-    Platform::notifyItemChange(localPath, newState);
-#endif
+    Platform::notifySyncFileChange(localPath, newState);
 }
 
 void MegaApplication::onSyncDisabled(std::shared_ptr<SyncSettings> syncSetting)
@@ -8377,7 +8388,7 @@ void MegaApplication::showSingleSyncDisabledNotification(std::shared_ptr<SyncSet
                          QString::fromUtf8("Sync \"%1\" Path: %2 disabled: %3")
                          .arg(syncName, syncSetting->getLocalFolder(), QString::number(errorCode)).toUtf8().constData());
 
-            if (syncSetting->isTemporaryDisabled()
+            if (!syncSetting->isEnabled()
                     && errorCode != MegaSync::Error::LOGGED_OUT)
             {
                 QString errMsg(tr("Your sync \"%1\" has been temporarily disabled").arg(syncName));
@@ -8447,7 +8458,7 @@ void MegaApplication::showSingleSyncDisabledNotification(std::shared_ptr<SyncSet
             MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
                          QString::fromUtf8("Backup \"%1\" Path: %2 disabled: %3")
                          .arg(syncName, syncSetting->getLocalFolder(), QString::number(errorCode)).toUtf8().constData());
-            if (syncSetting->isTemporaryDisabled()
+            if (!syncSetting->isEnabled()
                     && errorCode != MegaSync::Error::LOGGED_OUT)
             {
                 QString errMsg (tr("Your backup \"%1\" has been temporarily disabled").arg(syncName));
@@ -8527,16 +8538,6 @@ void MegaApplication::showSingleSyncDisabledNotification(std::shared_ptr<SyncSet
     }
 }
 
-void MegaApplication::onSyncDisabled(MegaApi*, MegaSync* sync)
-{
-    if (appfinished || !sync)
-    {
-        return;
-    }
-
-    onSyncDisabled(model->getSyncSettingByTag(sync->getBackupId()));
-}
-
 void MegaApplication::onSyncEnabled(std::shared_ptr<SyncSettings> syncSetting)
 {
     if (!syncSetting)
@@ -8555,30 +8556,14 @@ void MegaApplication::onSyncEnabled(std::shared_ptr<SyncSettings> syncSetting)
     model->removeUnattendedDisabledSync(syncSetting->backupId(), syncSetting->getType());
 }
 
-void MegaApplication::onSyncEnabled(MegaApi* , MegaSync* sync)
+void MegaApplication::onSyncAdded(MegaApi *api, MegaSync *sync)
 {
     if (appfinished || !sync)
     {
         return;
     }
 
-    onSyncEnabled(model->getSyncSettingByTag(sync->getBackupId()));
-}
-
-void MegaApplication::onSyncAdded(MegaApi *api, MegaSync *sync, int additionState)
-{
-    if (appfinished || !sync)
-    {
-        return;
-    }
-
-    auto syncSetting = model->updateSyncSettings(sync, additionState);
-
-    if (additionState == MegaSync::SyncAdded::FROM_CACHE_FAILED_TO_RESUME
-            || additionState == MegaSync::SyncAdded::NEW_TEMP_DISABLED)
-    {
-        onSyncDisabled(syncSetting);
-    }
+    auto syncSetting = model->updateSyncSettings(sync);
 
     onGlobalSyncStateChanged(api);
 }

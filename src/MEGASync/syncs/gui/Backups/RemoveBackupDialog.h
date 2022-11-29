@@ -2,7 +2,7 @@
 #define REMOVEBACKUPDIALOG_H
 
 #include "syncs/control/SyncSettings.h"
-#include "NodeSelector.h"
+#include "node_selector/gui/NodeSelector.h"
 
 #include <QDialog>
 #include <QPointer>

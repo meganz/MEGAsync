@@ -71,7 +71,7 @@ public:
      * @param addingState to distinguish adding cases (from onSyncAdded)
      * @return
      */
-    std::shared_ptr<SyncSettings> updateSyncSettings(mega::MegaSync *sync, int addingState = 0);
+    std::shared_ptr<SyncSettings> updateSyncSettings(mega::MegaSync *sync);
 
     // transition sync to active: will trigger platform dependent behaviour
     void activateSync(std::shared_ptr<SyncSettings> cs);

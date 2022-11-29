@@ -495,11 +495,10 @@ bool TransferManagerDelegateWidget::eventFilter(QObject *watched, QEvent *event)
     {
         if(watched == mUi->wTransferName)
         {
-            auto text = getData()->mFilename;
-            auto availableSize = getNameAvailableSize(mUi->wTransferName, mUi->lSyncIcon, mUi->nameSpacer);
             mUi->lTransferName->setText(mUi->lTransferName->fontMetrics()
-                               .elidedText(text, Qt::ElideMiddle,
-                                          availableSize));
+                                        .elidedText(getData()->mFilename, Qt::ElideMiddle,
+                                                   getNameAvailableSize(mUi->wTransferName, mUi->lSyncIcon, mUi->nameSpacer)));
+            mUi->lTransferName->adjustSize();
         }
         else if(auto label = dynamic_cast<QWidget*>(watched))
         {

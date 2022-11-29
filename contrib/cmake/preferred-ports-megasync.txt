@@ -25,20 +25,21 @@ libzen/0.4.37
 ffmpeg/c303dd024e2dc03a0665ddffbb12a1077933e649 osx:ffmpeg-fix-osx-cross-compilation.patch
 
 #freeimage and its dependencies (image preview/thumbnail generation)
-freeimage/7375bb408f2278d2f1875c259beef93332697ba7 osx:freeimage-bool-typedef-xcode-compiler.patch
-libpng/7375bb408f2278d2f1875c259beef93332697ba7
-libjpeg-turbo/7375bb408f2278d2f1875c259beef93332697ba7
-tiff/7375bb408f2278d2f1875c259beef93332697ba7
-openjpeg/7375bb408f2278d2f1875c259beef93332697ba7
+freeimage/94ce0dab56f4d8ba6bd631ba59ed682b02d45c46 osx:freeimage-bool-typedef-xcode-compiler.patch
+libpng/94ce0dab56f4d8ba6bd631ba59ed682b02d45c46
+libjpeg-turbo/94ce0dab56f4d8ba6bd631ba59ed682b02d45c46
+tiff/94ce0dab56f4d8ba6bd631ba59ed682b02d45c46
+openjpeg/94ce0dab56f4d8ba6bd631ba59ed682b02d45c46
 libwebp/7375bb408f2278d2f1875c259beef93332697ba7 all:libwebp-no-freeglut-no-avx.patch
 libraw/7375bb408f2278d2f1875c259beef93332697ba7 ios:libraw-ios.patch
-jxrlib/7375bb408f2278d2f1875c259beef93332697ba7 ios:jxrlib-ios-guiddef-fix.patch
-openexr/7375bb408f2278d2f1875c259beef93332697ba7 ios:openexr-ios.patch
-jasper/7375bb408f2278d2f1875c259beef93332697ba7 all:jasper-no-freeglut.patch
-liblzma/7375bb408f2278d2f1875c259beef93332697ba7 ios:liblzma-ios.patch
+jxrlib/94ce0dab56f4d8ba6bd631ba59ed682b02d45c46 ios:jxrlib-ios-guiddef-fix.patch
+openexr/94ce0dab56f4d8ba6bd631ba59ed682b02d45c46 ios:openexr-ios.patch
+imath/94ce0dab56f4d8ba6bd631ba59ed682b02d45c46
+jasper/94ce0dab56f4d8ba6bd631ba59ed682b02d45c46 all:jasper-no-freeglut.patch
+liblzma/94ce0dab56f4d8ba6bd631ba59ed682b02d45c46 ios:liblzma-ios.patch
 #python3 not needed; it only provides python bindings to use openexr from python
-libffi/7375bb408f2278d2f1875c259beef93332697ba7
-opengl/7375bb408f2278d2f1875c259beef93332697ba7
+libffi/94ce0dab56f4d8ba6bd631ba59ed682b02d45c46
+opengl/94ce0dab56f4d8ba6bd631ba59ed682b02d45c46
 #freeglut (cross platform window manager) not needed; problematic on some platforms, pulling in many, many dependencies
 
 # pdfium libraries, specific version for build stability  (preview/thumbnail generation for pdfs)
@@ -51,10 +52,10 @@ pdfium-freetype/2-12-1
 icu/979a5197b3389cfdf91d0ac5d98b6066ce73fd7a all:off osx:on
 icu/cb91b416cb8f85f0a55853baad23fb18d306148a all:on osx:off
 lcms/c303dd024e2dc03a0665ddffbb12a1077933e649
-libjpeg-turbo/7375bb408f2278d2f1875c259beef93332697ba7
-openjpeg/7375bb408f2278d2f1875c259beef93332697ba7
+#libjpeg-turbo already added for freeimage
+#openjpeg already added for freeimage
 bzip2/c303dd024e2dc03a0665ddffbb12a1077933e649
-libpng/7375bb408f2278d2f1875c259beef93332697ba7
+#libpng already added for freeimage
 
 # for the tests, just to get the build through
 gtest/7375bb408f2278d2f1875c259beef93332697ba7

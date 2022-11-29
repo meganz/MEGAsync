@@ -1,7 +1,7 @@
 #include "mega/types.h"
 #include "StreamingFromMegaDialog.h"
 #include "ui_StreamingFromMegaDialog.h"
-#include "NodeSelector.h"
+#include "node_selector/gui/NodeSelector.h"
 
 #include "QMegaMessageBox.h"
 #include "platform/Platform.h"
@@ -98,11 +98,10 @@ void StreamingFromMegaDialog::closeEvent(QCloseEvent *event)
 
 void StreamingFromMegaDialog::on_bFromCloud_clicked()
 {
-    const unique_ptr<NodeSelector> nodeSelector{::mega::make_unique<NodeSelector>(NodeSelector::STREAM_SELECT, this->parentWidget())};
-    if (mSelectedMegaNode)
-    {
-        nodeSelector->setSelectedNodeHandle(mSelectedMegaNode->getHandle());
-    }
+    const unique_ptr<NodeSelector> nodeSelector{::mega::make_unique<NodeSelector>(NodeSelectorTreeViewWidget::STREAM_SELECT, this->parentWidget())};
+    nodeSelector->setWindowTitle(tr("Select items"));
+    nodeSelector->setSelectedNodeHandle(mSelectedMegaNode);
+
     int result = nodeSelector->exec();
     if (!nodeSelector || result != QDialog::Accepted)
     {

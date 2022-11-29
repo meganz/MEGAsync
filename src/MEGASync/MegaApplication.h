@@ -14,7 +14,7 @@
 #include <memory>
 
 #include "gui/TransferManager.h"
-#include "gui/NodeSelector.h"
+#include "gui/node_selector/gui/NodeSelector.h"
 #include "gui/InfoDialog.h"
 #include "gui/UpgradeOverStorage.h"
 #include "gui/SetupWizard.h"
@@ -121,9 +121,7 @@ public:
     void onSyncStateChanged(mega::MegaApi *api,  mega::MegaSync *sync) override;
     void onSyncFileStateChanged(mega::MegaApi *api, mega::MegaSync *sync, std::string *localPath, int newState) override;
 
-    void onSyncAdded(mega::MegaApi *api, mega::MegaSync *sync, int additionState) override;
-    void onSyncDisabled(mega::MegaApi *api, mega::MegaSync *sync) override;
-    void onSyncEnabled(mega::MegaApi *api, mega::MegaSync *sync) override;
+    void onSyncAdded(mega::MegaApi *api, mega::MegaSync *sync) override;
     void onSyncDeleted(mega::MegaApi *api, mega::MegaSync *sync) override;
 
     virtual void onCheckDeferredPreferencesSync(bool timeout);
@@ -215,6 +213,7 @@ public:
     void reloadSyncsInSettings();
 
     void raiseInfoDialog();
+    bool isShellNotificationProcessingOngoing();
 
 signals:
     void startUpdaterThread();
@@ -232,6 +231,7 @@ signals:
     void storageStateChanged(int);
     void pauseStateChanged();
     void addBackup();
+    void shellNotificationsProcessed();
 
 public slots:
     void unlink(bool keepLogs = false);
@@ -316,7 +316,7 @@ public slots:
     void onCompletedTransfersTabActive(bool active);
     void checkFirstTransfer();
     void checkOperatingSystem();
-    void notifyItemChange(QString path, int newState);
+    void notifyChangeToAllFolders();
     int getPrevVersion();
     void onDismissStorageOverquota(bool overStorage);
     void showNotificationFinishedTransfers(unsigned long long appDataId);
@@ -560,9 +560,6 @@ protected:
     bool mDisableGfx;
 
 private:
-#ifdef _WIN32
-    std::shared_ptr<ShellNotifier> mShellNotifier;
-#endif
     void loadSyncExclusionRules(QString email = QString());
 
     static std::pair<QString,QString> buildFinishedTransferTitleAndMessage(const TransferMetaData *data);
@@ -605,6 +602,7 @@ private:
 
     bool noUploadedStarted = true;
     bool mProcessingUploadQueue = false;
+    int mProcessingShellNotifications = 0;
 
     void ConnectServerSignals(HTTPServer* server);
 
@@ -668,6 +666,7 @@ private:
 
 private slots:
     void onFolderTransferUpdate(FolderTransferUpdateEvent event);
+    void onNotificationProcessed();
 };
 
 class DeferPreferencesSyncForScope

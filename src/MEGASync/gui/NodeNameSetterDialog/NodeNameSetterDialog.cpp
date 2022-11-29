@@ -72,6 +72,23 @@ void NodeNameSetterDialog::showError(const QString &errorText)
     mUi->lineEdit->setFocus();
 }
 
+bool NodeNameSetterDialog::checkAlreadyExistingNode(const QString& nodeName, std::shared_ptr<mega::MegaNode> parentNode)
+{
+    auto node = std::unique_ptr<mega::MegaNode>(MegaSyncApp->getMegaApi()->getNodeByPath(nodeName.toUtf8().constData(), parentNode.get()));
+    if(node)
+    {
+        showAlreadyExistingNodeError(node->isFile());
+    }
+
+    return node != nullptr;
+}
+
+void NodeNameSetterDialog::showAlreadyExistingNodeError(bool isFile)
+{
+    isFile ? showError(tr("A file with this name already exists in this location.\nEnter a different name."))
+           : showError(tr("A folder with this name already exists in this location.\nEnter a different name"));
+}
+
 void NodeNameSetterDialog::changeEvent(QEvent *event)
 {
     if(event->type() == QEvent::LanguageChange)

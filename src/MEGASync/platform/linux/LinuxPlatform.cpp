@@ -16,6 +16,7 @@ static xcb_atom_t getAtom(xcb_connection_t * const connection, const char *name)
 
 ExtServer *LinuxPlatform::ext_server = NULL;
 NotifyServer *LinuxPlatform::notify_server = NULL;
+std::shared_ptr<AbstractShellNotifier> LinuxPlatform::mShellNotifier = nullptr;
 
 static QString autostart_dir = QDir::homePath() + QString::fromAscii("/.config/autostart/");
 
@@ -26,6 +27,7 @@ QString LinuxPlatform::custom_icon = QString::fromUtf8("/usr/share/icons/hicolor
 
 void LinuxPlatform::initialize(int /*argc*/, char** /*argv*/)
 {
+    mShellNotifier = std::make_shared<SignalShellNotifier>();
 }
 
 void LinuxPlatform::prepareForSync()
@@ -38,12 +40,24 @@ bool LinuxPlatform::enableTrayIcon(QString /*executable*/)
     return false;
 }
 
-void LinuxPlatform::notifyItemChange(string *localPath, int)
+void LinuxPlatform::notifyItemChange(const QString& path, int)
 {
-    if (notify_server && localPath && localPath->size()
-            && !Preferences::instance()->overlayIconsDisabled())
+    if (!path.isEmpty())
     {
-        notify_server->notifyItemChange(localPath);
+        if (notify_server && !Preferences::instance()->overlayIconsDisabled())
+        {
+            std::string stdPath = path.toStdString();
+            notify_server->notifyItemChange(&stdPath);
+        }
+        mShellNotifier->notify(path);
+    }
+}
+
+void LinuxPlatform::notifySyncFileChange(std::string *localPath, int newState)
+{
+    if(localPath && localPath->size())
+    {
+        notifyItemChange(QString::fromStdString(*localPath), newState);
     }
 }
 
@@ -540,7 +554,7 @@ void LinuxPlatform::initMenu(QMenu* m)
                                        "margin: 6px 10px 6px 10px;"
                                        "background-color: rgba(0, 0, 0, 0.1);"
                                    "}"
-                                   // For vanilla QMenus (only in TransferManager and MegaItemTreeView (NodeSelector))
+                                   // For vanilla QMenus (only in TransferManager and NodeSelectorTreeView (NodeSelector))
                                    "QMenu::item {"
                                        "font-family: Lato;"
                                        "font-size: 14px;"
@@ -561,6 +575,12 @@ void LinuxPlatform::initMenu(QMenu* m)
         m->ensurePolished();
     }
 }
+
+std::shared_ptr<AbstractShellNotifier> LinuxPlatform::getShellNotifier()
+{
+    return mShellNotifier;
+}
+
 // Platform-specific strings
 const char* LinuxPlatform::settingsString {QT_TRANSLATE_NOOP("Platform", "Settings")};
 const char* LinuxPlatform::exitString {QT_TRANSLATE_NOOP("Platform", "Exit")};
