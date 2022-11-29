@@ -13,7 +13,12 @@ pipeline {
 
     stages {
         stage('get additional build parameters'){
-            when { expression { env.gitlabTriggerPhrase.contains('BUILD_OPTIONS') } }
+            when {
+                allOf {
+                    expression { env.gitlabTriggerPhrase != null }
+                    expression { env.gitlabTriggerPhrase.contains('BUILD_OPTIONS') }
+                }
+            }
             steps {
                 script{
                     BUILD_OPTIONS = sh(script: "echo '${env.gitlabTriggerPhrase}' | grep BUILD_OPTIONS | awk -F 'BUILD_OPTIONS='  '{print \$2}' | cut -d'\"' -f2", returnStdout: true).trim()
@@ -59,7 +64,10 @@ pipeline {
             parallel {
                 stage('Build macOS') {
                     when {
-                        expression { env.gitlabTriggerPhrase == 'launch compilation' || env.gitlabTriggerPhrase.startsWith('launch compilation macos')}
+                        anyOf {
+                            expression { env.gitlabTriggerPhrase != null && ( env.gitlabTriggerPhrase == 'trigger compilation' || env.gitlabTriggerPhrase.startsWith('trigger compilation macos'))  }
+                            triggeredBy "GitlabWebhookCause"
+                        }
                     }
                     steps {
                         gitlabCommitStatus(name: 'MacOS build') {
@@ -100,7 +108,10 @@ pipeline {
 
                 stage('Build Linux') {
                     when {
-                        expression { env.gitlabTriggerPhrase == 'launch compilation' || env.gitlabTriggerPhrase.startsWith('launch compilation linux') }
+                        anyOf {
+                            expression { env.gitlabTriggerPhrase != null && ( env.gitlabTriggerPhrase == 'trigger compilation' || env.gitlabTriggerPhrase.startsWith('trigger compilation linux'))  }
+                            triggeredBy "GitlabWebhookCause"
+                        }
                     }
                     steps {
                         gitlabCommitStatus(name: 'Linux build') {
@@ -141,7 +152,10 @@ pipeline {
 
                 stage('Build Windows') {
                     when {
-                        expression { env.gitlabTriggerPhrase == 'launch compilation' || env.gitlabTriggerPhrase.startsWith('launch compilation windows') }
+                        anyOf {
+                            expression { env.gitlabTriggerPhrase != null && ( env.gitlabTriggerPhrase == 'trigger compilation' || env.gitlabTriggerPhrase.startsWith('trigger compilation windows'))  }
+                            triggeredBy "GitlabWebhookCause"
+                        }
                     }
                     steps {
                         gitlabCommitStatus(name: 'Windows build') {
