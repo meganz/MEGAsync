@@ -169,15 +169,23 @@ void MacXPlatform::stopShellDispatcher()
 
 void MacXPlatform::notifyItemChange(const QString& path, int newState)
 {
-    notifyItemChange(path.toUtf8().constData(), newState);
+    if (!path.isEmpty())
+    {
+        if (extService)
+        {
+            emit extService->itemChange(path, newState);
+        }
+
+        mShellNotifier->notify(path);
+    }
 }
 
-void MacXPlatform::notifySyncFileChange(std::string *localPath, int newState)
+void MacXPlatform::notifySyncFileChange(string* localPath, int newState)
 {
-    notifyItemChange(localPath, newState);
+    notifyItemChange(QString::fromStdString(*localPath), newState);
 }
 
-void MacXPlatform::syncFolderAdded(QString syncPath, QString syncName, QString syncID)
+void MacXPlatform::syncFolderAdded(QString syncPath, QString syncName, QString)
 {
     addPathToPlaces(syncPath,syncName);
     setFolderIcon(syncPath);
@@ -188,7 +196,7 @@ void MacXPlatform::syncFolderAdded(QString syncPath, QString syncName, QString s
     }
 }
 
-void MacXPlatform::syncFolderRemoved(QString syncPath, QString syncName, QString syncID)
+void MacXPlatform::syncFolderRemoved(QString syncPath, QString syncName, QString)
 {
     removePathFromPlaces(syncPath);
     unSetFolderIcon(syncPath);
@@ -359,18 +367,6 @@ void MacXPlatform::initMenu(QMenu* m)
 std::shared_ptr<AbstractShellNotifier> MacXPlatform::getShellNotifier()
 {
     return mShellNotifier;
-}
-
-void MacXPlatform::notifyItemChange(string *localPath, int newState)
-{
-    if (localPath && localPath->size())
-    {
-        if (extService)
-        {
-            emit extService->itemChange(QString::fromStdString(*localPath), newState);
-        }
-        mShellNotifier->notify(*localPath);
-    }
 }
 
 // Platform-specific strings

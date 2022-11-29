@@ -9,9 +9,9 @@
 class WindowsApiShellNotifier : public AbstractShellNotifier
 {
 public :
-    void notify(const std::string& path) override
+    void notify(const QString& path) override
     {
-        SHChangeNotify(SHCNE_UPDATEITEM, SHCNF_PATH, path.data(), NULL);
+        SHChangeNotify(SHCNE_UPDATEITEM, SHCNF_PATH, path.utf16(), NULL);
     }
 };
 

@@ -28,8 +28,8 @@ public:
     static void prepareForSync();
     static QStringList multipleUpload(QString uploadTitle);
     static bool enableTrayIcon(QString);
-    void notifyItemChange(const QString& path, int newState);
-    static void notifyItemChange(std::string *localPath, int newState);
+    static void notifyItemChange(const QString& path, int newState);
+    static void notifySyncFileChange(std::string *localPath, int newState);
     static bool startOnStartup(bool value);
     static bool isStartOnStartupActive();
     static void addFinderExtensionToSystem();
@@ -40,8 +40,8 @@ public:
     static bool showInFolder(QString pathIn);
     static void startShellDispatcher(MegaApplication *receiver);
     static void stopShellDispatcher();
-    static void syncFolderAdded(QString syncPath, QString syncName, QString syncID);
-    static void syncFolderRemoved(QString syncPath, QString syncName, QString syncID);
+    static void syncFolderAdded(QString syncPath, QString syncName, QString);
+    static void syncFolderRemoved(QString syncPath, QString syncName, QString);
     static void notifyRestartSyncFolders();
     static void notifyAllSyncFoldersAdded();
     static void notifyAllSyncFoldersRemoved();
@@ -69,9 +69,6 @@ public:
 
 private:
     static void disableSignalHandler();
-
-    static void notifySyncFileChange(std::string *localPath, int newState);
-
 };
 
 #endif // MACXPLATFORM_H
