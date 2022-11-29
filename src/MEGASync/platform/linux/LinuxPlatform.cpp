@@ -46,7 +46,8 @@ void LinuxPlatform::notifyItemChange(const QString& path, int)
     {
         if (notify_server && !Preferences::instance()->overlayIconsDisabled())
         {
-            notify_server->notifyItemChange(path.toStdString());
+            std::string stdPath = path.toStdString();
+            notify_server->notifyItemChange(&stdPath);
         }
         mShellNotifier->notify(path);
     }
