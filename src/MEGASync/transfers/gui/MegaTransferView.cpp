@@ -546,13 +546,13 @@ void MegaTransferView::onCustomContextMenu(const QPoint& point)
     {
         contextMenu->exec(mapToGlobal(point));
     }
-    contextMenu->deleteLater();
 }
 
 QMenu* MegaTransferView::createContextMenu()
 {
     auto contextMenu = new QMenu(this);
     contextMenu->setWindowFlags(contextMenu->windowFlags() | Qt::NoDropShadowWindowHint);
+    contextMenu->setAttribute(Qt::WA_DeleteOnClose);
     Platform::initMenu(contextMenu);
 
     QModelIndexList indexes = selectedIndexes();
