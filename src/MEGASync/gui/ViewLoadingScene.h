@@ -12,6 +12,7 @@
 #include <QLayout>
 #include <QHeaderView>
 #include <QScrollBar>
+#include <QDateTime>
 
 class LoadingSceneDelegateBase : public QStyledItemDelegate
 {
@@ -24,11 +25,17 @@ class LoadingSceneDelegateBase : public QStyledItemDelegate
 
 public:
     explicit LoadingSceneDelegateBase(QAbstractItemView* view) :
+        QStyledItemDelegate(view),
         mView(view),
         mOpacitySteps(OPACITY_STEPS),
-        mOpacity(MAX_OPACITY),
-        QStyledItemDelegate(view)
+        mOpacity(MAX_OPACITY)
     {
+    }
+    QWidget *createEditor(QWidget *,
+                          const QStyleOptionViewItem &,
+                          const QModelIndex &) const override
+    {
+        return nullptr;
     }
 
     ~LoadingSceneDelegateBase()
@@ -40,7 +47,6 @@ public:
     {
         updateTimer(state);
         mOpacity = MAX_OPACITY;
-
         mView->update();
     }
 
@@ -179,13 +185,50 @@ private:
     mutable QVector<DelegateWidget*> mLoadingItems;
 };
 
+class ViewLoadingSceneBase : public QObject
+{
+    Q_OBJECT
+
+ public:
+    ViewLoadingSceneBase() :
+        mDelayTimeToShowInMs(0)
+    {
+        mDelayTimerToShow.setSingleShot(true);
+        connect(&mDelayTimerToShow, &QTimer::timeout, this, &ViewLoadingSceneBase::onDelayTimerTimeout);
+    }
+
+    inline void setDelayTimeToShowInMs(int newDelayTimeToShowInMs)
+    {
+        mDelayTimeToShowInMs = newDelayTimeToShowInMs;
+    }
+
+signals:
+    void sceneVisibilityChange(bool value);
+
+protected:
+    QTimer mDelayTimerToShow;
+    int mDelayTimeToShowInMs;
+
+
+private slots:
+    void onDelayTimerTimeout()
+    {
+        setLoadingSceneVisible();
+    }
+
+private:
+    virtual void setLoadingSceneVisible() = 0;
+};
+
 template <class DelegateWidget>
-class ViewLoadingScene
+class ViewLoadingScene : public ViewLoadingSceneBase
 {
     const uint8_t MAX_LOADING_ROWS = 20;
+    const long long MIN_TIME_DISPLAYING_VIEW = 350;
 
 public:
     ViewLoadingScene() :
+        ViewLoadingSceneBase(),
         mViewDelegate(nullptr),
         mView(nullptr),
         mViewModel(nullptr),
@@ -193,15 +236,25 @@ public:
         mLoadingView(nullptr),
         mLoadingModel(nullptr),
         mLoadingDelegate(nullptr),
-        mViewLayout(nullptr)
+        mViewLayout(nullptr),
+        mLoadingViewSet(false)
     {}
 
     ~ViewLoadingScene()
-    {}
+    {
+        if(mLoadingDelegate)
+        {
+            mLoadingDelegate->deleteLater();
+        }
+        if(mLoadingModel)
+        {
+            mLoadingModel->deleteLater();
+        }
+    }
 
     bool isLoadingViewSet() const
     {
-        return mLoadingModel && mLoadingModel->rowCount() != 0;
+        return mLoadingViewSet;
     }
 
     inline void setView(QAbstractItemView* view)
@@ -217,7 +270,7 @@ public:
         }
     }
 
-    inline void setLoadingScene(bool state)
+    inline void changeLoadingSceneStatus(bool state)
     {
         if(!mView)
         {
@@ -230,6 +283,10 @@ public:
         }
         else if(!state && !isLoadingViewSet())
         {
+            if(mDelayTimerToShow.isActive())
+            {
+                mDelayTimerToShow.stop();
+            }
             return;
         }
 
@@ -244,7 +301,7 @@ public:
             mLoadingView->setSizePolicy(mView->sizePolicy());
             mLoadingView->setFrameStyle(QFrame::NoFrame);
             mLoadingView->setIndentation(0);
-
+            mLoadingView->setSelectionMode(QAbstractItemView::NoSelection);
             mLoadingModel = new QStandardItemModel(mLoadingView);
             mLoadingDelegate = new LoadingSceneDelegate<DelegateWidget>(mLoadingView);
             mLoadingView->setModel(mLoadingModel);
@@ -256,53 +313,76 @@ public:
 
         if(state)
         {
-            int visibleRows(0);
-
-            if(mView->isVisible())
+            if(mDelayTimeToShowInMs > 0)
             {
-                int delegateHeight(mLoadingDelegate->sizeHint(QStyleOptionViewItem(), QModelIndex()).height());
-
-                mView->updateGeometry();
-                visibleRows = mView->size().height()/delegateHeight;
-
-                //If the vertical header is visible, add one row to the loading model to show the vertical scroll
-                if(mViewModel && mView->verticalScrollBar()->isVisible())
+                if(!mDelayTimerToShow.isActive())
                 {
-                    visibleRows++;
-                }
-
-                if(visibleRows > MAX_LOADING_ROWS)
-                {
-                    visibleRows = MAX_LOADING_ROWS;
+                    mDelayTimerToShow.start(mDelayTimeToShowInMs);
                 }
             }
             else
             {
-                visibleRows = MAX_LOADING_ROWS;
+                setLoadingSceneVisible();
             }
-
-            for(int row = 0; row < visibleRows; ++row)
-            {
-                mLoadingModel->appendRow(new QStandardItem());
-            }
-
-            mView->setModel(nullptr);
-            mView->hide();
-            mLoadingView->show();
         }
         else
         {
-            mLoadingModel->setRowCount(0);
-            mLoadingView->hide();
-
-            mView->setModel(mViewModel);
-            mView->show();
+            mLoadingViewSet = false;
+            auto delay = std::max(0ll, MIN_TIME_DISPLAYING_VIEW - (QDateTime::currentMSecsSinceEpoch()
+                                                - mStartTime));
+            QTimer::singleShot(delay, this, [this, state] () {
+                sceneVisibilityChange(false);
+                mLoadingModel->setRowCount(0);
+                mLoadingView->hide();
+                mView->show();
+                mViewLayout->replaceWidget(mLoadingView, mView);
+                mLoadingDelegate->setLoading(state);
+            });
         }
-
-        mLoadingDelegate->setLoading(state);
     }
 
 private:
+    inline void setLoadingSceneVisible() override
+    {
+        sceneVisibilityChange(true);
+        int visibleRows(0);
+
+        if(mView->isVisible())
+        {
+            int delegateHeight(mLoadingDelegate->sizeHint(QStyleOptionViewItem(), QModelIndex()).height());
+
+            mView->updateGeometry();
+            visibleRows = mView->size().height()/delegateHeight + 1;
+
+            //If the vertical header is visible, add one row to the loading model to show the vertical scroll
+            if(mViewModel)
+            {
+                mView->verticalScrollBar()->isVisible() ? mLoadingView->verticalScrollBar()->show() : mLoadingView->verticalScrollBar()->hide();
+            }
+
+            if(visibleRows > MAX_LOADING_ROWS)
+            {
+                visibleRows = MAX_LOADING_ROWS;
+            }
+        }
+        else
+        {
+            visibleRows = MAX_LOADING_ROWS;
+        }
+
+        for(int row = 0; row < visibleRows; ++row)
+        {
+            mLoadingModel->appendRow(new QStandardItem());
+        }
+
+        mView->hide();
+        mLoadingView->show();
+        mViewLayout->replaceWidget(mView, mLoadingView);
+        mStartTime = QDateTime::currentMSecsSinceEpoch();
+        mLoadingDelegate->setLoading(true);
+        mLoadingViewSet = true;
+    }
+
     QAbstractItemDelegate* mViewDelegate;
     QAbstractItemView* mView;
     QPointer<QAbstractItemModel> mViewModel;
@@ -311,18 +391,9 @@ private:
     QPointer<QStandardItemModel> mLoadingModel;
     QPointer<LoadingSceneDelegate<DelegateWidget>> mLoadingDelegate;
     QLayout* mViewLayout;
+    qint64 mStartTime;
+    bool mLoadingViewSet;
 
-    int rowCount() const
-    {
-        if(auto proxyModel = dynamic_cast<QSortFilterProxyModel*>(mViewModel))
-        {
-            return proxyModel->sourceModel()->rowCount();
-        }
-        else
-        {
-            return mViewModel->rowCount();
-        }
-    }
 };
 
 #endif // VIEWLOADINGSCENE_H

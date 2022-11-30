@@ -34,27 +34,24 @@ int StalledIssuesDelegateWidgetsCache::getMaxCacheRow(int row) const
 
 StalledIssueHeader *StalledIssuesDelegateWidgetsCache::getStalledIssueHeaderWidget(const QModelIndex &index, QWidget *parent, const StalledIssueVariant &issue) const
 {
+    auto row = getMaxCacheRow(index.row());
+    auto headerCase = mStalledIssueHeaderWidgets[row];
     StalledIssueHeader* header(nullptr);
 
-    auto row = getMaxCacheRow(index.row());
-    header = mStalledIssueHeaderWidgets.value(row);
-
-    if(header && header->getData().consultData()->getReason() == issue.consultData()->getReason())
+    if(headerCase)
     {
-        header->updateUi(index, issue);
+        header = headerCase->getStalledIssueHeader();
+        headerCase->deleteLater();
     }
-    else if(!header || (header && header->getData().consultData()->getReason() != issue.consultData()->getReason()))
-    {
-        if(header)
-        {
-            header->deleteLater();
-        }
 
-        //Create new header
-        header = createHeaderWidget(index, parent, issue);
+    if(!header)
+    {
+        header = new StalledIssueHeader(parent);
         header->hide();
-        mStalledIssueHeaderWidgets.insert(row, header);
     }
+
+    headerCase = createHeaderWidget(index, header, issue);
+    header->updateUi(index, issue);
 
     return header;
 }
@@ -90,7 +87,10 @@ StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::getStalledIss
 
 StalledIssueHeader *StalledIssuesDelegateWidgetsCache::getNonCacheStalledIssueHeaderWidget(const QModelIndex& index, QWidget* parent, const StalledIssueVariant &issue) const
 {
-    return createHeaderWidget(index, parent, issue);
+    auto header = new StalledIssueHeader(parent);
+    createHeaderWidget(index, header, issue);
+    header->updateUi(index, issue);
+    return header;
 }
 
 StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::getNonCacheStalledIssueInfoWidget(const QModelIndex &index, QWidget *parent, const StalledIssueVariant& issue) const
@@ -166,87 +166,82 @@ bool StalledIssuesDelegateWidgetsCache::adaptativeHeight(mega::MegaSyncStall::Sy
     }
 }
 
-StalledIssueHeader *StalledIssuesDelegateWidgetsCache::createHeaderWidget(const QModelIndex &index, QWidget *parent, const StalledIssueVariant &issue) const
+StalledIssueHeaderCase* StalledIssuesDelegateWidgetsCache::createHeaderWidget(const QModelIndex &index, StalledIssueHeader* header, const StalledIssueVariant &issue) const
 {
-    StalledIssueHeader* header(nullptr);
+    StalledIssueHeaderCase* headerCase(nullptr);
 
     switch(issue.consultData()->getReason())
     {
         case mega::MegaSyncStall::SyncStallReason::FileIssue:
         {
-            header  = new FileIssueHeader(parent);
+            headerCase = new FileIssueHeader(header);
             break;
         }
         case mega::MegaSyncStall::SyncStallReason::MoveOrRenameCannotOccur:
         {
-            header  = new MoveOrRenameCannotOccurHeader(parent);
+            headerCase = new MoveOrRenameCannotOccurHeader(header);
             break;
         }
         case mega::MegaSyncStall::SyncStallReason::DeleteOrMoveWaitingOnScanning:
         {
-            header  = new DeleteOrMoveWaitingOnScanningHeader(parent);
+            headerCase = new DeleteOrMoveWaitingOnScanningHeader(header);
             break;
         }
         case mega::MegaSyncStall::SyncStallReason::DeleteWaitingOnMoves:
         {
-            header  = new DeleteWaitingOnMovesHeader(parent);
+            headerCase = new DeleteWaitingOnMovesHeader(header);
             break;
         }
         case mega::MegaSyncStall::SyncStallReason::UploadIssue:
         {
-            header  = new UploadIssueHeader(parent);
+            headerCase = new UploadIssueHeader(header);
             break;
         }
         case mega::MegaSyncStall::SyncStallReason::DownloadIssue:
         {
-            header  = new DownloadIssueHeader(parent);
+            headerCase = new DownloadIssueHeader(header);
             break;
         }
         case mega::MegaSyncStall::SyncStallReason::CannotCreateFolder:
         {
-            header  = new CannotCreateFolderHeader(parent);
+            headerCase = new CannotCreateFolderHeader(header);
             break;
         }
         case mega::MegaSyncStall::SyncStallReason::CannotPerformDeletion:
         {
-            header  = new CannotPerformDeletionHeader(parent);
+            headerCase = new CannotPerformDeletionHeader(header);
             break;
         }
         case mega::MegaSyncStall::SyncStallReason::FolderMatchedAgainstFile:
         {
-            header  = new FolderMatchedAgainstFileHeader(parent);
+            headerCase = new FolderMatchedAgainstFileHeader(header);
             break;
         }
         case mega::MegaSyncStall::SyncStallReason::SyncItemExceedsSupportedTreeDepth:
         {
-            header  = new SyncItemExceedsSupoortedTreeDepthHeader(parent);
+            headerCase = new SyncItemExceedsSupoortedTreeDepthHeader(header);
             break;
         }
         case mega::MegaSyncStall::SyncStallReason::LocalAndRemoteChangedSinceLastSyncedState_userMustChoose:
         {
-            header = new LocalAndRemoteChangedSinceLastSyncedStateHeader(parent);
+            headerCase = new LocalAndRemoteChangedSinceLastSyncedStateHeader(header);
             break;
         }
         case mega::MegaSyncStall::SyncStallReason::LocalAndRemotePreviouslyUnsyncedDiffer_userMustChoose:
         {
-            header  = new LocalAndRemotePreviouslyUnsyncedDifferHeader(parent);
+            headerCase = new LocalAndRemotePreviouslyUnsyncedDifferHeader(header);
             break;
         }
         case mega::MegaSyncStall::SyncStallReason::NamesWouldClashWhenSynced:
         {
-            header  = new NameConflictsHeader(parent);
+            headerCase = new NameConflictsHeader(header);
             break;
         }
         default:
         {
-            header = new DefaultHeader(parent);
+            headerCase = new DefaultHeader(header);
         }
     }
 
-    if(header)
-    {
-        header->updateUi(index, issue);
-    }
-
-    return header;
+    return headerCase;
 }

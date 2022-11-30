@@ -21,16 +21,6 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
     setWindowFlags(Qt::Window);
     setAttribute(Qt::WA_DeleteOnClose, true);
 
-    mProxyModel = new StalledIssuesProxyModel(this);
-    mProxyModel->setSourceModel(MegaSyncApp->getStalledIssuesModel());
-
-    ui->stalledIssuesTree->setModel(mProxyModel);
-    mViewHoverManager.setView(ui->stalledIssuesTree);
-
-    mDelegate = new StalledIssueDelegate(mProxyModel, ui->stalledIssuesTree);
-    ui->stalledIssuesTree->setItemDelegate(mDelegate);
-    mLoadingScene.setView(ui->stalledIssuesTree);
-
     connect(MegaSyncApp->getStalledIssuesModel(), &StalledIssuesModel::uiBlocked,
             this,  &StalledIssuesDialog::onUiBlocked);
     connect(MegaSyncApp->getStalledIssuesModel(), &StalledIssuesModel::uiUnblocked,
@@ -42,9 +32,6 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
     connect(MegaSyncApp->getStalledIssuesModel(), &StalledIssuesModel::globalSyncStateChanged,
             this,  &StalledIssuesDialog::onGlobalSyncStateChanged);
 
-    connect(MegaSyncApp->getStalledIssuesModel(), &StalledIssuesModel::stalledIssuesCountChanged,
-            this,  &StalledIssuesDialog::onStalledIssuesModelCountChanged);
-
     //Init all categories
     auto tabs = ui->header->findChildren<StalledIssueTab*>();
     foreach(auto tab, tabs)
@@ -53,6 +40,14 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
     }
 
     ui->allIssuesTab->setItsOn(true);
+
+    mProxyModel = new StalledIssuesProxyModel(this);
+    mProxyModel->setSourceModel(MegaSyncApp->getStalledIssuesModel());
+    connect(mProxyModel, &StalledIssuesProxyModel::modelFiltered, this, &StalledIssuesDialog::onModelFiltered);
+
+    mDelegate = new StalledIssueDelegate(mProxyModel, ui->stalledIssuesTree);
+    ui->stalledIssuesTree->setItemDelegate(mDelegate);
+    mLoadingScene.setView(ui->stalledIssuesTree);
 
     on_updateButton_clicked();
 }
@@ -77,7 +72,7 @@ void StalledIssuesDialog::on_updateButton_clicked()
     mProxyModel->updateStalledIssues();
 }
 
-void StalledIssuesDialog::onStalledIssuesModelCountChanged()
+void StalledIssuesDialog::checkIfViewIsEmpty()
 {
     if(auto proxyModel = dynamic_cast<StalledIssuesProxyModel*>(ui->stalledIssuesTree->model()))
     {
@@ -99,10 +94,7 @@ void StalledIssuesDialog::onUiBlocked()
     if(!mLoadingScene.isLoadingViewSet())
     {
         setDisabled(true);
-        mLoadingScene.setLoadingScene(true);
-
-        //Show the view
-        ui->TreeViewContainer->setCurrentWidget(ui->TreeViewContainerPage);
+        mLoadingScene.changeLoadingSceneStatus(true);
     }
 }
 
@@ -111,8 +103,8 @@ void StalledIssuesDialog::onUiUnblocked()
     if(mLoadingScene.isLoadingViewSet())
     {
         setDisabled(false);
-        mLoadingScene.setLoadingScene(false);
-        onStalledIssuesModelCountChanged();
+        mLoadingScene.changeLoadingSceneStatus(false);
+        checkIfViewIsEmpty();
     }
 }
 
@@ -120,7 +112,16 @@ void StalledIssuesDialog::onStalledIssuesLoaded()
 {
     mDelegate->resetCache();
     mProxyModel->updateFilter();
-    onUiUnblocked();
+}
+
+void StalledIssuesDialog::onModelFiltered()
+{
+    //Only the first time, in order to avoid setting the model before it is sorted
+    if(!ui->stalledIssuesTree->model())
+    {
+        ui->stalledIssuesTree->setModel(mProxyModel);
+        mViewHoverManager.setView(ui->stalledIssuesTree);
+    }
 }
 
 void StalledIssuesDialog::onGlobalSyncStateChanged(bool state)

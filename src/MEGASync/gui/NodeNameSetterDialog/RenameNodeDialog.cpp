@@ -72,7 +72,11 @@ void RenameRemoteNodeDialog::onDialogAccepted()
 {
     if (mNodeToRename)
     {
-        MegaSyncApp->getMegaApi()->renameNode(mNodeToRename.get(), getName().toStdString().c_str(), mDelegateListener.get());
+        std::shared_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getParentNode(mNodeToRename.get()));
+        if(!checkAlreadyExistingNode(getName(), parentNode))
+        {
+            MegaSyncApp->getMegaApi()->renameNode(mNodeToRename.get(), getName().toStdString().c_str(), mDelegateListener.get());
+        }
     }
     //Folder already exists
     else
@@ -131,16 +135,23 @@ void RenameLocalNodeDialog::onDialogAccepted()
         {
             QFileInfo fileInfo(mNodePath);
             fileInfo.setFile(fileInfo.path(), newFileName);
-
-            if(file.rename(QDir::toNativeSeparators(fileInfo.filePath())))
+            if(fileInfo.exists())
             {
-                done(QDialog::Accepted);
+                showAlreadyExistingNodeError(fileInfo.isFile());
                 return;
+            }
+            else
+            {
+                if(file.rename(QDir::toNativeSeparators(fileInfo.filePath())))
+                {
+                    done(QDialog::Accepted);
+                    return;
+                }
             }
         }
     }
 
-    showError(errorText(newFileName));
+    done(QDialog::Rejected);
 }
 
 bool RenameLocalNodeDialog::isFile()
@@ -169,25 +180,4 @@ QString RenameLocalNodeDialog::lineEditText()
         QDir dir(mNodePath);
         return dir.dirName();
     }
-}
-
-QString RenameLocalNodeDialog::errorText(const QString& newFileName) const
-{
-    QFileInfo localNode(mNodePath);
-    if(localNode.exists())
-    {
-        if(localNode.isFile())
-        {
-            return tr("File can’t be renamed to \"%1\"").arg(newFileName);
-        }
-        else
-        {
-            return tr("Folder can’t be renamed to \"%1\"").arg(newFileName);
-        }
-    }
-    else
-    {
-        return tr("Error renaming to %1").arg(newFileName);
-    }
-
 }

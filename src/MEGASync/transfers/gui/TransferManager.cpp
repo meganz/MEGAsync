@@ -774,7 +774,7 @@ void TransferManager::onVerticalScrollBarVisibilityChanged(bool state)
     if(currentTransferManager)
     {
         auto transfersView = dynamic_cast<MegaTransferView*>(sender());
-        if(transfersView)
+        if(transfersView && transfersView->isVisible())
         {
             if(state)
             {
@@ -1402,11 +1402,6 @@ void TransferManager::closeEvent(QCloseEvent *event)
             close();
         });
         event->ignore();
-    }
-    else
-    {
-        emit aboutToClose();
-        QDialog::closeEvent(event);
     }
 }
 

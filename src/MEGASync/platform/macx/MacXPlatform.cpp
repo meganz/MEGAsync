@@ -329,7 +329,7 @@ void MacXPlatform::initMenu(QMenu* m)
                                            "margin: 0px 8px 0px 8px;"
                                            "background-color: rgba(0, 0, 0, 0.1);"
                                        "}"
-                                       // For vanilla QMenus (only in TransferManager and MegaItemTreeView (NodeSelector))
+                                       // For vanilla QMenus (only in TransferManager and NodeSelectorTreeView (NodeSelector))
                                        "QMenu::item {"
                                            "font-size: 14px;"
                                            "margin: 6px 16px 6px 16px;"

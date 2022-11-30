@@ -540,7 +540,7 @@ void LinuxPlatform::initMenu(QMenu* m)
                                        "margin: 6px 10px 6px 10px;"
                                        "background-color: rgba(0, 0, 0, 0.1);"
                                    "}"
-                                   // For vanilla QMenus (only in TransferManager and MegaItemTreeView (NodeSelector))
+                                   // For vanilla QMenus (only in TransferManager and NodeSelectorTreeView (NodeSelector))
                                    "QMenu::item {"
                                        "font-family: Lato;"
                                        "font-size: 14px;"

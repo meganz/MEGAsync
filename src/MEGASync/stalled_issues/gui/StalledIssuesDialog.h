@@ -31,7 +31,7 @@ protected:
 private slots:
     void on_doneButton_clicked();
     void on_updateButton_clicked();
-    void onStalledIssuesModelCountChanged();
+    void checkIfViewIsEmpty();
     void onGlobalSyncStateChanged(bool state);
 
     void toggleTab(StalledIssueFilterCriterion filterCriterion);
@@ -40,6 +40,7 @@ private slots:
     void onUiUnblocked();
 
     void onStalledIssuesLoaded();
+    void onModelFiltered();
 
 private:
     Ui::StalledIssuesDialog *ui;

@@ -38,12 +38,12 @@ void InfoDialogTransfersWidget::showEvent(QShowEvent*)
 
 void InfoDialogTransfersWidget::onUiBlocked()
 {
-    mLoadingScene.setLoadingScene(true);
+    mLoadingScene.changeLoadingSceneStatus(true);
 }
 
 void InfoDialogTransfersWidget::onUiUnblocked()
 {
-    mLoadingScene.setLoadingScene(false);
+    mLoadingScene.changeLoadingSceneStatus(false);
 }
 
 void InfoDialogTransfersWidget::configureTransferView()

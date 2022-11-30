@@ -168,67 +168,75 @@ void StalledIssuesModel::onProcessStalledIssues(StalledIssuesReceiver::StalledIs
 {
     if(!issuesReceived.isEmpty())
     {
-        QMutexLocker lock(&mModelMutex);
-
-        for (auto it = issuesReceived.mDeleteStalledIssues.begin(); it != issuesReceived.mDeleteStalledIssues.end(); ++it)
+        ThreadPoolSingleton::getInstance()->push([this, issuesReceived]()
         {
-            auto index = mStalledIssuesByOrder.value((*it).get(),-1);
-            if(index >= 0)
+            mModelMutex.lock();
+            blockSignals(true);
+            reset();
+
+//            for (auto it = issuesReceived.mDeleteStalledIssues.begin(); it != issuesReceived.mDeleteStalledIssues.end(); ++it)
+//            {
+//                auto index = mStalledIssuesByOrder.value((*it).get(),-1);
+//                if(index >= 0)
+//                {
+//                    removeRows(index, 1);
+//                }
+
+//                updateStalledIssuedByOrder();
+//            }
+
+//            for (auto it = issuesReceived.mUpdateStalledIssues.begin(); it != issuesReceived.mUpdateStalledIssues.end(); ++it)
+//            {
+//                auto row = mStalledIssuesByOrder.value((*it).get(),-1);
+//                if(row >= 0)
+//                {
+//                    auto rootIndex(index(row,0));
+//                    emit dataChanged(rootIndex,rootIndex);
+
+//                    auto childIndex(index(0,0,rootIndex));
+//                    if(childIndex.isValid())
+//                    {
+//                        emit dataChanged(childIndex,childIndex);
+//                    }
+//                }
+//            }
+
+            auto totalRows = rowCount(QModelIndex());
+            auto rowsToBeInserted(static_cast<int>(issuesReceived.mNewStalledIssues.size()));
+
+            if(rowsToBeInserted > 0)
             {
-                removeRows(index, 1);
-            }
+                beginInsertRows(QModelIndex(), totalRows, totalRows + rowsToBeInserted - 1);
 
-            updateStalledIssuedByOrder();
-        }
-
-        for (auto it = issuesReceived.mUpdateStalledIssues.begin(); it != issuesReceived.mUpdateStalledIssues.end(); ++it)
-        {
-            auto row = mStalledIssuesByOrder.value((*it).get(),-1);
-            if(row >= 0)
-            {
-                auto rootIndex(index(row,0));
-                emit dataChanged(rootIndex,rootIndex);
-
-                auto childIndex(index(0,0,rootIndex));
-                if(childIndex.isValid())
+                for (auto it = issuesReceived.mNewStalledIssues.begin(); it != issuesReceived.mNewStalledIssues.end();)
                 {
-                    emit dataChanged(childIndex,childIndex);
+                    std::shared_ptr<StalledIssueVariant> issue(*it);
+                    mStalledIssues.append(issue);
+                    mStalledIssuesByOrder.insert(issue.get(), rowCount(QModelIndex()) - 1);
+                    mCountByFilterCriterion[static_cast<int>(StalledIssue::getCriterionByReason((*it)->consultData()->getReason()))]++;
+
+                    it++;
                 }
-            }
-        }
 
-        auto totalRows = rowCount(QModelIndex());
-        auto rowsToBeInserted(static_cast<int>(issuesReceived.mNewStalledIssues.size()));
-
-        if(rowsToBeInserted > 0)
-        {
-            beginInsertRows(QModelIndex(), totalRows, totalRows + rowsToBeInserted - 1);
-
-            for (auto it = issuesReceived.mNewStalledIssues.begin(); it != issuesReceived.mNewStalledIssues.end();)
-            {
-                std::shared_ptr<StalledIssueVariant> issue(*it);
-                mStalledIssues.append(issue);
-                mStalledIssuesByOrder.insert(issue.get(), rowCount(QModelIndex()) - 1);
-                mCountByFilterCriterion[static_cast<int>(StalledIssue::getCriterionByReason((*it)->consultData()->getReason()))]++;
-
-                it++;
+                endInsertRows();
             }
 
-            endInsertRows();
-        }
+            blockSignals(false);
+            mModelMutex.unlock();
 
-        emit stalledIssuesCountChanged();
-        emit stalledIssuesReceived(true);
-        emit layoutAboutToBeChanged();
-
-        layoutChanged();
+            emit stalledIssuesCountChanged();
+            emit stalledIssuesReceived(true);
+        });
+    }
+    else
+    {
+        reset();
     }
 }
 
 void StalledIssuesModel::updateStalledIssues()
 {
     blockUi();
-    reset();
 
     if (mMegaApi->isSyncStalled())
     {

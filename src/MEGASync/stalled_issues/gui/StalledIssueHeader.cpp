@@ -172,6 +172,11 @@ void StalledIssueHeader::refreshUi()
     {
         getData().consultData()->isSolved() ? issueIgnored() : showIgnoreFile();
     }
+    else
+    {
+        ui->ignoreFileButton->hide();
+    }
 
-    refreshCaseUi();
+    emit refreshCaseUi(this);
+    update();
 }

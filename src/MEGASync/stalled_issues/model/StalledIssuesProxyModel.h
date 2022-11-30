@@ -23,9 +23,15 @@ public:
     void updateStalledIssues();
     void updateStalledIssuesWhenReady();
 
+signals:
+    void modelFiltered();
+
 protected:
     bool canFetchMore(const QModelIndex &parent) const override;
     bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override;
+
+private slots:
+    void onModelSortedFiltered();
 
 private:
     StalledIssueFilterCriterion mFilterCriterion;

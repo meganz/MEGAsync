@@ -15,7 +15,6 @@ public:
 
 protected:
     QString dialogText() override;
-    QString lineEditText() = 0;
     NodeNameSetterDialog::LineEditSelection lineEditSelection() override;
 
     QString enterNewFileNameText() const;
@@ -37,7 +36,7 @@ protected:
     void onDialogAccepted() override;
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
     bool isFile() override;
-    QString lineEditText();
+    QString lineEditText() override;
 
 private:
     std::unique_ptr<mega::MegaNode> mNodeToRename;
@@ -54,11 +53,9 @@ public:
 protected:
     void onDialogAccepted() override;
     bool isFile() override;
-    QString lineEditText();
+    QString lineEditText() override;
 
 private:
-    QString errorText(const QString &newFileName) const;
-
     QString mNodePath;
 };
 

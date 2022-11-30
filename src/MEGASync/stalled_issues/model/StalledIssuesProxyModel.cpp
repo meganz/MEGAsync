@@ -9,7 +9,11 @@
 #include <QtConcurrent/QtConcurrent>
 
 StalledIssuesProxyModel::StalledIssuesProxyModel(QObject *parent) :QSortFilterProxyModel(parent)
-{}
+  , mFilterCriterion(StalledIssueFilterCriterion::ALL_ISSUES)
+{
+    connect(&mFilterWatcher, &QFutureWatcher<void>::finished,
+            this, &StalledIssuesProxyModel::onModelSortedFiltered);
+}
 
 int StalledIssuesProxyModel::rowCount(const QModelIndex &parent) const
 {
@@ -26,17 +30,35 @@ void StalledIssuesProxyModel::filter(StalledIssueFilterCriterion filterCriterion
     mFilterCriterion = filterCriterion;
 
     auto sourceM = qobject_cast<StalledIssuesModel*>(sourceModel());
+    emit layoutAboutToBeChanged();
     if(sourceM->rowCount(QModelIndex()) != 0)
     {
         sourceM->blockUi();
 
         //Test if it is worth it, because there is not sorting and the sort takes longer than filtering.
-         //QtConcurrent::run([this, sourceM](){
-            //sourceM->lockModelMutex(true);
-            invalidateFilter();
-            //sourceM->lockModelMutex(false);
+        auto filterAction = QtConcurrent::run([this, sourceM]()
+        {
+            blockSignals(true);
+            sourceM->blockSignals(true);
+            sourceM->lockModelMutex(true);
+            invalidate();
+            QSortFilterProxyModel::sort(0, sortOrder());
+            for (auto row = 0; row < rowCount(QModelIndex()); ++row)
+            {
+                auto proxyIndex = index(row, 0);
+                hasChildren(proxyIndex);
+            }
+            sourceM->lockModelMutex(false);
+            blockSignals(false);
+            sourceM->blockSignals(false);
             sourceM->unBlockUi();
-        //});
+        });
+
+        mFilterWatcher.setFuture(filterAction);
+    }
+    else
+    {
+        sourceM->unBlockUi();
     }
 }
 
@@ -49,7 +71,7 @@ void StalledIssuesProxyModel::setSourceModel(QAbstractItemModel *sourceModel)
 {
     QSortFilterProxyModel::setSourceModel(sourceModel);
     connect(sourceModel, &QAbstractItemModel::modelAboutToBeReset,this,[this](){
-        invalidate();
+        updateFilter();
     });
 }
 
@@ -88,4 +110,10 @@ bool StalledIssuesProxyModel::filterAcceptsRow(int source_row, const QModelIndex
     {
         return QSortFilterProxyModel::filterAcceptsRow(source_row, source_parent);
     }
+}
+
+void StalledIssuesProxyModel::onModelSortedFiltered()
+{
+    emit layoutChanged();
+    emit modelFiltered();
 }

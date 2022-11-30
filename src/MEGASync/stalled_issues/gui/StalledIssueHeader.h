@@ -40,8 +40,10 @@ public:
 
     void setTitleDescriptionText(const QString& text);
 
+signals:
+    void refreshCaseUi(StalledIssueHeader* header);
+
 protected:
-    virtual void refreshCaseUi() = 0;
     bool eventFilter(QObject *watched, QEvent *event) override;
 
     QString fileName();

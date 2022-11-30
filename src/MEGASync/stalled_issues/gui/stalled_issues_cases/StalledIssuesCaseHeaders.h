@@ -2,167 +2,189 @@
 #define STALLEDISSUESCASEHEADERS_H
 
 #include <StalledIssueHeader.h>
+#include <QPointer>
 
-//DefaultHeader failed
-class DefaultHeader : public StalledIssueHeader
+class StalledIssueHeaderCase : public QObject
 {
     Q_OBJECT
 
 public:
-    DefaultHeader(QWidget *parent = nullptr);
+    StalledIssueHeaderCase(StalledIssueHeader* header);
+    QPointer<StalledIssueHeader> getStalledIssueHeader();
 
 protected:
-    void refreshCaseUi() override;
+    QPointer<StalledIssueHeader> mStalledIssueHeader;
+
+protected slots:
+    virtual void onRefreshCaseUi() = 0;
+};
+
+//DefaultHeader failed
+class DefaultHeader : public StalledIssueHeaderCase
+{
+    Q_OBJECT
+
+public:
+    DefaultHeader(StalledIssueHeader* header);
+
+protected slots:
+    void onRefreshCaseUi() override;
 };
 
 //Create folder failed
-class FileIssueHeader : public StalledIssueHeader
+class FileIssueHeader : public StalledIssueHeaderCase
 {
     Q_OBJECT
 
 public:
-    FileIssueHeader(QWidget *parent = nullptr);
+    FileIssueHeader(StalledIssueHeader* header);
 
-protected:
-    void refreshCaseUi() override;
+protected slots:
+    void onRefreshCaseUi() override;
 };
 
 //Move or rename failed
-class MoveOrRenameCannotOccurHeader : public StalledIssueHeader
+class MoveOrRenameCannotOccurHeader : public StalledIssueHeaderCase
 {
     Q_OBJECT
 
 public:
-    MoveOrRenameCannotOccurHeader(QWidget *parent = nullptr);
+    MoveOrRenameCannotOccurHeader(StalledIssueHeader* header);
 
-protected:
-    void refreshCaseUi() override;
+protected slots:
+    void onRefreshCaseUi() override;
 };
 
 //Delete or Move Waiting onScanning
-class DeleteOrMoveWaitingOnScanningHeader : public StalledIssueHeader
+class DeleteOrMoveWaitingOnScanningHeader : public StalledIssueHeaderCase
 {
     Q_OBJECT
 
 public:
-    DeleteOrMoveWaitingOnScanningHeader(QWidget *parent = nullptr);
+    DeleteOrMoveWaitingOnScanningHeader(StalledIssueHeader* header);
 
-protected:
-    void refreshCaseUi() override;
+protected slots:
+    void onRefreshCaseUi() override;
 };
 
 //Delete waiting on moves
-class DeleteWaitingOnMovesHeader : public StalledIssueHeader
+class DeleteWaitingOnMovesHeader : public StalledIssueHeaderCase
 {
     Q_OBJECT
 
 public:
-    DeleteWaitingOnMovesHeader(QWidget *parent = nullptr);
+    DeleteWaitingOnMovesHeader(StalledIssueHeader* header);
 
-protected:
-    void refreshCaseUi() override;
+protected slots:
+    void onRefreshCaseUi() override;
 };
 
 //Upsync needs target folder
-class UploadIssueHeader : public StalledIssueHeader
+class UploadIssueHeader : public StalledIssueHeaderCase
 {
     Q_OBJECT
 
 public:
-    UploadIssueHeader(QWidget *parent = nullptr);
+    UploadIssueHeader(StalledIssueHeader* header);
 
-protected:
-    void refreshCaseUi() override;
+protected slots:
+    void onRefreshCaseUi() override;
 };
 
 //Downsync needs target folder
-class DownloadIssueHeader : public StalledIssueHeader
+class DownloadIssueHeader : public StalledIssueHeaderCase
 {
     Q_OBJECT
 
 public:
-    DownloadIssueHeader(QWidget *parent = nullptr);
+    DownloadIssueHeader(StalledIssueHeader* header);
 
-protected:
-    void refreshCaseUi() override;
+protected slots:
+    void onRefreshCaseUi() override;
 };
 
 //Create folder failed
-class CannotCreateFolderHeader : public StalledIssueHeader
+class CannotCreateFolderHeader : public StalledIssueHeaderCase
 {
     Q_OBJECT
 
 public:
-    CannotCreateFolderHeader(QWidget *parent = nullptr);
+    CannotCreateFolderHeader(StalledIssueHeader* header);
 
-protected:
-    void refreshCaseUi() override;
+protected slots:
+    void onRefreshCaseUi() override;
 };
 
 //Create folder failed
-class CannotPerformDeletionHeader : public StalledIssueHeader
+class CannotPerformDeletionHeader : public StalledIssueHeaderCase
 {
     Q_OBJECT
 
 public:
-    CannotPerformDeletionHeader(QWidget *parent = nullptr);
+    CannotPerformDeletionHeader(StalledIssueHeader* header);
 
-protected:
-    void refreshCaseUi() override;
+protected slots:
+    void onRefreshCaseUi() override;
 };
 
 //SyncItemExceedsSupoortedTreeDepth
-class SyncItemExceedsSupoortedTreeDepthHeader : public StalledIssueHeader
+class SyncItemExceedsSupoortedTreeDepthHeader : public StalledIssueHeaderCase
 {
     Q_OBJECT
 
 public:
-    SyncItemExceedsSupoortedTreeDepthHeader(QWidget *parent = nullptr);
+    SyncItemExceedsSupoortedTreeDepthHeader(StalledIssueHeader* header);
 
-protected:
-    void refreshCaseUi() override;
+protected slots:
+    void onRefreshCaseUi() override;
 };
 
 
 //Folder matched against file
-class FolderMatchedAgainstFileHeader : public StalledIssueHeader
+class FolderMatchedAgainstFileHeader : public StalledIssueHeaderCase
 {
     Q_OBJECT
 
 public:
-    FolderMatchedAgainstFileHeader(QWidget *parent = nullptr);
+    FolderMatchedAgainstFileHeader(StalledIssueHeader* header);
 
-protected:
-    void refreshCaseUi() override;
+protected slots:
+    void onRefreshCaseUi() override;
 };
 
-class LocalAndRemotePreviouslyUnsyncedDifferHeader : public StalledIssueHeader
+class LocalAndRemotePreviouslyUnsyncedDifferHeader : public StalledIssueHeaderCase
 {
+    Q_OBJECT
+
 public:
-    LocalAndRemotePreviouslyUnsyncedDifferHeader(QWidget *parent = nullptr);
+    LocalAndRemotePreviouslyUnsyncedDifferHeader(StalledIssueHeader* header);
 
-protected:
-    void refreshCaseUi() override;
-};
-
-//Local and remote previously synced differ
-class LocalAndRemoteChangedSinceLastSyncedStateHeader : public StalledIssueHeader
-{
-public:
-    LocalAndRemoteChangedSinceLastSyncedStateHeader(QWidget *parent = nullptr);
-
-protected:
-    void refreshCaseUi() override;
+protected slots:
+    void onRefreshCaseUi() override;
 };
 
 //Local and remote previously synced differ
-class NameConflictsHeader : public StalledIssueHeader
+class LocalAndRemoteChangedSinceLastSyncedStateHeader : public StalledIssueHeaderCase
 {
-public:
-    NameConflictsHeader(QWidget *parent = nullptr);
+    Q_OBJECT
 
-protected:
-    void refreshCaseUi() override;
+public:
+    LocalAndRemoteChangedSinceLastSyncedStateHeader(StalledIssueHeader* header);
+
+protected slots:
+    void onRefreshCaseUi() override;
+};
+
+//Local and remote previously synced differ
+class NameConflictsHeader : public StalledIssueHeaderCase
+{
+    Q_OBJECT
+
+public:
+    NameConflictsHeader(StalledIssueHeader* header);
+
+protected slots:
+    void onRefreshCaseUi() override;
 };
 
 #endif // STALLEDISSUESCASEHEADERS_H

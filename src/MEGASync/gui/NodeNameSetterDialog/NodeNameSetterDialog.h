@@ -40,6 +40,8 @@ protected:
     virtual LineEditSelection lineEditSelection(){return LineEditSelection();}
 
     void showError(const QString& errorText);
+    bool checkAlreadyExistingNode(const QString& nodeName, std::shared_ptr<mega::MegaNode> parentNode);
+    void showAlreadyExistingNodeError(bool isFile);
 
     void changeEvent(QEvent* event);
 

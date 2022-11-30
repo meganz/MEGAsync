@@ -100,6 +100,7 @@ set(3RDPARTY_RUNTIME_PATH "PATH=%PATH%" "${Mega3rdPartyDir}/vcpkg/installed/${VC
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOUIC_SEARCH_PATHS "${MEGAsyncDir}/gui/${UiDir}"
+                               "${MEGAsyncDir}/gui/node_selector/gui/${UiDir}"
                                "${MEGAsyncDir}/transfers/gui/${UiDir}"
                                "${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/${UiDir}"
                                "${MEGAsyncDir}/syncs/gui/Backups/${UiDir}"
@@ -124,6 +125,8 @@ include_directories( "${MEGAsyncDir}/gui" )
 include_directories( "${MEGAsyncDir}/stalled_issues/model" )
 include_directories( "${MEGAsyncDir}/stalled_issues/gui" )
 include_directories( "${MEGAsyncDir}/stalled_issues/gui/${UiDir}" )
+include_directories( "${MEGAsyncDir}/gui/node_selector/gui/${UiDir}")
+include_directories( "${MEGAsyncDir}/gui/node_selector" )
 include_directories( "${MEGAsyncDir}/platform" )
 include_directories( "${MEGAsyncDir}/gui/${UiDir}" )
 include_directories( "${MEGAsyncDir}/transfers/model" )
@@ -167,7 +170,6 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/BugReportDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/FilterAlertWidget.ui
     ${MEGAsyncDir}/gui/${UiDir}/InfoDialog.ui
-    ${MEGAsyncDir}/gui/${UiDir}/NodeSelector.ui
     ${MEGAsyncDir}/gui/${UiDir}/UploadToMegaDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/PasteMegaLinksDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/ImportMegaLinksDialog.ui
@@ -200,6 +202,9 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/NodeNameSetterDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/ScanningWidget.ui
     ${MEGAsyncDir}/gui/${UiDir}/CancelConfirmWidget.ui
+    ${MEGAsyncDir}/gui/node_selector/gui/${UiDir}/NodeSelector.ui
+    ${MEGAsyncDir}/gui/node_selector/gui/${UiDir}/NodeSelectorLoadingDelegate.ui
+    ${MEGAsyncDir}/gui/node_selector/gui/${UiDir}/NodeSelectorTreeViewWidget.ui
     ${MEGAsyncDir}/syncs/gui/Twoways/${UiDir}/FolderBinder.ui
     ${MEGAsyncDir}/syncs/gui/Twoways/${UiDir}/BindFolderDialog.ui
     ${MEGAsyncDir}/syncs/gui/Backups/${UiDir}/BackupsWizard.ui
@@ -308,19 +313,15 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/Login2FA.h
     ${MEGAsyncDir}/gui/MegaProxyStyle.h
     ${MEGAsyncDir}/gui/MultiQFileDialog.h
-    ${MEGAsyncDir}/gui/NodeSelector.h
     ${MEGAsyncDir}/gui/PasteMegaLinksDialog.h
     ${MEGAsyncDir}/gui/MegaProgressCustomDialog.h
     ${MEGAsyncDir}/gui/PlanWidget.h
     ${MEGAsyncDir}/gui/PSAwidget.h
     ${MEGAsyncDir}/gui/QAlertsModel.h
-    ${MEGAsyncDir}/gui/MegaItemModel.h
     ${MEGAsyncDir}/gui/SettingsDialog.h
     ${MEGAsyncDir}/gui/SetupWizard.h
     ${MEGAsyncDir}/gui/NotificationsSettings.h
     ${MEGAsyncDir}/gui/StatusInfo.h
-    ${MEGAsyncDir}/gui/MegaItemProxyModel.h
-    ${MEGAsyncDir}/gui/MegaItemTreeView.h
     ${MEGAsyncDir}/gui/StreamingFromMegaDialog.h
     ${MEGAsyncDir}/gui/UpgradeDialog.h
     ${MEGAsyncDir}/gui/UpgradeOverStorage.h
@@ -332,7 +333,6 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/ProxySettings.h
     ${MEGAsyncDir}/gui/SwitchButton.h
     ${MEGAsyncDir}/gui/BandwidthSettings.h
-    ${MEGAsyncDir}/gui/MegaItemDelegates.h
     ${MEGAsyncDir}/gui/GuiUtilities.h
     ${MEGAsyncDir}/gui/EventHelper.h
     ${MEGAsyncDir}/gui/AutoResizeStackedWidget.h
@@ -345,6 +345,17 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/NodeNameSetterDialog/NewFolderDialog.h
     ${MEGAsyncDir}/gui/NodeNameSetterDialog/RenameNodeDialog.h
     ${MEGAsyncDir}/gui/CancelConfirmWidget.h
+    ${MEGAsyncDir}/gui/MegaNodeNames.h
+	${MEGAsyncDir}/gui/node_selector/gui/NodeSelector.h
+	${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorLoadingDelegate.h
+	${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorTreeViewWidgetSpecializations.h
+	${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorTreeViewWidget.h
+	${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorTreeView.h
+	${MEGAsyncDir}/gui/node_selector/model/NodeSelectorDelegates.h
+	${MEGAsyncDir}/gui/node_selector/model/NodeSelectorModel.h
+	${MEGAsyncDir}/gui/node_selector/model/NodeSelectorModelItem.h
+	${MEGAsyncDir}/gui/node_selector/model/NodeSelectorModelSpecialised.h
+	${MEGAsyncDir}/gui/node_selector/model/NodeSelectorProxyModel.h
 
     ${MEGAsyncDir}/syncs/gui/SyncTooltipCreator.h
     ${MEGAsyncDir}/syncs/gui/SyncsMenu.h
@@ -513,7 +524,6 @@ set (SRCS
     ${MEGAsyncDir}/gui/InfoDialog.cpp
     ${MEGAsyncDir}/gui/QtPositioningBugFixer.cpp
     ${MEGAsyncDir}/gui/SetupWizard.cpp
-    ${MEGAsyncDir}/gui/NodeSelector.cpp
     ${MEGAsyncDir}/gui/UploadToMegaDialog.cpp
     ${MEGAsyncDir}/gui/PasteMegaLinksDialog.cpp
     ${MEGAsyncDir}/gui/ImportMegaLinksDialog.cpp
@@ -523,8 +533,6 @@ set (SRCS
     ${MEGAsyncDir}/gui/MegaProxyStyle.cpp
     ${MEGAsyncDir}/gui/AccountDetailsDialog.cpp
     ${MEGAsyncDir}/gui/DownloadFromMegaDialog.cpp
-    ${MEGAsyncDir}/gui/MegaItemModel.cpp
-    ${MEGAsyncDir}/gui/MegaItem.cpp
     ${MEGAsyncDir}/gui/ChangeLogDialog.cpp
     ${MEGAsyncDir}/gui/GuestWidget.cpp
     ${MEGAsyncDir}/gui/HighDpiResize.cpp
@@ -551,9 +559,6 @@ set (SRCS
     ${MEGAsyncDir}/gui/ProxySettings.cpp
     ${MEGAsyncDir}/gui/BandwidthSettings.cpp
     ${MEGAsyncDir}/gui/SwitchButton.cpp
-    ${MEGAsyncDir}/gui/MegaItemDelegates.cpp
-    ${MEGAsyncDir}/gui/MegaItemProxyModel.cpp
-    ${MEGAsyncDir}/gui/MegaItemTreeView.cpp
     ${MEGAsyncDir}/gui/GuiUtilities.cpp
     ${MEGAsyncDir}/gui/ButtonIconManager.cpp
     ${MEGAsyncDir}/gui/EventHelper.cpp
@@ -565,6 +570,16 @@ set (SRCS
     ${MEGAsyncDir}/gui/NodeNameSetterDialog/NodeNameSetterDialog.cpp
     ${MEGAsyncDir}/gui/NodeNameSetterDialog/NewFolderDialog.cpp
     ${MEGAsyncDir}/gui/NodeNameSetterDialog/RenameNodeDialog.cpp
+    ${MEGAsyncDir}/gui/node_selector/gui/NodeSelector.cpp
+	${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorLoadingDelegate.cpp
+	${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorTreeViewWidgetSpecializations.cpp
+	${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorTreeViewWidget.cpp
+	${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorTreeView.cpp
+	${MEGAsyncDir}/gui/node_selector/model/NodeSelectorDelegates.cpp
+	${MEGAsyncDir}/gui/node_selector/model/NodeSelectorModel.cpp
+	${MEGAsyncDir}/gui/node_selector/model/NodeSelectorModelItem.cpp
+	${MEGAsyncDir}/gui/node_selector/model/NodeSelectorModelSpecialised.cpp
+	${MEGAsyncDir}/gui/node_selector/model/NodeSelectorProxyModel.cpp
 
     ${MEGAsyncDir}/transfers/model/TransfersManagerSortFilterProxyModel.cpp
     ${MEGAsyncDir}/transfers/model/TransfersModel.cpp
@@ -696,6 +711,7 @@ if (CMAKE_HOST_WIN32)
         ${MEGAsyncDir}/platform/win/wintoastlib.cpp
         ${MEGAsyncDir}/platform/win/PlatformStrings.cpp
         ${MEGAsyncDir}/platform/win/PowerOptions.cpp
+
         ${MEGAsyncDir}/icon.rc
         )
 elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
@@ -847,6 +863,8 @@ endif()
 
 target_include_directories(MEGAsync PRIVATE
                                     ${MEGAsyncDir}
+                                    ${MEGAsyncDir}/gui/node_selector/gui
+                                    ${MEGAsyncDir}/gui/node_selector/model
                                     ${MEGAsyncDir}/transfers
                                     ${MEGAsyncDir}/transfers/gui
                                     ${MEGAsyncDir}/transfers/model

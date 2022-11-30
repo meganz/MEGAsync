@@ -17,149 +17,160 @@
     #include "limits.h"
 #endif
 
+StalledIssueHeaderCase::StalledIssueHeaderCase(StalledIssueHeader *header)
+    :mStalledIssueHeader(header)
+{
+    connect(mStalledIssueHeader, &StalledIssueHeader::refreshCaseUi, this, &StalledIssueHeaderCase::onRefreshCaseUi);
+}
+
+QPointer<StalledIssueHeader> StalledIssueHeaderCase::getStalledIssueHeader()
+{
+    return mStalledIssueHeader;
+}
+
+
 //Local folder not scannable
-DefaultHeader::DefaultHeader(QWidget *parent)
-    : StalledIssueHeader(parent)
+DefaultHeader::DefaultHeader(StalledIssueHeader* header)
+    : StalledIssueHeaderCase(header)
 {}
 
-void DefaultHeader::refreshCaseUi()
+void DefaultHeader::onRefreshCaseUi()
 {
-    setLeftTitleText(tr("Error detected with"));
-    addFileName();
-    setTitleDescriptionText(tr("Reason not found."));
+    mStalledIssueHeader->setLeftTitleText(tr("Error detected with"));
+    mStalledIssueHeader->addFileName();
+    mStalledIssueHeader->setTitleDescriptionText(tr("Reason not found."));
 }
 
 //Local folder not scannable
-FileIssueHeader::FileIssueHeader(QWidget *parent)
-    : StalledIssueHeader(parent)
+FileIssueHeader::FileIssueHeader(StalledIssueHeader* header)
+    : StalledIssueHeaderCase(header)
 {}
 
-void FileIssueHeader::refreshCaseUi()
+void FileIssueHeader::onRefreshCaseUi()
 {
-    setLeftTitleText(tr("Can´t sync"));
-    addFileName();
-    if(getData().consultData()->hasFiles() > 0)
+    mStalledIssueHeader->setLeftTitleText(tr("Can´t sync"));
+    mStalledIssueHeader->addFileName();
+    if(mStalledIssueHeader->getData().consultData()->hasFiles() > 0)
     {
-        setTitleDescriptionText(tr("A single file had an issue that needs a user decision to solve"));
+        mStalledIssueHeader->setTitleDescriptionText(tr("A single file had an issue that needs a user decision to solve"));
     }
-    else if(getData().consultData()->hasFolders() > 0)
+    else if(mStalledIssueHeader->getData().consultData()->hasFolders() > 0)
     {
-        setTitleDescriptionText(tr("A single folder had an issue that needs a user decision to solve."));
+        mStalledIssueHeader->setTitleDescriptionText(tr("A single folder had an issue that needs a user decision to solve."));
     }
 }
 
 //Local folder not scannable
-MoveOrRenameCannotOccurHeader::MoveOrRenameCannotOccurHeader(QWidget *parent)
-    : StalledIssueHeader(parent)
+MoveOrRenameCannotOccurHeader::MoveOrRenameCannotOccurHeader(StalledIssueHeader* header)
+    : StalledIssueHeaderCase(header)
 {}
 
-void MoveOrRenameCannotOccurHeader::refreshCaseUi()
+void MoveOrRenameCannotOccurHeader::onRefreshCaseUi()
 {
-    setLeftTitleText(tr("Cannot move or rename"));
-    addFileName();
-    if (getData().consultData()->mDetectedMEGASide)
+    mStalledIssueHeader->setLeftTitleText(tr("Cannot move or rename"));
+    mStalledIssueHeader->addFileName();
+    if (mStalledIssueHeader->getData().consultData()->mDetectedMEGASide)
     {
-        setTitleDescriptionText(tr("A move or rename was detected in MEGA, but could not be replicated in the local filesystem."));
+        mStalledIssueHeader->setTitleDescriptionText(tr("A move or rename was detected in MEGA, but could not be replicated in the local filesystem."));
     }
     else
     {
-        setTitleDescriptionText(tr("A move or rename was detected in the local filesystem, but could not be replicated in MEGA."));
+        mStalledIssueHeader->setTitleDescriptionText(tr("A move or rename was detected in the local filesystem, but could not be replicated in MEGA."));
     }
 }
 
 //Delete or Move Waiting onScanning
-DeleteOrMoveWaitingOnScanningHeader::DeleteOrMoveWaitingOnScanningHeader(QWidget *parent)
-    : StalledIssueHeader(parent)
+DeleteOrMoveWaitingOnScanningHeader::DeleteOrMoveWaitingOnScanningHeader(StalledIssueHeader* header)
+    : StalledIssueHeaderCase(header)
 {}
 
-void DeleteOrMoveWaitingOnScanningHeader::refreshCaseUi()
+void DeleteOrMoveWaitingOnScanningHeader::onRefreshCaseUi()
 {
-    setLeftTitleText(tr("Can´t find"));
-    addFileName();
-    setTitleDescriptionText(tr("Waiting to finish scan to see if the file was moved or deleted."));
+    mStalledIssueHeader->setLeftTitleText(tr("Can´t find"));
+    mStalledIssueHeader->addFileName();
+    mStalledIssueHeader->setTitleDescriptionText(tr("Waiting to finish scan to see if the file was moved or deleted."));
 }
 
 //Local folder not scannable
-DeleteWaitingOnMovesHeader::DeleteWaitingOnMovesHeader(QWidget *parent)
-    : StalledIssueHeader(parent)
+DeleteWaitingOnMovesHeader::DeleteWaitingOnMovesHeader(StalledIssueHeader* header)
+    : StalledIssueHeaderCase(header)
 {}
 
-void DeleteWaitingOnMovesHeader::refreshCaseUi()
+void DeleteWaitingOnMovesHeader::onRefreshCaseUi()
 {
-    setLeftTitleText(tr("Waiting to move"));
-    addFileName();
-    setTitleDescriptionText(tr("Waiting for other processes to complete."));
+    mStalledIssueHeader->setLeftTitleText(tr("Waiting to move"));
+    mStalledIssueHeader->addFileName();
+    mStalledIssueHeader->setTitleDescriptionText(tr("Waiting for other processes to complete."));
 }
 
 //Upsync needs target folder
-UploadIssueHeader::UploadIssueHeader(QWidget *parent)
-    : StalledIssueHeader(parent)
+UploadIssueHeader::UploadIssueHeader(StalledIssueHeader* header)
+    : StalledIssueHeaderCase(header)
 {
 }
 
-void UploadIssueHeader::refreshCaseUi()
+void UploadIssueHeader::onRefreshCaseUi()
 {
-    setLeftTitleText(tr("Can´t upload"));
-    addFileName();
-    setRightTitleText(tr("to the selected location"));
-    setTitleDescriptionText(tr("Cannot reach the destination folder."));
+    mStalledIssueHeader->setLeftTitleText(tr("Can´t upload"));
+    mStalledIssueHeader->addFileName();
+    mStalledIssueHeader->setRightTitleText(tr("to the selected location"));
+    mStalledIssueHeader->setTitleDescriptionText(tr("Cannot reach the destination folder."));
 }
 
 //Downsync needs target folder
-DownloadIssueHeader::DownloadIssueHeader(QWidget *parent)
-    : StalledIssueHeader(parent)
+DownloadIssueHeader::DownloadIssueHeader(StalledIssueHeader* header)
+    : StalledIssueHeaderCase(header)
 {
 }
 
-void DownloadIssueHeader::refreshCaseUi()
+void DownloadIssueHeader::onRefreshCaseUi()
 {
-    setLeftTitleText(tr("Can´t download"));
-    addFileName();
-    setRightTitleText(tr("to the selected location"));
-    setTitleDescriptionText(tr("Cannot reach the destination folder."));
-}
-
-//Create folder failed
-CannotCreateFolderHeader::CannotCreateFolderHeader(QWidget *parent)
-    : StalledIssueHeader(parent)
-{}
-
-void CannotCreateFolderHeader::refreshCaseUi()
-{
-    setLeftTitleText(tr("Cannot create"));
-    addFileName();
-    setTitleDescriptionText(tr("Filesystem error preventing folder access."));
+    mStalledIssueHeader->setLeftTitleText(tr("Can´t download"));
+    mStalledIssueHeader->addFileName();
+    mStalledIssueHeader->setRightTitleText(tr("to the selected location"));
+    mStalledIssueHeader->setTitleDescriptionText(tr("Cannot reach the destination folder."));
 }
 
 //Create folder failed
-CannotPerformDeletionHeader::CannotPerformDeletionHeader(QWidget *parent)
-    : StalledIssueHeader(parent)
+CannotCreateFolderHeader::CannotCreateFolderHeader(StalledIssueHeader* header)
+    : StalledIssueHeaderCase(header)
 {}
 
-void CannotPerformDeletionHeader::refreshCaseUi()
+void CannotCreateFolderHeader::onRefreshCaseUi()
 {
-    setLeftTitleText(tr("Cannot perform deletion"));
-    addFileName();
-    setTitleDescriptionText(tr("Filesystem error preventing folder access."));
+    mStalledIssueHeader->setLeftTitleText(tr("Cannot create"));
+    mStalledIssueHeader->addFileName();
+    mStalledIssueHeader->setTitleDescriptionText(tr("Filesystem error preventing folder access."));
+}
+
+//Create folder failed
+CannotPerformDeletionHeader::CannotPerformDeletionHeader(StalledIssueHeader* header)
+    : StalledIssueHeaderCase(header)
+{}
+
+void CannotPerformDeletionHeader::onRefreshCaseUi()
+{
+    mStalledIssueHeader->setLeftTitleText(tr("Cannot perform deletion"));
+    mStalledIssueHeader->addFileName();
+    mStalledIssueHeader->setTitleDescriptionText(tr("Filesystem error preventing folder access."));
 }
 
 //SyncItemExceedsSupoortedTreeDepth
-SyncItemExceedsSupoortedTreeDepthHeader::SyncItemExceedsSupoortedTreeDepthHeader(QWidget *parent)
-    : StalledIssueHeader(parent)
+SyncItemExceedsSupoortedTreeDepthHeader::SyncItemExceedsSupoortedTreeDepthHeader(StalledIssueHeader* header)
+    : StalledIssueHeaderCase(header)
 {
 }
 
-void SyncItemExceedsSupoortedTreeDepthHeader::refreshCaseUi()
+void SyncItemExceedsSupoortedTreeDepthHeader::onRefreshCaseUi()
 {
-    setLeftTitleText(tr("Unable to sync"));
-    addFileName();
-    setTitleDescriptionText(tr("Target is too deep on your folder structure.\nPlease move it to a location that is less than 64 folders deep."));
+    mStalledIssueHeader->setLeftTitleText(tr("Unable to sync"));
+    mStalledIssueHeader->addFileName();
+    mStalledIssueHeader->setTitleDescriptionText(tr("Target is too deep on your folder structure.\nPlease move it to a location that is less than 64 folders deep."));
 }
-
 
 ////MoveTargetNameTooLongHeader
-//CreateFolderNameTooLongHeader::CreateFolderNameTooLongHeader(QWidget *parent)
-//    : StalledIssueHeader(parent)
+//CreateFolderNameTooLongHeader::CreateFolderNameTooLongHeader(StalledIssueHeader* header)
+//    : StalledIssueHeaderCase(header)
 //{}
 
 //void CreateFolderNameTooLongHeader::refreshCaseUi()
@@ -181,70 +192,66 @@ void SyncItemExceedsSupoortedTreeDepthHeader::refreshCaseUi()
 //}
 
 //SymlinksNotSupported
-FolderMatchedAgainstFileHeader::FolderMatchedAgainstFileHeader(QWidget *parent)
-    : StalledIssueHeader(parent)
+FolderMatchedAgainstFileHeader::FolderMatchedAgainstFileHeader(StalledIssueHeader* header)
+    : StalledIssueHeaderCase(header)
 {
 }
 
-void FolderMatchedAgainstFileHeader::refreshCaseUi()
+void FolderMatchedAgainstFileHeader::onRefreshCaseUi()
 {
-    setLeftTitleText(tr("Cannot sync"));
-    addFileName();
-    setTitleDescriptionText(tr("Cannot sync folders against files."));
+    mStalledIssueHeader->setLeftTitleText(tr("Cannot sync"));
+    mStalledIssueHeader->addFileName();
+    mStalledIssueHeader->setTitleDescriptionText(tr("Cannot sync folders against files."));
 }
 
-LocalAndRemotePreviouslyUnsyncedDifferHeader::LocalAndRemotePreviouslyUnsyncedDifferHeader(QWidget *parent)
-    : StalledIssueHeader(parent)
+LocalAndRemotePreviouslyUnsyncedDifferHeader::LocalAndRemotePreviouslyUnsyncedDifferHeader(StalledIssueHeader* header)
+    : StalledIssueHeaderCase(header)
 {
-
 }
 
-void LocalAndRemotePreviouslyUnsyncedDifferHeader::refreshCaseUi()
+void LocalAndRemotePreviouslyUnsyncedDifferHeader::onRefreshCaseUi()
 {
-    setLeftTitleText(tr("Can´t sync"));
-    addFileName();
-    setTitleDescriptionText(tr("This file has conflicting copies"));
+    mStalledIssueHeader->setLeftTitleText(tr("Can´t sync"));
+    mStalledIssueHeader->addFileName();
+    mStalledIssueHeader->setTitleDescriptionText(tr("This file has conflicting copies"));
 }
 
 //Local and remote previously synced differ
-LocalAndRemoteChangedSinceLastSyncedStateHeader::LocalAndRemoteChangedSinceLastSyncedStateHeader(QWidget *parent)
-    : StalledIssueHeader(parent)
+LocalAndRemoteChangedSinceLastSyncedStateHeader::LocalAndRemoteChangedSinceLastSyncedStateHeader(StalledIssueHeader* header)
+    : StalledIssueHeaderCase(header)
 {
-
 }
 
-void LocalAndRemoteChangedSinceLastSyncedStateHeader::refreshCaseUi()
+void LocalAndRemoteChangedSinceLastSyncedStateHeader::onRefreshCaseUi()
 {
-    setLeftTitleText(tr("Can´t sync"));
-    addFileName();
-    setTitleDescriptionText(tr("This file has changed since it it was last synced."));
+    mStalledIssueHeader->setLeftTitleText(tr("Can´t sync"));
+    mStalledIssueHeader->addFileName();
+    mStalledIssueHeader->setTitleDescriptionText(tr("This file has changed since it it was last synced."));
 }
 
 //Name Conflicts
-NameConflictsHeader::NameConflictsHeader(QWidget *parent)
-    : StalledIssueHeader(parent)
+NameConflictsHeader::NameConflictsHeader(StalledIssueHeader* header)
+    : StalledIssueHeaderCase(header)
 {
-
 }
 
-void NameConflictsHeader::refreshCaseUi()
+void NameConflictsHeader::onRefreshCaseUi()
 {
-    setLeftTitleText(tr("Name Conflicts:"));
+    mStalledIssueHeader->setLeftTitleText(tr("Name Conflicts:"));
 
-    if(getData().consultData()->hasFiles() > 0 && getData().consultData()->hasFolders() > 0)
+    if(mStalledIssueHeader->getData().consultData()->hasFiles() > 0 && mStalledIssueHeader->getData().consultData()->hasFolders() > 0)
     {
-        setTitleDescriptionText(tr("These files and folders contain multiple names on one side, that would all become the same single name on the other side of the sync."
+        mStalledIssueHeader->setTitleDescriptionText(tr("These files and folders contain multiple names on one side, that would all become the same single name on the other side of the sync."
                                    "\nThis may be due to syncing to case insensitive local filesystems, or the effects of escaped characters."));
     }
-    else if(getData().consultData()->hasFiles() > 0)
+    else if(mStalledIssueHeader->getData().consultData()->hasFiles() > 0)
     {
-        setTitleDescriptionText(tr("These files contain multiple names on one side, that would all become the same single name on the other side of the sync."
+        mStalledIssueHeader->setTitleDescriptionText(tr("These files contain multiple names on one side, that would all become the same single name on the other side of the sync."
                                    "\nThis may be due to syncing to case insensitive local filesystems, or the effects of escaped characters."));
     }
-    else if(getData().consultData()->hasFolders() > 0)
+    else if(mStalledIssueHeader->getData().consultData()->hasFolders() > 0)
     {
-        setTitleDescriptionText(tr("These folders contain multiple names on one side, that would all become the same single name on the other side of the sync."
+        mStalledIssueHeader->setTitleDescriptionText(tr("These folders contain multiple names on one side, that would all become the same single name on the other side of the sync."
                                    "\nThis may be due to syncing to case insensitive local filesystems, or the effects of escaped characters."));
     }
 }
-
