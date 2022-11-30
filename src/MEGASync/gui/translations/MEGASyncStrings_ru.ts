@@ -503,7 +503,7 @@
     <message>
         <source>You can back up folders from your computer to MEGA. Files will automatically back up when the desktop app is running.</source>
         <translatorcomment>Backup wizard body text</translatorcomment>
-        <translation>Вы можете создавать резервные копии папок с вашего компьютера в MEGA. Файлы будут автоматически создавать резервные копии во время работы настольного приложения.</translation>
+        <translation>Вы можете создавать резервные копии папок с вашего компьютера в MEGA. Файлы будут автоматически копироваться во время работы настольного приложения.</translation>
     </message>
     <message>
         <source>No folders available</source>

@@ -3260,7 +3260,7 @@ I trasferimenti riprenderanno automaticamente quando riaprirai l&apos;app.</nume
     <message>
         <source>Account expired (business or Pro Flexi)</source>
         <translatorcomment>Label to show that the current account (either business or Pro Flexi) is expired during a SDK operation.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Account disattivato</translation>
     </message>
 </context>
 <context>

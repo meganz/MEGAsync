@@ -3261,7 +3261,7 @@ Die Transfers werden automatisch fortgesetzt, wenn Sie die App erneut öffnen.</
     <message>
         <source>Account expired (business or Pro Flexi)</source>
         <translatorcomment>Label to show that the current account (either business or Pro Flexi) is expired during a SDK operation.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ihr Business-Account ist abgelaufen</translation>
     </message>
 </context>
 <context>
@@ -4097,7 +4097,7 @@ Please delete the folder sync from preferences to cancel them.</source>
     <message>
         <source>Proxies</source>
         <translatorcomment>Title of dialog to set proxy settings.</translatorcomment>
-        <translation>Proxys</translation>
+        <translation>Proxy</translation>
     </message>
     <message>
         <source>Proxy</source>
@@ -5119,7 +5119,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Proxies</source>
         <translatorcomment>Section title text for the Proxy summary text and actions in Network pane.</translatorcomment>
-        <translation>Proxys</translation>
+        <translation>Proxy</translation>
     </message>
     <message>
         <source>Force a Full Scan</source>

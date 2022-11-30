@@ -278,7 +278,7 @@
     <message>
         <source>[A] has been deleted/deactivated</source>
         <translatorcomment>Label to indicate that [A] has been deleted from your contacts. Placeholder will be replaced by email of user deleted</translatorcomment>
-        <translation>[A]已被刪除/停用</translation>
+        <translation>[A]已被刪除或停用</translation>
     </message>
     <message>
         <source>[A] established you as a contact</source>
@@ -406,7 +406,7 @@
     <message>
         <source>Local Folder</source>
         <translatorcomment>Local folder column header name for backlups table in settings dialog</translatorcomment>
-        <translation>本機資料夾</translation>
+        <translation>本地資料夾</translation>
     </message>
     <message>
         <source>Sort by name</source>
@@ -439,12 +439,12 @@
     <message>
         <source>A folder named &quot;%1&quot; already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
         <translatorcomment>Text shown to the user if there is a name conflict with a folder in the Backups remote folder for the current device</translatorcomment>
-        <translation>您的備份中已存在名稱為「%1」的資料夾。重新命名新資料夾名稱以繼續進行備份。資料夾名稱在你的電腦上不會更改。</translation>
+        <translation>您的備份裡已存在名稱為「%1」的資料夾。請重新命名新資料夾名稱以繼續進行備份。資料夾名稱在你的電腦上不會更改。</translation>
     </message>
     <message>
         <source>If you don&apos;t want to rename the new folder, stop the backup in the [A]Backup centre[/A] for the existing folder. Then setup the backup for the new folder again.</source>
         <translatorcomment>Text instructing the user to go to the backup center to solve the backup name conflict</translatorcomment>
-        <translation>如果您不想重新命名新資料夾，請在[A]備份中心[/A]中停止現有資料夾的備份。然後重新為新資料夾設定備份。</translation>
+        <translation>如果您不想重新命名新資料夾，請在[A]備份中心[/A]中停止現有資料夾的備份。然後再次為新資料夾設定備份。</translation>
     </message>
     <message>
         <source>Rename and backup</source>
@@ -477,7 +477,7 @@
     <message>
         <source>A folder named &quot;%1&quot; already exists in your Backups. Rename the new folder to continue with the backup.</source>
         <translatorcomment>Error message displayed in the top of the rename backup dialog. It indicates that a backup with that name already exists.</translatorcomment>
-        <translation>您的備份中已存在名稱為「%1」的資料夾。請重新命名新資料夾名稱以繼續進行備份。</translation>
+        <translation>您的備份裡已存在名稱為「%1」的資料夾。請重新命名新資料夾名稱以繼續進行備份。</translation>
     </message>
 </context>
 <context>
@@ -533,7 +533,7 @@
     <message>
         <source>Folders will be stored in backups and you can check the status of your backups in backup centre.</source>
         <translatorcomment>Successfull dialog text</translatorcomment>
-        <translation>資料夾將儲存在備份中，您可以在備份中心查看您的備份狀態。</translation>
+        <translation>資料夾將儲存在備份裡，您可以在備份中心查看您的備份狀態。</translation>
     </message>
     <message>
         <source>Show more…</source>
@@ -741,7 +741,7 @@
     <message>
         <source>Only enable this option if tranfers don&apos;t start. Under all other circumstances, using HTTP is satisfactory as MEGA already encrypts all data.</source>
         <translatorcomment>Description label about the option Use HTTPS for transfers that don&amp;apos;t start checkbox.</translatorcomment>
-        <translation>僅於您的傳輸未啟動時才啟用此選項。在其它情況下，由於MEGA已將所有資料進行加密，HTTP選項的安全性已可正常運作。</translation>
+        <translation>僅於您的傳輸未啟動時才啟用此選項。在所有其它情況下，MEGA已將所有資料進行加密，HTTP選項的安全性已可正常運作。</translation>
     </message>
 </context>
 <context>
@@ -852,7 +852,7 @@
     <message>
         <source>Ok</source>
         <translatorcomment>Button label to confirm and close a message box dialog.</translatorcomment>
-        <translation>Ok</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Are you sure you want to exit uploading?</source>
@@ -1131,17 +1131,17 @@
     <message>
         <source>Shared Folder Received</source>
         <translatorcomment>Title of the notification when a shared folder has been received</translatorcomment>
-        <translation>已收到共享資料夾</translation>
+        <translation>共享資料夾已收到</translation>
     </message>
     <message>
         <source>Shared Folder Removed</source>
         <translatorcomment>Title of the notification when a shared folder has been removed</translatorcomment>
-        <translation>已移除共享資料夾</translation>
+        <translation>共享資料夾已移除</translation>
     </message>
     <message>
         <source>Shared Folder Updated</source>
         <translatorcomment>Generic label to indicate that there is an update in a shared folder but the name of the shared folder is not available.</translatorcomment>
-        <translation>已更新共享資料夾</translation>
+        <translation>共享資料夾已更新</translation>
     </message>
     <message>
         <source>Payment Info</source>
@@ -1645,7 +1645,7 @@
     <message>
         <source>Locked Account</source>
         <translatorcomment>Label to indicate the current account is locked</translatorcomment>
-        <translation>帳戶封鎖</translation>
+        <translation>帳戶已封鎖</translation>
     </message>
     <message>
         <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
@@ -1695,7 +1695,7 @@
     <message>
         <source>6 digit code:</source>
         <translatorcomment>Placeholder text on the Two Factor Authentication login dialog telling the user to enter their 6 digit code from the Google Authenticator app.</translatorcomment>
-        <translation>6位數字驗證碼：</translation>
+        <translation>6位數驗證碼：</translation>
     </message>
     <message>
         <source>Invalid code</source>
@@ -1749,7 +1749,7 @@
     <message>
         <source>Import to my cloud drive</source>
         <translatorcomment>Label to indicate if the user wants to import the selected MEGA link(s) to his cloud drive.</translatorcomment>
-        <translation>匯入至我的雲端硬碟</translation>
+        <translation>匯入到我的雲端硬碟</translation>
     </message>
     <message>
         <source>OK</source>
@@ -2104,7 +2104,7 @@
     <message>
         <source>Login or create an account to start using MEGA Desktop app.</source>
         <translatorcomment>Description label to inform the user about next step in order to use MEGA Desktop app. Users will need to login or create an account.</translatorcomment>
-        <translation>登入或建立一個帳戶以開始使用MEGA桌面應用程式。</translation>
+        <translation>登入或建立一個帳戶以開始使用我們的應用程式。</translation>
     </message>
     <message>
         <source>You need to log into MEGA account to use the MEGA desktop app.</source>
@@ -2170,7 +2170,7 @@
     <message>
         <source>Locked Accounts</source>
         <translatorcomment>Title of informative popover which informs users about the lock situation.</translatorcomment>
-        <translation>帳戶封鎖</translation>
+        <translation>帳戶已封鎖</translation>
     </message>
 </context>
 <context>
@@ -2188,7 +2188,7 @@
     <message>
         <source>6 digit code:</source>
         <translatorcomment>Placeholder text on the Two Factor Authentication login dialog telling the user to enter their 6 digit code from the Google Authenticator app.</translatorcomment>
-        <translation>6位數字驗證碼：</translation>
+        <translation>6位數驗證碼：</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2372,7 +2372,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
         <translatorcomment>Notification message launched when a connectivity problem occurs.</translatorcomment>
-        <translation>應用程式無法連接。請檢查您的網路連線和本地防火牆設置。請注意，大多數防毒軟體都包含防火牆。</translation>
+        <translation>應用程式無法連接。請檢查您的網路連線和本地防火牆設定。請注意，大多數防毒軟體都包含防火牆。</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
@@ -2407,7 +2407,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>因為遠端資料夾在垃圾筒中，您的同步 「%1」 已被停用</translation>
+        <translation>因為遠端資料夾在垃圾筒中，您的同步「%1」已停用</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
@@ -2478,7 +2478,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
         <translatorcomment>Message shown to the user to inform that MEGAsync is not able to find a systray to place tray icon</translatorcomment>
-        <translation>我們無法找到系統狀態列來放置應用程式的狀態圖示。請嘗試再次啟動應用程式。</translation>
+        <translation>我們無法找到系統狀態列來放置應用程式的圖示。請嘗試再次啟動應用程式。</translation>
     </message>
     <message>
         <source>Error getting link:</source>
@@ -2493,7 +2493,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>The link can&apos;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
         <translatorcomment>Notification error message shown while generating a public link of a file from an incoming shared folder or from the rubbish bin</translatorcomment>
-        <translation>無法生成連結，因為檔案位於傳入的共享資料夾或垃圾筒中。</translation>
+        <translation>無法生成連結，因為檔案位於傳入的共享資料夾或您的垃圾筒中。</translation>
     </message>
     <message>
         <source>Upload</source>
@@ -2597,7 +2597,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Account Suspended</source>
         <translatorcomment>Title to inform that a business account is actually suspended.</translatorcomment>
-        <translation>帳戶暫停</translation>
+        <translation>帳戶已暫停</translation>
     </message>
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
@@ -2617,7 +2617,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Locked account</source>
         <translatorcomment>Title of the system notification when the account is locked</translatorcomment>
-        <translation>帳戶封鎖</translation>
+        <translation>帳戶已封鎖</translation>
     </message>
     <message>
         <source>Open links</source>
@@ -2784,17 +2784,17 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>因為本機資料夾不存在，您的備份「%1」已停用。</translation>
+        <translation>因為本地資料夾不存在，您的備份「%1」已停用。</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>由於VirtualBox檔案系統比較不具效率，所以不支援共享資料夾同步，因此您的備份「%1」已停用。</translation>
+        <translation>由於該檔案系統的缺陷，因此不支援備份VirtualBox共享的資料夾，所以您的備份「%1」已停用。</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>因為MEGA資料夾在垃圾筒中，您的備份「%1」已停用</translation>
+        <translation>因為MEGA資料夾在垃圾筒中，您的備份「%1」已停用。</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
@@ -2804,7 +2804,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder has changed</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>因為本機資料夾已變更，您的備份「%1」已停用。</translation>
+        <translation>因為本地資料夾已變更，您的備份「%1」已停用。</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder has changed</source>
@@ -2977,7 +2977,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
         <translatorcomment>Error triggered by SDK when an account has been suspended due to copyright violations.</translatorcomment>
-        <translation>帳戶因侵犯版權而被暫停使用。我們向您發送了一封電子郵件，其中包含更多關於此的訊息。</translation>
+        <translation>帳戶因侵犯版權而被暫停使用。我們向您發送了一封電子郵件，其中包含更多關於此內容的訊息。</translation>
     </message>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
@@ -3000,7 +3000,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Locked Accounts</source>
         <translatorcomment>Title of informative message box which informs users about the lock situation.</translatorcomment>
-        <translation>帳戶封鎖</translation>
+        <translation>帳戶已封鎖</translation>
     </message>
     <message>
         <source>It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.</source>
@@ -3260,7 +3260,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Account expired (business or Pro Flexi)</source>
         <translatorcomment>Label to show that the current account (either business or Pro Flexi) is expired during a SDK operation.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>帳戶已停用</translation>
     </message>
 </context>
 <context>
@@ -4096,7 +4096,7 @@ Please delete the folder sync from preferences to cancel them.</source>
     <message>
         <source>Proxies</source>
         <translatorcomment>Title of dialog to set proxy settings.</translatorcomment>
-        <translation>Proxy</translation>
+        <translation>代理</translation>
     </message>
     <message>
         <source>Proxy</source>

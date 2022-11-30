@@ -2789,7 +2789,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>由于VirtualBox共享文件夹的同步由于该文件系统的缺陷而不被支持，您的备份“%1”已被禁用。</translation>
+        <translation>由于文件系统不支持VirtualBox共享文件夹的备份，您的备份“%1”已被禁用。</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>

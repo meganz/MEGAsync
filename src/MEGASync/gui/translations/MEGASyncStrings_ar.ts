@@ -2794,7 +2794,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>تم تعطيل نسخك الاحتياطي &quot;%1&quot; لأن مزامنة المجلدات المشاركة في VirtualBox غير مدعومة بسبب أوجه القصور في نظام الملفات هذا.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
@@ -3265,7 +3265,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Account expired (business or Pro Flexi)</source>
         <translatorcomment>Label to show that the current account (either business or Pro Flexi) is expired during a SDK operation.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>الحساب غير مفعل</translation>
     </message>
 </context>
 <context>

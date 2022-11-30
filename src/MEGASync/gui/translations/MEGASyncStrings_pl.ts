@@ -348,7 +348,7 @@
     <message>
         <source>Access to shared folder was removed by [A]</source>
         <translatorcomment>Label to indicate that the access for a shared folder has been removed by [A]. Keep placeholder. It will be replaced at runtime with specific email.</translatorcomment>
-        <translation>Dostęp do udostępnionego folderu został usunięty przez [A]</translation>
+        <translation>Dostęp do udostępnionego katalogu został usunięty przez [A]</translation>
     </message>
     <message>
         <source>Shared Folder Activity</source>
@@ -368,7 +368,7 @@
     <message>
         <source>Your publicly shared folder ([A]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder has been taken down. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
-        <translation>Twój publicznie udostępniony folder ([A]) został usunięty</translation>
+        <translation>Twój publicznie udostępniony katalog ([A]) został usunięty</translation>
     </message>
     <message>
         <source>Your publicly shared file ([A]) has been reinstated</source>
@@ -378,7 +378,7 @@
     <message>
         <source>Your publicly shared folder ([A]) has been reinstated</source>
         <translatorcomment>Label to indicate that public shared folder has been reinstated. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
-        <translation>Twój publicznie udostępniony folder ([A]) został przywrócony</translation>
+        <translation>Twój publicznie udostępniony katalog ([A]) został przywrócony</translation>
     </message>
     <message numerus="yes">
         <source>[A] added %n item</source>
@@ -1058,7 +1058,7 @@
         <source>Attach diagnostic log files to assist with debugging[Br](in some cases it may contain details about your data, such as file or folder names)</source>
         <translatorcomment>Checkbox to let the user attach diagnostic log files for analysis when an application crash occurs. Keep [Br] place holder.</translatorcomment>
         <translation>Dołącz pliki dziennika diagnostycznego, aby pomóc w usuwaniu błędów.
-W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich danych, takie jak nazwy plików lub folderów.</translation>
+W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich danych, takie jak nazwy plików lub katalogów.</translation>
     </message>
 </context>
 <context>
@@ -1076,7 +1076,7 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
     <message>
         <source>Access to shared folder was removed by [A]</source>
         <translatorcomment>Label to indicate that the access for a shared folder has been removed by [A]. Keep placeholder. It will be replaced at runtime with specific email.</translatorcomment>
-        <translation>Dostęp do udostępnionego folderu został usunięty przez [A]</translation>
+        <translation>Dostęp do udostępnionego katalogu został usunięty przez [A]</translation>
     </message>
     <message>
         <source>New Contact Request</source>
@@ -1186,12 +1186,12 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
     <message>
         <source>Your publicly shared folder ([A]) has been reinstated</source>
         <translatorcomment>Label to indicate that public shared folder has been reinstated. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
-        <translation>Twój publicznie udostępniony folder ([A]) został przywrócony</translation>
+        <translation>Twój publicznie udostępniony katalog ([A]) został przywrócony</translation>
     </message>
     <message>
         <source>Your publicly shared folder ([A]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder has been taken down. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
-        <translation>Twój publicznie udostępniony folder ([A]) został usunięty</translation>
+        <translation>Twój publicznie udostępniony katalog ([A]) został usunięty</translation>
     </message>
     <message>
         <source>Your taken down has been reinstated</source>
@@ -1357,7 +1357,7 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
     <message>
         <source>The folder at this destination will be maintained.</source>
         <translatorcomment>Text explaining the result of the folder skip action</translatorcomment>
-        <translation>Folder w tym miejscu docelowym zostanie zachowany.</translation>
+        <translation>Katalog w tym miejscu docelowym zostanie zachowany.</translation>
     </message>
     <message>
         <source>A file named [A] already exists at this destination</source>
@@ -2787,7 +2787,7 @@ Transfery zostaną automatycznie wznowione po ponownym otwarciu aplikacji.</nume
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Twoja kopia zapasowa &quot;%1&quot; została wyłączona, ponieważ lokalny folder nie istnieje</translation>
+        <translation>Twoja kopia zapasowa &quot;%1&quot; została wyłączona, ponieważ lokalny katalog nie istnieje</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
@@ -2797,7 +2797,7 @@ Transfery zostaną automatycznie wznowione po ponownym otwarciu aplikacji.</nume
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Twoja kopia zapasowa &quot;%1&quot; została wyłączona, ponieważ folder zdalny znajduje się w koszu.</translation>
+        <translation>Twoja kopia zapasowa &quot;%1&quot; została wyłączona, ponieważ katalog zdalny znajduje się w koszu.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
@@ -3158,7 +3158,7 @@ Transfery zostaną automatycznie wznowione po ponownym otwarciu aplikacji.</nume
     <message>
         <source>Remote node not found</source>
         <translatorcomment>Label to show that remote node was not found for a sync during a SDK operation.</translatorcomment>
-        <translation>Nie znaleziono zdalnego folderu synchronizacji</translation>
+        <translation>Nie znaleziono zdalnego katalog synchronizacji</translation>
     </message>
     <message>
         <source>Reached storage quota limit</source>
@@ -3178,12 +3178,12 @@ Transfery zostaną automatycznie wznowione po ponownym otwarciu aplikacji.</nume
     <message>
         <source>Remote node moved to Rubbish Bin</source>
         <translatorcomment>Label to show that remote node has been moved to Rubbish bin.</translatorcomment>
-        <translation>Zdalny folder synchronizacji został przeniesiony do kosza na śmieci</translation>
+        <translation>Zdalny katalog synchronizacji został przeniesiony do kosza na śmieci</translation>
     </message>
     <message>
         <source>Share without full access</source>
         <translatorcomment>SDK error label shown when trying to sync into a shared folder without full access.</translatorcomment>
-        <translation>Nie masz pełnego dostępu do folderu zdalnej synchronizacji</translation>
+        <translation>Nie masz pełnego dostępu do katalogu zdalnej synchronizacji</translation>
     </message>
     <message>
         <source>Local fingerprint mismatch</source>
@@ -3198,12 +3198,12 @@ Transfery zostaną automatycznie wznowione po ponownym otwarciu aplikacji.</nume
     <message>
         <source>Active sync below path</source>
         <translatorcomment>SDK error label shown when setting a sync and there is an active sync with path inside the selected remote target</translatorcomment>
-        <translation>W Twoim folderze zdalnym jest już aktywna synchronizacja</translation>
+        <translation>W twoim katalogu zdalnym jest już aktywna synchronizacja</translation>
     </message>
     <message>
         <source>Active sync above path</source>
         <translatorcomment>SDK error label shown when setting a sync and there is an active sync with a remote path as includes the selected remote target.</translatorcomment>
-        <translation>Folder zdalny jest już częścią istniejącej aktywnej synchronizacji</translation>
+        <translation>Katalog zdalny jest już częścią istniejącej aktywnej synchronizacji</translation>
     </message>
     <message>
         <source>Remote node has been deleted</source>
@@ -3213,7 +3213,7 @@ Transfery zostaną automatycznie wznowione po ponownym otwarciu aplikacji.</nume
     <message>
         <source>Remote node is inside Rubbish Bin</source>
         <translatorcomment>SDK error label shown when remote node is inside Rubbish bin.</translatorcomment>
-        <translation>Zdalny folder synchronizacji znajduje się w koszu na śmieci</translation>
+        <translation>Zdalny katalog synchronizacji znajduje się w koszu na śmieci</translation>
     </message>
     <message>
         <source>Unsupported VBoxSharedFolderFS filesystem</source>
@@ -3536,7 +3536,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying upload files to a non compatible folder</translatorcomment>
-        <translation>Aby móc przesłać dane do wybranego folderu, potrzebujesz praw dostępu do odczytu i zapisu lub pełnych praw dostępu.</translation>
+        <translation>Aby móc przesłać dane do wybranego katalogu, potrzebujesz praw dostępu do odczytu i zapisu lub pełnych praw dostępu.</translation>
     </message>
     <message>
         <source>You need Full access right to be able to sync the selected folder.</source>
@@ -4099,7 +4099,7 @@ Please delete the folder sync from preferences to cancel them.</source>
     <message>
         <source>Proxies</source>
         <translatorcomment>Title of dialog to set proxy settings.</translatorcomment>
-        <translation>Ustawienia proxy</translation>
+        <translation>Proxy</translation>
     </message>
     <message>
         <source>Proxy</source>
@@ -4607,7 +4607,7 @@ Czy mimo to chcesz je usunąć?</translation>
     <message>
         <source>To stop backing up this folder, you need to either move it or delete it.</source>
         <translatorcomment>Backup removal title description</translatorcomment>
-        <translation>Aby przestać tworzyć kopie zapasowe tego folderu, należy go przenieść lub usunąć.</translation>
+        <translation>Aby przestać tworzyć kopie zapasowe tego katalogu, należy go przenieść lub usunąć.</translation>
     </message>
     <message>
         <source>Move folder</source>
@@ -4617,7 +4617,7 @@ Czy mimo to chcesz je usunąć?</translation>
     <message>
         <source>Move this folder from backups to another location in your cloud drive to get full access to your data. This folder will stop being backed up.</source>
         <translatorcomment>Radio button description</translatorcomment>
-        <translation>Aby uzyskać pełny dostęp do swoich danych, przenieś ten folder z kopii zapasowych do innej lokalizacji na dysku w chmurze. Kopia zapasowa tego folderu przestanie być tworzona.</translation>
+        <translation>Aby uzyskać pełny dostęp do swoich danych, przenieś ten katalog z kopii zapasowych do innej lokalizacji na dysku w chmurze. Kopia zapasowa tego katalogu przestanie być tworzona.</translation>
     </message>
     <message>
         <source>Move to:</source>
@@ -4891,7 +4891,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and its consequences. Keep [A] substitution placeholder.</translatorcomment>
-        <translation>Kopie zapasowe poprzednich wersji zsynchronizowanych plików w MEGA zostaną trwale usunięte. Sprawdź folder [A] w Koszu na śmieci na swoim koncie MEGA, aby przed kontynuowaniem sprawdzić, czy musisz coś uratować.</translation>
+        <translation>Kopie zapasowe poprzednich wersji zsynchronizowanych plików w MEGA zostaną trwale usunięte. Sprawdź katalog [A] w Koszu na śmieci na swoim koncie MEGA, aby przed kontynuowaniem sprawdzić, czy musisz coś uratować.</translation>
     </message>
     <message>
         <source>Do you want to restart MEGAsync now?</source>
@@ -5121,7 +5121,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Proxies</source>
         <translatorcomment>Section title text for the Proxy summary text and actions in Network pane.</translatorcomment>
-        <translation>Proxies</translation>
+        <translation>Proxy</translation>
     </message>
     <message>
         <source>Force a Full Scan</source>
@@ -5176,7 +5176,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your MEGA account is full. Uploads are disabled and folder synchronisation is paused.</source>
         <translatorcomment>Warning text message shown in Sync pane when account storage is full.</translatorcomment>
-        <translation>Twoje konto MEGA jest pełne. Przesyłanie plików jest wyłączone, a synchronizacja folderów wstrzymana.</translation>
+        <translation>Twoje konto MEGA jest pełne. Przesyłanie plików jest wyłączone, a synchronizacja katalogów wstrzymana.</translation>
     </message>
     <message>
         <source>Your account security depends on the strength of your password. Passwords should be unique and impossible to guess. We recommend using a password manager.</source>
@@ -5461,7 +5461,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Failed to move or remove the remote backup folder. Reason: %1</source>
         <translatorcomment>Error text when the deletion or move of the remote backup folder failed</translatorcomment>
-        <translation>Nie udało się przenieść lub usunąć zdalnego folderu kopii zapasowej. Powód: %1</translation>
+        <translation>Nie udało się przenieść lub usunąć zdalnego katalogu kopii zapasowej. Powód: %1</translation>
     </message>
     <message>
         <source>Error enabling backup</source>
@@ -5797,7 +5797,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Specific folders in your Cloud Drive will be synchronized with a local folder.</source>
         <translatorcomment>Information label to explain the user the selective sync mode of MEGAsync</translatorcomment>
-        <translation>Określone foldery na Dysku Cloud zostaną zsynchronizowane z odpowiednim folderem lokalnym.</translation>
+        <translation>Określone katalogi na Dysku Cloud zostaną zsynchronizowane z odpowiednim katalogiem lokalnym.</translation>
     </message>
     <message>
         <source>Select Local folder:</source>
@@ -5817,7 +5817,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your entire Cloud Drive will be synchronized with a local folder.</source>
         <translatorcomment>Label with information about the full sync mode of MEGAsync</translatorcomment>
-        <translation>Cały dysk Cloud zostanie zsynchronizowany z folderem lokalnym.</translation>
+        <translation>Cały dysk Cloud zostanie zsynchronizowany z katalogiem lokalnym.</translation>
     </message>
     <message>
         <source>Log in</source>
@@ -6072,7 +6072,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You can&apos;t backup this folder as it&apos;s already synced.</source>
         <translatorcomment>Warning message indicating that a folder can´t be backed up as it is synced.</translatorcomment>
-        <translation>Nie można wykonać kopii zapasowej tego folderu, ponieważ jest on już zsynchronizowany.</translation>
+        <translation>Nie można wykonać kopii zapasowej tego katalogu, ponieważ jest on już zsynchronizowany.</translation>
     </message>
     <message>
         <source>Folder is already backed up. Select a different one.</source>
@@ -6204,7 +6204,7 @@ Aby kontynuować, wybierz inny katalog.</translation>
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a FAT filesystem.</translatorcomment>
-        <translation>Synchronizujesz folder lokalny sformatowany w systemie plików FAT. Ten system plików ma braki w zarządzaniu dużymi plikami i czasami modyfikacji, które mogą powodować problemy z synchronizacją (np. Przy zmianie czasu letniego), więc zdecydowanie zaleca się synchronizowanie tylko folderów sformatowanych przy użyciu bardziej niezawodnych systemów plików, takich jak NTFS (więcej informacji [A]tutaj[/A]).</translation>
+        <translation>Synchronizujesz katalog lokalny sformatowany w systemie plików FAT. Ten system plików ma braki w zarządzaniu dużymi plikami i czasami modyfikacji, które mogą powodować problemy z synchronizacją (np. Przy zmianie czasu letniego), więc zdecydowanie zaleca się synchronizowanie tylko katalogów sformatowanych przy użyciu bardziej niezawodnych systemów plików, takich jak NTFS (więcej informacji [A]tutaj[/A]).</translation>
     </message>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
@@ -6948,7 +6948,7 @@ Aby uzyskać więcej limitu, uaktualnij konto do wersji Pro lub poczekaj [A], a�
     <message>
         <source>Please, select the upload folder for your files:</source>
         <translatorcomment>Label to inform the user of the destination local folder for the files to be uploaded (MAX 50 characters)</translatorcomment>
-        <translation>Wybierz folder przesyłania plików:</translation>
+        <translation>Wybierz katalog dla plików:</translation>
     </message>
     <message>
         <source>MEGA folder:</source>

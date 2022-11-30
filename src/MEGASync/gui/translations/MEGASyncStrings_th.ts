@@ -3260,7 +3260,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Account expired (business or Pro Flexi)</source>
         <translatorcomment>Label to show that the current account (either business or Pro Flexi) is expired during a SDK operation.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>บัญชีธุรกิจของคุณหมดอายุแล้ว</translation>
     </message>
 </context>
 <context>

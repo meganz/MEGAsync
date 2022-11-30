@@ -857,7 +857,7 @@
     <message>
         <source>Are you sure you want to exit uploading?</source>
         <translatorcomment>Confirmation message shown when the user is trying to cancel the ongoing upload report.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Vrei să anulezi încărcarea problemei raportate?</translation>
     </message>
     <message>
         <source>The bug report will not be submitted if you exit uploading.</source>
@@ -3262,7 +3262,7 @@ Transferurile se vor relua automat când redeschizi aplicația.</numerusform></t
     <message>
         <source>Account expired (business or Pro Flexi)</source>
         <translatorcomment>Label to show that the current account (either business or Pro Flexi) is expired during a SDK operation.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Cont dezactivat</translation>
     </message>
 </context>
 <context>
@@ -4098,7 +4098,7 @@ Please delete the folder sync from preferences to cancel them.</source>
     <message>
         <source>Proxies</source>
         <translatorcomment>Title of dialog to set proxy settings.</translatorcomment>
-        <translation>Proxy-uri</translation>
+        <translation>Proxy</translation>
     </message>
     <message>
         <source>Proxy</source>
@@ -5030,7 +5030,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Please let us know if you encounter any issues. Help us by providing as much detail as possible.</source>
         <translatorcomment>Descriptive text label used to encourage users to submit bug reports via the Report Issue button.</translatorcomment>
-        <translation>Te rugăm să ne dai de știre dacă întâmpini probleme. Ajută -ne oferind cât mai multe detalii posibil.</translation>
+        <translation>Te rugăm să ne dai de știre dacă întâmpini probleme. Ajută-ne oferind cât mai multe detalii posibil.</translation>
     </message>
     <message>
         <source>Report Issue</source>
@@ -5120,7 +5120,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Proxies</source>
         <translatorcomment>Section title text for the Proxy summary text and actions in Network pane.</translatorcomment>
-        <translation>Proxy-uri</translation>
+        <translation>Proxy</translation>
     </message>
     <message>
         <source>Force a Full Scan</source>
@@ -5708,7 +5708,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Are you sure you want to cancel this wizard and undo all changes?</source>
         <translatorcomment>Message shown when an user cancel the Setup Wizard.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Vrei să anulezi acest asistent și să anulezi toate modificările?</translation>
     </message>
     <message>
         <source>Skip</source>
@@ -7013,7 +7013,7 @@ Pentru a obține mai multă cotă, upgradează la un cont Pro sau așteaptă pâ
     <message>
         <source>Bytes</source>
         <translatorcomment>Label to indicate bytes unit.</translatorcomment>
-        <translation>Byți</translation>
+        <translation>byți</translation>
     </message>
     <message>
         <source>Pro Lite</source>

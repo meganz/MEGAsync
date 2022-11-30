@@ -2790,7 +2790,7 @@ Overdrachten worden automatisch hervat wanneer u de applicatie heropend.</numeru
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Uw back-up &quot;%1&quot; is uitgeschakeld omdat de synchronisatie van gedeelde VirtualBox-mappen niet wordt ondersteund vanwege tekortkomingen in dat bestandssysteem.</translation>
+        <translation>Uw back-up “%1” is uitgeschakeld omdat de synchronisatie van VirtualBox gedeelde mappen niet wordt ondersteund vanwege gebreken in dat bestandssysteem.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
@@ -3261,7 +3261,7 @@ Overdrachten worden automatisch hervat wanneer u de applicatie heropend.</numeru
     <message>
         <source>Account expired (business or Pro Flexi)</source>
         <translatorcomment>Label to show that the current account (either business or Pro Flexi) is expired during a SDK operation.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Account gedeactiveerd</translation>
     </message>
 </context>
 <context>
@@ -4098,7 +4098,7 @@ Om de synchronisatie te verwijderen, gaat u naar Voorkeuren in de desktop-applic
     <message>
         <source>Proxies</source>
         <translatorcomment>Title of dialog to set proxy settings.</translatorcomment>
-        <translation>Proxies</translation>
+        <translation>Proxy</translation>
     </message>
     <message>
         <source>Proxy</source>
@@ -5120,7 +5120,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Proxies</source>
         <translatorcomment>Section title text for the Proxy summary text and actions in Network pane.</translatorcomment>
-        <translation>Proxies</translation>
+        <translation>Proxy</translation>
     </message>
     <message>
         <source>Force a Full Scan</source>
