@@ -4,6 +4,9 @@
 #include <StalledIssuesDelegateWidgetsCache.h>
 #include <NameConflictStalledIssue.h>
 
+#include "ThreadPool.h"
+#include "mega/types.h"
+
 #include <QSortFilterProxyModel>
 
 StalledIssuesReceiver::StalledIssuesReceiver(QObject *parent) : QObject(parent), mega::MegaRequestListener()
@@ -131,7 +134,8 @@ StalledIssuesModel::StalledIssuesModel(QObject *parent)
     : QAbstractItemModel(parent),
     mMegaApi (MegaSyncApp->getMegaApi()),
     mHasStalledIssues(false),
-    mUpdateWhenGlobalStateChanges(false)
+    mUpdateWhenGlobalStateChanges(false),
+    mThreadPool(mega::make_unique<ThreadPool>(1))
 {
     mStalledIssuesThread = new QThread();
     mStalledIssuedReceiver = new StalledIssuesReceiver();
@@ -167,12 +171,13 @@ void StalledIssuesModel::onProcessStalledIssues(StalledIssuesReceiver::StalledIs
 {
     if(!issuesReceived.isEmpty())
     {
-        ThreadPoolSingleton::getInstance()->push([this, issuesReceived]()
+        mThreadPool->push([this, issuesReceived]()
         {
             mModelMutex.lock();
             blockSignals(true);
             reset();
 
+            //In case we need to update existing stalled issues. For the moment, we reset and after we update with the new ones
 //            for (auto it = issuesReceived.mDeleteStalledIssues.begin(); it != issuesReceived.mDeleteStalledIssues.end(); ++it)
 //            {
 //                auto index = mStalledIssuesByOrder.value((*it).get(),-1);
@@ -209,6 +214,11 @@ void StalledIssuesModel::onProcessStalledIssues(StalledIssuesReceiver::StalledIs
 
                 for (auto it = issuesReceived.mNewStalledIssues.begin(); it != issuesReceived.mNewStalledIssues.end();)
                 {
+                    if(mThreadPool->isThreadInterrupted())
+                    {
+                        return;
+                    }
+
                     std::shared_ptr<StalledIssueVariant> issue(*it);
                     mStalledIssues.append(issue);
                     mStalledIssuesByOrder.insert(issue.get(), rowCount(QModelIndex()) - 1);

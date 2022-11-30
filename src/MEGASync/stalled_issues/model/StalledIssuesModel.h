@@ -10,6 +10,8 @@
 #include <QAbstractItemModel>
 #include <QTimer>
 
+class ThreadPool;
+
 class StalledIssuesReceiver : public QObject, public mega::MegaRequestListener
 {
     Q_OBJECT
@@ -126,6 +128,8 @@ private:
     mutable QHash<StalledIssueVariant*, int> mStalledIssuesByOrder;
 
     QHash<int, int> mCountByFilterCriterion;
+
+    std::unique_ptr<ThreadPool> mThreadPool;
 };
 
 #endif // STALLEDISSUESMODEL_H
