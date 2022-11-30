@@ -1,6 +1,7 @@
 #ifndef WINDOWSPLATFORM_H
 #define WINDOWSPLATFORM_H
 
+#include "platform/ShellNotifier.h"
 #include "platform/win/WinShellDispatcherTask.h"
 #include "platform/win/WinTrayReceiver.h"
 
@@ -35,7 +36,8 @@ public:
     static void initialize(int argc, char *argv[]);
     static void prepareForSync();
     static bool enableTrayIcon(QString executable);
-    static void notifyItemChange(std::string *localPath, int newState, std::shared_ptr<ShellNotifier> notifier = nullptr);
+    static void notifyItemChange(const QString& path, int newState);
+    static void notifySyncFileChange(std::string *localPath, int newState);
     static bool startOnStartup(bool value);
     static bool isStartOnStartupActive();
     static bool showInFolder(QString pathIn);
@@ -60,35 +62,18 @@ public:
     static bool isUserActive();
     static QString getDeviceName();
     static void initMenu(QMenu* m);
+    static std::shared_ptr<AbstractShellNotifier> getShellNotifier();
 
     static const char* settingsString;
     static const char* exitString;
     static const char* fileExplorerString;
-};
-
-
-class ShellNotifier
-{
-public:
-    ~ShellNotifier();
-
-    void enqueueItemChange(std::string&& localPath);
 
 private:
-    void doInThread();
+    static void notifyItemChange(const QString &localPath, AbstractShellNotifier* notifier);
+    static QString getPreparedPath(const QString& localPath);
 
-    void notify(const std::string& path) const; // called from secondary thread context
-
-    void checkReportQueueSize();
-
-    std::thread mThread;
-    std::queue<std::string> mPendingNotifications;
-
-    size_t lastReportedQueueSize = 0;
-
-    std::mutex mQueueAccessMutex;
-    std::condition_variable mWaitCondition;
-    bool mExit = false;
+    static std::shared_ptr<AbstractShellNotifier> mSyncFileNotifier;
+    static std::shared_ptr<AbstractShellNotifier> mGeneralNotifier;
 };
 
 #endif // WINDOWSPLATFORM_H

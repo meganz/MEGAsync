@@ -681,6 +681,7 @@ set (SRCS
     ${MEGAsyncDir}/syncs/control/SyncInfo.cpp
 
     ${MEGAsyncDir}/platform/notificator.cpp
+    ${MEGAsyncDir}/platform/ShellNotifier.cpp
 
     ${MEGAsyncDir}/qtlockedfile/qtlockedfile.cpp
 )
@@ -704,7 +705,8 @@ if (CMAKE_HOST_WIN32)
         ${MEGAsyncDir}/google_breakpad/client/windows/crash_generation/crash_generation_client.cc
 
         ${MEGAsyncDir}/control/win/Utilities.cpp
-
+         ${MEGAsyncDir}/platform/win/RecursiveShellNotifier.cpp
+        ${MEGAsyncDir}/platform/win/ThreadedQueueShellNotifier.cpp
         ${MEGAsyncDir}/platform/win/WindowsPlatform.cpp
         ${MEGAsyncDir}/platform/win/WinShellDispatcherTask.cpp
         ${MEGAsyncDir}/platform/win/WinTrayReceiver.cpp

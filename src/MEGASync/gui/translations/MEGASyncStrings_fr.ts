@@ -857,7 +857,7 @@
     <message>
         <source>Are you sure you want to exit uploading?</source>
         <translatorcomment>Confirmation message shown when the user is trying to cancel the ongoing upload report.</translatorcomment>
-        <translation>Voulez-vous vraiment annuler le téléversement du problème signalé ?</translation>
+        <translation>Voulez-vous annuler le téléversement du problème signalé ?</translation>
     </message>
     <message>
         <source>The bug report will not be submitted if you exit uploading.</source>
@@ -2517,7 +2517,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however you might not receive new updates.</source>
         <translatorcomment>Message shown to the user to inform that he is using an operating system that will be unsupported soon</translatorcomment>
-        <translation>L’appli continuera à fonctionner, cependant vous ne pourriez ne pas recevoir de nouvelles mises à jour.</translation>
+        <translation>L’appli continuera à fonctionner, cependant vous pourriez ne pas recevoir de nouvelles mises à jour.</translation>
     </message>
     <message>
         <source>Password changed</source>
@@ -3261,7 +3261,7 @@ Les transferts reprendront automatiquement quand vous rouvrirez l’appli.</nume
     <message>
         <source>Account expired (business or Pro Flexi)</source>
         <translatorcomment>Label to show that the current account (either business or Pro Flexi) is expired during a SDK operation.</translatorcomment>
-        <translation>Le compte est expiré</translation>
+        <translation>Le compte est désactivé</translation>
     </message>
 </context>
 <context>
@@ -5359,7 +5359,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Backup</source>
         <translatorcomment>Toolbar button text</translatorcomment>
-        <translation>Sauvegarder</translation>
+        <translation>Sauvegarde</translation>
     </message>
     <message>
         <source>Backups</source>
@@ -5707,7 +5707,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Are you sure you want to cancel this wizard and undo all changes?</source>
         <translatorcomment>Message shown when an user cancel the Setup Wizard.</translatorcomment>
-        <translation>Voulez-vous vraiment interrompre cet assistant et annuler tous les changements ?</translation>
+        <translation>Voulez-vous interrompre cet assistant et annuler tous les changements ?</translation>
     </message>
     <message>
         <source>Skip</source>

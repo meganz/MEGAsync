@@ -533,7 +533,7 @@
     <message>
         <source>Folders will be stored in backups and you can check the status of your backups in backup centre.</source>
         <translatorcomment>Successfull dialog text</translatorcomment>
-        <translation>Folderele vor fi stocate în backupuri și poți verifica starea backupurilor tale în centrul de backupuri.</translation>
+        <translation>Folderele vor fi stocate în Backupuri și poți verifica starea backupurilor tale în Centrul de backupuri.</translation>
     </message>
     <message>
         <source>Show more…</source>
@@ -857,7 +857,7 @@
     <message>
         <source>Are you sure you want to exit uploading?</source>
         <translatorcomment>Confirmation message shown when the user is trying to cancel the ongoing upload report.</translatorcomment>
-        <translation>Sigur vrei să anulezi încărcarea problemei raportate?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>The bug report will not be submitted if you exit uploading.</source>
@@ -3262,7 +3262,7 @@ Transferurile se vor relua automat când redeschizi aplicația.</numerusform></t
     <message>
         <source>Account expired (business or Pro Flexi)</source>
         <translatorcomment>Label to show that the current account (either business or Pro Flexi) is expired during a SDK operation.</translatorcomment>
-        <translation>Cont expirat</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4399,7 +4399,7 @@ Please delete the folder sync from preferences to cancel them.</source>
     <message>
         <source>File Folder</source>
         <translatorcomment>Label to desing a folder matching Windows Explorer case</translatorcomment>
-        <translation>Folderul fișierului</translation>
+        <translation>Folder</translation>
     </message>
     <message>
         <source>Folder</source>
@@ -5708,7 +5708,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Are you sure you want to cancel this wizard and undo all changes?</source>
         <translatorcomment>Message shown when an user cancel the Setup Wizard.</translatorcomment>
-        <translation>Sigur vrei să anulezi acest asistent de instalare și să anulezi toate schimbările?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Skip</source>

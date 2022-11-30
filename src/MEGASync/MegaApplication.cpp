@@ -702,6 +702,8 @@ void MegaApplication::initialize()
     connect(mTransfersModel.data(), &TransfersModel::transfersCountUpdated, this, &MegaApplication::onTransfersModelUpdate);
 
     mStalledIssuesModel = new StalledIssuesModel(this);
+    connect(Platform::getShellNotifier().get(), &AbstractShellNotifier::shellNotificationProcessed,
+            this, &MegaApplication::onNotificationProcessed);
 }
 
 QString MegaApplication::applicationFilePath()
@@ -2243,7 +2245,7 @@ void MegaApplication::cleanAll()
 
     for (auto localFolder : model->getLocalFolders(SyncInfo::AllHandledSyncTypes))
     {
-        notifyItemChange(localFolder, MegaApi::STATE_NONE);
+        Platform::notifyItemChange(localFolder, MegaApi::STATE_NONE);
     }
 
     mSyncController.reset();
@@ -2420,6 +2422,11 @@ void MegaApplication::raiseInfoDialog()
         infoDialog->activateWindow();
         infoDialog->highDpiResize.queueRedraw();
     }
+}
+
+bool MegaApplication::isShellNotificationProcessingOngoing()
+{
+    return mProcessingShellNotifications > 0;
 }
 
 void MegaApplication::showInfoDialog()
@@ -3616,6 +3623,15 @@ void MegaApplication::onFolderTransferUpdate(FolderTransferUpdateEvent event)
     }
 }
 
+void MegaApplication::onNotificationProcessed()
+{
+    --mProcessingShellNotifications;
+    if (mProcessingShellNotifications <= 0)
+    {
+        emit shellNotificationsProcessed();
+    }
+}
+
 void MegaApplication::setupWizardFinished(int result)
 {
     if (appfinished)
@@ -4279,20 +4295,13 @@ void MegaApplication::checkOperatingSystem()
     }
 }
 
-void MegaApplication::notifyItemChange(QString path, int newState)
+void MegaApplication::notifyChangeToAllFolders()
 {
-    string localPath;
-#ifdef _WIN32
-    if (path.startsWith(QString::fromUtf8("\\\\?\\")))
+    for (auto localFolder : model->getLocalFolders(SyncInfo::AllHandledSyncTypes))
     {
-        path = path.mid(4);
+        ++mProcessingShellNotifications;
+        Platform::notifyItemChange(localFolder, MegaApi::STATE_NONE);
     }
-
-    localPath.assign((const char *)path.utf16(), path.size() * sizeof(wchar_t));
-#else
-    localPath = path.toUtf8().constData();
-#endif
-    Platform::notifyItemChange(&localPath, newState);
 }
 
 int MegaApplication::getPrevVersion()
@@ -8362,17 +8371,7 @@ void MegaApplication::onSyncFileStateChanged(MegaApi *, MegaSync *, string *loca
         return;
     }
 
-#ifdef _WIN32
-    if (!mShellNotifier)
-    {
-        mShellNotifier = make_shared<ShellNotifier>();
-    }
-
-    Platform::notifyItemChange(localPath, newState, mShellNotifier);
-
-#else
-    Platform::notifyItemChange(localPath, newState);
-#endif
+    Platform::notifySyncFileChange(localPath, newState);
 }
 
 void MegaApplication::showSingleSyncDisabledNotification(std::shared_ptr<SyncSettings> syncSetting)

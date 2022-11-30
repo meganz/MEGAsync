@@ -1,4 +1,9 @@
 #include "WindowsPlatform.h"
+
+#include <platform/win/WinAPIShell.h>
+#include <platform/win/RecursiveShellNotifier.h>
+#include <platform/win/ThreadedQueueShellNotifier.h>
+
 #include <Shlobj.h>
 #include <Shlwapi.h>
 #include <tlhelp32.h>
@@ -63,13 +68,20 @@ SHSTDAPI SHGetSetFolderCustomSettings(_Inout_ LPSHFOLDERCUSTOMSETTINGS pfcs, _In
 #endif
 
 WinShellDispatcherTask* WindowsPlatform::shellDispatcherTask = NULL;
+std::shared_ptr<AbstractShellNotifier> WindowsPlatform::mSyncFileNotifier = nullptr;
+std::shared_ptr<AbstractShellNotifier> WindowsPlatform::mGeneralNotifier = nullptr;
 
 using namespace std;
 using namespace mega;
 
-void WindowsPlatform::initialize(int argc, char *argv[])
+void WindowsPlatform::initialize(int, char *[])
 {
     CoInitializeEx(NULL, COINIT_MULTITHREADED);
+    auto baseNotifier = std::make_shared<WindowsApiShellNotifier>();
+    mSyncFileNotifier = std::make_shared<ThreadedQueueShellNotifier>(baseNotifier);
+    mGeneralNotifier = std::make_shared<ThreadedQueueShellNotifier>(
+                std::make_shared<RecursiveShellNotifier>(baseNotifier)
+                );
 }
 
 void WindowsPlatform::prepareForSync()
@@ -105,7 +117,7 @@ void WindowsPlatform::prepareForSync()
                         QString driveName = parts.at(0);
                         QString networkName = parts.at(1);
                         MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Network drive detected: %1 (%2)")
-                                    .arg(networkName).arg(driveName).toUtf8().constData());
+                                    .arg(networkName, driveName).toUtf8().constData());
 
                         QStringList localFolders = SyncInfo::instance()->getLocalFolders(SyncInfo::AllHandledSyncTypes);
                         for (int i = 0; i < localFolders.size(); i++)
@@ -118,7 +130,7 @@ void WindowsPlatform::prepareForSync()
                                              .toUtf8().constData());
 
                                 QProcess p;
-                                QString command = QString::fromUtf8("net use %1 %2").arg(driveName).arg(networkName);
+                                QString command = QString::fromUtf8("net use %1 %2").arg(driveName, networkName);
                                 p.start(command);
                                 p.waitForFinished(2000);
                                 QString output = QString::fromUtf8(p.readAllStandardOutput().constData());
@@ -185,32 +197,22 @@ bool WindowsPlatform::enableTrayIcon(QString executable)
     return true;
 }
 
-void WindowsPlatform::notifyItemChange(std::string *localPath, int, std::shared_ptr<ShellNotifier> notifier)
+void WindowsPlatform::notifyItemChange(const QString& path, int newState)
 {
-    if (!localPath || !localPath->size())
-    {
-        return;
-    }
+    notifyItemChange(path, mGeneralNotifier.get());
+}
 
-    std::string path = *localPath;
-    if (!memcmp(path.data(), L"\\\\?\\", 8))
-    {
-        path = path.substr(8);
-    }
+void WindowsPlatform::notifySyncFileChange(std::string *localPath, int)
+{
+    notifyItemChange(QString::fromStdString(*localPath), mSyncFileNotifier.get());
+}
 
-    path.append("", 1);
-    if (path.length() >= MAX_PATH)
+void WindowsPlatform::notifyItemChange(const QString& localPath, AbstractShellNotifier *notifier)
+{
+    QString path = getPreparedPath(localPath);
+    if (!path.isEmpty())
     {
-        return;
-    }
-
-    if (notifier)
-    {
-        notifier->enqueueItemChange(std::move(path));
-    }
-    else
-    {
-        SHChangeNotify(SHCNE_UPDATEITEM, SHCNF_PATH, path.data(), NULL); // same as in ShellNotifier::notify()
+        notifier->notify(path);
     }
 }
 
@@ -1502,107 +1504,31 @@ void WindowsPlatform::initMenu(QMenu* m)
     }
 }
 
+std::shared_ptr<AbstractShellNotifier> WindowsPlatform::getShellNotifier()
+{
+    return mGeneralNotifier;
+}
+
+QString WindowsPlatform::getPreparedPath(const QString& localPath)
+{
+    QString preparedPath(localPath);
+    if (!preparedPath.isEmpty())
+    {
+        if (preparedPath.startsWith(QString::fromUtf8("\\\\?\\")))
+        {
+            preparedPath = preparedPath.mid(4);
+        }
+
+        if (preparedPath.size() < MAX_PATH)
+        {
+            return preparedPath;
+        }
+    }
+
+    return QString();
+}
+
 // Platform-specific strings
 const char* WindowsPlatform::settingsString {QT_TRANSLATE_NOOP("Platform", "Settings")};
 const char* WindowsPlatform::exitString {QT_TRANSLATE_NOOP("Platform", "Exit")};
 const char* WindowsPlatform::fileExplorerString {QT_TRANSLATE_NOOP("Platform", "Show in Explorer")};
-
-ShellNotifier::~ShellNotifier()
-{
-    if (!mThread.joinable()) // thread wasn't started
-    {
-        return;
-    }
-
-    // signal the thread to stop
-    {
-        std::unique_lock<std::mutex> lock(mQueueAccessMutex);
-        mExit = true;
-        mWaitCondition.notify_all();
-    }
-
-    mThread.join();
-}
-
-void ShellNotifier::enqueueItemChange(std::string&& localPath)
-{
-    // make sure the thread was started
-    if (!mThread.joinable())
-    {
-        mThread = std::thread([this]() { doInThread(); });
-    }
-
-    std::unique_lock<std::mutex> lock(mQueueAccessMutex);
-
-    mPendingNotifications.emplace(localPath);
-
-    checkReportQueueSize();
-
-    mWaitCondition.notify_one();
-}
-
-void ShellNotifier::checkReportQueueSize()
-{
-    // mutex already locked
-
-    auto now = mPendingNotifications.size();
-    auto last = lastReportedQueueSize;
-
-    // report if climbs above 1000, or gets back to 0
-    if ((now > 1000 && last > 1000) ||
-        (now == 0 && last > 1000) ||
-        (now > 1000 && last == 0))
-    {
-        if (now * 10 > last * 12 ||
-            last * 10 > now * 12)
-        {
-            // increased or decreased by factor 1.2 since last report
-            lastReportedQueueSize = now;
-            MegaApi::log(MegaApi::LOG_LEVEL_INFO, ("Queue to nofity shell size is now:" + std::to_string(now)).c_str());
-        }
-    }
-}
-
-void ShellNotifier::doInThread()
-{
-    while (!mExit) // no need to send the last million if the app is exiting anyway
-    {
-        std::string path;
-
-        { // lock scope
-            std::unique_lock<std::mutex> lock(mQueueAccessMutex);
-
-            if (mPendingNotifications.empty())
-            {
-                // end execution only when the notification queue was emptied
-                if (mExit)
-                {
-                    return;
-                }
-
-                mWaitCondition.wait(lock);
-            }
-            else
-            {
-                // pop next pending notification
-                path.swap(mPendingNotifications.front());
-                mPendingNotifications.pop();
-
-                checkReportQueueSize();
-            }
-        } // end of lock scope
-
-        if (!path.empty())
-        {
-            notify(path);
-        }
-    }
-}
-
-void ShellNotifier::notify(const std::string& path) const
-{
-    // same as in WindowsPlatform::notifyItemChange()
-    SHChangeNotify(SHCNE_UPDATEITEM, SHCNF_PATH, path.data(), NULL);
-    //OutputDebugString((wchar_t*)path.data());
-    //OutputDebugString(L"\n");
-}

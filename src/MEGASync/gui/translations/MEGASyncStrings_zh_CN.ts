@@ -857,7 +857,7 @@
     <message>
         <source>Are you sure you want to exit uploading?</source>
         <translatorcomment>Confirmation message shown when the user is trying to cancel the ongoing upload report.</translatorcomment>
-        <translation>您确定要取消上传您报告的问题吗？</translation>
+        <translation>想要取消上传您报告的问题吗？</translation>
     </message>
     <message>
         <source>The bug report will not be submitted if you exit uploading.</source>
@@ -3260,7 +3260,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Account expired (business or Pro Flexi)</source>
         <translatorcomment>Label to show that the current account (either business or Pro Flexi) is expired during a SDK operation.</translatorcomment>
-        <translation>帐户已过期</translation>
+        <translation>帐户已停用</translation>
     </message>
 </context>
 <context>
@@ -4332,7 +4332,7 @@ Please delete the folder sync from preferences to cancel them.</source>
     <message>
         <source>All Files (*)</source>
         <translatorcomment>File of type option for not filtering files by extension</translatorcomment>
-        <translation>所有文件（*）</translation>
+        <translation>所有文件 (*)</translation>
     </message>
     <message>
         <source>Show </source>
@@ -4342,7 +4342,7 @@ Please delete the folder sync from preferences to cancel them.</source>
     <message>
         <source>All files (*)</source>
         <translatorcomment>File of type option for not filtering files by extension</translatorcomment>
-        <translation>所有文件（*）</translation>
+        <translation>所有文件 (*)</translation>
     </message>
     <message>
         <source>Directories</source>
@@ -5706,7 +5706,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Are you sure you want to cancel this wizard and undo all changes?</source>
         <translatorcomment>Message shown when an user cancel the Setup Wizard.</translatorcomment>
-        <translation>您确定要取消此向导并撤消所有更改吗？</translation>
+        <translation>想要取消此向导撤销失所有更改吗？</translation>
     </message>
     <message>
         <source>Skip</source>

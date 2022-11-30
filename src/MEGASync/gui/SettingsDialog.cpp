@@ -251,8 +251,11 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     syncsStateInformation(SyncStateInformation::SAVING_BACKUPS_FINISHED);
 
     connectSyncHandlers();
-
     connectBackupHandlers();
+
+    connect(mApp, &MegaApplication::shellNotificationsProcessed,
+            this, &SettingsDialog::onShellNotificationsProcessed);
+    mUi->cOverlayIcons->setEnabled(!mApp->isShellNotificationProcessingOngoing());
 }
 
 SettingsDialog::~SettingsDialog()
@@ -1114,15 +1117,12 @@ void SettingsDialog::on_cbSleepMode_toggled(bool checked)
 void SettingsDialog::on_cOverlayIcons_toggled(bool checked)
 {
     if (mLoadingSettings) return;
+    mUi->cOverlayIcons->setEnabled(false);
     mPreferences->disableOverlayIcons(!checked);
 #ifdef Q_OS_MACOS
     Platform::notifyRestartSyncFolders();
-#else
-    for (auto localFolder : mModel->getLocalFolders(SyncInfo::AllHandledSyncTypes))
-    {
-            mApp->notifyItemChange(localFolder, MegaApi::STATE_NONE);
-    }
 #endif
+    mApp->notifyChangeToAllFolders();
 }
 
 #ifdef Q_OS_WINDOWS
@@ -2276,6 +2276,10 @@ void SettingsDialog::restartApp()
 //        }
 //    }
 //}
+void SettingsDialog::onShellNotificationsProcessed()
+{
+    mUi->cOverlayIcons->setEnabled(true);
+}
 
 // Network -----------------------------------------------------------------------------------------
 void SettingsDialog::on_bNetwork_clicked()

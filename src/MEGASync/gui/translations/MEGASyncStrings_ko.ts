@@ -857,7 +857,7 @@
     <message>
         <source>Are you sure you want to exit uploading?</source>
         <translatorcomment>Confirmation message shown when the user is trying to cancel the ongoing upload report.</translatorcomment>
-        <translation>문제 보고 업로드를 중단하시겠습니까?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>The bug report will not be submitted if you exit uploading.</source>
@@ -3261,7 +3261,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Account expired (business or Pro Flexi)</source>
         <translatorcomment>Label to show that the current account (either business or Pro Flexi) is expired during a SDK operation.</translatorcomment>
-        <translation>계정 만료됨</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4400,7 +4400,7 @@ Please delete the folder sync from preferences to cancel them.</source>
     <message>
         <source>File Folder</source>
         <translatorcomment>Label to desing a folder matching Windows Explorer case</translatorcomment>
-        <translation>파일 폴더</translation>
+        <translation>폴더</translation>
     </message>
     <message>
         <source>Folder</source>
@@ -5709,7 +5709,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Are you sure you want to cancel this wizard and undo all changes?</source>
         <translatorcomment>Message shown when an user cancel the Setup Wizard.</translatorcomment>
-        <translation>이 마법사를 취소하고 모든 변경사항을 취소하시겠습니까?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Skip</source>

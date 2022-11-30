@@ -200,6 +200,9 @@ protected:
 
     void restartApp();
 
+private slots:
+    void onShellNotificationsProcessed();
+
 private:
     void connectSyncHandlers();
     void loadSyncSettings();
