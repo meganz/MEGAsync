@@ -7,7 +7,6 @@
 #include "MegaDelegateHoverManager.h"
 
 #include <QPainter>
-#include <QDebug>
 #include <QMouseEvent>
 #include <QElapsedTimer>
 

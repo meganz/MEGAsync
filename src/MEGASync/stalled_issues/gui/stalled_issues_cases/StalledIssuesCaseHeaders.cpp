@@ -7,8 +7,6 @@
 #include <StalledIssuesModel.h>
 #include <StalledIssue.h>
 
-#include <QDebug>
-
 #ifdef _WIN32
     #include "minwindef.h"
 #elif defined Q_OS_MACOS

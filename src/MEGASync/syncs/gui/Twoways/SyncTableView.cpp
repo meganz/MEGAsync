@@ -136,6 +136,24 @@ void SyncTableView::showContextMenu(const QPoint &pos, const QModelIndex index)
         emit signalRemoveSync(sync);
     });
 
+    showLocalAction->setParent(menu);
+    showRemoteAction->setParent(menu);
+    delAction->setParent(menu);
+
+    menu->addAction(showLocalAction);
+    menu->addAction(showRemoteAction);
+    menu->addSeparator();
+    menu->addAction(delAction);
+
+    menu->addSeparator();
+
+    createStatesContextActions(menu, sync);
+
+    menu->popup(pos);
+}
+
+void SyncTableView::createStatesContextActions(QMenu* menu, std::shared_ptr<SyncSettings> sync)
+{
     auto syncRun (new MenuItemAction(tr("Run"), QIcon(QString::fromUtf8("://images/ico_open_MEGA.png"))));
     auto syncPause (new MenuItemAction(tr("Pause"), QIcon(QString::fromUtf8("://images/ico_open_MEGA.png"))));
     auto syncSuspend (new MenuItemAction(tr("Suspend"), QIcon(QString::fromUtf8("://images/ico_open_MEGA.png"))));
@@ -159,16 +177,6 @@ void SyncTableView::showContextMenu(const QPoint &pos, const QModelIndex index)
     syncDisable->setParent(menu);
     openMegaignore->setParent(menu);
 
-    showLocalAction->setParent(menu);
-    showRemoteAction->setParent(menu);
-    delAction->setParent(menu);
-
-    menu->addAction(showLocalAction);
-    menu->addAction(showRemoteAction);
-    menu->addSeparator();
-    menu->addAction(delAction);
-
-    menu->addSeparator();
     menu->addAction(syncRun);
     menu->addAction(syncPause);
     menu->addAction(syncSuspend);
@@ -176,8 +184,6 @@ void SyncTableView::showContextMenu(const QPoint &pos, const QModelIndex index)
 
     menu->addSeparator();
     menu->addAction(openMegaignore);
-
-    menu->popup(pos);
 }
 
 MenuItemDelegate::MenuItemDelegate(QObject *parent) : QStyledItemDelegate(parent)
@@ -187,6 +193,7 @@ MenuItemDelegate::MenuItemDelegate(QObject *parent) : QStyledItemDelegate(parent
 MenuItemDelegate::~MenuItemDelegate()
 {
 }
+
 
 void MenuItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {

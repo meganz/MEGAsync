@@ -2844,11 +2844,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>This sync can’t be added: %1. Reason: %2</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been temporarily disabled</source>
-        <translatorcomment>Notification message launched when a sync is temporarily disabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime.</translatorcomment>
-        <translation>Your sync “%1” has been temporarily disabled</translation>
-    </message>
-    <message>
         <source>Your sync &quot;%1&quot; has been disabled. Reason: %2</source>
         <translatorcomment>Notification message launched when a sync is disabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime and %2 with the reason of the error.</translatorcomment>
         <translation>Your sync “%1” has been disabled. Reason: %2</translation>
@@ -2983,11 +2978,6 @@ Transfers will automatically resume when you re-open the app.</numerusform>
         <translation>Your backups have been disabled</translation>
     </message>
     <message>
-        <source>Your backup &quot;%1&quot; has been temporarily disabled</source>
-        <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder displays backup name</translatorcomment>
-        <translation>Your backup &quot;%1&quot; has been temporarily disabled</translation>
-    </message>
-    <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
         <translation>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</translation>
@@ -3024,38 +3014,6 @@ Transfers will automatically resume when you re-open the app.</numerusform>
     </message>
     <message>
         <source>Stalled</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been temporarily suspended</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been suspended because the local folder doesn&apos;t exist</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been suspended because the remote folder doesn&apos;t exist</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been suspended because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been suspended because the remote folder is in the rubbish bin</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been suspended. The remote folder (or part of it) doesn&apos;t have full access</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been suspended because the local folder has changed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been suspended. Reason: %2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3695,6 +3653,10 @@ Your selected incomplete sync transfers won&apos;t be cancelled.</translation>
         <source>folder</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>No action needed</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NameConflictTitle</name>
@@ -3725,6 +3687,7 @@ This may be due to syncing to case insensitive local filesystems, or the effects
         <translation type="unfinished"></translation>
     </message>
 </context>
+<context>
     <name>NewFolderDialog</name>
     <message>
         <source>Enter the new folder name</source>
@@ -4442,6 +4405,18 @@ Please delete the folder sync from preferences to cancel them.</translation>
         <translatorcomment>Warning message shown when some backups and syncs are disabled. Tell the userto go to settings to solve the issue (mac)</translatorcomment>
         <translation>Some syncs and backups have been disabled. Go to preferences to enable them again.</translation>
     </message>
+    <message>
+        <source>Move to trash</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move to recycle bin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move to bin</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Preferences</name>
@@ -4460,6 +4435,7 @@ Please delete the folder sync from preferences to cancel them.</translation>
 - Fixed detected crashes on Windows, Linux, and macOS.
 - Fixed translation issues.
 - Improved performance.
+    </translation>
     </message>
 </context>
 <context>
@@ -5303,16 +5279,6 @@ Do you want to delete it anyway?</translation>
         <translation>MEGA-RECOVERYKEY</translation>
     </message>
     <message>
-        <source>Error enabling sync</source>
-        <translatorcomment>Title error message shown when an error occurs while trying to enable a sync.</translatorcomment>
-        <translation>Error enabling sync</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; can&apos;t be enabled. Reason: %2</source>
-        <translatorcomment>Error message shown when an error occurs trying to enable a sync. %1 is name of sync and %2 is reason of error.</translatorcomment>
-        <translation>Your sync “%1” can’t be enabled. Reason: %2</translation>
-    </message>
-    <message>
         <source>General</source>
         <translatorcomment>Title for the Settings -&gt; General pane tab button. Keep as short as possible.</translatorcomment>
         <translation>General</translation>
@@ -5774,16 +5740,6 @@ Do you want to delete it anyway?</translation>
         <translation>Your sync can&apos;t be removed. Reason: %1</translation>
     </message>
     <message>
-        <source>Error disabling sync</source>
-        <translatorcomment>Warning message title indicating that an error happened disabling a sync.</translatorcomment>
-        <translation>Error disabling sync</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
-        <translatorcomment>Warning message indicating that an error happened disabling a sync. First placeholder is the sync name and second placeholder is the error message sent by SDK (reason)</translatorcomment>
-        <translation>Your sync &quot;%1&quot; can&apos;t be disabled. Reason: %2</translation>
-    </message>
-    <message>
         <source>Error adding backup %1</source>
         <translatorcomment>Error message dialog title. Placeholder shows the backup name</translatorcomment>
         <translation>Error adding backup %1</translation>
@@ -5809,29 +5765,9 @@ Do you want to delete it anyway?</translation>
         <translation>Failed to move or remove the remote backup folder. Reason: %1</translation>
     </message>
     <message>
-        <source>Error enabling backup</source>
-        <translatorcomment>Title of the dialog shown when enabling a backup failed</translatorcomment>
-        <translation>Error enabling backup</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; can&apos;t be enabled. Reason: %2</source>
-        <translatorcomment>Error text when enabling a backup failed</translatorcomment>
-        <translation>Your backup &quot;%1&quot; can&apos;t be enabled. Reason: %2</translation>
-    </message>
-    <message>
-        <source>Error disabling backup</source>
-        <translatorcomment>Title of the dialog shown when enabling a backup failed</translatorcomment>
-        <translation>Error disabling backup</translation>
-    </message>
-    <message>
         <source>Pro Flexi</source>
         <translatorcomment>Text label indicating the Pro Flexi tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
         <translation>Pro Flexi</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
-        <translatorcomment>Error text when disabling a backup failed</translatorcomment>
-        <translation>Your backup &quot;%1&quot; can&apos;t be disabled. Reason: %2</translation>
     </message>
     <message>
         <source>Go to backup centre</source>
@@ -5844,59 +5780,23 @@ Do you want to delete it anyway?</translation>
         <translation>Prevent the computer from going to sleep when transfers or syncs are in progress.</translation>
     </message>
     <message>
-        <source>Name</source>
-        <translation type="unfinished">Name</translation>
-    </message>
-    <message>
-        <source>Run State</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unexpected error adding sync</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Create exclusions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Run</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pause</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Suspend</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Disable</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unexpected error running sync</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unexpected error pausing sync</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unexpected error suspending sync</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unexpected error disabling sync</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unexpected error removing sync</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Error opening megaignore file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Backup operation failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Operation on backup &apos;%1&apos; failed. Reason: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sync operation failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Operation on sync &apos;%1&apos; failed. Reason: %2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6337,10 +6237,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Chosen</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Moved to bin</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6804,6 +6700,18 @@ To continue, select a different folder.</translation>
     </message>
 </context>
 <context>
+    <name>SyncItemExceedsSupoortedTreeDepthHeader</name>
+    <message>
+        <source>Unable to sync</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Target is too deep on your folder structure.
+Please move it to a location that is less than 64 folders deep.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SyncItemModel</name>
     <message>
         <source>Sort by state</source>
@@ -6858,6 +6766,26 @@ To continue, select a different folder.</translation>
         <translatorcomment>Context menu option that removes the sync.</translatorcomment>
         <translation>Remove synced folder</translation>
     </message>
+    <message>
+        <source>Run</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pause</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Suspend</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit .megaignore</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SyncTooltip</name>
@@ -6893,18 +6821,6 @@ To continue, select a different folder.</translation>
         <source>Add Backup</source>
         <translatorcomment>Menu option used to add backups</translatorcomment>
         <translation>Add Backup</translation>
-    </message>
-</context>
-<context>
-    <name>SyncItemExceedsSupoortedTreeDepthHeader</name>
-    <message>
-        <source>Unable to sync</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Target is too deep on your folder structure.
-Please move it to a location that is less than 64 folders deep.</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

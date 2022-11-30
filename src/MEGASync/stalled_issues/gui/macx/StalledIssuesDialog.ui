@@ -82,7 +82,7 @@
 
 #updateButton:disabled
 {
-    background-color: #AAAAAA4D;
+    background-color: rgba(170,170,170,30%);
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">

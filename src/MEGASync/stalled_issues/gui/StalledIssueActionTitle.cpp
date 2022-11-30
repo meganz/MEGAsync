@@ -7,7 +7,6 @@
 #include <QPainter>
 #include <QPainterPath>
 #include <QFileInfo>
-#include <QDebug>
 
 const char* BUTTON_ID = "button_id";
 const char* ONLY_ICON = "onlyIcon";

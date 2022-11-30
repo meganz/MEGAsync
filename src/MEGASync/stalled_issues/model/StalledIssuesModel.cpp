@@ -5,7 +5,6 @@
 #include <NameConflictStalledIssue.h>
 
 #include <QSortFilterProxyModel>
-#include <QDebug>
 
 StalledIssuesReceiver::StalledIssuesReceiver(QObject *parent) : QObject(parent), mega::MegaRequestListener()
 {

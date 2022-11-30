@@ -4,7 +4,6 @@
 #include "StalledIssueChooseWidget.h"
 #include "StalledIssuesModel.h"
 
-#include <QDebug>
 #include <QElapsedTimer>
 #include <QtConcurrent/QtConcurrent>
 

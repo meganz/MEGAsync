@@ -19,6 +19,7 @@ protected:
     void keyPressEvent(QKeyEvent *event) override;
     void showEvent(QShowEvent *event) override;
     virtual void initTable();
+    void createStatesContextActions(QMenu* menu, std::shared_ptr<SyncSettings> sync);
 
 signals:
     void signalRemoveSync(std::shared_ptr<SyncSettings> sync);

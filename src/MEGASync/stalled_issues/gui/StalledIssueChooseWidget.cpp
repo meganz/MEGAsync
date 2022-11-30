@@ -2,6 +2,7 @@
 #include "ui_StalledIssueChooseWidget.h"
 
 #include "Utilities.h"
+#include "PlatformStrings.h"
 #include "MegaApplication.h"
 #include "StalledIssueHeader.h"
 #include "StalledIssuesModel.h"
@@ -86,7 +87,7 @@ void StalledIssueChooseWidget::setData(StalledIssueDataPtr data)
             else
             {
                 icon.addFile(QString::fromUtf8(":/images/StalledIssues/remove_default.png"));
-                ui->chooseTitle->addMessage(tr("Moved to bin"), icon.pixmap(16,16));
+                ui->chooseTitle->addMessage(PlatformStrings::moveFileToBin(), icon.pixmap(16,16));
             }
 
             discardItem = !data->isSolved();

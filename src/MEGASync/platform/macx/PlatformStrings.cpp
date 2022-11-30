@@ -25,3 +25,8 @@ QString PlatformStrings::cancelSyncsWarning()
     return tr("Sync transfers cannot be cancelled individually.\n"
               "Please delete the folder sync from preferences to cancel them.");
 }
+
+QString PlatformStrings::moveFileToBin()
+{
+    return tr("Move to bin");
+}

@@ -48,6 +48,7 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
     mDelegate = new StalledIssueDelegate(mProxyModel, ui->stalledIssuesTree);
     ui->stalledIssuesTree->setItemDelegate(mDelegate);
     mLoadingScene.setView(ui->stalledIssuesTree);
+    connect(&mLoadingScene, &ViewLoadingSceneBase::sceneVisibilityChange, this, &StalledIssuesDialog::onLoadingSceneChanged);
 
     on_updateButton_clicked();
 }
@@ -93,7 +94,6 @@ void StalledIssuesDialog::onUiBlocked()
 {
     if(!mLoadingScene.isLoadingViewSet())
     {
-        setDisabled(true);
         mLoadingScene.changeLoadingSceneStatus(true);
     }
 }
@@ -102,9 +102,7 @@ void StalledIssuesDialog::onUiUnblocked()
 {
     if(mLoadingScene.isLoadingViewSet())
     {
-        setDisabled(false);
         mLoadingScene.changeLoadingSceneStatus(false);
-        checkIfViewIsEmpty();
     }
 }
 
@@ -121,6 +119,15 @@ void StalledIssuesDialog::onModelFiltered()
     {
         ui->stalledIssuesTree->setModel(mProxyModel);
         mViewHoverManager.setView(ui->stalledIssuesTree);
+    }
+}
+
+void StalledIssuesDialog::onLoadingSceneChanged(bool state)
+{
+    setDisabled(state);
+    if(!state)
+    {
+        checkIfViewIsEmpty();
     }
 }
 

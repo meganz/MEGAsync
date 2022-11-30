@@ -9,10 +9,13 @@ class PlatformStrings : QObject
     Q_OBJECT
 public:
     static QString openSettings();
+
     static QString syncsDisableWarning();
     static QString backupsDisableWarning();
     static QString syncsAndBackupsDisableWarning();
     static QString cancelSyncsWarning();
+
+    static QString moveFileToBin();
 };
 
 #endif // PLATFORMSTRINGS_H

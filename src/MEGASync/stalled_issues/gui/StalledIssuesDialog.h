@@ -41,6 +41,7 @@ private slots:
 
     void onStalledIssuesLoaded();
     void onModelFiltered();
+    void onLoadingSceneChanged(bool state);
 
 private:
     Ui::StalledIssuesDialog *ui;
