@@ -69,7 +69,8 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/node_selector/gui/NodeSelectorTreeViewWidget.cpp \
     $$PWD/node_selector/gui/NodeSelectorTreeViewWidgetSpecializations.cpp \
     $$PWD/node_selector/gui/NodeSelector.cpp \
-    $$PWD/node_selector/gui/NodeSelectorLoadingDelegate.cpp
+    $$PWD/node_selector/gui/NodeSelectorLoadingDelegate.cpp \
+    $$PWD/node_selector/gui/SearchLineEdit.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/AutoResizeStackedWidget.h \
@@ -144,7 +145,8 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/node_selector/gui/NodeSelectorTreeViewWidget.h \
     $$PWD/node_selector/gui/NodeSelectorTreeViewWidgetSpecializations.h \
     $$PWD/node_selector/gui/NodeSelector.h \
-    $$PWD/node_selector/gui/NodeSelectorLoadingDelegate.h
+    $$PWD/node_selector/gui/NodeSelectorLoadingDelegate.h \
+    $$PWD/node_selector/gui/SearchLineEdit.h
 
 INCLUDEPATH += $$PWD
 
@@ -194,7 +196,8 @@ win32 {
                 $$PWD/win/NotificationsSettings.ui \
                 $$PWD/node_selector/gui/win/NodeSelectorTreeViewWidget.ui \
                 $$PWD/node_selector/gui/win/NodeSelectorLoadingDelegate.ui \
-                $$PWD/node_selector/gui/win/NodeSelector.ui
+                $$PWD/node_selector/gui/win/NodeSelector.ui \
+                $$PWD/node_selector/gui/win/SearchLineEdit.ui
 }
 
 macx {
@@ -241,7 +244,8 @@ macx {
                 $$PWD/macx/NotificationsSettings.ui \
                 $$PWD/node_selector/gui/macx/NodeSelectorTreeViewWidget.ui \
                 $$PWD/node_selector/gui/macx/NodeSelectorLoadingDelegate.ui \
-                $$PWD/node_selector/gui/macx/NodeSelector.ui
+                $$PWD/node_selector/gui/macx/NodeSelector.ui \
+                $$PWD/node_selector/gui/win/SearchLineEdit.ui
 
 
     #Asset catalog need to load SF symbol images of toolbar items for custom NSToolbar
@@ -312,7 +316,8 @@ unix:!macx {
                 $$PWD/linux/NotificationsSettings.ui \
                 $$PWD/node_selector/gui/linux/NodeSelectorTreeViewWidget.ui \
                 $$PWD/node_selector/gui/linux/NodeSelectorLoadingDelegate.ui \
-                $$PWD/node_selector/gui/linux/NodeSelector.ui
+                $$PWD/node_selector/gui/linux/NodeSelector.ui \
+                $$PWD/node_selector/gui/win/SearchLineEdit.ui
 
 
     HEADERS += $$PWD/PermissionsDialog.h \

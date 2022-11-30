@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SearchLineEdit</class>
+ <widget class="QWidget" name="SearchLineEdit">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>50</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QToolButton{
+    border: none;
+}</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <item>
+    <widget class="QToolButton" name="tSearchIcon">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="icon">
+      <iconset theme="search_ico" resource="../../../Resources_win.qrc">
+       <normaloff>:/images/transfer_manager/sidebar/search_ico_default.png</normaloff>:/images/transfer_manager/sidebar/search_ico_default.png</iconset>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLineEdit" name="leSearchField">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string notr="true"/>
+     </property>
+     <property name="frame">
+      <bool>false</bool>
+     </property>
+     <property name="placeholderText">
+      <string>Search</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QToolButton" name="tSearchCancel">
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
+     <property name="icon">
+      <iconset theme="delete_search_ico" resource="../../../Resources_win.qrc">
+       <normaloff>:/images/transfer_manager/sidebar/delete_search_ico_default.png</normaloff>:/images/transfer_manager/sidebar/delete_search_ico_default.png</iconset>
+     </property>
+     <property name="default_icon" stdset="0">
+      <string notr="true">qrc:/images/transfer_manager/sidebar/delete_search_ico_default.png</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../../../Resources_win.qrc"/>
+  <include location="../../../Resources_win.qrc"/>
+  <include location="../../../Resources_win.qrc"/>
+ </resources>
+ <connections/>
+</ui>

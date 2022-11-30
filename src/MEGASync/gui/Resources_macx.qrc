@@ -991,5 +991,8 @@
         <file>images/icons/folder/small-chat-files.png</file>
         <file>images/icons/folder/small-chat-files@2x.png</file>
         <file>images/icons/folder/small-chat-files@3x.png</file>
+        <file>images/node_selector/search_icon.png</file>
+        <file>images/node_selector/search_icon@2x.png</file>
+        <file>images/node_selector/search_icon@3x.png</file>
     </qresource>
 </RCC>

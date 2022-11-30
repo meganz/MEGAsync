@@ -25,7 +25,7 @@
      <property name="bottomMargin">
       <number>12</number>
      </property>
-     <item alignment="Qt::AlignVCenter">
+     <item>
       <widget class="QPushButton" name="bBack">
        <property name="maximumSize">
         <size>
@@ -57,7 +57,7 @@
        </property>
       </widget>
      </item>
-     <item alignment="Qt::AlignVCenter">
+     <item>
       <widget class="QPushButton" name="bForward">
        <property name="maximumSize">
         <size>
@@ -98,13 +98,13 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>10</width>
+         <width>13</width>
          <height>20</height>
         </size>
        </property>
       </spacer>
      </item>
-     <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+     <item>
       <widget class="QLabel" name="lFolderName">
        <property name="font">
         <font>
@@ -134,7 +134,7 @@ font-size:17px;
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>10</width>
+         <width>13</width>
          <height>20</height>
         </size>
        </property>
@@ -178,7 +178,7 @@ font-size:17px;
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>10</width>
+         <width>13</width>
          <height>20</height>
         </size>
        </property>
@@ -218,6 +218,22 @@ font-size:17px;
         </size>
        </property>
       </spacer>
+     </item>
+     <item>
+      <widget class="SearchLineEdit" name="frame">
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Plain</enum>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -442,8 +458,16 @@ padding-right:10px;
    <extends>QTreeView</extends>
    <header>NodeSelectorTreeView.h</header>
   </customwidget>
+  <customwidget>
+   <class>SearchLineEdit</class>
+   <extends>QFrame</extends>
+   <header>SearchLineEdit.h</header>
+   <container>1</container>
+  </customwidget>
  </customwidgets>
  <resources>
+  <include location="../../../Resources_win.qrc"/>
+  <include location="../../../Resources_win.qrc"/>
   <include location="../../../Resources_win.qrc"/>
  </resources>
  <connections/>
