@@ -177,18 +177,18 @@ public:
     explicit TransfersModel(QObject* parent = 0);
     ~TransfersModel();
 
-    virtual Qt::ItemFlags flags(const QModelIndex& index) const;
-    virtual Qt::DropActions supportedDropActions() const;
-    virtual QMimeData* mimeData(const QModelIndexList& indexes) const;
+    virtual Qt::ItemFlags flags(const QModelIndex& index) const override;
+    virtual Qt::DropActions supportedDropActions() const override;
+    virtual QMimeData* mimeData(const QModelIndexList& indexes) const override;
     bool dropMimeData(const QMimeData* data, Qt::DropAction action, int destRow,
-                                                int column, const QModelIndex& parent);
-    bool hasChildren(const QModelIndex& parent) const;
-    int rowCount(const QModelIndex& parent = QModelIndex()) const;
-    int columnCount(const QModelIndex& parent = QModelIndex()) const;
-    QVariant data(const QModelIndex& index, int role) const;
-    QModelIndex parent(const QModelIndex& index) const;
-    QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const;
-    bool removeRows(int row, int count, const QModelIndex& parent = QModelIndex());
+                                                int column, const QModelIndex& parent) override;
+    bool hasChildren(const QModelIndex& parent) const override;
+    int rowCount(const QModelIndex& parent = QModelIndex()) const override;
+    int columnCount(const QModelIndex& parent = QModelIndex()) const override;
+    QVariant data(const QModelIndex& index, int role) const override;
+    QModelIndex parent(const QModelIndex& index) const override;
+    QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const override;
+    bool removeRows(int row, int count, const QModelIndex& parent = QModelIndex()) override;
     bool moveRows(const QModelIndex &sourceParent, int sourceRow, int count,
                   const QModelIndex &destinationParent, int destinationChild) override;
 
@@ -199,10 +199,15 @@ public:
 
     void resetModel();
 
-    void getLinks(QList<int>& rows);
-    void openInMEGA(QList<int>& rows);
+    void getLinks(const QList<int>& rows);
+    void openInMEGA(const QList<int>& rows);
+    std::unique_ptr<mega::MegaNode> getNodeToOpenByRow(int row);
+    std::unique_ptr<mega::MegaNode> getParentNodeToOpenByRow(int row);
+    QFileInfo getFileInfoByIndex(const QModelIndex &index);
     void openFolderByIndex(const QModelIndex& index);
+    void openFoldersByIndexes(const QModelIndexList& indexes);
     void openFolderByTag(TransferTag tag);
+
     void retryTransferByIndex(const QModelIndex& index);
     void retryTransfers(QModelIndexList indexes);
     void cancelAndClearTransfers(const QModelIndexList& indexes, QWidget *canceledFrom);
@@ -316,6 +321,8 @@ private:
 
     int performPauseResumeAllTransfers(int activeTransfers, bool useEventUpdater);
     int performPauseResumeVisibleTransfers(const QModelIndexList& indexes, bool pauseState, bool useEventUpdater);
+
+    void openFolder(const QFileInfo& info);
 
 private:
     mega::MegaApi* mMegaApi;
