@@ -16,7 +16,7 @@
 #endif
 
 StalledIssueHeaderCase::StalledIssueHeaderCase(StalledIssueHeader *header)
-    :mStalledIssueHeader(header)
+    :mStalledIssueHeader(header), QObject(header)
 {
     connect(mStalledIssueHeader, &StalledIssueHeader::refreshCaseUi, this, &StalledIssueHeaderCase::onRefreshCaseUi);
 }

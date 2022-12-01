@@ -35,13 +35,12 @@ int StalledIssuesDelegateWidgetsCache::getMaxCacheRow(int row) const
 StalledIssueHeader *StalledIssuesDelegateWidgetsCache::getStalledIssueHeaderWidget(const QModelIndex &index, QWidget *parent, const StalledIssueVariant &issue) const
 {
     auto row = getMaxCacheRow(index.row());
-    auto headerCase = mStalledIssueHeaderWidgets[row];
+    auto& headerCase = mStalledIssueHeaderWidgets[row];
     StalledIssueHeader* header(nullptr);
 
     if(headerCase)
     {
         header = headerCase->getStalledIssueHeader();
-        headerCase->deleteLater();
     }
 
     if(!header)
@@ -50,7 +49,7 @@ StalledIssueHeader *StalledIssuesDelegateWidgetsCache::getStalledIssueHeaderWidg
         header->hide();
     }
 
-    headerCase = createHeaderWidget(index, header, issue);
+    headerCase = createHeaderWidget( header, issue);
     header->updateUi(index, issue);
 
     return header;
@@ -88,7 +87,7 @@ StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::getStalledIss
 StalledIssueHeader *StalledIssuesDelegateWidgetsCache::getNonCacheStalledIssueHeaderWidget(const QModelIndex& index, QWidget* parent, const StalledIssueVariant &issue) const
 {
     auto header = new StalledIssueHeader(parent);
-    createHeaderWidget(index, header, issue);
+    createHeaderWidget(header, issue);
     header->updateUi(index, issue);
     return header;
 }
@@ -146,6 +145,7 @@ bool StalledIssuesDelegateWidgetsCache::adaptativeHeight(mega::MegaSyncStall::Sy
     switch(reason)
     {
         case mega::MegaSyncStall::SyncStallReason::NamesWouldClashWhenSynced:
+        case mega::MegaSyncStall::SyncStallReason::SyncItemExceedsSupportedTreeDepth:
         {
             return true;
         }
@@ -158,7 +158,6 @@ bool StalledIssuesDelegateWidgetsCache::adaptativeHeight(mega::MegaSyncStall::Sy
         case mega::MegaSyncStall::SyncStallReason::CannotCreateFolder:
         case mega::MegaSyncStall::SyncStallReason::CannotPerformDeletion:
         case mega::MegaSyncStall::SyncStallReason::FolderMatchedAgainstFile:
-        case mega::MegaSyncStall::SyncStallReason::SyncItemExceedsSupportedTreeDepth:
         case mega::MegaSyncStall::SyncStallReason::LocalAndRemoteChangedSinceLastSyncedState_userMustChoose:
         case mega::MegaSyncStall::SyncStallReason::LocalAndRemotePreviouslyUnsyncedDiffer_userMustChoose:
         default:
@@ -166,7 +165,7 @@ bool StalledIssuesDelegateWidgetsCache::adaptativeHeight(mega::MegaSyncStall::Sy
     }
 }
 
-StalledIssueHeaderCase* StalledIssuesDelegateWidgetsCache::createHeaderWidget(const QModelIndex &index, StalledIssueHeader* header, const StalledIssueVariant &issue) const
+StalledIssueHeaderCase* StalledIssuesDelegateWidgetsCache::createHeaderWidget(StalledIssueHeader* header, const StalledIssueVariant &issue) const
 {
     StalledIssueHeaderCase* headerCase(nullptr);
 

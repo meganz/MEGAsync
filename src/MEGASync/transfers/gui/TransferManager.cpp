@@ -271,7 +271,6 @@ TransferManager::TransferManager(MegaApi *megaApi) :
     mUi->wLeftPane->installEventFilter(this);
 }
 
-
 TransferManager::~TransferManager()
 {
     disconnect(findChild<MegaTransferView*>(), &MegaTransferView::verticalScrollBarVisibilityChanged,

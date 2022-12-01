@@ -10,6 +10,8 @@ class StalledIssueHeaderCase : public QObject
 
 public:
     StalledIssueHeaderCase(StalledIssueHeader* header);
+    ~StalledIssueHeaderCase() = default;
+
     QPointer<StalledIssueHeader> getStalledIssueHeader();
 
 protected:
