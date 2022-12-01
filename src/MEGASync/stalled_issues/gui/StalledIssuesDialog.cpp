@@ -18,7 +18,11 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    setWindowFlags(Qt::Window);
+#ifndef Q_OS_MACOS
+    Qt::WindowFlags flags =  Qt::Window;
+    this->setWindowFlags(flags);
+#endif
+
     setAttribute(Qt::WA_DeleteOnClose, true);
 
     connect(MegaSyncApp->getStalledIssuesModel(), &StalledIssuesModel::uiBlocked,
