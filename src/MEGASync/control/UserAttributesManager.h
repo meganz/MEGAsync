@@ -1,10 +1,10 @@
 #ifndef USERATTRIBUTESMANAGER_H
 #define USERATTRIBUTESMANAGER_H
 
+#include <QTMegaListener.h>
+
 #include <QObject>
 #include <QMultiMap>
-
-#include <QTMegaListener.h>
 #include <QSharedPointer>
 
 #include <memory>
@@ -25,7 +25,14 @@ public:
             ParamInfo(const std::function<void()>& func, QList<int> errCodes)
                 : mNoRetryErrCodes(errCodes)
                 , requestFunc(func)
-            {}
+            {
+                Q_ASSERT(!errCodes.isEmpty());
+            }
+            ParamInfo(const std::function<void()>& func)
+                : requestFunc(func)
+            {
+            }
+
             void setNeedsRetry(int errCode);
             void setPending(bool isPending);
             std::function<void()> requestFunc;
@@ -47,6 +54,7 @@ public:
 
     virtual void onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e) = 0;
     virtual void requestAttribute()= 0;
+    void forceRequestAttribute() const;
     virtual bool isAttributeReady() const = 0;
     virtual RequestInfo fillRequestInfo() = 0;
     bool attributeRequestNeedsRetry(int attribute) const;
@@ -73,14 +81,15 @@ public:
     void reset();
 
     template <typename AttributeClass>
-    std::shared_ptr<AttributeClass> requestAttribute(const char* user_email)
+    std::shared_ptr<AttributeClass> requestAttribute(const char* user_email = nullptr)
     {
         QString userEmail = QString::fromUtf8(user_email);
+        QString mapKey = getKey(userEmail);
 
         auto classType = typeid(AttributeClass).name();
 
-        auto requestsByEmail = mRequests.values(userEmail);
-        foreach(auto& request, requestsByEmail)
+        auto userRequests = mRequests.values(mapKey);
+        foreach(auto& request, userRequests)
         {
             auto requestType = typeid(*request).name();
             if(requestType == classType)
@@ -95,17 +104,24 @@ public:
 
         auto request = std::make_shared<AttributeClass>(userEmail);
         request->initRequestInfo();
-        mRequests.insert(userEmail, std::static_pointer_cast<AttributeRequest>(request));
+        mRequests.insert(mapKey, std::static_pointer_cast<AttributeRequest>(request));
         request->requestAttribute();
 
         return request;
     }
 
+    void updateEmptyAttributesByUser(const char* user_email);
+
+private:
+    friend class AttributeRequest;
+
     void onRequestFinish(mega::MegaApi *api, mega::MegaRequest *incoming_request, mega::MegaError *e) override;
     void onUsersUpdate(mega::MegaApi *, mega::MegaUserList *users) override;
 
-private:
+    void forceRequestAttribute(const AttributeRequest*) const;
+
     explicit UserAttributesManager();
+    QString getKey(const QString& userEmail) const;
 
     std::unique_ptr<mega::QTMegaListener> mDelegateListener;
     QMultiMap<QString, std::shared_ptr<AttributeRequest>> mRequests;

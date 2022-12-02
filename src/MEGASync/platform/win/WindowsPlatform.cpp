@@ -1,4 +1,9 @@
 #include "WindowsPlatform.h"
+
+#include <platform/win/WinAPIShell.h>
+#include <platform/win/RecursiveShellNotifier.h>
+#include <platform/win/ThreadedQueueShellNotifier.h>
+
 #include <Shlobj.h>
 #include <Shlwapi.h>
 #include <tlhelp32.h>
@@ -63,13 +68,20 @@ SHSTDAPI SHGetSetFolderCustomSettings(_Inout_ LPSHFOLDERCUSTOMSETTINGS pfcs, _In
 #endif
 
 WinShellDispatcherTask* WindowsPlatform::shellDispatcherTask = NULL;
+std::shared_ptr<AbstractShellNotifier> WindowsPlatform::mSyncFileNotifier = nullptr;
+std::shared_ptr<AbstractShellNotifier> WindowsPlatform::mGeneralNotifier = nullptr;
 
 using namespace std;
 using namespace mega;
 
-void WindowsPlatform::initialize(int argc, char *argv[])
+void WindowsPlatform::initialize(int, char *[])
 {
     CoInitializeEx(NULL, COINIT_MULTITHREADED);
+    auto baseNotifier = std::make_shared<WindowsApiShellNotifier>();
+    mSyncFileNotifier = std::make_shared<ThreadedQueueShellNotifier>(baseNotifier);
+    mGeneralNotifier = std::make_shared<ThreadedQueueShellNotifier>(
+                std::make_shared<RecursiveShellNotifier>(baseNotifier)
+                );
 }
 
 void WindowsPlatform::prepareForSync()
@@ -105,9 +117,9 @@ void WindowsPlatform::prepareForSync()
                         QString driveName = parts.at(0);
                         QString networkName = parts.at(1);
                         MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Network drive detected: %1 (%2)")
-                                    .arg(networkName).arg(driveName).toUtf8().constData());
+                                    .arg(networkName, driveName).toUtf8().constData());
 
-                        QStringList localFolders = Model::instance()->getLocalFolders();
+                        QStringList localFolders = SyncInfo::instance()->getLocalFolders(SyncInfo::AllHandledSyncTypes);
                         for (int i = 0; i < localFolders.size(); i++)
                         {
                             QString localFolder = localFolders.at(i);
@@ -118,7 +130,7 @@ void WindowsPlatform::prepareForSync()
                                              .toUtf8().constData());
 
                                 QProcess p;
-                                QString command = QString::fromUtf8("net use %1 %2").arg(driveName).arg(networkName);
+                                QString command = QString::fromUtf8("net use %1 %2").arg(driveName, networkName);
                                 p.start(command);
                                 p.waitForFinished(2000);
                                 QString output = QString::fromUtf8(p.readAllStandardOutput().constData());
@@ -185,32 +197,22 @@ bool WindowsPlatform::enableTrayIcon(QString executable)
     return true;
 }
 
-void WindowsPlatform::notifyItemChange(std::string *localPath, int, std::shared_ptr<ShellNotifier> notifier)
+void WindowsPlatform::notifyItemChange(const QString& path, int newState)
 {
-    if (!localPath || !localPath->size())
-    {
-        return;
-    }
+    notifyItemChange(path, mGeneralNotifier.get());
+}
 
-    std::string path = *localPath;
-    if (!memcmp(path.data(), L"\\\\?\\", 8))
-    {
-        path = path.substr(8);
-    }
+void WindowsPlatform::notifySyncFileChange(std::string *localPath, int)
+{
+    notifyItemChange(QString::fromStdString(*localPath), mSyncFileNotifier.get());
+}
 
-    path.append("", 1);
-    if (path.length() >= MAX_PATH)
+void WindowsPlatform::notifyItemChange(const QString& localPath, AbstractShellNotifier *notifier)
+{
+    QString path = getPreparedPath(localPath);
+    if (!path.isEmpty())
     {
-        return;
-    }
-
-    if (notifier)
-    {
-        notifier->enqueueItemChange(std::move(path));
-    }
-    else
-    {
-        SHChangeNotify(SHCNE_UPDATEITEM, SHCNF_PATH, path.data(), NULL); // same as in ShellNotifier::notify()
+        notifier->notify(path);
     }
 }
 
@@ -1426,75 +1428,89 @@ bool WindowsPlatform::isUserActive()
     return true;
 }
 
-ShellNotifier::~ShellNotifier()
+QString WindowsPlatform::getDeviceName()
 {
-    if (!mThread.joinable()) // thread wasn't started
+    // First, try to read maker and model
+    QSettings settings (QLatin1Literal("HKEY_LOCAL_MACHINE\\HARDWARE\\DESCRIPTION\\System\\BIOS"),
+                        QSettings::NativeFormat);
+    QString vendor (settings.value(QLatin1Literal("BaseBoardManufacturer"),
+                                   QLatin1Literal("0")).toString());
+    QString model (settings.value(QLatin1String("SystemProductName"),
+                                  QLatin1Literal("0")).toString());
+    QString deviceName;
+    // If failure or empty strings, give hostname
+    if (vendor.isEmpty() && model.isEmpty())
     {
-        return;
+        deviceName = QSysInfo::machineHostName();
+        deviceName.remove(QLatin1Literal(".local"));
+    }
+    else
+    {
+        deviceName = vendor + QLatin1Literal(" ") + model;
     }
 
-    // signal the thread to stop
-    {
-        std::unique_lock<std::mutex> lock(mQueueAccessMutex);
-        mExit = true;
-        mWaitCondition.notify_all();
-    }
-
-    mThread.join();
+    return deviceName;
 }
 
-void ShellNotifier::enqueueItemChange(std::string&& localPath)
+void WindowsPlatform::initMenu(QMenu* m)
 {
-    // make sure the thread was started
-    if (!mThread.joinable())
+    if (m)
     {
-        mThread = std::thread([this]() { doInThread(); });
+        m->setStyleSheet(QLatin1String("QMenu {"
+                                           "background: #ffffff;"
+                                           "padding-top: 6px;"
+                                           "padding-bottom: 6px;"
+                                           "border: 1px solid #B8B8B8;"
+                                       "}"
+                                       "QMenu::separator {"
+                                           "height: 1px;"
+                                           "margin: 6px 10px 6px 10px;"
+                                           "background-color: rgba(0, 0, 0, 0.1);"
+                                       "}"
+                                       // For vanilla QMenus (only in TransferManager and NodeSelectorTreeView (NodeSelector))
+                                       "QMenu::item {"
+                                           "font-family: Lato;"
+                                           "font-size: 14px;"
+                                           "margin: 6px 16px 6px 16px;"
+                                           "color: #777777;"
+                                           "padding-right: 16px;"
+                                       "}"
+                                       "QMenu::item:selected {"
+                                           "color: #000000;"
+                                       "}"
+                                       // For menus with MenuItemActions
+                                       "QLabel {"
+                                           "font-family: Lato;"
+                                           "font-size: 14px;"
+                                           "padding: 0px;"
+                                       "}"
+                                       ));
+        m->ensurePolished();
     }
-
-    std::unique_lock<std::mutex> lock(mQueueAccessMutex);
-
-    mPendingNotifications.emplace(localPath);
-    mWaitCondition.notify_one();
 }
 
-void ShellNotifier::doInThread()
+std::shared_ptr<AbstractShellNotifier> WindowsPlatform::getShellNotifier()
 {
-    for (;;)
+    return mGeneralNotifier;
+}
+
+QString WindowsPlatform::getPreparedPath(const QString& localPath)
+{
+    QString preparedPath(localPath);
+    if (!preparedPath.isEmpty())
     {
-        std::string path;
-
-        { // lock scope
-            std::unique_lock<std::mutex> lock(mQueueAccessMutex);
-
-            if (mPendingNotifications.empty())
-            {
-                // end execution only when the notification queue was emptied
-                if (mExit)
-                {
-                    return;
-                }
-
-                mWaitCondition.wait(lock);
-            }
-            else
-            {
-                // pop next pending notification
-                path.swap(mPendingNotifications.front());
-                mPendingNotifications.pop();
-            }
-        } // end of lock scope
-
-        if (!path.empty())
+        if (preparedPath.startsWith(QString::fromUtf8("\\\\?\\")))
         {
-            notify(path);
+            preparedPath = preparedPath.mid(4);
+        }
+
+        if (preparedPath.size() < MAX_PATH)
+        {
+            return preparedPath;
         }
     }
-}
 
-void ShellNotifier::notify(const std::string& path) const
-{
-    // same as in WindowsPlatform::notifyItemChange()
-    SHChangeNotify(SHCNE_UPDATEITEM, SHCNF_PATH, path.data(), NULL);
+    return QString();
 }
 
 // Platform-specific strings

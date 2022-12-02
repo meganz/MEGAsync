@@ -1,7 +1,8 @@
 #include "mega/types.h"
 #include "StreamingFromMegaDialog.h"
 #include "ui_StreamingFromMegaDialog.h"
-#include "NodeSelector.h"
+#include "node_selector/gui/NodeSelector.h"
+#include "DialogOpener.h"
 
 #include "QMegaMessageBox.h"
 #include "platform/Platform.h"
@@ -88,12 +89,11 @@ void StreamingFromMegaDialog::closeEvent(QCloseEvent *event)
 
 void StreamingFromMegaDialog::on_bFromCloud_clicked()
 {
-    QPointer<NodeSelector> nodeSelector(new NodeSelector(NodeSelector::STREAM_SELECT, this));
-    if (mSelectedMegaNode)
-    {
-        nodeSelector->setSelectedNodeHandle(mSelectedMegaNode->getHandle());
-    }
-    Utilities::showDialog<NodeSelector>(nodeSelector, [nodeSelector, this]()
+    QPointer<NodeSelector> nodeSelector(new NodeSelector(NodeSelectorTreeViewWidget::STREAM_SELECT, this->parentWidget()));
+    nodeSelector->setWindowTitle(tr("Select items"));
+    nodeSelector->setSelectedNodeHandle(mSelectedMegaNode);
+
+    DialogOpener::showDialog<NodeSelector>(nodeSelector, [nodeSelector, this]()
     {
         if (nodeSelector->result() == QDialog::Accepted)
         {
@@ -111,7 +111,7 @@ void StreamingFromMegaDialog::on_bFromPublicLink_clicked()
     inputDialog->setLabelText(tr("Enter a MEGA file link:"));
     inputDialog->resize(470, inputDialog->height());
 
-    Utilities::showDialog<QInputDialog>(inputDialog, [inputDialog, this]()
+    DialogOpener::showDialog<QInputDialog>(inputDialog, [inputDialog, this]()
     {
         if (inputDialog->result() == QDialog::Accepted)
         {
@@ -301,7 +301,7 @@ void StreamingFromMegaDialog::openStreamWithApp(QString app)
 {
     if (app.isEmpty())
     {
-        QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromEncoded(streamURL.toUtf8()));
+        Utilities::openUrl(QUrl::fromEncoded(streamURL.toUtf8()));
         return;
     }
 

@@ -4,21 +4,15 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/BalloonToolTip.cpp \
     $$PWD/BlurredShadowEffect.cpp \
     $$PWD/ButtonIconManager.cpp \
-    $$PWD/MegaItemDelegates.cpp \
     $$PWD/EventHelper.cpp \
     $$PWD/InfoDialog.cpp \
     $$PWD/MegaDelegateHoverManager.cpp \
-    $$PWD/MegaItemProxyModel.cpp \
-    $$PWD/MegaItemTreeView.cpp \
     $$PWD/NotificationsSettings.cpp \
     $$PWD/OverQuotaDialog.cpp \
     $$PWD/ScanningWidget.cpp \
     $$PWD/QtPositioningBugFixer.cpp \
     $$PWD/PasswordLineEdit.cpp \
     $$PWD/SetupWizard.cpp \
-    $$PWD/NodeSelector.cpp \
-    $$PWD/FolderBinder.cpp \
-    $$PWD/BindFolderDialog.cpp \
     $$PWD/UploadToMegaDialog.cpp \
     $$PWD/PasteMegaLinksDialog.cpp \
     $$PWD/ImportMegaLinksDialog.cpp \
@@ -28,8 +22,6 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/MegaProxyStyle.cpp \
     $$PWD/AccountDetailsDialog.cpp \
     $$PWD/DownloadFromMegaDialog.cpp \
-    $$PWD/MegaItemModel.cpp \
-    $$PWD/MegaItem.cpp \
     $$PWD/ChangeLogDialog.cpp \
     $$PWD/GuestWidget.cpp \
     $$PWD/StreamingFromMegaDialog.cpp \
@@ -48,7 +40,6 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/UpgradeOverStorage.cpp \
     $$PWD/Login2FA.cpp \
     $$PWD/QRWidget.cpp \
-    $$PWD/QSyncItemWidget.cpp \
     $$PWD/CircularUsageProgressBar.cpp \
     $$PWD/HighDpiResize.cpp \
     $$PWD/AlertItem.cpp \
@@ -58,10 +49,6 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/FilterAlertWidget.cpp \
     $$PWD/AlertFilterType.cpp \
     $$PWD/BugReportDialog.cpp \
-    $$PWD/UserAttributesRequests/FullName.cpp \
-    $$PWD/UserAttributesRequests/Avatar.cpp \
-    $$PWD/UserAttributesRequests/CameraUploadFolder.cpp \
-    $$PWD/UserAttributesRequests/MyChatFilesFolder.cpp \
     $$PWD/VerifyLockMessage.cpp \
     $$PWD/MegaInfoMessage.cpp \
     $$PWD/WaitingSpinnerWidget.cpp \
@@ -72,7 +59,17 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/CancelConfirmWidget.cpp \
     $$PWD/NodeNameSetterDialog/NodeNameSetterDialog.cpp \
     $$PWD/NodeNameSetterDialog/NewFolderDialog.cpp \
-    $$PWD/NodeNameSetterDialog/RenameNodeDialog.cpp
+    $$PWD/NodeNameSetterDialog/RenameNodeDialog.cpp \   
+    $$PWD/node_selector/model/NodeSelectorDelegates.cpp \
+    $$PWD/node_selector/model/NodeSelectorProxyModel.cpp \
+    $$PWD/node_selector/model/NodeSelectorModel.cpp \
+    $$PWD/node_selector/model/NodeSelectorModelSpecialised.cpp \
+    $$PWD/node_selector/model/NodeSelectorModelItem.cpp \
+    $$PWD/node_selector/gui/NodeSelectorTreeView.cpp \
+    $$PWD/node_selector/gui/NodeSelectorTreeViewWidget.cpp \
+    $$PWD/node_selector/gui/NodeSelectorTreeViewWidgetSpecializations.cpp \
+    $$PWD/node_selector/gui/NodeSelector.cpp \
+    $$PWD/node_selector/gui/NodeSelectorLoadingDelegate.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/AutoResizeStackedWidget.h \
@@ -80,21 +77,16 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/BlurredShadowEffect.h \
     $$PWD/ButtonIconManager.h \
     $$PWD/DialogGeometryRetainer.h \
-    $$PWD/MegaItemDelegates.h \
     $$PWD/EventHelper.h \
     $$PWD/InfoDialog.h \
     $$PWD/MegaDelegateHoverManager.h \
-    $$PWD/MegaItemProxyModel.h \
-    $$PWD/MegaItemTreeView.h \
+    $$PWD/MegaNodeNames.h \
     $$PWD/NotificationsSettings.h \
     $$PWD/OverQuotaDialog.h \
     $$PWD/ScanningWidget.h \
     $$PWD/QtPositioningBugFixer.h \
     $$PWD/PasswordLineEdit.h \
     $$PWD/SetupWizard.h \
-    $$PWD/NodeSelector.h \
-    $$PWD/FolderBinder.h \
-    $$PWD/BindFolderDialog.h \
     $$PWD/UploadToMegaDialog.h \
     $$PWD/PasteMegaLinksDialog.h \
     $$PWD/ImportMegaLinksDialog.h \
@@ -104,8 +96,6 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/MegaProxyStyle.h \
     $$PWD/AccountDetailsDialog.h \
     $$PWD/DownloadFromMegaDialog.h \
-    $$PWD/MegaItemModel.h \
-    $$PWD/MegaItem.h \
     $$PWD/ChangeLogDialog.h \
     $$PWD/GuestWidget.h \
     $$PWD/StreamingFromMegaDialog.h \
@@ -124,7 +114,6 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/ChangePassword.h \
     $$PWD/Login2FA.h \
     $$PWD/QRWidget.h \
-    $$PWD/QSyncItemWidget.h \
     $$PWD/CircularUsageProgressBar.h \
     $$PWD/HighDpiResize.h \
     $$PWD/AlertItem.h \
@@ -134,10 +123,6 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/FilterAlertWidget.h \
     $$PWD/AlertFilterType.h \
     $$PWD/BugReportDialog.h \
-    $$PWD/UserAttributesRequests/FullName.h \
-    $$PWD/UserAttributesRequests/Avatar.h \
-    $$PWD/UserAttributesRequests/CameraUploadFolder.h \
-    $$PWD/UserAttributesRequests/MyChatFilesFolder.h \
     $$PWD/VerifyLockMessage.h \
     $$PWD/ViewLoadingScene.h \
     $$PWD/MegaInfoMessage.h \
@@ -149,7 +134,17 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/CancelConfirmWidget.h \
     $$PWD/NodeNameSetterDialog/NodeNameSetterDialog.h \
     $$PWD/NodeNameSetterDialog/NewFolderDialog.h \
-    $$PWD/NodeNameSetterDialog/RenameNodeDialog.h
+    $$PWD/NodeNameSetterDialog/RenameNodeDialog.h \
+    $$PWD/node_selector/model/NodeSelectorDelegates.h \
+    $$PWD/node_selector/model/NodeSelectorProxyModel.h \
+    $$PWD/node_selector/model/NodeSelectorModel.h \
+    $$PWD/node_selector/model/NodeSelectorModelSpecialised.h \
+    $$PWD/node_selector/model/NodeSelectorModelItem.h \
+    $$PWD/node_selector/gui/NodeSelectorTreeView.h \
+    $$PWD/node_selector/gui/NodeSelectorTreeViewWidget.h \
+    $$PWD/node_selector/gui/NodeSelectorTreeViewWidgetSpecializations.h \
+    $$PWD/node_selector/gui/NodeSelector.h \
+    $$PWD/node_selector/gui/NodeSelectorLoadingDelegate.h
 
 INCLUDEPATH += $$PWD
 
@@ -161,9 +156,6 @@ win32 {
     RESOURCES += $$PWD/Resources_win.qrc
     INCLUDEPATH += $$PWD/win
     FORMS    += $$PWD/win/InfoDialog.ui \
-                $$PWD/win/NodeSelector.ui \
-                $$PWD/win/FolderBinder.ui \
-                $$PWD/win/BindFolderDialog.ui \
                 $$PWD/win/UploadToMegaDialog.ui \
                 $$PWD/win/PasteMegaLinksDialog.ui \
                 $$PWD/win/ImportMegaLinksDialog.ui \
@@ -186,7 +178,6 @@ win32 {
                 $$PWD/win/UpgradeOverStorage.ui \
                 $$PWD/win/ChangePassword.ui \
                 $$PWD/win/Login2FA.ui \
-                $$PWD/win/QSyncItemWidget.ui \
                 $$PWD/win/AlertItem.ui \
                 $$PWD/win/FilterAlertWidget.ui \
                 $$PWD/win/AlertFilterType.ui \
@@ -200,16 +191,16 @@ win32 {
                 $$PWD/win/ScanningWidget.ui \
                 $$PWD/win/CancelConfirmWidget.ui \
                 $$PWD/win/NodeNameSetterDialog.ui \
-                $$PWD/win/NotificationsSettings.ui
+                $$PWD/win/NotificationsSettings.ui \
+                $$PWD/node_selector/gui/win/NodeSelectorTreeViewWidget.ui \
+                $$PWD/node_selector/gui/win/NodeSelectorLoadingDelegate.ui \
+                $$PWD/node_selector/gui/win/NodeSelector.ui
 }
 
 macx {
     RESOURCES += $$PWD/Resources_macx.qrc
     INCLUDEPATH += $$PWD/macx
     FORMS    += $$PWD/macx/InfoDialog.ui \
-                $$PWD/macx/NodeSelector.ui \
-                $$PWD/macx/FolderBinder.ui \
-                $$PWD/macx/BindFolderDialog.ui \
                 $$PWD/macx/UploadToMegaDialog.ui \
                 $$PWD/macx/PasteMegaLinksDialog.ui \
                 $$PWD/macx/ImportMegaLinksDialog.ui \
@@ -234,7 +225,6 @@ macx {
                 $$PWD/macx/UpgradeOverStorage.ui \
                 $$PWD/macx/ChangePassword.ui \
                 $$PWD/macx/Login2FA.ui \
-                $$PWD/macx/QSyncItemWidget.ui \
                 $$PWD/macx/AlertItem.ui \
                 $$PWD/macx/FilterAlertWidget.ui \
                 $$PWD/macx/AlertFilterType.ui \
@@ -248,7 +238,11 @@ macx {
                 $$PWD/macx/ScanningWidget.ui \
                 $$PWD/macx/CancelConfirmWidget.ui \
                 $$PWD/macx/NodeNameSetterDialog.ui \
-                $$PWD/macx/NotificationsSettings.ui
+                $$PWD/macx/NotificationsSettings.ui \
+                $$PWD/node_selector/gui/macx/NodeSelectorTreeViewWidget.ui \
+                $$PWD/node_selector/gui/macx/NodeSelectorLoadingDelegate.ui \
+                $$PWD/node_selector/gui/macx/NodeSelector.ui
+
 
     #Asset catalog need to load SF symbol images of toolbar items for custom NSToolbar
     QMAKE_ASSET_CATALOGS += $$PWD/images/Images.xcassets
@@ -278,9 +272,6 @@ unix:!macx {
     RESOURCES += $$PWD/Resources_linux.qrc
     INCLUDEPATH += $$PWD/linux
     FORMS    += $$PWD/linux/InfoDialog.ui \
-                $$PWD/linux/NodeSelector.ui \
-                $$PWD/linux/FolderBinder.ui \
-                $$PWD/linux/BindFolderDialog.ui \
                 $$PWD/linux/UploadToMegaDialog.ui \
                 $$PWD/linux/PasteMegaLinksDialog.ui \
                 $$PWD/linux/ImportMegaLinksDialog.ui \
@@ -305,7 +296,6 @@ unix:!macx {
                 $$PWD/linux/UpgradeOverStorage.ui \
                 $$PWD/linux/ChangePassword.ui \
                 $$PWD/linux/Login2FA.ui \
-                $$PWD/linux/QSyncItemWidget.ui \
                 $$PWD/linux/AlertItem.ui \
                 $$PWD/linux/FilterAlertWidget.ui \
                 $$PWD/linux/AlertFilterType.ui \
@@ -319,7 +309,11 @@ unix:!macx {
                 $$PWD/linux/CancelConfirmWidget.ui \
                 $$PWD/linux/ScanningWidget.ui \
                 $$PWD/linux/NodeNameSetterDialog.ui \
-                $$PWD/linux/NotificationsSettings.ui
+                $$PWD/linux/NotificationsSettings.ui \
+                $$PWD/node_selector/gui/linux/NodeSelectorTreeViewWidget.ui \
+                $$PWD/node_selector/gui/linux/NodeSelectorLoadingDelegate.ui \
+                $$PWD/node_selector/gui/linux/NodeSelector.ui
+
 
     HEADERS += $$PWD/PermissionsDialog.h \
                $$PWD/PermissionsWidget.h

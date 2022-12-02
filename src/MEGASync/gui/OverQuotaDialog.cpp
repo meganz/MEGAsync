@@ -105,6 +105,7 @@ QPointer<OverQuotaDialog> OverQuotaDialog::showDialog(OverQuotaDialogType type, 
     if(showDialog)
     {
         QPointer<OverQuotaDialog> dialog = new OverQuotaDialog(type, parent);
+        dialog->setWindowModality(Qt::WindowModal);
         return dialog;
     }
 
@@ -190,7 +191,7 @@ void OverQuotaDialog::onUpgradeClicked()
 {
     QString url{QString::fromUtf8("mega://#pro")};
     Utilities::getPROurlWithParameters(url);
-    QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
+    Utilities::openUrl(QUrl(url));
     QDialog::accept();
 }
 

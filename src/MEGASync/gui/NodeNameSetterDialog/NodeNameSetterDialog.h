@@ -20,7 +20,6 @@ class NodeNameSetterDialog : public QDialog, public mega::MegaRequestListener
 public:
     NodeNameSetterDialog(QWidget* parent);
 
-    int show();
     QString getName() const;
 
 protected:
@@ -40,6 +39,8 @@ protected:
     virtual LineEditSelection lineEditSelection(){return LineEditSelection();}
 
     void showError(const QString& errorText);
+    bool checkAlreadyExistingNode(const QString& nodeName, std::shared_ptr<mega::MegaNode> parentNode);
+    void showAlreadyExistingNodeError(bool isFile);
 
     void changeEvent(QEvent* event);
 
@@ -47,6 +48,7 @@ protected:
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
 
 private:
+    void init();
 
     QTimer mNewFolderErrorTimer;
 

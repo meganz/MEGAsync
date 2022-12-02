@@ -21,16 +21,26 @@ void UserAttributesManager::reset()
     mRequests.clear();
 }
 
+void UserAttributesManager::updateEmptyAttributesByUser(const char *user_email)
+{
+    QString userEmail = QString::fromUtf8(user_email);
+    auto requests = mRequests.values(userEmail);
+    foreach(auto request, requests)
+    {
+        request->forceRequestAttribute();
+    }
+}
+
 void UserAttributesManager::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *incoming_request, mega::MegaError *e)
 {
-    if(incoming_request->getType() == mega::MegaRequest::TYPE_GET_ATTR_USER)
+    auto reqType (incoming_request->getType());
+    if(reqType == mega::MegaRequest::TYPE_GET_ATTR_USER
+            || reqType == mega::MegaRequest::TYPE_SET_ATTR_USER)
     {
         auto userEmail = QString::fromUtf8(incoming_request->getEmail());
-        if(userEmail.isEmpty())
-        {
-            userEmail = QString::fromUtf8(api->getMyEmail());
-        }
-        foreach(auto request, mRequests.values(userEmail))
+
+        // Forward to requests related to the corresponding user
+        foreach(auto request, mRequests.values(getKey(userEmail)))
         {
             if(request->getRequestInfo().mParamInfo.contains(incoming_request->getParamType()))
             {
@@ -39,7 +49,12 @@ void UserAttributesManager::onRequestFinish(mega::MegaApi *api, mega::MegaReques
                 paramInfo->setPending(false);
                 request->onRequestFinish(api, incoming_request, e);
             }
-        }   
+        }
+
+        if(e && e->getErrorCode() != mega::MegaError::API_OK)
+        {
+            mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error requesting user attribute. User: %1 Attribute: %2 Error: %3").arg(userEmail).arg(incoming_request->getParamType()).arg(e->getErrorCode()).toUtf8().constData());
+        }
     }
 }
 
@@ -53,7 +68,7 @@ void UserAttributesManager::onUsersUpdate(mega::MegaApi*, mega::MegaUserList *us
             if(user->isOwnChange() <= 0)
             {
                 auto userEmail = QString::fromUtf8(user->getEmail());
-                foreach(auto request, mRequests.values(userEmail))
+                foreach(auto request, mRequests.values(getKey(userEmail)))
                 {
                     foreach(auto changeType, request->getRequestInfo().mChangedTypes.keys())
                     {
@@ -73,9 +88,23 @@ void UserAttributesManager::onUsersUpdate(mega::MegaApi*, mega::MegaUserList *us
     }
 }
 
+void UserAttributesManager::forceRequestAttribute(const AttributeRequest* request) const
+{
+    if(request)
+    {
+        foreach(auto paramType, request->getRequestInfo().mParamInfo.keys())
+        {
+            auto paramInfo = request->getRequestInfo().mParamInfo.value(paramType);
+            paramInfo->mNeedsRetry = true;
+            paramInfo->setPending(true);
+            paramInfo->requestFunc();
+        }
+    }
+}
+
 void AttributeRequest::RequestInfo::ParamInfo::setNeedsRetry(int errCode)
 {
-   mNeedsRetry = !mNoRetryErrCodes.contains(errCode);
+    mNeedsRetry = !mNoRetryErrCodes.isEmpty() &&!mNoRetryErrCodes.contains(errCode);
 }
 
 void AttributeRequest::RequestInfo::ParamInfo::setPending(bool isPending)
@@ -105,6 +134,10 @@ bool AttributeRequest::isRequestPending() const
     return isPending;
 }
 
+void AttributeRequest::forceRequestAttribute() const
+{
+    UserAttributesManager::instance().forceRequestAttribute(this);
+}
 
 bool AttributeRequest::attributeRequestNeedsRetry(int attribute) const
 {
@@ -125,6 +158,22 @@ void AttributeRequest::requestUserAttribute(int attribute)
         val->setPending(true);
         val->requestFunc();
     }
+}
+
+QString UserAttributesManager::getKey(const QString& userEmail) const
+{
+    // If the email is not empty, use key 'u' for current user.
+    QString key (QLatin1Char('u'));
+    if (!userEmail.isEmpty())
+    {
+        std::unique_ptr<char[]> currentUserEmail (MegaSyncApp->getMegaApi()->getMyEmail());
+        if (userEmail != QString::fromUtf8(currentUserEmail.get()))
+        {
+            key = userEmail;
+        }
+    }
+
+    return key;
 }
 
 }//end namespace UserAttributes

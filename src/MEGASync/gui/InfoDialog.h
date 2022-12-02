@@ -10,8 +10,7 @@
 #include "SettingsDialog.h"
 #include "MenuItemAction.h"
 #include "control/Preferences.h"
-#include "control/MegaController.h"
-#include "model/Model.h"
+#include "syncs/control/SyncInfo.h"
 #include <QGraphicsOpacityEffect>
 #include "TransferScanCancelUi.h"
 #include "HighDpiResize.h"
@@ -20,11 +19,15 @@
 #include "QtPositioningBugFixer.h"
 #include "TransferQuota.h"
 #include "StatusInfo.h"
+#include "syncs/gui/SyncsMenu.h"
+#include "syncs/control/SyncController.h"
+#include "syncs/gui/Backups/AddBackupDialog.h"
+#include "syncs/gui/Backups/BackupsWizard.h"
+
 #include <memory>
 #ifdef _WIN32
 #include <chrono>
 #endif
-
 
 namespace Ui {
 class InfoDialog;
@@ -55,12 +58,12 @@ public:
     void setAvatar();
     void setIndexing(bool indexing);
     void setWaiting(bool waiting);
-    void setSyncing(bool value);
-    void setTransferring(bool value);
+    void setSyncing(bool syncing);
+    void setTransferring(bool transferring);
     void setOverQuotaMode(bool state);
     void setAccountType(int accType);
     void setDisabledSyncTags(QSet<int> tags);
-    void addSync(mega::MegaHandle h);
+    void addBackup();
     void clearUserAttributes();
     void setPSAannouncement(int id, QString title, QString text, QString urlImage, QString textButton, QString linkButton);
     bool updateOverStorageState(int state);
@@ -90,7 +93,6 @@ public:
     void setUnseenNotifications(long long value);
     void setUnseenTypeNotifications(long long all, long long contacts, long long shares, long long payment);
     long long getUnseenNotifications() const;
-    void closeSyncsMenu();
     int getLoggedInMode() const;
     void showNotifications();
 
@@ -117,8 +119,10 @@ public slots:
     void dlAreaHovered(QMouseEvent *event);
     void upAreaHovered(QMouseEvent *event);
 
-   void addSync();
-   void updateDialogState();
+    void addSync(mega::MegaHandle h = mega::INVALID_HANDLE);
+    void onAddSync(mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
+    void onAddBackup();
+    void updateDialogState();
 
    void enableTransferOverquotaAlert();
    void enableTransferAlmostOverquotaAlert();
@@ -132,8 +136,8 @@ private slots:
     void onOverlayClicked();
     void on_bTransferManager_clicked();
     void on_bAddSync_clicked();
+    void on_bAddBackup_clicked();
     void on_bUpload_clicked();
-    void on_bDownload_clicked();
     void onUserAction(int action);
     void resetLoggedInMode();
 
@@ -151,10 +155,12 @@ private slots:
 
     void sTabsChanged(int tab);
 
-    void highLightMenuEntry(QAction* action);
-
     void on_bDismissSyncSettings_clicked();
     void on_bOpenSyncSettings_clicked();
+    void on_bDismissBackupsSettings_clicked();
+    void on_bOpenBackupsSettings_clicked();
+    void on_bDismissAllSyncsSettings_clicked();
+    void on_bOpenAllSyncsSettings_clicked();
 
     void updateTransfersCount();
 
@@ -185,7 +191,6 @@ private:
     FilterAlertWidget *filterMenu;
 
     MenuItemAction *cloudItem;
-    MenuItemAction *inboxItem;
     MenuItemAction *sharesItem;
     MenuItemAction *rubbishItem;
 
@@ -193,11 +198,14 @@ private:
     bool pendingUploadsTimerRunning = false;
     bool pendingDownloadsTimerRunning = false;
     bool circlesShowAllActiveTransfersProgress;
+    void showSyncsMenu(QPushButton* b, mega::MegaSync::SyncType type);
+    SyncsMenu* createSyncMenu(mega::MegaSync::SyncType type, bool isEnabled);
 
-    bool indexing; //scanning
-    bool waiting;
-    bool syncing; //if any sync is in syncing state
-    bool transferring; // if there are ongoing regular transfers
+
+    bool mIndexing; //scanning
+    bool mWaiting;
+    bool mSyncing; //if any sync is in syncing state
+    bool mTransferring; // if there are ongoing regular transfers
     GuestWidget *gWidget;
     StatusInfo::TRANSFERS_STATES mState;
     bool overQuotaState;
@@ -213,6 +221,10 @@ private:
 
     QPointer<TransferManager> mTransferManager;
 
+    QPointer<BackupsWizard> mBackupsWizard;
+    QPointer<AddBackupDialog> mAddBackupDialog;
+    QPointer<BindFolderDialog> mAddSyncDialog;
+
 #ifdef Q_OS_LINUX
     bool doNotActAsPopup;
 #endif
@@ -226,10 +238,7 @@ private:
     QParallelAnimationGroup animationGroupBlockedError;
     void hideBlockedError(bool animated = false);
     void showBlockedError();
-
-    std::unique_ptr<QMenu> syncsMenu;
-    MenuItemAction *addSyncAction;
-    MenuItemAction *lastHovered;
+    QHash<QPushButton*, SyncsMenu*> mSyncsMenus;
 
 protected:
     void setBlockedStateLabel(QString state);
@@ -247,12 +256,12 @@ protected:
     QTimer transfersFinishedTimer;
     QTimer mResetTransferSummaryWidget;
     MegaApplication *app;
-    std::shared_ptr<Preferences> preferences;
-    Model *model;
-    Controller *controller;
+    std::shared_ptr<Preferences> mPreferences;
+    SyncInfo *mSyncInfo;
     mega::MegaApi *megaApi;
     mega::MegaTransfer *activeDownload;
     mega::MegaTransfer *activeUpload;
+    std::shared_ptr<SyncController> mSyncController;
 
  private:
     void onAddSyncDialogFinished(QPointer<BindFolderDialog> dialog);
@@ -260,8 +269,7 @@ protected:
     void enableUserActions(bool value);
     void changeStatusState(StatusInfo::TRANSFERS_STATES newState,
                            bool animate = true);
-
-    QPointer<BindFolderDialog> mAddSyncDialog;
+    void setupSyncController();
 
     TransferScanCancelUi* mTransferScanCancelUi = nullptr;
     QtPositioningBugFixer qtBugFixer;

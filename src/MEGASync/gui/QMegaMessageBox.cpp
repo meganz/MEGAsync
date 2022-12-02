@@ -4,37 +4,37 @@
 
 QMessageBox::StandardButton QMegaMessageBox::information(QWidget *parent, const QString &title,
     const QString &text, QMessageBox::StandardButtons buttons,
-                                  QMessageBox::StandardButton defaultButton, QMap<StandardButton, QString> textByButton)
+                                  QMessageBox::StandardButton defaultButton, QMap<StandardButton, QString> textByButton, Qt::TextFormat format)
 {
-    return showNewMessageBox(parent, Information, title, text, buttons, defaultButton, textByButton);
+    return showNewMessageBox(parent, Information, title, text, buttons, defaultButton, textByButton, format);
 }
 
 QMessageBox::StandardButton QMegaMessageBox::warning(QWidget *parent, const QString &title,
     const QString &text, QMessageBox::StandardButtons buttons,
-                                  QMessageBox::StandardButton defaultButton, QMap<StandardButton, QString> textByButton)
+                                  QMessageBox::StandardButton defaultButton, QMap<StandardButton, QString> textByButton, Qt::TextFormat format)
 {
-    return showNewMessageBox(parent, Warning, title, text, buttons, defaultButton, textByButton);
+    return showNewMessageBox(parent, Warning, title, text, buttons, defaultButton, textByButton, format);
 }
 
 QMessageBox::StandardButton QMegaMessageBox::question(QWidget *parent, const QString &title,
     const QString &text, QMessageBox::StandardButtons buttons,
-                                  QMessageBox::StandardButton defaultButton, QMap<StandardButton, QString> textByButton)
+                                  QMessageBox::StandardButton defaultButton, QMap<StandardButton, QString> textByButton, Qt::TextFormat format)
 {
-    return showNewMessageBox(parent, Question, title, text, buttons, defaultButton, textByButton);
+    return showNewMessageBox(parent, Question, title, text, buttons, defaultButton, textByButton, format);
 }
 
 QMessageBox::StandardButton QMegaMessageBox::critical(QWidget *parent, const QString &title,
     const QString &text,  QMessageBox::StandardButtons buttons,
-                                  QMessageBox::StandardButton defaultButton, QMap<StandardButton, QString> textByButton)
+                                  QMessageBox::StandardButton defaultButton, QMap<StandardButton, QString> textByButton, Qt::TextFormat format)
 {
-    return showNewMessageBox(parent, Critical, title, text, buttons, defaultButton, textByButton);
+    return showNewMessageBox(parent, Critical, title, text, buttons, defaultButton, textByButton, format);
 }
 
 QMessageBox::StandardButton QMegaMessageBox::showNewMessageBox(QWidget *parent, QMessageBox::Icon icon,
-    const QString &title, const QString &text, QMessageBox::StandardButtons buttons, QMessageBox::StandardButton defaultButton, QMap<QMessageBox::StandardButton, QString> textByButton)
+    const QString &title, const QString &text, QMessageBox::StandardButtons buttons, QMessageBox::StandardButton defaultButton, QMap<QMessageBox::StandardButton, QString> textByButton, Qt::TextFormat format)
 {
     QMessageBox msgBox(icon, title, text, QMessageBox::NoButton, parent);
-    msgBox.setTextFormat(Qt::TextFormat::AutoText);
+    msgBox.setTextFormat(format);
     HighDpiResize hDpiResizer(&msgBox);
 
     QDialogButtonBox *buttonBox = msgBox.findChild<QDialogButtonBox*>();

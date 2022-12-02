@@ -761,7 +761,7 @@ void TransferManager::onVerticalScrollBarVisibilityChanged(bool state)
     if(currentTransferManager)
     {
         auto transfersView = dynamic_cast<MegaTransferView*>(sender());
-        if(transfersView)
+        if(transfersView && transfersView->isVisible())
         {
             if(state)
             {
@@ -925,7 +925,7 @@ void TransferManager::on_tSeePlans_clicked()
 {
     QString url = QString::fromUtf8("mega://#pro");
     Utilities::getPROurlWithParameters(url);
-    QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
+    Utilities::openUrl(QUrl(url));
 }
 
 void TransferManager::on_bPause_toggled()
@@ -1109,7 +1109,7 @@ void TransferManager::onFileTypeButtonClicked(TransfersWidget::TM_TAB tab, Utili
 
 void TransferManager::on_bOpenLinks_clicked()
 {
-    qobject_cast<MegaApplication*>(qApp)->importLinks();
+    qobject_cast<MegaApplication*>(qApp)->importLinksFromWidget(this);
 }
 
 void TransferManager::on_tCogWheel_clicked()
@@ -1119,12 +1119,12 @@ void TransferManager::on_tCogWheel_clicked()
 
 void TransferManager::on_bDownload_clicked()
 {
-    qobject_cast<MegaApplication*>(qApp)->downloadActionClicked();
+    qobject_cast<MegaApplication*>(qApp)->downloadActionClickedFromWidget(this);
 }
 
 void TransferManager::on_bUpload_clicked()
 {
-    qobject_cast<MegaApplication*>(qApp)->uploadActionClickedFromWindow(this);
+    qobject_cast<MegaApplication*>(qApp)->uploadActionClickedFromWidget(this);
 }
 
 void TransferManager::on_leSearchField_returnPressed()
@@ -1378,11 +1378,6 @@ void TransferManager::closeEvent(QCloseEvent *event)
             close();
         });
         event->ignore();
-    }
-    else
-    {
-        emit aboutToClose();
-        QDialog::closeEvent(event);
     }
 }
 

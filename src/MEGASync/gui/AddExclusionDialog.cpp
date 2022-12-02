@@ -52,7 +52,7 @@ void AddExclusionDialog::on_bChoose_clicked()
 #ifdef __APPLE__
     QPointer<MultiQFileDialog> fileDialog = new MultiQFileDialog(0,  tr("Select the file or folder you want to exclude"), QDir::home().path(), false);
     fileDialog->setOptions(QFileDialog::DontResolveSymlinks);
-    Utilities::showDialog<MultiQFileDialog>(fileDialog,[fileDialog, this](){
+    DialogOpener::showDialog<MultiQFileDialog>(fileDialog,[fileDialog, this](){
         if (fileDialog->result() == QDialog::Accepted && !fileDialog->selectedFiles().isEmpty())
         {
             setTextToExclusionItem(fileDialog->selectedFiles().value(0));

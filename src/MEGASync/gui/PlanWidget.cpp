@@ -178,9 +178,9 @@ void PlanWidget::updatePlanInfo()
     style()->polish(this);
 }
 
-void PlanWidget::setPlanInfo(const PlanInfo& data)
+void PlanWidget::setPlanInfo(const PlanInfo& planData)
 {
-    mDetails = data;
+    mDetails = planData;
     updatePlanInfo();
 }
 
@@ -225,7 +225,7 @@ bool PlanWidget::eventFilter(QObject* obj, QEvent* event)
         {
             QString url = getProURL();
             Utilities::getPROurlWithParameters(url);
-            QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
+            Utilities::openUrl(QUrl(url));
             return true;
         }
         else if (event->type() == QEvent::ToolTip)

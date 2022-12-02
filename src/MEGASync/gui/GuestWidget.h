@@ -1,6 +1,8 @@
 #ifndef GUESTWIDGET_H
 #define GUESTWIDGET_H
 
+#include <QWidget>
+#include <QPushButton>
 #include "megaapi.h"
 #include "QTMegaRequestListener.h"
 #include "Preferences.h"
@@ -82,7 +84,7 @@ private slots:
 private:
     Ui::GuestWidget *ui;
     MegaApplication *app;
-    QString email, password;
+    QString mEmail, mPassword;
     bool mSSLSecureConnectionFailed;
     bool incorrectCredentialsMessageReceived = false;
 

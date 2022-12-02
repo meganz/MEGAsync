@@ -1,11 +1,12 @@
 #include "ImportMegaLinksDialog.h"
 #include "ui_ImportMegaLinksDialog.h"
 #include "gui/ImportListWidgetItem.h"
-#include "gui/NodeSelector.h"
+#include "gui/node_selector/gui/NodeSelector.h"
 #include "gui/MultiQFileDialog.h"
 #include "Utilities.h"
 #include "MegaApplication.h"
 #include "QMegaMessageBox.h"
+#include "DialogOpener.h"
 
 #include <QDesktopServices>
 #include <QDir>
@@ -64,7 +65,7 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(std::shared_ptr<LinkProcessor> link
 
     if (mPreferences->logged())
     {
-        initUiAsLogged(mPreferences);
+        initUiAsLogged();
     }
     else
     {
@@ -135,7 +136,7 @@ void ImportMegaLinksDialog::on_bLocalFolder_clicked()
     QPointer<MultiQFileDialog> fileDialog = new MultiQFileDialog(0,  tr("Select local folder"), defaultPath, false);
     fileDialog->setOptions(QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
     fileDialog->setFileMode(QFileDialog::DirectoryOnly);
-    Utilities::showDialog<MultiQFileDialog>(fileDialog, [fileDialog, this]()
+    DialogOpener::showDialog<MultiQFileDialog>(fileDialog, [fileDialog, this]()
     {
         if (fileDialog->result() == QDialog::Accepted && !fileDialog->selectedFiles().isEmpty())
         {
@@ -173,8 +174,8 @@ void ImportMegaLinksDialog::onLocalFolderSet(const QString& path)
 
 void ImportMegaLinksDialog::on_bMegaFolder_clicked()
 {
-    QPointer<NodeSelector> nodeSelector = new NodeSelector(NodeSelector::UPLOAD_SELECT, this);
-    Utilities::showDialog(nodeSelector, this, &ImportMegaLinksDialog::onMegaFolderSelectorFinished);
+    QPointer<NodeSelector> nodeSelector = new NodeSelector(NodeSelectorTreeViewWidget::UPLOAD_SELECT, this);
+    DialogOpener::showDialog(nodeSelector, this, &ImportMegaLinksDialog::onMegaFolderSelectorFinished);
 }
 
 void ImportMegaLinksDialog::onMegaFolderSelectorFinished(QPointer<NodeSelector> nodeSelector)
@@ -267,9 +268,9 @@ void ImportMegaLinksDialog::changeEvent(QEvent *event)
     QDialog::changeEvent(event);
 }
 
-void ImportMegaLinksDialog::initUiAsLogged(std::shared_ptr<Preferences> mPreferences)
+void ImportMegaLinksDialog::initUiAsLogged()
 {
-    initImportFolderControl(mPreferences);
+    initImportFolderControl();
     ui->cImport->setChecked(mPreferences->getImportMegaLinksEnabled());
     ui->cDownload->setChecked(mPreferences->getDownloadMegaLinksEnabled());
 }
@@ -282,7 +283,7 @@ void ImportMegaLinksDialog::initUiAsUnlogged()
     ui->cDownload->setVisible(false);
 }
 
-void ImportMegaLinksDialog::initImportFolderControl(std::shared_ptr<Preferences> mPreferences)
+void ImportMegaLinksDialog::initImportFolderControl()
 {
     std::unique_ptr<MegaNode> importFolderNode(mMegaApi->getNodeByHandle(mPreferences->importFolder()));
     if (importFolderNode)
@@ -295,16 +296,16 @@ void ImportMegaLinksDialog::initImportFolderControl(std::shared_ptr<Preferences>
         }
         else
         {
-            setInvalidImportFolder(mPreferences);
+            setInvalidImportFolder();
         }
     }
     else
     {
-        setInvalidImportFolder(mPreferences);
+        setInvalidImportFolder();
     }
 }
 
-void ImportMegaLinksDialog::setInvalidImportFolder(std::shared_ptr<Preferences> mPreferences)
+void ImportMegaLinksDialog::setInvalidImportFolder()
 {
     ui->eMegaFolder->setText(QString::fromUtf8("/MEGAsync Imports"));
     mPreferences->setImportFolder(mega::INVALID_HANDLE);

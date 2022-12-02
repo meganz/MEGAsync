@@ -9,10 +9,12 @@
 #include <QThread>
 #include <QDir>
 #include <QProcess>
+#include <QMenu>
 
 #include "MegaApplication.h"
 #include "ExtServer.h"
 #include "NotifyServer.h"
+#include "ShellNotifier.h"
 
 class LinuxPlatform
 {
@@ -32,7 +34,8 @@ public:
     static void prepareForSync();
     static QString desktop_file;
     static bool enableTrayIcon(QString executable);
-    static void notifyItemChange(std::string *localPath, int newState);
+    static void notifyItemChange(const QString &path, int);
+    static void notifySyncFileChange(std::string* localPath, int newState);
     static bool startOnStartup(bool value);
     static bool isStartOnStartupActive();
     static bool isTilingWindowManager();
@@ -59,10 +62,17 @@ public:
     static bool shouldRunHttpServer();
     static bool shouldRunHttpsServer();
     static bool isUserActive();
+    static QString getDeviceName();
+    static void initMenu(QMenu* m);
+    static std::shared_ptr<AbstractShellNotifier> getShellNotifier();
 
     static const char* settingsString;
     static const char* exitString;
     static const char* fileExplorerString;
+    static std::shared_ptr<AbstractShellNotifier> mShellNotifier;
+
+private:
+    static void notifyItemChange(std::string *localPath, int newState);
 };
 
 #endif // LINUXPLATFORM_H

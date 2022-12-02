@@ -24,7 +24,7 @@ public:
     void addNodeItem(DuplicatedNodeItem* item);
     void setHeader(const QString& baseText, const QString &nodeName);
 
-    void open();
+    void show();
 
     const std::shared_ptr<mega::MegaNode>& getNode() const;
 

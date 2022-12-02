@@ -3,6 +3,8 @@
 #include "megaapi.h"
 #include "MegaApplication.h"
 #include "QMegaMessageBox.h"
+#include "DialogOpener.h"
+#include <InfoWizard.h>
 
 #include "platform/Platform.h"
 #include "gui/Login2FA.h"
@@ -130,7 +132,7 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
             }
         }
 
-        Utilities::removeDialog(mWhyAmISeeingThisDialog);
+        DialogOpener::removeDialog(mWhyAmISeeingThisDialog);
         reset_UI_props();
         closing = false;
         page_login();
@@ -330,7 +332,7 @@ void GuestWidget::enableListener()
 
 void GuestWidget::initialize()
 {
-    Utilities::removeDialog(mWhyAmISeeingThisDialog);
+    DialogOpener::removeDialog(mWhyAmISeeingThisDialog);
     reset_UI_props();
 
     closing = false;
@@ -440,36 +442,36 @@ void GuestWidget::setBlockState(int lockType)
 
 void GuestWidget::on_bLogin_clicked()
 {
-    email = ui->lEmail->text().toLower().trimmed();
-    password = ui->lPassword->text();
+    mEmail = ui->lEmail->text().toLower().trimmed();
+    mPassword = ui->lPassword->text();
 
-    if (!email.length())
+    if (!mEmail.length())
     {
         showLoginError(tr("Please, enter your e-mail address"));
         return;
     }
 
-    if (!email.contains(QChar::fromAscii('@')) || !email.contains(QChar::fromAscii('.')))
+    if (!mEmail.contains(QChar::fromAscii('@')) || !mEmail.contains(QChar::fromAscii('.')))
     {
         showLoginError(tr("Please, enter a valid e-mail address"));
         return;
     }
 
-    if (!password.length())
+    if (!mPassword.length())
     {
         showLoginError(tr("Please, enter your password"));
         ui->lPassword->setFocus();
         return;
     }
 
-    app->closeInfoWizard();
-    megaApi->login(email.toUtf8().constData(), password.toUtf8().constData());
+    DialogOpener::removeDialogByClass<InfoWizard>();
+    megaApi->login(mEmail.toUtf8().constData(), mPassword.toUtf8().constData());
     loggingStarted = true;
 }
 
 void GuestWidget::on_bCreateAccount_clicked()
 {
-    app->closeInfoWizard();
+    DialogOpener::removeDialogByClass<InfoWizard>();
     emit forwardAction(SetupWizard::PAGE_NEW_ACCOUNT);
 }
 
@@ -498,7 +500,7 @@ void GuestWidget::on_bSettings_clicked()
 
 void GuestWidget::on_bForgotPassword_clicked()
 {
-    QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#recovery")));
+    Utilities::openUrl(QUrl(QString::fromUtf8("mega://#recovery")));
 }
 
 void GuestWidget::on_bCancel_clicked()
@@ -557,7 +559,7 @@ void GuestWidget::on_bWhyAmIseen_clicked()
                                               QIcon(QString::fromUtf8(":/images/locked_account_ico.png")).pixmap(70.0, 70.0));
     }
 
-    Utilities::showDialog(mWhyAmISeeingThisDialog);
+    DialogOpener::showDialog(mWhyAmISeeingThisDialog);
 }
 
 void GuestWidget::fetchNodesAfterBlockCallbak()
@@ -746,7 +748,7 @@ void GuestWidget::on_bLogin2FaNext_clicked()
     }
     else
     {
-        megaApi->multiFactorAuthLogin(email.toUtf8(), password.toUtf8().constData(), pin.toUtf8().constData());
+        megaApi->multiFactorAuthLogin(mEmail.toUtf8(), mPassword.toUtf8().constData(), pin.toUtf8().constData());
     }
 }
 
@@ -760,5 +762,5 @@ void GuestWidget::on_bLoging2FaCancel_clicked()
 void GuestWidget::on_bLogin2FaHelp_clicked()
 {
     QString helpUrl = Preferences::BASE_URL + QString::fromAscii("/recovery");
-    QtConcurrent::run(QDesktopServices::openUrl, QUrl(helpUrl));
+    Utilities::openUrl(QUrl(helpUrl));
 }

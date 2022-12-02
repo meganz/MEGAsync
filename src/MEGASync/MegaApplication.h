@@ -14,7 +14,7 @@
 #include <memory>
 
 #include "gui/TransferManager.h"
-#include "gui/NodeSelector.h"
+#include "gui/node_selector/gui/NodeSelector.h"
 #include "gui/InfoDialog.h"
 #include "gui/UpgradeOverStorage.h"
 #include "gui/SetupWizard.h"
@@ -34,9 +34,9 @@
 #include "control/UpdateTask.h"
 #include "control/MegaSyncLogger.h"
 #include "control/ThreadPool.h"
-#include "control/MegaController.h"
 #include "control/Utilities.h"
-#include "model/Model.h"
+#include "syncs/control/SyncInfo.h"
+#include "syncs/control/SyncController.h"
 #include "megaapi.h"
 #include "QTMegaListener.h"
 #include "gui/QFilterAlertsModel.h"
@@ -123,9 +123,7 @@ public:
     void onSyncStateChanged(mega::MegaApi *api,  mega::MegaSync *sync) override;
     void onSyncFileStateChanged(mega::MegaApi *api, mega::MegaSync *sync, std::string *localPath, int newState) override;
 
-    void onSyncAdded(mega::MegaApi *api, mega::MegaSync *sync, int additionState) override;
-    void onSyncDisabled(mega::MegaApi *api, mega::MegaSync *sync) override;
-    void onSyncEnabled(mega::MegaApi *api, mega::MegaSync *sync) override;
+    void onSyncAdded(mega::MegaApi *api, mega::MegaSync *sync) override;
     void onSyncDeleted(mega::MegaApi *api, mega::MegaSync *sync) override;
 
     virtual void onCheckDeferredPreferencesSync(bool timeout);
@@ -133,7 +131,6 @@ public:
 
     void showAddSyncError(mega::MegaRequest *request, mega::MegaError* e, QString localpath, QString remotePath = QString());
     void showAddSyncError(int errorCode, QString localpath, QString remotePath = QString());
-
 
     /**
      * @brief Migrate sync configuration to sdk cache
@@ -185,7 +182,7 @@ public:
     bool hasNotifications();
     bool hasNotificationsOfType(int type);
     std::shared_ptr<mega::MegaNode> getRootNode(bool forceReset = false);
-    std::shared_ptr<mega::MegaNode> getInboxNode(bool forceReset = false);
+    std::shared_ptr<mega::MegaNode> getVaultNode(bool forceReset = false);
     std::shared_ptr<mega::MegaNode> getRubbishNode(bool forceReset = false);
 
     MegaSyncLogger& getLogger() const;
@@ -219,6 +216,7 @@ public:
     void reloadSyncsInSettings();
 
     void raiseInfoDialog();
+    bool isShellNotificationProcessingOngoing();
 
     void checkAndCloseOpenDialogs();
 
@@ -236,6 +234,8 @@ signals:
     void blocked();
     void storageStateChanged(int);
     void pauseStateChanged();
+    void addBackup();
+    void shellNotificationsProcessed();
 
 public slots:
     void unlink(bool keepLogs = false);
@@ -246,17 +246,19 @@ public slots:
     void openSettings(int tab = -1);
     void openSettingsAddSync(mega::MegaHandle megaFolderHandle);
     void openInfoWizard();
+    void importLinksFromWidget(QWidget* parent);
     void importLinks();
     void officialWeb();
     void goToMyCloud();
     void pauseTransfers();
     void showChangeLog();
     void uploadActionClicked();
-    void uploadActionClickedFromWindow(QWidget *openFrom);
+    void uploadActionClickedFromWidget(QWidget *openFrom);
     void uploadActionClickedFromWindowAfterOverQuotaCheck(QWidget *openFrom);
     void loginActionClicked();
     void copyFileLink(mega::MegaHandle fileHandle, QString nodeKey = QString());
     void downloadActionClicked();
+    void downloadActionClickedFromWidget(QWidget *openFrom);
     void streamActionClicked();
     void transferManagerActionClicked(int tab = 0);
     void logoutActionClicked();
@@ -272,6 +274,7 @@ public slots:
     void externalFileUpload(qlonglong targetFolder);
     void externalFolderUpload(qlonglong targetFolder);
     void externalFolderSync(qlonglong targetFolder);
+    void externalAddBackup();
     void externalOpenTransferManager(int tab);
     void internalDownload(long long handle);
     void onLinkImportFinished();
@@ -298,10 +301,9 @@ public slots:
     void showInfoDialogNotifications();
     void triggerInstallUpdate();
     void scanningAnimationStep();
-    void setupWizardFinished(QPointer<SetupWizard>);
+    void setupWizardFinished(QPointer<SetupWizard> dialog);
     void clearDownloadAndPendingLinks(QDialog *dialog);
-    void infoWizardDialogFinished(QPointer<InfoWizard>);
-    void closeInfoWizard();
+    void infoWizardDialogFinished(QPointer<InfoWizard> dialog);
     void runConnectivityCheck();
     void onConnectivityCheckSuccess();
     void onConnectivityCheckError();
@@ -321,7 +323,7 @@ public slots:
     void onCompletedTransfersTabActive(bool active);
     void checkFirstTransfer();
     void checkOperatingSystem();
-    void notifyItemChange(QString path, int newState);
+    void notifyChangeToAllFolders();
     int getPrevVersion();
     void onDismissStorageOverquota(bool overStorage);
     void showNotificationFinishedTransfers(unsigned long long appDataId);
@@ -337,10 +339,11 @@ private slots:
     void openFolderPath(QString path);
     void registerUserActivity();
     void PSAseen(int id);
-    void onSyncStateChanged(std::shared_ptr<SyncSetting> syncSettings);
-    void onSyncDeleted(std::shared_ptr<SyncSetting> syncSettings);
-    void onSyncDisabled(std::shared_ptr<SyncSetting> syncSetting);
-    void onSyncEnabled(std::shared_ptr<SyncSetting> syncSetting);
+    void onSyncStateChanged(std::shared_ptr<SyncSettings> syncSettings);
+    void onSyncDeleted(std::shared_ptr<SyncSettings> syncSettings);
+    void onSyncDisabled(std::shared_ptr<SyncSettings> syncSetting);
+    void showSingleSyncDisabledNotification(std::shared_ptr<SyncSettings> syncSetting);
+    void onSyncEnabled(std::shared_ptr<SyncSettings> syncSetting);
     void onBlocked();
     void onUnblocked();
     void onTransfersModelUpdate();
@@ -352,7 +355,7 @@ protected slots:
     void onUploadsCheckedAndReady(QPointer<DuplicatedNodeDialog> checkDialog);
     void onPasteMegaLinksDialogFinish(QPointer<PasteMegaLinksDialog>);
     void onImportDialogFinish(QPointer<ImportMegaLinksDialog>);
-    void onDownloadFromMegaFinished(QPointer<DownloadFromMegaDialog>);
+    void onDownloadFromMegaFinished(QPointer<DownloadFromMegaDialog> dialog);
 
 protected:
     void createTrayIcon();
@@ -404,8 +407,6 @@ protected:
     QPointer<QMenu> infoDialogMenu;
     QPointer<QMenu> guestMenu;
     QMenu emptyMenu;
-    QPointer<QMenu> syncsMenu;
-    QSignalMapper *menuSignalMapper;
 
     MenuItemAction *exitAction;
     MenuItemAction *settingsAction;
@@ -414,11 +415,11 @@ protected:
     MenuItemAction *downloadAction;
     MenuItemAction *streamAction;
     MenuItemAction *myCloudAction;
-    MenuItemAction *addSyncAction;
-
     MenuItemAction *updateAction;
     MenuItemAction *aboutAction;
     QAction *showStatusAction;
+    QPointer<SyncsMenu> mSyncs2waysMenu;
+    QPointer<SyncsMenu> mBackupsMenu;
 
     MenuItemAction *exitActionGuest;
     MenuItemAction *settingsActionGuest;
@@ -438,8 +439,7 @@ protected:
     QPointer<SettingsDialog> mSettingsDialog;
     QPointer<InfoDialog> infoDialog;
     std::shared_ptr<Preferences> preferences;
-    Model *model;
-    Controller *controller;
+    SyncInfo *model;
     mega::MegaApi *megaApi;
     mega::MegaApi *megaApiFolders;
     QFilterAlertsModel *notificationsProxyModel;
@@ -451,14 +451,8 @@ protected:
     HTTPServer *httpServer;
     HTTPServer *httpsServer;
     long long lastTsConnectionError = 0;
-    QPointer<UploadToMegaDialog> uploadFolderSelector;
-    QPointer<DownloadFromMegaDialog> downloadFolderSelector;
     mega::MegaHandle fileUploadTarget;
-    QPointer<QFileDialog> fileUploadSelector;
     mega::MegaHandle folderUploadTarget;
-    QPointer<QFileDialog> folderUploadSelector;
-    QPointer<StreamingFromMegaDialog> streamSelector;
-    QPointer<MultiQFileDialog> mMultiUploadFileDialog;
 
     QQueue<QString> uploadQueue;
     QQueue<WrappedNode *> downloadQueue;
@@ -467,7 +461,7 @@ protected:
 
     ThreadPool* mThreadPool;
     std::shared_ptr<mega::MegaNode> mRootNode;
-    std::shared_ptr<mega::MegaNode> mInboxNode;
+    std::shared_ptr<mega::MegaNode> mVaultNode;
     std::shared_ptr<mega::MegaNode> mRubbishNode;
     bool mFetchingNodes = false;
     bool mQueringWhyAmIBlocked = false;
@@ -489,7 +483,6 @@ protected:
     std::shared_ptr<mega::MegaPricing> mPricing;
     std::shared_ptr<mega::MegaCurrency> mCurrency;
     QPointer<UpgradeOverStorage> mStorageOverquotaDialog;
-    QPointer<InfoWizard> mInfoWizard;
     mega::QTMegaListener *delegateListener;
     MegaUploader *uploader;
     MegaDownloader *downloader;
@@ -500,11 +493,7 @@ protected:
     std::unique_ptr<std::thread> mMutexStealerThread;
 
     QTranslator translator;
-    QPointer<PasteMegaLinksDialog> mPasteMegaLinksDialog;
     std::shared_ptr<LinkProcessor> mLinkProcessor;
-    QPointer<ChangeLogDialog> mChangeLogDialog;
-    QPointer<ImportMegaLinksDialog> mImportDialog;
-    QPointer<NodeSelector> mDownloadNodeSelector;
     QString lastTrayMessage;
     QStringList extraLinks;
     QString currentLanguageCode;
@@ -542,8 +531,8 @@ protected:
     bool appfinished;
     bool updateAvailable;
     bool isLinux;
-    bool isFirstSyncDone;
-    bool isFirstFileSynced;
+    bool mIsFirstFileTwoWaySynced;
+    bool mIsFirstFileBackedUp;
     bool networkConnectivity;
     int nUnviewedTransfers;
     bool completedTabActive;
@@ -563,6 +552,8 @@ protected:
     QMutex mMutexOpenUrls;
     QMap<QString, std::chrono::system_clock::time_point> mOpenUrlsClusterTs;
 
+    std::unique_ptr<SyncController> mSyncController;
+
     QPointer<TransfersModel> mTransfersModel;
 
     ScanStageController scanStageController;
@@ -572,9 +563,6 @@ protected:
     bool mDisableGfx;
 
 private:
-#ifdef _WIN32
-    std::shared_ptr<ShellNotifier> mShellNotifier;
-#endif
     void loadSyncExclusionRules(QString email = QString());
 
     static std::pair<QString,QString> buildFinishedTransferTitleAndMessage(const TransferMetaData *data);
@@ -617,6 +605,7 @@ private:
 
     bool noUploadedStarted = true;
     bool mProcessingUploadQueue = false;
+    int mProcessingShellNotifications = 0;
 
     void ConnectServerSignals(HTTPServer* server);
 
@@ -626,7 +615,6 @@ private:
 
     static void logInfoDialogCoordinates(const char* message, const QRect& screenGeometry, const QString& otherInformation);
 
-    void destroyInfoDialogMenus();
     bool dontAskForExitConfirmation(bool force);
     void exitApplication();
 
@@ -681,6 +669,7 @@ private:
 
 private slots:
     void onFolderTransferUpdate(FolderTransferUpdateEvent event);
+    void onNotificationProcessed();
 };
 
 class DeferPreferencesSyncForScope

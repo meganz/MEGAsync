@@ -6,6 +6,7 @@
 #include <QHeaderView>
 #include <QSpinBox>
 #include <QComboBox>
+#include <QOperatingSystemVersion>
 
 const int TOOLTIP_DELAY = 250;
 
@@ -193,6 +194,16 @@ void MegaProxyStyle::polish(QWidget *widget)
     {
         EventManager::addEvent(comboBox, QEvent::Wheel, EventHelper::BLOCK);
     }
+#ifdef Q_OS_MAC
+    else if (QOperatingSystemVersion::current() > QOperatingSystemVersion::MacOSBigSur) //It only fails from macOS Monterey
+    {
+        if(auto messageBox = qobject_cast<QMessageBox*>(widget))
+        {
+            messageBox->setTextInteractionFlags(Qt::TextInteractionFlag::NoTextInteraction);
+        }
+    }
+#endif
+
     QProxyStyle::polish(widget);
 }
 

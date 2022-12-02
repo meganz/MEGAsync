@@ -3,6 +3,7 @@
 #include "control/AppStatsEvents.h"
 #include "platform/Platform.h"
 #include "OverQuotaDialog.h"
+#include "DialogOpener.h"
 
 TransferQuota::TransferQuota(std::shared_ptr<DesktopNotifications> desktopNotifications)
     : mMegaApi(MegaSyncApp->getMegaApi()),
@@ -119,7 +120,7 @@ void TransferQuota::checkExecuteDialog()
         if (!mUpgradeDialog)
         {
             mUpgradeDialog = new UpgradeDialog(mMegaApi, mPricing, mCurrency);
-            Utilities::showDialog(mUpgradeDialog);
+            DialogOpener::showDialog(mUpgradeDialog);
         }
         else if (!mUpgradeDialog->isVisible())
         {
@@ -226,7 +227,7 @@ void TransferQuota::setOverQuotaDialogPricing(std::shared_ptr<mega::MegaPricing>
 
 void TransferQuota::closeDialog()
 {
-    Utilities::removeDialog(mUpgradeDialog);
+    DialogOpener::removeDialog(mUpgradeDialog);
 }
 
 void TransferQuota::checkQuotaAndAlerts()
@@ -257,7 +258,7 @@ void TransferQuota::checkAlertDismissed(OverQuotaDialogType type, std::function<
         auto dialog = OverQuotaDialog::showDialog(type);
         if(dialog)
         {
-            Utilities::showDialog(dialog, [dialog, func, this]()
+            DialogOpener::showDialog(dialog, [dialog, func, this]()
             {
                func(dialog->result());
             });

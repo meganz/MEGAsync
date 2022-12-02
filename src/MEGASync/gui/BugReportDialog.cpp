@@ -1,6 +1,9 @@
 #include "BugReportDialog.h"
+#include "DialogOpener.h"
+
 #include <QCloseEvent>
 #include <QRegExp>
+
 #include "ui_BugReportDialog.h"
 
 
@@ -70,7 +73,7 @@ void BugReportDialog::onTransferStart(MegaApi*, MegaTransfer* transfer)
     labelWidget->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     mSendProgress->setLabel(labelWidget);
 
-    Utilities::showDialog(mSendProgress);
+    DialogOpener::showDialog(mSendProgress);
 }
 
 void BugReportDialog::onTransferUpdate(MegaApi*, MegaTransfer* transfer)

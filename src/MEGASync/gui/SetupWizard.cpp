@@ -9,6 +9,7 @@
 #include "gui/Login2FA.h"
 #include "gui/GuiUtilities.h"
 #include "platform/Platform.h"
+#include "DialogOpener.h"
 
 #include <QKeyEvent>
 
@@ -304,7 +305,7 @@ void SetupWizard::show2FA(MegaRequest *request, bool invalidCode)
     QPointer<Login2FA> verification(new Login2FA());
     verification->invalidCode(invalidCode);
     std::shared_ptr<MegaRequest> requestCopy(request->copy());
-    Utilities::showDialog<Login2FA>(verification, [requestCopy, verification,this](){
+    DialogOpener::showDialog<Login2FA>(verification, [requestCopy, verification,this](){
         if (verification->result() != QDialog::Accepted)
         {
             megaApi->localLogout();
@@ -519,42 +520,64 @@ void SetupWizard::on_bNext_clicked()
         }
 
         QString localFolderPath = ui->eLocalFolder->text();
-        if (!Utilities::verifySyncedFolderLimits(localFolderPath))
+        QString warningMessage;
+        auto syncability (SyncController::isLocalFolderAllowedForSync(localFolderPath, MegaSync::TYPE_TWOWAY, warningMessage));
+        if (syncability != SyncController::CANT_SYNC)
         {
-            QMegaMessageBox::warning(nullptr, tr("Warning"), tr("You are trying to sync an extremely large folder.\nTo prevent the syncing of entire boot volumes, which is inefficient and dangerous,\nwe ask you to start with a smaller folder and add more data while MEGAsync is running."), QMessageBox::Ok);
-            return;
+            syncability = SyncController::areLocalFolderAccessRightsOk(localFolderPath, MegaSync::TYPE_TWOWAY, warningMessage);
         }
 
-        MegaNode *node = megaApi->getNodeByPath(ui->eMegaFolder->text().toUtf8().constData());
-        if (!node)
+        // If OK, check that we can sync the selected remote folder
+        QString remoteFolderPath = ui->eMegaFolder->text();
+        std::shared_ptr<MegaNode> node (megaApi->getNodeByPath(remoteFolderPath.toUtf8().constData()));
+
+        if (syncability != SyncController::CANT_SYNC)
         {
-            auto rootNode = ((MegaApplication*)qApp)->getRootNode();
-            if (!rootNode)
+            syncability = std::max(SyncController::isRemoteFolderSyncable(node, warningMessage), syncability);
+        }
+
+        if (syncability == SyncController::CANT_SYNC)
+        {
+            // If can't sync because remote node does not exist, try to create it
+            if (!node)
             {
-                page_login();
-                QMegaMessageBox::warning(nullptr, tr("Error"), tr("Unable to get the filesystem.\n"
-                                    "Please, try again. If the problem persists "
-                                    "please contact bug@mega.co.nz"));
-
-                done(QDialog::Rejected);
-                MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting isCrashed true: !rootNode (SetupWizard - next)");
+                auto rootNode = MegaSyncApp->getRootNode();
+                if (!rootNode)
+                {
+                    page_login();
+                    QMegaMessageBox::warning(nullptr, tr("Error"), tr("Unable to get the filesystem.\n"
+                                                                      "Please, try again. If the problem persists "
+                                                                      "please contact bug@mega.co.nz"));
+                    done(QDialog::Rejected);
+                    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting isCrashed true: !rootNode (SetupWizard - next)");
                 preferences->setCrashed(true);
-                app->rebootApplication(false);
-                return;
+                    app->rebootApplication(false);
+                }
+                else
+                {
+                    ui->eMegaFolder->setText(QString::fromLatin1("/MEGAsync"));
+                    megaApi->createFolder("MEGAsync", rootNode.get());
+                    creatingDefaultSyncFolder = true;
+
+                    ui->lProgress->setText(tr("Creating folder…"));
+                    page_progress();
+                }
             }
-
-            ui->eMegaFolder->setText(QString::fromUtf8("/MEGAsync"));
-            megaApi->createFolder("MEGAsync", rootNode.get());
-            creatingDefaultSyncFolder = true;
-
-            ui->lProgress->setText(tr("Creating folder..."));
-            page_progress();
+            else
+            {
+                QMegaMessageBox::warning(nullptr, tr("Warning"), warningMessage, QMessageBox::Ok);
+            }
         }
-        else
+        else if (syncability == SyncController::CAN_SYNC
+                 || (syncability == SyncController::WARN_SYNC
+                     && QMegaMessageBox::warning(nullptr, tr("Warning"), warningMessage
+                                                 + QLatin1Char('\n')
+                                                 + tr("Do you want to continue?"),
+                                                 QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
+                     == QMessageBox::Yes))
         {
             selectedMegaFolderHandle = node->getHandle();
             page_welcome();
-            delete node;
         }
     }
 }
@@ -598,7 +621,9 @@ void SetupWizard::on_bCancel_clicked()
             return;
         }
 
-        mPreconfiguredSyncs.append(PreConfiguredSync(ui->eLocalFolder->text(), selectedMegaFolderHandle));
+        QString localPath (QDir::toNativeSeparators(QDir(ui->eLocalFolder->text()).canonicalPath()));
+        QString syncName (SyncController::getSyncNameFromPath(localPath));
+        mPreconfiguredSyncs.append(PreConfiguredSync(localPath, selectedMegaFolderHandle, syncName));
         done(QDialog::Accepted);
     }
     else
@@ -683,31 +708,20 @@ void SetupWizard::on_bLocalFolder_clicked()
 
 void SetupWizard::onLocalFolderSet(const QString& path)
 {
-    if (path.length())
+    QDir dir(path);
+    if (dir.mkpath(QString::fromLatin1(".")))
     {
-        QDir dir(path);
-        if (!dir.exists() && !dir.mkpath(QString::fromUtf8(".")))
-        {
-            return;
-        }
-
-        QTemporaryFile test(path + QDir::separator());
-        if (test.open() || QMegaMessageBox::warning(nullptr, tr("Warning"), tr("You don't have write permissions in this local folder.") +
-                    QString::fromUtf8("\n") + tr("MEGAsync won't be able to download anything here.") + QString::fromUtf8("\n") + tr("Do you want to continue?"),
-                    QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes)
-        {
-            ui->eLocalFolder->setText(path);
-        }
+        ui->eLocalFolder->setText(path);
     }
 }
 
 void SetupWizard::on_bMegaFolder_clicked()
 {
-    QPointer<NodeSelector> nodeSelector = new NodeSelector(NodeSelector::SYNC_SELECT, this);
+    QPointer<NodeSelector> nodeSelector = new NodeSelector(NodeSelectorTreeViewWidget::SYNC_SELECT, this);
 #ifdef Q_OS_LINUX
     nodeSelector->setWindowFlags(nodeSelector->windowFlags() | (Qt::Tool));
 #endif
-    Utilities::showDialog<NodeSelector>(nodeSelector, [nodeSelector, this](){
+    DialogOpener::showDialog<NodeSelector>(nodeSelector, [nodeSelector, this](){
         if (nodeSelector->result() == QDialog::Accepted)
         {
             selectedMegaFolderHandle = nodeSelector->getSelectedNodeHandle();
@@ -1123,13 +1137,13 @@ void SetupWizard::lTermsLink_clicked()
 
 void SetupWizard::on_lTermsLink_linkActivated(const QString& /*link*/)
 {
-    QtConcurrent::run(QDesktopServices::openUrl, QUrl(Preferences::BASE_URL + QString::fromUtf8("/terms")));
+    Utilities::openUrl(QUrl(Preferences::BASE_URL + QString::fromUtf8("/terms")));
 }
 
 void SetupWizard::on_bLearMore_clicked()
 {
     QString helpUrl = QString::fromAscii("https://help.mega.io/installs-apps/desktop-syncing");
-    QtConcurrent::run(QDesktopServices::openUrl, QUrl(helpUrl));
+    Utilities::openUrl(QUrl(helpUrl));
 }
 
 void SetupWizard::on_bFinish_clicked()
@@ -1175,8 +1189,8 @@ void SetupWizard::onPasswordTextChanged(QString text)
     text.isEmpty() ? setLevelStrength(-1) : setLevelStrength(strength);
 }
 
-PreConfiguredSync::PreConfiguredSync(QString localFolder, MegaHandle megaFolderHandle):
-    mMegaFolderHandle(megaFolderHandle), mLocalFolder(localFolder)
+PreConfiguredSync::PreConfiguredSync(QString localFolder, MegaHandle megaFolderHandle, QString syncName):
+    mMegaFolderHandle(megaFolderHandle), mLocalFolder(localFolder), mSyncName(syncName)
 {
 
 }
@@ -1188,7 +1202,7 @@ QString PreConfiguredSync::localFolder() const
 
 QString PreConfiguredSync::syncName() const
 {
-    return Controller::getSyncNameFromPath(mLocalFolder);
+    return mSyncName;
 }
 
 mega::MegaHandle PreConfiguredSync::megaFolderHandle() const

@@ -48,10 +48,10 @@ private:
     std::shared_ptr<LinkProcessor> mLinkProcessor;
     bool finished;
 
-    void initUiAsLogged(std::shared_ptr<Preferences> preferences);
+    void initUiAsLogged();
     void initUiAsUnlogged();
-    void initImportFolderControl(std::shared_ptr<Preferences> preferences);
-    void setInvalidImportFolder(std::shared_ptr<Preferences> preferences);
+    void initImportFolderControl();
+    void setInvalidImportFolder();
 
     void enableOkButton() const;
     void enableLocalFolder(bool enable);

@@ -705,7 +705,6 @@ int main(int argc, char *argv[])
     QT_TRANSLATE_NOOP("FinderExtensionApp", "%n file", "", n);
     QT_TRANSLATE_NOOP("FinderExtensionApp", "%n folder", "", n);
     QT_TRANSLATE_NOOP("FinderExtensionApp", "View previous versions");
-    QT_TRANSLATE_NOOP("MegaNodeNames", "Cloud Drive");
     QT_TRANSLATE_NOOP("MegaSyncError", "No error");
     QT_TRANSLATE_NOOP("MegaSyncError", "Unknown error");
     QT_TRANSLATE_NOOP("MegaSyncError", "File system not supported");
@@ -716,7 +715,7 @@ int main(int argc, char *argv[])
     QT_TRANSLATE_NOOP("MegaSyncError", "Local path not available");
     QT_TRANSLATE_NOOP("MegaSyncError", "Remote node not found");
     QT_TRANSLATE_NOOP("MegaSyncError", "Reached storage quota limit");
-    QT_TRANSLATE_NOOP("MegaSyncError", "Business account expired");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Account expired (business or Pro Flexi)");
     QT_TRANSLATE_NOOP("MegaSyncError", "Foreign target storage quota reached");
     QT_TRANSLATE_NOOP("MegaSyncError", "Remote path has changed");
     QT_TRANSLATE_NOOP("MegaSyncError", "Remote node moved to Rubbish Bin");

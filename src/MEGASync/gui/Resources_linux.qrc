@@ -41,9 +41,6 @@
         <file>images/cloud_upload_item_ico.png</file>
         <file>images/cloud_upload_item_ico@2x.png</file>
         <file>images/cloud_upload_item_ico@3x.png</file>
-        <file>images/color_folder.png</file>
-        <file>images/color_folder@2x.png</file>
-        <file>images/color_folder@3x.png</file>
         <file>images/completed_item_ico.png</file>
         <file>images/completed_item_ico@2x.png</file>
         <file>images/completed_item_ico@3x.png</file>
@@ -182,9 +179,6 @@
         <file>images/full_sync_ico.png</file>
         <file>images/full_sync_ico@2x.png</file>
         <file>images/full_sync_ico@3x.png</file>
-        <file>images/grey_folder.png</file>
-        <file>images/grey_folder@2x.png</file>
-        <file>images/grey_folder@3x.png</file>
         <file>images/help_ico.png</file>
         <file>images/help_ico@2x.png</file>
         <file>images/help_ico@3x.png</file>
@@ -196,18 +190,17 @@
         <file>images/ico_about_MEGA@3x.png</file>
         <file>images/ico_about_MEGA_out@3x.png</file>
         <file>images/ico_about_MEGA_over@3x.png</file>
-        <file>images/ico_add_sync_folder.png</file>
-        <file>images/ico_add_sync_folder@2x.png</file>
-        <file>images/ico_add_sync_folder@3x.png</file>
+        <file>images/icons/ico_sync.png</file>
+        <file>images/icons/ico_sync@2x.png</file>
+        <file>images/icons/ico_sync@3x.png</file>
         <file>images/ico_download.png</file>
         <file>images/ico_download@2x.png</file>
         <file>images/ico_download@3x.png</file>
         <file>images/ico_download_out@3x.png</file>
         <file>images/ico_download_over@3x.png</file>
-        <file>images/ico_drop_add_sync.png</file>
-        <file>images/ico_drop_add_sync@2x.png</file>
-        <file>images/ico_drop_add_sync@3x.png</file>
-        <file>images/ico_drop_add_sync_over@3x.png</file>
+        <file>images/icons/ico_add_sync.png</file>
+        <file>images/icons/ico_add_sync@2x.png</file>
+        <file>images/icons/ico_add_sync@3x.png</file>
         <file>images/ico_drop_synched_folder.png</file>
         <file>images/ico_drop_synched_folder@2x.png</file>
         <file>images/ico_drop_synched_folder@3x.png</file>
@@ -450,6 +443,9 @@
         <file>images/showinfolder.png</file>
         <file>images/showinfolder@2x.png</file>
         <file>images/showinfolder@3x.png</file>
+        <file>images/small_folder.png</file>
+        <file>images/small_folder@2x.png</file>
+        <file>images/small_folder@3x.png</file>
         <file>images/small_3D.png</file>
         <file>images/small_3D@2x.png</file>
         <file>images/small_3D@3x.png</file>
@@ -648,15 +644,18 @@
         <file>images/settings-account.png</file>
         <file>images/settings-account@3x.png</file>
         <file>images/settings-account@2x.png</file>
+        <file>images/Backups_24_ico.png</file>
+        <file>images/Backups_24_ico@2x.png</file>
+        <file>images/Backups_24_ico@3x.png</file>
         <file>images/key_big.png</file>
         <file>images/key_big@2x.png</file>
         <file>images/key_big@3x.png</file>
         <file>images/lock_big.png</file>
         <file>images/lock_big@2x.png</file>
         <file>images/lock_big@3x.png</file>
-        <file>images/warning-disabled-syncs.png</file>
-        <file>images/warning-disabled-syncs@2x.png</file>
-        <file>images/warning-disabled-syncs@3x.png</file>
+        <file>images/icons/infodialog/warning-disabled-syncs.png</file>
+        <file>images/icons/infodialog/warning-disabled-syncs@2x.png</file>
+        <file>images/icons/infodialog/warning-disabled-syncs@3x.png</file>
         <file>images/settings-syncs-warn.png</file>
         <file>images/settings-syncs-warn@3x.png</file>
         <file>images/settings-syncs-warn@2x.png</file>
@@ -744,6 +743,54 @@
         <file>animations/scanning.gif</file>
         <file>animations/scanning@2x.gif</file>
         <file>animations/scanning@3x.gif</file>
+        <file>images/icons/ico_backup.png</file>
+        <file>images/icons/ico_backup@2x.png</file>
+        <file>images/icons/ico_backup@3x.png</file>
+        <file>images/icons/pc/pc-linux_24.png</file>
+        <file>images/icons/pc/pc-linux_24@2x.png</file>
+        <file>images/icons/pc/pc-linux_24@3x.png</file>
+        <file>images/icons/pc/pc-linux_48.png</file>
+        <file>images/icons/pc/pc-linux_48@2x.png</file>
+        <file>images/icons/pc/pc-linux_48@3x.png</file>
+        <file>images/icons/folder/folder-mono_24.png</file>
+        <file>images/icons/folder/folder-mono_24@2x.png</file>
+        <file>images/icons/folder/folder-mono_24@3x.png</file>
+        <file>images/icons/folder/folder-mono-with-warning_24.png</file>
+        <file>images/icons/folder/folder-mono-with-warning_24@2x.png</file>
+        <file>images/icons/folder/folder-mono-with-warning_24@3x.png</file>
+        <file>images/settings-backup.png</file>
+        <file>images/settings-backup@3x.png</file>
+        <file>images/settings-backup@2x.png</file>
+        <file>images/icons/pc/pc_24.png</file>
+        <file>images/icons/pc/pc_24@2x.png</file>
+        <file>images/icons/pc/pc_24@3x.png</file>
+        <file>images/icons/infodialog/warning-disabled-backups.png</file>
+        <file>images/icons/infodialog/warning-disabled-backups@2x.png</file>
+        <file>images/icons/infodialog/warning-disabled-backups@3x.png</file>
+        <file>images/icons/infodialog/warning-disabled-syncs-and-backups.png</file>
+        <file>images/icons/infodialog/warning-disabled-syncs-and-backups@2x.png</file>
+        <file>images/icons/infodialog/warning-disabled-syncs-and-backups@3x.png</file>
+        <file>images/icons/folder/folder-warning-rest@3x.png</file>
+        <file>images/icons/folder/folder-warning-rest@2x.png</file>
+        <file>images/icons/folder/folder-warning-rest.png</file>
+        <file>images/icons/folder/folder-warning-hover@3x.png</file>
+        <file>images/icons/folder/folder-warning-hover@2x.png</file>
+        <file>images/icons/folder/folder-warning-hover.png</file>
+        <file>images/icons/folder/folder-hover@3x.png</file>
+        <file>images/icons/folder/folder-hover@2x.png</file>
+        <file>images/icons/folder/folder-hover.png</file>
+        <file>images/icons/folder/folder-rest@3x.png</file>
+        <file>images/icons/folder/folder-rest@2x.png</file>
+        <file>images/icons/folder/folder-rest.png</file>
+        <file>images/icons/options_dots/options-press@3x.png</file>
+        <file>images/icons/options_dots/options-press@2x.png</file>
+        <file>images/icons/options_dots/options-press.png</file>
+        <file>images/icons/options_dots/options-rest@3x.png</file>
+        <file>images/icons/options_dots/options-rest@2x.png</file>
+        <file>images/icons/options_dots/options-rest.png</file>
+        <file>images/icons/options_dots/options-hover@3x.png</file>
+        <file>images/icons/options_dots/options-hover@2x.png</file>
+        <file>images/icons/options_dots/options-hover.png</file>
         <file>images/Icon_Small_Backups@3x.png</file>
         <file>images/Icon_Small_Backups@2x.png</file>
         <file>images/Icon_Small_Backups.png</file>
@@ -768,6 +815,7 @@
         <file>images/Switches/switch_unchecked_down.svg</file>
         <file>images/Switches/switch_unchecked_hover.svg</file>
         <file>images/Switches/switch_unchecked_rest.svg</file>
+        <file>animations/loading.gif</file>
         <file>images/node_selector/arrow-left-disabled-ico.png</file>
         <file>images/node_selector/arrow-left-disabled-ico@2x.png</file>
         <file>images/node_selector/arrow-left-disabled-ico@3x.png</file>
@@ -786,27 +834,27 @@
         <file>images/node_selector/icon-small-sync-disabled.png</file>
         <file>images/node_selector/icon-small-sync-disabled@2x.png</file>
         <file>images/node_selector/icon-small-sync-disabled@3x.png</file>
-        <file>images/node_selector/small-camera-sync.png</file>
-        <file>images/node_selector/small-camera-sync@2x.png</file>
-        <file>images/node_selector/small-camera-sync@3x.png</file>
-        <file>images/node_selector/small-chat-files.png</file>
-        <file>images/node_selector/small-chat-files@2x.png</file>
-        <file>images/node_selector/small-chat-files@3x.png</file>
-        <file>images/node_selector/small-chat-files-disabled.png</file>
-        <file>images/node_selector/small-chat-files-disabled@2x.png</file>
-        <file>images/node_selector/small-chat-files-disabled@3x.png</file>
-        <file>images/node_selector/small-folder-camera-sync-disabled.png</file>
-        <file>images/node_selector/small-folder-camera-sync-disabled@2x.png</file>
-        <file>images/node_selector/small-folder-camera-sync-disabled@3x.png</file>
-        <file>images/node_selector/small-folder-incoming.png</file>
-        <file>images/node_selector/small-folder-incoming@2x.png</file>
-        <file>images/node_selector/small-folder-incoming@3x.png</file>
-        <file>images/node_selector/small-folder-incoming-disabled.png</file>
-        <file>images/node_selector/small-folder-incoming-disabled@2x.png</file>
-        <file>images/node_selector/small-folder-incoming-disabled@3x.png</file>
-        <file>images/node_selector/small-folder-outgoing.png</file>
-        <file>images/node_selector/small-folder-outgoing@2x.png</file>
-        <file>images/node_selector/small-folder-outgoing@3x.png</file>
+        <file>images/icons/folder/small-camera-sync.png</file>
+        <file>images/icons/folder/small-camera-sync@2x.png</file>
+        <file>images/icons/folder/small-camera-sync@3x.png</file>
+        <file>images/icons/folder/small-chat-files.png</file>
+        <file>images/icons/folder/small-chat-files@2x.png</file>
+        <file>images/icons/folder/small-chat-files@3x.png</file>
+        <file>images/icons/folder/small-chat-files-disabled.png</file>
+        <file>images/icons/folder/small-chat-files-disabled@2x.png</file>
+        <file>images/icons/folder/small-chat-files-disabled@3x.png</file>
+        <file>images/icons/folder/small-folder-camera-sync-disabled.png</file>
+        <file>images/icons/folder/small-folder-camera-sync-disabled@2x.png</file>
+        <file>images/icons/folder/small-folder-camera-sync-disabled@3x.png</file>
+        <file>images/icons/folder/small-folder-incoming.png</file>
+        <file>images/icons/folder/small-folder-incoming@2x.png</file>
+        <file>images/icons/folder/small-folder-incoming@3x.png</file>
+        <file>images/icons/folder/small-folder-incoming-disabled.png</file>
+        <file>images/icons/folder/small-folder-incoming-disabled@2x.png</file>
+        <file>images/icons/folder/small-folder-incoming-disabled@3x.png</file>
+        <file>images/icons/folder/small-folder-outgoing.png</file>
+        <file>images/icons/folder/small-folder-outgoing@2x.png</file>
+        <file>images/icons/folder/small-folder-outgoing@3x.png</file>
         <file>images/Item-sync-rest@3x.png</file>
         <file>images/Item-sync-press.png</file>
         <file>images/Item-sync-press@2x.png</file>
@@ -1122,9 +1170,27 @@
         <file>images/transfer_manager/transfers_actions/lists_pause_all_ico_hover.png</file>
         <file>images/transfer_manager/transfers_actions/lists_pause_all_ico_hover@2x.png</file>
         <file>images/transfer_manager/transfers_actions/lists_pause_all_ico_hover@3x.png</file>
-        <file>images/small_folder@2x.png</file>
-        <file>images/small_folder@3x.png</file>
-        <file>images/small_folder.png</file>
+        <file>images/icons/synced-ico-hover.png</file>
+        <file>images/icons/synced-ico-rest@3x.png</file>
+        <file>images/icons/synced-ico-hover@2x.png</file>
+        <file>images/icons/synced-ico-hover@3x.png</file>
+        <file>images/icons/synced-ico-rest@2x.png</file>
+        <file>images/icons/synced-ico-rest.png</file>
+        <file>images/node_selector/cloud@3x.png</file>
+        <file>images/node_selector/cloud@2x.png</file>
+        <file>images/node_selector/cloud.png</file>
+        <file>images/node_selector/Backups_small_ico.png</file>
+        <file>images/node_selector/Backups_small_ico@2x.png</file>
+        <file>images/node_selector/Backups_small_ico@3x.png</file>
+        <file>images/icons/folder/small-folder.png</file>
+        <file>images/icons/folder/small-folder@2x.png</file>
+        <file>images/icons/folder/small-folder@3x.png</file>
+        <file>images/icons/folder/small-folder-disabled.png</file>
+        <file>images/icons/folder/small-folder-disabled@2x.png</file>
+        <file>images/icons/folder/small-folder-disabled@3x.png</file>
+        <file>images/icons/folder/medium-folder.png</file>
+        <file>images/icons/folder/medium-folder@2x.png</file>
+        <file>images/icons/folder/medium-folder@3x.png</file>
         <file>images/node_selector/icon_small_user.png</file>
         <file>images/node_selector/icon_small_user@2x.png</file>
         <file>images/node_selector/icon_small_user@3x.png</file>
@@ -1134,15 +1200,15 @@
         <file>images/account_details/available_storage@3x.png</file>
         <file>images/account_details/available_storage@2x.png</file>
         <file>images/account_details/available_storage.png</file>
-        <file>images/account_details/Inbox_24_ico@3x.png</file>
-        <file>images/account_details/Inbox_24_ico@2x.png</file>
-        <file>images/account_details/Inbox_24_ico.png</file>
         <file>images/account_details/Cloud_Drive_24_ico@3x.png</file>
         <file>images/account_details/Cloud_Drive_24_ico@2x.png</file>
         <file>images/account_details/Cloud_Drive_24_ico.png</file>
         <file>images/account_details/Bin_24_ico@3x.png</file>
         <file>images/account_details/Bin_24_ico@2x.png</file>
         <file>images/account_details/Bin_24_ico.png</file>
+        <file>images/settings-backups-warn@3x.png</file>
+        <file>images/settings-backups-warn@2x.png</file>
+        <file>images/settings-backups-warn.png</file>
         <file>images/transfer_manager/transfers_actions/lists_minus_all_ico_default.png</file>
         <file>images/transfer_manager/transfers_actions/lists_minus_all_ico_default@2x.png</file>
         <file>images/transfer_manager/transfers_actions/lists_minus_all_ico_default@3x.png</file>
@@ -1158,5 +1224,8 @@
         <file>animations/cancelling.gif</file>
         <file>animations/cancelling@2x.gif</file>
         <file>animations/cancelling@3x.gif</file>
+        <file>images/Small_Pro_Flexi.png</file>
+        <file>images/Small_Pro_Flexi@2x.png</file>
+        <file>images/Small_Pro_Flexi@3x.png</file>
     </qresource>
 </RCC>

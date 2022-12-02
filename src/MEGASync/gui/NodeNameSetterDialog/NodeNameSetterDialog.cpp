@@ -3,26 +3,20 @@
 
 #include <Utilities.h>
 #include <MegaApplication.h>
+#include <CommonMessages.h>
 #include <mega/types.h>
 
 #include <memory>
-
-// Human-friendly list of forbidden chars for New Remote Folder
-static const QString FORBIDDEN(QLatin1String("\\ / : \" * < > \? |"));
-// Forbidden chars PCRE using a capture list: [\\/:"\*<>?|]
-static const QRegularExpression FORBIDDEN_RX(QLatin1String("[\\\\/:\"*<>\?|]"));
-// Time to show the new remote folder input error
-static int NEW_FOLDER_ERROR_DISPLAY_TIME = 10000; //10s in milliseconds
-
 
 NodeNameSetterDialog::NodeNameSetterDialog(QWidget *parent)
     : QDialog(parent),
       mUi(new Ui::NodeNameSetterDialog()),
       mDelegateListener(mega::make_unique<mega::QTMegaRequestListener>(MegaSyncApp->getMegaApi(), this))
 {
+    init();
 }
 
-int NodeNameSetterDialog::show()
+void NodeNameSetterDialog::init()
 {
     // Initialize the mNewFolder input Dialog
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -60,7 +54,6 @@ int NodeNameSetterDialog::show()
     mUi->errorLabel->hide();
     mUi->textLabel->show();
     mUi->lineEdit->setFocus();
-    return exec();
 }
 
 QString NodeNameSetterDialog::getName() const
@@ -75,8 +68,25 @@ void NodeNameSetterDialog::showError(const QString &errorText)
     mUi->textLabel->hide();
     mUi->errorLabel->show();
     Utilities::animateFadein(mUi->errorLabel);
-    mNewFolderErrorTimer.start(NEW_FOLDER_ERROR_DISPLAY_TIME); //(re)start timer
+    mNewFolderErrorTimer.start(Utilities::ERROR_DISPLAY_TIME_MS); //(re)start timer
     mUi->lineEdit->setFocus();
+}
+
+bool NodeNameSetterDialog::checkAlreadyExistingNode(const QString& nodeName, std::shared_ptr<mega::MegaNode> parentNode)
+{
+    auto node = std::unique_ptr<mega::MegaNode>(MegaSyncApp->getMegaApi()->getNodeByPath(nodeName.toUtf8().constData(), parentNode.get()));
+    if(node)
+    {
+        showAlreadyExistingNodeError(node->isFile());
+    }
+
+    return node != nullptr;
+}
+
+void NodeNameSetterDialog::showAlreadyExistingNodeError(bool isFile)
+{
+    isFile ? showError(tr("A file with this name already exists in this location.\nEnter a different name."))
+           : showError(tr("A folder with this name already exists in this location.\nEnter a different name"));
 }
 
 void NodeNameSetterDialog::changeEvent(QEvent *event)
@@ -100,14 +110,14 @@ void NodeNameSetterDialog::dialogAccepted()
     //        }
     //        else
     {
-        if(mUi->lineEdit->text().trimmed().contains(FORBIDDEN_RX))
-        {
-            showError(tr("The following characters are not allowed:\n%1").arg(FORBIDDEN));
-        }
-        else
+        if(Utilities::isNodeNameValid(mUi->lineEdit->text()))
         {
             //dialog accepted, execute New Folder operation
             onDialogAccepted();
+        }
+        else
+        {
+            showError(CommonMessages::errorInvalidChars());
         }
     }
 }

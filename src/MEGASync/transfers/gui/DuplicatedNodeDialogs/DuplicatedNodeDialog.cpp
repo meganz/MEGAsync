@@ -234,11 +234,11 @@ const QList<std::shared_ptr<DuplicatedNodeInfo> > &DuplicatedNodeDialog::getReso
     return mResolvedUploads;
 }
 
-void DuplicatedNodeDialog::open()
+void DuplicatedNodeDialog::show()
 {
     //Show folders conflicts
     startWithNewCategoryOfConflicts();
-    QDialog::open();
+    QDialog::show();
 }
 
 void DuplicatedNodeDialog::setDialogTitle(const QString &title)

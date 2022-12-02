@@ -2,6 +2,7 @@
 #include "ui_ChangePassword.h"
 #include "MegaApplication.h"
 #include "QMegaMessageBox.h"
+#include "DialogOpener.h"
 #include "gui/Login2FA.h"
 
 using namespace mega;
@@ -92,7 +93,7 @@ void ChangePassword::show2FA(bool invalidCode)
     {
         QPointer<Login2FA> verification = new Login2FA(this);
         verification->invalidCode(invalidCode);
-        Utilities::showDialog<Login2FA>(verification, [verification, this]()
+        DialogOpener::showDialog<Login2FA>(verification, [verification, this]()
         {
             if (verification->result() == QDialog::Accepted)
             {
