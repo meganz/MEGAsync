@@ -124,7 +124,8 @@ int DesktopNotifications::countUnseenAlerts(mega::MegaUserAlertList *alertList)
     auto count = 0;
     for(int iAlert = 0; iAlert < alertList->size(); iAlert++)
     {
-        if(!alertList->get(iAlert)->getSeen())
+        auto alert = alertList->get(iAlert);
+        if(!alert->getSeen() && !alert->isRemoved())
         {
             count++;
         }
@@ -152,7 +153,7 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
         const auto alert = alertList->get(iAlert);
 
         // alerts are sent again after seen state updated, so lets only notify the unseen alerts
-        if(!alert->getSeen())
+        if(!alert->getSeen() && !alert->isRemoved())
         {
             auto userEmail = QString::fromUtf8(alert->getEmail());
 
