@@ -3603,6 +3603,11 @@ bool MegaApplication::isQueueProcessingOngoing()
 
 void MegaApplication::onFolderTransferUpdate(FolderTransferUpdateEvent event)
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     transferProgressController.update(event);
     if (event.stage >= MegaTransfer::STAGE_TRANSFERRING_FILES)
     {
