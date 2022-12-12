@@ -399,22 +399,18 @@ void MegaTransferView::onCancelVisibleTransfers()
 void MegaTransferView::onCancelSelectedTransfers()
 {
     auto info = getSelectedCancelOrClearInfo();
+    QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
-    if(!info.areAllSync)
+    if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
+                                 info.actionText,
+                                 QMessageBox::Yes | QMessageBox::No, QMessageBox::No, info.buttonsText)
+            == QMessageBox::Yes
+            && dialog)
     {
-        QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
+        QModelIndexList indexes = getSelectedTransfers();
 
-        if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                                     info.actionText,
-                                     QMessageBox::Yes | QMessageBox::No, QMessageBox::No, info.buttonsText)
-                == QMessageBox::Yes
-                && dialog)
-        {
-            QModelIndexList indexes = getSelectedTransfers();
-
-            auto sourceModel = MegaSyncApp->getTransfersModel();
-            sourceModel->cancelAndClearTransfers(indexes, this);
-        }
+        auto sourceModel = MegaSyncApp->getTransfersModel();
+        sourceModel->cancelAndClearTransfers(indexes, this);
     }
 }
 
