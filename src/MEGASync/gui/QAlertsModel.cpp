@@ -22,7 +22,7 @@ QAlertsModel::QAlertsModel(MegaUserAlertList *alerts, bool copy, QObject *parent
 
 void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
 {
-    int numAlerts = alerts->size();
+    int numAlerts = alerts ? alerts->size() : 0;
     int actualnumberofalertstoinsert = 0;
     if (numAlerts)
     {
@@ -40,7 +40,8 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
         }
 
         int deleted = 0;
-        while (copy && actualnumberofalertstoinsert - deleted + (int)alertsMap.size() >= (int)Preferences::MAX_COMPLETED_ITEMS)
+        while (copy && !alertOrder.empty()
+               && actualnumberofalertstoinsert - deleted + (int)alertsMap.size() >= (int)Preferences::MAX_COMPLETED_ITEMS)
         {
             MegaUserAlert *alertToDelete = alertsMap[alertOrder.back()];
             assert(alertToDelete && "something went wrong: no alert to delete");
