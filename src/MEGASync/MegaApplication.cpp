@@ -8285,14 +8285,16 @@ void MegaApplication::onGlobalSyncStateChangedImpl(MegaApi *, bool timeout)
     {
         mThreadPool->push([this]() {
 
-        indexing = megaApi->isScanning();
-        waiting = megaApi->isWaiting();
-        syncing = megaApi->isSyncing();
         auto model = getTransfersModel();
-        if (!model)
+        if (!megaApi || !model)
         {
             return;
         }
+
+        indexing = megaApi->isScanning();
+        waiting = megaApi->isWaiting();
+        syncing = megaApi->isSyncing();
+
         auto transferCount = model->getTransfersCount();
         transferring = transferCount.pendingUploads || transferCount.pendingDownloads;
 
