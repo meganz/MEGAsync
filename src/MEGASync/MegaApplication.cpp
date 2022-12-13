@@ -3601,6 +3601,33 @@ bool MegaApplication::isQueueProcessingOngoing()
     return mProcessingUploadQueue || downloader->isQueueProcessingOngoing();
 }
 
+void MegaApplication::processUpgradeSecurityEvent()
+{
+    // TODO: Get shared folders list
+    QString folderList;
+
+    // TODO: put validated strings
+    QString title = tr("Security upgrade");
+    QString message = tr("We are upgrading the cryptographic resilience of your account. "
+                         "You will see this message only once. If you see it again in the future, "
+                         "you may be under attack by us. If you have seen it in the past, "
+                         "do not proceed. You are currently sharing the following folders: %1")
+                      .arg(folderList);
+
+    QMegaMessageBox::information(nullptr, title, message);
+
+    megaApi->upgradeSecurity(new OnFinishOneShot(megaApi, [=](const MegaError& e){
+        if (e.getErrorCode() != MegaError::API_OK)
+        {
+            // TODO: put validated strings
+            QString title = tr("Error");
+            QString message = tr("Failed to ugrade security. Error: %1")
+                              .arg(tr(e.getErrorString()));
+            showErrorMessage(message, title);
+        }
+    }));
+}
+
 void MegaApplication::onFolderTransferUpdate(FolderTransferUpdateEvent event)
 {
     if (appfinished)
@@ -6956,6 +6983,10 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
     else if (event->getType() == MegaEvent::EVENT_BUSINESS_STATUS)
     {
         manageBusinessStatus(event->getNumber());
+    }
+    else if (event->getType() == MegaEvent::EVENT_UPGRADE_SECURITY)
+    {
+        processUpgradeSecurityEvent();
     }
 }
 

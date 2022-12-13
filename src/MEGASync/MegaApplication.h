@@ -664,6 +664,8 @@ private:
         (*action)->setEnabled(previousEnabledState);
     }
 
+    void processUpgradeSecurityEvent();
+
 private slots:
     void onFolderTransferUpdate(FolderTransferUpdateEvent event);
     void onNotificationProcessed();
