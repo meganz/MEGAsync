@@ -1280,7 +1280,7 @@ void TransfersModel::cancelAllTransfers(QWidget* canceledFrom)
         auto d (getTransfer(row));
 
         // Clear (remove rows of) finished transfers
-        if (d && d->isSyncTransfer())
+        if (d && d->isSyncTransfer() && !d->isFinished())
         {
             if(!mSyncsInRowsToCancel)
             {
