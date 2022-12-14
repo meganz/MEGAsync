@@ -14,6 +14,9 @@
 
 class NodeSelectorProxyModel;
 class NodeSelectorModel;
+class NodeSelectorTreeViewWidgetCloudDrive;
+class NodeSelectorTreeViewWidgetIncomingShares;
+class NodeSelectorTreeViewWidgetBackups;
 
 namespace Ui {
 class NodeSelector;
@@ -31,7 +34,7 @@ public:
     };
 
     static const int LABEL_ELIDE_MARGIN;
-    explicit NodeSelector(NodeSelectorTreeViewWidget::Type selectMode, QWidget *parent = 0);
+    explicit NodeSelector(QWidget *parent = 0);
 
     ~NodeSelector();
     void showDefaultUploadOption(bool show = true);
@@ -46,6 +49,12 @@ public:
 protected:
     void changeEvent(QEvent * event) override;
     void showEvent(QShowEvent* event) override;
+    void addBackupsView();
+    void hideSelector(TabItem item);
+    bool nodeExistWarningMsg(int &access);
+
+    mega::MegaApi* mMegaApi;
+    Ui::NodeSelector *ui;
 
 private slots:
     void onbOkClicked();
@@ -61,19 +70,57 @@ private slots:
     void onViewReady(bool isEmpty);
 
 private:
+    NodeSelectorTreeViewWidgetCloudDrive* mCloudDriveWidget;
+    NodeSelectorTreeViewWidgetIncomingShares* mIncomingSharesWidget;
+    NodeSelectorTreeViewWidgetBackups* mBackupsWidget;
     void processCloseEvent(NodeSelectorProxyModel *proxy, QCloseEvent* event);
     QModelIndex getParentIncomingShareByIndex(QModelIndex idx);
-    void hideSelector(TabItem item);
+    virtual bool isSelectionCorrect() = 0;
+
 #ifdef Q_OS_MAC
     void hideTabSelector(const QString& tabText);
 #endif
     void shortCutConnects(int ignoreThis);
 
-    Ui::NodeSelector *ui;
     NodeSelectorTreeViewWidget::Type mSelectMode;
 
-    mega::MegaApi* mMegaApi;
     bool mManuallyResizedColumn;
+};
+
+class UploadNodeSelector : public NodeSelector
+{
+public:
+    explicit UploadNodeSelector(QWidget *parent = 0);
+
+private:
+    bool isSelectionCorrect() override;
+};
+
+class DownloadNodeSelector : public NodeSelector
+{
+public:
+    explicit DownloadNodeSelector(QWidget *parent = 0);
+
+private:
+    bool isSelectionCorrect() override;
+};
+
+class SyncNodeSelector : public NodeSelector
+{
+public:
+    explicit SyncNodeSelector(QWidget *parent = 0);
+
+private:
+    bool isSelectionCorrect() override;
+};
+
+class StreamNodeSelector : public NodeSelector
+{
+public:
+    explicit StreamNodeSelector(QWidget *parent = 0);
+
+private:
+    bool isSelectionCorrect() override;
 };
 
 #endif // NODESELECTOR_H

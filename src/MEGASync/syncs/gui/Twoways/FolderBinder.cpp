@@ -108,7 +108,7 @@ void FolderBinder::on_bLocalFolder_clicked()
 
 void FolderBinder::on_bMegaFolder_clicked()
 {
-    QPointer<NodeSelector> nodeSelector = new NodeSelector(NodeSelectorTreeViewWidget::SYNC_SELECT, this);
+    QPointer<NodeSelector> nodeSelector = new SyncNodeSelector(this);
     std::shared_ptr<MegaNode> defaultNode(megaApi->getNodeByPath(ui->eMegaFolder->text().toUtf8().constData()));
     nodeSelector->setSelectedNodeHandle(defaultNode);
 

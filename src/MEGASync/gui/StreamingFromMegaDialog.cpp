@@ -98,7 +98,7 @@ void StreamingFromMegaDialog::closeEvent(QCloseEvent *event)
 
 void StreamingFromMegaDialog::on_bFromCloud_clicked()
 {
-    const unique_ptr<NodeSelector> nodeSelector{::mega::make_unique<NodeSelector>(NodeSelectorTreeViewWidget::STREAM_SELECT, this->parentWidget())};
+    const unique_ptr<NodeSelector> nodeSelector{::mega::make_unique<StreamNodeSelector>(this)};
     nodeSelector->setWindowTitle(tr("Select items"));
     nodeSelector->setSelectedNodeHandle(mSelectedMegaNode);
 

@@ -169,7 +169,7 @@ void ImportMegaLinksDialog::on_bLocalFolder_clicked()
 
 void ImportMegaLinksDialog::on_bMegaFolder_clicked()
 {
-    QPointer<NodeSelector> nodeSelector = new NodeSelector(NodeSelectorTreeViewWidget::UPLOAD_SELECT, this);
+    QPointer<NodeSelector> nodeSelector = new UploadNodeSelector(this);
     int result = nodeSelector->exec();
     if (!nodeSelector || result != QDialog::Accepted)
     {
