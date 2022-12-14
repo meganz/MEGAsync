@@ -107,12 +107,12 @@
     <message>
         <source>Choose File</source>
         <translatorcomment>Label of button that pop up a selection dialog to choose a file to be excluded for the synchonization</translatorcomment>
-        <translation>Kies Bestand</translation>
+        <translation>Kies bestand</translation>
     </message>
     <message>
         <source>Choose Folder</source>
         <translatorcomment>Label of button that pop up a selection dialog to choose a folder to be excluded for the synchonization</translatorcomment>
-        <translation>Kies Map</translation>
+        <translation>Kies map</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -278,7 +278,7 @@
     <message>
         <source>[A] has been deleted/deactivated</source>
         <translatorcomment>Label to indicate that [A] has been deleted from your contacts. Placeholder will be replaced by email of user deleted</translatorcomment>
-        <translation>[A] is verwijderd/gedeactiveerd</translation>
+        <translation>[A] is verwijderd of gedeactiveerd</translation>
     </message>
     <message>
         <source>[A] established you as a contact</source>
@@ -353,7 +353,7 @@
     <message>
         <source>Shared Folder Activity</source>
         <translatorcomment>Generic label to indicate that there is activity in a shared folder but the name of the shared folder is not available.</translatorcomment>
-        <translation>Gedeelde Map Activiteit</translation>
+        <translation>Gedeelde map activiteit</translation>
     </message>
     <message>
         <source>Access to shared folder was removed</source>
@@ -406,7 +406,7 @@
     <message>
         <source>Local Folder</source>
         <translatorcomment>Local folder column header name for backlups table in settings dialog</translatorcomment>
-        <translation>Lokale Map</translation>
+        <translation>Lokale map</translation>
     </message>
     <message>
         <source>Sort by name</source>
@@ -1985,12 +1985,12 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     <message>
         <source>Open Preferences</source>
         <translatorcomment>Button label to open MEGAsync preferences dialog (MacOS).</translatorcomment>
-        <translation>Voorkeuren Openen</translation>
+        <translation>Voorkeuren openen</translation>
     </message>
     <message>
         <source>Open Settings</source>
         <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
-        <translation>Instellingen Openen</translation>
+        <translation>Instellingen openen</translation>
     </message>
     <message>
         <source>Your data is at risk</source>
@@ -2094,7 +2094,7 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     </message>
     <message>
         <source>Create Account</source>
-        <translation>Account Creëren</translation>
+        <translation>Account creëren</translation>
     </message>
     <message>
         <source>MEGA Desktop app</source>
@@ -2124,7 +2124,7 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     <message>
         <source>Know more about MEGA desktop app. [A]Read more[/A]</source>
         <translatorcomment>Label with hyperlink to sync client webpage to know more about MEGA desktop app. Keep placeholders.</translatorcomment>
-        <translation>Meer informatie over onze Applicatie. [A]Lees meer[/A]</translation>
+        <translation>Meer informatie over onze applicatie. [A]Lees meer[/A]</translation>
     </message>
 </context>
 <context>
@@ -2132,7 +2132,7 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     <message>
         <source>Choose Users</source>
         <translatorcomment>Label to indicate for which users you want to install MEGAsync.</translatorcomment>
-        <translation>Kies Gebruikers</translation>
+        <translation>Kies gebruikers</translation>
     </message>
     <message>
         <source>Choose for which users you want to install $(^NameDA).</source>
@@ -2170,7 +2170,7 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     <message>
         <source>Locked Accounts</source>
         <translatorcomment>Title of informative popover which informs users about the lock situation.</translatorcomment>
-        <translation>Gesloten Accounts</translation>
+        <translation>Gesloten accounts</translation>
     </message>
 </context>
 <context>
@@ -2532,7 +2532,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Folder Upload</source>
         <translatorcomment>Title of system notifications related to a folder upload</translatorcomment>
-        <translation>Map Upload</translation>
+        <translation>Map upload</translation>
     </message>
     <message>
         <source>File Upload</source>
@@ -2562,7 +2562,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Pay Now</source>
         <translatorcomment>Button text to redirect the user to fix issues with pending payments for the current business account.</translatorcomment>
-        <translation>Nu Betalen</translation>
+        <translation>Nu betalen</translation>
     </message>
     <message>
         <source>Your Business account is expired</source>
@@ -2795,7 +2795,7 @@ Overdrachten worden automatisch hervat wanneer u de applicatie heropend.</numeru
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Uw back-up &quot;%1&quot; was uitgeschakeld omdat de MEGA map in de prullenbak is.</translation>
+        <translation>Uw back-up &quot;%1&quot; was uitgeschakeld omdat de MEGA map in de Prullenbak is.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
@@ -2968,7 +2968,7 @@ Overdrachten worden automatisch hervat wanneer u de applicatie heropend.</numeru
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
         <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
-        <translation>Opslag Tegoed Overschreden. Nu upgraden</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Decryption error</source>
@@ -3015,77 +3015,6 @@ Overdrachten worden automatisch hervat wanneer u de applicatie heropend.</numeru
     </message>
 </context>
 <context>
-    <name>MegaItemModel</name>
-    <message>
-        <source>Folder already synced</source>
-        <translatorcomment>Tooltip text to notify the user that this folder is already synced.</translatorcomment>
-        <translation>Map al gesynchroniseerd</translation>
-    </message>
-    <message>
-        <source>Folder contents already synced</source>
-        <translatorcomment>Tooltip text to notify the user that some folder inside the folder that he is hovering with mouse is already synced.</translatorcomment>
-        <translation>Mapinhoud al gesynchroniseerd</translation>
-    </message>
-    <message>
-        <source>Name</source>
-        <translatorcomment>Column title. This column shows the name of a file or folder.</translatorcomment>
-        <translation>Naam</translation>
-    </message>
-    <message>
-        <source>Sort by status</source>
-        <translatorcomment>First column title tooltip(this column title doesn´t contains text, it shows an icon). Sorts the order of the column by node status, for example synced folders first or last.</translatorcomment>
-        <translation>Sorteren op status</translation>
-    </message>
-    <message>
-        <source>Sort by owner name</source>
-        <translatorcomment>Owner column title tooltip. Sorts the order of the column by owner name alphabetically.</translatorcomment>
-        <translation>Sorteren op naam van eigenaar</translation>
-    </message>
-    <message>
-        <source>Sort by date</source>
-        <translatorcomment>Recently used column title tooltip. Sorts the order of the column by date.</translatorcomment>
-        <translation>Sorteren op datum</translation>
-    </message>
-    <message>
-        <source>Sort by name</source>
-        <translatorcomment>Node name column title tooltip. Sorts the order of the column by date.</translatorcomment>
-        <translation>Sorteren op naam</translation>
-    </message>
-    <message numerus="yes">
-        <source>Today at %1</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened today. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation><numerusform>Vandaag om %1</numerusform><numerusform>Vandaag om %1</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Yesterday at %1</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened yesterday. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation><numerusform>Gisteren om %1</numerusform><numerusform>Gisteren om %1</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%1 at %2</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was previously to yesterday. %1 represents the date (day month and year), while %2 represents the hour). Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation><numerusform>%1 om %2</numerusform><numerusform>%1 om %2</numerusform></translation>
-    </message>
-    <message>
-        <source>Recently used</source>
-        <translatorcomment>Column title. This column shows when this file or folder was changed.</translatorcomment>
-        <translation>Laatst aangepast</translation>
-    </message>
-</context>
-<context>
-    <name>MegaItemTreeView</name>
-    <message>
-        <source>Get MEGA link</source>
-        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It creates an MEGA link and copy to Clipboard.</translatorcomment>
-        <translation>MEGA link ophalen</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It removes the node (file or folder).</translatorcomment>
-        <translation>Verwijderen</translation>
-    </message>
-</context>
-<context>
     <name>MegaNodeNames</name>
     <message>
         <source>Cloud Drive</source>
@@ -3096,6 +3025,11 @@ Overdrachten worden automatisch hervat wanneer u de applicatie heropend.</numeru
         <source>Backups</source>
         <translatorcomment>Title of the Backups root node</translatorcomment>
         <translation>Back-ups</translation>
+    </message>
+    <message>
+        <source>Incoming shares</source>
+        <translatorcomment>Title of the Incoming shares root node</translatorcomment>
+        <translation>Binnenkomende Delingen</translation>
     </message>
 </context>
 <context>
@@ -3482,6 +3416,19 @@ Alle andere geselecteerde overdrachten worden geannuleerd.</translation>
         <translation>De volgende tekens zijn niet toegestaan:
 %1</translation>
     </message>
+    <message>
+        <source>A file with this name already exists in this location.
+Enter a different name.</source>
+        <translatorcomment>Message shown when the user has entered a name which already exists on the folder</translatorcomment>
+        <translation>Er bestaat al een bestand met deze naam op deze locatie.
+Voer een andere naam in.</translation>
+    </message>
+    <message>
+        <source>A folder with this name already exists in this location.
+Enter a different name</source>
+        <translatorcomment>Message shown when the user has entered a name which already exists on the folder</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NodeSelector</name>
@@ -3494,21 +3441,6 @@ Alle andere geselecteerde overdrachten worden geannuleerd.</translation>
         <source>Select a MEGA folder:</source>
         <translatorcomment>Label to indicate the user to select a MEGA folder for a synchronization (String short as possible). Keep capital letters.</translatorcomment>
         <translation>Selecteer een MEGA map:</translation>
-    </message>
-    <message>
-        <source>New folder</source>
-        <translatorcomment>Button label to create a New folder at your MEGA cloud drive. Keep capital letters. String as short as possible.</translatorcomment>
-        <translation>Nieuwe map</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>OK</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Annuleren</translation>
     </message>
     <message>
         <source>Error</source>
@@ -3527,11 +3459,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Ongeldige map voor synchronisatie. Zorg ervoor dat u geen tekens zoals “\”, “/” of “:” gebruikt in uw map namen.</translation>
     </message>
     <message>
-        <source>Always upload to this destination</source>
-        <translatorcomment>Label to inform the user upload files/folder to a default destination. with a checkbox.</translatorcomment>
-        <translation>Altijd uploaden naar deze locatie</translation>
-    </message>
-    <message>
         <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying upload files to a non compatible folder</translatorcomment>
         <translation>U heeft Lezen en Schrijven of Volledige toegangsrechten nodig om de geselecteerde map te kunnen uploaden.</translation>
@@ -3542,17 +3469,9 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>U heeft Volledig toegangsrechten nodig om de geselecteerde map te synchroniseren.</translation>
     </message>
     <message>
-        <source>Are you sure that you want to delete &quot;%1&quot;?</source>
-        <translation>Weet u zeker dat u “%1” wilt verwijderen?</translation>
-    </message>
-    <message>
         <source>Only files can be used for streaming.</source>
         <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
         <translation>Alleen bestanden kunnen worden gebruikt voor streaming.</translation>
-    </message>
-    <message>
-        <source>Select items</source>
-        <translation>Selecteer items</translation>
     </message>
     <message>
         <source>Select a MEGA folder</source>
@@ -3563,16 +3482,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>You no longer have access to this item. Ask the owner to share again.</source>
         <translatorcomment>Error message shown when the user is trying to download an file or folder from an incoming share and the owner stops sharing/removes all items</translatorcomment>
         <translation><numerusform>U heeft niet langer toegang tot dit item. Vraag de eigenaar om het opnieuw te delen</numerusform><numerusform>U heeft niet langer toegang tot deze items. Vraag de eigenaar om het opnieuw te delen</numerusform></translation>
-    </message>
-    <message>
-        <source>Cloud drive</source>
-        <translatorcomment>Node selector button Text. Switch the view to show only the cloud drive nodes (files and folders)</translatorcomment>
-        <translation>Cloud schijf</translation>
-    </message>
-    <message>
-        <source>Incoming shares</source>
-        <translatorcomment>Node selector button Text. Switch the view to show only the incoming shares nodes (files and folders)</translatorcomment>
-        <translation>Binnenkomende delingen</translation>
     </message>
     <message numerus="yes">
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
@@ -3591,10 +3500,114 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
                            Second and last part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
         <translation><numerusform>%1.%2 was verwijderd. Om te herselecteren, sluit dit venster en probeer nogmaals.</numerusform><numerusform>%1.%2 waren verwijderd. Om te herselecteren, sluit dit venster en probeer nogmaals.</numerusform></translation>
     </message>
+</context>
+<context>
+    <name>NodeSelectorModel</name>
     <message>
-        <source>Backups</source>
-        <translatorcomment>Title of the Backups section</translatorcomment>
-        <translation>Back-ups</translation>
+        <source>Folder already synced</source>
+        <translatorcomment>Tooltip text to notify the user that this folder is already synced.</translatorcomment>
+        <translation>Map al gesynchroniseerd</translation>
+    </message>
+    <message>
+        <source>Folder contents already synced</source>
+        <translatorcomment>Tooltip text to notify the user that some folder inside the folder that he is hovering with mouse is already synced.</translatorcomment>
+        <translation>Mapinhoud is al gesynchroniseerd</translation>
+    </message>
+    <message>
+        <source>Recently used</source>
+        <translatorcomment>Column title. This column shows when this file or folder was changed.</translatorcomment>
+        <translation>Laatst aangepast</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translatorcomment>Column title. This column shows the name of a file or folder.</translatorcomment>
+        <translation>Naam</translation>
+    </message>
+    <message>
+        <source>Sort by status</source>
+        <translatorcomment>First column title tooltip(this column title doesn´t contains text, it shows an icon). Sorts the order of the column by node status, for example synced folders first or last.</translatorcomment>
+        <translation>Sorteren op status</translation>
+    </message>
+    <message>
+        <source>Sort by owner name</source>
+        <translatorcomment>Owner column title tooltip. Sorts the order of the column by owner name alphabetically.</translatorcomment>
+        <translation>Sorteren op naam van eigenaar</translation>
+    </message>
+    <message>
+        <source>Sort by date</source>
+        <translatorcomment>Recently used column title tooltip. Sorts the order of the column by date.</translatorcomment>
+        <translation>Sorteren op datum</translation>
+    </message>
+    <message>
+        <source>Sort by name</source>
+        <translatorcomment>Node name column title tooltip. Sorts the order of the column by date.</translatorcomment>
+        <translation>Sorteren op naam</translation>
+    </message>
+    <message numerus="yes">
+        <source>Today at %1</source>
+        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened today. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
+        <translation><numerusform>Vandaag om %1</numerusform><numerusform>Vandaag om %1</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Yesterday at %1</source>
+        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened yesterday. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
+        <translation><numerusform>Gisteren om %1</numerusform><numerusform>Gisteren om %1</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 at %2</source>
+        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was previously to yesterday. %1 represents the date (day month and year), while %2 represents the hour). Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
+        <translation><numerusform>%1 om %2</numerusform><numerusform>%1 om %2</numerusform></translation>
+    </message>
+</context>
+<context>
+    <name>NodeSelectorTreeView</name>
+    <message>
+        <source>Get MEGA link</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It creates an MEGA link and copy to Clipboard.</translatorcomment>
+        <translation>MEGA link ophalen</translation>
+    </message>
+    <message>
+        <source>Rename</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It renames the node (file or folder).</translatorcomment>
+        <translation>Hernoemen</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It removes the node (file or folder).</translatorcomment>
+        <translation>Verwijderen</translation>
+    </message>
+</context>
+<context>
+    <name>NodeSelectorTreeViewWidget</name>
+    <message>
+        <source>Always upload to this destination</source>
+        <translatorcomment>Label to inform the user upload files/folder to a default destination. with a checkbox.</translatorcomment>
+        <translation>Always uploaden naar deze locatie</translation>
+    </message>
+    <message>
+        <source>New folder</source>
+        <translatorcomment>Button label to create a New folder at your MEGA cloud drive. Keep capital letters. String as short as possible.</translatorcomment>
+        <translation>Nieuwe map</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translatorcomment>Label for accept button.</translatorcomment>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Label for cancel button.</translatorcomment>
+        <translation>Annuleren</translation>
+    </message>
+    <message>
+        <source>Are you sure that you want to delete &quot;%1&quot;?</source>
+        <translatorcomment>MessageBox to confirm that the user wants to remove the node. %1 is the node name</translatorcomment>
+        <translation>Weet u zeker dat u “%1” wilt verwijderen?</translation>
+    </message>
+    <message>
+        <source>Error:</source>
+        <translatorcomment>MessageBox to inform about an error when trying to move or remove a node</translatorcomment>
+        <translation>Fout:</translation>
     </message>
 </context>
 <context>
@@ -3696,7 +3709,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Storage full</source>
         <translatorcomment>Label to indicate the full storage for the current account is full.</translatorcomment>
-        <translation>Opslagruimte Vol</translation>
+        <translation>Opslagruimte vol</translation>
     </message>
     <message>
         <source>You have exceeded the available storage space for your account. You can add syncs but they will remain disabled until there is enough space on your account.</source>
@@ -3731,7 +3744,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Upgrade Account</source>
         <translatorcomment>Button label to redirect the user to upgrade account (getting more space and transfer quota)</translatorcomment>
-        <translation>Upgrade Account</translation>
+        <translation>Account upgraden</translation>
     </message>
     <message>
         <source>Importing links is temporarily disabled.</source>
@@ -3766,7 +3779,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Depleted transfer quota</source>
         <translatorcomment>Label to indicate that transfer quota has been depleted.</translatorcomment>
-        <translation>Uitgeput overdrachtstegoed</translation>
+        <translation>Uitgeputte overdrachtstegoed</translation>
     </message>
 </context>
 <context>
@@ -3966,12 +3979,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Additional storage charged at %1 per %2TB.</source>
         <translatorcomment>Balloon tooltip to inform users that additional storate for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
-        <translation>Extra opslagruimte in rekening gebracht op %1 per %2TB.</translation>
+        <translation>Extra opslagtegoed in rekening gebracht op %1per %2&#xa0;TB.</translation>
     </message>
     <message>
         <source>Additional transfer quota charged at %1 per %2TB.</source>
         <translatorcomment>Balloon tooltip to inform users that additional transfer quota for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
-        <translation>Extra overdrachtstegoed in rekening gebracht op %1 per %2TB.</translation>
+        <translation>Extra overdrachtstegoed in rekening gebracht op %1 per %2&#xa0;TB.</translation>
     </message>
     <message numerus="yes">
         <source>minimum %n user</source>
@@ -4022,7 +4035,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Open settings</source>
         <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
-        <translation>Instellingen Openen</translation>
+        <translation>Instellingen openen</translation>
     </message>
     <message>
         <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
@@ -4084,13 +4097,12 @@ Om de synchronisatie te verwijderen, gaat u naar Voorkeuren in de desktop-applic
 - Improved performance.
 </source>
         <translatorcomment>Changelog for v4.8.0 version</translatorcomment>
-        <translation>- Ondersteuning voor Flexi Pro-accounts.
-- Nieuwe back-up functie.
-- Opgeloste problemen gedetecteerd met macOS Ventura.
-- Gedetecteerde crashes op Windows, Linux en macOS opgelost.
+        <translation>- Ondersteuning toegevoegd voor Pro&#xa0;Flexi-accounts. 
+- Nieuwe back-upfunctie toegevoegd.
+- Problemen opgelost die zijn gedetecteerd met macOS Ventura.
+- Vaste gedetecteerde crashes op Windows, Linux en macOS.
 - Vertaalproblemen opgelost.
-- Verbeterde prestatie.
-</translation>
+- Verbeterde prestatie.</translation>
     </message>
 </context>
 <context>
@@ -4504,27 +4516,27 @@ Wilt u deze toch verwijderen?</translation>
     <message>
         <source>%1 TB</source>
         <translatorcomment>File size measured in terabytes</translatorcomment>
-        <translation>%1 TB</translation>
+        <translation>%1&#xa0;TB</translation>
     </message>
     <message>
         <source>%1 GB</source>
         <translatorcomment>File size measured in gigabytes</translatorcomment>
-        <translation>%1 GB</translation>
+        <translation>%1&#xa0;GB</translation>
     </message>
     <message>
         <source>%1 MB</source>
         <translatorcomment>File size measured in megabytes</translatorcomment>
-        <translation>%1 MB</translation>
+        <translation>%1&#xa0;MB</translation>
     </message>
     <message>
         <source>%1 KB</source>
         <translatorcomment>File size measured in kilobytes</translatorcomment>
-        <translation>%1 KB</translation>
+        <translation>%1&#xa0;KB</translation>
     </message>
     <message>
         <source>%1 bytes</source>
         <translatorcomment>File size measured in bytes</translatorcomment>
-        <translation>%1 bytes</translation>
+        <translation>%1&#xa0;bytes</translation>
     </message>
     <message>
         <source>Invalid filename</source>
@@ -4616,7 +4628,7 @@ Wilt u deze toch verwijderen?</translation>
     <message>
         <source>Move this folder from backups to another location in your cloud drive to get full access to your data. This folder will stop being backed up.</source>
         <translatorcomment>Radio button description</translatorcomment>
-        <translation>Verplaats deze map van back-ups naar een andere locatie in uw cloud schijf om volledige toegang tot uw gegevens te krijgen. Er wordt dan geen back-up meer gemaakt van deze map.</translation>
+        <translation>Verplaats deze map van back-ups naar een andere locatie in uw Cloud schijf om volledige toegang tot uw gegevens te krijgen. Er wordt dan geen back-up meer gemaakt van deze map.</translation>
     </message>
     <message>
         <source>Move to:</source>
@@ -4647,19 +4659,6 @@ Wilt u deze toch verwijderen?</translation>
         <source>Cancel</source>
         <translatorcomment>Button text that cancels</translatorcomment>
         <translation>Annuleren</translation>
-    </message>
-</context>
-<context>
-    <name>RenameLocalNodeDialog</name>
-    <message>
-        <source>File can’t be renamed to &quot;%1&quot;</source>
-        <translatorcomment>Error warning shown when a file can´t be renamed due to an error.</translatorcomment>
-        <translation>Bestand kan niet hernoemd worden naar &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <source>Folder can’t be renamed to &quot;%1&quot;</source>
-        <translatorcomment>Error warning shown when a folder can´t be renamed due to an error.</translatorcomment>
-        <translation>Map kan niet hernoemd worden naar &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
@@ -4700,7 +4699,7 @@ Wilt u deze toch verwijderen?</translation>
     <message>
         <source>Scanning</source>
         <translatorcomment>Label used to display when the scanning widget is on the &quot;Scanning&quot; step</translatorcomment>
-        <translation>Scannen</translation>
+        <translation>Scannen...</translation>
     </message>
     <message>
         <source>Creating folders</source>
@@ -4855,7 +4854,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Master key</source>
         <translatorcomment>Title of dialog to export master key for the current user.</translatorcomment>
-        <translation>Herstelsleutel Exporteren</translation>
+        <translation>Herstelsleutel exporteren</translation>
     </message>
     <message>
         <source>Unable to write file</source>
@@ -5000,7 +4999,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Check for Updates</source>
         <translatorcomment>Label for button to check for application updates. Keep as short as possible.</translatorcomment>
-        <translation>Updates Controleren</translation>
+        <translation>Updates controleren</translation>
     </message>
     <message>
         <source>%1 (local cache)</source>
@@ -5035,7 +5034,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Report Issue</source>
         <translatorcomment>Button label used to submit bug reports to MEGA.</translatorcomment>
-        <translation>Probleem Melden</translation>
+        <translation>Rapporteer probleem</translation>
     </message>
     <message>
         <source>My Account</source>
@@ -5245,7 +5244,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Pro Lite</source>
         <translatorcomment>Text label indicating the Pro Lite tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro Lite</translation>
+        <translation>Pro&#xa0;Lite</translation>
     </message>
     <message>
         <source>Business</source>
@@ -5300,17 +5299,17 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Pro I</source>
         <translatorcomment>Text label indicating the Pro I tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro I</translation>
+        <translation>Pro&#xa0;I</translation>
     </message>
     <message>
         <source>Pro II</source>
         <translatorcomment>Text label indicating the Pro II tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro II</translation>
+        <translation>Pro&#xa0;II</translation>
     </message>
     <message>
         <source>Pro III</source>
         <translatorcomment>Text label indicating the Pro III tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro III</translation>
+        <translation>Pro&#xa0;III</translation>
     </message>
     <message>
         <source>Export Key</source>
@@ -5445,7 +5444,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Error removing backup</source>
         <translatorcomment>Error message dialog title</translatorcomment>
-        <translation>Fout bij verwijderen van de back-up</translation>
+        <translation>Fout bij stoppen van de back-up</translation>
     </message>
     <message>
         <source>Your backup can&apos;t be removed. Reason: %1</source>
@@ -5480,7 +5479,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Pro Flexi</source>
         <translatorcomment>Text label indicating the Pro Flexi tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro Flexi</translation>
+        <translation>Pro&#xa0;Flexi</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
@@ -5538,7 +5537,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source> Sync your entire cloud drive</source>
         <translatorcomment>Label displayed to inform the user about the Full sync (Sync the entire cloud drive)</translatorcomment>
-        <translation>Synchroniseer uw volledige cloud schijf</translation>
+        <translation>Synchroniseer uw volledige Cloud schijf</translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -5751,7 +5750,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
-        <translation>U heeft te vaak geprobeerd om in te loggen.[BR] Wacht alstublieft tot%1 en probeer het opnieuw.</translation>
+        <translation>U heeft te vaak geprobeerd om in te loggen.[BR] Wacht alstublieft tot %1 en probeer het opnieuw.</translation>
     </message>
     <message>
         <source>When you finish this assistant, you will be able to sync additional folders using the settings dialog</source>
@@ -5776,7 +5775,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Sync specific folders in your cloud drive</source>
         <translatorcomment>Label to inform the user about the selective sync mode of MEGAsync</translatorcomment>
-        <translation>Synchroniseer specifieke mappen in uw cloud schijf</translation>
+        <translation>Synchroniseer specifieke mappen in uw Cloud schijf</translation>
     </message>
     <message>
         <source>Selective sync:</source>
@@ -6052,6 +6051,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Message shown while waiting for the server request with the file info to stream</translatorcomment>
         <translation>Een ogenblik geduld a.u.b…</translation>
     </message>
+    <message>
+        <source>Select items</source>
+        <translatorcomment>Window title for node selector when is openned in stream mode</translatorcomment>
+        <translation>Selecteer items</translation>
+    </message>
 </context>
 <context>
     <name>SwitchButton</name>
@@ -6176,12 +6180,12 @@ Selecteer een andere map om door te gaan.
     <message>
         <source>You don&apos;t have enough permissions for this remote folder.</source>
         <translatorcomment>Warning message indicating that a folder can´t be synced as it the remote folder is an incoming share and the current user doesn´t have enought permisions</translatorcomment>
-        <translation>U heeft niet genoeg rechten voor deze externe map.</translation>
+        <translation>U heeft geen volledige toegang tot deze gedeelde map en kunt deze niet synchroniseren.</translation>
     </message>
     <message>
         <source>Invalid remote path.</source>
         <translatorcomment>The selected remote path for the sync creation is invalid</translatorcomment>
-        <translation>Ongeldig extern pad.</translation>
+        <translation>Deze MEGA-map kan niet worden gesynchroniseerd.</translation>
     </message>
     <message>
         <source>The selected MEGA folder is already synced.</source>
@@ -6209,7 +6213,7 @@ Selecteer een andere map om door te gaan.
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a local folder shared with VMWare third party app.</translatorcomment>
-        <translation>U bent een lokale map aan het synchroniseren met VMWare. Deze mappen ondersteunen geen bestandssysteem meldingen dus de applicatie moet steeds worden gescand om wijzigingen te detecteren in uw bestanden en mappen. Gebruik een andere map mits mogelijk om het CPU verbruik te verminderen.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6222,7 +6226,7 @@ Selecteer een andere map om door te gaan.
     <message>
         <source>Local Folder</source>
         <translatorcomment>Sync table header column title</translatorcomment>
-        <translation>Lokale Map</translation>
+        <translation>Lokale map</translation>
     </message>
     <message>
         <source>Sort by folder name</source>
@@ -6252,7 +6256,7 @@ Selecteer een andere map om door te gaan.
     <message>
         <source>Click menu for more Sync actions</source>
         <translatorcomment>Menu column item tooltip.</translatorcomment>
-        <translation>Klik op Menu voor meer Synchronisatie acties</translation>
+        <translation>Klik op menu voor meer synchronisatie acties</translation>
     </message>
 </context>
 <context>
@@ -6286,7 +6290,7 @@ Selecteer een andere map om door te gaan.
     <message>
         <source>Add Sync</source>
         <translatorcomment>Menu option used to add sync</translatorcomment>
-        <translation>Synchronisatie Toevoegen</translation>
+        <translation>Synchronisatie toevoegen</translation>
     </message>
     <message>
         <source>Syncs</source>
@@ -6659,27 +6663,27 @@ Om meer tegoed te krijgen, upgrade naar een Pro-account of wacht [A] tot er meer
     <message>
         <source>Clear all audios</source>
         <translatorcomment>Tooltip for clear button when the user is in the audios category</translatorcomment>
-        <translation>Alle audios wissen</translation>
+        <translation>Alle overdrachten in Audio wissen</translation>
     </message>
     <message>
         <source>Clear all videos</source>
         <translatorcomment>Tooltip for clear button when the user is in the videos category</translatorcomment>
-        <translation>Alle video&apos;s wissen</translation>
+        <translation>Alle overdrachten in Video&apos;s wissen</translation>
     </message>
     <message>
         <source>Clear all archives</source>
         <translatorcomment>Tooltip for clear button when the user is in the archives category</translatorcomment>
-        <translation>Alle archieven wissen</translation>
+        <translation>Alle overdrachten in Archieven wissen</translation>
     </message>
     <message>
         <source>Clear all documents</source>
         <translatorcomment>Tooltip for clear button when the user is in the documents category</translatorcomment>
-        <translation>Alle documenten wissen</translation>
+        <translation>Alle overdrachten in Documenten wissen</translation>
     </message>
     <message>
         <source>Clear all images</source>
         <translatorcomment>Tooltip for clear button when the user is in the images category</translatorcomment>
-        <translation>Alle afbeeldingen wissen</translation>
+        <translation>Alle overdrachten in Afbeeldingen wissen</translation>
     </message>
     <message>
         <source>Clear all transfers</source>
@@ -6689,17 +6693,17 @@ Om meer tegoed te krijgen, upgrade naar een Pro-account of wacht [A] tot er meer
     <message>
         <source>Cancel all downloads</source>
         <translatorcomment>Tooltip for cancel button when the user is in the downloads category</translatorcomment>
-        <translation>Alle downloads annuleren</translation>
+        <translation>Alle overdrachten in Downloads annuleren</translation>
     </message>
     <message>
         <source>Cancel all uploads</source>
         <translatorcomment>Tooltip for cancel button when the user is in the uploads category</translatorcomment>
-        <translation>Alle uploads annuleren</translation>
+        <translation>Alle overdrachten in Uploads annuleren</translation>
     </message>
     <message>
         <source>Cancel all failed</source>
         <translatorcomment>Tooltip for cancel button when the user is in the failed category</translatorcomment>
-        <translation>Alle mislukte annuleren</translation>
+        <translation>Alle overdrachten in Mislukt annuleren</translation>
     </message>
     <message>
         <source>Cancel all search results</source>
@@ -6709,27 +6713,27 @@ Om meer tegoed te krijgen, upgrade naar een Pro-account of wacht [A] tot er meer
     <message>
         <source>Cancel all audios</source>
         <translatorcomment>Tooltip for cancel button when the user is in the audios category</translatorcomment>
-        <translation>Alle audio&apos;s annuleren</translation>
+        <translation>Alle overdrachten in Audio annuleren</translation>
     </message>
     <message>
         <source>Cancel all videos</source>
         <translatorcomment>Tooltip for cancel button when the user is in the videos category</translatorcomment>
-        <translation>Alle video&apos;s annuleren</translation>
+        <translation>Alle overdrachten in Video annuleren</translation>
     </message>
     <message>
         <source>Cancel all archives</source>
         <translatorcomment>Tooltip for cancel button when the user is in the archives category</translatorcomment>
-        <translation>Alle archieven annuleren</translation>
+        <translation>Alle overdrachten in Archieven annuleren</translation>
     </message>
     <message>
         <source>Cancel all documents</source>
         <translatorcomment>Tooltip for cancel button when the user is in the documents category</translatorcomment>
-        <translation>Alle documenten annuleren</translation>
+        <translation>Alle overdrachten in Documenten annuleren</translation>
     </message>
     <message>
         <source>Cancel all images</source>
         <translatorcomment>Tooltip for cancel button when the user is in the images category</translatorcomment>
-        <translation>Alle afbeeldingen annuleren</translation>
+        <translation>Alle overdrachten in Afbeeldingen annuleren</translation>
     </message>
     <message>
         <source>Cancel all transfers</source>
@@ -7019,22 +7023,22 @@ Om meer tegoed te krijgen, upgrade naar een Pro-account of wacht [A] tot er meer
     <message>
         <source>Pro Lite</source>
         <translatorcomment>Label to refer Pro Lite tier</translatorcomment>
-        <translation>Pro Lite</translation>
+        <translation>Pro&#xa0;Lite</translation>
     </message>
     <message>
         <source>Pro I</source>
         <translatorcomment>Label to refer Pro I tier</translatorcomment>
-        <translation>Pro I</translation>
+        <translation>Pro&#xa0;I</translation>
     </message>
     <message>
         <source>Pro II</source>
         <translatorcomment>Label to refer Pro II tier</translatorcomment>
-        <translation>Pro II</translation>
+        <translation>Pro&#xa0;II</translation>
     </message>
     <message>
         <source>Pro III</source>
         <translatorcomment>Label to refer Pro III tier</translatorcomment>
-        <translation>Pro III</translation>
+        <translation>Pro&#xa0;III</translation>
     </message>
     <message numerus="yes">
         <source>%n second ago</source>

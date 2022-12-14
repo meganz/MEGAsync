@@ -2407,7 +2407,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Синхронизация «%1» была отключена, так как удалённая папка находится в корзине</translation>
+        <translation>Синхронизация «%1» была отключена, так как удалённая папка находится в Корзине</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
@@ -2493,7 +2493,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>The link can&apos;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
         <translatorcomment>Notification error message shown while generating a public link of a file from an incoming shared folder or from the rubbish bin</translatorcomment>
-        <translation>Нельзя сгенерировать ссылку на файл, находящийся во входящей общей папке или корзине.</translation>
+        <translation>Нельзя сгенерировать ссылку на файл, находящийся во входящей общей папке или Корзине.</translation>
     </message>
     <message>
         <source>Upload</source>
@@ -2797,7 +2797,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Резервная копия «%1» была отключена, так как MEGA-папка находится в корзине.</translation>
+        <translation>Резервная копия «%1» была отключена, так как MEGA-папка находится в Корзине.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
@@ -2970,7 +2970,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
         <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
-        <translation>Превышен лимит хранения данных. Пожалуйста, улучшите аккаунт</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Decryption error</source>
@@ -3017,77 +3017,6 @@ Transfer will automatically resume when you re-open the app.</source>
     </message>
 </context>
 <context>
-    <name>MegaItemModel</name>
-    <message>
-        <source>Folder already synced</source>
-        <translatorcomment>Tooltip text to notify the user that this folder is already synced.</translatorcomment>
-        <translation>Папка уже синхронизирована</translation>
-    </message>
-    <message>
-        <source>Folder contents already synced</source>
-        <translatorcomment>Tooltip text to notify the user that some folder inside the folder that he is hovering with mouse is already synced.</translatorcomment>
-        <translation>Содержимое папки уже синхронизировано</translation>
-    </message>
-    <message>
-        <source>Name</source>
-        <translatorcomment>Column title. This column shows the name of a file or folder.</translatorcomment>
-        <translation>Название</translation>
-    </message>
-    <message>
-        <source>Sort by status</source>
-        <translatorcomment>First column title tooltip(this column title doesn´t contains text, it shows an icon). Sorts the order of the column by node status, for example synced folders first or last.</translatorcomment>
-        <translation>Сортировать по статусу</translation>
-    </message>
-    <message>
-        <source>Sort by owner name</source>
-        <translatorcomment>Owner column title tooltip. Sorts the order of the column by owner name alphabetically.</translatorcomment>
-        <translation>Сортировать по имени владельца</translation>
-    </message>
-    <message>
-        <source>Sort by date</source>
-        <translatorcomment>Recently used column title tooltip. Sorts the order of the column by date.</translatorcomment>
-        <translation>Сортировать по дате</translation>
-    </message>
-    <message>
-        <source>Sort by name</source>
-        <translatorcomment>Node name column title tooltip. Sorts the order of the column by date.</translatorcomment>
-        <translation>Сортировать по названию</translation>
-    </message>
-    <message numerus="yes">
-        <source>Today at %1</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened today. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation><numerusform>Сегодня в %1</numerusform><numerusform>Сегодня в %1</numerusform><numerusform>Сегодня в %1</numerusform><numerusform>Сегодня в %1</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Yesterday at %1</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened yesterday. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation><numerusform>Вчера в %1</numerusform><numerusform>Вчера в %1</numerusform><numerusform>Вчера в %1</numerusform><numerusform>Вчера в %1</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%1 at %2</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was previously to yesterday. %1 represents the date (day month and year), while %2 represents the hour). Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation><numerusform>%1 в %2</numerusform><numerusform>%1 в %2</numerusform><numerusform>%1 в %2</numerusform><numerusform>%1 в %2</numerusform></translation>
-    </message>
-    <message>
-        <source>Recently used</source>
-        <translatorcomment>Column title. This column shows when this file or folder was changed.</translatorcomment>
-        <translation>Последнее изменение</translation>
-    </message>
-</context>
-<context>
-    <name>MegaItemTreeView</name>
-    <message>
-        <source>Get MEGA link</source>
-        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It creates an MEGA link and copy to Clipboard.</translatorcomment>
-        <translation>Получить MEGA-ссылку</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It removes the node (file or folder).</translatorcomment>
-        <translation>Удалить</translation>
-    </message>
-</context>
-<context>
     <name>MegaNodeNames</name>
     <message>
         <source>Cloud Drive</source>
@@ -3098,6 +3027,11 @@ Transfer will automatically resume when you re-open the app.</source>
         <source>Backups</source>
         <translatorcomment>Title of the Backups root node</translatorcomment>
         <translation>Резервные копии</translation>
+    </message>
+    <message>
+        <source>Incoming shares</source>
+        <translatorcomment>Title of the Incoming shares root node</translatorcomment>
+        <translation>Входящие элементы</translation>
     </message>
 </context>
 <context>
@@ -3178,7 +3112,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Remote node moved to Rubbish Bin</source>
         <translatorcomment>Label to show that remote node has been moved to Rubbish bin.</translatorcomment>
-        <translation>Удалённая синхронизируемая папка перемещёна в корзину</translation>
+        <translation>Удалённая синхронизируемая папка перемещёна в Корзину</translation>
     </message>
     <message>
         <source>Share without full access</source>
@@ -3213,7 +3147,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Remote node is inside Rubbish Bin</source>
         <translatorcomment>SDK error label shown when remote node is inside Rubbish bin.</translatorcomment>
-        <translation>Удалённая синхронизируемая папка находится в корзине</translation>
+        <translation>Удалённая синхронизируемая папка находится в Корзине</translation>
     </message>
     <message>
         <source>Unsupported VBoxSharedFolderFS filesystem</source>
@@ -3484,6 +3418,19 @@ Your selected incomplete sync transfers won&apos;t be cancelled.</source>
         <translation>Следующие символы не допускаются:
 %1</translation>
     </message>
+    <message>
+        <source>A file with this name already exists in this location.
+Enter a different name.</source>
+        <translatorcomment>Message shown when the user has entered a name which already exists on the folder</translatorcomment>
+        <translation>В этой папке уже есть файл с таким названием.
+Введите другое название.</translation>
+    </message>
+    <message>
+        <source>A folder with this name already exists in this location.
+Enter a different name</source>
+        <translatorcomment>Message shown when the user has entered a name which already exists on the folder</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NodeSelector</name>
@@ -3496,21 +3443,6 @@ Your selected incomplete sync transfers won&apos;t be cancelled.</source>
         <source>Select a MEGA folder:</source>
         <translatorcomment>Label to indicate the user to select a MEGA folder for a synchronization (String short as possible). Keep capital letters.</translatorcomment>
         <translation>Выберите папку MEGA:</translation>
-    </message>
-    <message>
-        <source>New folder</source>
-        <translatorcomment>Button label to create a New folder at your MEGA cloud drive. Keep capital letters. String as short as possible.</translatorcomment>
-        <translation>Новая папка</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>ОК</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Отмена</translation>
     </message>
     <message>
         <source>Error</source>
@@ -3529,11 +3461,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Недействительная папка для синхронизации. Убедитесь, что вы не используете символы «\», «/» или «:» в названиях папок.</translation>
     </message>
     <message>
-        <source>Always upload to this destination</source>
-        <translatorcomment>Label to inform the user upload files/folder to a default destination. with a checkbox.</translatorcomment>
-        <translation>Всегда загружать в эту папку</translation>
-    </message>
-    <message>
         <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying upload files to a non compatible folder</translatorcomment>
         <translation>Требуются права на чтение и запись или полные права, чтобы можно было загружать в выбранную папку.</translation>
@@ -3544,17 +3471,9 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Для синхронизации выбранной папки необходим полный доступ.</translation>
     </message>
     <message>
-        <source>Are you sure that you want to delete &quot;%1&quot;?</source>
-        <translation>Действительно удалить «%1»?</translation>
-    </message>
-    <message>
         <source>Only files can be used for streaming.</source>
         <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
         <translation>Можно транслировать только файлы.</translation>
-    </message>
-    <message>
-        <source>Select items</source>
-        <translation>Выбор элементов</translation>
     </message>
     <message>
         <source>Select a MEGA folder</source>
@@ -3565,16 +3484,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>You no longer have access to this item. Ask the owner to share again.</source>
         <translatorcomment>Error message shown when the user is trying to download an file or folder from an incoming share and the owner stops sharing/removes all items</translatorcomment>
         <translation><numerusform>У вас больше нет доступа к этому элементу. Попросите владельца поделиться ещё раз.</numerusform><numerusform>У вас больше нет доступа к этим элементам. Попросите владельца поделиться ещё раз.</numerusform><numerusform>У вас больше нет доступа к этим элементам. Попросите владельца поделиться ещё раз.</numerusform><numerusform>У вас больше нет доступа к этим элементам. Попросите владельца поделиться ещё раз.</numerusform></translation>
-    </message>
-    <message>
-        <source>Cloud drive</source>
-        <translatorcomment>Node selector button Text. Switch the view to show only the cloud drive nodes (files and folders)</translatorcomment>
-        <translation>Облачный диск</translation>
-    </message>
-    <message>
-        <source>Incoming shares</source>
-        <translatorcomment>Node selector button Text. Switch the view to show only the incoming shares nodes (files and folders)</translatorcomment>
-        <translation>Входящие элементы</translation>
     </message>
     <message numerus="yes">
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
@@ -3593,10 +3502,114 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
                            Second and last part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
         <translation><numerusform>%1. %2 был удалён. Для повторного выбора закройте это окно и повторите попытку.</numerusform><numerusform>%1. %2 было удалено. Для повторного выбора закройте это окно и повторите попытку.</numerusform><numerusform>%1. %2 было удалено. Для повторного выбора закройте это окно и повторите попытку.</numerusform><numerusform>%1. %2 было удалено. Для повторного выбора закройте это окно и повторите попытку.</numerusform></translation>
     </message>
+</context>
+<context>
+    <name>NodeSelectorModel</name>
     <message>
-        <source>Backups</source>
-        <translatorcomment>Title of the Backups section</translatorcomment>
-        <translation>Резервные копии</translation>
+        <source>Folder already synced</source>
+        <translatorcomment>Tooltip text to notify the user that this folder is already synced.</translatorcomment>
+        <translation>Папка уже синхронизирована</translation>
+    </message>
+    <message>
+        <source>Folder contents already synced</source>
+        <translatorcomment>Tooltip text to notify the user that some folder inside the folder that he is hovering with mouse is already synced.</translatorcomment>
+        <translation>Содержимое папки уже синхронизировано.</translation>
+    </message>
+    <message>
+        <source>Recently used</source>
+        <translatorcomment>Column title. This column shows when this file or folder was changed.</translatorcomment>
+        <translation>Последнее изменение</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translatorcomment>Column title. This column shows the name of a file or folder.</translatorcomment>
+        <translation>Название</translation>
+    </message>
+    <message>
+        <source>Sort by status</source>
+        <translatorcomment>First column title tooltip(this column title doesn´t contains text, it shows an icon). Sorts the order of the column by node status, for example synced folders first or last.</translatorcomment>
+        <translation>Сортировать по статусу</translation>
+    </message>
+    <message>
+        <source>Sort by owner name</source>
+        <translatorcomment>Owner column title tooltip. Sorts the order of the column by owner name alphabetically.</translatorcomment>
+        <translation>Сортировать по имени владельца</translation>
+    </message>
+    <message>
+        <source>Sort by date</source>
+        <translatorcomment>Recently used column title tooltip. Sorts the order of the column by date.</translatorcomment>
+        <translation>Сортировать по дате</translation>
+    </message>
+    <message>
+        <source>Sort by name</source>
+        <translatorcomment>Node name column title tooltip. Sorts the order of the column by date.</translatorcomment>
+        <translation>Сортировать по названию</translation>
+    </message>
+    <message numerus="yes">
+        <source>Today at %1</source>
+        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened today. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
+        <translation><numerusform>Сегодня в %1</numerusform><numerusform>Сегодня в %1</numerusform><numerusform>Сегодня в %1</numerusform><numerusform>Сегодня в %1</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Yesterday at %1</source>
+        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened yesterday. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
+        <translation><numerusform>Вчера в %1</numerusform><numerusform>Вчера в %1</numerusform><numerusform>Вчера в %1</numerusform><numerusform>Вчера в %1</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 at %2</source>
+        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was previously to yesterday. %1 represents the date (day month and year), while %2 represents the hour). Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
+        <translation><numerusform>%1 в %2</numerusform><numerusform>%1 в %2</numerusform><numerusform>%1 в %2</numerusform><numerusform>%1 в %2</numerusform></translation>
+    </message>
+</context>
+<context>
+    <name>NodeSelectorTreeView</name>
+    <message>
+        <source>Get MEGA link</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It creates an MEGA link and copy to Clipboard.</translatorcomment>
+        <translation>Получить MEGA-ссылку</translation>
+    </message>
+    <message>
+        <source>Rename</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It renames the node (file or folder).</translatorcomment>
+        <translation>Переименовать</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It removes the node (file or folder).</translatorcomment>
+        <translation>Удалить</translation>
+    </message>
+</context>
+<context>
+    <name>NodeSelectorTreeViewWidget</name>
+    <message>
+        <source>Always upload to this destination</source>
+        <translatorcomment>Label to inform the user upload files/folder to a default destination. with a checkbox.</translatorcomment>
+        <translation>Всегда загружать в это расположение</translation>
+    </message>
+    <message>
+        <source>New folder</source>
+        <translatorcomment>Button label to create a New folder at your MEGA cloud drive. Keep capital letters. String as short as possible.</translatorcomment>
+        <translation>Новая папка</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translatorcomment>Label for accept button.</translatorcomment>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Label for cancel button.</translatorcomment>
+        <translation>Отмена</translation>
+    </message>
+    <message>
+        <source>Are you sure that you want to delete &quot;%1&quot;?</source>
+        <translatorcomment>MessageBox to confirm that the user wants to remove the node. %1 is the node name</translatorcomment>
+        <translation>Действительно удалить «%1»?</translation>
+    </message>
+    <message>
+        <source>Error:</source>
+        <translatorcomment>MessageBox to inform about an error when trying to move or remove a node</translatorcomment>
+        <translation>Ошибка:</translation>
     </message>
 </context>
 <context>
@@ -3968,12 +3981,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Additional storage charged at %1 per %2TB.</source>
         <translatorcomment>Balloon tooltip to inform users that additional storate for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
-        <translation>Дополнительный объём по %1 за %2ТБ.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Additional transfer quota charged at %1 per %2TB.</source>
         <translatorcomment>Balloon tooltip to inform users that additional transfer quota for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
-        <translation>Дополнительные передачи по %1 за %2 ТБ.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
         <source>minimum %n user</source>
@@ -4085,13 +4098,12 @@ Please delete the folder sync from preferences to cancel them.</source>
 - Improved performance.
 </source>
         <translatorcomment>Changelog for v4.8.0 version</translatorcomment>
-        <translation>- Добавлена поддержка аккаунтов Pro Flexi.
+        <translation>- Добавлена поддержка аккаунтов Pro&#xa0;Flexi.
 - Новая функция резервного копирования.
 - Исправлены обнаруженные ошибки в macOS Ventura.
 - Исправлены обнаруженные сбои в Windows, Linux, and macOS.
 - Исправлены ошибки перевода.
-- Улучшена производительность.
-</translation>
+- Улучшена производительность.</translation>
     </message>
 </context>
 <context>
@@ -4505,27 +4517,27 @@ Do you want to delete it anyway?</source>
     <message>
         <source>%1 TB</source>
         <translatorcomment>File size measured in terabytes</translatorcomment>
-        <translation>%1 ТБ</translation>
+        <translation>%1&#xa0;ТБ</translation>
     </message>
     <message>
         <source>%1 GB</source>
         <translatorcomment>File size measured in gigabytes</translatorcomment>
-        <translation>%1 ГБ</translation>
+        <translation>%1&#xa0;ГБ</translation>
     </message>
     <message>
         <source>%1 MB</source>
         <translatorcomment>File size measured in megabytes</translatorcomment>
-        <translation>%1 МБ</translation>
+        <translation>%1&#xa0;МБ</translation>
     </message>
     <message>
         <source>%1 KB</source>
         <translatorcomment>File size measured in kilobytes</translatorcomment>
-        <translation>%1 КБ</translation>
+        <translation>%1&#xa0;КБ</translation>
     </message>
     <message>
         <source>%1 bytes</source>
         <translatorcomment>File size measured in bytes</translatorcomment>
-        <translation>%1 Б</translation>
+        <translation>%1&#xa0;Б</translation>
     </message>
     <message>
         <source>Invalid filename</source>
@@ -4648,19 +4660,6 @@ Do you want to delete it anyway?</source>
         <source>Cancel</source>
         <translatorcomment>Button text that cancels</translatorcomment>
         <translation>Отмена</translation>
-    </message>
-</context>
-<context>
-    <name>RenameLocalNodeDialog</name>
-    <message>
-        <source>File can’t be renamed to &quot;%1&quot;</source>
-        <translatorcomment>Error warning shown when a file can´t be renamed due to an error.</translatorcomment>
-        <translation>Файл нельзя переименовать в «%1»</translation>
-    </message>
-    <message>
-        <source>Folder can’t be renamed to &quot;%1&quot;</source>
-        <translatorcomment>Error warning shown when a folder can´t be renamed due to an error.</translatorcomment>
-        <translation>Папку нельзя переименовать в «%1»</translation>
     </message>
 </context>
 <context>
@@ -4891,7 +4890,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and its consequences. Keep [A] substitution placeholder.</translatorcomment>
-        <translation>Резервные копии ранее синхронизированных файлов на компьютере будут полностью удалены. Проверьте папку «[A]» в корзине MEGA, если нужно что-то оставить.</translation>
+        <translation>Резервные копии ранее синхронизированных файлов на компьютере будут полностью удалены. Проверьте папку «[A]» в Корзине MEGA, если нужно что-то оставить.</translation>
     </message>
     <message>
         <source>Do you want to restart MEGAsync now?</source>
@@ -5036,7 +5035,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Report Issue</source>
         <translatorcomment>Button label used to submit bug reports to MEGA.</translatorcomment>
-        <translation>Сообщить об ошибке</translation>
+        <translation>Сообщение о проблеме</translation>
     </message>
     <message>
         <source>My Account</source>
@@ -5246,7 +5245,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Pro Lite</source>
         <translatorcomment>Text label indicating the Pro Lite tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro Lite</translation>
+        <translation>Pro&#xa0;Lite</translation>
     </message>
     <message>
         <source>Business</source>
@@ -5301,17 +5300,17 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Pro I</source>
         <translatorcomment>Text label indicating the Pro I tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro I</translation>
+        <translation>Pro&#xa0;I</translation>
     </message>
     <message>
         <source>Pro II</source>
         <translatorcomment>Text label indicating the Pro II tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro II</translation>
+        <translation>Pro&#xa0;II</translation>
     </message>
     <message>
         <source>Pro III</source>
         <translatorcomment>Text label indicating the Pro III tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro III</translation>
+        <translation>Pro&#xa0;III</translation>
     </message>
     <message>
         <source>Export Key</source>
@@ -5481,7 +5480,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Pro Flexi</source>
         <translatorcomment>Text label indicating the Pro Flexi tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro Flexi</translation>
+        <translation>Pro&#xa0;Flexi</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
@@ -6053,6 +6052,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Message shown while waiting for the server request with the file info to stream</translatorcomment>
         <translation>Пожалуйста, подождите…</translation>
     </message>
+    <message>
+        <source>Select items</source>
+        <translatorcomment>Window title for node selector when is openned in stream mode</translatorcomment>
+        <translation>Выбор элементов</translation>
+    </message>
 </context>
 <context>
     <name>SwitchButton</name>
@@ -6209,7 +6213,7 @@ To continue, select a different folder.</source>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a local folder shared with VMWare third party app.</translatorcomment>
-        <translation>Вы синхронизируете локальную папку, используемую совместно с VMWare. Эти папки не поддерживают уведомления файловой системы, поэтому приложение должно будет постоянно сканировать их, чтобы обнаружить изменения в файлах и папках. Используйте другую папку, если это возможно, чтобы уменьшить нагрузку на процессор.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7019,22 +7023,22 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Pro Lite</source>
         <translatorcomment>Label to refer Pro Lite tier</translatorcomment>
-        <translation>Pro Lite</translation>
+        <translation>Pro&#xa0;Lite</translation>
     </message>
     <message>
         <source>Pro I</source>
         <translatorcomment>Label to refer Pro I tier</translatorcomment>
-        <translation>Pro I</translation>
+        <translation>Pro&#xa0;I</translation>
     </message>
     <message>
         <source>Pro II</source>
         <translatorcomment>Label to refer Pro II tier</translatorcomment>
-        <translation>Pro II</translation>
+        <translation>Pro&#xa0;II</translation>
     </message>
     <message>
         <source>Pro III</source>
         <translatorcomment>Label to refer Pro III tier</translatorcomment>
-        <translation>Pro III</translation>
+        <translation>Pro&#xa0;III</translation>
     </message>
     <message numerus="yes">
         <source>%n second ago</source>

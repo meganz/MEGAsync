@@ -857,7 +857,7 @@
     <message>
         <source>Are you sure you want to exit uploading?</source>
         <translatorcomment>Confirmation message shown when the user is trying to cancel the ongoing upload report.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>هل تريد إلغاء ترفيع مشكلتك المبلغ عنها؟</translation>
     </message>
     <message>
         <source>The bug report will not be submitted if you exit uploading.</source>
@@ -1555,7 +1555,7 @@
     <message>
         <source>Login</source>
         <translatorcomment>Button label to start the Login process. (String as short as possible)</translatorcomment>
-        <translation>تسجيل الدخول</translation>
+        <translation>تسجيل&#xa0;الدخول</translation>
     </message>
     <message>
         <source>Create account</source>
@@ -1655,7 +1655,7 @@
     <message>
         <source>Log out</source>
         <translatorcomment>Button label to log out the current account.</translatorcomment>
-        <translation>تسجيل الخروج</translation>
+        <translation>تسجيل&#xa0;الخروج</translation>
     </message>
     <message>
         <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
@@ -2090,7 +2090,7 @@
     <message>
         <source>Log in</source>
         <translatorcomment>Title for explanation about log in</translatorcomment>
-        <translation>تسجيل الدخول</translation>
+        <translation>تسجيل&#xa0;الدخول</translation>
     </message>
     <message>
         <source>Create Account</source>
@@ -2794,7 +2794,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم تعطيل النسخ الاحتياطي ”%1“ لأن النسخ الاحتياطي لمجلدات VirtualBox المشتركة غير مدعوم بسبب أوجه القصور في نظام الملفات هذا.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
@@ -2972,7 +2972,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
         <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
-        <translation>تم تجاوز مساحة التخزين. الرجاء الترقية الآن</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Decryption error</source>
@@ -3019,77 +3019,6 @@ Transfer will automatically resume when you re-open the app.</source>
     </message>
 </context>
 <context>
-    <name>MegaItemModel</name>
-    <message>
-        <source>Folder already synced</source>
-        <translatorcomment>Tooltip text to notify the user that this folder is already synced.</translatorcomment>
-        <translation>تمت مزامنة المجلد بالفعل</translation>
-    </message>
-    <message>
-        <source>Folder contents already synced</source>
-        <translatorcomment>Tooltip text to notify the user that some folder inside the folder that he is hovering with mouse is already synced.</translatorcomment>
-        <translation>تمت مزامنة محتويات المجلد بالفعل</translation>
-    </message>
-    <message>
-        <source>Name</source>
-        <translatorcomment>Column title. This column shows the name of a file or folder.</translatorcomment>
-        <translation>الاسم</translation>
-    </message>
-    <message>
-        <source>Sort by status</source>
-        <translatorcomment>First column title tooltip(this column title doesn´t contains text, it shows an icon). Sorts the order of the column by node status, for example synced folders first or last.</translatorcomment>
-        <translation>فرز حسب الحالة</translation>
-    </message>
-    <message>
-        <source>Sort by owner name</source>
-        <translatorcomment>Owner column title tooltip. Sorts the order of the column by owner name alphabetically.</translatorcomment>
-        <translation>فرز حسب اسم المالك</translation>
-    </message>
-    <message>
-        <source>Sort by date</source>
-        <translatorcomment>Recently used column title tooltip. Sorts the order of the column by date.</translatorcomment>
-        <translation>فرز حسب التاريخ</translation>
-    </message>
-    <message>
-        <source>Sort by name</source>
-        <translatorcomment>Node name column title tooltip. Sorts the order of the column by date.</translatorcomment>
-        <translation>فرز حسب الاسم</translation>
-    </message>
-    <message numerus="yes">
-        <source>Today at %1</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened today. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation><numerusform>اليوم الساعة %1</numerusform><numerusform>اليوم الساعة %1</numerusform><numerusform>اليوم الساعة %1</numerusform><numerusform>اليوم الساعة %1</numerusform><numerusform>اليوم الساعة %1</numerusform><numerusform>اليوم الساعة %1</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Yesterday at %1</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened yesterday. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation><numerusform>البارحة الساعة %1</numerusform><numerusform>البارحة الساعة %1</numerusform><numerusform>البارحة الساعة %1</numerusform><numerusform>البارحة الساعة %1</numerusform><numerusform>البارحة الساعة %1</numerusform><numerusform>البارحة الساعة %1</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%1 at %2</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was previously to yesterday. %1 represents the date (day month and year), while %2 represents the hour). Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation><numerusform>%1 الساعة %2</numerusform><numerusform>%1 الساعة %2</numerusform><numerusform>%1 الساعة %2</numerusform><numerusform>%1 الساعة %2</numerusform><numerusform>%1 الساعة %2</numerusform><numerusform>%1 الساعة %2</numerusform></translation>
-    </message>
-    <message>
-        <source>Recently used</source>
-        <translatorcomment>Column title. This column shows when this file or folder was changed.</translatorcomment>
-        <translation>آخر تعديل</translation>
-    </message>
-</context>
-<context>
-    <name>MegaItemTreeView</name>
-    <message>
-        <source>Get MEGA link</source>
-        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It creates an MEGA link and copy to Clipboard.</translatorcomment>
-        <translation>احصل على رابط ميغا MEGA</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It removes the node (file or folder).</translatorcomment>
-        <translation>حذف</translation>
-    </message>
-</context>
-<context>
     <name>MegaNodeNames</name>
     <message>
         <source>Cloud Drive</source>
@@ -3100,6 +3029,11 @@ Transfer will automatically resume when you re-open the app.</source>
         <source>Backups</source>
         <translatorcomment>Title of the Backups root node</translatorcomment>
         <translation>النسخ الاحتياطية</translation>
+    </message>
+    <message>
+        <source>Incoming shares</source>
+        <translatorcomment>Title of the Incoming shares root node</translatorcomment>
+        <translation>مشاركات واردة</translation>
     </message>
 </context>
 <context>
@@ -3486,6 +3420,19 @@ Your selected incomplete sync transfers won&apos;t be cancelled.</source>
         <translation>المحارف التالية غير مسموح بها:
 %1</translation>
     </message>
+    <message>
+        <source>A file with this name already exists in this location.
+Enter a different name.</source>
+        <translatorcomment>Message shown when the user has entered a name which already exists on the folder</translatorcomment>
+        <translation>يوجد ملف بهذا الاسم بالفعل في هذا الموقع.
+أدخل اسمًا مختلفًا.</translation>
+    </message>
+    <message>
+        <source>A folder with this name already exists in this location.
+Enter a different name</source>
+        <translatorcomment>Message shown when the user has entered a name which already exists on the folder</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NodeSelector</name>
@@ -3498,21 +3445,6 @@ Your selected incomplete sync transfers won&apos;t be cancelled.</source>
         <source>Select a MEGA folder:</source>
         <translatorcomment>Label to indicate the user to select a MEGA folder for a synchronization (String short as possible). Keep capital letters.</translatorcomment>
         <translation>اختر مجلد ميغا MEGA:</translation>
-    </message>
-    <message>
-        <source>New folder</source>
-        <translatorcomment>Button label to create a New folder at your MEGA cloud drive. Keep capital letters. String as short as possible.</translatorcomment>
-        <translation>مجلد جديد</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>موافق</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>الغاء</translation>
     </message>
     <message>
         <source>Error</source>
@@ -3531,11 +3463,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>مجلد غير صالح للمزامنة. يرجى التأكد من عدم استخدام أحرف مثل ‘\’, ‘/’ أو ‘:’ في أسماء المجلدات الخاصة بك.</translation>
     </message>
     <message>
-        <source>Always upload to this destination</source>
-        <translatorcomment>Label to inform the user upload files/folder to a default destination. with a checkbox.</translatorcomment>
-        <translation>الرفع دائما الي هذه الوجهة</translation>
-    </message>
-    <message>
         <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying upload files to a non compatible folder</translatorcomment>
         <translation>تحتاج إلى إذن القراءة و الكتابة أو إذن الوصول الكامل حتي تتمكن من رفع المجلد المحدد.</translation>
@@ -3546,17 +3473,9 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>تحتاج صلاحية الدخول بشكل كامل لمزامنة المجلد المحدد.</translation>
     </message>
     <message>
-        <source>Are you sure that you want to delete &quot;%1&quot;?</source>
-        <translation>هل أنت متأكد أنك تريد حذف “%1”؟</translation>
-    </message>
-    <message>
         <source>Only files can be used for streaming.</source>
         <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
         <translation>يمكن استخدام الملفات فقط للبث.</translation>
-    </message>
-    <message>
-        <source>Select items</source>
-        <translation>اختر العناصر</translation>
     </message>
     <message>
         <source>Select a MEGA folder</source>
@@ -3567,16 +3486,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>You no longer have access to this item. Ask the owner to share again.</source>
         <translatorcomment>Error message shown when the user is trying to download an file or folder from an incoming share and the owner stops sharing/removes all items</translatorcomment>
         <translation><numerusform>لم يعد لديك حق الوصول إلى هذه العنصر. اطلب من المالك المشاركة مرة أخرى.</numerusform><numerusform>لم يعد لديك حق الوصول إلى هذه العنصر. اطلب من المالك المشاركة مرة أخرى.</numerusform><numerusform>لم يعد لديك حق الوصول إلى هذان العنصران. اطلب من المالك المشاركة مرة أخرى.</numerusform><numerusform>لم يعد لديك حق الوصول إلى هذه العناصر. اطلب من المالك المشاركة مرة أخرى.</numerusform><numerusform>لم يعد لديك حق الوصول إلى هذه العناصر. اطلب من المالك المشاركة مرة أخرى.</numerusform><numerusform>لم يعد لديك حق الوصول إلى هذه العناصر. اطلب من المالك المشاركة مرة أخرى.</numerusform></translation>
-    </message>
-    <message>
-        <source>Cloud drive</source>
-        <translatorcomment>Node selector button Text. Switch the view to show only the cloud drive nodes (files and folders)</translatorcomment>
-        <translation>السواقة السحابية</translation>
-    </message>
-    <message>
-        <source>Incoming shares</source>
-        <translatorcomment>Node selector button Text. Switch the view to show only the incoming shares nodes (files and folders)</translatorcomment>
-        <translation>مشاركات واردة</translation>
     </message>
     <message numerus="yes">
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
@@ -3595,10 +3504,114 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
                            Second and last part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
         <translation><numerusform>%1.%2 قد أزيل. لإعادة التحديد، أغلق هذه النافذة وحاول مرة أخرى.</numerusform><numerusform>%1.%2 قد أزيل. لإعادة التحديد، أغلق هذه النافذة وحاول مرة أخرى.</numerusform><numerusform>%1.%2 قد أزيلت. لإعادة التحديد، أغلق هذه النافذة وحاول مرة أخرى.</numerusform><numerusform>%1.%2 قد أزيلت. لإعادة التحديد، أغلق هذه النافذة وحاول مرة أخرى.</numerusform><numerusform>%1.%2 قد أزيلت. لإعادة التحديد، أغلق هذه النافذة وحاول مرة أخرى.</numerusform><numerusform>%1.%2  قد أزيلت. لإعادة التحديد، أغلق هذه النافذة وحاول مرة أخرى.</numerusform></translation>
     </message>
+</context>
+<context>
+    <name>NodeSelectorModel</name>
     <message>
-        <source>Backups</source>
-        <translatorcomment>Title of the Backups section</translatorcomment>
-        <translation>النسخ الاحتياطية</translation>
+        <source>Folder already synced</source>
+        <translatorcomment>Tooltip text to notify the user that this folder is already synced.</translatorcomment>
+        <translation>تمت مزامنة المجلد بالفعل</translation>
+    </message>
+    <message>
+        <source>Folder contents already synced</source>
+        <translatorcomment>Tooltip text to notify the user that some folder inside the folder that he is hovering with mouse is already synced.</translatorcomment>
+        <translation>تمت مزامنة محتويات المجلد بالفعل</translation>
+    </message>
+    <message>
+        <source>Recently used</source>
+        <translatorcomment>Column title. This column shows when this file or folder was changed.</translatorcomment>
+        <translation>آخر تعديل</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translatorcomment>Column title. This column shows the name of a file or folder.</translatorcomment>
+        <translation>الاسم</translation>
+    </message>
+    <message>
+        <source>Sort by status</source>
+        <translatorcomment>First column title tooltip(this column title doesn´t contains text, it shows an icon). Sorts the order of the column by node status, for example synced folders first or last.</translatorcomment>
+        <translation>فرز حسب الحالة</translation>
+    </message>
+    <message>
+        <source>Sort by owner name</source>
+        <translatorcomment>Owner column title tooltip. Sorts the order of the column by owner name alphabetically.</translatorcomment>
+        <translation>فرز حسب اسم المالك</translation>
+    </message>
+    <message>
+        <source>Sort by date</source>
+        <translatorcomment>Recently used column title tooltip. Sorts the order of the column by date.</translatorcomment>
+        <translation>فرز حسب التاريخ</translation>
+    </message>
+    <message>
+        <source>Sort by name</source>
+        <translatorcomment>Node name column title tooltip. Sorts the order of the column by date.</translatorcomment>
+        <translation>فرز حسب الاسم</translation>
+    </message>
+    <message numerus="yes">
+        <source>Today at %1</source>
+        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened today. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
+        <translation><numerusform>اليوم الساعة %1</numerusform><numerusform>اليوم الساعة %1</numerusform><numerusform>اليوم الساعة %1</numerusform><numerusform>اليوم الساعة %1</numerusform><numerusform>اليوم الساعة %1</numerusform><numerusform>اليوم الساعة %1</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Yesterday at %1</source>
+        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened yesterday. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
+        <translation><numerusform>البارحة الساعة %1</numerusform><numerusform>البارحة الساعة %1</numerusform><numerusform>البارحة الساعة %1</numerusform><numerusform>البارحة الساعة %1</numerusform><numerusform>البارحة الساعة %1</numerusform><numerusform>البارحة الساعة %1</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 at %2</source>
+        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was previously to yesterday. %1 represents the date (day month and year), while %2 represents the hour). Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
+        <translation><numerusform>%1 الساعة %2</numerusform><numerusform>%1 الساعة %2</numerusform><numerusform>%1 الساعة %2</numerusform><numerusform>%1 الساعة %2</numerusform><numerusform>%1 الساعة %2</numerusform><numerusform>%1 الساعة %2</numerusform></translation>
+    </message>
+</context>
+<context>
+    <name>NodeSelectorTreeView</name>
+    <message>
+        <source>Get MEGA link</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It creates an MEGA link and copy to Clipboard.</translatorcomment>
+        <translation>احصل على رابط ميغا MEGA</translation>
+    </message>
+    <message>
+        <source>Rename</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It renames the node (file or folder).</translatorcomment>
+        <translation>إعادة تسمية</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It removes the node (file or folder).</translatorcomment>
+        <translation>حذف</translation>
+    </message>
+</context>
+<context>
+    <name>NodeSelectorTreeViewWidget</name>
+    <message>
+        <source>Always upload to this destination</source>
+        <translatorcomment>Label to inform the user upload files/folder to a default destination. with a checkbox.</translatorcomment>
+        <translation>قم بالترفيع إلى هذه الوجهة دائماً</translation>
+    </message>
+    <message>
+        <source>New folder</source>
+        <translatorcomment>Button label to create a New folder at your MEGA cloud drive. Keep capital letters. String as short as possible.</translatorcomment>
+        <translation>مجلّد جديد</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translatorcomment>Label for accept button.</translatorcomment>
+        <translation>موافق</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Label for cancel button.</translatorcomment>
+        <translation>إلغاء</translation>
+    </message>
+    <message>
+        <source>Are you sure that you want to delete &quot;%1&quot;?</source>
+        <translatorcomment>MessageBox to confirm that the user wants to remove the node. %1 is the node name</translatorcomment>
+        <translation>هل أنت متأكد أنك تريد حذف ”%1“؟</translation>
+    </message>
+    <message>
+        <source>Error:</source>
+        <translatorcomment>MessageBox to inform about an error when trying to move or remove a node</translatorcomment>
+        <translation>خطأ:</translation>
     </message>
 </context>
 <context>
@@ -3970,12 +3983,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Additional storage charged at %1 per %2TB.</source>
         <translatorcomment>Balloon tooltip to inform users that additional storate for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
-        <translation>مساحة التخزين الإضافية محسوبة برسم %1 لكل %2 تيرابايت.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Additional transfer quota charged at %1 per %2TB.</source>
         <translatorcomment>Balloon tooltip to inform users that additional transfer quota for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
-        <translation>حجم تراسل المعطيات الإضافي محسوب برسم %1 لكل%2 تيرابايت.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
         <source>minimum %n user</source>
@@ -4087,13 +4100,12 @@ Please delete the folder sync from preferences to cancel them.</source>
 - Improved performance.
 </source>
         <translatorcomment>Changelog for v4.8.0 version</translatorcomment>
-        <translation>- تمت إضافة دعم لحسابات برو Pro Flexi.
+        <translation>- تمت إضافة دعم لحسابات برو Pro&#xa0;Flexi.
 - تمت إضافة ميزة النسخ الاحتياطي الجديدة.
 - تم إصلاح المشكلات التي تم اكتشافها في macOS Ventura.
 - إصلاح الأعطال المكتشفة على أنظمة التشغيل ويندوز Windows و لينيكس Linux و ماك او اس macOS .
 - إصلاح مشاكل الترجمة.
-- تحسين الأداء.
-</translation>
+- تحسين الأداء.</translation>
     </message>
 </context>
 <context>
@@ -4507,27 +4519,27 @@ Do you want to delete it anyway?</source>
     <message>
         <source>%1 TB</source>
         <translatorcomment>File size measured in terabytes</translatorcomment>
-        <translation>%1 تيرابايت</translation>
+        <translation>%1&#xa0;تيرابايت</translation>
     </message>
     <message>
         <source>%1 GB</source>
         <translatorcomment>File size measured in gigabytes</translatorcomment>
-        <translation>%1 غيغابايت</translation>
+        <translation>%1&#xa0;غيغابايت</translation>
     </message>
     <message>
         <source>%1 MB</source>
         <translatorcomment>File size measured in megabytes</translatorcomment>
-        <translation>%1 ميغا بايت</translation>
+        <translation>%1&#xa0;ميغا بايت</translation>
     </message>
     <message>
         <source>%1 KB</source>
         <translatorcomment>File size measured in kilobytes</translatorcomment>
-        <translation>%1 كيلوبايت</translation>
+        <translation>%1&#xa0;كيلوبايت</translation>
     </message>
     <message>
         <source>%1 bytes</source>
         <translatorcomment>File size measured in bytes</translatorcomment>
-        <translation>%1 بايت</translation>
+        <translation>%1&#xa0;بايت</translation>
     </message>
     <message>
         <source>Invalid filename</source>
@@ -4653,19 +4665,6 @@ Do you want to delete it anyway?</source>
     </message>
 </context>
 <context>
-    <name>RenameLocalNodeDialog</name>
-    <message>
-        <source>File can’t be renamed to &quot;%1&quot;</source>
-        <translatorcomment>Error warning shown when a file can´t be renamed due to an error.</translatorcomment>
-        <translation>لا يمكن إعادة تسمية الملف &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <source>Folder can’t be renamed to &quot;%1&quot;</source>
-        <translatorcomment>Error warning shown when a folder can´t be renamed due to an error.</translatorcomment>
-        <translation>لا يمكن إعادة تسمية المجلد &quot;%1&quot;</translation>
-    </message>
-</context>
-<context>
     <name>RenameNodeDialog</name>
     <message>
         <source>Enter new file name</source>
@@ -4771,7 +4770,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Log out</source>
         <translatorcomment>Button label to log out of the application. String as short as possible.</translatorcomment>
-        <translation>تسجيل الخروج</translation>
+        <translation>تسجيل&#xa0;الخروج</translation>
     </message>
     <message>
         <source>Upgrade</source>
@@ -5248,7 +5247,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Pro Lite</source>
         <translatorcomment>Text label indicating the Pro Lite tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>برو لايت Pro Lite</translation>
+        <translation>برو لايت Pro&#xa0;Lite</translation>
     </message>
     <message>
         <source>Business</source>
@@ -5303,17 +5302,17 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Pro I</source>
         <translatorcomment>Text label indicating the Pro I tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>برو Pro I</translation>
+        <translation>برو Pro&#xa0;I</translation>
     </message>
     <message>
         <source>Pro II</source>
         <translatorcomment>Text label indicating the Pro II tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>برو Pro II</translation>
+        <translation>برو Pro&#xa0;II</translation>
     </message>
     <message>
         <source>Pro III</source>
         <translatorcomment>Text label indicating the Pro III tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>برو Pro III</translation>
+        <translation>برو Pro&#xa0;III</translation>
     </message>
     <message>
         <source>Export Key</source>
@@ -5483,7 +5482,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Pro Flexi</source>
         <translatorcomment>Text label indicating the Pro Flexi tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro Flexi</translation>
+        <translation>Pro&#xa0;Flexi</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
@@ -5711,7 +5710,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Are you sure you want to cancel this wizard and undo all changes?</source>
         <translatorcomment>Message shown when an user cancel the Setup Wizard.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>هل تريد إلغاء هذا الإجراء والتراجع عن كافة التغييرات؟</translation>
     </message>
     <message>
         <source>Skip</source>
@@ -5824,7 +5823,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Log in</source>
         <translatorcomment>Button label to open Login form</translatorcomment>
-        <translation>تسجيل الدخول</translation>
+        <translation>تسجيل&#xa0;الدخول</translation>
     </message>
     <message>
         <source>I agree with the MEGA [A]Terms of Service[/A]</source>
@@ -6055,6 +6054,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Message shown while waiting for the server request with the file info to stream</translatorcomment>
         <translation>يُرجى الانتظار…</translation>
     </message>
+    <message>
+        <source>Select items</source>
+        <translatorcomment>Window title for node selector when is openned in stream mode</translatorcomment>
+        <translation>اختر العناصر</translation>
+    </message>
 </context>
 <context>
     <name>SwitchButton</name>
@@ -6211,7 +6215,7 @@ To continue, select a different folder.</source>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a local folder shared with VMWare third party app.</translatorcomment>
-        <translation>أنت تقوم بمزامنة مجلد محلي مشترك مع برنامج VMWare. لا تدعم هذه المجلدات إشعارات نظام الملفات، لذا سيتعين على التطبيق أن يقوم بالفحص باستمرار لاكتشاف التغييرات في ملفاتك ومجلداتك. يرجى استخدام مجلد مختلف إن أمكن لتقليل استخدام وحدة المعالجة المركزية.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7021,22 +7025,22 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Pro Lite</source>
         <translatorcomment>Label to refer Pro Lite tier</translatorcomment>
-        <translation>برو لايت Pro Lite</translation>
+        <translation>برو لايت Pro&#xa0;Lite</translation>
     </message>
     <message>
         <source>Pro I</source>
         <translatorcomment>Label to refer Pro I tier</translatorcomment>
-        <translation>برو Pro I</translation>
+        <translation>برو Pro&#xa0;I</translation>
     </message>
     <message>
         <source>Pro II</source>
         <translatorcomment>Label to refer Pro II tier</translatorcomment>
-        <translation>برو Pro II</translation>
+        <translation>برو Pro&#xa0;II</translation>
     </message>
     <message>
         <source>Pro III</source>
         <translatorcomment>Label to refer Pro III tier</translatorcomment>
-        <translation>برو Pro III</translation>
+        <translation>برو Pro&#xa0;III</translation>
     </message>
     <message numerus="yes">
         <source>%n second ago</source>
@@ -7079,7 +7083,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Log out</source>
         <translatorcomment>Button label to log out the current account</translatorcomment>
-        <translation>تسجيل الخروج</translation>
+        <translation>تسجيل&#xa0;الخروج</translation>
     </message>
     <message>
         <source>Verify your email</source>

@@ -2141,7 +2141,7 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Log in</source>
         <translatorcomment>Title for explanation about log in</translatorcomment>
-        <translation>Log in</translation>
+        <translation>Log&#xa0;in</translation>
     </message>
     <message>
         <source>Create Account</source>
@@ -2867,7 +2867,7 @@ Transfers will automatically resume when you re-open the app.</numerusform>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Your backup ”%1“ has been disabled because the MEGA folder is in the rubbish bin.</translation>
+        <translation>Your backup ”%1“ has been disabled because the MEGA folder is in the Rubbish bin.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
@@ -3040,7 +3040,7 @@ Transfers will automatically resume when you re-open the app.</numerusform>
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
         <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
-        <translation>Storage Quota Exceeded. Please upgrade now</translation>
+        <translation>Storage quota exceeded. Please upgrade now.</translation>
     </message>
     <message>
         <source>Decryption error</source>
@@ -3101,7 +3101,7 @@ Transfers will automatically resume when you re-open the app.</numerusform>
     <message>
         <source>Incoming shares</source>
         <translatorcomment>Title of the Incoming shares root node</translatorcomment>
-        <translation type="unfinished">Incoming shares</translation>
+        <translation>Incoming shares</translation>
     </message>
 </context>
 <context>
@@ -3182,7 +3182,7 @@ Transfers will automatically resume when you re-open the app.</numerusform>
     <message>
         <source>Remote node moved to Rubbish Bin</source>
         <translatorcomment>Label to show that remote node has been moved to Rubbish bin.</translatorcomment>
-        <translation>The remote sync folder has been moved to Rubbish bin</translation>
+        <translation>The remote sync folder has been moved to the Rubbish bin</translation>
     </message>
     <message>
         <source>Share without full access</source>
@@ -3507,13 +3507,15 @@ Your selected incomplete sync transfers won&apos;t be cancelled. All the other s
         <source>A file with this name already exists in this location.
 Enter a different name.</source>
         <translatorcomment>Message shown when the user has entered a name which already exists on the folder</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>A file with this name already exists in this location.
+Enter a different name.</translation>
     </message>
     <message>
         <source>A folder with this name already exists in this location.
 Enter a different name</source>
         <translatorcomment>Message shown when the user has entered a name which already exists on the folder</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>A folder with this name already exists in this location.
+Enter a different name.</translation>
     </message>
 </context>
 <context>
@@ -3604,47 +3606,47 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Folder already synced</source>
         <translatorcomment>Tooltip text to notify the user that this folder is already synced.</translatorcomment>
-        <translation type="unfinished">Folder already synced</translation>
+        <translation>Folder already synced</translation>
     </message>
     <message>
         <source>Folder contents already synced</source>
         <translatorcomment>Tooltip text to notify the user that some folder inside the folder that he is hovering with mouse is already synced.</translatorcomment>
-        <translation type="unfinished">Folder contents already synced</translation>
+        <translation>Folder contents already synced</translation>
     </message>
     <message>
         <source>Recently used</source>
         <translatorcomment>Column title. This column shows when this file or folder was changed.</translatorcomment>
-        <translation type="unfinished">Last modified</translation>
+        <translation>Last modified</translation>
     </message>
     <message>
         <source>Name</source>
         <translatorcomment>Column title. This column shows the name of a file or folder.</translatorcomment>
-        <translation type="unfinished">Name</translation>
+        <translation>Name</translation>
     </message>
     <message>
         <source>Sort by status</source>
         <translatorcomment>First column title tooltip(this column title doesn´t contains text, it shows an icon). Sorts the order of the column by node status, for example synced folders first or last.</translatorcomment>
-        <translation type="unfinished">Sort by status</translation>
+        <translation>Sort by status</translation>
     </message>
     <message>
         <source>Sort by owner name</source>
         <translatorcomment>Owner column title tooltip. Sorts the order of the column by owner name alphabetically.</translatorcomment>
-        <translation type="unfinished">Sort by owner name</translation>
+        <translation>Sort by owner name</translation>
     </message>
     <message>
         <source>Sort by date</source>
         <translatorcomment>Recently used column title tooltip. Sorts the order of the column by date.</translatorcomment>
-        <translation type="unfinished">Sort by date</translation>
+        <translation>Sort by date</translation>
     </message>
     <message>
         <source>Sort by name</source>
         <translatorcomment>Node name column title tooltip. Sorts the order of the column by date.</translatorcomment>
-        <translation type="unfinished">Sort by name</translation>
+        <translation>Sort by name</translation>
     </message>
     <message numerus="yes">
         <source>Today at %1</source>
         <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened today. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>Today at %1</numerusform>
             <numerusform>Today at %1</numerusform>
         </translation>
@@ -3652,7 +3654,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>Yesterday at %1</source>
         <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened yesterday. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>Yesterday at %1</numerusform>
             <numerusform>Yesterday at %1</numerusform>
         </translation>
@@ -3660,7 +3662,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>%1 at %2</source>
         <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was previously to yesterday. %1 represents the date (day month and year), while %2 represents the hour). Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%1 at %2</numerusform>
             <numerusform>%1 at %2</numerusform>
         </translation>
@@ -3671,17 +3673,17 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Get MEGA link</source>
         <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It creates an MEGA link and copy to Clipboard.</translatorcomment>
-        <translation type="unfinished">Get MEGA link</translation>
+        <translation>Get MEGA link</translation>
     </message>
     <message>
         <source>Rename</source>
         <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It renames the node (file or folder).</translatorcomment>
-        <translation type="unfinished">Rename</translation>
+        <translation>Rename</translation>
     </message>
     <message>
         <source>Delete</source>
         <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It removes the node (file or folder).</translatorcomment>
-        <translation type="unfinished">Delete</translation>
+        <translation>Delete</translation>
     </message>
 </context>
 <context>
@@ -3689,32 +3691,32 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Always upload to this destination</source>
         <translatorcomment>Label to inform the user upload files/folder to a default destination. with a checkbox.</translatorcomment>
-        <translation type="unfinished">Always upload to this destination</translation>
+        <translation>Always upload to this destination</translation>
     </message>
     <message>
         <source>New folder</source>
         <translatorcomment>Button label to create a New folder at your MEGA cloud drive. Keep capital letters. String as short as possible.</translatorcomment>
-        <translation type="unfinished">New folder</translation>
+        <translation>New folder</translation>
     </message>
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation type="unfinished">OK</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation type="unfinished">Cancel</translation>
+        <translation>Cancel</translation>
     </message>
     <message>
         <source>Are you sure that you want to delete &quot;%1&quot;?</source>
         <translatorcomment>MessageBox to confirm that the user wants to remove the node. %1 is the node name</translatorcomment>
-        <translation type="unfinished">Are you sure that you want to delete “%1”?</translation>
+        <translation>Are you sure that you want to delete “%1”?</translation>
     </message>
     <message>
         <source>Error:</source>
         <translatorcomment>MessageBox to inform about an error when trying to move or remove a node</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Error:</translation>
     </message>
 </context>
 <context>
@@ -4089,12 +4091,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Additional storage charged at %1 per %2TB.</source>
         <translatorcomment>Balloon tooltip to inform users that additional storate for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
-        <translation>Additional storage charged at %1 per %2TB.</translation>
+        <translation>Additional storage charged at %1 per %2&#xa0;TB.</translation>
     </message>
     <message>
         <source>Additional transfer quota charged at %1 per %2TB.</source>
         <translatorcomment>Balloon tooltip to inform users that additional transfer quota for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
-        <translation>Additional transfer quota charged at %1 per %2TB.</translation>
+        <translation>Additional transfer quota charged at %1 per %2&#xa0;TB.</translation>
     </message>
     <message numerus="yes">
         <source>minimum %n user</source>
@@ -4201,21 +4203,13 @@ Please delete the folder sync from preferences to cancel them.</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Support for Flexi Pro accounts.
-- New backups feature.
-- Fixed issues detected with macOS Ventura.
-- Fixed detected crashes on Windows, Linux, and macOS.
-- Fixed translation issues.
-- Improved performance.
+        <source>- Detected crashes on Windows, Linux, and masOS fixed.
+- Less device memory will be used by accounts with large amounts of data stored.
+- Application performance improved.
+- Translation issues fixed.
 </source>
-        <translatorcomment>Changelog for v4.8.0 version</translatorcomment>
-        <translation>- Added support for Pro&#xa0;Flexi accounts.
-- Added new backup feature.
-- Fixed issues detected with macOS Ventura.
-- Fixed detected crashes on Windows, Linux, and macOS.
-- Fixed translation issues.
-- Improved performance.
-</translation>
+        <translatorcomment>Changelog for version v4.8.5</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5153,7 +5147,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Report Issue</source>
         <translatorcomment>Button label used to submit bug reports to MEGA.</translatorcomment>
-        <translation>Report Issue</translation>
+        <translation>Report issue</translation>
     </message>
     <message>
         <source>My Account</source>
@@ -6185,7 +6179,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Select items</source>
         <translatorcomment>Window title for node selector when is openned in stream mode</translatorcomment>
-        <translation type="unfinished">Select items</translation>
+        <translation>Select items</translation>
     </message>
 </context>
 <context>
@@ -6343,7 +6337,7 @@ To continue, select a different folder.</translation>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a local folder shared with VMWare third party app.</translatorcomment>
-        <translation>You&apos;re syncing a local folder shared with VMWare. Those folders don&apos;t support file system notifications so the app will have to be continuously scanning to detect changes in your files and folders. Use a different folder if possible to reduce CPU usage.</translation>
+        <translation>You&apos;re syncing a local folder shared with VMWare. This folder doesn&apos;t support file system notifications, so to detect changes and sync, the app will have to continuously scan the folder and the files within it. If possible, use a different folder to reduce CPU usage.</translation>
     </message>
 </context>
 <context>
