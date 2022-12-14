@@ -3603,6 +3603,11 @@ bool MegaApplication::isQueueProcessingOngoing()
 
 void MegaApplication::onFolderTransferUpdate(FolderTransferUpdateEvent event)
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     transferProgressController.update(event);
     if (event.stage >= MegaTransfer::STAGE_TRANSFERRING_FILES)
     {
@@ -8280,10 +8285,17 @@ void MegaApplication::onGlobalSyncStateChangedImpl(MegaApi *, bool timeout)
     {
         mThreadPool->push([this]() {
 
+        auto model = getTransfersModel();
+        if (!megaApi || !model)
+        {
+            return;
+        }
+
         indexing = megaApi->isScanning();
         waiting = megaApi->isWaiting();
         syncing = megaApi->isSyncing();
-        auto transferCount = getTransfersModel()->getTransfersCount();
+
+        auto transferCount = model->getTransfersCount();
         transferring = transferCount.pendingUploads || transferCount.pendingDownloads;
 
         Utilities::queueFunctionInAppThread([=](){
