@@ -2967,7 +2967,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
         <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>超出儲存空間配額。請立即升級。</translation>
     </message>
     <message>
         <source>Decryption error</source>
@@ -3426,7 +3426,8 @@ Enter a different name.</source>
         <source>A folder with this name already exists in this location.
 Enter a different name</source>
         <translatorcomment>Message shown when the user has entered a name which already exists on the folder</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>此位置已存在相同名稱的資料夾。
+請輸入一個不同名稱。</translation>
     </message>
 </context>
 <context>
@@ -3978,12 +3979,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Additional storage charged at %1 per %2TB.</source>
         <translatorcomment>Balloon tooltip to inform users that additional storate for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>額外儲存空間按每%2&#xa0;TB收費%1。</translation>
     </message>
     <message>
         <source>Additional transfer quota charged at %1 per %2TB.</source>
         <translatorcomment>Balloon tooltip to inform users that additional transfer quota for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>額外傳輸配額按每%2&#xa0;TB收費%1。</translation>
     </message>
     <message numerus="yes">
         <source>minimum %n user</source>
@@ -4087,20 +4088,16 @@ Please delete the folder sync from preferences to cancel them.</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Support for Flexi Pro accounts.
-- New backups feature.
-- Fixed issues detected with macOS Ventura.
-- Fixed detected crashes on Windows, Linux, and macOS.
-- Fixed translation issues.
-- Improved performance.
+        <source>- Detected crashes on Windows, Linux, and masOS fixed.
+- Less device memory will be used by accounts with large amounts of data stored.
+- Application performance improved.
+- Translation issues fixed.
 </source>
-        <translatorcomment>Changelog for v4.8.0 version</translatorcomment>
-        <translation>- 加入對Pro&#xa0;Flexi帳戶的支援。
-- 加入新的備份功能。
-- 修復了在macOS Ventura中檢測到的問題。
-- 修復了在Windows、Linux和macOS上檢測到的崩潰問題。
-- 修正翻譯問題。
-- 改進性能。</translation>
+        <translatorcomment>Changelog for version v4.8.5</translatorcomment>
+        <translation>- 修復在Windows、Linux和macOS上檢測到的當機問題。
+- 有大量資料儲存的帳戶所使用的裝置記憶體將更少。
+- 改善應用程式性能。
+- 修復翻譯問題。</translation>
     </message>
 </context>
 <context>
@@ -6210,7 +6207,7 @@ To continue, select a different folder.</source>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a local folder shared with VMWare third party app.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>您正在同步一個透過VMWare共享的本地資料夾。這個資料夾不支援檔案系統通知，所以為了偵測變更和同步，應用程式須不斷地對資料夾和其中的檔案進行掃描。如果可以的話，請使用一個不同的資料夾來降低CPU的使用率。</translation>
     </message>
 </context>
 <context>

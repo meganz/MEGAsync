@@ -2968,7 +2968,7 @@ Les transferts reprendront automatiquement quand vous rouvrirez l’appli.</nume
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
         <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Le quota d’espace de stockage a été dépassé. Veuillez surclasser votre compte maintenant.</translation>
     </message>
     <message>
         <source>Decryption error</source>
@@ -3428,7 +3428,8 @@ Saisissez un nom différent.</translation>
         <source>A folder with this name already exists in this location.
 Enter a different name</source>
         <translatorcomment>Message shown when the user has entered a name which already exists on the folder</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Un dossier du même nom existe déjà dans cet emplacement.
+Saisissez un nom différent.</translation>
     </message>
 </context>
 <context>
@@ -4089,20 +4090,13 @@ Please delete the folder sync from preferences to cancel them.</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Support for Flexi Pro accounts.
-- New backups feature.
-- Fixed issues detected with macOS Ventura.
-- Fixed detected crashes on Windows, Linux, and macOS.
-- Fixed translation issues.
-- Improved performance.
+        <source>- Detected crashes on Windows, Linux, and masOS fixed.
+- Less device memory will be used by accounts with large amounts of data stored.
+- Application performance improved.
+- Translation issues fixed.
 </source>
-        <translatorcomment>Changelog for v4.8.0 version</translatorcomment>
-        <translation>– Prise en charge des comptes Pro&#xa0;Flexi.
-– Ajout d’une nouvelle fonction de sauvegarde.
-– Correction de problèmes détectés sous macOS Ventura.
-– Correction de plantages détectés sous Windows, Linux et macOS.
-– Correction de problèmes de traduction.
-– Amélioration des performances.</translation>
+        <translatorcomment>Changelog for version v4.8.5</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6212,7 +6206,7 @@ Afin de poursuivre, sélectionner un dossier différent.</translation>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a local folder shared with VMWare third party app.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Vous synchronisez un dossier local partagé avec VMware. Ce dossier ne prend pas en charge les notifications du système de fichiers. Ainsi, pour détecter les changements, l’appli devra continuellement analyser le dossier et les fichiers qu’il comprend. Si possible, utilisez un dossier différent pour réduire l’utilisation de l’UCT.</translation>
     </message>
 </context>
 <context>

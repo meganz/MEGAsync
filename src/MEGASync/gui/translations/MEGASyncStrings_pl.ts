@@ -701,7 +701,7 @@
     <message>
         <source>Uploads:</source>
         <translatorcomment>Label to indicate the limit of upload connections per transfer.</translatorcomment>
-        <translation>Wgrywanie:</translation>
+        <translation>Przesyłanie:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1915,7 +1915,7 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
     <message>
         <source>Open Uploads</source>
         <translatorcomment>Tooltip of button that let the user open uploads section of transfer manager.</translatorcomment>
-        <translation>Otwórz przesyłanie</translation>
+        <translation>Otwórz przesyłane</translation>
     </message>
     <message>
         <source>No notifications for contacts</source>
@@ -2255,7 +2255,7 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
     <message>
         <source>About</source>
         <translatorcomment>Label to indicate the About option for the application (MAX 20 characters)</translatorcomment>
-        <translation>O</translation>
+        <translation>O aplikacji</translation>
     </message>
     <message>
         <source>Up to date</source>
@@ -2797,7 +2797,7 @@ Transfery zostaną automatycznie wznowione po ponownym otwarciu aplikacji.</nume
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Twoja kopia zapasowa &quot;%1&quot; została wyłączona, ponieważ katalog zdalny znajduje się w Koszu.</translation>
+        <translation>Twoja kopia zapasowa ”%1“ została wyłączona, ponieważ katalog zdalny znajduje się w Koszu.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
@@ -2970,7 +2970,7 @@ Transfery zostaną automatycznie wznowione po ponownym otwarciu aplikacji.</nume
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
         <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Przekroczono limit miejsca. Uaktualnij teraz.</translation>
     </message>
     <message>
         <source>Decryption error</source>
@@ -3429,7 +3429,8 @@ Wprowadź inną nazwę.</translation>
         <source>A folder with this name already exists in this location.
 Enter a different name</source>
         <translatorcomment>Message shown when the user has entered a name which already exists on the folder</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Katalog o tej nazwie już istnieje w tej lokalizacji.
+Wprowadź inną nazwę.</translation>
     </message>
 </context>
 <context>
@@ -3981,12 +3982,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Additional storage charged at %1 per %2TB.</source>
         <translatorcomment>Balloon tooltip to inform users that additional storate for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Opłata za dodatkową przestrzeń dyskową wynosi %1 za %2&#xa0;TB.</translation>
     </message>
     <message>
         <source>Additional transfer quota charged at %1 per %2TB.</source>
         <translatorcomment>Balloon tooltip to inform users that additional transfer quota for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Dodatkowy limit transferu naliczany w wysokości %1 za %2&#xa0;TB.</translation>
     </message>
     <message numerus="yes">
         <source>minimum %n user</source>
@@ -4090,20 +4091,16 @@ Please delete the folder sync from preferences to cancel them.</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Support for Flexi Pro accounts.
-- New backups feature.
-- Fixed issues detected with macOS Ventura.
-- Fixed detected crashes on Windows, Linux, and macOS.
-- Fixed translation issues.
-- Improved performance.
+        <source>- Detected crashes on Windows, Linux, and masOS fixed.
+- Less device memory will be used by accounts with large amounts of data stored.
+- Application performance improved.
+- Translation issues fixed.
 </source>
-        <translatorcomment>Changelog for v4.8.0 version</translatorcomment>
-        <translation>- Dodano obsługę kont Pro&#xa0;Flexi.
-- Dodano nową funkcję tworzenia kopii zapasowych.
-- Naprawiono błędy wykryte w systemie macOS Ventura.
-- Naprawiono wykryte awarie w systemach Windows, Linux i macOS.
-- Naprawiono problemy z tłumaczeniem.
-- Poprawiono wydajność.</translation>
+        <translatorcomment>Changelog for version v4.8.5</translatorcomment>
+        <translation>- Naprawiono wykryte awarie w systemach Windows, Linux i macOS.
+- Mniej pamięci urządzenia będzie wykorzystywane przez konta z zapisanymi dużymi ilościami danych.
+- Poprawiono wydajność aplikacji.
+- Poprawiono problemy z tłumaczeniem.</translation>
     </message>
 </context>
 <context>
@@ -4840,7 +4837,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Uploads:</source>
         <translatorcomment>Label to indicate the default folder for uploads.</translatorcomment>
-        <translation>Wgrywanie:</translation>
+        <translation>Przesyłanie:</translation>
     </message>
     <message>
         <source>Downloads:</source>
@@ -6213,7 +6210,7 @@ Aby kontynuować, wybierz inny katalog.</translation>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a local folder shared with VMWare third party app.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Synchronizujesz lokalny katalog udostępniony z VMWare. Ten katalog nie obsługuje powiadomień systemu plików, więc aby wykryć zmiany i zsynchronizować, aplikacja będzie musiała stale skanować katalog i znajdujące się w nim pliki. Jeśli to możliwe, użyj innego katalogu, aby zmniejszyć zużycie procesora.</translation>
     </message>
 </context>
 <context>
@@ -6396,7 +6393,7 @@ Aby kontynuować, wybierz inny katalog.</translation>
     <message>
         <source>Uploads</source>
         <translatorcomment>Label of tab to access all active uploads</translatorcomment>
-        <translation>Wgrywane</translation>
+        <translation>Przesyłanie</translation>
     </message>
     <message>
         <source>Completed</source>
@@ -6698,7 +6695,7 @@ Aby uzyskać więcej limitu, uaktualnij konto do wersji Pro lub poczekaj [A], a�
     <message>
         <source>Cancel all uploads</source>
         <translatorcomment>Tooltip for cancel button when the user is in the uploads category</translatorcomment>
-        <translation>Anuluj wszystkie transfery w Wgrane</translation>
+        <translation>Anuluj wszystkie transfery w Przesyłane</translation>
     </message>
     <message>
         <source>Cancel all failed</source>
@@ -6783,7 +6780,7 @@ Aby uzyskać więcej limitu, uaktualnij konto do wersji Pro lub poczekaj [A], a�
     <message>
         <source>Resume all uploads</source>
         <translatorcomment>Tooltip for Resume button when the user is in the uploads category</translatorcomment>
-        <translation>Wznów wszystkie wgrania</translation>
+        <translation>Wznów wszystkie przesyłania</translation>
     </message>
     <message>
         <source>Resume all search results</source>
@@ -6828,7 +6825,7 @@ Aby uzyskać więcej limitu, uaktualnij konto do wersji Pro lub poczekaj [A], a�
     <message>
         <source>Pause all uploads</source>
         <translatorcomment>Tooltip for Pause button when the user is in the uploads category</translatorcomment>
-        <translation>Wstrzymaj wszystkie wgrania</translation>
+        <translation>Wstrzymaj wszystkie przesyłania</translation>
     </message>
     <message>
         <source>Pause all search results</source>
@@ -7156,7 +7153,7 @@ Chcesz go utworzyć?</translation>
     <message>
         <source>MEGA synced folder</source>
         <translatorcomment>Label to indicate the synced MEGA folder.</translatorcomment>
-        <translation>Katalog MEGA</translation>
+        <translation>MEGA katalog synchronizowany</translation>
     </message>
 </context>
 </TS>

@@ -2967,7 +2967,7 @@ Các phiên truyền tải sẽ được tự động tiếp tục khi bạn m�
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
         <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Vượt mức giới hạn lưu trữ. Xin nâng cấp ngay.</translation>
     </message>
     <message>
         <source>Decryption error</source>
@@ -3426,7 +3426,8 @@ Nhập một tên khác.</translation>
         <source>A folder with this name already exists in this location.
 Enter a different name</source>
         <translatorcomment>Message shown when the user has entered a name which already exists on the folder</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Đã có một thư mục với cùng tên ở vị trí này rồi.
+Nhập một tên khác.</translation>
     </message>
 </context>
 <context>
@@ -4087,20 +4088,16 @@ Please delete the folder sync from preferences to cancel them.</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Support for Flexi Pro accounts.
-- New backups feature.
-- Fixed issues detected with macOS Ventura.
-- Fixed detected crashes on Windows, Linux, and macOS.
-- Fixed translation issues.
-- Improved performance.
+        <source>- Detected crashes on Windows, Linux, and masOS fixed.
+- Less device memory will be used by accounts with large amounts of data stored.
+- Application performance improved.
+- Translation issues fixed.
 </source>
-        <translatorcomment>Changelog for v4.8.0 version</translatorcomment>
-        <translation>- Thêm hỗ trợ cho tài khoản hạng Pro&#xa0;Flexi.
-- Thêm tính năng sao lưu mới.
-- Sửa lỗi đã phát hiện với macOS Ventura.
-- Sửa lỗi đã phát hện với Windows, Linux, and macOS.
-- Sưa lỗi dịch thuật.
-- Cải thiện hiệu suất.</translation>
+        <translatorcomment>Changelog for version v4.8.5</translatorcomment>
+        <translation>- Các lỗi treo máy xác định trên Windows, Linux, and macOS đã được sửa.
+- Bộ nhớ thiết bị giờ đây được sử dụng ít hơn dù tài khoản có chứa số lượng lớn dữ liệu.
+- Hiệu suất ứng dụng được cải thiện.
+- Sửa lỗi dịch thuật.</translation>
     </message>
 </context>
 <context>
@@ -6210,7 +6207,7 @@ To continue, select a different folder.</source>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a local folder shared with VMWare third party app.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Bạn đang đồng bộ một thư mục cục bộ được chia sẻ với VMWare. Thư mục này không hỗ trợ thông báo hệ thống tệp cho nên để phát hiện các thay đổi có trong các tệp tin và thư mục của bạn, ứng dụng sẽ phải quét dữ liệu liên tục. Nếu được, hãy sử dụng một thư mục khác để giảm mức sử dụng CPU.</translation>
     </message>
 </context>
 <context>

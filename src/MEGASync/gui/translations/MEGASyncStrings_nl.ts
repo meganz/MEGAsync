@@ -2968,7 +2968,7 @@ Overdrachten worden automatisch hervat wanneer u de applicatie heropend.</numeru
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
         <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Opslag tegoed overschreden. Nu upgraden.</translation>
     </message>
     <message>
         <source>Decryption error</source>
@@ -3427,7 +3427,8 @@ Voer een andere naam in.</translation>
         <source>A folder with this name already exists in this location.
 Enter a different name</source>
         <translatorcomment>Message shown when the user has entered a name which already exists on the folder</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Er bestaat al een map met deze naam op deze locatie.
+Voer een andere naam in.</translation>
     </message>
 </context>
 <context>
@@ -3979,7 +3980,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Additional storage charged at %1 per %2TB.</source>
         <translatorcomment>Balloon tooltip to inform users that additional storate for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
-        <translation>Extra opslagtegoed in rekening gebracht op %1per %2&#xa0;TB.</translation>
+        <translation>Extra opslagtegoed in rekening gebracht op %1 per %2&#xa0;TB.</translation>
     </message>
     <message>
         <source>Additional transfer quota charged at %1 per %2TB.</source>
@@ -4089,20 +4090,13 @@ Om de synchronisatie te verwijderen, gaat u naar Voorkeuren in de desktop-applic
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Support for Flexi Pro accounts.
-- New backups feature.
-- Fixed issues detected with macOS Ventura.
-- Fixed detected crashes on Windows, Linux, and macOS.
-- Fixed translation issues.
-- Improved performance.
+        <source>- Detected crashes on Windows, Linux, and masOS fixed.
+- Less device memory will be used by accounts with large amounts of data stored.
+- Application performance improved.
+- Translation issues fixed.
 </source>
-        <translatorcomment>Changelog for v4.8.0 version</translatorcomment>
-        <translation>- Ondersteuning toegevoegd voor Pro&#xa0;Flexi-accounts. 
-- Nieuwe back-upfunctie toegevoegd.
-- Problemen opgelost die zijn gedetecteerd met macOS Ventura.
-- Vaste gedetecteerde crashes op Windows, Linux en macOS.
-- Vertaalproblemen opgelost.
-- Verbeterde prestatie.</translation>
+        <translatorcomment>Changelog for version v4.8.5</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

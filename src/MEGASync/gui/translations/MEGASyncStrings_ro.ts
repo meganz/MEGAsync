@@ -2969,7 +2969,7 @@ Transferurile se vor relua automat când redeschizi aplicația.</numerusform></t
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
         <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Cotă de stocare depășită. Te rugăm să faci upgrade acum.</translation>
     </message>
     <message>
         <source>Decryption error</source>
@@ -3428,7 +3428,8 @@ Introdu un alt nume.</translation>
         <source>A folder with this name already exists in this location.
 Enter a different name</source>
         <translatorcomment>Message shown when the user has entered a name which already exists on the folder</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Un folder cu acest nume există deja în această locație.
+Introdu un alt nume.</translation>
     </message>
 </context>
 <context>
@@ -3980,12 +3981,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Additional storage charged at %1 per %2TB.</source>
         <translatorcomment>Balloon tooltip to inform users that additional storate for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Spațiul de stocare suplimentar este taxat cu %1 per %2&#xa0;TB.</translation>
     </message>
     <message>
         <source>Additional transfer quota charged at %1 per %2TB.</source>
         <translatorcomment>Balloon tooltip to inform users that additional transfer quota for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Cota de transfer suplimentară este taxată cu %1 per %2&#xa0;TB.</translation>
     </message>
     <message numerus="yes">
         <source>minimum %n user</source>
@@ -4089,20 +4090,13 @@ Please delete the folder sync from preferences to cancel them.</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Support for Flexi Pro accounts.
-- New backups feature.
-- Fixed issues detected with macOS Ventura.
-- Fixed detected crashes on Windows, Linux, and macOS.
-- Fixed translation issues.
-- Improved performance.
+        <source>- Detected crashes on Windows, Linux, and masOS fixed.
+- Less device memory will be used by accounts with large amounts of data stored.
+- Application performance improved.
+- Translation issues fixed.
 </source>
-        <translatorcomment>Changelog for v4.8.0 version</translatorcomment>
-        <translation>- A fost adăugat suport pentru conturile Pro&#xa0;Flexi.
-- A fost adăugată o nouă funcție de backup.
-- Au fost remediate problemele detectate cu macOS Ventura.
-- Au fost remediate defecțiunile detectate pe Windows, Linux și macOS.
-- Au fost remediate probleme de traducere.
-- A fost îmbunătățită performanța.</translation>
+        <translatorcomment>Changelog for version v4.8.5</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6212,7 +6206,7 @@ Pentru a continua, selectează un alt folder.</translation>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a local folder shared with VMWare third party app.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Sincronizezi un folder local partajat cu VMWare. Acest folder nu suportă notificări privind sistemul de fișiere, astfel pentru a detecta modificările și sincronizarea, aplicația va trebui să scaneze continuu folderul și fișierele din acesta. Dacă este posibil, folosește un folder diferit pentru a reduce utilizarea procesorului.</translation>
     </message>
 </context>
 <context>

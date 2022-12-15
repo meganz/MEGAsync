@@ -2968,7 +2968,7 @@ As transferências continuarão automaticamente quando você abrir o aplicativo 
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
         <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Cota de armazenamento excedida. Por favor, faça um upgrade.</translation>
     </message>
     <message>
         <source>Decryption error</source>
@@ -3427,7 +3427,9 @@ Digite um nome diferente.</translation>
         <source>A folder with this name already exists in this location.
 Enter a different name</source>
         <translatorcomment>Message shown when the user has entered a name which already exists on the folder</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Já existe uma pasta com este nome neste local.
+Digite um nome diferente.
+ </translation>
     </message>
 </context>
 <context>
@@ -4088,20 +4090,13 @@ Please delete the folder sync from preferences to cancel them.</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Support for Flexi Pro accounts.
-- New backups feature.
-- Fixed issues detected with macOS Ventura.
-- Fixed detected crashes on Windows, Linux, and macOS.
-- Fixed translation issues.
-- Improved performance.
+        <source>- Detected crashes on Windows, Linux, and masOS fixed.
+- Less device memory will be used by accounts with large amounts of data stored.
+- Application performance improved.
+- Translation issues fixed.
 </source>
-        <translatorcomment>Changelog for v4.8.0 version</translatorcomment>
-        <translation>- Suporte a contas Pro&#xa0;Flexi.
-- Novo recurso de backup.
-- Correção de problemas detectados com o macOS Ventura.
-- Correção de falhas detectadas no Windows, Linux e macOS.
-- Correção de problemas de tradução.
-- Aprimoramento da performance.</translation>
+        <translatorcomment>Changelog for version v4.8.5</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

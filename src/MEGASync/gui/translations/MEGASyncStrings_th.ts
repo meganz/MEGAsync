@@ -2967,7 +2967,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
         <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>พื้นที่จัดเก็บของคุณเต็มแล้ว กรุณาอัปเกรดทันที</translation>
     </message>
     <message>
         <source>Decryption error</source>
@@ -3425,7 +3425,7 @@ Enter a different name.</source>
         <source>A folder with this name already exists in this location.
 Enter a different name</source>
         <translatorcomment>Message shown when the user has entered a name which already exists on the folder</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>มีโฟลเดอร์ชื่อนี้อยู่ในตำแหน่งนี้แล้ว กรอกชื่ออื่น</translation>
     </message>
 </context>
 <context>
@@ -4086,20 +4086,17 @@ Please delete the folder sync from preferences to cancel them.</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Support for Flexi Pro accounts.
-- New backups feature.
-- Fixed issues detected with macOS Ventura.
-- Fixed detected crashes on Windows, Linux, and macOS.
-- Fixed translation issues.
-- Improved performance.
+        <source>- Detected crashes on Windows, Linux, and masOS fixed.
+- Less device memory will be used by accounts with large amounts of data stored.
+- Application performance improved.
+- Translation issues fixed.
 </source>
-        <translatorcomment>Changelog for v4.8.0 version</translatorcomment>
-        <translation>- เพิ่มการสนับสนุนบัญชี Pro&#xa0;Flexi
-- เพิ่มฟีเจอร์การสำรองข้อมูลใหม่
-- แก้ไขปัญหาที่ตรวจพบบน macOS Ventura
-- แก้ไขข้อผิดพลาดที่ตรวจพบบน Windows, Linux และ macOS
-- แก้ไขข้อผิดพลาดในการแปลบางจุด
-- ปรับปรุงประสิทธิภาพการทำงานทั่วไป</translation>
+        <translatorcomment>Changelog for version v4.8.5</translatorcomment>
+        <translation>- แก้ไขแอปหยุดทำงานที่ตรวจ
+เจอบน Windows, Linux และ macOS
+- บัญชีที่มีข้อมูลจำนวนมากจะใช้หน่วยความจำบนอุปกรณ์ของคุณน้อยลง
+- ปรับปรุงประสิทธิภาพของแอปพลิเคชัน
+- แก้ไขข้อผิดพลาดในการแปลบางจุด</translation>
     </message>
 </context>
 <context>
@@ -6209,7 +6206,7 @@ To continue, select a different folder.</source>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a local folder shared with VMWare third party app.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>คุณกำลังซิงค์โฟลเดอร์ในเครื่องที่ใช้แชร์อยู่กับ VMware โฟลเดอร์นี้ไม่สนับสนุนการแจ้งเตือนระบบไฟล์ ดังนั้น เพื่อตรวจจับการเปลี่ยนแปลง แอปจะต้องสแกนโฟลเดอร์และไฟล์ที่อยู่ในนั้นอย่างต่อเนื่อง หากเป็นไปได้ กรุณาใช้โฟลเดอร์อื่นเพื่อลดการใช้งาน CPU ลง</translation>
     </message>
 </context>
 <context>

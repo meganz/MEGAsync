@@ -1246,7 +1246,7 @@
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>Ihr Business-Account ist abgelaufen</translation>
+        <translation>Account deaktiviert</translation>
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
@@ -2968,7 +2968,7 @@ Die Transfers werden automatisch fortgesetzt, wenn Sie die App erneut öffnen.</
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
         <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Speicherlimit überschritten. Bitte jetzt upgraden&#xa0;</translation>
     </message>
     <message>
         <source>Decryption error</source>
@@ -3427,7 +3427,8 @@ Bitte geben Sie einen anderen Namen ein.</translation>
         <source>A folder with this name already exists in this location.
 Enter a different name</source>
         <translatorcomment>Message shown when the user has entered a name which already exists on the folder</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>An diesem Ort befindet sich bereits ein Ordner mit diesem Namen.
+Bitte geben Sie einen anderen Namen ein.</translation>
     </message>
 </context>
 <context>
@@ -3979,12 +3980,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Additional storage charged at %1 per %2TB.</source>
         <translatorcomment>Balloon tooltip to inform users that additional storate for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Zusätzlicher Speicherplatz wird mit %1 pro %2&#xa0;TB berechnet.</translation>
     </message>
     <message>
         <source>Additional transfer quota charged at %1 per %2TB.</source>
         <translatorcomment>Balloon tooltip to inform users that additional transfer quota for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Zusätzliches Transfervolumen wird mit %1 pro %2&#xa0;TB berechnet.</translation>
     </message>
     <message numerus="yes">
         <source>minimum %n user</source>
@@ -4088,20 +4089,16 @@ Please delete the folder sync from preferences to cancel them.</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Support for Flexi Pro accounts.
-- New backups feature.
-- Fixed issues detected with macOS Ventura.
-- Fixed detected crashes on Windows, Linux, and macOS.
-- Fixed translation issues.
-- Improved performance.
+        <source>- Detected crashes on Windows, Linux, and masOS fixed.
+- Less device memory will be used by accounts with large amounts of data stored.
+- Application performance improved.
+- Translation issues fixed.
 </source>
-        <translatorcomment>Changelog for v4.8.0 version</translatorcomment>
-        <translation>- Unterstützung für Pro-Flexi-Accounts eingeführt.
-- Neue Backup-Funktion eingeführt.
-- Erkannte Probleme mit macOS Ventura behoben.
-- Erkannte Abstürze unter Windows, Linux und macOS behoben.
-- Übersetzungsprobleme behoben.
-- Leistung verbessert.</translation>
+        <translatorcomment>Changelog for version v4.8.5</translatorcomment>
+        <translation>- Erkannte Abstürze unter Windows, Linux und macOS behoben.
+- Bei Accounts mit großen Datenmengen wird weniger Gerätespeicher verwendet.
+- Anwendungsleistung verbessert.
+- Übersetzungsprobleme behoben.</translation>
     </message>
 </context>
 <context>
@@ -6211,7 +6208,7 @@ Um fortzufahren, wählen Sie einen anderen Ordner aus.</translation>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a local folder shared with VMWare third party app.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Sie synchronisieren einen lokalen Ordner, der mit VMware freigegeben wurde. Dieser Ordner unterstützt keine Dateisystem-Benachrichtigungen, sodass die App den Ordner und die darin enthaltenen Dateien kontinuierlich überprüfen muss, um Änderungen zu erkennen und zu synchronisieren. Wählen Sie nach Möglichkeit einen anderen Ordner, um die CPU-Belastung zu reduzieren.</translation>
     </message>
 </context>
 <context>

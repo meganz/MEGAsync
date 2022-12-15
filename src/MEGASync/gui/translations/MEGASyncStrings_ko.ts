@@ -2968,7 +2968,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
         <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>저장소 할당량 초과. 지금 업그레이드 하세요.</translation>
     </message>
     <message>
         <source>Decryption error</source>
@@ -3029,7 +3029,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Incoming shares</source>
         <translatorcomment>Title of the Incoming shares root node</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>들어오는 공유</translation>
     </message>
 </context>
 <context>
@@ -3429,7 +3429,8 @@ Enter a different name.</source>
         <source>A folder with this name already exists in this location.
 Enter a different name</source>
         <translatorcomment>Message shown when the user has entered a name which already exists on the folder</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>이 위치에 이 이름을 가진 폴더가 이미 존재합니다.
+다른 이름을 입력하세요.</translation>
     </message>
 </context>
 <context>
@@ -3518,7 +3519,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Recently used</source>
         <translatorcomment>Column title. This column shows when this file or folder was changed.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>최종 수정일</translation>
     </message>
     <message>
         <source>Name</source>
@@ -3589,12 +3590,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>New folder</source>
         <translatorcomment>Button label to create a New folder at your MEGA cloud drive. Keep capital letters. String as short as possible.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>새 폴더</translation>
     </message>
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -3981,12 +3982,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Additional storage charged at %1 per %2TB.</source>
         <translatorcomment>Balloon tooltip to inform users that additional storate for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>추가 저장소는 %2TB당 %1(으)로 청구됩니다.</translation>
     </message>
     <message>
         <source>Additional transfer quota charged at %1 per %2TB.</source>
         <translatorcomment>Balloon tooltip to inform users that additional transfer quota for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>추가 전송 할당량은 %2TB당 %1(으)로 청구됩니다.</translation>
     </message>
     <message numerus="yes">
         <source>minimum %n user</source>
@@ -4090,20 +4091,13 @@ Please delete the folder sync from preferences to cancel them.</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Support for Flexi Pro accounts.
-- New backups feature.
-- Fixed issues detected with macOS Ventura.
-- Fixed detected crashes on Windows, Linux, and macOS.
-- Fixed translation issues.
-- Improved performance.
+        <source>- Detected crashes on Windows, Linux, and masOS fixed.
+- Less device memory will be used by accounts with large amounts of data stored.
+- Application performance improved.
+- Translation issues fixed.
 </source>
-        <translatorcomment>Changelog for v4.8.0 version</translatorcomment>
-        <translation>- Pro&#xa0;Flexi 계정 지원 추가.
-- 새 백업 기능 추가.
-- macOS Ventura에서 감지된 문제 수정.
-- Windows, Linux, 그리고 macOS에서 감지된 충돌 수정.
-- 번역 문제 수정.
-- 성능 향상.</translation>
+        <translatorcomment>Changelog for version v4.8.5</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6214,7 +6208,7 @@ To continue, select a different folder.</source>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a local folder shared with VMWare third party app.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>당신은 VMWare와 공유된 로컬 폴더를 동기화하려고 합니다. 이 폴더는 파일 시스템 알림을 지원하지 않아서 폴더와 파일의 변화 탐지와 동기화를 위해, 앱이 지속적으로 스캔할 것입니다. 가능하다면, CPU 사용량을 줄이기 위해 다른 폴더를 이용하세요.</translation>
     </message>
 </context>
 <context>

@@ -2965,7 +2965,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
         <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ストレージ容量を超えました。今すぐアップグレードしてください。</translation>
     </message>
     <message>
         <source>Decryption error</source>
@@ -3424,7 +3424,7 @@ Enter a different name.</source>
         <source>A folder with this name already exists in this location.
 Enter a different name</source>
         <translatorcomment>Message shown when the user has entered a name which already exists on the folder</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>この名前のフォルダは、この場所にすでに存在します。別の名前を入力してください。</translation>
     </message>
 </context>
 <context>
@@ -4085,20 +4085,16 @@ Please delete the folder sync from preferences to cancel them.</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Support for Flexi Pro accounts.
-- New backups feature.
-- Fixed issues detected with macOS Ventura.
-- Fixed detected crashes on Windows, Linux, and macOS.
-- Fixed translation issues.
-- Improved performance.
+        <source>- Detected crashes on Windows, Linux, and masOS fixed.
+- Less device memory will be used by accounts with large amounts of data stored.
+- Application performance improved.
+- Translation issues fixed.
 </source>
-        <translatorcomment>Changelog for v4.8.0 version</translatorcomment>
-        <translation>ーPro&#xa0;Flexiアカウントのサポートを追加。
-ー新しいバックアップ機能を追加。
-ーmacOS Venturaで検出された問題を修正。
-ーWindows、Linux、およびmacOSで検出されたクラッシュを修正。
-ー翻訳の問題を修正。
-ーパフォーマンスを改善。</translation>
+        <translatorcomment>Changelog for version v4.8.5</translatorcomment>
+        <translation>－Windows、Linux、およびmacOSで検出されたクラッシュが修正されました。
+－大量のデータが保存されているアカウントでは、デバイスのメモリ使用量が少なくなります。
+－アプリケーションのパフォーマンスが向上しました。
+－翻訳の問題が修正されました。</translation>
     </message>
 </context>
 <context>
@@ -6208,7 +6204,7 @@ To continue, select a different folder.</source>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a local folder shared with VMWare third party app.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>VMWareと共有されているローカルフォルダを同期します。このフォルダはファイルシステムの通知をサポートしていないため、変更を検出して同期するには、アプリはフォルダとその中のファイルを継続的にスキャンする必要があります。可能であれば、別のフォルダを使用してCPU使用率を減らしてください。</translation>
     </message>
 </context>
 <context>
