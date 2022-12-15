@@ -28,5 +28,5 @@ QString PlatformStrings::cancelSyncsWarning()
 
 QString PlatformStrings::moveFileToBin()
 {
-    return tr("Move to recycle bin");
+    return tr("Moved to recycle bin");
 }

@@ -224,7 +224,7 @@ void LocalAndRemoteChangedSinceLastSyncedStateHeader::onRefreshCaseUi()
 {
     mStalledIssueHeader->setLeftTitleText(tr("Can´t sync"));
     mStalledIssueHeader->addFileName();
-    mStalledIssueHeader->setTitleDescriptionText(tr("This file has changed since it it was last synced."));
+    mStalledIssueHeader->setTitleDescriptionText(tr("This file has been changed both in MEGA and locally since it it was last synced."));
 }
 
 //Name Conflicts
