@@ -146,6 +146,9 @@ color:#666666;
             <property name="text">
              <string>Move folder</string>
             </property>
+            <attribute name="buttonGroup">
+             <string notr="true">buttonGroup</string>
+            </attribute>
            </widget>
           </item>
           <item>
@@ -337,6 +340,9 @@ font-size:13px;
             <property name="text">
              <string>Delete folder permanently</string>
             </property>
+            <attribute name="buttonGroup">
+             <string notr="true">buttonGroup</string>
+            </attribute>
            </widget>
           </item>
           <item>
@@ -455,4 +461,7 @@ margin-right: 32px;
  </widget>
  <resources/>
  <connections/>
+ <buttongroups>
+  <buttongroup name="buttonGroup"/>
+ </buttongroups>
 </ui>
