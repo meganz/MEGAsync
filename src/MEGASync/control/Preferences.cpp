@@ -14,10 +14,10 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
 const char Preferences::USER_AGENT[] = "MEGAsync/4.8.5.0";
 const int Preferences::VERSION_CODE = 4805;
-const int Preferences::BUILD_ID = 0;
+const int Preferences::BUILD_ID = 1;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
 const QString Preferences::VERSION_STRING = QString::fromAscii("4.8.5");
-QString Preferences::SDK_ID = QString::fromAscii("dfa0c02");
+QString Preferences::SDK_ID = QString::fromAscii("fbf8634");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
 "- Detected crashes on Windows, Linux, and masOS fixed.\n"
 "- Less device memory will be used by accounts with large amounts of data stored.\n"
