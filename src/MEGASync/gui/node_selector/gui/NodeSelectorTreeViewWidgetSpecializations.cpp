@@ -6,8 +6,8 @@
 #include "../model/NodeSelectorModelSpecialised.h"
 
 ///////////////////////////////////////////////////////////////////
-NodeSelectorTreeViewWidgetCloudDrive::NodeSelectorTreeViewWidgetCloudDrive(QWidget *parent)
-    : NodeSelectorTreeViewWidget(parent)
+NodeSelectorTreeViewWidgetCloudDrive::NodeSelectorTreeViewWidgetCloudDrive(SelectType *mode, QWidget *parent)
+    : NodeSelectorTreeViewWidget(mode, parent)
 {
     setTitle(MegaNodeNames::getCloudDriveName());
 }
@@ -29,8 +29,8 @@ void NodeSelectorTreeViewWidgetCloudDrive::onRootIndexChanged(const QModelIndex 
 }
 
 /////////////////////////////////////////////////////////////////
-NodeSelectorTreeViewWidgetIncomingShares::NodeSelectorTreeViewWidgetIncomingShares(QWidget *parent)
-    : NodeSelectorTreeViewWidget(parent)
+NodeSelectorTreeViewWidgetIncomingShares::NodeSelectorTreeViewWidgetIncomingShares(SelectType *mode, QWidget *parent)
+    : NodeSelectorTreeViewWidget(mode, parent)
 {
     setTitle(MegaNodeNames::getIncomingSharesName());
 }
@@ -65,8 +65,8 @@ void NodeSelectorTreeViewWidgetIncomingShares::onRootIndexChanged(const QModelIn
 }
 
 /////////////////////////////////////////////////////////////////
-NodeSelectorTreeViewWidgetBackups::NodeSelectorTreeViewWidgetBackups(QWidget *parent)
-    : NodeSelectorTreeViewWidget(parent)
+NodeSelectorTreeViewWidgetBackups::NodeSelectorTreeViewWidgetBackups(SelectType *mode, QWidget *parent)
+    : NodeSelectorTreeViewWidget(mode, parent)
 {
     setTitle(MegaNodeNames::getBackupsName());
 }

@@ -18,7 +18,7 @@ class NodeSelectorTreeViewWidgetCloudDrive : public NodeSelectorTreeViewWidget
     Q_OBJECT
 
 public:
-    explicit NodeSelectorTreeViewWidgetCloudDrive(QWidget *parent = nullptr);
+    explicit NodeSelectorTreeViewWidgetCloudDrive(SelectType *mode, QWidget *parent = nullptr);
 
 private:
     QString getRootText() override;
@@ -31,7 +31,7 @@ class NodeSelectorTreeViewWidgetIncomingShares : public NodeSelectorTreeViewWidg
     Q_OBJECT
 
 public:
-    explicit NodeSelectorTreeViewWidgetIncomingShares(QWidget *parent = nullptr);
+    explicit NodeSelectorTreeViewWidgetIncomingShares(SelectType *mode, QWidget *parent = nullptr);
 
 private:
     QString getRootText() override;
@@ -45,7 +45,7 @@ class NodeSelectorTreeViewWidgetBackups : public NodeSelectorTreeViewWidget
     Q_OBJECT
 
 public:
-    explicit NodeSelectorTreeViewWidgetBackups(QWidget *parent = nullptr);
+    explicit NodeSelectorTreeViewWidgetBackups(SelectType *mode, QWidget *parent = nullptr);
 
 private:
     QString getRootText() override;

@@ -43,7 +43,6 @@ public:
     void setSelectedNodeHandle(std::shared_ptr<mega::MegaNode> node = nullptr);
     mega::MegaHandle getSelectedNodeHandle();
     QList<mega::MegaHandle> getMultiSelectionNodeHandle();
-    NodeSelectorTreeViewWidget::Type getSelectMode(){ return mSelectMode;}
     void closeEvent(QCloseEvent* event) override;
 
 protected:
@@ -52,12 +51,17 @@ protected:
     void addBackupsView();
     void hideSelector(TabItem item);
     bool nodeExistWarningMsg(int &access);
+    void makeConnections();
 
+    NodeSelectorTreeViewWidgetCloudDrive* mCloudDriveWidget;
+    NodeSelectorTreeViewWidgetIncomingShares* mIncomingSharesWidget;
+    NodeSelectorTreeViewWidgetBackups* mBackupsWidget;
     mega::MegaApi* mMegaApi;
     Ui::NodeSelector *ui;
 
 private slots:
     void onbOkClicked();
+    void onViewReady(bool isEmpty);
     void onbShowIncomingSharesClicked();
     void onbShowCloudDriveClicked();
     void onbShowBackupsFolderClicked();
@@ -67,22 +71,15 @@ private slots:
 #ifdef Q_OS_MAC
     void onTabSelected(int index);
 #endif
-    void onViewReady(bool isEmpty);
 
 private:
-    NodeSelectorTreeViewWidgetCloudDrive* mCloudDriveWidget;
-    NodeSelectorTreeViewWidgetIncomingShares* mIncomingSharesWidget;
-    NodeSelectorTreeViewWidgetBackups* mBackupsWidget;
     void processCloseEvent(NodeSelectorProxyModel *proxy, QCloseEvent* event);
     QModelIndex getParentIncomingShareByIndex(QModelIndex idx);
     virtual bool isSelectionCorrect() = 0;
-
 #ifdef Q_OS_MAC
     void hideTabSelector(const QString& tabText);
 #endif
     void shortCutConnects(int ignoreThis);
-
-    NodeSelectorTreeViewWidget::Type mSelectMode;
 
     bool mManuallyResizedColumn;
 };

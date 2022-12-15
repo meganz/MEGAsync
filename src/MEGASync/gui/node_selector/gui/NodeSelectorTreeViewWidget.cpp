@@ -12,18 +12,18 @@ const int NodeSelectorTreeViewWidget::LABEL_ELIDE_MARGIN = 100;
 const int NodeSelectorTreeViewWidget::LOADING_VIEW_THRESSHOLD = 500;
 
 
-NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(QWidget *parent) :
+NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(SelectType* mode, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::NodeSelectorTreeViewWidget),
     mProxyModel(nullptr),
-    mSelectMode(UNINITIALIZED_SELECT),
     mMegaApi(MegaSyncApp->getMegaApi()),
     mManuallyResizedColumn(false),
     mDelegateListener(new QTMegaRequestListener(mMegaApi, this)),
     mModel(nullptr),
     first(true),
     mUiBlocked(false),
-    mNodeHandleToSelect(INVALID_HANDLE)
+    mNodeHandleToSelect(INVALID_HANDLE),
+    mSelectType(mode)
 {
     ui->setupUi(this);
 
@@ -54,42 +54,12 @@ void NodeSelectorTreeViewWidget::changeEvent(QEvent *event)
     QWidget::changeEvent(event);
 }
 
-void NodeSelectorTreeViewWidget::setSelectionMode(Type selectMode)
+void NodeSelectorTreeViewWidget::setSelectionMode()
 {
-    if(mSelectMode != UNINITIALIZED_SELECT)
-    {
-        return;
-    }
-
-    mSelectMode = selectMode;
-
     mProxyModel = std::unique_ptr<NodeSelectorProxyModel>(new NodeSelectorProxyModel());
     mModel = getModel();
 
-    switch(mSelectMode)
-    {
-        case SYNC_SELECT:
-            mModel->setSyncSetupMode(true);
-            // fall through
-        case UPLOAD_SELECT:
-            ui->bNewFolder->show();
-            mProxyModel->showReadOnlyFolders(false);
-            mModel->showFiles(false);
-            break;
-        case DOWNLOAD_SELECT:
-            ui->bNewFolder->hide();
-            ui->tMegaFolders->setSelectionMode(QAbstractItemView::ExtendedSelection);
-            mProxyModel->showReadOnlyFolders(true);
-            mModel->showFiles(true);
-            break;
-        case STREAM_SELECT:
-            ui->bNewFolder->hide();
-            mProxyModel->showReadOnlyFolders(true);
-            mModel->showFiles(true);
-            break;
-        default:
-            break;
-    }
+    mSelectType->init(this);
 
     connect(mProxyModel.get(), &NodeSelectorProxyModel::expandReady, this, &NodeSelectorTreeViewWidget::onExpandReady);
 
@@ -324,14 +294,7 @@ bool NodeSelectorTreeViewWidget::isAllowedToEnterInIndex(const QModelIndex &idx)
     NodeSelectorModelItem *item = static_cast<NodeSelectorModelItem*>(source_idx.internalPointer());
     if(item)
     {
-        if((item->getNode()->isFile())
-           || (item->isCloudDrive())
-           || (mSelectMode == SYNC_SELECT
-               && (item->getStatus() == NodeSelectorModelItem::SYNC
-                   || item->getStatus() == NodeSelectorModelItem::SYNC_CHILD)))
-        {
-            return false;
-        }
+        return mSelectType->isAllowedToNavigateInside(item);
     }
     return true;
 }
@@ -351,11 +314,7 @@ void NodeSelectorTreeViewWidget::onItemDoubleClick(const QModelIndex &index)
 
 void NodeSelectorTreeViewWidget::checkNewFolderButtonVisibility()
 {
-    if(mSelectMode == SYNC_SELECT || mSelectMode == UPLOAD_SELECT)
-    {
-        auto sourceIndex = mProxyModel->getIndexFromSource(ui->tMegaFolders->rootIndex());
-        ui->bNewFolder->setVisible(sourceIndex.isValid() || newFolderBtnVisibleInRoot());
-    }
+    mSelectType->newFolderButtonVisibility(this);
 }
 
 void NodeSelectorTreeViewWidget::setLoadingSceneVisible(bool blockUi)
@@ -402,40 +361,7 @@ void NodeSelectorTreeViewWidget::onSelectionChanged(const QItemSelection& select
 
 void NodeSelectorTreeViewWidget::checkOkButton(const QModelIndexList &selected)
 {
-    auto result(false);
-
-    if(!selected.isEmpty())
-    {
-        if(mSelectMode == UPLOAD_SELECT || mSelectMode == DOWNLOAD_SELECT)
-        {
-            result = true;
-        }
-        else
-        {
-            int correctSelected(0);
-
-            foreach(auto& index, selected)
-            {
-                auto source_idx = mProxyModel->getIndexFromSource(index);
-                NodeSelectorModelItem *item = static_cast<NodeSelectorModelItem*>(source_idx.internalPointer());
-                if(item)
-                {
-                    if(mSelectMode == STREAM_SELECT)
-                    {
-                        item->getNode()->isFile() ? correctSelected++ : correctSelected;
-                    }
-                    else if(mSelectMode == SYNC_SELECT)
-                    {
-                        item->getNode()->isFolder() ? correctSelected++ : correctSelected;
-                    }
-                }
-            }
-
-            result = correctSelected == selected.size();
-        }
-    }
-
-    ui->bOk->setEnabled(result);
+    mSelectType->checkOkButton(this, selected);
 }
 
 void NodeSelectorTreeViewWidget::onRenameClicked()
@@ -762,4 +688,124 @@ void NodeSelectorTreeViewWidget::Navigation::appendToForward(const mega::MegaHan
 {
     if(!forwardHandles.contains(handle))
         forwardHandles.append(handle);
+}
+
+bool SelectType::isAllowedToNavigateInside(NodeSelectorModelItem *item)
+{
+    return !(item->getNode()->isFile() || item->isCloudDrive());
+}
+
+void DownloadType::init(NodeSelectorTreeViewWidget *wdg)
+{
+    qDebug()<<"DOWNLOAD TYPE";
+    wdg->ui->bNewFolder->hide();
+    wdg->ui->tMegaFolders->setSelectionMode(QAbstractItemView::ExtendedSelection);
+    wdg->mProxyModel->showReadOnlyFolders(true);
+    wdg->mModel->showFiles(true);
+}
+
+void DownloadType::checkOkButton(NodeSelectorTreeViewWidget *wdg, const QModelIndexList &selected)
+{
+    bool enable(false);
+    if(!selected.isEmpty())
+    {
+        enable = true;
+    }
+    wdg->ui->bOk->setEnabled(enable);
+}
+
+void SyncType::init(NodeSelectorTreeViewWidget *wdg)
+{
+    wdg->mModel->setSyncSetupMode(true);
+    qDebug()<<"SyncType TYPE";
+}
+
+void SyncType::newFolderButtonVisibility(NodeSelectorTreeViewWidget *wdg)
+{
+    auto sourceIndex = wdg->mProxyModel->getIndexFromSource(wdg->ui->tMegaFolders->rootIndex());
+    wdg->ui->bNewFolder->setVisible(sourceIndex.isValid() || wdg->newFolderBtnVisibleInRoot());
+}
+
+void SyncType::checkOkButton(NodeSelectorTreeViewWidget *wdg, const QModelIndexList &selected)
+{
+    bool enable(false);
+    if(!selected.isEmpty())
+    {
+        int correctSelected(0);
+
+        foreach(auto& index, selected)
+        {
+            auto source_idx = wdg->mProxyModel->getIndexFromSource(index);
+            NodeSelectorModelItem *item = static_cast<NodeSelectorModelItem*>(source_idx.internalPointer());
+            if(item)
+            {
+                item->getNode()->isFolder() ? correctSelected++ : correctSelected;
+            }
+        }
+
+        enable = correctSelected == selected.size();
+    }
+    wdg->ui->bOk->setEnabled(enable);
+}
+
+bool SyncType::isAllowedToNavigateInside(NodeSelectorModelItem *item)
+{
+    return SelectType::isAllowedToNavigateInside(item) || !(item->getStatus() == NodeSelectorModelItem::SYNC
+        || item->getStatus() == NodeSelectorModelItem::SYNC_CHILD);
+}
+
+void StreamType::init(NodeSelectorTreeViewWidget *wdg)
+{
+    wdg->ui->bNewFolder->hide();
+    wdg->mProxyModel->showReadOnlyFolders(true);
+    wdg->mModel->showFiles(true);
+    qDebug()<<"StreamType TYPE";
+}
+
+void StreamType::checkOkButton(NodeSelectorTreeViewWidget *wdg, const QModelIndexList &selected)
+{
+    bool enable(false);
+    if(!selected.isEmpty())
+    {
+        int correctSelected(0);
+        foreach(auto& index, selected)
+        {
+            auto source_idx = wdg->mProxyModel->getIndexFromSource(index);
+            NodeSelectorModelItem *item = static_cast<NodeSelectorModelItem*>(source_idx.internalPointer());
+            if(item)
+            {
+                item->getNode()->isFile() ? correctSelected++ : correctSelected;
+
+            }
+        }
+
+        enable = correctSelected == selected.size();
+
+    }
+    wdg->ui->bOk->setEnabled(enable);
+}
+
+void UploadType::init(NodeSelectorTreeViewWidget *wdg)
+{
+    qDebug()<<"UPLOAD TYPE";
+    wdg->mModel->setSyncSetupMode(true);
+    wdg->ui->bNewFolder->show();
+    wdg->mProxyModel->showReadOnlyFolders(false);
+    wdg->mModel->showFiles(false);
+}
+
+void UploadType::newFolderButtonVisibility(NodeSelectorTreeViewWidget *wdg)
+{
+    auto sourceIndex = wdg->mProxyModel->getIndexFromSource(wdg->ui->tMegaFolders->rootIndex());
+    wdg->ui->bNewFolder->setVisible(sourceIndex.isValid() || wdg->newFolderBtnVisibleInRoot());
+}
+
+void UploadType::checkOkButton(NodeSelectorTreeViewWidget *wdg, const QModelIndexList &selected)
+{
+    bool enable(false);
+    if(!selected.isEmpty())
+    {
+        enable = true;
+    }
+    wdg->ui->bOk->setEnabled(enable);
 }
