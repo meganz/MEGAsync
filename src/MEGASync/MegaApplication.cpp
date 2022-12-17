@@ -21,6 +21,7 @@
 #include "UserAttributesRequests/MyBackupsHandle.h"
 #include "syncs/gui/SyncsMenu.h"
 #include "TextDecorator.h"
+#include "platform/PowerOptions.h"
 
 #include "mega/types.h"
 
@@ -362,6 +363,8 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 
 MegaApplication::~MegaApplication()
 {
+    PowerOptions::appShutdown();
+
     logger.reset();
 
     if (!translator.isEmpty())

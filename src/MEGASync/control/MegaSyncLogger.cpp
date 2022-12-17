@@ -378,7 +378,10 @@ private:
                             logDesktopFile << "<log gap - out of logging memory at this point>\n";
                         }
                     }
-                    logDesktopFile.flush(); //always flush in `active` logging
+                    if (!newMessages)
+                    {
+                        logDesktopFile.flush(); //always flush in `active` logging
+                    }
                 }
 
                 if (g_megaSyncLogger && g_megaSyncLogger->mLogToStdout)
@@ -391,7 +394,10 @@ private:
                     {
                         std::cout << p->message;
                     }
-                    std::cout << std::flush; //always flush into stdout (DEBUG mode)
+                    if (!newMessages)
+                    {
+                        std::cout << std::flush; //always flush into stdout (DEBUG mode)
+                    }
                 }
                 p->notifyWaiter();
                 free(p);
