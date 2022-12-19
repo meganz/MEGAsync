@@ -18,6 +18,7 @@ SearchLineEdit::SearchLineEdit(QWidget *parent)
     mButtonManager.addButton(ui->tSearchCancel);
     connect(ui->tSearchCancel, &QToolButton::clicked, this, &SearchLineEdit::onClearClicked);
     connect(ui->leSearchField, &QLineEdit::textChanged, this, &SearchLineEdit::onTextChanged);
+    connect(ui->leSearchField, &QLineEdit::editingFinished, this, &SearchLineEdit::onEditingFinieshed);
     ui->tSearchCancel->setGraphicsEffect(new QGraphicsOpacityEffect());
 }
 
@@ -47,6 +48,16 @@ void SearchLineEdit::animationFinished()
 {
    ui->tSearchCancel->setVisible(!ui->leSearchField->text().isEmpty());
    connect(ui->leSearchField, &QLineEdit::textChanged, this, &SearchLineEdit::onTextChanged);
+}
+
+void SearchLineEdit::onEditingFinieshed()
+{
+    if(ui->leSearchField->text().isEmpty() || mOldString == ui->leSearchField->text())
+    {
+        return;
+    }
+    mOldString = ui->leSearchField->text();
+    emit search(ui->leSearchField->text());
 }
 
 void SearchLineEdit::makeEffect(bool fadeIn)

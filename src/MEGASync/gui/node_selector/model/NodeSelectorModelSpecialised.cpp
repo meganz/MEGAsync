@@ -48,6 +48,7 @@ void NodeSelectorModelCloudDrive::firstLoad()
 
 void NodeSelectorModelCloudDrive::onRootItemCreated(NodeSelectorModelItem *item)
 {
+    Q_UNUSED(item)
     rootItemsLoaded();
 
     //Add the item of the Cloud Drive
@@ -92,6 +93,7 @@ void NodeSelectorModelIncomingShares::onItemInfoUpdated(int role)
 
 void NodeSelectorModelIncomingShares::onRootItemsCreated(QList<NodeSelectorModelItem *> items)
 {
+    Q_UNUSED(items)
     rootItemsLoaded();
 
     if(!mNodesToLoad.isEmpty())
@@ -214,4 +216,73 @@ void NodeSelectorModelBackups::onRootItemCreated(NodeSelectorModelItem *item)
             fetchItemChildren(rootIndex);
         }
     }
+}
+
+NodeSelectorModelSearch::NodeSelectorModelSearch(QObject *parent)
+    : NodeSelectorModel(parent)
+{
+
+}
+
+NodeSelectorModelSearch::~NodeSelectorModelSearch()
+{
+
+}
+
+void NodeSelectorModelSearch::firstLoad()
+{
+    connect(this, &NodeSelectorModelSearch::searchNodes, mNodeRequesterWorker, &NodeRequester::search);
+    connect(mNodeRequesterWorker, &NodeRequester::searchItemsCreated, this, &NodeSelectorModelSearch::onRootItemsCreated, Qt::QueuedConnection);
+}
+
+void NodeSelectorModelSearch::createRootNodes()
+{
+    //pure virtual function in the base class, in first stage this model is empty so not need to put any code here.
+}
+
+void NodeSelectorModelSearch::searchByText(const QString &text)
+{
+    addRootItems();
+    emit searchNodes(text);
+}
+
+int NodeSelectorModelSearch::rootItemsCount() const
+{
+    return 0;
+}
+
+bool NodeSelectorModelSearch::canFetchMore(const QModelIndex &parent) const
+{
+    Q_UNUSED(parent)
+    return false;
+}
+
+QVariant NodeSelectorModelSearch::data(const QModelIndex &index, int role) const
+{
+    if(!index.isValid())
+    {
+        return QVariant();
+    }
+    if(index.column() == NODE)
+    {
+        switch(role)
+        {
+        case toInt(NodeRowDelegateRoles::INDENT_ROLE):
+        {
+            return -15;
+        }
+        case toInt(NodeRowDelegateRoles::SMALL_ICON_ROLE):
+        {
+            return false;
+        }
+        }
+    }
+    return NodeSelectorModel::data(index, role);
+}
+
+void NodeSelectorModelSearch::onRootItemsCreated(QList<NodeSelectorModelItem *> items)
+{
+    Q_UNUSED(items)
+    rootItemsLoaded();
+    loadLevelFinished();
 }

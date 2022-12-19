@@ -40,7 +40,7 @@ public:
 
     QPointer<NodeSelectorModelItem> getParent();
     QPointer<NodeSelectorModelItem> getChild(int i);
-    int getNumChildren();
+    virtual int getNumChildren();
     int indexOf(NodeSelectorModelItem *item);
     QString getOwnerName();
     QString getOwnerEmail();
@@ -88,6 +88,16 @@ private:
     mega::MegaApi* mMegaApi;
     std::shared_ptr<const UserAttributes::FullName> mFullNameAttribute;
     std::shared_ptr<const UserAttributes::Avatar> mAvatarAttribute;
+};
+
+class NodeSelectorModelItemSearch : public NodeSelectorModelItem
+{
+public:
+    explicit NodeSelectorModelItemSearch(std::unique_ptr<mega::MegaNode> node);
+    ~NodeSelectorModelItemSearch();
+
+    int getNumChildren() override;
+
 };
 
 #endif // MODELSELECTORMODELITEM_H

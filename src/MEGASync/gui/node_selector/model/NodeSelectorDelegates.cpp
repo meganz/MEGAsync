@@ -42,7 +42,8 @@ void NodeRowDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
     QStyleOptionViewItem opt(option);
     int indentValue = index.data(toInt(NodeRowDelegateRoles::INDENT_ROLE)).toInt();
     opt.rect.adjust(indentValue, 0, 0, 0);
-    if(indentValue < 0)
+    QVariant small_icon = index.data(toInt(NodeRowDelegateRoles::SMALL_ICON_ROLE));
+    if(small_icon.isValid() && small_icon.toBool())
         opt.decorationSize = QSize(opt.decorationSize.width() - DIFF_WITH_STD_ICON, opt.decorationSize.height() - DIFF_WITH_STD_ICON);
 
     QStyledItemDelegate::paint(painter, opt, index);

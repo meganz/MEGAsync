@@ -16,7 +16,7 @@ class NodeSelectorProxyModel;
 class NodeSelectorModel;
 class NodeSelectorModelItem;
 class SelectType;
-typedef std::unique_ptr<SelectType> SelectTypeUPtr;
+typedef std::shared_ptr<SelectType> SelectTypeSPtr;
 
 namespace Ui {
 class NodeSelectorTreeViewWidget;
@@ -32,10 +32,10 @@ public:
     static const int LABEL_ELIDE_MARGIN;
     static const int LOADING_VIEW_THRESSHOLD;
 
-    explicit NodeSelectorTreeViewWidget(SelectType *mode, QWidget *parent = nullptr);
+    explicit NodeSelectorTreeViewWidget(SelectTypeSPtr mode, QWidget *parent = nullptr);
     ~NodeSelectorTreeViewWidget();
     mega::MegaHandle getSelectedNodeHandle();
-    void setSelectionMode();
+    void init();
     QList<mega::MegaHandle> getMultiSelectionNodeHandle();
     void setSelectedNodeHandle(const mega::MegaHandle &selectedHandle);
     void setFutureSelectedNodeHandle(const mega::MegaHandle &selectedHandle);
@@ -56,6 +56,7 @@ signals:
     void okBtnClicked();
     void cancelBtnClicked();
     void onViewReady(bool isEmpty);
+    void onSearch(const QString& text);
 
 protected:
     void showEvent(QShowEvent* ) override;
@@ -67,7 +68,7 @@ protected:
 
     Ui::NodeSelectorTreeViewWidget *ui;
     std::unique_ptr<NodeSelectorProxyModel> mProxyModel;
-
+    std::unique_ptr<NodeSelectorModel> mModel;
 
 private slots:
     void onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
@@ -101,7 +102,6 @@ private:
     bool mManuallyResizedColumn;
     Navigation mNavigationInfo;
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
-    std::unique_ptr<NodeSelectorModel> mModel;
 
     bool isAllowedToEnterInIndex(const QModelIndex &idx);
     QModelIndex getSelectedIndex();
@@ -120,7 +120,7 @@ private:
     bool mUiBlocked;
     mega::MegaHandle mNodeHandleToSelect;
     ViewLoadingScene<NodeSelectorLoadingDelegate> mLoadingScene;
-    SelectTypeUPtr mSelectType;
+    SelectTypeSPtr mSelectType;
     friend class DownloadType;
     friend class SyncType;
     friend class UploadType;

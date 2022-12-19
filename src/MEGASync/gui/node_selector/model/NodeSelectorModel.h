@@ -29,6 +29,7 @@ enum class NodeRowDelegateRoles
 {
     ENABLED_ROLE = toInt(NodeSelectorModelRoles::last),  //ALWAYS use last enum value from previous enum class for new enums
     INDENT_ROLE,
+    SMALL_ICON_ROLE,
     INIT_ROLE,
     last
 };
@@ -53,7 +54,7 @@ public:
 
 public slots:
     void requestNodeAndCreateChildren(NodeSelectorModelItem* item, const QModelIndex& parentIndex, bool showFiles);
-
+    void search(const QString& text);
     void createCloudDriveRootItem();
     void createIncomingSharesRootItems(std::shared_ptr<mega::MegaNodeList> nodeList);
     void createBackupRootItems(mega::MegaHandle backupsHandle);
@@ -68,6 +69,7 @@ signals:
      void megaCloudDriveRootItemCreated(NodeSelectorModelItem* item);
      void megaIncomingSharesRootItemsCreated(QList<NodeSelectorModelItem*> item);
      void megaBackupRootItemsCreated(NodeSelectorModelItem* item);
+     void searchItemsCreated(QList<NodeSelectorModelItem*> item);
      void nodeAdded(NodeSelectorModelItem* item);
 
 private:

@@ -220,7 +220,7 @@ font-size:17px;
       </spacer>
      </item>
      <item>
-      <widget class="SearchLineEdit" name="frame">
+      <widget class="SearchLineEdit" name="leSearch">
        <property name="minimumSize">
         <size>
          <width>150</width>

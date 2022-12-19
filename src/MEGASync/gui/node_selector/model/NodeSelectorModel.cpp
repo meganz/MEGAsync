@@ -58,6 +58,42 @@ void NodeRequester::requestNodeAndCreateChildren(NodeSelectorModelItem* item, co
     }
 }
 
+void NodeRequester::search(const QString &text)
+{
+    if(text.isEmpty())
+    {
+        return;
+    }
+    mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
+    auto nodeList = megaApi->search(text.toUtf8());
+    QList<NodeSelectorModelItem*> items;
+
+    for(int i = 0; i < nodeList->size(); i++)
+    {
+        if(isAborted())
+        {
+            break;
+        }
+
+        auto node = std::unique_ptr<mega::MegaNode>(nodeList->get(i));
+        if(node->isFolder() || (node->isFile() && mShowFiles))
+        {
+            auto item = new NodeSelectorModelItemSearch(std::move(node));
+            items.append(item);
+        }
+    }
+
+    if(isAborted())
+    {
+        qDeleteAll(items);
+    }
+    else
+    {
+        mRootItems.append(items);
+        emit searchItemsCreated(items);
+    }
+}
+
 void NodeRequester::createCloudDriveRootItem()
 {
     auto root = std::unique_ptr<mega::MegaNode>(MegaSyncApp->getMegaApi()->getRootNode());
@@ -326,6 +362,10 @@ QVariant NodeSelectorModel::data(const QModelIndex &index, int role) const
                 case toInt(NodeRowDelegateRoles::INDENT_ROLE):
                 {
                     return item->isCloudDrive() || item->isVault()? -10 : 0;
+                }
+                case toInt(NodeRowDelegateRoles::SMALL_ICON_ROLE):
+                {
+                    return item->isCloudDrive() || item->isVault() ? true : false;
                 }
                 case toInt(NodeRowDelegateRoles::INIT_ROLE):
                 {

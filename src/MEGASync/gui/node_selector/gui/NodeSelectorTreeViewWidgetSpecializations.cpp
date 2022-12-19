@@ -6,7 +6,7 @@
 #include "../model/NodeSelectorModelSpecialised.h"
 
 ///////////////////////////////////////////////////////////////////
-NodeSelectorTreeViewWidgetCloudDrive::NodeSelectorTreeViewWidgetCloudDrive(SelectType *mode, QWidget *parent)
+NodeSelectorTreeViewWidgetCloudDrive::NodeSelectorTreeViewWidgetCloudDrive(SelectTypeSPtr mode, QWidget *parent)
     : NodeSelectorTreeViewWidget(mode, parent)
 {
     setTitle(MegaNodeNames::getCloudDriveName());
@@ -29,7 +29,7 @@ void NodeSelectorTreeViewWidgetCloudDrive::onRootIndexChanged(const QModelIndex 
 }
 
 /////////////////////////////////////////////////////////////////
-NodeSelectorTreeViewWidgetIncomingShares::NodeSelectorTreeViewWidgetIncomingShares(SelectType *mode, QWidget *parent)
+NodeSelectorTreeViewWidgetIncomingShares::NodeSelectorTreeViewWidgetIncomingShares(SelectTypeSPtr mode, QWidget *parent)
     : NodeSelectorTreeViewWidget(mode, parent)
 {
     setTitle(MegaNodeNames::getIncomingSharesName());
@@ -65,7 +65,7 @@ void NodeSelectorTreeViewWidgetIncomingShares::onRootIndexChanged(const QModelIn
 }
 
 /////////////////////////////////////////////////////////////////
-NodeSelectorTreeViewWidgetBackups::NodeSelectorTreeViewWidgetBackups(SelectType *mode, QWidget *parent)
+NodeSelectorTreeViewWidgetBackups::NodeSelectorTreeViewWidgetBackups(SelectTypeSPtr mode, QWidget *parent)
     : NodeSelectorTreeViewWidget(mode, parent)
 {
     setTitle(MegaNodeNames::getBackupsName());
@@ -85,4 +85,28 @@ void NodeSelectorTreeViewWidgetBackups::onRootIndexChanged(const QModelIndex &so
 {
     Q_UNUSED(source_idx)
     ui->tMegaFolders->header()->hideSection(NodeSelectorModel::COLUMN::USER);
+}
+/////////////////////////////////////////////////////////////////
+
+NodeSelectorTreeViewWidgetSearch::NodeSelectorTreeViewWidgetSearch(SelectTypeSPtr mode, QWidget *parent)
+    : NodeSelectorTreeViewWidget(mode, parent)
+
+{
+
+}
+
+void NodeSelectorTreeViewWidgetSearch::search(const QString &text)
+{
+    auto search_model = static_cast<NodeSelectorModelSearch*>(mModel.get());
+    search_model->searchByText(text);
+}
+
+QString NodeSelectorTreeViewWidgetSearch::getRootText()
+{
+    return QString::fromUtf8("searching:...");
+}
+
+std::unique_ptr<NodeSelectorModel> NodeSelectorTreeViewWidgetSearch::getModel()
+{
+    return std::unique_ptr<NodeSelectorModelSearch>(new NodeSelectorModelSearch);
 }

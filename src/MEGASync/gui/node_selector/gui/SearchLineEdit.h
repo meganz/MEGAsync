@@ -23,18 +23,19 @@ public:
 
 
 signals:
+    void search(const QString& text);
 
 private slots:
     void onClearClicked();
     void onTextChanged(const QString& text);
     void animationFinished();
+    void onEditingFinieshed();
 
 private:
     void makeEffect(bool fadeIn);
     Ui::SearchLineEdit *ui;
-    //QGraphicsOpacityEffect * mEffect;
-    //QPropertyAnimation *mAnimation;
     ButtonIconManager mButtonManager;
+    QString mOldString;
 };
 
 #endif // SEARCHLINEEDIT_H

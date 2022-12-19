@@ -18,7 +18,7 @@ class NodeSelectorTreeViewWidgetCloudDrive : public NodeSelectorTreeViewWidget
     Q_OBJECT
 
 public:
-    explicit NodeSelectorTreeViewWidgetCloudDrive(SelectType *mode, QWidget *parent = nullptr);
+    explicit NodeSelectorTreeViewWidgetCloudDrive(SelectTypeSPtr mode, QWidget *parent = nullptr);
 
 private:
     QString getRootText() override;
@@ -31,7 +31,7 @@ class NodeSelectorTreeViewWidgetIncomingShares : public NodeSelectorTreeViewWidg
     Q_OBJECT
 
 public:
-    explicit NodeSelectorTreeViewWidgetIncomingShares(SelectType *mode, QWidget *parent = nullptr);
+    explicit NodeSelectorTreeViewWidgetIncomingShares(SelectTypeSPtr mode, QWidget *parent = nullptr);
 
 private:
     QString getRootText() override;
@@ -45,11 +45,24 @@ class NodeSelectorTreeViewWidgetBackups : public NodeSelectorTreeViewWidget
     Q_OBJECT
 
 public:
-    explicit NodeSelectorTreeViewWidgetBackups(SelectType *mode, QWidget *parent = nullptr);
+    explicit NodeSelectorTreeViewWidgetBackups(SelectTypeSPtr mode, QWidget *parent = nullptr);
 
 private:
     QString getRootText() override;
     void onRootIndexChanged(const QModelIndex& source_idx) override;
+    std::unique_ptr<NodeSelectorModel> getModel() override;
+};
+
+class NodeSelectorTreeViewWidgetSearch : public NodeSelectorTreeViewWidget
+{
+    Q_OBJECT
+
+public:
+    explicit NodeSelectorTreeViewWidgetSearch(SelectTypeSPtr mode, QWidget *parent = nullptr);
+    void search(const QString& text);
+
+private:
+    QString getRootText() override;
     std::unique_ptr<NodeSelectorModel> getModel() override;
 };
 

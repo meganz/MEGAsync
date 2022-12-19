@@ -369,3 +369,19 @@ bool NodeSelectorModelItem::isVault()
 {
     return mIsVault;
 }
+
+NodeSelectorModelItemSearch::NodeSelectorModelItemSearch(std::unique_ptr<mega::MegaNode> node)
+    : NodeSelectorModelItem(std::move(node), false, nullptr)
+{
+
+}
+
+NodeSelectorModelItemSearch::~NodeSelectorModelItemSearch()
+{
+
+}
+
+int NodeSelectorModelItemSearch::getNumChildren()
+{
+    return 0;
+}

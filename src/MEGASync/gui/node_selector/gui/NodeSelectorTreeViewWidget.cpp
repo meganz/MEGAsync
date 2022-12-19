@@ -12,7 +12,7 @@ const int NodeSelectorTreeViewWidget::LABEL_ELIDE_MARGIN = 100;
 const int NodeSelectorTreeViewWidget::LOADING_VIEW_THRESSHOLD = 500;
 
 
-NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(SelectType* mode, QWidget *parent) :
+NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(SelectTypeSPtr mode, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::NodeSelectorTreeViewWidget),
     mProxyModel(nullptr),
@@ -35,6 +35,7 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(SelectType* mode, QWidget
     connect(ui->bOk, &QPushButton::clicked, this, &NodeSelectorTreeViewWidget::okBtnClicked);
     connect(ui->bCancel, &QPushButton::clicked, this, &NodeSelectorTreeViewWidget::cancelBtnClicked);
     connect(ui->cbAlwaysUploadToLocation, &QCheckBox::stateChanged, this, &NodeSelectorTreeViewWidget::oncbAlwaysUploadToLocationChanged);
+    connect(ui->leSearch, &SearchLineEdit::search, this, &NodeSelectorTreeViewWidget::onSearch);
     checkBackForwardButtons();
 
     mLoadingScene.setView(ui->tMegaFolders);
@@ -54,7 +55,7 @@ void NodeSelectorTreeViewWidget::changeEvent(QEvent *event)
     QWidget::changeEvent(event);
 }
 
-void NodeSelectorTreeViewWidget::setSelectionMode()
+void NodeSelectorTreeViewWidget::init()
 {
     mProxyModel = std::unique_ptr<NodeSelectorProxyModel>(new NodeSelectorProxyModel());
     mModel = getModel();
@@ -181,7 +182,6 @@ void NodeSelectorTreeViewWidget::onExpandReady()
 
         setRootIndex(QModelIndex());
         checkNewFolderButtonVisibility();
-
         emit onViewReady(mProxyModel->rowCount() == 0);
     }
 

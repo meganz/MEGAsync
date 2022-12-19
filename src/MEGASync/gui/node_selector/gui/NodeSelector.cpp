@@ -20,8 +20,8 @@ const int NodeSelector::LABEL_ELIDE_MARGIN = 100;
 
 NodeSelector::NodeSelector(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::NodeSelector),
-    mMegaApi(MegaSyncApp->getMegaApi())
+    mMegaApi(MegaSyncApp->getMegaApi()),
+    ui(new Ui::NodeSelector)
 {
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowModality(Qt::WindowModal);
@@ -60,6 +60,12 @@ void NodeSelector::updateNodeSelectorTabs()
     ui->tabBar->addTab(MegaNodeNames::getIncomingSharesName());
     ui->tabBar->addTab(MegaNodeNames::getBackupsName());
 #endif
+}
+
+void NodeSelector::onSearch(const QString &text)
+{
+    ui->stackedWidget->setCurrentWidget(mSearchWidget);
+    mSearchWidget->search(text);
 }
 
 void NodeSelector::showDefaultUploadOption(bool show)
@@ -104,6 +110,18 @@ void NodeSelector::changeEvent(QEvent *event)
 void NodeSelector::showEvent(QShowEvent *event)
 {
     QDialog::showEvent(event);
+}
+
+void NodeSelector::keyPressEvent(QKeyEvent *e)
+{
+    switch (e->key())
+    {
+    case Qt::Key_Enter:
+    case Qt::Key_Return:
+    {
+        e->ignore();
+    }
+    }
 }
 
 void NodeSelector::onbOkClicked()
@@ -157,6 +175,7 @@ void NodeSelector::onTabSelected(int index)
 
 void NodeSelector::onbShowCloudDriveClicked()
 {
+    qDebug()<<sender();
     ui->stackedWidget->setCurrentIndex(CLOUD_DRIVE);
 }
 
@@ -289,17 +308,21 @@ bool NodeSelector::nodeExistWarningMsg(int &access)
     return ret;
 }
 
-void NodeSelector::makeConnections()
+void NodeSelector::makeConnections(SelectTypeSPtr selectType)
 {
+    mSearchWidget = new NodeSelectorTreeViewWidgetSearch(selectType);
+    mSearchWidget->setObjectName(QString::fromUtf8("Search"));
+    ui->stackedWidget->addWidget(mSearchWidget);
     for(int page = 0; page < ui->stackedWidget->count(); ++page)
     {
         auto viewContainer = dynamic_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->widget(page));
         if(viewContainer)
         {
-            viewContainer->setSelectionMode();
+            viewContainer->init();
             connect(viewContainer, &NodeSelectorTreeViewWidget::okBtnClicked, this, &NodeSelector::onbOkClicked, Qt::UniqueConnection);
             connect(viewContainer, &NodeSelectorTreeViewWidget::cancelBtnClicked, this, &NodeSelector::reject, Qt::UniqueConnection);
             connect(viewContainer, &NodeSelectorTreeViewWidget::onViewReady, this, &NodeSelector::onViewReady, Qt::UniqueConnection);
+            connect(viewContainer, &NodeSelectorTreeViewWidget::onSearch, this, &NodeSelector::onSearch, Qt::UniqueConnection);
         }
     }
 }
@@ -338,13 +361,14 @@ void NodeSelector::setSelectedNodeHandle(std::shared_ptr<MegaNode> node)
 UploadNodeSelector::UploadNodeSelector(QWidget *parent) : NodeSelector(parent)
 {
     hideSelector(NodeSelector::TabItem::VAULT);
-    mCloudDriveWidget = new NodeSelectorTreeViewWidgetCloudDrive(new UploadType());
+    SelectTypeSPtr selectType = SelectTypeSPtr(new UploadType);
+    mCloudDriveWidget = new NodeSelectorTreeViewWidgetCloudDrive(selectType);
     mCloudDriveWidget->setObjectName(QString::fromUtf8("CloudDrive"));
     ui->stackedWidget->addWidget(mCloudDriveWidget);
-    mIncomingSharesWidget = new NodeSelectorTreeViewWidgetIncomingShares(new UploadType());
+    mIncomingSharesWidget = new NodeSelectorTreeViewWidgetIncomingShares(selectType);
     mIncomingSharesWidget->setObjectName(QString::fromUtf8("IncomingShares"));
     ui->stackedWidget->addWidget(mIncomingSharesWidget);
-    makeConnections();
+    makeConnections(selectType);
 }
 
 bool UploadNodeSelector::isSelectionCorrect()
@@ -364,16 +388,17 @@ bool UploadNodeSelector::isSelectionCorrect()
 
 DownloadNodeSelector::DownloadNodeSelector(QWidget *parent) : NodeSelector(parent)
 {
-    mCloudDriveWidget = new NodeSelectorTreeViewWidgetCloudDrive(new DownloadType());
+    SelectTypeSPtr selectType = SelectTypeSPtr(new DownloadType);
+    mCloudDriveWidget = new NodeSelectorTreeViewWidgetCloudDrive(selectType);
     mCloudDriveWidget->setObjectName(QString::fromUtf8("CloudDrive"));
     ui->stackedWidget->addWidget(mCloudDriveWidget);
-    mIncomingSharesWidget = new NodeSelectorTreeViewWidgetIncomingShares(new DownloadType());
+    mIncomingSharesWidget = new NodeSelectorTreeViewWidgetIncomingShares(selectType);
     mIncomingSharesWidget->setObjectName(QString::fromUtf8("IncomingShares"));
     ui->stackedWidget->addWidget(mIncomingSharesWidget);
-    mBackupsWidget = new NodeSelectorTreeViewWidgetBackups(new DownloadType());
+    mBackupsWidget = new NodeSelectorTreeViewWidgetBackups(selectType);
     mBackupsWidget->setObjectName(QString::fromUtf8("Backups"));
     ui->stackedWidget->addWidget(mBackupsWidget);
-    makeConnections();
+    makeConnections(selectType);
 }
 
 bool DownloadNodeSelector::isSelectionCorrect()
@@ -415,13 +440,14 @@ bool DownloadNodeSelector::isSelectionCorrect()
 SyncNodeSelector::SyncNodeSelector(QWidget *parent) : NodeSelector(parent)
 {
     hideSelector(NodeSelector::TabItem::VAULT);
-    mCloudDriveWidget = new NodeSelectorTreeViewWidgetCloudDrive(new SyncType());
+    SelectTypeSPtr selectType = SelectTypeSPtr(new SyncType);
+    mCloudDriveWidget = new NodeSelectorTreeViewWidgetCloudDrive(selectType);
     mCloudDriveWidget->setObjectName(QString::fromUtf8("CloudDrive"));
     ui->stackedWidget->addWidget(mCloudDriveWidget);
-    mIncomingSharesWidget = new NodeSelectorTreeViewWidgetIncomingShares(new SyncType());
+    mIncomingSharesWidget = new NodeSelectorTreeViewWidgetIncomingShares(selectType);
     mIncomingSharesWidget->setObjectName(QString::fromUtf8("IncomingShares"));
     ui->stackedWidget->addWidget(mIncomingSharesWidget);
-    makeConnections();
+    makeConnections(selectType);
 }
 
 bool SyncNodeSelector::isSelectionCorrect()
@@ -455,16 +481,17 @@ bool SyncNodeSelector::isSelectionCorrect()
 
 StreamNodeSelector::StreamNodeSelector(QWidget *parent) : NodeSelector(parent)
 {
-    mCloudDriveWidget = new NodeSelectorTreeViewWidgetCloudDrive(new StreamType());
+    SelectTypeSPtr selectType = SelectTypeSPtr(new StreamType);
+    mCloudDriveWidget = new NodeSelectorTreeViewWidgetCloudDrive(selectType);
     mCloudDriveWidget->setObjectName(QString::fromUtf8("CloudDrive"));
     ui->stackedWidget->addWidget(mCloudDriveWidget);
-    mIncomingSharesWidget = new NodeSelectorTreeViewWidgetIncomingShares(new StreamType());
+    mIncomingSharesWidget = new NodeSelectorTreeViewWidgetIncomingShares(selectType);
     mIncomingSharesWidget->setObjectName(QString::fromUtf8("IncomingShares"));
     ui->stackedWidget->addWidget(mIncomingSharesWidget);
-    mBackupsWidget = new NodeSelectorTreeViewWidgetBackups(new StreamType());
+    mBackupsWidget = new NodeSelectorTreeViewWidgetBackups(selectType);
     mBackupsWidget->setObjectName(QString::fromUtf8("Backups"));
     ui->stackedWidget->addWidget(mBackupsWidget);
-    makeConnections();
+    makeConnections(selectType);
 }
 
 bool StreamNodeSelector::isSelectionCorrect()

@@ -89,4 +89,24 @@ private:
     mega::MegaHandle mBackupsHandle;
 };
 
+class NodeSelectorModelSearch : public NodeSelectorModel
+{
+    Q_OBJECT
+public:
+    explicit NodeSelectorModelSearch(QObject* parent = 0);
+    virtual ~NodeSelectorModelSearch();
+    void firstLoad() override;
+    void createRootNodes() override;
+    void searchByText(const QString& text);
+    int rootItemsCount() const override;
+    bool canFetchMore(const QModelIndex &parent) const override;
+    QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const override;
+
+signals:
+    void searchNodes(const QString& text);
+
+private slots:
+    void onRootItemsCreated(QList<NodeSelectorModelItem*> items);
+};
+
 #endif // NODESELECTORMODELSPECIALISED_H

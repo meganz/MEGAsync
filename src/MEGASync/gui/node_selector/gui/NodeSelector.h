@@ -17,6 +17,7 @@ class NodeSelectorModel;
 class NodeSelectorTreeViewWidgetCloudDrive;
 class NodeSelectorTreeViewWidgetIncomingShares;
 class NodeSelectorTreeViewWidgetBackups;
+class NodeSelectorTreeViewWidgetSearch;
 
 namespace Ui {
 class NodeSelector;
@@ -48,14 +49,16 @@ public:
 protected:
     void changeEvent(QEvent * event) override;
     void showEvent(QShowEvent* event) override;
+    void keyPressEvent(QKeyEvent *e) override;
     void addBackupsView();
     void hideSelector(TabItem item);
     bool nodeExistWarningMsg(int &access);
-    void makeConnections();
+    void makeConnections(SelectTypeSPtr selectType);
 
     NodeSelectorTreeViewWidgetCloudDrive* mCloudDriveWidget;
     NodeSelectorTreeViewWidgetIncomingShares* mIncomingSharesWidget;
     NodeSelectorTreeViewWidgetBackups* mBackupsWidget;
+    NodeSelectorTreeViewWidgetSearch* mSearchWidget;
     mega::MegaApi* mMegaApi;
     Ui::NodeSelector *ui;
 
@@ -67,6 +70,7 @@ private slots:
     void onbShowBackupsFolderClicked();
     void onOptionSelected(int index);
     void updateNodeSelectorTabs();
+    void onSearch(const QString& text);
 
 #ifdef Q_OS_MAC
     void onTabSelected(int index);
