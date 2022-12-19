@@ -125,7 +125,7 @@ QVariant SyncItemModel::data(const QModelIndex &index, int role) const
         }
         else if(role == Qt::DisplayRole)
         {
-            return sync->name();
+            return sync->name(false, true);
         }
         else if(role == Qt::ToolTipRole)
         {
