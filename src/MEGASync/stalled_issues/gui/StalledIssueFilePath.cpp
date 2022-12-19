@@ -341,99 +341,99 @@ QString StalledIssueFilePath::getSyncPathProblemString(mega::MegaSyncStall::Sync
         case mega::MegaSyncStall::FileChangingFrequently:
         {
             return tr("File is being frequently changing.");
-            break;
         }
         case mega::MegaSyncStall::IgnoreRulesUnknown:
         {
             return tr("Ignore rules unknown.");
-            break;
         }
         case mega::MegaSyncStall::DetectedHardLink:
         {
             return tr("Hard link detected.");
-            break;
         }
         case mega::MegaSyncStall::DetectedSymlink:
         {
             return tr("Detected Sym link.");
-            break;
         }
         case mega::MegaSyncStall::DetectedSpecialFile:
         {
             return tr("Detected special file.");
-            break;
         }
         case mega::MegaSyncStall::DifferentFileOrFolderIsAlreadyPresent:
         {
             return tr("Different file or folder is already present.");
-            break;
         }
         case mega::MegaSyncStall::ParentFolderDoesNotExist:
         {
             return tr("Parent folder does not exist.");
-            break;
         }
         case mega::MegaSyncStall::FilesystemErrorDuringOperation:
         {
             return tr("Filesystem error during operation.");
-            break;
         }
         case mega::MegaSyncStall::NameTooLongForFilesystem:
         {
             return tr("Name too long for filesystem.");
-            break;
         }
         case mega::MegaSyncStall::CannotFingerprintFile:
         {
             return tr("Cannot fingerprint file.");
-            break;
         }
         case mega::MegaSyncStall::DestinationPathInUnresolvedArea:
         {
             return tr("Destination path is in an unresolved area.");
-            break;
         }
         case mega::MegaSyncStall::MACVerificationFailure:
         {
             return tr("MAC verification failure.");
-            break;
         }
         case mega::MegaSyncStall::DeletedOrMovedByUser:
         {
             return tr("Deleted or moved by user.");
-            break;
         }
         case mega::MegaSyncStall::FileFolderDeletedByUser:
         {
             return tr("Deleted by user.");
-            break;
         }
         case mega::MegaSyncStall::MoveToDebrisFolderFailed:
         {
             return tr("Move to debris folder failed.");
-            break;
         }
         case mega::MegaSyncStall::IgnoreFileMalformed:
         {
             return tr("Ignore file malformed.");
-            break;
         }
         case mega::MegaSyncStall::FilesystemErrorListingFolder:
         {
             return tr("Error Listing folder in filesystem.");
-            break;
         }
         case mega::MegaSyncStall::FilesystemErrorIdentifyingFolderContent:
         {
             return tr("Error identifying folder content in filesystem.");
-            break;
         }
         case mega::MegaSyncStall::UndecryptedCloudNode:
         {
             return tr("Cloud node undecrypted.");
+        }
+        case mega::MegaSyncStall::WaitingForScanningToComplete:
+        {
+            return tr("Waiting for scanning to complete.");
+        }
+        case mega::MegaSyncStall::WaitingForAnotherMoveToComplete:
+        {
+            return tr("Waiting for another move to complete.");
+        }
+        case mega::MegaSyncStall::SourceWasMovedElsewhere:
+        {
+            return tr("Source was moved elsewhere.");
+        }
+        case mega::MegaSyncStall::FilesystemCannotStoreThisName:
+        {
+            return tr("Local filesystem cannot store this name.");
+        }
+        case mega::MegaSyncStall::SyncPathProblem_LastPlusOne:
+        {
             break;
         }
-        default:
-            return tr("Error not detected");
     }
+    return tr("Error not detected");
 }
