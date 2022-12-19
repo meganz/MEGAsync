@@ -175,7 +175,7 @@
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Label to indicate that the application is showing only incoming share notifications</translatorcomment>
-        <translation>Binnenkomende Delingen</translation>
+        <translation>Binnenkomende delingen</translation>
     </message>
 </context>
 <context>
@@ -193,7 +193,7 @@
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Label title for Incoming shares category of a notification</translatorcomment>
-        <translation>Binnenkomende Delingen</translation>
+        <translation>Binnenkomende delingen</translation>
     </message>
     <message>
         <source>Payment</source>
@@ -4096,7 +4096,10 @@ Om de synchronisatie te verwijderen, gaat u naar Voorkeuren in de desktop-applic
 - Translation issues fixed.
 </source>
         <translatorcomment>Changelog for version v4.8.5</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Gedetecteerde crashes op Windows, Linux en macOS verholpen.
+- Er wordt minder apparaatgeheugen gebruikt door accounts met grote hoeveelheden opgeslagen gegevens. 
+- Applicatieprestaties verbeterd. 
+- Vertaalproblemen opgelost.</translation>
     </message>
 </context>
 <context>
@@ -6207,7 +6210,7 @@ Selecteer een andere map om door te gaan.
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a local folder shared with VMWare third party app.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>U bent een lokale map aan het synchroniseren met VMWare. Deze map ondersteund geen bestandssysteem meldingen dus de applicatie moet steeds worden gescand om wijzigingen te detecteren in uw bestanden en mappen. Gebruik een andere map mits mogelijk om het CPU verbruik te verminderen.</translation>
     </message>
 </context>
 <context>

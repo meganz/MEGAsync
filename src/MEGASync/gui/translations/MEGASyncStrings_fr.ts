@@ -4096,7 +4096,10 @@ Please delete the folder sync from preferences to cancel them.</source>
 - Translation issues fixed.
 </source>
         <translatorcomment>Changelog for version v4.8.5</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>– Correction de plantages détectés sous Windows, Linux et macOS.
+– Les comptes qui hébergent de grandes quantités de données utilisent désormais moins de mémoire vive.
+– Amélioration des performances de l’application.
+– Correction de problèmes de traduction.</translation>
     </message>
 </context>
 <context>

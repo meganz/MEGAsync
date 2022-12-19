@@ -4094,7 +4094,10 @@ Please delete the folder sync from preferences to cancel them.</source>
 - Translation issues fixed.
 </source>
         <translatorcomment>Changelog for version v4.8.5</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- 修復在Windows、Linux和macOS上檢測到的當機問題。
+- 有大量資料儲存的帳戶所使用的裝置記憶體將更少。
+- 改善應用程式性能。
+- 修復翻譯問題。</translation>
     </message>
 </context>
 <context>

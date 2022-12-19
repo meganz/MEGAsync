@@ -4097,7 +4097,10 @@ Please delete the folder sync from preferences to cancel them.</source>
 - Translation issues fixed.
 </source>
         <translatorcomment>Changelog for version v4.8.5</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Windows, Linux 그리고 macOS에서 감지된 충돌 해결.
+- 많은 양의 데이터가 저장된 계정이 사용하는 메모리를 줄였습니다.
+- 어플리케이션 성능 향상.
+- 번역 문제 해결.</translation>
     </message>
 </context>
 <context>

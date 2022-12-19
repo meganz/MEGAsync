@@ -1625,12 +1625,12 @@
     <message>
         <source>Please, enter your e-mail address</source>
         <translatorcomment>Message box shown if user does not enter email and try to log in</translatorcomment>
-        <translation>請輸入您的email</translation>
+        <translation>請輸入您的電子郵件地址</translation>
     </message>
     <message>
         <source>Please, enter a valid e-mail address</source>
         <translatorcomment>Message box shown if user has typed an incorrect email</translatorcomment>
-        <translation>請輸入一個有效的email</translation>
+        <translation>請輸入一個有效的電子郵件地址</translation>
     </message>
     <message>
         <source>Please, enter your password</source>
@@ -1650,7 +1650,7 @@
     <message>
         <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
         <translatorcomment>Description to explain why the current account is locked. The user needs to verify email in order to continue using the application.</translatorcomment>
-        <translation>為了安全起見，您的帳戶已被暫時封鎖。請驗證您的email並按照步驟解鎖您的帳戶。</translation>
+        <translation>為了安全起見，您的帳戶已被暫時封鎖。請驗證您的電子郵件地址並按照步驟解鎖您的帳戶。</translation>
     </message>
     <message>
         <source>Log out</source>
@@ -7090,7 +7090,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
         <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
-        <translation>為了安全起見，您的帳戶已被暫時封鎖。請驗證您的email並按照步驟解鎖您的帳戶。</translation>
+        <translation>為了安全起見，您的帳戶已被暫時封鎖。請驗證您的電子郵件地址並按照步驟解鎖您的帳戶。</translation>
     </message>
     <message>
         <source>Resend email</source>

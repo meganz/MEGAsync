@@ -3987,7 +3987,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Additional transfer quota charged at %1 per %2TB.</source>
         <translatorcomment>Balloon tooltip to inform users that additional transfer quota for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
-        <translation>Дополнительные передачи по %1 за %2&#xa0;ТБ.</translation>
+        <translation>Дополнительный трафик по %1 за %2&#xa0;ТБ.</translation>
     </message>
     <message numerus="yes">
         <source>minimum %n user</source>
@@ -4097,7 +4097,10 @@ Please delete the folder sync from preferences to cancel them.</source>
 - Translation issues fixed.
 </source>
         <translatorcomment>Changelog for version v4.8.5</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Исправлены обнаруженные сбои на Windows, Linux, и macOS.
+- Аккаунты с большим объёмом хранимых данных будут использовать меньше памяти устройства.
+- Улучшена производительность приложения.
+- Исправлены ошибки перевода.</translation>
     </message>
 </context>
 <context>
@@ -5029,7 +5032,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Report Issue</source>
         <translatorcomment>Button label used to submit bug reports to MEGA.</translatorcomment>
-        <translation>Сообщение о проблеме</translation>
+        <translation>Сообщить о проблеме</translation>
     </message>
     <message>
         <source>My Account</source>
@@ -6207,7 +6210,7 @@ To continue, select a different folder.</source>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a local folder shared with VMWare third party app.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Вы синхронизируете локальную папку, используемую совместно с VMWare. Эта папка не поддерживает уведомления файловой системы, поэтому для обнаружения изменений и синхронизации приложению придётся постоянно сканировать папку и файлы в ней. Если возможно, используйте другую папку, чтобы снизить нагрузку на процессор.</translation>
     </message>
 </context>
 <context>

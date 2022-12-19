@@ -4096,7 +4096,10 @@ Please delete the folder sync from preferences to cancel them.</source>
 - Translation issues fixed.
 </source>
         <translatorcomment>Changelog for version v4.8.5</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Se han corregidos los crashes detectados en Windows, Linux y macOS.
+- Las cuentas con grandes cantidades de datos almacenados utilizarán menos memoria del dispositivo.
+- Se ha mejorado el rendimiento de la aplicación.
+- Se han solucionado algunos problemas de traducción.</translation>
     </message>
 </context>
 <context>
@@ -6207,7 +6210,7 @@ Para continuar, selecciona una carpeta diferente.</translation>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a local folder shared with VMWare third party app.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Estás sincronizando una carpeta local compartida con VMWare. Esta carpeta no admite notificaciones del sistema de archivos, por lo que para detectar cambios y sincronizar, la aplicación deberá escanear continuamente la carpeta y los archivos que contiene. Si es posible, utiliza una carpeta diferente para reducir el uso de la CPU.</translation>
     </message>
 </context>
 <context>

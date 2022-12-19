@@ -1744,7 +1744,7 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>Download to my computer</source>
         <translatorcomment>Label to indicate if the user wants to download the imported MEGA link(s) to his computer.</translatorcomment>
-        <translation>Tải về máy tính của tôi</translation>
+        <translation>Tải&#xa0;xuống máy&#xa0;tính của tôi</translation>
     </message>
     <message>
         <source>Import to my cloud drive</source>
@@ -2099,7 +2099,7 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>MEGA Desktop app</source>
         <translatorcomment>Title of MEGA Desktop app within initial information wizard.</translatorcomment>
-        <translation>App MEGA cho Máy Tính</translation>
+        <translation>App MEGA cho Máy&#xa0;Tính</translation>
     </message>
     <message>
         <source>Login or create an account to start using MEGA Desktop app.</source>
@@ -2892,7 +2892,7 @@ Các phiên truyền tải sẽ được tự động tiếp tục khi bạn m�
     <message>
         <source>Invalid key/Decryption error</source>
         <translatorcomment>Label to show that an error related with the decryption process of a node occurs during a SDK operation.</translatorcomment>
-        <translation>Khóa không hợp lệ/Lỗi giải mã</translation>
+        <translation>Chìa&#xa0;khóa không hợp&#xa0;lệ/Lỗi giải&#xa0;mã</translation>
     </message>
     <message>
         <source>Bad session ID</source>
@@ -4571,7 +4571,7 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
     <message>
         <source>Computer</source>
         <translatorcomment>Name of the top level of the filesystem in unix platform</translatorcomment>
-        <translation>Máy Tính</translation>
+        <translation>Máy&#xa0;Tính</translation>
     </message>
     <message>
         <source>&lt;b&gt;The name &quot;%1&quot; cannot be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuation marks.</source>
@@ -4849,22 +4849,22 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Master key</source>
         <translatorcomment>Title of dialog to export master key for the current user.</translatorcomment>
-        <translation>Xuất Mã Phục Hồi</translation>
+        <translation>Xuất Chìa&#xa0;Khóa Phục&#xa0;Hồi</translation>
     </message>
     <message>
         <source>Unable to write file</source>
         <translatorcomment>Title for message box displayed when an error occurs exporting the master key to a file.</translatorcomment>
-        <translation>Không thể tạo mục chứa mã masterkey</translation>
+        <translation>Không thể viết tệp tin</translation>
     </message>
     <message>
         <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
         <translatorcomment>Label to inform the user to keep the master key in a secure location.</translatorcomment>
-        <translation>Xuất ra Mã Phục Hồi và giữ mã ở một nơi an toàn và dễ nhớ sẽ giúp bạn tránh việc mất dữ liệu khi quên mật khẩu.</translation>
+        <translation>Xuất&#xa0;ra Chìa&#xa0;Khóa Phục&#xa0;Hồi và giữ chìa&#xa0;khóa ở một&#xa0;nơi an&#xa0;toàn và dễ&#xa0;nhớ sẽ giúp bạn tránh&#xa0;việc mất dữ&#xa0;liệu khi quên mật&#xa0;khẩu.</translation>
     </message>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
         <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
-        <translation>Luôn luôn giữ kiểm soát bản sao chép của Mã Phục Hồi để phòng bị mất (vd: máy tính, ổ đĩa ngoài, hoặc in ra).</translation>
+        <translation>Luôn&#xa0;luôn giữ kiểm&#xa0;soát bản&#xa0;sao của Chìa&#xa0;Khóa Phục&#xa0;Hồi để&#xa0;phòng bị mất (vd: trong máy&#xa0;tính, ổ&#xa0;đĩa ngoài, hoặc in&#xa0;ra).</translation>
     </message>
     <message>
         <source>Exclude by size</source>
@@ -4949,7 +4949,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>MEGA-RECOVERYKEY</source>
         <translatorcomment>File name of file exported containing the recovery key.</translatorcomment>
-        <translation>MAPHUCHOI-MEGA</translation>
+        <translation>CHIAKHOAPHUCHOI-MEGA</translation>
     </message>
     <message>
         <source>Error enabling sync</source>
@@ -5064,12 +5064,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Recovery Key</source>
         <translatorcomment>Section title for MEGA recovery key download in Security pane.</translatorcomment>
-        <translation>Mã phục hồI</translation>
+        <translation>Chìa&#xa0;Khóa Phục&#xa0;Hồi</translation>
     </message>
     <message>
         <source>Your password is not stored by MEGA and we cannot recover it for you. To avoid losing access to your account, save your Recovery Key in a safe place.</source>
         <translatorcomment>Informative text message shown in the Recovery Key section in Security pane, inviting the user to save the Recovery Key in a safe place.</translatorcomment>
-        <translation>MEGA không lưu trữ mật khẩu vì thế sẽ không có cách nào tra cứu và phục hồi lại. Để tránh mất khả năng truy cập vào tài khoản, nên tải và lưu lại Mã Phục Hồi ở nơi an toàn và dễ nhớ.</translation>
+        <translation>MEGA không lưu&#xa0;trữ mật&#xa0;khẩu vì thế sẽ không&#xa0;có cách nào tra&#xa0;cứu và phục&#xa0;hồi lại. Để&#xa0;tránh mất khả&#xa0;năng truy&#xa0;cập vào tài&#xa0;khoản, nên tải và lưu&#xa0;lại Chìa&#xa0;Khóa Phục&#xa0;Hồi ở nơi an&#xa0;toàn và dễ&#xa0;nhớ.</translation>
     </message>
     <message>
         <source>Password</source>

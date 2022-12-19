@@ -4096,7 +4096,11 @@ Please delete the folder sync from preferences to cancel them.</source>
 - Translation issues fixed.
 </source>
         <translatorcomment>Changelog for version v4.8.5</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Au fost remediate defecțiunile detectate pe Windows, Linux și macOS.
+- Se va folosi mai puțină memorie a dispozitivului pentru conturile cu cantități mari de date stocate.
+- A fost îmbunătățită performanța aplicației.
+- Au fost remediate probleme de traducere.
+</translation>
     </message>
 </context>
 <context>

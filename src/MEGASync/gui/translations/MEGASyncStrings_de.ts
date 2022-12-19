@@ -2567,7 +2567,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>Ihr Business-Account ist abgelaufen</translation>
+        <translation>Account deaktiviert</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -2592,7 +2592,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>This month&apos;s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</source>
         <translatorcomment>Informative message shown to the user when a payment has failed for a business account.</translatorcomment>
-        <translation>Wir haben für diesen Monat keine Zahlung erhalten. Bitte lösen Sie Ihr Zahlungsproblem baldmöglichst, um eine Sperrung Ihres Business-Accounts zu vermeiden.</translation>
+        <translation>Wir haben für diesen Monat keine Zahlung erhalten. Bitte lösen Sie Ihr Zahlungsproblem baldmöglichst, um eine Deaktivierung Ihres Accounts zu vermeiden.</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -3195,7 +3195,7 @@ Die Transfers werden automatisch fortgesetzt, wenn Sie die App erneut öffnen.</
     <message>
         <source>Account expired (business or Pro Flexi)</source>
         <translatorcomment>Label to show that the current account (either business or Pro Flexi) is expired during a SDK operation.</translatorcomment>
-        <translation>Ihr Business-Account ist abgelaufen</translation>
+        <translation>Account deaktiviert</translation>
     </message>
 </context>
 <context>
