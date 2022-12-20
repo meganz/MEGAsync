@@ -21,7 +21,6 @@ class ButtonIconManager : public QObject
         QString extension;
         QString iconName;
         QString iconPath;
-
         bool isEmpty(){return iconName.isEmpty();}
     };
 

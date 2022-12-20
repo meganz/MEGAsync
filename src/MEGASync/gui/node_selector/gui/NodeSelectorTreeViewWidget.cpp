@@ -77,6 +77,11 @@ void NodeSelectorTreeViewWidget::showDefaultUploadOption(bool show)
     ui->cbAlwaysUploadToLocation->setVisible(show);
 }
 
+void NodeSelectorTreeViewWidget::setSearchText(const QString &text)
+{
+    ui->leSearch->setText(text);
+}
+
 void NodeSelectorTreeViewWidget::abort()
 {
     mModel->abort();
@@ -697,7 +702,6 @@ bool SelectType::isAllowedToNavigateInside(NodeSelectorModelItem *item)
 
 void DownloadType::init(NodeSelectorTreeViewWidget *wdg)
 {
-    qDebug()<<"DOWNLOAD TYPE";
     wdg->ui->bNewFolder->hide();
     wdg->ui->tMegaFolders->setSelectionMode(QAbstractItemView::ExtendedSelection);
     wdg->mProxyModel->showReadOnlyFolders(true);
@@ -717,7 +721,6 @@ void DownloadType::checkOkButton(NodeSelectorTreeViewWidget *wdg, const QModelIn
 void SyncType::init(NodeSelectorTreeViewWidget *wdg)
 {
     wdg->mModel->setSyncSetupMode(true);
-    qDebug()<<"SyncType TYPE";
 }
 
 void SyncType::newFolderButtonVisibility(NodeSelectorTreeViewWidget *wdg)
@@ -759,7 +762,6 @@ void StreamType::init(NodeSelectorTreeViewWidget *wdg)
     wdg->ui->bNewFolder->hide();
     wdg->mProxyModel->showReadOnlyFolders(true);
     wdg->mModel->showFiles(true);
-    qDebug()<<"StreamType TYPE";
 }
 
 void StreamType::checkOkButton(NodeSelectorTreeViewWidget *wdg, const QModelIndexList &selected)
@@ -787,7 +789,6 @@ void StreamType::checkOkButton(NodeSelectorTreeViewWidget *wdg, const QModelInde
 
 void UploadType::init(NodeSelectorTreeViewWidget *wdg)
 {
-    qDebug()<<"UPLOAD TYPE";
     wdg->mModel->setSyncSetupMode(true);
     wdg->ui->bNewFolder->show();
     wdg->mProxyModel->showReadOnlyFolders(false);

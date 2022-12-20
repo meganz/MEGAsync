@@ -20,7 +20,7 @@ public:
     explicit SearchLineEdit(QWidget *parent = nullptr);
     ~SearchLineEdit();
     void setIcon(const QIcon& icon);
-
+    void setText(const QString& text);
 
 signals:
     void search(const QString& text);

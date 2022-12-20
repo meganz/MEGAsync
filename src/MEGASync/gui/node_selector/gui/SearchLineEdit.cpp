@@ -27,6 +27,11 @@ SearchLineEdit::~SearchLineEdit()
     delete ui;
 }
 
+void SearchLineEdit::setText(const QString &text)
+{
+    ui->leSearchField->setText(text);
+}
+
 void SearchLineEdit::onClearClicked()
 {
     ui->leSearchField->clear();

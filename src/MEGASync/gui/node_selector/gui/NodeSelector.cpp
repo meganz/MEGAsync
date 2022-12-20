@@ -36,6 +36,12 @@ NodeSelector::NodeSelector(QWidget *parent) :
     connect(ui->tabBar, &QTabBar::currentChanged, this, &NodeSelector::onOptionSelected);
 #endif
 
+    auto managedButtons = ui->wLeftPane->findChildren<QAbstractButton*>();
+    foreach(auto& button, managedButtons)
+    {
+        mButtonIconManager.addButton(button);
+    }
+
     updateNodeSelectorTabs();
 }
 
@@ -66,6 +72,15 @@ void NodeSelector::onSearch(const QString &text)
 {
     ui->stackedWidget->setCurrentWidget(mSearchWidget);
     mSearchWidget->search(text);
+
+    for(int page = 0; page < ui->stackedWidget->count(); ++page)
+    {
+        auto viewContainer = dynamic_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->widget(page));
+        if(viewContainer)
+        {
+            viewContainer->setSearchText(text);
+        }
+    }
 }
 
 void NodeSelector::showDefaultUploadOption(bool show)
@@ -175,7 +190,6 @@ void NodeSelector::onTabSelected(int index)
 
 void NodeSelector::onbShowCloudDriveClicked()
 {
-    qDebug()<<sender();
     ui->stackedWidget->setCurrentIndex(CLOUD_DRIVE);
 }
 

@@ -64,6 +64,7 @@ public:
 private:
     QString getRootText() override;
     std::unique_ptr<NodeSelectorModel> getModel() override;
+    QString mSearchText;
 };
 
 #endif // NODESELECTORTREEVIEWWIDGETSPECIALIZATIONS_H

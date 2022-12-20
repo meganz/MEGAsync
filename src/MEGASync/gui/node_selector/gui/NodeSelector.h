@@ -1,6 +1,7 @@
 #ifndef NODESELECTOR_H
 #define NODESELECTOR_H
 
+#include "ButtonIconManager.h"
 #include "NodeNameSetterDialog/NewFolderDialog.h"
 #include "NodeSelectorTreeViewWidget.h"
 #include "megaapi.h"
@@ -84,6 +85,7 @@ private:
     void hideTabSelector(const QString& tabText);
 #endif
     void shortCutConnects(int ignoreThis);
+    ButtonIconManager mButtonIconManager;
 
     bool mManuallyResizedColumn;
 };

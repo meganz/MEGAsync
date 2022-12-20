@@ -99,11 +99,12 @@ void NodeSelectorTreeViewWidgetSearch::search(const QString &text)
 {
     auto search_model = static_cast<NodeSelectorModelSearch*>(mModel.get());
     search_model->searchByText(text);
+    mSearchText = text;
 }
 
 QString NodeSelectorTreeViewWidgetSearch::getRootText()
 {
-    return QString::fromUtf8("searching:...");
+    return QString::fromUtf8("Searching:") + mSearchText;
 }
 
 std::unique_ptr<NodeSelectorModel> NodeSelectorTreeViewWidgetSearch::getModel()

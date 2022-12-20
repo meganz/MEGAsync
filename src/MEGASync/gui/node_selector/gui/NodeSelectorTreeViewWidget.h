@@ -42,6 +42,7 @@ public:
     void setDefaultUploadOption(bool value);
     bool getDefaultUploadOption();
     void showDefaultUploadOption(bool show);
+    void setSearchText(const QString& text);
     void abort();
     NodeSelectorProxyModel* getProxyModel();
 

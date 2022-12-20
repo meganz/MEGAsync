@@ -64,8 +64,10 @@ void NodeRequester::search(const QString &text)
     {
         return;
     }
+    mRootItems.clear();
+
     mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
-    auto nodeList = megaApi->search(text.toUtf8());
+    auto nodeList = megaApi->search(text.toUtf8(), mCancelToken.get());
     QList<NodeSelectorModelItem*> items;
 
     for(int i = 0; i < nodeList->size(); i++)
@@ -75,7 +77,7 @@ void NodeRequester::search(const QString &text)
             break;
         }
 
-        auto node = std::unique_ptr<mega::MegaNode>(nodeList->get(i));
+        auto node = std::unique_ptr<mega::MegaNode>(nodeList->get(i)->copy());
         if(node->isFolder() || (node->isFile() && mShowFiles))
         {
             auto item = new NodeSelectorModelItemSearch(std::move(node));
