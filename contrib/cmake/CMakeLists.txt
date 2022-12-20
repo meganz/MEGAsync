@@ -267,6 +267,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/EventUpdater.h
     ${MEGAsyncDir}/FolderTransferListener.h
     ${MEGAsyncDir}/BlockingStageProgressController.h
+    ${MEGAsyncDir}/TransferNotificationMessageBuilder.h
 
     ${MEGAsyncDir}/control/ConnectivityChecker.h
     ${MEGAsyncDir}/control/CrashHandler.h
@@ -505,6 +506,7 @@ set (SRCS
     ${MEGAsyncDir}/EventUpdater.cpp
     ${MEGAsyncDir}/FolderTransferListener.cpp
     ${MEGAsyncDir}/BlockingStageProgressController.cpp
+    ${MEGAsyncDir}/TransferNotificationMessageBuilder.cpp
 
     ${FORMS}
     ${MOC_INPUT}
