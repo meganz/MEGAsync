@@ -656,7 +656,7 @@
     <message>
         <source>Upload rate limit</source>
         <translatorcomment>Section title for upload rate limit details.</translatorcomment>
-        <translation>Batas kecepatan upload</translation>
+        <translation>Batas kecepatan unggah</translation>
     </message>
     <message>
         <source>No limit</source>
@@ -1042,7 +1042,7 @@
     <message>
         <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
         <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
-        <translation>Anda dapat membantu kami meningkatkan MEGAsync dengan mengirimkan laporan kesalahan ini. Itu tidak mengandung informasi pribadi apa pun. Jika anda ingin memberi kami detail lebih lanjut, silahkan tulis di bawah ini:</translation>
+        <translation>Anda dapat membantu kami meningkatkan aplikasi MEGA dengan mengirimkan laporan kesalahan ini. Itu tidak mengandung informasi pribadi apa pun. Jika anda ingin memberi kami detail lebih lanjut, silahkan tulis di bawah ini:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1821,7 +1821,7 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
     <message>
         <source>Show MEGAsync options</source>
         <translatorcomment>Tooltip for the button that opens MEGAsync options menu</translatorcomment>
-        <translation>Tampilkan opsi MEGAsync</translation>
+        <translation>Tampilkan opsi</translation>
     </message>
     <message>
         <source>The process is taking longer than expected. Please wait...</source>
@@ -2225,17 +2225,17 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
     <message>
         <source>MEGAsync is now running. Click here to open the status window.</source>
         <translatorcomment>Notification message that MEGAsync is actually running.</translatorcomment>
-        <translation>MEGAsync sekarang berjalan. Klik di sini untuk membuka jendela status.</translation>
+        <translation>Aplikasi sekarang berjalan. Klik di sini untuk membuka jendela status.</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
         <translatorcomment>Notification message launched when a problem occurs uploading files to a destination folder in MEGA.</translatorcomment>
-        <translation>Error: Folder tujuan salah. Upload telah dibatalkan</translation>
+        <translation>Error: Folder tujuan salah. Unggahan telah dibatalkan</translation>
     </message>
     <message>
         <source>About MEGAsync</source>
         <translatorcomment>Title of the dialog that displays the version code of MEGAsync.</translatorcomment>
-        <translation>Tentang MEGAsync</translation>
+        <translation>Tentang</translation>
     </message>
     <message>
         <source>The link has been copied to the clipboard</source>
@@ -2280,7 +2280,7 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
     <message>
         <source>MEGAsync has been updated</source>
         <translatorcomment>Notification message launched when an update has been succesfully applied.</translatorcomment>
-        <translation>MEGAsync telah diperbarui</translation>
+        <translation>Aplikasi telah diperbarui</translation>
     </message>
     <message>
         <source>Waiting</source>
@@ -2347,12 +2347,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
         <translatorcomment>Notification message launched when an user logged in succesfully. String as short as possible.</translatorcomment>
-        <translation>MEGAsync sekarang berjalan. Klik gambar baki sistem untuk membuka jendela status.</translation>
+        <translation>Aplikasi sekarang berjalan. Klik gambar baki sistem untuk membuka jendela status.</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
         <translatorcomment>Notification message launched when an user logged in succesfully. String as short as possible.</translatorcomment>
-        <translation>MEGAsync sekarang berjalan. Klik gambar bilah menu untuk membuka jendela status.</translation>
+        <translation>Aplikasi sekarang berjalan. Klik gambar bilah menu untuk membuka jendela status.</translation>
     </message>
     <message>
         <source>Show status</source>
@@ -2372,7 +2372,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
         <translatorcomment>Notification message launched when a connectivity problem occurs.</translatorcomment>
-        <translation>MEGAsync tidak dapat tersambung. Silakan periksa konektivitas Internet anda dan konfigurasi firewall lokal. Perhatikan bahwa sebagian besar perangkat lunak antivirus menyertakan firewall.</translation>
+        <translation>Aplikasi tidak dapat tersambung. Silakan periksa konektivitas Internet anda dan konfigurasi firewall lokal. Perhatikan bahwa sebagian besar perangkat lunak antivirus menyertakan firewall.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
@@ -2442,7 +2442,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log)</source>
         <translatorcomment>Notification message shown when the DEBUG mode is enabled.</translatorcomment>
-        <translation>Mode debug diaktifkan. Sebuah log sedang dibuat di komputer anda (“MEGAsync.log”) .</translation>
+        <translation>Mode debug diaktifkan. Sebuah log bernama “MEGAsync.log” sedang dibuat di komputer anda.</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The download has been cancelled</source>
@@ -2478,7 +2478,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
         <translatorcomment>Message shown to the user to inform that MEGAsync is not able to find a systray to place tray icon</translatorcomment>
-        <translation>Kami tidak dapat menemukan baki sistem untuk menempatkan ikon baki MEGAsync. MEGAsync dimaksudkan untuk digunakan dengan ikon baki sistem tetapi dapat bekerja dengan baik tanpanya. Jika anda ingin membuka antarmuka, coba buka MEGAsync lagi.</translation>
+        <translation>Kami tidak dapat menemukan baki sistem untuk menempatkan ikon baki aplikasi. Coba luncurkan aplikasi lagi.</translation>
     </message>
     <message>
         <source>Error getting link:</source>
@@ -2517,7 +2517,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however you might not receive new updates.</source>
         <translatorcomment>Message shown to the user to inform that he is using an operating system that will be unsupported soon</translatorcomment>
-        <translation>MEGAsync akan terus berfungsi, namun anda mungkin tidak menerima pembaruan baru.</translation>
+        <translation>Aplikasi akan terus berfungsi, namun anda mungkin tidak menerima pembaruan baru.</translation>
     </message>
     <message>
         <source>Password changed</source>
@@ -2607,7 +2607,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
         <translatorcomment>Informative message shown when a user is trying to upload data to a inshare that is in overquota state. %1 will be replaced with sharer account to inform the user.</translatorcomment>
-        <translation>Upload anda tidak dapat dilanjutkan karena akun %1 penuh.</translation>
+        <translation>Unggahan anda tidak dapat dilanjutkan karena akun %1 penuh.</translation>
     </message>
     <message>
         <source>contact</source>
@@ -2632,7 +2632,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
         <translatorcomment>Informative message box shown if user is running an old Win version (vista or previous), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation>MEGAsync akan terus berfungsi, namun pembaruan tidak lagi didukung untuk versi Windows Vista dan versi sebelumnya.</translation>
+        <translation>Aplikasi akan terus berfungsi, namun pembaruan tidak lagi didukung untuk versi Windows Vista dan versi sebelumnya.</translation>
     </message>
     <message>
         <source>Transferring</source>
@@ -2672,7 +2672,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
         <translatorcomment>Informative message box shown if user is running an old OSX version (previous than Yosemite), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation>MEGAsync akan terus berfungsi, namun pembaruan tidak lagi didukung untuk versi sebelum OS X Yosemite.</translation>
+        <translation>Aplikasi akan terus berfungsi, namun pembaruan tidak lagi didukung untuk versi sebelum OS X Yosemite.</translation>
     </message>
     <message>
         <source>Your syncs have been disabled</source>
@@ -2717,12 +2717,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>A new version of MEGAsync is available. Click on this message to install it</source>
         <translatorcomment>System notification to inform the user that there is a new version of MEGAsync available for update. Windows version.</translatorcomment>
-        <translation>Versi baru dari MEGAsync kini tersedia. Klik pesan ini untuk menginstalnya</translation>
+        <translation>Versi baru dari aplikasi kini tersedia. Klik pesan ini untuk menginstalnya</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available</source>
         <translatorcomment>System notification to inform the user that there is a new version of MEGAsync available for update. macOS version cannot be installed making click so, a new string is provided</translatorcomment>
-        <translation>Versi baru dari MEGAsync kini tersedia.</translation>
+        <translation>Versi baru dari aplikasi kini tersedia.</translation>
     </message>
     <message>
         <source>%1 and %2 were successfully uploaded</source>
@@ -3036,7 +3036,7 @@ Transfer akan dilanjutkan secara otomatis saat anda membuka kembali aplikasi.</n
     <message>
         <source>MEGAsync</source>
         <translatorcomment>Title of MEGAsync dialog.</translatorcomment>
-        <translation>MEGAsync</translation>
+        <translation>MEGA</translation>
     </message>
     <message>
         <source>Please wait...</source>
@@ -3693,7 +3693,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>MEGAsync</source>
         <translatorcomment>Product name.</translatorcomment>
-        <translation>MEGAsync</translation>
+        <translation>MEGA</translation>
     </message>
 </context>
 <context>
@@ -3894,7 +3894,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&apos;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
-        <translation>File dan folder memiliki pemilik dan milik sekelompok pengguna. Dengan menggunakan dialog ini, anda dapat memberikan izin akses yang berbeda untuk file dan folder baru yang dibuat oleh MEGAsync kepada pengguna yang tergabung dalam grup yang sama dan pengguna lainnya di komputer. Jika anda tidak perlu mengubahnya, biarkan pada pengaturan default untuk alasan keamanan.</translation>
+        <translation>File dan folder memiliki pemilik dan milik sekelompok pengguna. Dengan menggunakan dialog ini, anda dapat memberikan izin akses yang berbeda untuk file dan folder baru yang dibuat oleh aplikasi desktop kepada pengguna yang tergabung dalam grup yang sama dan pengguna lainnya di komputer. Jika anda tidak perlu mengubahnya, biarkan pada pengaturan default untuk alasan keamanan.</translation>
     </message>
     <message>
         <source>Owner permissions:</source>
@@ -4818,7 +4818,7 @@ Apakah anda tetap ingin menghapusnya?</translation>
 
 Do you want to restart MEGAsync now?</source>
         <translatorcomment>Message displayed asking for confirmation to the user to restart the application for a Full scan operation.</translatorcomment>
-        <translation>MEGAsync akan melakukan pemindaian penuh terhadap folder yang disinkronkan saat dimulai. Apakah anda ingin memulai ulang MEGAsync sekarang?</translation>
+        <translation>Aplikasi ini akan melakukan pemindaian penuh terhadap folder yang disinkronkan saat dimulai. Apakah anda ingin memulai ulang aplikasi sekarang?</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -4888,7 +4888,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Do you want to restart MEGAsync now?</source>
         <translatorcomment>Message shown when clicking on restart MEGAsync button in Settings.</translatorcomment>
-        <translation>Apakah anda ingin memulai ulang MEGAsync sekarang?</translation>
+        <translation>Apakah anda ingin memulai ulang aplikasi sekarang?</translation>
     </message>
     <message>
         <source>Permissions</source>
@@ -5248,7 +5248,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Restart MEGAsync</source>
         <translatorcomment>Title text of dialog shown when clicking on Restart application button. Keep as short as possible.</translatorcomment>
-        <translation>Mulai ulang MEGAsync</translation>
+        <translation>Mulai ulang</translation>
     </message>
     <message>
         <source>No limit</source>
@@ -5824,7 +5824,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Enjoy MEGAsync</source>
         <translatorcomment>Label displayed when user completes the setup wizard</translatorcomment>
-        <translation>Nikmati MEGAsync</translation>
+        <translation>Nikmati aplikasi kami</translation>
     </message>
     <message>
         <source>We are all done</source>
@@ -5842,7 +5842,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload to MEGA</source>
         <translatorcomment>Label displayed when a user is trying to upload a file/folder to MEGA from the shell extension. String as short as possible.</translatorcomment>
-        <translation>Upload ke MEGA</translation>
+        <translation>Unggah ke MEGA</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -6124,7 +6124,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
         <translatorcomment>Warning message indicating that megasync is not going to be able to download anything in the selected folder.</translatorcomment>
-        <translation>MEGAsync tidak akan dapat mengunduh apa pun di sini.</translation>
+        <translation>Aplikasi tidak akan dapat mengunduh apa pun di sini.</translation>
     </message>
     <message>
         <source>You can&apos;t backup this folder as it contains backed up folders.</source>
@@ -6940,12 +6940,12 @@ Untuk mendapatkan lebih banyak kuota, tingkatkan ke akun Pro atau tunggu [A] sam
     <message>
         <source>Upload to MEGA</source>
         <translatorcomment>Label and Title of the dialog displayed when a user is trying to upload a file/folder to MEGA.(MAX 20 characters)</translatorcomment>
-        <translation>Upload ke MEGA</translation>
+        <translation>Unggah ke MEGA</translation>
     </message>
     <message>
         <source>Please, select the upload folder for your files:</source>
         <translatorcomment>Label to inform the user of the destination local folder for the files to be uploaded (MAX 50 characters)</translatorcomment>
-        <translation>Harap pilih upload folder untuk file anda:</translation>
+        <translation>Harap pilih unggah folder untuk file anda:</translation>
     </message>
     <message>
         <source>MEGA folder:</source>

@@ -406,7 +406,7 @@
     <message>
         <source>Local Folder</source>
         <translatorcomment>Local folder column header name for backlups table in settings dialog</translatorcomment>
-        <translation>Cartella Locale</translation>
+        <translation>Cartella locale</translation>
     </message>
     <message>
         <source>Sort by name</source>
@@ -1245,7 +1245,7 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>Il tuo account Business è scaduto</translation>
+        <translation>Account disattivato</translation>
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
@@ -1815,7 +1815,7 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message>
         <source>Open Transfer Manager</source>
         <translatorcomment>Tooltip for the button that open transfer manager dialog</translatorcomment>
-        <translation>Apri il Gestore dei trasferimenti</translation>
+        <translation>Apri il gestore dei trasferimenti</translation>
     </message>
     <message>
         <source>Show MEGAsync options</source>
@@ -2566,7 +2566,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>Il tuo account Business è scaduto</translation>
+        <translation>Account disattivato</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -4095,7 +4095,10 @@ Per favore, elimina la cartella di sincronizzazione dalle Preferenze per annulla
 - Translation issues fixed.
 </source>
         <translatorcomment>Changelog for version v4.8.5</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Sistemati alcuni crash su Windows, Linux, e macOS.
+- Minore memoria del dispositivo verrà utilizzata da account con grandi quantità di dati archiviati.
+- Performance dell&apos;applicazione migliorata.
+- Sistemati problemi di traduzione.</translation>
     </message>
 </context>
 <context>
@@ -6205,7 +6208,7 @@ Per continuare, seleziona un&apos;altra cartella.</translation>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a local folder shared with VMWare third party app.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Stai sincronizzando una cartella locale condivisa con VMWare. Questa cartella non supporta le notifiche del filesystem, quindi per riscontrare cambiamenti e sincronizzare, l&apos;app dovrà scansionare la cartella e i file al suo interno di continuo. Se possibile, utilizza un&apos;altra cartella per ridurre l&apos;utilizzo della CPU.</translation>
     </message>
 </context>
 <context>
