@@ -2735,54 +2735,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Informative message shown when a user makes a report to thank for his help.</translatorcomment>
         <translation>Thank you for your collaboration</translation>
     </message>
-    <message numerus="yes">
-        <source>%n file</source>
-        <translatorcomment>File count, where %n is the number of files. Used to build the &quot;Files and folders successfully uploaded/downloaded&quot; string.</translatorcomment>
-        <translation>
-            <numerusform>%n file</numerusform>
-            <numerusform>%n files</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>%n folder</source>
-        <translatorcomment>Folder count, where %n is the number of folders. Used to build the &quot;Files and folders successfully uploaded/downloaded&quot; string.</translatorcomment>
-        <translation>
-            <numerusform>%n folder</numerusform>
-            <numerusform>%n folders</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>%n file was successfully uploaded</source>
-        <translatorcomment>System notification to inform the user that %1 files were successfully uploaded</translatorcomment>
-        <translation>
-            <numerusform>%n file was successfully uploaded</numerusform>
-            <numerusform>%n files were successfully uploaded</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>%n file was successfully downloaded</source>
-        <translatorcomment>System notification to inform the user that %1 files were successfully downloaded</translatorcomment>
-        <translation>
-            <numerusform>%n file was successfully downloaded</numerusform>
-            <numerusform>%n files were successfully downloaded</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>%n folder was successfully uploaded</source>
-        <translatorcomment>System notification to inform the user that %n folders were successfully uploaded</translatorcomment>
-        <translation>
-            <numerusform>%n folder was successfully uploaded</numerusform>
-            <numerusform>%n folders were successfully uploaded</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>%n folder was successfully downloaded</source>
-        <translatorcomment>System notification to inform the user that %n folders were successfully downloaded</translatorcomment>
-        <translation>
-            <numerusform>%n folder was successfully downloaded</numerusform>
-            <numerusform>%n folders were successfully downloaded</numerusform>
-        </translation>
-    </message>
     <message>
         <source>A new version of MEGAsync is available. Click on this message to install it</source>
         <translatorcomment>System notification to inform the user that there is a new version of MEGAsync available for update. Windows version.</translatorcomment>
@@ -4054,16 +4006,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>%1 per user</translation>
     </message>
     <message>
-        <source>storage</source>
-        <translatorcomment>Label to indicate the specific storage of a pro plan.</translatorcomment>
-        <translation>storage</translation>
-    </message>
-    <message>
-        <source>transfer</source>
-        <translatorcomment>Label to indicate the specific transfer quota of a pro plan.</translatorcomment>
-        <translation>transfer</translation>
-    </message>
-    <message>
         <source>Great value for secure cloud storage, sharing and communication.</source>
         <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of Pro I plan.</translatorcomment>
         <translation>Great value for secure cloud storage, sharing and communication.</translation>
@@ -4105,6 +4047,16 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
             <numerusform>minimum %n user</numerusform>
             <numerusform>minimum %n users</numerusform>
         </translation>
+    </message>
+    <message>
+        <source>[A] storage</source>
+        <translatorcomment>Label to indicate the specific storage of a pro plan. [A] is a placeholder for the value of the storage, it must be kept in the translated strings.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[A] transfer</source>
+        <translatorcomment>Label to indicate the specific transfer quota of a pro plan. [A] is a placeholder for the value of the transfer quota, it must be kept in the translated strings.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6718,6 +6670,147 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
         <source>Drop to Upload</source>
         <translatorcomment>Let the user know that files can be dropped there</translatorcomment>
         <translation>Drop to upload</translation>
+    </message>
+</context>
+<context>
+    <name>TransferNotificationMessageBuilder</name>
+    <message>
+        <source>Upload</source>
+        <translatorcomment>Title of system notifications related to an upload of files and folders</translatorcomment>
+        <translation type="unfinished">Upload</translation>
+    </message>
+    <message>
+        <source>Download</source>
+        <translatorcomment>Title of system notifications related to a download of files and folders</translatorcomment>
+        <translation type="unfinished">Download</translation>
+    </message>
+    <message>
+        <source>File Upload</source>
+        <translatorcomment>Title of system notifications related to a file upload</translatorcomment>
+        <translation type="unfinished">File Upload</translation>
+    </message>
+    <message>
+        <source>File Download</source>
+        <translatorcomment>Title of system notifications related to a file download</translatorcomment>
+        <translation type="unfinished">File Download</translation>
+    </message>
+    <message>
+        <source>Folder Upload</source>
+        <translatorcomment>Title of system notifications related to a folder upload</translatorcomment>
+        <translation type="unfinished">Folder Upload</translation>
+    </message>
+    <message>
+        <source>Folder Download</source>
+        <translatorcomment>Title of system notifications related to a folder download</translatorcomment>
+        <translation type="unfinished">Folder Download</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n file</source>
+        <translatorcomment>File count, where %n is the number of files. Used to build the &quot;Files and folders successfully uploaded/downloaded&quot; string.</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>%n file</numerusform>
+            <numerusform>%n files</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n folder</source>
+        <translatorcomment>Folder count, where %n is the number of folders. Used to build the &quot;Files and folders successfully uploaded/downloaded&quot; string.</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>%n folder</numerusform>
+            <numerusform>%n folders</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>%1 and %2 were successfully uploaded, %3</source>
+        <translatorcomment>System notification to inform the user that %1 files and %2 folders were successfully uploaded. The %1 is a sentence part for files and %2 for folders, and %3 is the substring containing the cancelled transfers.</translatorcomment>
+        <translation type="unfinished">%1 and %2 were successfully uploaded, %3</translation>
+    </message>
+    <message>
+        <source>%1 and %2 were successfully uploaded</source>
+        <translatorcomment>System notification to inform the user that %1 files and %2 folders were successfully uploaded. The %1 is a sentence part for files and %2 for folders.</translatorcomment>
+        <translation type="unfinished">%1 and %2 were successfully uploaded</translation>
+    </message>
+    <message>
+        <source>%1 and %2 were successfully downloaded, %3</source>
+        <translatorcomment>System notification to inform the user that %1 files and %2 folders were successfully downloaded. The %1 is a sentence part for files and %2 for folders, and %3 is the substring containing the cancelled transfers.</translatorcomment>
+        <translation type="unfinished">%1 and %2 were successfully downloaded, %3</translation>
+    </message>
+    <message>
+        <source>%1 and %2 were successfully downloaded</source>
+        <translatorcomment>System notification to inform the user that %1 files and %2 folders were successfully downloaded. The %1 is a sentence part for files and %2 for folders.</translatorcomment>
+        <translation type="unfinished">%1 and %2 were successfully downloaded</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n file was successfully uploaded, %1</source>
+        <translatorcomment>System notification to inform the user that %n files were successfully uploaded. %1 is replaced by the cancelled items string.</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>%n file was successfully uploaded, %1</numerusform>
+            <numerusform>%n files were successfully uploaded, %1</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n file was successfully uploaded</source>
+        <translatorcomment>System notification to inform the user that %n files were successfully uploaded</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>%n file was successfully uploaded</numerusform>
+            <numerusform>%n files were successfully uploaded</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n file was successfully downloaded, %1</source>
+        <translatorcomment>System notification to inform the user that %n files were successfully downloaded. %1 is replaced by the cancelled items string.</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>%n file was successfully downloaded, %1</numerusform>
+            <numerusform>%n files were successfully downloaded, %1</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n file was successfully downloaded</source>
+        <translatorcomment>System notification to inform the user that %n files were successfully downloaded</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>%n file was successfully downloaded</numerusform>
+            <numerusform>%n files were successfully downloaded</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n folder was successfully uploaded, %1</source>
+        <translatorcomment>System notification to inform the user that %n files were successfully downloaded. %1 is replaced by the cancelled items string.</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>%n folder was successfully uploaded, %1</numerusform>
+            <numerusform>%n folders were successfully uploaded, %1</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n folder was successfully uploaded</source>
+        <translatorcomment>System notification to inform the user that %n folders were successfully uploaded</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>%n folder was successfully uploaded</numerusform>
+            <numerusform>%n folders were successfully uploaded</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n folder was successfully downloaded, %1</source>
+        <translatorcomment>System notification to inform the user that %1 files were successfully downloaded. %1 is replaced by the cancelled items string.</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>%n file was successfully downloaded, %1</numerusform>
+            <numerusform>%n files were successfully downloaded, %1</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n folder was successfully downloaded</source>
+        <translatorcomment>System notification to inform the user that %1 files were successfully downloaded</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>%n file was successfully downloaded</numerusform>
+            <numerusform>%n files were successfully downloaded</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n transfer was cancelled</source>
+        <translatorcomment>Used to build the notification message when transfers are cancelled. %n is the number of items cancelled.</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>%n transfer was cancelled</numerusform>
+            <numerusform>%n transfers were cancelled</numerusform>
+        </translation>
     </message>
 </context>
 <context>

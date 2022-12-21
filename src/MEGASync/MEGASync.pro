@@ -150,6 +150,7 @@ SOURCES += $$PWD/MegaApplication.cpp \
     $$PWD/EventUpdater.cpp \
     $$PWD/FolderTransferListener.cpp \
     $$PWD/BlockingStageProgressController.cpp \
+    $$PWD/TransferNotificationMessageBuilder.cpp \
     $$PWD/UserAttributesRequests/Avatar.cpp \
     $$PWD/UserAttributesRequests/CameraUploadFolder.cpp \
     $$PWD/UserAttributesRequests/DeviceName.cpp \
@@ -169,6 +170,7 @@ HEADERS += $$PWD/MegaApplication.h \
     $$PWD/FolderTransferListener.h \
     $$PWD/BlockingStageProgressController.h \
     $$PWD/FolderTransferEvents.h \
+    $$PWD/TransferNotificationMessageBuilder.h \
     $$PWD/UserAttributesRequests/Avatar.h \
     $$PWD/UserAttributesRequests/CameraUploadFolder.h \
     $$PWD/UserAttributesRequests/DeviceName.h \

@@ -22,6 +22,7 @@ signals:
 
 private:
     FolderTransferUpdateEvent data;
+
     std::mutex dataMutex;
     QTimer uiUpdatingTimer;
     const unsigned int updateThresholdInMs = 100;

@@ -55,7 +55,6 @@ class PlanWidget : public QWidget
         void updatePlanInfo();
         void setWidgetOpacity(qreal opacity);
         QString getProURL();
-        QString formatRichString(QString str, int type);
         QString getTooltipMsg(HelpButton hoverOver = HELP);
         QString toPrice (double value, const QString& currencySymbol);
 };
