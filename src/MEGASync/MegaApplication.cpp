@@ -3603,46 +3603,68 @@ bool MegaApplication::isQueueProcessingOngoing()
 
 void MegaApplication::processUpgradeSecurityEvent()
 {
-    QStringList folderList;
-
-    // Get inShares
-    std::unique_ptr<MegaNodeList> inSharesList (megaApi->getInShares());
-    for (int i = 0; i < inSharesList->size(); i++)
-    {
-        std::unique_ptr<char[]> path (megaApi->getNodePath(inSharesList->get(i)));
-        folderList << QString::fromUtf8(path.get());
-    }
-
-    // Get outShares
+    // Get outShares paths, to show them to the user
+    QStringList outSharesStrings;
     std::unique_ptr<MegaShareList> outSharesList (megaApi->getOutShares());
-    for (int i = 0; i < outSharesList->size(); i++)
+    for (int i = 0; i < outSharesList->size(); ++i)
     {
         MegaHandle handle = outSharesList->get(i)->getNodeHandle();
         std::unique_ptr<char[]> path (megaApi->getNodePathByNodeHandle(handle));
-        folderList << QString::fromUtf8(path.get());
+        outSharesStrings << QString::fromUtf8(path.get());
     }
 
-    // TODO: put validated strings
+    // Prepare the dialog
     QString title = tr("Security upgrade");
-    QString message = tr("We are upgrading the cryptographic resilience of your account. "
-                         "You will see this message only once. If you see it again in the future, "
-                         "you may be under attack by us. If you have seen it in the past, "
-                         "do not proceed. You are currently sharing the following folders: %1")
-                      .arg(folderList.join(QChar::LineSeparator));
+    QString message;
+    if (outSharesStrings.isEmpty())
+    {
+        message = tr("Your account's security is now being upgraded. "
+                     "This will happen only once. If you have seen this message for "
+                     "this account before, press Cancel.");
+    }
+    else
+    {
+        message = tr("Your account's security is now being upgraded. "
+                     "This will happen only once. If you have seen this message for "
+                     "this account before, press Cancel.\n"
+                     "You are currently sharing the following folder: %1", "", outSharesStrings.size())
+                  .arg(outSharesStrings.join(QLatin1String(", ")));
+    }
 
-    QMegaMessageBox::information(nullptr, title, message);
+    auto upgradeSecurityDialog = new QMessageBox(QMessageBox::Information, title, message,
+                                                 QMessageBox::Ok|QMessageBox::Cancel);
+    upgradeSecurityDialog->setAttribute(Qt::WA_DeleteOnClose);
 
-    megaApi->upgradeSecurity(new OnFinishOneShot(megaApi, [=](const MegaError& e){
-        if (e.getErrorCode() != MegaError::API_OK)
-        {
-            // TODO: put validated strings
-            QString title = tr("Error");
-            QString message = tr("Failed to ugrade security. Error: %1")
-                              .arg(tr(e.getErrorString()));
-            showErrorMessage(message, title);
-            // Exit App?
-        }
-    }));
+    HighDpiResize hDpiResizer(upgradeSecurityDialog);
+
+    // Show dialog and:
+    // - upgrade security if user says OK
+    // - exit app if user says Cancel
+    int button = upgradeSecurityDialog->exec();
+
+    QPointer<MegaApplication> currentMegaApp(this);
+    if (!currentMegaApp)
+    {
+        return;
+    }
+
+    if (button == QMessageBox::Ok)
+    {
+        megaApi->upgradeSecurity(new OnFinishOneShot(megaApi, [=](const MegaError& e){
+            if (e.getErrorCode() != MegaError::API_OK)
+            {
+                QString errorTitle = tr("Error");
+                QString errorMessage = tr("Failed to ugrade security. Error: %1")
+                                       .arg(tr(e.getErrorString()));
+                showErrorMessage(errorMessage, errorTitle);
+                exitApplication();
+            }
+        }));
+    }
+    else if (button == QMessageBox::Cancel)
+    {
+        exitApplication();
+    }
 }
 
 void MegaApplication::onFolderTransferUpdate(FolderTransferUpdateEvent event)
