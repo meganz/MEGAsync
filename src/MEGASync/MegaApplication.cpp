@@ -3604,7 +3604,7 @@ bool MegaApplication::isQueueProcessingOngoing()
 void MegaApplication::processUpgradeSecurityEvent()
 {
     // Get outShares paths, to show them to the user
-    QStringList outSharesStrings;
+    QSet<QString> outSharesStrings;
     std::unique_ptr<MegaShareList> outSharesList (megaApi->getOutShares());
     for (int i = 0; i < outSharesList->size(); ++i)
     {
@@ -3628,7 +3628,7 @@ void MegaApplication::processUpgradeSecurityEvent()
                      "This will happen only once. If you have seen this message for "
                      "this account before, press Cancel.\n"
                      "You are currently sharing the following folder: %1", "", outSharesStrings.size())
-                  .arg(outSharesStrings.join(QLatin1String(", ")));
+                  .arg(outSharesStrings.toList().join(QLatin1String(", ")));
     }
 
     auto upgradeSecurityDialog = new QMessageBox(QMessageBox::Information, title, message,
