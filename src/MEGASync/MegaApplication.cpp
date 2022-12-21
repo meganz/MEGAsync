@@ -3603,8 +3603,24 @@ bool MegaApplication::isQueueProcessingOngoing()
 
 void MegaApplication::processUpgradeSecurityEvent()
 {
-    // TODO: Get shared folders list
-    QString folderList;
+    QStringList folderList;
+
+    // Get inShares
+    std::unique_ptr<MegaNodeList> inSharesList (megaApi->getInShares());
+    for (int i = 0; i < inSharesList->size(); i++)
+    {
+        std::unique_ptr<char[]> path (megaApi->getNodePath(inSharesList->get(i)));
+        folderList << QString::fromUtf8(path.get());
+    }
+
+    // Get outShares
+    std::unique_ptr<MegaShareList> outSharesList (megaApi->getOutShares());
+    for (int i = 0; i < outSharesList->size(); i++)
+    {
+        MegaHandle handle = outSharesList->get(i)->getNodeHandle();
+        std::unique_ptr<char[]> path (megaApi->getNodePathByNodeHandle(handle));
+        folderList << QString::fromUtf8(path.get());
+    }
 
     // TODO: put validated strings
     QString title = tr("Security upgrade");
@@ -3612,7 +3628,7 @@ void MegaApplication::processUpgradeSecurityEvent()
                          "You will see this message only once. If you see it again in the future, "
                          "you may be under attack by us. If you have seen it in the past, "
                          "do not proceed. You are currently sharing the following folders: %1")
-                      .arg(folderList);
+                      .arg(folderList.join(QChar::LineSeparator));
 
     QMegaMessageBox::information(nullptr, title, message);
 
@@ -3624,6 +3640,7 @@ void MegaApplication::processUpgradeSecurityEvent()
             QString message = tr("Failed to ugrade security. Error: %1")
                               .arg(tr(e.getErrorString()));
             showErrorMessage(message, title);
+            // Exit App?
         }
     }));
 }
