@@ -65,7 +65,7 @@ public slots:
         bool result(false);
 
 #ifdef USE_DBUS
-        //This check is not neccesary, but just in case...this slot is only called when the boolean is true       
+        //This check is not neccesary, but just in case...this slot is only called when the boolean is true
         QDBusConnection bus = QDBusConnection::sessionBus();
 
         if(bus.isConnected())
@@ -295,4 +295,14 @@ PowerOptions::~PowerOptions()
 bool PowerOptions::keepAwake(bool state)
 {
     return mPowerOptionsImpl->changeKeepPCAwakeState(state);
+}
+
+void PowerOptions::appShutdown()
+{
+    // singletons are trouble.
+    // global objects deletion order in different compilation units cannot be predicted.
+    // delete this unpredictable singleton thing before it causes a shutdown crash
+    // as it will try to log some messages on destruction.
+    // And logging may (will) already have been destroyed (as it uses global objects too).
+    mPowerOptionsImpl.reset();
 }
