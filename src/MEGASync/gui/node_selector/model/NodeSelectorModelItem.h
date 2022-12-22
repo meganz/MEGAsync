@@ -1,5 +1,5 @@
-#ifndef MEGAITEM_H
-#define MEGAITEM_H
+#ifndef MODELSELECTORMODELITEM_H
+#define MODELSELECTORMODELITEM_H
 
 #include <QList>
 #include <QIcon>
@@ -13,7 +13,7 @@ class FullName;
 class Avatar;
 }
 
-class MegaItem : public QObject
+class NodeSelectorModelItem : public QObject
 {
     Q_OBJECT
 
@@ -28,16 +28,20 @@ public:
         NONE,
     };
 
-    explicit MegaItem(std::unique_ptr<mega::MegaNode> node, MegaItem *parentItem = 0, bool showFiles = false);
+    explicit NodeSelectorModelItem(std::unique_ptr<mega::MegaNode> node, bool showFiles, NodeSelectorModelItem *parentItem = 0);
+    ~NodeSelectorModelItem();
 
-    std::shared_ptr<mega::MegaNode> getNode();
-    void setChildren(std::shared_ptr<mega::MegaNodeList> children);
+    std::shared_ptr<mega::MegaNode> getNode() const;
 
-    bool areChildrenSet();
-    MegaItem *getParent();
-    MegaItem *getChild(int i);
+    void createChildItems(std::unique_ptr<mega::MegaNodeList> nodeList);
+    bool areChildrenInitialized();
+
+    bool canFetchMore();
+
+    QPointer<NodeSelectorModelItem> getParent();
+    QPointer<NodeSelectorModelItem> getChild(int i);
     int getNumChildren();
-    int indexOf(MegaItem *item);
+    int indexOf(NodeSelectorModelItem *item);
     QString getOwnerName();
     QString getOwnerEmail();
     void setOwner(std::unique_ptr<mega::MegaUser> user);
@@ -45,29 +49,34 @@ public:
     QIcon getStatusIcons();
     int getStatus();
     bool isSyncable();
-    bool isRoot();
+    bool isCloudDrive();
+    QPointer<NodeSelectorModelItem> addNode(std::shared_ptr<mega::MegaNode> node);
+    QPointer<NodeSelectorModelItem> findChildNode(std::shared_ptr<mega::MegaNode> node);
     bool isVault();
-    void addNode(std::unique_ptr<mega::MegaNode> node);
-    void removeNode(std::shared_ptr<mega::MegaNode> node);
     void displayFiles(bool enable);
     void setChatFilesFolder();
     void setAsVaultNode();
     int row();
+    void updateNode(std::shared_ptr<mega::MegaNode> node);
 
-    ~MegaItem();
+    bool requestingChildren() const;
+    void setRequestingChildren(bool newRequestingChildren);
 
 signals:
     void infoUpdated(int role);
 
 protected:
-    bool mShowFiles;
     QString mOwnerEmail;
     int mStatus;
     bool mChildrenSet;
+    bool mRequestingChildren;
+    long long mChildrenCounter;
+    bool mShowFiles;
+    bool mChildrenAreInit;
     bool mIsVault;
 
     std::shared_ptr<mega::MegaNode> mNode;
-    QList<MegaItem*> mChildItems;
+    QList<QPointer<NodeSelectorModelItem>> mChildItems;
     std::unique_ptr<mega::MegaUser> mOwner;
 
 private slots:
@@ -81,4 +90,4 @@ private:
     std::shared_ptr<const UserAttributes::Avatar> mAvatarAttribute;
 };
 
-#endif // MEGAITEM_H
+#endif // MODELSELECTORMODELITEM_H

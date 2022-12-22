@@ -6,6 +6,7 @@ using namespace std;
 
 MacXSystemServiceTask* MacXPlatform::systemServiceTask = NULL;
 QPointer<MacXExtServerService> MacXPlatform::extService;
+std::shared_ptr<AbstractShellNotifier> MacXPlatform::mShellNotifier = nullptr;
 
 static const QString kFinderSyncBundleId = QString::fromUtf8("mega.mac.MEGAShellExtFinder");
 static const QString kFinderSyncPath = QString::fromUtf8("/Applications/MEGAsync.app/Contents/PlugIns/MEGAShellExtFinder.appex/");
@@ -13,6 +14,7 @@ static const QString kFinderSyncPath = QString::fromUtf8("/Applications/MEGAsync
 void MacXPlatform::initialize(int /*argc*/, char *[] /*argv*/)
 {
     setMacXActivationPolicy();
+    mShellNotifier = std::make_shared<SignalShellNotifier>();
 }
 
 void MacXPlatform::prepareForSync()
@@ -165,15 +167,25 @@ void MacXPlatform::stopShellDispatcher()
     }
 }
 
-void MacXPlatform::notifyItemChange(string *localPath, int newState)
+void MacXPlatform::notifyItemChange(const QString& path, int newState)
 {
-    if (extService && localPath && localPath->size())
+    if (!path.isEmpty())
     {
-        emit extService->itemChange(QString::fromStdString(*localPath), newState);
+        if (extService)
+        {
+            emit extService->itemChange(path, newState);
+        }
+
+        mShellNotifier->notify(path);
     }
 }
 
-void MacXPlatform::syncFolderAdded(QString syncPath, QString syncName, QString syncID)
+void MacXPlatform::notifySyncFileChange(string* localPath, int newState)
+{
+    notifyItemChange(QString::fromStdString(*localPath), newState);
+}
+
+void MacXPlatform::syncFolderAdded(QString syncPath, QString syncName, QString)
 {
     addPathToPlaces(syncPath,syncName);
     setFolderIcon(syncPath);
@@ -184,7 +196,7 @@ void MacXPlatform::syncFolderAdded(QString syncPath, QString syncName, QString s
     }
 }
 
-void MacXPlatform::syncFolderRemoved(QString syncPath, QString syncName, QString syncID)
+void MacXPlatform::syncFolderRemoved(QString syncPath, QString syncName, QString)
 {
     removePathFromPlaces(syncPath);
     unSetFolderIcon(syncPath);
@@ -329,7 +341,7 @@ void MacXPlatform::initMenu(QMenu* m)
                                            "margin: 0px 8px 0px 8px;"
                                            "background-color: rgba(0, 0, 0, 0.1);"
                                        "}"
-                                       // For vanilla QMenus (only in TransferManager and MegaItemTreeView (NodeSelector))
+                                       // For vanilla QMenus (only in TransferManager and NodeSelectorTreeView (NodeSelector))
                                        "QMenu::item {"
                                            "font-size: 14px;"
                                            "margin: 6px 16px 6px 16px;"
@@ -350,6 +362,11 @@ void MacXPlatform::initMenu(QMenu* m)
         m->setWindowFlags(m->windowFlags() | Qt::FramelessWindowHint);
         m->ensurePolished();
     }
+}
+
+std::shared_ptr<AbstractShellNotifier> MacXPlatform::getShellNotifier()
+{
+    return mShellNotifier;
 }
 
 // Platform-specific strings

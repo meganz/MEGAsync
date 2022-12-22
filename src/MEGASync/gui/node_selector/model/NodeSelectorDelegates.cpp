@@ -1,12 +1,11 @@
-#include "MegaItemDelegates.h"
-#include "MegaApplication.h"
-#include "MegaItemModel.h"
+#include "NodeSelectorDelegates.h"
+#include "NodeSelectorModel.h"
 
 #include <QBitmap>
 #include <QPainter>
 #include <QToolTip>
 #include <QFontMetrics>
-
+#include <QAbstractItemView>
 
 IconDelegate::IconDelegate(QObject* parent) :
     QStyledItemDelegate(parent)
@@ -61,7 +60,7 @@ bool NodeRowDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view, cons
         QFontMetrics fm = option.fontMetrics;
 
         int margin = MARGIN;
-        if(index.column() == MegaItemModel::NODE)
+        if(index.column() == NodeSelectorModel::NODE)
         {
             margin = ICON_MARGIN;
         }

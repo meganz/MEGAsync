@@ -226,8 +226,11 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     syncsStateInformation(SyncStateInformation::SAVING_BACKUPS_FINISHED);
 
     connectSyncHandlers();
-
     connectBackupHandlers();
+
+    connect(mApp, &MegaApplication::shellNotificationsProcessed,
+            this, &SettingsDialog::onShellNotificationsProcessed);
+    mUi->cOverlayIcons->setEnabled(!mApp->isShellNotificationProcessingOngoing());
 }
 
 SettingsDialog::~SettingsDialog()
@@ -1087,15 +1090,12 @@ void SettingsDialog::on_cbSleepMode_toggled(bool checked)
 void SettingsDialog::on_cOverlayIcons_toggled(bool checked)
 {
     if (mLoadingSettings) return;
+    mUi->cOverlayIcons->setEnabled(false);
     mPreferences->disableOverlayIcons(!checked);
 #ifdef Q_OS_MACOS
     Platform::notifyRestartSyncFolders();
-#else
-    for (auto localFolder : mModel->getLocalFolders(SyncInfo::AllHandledSyncTypes))
-    {
-            mApp->notifyItemChange(localFolder, MegaApi::STATE_NONE);
-    }
 #endif
+    mApp->notifyChangeToAllFolders();
 }
 
 #ifdef Q_OS_WINDOWS
@@ -1449,27 +1449,24 @@ void SettingsDialog::connectSyncHandlers()
         QMegaMessageBox::warning(nullptr, tr("Error removing sync"),
                                   tr("Your sync can't be removed. Reason: %1")
                                   .arg(QCoreApplication::translate("MegaError", err->getErrorString())));
-
     });
 
-    connect(&mSyncController, &SyncController::syncEnableError, this, [this](std::shared_ptr<SyncSettings> sync)
+    connect(&mSyncController, &SyncController::syncEnableError, this, [this](std::shared_ptr<SyncSettings> sync, mega::MegaSync::Error errorCode)
     {
         onSavingSyncsCompleted(SAVING_SYNCS_FINISHED);
         QMegaMessageBox::warning(nullptr, tr("Error enabling sync"),
                                   tr("Your sync \"%1\" can't be enabled. Reason: %2")
                                   .arg(sync->name())
-                                  .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(sync->getError()))));
-
+                                  .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(errorCode))));
     });
 
-    connect(&mSyncController, &SyncController::syncDisableError, this, [this](std::shared_ptr<SyncSettings> sync)
+    connect(&mSyncController, &SyncController::syncDisableError, this, [this](std::shared_ptr<SyncSettings> sync, mega::MegaSync::Error errorCode)
     {
         onSavingSyncsCompleted(SAVING_SYNCS_FINISHED);
         QMegaMessageBox::warning(nullptr, tr("Error disabling sync"),
                                   tr("Your sync \"%1\" can't be disabled. Reason: %2")
                                   .arg(sync->name())
-                                  .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(sync->getError()))));
-
+                                  .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(errorCode))));
     });
 }
 
@@ -1697,7 +1694,6 @@ void SettingsDialog::connectBackupHandlers()
         QMegaMessageBox::warning(nullptr, tr("Error removing backup"),
                                   tr("Your backup can't be removed. Reason: %1")
                                   .arg(QCoreApplication::translate("MegaError", err->getErrorString())));
-
     });
 
     connect(&mBackupController, &SyncController::backupMoveOrRemoveRemoteFolderError, this, [this](std::shared_ptr<mega::MegaError> err)
@@ -1706,27 +1702,24 @@ void SettingsDialog::connectBackupHandlers()
         QMegaMessageBox::warning(nullptr, tr("Error moving or removing remote backup folder"),
                                  tr("Failed to move or remove the remote backup folder. Reason: %1")
                                  .arg(QCoreApplication::translate("MegaError", err->getErrorString())));
-
     });
 
-    connect(&mBackupController, &SyncController::syncEnableError, this, [this](std::shared_ptr<SyncSettings> sync)
+    connect(&mBackupController, &SyncController::syncEnableError, this, [this](std::shared_ptr<SyncSettings> sync, mega::MegaSync::Error errorCode)
     {
         onSavingSyncsCompleted(SyncStateInformation::SAVING_BACKUPS_FINISHED);
         QMegaMessageBox::warning(nullptr, tr("Error enabling backup"),
                                   tr("Your backup \"%1\" can't be enabled. Reason: %2")
                                   .arg(sync->name())
-                                  .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(sync->getError()))));
-
+                                  .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(errorCode))));
     });
 
-    connect(&mBackupController, &SyncController::syncDisableError, this, [this](std::shared_ptr<SyncSettings> sync)
+    connect(&mBackupController, &SyncController::syncDisableError, this, [this](std::shared_ptr<SyncSettings> sync, mega::MegaSync::Error errorCode)
     {
         onSavingSyncsCompleted(SyncStateInformation::SAVING_BACKUPS_FINISHED);
         QMegaMessageBox::warning(nullptr, tr("Error disabling backup"),
                                   tr("Your backup \"%1\" can't be disabled. Reason: %2")
                                   .arg(sync->name())
-                                  .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(sync->getError()))));
-
+                                  .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(errorCode))));
     });
 }
 
@@ -1990,14 +1983,9 @@ void SettingsDialog::on_bFolders_clicked()
 
 void SettingsDialog::on_bUploadFolder_clicked()
 {
-    QPointer<NodeSelector> nodeSelector = new NodeSelector(NodeSelector::UPLOAD_SELECT, this);
-    MegaNode* defaultNode = mMegaApi->getNodeByPath(mUi->eUploadFolder->text()
-                                                    .toUtf8().constData());
-    if (defaultNode)
-    {
-        nodeSelector->setSelectedNodeHandle(defaultNode->getHandle());
-        delete defaultNode;
-    }
+    QPointer<NodeSelector> nodeSelector = new NodeSelector(NodeSelectorTreeViewWidget::UPLOAD_SELECT, this);
+    std::shared_ptr<mega::MegaNode> defaultNode(mMegaApi->getNodeByPath(mUi->eUploadFolder->text().toStdString().c_str()));
+    nodeSelector->setSelectedNodeHandle(defaultNode);
 
     nodeSelector->setDefaultUploadOption(mHasDefaultUploadOption);
     nodeSelector->showDefaultUploadOption();
@@ -2221,6 +2209,11 @@ void SettingsDialog::restartApp()
     // handling the exit of Settings Dialog
     QTimer::singleShot(0, [] () {MegaSyncApp->rebootApplication(false);});
 #endif
+}
+
+void SettingsDialog::onShellNotificationsProcessed()
+{
+    mUi->cOverlayIcons->setEnabled(true);
 }
 
 void SettingsDialog::on_bRestart_clicked()

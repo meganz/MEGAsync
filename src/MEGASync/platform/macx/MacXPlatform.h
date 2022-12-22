@@ -4,6 +4,7 @@
 #include "MacXFunctions.h"
 #include "MacXSystemServiceTask.h"
 #include "MacXExtServerService.h"
+#include "ShellNotifier.h"
 
 #include <QApplication>
 #include <QString>
@@ -27,7 +28,8 @@ public:
     static void prepareForSync();
     static QStringList multipleUpload(QString uploadTitle);
     static bool enableTrayIcon(QString);
-    static void notifyItemChange(std::string *localPath, int newState);
+    static void notifyItemChange(const QString& path, int newState);
+    static void notifySyncFileChange(std::string *localPath, int newState);
     static bool startOnStartup(bool value);
     static bool isStartOnStartupActive();
     static void addFinderExtensionToSystem();
@@ -38,8 +40,8 @@ public:
     static bool showInFolder(QString pathIn);
     static void startShellDispatcher(MegaApplication *receiver);
     static void stopShellDispatcher();
-    static void syncFolderAdded(QString syncPath, QString syncName, QString syncID);
-    static void syncFolderRemoved(QString syncPath, QString syncName, QString syncID);
+    static void syncFolderAdded(QString syncPath, QString syncName, QString);
+    static void syncFolderRemoved(QString syncPath, QString syncName, QString);
     static void notifyRestartSyncFolders();
     static void notifyAllSyncFoldersAdded();
     static void notifyAllSyncFoldersRemoved();
@@ -58,14 +60,15 @@ public:
     static double getUpTime();
     static QString getDeviceName();
     static void initMenu(QMenu* m);
+    static std::shared_ptr<AbstractShellNotifier> getShellNotifier();
 
     static const char* settingsString;
     static const char* exitString;
     static const char* fileExplorerString;
+    static std::shared_ptr<AbstractShellNotifier> mShellNotifier;
 
 private:
     static void disableSignalHandler();
-
 };
 
 #endif // MACXPLATFORM_H

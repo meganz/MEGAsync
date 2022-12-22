@@ -1,4 +1,4 @@
-#include "MegaItem.h"
+#include "NodeSelectorModelItem.h"
 #include "QMegaMessageBox.h"
 #include "MegaApplication.h"
 #include "syncs/control/SyncInfo.h"
@@ -7,21 +7,28 @@
 
 #include "mega/utils.h"
 
-const int MegaItem::ICON_SIZE = 17;
+const int NodeSelectorModelItem::ICON_SIZE = 17;
 
 using namespace mega;
 
-MegaItem::MegaItem(std::unique_ptr<MegaNode> node, MegaItem *parentItem, bool showFiles) :
+NodeSelectorModelItem::NodeSelectorModelItem(std::unique_ptr<MegaNode> node, bool showFiles, NodeSelectorModelItem *parentItem) :
     QObject(parentItem),
-    mShowFiles(showFiles),
     mOwnerEmail(QString()),
     mStatus(STATUS::NONE),
     mChildrenSet(false),
+    mRequestingChildren(false),
+    mShowFiles(showFiles),
     mNode(std::move(node)),
     mOwner(nullptr),
     mMegaApi(MegaSyncApp->getMegaApi()),
     mIsVault(false)
 { 
+    mChildrenCounter = mShowFiles ? MegaSyncApp->getMegaApi()->getNumChildren(mNode.get())
+            : MegaSyncApp->getMegaApi()->getNumChildFolders(mNode.get());
+
+    //If it has no children, the item does not need to be init
+    mChildrenAreInit = mChildrenCounter > 0 ? false : true;
+
     if(mNode->isFile() || mNode->isInShare())
     {
         mStatus = STATUS::NONE;
@@ -30,7 +37,7 @@ MegaItem::MegaItem(std::unique_ptr<MegaNode> node, MegaItem *parentItem, bool sh
 
     //This code is to calculate if a folder which is inside an incoming share folder is a child of a sync
     //////////
-    MegaItem *parent_item = getParent();
+    NodeSelectorModelItem *parent_item = getParent();
     while(parent_item && parent_item->getNode()->getParentHandle() != INVALID_HANDLE)
     {
         parent_item = parent_item->getParent();
@@ -57,7 +64,7 @@ MegaItem::MegaItem(std::unique_ptr<MegaNode> node, MegaItem *parentItem, bool sh
     else
     {
         QStringList syncList = SyncInfo::instance()->getCloudDriveSyncMegaFolders(true);
-        if(isRoot() && !syncList.isEmpty())
+        if(isCloudDrive() && !syncList.isEmpty())
         {
             mStatus = STATUS::SYNC_PARENT;
             return;
@@ -66,52 +73,96 @@ MegaItem::MegaItem(std::unique_ptr<MegaNode> node, MegaItem *parentItem, bool sh
     }
 }
 
+NodeSelectorModelItem::~NodeSelectorModelItem()
+{
+    qDeleteAll(mChildItems);
+    mChildItems.clear();
+}
 
-std::shared_ptr<mega::MegaNode> MegaItem::getNode()
+std::shared_ptr<mega::MegaNode> NodeSelectorModelItem::getNode() const
 {
     return mNode;
 }
 
-void MegaItem::setChildren(std::shared_ptr<MegaNodeList> children)
+void NodeSelectorModelItem::createChildItems(std::unique_ptr<mega::MegaNodeList> nodeList)
 {
-    mChildrenSet = true;
-    for (int i = 0; i < children->size(); i++)
+    if(!mNode->isFile())
     {
-        auto node = std::unique_ptr<MegaNode>(children->get(i)->copy());
-        if (!mShowFiles && node->getType() == MegaNode::TYPE_FILE)
+        for(int i = 0; i < nodeList->size(); i++)
         {
-            break;
+            auto node = std::unique_ptr<MegaNode>(nodeList->get(i)->copy());
+            mChildItems.append(new NodeSelectorModelItem(move(node),mShowFiles, this));
         }
-        mChildItems.append(new MegaItem(move(node), this, mShowFiles));
+
+        mRequestingChildren = false;
+        mChildrenAreInit = true;
     }
 }
 
-bool MegaItem::areChildrenSet()
+bool NodeSelectorModelItem::areChildrenInitialized()
 {
-    return mChildrenSet;
+    return mChildrenAreInit;
 }
 
-MegaItem *MegaItem::getParent()
+bool NodeSelectorModelItem::canFetchMore()
 {
-    return dynamic_cast<MegaItem*>(parent());
+    if(!mChildrenAreInit)
+    {
+        return true;
+    }
+    else if(mChildrenCounter == 0)
+    {
+        return false;
+    }
+
+    return mChildItems.isEmpty();
 }
 
-MegaItem* MegaItem::getChild(int i)
+bool NodeSelectorModelItem::requestingChildren() const
 {
+    return mRequestingChildren;
+}
+
+void NodeSelectorModelItem::setRequestingChildren(bool newRequestingChildren)
+{
+    mRequestingChildren = newRequestingChildren;
+}
+
+QPointer<NodeSelectorModelItem> NodeSelectorModelItem::getParent()
+{
+    return dynamic_cast<NodeSelectorModelItem*>(parent());
+}
+
+QPointer<NodeSelectorModelItem> NodeSelectorModelItem::getChild(int i)
+{
+    if(mChildItems.size() <= i)
+    {
+        return nullptr;
+    }
+
     return mChildItems.at(i);
 }
 
-int MegaItem::getNumChildren()
+int NodeSelectorModelItem::getNumChildren()
 {
+    if(mNode->isFile())
+    {
+        return 0;
+    }
+    else if(!areChildrenInitialized())
+    {
+        return mChildrenCounter;
+    }
+
     return mChildItems.size();
 }
 
-int MegaItem::indexOf(MegaItem* item)
+int NodeSelectorModelItem::indexOf(NodeSelectorModelItem* item)
 {
     return mChildItems.indexOf(item);
 }
 
-QString MegaItem::getOwnerName()
+QString NodeSelectorModelItem::getOwnerName()
 {
     if(mFullNameAttribute && mFullNameAttribute->isAttributeReady())
     {
@@ -121,19 +172,19 @@ QString MegaItem::getOwnerName()
     return mOwnerEmail;
 }
 
-QString MegaItem::getOwnerEmail()
+QString NodeSelectorModelItem::getOwnerEmail()
 {
     return mOwnerEmail;
 }
 
-void MegaItem::setOwner(std::unique_ptr<mega::MegaUser> user)
+void NodeSelectorModelItem::setOwner(std::unique_ptr<mega::MegaUser> user)
 {
     mOwner = std::move(user);
     mOwnerEmail = QString::fromUtf8(mOwner->getEmail());
     mFullNameAttribute = UserAttributes::FullName::requestFullName(mOwner->getEmail());
     if(mFullNameAttribute)
     {
-        connect(mFullNameAttribute.get(), &UserAttributes::FullName::fullNameReady, this, &MegaItem::onFullNameAttributeReady);
+        connect(mFullNameAttribute.get(), &UserAttributes::FullName::fullNameReady, this, &NodeSelectorModelItem::onFullNameAttributeReady);
         if(mFullNameAttribute->isAttributeReady())
         {
             onFullNameAttributeReady();
@@ -142,7 +193,7 @@ void MegaItem::setOwner(std::unique_ptr<mega::MegaUser> user)
     mAvatarAttribute = UserAttributes::Avatar::requestAvatar(mOwner->getEmail());
     if(mAvatarAttribute)
     {
-        connect(mAvatarAttribute.get(), &UserAttributes::Avatar::attributeReady, this, &MegaItem::onAvatarAttributeReady);
+        connect(mAvatarAttribute.get(), &UserAttributes::Avatar::attributeReady, this, &NodeSelectorModelItem::onAvatarAttributeReady);
         if(mAvatarAttribute->isAttributeReady())
         {
             onAvatarAttributeReady();
@@ -161,17 +212,17 @@ void MegaItem::setOwner(std::unique_ptr<mega::MegaUser> user)
     calculateSyncStatus(folderList);
 }
 
-void MegaItem::onFullNameAttributeReady()
+void NodeSelectorModelItem::onFullNameAttributeReady()
 {
     emit infoUpdated(Qt::DisplayRole);
 }
 
-void MegaItem::onAvatarAttributeReady()
+void NodeSelectorModelItem::onAvatarAttributeReady()
 {
     emit infoUpdated(Qt::DecorationRole);
 }
 
-QPixmap MegaItem::getOwnerIcon()
+QPixmap NodeSelectorModelItem::getOwnerIcon()
 {
     if(mAvatarAttribute)
     {
@@ -181,7 +232,7 @@ QPixmap MegaItem::getOwnerIcon()
     return QPixmap();
 }
 
-QIcon MegaItem::getStatusIcons()
+QIcon NodeSelectorModelItem::getStatusIcons()
 {
     QIcon statusIcons; //first is selected state icon / second is normal state icon
     switch(mStatus)
@@ -207,12 +258,12 @@ QIcon MegaItem::getStatusIcons()
     return statusIcons;
 }
 
-int MegaItem::getStatus()
+int NodeSelectorModelItem::getStatus()
 {
     return mStatus;
 }
 
-bool MegaItem::isSyncable()
+bool NodeSelectorModelItem::isSyncable()
 {       
     return mStatus != SYNC
             && mStatus != SYNC_PARENT
@@ -220,55 +271,58 @@ bool MegaItem::isSyncable()
             && mStatus != BACKUP;
 }
 
-void MegaItem::addNode(std::unique_ptr<MegaNode>node)
+QPointer<NodeSelectorModelItem> NodeSelectorModelItem::addNode(std::shared_ptr<MegaNode>node)
 {
-    mChildItems.append(new MegaItem(move(node), this, mShowFiles));
+    auto nodeCopy(node.get()->copy());
+    auto item = new NodeSelectorModelItem(std::unique_ptr<MegaNode>(nodeCopy),mShowFiles, this);
+    mChildItems.append(item);
+    return item;
 }
 
-void MegaItem::removeNode(std::shared_ptr<MegaNode> node)
+QPointer<NodeSelectorModelItem> NodeSelectorModelItem::findChildNode(std::shared_ptr<MegaNode> node)
 {
-    if (!node)
-    {
-        return;
-    }
+    NodeSelectorModelItem* returnNode(nullptr);
 
-    for (int i = 0; i < mChildItems.size(); i++)
+    if (node)
     {
-        if (mChildItems[i]->getNode()->getHandle() == node->getHandle())
+        for (int i = 0; i < mChildItems.size(); i++)
         {
-            MegaItem* item = mChildItems.takeAt(i);
-            delete item;
-            return;
+            if (mChildItems[i]->getNode()->getHandle() == node->getHandle())
+            {
+                returnNode = mChildItems.takeAt(i);
+                break;
+            }
         }
     }
+
+    return returnNode;
 }
 
-void MegaItem::displayFiles(bool enable)
+void NodeSelectorModelItem::displayFiles(bool enable)
 {
     mShowFiles = enable;
 }
 
-void MegaItem::setAsVaultNode()
+void NodeSelectorModelItem::setAsVaultNode()
 {
     mIsVault = true;
 }
 
-int MegaItem::row()
+int NodeSelectorModelItem::row()
 {
-    if (MegaItem* parent = getParent())
+    if (NodeSelectorModelItem* parent = getParent())
     {
-        return parent->mChildItems.indexOf(const_cast<MegaItem*>(this));
+        return parent->mChildItems.indexOf(const_cast<NodeSelectorModelItem*>(this));
     }
     return 0;
 }
 
-MegaItem::~MegaItem()
+void NodeSelectorModelItem::updateNode(std::shared_ptr<mega::MegaNode> node)
 {
-    qDeleteAll(mChildItems);
-    mChildItems.clear();
+    mNode = node;
 }
 
-void MegaItem::calculateSyncStatus(const QStringList &folders)
+void NodeSelectorModelItem::calculateSyncStatus(const QStringList &folders)
 {
     auto syncedFolders = SyncInfo::instance()->getMegaFolderHandles(SyncInfo::AllHandledSyncTypes);
     if(syncedFolders.contains(mNode->getHandle()))
@@ -306,12 +360,12 @@ void MegaItem::calculateSyncStatus(const QStringList &folders)
     }
 }
 
-bool MegaItem::isRoot()
+bool NodeSelectorModelItem::isCloudDrive()
 {
     return mNode->getHandle() == MegaSyncApp->getRootNode()->getHandle();
 }
 
-bool MegaItem::isVault()
+bool NodeSelectorModelItem::isVault()
 {
     return mIsVault;
 }
