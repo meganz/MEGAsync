@@ -3615,20 +3615,14 @@ void MegaApplication::processUpgradeSecurityEvent()
 
     // Prepare the dialog
     QString title = tr("Security upgrade");
-    QString message;
-    if (outSharesStrings.isEmpty())
+    QString message = tr("Your account's security is now being upgraded. "
+                        "This will happen only once. If you have seen this message for "
+                        "this account before, press Cancel.");
+    if (!outSharesStrings.isEmpty())
     {
-        message = tr("Your account's security is now being upgraded. "
-                     "This will happen only once. If you have seen this message for "
-                     "this account before, press Cancel.");
-    }
-    else
-    {
-        message = tr("Your account's security is now being upgraded. "
-                     "This will happen only once. If you have seen this message for "
-                     "this account before, press Cancel.\n"
-                     "You are currently sharing the following folder: %1", "", outSharesStrings.size())
-                  .arg(outSharesStrings.toList().join(QLatin1String(", ")));
+        message.append(QString::fromUtf8("<br><br>"));
+        message.append(tr("You are currently sharing the following folder: %1", "", outSharesStrings.size())
+                  .arg(outSharesStrings.toList().join(QLatin1String(", "))));
     }
 
     auto upgradeSecurityDialog = new QMessageBox(QMessageBox::Information, title, message,
