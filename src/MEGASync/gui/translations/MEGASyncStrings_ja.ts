@@ -2792,7 +2792,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>MEGAフォルダがごみ箱に入っているため、バックアップ「%1」は無効となっています</translation>
+        <translation>MEGAフォルダがごみ箱に入っているため、バックアップ「%1」は無効となっています。</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
@@ -2965,7 +2965,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
         <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
-        <translation>ストレージ容量を超えました。今すぐアップグレードしてください</translation>
+        <translation>ストレージ容量を超えました。今すぐアップグレードしてください。</translation>
     </message>
     <message>
         <source>Decryption error</source>
@@ -3012,77 +3012,6 @@ Transfer will automatically resume when you re-open the app.</source>
     </message>
 </context>
 <context>
-    <name>MegaItemModel</name>
-    <message>
-        <source>Folder already synced</source>
-        <translatorcomment>Tooltip text to notify the user that this folder is already synced.</translatorcomment>
-        <translation>フォルダはすでに同期されています</translation>
-    </message>
-    <message>
-        <source>Folder contents already synced</source>
-        <translatorcomment>Tooltip text to notify the user that some folder inside the folder that he is hovering with mouse is already synced.</translatorcomment>
-        <translation>フォルダの内容はすでに同期されています</translation>
-    </message>
-    <message>
-        <source>Name</source>
-        <translatorcomment>Column title. This column shows the name of a file or folder.</translatorcomment>
-        <translation>名前</translation>
-    </message>
-    <message>
-        <source>Sort by status</source>
-        <translatorcomment>First column title tooltip(this column title doesn´t contains text, it shows an icon). Sorts the order of the column by node status, for example synced folders first or last.</translatorcomment>
-        <translation>ステータスで並べ替え</translation>
-    </message>
-    <message>
-        <source>Sort by owner name</source>
-        <translatorcomment>Owner column title tooltip. Sorts the order of the column by owner name alphabetically.</translatorcomment>
-        <translation>所有者名で並び替え</translation>
-    </message>
-    <message>
-        <source>Sort by date</source>
-        <translatorcomment>Recently used column title tooltip. Sorts the order of the column by date.</translatorcomment>
-        <translation>日付順に並べ替え</translation>
-    </message>
-    <message>
-        <source>Sort by name</source>
-        <translatorcomment>Node name column title tooltip. Sorts the order of the column by date.</translatorcomment>
-        <translation>名前で並び替え</translation>
-    </message>
-    <message numerus="yes">
-        <source>Today at %1</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened today. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation><numerusform>今日の%1時</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Yesterday at %1</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened yesterday. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation><numerusform>昨日の%1時</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%1 at %2</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was previously to yesterday. %1 represents the date (day month and year), while %2 represents the hour). Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation><numerusform>%1の%2時</numerusform></translation>
-    </message>
-    <message>
-        <source>Recently used</source>
-        <translatorcomment>Column title. This column shows when this file or folder was changed.</translatorcomment>
-        <translation>最終更新</translation>
-    </message>
-</context>
-<context>
-    <name>MegaItemTreeView</name>
-    <message>
-        <source>Get MEGA link</source>
-        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It creates an MEGA link and copy to Clipboard.</translatorcomment>
-        <translation>MEGAリンクを取得</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It removes the node (file or folder).</translatorcomment>
-        <translation>削除</translation>
-    </message>
-</context>
-<context>
     <name>MegaNodeNames</name>
     <message>
         <source>Cloud Drive</source>
@@ -3093,6 +3022,11 @@ Transfer will automatically resume when you re-open the app.</source>
         <source>Backups</source>
         <translatorcomment>Title of the Backups root node</translatorcomment>
         <translation>バックアップ</translation>
+    </message>
+    <message>
+        <source>Incoming shares</source>
+        <translatorcomment>Title of the Incoming shares root node</translatorcomment>
+        <translation>受信共有</translation>
     </message>
 </context>
 <context>
@@ -3479,6 +3413,19 @@ Your selected incomplete sync transfers won&apos;t be cancelled.</source>
         <translation>次の文字は許可されていません：
 %1</translation>
     </message>
+    <message>
+        <source>A file with this name already exists in this location.
+Enter a different name.</source>
+        <translatorcomment>Message shown when the user has entered a name which already exists on the folder</translatorcomment>
+        <translation>この名前のファイルは、この場所にすでに存在します。
+別の名前を入力してください。</translation>
+    </message>
+    <message>
+        <source>A folder with this name already exists in this location.
+Enter a different name</source>
+        <translatorcomment>Message shown when the user has entered a name which already exists on the folder</translatorcomment>
+        <translation>この名前のフォルダは、この場所にすでに存在します。別の名前を入力してください。</translation>
+    </message>
 </context>
 <context>
     <name>NodeSelector</name>
@@ -3491,21 +3438,6 @@ Your selected incomplete sync transfers won&apos;t be cancelled.</source>
         <source>Select a MEGA folder:</source>
         <translatorcomment>Label to indicate the user to select a MEGA folder for a synchronization (String short as possible). Keep capital letters.</translatorcomment>
         <translation>MEGAフォルダを選択：</translation>
-    </message>
-    <message>
-        <source>New folder</source>
-        <translatorcomment>Button label to create a New folder at your MEGA cloud drive. Keep capital letters. String as short as possible.</translatorcomment>
-        <translation>新規フォルダ</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>OK</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>キャンセル</translation>
     </message>
     <message>
         <source>Error</source>
@@ -3524,11 +3456,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>同期用のフォルダが無効です。フォルダ名に &apos;\&apos;、 &apos;/&apos;、 &apos;：&apos;などの文字を使用しないようにしてください。</translation>
     </message>
     <message>
-        <source>Always upload to this destination</source>
-        <translatorcomment>Label to inform the user upload files/folder to a default destination. with a checkbox.</translatorcomment>
-        <translation>いつもこの宛先にアップロードする</translation>
-    </message>
-    <message>
         <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying upload files to a non compatible folder</translatorcomment>
         <translation>選択したフォルダにアップロードするには、読み取りと書き込みまたはフルアクセス権が必要です。</translation>
@@ -3539,17 +3466,9 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>選択したフォルダを同期するには、フルアクセス権が必要です。</translation>
     </message>
     <message>
-        <source>Are you sure that you want to delete &quot;%1&quot;?</source>
-        <translation>”%1”を削除してもよろしいですか</translation>
-    </message>
-    <message>
         <source>Only files can be used for streaming.</source>
         <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
         <translation>ストリーミングに使用できるのはファイルのみです。</translation>
-    </message>
-    <message>
-        <source>Select items</source>
-        <translation>項目を選択</translation>
     </message>
     <message>
         <source>Select a MEGA folder</source>
@@ -3560,16 +3479,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>You no longer have access to this item. Ask the owner to share again.</source>
         <translatorcomment>Error message shown when the user is trying to download an file or folder from an incoming share and the owner stops sharing/removes all items</translatorcomment>
         <translation><numerusform>この項目にアクセスできなくなりました。所有者にもう一度共有するように依頼してください。</numerusform></translation>
-    </message>
-    <message>
-        <source>Cloud drive</source>
-        <translatorcomment>Node selector button Text. Switch the view to show only the cloud drive nodes (files and folders)</translatorcomment>
-        <translation>クラウドドライブ</translation>
-    </message>
-    <message>
-        <source>Incoming shares</source>
-        <translatorcomment>Node selector button Text. Switch the view to show only the incoming shares nodes (files and folders)</translatorcomment>
-        <translation>受信共有</translation>
     </message>
     <message numerus="yes">
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
@@ -3588,10 +3497,114 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
                            Second and last part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
         <translation><numerusform>%1、%2は削除されました。再選択する場合は、このウィンドウを閉じてから、もう一度やり直してください。</numerusform></translation>
     </message>
+</context>
+<context>
+    <name>NodeSelectorModel</name>
     <message>
-        <source>Backups</source>
-        <translatorcomment>Title of the Backups section</translatorcomment>
-        <translation>バックアップ</translation>
+        <source>Folder already synced</source>
+        <translatorcomment>Tooltip text to notify the user that this folder is already synced.</translatorcomment>
+        <translation>フォルダはすでに同期されています</translation>
+    </message>
+    <message>
+        <source>Folder contents already synced</source>
+        <translatorcomment>Tooltip text to notify the user that some folder inside the folder that he is hovering with mouse is already synced.</translatorcomment>
+        <translation>フォルダの内容はすでに同期されています</translation>
+    </message>
+    <message>
+        <source>Recently used</source>
+        <translatorcomment>Column title. This column shows when this file or folder was changed.</translatorcomment>
+        <translation>最終更新</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translatorcomment>Column title. This column shows the name of a file or folder.</translatorcomment>
+        <translation>名前</translation>
+    </message>
+    <message>
+        <source>Sort by status</source>
+        <translatorcomment>First column title tooltip(this column title doesn´t contains text, it shows an icon). Sorts the order of the column by node status, for example synced folders first or last.</translatorcomment>
+        <translation>ステータスで並べ替え</translation>
+    </message>
+    <message>
+        <source>Sort by owner name</source>
+        <translatorcomment>Owner column title tooltip. Sorts the order of the column by owner name alphabetically.</translatorcomment>
+        <translation>所有者名で並べ替え</translation>
+    </message>
+    <message>
+        <source>Sort by date</source>
+        <translatorcomment>Recently used column title tooltip. Sorts the order of the column by date.</translatorcomment>
+        <translation>日付けで並び替え</translation>
+    </message>
+    <message>
+        <source>Sort by name</source>
+        <translatorcomment>Node name column title tooltip. Sorts the order of the column by date.</translatorcomment>
+        <translation>名前で並べ替え</translation>
+    </message>
+    <message numerus="yes">
+        <source>Today at %1</source>
+        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened today. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
+        <translation><numerusform>今日の%1</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Yesterday at %1</source>
+        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened yesterday. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
+        <translation><numerusform>昨日の%1</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 at %2</source>
+        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was previously to yesterday. %1 represents the date (day month and year), while %2 represents the hour). Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
+        <translation><numerusform>%1の%2</numerusform></translation>
+    </message>
+</context>
+<context>
+    <name>NodeSelectorTreeView</name>
+    <message>
+        <source>Get MEGA link</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It creates an MEGA link and copy to Clipboard.</translatorcomment>
+        <translation>MEGAリンクを取得</translation>
+    </message>
+    <message>
+        <source>Rename</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It renames the node (file or folder).</translatorcomment>
+        <translation>名前を変更</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It removes the node (file or folder).</translatorcomment>
+        <translation>削除</translation>
+    </message>
+</context>
+<context>
+    <name>NodeSelectorTreeViewWidget</name>
+    <message>
+        <source>Always upload to this destination</source>
+        <translatorcomment>Label to inform the user upload files/folder to a default destination. with a checkbox.</translatorcomment>
+        <translation>常にこの宛先にアップロード</translation>
+    </message>
+    <message>
+        <source>New folder</source>
+        <translatorcomment>Button label to create a New folder at your MEGA cloud drive. Keep capital letters. String as short as possible.</translatorcomment>
+        <translation>新しいフォルダ</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translatorcomment>Label for accept button.</translatorcomment>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Label for cancel button.</translatorcomment>
+        <translation>キャンセル</translation>
+    </message>
+    <message>
+        <source>Are you sure that you want to delete &quot;%1&quot;?</source>
+        <translatorcomment>MessageBox to confirm that the user wants to remove the node. %1 is the node name</translatorcomment>
+        <translation>「%1」を削除してよろしいですか？</translation>
+    </message>
+    <message>
+        <source>Error:</source>
+        <translatorcomment>MessageBox to inform about an error when trying to move or remove a node</translatorcomment>
+        <translation>エラー：</translation>
     </message>
 </context>
 <context>
@@ -3963,12 +3976,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Additional storage charged at %1 per %2TB.</source>
         <translatorcomment>Balloon tooltip to inform users that additional storate for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
-        <translation>追加ストレージは%2TBあたり%1の料金を頂戴いたします。</translation>
+        <translation>追加ストレージは%2&#xa0;TBあたり%1の料金を頂戴いたします。</translation>
     </message>
     <message>
         <source>Additional transfer quota charged at %1 per %2TB.</source>
         <translatorcomment>Balloon tooltip to inform users that additional transfer quota for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
-        <translation>追加の転送容量は%2TBあたり%1の料金を頂戴いたします。</translation>
+        <translation>追加の転送容量は%2&#xa0;TBあたり%1の料金を頂戴いたします。</translation>
     </message>
     <message numerus="yes">
         <source>minimum %n user</source>
@@ -4072,21 +4085,16 @@ Please delete the folder sync from preferences to cancel them.</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Support for Flexi Pro accounts.
-- New backups feature.
-- Fixed issues detected with macOS Ventura.
-- Fixed detected crashes on Windows, Linux, and macOS.
-- Fixed translation issues.
-- Improved performance.
+        <source>- Detected crashes on Windows, Linux, and masOS fixed.
+- Less device memory will be used by accounts with large amounts of data stored.
+- Application performance improved.
+- Translation issues fixed.
 </source>
-        <translatorcomment>Changelog for v4.8.0 version</translatorcomment>
-        <translation>ーPro Flexiアカウントのサポートを追加。
-ー新しいバックアップ機能を追加。
-ーmacOS Venturaで検出された問題を修正。
-ーWindows、Linux、およびmacOSで検出されたクラッシュを修正。
-ー翻訳の問題を修正。
-ーパフォーマンスを改善。
-</translation>
+        <translatorcomment>Changelog for version v4.8.5</translatorcomment>
+        <translation>－Windows、Linux、およびmacOSで検出されたクラッシュが修正されました。
+－大量のデータが保存されているアカウントでは、デバイスのメモリ使用量が少なくなります。
+－アプリケーションのパフォーマンスが向上しました。
+－翻訳の問題が修正されました。</translation>
     </message>
 </context>
 <context>
@@ -4500,27 +4508,27 @@ Do you want to delete it anyway?</source>
     <message>
         <source>%1 TB</source>
         <translatorcomment>File size measured in terabytes</translatorcomment>
-        <translation>%1 TB</translation>
+        <translation>%1&#xa0;TB</translation>
     </message>
     <message>
         <source>%1 GB</source>
         <translatorcomment>File size measured in gigabytes</translatorcomment>
-        <translation>%1 GB</translation>
+        <translation>%1&#xa0;GB</translation>
     </message>
     <message>
         <source>%1 MB</source>
         <translatorcomment>File size measured in megabytes</translatorcomment>
-        <translation>%1 MB</translation>
+        <translation>%1&#xa0;MB</translation>
     </message>
     <message>
         <source>%1 KB</source>
         <translatorcomment>File size measured in kilobytes</translatorcomment>
-        <translation>%1 KB</translation>
+        <translation>%1&#xa0;KB</translation>
     </message>
     <message>
         <source>%1 bytes</source>
         <translatorcomment>File size measured in bytes</translatorcomment>
-        <translation>%1 バイト</translation>
+        <translation>%1&#xa0;バイト</translation>
     </message>
     <message>
         <source>Invalid filename</source>
@@ -4643,19 +4651,6 @@ Do you want to delete it anyway?</source>
         <source>Cancel</source>
         <translatorcomment>Button text that cancels</translatorcomment>
         <translation>キャンセル</translation>
-    </message>
-</context>
-<context>
-    <name>RenameLocalNodeDialog</name>
-    <message>
-        <source>File can’t be renamed to &quot;%1&quot;</source>
-        <translatorcomment>Error warning shown when a file can´t be renamed due to an error.</translatorcomment>
-        <translation>ファイルの名前を「%1」に変更できません</translation>
-    </message>
-    <message>
-        <source>Folder can’t be renamed to &quot;%1&quot;</source>
-        <translatorcomment>Error warning shown when a folder can´t be renamed due to an error.</translatorcomment>
-        <translation>フォルダの名前を「%1」に変更できません</translation>
     </message>
 </context>
 <context>
@@ -5241,7 +5236,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Pro Lite</source>
         <translatorcomment>Text label indicating the Pro Lite tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro Lite</translation>
+        <translation>Pro&#xa0;Lite</translation>
     </message>
     <message>
         <source>Business</source>
@@ -5296,17 +5291,17 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Pro I</source>
         <translatorcomment>Text label indicating the Pro I tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro I</translation>
+        <translation>Pro&#xa0;I</translation>
     </message>
     <message>
         <source>Pro II</source>
         <translatorcomment>Text label indicating the Pro II tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro II</translation>
+        <translation>Pro&#xa0;II</translation>
     </message>
     <message>
         <source>Pro III</source>
         <translatorcomment>Text label indicating the Pro III tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro III</translation>
+        <translation>Pro&#xa0;III</translation>
     </message>
     <message>
         <source>Export Key</source>
@@ -5476,7 +5471,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Pro Flexi</source>
         <translatorcomment>Text label indicating the Pro Flexi tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro Flexi</translation>
+        <translation>Pro&#xa0;Flexi</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
@@ -6048,6 +6043,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Message shown while waiting for the server request with the file info to stream</translatorcomment>
         <translation>お待ちください…</translation>
     </message>
+    <message>
+        <source>Select items</source>
+        <translatorcomment>Window title for node selector when is openned in stream mode</translatorcomment>
+        <translation>項目を選択</translation>
+    </message>
 </context>
 <context>
     <name>SwitchButton</name>
@@ -6204,7 +6204,7 @@ To continue, select a different folder.</source>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a local folder shared with VMWare third party app.</translatorcomment>
-        <translation>VMWareと共有するローカルフォルダを同期しています。これらのフォルダはファイルシステムの通知をサポートしていないため、あなたのファイルやフォルダの変更を検出するためにこのアプリは継続的にスキャンする必要があります。可能であれば、別のフォルダを使用してCPU使用量を減らしてください。</translation>
+        <translation>VMWareと共有されているローカルフォルダを同期します。このフォルダはファイルシステムの通知をサポートしていないため、変更を検出して同期するには、アプリはフォルダとその中のファイルを継続的にスキャンする必要があります。可能であれば、別のフォルダを使用してCPU使用率を減らしてください。</translation>
     </message>
 </context>
 <context>
@@ -6925,7 +6925,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>100% of the %1 available used on your account.</source>
         <translatorcomment>Informative message for the user when it is in over storage situation, letting know about the %1 space used and reaching the 100% limit of his current storage amount.</translatorcomment>
-        <translation>お客様のアカウントでご使用可能な%1中100 %を使用しました。</translation>
+        <translation>お客様のアカウントでご使用可能な%1中100&#xa0;%を使用しました。</translation>
     </message>
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
@@ -7014,22 +7014,22 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Pro Lite</source>
         <translatorcomment>Label to refer Pro Lite tier</translatorcomment>
-        <translation>Pro Lite</translation>
+        <translation>Pro&#xa0;Lite</translation>
     </message>
     <message>
         <source>Pro I</source>
         <translatorcomment>Label to refer Pro I tier</translatorcomment>
-        <translation>Pro I</translation>
+        <translation>Pro&#xa0;I</translation>
     </message>
     <message>
         <source>Pro II</source>
         <translatorcomment>Label to refer Pro II tier</translatorcomment>
-        <translation>Pro II</translation>
+        <translation>Pro&#xa0;II</translation>
     </message>
     <message>
         <source>Pro III</source>
         <translatorcomment>Label to refer Pro III tier</translatorcomment>
-        <translation>Pro III</translation>
+        <translation>Pro&#xa0;III</translation>
     </message>
     <message numerus="yes">
         <source>%n second ago</source>

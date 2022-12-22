@@ -135,7 +135,7 @@ QVariant SyncItemModel::data(const QModelIndex &index, int role) const
                 toolTip += QCoreApplication::translate("MegaSyncError", mega::MegaSync::getMegaSyncErrorCode(sync->getError()));
                 toolTip += QChar::LineSeparator;
             }
-            toolTip += SyncTooltipCreator::createForLocal(sync->getLocalFolder());
+            toolTip += SyncTooltipCreator::createForLocal(sync->getLocalFolder(true));
             return toolTip;
         }
         break;
