@@ -9,6 +9,7 @@
 #include <QDialog>
 #include <QItemSelection>
 #include <QTimer>
+#include <QGraphicsDropShadowEffect>
 
 #include <memory>
 
@@ -33,7 +34,9 @@ public:
         CLOUD_DRIVE = 0,
         SHARES,
         VAULT,
+        SEARCH
     };
+    Q_ENUM(TabItem)
 
     static const int LABEL_ELIDE_MARGIN;
     explicit NodeSelector(QWidget *parent = 0);
@@ -69,9 +72,11 @@ private slots:
     void onbShowIncomingSharesClicked();
     void onbShowCloudDriveClicked();
     void onbShowBackupsFolderClicked();
+    void onbShowSearchClicked();
     void onOptionSelected(int index);
     void updateNodeSelectorTabs();
     void onSearch(const QString& text);
+    void on_tClearSearchResult_clicked();
 
 #ifdef Q_OS_MAC
     void onTabSelected(int index);
@@ -80,12 +85,16 @@ private slots:
 private:
     void processCloseEvent(NodeSelectorProxyModel *proxy, QCloseEvent* event);
     QModelIndex getParentIncomingShareByIndex(QModelIndex idx);
+    void setToggledStyle(TabItem item);
+    void setAllFramesItsOnProperty();
     virtual bool isSelectionCorrect() = 0;
 #ifdef Q_OS_MAC
     void hideTabSelector(const QString& tabText);
 #endif
     void shortCutConnects(int ignoreThis);
     ButtonIconManager mButtonIconManager;
+    QGraphicsDropShadowEffect* mShadowTab;
+    QMap<TabItem, QFrame*> mTabFramesToggleGroup;
 
     bool mManuallyResizedColumn;
 };

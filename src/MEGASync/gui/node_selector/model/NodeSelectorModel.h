@@ -145,7 +145,7 @@ public:
     virtual bool canBeDeleted() const;
 
 signals:
-    void levelsAdded(const QModelIndexList& parent);
+    void levelsAdded(const QModelIndexList& parent, bool force = false);
     void requestChildNodes(NodeSelectorModelItem* parent, const QModelIndex& parentIndex,
                            int nodeType);
     void firstLoadFinished(const QModelIndex& parent);

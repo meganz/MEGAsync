@@ -10,6 +10,7 @@ NodeSelectorTreeViewWidgetCloudDrive::NodeSelectorTreeViewWidgetCloudDrive(Selec
     : NodeSelectorTreeViewWidget(mode, parent)
 {
     setTitle(MegaNodeNames::getCloudDriveName());
+    ui->searchEmptyInfoWidget->setVisible(false);
 }
 
 QString NodeSelectorTreeViewWidgetCloudDrive::getRootText()
@@ -20,6 +21,12 @@ QString NodeSelectorTreeViewWidgetCloudDrive::getRootText()
 std::unique_ptr<NodeSelectorModel> NodeSelectorTreeViewWidgetCloudDrive::getModel()
 {
     return std::unique_ptr<NodeSelectorModelCloudDrive>(new NodeSelectorModelCloudDrive);
+}
+
+bool NodeSelectorTreeViewWidgetCloudDrive::isModelEmpty()
+{
+    auto rootIndex = mModel->index(0,0);
+    return mModel->rowCount(rootIndex) == 0;
 }
 
 void NodeSelectorTreeViewWidgetCloudDrive::onRootIndexChanged(const QModelIndex &source_idx)
@@ -92,19 +99,21 @@ NodeSelectorTreeViewWidgetSearch::NodeSelectorTreeViewWidgetSearch(SelectTypeSPt
     : NodeSelectorTreeViewWidget(mode, parent)
 
 {
-
+    ui->searchButtonsWidget->setVisible(true);
 }
 
 void NodeSelectorTreeViewWidgetSearch::search(const QString &text)
 {
     auto search_model = static_cast<NodeSelectorModelSearch*>(mModel.get());
     search_model->searchByText(text);
-    mSearchText = text;
+    ui->searchingText->setText(text);
+    ui->searchingText->setVisible(true);
+    ui->cloudDriveSearch->setChecked(true);
 }
 
 QString NodeSelectorTreeViewWidgetSearch::getRootText()
 {
-    return QString::fromUtf8("Searching:") + mSearchText;
+    return QString::fromUtf8("Searching:");
 }
 
 std::unique_ptr<NodeSelectorModel> NodeSelectorTreeViewWidgetSearch::getModel()

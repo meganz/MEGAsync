@@ -16,6 +16,8 @@
 
 using namespace mega;
 
+const char* ITS_ON_NS = "itsOn";
+
 const int NodeSelector::LABEL_ELIDE_MARGIN = 100;
 
 NodeSelector::NodeSelector(QWidget *parent) :
@@ -32,6 +34,8 @@ NodeSelector::NodeSelector(QWidget *parent) :
     connect(ui->bShowIncomingShares, &QPushButton::clicked, this, &NodeSelector::onbShowIncomingSharesClicked);
     connect(ui->bShowCloudDrive, &QPushButton::clicked, this, &NodeSelector::onbShowCloudDriveClicked);
     connect(ui->bShowBackups, &QPushButton::clicked, this, &NodeSelector::onbShowBackupsFolderClicked);
+    connect(ui->bSearch, &QPushButton::clicked, this, &NodeSelector::onbShowSearchClicked);
+
 #else
     connect(ui->tabBar, &QTabBar::currentChanged, this, &NodeSelector::onOptionSelected);
 #endif
@@ -41,6 +45,20 @@ NodeSelector::NodeSelector(QWidget *parent) :
     {
         mButtonIconManager.addButton(button);
     }
+    QColor shadowColor (188, 188, 188);
+    mShadowTab = new QGraphicsDropShadowEffect(ui->buttonGroup); //todo check if it is better deletelater on destructor - May this crash?
+    mShadowTab->setBlurRadius(10.);
+    mShadowTab->setXOffset(0.);
+    mShadowTab->setYOffset(0.);
+    mShadowTab->setColor(shadowColor);
+    mShadowTab->setEnabled(true);
+
+    mTabFramesToggleGroup[SEARCH] = ui->fSearchString;
+    mTabFramesToggleGroup[VAULT] = ui->fBackups;
+    mTabFramesToggleGroup[SHARES] = ui->fIncomingShares;
+    mTabFramesToggleGroup[CLOUD_DRIVE] = ui->fCloudDrive;
+    ui->wSearch->hide();
+    setAllFramesItsOnProperty();
 
     updateNodeSelectorTabs();
 }
@@ -48,6 +66,14 @@ NodeSelector::NodeSelector(QWidget *parent) :
 NodeSelector::~NodeSelector()
 {
     delete ui;
+}
+
+void NodeSelector::setAllFramesItsOnProperty()
+{
+    for (auto tabFrame : qAsConst(mTabFramesToggleGroup))
+    {
+        tabFrame->setProperty(ITS_ON_NS, false);
+    }
 }
 
 void NodeSelector::updateNodeSelectorTabs()
@@ -70,16 +96,17 @@ void NodeSelector::updateNodeSelectorTabs()
 
 void NodeSelector::onSearch(const QString &text)
 {
-    ui->stackedWidget->setCurrentWidget(mSearchWidget);
-    mSearchWidget->search(text);
+    ui->bSearch->setText(text);
+    ui->wSearch->setVisible(true);
 
-    for(int page = 0; page < ui->stackedWidget->count(); ++page)
+    mSearchWidget->search(text);
+    mSearchWidget->setSearchText(text);
+    onbShowSearchClicked();
+
+    auto senderViewWidget = dynamic_cast<NodeSelectorTreeViewWidget*>(sender());
+    if(senderViewWidget != mSearchWidget)
     {
-        auto viewContainer = dynamic_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->widget(page));
-        if(viewContainer)
-        {
-            viewContainer->setSearchText(text);
-        }
+        senderViewWidget->clearSearchText();
     }
 }
 
@@ -144,6 +171,16 @@ void NodeSelector::onbOkClicked()
     isSelectionCorrect() ? accept() : reject();
 }
 
+void NodeSelector::on_tClearSearchResult_clicked()
+{
+    ui->wSearch->hide();
+    ui->bSearch->setText(QString());
+    if(ui->stackedWidget->currentWidget() == mSearchWidget)
+    {
+        onbShowCloudDriveClicked();
+    }
+}
+
 void NodeSelector::onOptionSelected(int index)
 {
 #ifdef Q_OS_MAC
@@ -191,16 +228,25 @@ void NodeSelector::onTabSelected(int index)
 void NodeSelector::onbShowCloudDriveClicked()
 {
     ui->stackedWidget->setCurrentIndex(CLOUD_DRIVE);
+    setToggledStyle(CLOUD_DRIVE);
 }
 
 void NodeSelector::onbShowIncomingSharesClicked()
 {
     ui->stackedWidget->setCurrentIndex(SHARES);
+    setToggledStyle(SHARES);
 }
 
 void NodeSelector::onbShowBackupsFolderClicked()
 {
     ui->stackedWidget->setCurrentIndex(VAULT);
+    setToggledStyle(VAULT);
+}
+
+void NodeSelector::onbShowSearchClicked()
+{
+    ui->stackedWidget->setCurrentIndex(SEARCH);
+    setToggledStyle(SEARCH);
 }
 
 void NodeSelector::onViewReady(bool isEmpty)
@@ -268,6 +314,17 @@ void NodeSelector::processCloseEvent(NodeSelectorProxyModel *proxy, QCloseEvent 
         });
         event->ignore();
     }
+}
+
+void NodeSelector::setToggledStyle(TabItem item)
+{
+    setAllFramesItsOnProperty();
+
+    mTabFramesToggleGroup[item]->setProperty(ITS_ON_NS, true);
+    mTabFramesToggleGroup[item]->setGraphicsEffect(mShadowTab);
+
+    // Reload QSS because it is glitchy
+    ui->wLeftPane->setStyleSheet(ui->wLeftPane->styleSheet());
 }
 
 void NodeSelector::hideSelector(TabItem item)

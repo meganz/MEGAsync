@@ -60,7 +60,6 @@ public:
 
 protected:
     void paintSection(QPainter *painter, const QRect &rect, int logicalIndex) const override;
-
 };
 
 #endif // NODESELECTORTREEVIEW_H

@@ -64,8 +64,8 @@ void NodeRequester::search(const QString &text)
     {
         return;
     }
+    qDeleteAll(mRootItems);
     mRootItems.clear();
-
     mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
     auto nodeList = megaApi->search(text.toUtf8(), mCancelToken.get());
     QList<NodeSelectorModelItem*> items;
@@ -92,8 +92,8 @@ void NodeRequester::search(const QString &text)
     else
     {
         mRootItems.append(items);
-        emit searchItemsCreated(items);
     }
+    emit searchItemsCreated(items);
 }
 
 void NodeRequester::createCloudDriveRootItem()

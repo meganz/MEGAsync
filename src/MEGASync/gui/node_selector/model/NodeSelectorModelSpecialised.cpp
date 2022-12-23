@@ -284,5 +284,5 @@ void NodeSelectorModelSearch::onRootItemsCreated(QList<NodeSelectorModelItem *> 
 {
     Q_UNUSED(items)
     rootItemsLoaded();
-    loadLevelFinished();
+    emit levelsAdded(mIndexesActionInfo.indexesToBeExpanded, true);
 }

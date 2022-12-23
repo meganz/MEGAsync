@@ -43,6 +43,7 @@ public:
     bool getDefaultUploadOption();
     void showDefaultUploadOption(bool show);
     void setSearchText(const QString& text);
+    void clearSearchText();
     void abort();
     NodeSelectorProxyModel* getProxyModel();
 
@@ -115,6 +116,7 @@ private:
     virtual QString getRootText() = 0;
     virtual std::unique_ptr<NodeSelectorModel> getModel() = 0;
     virtual bool newFolderBtnVisibleInRoot(){return true;}
+    virtual bool isModelEmpty();
     void checkOkButton(const QModelIndexList& selected);
 
     bool first;

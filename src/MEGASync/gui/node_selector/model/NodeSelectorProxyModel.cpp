@@ -9,7 +9,8 @@ NodeSelectorProxyModel::NodeSelectorProxyModel(QObject* parent) :
     QSortFilterProxyModel(parent),
     mSortColumn(NodeSelectorModel::NODE),
     mOrder(Qt::AscendingOrder),
-    mExpandMapped(true)
+    mExpandMapped(true),
+    mForceInvalidate(false)
 {
     mCollator.setCaseSensitivity(Qt::CaseInsensitive);
     mCollator.setNumericMode(true);
@@ -54,6 +55,10 @@ void NodeSelectorProxyModel::sort(int column, Qt::SortOrder order)
                 {
                     auto proxyIndex = mapFromSource((*it));
                     hasChildren(proxyIndex);
+                }
+                if(mForceInvalidate)
+                {
+                    invalidate();
                 }
                 blockSignals(false);
                 sourceModel()->blockSignals(false);
@@ -295,9 +300,10 @@ bool NodeSelectorProxyModel::canBeDeleted() const
     return dynamic_cast<NodeSelectorModel*>(sourceModel())->canBeDeleted();
 }
 
-void NodeSelectorProxyModel::invalidateModel(const QModelIndexList& parents)
+void NodeSelectorProxyModel::invalidateModel(const QModelIndexList& parents, bool force)
 {
     itemsToMap = parents;
+    mForceInvalidate = force;
     sort(mSortColumn, mOrder);
 }
 
@@ -317,7 +323,6 @@ void NodeSelectorProxyModel::onModelSortedFiltered()
             nodeSelectorModel->clearIndexesNodeInfo();
         }
     }
-
     emit getMegaModel()->blockUi(false);
     itemsToMap.clear();
 }

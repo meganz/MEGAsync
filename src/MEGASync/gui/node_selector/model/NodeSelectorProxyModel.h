@@ -68,10 +68,10 @@ private:
     QEventLoop loop;
     QModelIndexList itemsToMap;
     bool mExpandMapped;
-
+    bool mForceInvalidate;
 
 private slots:
-    void invalidateModel(const QModelIndexList &parents);
+    void invalidateModel(const QModelIndexList &parents, bool force = false);
     void onModelSortedFiltered();
 };
 

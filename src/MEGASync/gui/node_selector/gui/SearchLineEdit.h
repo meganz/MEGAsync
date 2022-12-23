@@ -25,8 +25,10 @@ public:
 signals:
     void search(const QString& text);
 
-private slots:
+public slots:
     void onClearClicked();
+
+private slots:
     void onTextChanged(const QString& text);
     void animationFinished();
     void onEditingFinieshed();

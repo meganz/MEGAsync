@@ -35,6 +35,15 @@ void SearchLineEdit::setText(const QString &text)
 void SearchLineEdit::onClearClicked()
 {
     ui->leSearchField->clear();
+    if(ui->tSearchCancel->isVisible())
+    {
+        makeEffect(true);
+    }
+    else
+    {
+        ui->tSearchCancel->hide();
+    }
+    mOldString = QString();
 }
 
 void SearchLineEdit::onTextChanged(const QString &text)
@@ -67,7 +76,7 @@ void SearchLineEdit::onEditingFinieshed()
 
 void SearchLineEdit::makeEffect(bool fadeIn)
 {
-    auto an = new QPropertyAnimation(ui->tSearchCancel->graphicsEffect(),"opacity");
+    auto an = new QPropertyAnimation(ui->tSearchCancel->graphicsEffect(), "opacity");
     an->setDuration(350);
     if(fadeIn)
     {

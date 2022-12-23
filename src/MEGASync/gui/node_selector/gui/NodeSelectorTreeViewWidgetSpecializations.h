@@ -5,6 +5,8 @@
 
 #include <QWidget>
 #include <QModelIndex>
+#include <QLabel>
+#include <QToolButton>
 
 #include <memory>
 
@@ -24,6 +26,7 @@ private:
     QString getRootText() override;
     void onRootIndexChanged(const QModelIndex& source_idx) override;
     std::unique_ptr<NodeSelectorModel> getModel() override;
+    bool isModelEmpty() override;
 };
 
 class NodeSelectorTreeViewWidgetIncomingShares : public NodeSelectorTreeViewWidget
@@ -64,7 +67,6 @@ public:
 private:
     QString getRootText() override;
     std::unique_ptr<NodeSelectorModel> getModel() override;
-    QString mSearchText;
 };
 
 #endif // NODESELECTORTREEVIEWWIDGETSPECIALIZATIONS_H

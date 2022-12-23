@@ -9,13 +9,13 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
+    <width>830</width>
     <height>590</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>540</width>
+    <width>700</width>
     <height>530</height>
    </size>
   </property>
@@ -76,10 +76,21 @@ height: 16px;
     qproperty-alignment: 'AlignLeft | AlignVCenter';
 }
 
-#wSearch QFrame
+#wStorage QFrame
 {
     padding-right: 6px;
     padding-left: 6px;
+}
+
+#wSearch  QFrame
+{
+    padding-right: 6px;
+    padding-left: 6px;
+}
+
+#wStorage QPushButton
+{
+    height: 34px;
 }
 
 #wSearch QPushButton
@@ -134,6 +145,18 @@ QGroupBox::title
    <bool>true</bool>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_15" stretch="0,1">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
    <item>
     <widget class="QWidget" name="wLeftPane" native="true">
      <property name="sizePolicy">
@@ -295,6 +318,12 @@ QGroupBox::title
          </item>
          <item>
           <widget class="QFrame" name="fBackups">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
            <property name="frameShape">
             <enum>QFrame::NoFrame</enum>
            </property>
@@ -510,7 +539,7 @@ QGroupBox::title
              <number>0</number>
             </property>
             <item>
-             <widget class="QPushButton" name="bSearchString">
+             <widget class="QPushButton" name="bSearch">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -582,6 +611,12 @@ QGroupBox::title
    </item>
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
      <property name="currentIndex">
       <number>-1</number>
      </property>

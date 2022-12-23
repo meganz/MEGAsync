@@ -16,10 +16,10 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(SelectTypeSPtr mode, QWid
     QWidget(parent),
     ui(new Ui::NodeSelectorTreeViewWidget),
     mProxyModel(nullptr),
+    mModel(nullptr),
     mMegaApi(MegaSyncApp->getMegaApi()),
     mManuallyResizedColumn(false),
     mDelegateListener(new QTMegaRequestListener(mMegaApi, this)),
-    mModel(nullptr),
     first(true),
     mUiBlocked(false),
     mNodeHandleToSelect(INVALID_HANDLE),
@@ -30,6 +30,7 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(SelectTypeSPtr mode, QWid
     ui->cbAlwaysUploadToLocation->hide();
     ui->bOk->setDefault(true);
     ui->bOk->setEnabled(false);
+    ui->searchButtonsWidget->setVisible(false);
 
     connect(ui->bNewFolder, &QPushButton::clicked, this, &NodeSelectorTreeViewWidget::onbNewFolderClicked);
     connect(ui->bOk, &QPushButton::clicked, this, &NodeSelectorTreeViewWidget::okBtnClicked);
@@ -80,6 +81,11 @@ void NodeSelectorTreeViewWidget::showDefaultUploadOption(bool show)
 void NodeSelectorTreeViewWidget::setSearchText(const QString &text)
 {
     ui->leSearch->setText(text);
+}
+
+void NodeSelectorTreeViewWidget::clearSearchText()
+{
+    ui->leSearch->onClearClicked();
 }
 
 void NodeSelectorTreeViewWidget::abort()
@@ -182,7 +188,6 @@ void NodeSelectorTreeViewWidget::onExpandReady()
         connect(ui->bBack, &QPushButton::clicked, this, &NodeSelectorTreeViewWidget::onGoBackClicked);
         connect(ui->tMegaFolders->header(), &QHeaderView::sectionResized, this, &NodeSelectorTreeViewWidget::onSectionResized);
         connect(mModel.get(), &QAbstractItemModel::rowsInserted, this, &NodeSelectorTreeViewWidget::onRowsInserted);
-
         connect(mModel.get(), &NodeSelectorModel::blockUi, this, &NodeSelectorTreeViewWidget::setLoadingSceneVisible);
 
         setRootIndex(QModelIndex());
@@ -328,7 +333,26 @@ void NodeSelectorTreeViewWidget::setLoadingSceneVisible(bool blockUi)
     ui->tMegaFolders->header()->blockSignals(blockUi);
 
     mLoadingScene.changeLoadingSceneStatus(blockUi);
+
+    if(isModelEmpty())
+    {
+        ui->stackedWidget->setCurrentWidget(ui->emptyPage);
+    }
+    else
+    {
+        ui->stackedWidget->setCurrentWidget(ui->treeViewPage);
+    }
 }
+
+bool NodeSelectorTreeViewWidget::isModelEmpty()
+{
+    if(mModel)
+    {
+        return mModel->rowCount() == 0;
+    }
+    return false;
+}
+
 
 void NodeSelectorTreeViewWidget::onUiBlocked(bool state)
 {

@@ -49,7 +49,7 @@ void NodeSelectorTreeView::setModel(QAbstractItemModel *model)
 
 bool NodeSelectorTreeView::viewportEvent(QEvent *event)
 {
-     return signalsBlocked() ? true : QTreeView::viewportEvent(event);
+    return signalsBlocked() ? true : QTreeView::viewportEvent(event);
 }
 
 void NodeSelectorTreeView::drawBranches(QPainter *painter, const QRect &rect, const QModelIndex &index) const
@@ -275,5 +275,4 @@ void NodSelectorTreeViewHeaderView::paintSection(QPainter *painter, const QRect 
 
     QHeaderView::paintSection(painter, vrect, logicalIndex);
 }
-
 
