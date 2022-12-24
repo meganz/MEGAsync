@@ -3057,7 +3057,10 @@ QList<QNetworkInterface> MegaApplication::findNewNetworkInterfaces()
         QNetworkInterface::InterfaceFlags flags = networkInterface.flags();
         if (isActiveNetworkInterface(interfaceName, flags))
         {
-            MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Active network interface: %1").arg(interfaceName).toUtf8().constData());
+            if (logger->isDebug())
+            {
+                MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Active network interface: %1").arg(interfaceName).toUtf8().constData());
+            }
 
             const int numActiveIPs = countActiveIps(networkInterface.addressEntries());
             if (numActiveIPs > 0)
@@ -3066,7 +3069,7 @@ QList<QNetworkInterface> MegaApplication::findNewNetworkInterfaces()
                 newInterfaces.append(networkInterface);
             }
         }
-        else
+        else if (logger->isDebug())
         {
             MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Ignored network interface: %1 Flags: %2")
                          .arg(interfaceName)
@@ -3210,9 +3213,15 @@ bool MegaApplication::isLocalIpv6(const QString &address)
 
 void MegaApplication::logIpAddress(const char* message, const QHostAddress &ipAddress) const
 {
-    const QString logMessage = QString::fromUtf8(message) + QString::fromUtf8(": %1");
-    const QString addressToLog = obfuscateIfNecessary(ipAddress);
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, logMessage.arg(addressToLog).toUtf8().constData());
+    if (logger->isDebug())
+    {
+        // these are quite frequent (30s) and usually there are around 10.
+        // so, just log when debug logging has been activated (ie, file to desktop)
+        // otherwise, it's quite distracting
+        const QString logMessage = QString::fromUtf8(message) + QString::fromUtf8(": %1");
+        const QString addressToLog = obfuscateIfNecessary(ipAddress);
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO, logMessage.arg(addressToLog).toUtf8().constData());
+    }
 }
 
 QString MegaApplication::obfuscateIfNecessary(const QHostAddress &ipAddress) const
