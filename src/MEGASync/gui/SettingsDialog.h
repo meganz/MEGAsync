@@ -141,6 +141,8 @@ private slots:
     void openMegaIgnore(std::shared_ptr<SyncSettings>);
     void onOpenMegaIgnoreFinished();
     void showOpenMegaIgnoreError();
+    void rescanQuick(std::shared_ptr<SyncSettings>);
+    void rescanDeep(std::shared_ptr<SyncSettings>);
 
 #ifndef WIN32
     void on_bPermissions_clicked();

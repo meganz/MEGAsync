@@ -1448,6 +1448,8 @@ void SettingsDialog::connectSyncHandlers()
     connect(mUi->syncTableView, &SyncTableView::signalSuspendSync, this, &SettingsDialog::setSyncToSuspend);
     connect(mUi->syncTableView, &SyncTableView::signalDisableSync, this, &SettingsDialog::setSyncToDisabled);
     connect(mUi->syncTableView, &SyncTableView::signalOpenMegaignore, this, &SettingsDialog::openMegaIgnore);
+    connect(mUi->syncTableView, &SyncTableView::signalRescanQuick, this, &SettingsDialog::rescanQuick);
+    connect(mUi->syncTableView, &SyncTableView::signalRescanDeep, this, &SettingsDialog::rescanDeep);
 
     connect(&mSyncController, &SyncController::syncAddStatus, this, [this](int errorCode, const QString errorMsg)
     {
@@ -1719,6 +1721,8 @@ void SettingsDialog::connectBackupHandlers()
     connect(mUi->backupTableView, &BackupTableView::signalSuspendSync, this, &SettingsDialog::setSyncToSuspend);
     connect(mUi->backupTableView, &BackupTableView::signalDisableSync, this, &SettingsDialog::setSyncToDisabled);
     connect(mUi->backupTableView, &BackupTableView::signalOpenMegaignore, this, &SettingsDialog::openMegaIgnore);
+    connect(mUi->backupTableView, &BackupTableView::signalRescanQuick, this, &SettingsDialog::rescanQuick);
+    connect(mUi->backupTableView, &BackupTableView::signalRescanDeep, this, &SettingsDialog::rescanDeep);
 
     auto myBackupsHandle = UserAttributes::MyBackupsHandle::requestMyBackupsHandle();
     connect(myBackupsHandle.get(), &UserAttributes::MyBackupsHandle::attributeReady,
@@ -1868,10 +1872,19 @@ void SettingsDialog::setSyncToDisabled(std::shared_ptr<SyncSettings> sync)
 
 void SettingsDialog::openMegaIgnore(std::shared_ptr<SyncSettings> sync)
 {
-
     QString ignore(sync->getLocalFolder() + QDir::separator() + QString::fromUtf8(".megaignore"));
     auto future = QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(ignore));
     mOpenUrlWatcher.setFuture(future);
+}
+
+void SettingsDialog::rescanQuick(std::shared_ptr<SyncSettings> sync)
+{
+    mMegaApi->rescanSync(sync->backupId(), false);
+}
+
+void SettingsDialog::rescanDeep(std::shared_ptr<SyncSettings> sync)
+{
+    mMegaApi->rescanSync(sync->backupId(), true);
 }
 
 void SettingsDialog::on_bOpenBackupFolder_clicked()

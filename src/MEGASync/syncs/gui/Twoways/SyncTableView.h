@@ -28,6 +28,8 @@ signals:
     void signalSuspendSync(std::shared_ptr<SyncSettings> sync);
     void signalDisableSync(std::shared_ptr<SyncSettings> sync);
     void signalOpenMegaignore(std::shared_ptr<SyncSettings> sync);
+    void signalRescanQuick(std::shared_ptr<SyncSettings> sync);
+    void signalRescanDeep(std::shared_ptr<SyncSettings> sync);
 
 private slots:
     virtual void onCustomContextMenuRequested(const QPoint& pos);

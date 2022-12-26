@@ -159,12 +159,16 @@ void SyncTableView::createStatesContextActions(QMenu* menu, std::shared_ptr<Sync
     auto syncSuspend (new MenuItemAction(tr("Suspend"), QIcon(QString::fromUtf8("://images/ico_open_MEGA.png"))));
     auto syncDisable (new MenuItemAction(tr("Disable"), QIcon(QString::fromUtf8("://images/ico_open_MEGA.png"))));
     auto openMegaignore (new MenuItemAction(tr("Edit .megaignore"), QIcon(QString::fromUtf8("://images/ico_open_MEGA.png"))));
+    auto rescanQuick (new MenuItemAction(tr("Quick Rescan"), QIcon(QString::fromUtf8("://images/ico_open_MEGA.png"))));
+    auto rescanDeep (new MenuItemAction(tr("Deep Rescan (checks file fingerprints)"), QIcon(QString::fromUtf8("://images/ico_open_MEGA.png"))));
 
     connect(syncRun, &MenuItemAction::triggered, this, [this, sync]() { emit signalRunSync(sync); });
     connect(syncPause, &MenuItemAction::triggered, this, [this, sync]() { emit signalPauseSync(sync); });
     connect(syncSuspend, &MenuItemAction::triggered, this, [this, sync]() { emit signalSuspendSync(sync); });
     connect(syncDisable, &MenuItemAction::triggered, this, [this, sync]() { emit signalDisableSync(sync); });
     connect(openMegaignore, &MenuItemAction::triggered, this, [this, sync]() { emit signalOpenMegaignore(sync); });
+    connect(rescanQuick, &MenuItemAction::triggered, this, [this, sync]() { emit signalRescanQuick(sync); });
+    connect(rescanDeep, &MenuItemAction::triggered, this, [this, sync]() { emit signalRescanDeep(sync); });
 
     syncRun->setEnabled(sync->getSync()->getRunState() !=  mega::MegaSync::RUNSTATE_RUNNING);
     syncPause->setEnabled(sync->getSync()->getRunState() !=  mega::MegaSync::RUNSTATE_PAUSED);
@@ -176,6 +180,8 @@ void SyncTableView::createStatesContextActions(QMenu* menu, std::shared_ptr<Sync
     syncSuspend->setParent(menu);
     syncDisable->setParent(menu);
     openMegaignore->setParent(menu);
+    rescanQuick->setParent(menu);
+    rescanDeep->setParent(menu);
 
     menu->addAction(syncRun);
     menu->addAction(syncPause);
@@ -184,6 +190,9 @@ void SyncTableView::createStatesContextActions(QMenu* menu, std::shared_ptr<Sync
 
     menu->addSeparator();
     menu->addAction(openMegaignore);
+    menu->addSeparator();
+    menu->addAction(rescanQuick);
+    menu->addAction(rescanDeep);
 }
 
 MenuItemDelegate::MenuItemDelegate(QObject *parent) : QStyledItemDelegate(parent)
