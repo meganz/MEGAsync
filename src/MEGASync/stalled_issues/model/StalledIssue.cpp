@@ -330,8 +330,17 @@ mega::MegaSyncStall::SyncStallReason StalledIssue::getReason() const
     return mReason;
 }
 
-QString StalledIssue::getFileName() const
+QString StalledIssue::getFileName(bool preferCloud) const
 {
+    if (preferCloud)
+    {
+        if (mCloudData) return mCloudData->getFileName();
+    }
+    else
+    {
+        if (mLocalData) return mLocalData->getFileName();
+    }
+
     if(mLocalData)
     {
         return mLocalData->getFileName();

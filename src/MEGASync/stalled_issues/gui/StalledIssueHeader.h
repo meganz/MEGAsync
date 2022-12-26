@@ -35,7 +35,7 @@ public:
     void showMessage(const QString& message, const QPixmap &pixmap);
 
     void setLeftTitleText(const QString& text);
-    void addFileName();
+    void addFileName(bool preferCloud = false);
     void setRightTitleText(const QString& text);
 
     void setTitleDescriptionText(const QString& text);

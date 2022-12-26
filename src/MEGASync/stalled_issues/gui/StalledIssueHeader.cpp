@@ -89,9 +89,9 @@ void StalledIssueHeader::setLeftTitleText(const QString &text)
     ui->leftTitleText->setText(text);
 }
 
-void StalledIssueHeader::addFileName()
+void StalledIssueHeader::addFileName(bool preferCloud)
 {
-    ui->fileNameTitle->setText(getData().consultData()->getFileName());
+    ui->fileNameTitle->setText(getData().consultData()->getFileName(preferCloud));
     ui->fileNameTitle->installEventFilter(this);
 }
 
@@ -131,7 +131,7 @@ bool StalledIssueHeader::eventFilter(QObject *watched, QEvent *event)
 {
     if(watched == ui->fileNameTitle && event->type() == QEvent::Resize)
     {
-        auto elidedText = ui->fileNameTitle->fontMetrics().elidedText(getData().consultData()->getFileName(),Qt::ElideMiddle, ui->fileNameTitle->width());
+        auto elidedText = ui->fileNameTitle->fontMetrics().elidedText(getData().consultData()->getFileName(false),Qt::ElideMiddle, ui->fileNameTitle->width());
         ui->fileNameTitle->setText(elidedText);
     }
 
@@ -159,7 +159,7 @@ void StalledIssueHeader::refreshUi()
     if(getData().consultData()->hasFiles() > 0)
     {
         fileTypeIcon = Utilities::getCachedPixmap(Utilities::getExtensionPixmapName(
-                                                      getData().consultData()->getFileName(), QLatin1Literal(":/images/drag_")));
+                                                      getData().consultData()->getFileName(false), QLatin1Literal(":/images/drag_")));
     }
     else
     {

@@ -83,7 +83,7 @@ public:
     const StalledIssueDataPtr consultCloudData() const;
 
     mega::MegaSyncStall::SyncStallReason getReason() const;
-    QString getFileName() const;
+    QString getFileName(bool preferCloud) const;
     static StalledIssueFilterCriterion getCriterionByReason(mega::MegaSyncStall::SyncStallReason reason);
 
     bool operator==(const StalledIssue &data);

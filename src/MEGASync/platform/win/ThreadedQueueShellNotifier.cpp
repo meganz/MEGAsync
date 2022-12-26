@@ -65,7 +65,11 @@ void ThreadedQueueShellNotifier::doInThread()
             }
         } // end of lock scope
 
-        if (!path.isEmpty())
+        if (mExit)
+        {
+            return;  // There could be many of these already queued.  Don't delay app exit (possibly for minutes).  These are irrelevant if MEGAsync is no longer running
+        }
+        else if (!path.isEmpty())
         {
             mBaseNotifier->notify(path);
         }

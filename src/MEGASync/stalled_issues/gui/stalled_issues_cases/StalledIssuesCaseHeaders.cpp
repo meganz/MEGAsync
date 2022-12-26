@@ -110,7 +110,7 @@ UploadIssueHeader::UploadIssueHeader(StalledIssueHeader* header)
 void UploadIssueHeader::onRefreshCaseUi()
 {
     mStalledIssueHeader->setLeftTitleText(tr("Can´t upload"));
-    mStalledIssueHeader->addFileName();
+    mStalledIssueHeader->addFileName(false);
     mStalledIssueHeader->setRightTitleText(tr("to the selected location"));
     mStalledIssueHeader->setTitleDescriptionText(tr("Cannot reach the destination folder."));
 }
@@ -124,9 +124,9 @@ DownloadIssueHeader::DownloadIssueHeader(StalledIssueHeader* header)
 void DownloadIssueHeader::onRefreshCaseUi()
 {
     mStalledIssueHeader->setLeftTitleText(tr("Can´t download"));
-    mStalledIssueHeader->addFileName();
+    mStalledIssueHeader->addFileName(true);
     mStalledIssueHeader->setRightTitleText(tr("to the selected location"));
-    mStalledIssueHeader->setTitleDescriptionText(tr("Cannot reach the destination folder."));
+    mStalledIssueHeader->setTitleDescriptionText(tr("A failure occurred either downloading the file, or moving the downloaded temporary file to its final name and location."));
 }
 
 //Create folder failed
