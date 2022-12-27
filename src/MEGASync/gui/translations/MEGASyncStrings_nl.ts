@@ -2817,6 +2817,26 @@ Overdrachten worden automatisch hervat wanneer u de applicatie heropend.</numeru
         <translatorcomment>Notification message launched when a backup is disabled. Keep &amp;quot;%1&amp;quot; code because is filled with the name of the backup at runtime and %2 with the reason of the error.</translatorcomment>
         <translation>Uw back-up &quot;%1&quot; is uitgeschakeld. Reden: %2</translation>
     </message>
+    <message>
+        <source>Security upgrade</source>
+        <translatorcomment>Title of security upgrade dialog</translatorcomment>
+        <translation>Beveiligingsupgrade</translation>
+    </message>
+    <message numerus="yes">
+        <source>You are currently sharing the following folder: %1</source>
+        <translatorcomment>Additional information shown within Security upgrade dialog if the user has outgoing shares. A list of the shares will be filled at %1 placeholder. Please check screenshot to see the full context of this string along with the other ones.</translatorcomment>
+        <translation><numerusform>U bent de volgende map aan het delen:%1</numerusform><numerusform>U bent de volgende mappen aan het delen:%1</numerusform></translation>
+    </message>
+    <message>
+        <source>Failed to ugrade security. Error: %1</source>
+        <translatorcomment>System notification error shown if an error occur while upgrading security for your account. %1 will be replaced with the error returned from the SDK.</translatorcomment>
+        <translation>Mislukt om beveiliging te upgraden. Fout: %1</translation>
+    </message>
+    <message>
+        <source>Your account&apos;s security is now being upgraded. This will happen only once. If you have seen this message for this account before, press Cancel.</source>
+        <translatorcomment>Error message shown to the user to inform about that the security of his account is going to be upgraded. </translatorcomment>
+        <translation>De beveiliging van uw account wordt nu geupgraded. Dit gebeurd alleen éénmalig. Als u dit bericht eerder heeft gezien voor dit account, klik Annuleren.</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
