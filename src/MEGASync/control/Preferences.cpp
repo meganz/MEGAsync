@@ -13,10 +13,10 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
 const char Preferences::USER_AGENT[] = "MEGAsync/5.0.0.1";
-const int Preferences::VERSION_CODE = 5001;
+const int Preferences::VERSION_CODE = 5002;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("5.0.1");
+const QString Preferences::VERSION_STRING = QString::fromAscii("5.0.2");
 QString Preferences::SDK_ID = QString::fromAscii("dd7021b");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
 "- Support for Flexi Pro accounts.\n"
