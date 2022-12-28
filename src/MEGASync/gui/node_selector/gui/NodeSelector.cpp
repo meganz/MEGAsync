@@ -40,11 +40,11 @@ NodeSelector::NodeSelector(QWidget *parent) :
     connect(ui->tabBar, &QTabBar::currentChanged, this, &NodeSelector::onOptionSelected);
 #endif
 
-    auto managedButtons = ui->wLeftPane->findChildren<QAbstractButton*>();
-    foreach(auto& button, managedButtons)
+    foreach(auto& button, ui->wLeftPane->findChildren<QAbstractButton*>())
     {
         mButtonIconManager.addButton(button);
     }
+
     QColor shadowColor (188, 188, 188);
     mShadowTab = new QGraphicsDropShadowEffect(ui->buttonGroup); //todo check if it is better deletelater on destructor - May this crash?
     mShadowTab->setBlurRadius(10.);
@@ -102,6 +102,7 @@ void NodeSelector::onSearch(const QString &text)
     mSearchWidget->search(text);
     mSearchWidget->setSearchText(text);
     onbShowSearchClicked();
+    ui->bSearch->setChecked(true);
 
     auto senderViewWidget = dynamic_cast<NodeSelectorTreeViewWidget*>(sender());
     if(senderViewWidget != mSearchWidget)

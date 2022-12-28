@@ -22,6 +22,9 @@ public:
     void setIcon(const QIcon& icon);
     void setText(const QString& text);
 
+protected:
+    bool eventFilter(QObject* obj, QEvent* evnt) override;
+
 signals:
     void search(const QString& text);
 
@@ -31,7 +34,6 @@ public slots:
 private slots:
     void onTextChanged(const QString& text);
     void animationFinished();
-    void onEditingFinieshed();
 
 private:
     void makeEffect(bool fadeIn);

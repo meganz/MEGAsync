@@ -464,8 +464,8 @@ QGroupBox::title
                <string>Incoming Shares</string>
               </property>
               <property name="icon">
-               <iconset theme="incoming_ico" resource="../../../Resources_win.qrc">
-                <normaloff>:/images/node_selector/sidebar/incoming_share_ico_default.png</normaloff>:/images/node_selector/sidebar/incoming_share_ico_default.png</iconset>
+               <iconset resource="../../../Resources_win.qrc">
+                <normaloff>:/images/node_selector/sidebar/folder-users_default.png</normaloff>:/images/node_selector/sidebar/folder-users_default.png</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -477,7 +477,7 @@ QGroupBox::title
                <bool>false</bool>
               </property>
               <property name="default_icon" stdset="0">
-               <string notr="true">qrc:/images/node_selector/sidebar/incoming_share_ico_default.png</string>
+               <string notr="true">qrc:/images/node_selector/sidebar/folder-users_default.png</string>
               </property>
               <attribute name="buttonGroup">
                <string notr="true">buttonGroup</string>
@@ -511,7 +511,7 @@ QGroupBox::title
          <property name="bottomMargin">
           <number>4</number>
          </property>
-         <item>
+         <item alignment="Qt::AlignBottom">
           <widget class="QFrame" name="fSearchString">
            <property name="focusPolicy">
             <enum>Qt::StrongFocus</enum>
@@ -553,8 +553,8 @@ QGroupBox::title
                <string notr="true"/>
               </property>
               <property name="icon">
-               <iconset theme="search_result" resource="../../../Resources_linux.qrc">
-                <normaloff>:/images/transfer_manager/sidebar/search_result_default.png</normaloff>:/images/transfer_manager/sidebar/search_result_default.png</iconset>
+               <iconset resource="../../../Resources_win.qrc">
+                <normaloff>:/images/node_selector/sidebar/search_default.png</normaloff>:/images/node_selector/sidebar/search_default.png</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -563,7 +563,7 @@ QGroupBox::title
                <bool>false</bool>
               </property>
               <property name="default_icon" stdset="0">
-               <string notr="true">qrc:/images/transfer_manager/sidebar/search_result_default.png</string>
+               <string notr="true">qrc:/images/node_selector/sidebar/search_default.png</string>
               </property>
               <attribute name="buttonGroup">
                <string notr="true">buttonGroup</string>
@@ -575,15 +575,21 @@ QGroupBox::title
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
+              <property name="styleSheet">
+               <string notr="true">*
+{
+padding-top:1px;
+}</string>
+              </property>
               <property name="text">
                <string/>
               </property>
               <property name="icon">
-               <iconset theme="delete_search" resource="../../../Resources_linux.qrc">
-                <normaloff>:/images/transfer_manager/sidebar/delete_search_result_default.png</normaloff>:/images/transfer_manager/sidebar/delete_search_result_default.png</iconset>
+               <iconset resource="../../../Resources_win.qrc">
+                <normaloff>:/images/node_selector/sidebar/clear_search_default.png</normaloff>:/images/node_selector/sidebar/clear_search_default.png</iconset>
               </property>
               <property name="default_icon" stdset="0">
-               <string notr="true">qrc:/images/transfer_manager/sidebar/delete_search_result_default.png</string>
+               <string notr="true">qrc:/images/node_selector/sidebar/clear_search_default.png</string>
               </property>
              </widget>
             </item>
@@ -625,11 +631,8 @@ QGroupBox::title
   </layout>
  </widget>
  <resources>
-  <include location="../../../Resources_linux.qrc"/>
   <include location="../../../Resources_win.qrc"/>
-  <include location="../../../Resources_linux.qrc"/>
   <include location="../../../Resources_win.qrc"/>
-  <include location="../../../Resources_linux.qrc"/>
   <include location="../../../Resources_win.qrc"/>
  </resources>
  <connections/>

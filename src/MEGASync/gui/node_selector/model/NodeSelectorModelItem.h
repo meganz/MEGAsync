@@ -20,8 +20,8 @@ class NodeSelectorModelItem : public QObject
 public:
     static const int ICON_SIZE;
 
-    enum STATUS{
-        SYNC,
+    enum class Status{
+        SYNC = 0,
         SYNC_PARENT,
         SYNC_CHILD,
         BACKUP,
@@ -47,15 +47,14 @@ public:
     void setOwner(std::unique_ptr<mega::MegaUser> user);
     QPixmap getOwnerIcon();
     QIcon getStatusIcons();
-    int getStatus();
-    bool isSyncable();
+    Status getStatus();
+    virtual bool isSyncable();
+    virtual bool isVault();
     bool isCloudDrive();
     QPointer<NodeSelectorModelItem> addNode(std::shared_ptr<mega::MegaNode> node);
     QPointer<NodeSelectorModelItem> findChildNode(std::shared_ptr<mega::MegaNode> node);
-    bool isVault();
     void displayFiles(bool enable);
     void setChatFilesFolder();
-    void setAsVaultNode();
     int row();
     void updateNode(std::shared_ptr<mega::MegaNode> node);
 
@@ -66,15 +65,17 @@ signals:
     void infoUpdated(int role);
 
 protected:
+    void calculateSyncStatus();
+
     QString mOwnerEmail;
-    int mStatus;
+    Status mStatus;
     bool mChildrenSet;
     bool mRequestingChildren;
     long long mChildrenCounter;
     bool mShowFiles;
     bool mChildrenAreInit;
-    bool mIsVault;
 
+    mega::MegaApi* mMegaApi;
     std::shared_ptr<mega::MegaNode> mNode;
     QList<QPointer<NodeSelectorModelItem>> mChildItems;
     std::unique_ptr<mega::MegaUser> mOwner;
@@ -84,20 +85,63 @@ private slots:
     void onAvatarAttributeReady();
 
 private:
-    void calculateSyncStatus(const QStringList& folders);
-    mega::MegaApi* mMegaApi;
+    virtual NodeSelectorModelItem* createModelItem(std::unique_ptr<mega::MegaNode> node, bool showFiles, NodeSelectorModelItem *parentItem = 0) = 0;
     std::shared_ptr<const UserAttributes::FullName> mFullNameAttribute;
     std::shared_ptr<const UserAttributes::Avatar> mAvatarAttribute;
+};
+
+Q_DECLARE_METATYPE(NodeSelectorModelItem::Status)
+
+class NodeSelectorModelItemCloudDrive : public NodeSelectorModelItem
+{
+public:
+    explicit NodeSelectorModelItemCloudDrive(std::unique_ptr<mega::MegaNode> node, bool showFiles, NodeSelectorModelItem *parentItem = 0);
+    ~NodeSelectorModelItemCloudDrive();
+
+private:
+    NodeSelectorModelItem* createModelItem(std::unique_ptr<mega::MegaNode> node, bool showFiles, NodeSelectorModelItem *parentItem = 0) override;
+};
+
+class NodeSelectorModelItemIncomingShare : public NodeSelectorModelItem
+{
+public:
+    explicit NodeSelectorModelItemIncomingShare(std::unique_ptr<mega::MegaNode> node, bool showFiles, NodeSelectorModelItem *parentItem = 0);
+    ~NodeSelectorModelItemIncomingShare();
+
+private:
+    NodeSelectorModelItem* createModelItem(std::unique_ptr<mega::MegaNode> node, bool showFiles, NodeSelectorModelItem *parentItem = 0) override;
+};
+
+class NodeSelectorModelItemBackup : public NodeSelectorModelItem
+{
+public:
+    explicit NodeSelectorModelItemBackup(std::unique_ptr<mega::MegaNode> node, bool showFiles, NodeSelectorModelItem *parentItem = 0);
+    ~NodeSelectorModelItemBackup();
+    bool isSyncable() override;
+    bool isVault() override;
+
+private:
+    NodeSelectorModelItem* createModelItem(std::unique_ptr<mega::MegaNode> node, bool showFiles, NodeSelectorModelItem *parentItem = 0) override;
 };
 
 class NodeSelectorModelItemSearch : public NodeSelectorModelItem
 {
 public:
-    explicit NodeSelectorModelItemSearch(std::unique_ptr<mega::MegaNode> node);
-    ~NodeSelectorModelItemSearch();
+    enum class Type
+    {
+        BACKUP = 0,
+        INCOMING_SHARE,
+        CLOUD_DRIVE,
+    };
 
+    explicit NodeSelectorModelItemSearch(std::unique_ptr<mega::MegaNode> node, NodeSelectorModelItem *parentItem = 0);
+    ~NodeSelectorModelItemSearch();
+    Type getType(){return mType;}
     int getNumChildren() override;
 
+private:
+    NodeSelectorModelItem* createModelItem(std::unique_ptr<mega::MegaNode> node, bool showFiles, NodeSelectorModelItem *parentItem = 0) override;
+    Type mType;
 };
 
 #endif // MODELSELECTORMODELITEM_H

@@ -42,6 +42,11 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(SelectTypeSPtr mode, QWid
     mLoadingScene.setView(ui->tMegaFolders);
     mLoadingScene.setDelayTimeToShowInMs(100);
     connect(&mLoadingScene, &ViewLoadingSceneBase::sceneVisibilityChange, this, &NodeSelectorTreeViewWidget::onUiBlocked);
+
+    foreach(auto& button, ui->searchButtonsWidget->findChildren<QAbstractButton*>())
+    {
+        mButtonIconManager.addButton(button);
+    }
 }
 
 void NodeSelectorTreeViewWidget::changeEvent(QEvent *event)
@@ -58,9 +63,9 @@ void NodeSelectorTreeViewWidget::changeEvent(QEvent *event)
 
 void NodeSelectorTreeViewWidget::init()
 {
-    mProxyModel = std::unique_ptr<NodeSelectorProxyModel>(new NodeSelectorProxyModel());
-    mModel = getModel();
-
+    mProxyModel = createProxyModel();
+    mModel = createModel();
+    ui->emptyIcon->setIcon(getEmptyIcon());
     mSelectType->init(this);
 
     connect(mProxyModel.get(), &NodeSelectorProxyModel::expandReady, this, &NodeSelectorTreeViewWidget::onExpandReady);
@@ -325,6 +330,11 @@ void NodeSelectorTreeViewWidget::onItemDoubleClick(const QModelIndex &index)
 void NodeSelectorTreeViewWidget::checkNewFolderButtonVisibility()
 {
     mSelectType->newFolderButtonVisibility(this);
+}
+
+std::unique_ptr<NodeSelectorProxyModel> NodeSelectorTreeViewWidget::createProxyModel()
+{
+    return std::unique_ptr<NodeSelectorProxyModel>(new NodeSelectorProxyModel);
 }
 
 void NodeSelectorTreeViewWidget::setLoadingSceneVisible(bool blockUi)
@@ -623,6 +633,11 @@ void NodeSelectorTreeViewWidget::setRootIndex(const QModelIndex &proxy_idx)
     }
 }
 
+QIcon NodeSelectorTreeViewWidget::getEmptyIcon()
+{
+    return QIcon();
+}
+
 QModelIndex NodeSelectorTreeViewWidget::getParentIncomingShareByIndex(QModelIndex idx)
 {
     while(idx.isValid())
@@ -777,8 +792,8 @@ void SyncType::checkOkButton(NodeSelectorTreeViewWidget *wdg, const QModelIndexL
 
 bool SyncType::isAllowedToNavigateInside(NodeSelectorModelItem *item)
 {
-    return SelectType::isAllowedToNavigateInside(item) || !(item->getStatus() == NodeSelectorModelItem::SYNC
-        || item->getStatus() == NodeSelectorModelItem::SYNC_CHILD);
+    return SelectType::isAllowedToNavigateInside(item) || !(item->getStatus() == NodeSelectorModelItem::Status::SYNC
+        || item->getStatus() == NodeSelectorModelItem::Status::SYNC_CHILD);
 }
 
 void StreamType::init(NodeSelectorTreeViewWidget *wdg)

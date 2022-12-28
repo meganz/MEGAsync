@@ -288,8 +288,22 @@ color:#303233;
 QToolButton:checked
 {
   background-color: #04101E;
-  color:#FAFAFB
-}</string>
+  color:#FAFAFB;
+}
+
+QToolButton:hover
+{
+  background-color: rgba(0, 0, 0, 0.1);
+  color:#616366;
+}
+
+
+QToolButton:pressed
+{
+  background-color: rgba(0, 0, 0, 0.2);
+  color:#616366;
+}
+</string>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <property name="spacing">
@@ -300,6 +314,15 @@ QToolButton:checked
         </property>
         <item>
          <widget class="QToolButton" name="cloudDriveSearch">
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="tabletTracking">
+           <bool>false</bool>
+          </property>
+          <property name="autoFillBackground">
+           <bool>false</bool>
+          </property>
           <property name="styleSheet">
            <string notr="true"/>
           </property>
@@ -308,7 +331,13 @@ QToolButton:checked
           </property>
           <property name="icon">
            <iconset resource="../../../Resources_win.qrc">
-            <normaloff>:/images/node_selector/sidebar/cloud_ico_hover.png</normaloff>:/images/node_selector/sidebar/cloud_ico_hover.png</iconset>
+            <normaloff>:/images/node_selector/search_filter/small_cloud_default.png</normaloff>:/images/node_selector/search_filter/small_cloud_default.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>16</width>
+            <height>16</height>
+           </size>
           </property>
           <property name="checkable">
            <bool>true</bool>
@@ -319,6 +348,12 @@ QToolButton:checked
           <property name="toolButtonStyle">
            <enum>Qt::ToolButtonTextBesideIcon</enum>
           </property>
+          <property name="default_icon" stdset="0">
+           <string notr="true">qrc:/images/node_selector/search_filter/small_cloud_default.png</string>
+          </property>
+          <property name="not_change_text_color" stdset="0">
+           <bool>true</bool>
+          </property>
           <attribute name="buttonGroup">
            <string notr="true">searchFilterButtonGroup</string>
           </attribute>
@@ -326,18 +361,33 @@ QToolButton:checked
         </item>
         <item>
          <widget class="QToolButton" name="backupsSearch">
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
           <property name="text">
            <string>Backups</string>
           </property>
           <property name="icon">
            <iconset resource="../../../Resources_win.qrc">
-            <normaloff>:/images/node_selector/sidebar/backup_ico_default.png</normaloff>:/images/node_selector/sidebar/backup_ico_default.png</iconset>
+            <normaloff>:/images/node_selector/search_filter/small_database_default.png</normaloff>:/images/node_selector/search_filter/small_database_default.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>16</width>
+            <height>16</height>
+           </size>
           </property>
           <property name="checkable">
            <bool>true</bool>
           </property>
           <property name="toolButtonStyle">
            <enum>Qt::ToolButtonTextBesideIcon</enum>
+          </property>
+          <property name="default_icon" stdset="0">
+           <string notr="true">qrc:/images/node_selector/search_filter/small_database_default.png</string>
+          </property>
+          <property name="not_change_text_color" stdset="0">
+           <bool>true</bool>
           </property>
           <attribute name="buttonGroup">
            <string notr="true">searchFilterButtonGroup</string>
@@ -346,18 +396,33 @@ QToolButton:checked
         </item>
         <item>
          <widget class="QToolButton" name="incomingSharesSearch">
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
           <property name="text">
            <string>Incoming Shares</string>
           </property>
           <property name="icon">
            <iconset resource="../../../Resources_win.qrc">
-            <normaloff>:/images/node_selector/sidebar/incoming_share_ico_default.png</normaloff>:/images/node_selector/sidebar/incoming_share_ico_default.png</iconset>
+            <normaloff>:/images/node_selector/search_filter/small_folder_default.png</normaloff>:/images/node_selector/search_filter/small_folder_default.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>16</width>
+            <height>16</height>
+           </size>
           </property>
           <property name="checkable">
            <bool>true</bool>
           </property>
           <property name="toolButtonStyle">
            <enum>Qt::ToolButtonTextBesideIcon</enum>
+          </property>
+          <property name="default_icon" stdset="0">
+           <string>qrc:/images/node_selector/search_filter/small_folder_default.png</string>
+          </property>
+          <property name="not_change_text_color" stdset="0">
+           <bool>true</bool>
           </property>
           <attribute name="buttonGroup">
            <string notr="true">searchFilterButtonGroup</string>
@@ -578,7 +643,7 @@ padding-right:10px;
            </spacer>
           </item>
           <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
-           <widget class="QToolButton" name="toolButton">
+           <widget class="QToolButton" name="emptyIcon">
             <property name="text">
              <string>...</string>
             </property>
@@ -621,7 +686,7 @@ font-weight: 700;
               </widget>
              </item>
              <item alignment="Qt::AlignLeft">
-              <widget class="QLabel" name="searchNotFoundLabel">
+              <widget class="QLabel" name="searchNotFoundText">
                <property name="styleSheet">
                 <string notr="true">*{
 font-weight: 400;

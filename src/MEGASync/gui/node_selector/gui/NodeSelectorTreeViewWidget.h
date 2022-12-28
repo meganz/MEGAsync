@@ -1,6 +1,7 @@
 #ifndef NODESELECTORTREEVIEWWIDGET_H
 #define NODESELECTORTREEVIEWWIDGET_H
 
+#include "ButtonIconManager.h"
 #include "QTMegaRequestListener.h"
 #include <megaapi.h>
 #include "NodeSelectorLoadingDelegate.h"
@@ -109,15 +110,18 @@ private:
     QModelIndex getSelectedIndex();
     void checkBackForwardButtons();
     void setRootIndex(const QModelIndex& proxy_idx);
+    virtual QIcon getEmptyIcon();
     virtual void onRootIndexChanged(const QModelIndex& source_idx){Q_UNUSED(source_idx)};
     mega::MegaHandle getHandleByIndex(const QModelIndex& idx);
     QModelIndex getIndexFromHandle(const mega::MegaHandle &handle);
     void checkNewFolderButtonVisibility();
     virtual QString getRootText() = 0;
-    virtual std::unique_ptr<NodeSelectorModel> getModel() = 0;
+    virtual std::unique_ptr<NodeSelectorProxyModel> createProxyModel();
+    virtual std::unique_ptr<NodeSelectorModel> createModel() = 0;
     virtual bool newFolderBtnVisibleInRoot(){return true;}
     virtual bool isModelEmpty();
     void checkOkButton(const QModelIndexList& selected);
+    ButtonIconManager mButtonIconManager;
 
     bool first;
     bool mUiBlocked;

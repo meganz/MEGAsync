@@ -11,6 +11,7 @@ const char* ButtonIconManager::IGNORE_BUTTON = "ignore_button_manager";
 
 const char* ButtonIconManager::BUTTON_FULL_TEXT = "button_full_text";
 const char* ButtonIconManager::BUTTON_ELIDE_TEXT = "button_elide_text";
+const char* ButtonIconManager::NOT_CHANGE_TEXT_COLOR = "not_change_text_color";
 
 const QString QRC_PREFIX = QLatin1Literal("qrc");
 
@@ -177,8 +178,8 @@ void ButtonIconManager::setSelectedIcon(QAbstractButton *button)
     if(!iconInfo.isEmpty())
     {
         //The button is checked
-        auto newIcon = button->icon();
-        //QIcon newIcon;
+        //auto newIcon = button->icon();
+        QIcon newIcon;
         if(button->isChecked())
         {
             iconInfo.iconName.append(mSettings.selected_suffix);
@@ -214,7 +215,9 @@ void ButtonIconManager::elideButtonText(QAbstractButton* button, const QString& 
 
 void ButtonIconManager::changeButtonTextColor(QAbstractButton* button, double alphaValue)
 {
-    if(!button->text().isEmpty())
+    if(!button->text().isEmpty()
+       && ((button->property(NOT_CHANGE_TEXT_COLOR).isValid() && !button->property(NOT_CHANGE_TEXT_COLOR).toBool())
+            || !button->property(NOT_CHANGE_TEXT_COLOR).isValid()))
     {
         QColor textColor(button->palette().color(QPalette::ColorRole::ButtonText));
         textColor.setAlphaF(alphaValue);

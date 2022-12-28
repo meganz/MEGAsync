@@ -1,9 +1,9 @@
 ﻿#include "NodeSelectorProxyModel.h"
-#include "NodeSelectorModelItem.h"
 #include "megaapi.h"
 #include "NodeSelectorModel.h"
 #include "MegaApplication.h"
 #include "QThread"
+#include <QDebug>
 
 NodeSelectorProxyModel::NodeSelectorProxyModel(QObject* parent) :
     QSortFilterProxyModel(parent),
@@ -18,6 +18,11 @@ NodeSelectorProxyModel::NodeSelectorProxyModel(QObject* parent) :
 
     connect(&mFilterWatcher, &QFutureWatcher<void>::finished,
             this, &NodeSelectorProxyModel::onModelSortedFiltered);
+
+}
+
+NodeSelectorProxyModel::~NodeSelectorProxyModel()
+{
 
 }
 
@@ -325,4 +330,46 @@ void NodeSelectorProxyModel::onModelSortedFiltered()
     }
     emit getMegaModel()->blockUi(false);
     itemsToMap.clear();
+}
+
+NodeSelectorProxyModelSearch::NodeSelectorProxyModelSearch(QObject *parent)
+    : NodeSelectorProxyModel(parent), mMode(NodeSelectorModelItemSearch::Type::CLOUD_DRIVE)
+{
+
+}
+
+void NodeSelectorProxyModelSearch::setMode(NodeSelectorModelItemSearch::Type mode)
+{
+    mMode = mode;
+    invalidateFilter();
+}
+
+bool NodeSelectorProxyModelSearch::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
+{
+    QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
+
+    if(index.isValid())
+    {
+        if(NodeSelectorModelItemSearch* item = static_cast<NodeSelectorModelItemSearch*>(index.internalPointer()))
+        {
+            return mMode == item->getType();
+        }
+    }
+
+    return NodeSelectorProxyModel::filterAcceptsRow(sourceRow, sourceParent);
+}
+
+bool NodeSelectorProxyModelSearch::filterAcceptsColumn(int source_column, const QModelIndex &source_parent) const
+{
+    Q_UNUSED(source_parent)
+
+    if(source_column == NodeSelectorModel::USER)
+    {
+        if(mMode == NodeSelectorModelItemSearch::Type::INCOMING_SHARE)
+        {
+            return true;
+        }
+        return false;
+    }
+    return true;
 }

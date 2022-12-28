@@ -2,6 +2,7 @@
 #define NODESELECTORPROXYMODEL_H
 
 #include "megaapi.h"
+#include "NodeSelectorModelItem.h"
 
 #include <QSortFilterProxyModel>
 #include <QCollator>
@@ -29,6 +30,7 @@ public:
     };
 
     explicit NodeSelectorProxyModel(QObject* parent = nullptr);
+    ~NodeSelectorProxyModel();
 
     void showReadOnlyFolders(bool value);
     void showReadWriteFolders(bool value);
@@ -73,6 +75,27 @@ private:
 private slots:
     void invalidateModel(const QModelIndexList &parents, bool force = false);
     void onModelSortedFiltered();
+};
+
+class NodeSelectorProxyModelSearch : public NodeSelectorProxyModel
+{
+//    enum class SearchType
+//    {
+//        CLOUD_DRIVE = 0,
+//        INCOMING_SHARES,
+//        BACKUPS
+//    };
+
+public:
+    explicit NodeSelectorProxyModelSearch(QObject* parent = nullptr);
+    void setMode(NodeSelectorModelItemSearch::Type mode);
+
+protected:
+    bool filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const override;
+    bool filterAcceptsColumn(int source_column, const QModelIndex &source_parent) const override;
+
+private:
+    NodeSelectorModelItemSearch::Type mMode;
 };
 
 #endif // NODESELECTORPROXYMODEL_H

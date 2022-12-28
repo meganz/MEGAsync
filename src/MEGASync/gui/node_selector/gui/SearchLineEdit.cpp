@@ -2,6 +2,8 @@
 #include "ui_SearchLineEdit.h"
 
 #include "SearchLineEdit.h"
+#include <QEvent>
+#include <QKeyEvent>
 #include <QDebug>
 
 #include <functional>
@@ -18,8 +20,8 @@ SearchLineEdit::SearchLineEdit(QWidget *parent)
     mButtonManager.addButton(ui->tSearchCancel);
     connect(ui->tSearchCancel, &QToolButton::clicked, this, &SearchLineEdit::onClearClicked);
     connect(ui->leSearchField, &QLineEdit::textChanged, this, &SearchLineEdit::onTextChanged);
-    connect(ui->leSearchField, &QLineEdit::editingFinished, this, &SearchLineEdit::onEditingFinieshed);
     ui->tSearchCancel->setGraphicsEffect(new QGraphicsOpacityEffect());
+    ui->leSearchField->installEventFilter(this);
 }
 
 SearchLineEdit::~SearchLineEdit()
@@ -30,6 +32,23 @@ SearchLineEdit::~SearchLineEdit()
 void SearchLineEdit::setText(const QString &text)
 {
     ui->leSearchField->setText(text);
+}
+
+bool SearchLineEdit::eventFilter(QObject *obj, QEvent *evnt)
+{
+    if(obj == ui->leSearchField && evnt->type() == QEvent::KeyPress)
+    {
+        QKeyEvent* keyEvent = dynamic_cast<QKeyEvent*>(evnt);
+        if(keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return)
+        {
+            if(!ui->leSearchField->text().isEmpty() || mOldString != ui->leSearchField->text())
+            {
+                mOldString = ui->leSearchField->text();
+                emit search(ui->leSearchField->text());
+            }
+        }
+    }
+    return QFrame::eventFilter(obj, evnt);
 }
 
 void SearchLineEdit::onClearClicked()
@@ -62,16 +81,6 @@ void SearchLineEdit::animationFinished()
 {
    ui->tSearchCancel->setVisible(!ui->leSearchField->text().isEmpty());
    connect(ui->leSearchField, &QLineEdit::textChanged, this, &SearchLineEdit::onTextChanged);
-}
-
-void SearchLineEdit::onEditingFinieshed()
-{
-    if(ui->leSearchField->text().isEmpty() || mOldString == ui->leSearchField->text())
-    {
-        return;
-    }
-    mOldString = ui->leSearchField->text();
-    emit search(ui->leSearchField->text());
 }
 
 void SearchLineEdit::makeEffect(bool fadeIn)

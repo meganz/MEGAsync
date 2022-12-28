@@ -1,16 +1,16 @@
 #include "NodeSelectorTreeViewWidgetSpecializations.h"
 #include "ui_NodeSelectorTreeViewWidget.h"
-
-#include "MegaNodeNames.h"
+#include "../model/NodeSelectorProxyModel.h"
 #include "../model/NodeSelectorModel.h"
 #include "../model/NodeSelectorModelSpecialised.h"
+
+#include "MegaNodeNames.h"
 
 ///////////////////////////////////////////////////////////////////
 NodeSelectorTreeViewWidgetCloudDrive::NodeSelectorTreeViewWidgetCloudDrive(SelectTypeSPtr mode, QWidget *parent)
     : NodeSelectorTreeViewWidget(mode, parent)
 {
     setTitle(MegaNodeNames::getCloudDriveName());
-    ui->searchEmptyInfoWidget->setVisible(false);
 }
 
 QString NodeSelectorTreeViewWidgetCloudDrive::getRootText()
@@ -18,7 +18,7 @@ QString NodeSelectorTreeViewWidgetCloudDrive::getRootText()
     return MegaNodeNames::getCloudDriveName();
 }
 
-std::unique_ptr<NodeSelectorModel> NodeSelectorTreeViewWidgetCloudDrive::getModel()
+std::unique_ptr<NodeSelectorModel> NodeSelectorTreeViewWidgetCloudDrive::createModel()
 {
     return std::unique_ptr<NodeSelectorModelCloudDrive>(new NodeSelectorModelCloudDrive);
 }
@@ -27,6 +27,11 @@ bool NodeSelectorTreeViewWidgetCloudDrive::isModelEmpty()
 {
     auto rootIndex = mModel->index(0,0);
     return mModel->rowCount(rootIndex) == 0;
+}
+
+QIcon NodeSelectorTreeViewWidgetCloudDrive::getEmptyIcon()
+{
+    return QIcon(QString::fromUtf8("://images/node_selector/view/cloud.png"));
 }
 
 void NodeSelectorTreeViewWidgetCloudDrive::onRootIndexChanged(const QModelIndex &source_idx)
@@ -47,7 +52,7 @@ QString NodeSelectorTreeViewWidgetIncomingShares::getRootText()
     return MegaNodeNames::getIncomingSharesName();
 }
 
-std::unique_ptr<NodeSelectorModel> NodeSelectorTreeViewWidgetIncomingShares::getModel()
+std::unique_ptr<NodeSelectorModel> NodeSelectorTreeViewWidgetIncomingShares::createModel()
 {
     return std::unique_ptr<NodeSelectorModelIncomingShares>(new NodeSelectorModelIncomingShares);
 }
@@ -71,6 +76,11 @@ void NodeSelectorTreeViewWidgetIncomingShares::onRootIndexChanged(const QModelIn
     }
 }
 
+QIcon NodeSelectorTreeViewWidgetIncomingShares::getEmptyIcon()
+{
+    return QIcon(QString::fromUtf8("://images/node_selector/view/folder_share.png"));
+}
+
 /////////////////////////////////////////////////////////////////
 NodeSelectorTreeViewWidgetBackups::NodeSelectorTreeViewWidgetBackups(SelectTypeSPtr mode, QWidget *parent)
     : NodeSelectorTreeViewWidget(mode, parent)
@@ -83,9 +93,14 @@ QString NodeSelectorTreeViewWidgetBackups::getRootText()
     return MegaNodeNames::getBackupsName();
 }
 
-std::unique_ptr<NodeSelectorModel> NodeSelectorTreeViewWidgetBackups::getModel()
+std::unique_ptr<NodeSelectorModel> NodeSelectorTreeViewWidgetBackups::createModel()
 {
     return std::unique_ptr<NodeSelectorModelBackups>(new NodeSelectorModelBackups);
+}
+
+QIcon NodeSelectorTreeViewWidgetBackups::getEmptyIcon()
+{
+    return QIcon(QString::fromUtf8("://images/node_selector/view/database.png"));
 }
 
 void NodeSelectorTreeViewWidgetBackups::onRootIndexChanged(const QModelIndex &source_idx)
@@ -100,6 +115,9 @@ NodeSelectorTreeViewWidgetSearch::NodeSelectorTreeViewWidgetSearch(SelectTypeSPt
 
 {
     ui->searchButtonsWidget->setVisible(true);
+    connect(ui->cloudDriveSearch, &QToolButton::clicked, this, &NodeSelectorTreeViewWidgetSearch::onCloudDriveSearchClicked);
+    connect(ui->incomingSharesSearch, &QToolButton::clicked, this, &NodeSelectorTreeViewWidgetSearch::onIncomingSharesSearchClicked);
+    connect(ui->backupsSearch, &QToolButton::clicked, this, &NodeSelectorTreeViewWidgetSearch::onBackupsSearchClicked);
 }
 
 void NodeSelectorTreeViewWidgetSearch::search(const QString &text)
@@ -107,8 +125,32 @@ void NodeSelectorTreeViewWidgetSearch::search(const QString &text)
     auto search_model = static_cast<NodeSelectorModelSearch*>(mModel.get());
     search_model->searchByText(text);
     ui->searchingText->setText(text);
+    ui->searchNotFoundText->setText(text);
     ui->searchingText->setVisible(true);
     ui->cloudDriveSearch->setChecked(true);
+}
+
+std::unique_ptr<NodeSelectorProxyModel> NodeSelectorTreeViewWidgetSearch::createProxyModel()
+{
+    return std::unique_ptr<NodeSelectorProxyModelSearch>(new NodeSelectorProxyModelSearch);
+}
+
+void NodeSelectorTreeViewWidgetSearch::onBackupsSearchClicked()
+{
+    auto proxy_model = static_cast<NodeSelectorProxyModelSearch*>(mProxyModel.get());
+    proxy_model->setMode(NodeSelectorModelItemSearch::Type::BACKUP);
+}
+
+void NodeSelectorTreeViewWidgetSearch::onIncomingSharesSearchClicked()
+{
+    auto proxy_model = static_cast<NodeSelectorProxyModelSearch*>(mProxyModel.get());
+    proxy_model->setMode(NodeSelectorModelItemSearch::Type::INCOMING_SHARE);
+}
+
+void NodeSelectorTreeViewWidgetSearch::onCloudDriveSearchClicked()
+{
+    auto proxy_model = static_cast<NodeSelectorProxyModelSearch*>(mProxyModel.get());
+    proxy_model->setMode(NodeSelectorModelItemSearch::Type::CLOUD_DRIVE);
 }
 
 QString NodeSelectorTreeViewWidgetSearch::getRootText()
@@ -116,7 +158,12 @@ QString NodeSelectorTreeViewWidgetSearch::getRootText()
     return QString::fromUtf8("Searching:");
 }
 
-std::unique_ptr<NodeSelectorModel> NodeSelectorTreeViewWidgetSearch::getModel()
+std::unique_ptr<NodeSelectorModel> NodeSelectorTreeViewWidgetSearch::createModel()
 {
     return std::unique_ptr<NodeSelectorModelSearch>(new NodeSelectorModelSearch);
+}
+
+QIcon NodeSelectorTreeViewWidgetSearch::getEmptyIcon()
+{
+    return QIcon(QString::fromUtf8("://images/node_selector/view/search.png"));
 }

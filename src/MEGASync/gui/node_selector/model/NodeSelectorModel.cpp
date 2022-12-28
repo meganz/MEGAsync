@@ -67,7 +67,11 @@ void NodeRequester::search(const QString &text)
     qDeleteAll(mRootItems);
     mRootItems.clear();
     mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
-    auto nodeList = megaApi->search(text.toUtf8(), mCancelToken.get());
+
+    ///block one big search;
+    QElapsedTimer timer;
+    timer.start();
+    auto nodeList = std::unique_ptr<mega::MegaNodeList>(megaApi->search(text.toUtf8(), mCancelToken.get()));
     QList<NodeSelectorModelItem*> items;
 
     for(int i = 0; i < nodeList->size(); i++)
@@ -76,7 +80,10 @@ void NodeRequester::search(const QString &text)
         {
             break;
         }
-
+        if(megaApi->isInRubbish(nodeList->get(i)))
+        {
+            continue;
+        }
         auto node = std::unique_ptr<mega::MegaNode>(nodeList->get(i)->copy());
         if(node->isFolder() || (node->isFile() && mShowFiles))
         {
@@ -102,7 +109,7 @@ void NodeRequester::createCloudDriveRootItem()
 
     if(!isAborted())
     {
-        auto item = new NodeSelectorModelItem(std::move(root), mShowFiles);
+        auto item = new NodeSelectorModelItemCloudDrive(std::move(root), mShowFiles);
         mRootItems.append(item);
         emit megaCloudDriveRootItemCreated(item);
     }
@@ -120,7 +127,7 @@ void NodeRequester::createIncomingSharesRootItems(std::shared_ptr<mega::MegaNode
 
         auto node = std::unique_ptr<mega::MegaNode>(nodeList->get(i)->copy());
         auto user = std::unique_ptr<mega::MegaUser>(MegaSyncApp->getMegaApi()->getUserFromInShare(node.get()));
-        NodeSelectorModelItem* item = new NodeSelectorModelItem(std::move(node), mShowFiles);
+        NodeSelectorModelItem* item = new NodeSelectorModelItemIncomingShare(std::move(node), mShowFiles);
 
         items.append(item);
 
@@ -153,8 +160,7 @@ void NodeRequester::createBackupRootItems(mega::MegaHandle backupsHandle)
         {
             if(!isAborted())
             {
-                NodeSelectorModelItem* item = new NodeSelectorModelItem(std::move(backupsNode), mShowFiles);
-                item->setAsVaultNode();
+                NodeSelectorModelItem* item = new NodeSelectorModelItemBackup(std::move(backupsNode), mShowFiles);
                 mRootItems.append(item);
                 emit megaBackupRootItemsCreated(item);
             }
@@ -328,12 +334,12 @@ QVariant NodeSelectorModel::data(const QModelIndex &index, int role) const
                     }
                     else if(mSyncSetupMode)
                     {
-                        if((item->getStatus() == NodeSelectorModelItem::SYNC)
-                                || (item->getStatus() == NodeSelectorModelItem::SYNC_CHILD))
+                        if((item->getStatus() == NodeSelectorModelItem::Status::SYNC)
+                                || (item->getStatus() == NodeSelectorModelItem::Status::SYNC_CHILD))
                         {
                             return tr("Folder already synced");
                         }
-                        else if(item->getStatus() == NodeSelectorModelItem::SYNC_PARENT)
+                        else if(item->getStatus() == NodeSelectorModelItem::Status::SYNC_PARENT)
                         {
                             return tr("Folder contents already synced");
                         }
