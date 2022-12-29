@@ -69,6 +69,8 @@ void NodeSelectorTreeViewWidget::init()
     mSelectType->init(this);
 
     connect(mProxyModel.get(), &NodeSelectorProxyModel::expandReady, this, &NodeSelectorTreeViewWidget::onExpandReady);
+    connect(mModel.get(), &QAbstractItemModel::rowsInserted, this, &NodeSelectorTreeViewWidget::onRowsInserted);
+    connect(mModel.get(), &NodeSelectorModel::blockUi, this, &NodeSelectorTreeViewWidget::setLoadingSceneVisible);
 
     ui->tMegaFolders->setSortingEnabled(true);
     mProxyModel->setSourceModel(mModel.get());
@@ -131,14 +133,17 @@ void NodeSelectorTreeViewWidget::mousePressEvent(QMouseEvent *event)
 
 void NodeSelectorTreeViewWidget::showEvent(QShowEvent* )
 {
-    ui->tMegaFolders->setColumnWidth(NodeSelectorModel::COLUMN::NODE, qRound(ui->tMegaFolders->width() * 0.57));
+    if(!mManuallyResizedColumn)
+    {
+        ui->tMegaFolders->setColumnWidth(NodeSelectorModel::COLUMN::NODE, qRound(ui->stackedWidget->width() * 0.57));
+    }
 }
 
 void NodeSelectorTreeViewWidget::resizeEvent(QResizeEvent *)
 {
     if(!mManuallyResizedColumn)
     {
-        ui->tMegaFolders->setColumnWidth(NodeSelectorModel::COLUMN::NODE, qRound(ui->tMegaFolders->width() * 0.57));
+        ui->tMegaFolders->setColumnWidth(NodeSelectorModel::COLUMN::NODE, qRound(ui->stackedWidget->width() * 0.57));
     }
 }
 
@@ -192,8 +197,6 @@ void NodeSelectorTreeViewWidget::onExpandReady()
         connect(ui->bForward, &QPushButton::clicked, this, &NodeSelectorTreeViewWidget::onGoForwardClicked);
         connect(ui->bBack, &QPushButton::clicked, this, &NodeSelectorTreeViewWidget::onGoBackClicked);
         connect(ui->tMegaFolders->header(), &QHeaderView::sectionResized, this, &NodeSelectorTreeViewWidget::onSectionResized);
-        connect(mModel.get(), &QAbstractItemModel::rowsInserted, this, &NodeSelectorTreeViewWidget::onRowsInserted);
-        connect(mModel.get(), &NodeSelectorModel::blockUi, this, &NodeSelectorTreeViewWidget::setLoadingSceneVisible);
 
         setRootIndex(QModelIndex());
         checkNewFolderButtonVisibility();

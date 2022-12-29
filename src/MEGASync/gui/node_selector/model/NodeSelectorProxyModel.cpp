@@ -314,6 +314,8 @@ void NodeSelectorProxyModel::invalidateModel(const QModelIndexList& parents, boo
 
 void NodeSelectorProxyModel::onModelSortedFiltered()
 {
+    mForceInvalidate = false;
+
     emit layoutChanged();
 
     if(mExpandMapped)
@@ -340,8 +342,10 @@ NodeSelectorProxyModelSearch::NodeSelectorProxyModelSearch(QObject *parent)
 
 void NodeSelectorProxyModelSearch::setMode(NodeSelectorModelItemSearch::Type mode)
 {
+    emit getMegaModel()->blockUi(true);
     mMode = mode;
     invalidateFilter();
+    emit getMegaModel()->blockUi(false);
 }
 
 bool NodeSelectorProxyModelSearch::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const

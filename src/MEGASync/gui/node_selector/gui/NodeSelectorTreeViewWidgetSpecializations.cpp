@@ -167,3 +167,12 @@ QIcon NodeSelectorTreeViewWidgetSearch::getEmptyIcon()
 {
     return QIcon(QString::fromUtf8("://images/node_selector/view/search.png"));
 }
+
+bool NodeSelectorTreeViewWidgetSearch::isModelEmpty()
+{
+    if(qobject_cast<NodeSelectorModelSearch*>(mModel.get())->isSearching())
+    {
+        return false;
+    }
+    return mProxyModel->rowCount() == 0;
+}

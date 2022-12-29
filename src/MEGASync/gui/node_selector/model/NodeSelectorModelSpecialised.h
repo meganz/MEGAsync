@@ -101,12 +101,16 @@ public:
     int rootItemsCount() const override;
     bool canFetchMore(const QModelIndex &parent) const override;
     QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const override;
+    bool isSearching(){ return mSearching; }
 
 signals:
     void searchNodes(const QString& text);
 
 private slots:
     void onRootItemsCreated(QList<NodeSelectorModelItem*> items);
+
+private:
+    bool mSearching;
 };
 
 #endif // NODESELECTORMODELSPECIALISED_H

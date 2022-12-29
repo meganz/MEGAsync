@@ -66,17 +66,15 @@ void NodeRequester::search(const QString &text)
     }
     qDeleteAll(mRootItems);
     mRootItems.clear();
+    mSearchCanceled = false;
     mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
 
-    ///block one big search;
-    QElapsedTimer timer;
-    timer.start();
     auto nodeList = std::unique_ptr<mega::MegaNodeList>(megaApi->search(text.toUtf8(), mCancelToken.get()));
     QList<NodeSelectorModelItem*> items;
 
     for(int i = 0; i < nodeList->size(); i++)
     {
-        if(isAborted())
+        if(isAborted() || mSearchCanceled)
         {
             break;
         }
@@ -92,15 +90,16 @@ void NodeRequester::search(const QString &text)
         }
     }
 
-    if(isAborted())
+    if(isAborted() || mSearchCanceled)
     {
         qDeleteAll(items);
     }
     else
     {
         mRootItems.append(items);
+        emit searchItemsCreated(items);
     }
-    emit searchItemsCreated(items);
+
 }
 
 void NodeRequester::createCloudDriveRootItem()
@@ -218,6 +217,16 @@ NodeSelectorModelItem *NodeRequester::getRootItem(int index) const
 {
     QMutexLocker lock(&mMutex);
     return mRootItems.at(index);
+}
+
+void NodeRequester::restartSearch()
+{
+    if(mCancelToken)
+    {
+        mCancelToken->cancel();
+        mSearchCanceled = true;
+        mCancelToken.reset(mega::MegaCancelToken::createInstance());
+    }
 }
 
 void NodeRequester::cancelCurrentRequest()
@@ -813,6 +822,7 @@ void NodeSelectorModel::rootItemsLoaded()
 
 void NodeSelectorModel::addRootItems()
 {
+    emit blockUi(true);
     beginResetModel();
     createRootNodes();
 }

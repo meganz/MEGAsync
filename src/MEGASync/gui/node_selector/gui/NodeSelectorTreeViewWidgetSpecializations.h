@@ -77,6 +77,7 @@ private:
     QString getRootText() override;
     std::unique_ptr<NodeSelectorModel> createModel() override;
     QIcon getEmptyIcon() override;
+    bool isModelEmpty() override;
 };
 
 #endif // NODESELECTORTREEVIEWWIDGETSPECIALIZATIONS_H

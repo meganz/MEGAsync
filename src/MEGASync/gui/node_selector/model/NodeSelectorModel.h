@@ -51,6 +51,7 @@ public:
     NodeSelectorModelItem* getRootItem(int index) const;
 
     void cancelCurrentRequest();
+    void restartSearch();
 
 public slots:
     void requestNodeAndCreateChildren(NodeSelectorModelItem* item, const QModelIndex& parentIndex, bool showFiles);
@@ -78,6 +79,7 @@ private:
 
      std::atomic<bool> mShowFiles{true};
      std::atomic<bool> mAborted{false};
+     std::atomic<bool> mSearchCanceled{false};
      NodeSelectorModel* mModel;
      QList<NodeSelectorModelItem*> mRootItems;
      mutable QMutex mMutex;

@@ -21,7 +21,7 @@ NodeSelectorModelCloudDrive::NodeSelectorModelCloudDrive(QObject *parent)
 }
 
 void NodeSelectorModelCloudDrive::createRootNodes()
-{
+{    
     emit requestCloudDriveRootCreation();
 }
 
@@ -219,7 +219,8 @@ void NodeSelectorModelBackups::onRootItemCreated(NodeSelectorModelItem *item)
 }
 
 NodeSelectorModelSearch::NodeSelectorModelSearch(QObject *parent)
-    : NodeSelectorModel(parent)
+    : NodeSelectorModel(parent),
+      mSearching(false)
 {
 
 }
@@ -242,6 +243,11 @@ void NodeSelectorModelSearch::createRootNodes()
 
 void NodeSelectorModelSearch::searchByText(const QString &text)
 {
+    if(mSearching)
+    {
+        mNodeRequesterWorker->restartSearch();
+    }
+    mSearching = true;
     addRootItems();
     emit searchNodes(text);
 }
@@ -282,6 +288,7 @@ QVariant NodeSelectorModelSearch::data(const QModelIndex &index, int role) const
 
 void NodeSelectorModelSearch::onRootItemsCreated(QList<NodeSelectorModelItem *> items)
 {
+    mSearching = false;
     Q_UNUSED(items)
     rootItemsLoaded();
     emit levelsAdded(mIndexesActionInfo.indexesToBeExpanded, true);
