@@ -1,25 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>SearchLineEdit</class>
- <widget class="QWidget" name="SearchLineEdit">
+ <widget class="QFrame" name="SearchLineEdit">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>50</height>
+    <height>34</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
   <property name="styleSheet">
    <string notr="true">QToolButton{
-    border: none;
+border:none;
+margin-top:2px;
 }</string>
   </property>
+  <property name="frameShape">
+   <enum>QFrame::Panel</enum>
+  </property>
+  <property name="frameShadow">
+   <enum>QFrame::Plain</enum>
+  </property>
+  <property name="lineWidth">
+   <number>1</number>
+  </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
-   <item>
+   <property name="leftMargin">
+    <number>3</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>3</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
     <widget class="QToolButton" name="tSearchIcon">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -27,19 +52,25 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
      <property name="icon">
-      <iconset theme="search_ico" resource="../../../Resources_win.qrc">
+      <iconset theme="search_ico" resource="../../../Resources_linux.qrc">
        <normaloff>:/images/transfer_manager/sidebar/search_ico_default.png</normaloff>:/images/transfer_manager/sidebar/search_ico_default.png</iconset>
      </property>
      <property name="checkable">
-      <bool>true</bool>
+      <bool>false</bool>
+     </property>
+     <property name="checked">
+      <bool>false</bool>
      </property>
     </widget>
    </item>
-   <item>
+   <item alignment="Qt::AlignVCenter">
     <widget class="QLineEdit" name="leSearchField">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -55,14 +86,17 @@
      </property>
     </widget>
    </item>
-   <item>
+   <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
     <widget class="QToolButton" name="tSearchCancel">
      <property name="cursor">
       <cursorShape>PointingHandCursor</cursorShape>
      </property>
      <property name="icon">
-      <iconset theme="delete_search_ico" resource="../../../Resources_win.qrc">
+      <iconset theme="delete_search_ico" resource="../../../Resources_linux.qrc">
        <normaloff>:/images/transfer_manager/sidebar/delete_search_ico_default.png</normaloff>:/images/transfer_manager/sidebar/delete_search_ico_default.png</iconset>
+     </property>
+     <property name="popupMode">
+      <enum>QToolButton::DelayedPopup</enum>
      </property>
      <property name="default_icon" stdset="0">
       <string notr="true">qrc:/images/transfer_manager/sidebar/delete_search_ico_default.png</string>
@@ -72,9 +106,9 @@
   </layout>
  </widget>
  <resources>
-  <include location="../../../Resources_win.qrc"/>
-  <include location="../../../Resources_win.qrc"/>
-  <include location="../../../Resources_win.qrc"/>
+  <include location="../../../Resources_linux.qrc"/>
+  <include location="../../../Resources_linux.qrc"/>
+  <include location="../../../Resources_linux.qrc"/>
  </resources>
  <connections/>
 </ui>

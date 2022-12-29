@@ -245,7 +245,7 @@ macx {
                 $$PWD/node_selector/gui/macx/NodeSelectorTreeViewWidget.ui \
                 $$PWD/node_selector/gui/macx/NodeSelectorLoadingDelegate.ui \
                 $$PWD/node_selector/gui/macx/NodeSelector.ui \
-                $$PWD/node_selector/gui/win/SearchLineEdit.ui
+                $$PWD/node_selector/gui/macx/SearchLineEdit.ui
 
 
     #Asset catalog need to load SF symbol images of toolbar items for custom NSToolbar
@@ -317,7 +317,7 @@ unix:!macx {
                 $$PWD/node_selector/gui/linux/NodeSelectorTreeViewWidget.ui \
                 $$PWD/node_selector/gui/linux/NodeSelectorLoadingDelegate.ui \
                 $$PWD/node_selector/gui/linux/NodeSelector.ui \
-                $$PWD/node_selector/gui/win/SearchLineEdit.ui
+                $$PWD/node_selector/gui/linux/SearchLineEdit.ui
 
 
     HEADERS += $$PWD/PermissionsDialog.h \
