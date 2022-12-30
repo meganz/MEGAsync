@@ -52,7 +52,10 @@ border:none;
       </sizepolicy>
      </property>
      <property name="styleSheet">
-      <string notr="true"/>
+      <string notr="true">*{
+padding-top:2px;
+padding-left:3px;
+}</string>
      </property>
      <property name="icon">
       <iconset theme="search_ico" resource="../../../Resources_linux.qrc">
@@ -89,6 +92,12 @@ border:none;
     <widget class="QToolButton" name="tSearchCancel">
      <property name="cursor">
       <cursorShape>PointingHandCursor</cursorShape>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">*{
+padding-top:2px;
+padding-right:3px;
+}</string>
      </property>
      <property name="icon">
       <iconset theme="delete_search_ico" resource="../../../Resources_linux.qrc">
