@@ -56,7 +56,7 @@ void SearchLineEdit::onClearClicked()
     ui->leSearchField->clear();
     if(ui->tSearchCancel->isVisible())
     {
-        makeEffect(true);
+        makeEffect(false);
     }
     else
     {

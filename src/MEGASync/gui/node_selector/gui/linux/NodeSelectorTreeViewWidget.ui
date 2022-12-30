@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>540</width>
-    <height>433</height>
+    <height>445</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,6 +20,9 @@ border:none;
 }</string>
   </property>
   <layout class="QVBoxLayout" name="NodeSelectorWidgetLayout">
+   <property name="spacing">
+    <number>10</number>
+   </property>
    <property name="leftMargin">
     <number>30</number>
    </property>
@@ -30,7 +33,7 @@ border:none;
     <number>30</number>
    </property>
    <property name="bottomMargin">
-    <number>30</number>
+    <number>20</number>
    </property>
    <item>
     <layout class="QGridLayout" name="gridLayout">
@@ -44,9 +47,18 @@ border:none;
       <widget class="SearchLineEdit" name="leSearch">
        <property name="minimumSize">
         <size>
-         <width>150</width>
-         <height>0</height>
+         <width>175</width>
+         <height>32</height>
         </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QFrame{
+border-radius:6px;
+border-width:1px 1px 1px 1px;
+border-style:solid;
+border-color:rgba(0,0,0,0.1);
+min-height:30px;
+}</string>
        </property>
        <property name="frameShape">
         <enum>QFrame::StyledPanel</enum>
@@ -732,21 +744,24 @@ font-weight: 400;
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>26</height>
+       <height>16777215</height>
       </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <property name="leftMargin">
        <number>0</number>
       </property>
       <property name="topMargin">
-       <number>0</number>
+       <number>12</number>
       </property>
       <property name="rightMargin">
        <number>0</number>
       </property>
       <property name="bottomMargin">
-       <number>0</number>
+       <number>8</number>
       </property>
       <item>
        <widget class="QPushButton" name="bNewFolder">
