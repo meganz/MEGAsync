@@ -58,19 +58,27 @@ void SyncTableView::initTable()
 {
     setItemDelegateForColumn(SyncItemModel::Column::MENU, new MenuItemDelegate(this));
     setItemDelegateForColumn(SyncItemModel::Column::LNAME, new IconMiddleDelegate(this));
-    setItemDelegateForColumn(SyncItemModel::Column::RNAME, new ElideMiddleDelegate(this));
+    setItemDelegateForColumn(SyncItemModel::Column::Column_STATE, new ElideMiddleDelegate(this));
+    setItemDelegateForColumn(SyncItemModel::Column::Column_FILES, new ElideMiddleDelegate(this));
+    setItemDelegateForColumn(SyncItemModel::Column::Column_FOLDERS, new ElideMiddleDelegate(this));
+    setItemDelegateForColumn(SyncItemModel::Column::Column_DOWNLOADS, new ElideMiddleDelegate(this));
+    setItemDelegateForColumn(SyncItemModel::Column::Column_UPLOADS, new ElideMiddleDelegate(this));
 
     horizontalHeader()->resizeSection(SyncItemModel::Column::ENABLED, FIXED_COLUMN_WIDTH);
     horizontalHeader()->resizeSection(SyncItemModel::Column::MENU, FIXED_COLUMN_WIDTH);
-    horizontalHeader()->resizeSection(SyncItemModel::Column::MENU, FIXED_COLUMN_WIDTH);
+    horizontalHeader()->resizeSection(SyncItemModel::Column::Column_STATE, 3 * FIXED_COLUMN_WIDTH);
+    horizontalHeader()->resizeSection(SyncItemModel::Column::Column_FILES, 2 * FIXED_COLUMN_WIDTH);
+    horizontalHeader()->resizeSection(SyncItemModel::Column::Column_FOLDERS, 2 * FIXED_COLUMN_WIDTH);
+    horizontalHeader()->resizeSection(SyncItemModel::Column::Column_DOWNLOADS, 2 * FIXED_COLUMN_WIDTH);
+    horizontalHeader()->resizeSection(SyncItemModel::Column::Column_UPLOADS, 2 * FIXED_COLUMN_WIDTH);
 
     horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
     horizontalHeader()->setSectionResizeMode(SyncItemModel::Column::ENABLED, QHeaderView::Fixed);
     horizontalHeader()->setSectionResizeMode(SyncItemModel::Column::MENU, QHeaderView::Fixed);
-    horizontalHeader()->resizeSection(SyncItemModel::Column::LNAME, (width() - FIXED_COLUMN_WIDTH * 2) / 2);
+    horizontalHeader()->resizeSection(SyncItemModel::Column::LNAME, (width() - FIXED_COLUMN_WIDTH * 11));
 
-    horizontalHeader()->setSectionResizeMode(SyncItemModel::Column::LNAME, QHeaderView::Interactive);
-    horizontalHeader()->setSectionResizeMode(SyncItemModel::Column::RNAME, QHeaderView::Stretch);
+    horizontalHeader()->setSectionResizeMode(SyncItemModel::Column::LNAME, QHeaderView::Stretch); //QHeaderView::Interactive);
+    //horizontalHeader()->setSectionResizeMode(SyncItemModel::Column::RNAME, QHeaderView::Stretch);
 
     setFont(QFont().defaultFamily());
 

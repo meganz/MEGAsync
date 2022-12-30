@@ -17,9 +17,13 @@ public:
     {
         ENABLED = 0,
         LNAME,
+        Column_STATE,
+        Column_FILES,
+        Column_FOLDERS,
+        Column_UPLOADS,
         MENU
     } Column;
-    const unsigned int kColumns = 3;
+    const unsigned int kColumns = 7;
 
     explicit BackupItemModel(QObject *parent = nullptr);
 

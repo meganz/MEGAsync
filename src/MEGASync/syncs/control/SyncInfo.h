@@ -38,6 +38,7 @@ class SyncInfo : public QObject
 
 signals:
     void syncStateChanged(std::shared_ptr<SyncSettings> syncSettings);
+    void syncStatsUpdated(std::shared_ptr<::mega::MegaSyncStats>);
     void syncRemoved(std::shared_ptr<SyncSettings> syncSettings);
     void syncDisabledListUpdated();
 
@@ -50,6 +51,11 @@ private:
     bool mIsFirstBackupDone;
 
     void saveUnattendedDisabledSyncs();
+
+public:
+    // Data for display in Settings dialog Syncs/Backups.
+    // Model data that needs to be kept even before the window is shown
+    std::map<::mega::MegaHandle, std::shared_ptr<::mega::MegaSyncStats>> mSyncStatsMap;
 
 protected:
     QMutex syncMutex;
@@ -72,6 +78,8 @@ public:
      * @return
      */
     std::shared_ptr<SyncSettings> updateSyncSettings(mega::MegaSync *sync);
+
+    void updateSyncStats(mega::MegaSyncStats* stats);
 
     // transition sync to active: will trigger platform dependent behaviour
     void activateSync(std::shared_ptr<SyncSettings> cs);

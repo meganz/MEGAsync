@@ -33,6 +33,29 @@ QVariant BackupItemModel::headerData(int section, Qt::Orientation orientation, i
             if(role == Qt::ToolTipRole)
                 return tr("Sort by name");
             break;
+        case Column_STATE:
+            if(role == Qt::DisplayRole)
+                return tr("State");
+            if(role == Qt::ToolTipRole)
+                return tr("Sort by backup state");
+            break;
+        case Column_FILES:
+            if(role == Qt::DisplayRole)
+                return tr("Files");
+            if(role == Qt::ToolTipRole)
+                return tr("Sort by file count");
+            break;
+        case Column_FOLDERS:
+            if(role == Qt::DisplayRole)
+                return tr("Folders");
+            if(role == Qt::ToolTipRole)
+                return tr("Sort by folder count");
+            break;
+        case Column_UPLOADS:
+            if(role == Qt::DisplayRole)
+                return tr("Uploading");
+            if(role == Qt::ToolTipRole)
+                return tr("Sort by Uploading");
         }
     }
     return QVariant();
@@ -107,6 +130,74 @@ QVariant BackupItemModel::data(const QModelIndex &index, int role) const
             toolTip += SyncTooltipCreator::createForRemote(
                         mMyBackupsHandleRequest->getNodeLocalizedPath(sync->getMegaFolder()));
             return toolTip;
+        }
+        break;
+    case Column_STATE:
+        if(role == Qt::DisplayRole)
+        {
+            std::string s;
+            switch (sync->getRunState())
+            {
+            case ::mega::MegaSync::RUNSTATE_PENDING: s = "Pending"; break;
+            case ::mega::MegaSync::RUNSTATE_LOADING: s = "Loading"; break;
+            case ::mega::MegaSync::RUNSTATE_PAUSED: s = "Paused"; break;
+            case ::mega::MegaSync::RUNSTATE_SUSPENDED: s = "Suspended"; break;
+            case ::mega::MegaSync::RUNSTATE_DISABLED: s = "Disabled"; break;
+            case ::mega::MegaSync::RUNSTATE_RUNNING:
+                {
+                    auto it = mSyncInfo->mSyncStatsMap.find(sync->backupId());
+                    if (it != mSyncInfo->mSyncStatsMap.end())
+                    {
+                        ::mega::MegaSyncStats& stats = *it->second;
+                        if (stats.isScanning())
+                        {
+                            s = "Scanning";
+                        }
+                        else if (stats.isSyncing())
+                        {
+                            s = "Syncing";
+                        }
+                        else
+                        {
+                            s = "Monitoring";
+                        }
+                    }
+                }
+            }
+            return QString::fromStdString(s);
+        }
+        break;
+    case Column_FILES:
+        if(role == Qt::DisplayRole)
+        {
+            auto it = mSyncInfo->mSyncStatsMap.find(sync->backupId());
+            if (it != mSyncInfo->mSyncStatsMap.end())
+            {
+                ::mega::MegaSyncStats& stats = *it->second;
+                return QString::fromStdString(std::to_string(stats.getFileCount()));
+            }
+        }
+        break;
+    case Column_FOLDERS:
+        if(role == Qt::DisplayRole)
+        {
+            auto it = mSyncInfo->mSyncStatsMap.find(sync->backupId());
+            if (it != mSyncInfo->mSyncStatsMap.end())
+            {
+                ::mega::MegaSyncStats& stats = *it->second;
+                return QString::fromStdString(std::to_string(stats.getFolderCount()));
+            }
+        }
+        break;
+    case Column_UPLOADS:
+        if(role == Qt::DisplayRole)
+        {
+            auto it = mSyncInfo->mSyncStatsMap.find(sync->backupId());
+            if (it != mSyncInfo->mSyncStatsMap.end())
+            {
+                ::mega::MegaSyncStats& stats = *it->second;
+                return QString::fromStdString(std::to_string(stats.getUploadCount()));
+            }
         }
         break;
     case Column::MENU:

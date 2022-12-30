@@ -120,6 +120,7 @@ public:
     void onReloadNeeded(mega::MegaApi* api) override;
     void onGlobalSyncStateChanged(mega::MegaApi *api) override;
     void onSyncStateChanged(mega::MegaApi *api,  mega::MegaSync *sync) override;
+    void onSyncStatsUpdated(mega::MegaApi *api,  mega::MegaSyncStats *stats) override;
     void onSyncFileStateChanged(mega::MegaApi *api, mega::MegaSync *sync, std::string *localPath, int newState) override;
 
     void onSyncAdded(mega::MegaApi *api, mega::MegaSync *sync) override;

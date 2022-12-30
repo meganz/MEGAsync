@@ -17,10 +17,14 @@ public:
     {
         ENABLED = 0,
         LNAME,
-        RNAME,
+        Column_STATE,
+        Column_FILES,
+        Column_FOLDERS,
+        Column_DOWNLOADS,
+        Column_UPLOADS,
         MENU
     } Column;
-    const unsigned int kColumns = 4;
+    const unsigned int kColumns = 8;
 
     static const int ICON_SIZE;
     static const int WARNING_ICON_SIZE;
@@ -56,10 +60,12 @@ signals:
 private slots:
     //void resetModel();
     void insertSync(std::shared_ptr<SyncSettings> sync);
+    void updateSyncStats(std::shared_ptr<::mega::MegaSyncStats> stats);
     void removeSync(std::shared_ptr<SyncSettings> sync);
 
-private:
+protected:
     SyncInfo* mSyncInfo;
+private:
     QList<std::shared_ptr<SyncSettings>> mList;
     mega::MegaSync::SyncType mSyncType;
 

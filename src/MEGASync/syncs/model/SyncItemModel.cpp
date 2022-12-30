@@ -2,6 +2,9 @@
 #include "syncs/gui/SyncTooltipCreator.h"
 #include "syncs/control/SyncInfo.h"
 
+#include "control/Utilities.h"
+#include "MegaApplication.h"
+
 #include <QCoreApplication>
 #include <QIcon>
 #include <QFileInfo>
@@ -16,6 +19,7 @@ SyncItemModel::SyncItemModel(QObject *parent)
     mSyncInfo (SyncInfo::instance())
 {
     connect(mSyncInfo, &SyncInfo::syncStateChanged, this, &SyncItemModel::insertSync);
+    connect(mSyncInfo, &SyncInfo::syncStatsUpdated, this, &SyncItemModel::updateSyncStats);
     connect(mSyncInfo, &SyncInfo::syncRemoved, this, &SyncItemModel::removeSync);
 }
 
@@ -31,15 +35,39 @@ QVariant SyncItemModel::headerData(int section, Qt::Orientation orientation, int
             break;
         case Column::LNAME:
             if(role == Qt::DisplayRole)
-                return tr("Local Folder");
+                return tr("Sync Name");
             if(role == Qt::ToolTipRole)
-                return tr("Sort by folder name");
+                return tr("Sort by sync name");
             break;
-        case Column::RNAME:
+        case Column_STATE:
             if(role == Qt::DisplayRole)
-                return tr("MEGA Folder");
+                return tr("State");
             if(role == Qt::ToolTipRole)
-                return tr("Sort by MEGA folder name");
+                return tr("Sort by sync state");
+            break;
+        case Column_FILES:
+            if(role == Qt::DisplayRole)
+                return tr("Files");
+            if(role == Qt::ToolTipRole)
+                return tr("Sort by file count");
+            break;
+        case Column_FOLDERS:
+            if(role == Qt::DisplayRole)
+                return tr("Folders");
+            if(role == Qt::ToolTipRole)
+                return tr("Sort by folder count");
+            break;
+        case Column_DOWNLOADS:
+            if(role == Qt::DisplayRole)
+                return tr("Downloading");
+            if(role == Qt::ToolTipRole)
+                return tr("Sort by Downloading");
+            break;
+        case Column_UPLOADS:
+            if(role == Qt::DisplayRole)
+                return tr("Uploading");
+            if(role == Qt::ToolTipRole)
+                return tr("Sort by Uploading");
             break;
         }
     }
@@ -136,17 +164,89 @@ QVariant SyncItemModel::data(const QModelIndex &index, int role) const
                 toolTip += QChar::LineSeparator;
             }
             toolTip += SyncTooltipCreator::createForLocal(sync->getLocalFolder());
+            toolTip += QChar::LineSeparator;
+            toolTip += SyncTooltipCreator::createForRemote(sync->getMegaFolder());
             return toolTip;
         }
         break;
-    case Column::RNAME:
+    case Column_STATE:
         if(role == Qt::DisplayRole)
         {
-            QString megaFolder (sync->getMegaFolder());
-            return megaFolder.size() == 1 ? megaFolder : QFileInfo(megaFolder).fileName();
+            std::string s;
+            switch (sync->getRunState())
+            {
+            case ::mega::MegaSync::RUNSTATE_PENDING: s = "Pending"; break;
+            case ::mega::MegaSync::RUNSTATE_LOADING: s = "Loading"; break;
+            case ::mega::MegaSync::RUNSTATE_PAUSED: s = "Paused"; break;
+            case ::mega::MegaSync::RUNSTATE_SUSPENDED: s = "Suspended"; break;
+            case ::mega::MegaSync::RUNSTATE_DISABLED: s = "Disabled"; break;
+            case ::mega::MegaSync::RUNSTATE_RUNNING:
+                {
+                    auto it = mSyncInfo->mSyncStatsMap.find(sync->backupId());
+                    if (it != mSyncInfo->mSyncStatsMap.end())
+                    {
+                        ::mega::MegaSyncStats& stats = *it->second;
+                        if (stats.isScanning())
+                        {
+                            s = "Scanning";
+                        }
+                        else if (stats.isSyncing())
+                        {
+                            s = "Syncing";
+                        }
+                        else
+                        {
+                            s = "Monitoring";
+                        }
+                    }
+                }
+            }
+            return QString::fromStdString(s);
         }
-        else if(role == Qt::ToolTipRole)
-            return SyncTooltipCreator::createForRemote(sync->getMegaFolder());
+        break;
+    case Column_FILES:
+        if(role == Qt::DisplayRole)
+        {
+            auto it = mSyncInfo->mSyncStatsMap.find(sync->backupId());
+            if (it != mSyncInfo->mSyncStatsMap.end())
+            {
+                ::mega::MegaSyncStats& stats = *it->second;
+                return QString::fromStdString(std::to_string(stats.getFileCount()));
+            }
+        }
+        break;
+    case Column_FOLDERS:
+        if(role == Qt::DisplayRole)
+        {
+            auto it = mSyncInfo->mSyncStatsMap.find(sync->backupId());
+            if (it != mSyncInfo->mSyncStatsMap.end())
+            {
+                ::mega::MegaSyncStats& stats = *it->second;
+                return QString::fromStdString(std::to_string(stats.getFolderCount()));
+            }
+        }
+        break;
+    case Column_DOWNLOADS:
+        if(role == Qt::DisplayRole)
+        {
+            auto it = mSyncInfo->mSyncStatsMap.find(sync->backupId());
+            if (it != mSyncInfo->mSyncStatsMap.end())
+            {
+                ::mega::MegaSyncStats& stats = *it->second;
+                return QString::fromStdString(std::to_string(stats.getDownloadCount()));
+            }
+        }
+        break;
+    case Column_UPLOADS:
+        if(role == Qt::DisplayRole)
+        {
+            auto it = mSyncInfo->mSyncStatsMap.find(sync->backupId());
+            if (it != mSyncInfo->mSyncStatsMap.end())
+            {
+                ::mega::MegaSyncStats& stats = *it->second;
+                return QString::fromStdString(std::to_string(stats.getUploadCount()));
+            }
+        }
         break;
     case Column::MENU:
 
@@ -219,6 +319,19 @@ void SyncItemModel::insertSync(std::shared_ptr<SyncSettings> sync)
         }
     }
     emit syncUpdateFinished(sync);
+}
+
+void SyncItemModel::updateSyncStats(std::shared_ptr<::mega::MegaSyncStats> stats)
+{
+    for(auto it = mList.cbegin(); it!=mList.cend();++it)
+    {
+        if((*it)->backupId() == stats->getBackupId())
+        {
+            int pos = it - mList.cbegin();
+            sendDataChanged(pos);
+            break;
+        }
+    }
 }
 
 void SyncItemModel::removeSync(std::shared_ptr<SyncSettings> sync)

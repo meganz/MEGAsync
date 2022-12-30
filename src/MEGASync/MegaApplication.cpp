@@ -8337,6 +8337,19 @@ void MegaApplication::onSyncStateChanged(MegaApi *api, MegaSync *sync)
     onGlobalSyncStateChanged(api);
 }
 
+void MegaApplication::onSyncStatsUpdated(MegaApi *api, MegaSyncStats* stats)
+{
+    if (appfinished)
+    {
+        return;
+    }
+
+    model->updateSyncStats(stats); //Note, we are not updating the remote sync path
+    // we asume that cannot change for existing syncs.
+
+    onGlobalSyncStateChanged(api);
+}
+
 void MegaApplication::onSyncFileStateChanged(MegaApi *, MegaSync *, string *localPath, int newState)
 {
     if (appfinished)
