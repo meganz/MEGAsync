@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>34</height>
+    <height>33</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,7 +19,6 @@
   <property name="styleSheet">
    <string notr="true">QToolButton{
 border:none;
-margin-top:2px;
 }</string>
   </property>
   <property name="frameShape">
@@ -53,7 +52,10 @@ margin-top:2px;
       </sizepolicy>
      </property>
      <property name="styleSheet">
-      <string notr="true"/>
+      <string notr="true">*{
+padding-top:2px;
+padding-left:3px;
+}</string>
      </property>
      <property name="icon">
       <iconset theme="search_ico" resource="../../../Resources_win.qrc">
@@ -90,6 +92,12 @@ margin-top:2px;
     <widget class="QToolButton" name="tSearchCancel">
      <property name="cursor">
       <cursorShape>PointingHandCursor</cursorShape>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">*{
+padding-top:2px;
+padding-right:3px;
+}</string>
      </property>
      <property name="icon">
       <iconset theme="delete_search_ico" resource="../../../Resources_win.qrc">

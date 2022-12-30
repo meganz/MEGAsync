@@ -45,8 +45,17 @@ border:none;
        <property name="minimumSize">
         <size>
          <width>150</width>
-         <height>0</height>
+         <height>27</height>
         </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QFrame{
+border-radius:6px;
+border-width:1px 1px 1px 1px;
+border-style:solid;
+border-color:rgba(0,0,0,0.1);
+min-height:25px;
+}</string>
        </property>
        <property name="frameShape">
         <enum>QFrame::StyledPanel</enum>
@@ -791,12 +800,12 @@ font-weight: 400;
   <customwidget>
    <class>NodeSelectorTreeView</class>
    <extends>QTreeView</extends>
-   <header>NodeSelectorTreeView.h</header>
+   <header>gui/node_selector/gui/NodeSelectorTreeView.h</header>
   </customwidget>
   <customwidget>
    <class>SearchLineEdit</class>
    <extends>QFrame</extends>
-   <header>SearchLineEdit.h</header>
+   <header>gui/node_selector/gui/SearchLineEdit.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
