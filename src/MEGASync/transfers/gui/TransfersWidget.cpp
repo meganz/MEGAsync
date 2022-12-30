@@ -420,17 +420,14 @@ void TransfersWidget::setScanningWidgetVisible(bool state)
 
 void TransfersWidget::onUiBlocked()
 {
-    if(!mProxyModel->isEmpty())
+    ui->tvTransfers->blockSignals(true);
+    ui->tvTransfers->header()->blockSignals(true);
+
+    mLoadingScene.changeLoadingSceneStatus(true);
+
+    if(!mScanningIsActive)
     {
-        ui->tvTransfers->blockSignals(true);
-        ui->tvTransfers->header()->blockSignals(true);
-
-        mLoadingScene.changeLoadingSceneStatus(true);
-
-        if(!mScanningIsActive)
-        {
-            emit disableTransferManager(true);
-        }
+        emit disableTransferManager(true);
     }
 }
 
