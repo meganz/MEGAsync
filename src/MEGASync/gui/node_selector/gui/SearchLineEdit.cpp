@@ -22,6 +22,11 @@ SearchLineEdit::SearchLineEdit(QWidget *parent)
     connect(ui->leSearchField, &QLineEdit::textChanged, this, &SearchLineEdit::onTextChanged);
     ui->tSearchCancel->setGraphicsEffect(new QGraphicsOpacityEffect());
     ui->leSearchField->installEventFilter(this);
+
+#ifdef Q_OS_MACOS
+    ui->leSearchField->setAttribute(Qt::WA_MacShowFocusRect, 0);
+#endif
+
 }
 
 SearchLineEdit::~SearchLineEdit()

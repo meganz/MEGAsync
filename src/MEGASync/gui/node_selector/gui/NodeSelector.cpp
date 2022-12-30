@@ -30,15 +30,10 @@ NodeSelector::NodeSelector(QWidget *parent) :
 
     ui->setupUi(this);
 
-#ifndef Q_OS_MAC
     connect(ui->bShowIncomingShares, &QPushButton::clicked, this, &NodeSelector::onbShowIncomingSharesClicked);
     connect(ui->bShowCloudDrive, &QPushButton::clicked, this, &NodeSelector::onbShowCloudDriveClicked);
     connect(ui->bShowBackups, &QPushButton::clicked, this, &NodeSelector::onbShowBackupsFolderClicked);
     connect(ui->bSearch, &QPushButton::clicked, this, &NodeSelector::onbShowSearchClicked);
-
-#else
-    connect(ui->tabBar, &QTabBar::currentChanged, this, &NodeSelector::onOptionSelected);
-#endif
 
     foreach(auto& button, ui->wLeftPane->findChildren<QAbstractButton*>())
     {
@@ -78,20 +73,9 @@ void NodeSelector::setAllFramesItsOnProperty()
 
 void NodeSelector::updateNodeSelectorTabs()
 {
-#ifndef Q_OS_MAC
     ui->bShowCloudDrive->setText(MegaNodeNames::getCloudDriveName());
     ui->bShowIncomingShares->setText(MegaNodeNames::getIncomingSharesName());
     ui->bShowBackups->setText(MegaNodeNames::getBackupsName());
-#else
-    for(int index = ui->tabBar->count() - 1; index >= 0; --index)
-    {
-        ui->tabBar->removeTab(index);
-    }
-
-    ui->tabBar->addTab(MegaNodeNames::getCloudDriveName());
-    ui->tabBar->addTab(MegaNodeNames::getIncomingSharesName());
-    ui->tabBar->addTab(MegaNodeNames::getBackupsName());
-#endif
 }
 
 void NodeSelector::onSearch(const QString &text)
@@ -184,9 +168,6 @@ void NodeSelector::on_tClearSearchResult_clicked()
 
 void NodeSelector::onOptionSelected(int index)
 {
-#ifdef Q_OS_MAC
-    onTabSelected(index);
-#else
     switch (index)
     {
         case NodeSelector::CLOUD_DRIVE:
@@ -201,30 +182,7 @@ void NodeSelector::onOptionSelected(int index)
         default:
             break;
     }
-#endif
-
 }
-
-#ifdef Q_OS_MAC
-void NodeSelector::onTabSelected(int index)
-{
-    auto tabText = ui->tabBar->tabText(index);
-    if(tabText == MegaNodeNames::getCloudDriveName())
-    {
-        onbShowCloudDriveClicked();
-    }
-    else if(tabText == MegaNodeNames::getIncomingSharesName())
-    {
-        onbShowIncomingSharesClicked();
-    }
-    else if(tabText == MegaNodeNames::getBackupsName())
-    {
-        onbShowBackupsFolderClicked();
-    }
-
-    ui->tabBar->setCurrentIndex(index);
-}
-#endif
 
 void NodeSelector::onbShowCloudDriveClicked()
 {
@@ -334,29 +292,17 @@ void NodeSelector::hideSelector(TabItem item)
     {
         case CLOUD_DRIVE:
         {
-#ifndef Q_OS_MAC
             ui->bShowCloudDrive->hide();
-#else
-            hideTabSelector(MegaNodeNames::getCloudDriveName());
-#endif
             break;
         }
         case SHARES:
         {
-#ifndef Q_OS_MAC
             ui->bShowIncomingShares->hide();
-#else
-            hideTabSelector(MegaNodeNames::getIncomingSharesName());
-#endif
             break;
         }
         case VAULT:
         {
-#ifndef Q_OS_MAC
             ui->bShowBackups->hide();
-#else
-            hideTabSelector(MegaNodeNames::getBackupsName());
-#endif
             break;
         }
     }
@@ -398,20 +344,6 @@ void NodeSelector::makeConnections(SelectTypeSPtr selectType)
         }
     }
 }
-
-#ifdef Q_OS_MAC
-void NodeSelector::hideTabSelector(const QString& tabText)
-{
-    for(int index = 0; index < ui->tabBar->count(); ++index)
-    {
-        if(ui->tabBar->tabText(index) == tabText)
-        {
-            ui->tabBar->removeTab(index);
-            break;
-        }
-    }
-}
-#endif
 
 void NodeSelector::setSelectedNodeHandle(std::shared_ptr<MegaNode> node)
 {

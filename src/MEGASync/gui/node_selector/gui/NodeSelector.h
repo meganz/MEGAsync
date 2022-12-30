@@ -78,19 +78,12 @@ private slots:
     void onSearch(const QString& text);
     void on_tClearSearchResult_clicked();
 
-#ifdef Q_OS_MAC
-    void onTabSelected(int index);
-#endif
-
 private:
     void processCloseEvent(NodeSelectorProxyModel *proxy, QCloseEvent* event);
     QModelIndex getParentIncomingShareByIndex(QModelIndex idx);
     void setToggledStyle(TabItem item);
     void setAllFramesItsOnProperty();
     virtual bool isSelectionCorrect() = 0;
-#ifdef Q_OS_MAC
-    void hideTabSelector(const QString& tabText);
-#endif
     void shortCutConnects(int ignoreThis);
     ButtonIconManager mButtonIconManager;
     QGraphicsDropShadowEffect* mShadowTab;
