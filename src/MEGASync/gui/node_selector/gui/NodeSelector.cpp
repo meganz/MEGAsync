@@ -49,7 +49,7 @@ NodeSelector::NodeSelector(QWidget *parent) :
     mShadowTab->setEnabled(true);
 
     mTabFramesToggleGroup[SEARCH] = ui->fSearchString;
-    mTabFramesToggleGroup[VAULT] = ui->fBackups;
+    mTabFramesToggleGroup[BACKUPS] = ui->fBackups;
     mTabFramesToggleGroup[SHARES] = ui->fIncomingShares;
     mTabFramesToggleGroup[CLOUD_DRIVE] = ui->fCloudDrive;
     ui->wSearch->hide();
@@ -177,7 +177,7 @@ void NodeSelector::onOptionSelected(int index)
         case NodeSelector::SHARES:
             ui->bShowIncomingShares->click();
             break;
-        case NodeSelector::VAULT:
+        case NodeSelector::BACKUPS:
             ui->bShowBackups->click();
             break;
         default:
@@ -199,8 +199,8 @@ void NodeSelector::onbShowIncomingSharesClicked()
 
 void NodeSelector::onbShowBackupsFolderClicked()
 {
-    ui->stackedWidget->setCurrentIndex(VAULT);
-    setToggledStyle(VAULT);
+    ui->stackedWidget->setCurrentIndex(BACKUPS);
+    setToggledStyle(BACKUPS);
 }
 
 void NodeSelector::onbShowSearchClicked()
@@ -213,8 +213,8 @@ void NodeSelector::onViewReady(bool isEmpty)
 {
     if(sender() == mBackupsWidget && isEmpty)
     {
-        hideSelector(VAULT);
-        shortCutConnects(VAULT);
+        hideSelector(BACKUPS);
+        shortCutConnects(BACKUPS);
     }
     else if(sender() == mIncomingSharesWidget && isEmpty)
     {
@@ -227,7 +227,7 @@ void NodeSelector::shortCutConnects(int ignoreThis)
 {
     // Provide quick access shortcuts for the two panes via Ctrl+1,2
     // Ctrl is auto-magically translated to CMD key by Qt on macOS
-    for (int i = 0; i <= VAULT; ++i)
+    for (int i = 0; i <= BACKUPS; ++i)
     {
         if(i != ignoreThis)
         {
@@ -307,7 +307,7 @@ void NodeSelector::hideSelector(TabItem item)
             ui->bShowIncomingShares->hide();
             break;
         }
-        case VAULT:
+        case BACKUPS:
         {
             ui->bShowBackups->hide();
             break;
@@ -339,6 +339,7 @@ void NodeSelector::makeConnections(SelectTypeSPtr selectType)
 {
     mSearchWidget = new NodeSelectorTreeViewWidgetSearch(selectType);
     mSearchWidget->setObjectName(QString::fromUtf8("Search"));
+    connect(mSearchWidget, &NodeSelectorTreeViewWidgetSearch::nodeDoubleClicked, this, &NodeSelector::setSelectedNodeHandle);
     ui->stackedWidget->addWidget(mSearchWidget);
     for(int page = 0; page < ui->stackedWidget->count(); ++page)
     {
@@ -363,7 +364,16 @@ void NodeSelector::setSelectedNodeHandle(std::shared_ptr<MegaNode> node)
 
     if(node)
     {
-        TabItem option = mMegaApi->isInCloud(node.get()) ? CLOUD_DRIVE : SHARES;
+        TabItem option = SHARES;
+        if(mMegaApi->isInCloud(node.get()))
+        {
+            option = CLOUD_DRIVE;
+        }
+        else if(mMegaApi->isInVault(node.get()))
+        {
+            option = BACKUPS;
+        }
+
         onOptionSelected(option);
 
         auto tree_view_widget = static_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->currentWidget());
@@ -373,7 +383,7 @@ void NodeSelector::setSelectedNodeHandle(std::shared_ptr<MegaNode> node)
 
 UploadNodeSelector::UploadNodeSelector(QWidget *parent) : NodeSelector(parent)
 {
-    hideSelector(NodeSelector::TabItem::VAULT);
+    hideSelector(NodeSelector::TabItem::BACKUPS);
     SelectTypeSPtr selectType = SelectTypeSPtr(new UploadType);
     mCloudDriveWidget = new NodeSelectorTreeViewWidgetCloudDrive(selectType);
     mCloudDriveWidget->setObjectName(QString::fromUtf8("CloudDrive"));
@@ -452,7 +462,7 @@ bool DownloadNodeSelector::isSelectionCorrect()
 
 SyncNodeSelector::SyncNodeSelector(QWidget *parent) : NodeSelector(parent)
 {
-    hideSelector(NodeSelector::TabItem::VAULT);
+    hideSelector(NodeSelector::TabItem::BACKUPS);
     SelectTypeSPtr selectType = SelectTypeSPtr(new SyncType);
     mCloudDriveWidget = new NodeSelectorTreeViewWidgetCloudDrive(selectType);
     mCloudDriveWidget->setObjectName(QString::fromUtf8("CloudDrive"));

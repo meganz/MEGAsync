@@ -69,13 +69,16 @@ public:
     void stopSearch();
     std::unique_ptr<NodeSelectorProxyModel> createProxyModel() override;
 
+signals:
+    void nodeDoubleClicked(std::shared_ptr<mega::MegaNode> node);
+
 private slots:
     void onBackupsSearchClicked();
     void onIncomingSharesSearchClicked();
     void onCloudDriveSearchClicked();
+    void onItemDoubleClick(const QModelIndex &index) override;
 
 private:
-    bool isAllowedToEnterInIndex(const QModelIndex &idx) override;
     QString getRootText() override;
     std::unique_ptr<NodeSelectorModel> createModel() override;
     QIcon getEmptyIcon() override;

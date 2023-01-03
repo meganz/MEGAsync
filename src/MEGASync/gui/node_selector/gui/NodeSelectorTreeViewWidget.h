@@ -78,7 +78,7 @@ private slots:
     void onDeleteClicked();
     void onRenameClicked();
     void onGenMEGALinkClicked();
-    void onItemDoubleClick(const QModelIndex &index);
+    virtual void onItemDoubleClick(const QModelIndex &index);
     void onGoForwardClicked();
     void onGoBackClicked();
     void onSectionResized();

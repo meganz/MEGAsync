@@ -162,10 +162,11 @@ void NodeSelectorTreeViewWidgetSearch::onCloudDriveSearchClicked()
     proxy_model->setMode(NodeSelectorModelItemSearch::Type::CLOUD_DRIVE);
 }
 
-bool NodeSelectorTreeViewWidgetSearch::isAllowedToEnterInIndex(const QModelIndex &idx)
+void NodeSelectorTreeViewWidgetSearch::onItemDoubleClick(const QModelIndex &index)
 {
-    Q_UNUSED(idx)
-    return false;
+    auto sourceIndex = mProxyModel->mapToSource(index);
+    NodeSelectorModelItem *item = static_cast<NodeSelectorModelItem*>(sourceIndex.internalPointer());
+    emit nodeDoubleClicked(item->getNode());
 }
 
 QString NodeSelectorTreeViewWidgetSearch::getRootText()

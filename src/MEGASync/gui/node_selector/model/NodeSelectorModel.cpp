@@ -32,7 +32,7 @@ void NodeRequester::requestNodeAndCreateChildren(NodeSelectorModelItem* item, co
     {
         auto node = item->getNode();
         item->setProperty(INDEX_PROPERTY, parentIndex);
-
+        qDebug()<<item->getNode()->getName();
         if(!item->requestingChildren() && !item->areChildrenInitialized())
         {
             item->setRequestingChildren(true);
@@ -761,7 +761,6 @@ void NodeSelectorModel::loadTreeFromNode(const std::shared_ptr<mega::MegaNode> n
     {
         emit blockUi(false);
         mNodesToLoad.clear();
-        clearIndexesNodeInfo();
     }
 }
 
@@ -774,7 +773,6 @@ bool NodeSelectorModel::fetchMoreRecursively(const QModelIndex& parentIndex)
         if(node)
         {
             auto indexToCheck = getIndexFromNode(node, parentIndex);
-
             if(canFetchMore(indexToCheck))
             {
                 fetchMore(indexToCheck);
@@ -783,7 +781,7 @@ bool NodeSelectorModel::fetchMoreRecursively(const QModelIndex& parentIndex)
             else
             {
                 mIndexesActionInfo.indexesToBeExpanded.append(indexToCheck);
-                continueWithNextItemToLoad(indexToCheck);
+                result = continueWithNextItemToLoad(indexToCheck);
             }
         }
     }
@@ -850,7 +848,7 @@ void NodeSelectorModel::fetchItemChildren(const QModelIndex& parent)
     emit blockUi(true);
 
     NodeSelectorModelItem* item = static_cast<NodeSelectorModelItem*>(parent.internalPointer());
-
+    qDebug()<<"Fetching item children:"<<item->getNode()->getName();
     if(!item->areChildrenInitialized() && !item->requestingChildren())
     {
         int itemNumChildren = item->getNumChildren();
@@ -879,15 +877,18 @@ void NodeSelectorModel::onChildNodesReady(NodeSelectorModelItem* parent)
     continueWithNextItemToLoad(index);
 }
 
-void NodeSelectorModel::continueWithNextItemToLoad(const QModelIndex& parentIndex)
+bool NodeSelectorModel::continueWithNextItemToLoad(const QModelIndex& parentIndex)
 {
+    bool result = false;
+
     if(!mNodesToLoad.isEmpty())
     {
         //The last one has been already processed
         mNodesToLoad.removeLast();
         if(!mNodesToLoad.isEmpty())
         {
-            if(!fetchMoreRecursively(parentIndex) && !mNodesToLoad.isEmpty())
+            result = fetchMoreRecursively(parentIndex);
+            if(!result && !mNodesToLoad.isEmpty())
             {
                 //The last node is empty
                 mNodesToLoad.removeLast();
@@ -899,6 +900,7 @@ void NodeSelectorModel::continueWithNextItemToLoad(const QModelIndex& parentInde
     {
         loadLevelFinished();
     }
+    return result;
 }
 
 QModelIndex NodeSelectorModel::findItemByNodeHandle(const mega::MegaHandle& handle, const QModelIndex &parent)

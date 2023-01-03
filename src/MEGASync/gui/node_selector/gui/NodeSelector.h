@@ -33,7 +33,7 @@ public:
     enum TabItem{
         CLOUD_DRIVE = 0,
         SHARES,
-        VAULT,
+        BACKUPS,
         SEARCH
     };
     Q_ENUM(TabItem)

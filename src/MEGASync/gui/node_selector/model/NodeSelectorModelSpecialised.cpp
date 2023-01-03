@@ -300,6 +300,5 @@ void NodeSelectorModelSearch::onRootItemsCreated(QList<NodeSelectorModelItem *> 
     mSearching = false;
     Q_UNUSED(items)
     rootItemsLoaded();
-    emit searchFinished();
     emit levelsAdded(mIndexesActionInfo.indexesToBeExpanded, true);
 }

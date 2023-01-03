@@ -162,7 +162,7 @@ protected:
     void fetchItemChildren(const QModelIndex& parent);
     void addRootItems();
     virtual void loadLevelFinished();
-    void continueWithNextItemToLoad(const QModelIndex &parentIndex);
+    bool continueWithNextItemToLoad(const QModelIndex &parentIndex);
 
     int mRequiredRights;
     bool mDisplayFiles;
