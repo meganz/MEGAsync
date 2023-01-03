@@ -27,6 +27,7 @@ class ButtonIconManager : public QObject
 
 public:
     static const char*   DISABLE_UNCHECK_ON_CLICK;
+    static const char*   CHANGE_LATER;
 
     struct Settings
     {

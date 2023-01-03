@@ -45,6 +45,7 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(SelectTypeSPtr mode, QWid
 
     foreach(auto& button, ui->searchButtonsWidget->findChildren<QAbstractButton*>())
     {
+        button->setProperty(ButtonIconManager::CHANGE_LATER, true);
         mButtonIconManager.addButton(button);
     }
 }
@@ -344,7 +345,6 @@ void NodeSelectorTreeViewWidget::setLoadingSceneVisible(bool blockUi)
 {
     ui->tMegaFolders->blockSignals(blockUi);
     ui->tMegaFolders->header()->blockSignals(blockUi);
-
     mLoadingScene.changeLoadingSceneStatus(blockUi);
 
     if(isModelEmpty())
@@ -375,6 +375,7 @@ void NodeSelectorTreeViewWidget::onUiBlocked(bool state)
 
         ui->bNewFolder->setDisabled(state);
         ui->bCancel->setDisabled(state);
+        ui->searchButtonsWidget->setDisabled(state);
 
         if(!state)
         {

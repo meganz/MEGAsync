@@ -114,7 +114,11 @@ NodeSelectorTreeViewWidgetSearch::NodeSelectorTreeViewWidgetSearch(SelectTypeSPt
     : NodeSelectorTreeViewWidget(mode, parent)
 
 {
+    ui->cloudDriveSearch->setChecked(true);
     ui->searchButtonsWidget->setVisible(true);
+    ui->lFolderName->setText(tr("Searching:"));
+    ui->bBack->hide();
+    ui->bForward->hide();
     connect(ui->cloudDriveSearch, &QToolButton::clicked, this, &NodeSelectorTreeViewWidgetSearch::onCloudDriveSearchClicked);
     connect(ui->incomingSharesSearch, &QToolButton::clicked, this, &NodeSelectorTreeViewWidgetSearch::onIncomingSharesSearchClicked);
     connect(ui->backupsSearch, &QToolButton::clicked, this, &NodeSelectorTreeViewWidgetSearch::onBackupsSearchClicked);
@@ -127,7 +131,12 @@ void NodeSelectorTreeViewWidgetSearch::search(const QString &text)
     ui->searchingText->setText(text);
     ui->searchNotFoundText->setText(text);
     ui->searchingText->setVisible(true);
-    ui->cloudDriveSearch->setChecked(true);
+}
+
+void NodeSelectorTreeViewWidgetSearch::stopSearch()
+{
+    auto search_model = static_cast<NodeSelectorModelSearch*>(mModel.get());
+    search_model->stopSearch();
 }
 
 std::unique_ptr<NodeSelectorProxyModel> NodeSelectorTreeViewWidgetSearch::createProxyModel()
@@ -153,9 +162,15 @@ void NodeSelectorTreeViewWidgetSearch::onCloudDriveSearchClicked()
     proxy_model->setMode(NodeSelectorModelItemSearch::Type::CLOUD_DRIVE);
 }
 
+bool NodeSelectorTreeViewWidgetSearch::isAllowedToEnterInIndex(const QModelIndex &idx)
+{
+    Q_UNUSED(idx)
+    return false;
+}
+
 QString NodeSelectorTreeViewWidgetSearch::getRootText()
 {
-    return QString::fromUtf8("Searching:");
+    return tr("Searching:");
 }
 
 std::unique_ptr<NodeSelectorModel> NodeSelectorTreeViewWidgetSearch::createModel()

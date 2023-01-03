@@ -8,6 +8,7 @@ const char* ButtonIconManager::ICON_PREFIX = "default_icon";
 const char* ButtonIconManager::HOVER_SELECTED_FLAG = "hover_selected";
 const char* ButtonIconManager::CHECK_STATE = "check_state";
 const char* ButtonIconManager::IGNORE_BUTTON = "ignore_button_manager";
+const char* ButtonIconManager::CHANGE_LATER = "change_if_hover_on_selection";
 
 const char* ButtonIconManager::BUTTON_FULL_TEXT = "button_full_text";
 const char* ButtonIconManager::BUTTON_ELIDE_TEXT = "button_elide_text";
@@ -56,7 +57,15 @@ bool ButtonIconManager::eventFilter(QObject * watched, QEvent * event)
         else if(event->type() == QEvent::Paint)
         {
             bool checkstateHasChanged = button->isCheckable() && (button->property(CHECK_STATE).toBool() != button->isChecked());
-            if(checkstateHasChanged)
+            bool changeLater = button->property(CHANGE_LATER).isValid() ? button->property(CHANGE_LATER).toBool() : false;
+            bool change(true);
+
+            if(changeLater)
+            {
+               change = !button->rect().contains(button->mapFromGlobal(QCursor::pos()));
+            }
+
+            if(checkstateHasChanged && change)
             {
                 setDefaultIcon(button);
                 button->setProperty(CHECK_STATE, button->isChecked());

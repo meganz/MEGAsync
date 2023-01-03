@@ -98,6 +98,7 @@ public:
     void firstLoad() override;
     void createRootNodes() override;
     void searchByText(const QString& text);
+    void stopSearch();
     int rootItemsCount() const override;
     bool canFetchMore(const QModelIndex &parent) const override;
     QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const override;

@@ -66,6 +66,7 @@ class NodeSelectorTreeViewWidgetSearch : public NodeSelectorTreeViewWidget
 public:
     explicit NodeSelectorTreeViewWidgetSearch(SelectTypeSPtr mode, QWidget *parent = nullptr);
     void search(const QString& text);
+    void stopSearch();
     std::unique_ptr<NodeSelectorProxyModel> createProxyModel() override;
 
 private slots:
@@ -74,6 +75,7 @@ private slots:
     void onCloudDriveSearchClicked();
 
 private:
+    bool isAllowedToEnterInIndex(const QModelIndex &idx) override;
     QString getRootText() override;
     std::unique_ptr<NodeSelectorModel> createModel() override;
     QIcon getEmptyIcon() override;

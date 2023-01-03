@@ -106,7 +106,7 @@ private:
     Navigation mNavigationInfo;
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
 
-    bool isAllowedToEnterInIndex(const QModelIndex &idx);
+    virtual bool isAllowedToEnterInIndex(const QModelIndex &idx);
     QModelIndex getSelectedIndex();
     void checkBackForwardButtons();
     void setRootIndex(const QModelIndex& proxy_idx);

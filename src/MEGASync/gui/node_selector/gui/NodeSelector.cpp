@@ -160,6 +160,7 @@ void NodeSelector::on_tClearSearchResult_clicked()
 {
     ui->wSearch->hide();
     ui->bSearch->setText(QString());
+    mSearchWidget->stopSearch();
     if(ui->stackedWidget->currentWidget() == mSearchWidget)
     {
         onbShowCloudDriveClicked();
@@ -279,6 +280,12 @@ void NodeSelector::setToggledStyle(TabItem item)
 {
     setAllFramesItsOnProperty();
 
+    auto btn = mTabFramesToggleGroup[item]->findChildren<QPushButton*>();
+    if(btn.size() > 0)
+    {
+        btn.at(0)->setChecked(true);
+    }
+
     mTabFramesToggleGroup[item]->setProperty(ITS_ON_NS, true);
     mTabFramesToggleGroup[item]->setGraphicsEffect(mShadowTab);
 
@@ -305,6 +312,8 @@ void NodeSelector::hideSelector(TabItem item)
             ui->bShowBackups->hide();
             break;
         }
+        default:
+            break;
     }
 }
 

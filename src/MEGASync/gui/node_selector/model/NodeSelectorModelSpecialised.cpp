@@ -252,6 +252,15 @@ void NodeSelectorModelSearch::searchByText(const QString &text)
     emit searchNodes(text);
 }
 
+void NodeSelectorModelSearch::stopSearch()
+{
+    if(mSearching)
+    {
+        mNodeRequesterWorker->restartSearch();
+    }
+    mSearching = false;
+}
+
 int NodeSelectorModelSearch::rootItemsCount() const
 {
     return 0;
@@ -291,5 +300,6 @@ void NodeSelectorModelSearch::onRootItemsCreated(QList<NodeSelectorModelItem *> 
     mSearching = false;
     Q_UNUSED(items)
     rootItemsLoaded();
+    emit searchFinished();
     emit levelsAdded(mIndexesActionInfo.indexesToBeExpanded, true);
 }
