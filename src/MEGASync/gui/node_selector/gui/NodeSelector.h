@@ -55,7 +55,6 @@ protected:
     void showEvent(QShowEvent* event) override;
     void keyPressEvent(QKeyEvent *e) override;
     void addBackupsView();
-    void hideSelector(TabItem item);
     bool nodeExistWarningMsg(int &access);
     void makeConnections(SelectTypeSPtr selectType);
 
@@ -67,12 +66,11 @@ protected:
     Ui::NodeSelector *ui;
 
 private slots:
+    void onbShowSearchClicked();
     void onbOkClicked();
-    void onViewReady(bool isEmpty);
     void onbShowIncomingSharesClicked();
     void onbShowCloudDriveClicked();
     void onbShowBackupsFolderClicked();
-    void onbShowSearchClicked();
     void onOptionSelected(int index);
     void updateNodeSelectorTabs();
     void onSearch(const QString& text);

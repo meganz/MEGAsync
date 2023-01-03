@@ -201,7 +201,6 @@ void NodeSelectorTreeViewWidget::onExpandReady()
 
         setRootIndex(QModelIndex());
         checkNewFolderButtonVisibility();
-        emit onViewReady(mProxyModel->rowCount() == 0);
     }
 
     auto indexesAndSelected = mModel->needsToBeExpandedAndSelected();

@@ -205,22 +205,8 @@ void NodeSelector::onbShowBackupsFolderClicked()
 
 void NodeSelector::onbShowSearchClicked()
 {
-    ui->stackedWidget->setCurrentIndex(SEARCH);
+    ui->stackedWidget->setCurrentWidget(mSearchWidget);
     setToggledStyle(SEARCH);
-}
-
-void NodeSelector::onViewReady(bool isEmpty)
-{
-    if(sender() == mBackupsWidget && isEmpty)
-    {
-        hideSelector(BACKUPS);
-        shortCutConnects(BACKUPS);
-    }
-    else if(sender() == mIncomingSharesWidget && isEmpty)
-    {
-        hideSelector(SHARES);
-        shortCutConnects(SHARES);
-    }
 }
 
 void NodeSelector::shortCutConnects(int ignoreThis)
@@ -293,30 +279,6 @@ void NodeSelector::setToggledStyle(TabItem item)
     ui->wLeftPane->setStyleSheet(ui->wLeftPane->styleSheet());
 }
 
-void NodeSelector::hideSelector(TabItem item)
-{
-    switch(item)
-    {
-        case CLOUD_DRIVE:
-        {
-            ui->bShowCloudDrive->hide();
-            break;
-        }
-        case SHARES:
-        {
-            ui->bShowIncomingShares->hide();
-            break;
-        }
-        case BACKUPS:
-        {
-            ui->bShowBackups->hide();
-            break;
-        }
-        default:
-            break;
-    }
-}
-
 bool NodeSelector::nodeExistWarningMsg(int &access)
 {
     bool ret = true;
@@ -349,7 +311,6 @@ void NodeSelector::makeConnections(SelectTypeSPtr selectType)
             viewContainer->init();
             connect(viewContainer, &NodeSelectorTreeViewWidget::okBtnClicked, this, &NodeSelector::onbOkClicked, Qt::UniqueConnection);
             connect(viewContainer, &NodeSelectorTreeViewWidget::cancelBtnClicked, this, &NodeSelector::reject, Qt::UniqueConnection);
-            connect(viewContainer, &NodeSelectorTreeViewWidget::onViewReady, this, &NodeSelector::onViewReady, Qt::UniqueConnection);
             connect(viewContainer, &NodeSelectorTreeViewWidget::onSearch, this, &NodeSelector::onSearch, Qt::UniqueConnection);
         }
     }
@@ -383,7 +344,7 @@ void NodeSelector::setSelectedNodeHandle(std::shared_ptr<MegaNode> node)
 
 UploadNodeSelector::UploadNodeSelector(QWidget *parent) : NodeSelector(parent)
 {
-    hideSelector(NodeSelector::TabItem::BACKUPS);
+    ui->fBackups->hide();
     SelectTypeSPtr selectType = SelectTypeSPtr(new UploadType);
     mCloudDriveWidget = new NodeSelectorTreeViewWidgetCloudDrive(selectType);
     mCloudDriveWidget->setObjectName(QString::fromUtf8("CloudDrive"));
@@ -462,7 +423,7 @@ bool DownloadNodeSelector::isSelectionCorrect()
 
 SyncNodeSelector::SyncNodeSelector(QWidget *parent) : NodeSelector(parent)
 {
-    hideSelector(NodeSelector::TabItem::BACKUPS);
+    ui->fBackups->hide();
     SelectTypeSPtr selectType = SelectTypeSPtr(new SyncType);
     mCloudDriveWidget = new NodeSelectorTreeViewWidgetCloudDrive(selectType);
     mCloudDriveWidget->setObjectName(QString::fromUtf8("CloudDrive"));

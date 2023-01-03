@@ -58,7 +58,6 @@ private slots:
 signals:
     void okBtnClicked();
     void cancelBtnClicked();
-    void onViewReady(bool isEmpty);
     void onSearch(const QString& text);
 
 protected:
