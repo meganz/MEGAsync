@@ -32,6 +32,7 @@ void StalledIssuesProxyModel::filter(StalledIssueFilterCriterion filterCriterion
     emit layoutAboutToBeChanged();
     if(sourceM->rowCount(QModelIndex()) != 0)
     {
+        qApp->processEvents();
         sourceM->blockUi();
 
         //Test if it is worth it, because there is not sorting and the sort takes longer than filtering.
@@ -40,13 +41,15 @@ void StalledIssuesProxyModel::filter(StalledIssueFilterCriterion filterCriterion
             blockSignals(true);
             sourceM->blockSignals(true);
             sourceM->lockModelMutex(true);
+
             invalidate();
-            QSortFilterProxyModel::sort(0, sortOrder());
             for (auto row = 0; row < rowCount(QModelIndex()); ++row)
             {
                 auto proxyIndex = index(row, 0);
                 hasChildren(proxyIndex);
             }
+            QSortFilterProxyModel::sort(0, sortOrder());
+
             sourceM->lockModelMutex(false);
             blockSignals(false);
             sourceM->blockSignals(false);
@@ -69,9 +72,6 @@ void StalledIssuesProxyModel::updateFilter()
 void StalledIssuesProxyModel::setSourceModel(QAbstractItemModel *sourceModel)
 {
     QSortFilterProxyModel::setSourceModel(sourceModel);
-    connect(sourceModel, &QAbstractItemModel::modelAboutToBeReset,this,[this](){
-        updateFilter();
-    });
 }
 
 void StalledIssuesProxyModel::updateStalledIssues()

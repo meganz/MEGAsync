@@ -124,6 +124,7 @@ void StalledIssueHeader::on_ignoreFileButton_clicked()
 
         MegaSyncApp->getStalledIssuesModel()->solveIssue(false,getCurrentIndex());
         mIsSolved = true;
+        refreshUi();
     }
 }
 

@@ -20,13 +20,6 @@ StalledIssueDelegate::StalledIssueDelegate(StalledIssuesProxyModel* proxyModel, 
                       mProxyModel->sourceModel());
 
     mCacheManager.setProxyModel(mProxyModel);
-    connect(mSourceModel, &QAbstractItemModel::modelReset, this, [this](){
-        resetCache();
-    });
-}
-
-StalledIssueDelegate::~StalledIssueDelegate()
-{
 }
 
 QSize StalledIssueDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
@@ -78,7 +71,9 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
         painter->save();
         painter->translate(pos);
 
-        bool renderDelegate(!mEditor || mEditor->getCurrentIndex() != index);
+        QModelIndex editorCurrentIndex(getEditorCurrentIndex());
+
+        bool renderDelegate(editorCurrentIndex != index);
 
         if(renderDelegate)
         {
@@ -192,19 +187,19 @@ bool StalledIssueDelegate::eventFilter(QObject *object, QEvent *event)
                         if(mEditor)
                         {
                             mEditor->expand(!currentState);
-
-                            //If it is going to be expanded
-                            if(!currentState)
-                            {
-                                auto childIndex = index.child(0,0);
-                                if(childIndex.isValid())
-                                {
-                                    mView->scrollTo(childIndex);
-                                }
-                            }
-
-                            return true;
                         }
+
+                        //If it is going to be expanded
+                        if(!currentState)
+                        {
+                            auto childIndex = index.child(0,0);
+                            if(childIndex.isValid())
+                            {
+                                mView->scrollTo(childIndex);
+                            }
+                        }
+
+                        return true;
                     }
                 }
             }
@@ -216,19 +211,22 @@ bool StalledIssueDelegate::eventFilter(QObject *object, QEvent *event)
 
 void StalledIssueDelegate::onHoverEnter(const QModelIndex &index)
 {
-    if(mEditor && mEditor->getCurrentIndex() != index)
-    {
-        //Small hack to avoid blinks when changing from editor to delegate paint
-        //Set the editor to nullptr and update the view -> Then the delegate paints the base widget
-        //before the editor is removed
-        auto editorIndex = mEditor->getCurrentIndex();
-        mEditor = nullptr;
-        mView->update(index);
-        mView->closePersistentEditor(editorIndex);
-    }
+    QModelIndex editorCurrentIndex(getEditorCurrentIndex());
 
-    if(!mEditor)
+    if(editorCurrentIndex != index)
     {
+        //It is mandatory to close the editor, as it may be different depending on the row
+        if(mEditor)
+        {
+            mView->closePersistentEditor(editorCurrentIndex);
+
+            //Small hack to avoid blinks when changing from editor to delegate paint
+            //Set the editor to nullptr and update the view -> Then the delegate paints the base widget
+            //before the editor is removed
+            mEditor = nullptr;
+        }
+
+        mView->update(index);
         mView->setCurrentIndex(index);
         mView->openPersistentEditor(index);
     }
@@ -253,17 +251,34 @@ QColor StalledIssueDelegate::getRowColor(const QModelIndex &index) const
     return rowColor;
 }
 
+QModelIndex StalledIssueDelegate::getEditorCurrentIndex() const
+{
+    if(mEditor)
+    {
+       return mProxyModel->mapFromSource(mEditor->getCurrentIndex());
+    }
+
+    return QModelIndex();
+}
+
 StalledIssueBaseDelegateWidget *StalledIssueDelegate::getStalledIssueItemWidget(const QModelIndex &index, const StalledIssueVariant& data) const
 {
     StalledIssueBaseDelegateWidget* item(nullptr);
 
-    if(index.parent().isValid())
+    auto finalIndex(index);
+    auto sourceIndex = mProxyModel->mapToSource(index);
+    if(sourceIndex.isValid())
     {
-        item = mCacheManager.getStalledIssueInfoWidget(index,mView->viewport(), data);
+        finalIndex = sourceIndex;
+    }
+
+    if(finalIndex.parent().isValid())
+    {
+        item = mCacheManager.getStalledIssueInfoWidget(finalIndex,mView->viewport(), data);
     }
     else
     {
-        item = mCacheManager.getStalledIssueHeaderWidget(index,mView->viewport(), data);
+        item = mCacheManager.getStalledIssueHeaderWidget(finalIndex,mView->viewport(), data);
     }
 
     return item;
@@ -273,13 +288,20 @@ StalledIssueBaseDelegateWidget *StalledIssueDelegate::getNonCacheStalledIssueIte
 {
     StalledIssueBaseDelegateWidget* item(nullptr);
 
-    if(index.parent().isValid())
+    auto finalIndex(index);
+    auto sourceIndex = mProxyModel->mapToSource(index);
+    if(sourceIndex.isValid())
     {
-        item = mCacheManager.getNonCacheStalledIssueInfoWidget(index,parent, data);
+        finalIndex = sourceIndex;
+    }
+
+    if(finalIndex.parent().isValid())
+    {
+        item = mCacheManager.getNonCacheStalledIssueInfoWidget(finalIndex,parent, data);
     }
     else
     {
-        item = mCacheManager.getNonCacheStalledIssueHeaderWidget(index,parent, data);
+        item = mCacheManager.getNonCacheStalledIssueHeaderWidget(finalIndex,parent, data);
     }
 
     return item;

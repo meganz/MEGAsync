@@ -26,11 +26,6 @@ bool StalledIssuesReceiver::setCurrentStalledIssuesToCompare(const StalledIssues
     return false;
 }
 
-void StalledIssuesReceiver::processStalledIssues()
-{
-    emit stalledIssuesReady(mCacheStalledIssues);
-}
-
 void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest *request, mega::MegaError*)
 {
     if (auto stalls = request->getMegaSyncStallList())
@@ -38,93 +33,27 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest *r
         QMutexLocker lock(&mCacheMutex);
 
         mCacheStalledIssues.clear();
+        mCurrentStalledIssues.clear();
 
         for (size_t i = 0; i < stalls->size(); ++i)
         {
             auto stall = stalls->get(i);
 
-            //Compare with the currentIssues
-            auto existingUpdate = std::find_if(mCurrentStalledIssues.begin(), mCurrentStalledIssues.end(), [stall](const std::shared_ptr<StalledIssueVariant>& check) ->bool{
-                if(stall->reason() == check->consultData()->getReason())
-                {
-                    if(stall->reason() == mega::MegaSyncStall::SyncStallReason::NamesWouldClashWhenSynced)
-                    {
-                        if(auto nameConflict = std::dynamic_pointer_cast<const NameConflictedStalledIssue>(check->consultData()))
-                        {
-                            auto cloudNames = NameConflictedStalledIssue::convertConflictedNames(true, stall);
-                            auto localNames = NameConflictedStalledIssue::convertConflictedNames(false, stall);
-
-                            if(!nameConflict->getNameConflictCloudData().isEmpty() && !cloudNames.isEmpty())
-                            {
-                                foreach(auto name, cloudNames)
-                                {
-                                    if(nameConflict->getNameConflictCloudData().conflictedNames.contains(name))
-                                    {
-                                        return true;
-                                    }
-                                }
-                            }
-
-                            if(!nameConflict->getNameConflictLocalData().isEmpty() && !localNames.isEmpty())
-                            {
-                                foreach(auto name, localNames)
-                                {
-                                    if(nameConflict->getNameConflictLocalData().conflictedNames.contains(name))
-                                    {
-                                        return true;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        auto result(true);
-                        auto issue = check->consultData();
-
-                        if(issue->consultCloudData())
-                        {
-                            result &= issue->consultCloudData()->isEqual(stall);
-                        }
-
-                        if(issue->consultLocalData())
-                        {
-                            result &= issue->consultLocalData()->isEqual(stall);
-                        }
-
-                        return result;
-                    }
-                }
-
-                return false;
-            });
-
-            if(!mCurrentStalledIssues.isEmpty() && existingUpdate != mCurrentStalledIssues.end())
+            if(stall->reason() == mega::MegaSyncStall::SyncStallReason::NamesWouldClashWhenSynced)
             {
-                (*existingUpdate)->updateData(stall);
-                mCacheStalledIssues.mUpdateStalledIssues.append((*existingUpdate));
-                mCurrentStalledIssues.removeOne(*existingUpdate);
+                auto d = std::make_shared<NameConflictedStalledIssue>(stall);
+                auto variant = std::make_shared<StalledIssueVariant>(d);
+                mCacheStalledIssues.stalledIssues.append(variant);
             }
             else
             {
-                if(stall->reason() == mega::MegaSyncStall::SyncStallReason::NamesWouldClashWhenSynced)
-                {
-                    auto d = std::make_shared<NameConflictedStalledIssue>(stall);
-                    auto variant = std::make_shared<StalledIssueVariant>(d);
-                    mCacheStalledIssues.mNewStalledIssues.append(variant);
-                }
-                else
-                {
-                    auto d = std::make_shared<StalledIssue>(stall);
-                    auto variant = std::make_shared<StalledIssueVariant>(d);
-                    mCacheStalledIssues.mNewStalledIssues.append(variant);
-                }
+                auto d = std::make_shared<StalledIssue>(stall);
+                auto variant = std::make_shared<StalledIssueVariant>(d);
+                mCacheStalledIssues.stalledIssues.append(variant);
             }
         }
 
-        mCacheStalledIssues.mDeleteStalledIssues.append(mCurrentStalledIssues);
-
-        processStalledIssues();
+        emit stalledIssuesReady(mCacheStalledIssues);
     }
 }
 
@@ -171,48 +100,21 @@ void StalledIssuesModel::onProcessStalledIssues(StalledIssuesReceiver::StalledIs
 {
     if(!issuesReceived.isEmpty())
     {
+        reset();
+
         mThreadPool->push([this, issuesReceived]()
         {
             mModelMutex.lock();
             blockSignals(true);
-            reset();
-
-            //In case we need to update existing stalled issues. For the moment, we reset and after we update with the new ones
-//            for (auto it = issuesReceived.mDeleteStalledIssues.begin(); it != issuesReceived.mDeleteStalledIssues.end(); ++it)
-//            {
-//                auto index = mStalledIssuesByOrder.value((*it).get(),-1);
-//                if(index >= 0)
-//                {
-//                    removeRows(index, 1);
-//                }
-
-//                updateStalledIssuedByOrder();
-//            }
-
-//            for (auto it = issuesReceived.mUpdateStalledIssues.begin(); it != issuesReceived.mUpdateStalledIssues.end(); ++it)
-//            {
-//                auto row = mStalledIssuesByOrder.value((*it).get(),-1);
-//                if(row >= 0)
-//                {
-//                    auto rootIndex(index(row,0));
-//                    emit dataChanged(rootIndex,rootIndex);
-
-//                    auto childIndex(index(0,0,rootIndex));
-//                    if(childIndex.isValid())
-//                    {
-//                        emit dataChanged(childIndex,childIndex);
-//                    }
-//                }
-//            }
 
             auto totalRows = rowCount(QModelIndex());
-            auto rowsToBeInserted(static_cast<int>(issuesReceived.mNewStalledIssues.size()));
+            auto rowsToBeInserted(static_cast<int>(issuesReceived.stalledIssues.size()));
 
             if(rowsToBeInserted > 0)
             {
                 beginInsertRows(QModelIndex(), totalRows, totalRows + rowsToBeInserted - 1);
 
-                for (auto it = issuesReceived.mNewStalledIssues.begin(); it != issuesReceived.mNewStalledIssues.end();)
+                for (auto it = issuesReceived.stalledIssues.begin(); it != issuesReceived.stalledIssues.end();)
                 {
                     if(mThreadPool->isThreadInterrupted())
                     {

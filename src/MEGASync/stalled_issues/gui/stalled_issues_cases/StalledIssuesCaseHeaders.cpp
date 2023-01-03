@@ -26,6 +26,12 @@ QPointer<StalledIssueHeader> StalledIssueHeaderCase::getStalledIssueHeader()
     return mStalledIssueHeader;
 }
 
+void StalledIssueHeaderCase::reset()
+{
+    mStalledIssueHeader->deleteLater();
+    deleteLater();
+}
+
 
 //Local folder not scannable
 DefaultHeader::DefaultHeader(StalledIssueHeader* header)

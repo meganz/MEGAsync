@@ -13,6 +13,7 @@ public:
     ~StalledIssueHeaderCase() = default;
 
     QPointer<StalledIssueHeader> getStalledIssueHeader();
+    void reset();
 
 protected:
     QPointer<StalledIssueHeader> mStalledIssueHeader;

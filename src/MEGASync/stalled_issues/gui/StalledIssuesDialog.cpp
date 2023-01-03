@@ -98,6 +98,8 @@ void StalledIssuesDialog::onUiBlocked()
 {
     if(!mLoadingScene.isLoadingViewSet())
     {
+        ui->stalledIssuesTree->blockSignals(true);
+        ui->stalledIssuesTree->header()->blockSignals(true);
         mLoadingScene.changeLoadingSceneStatus(true);
     }
 }
@@ -106,6 +108,8 @@ void StalledIssuesDialog::onUiUnblocked()
 {
     if(mLoadingScene.isLoadingViewSet())
     {
+        ui->stalledIssuesTree->blockSignals(false);
+        ui->stalledIssuesTree->header()->blockSignals(false);
         mLoadingScene.changeLoadingSceneStatus(false);
     }
 }
@@ -137,13 +141,5 @@ void StalledIssuesDialog::onLoadingSceneChanged(bool state)
 
 void StalledIssuesDialog::onGlobalSyncStateChanged(bool state)
 {
-    if(state)
-    {
-        onUiUnblocked();
-        mProxyModel->updateFilter();
-    }
-    else
-    {
-        mProxyModel->invalidate();
-    }
+    //For the future, detect if the stalled issues have been removed remotely to close the dialog
 }

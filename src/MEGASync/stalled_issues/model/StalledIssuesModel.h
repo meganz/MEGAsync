@@ -18,16 +18,12 @@ class StalledIssuesReceiver : public QObject, public mega::MegaRequestListener
 public:
     struct StalledIssuesReceived
     {
-        StalledIssuesVariantList mNewStalledIssues;
-        StalledIssuesVariantList mUpdateStalledIssues;
-        StalledIssuesVariantList mDeleteStalledIssues;
+        StalledIssuesVariantList stalledIssues;
 
-        bool isEmpty(){return mNewStalledIssues.isEmpty() && mUpdateStalledIssues.isEmpty() && mDeleteStalledIssues.isEmpty();}
+        bool isEmpty(){return stalledIssues.isEmpty();}
         void clear()
         {
-            mNewStalledIssues.clear();
-            mUpdateStalledIssues.clear();
-            mDeleteStalledIssues.clear();
+            stalledIssues.clear();
         }
     };
 
@@ -46,8 +42,6 @@ private:
     QMutex mCacheMutex;
     StalledIssuesReceived mCacheStalledIssues;
     StalledIssuesVariantList mCurrentStalledIssues;
-
-    void processStalledIssues();
 };
 
 Q_DECLARE_METATYPE(StalledIssuesReceiver::StalledIssuesReceived);

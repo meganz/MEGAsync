@@ -19,7 +19,13 @@ void StalledIssuesDelegateWidgetsCache::setProxyModel(StalledIssuesProxyModel *p
 
 void StalledIssuesDelegateWidgetsCache::reset()
 {
-    qDeleteAll(mStalledIssueHeaderWidgets);
+    foreach(auto headerCase, mStalledIssueHeaderWidgets)
+    {
+        headerCase->reset();
+    }
+
+    mStalledIssueHeaderWidgets.clear();
+
     foreach(auto map, mStalledIssueWidgets.values())
     {
         qDeleteAll(map);
@@ -41,6 +47,7 @@ StalledIssueHeader *StalledIssuesDelegateWidgetsCache::getStalledIssueHeaderWidg
     if(headerCase)
     {
         header = headerCase->getStalledIssueHeader();
+        headerCase->deleteLater();
     }
 
     if(!header)
@@ -167,7 +174,7 @@ bool StalledIssuesDelegateWidgetsCache::adaptativeHeight(mega::MegaSyncStall::Sy
 
 StalledIssueHeaderCase* StalledIssuesDelegateWidgetsCache::createHeaderWidget(StalledIssueHeader* header, const StalledIssueVariant &issue) const
 {
-    StalledIssueHeaderCase* headerCase(nullptr);
+    QPointer<StalledIssueHeaderCase> headerCase(nullptr);
 
     switch(issue.consultData()->getReason())
     {
@@ -242,5 +249,5 @@ StalledIssueHeaderCase* StalledIssuesDelegateWidgetsCache::createHeaderWidget(St
         }
     }
 
-    return headerCase;
+    return headerCase.data();
 }

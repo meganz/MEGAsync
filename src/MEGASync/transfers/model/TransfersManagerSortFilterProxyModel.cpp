@@ -53,6 +53,7 @@ void TransfersManagerSortFilterProxyModel::sort(int sortCriterion, Qt::SortOrder
         sourceM->pauseModelProcessing(true);
     }
 
+    qApp->processEvents();
     emit layoutAboutToBeChanged();
     QFuture<void> sorting = QtConcurrent::run([this]()
     {
@@ -118,6 +119,7 @@ void TransfersManagerSortFilterProxyModel::invalidateModel()
         sourceM->pauseModelProcessing(true);
     }
 
+    qApp->processEvents();
     emit layoutAboutToBeChanged();
     QFuture<void> filtered = QtConcurrent::run([this](){
         startProcessingInOtherThread();

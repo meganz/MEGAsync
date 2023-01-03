@@ -19,7 +19,7 @@ class StalledIssueDelegate : public QStyledItemDelegate
 
 public:
     StalledIssueDelegate(StalledIssuesProxyModel* proxyModel,  StalledIssuesView* view);
-    ~StalledIssueDelegate();
+    ~StalledIssueDelegate() = default;
     QSize sizeHint(const QStyleOptionViewItem&option, const QModelIndex&index) const;
     void resetCache();
 
@@ -36,6 +36,7 @@ protected slots:
 
 private:
     QColor getRowColor(const QModelIndex& index) const;
+    QModelIndex getEditorCurrentIndex() const;
 
     StalledIssueBaseDelegateWidget *getStalledIssueItemWidget(const QModelIndex &index, const StalledIssueVariant &data) const;
     StalledIssueBaseDelegateWidget *getNonCacheStalledIssueItemWidget(const QModelIndex &index, QWidget *parent, const StalledIssueVariant& data) const;
