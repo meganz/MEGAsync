@@ -5523,8 +5523,6 @@ void MegaApplication::processDownloads()
         qDeleteAll(downloadQueue);
         downloadQueue.clear();
     }
-
-    return;
 }
 
 void MegaApplication::logoutActionClicked()
