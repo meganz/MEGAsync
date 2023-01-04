@@ -342,6 +342,11 @@ NodeSelectorProxyModelSearch::NodeSelectorProxyModelSearch(QObject *parent)
 
 void NodeSelectorProxyModelSearch::setMode(NodeSelectorModelItemSearch::Type mode)
 {
+    if(mMode == mode)
+    {
+        return;
+    }
+
     emit getMegaModel()->blockUi(true);
     mMode = mode;
     invalidateFilter();

@@ -346,23 +346,23 @@ void NodeSelectorTreeViewWidget::setLoadingSceneVisible(bool blockUi)
     ui->tMegaFolders->header()->blockSignals(blockUi);
     mLoadingScene.changeLoadingSceneStatus(blockUi);
 
-    if(isModelEmpty())
+    if(!blockUi)
     {
-        ui->stackedWidget->setCurrentWidget(ui->emptyPage);
-    }
-    else
-    {
-        ui->stackedWidget->setCurrentWidget(ui->treeViewPage);
+        modelLoaded();
     }
 }
 
-bool NodeSelectorTreeViewWidget::isModelEmpty()
+void NodeSelectorTreeViewWidget::modelLoaded()
 {
     if(mModel)
     {
-        return mModel->rowCount() == 0;
+        if(mModel->rowCount() == 0)
+        {
+            ui->stackedWidget->setCurrentWidget(ui->emptyPage);
+            return;
+        }
     }
-    return false;
+    ui->stackedWidget->setCurrentWidget(ui->treeViewPage);
 }
 
 
@@ -763,6 +763,9 @@ void DownloadType::checkOkButton(NodeSelectorTreeViewWidget *wdg, const QModelIn
 void SyncType::init(NodeSelectorTreeViewWidget *wdg)
 {
     wdg->mModel->setSyncSetupMode(true);
+    wdg->ui->bNewFolder->show();
+    wdg->mProxyModel->showReadOnlyFolders(false);
+    wdg->mModel->showFiles(false);
 }
 
 void SyncType::newFolderButtonVisibility(NodeSelectorTreeViewWidget *wdg)
@@ -831,7 +834,6 @@ void StreamType::checkOkButton(NodeSelectorTreeViewWidget *wdg, const QModelInde
 
 void UploadType::init(NodeSelectorTreeViewWidget *wdg)
 {
-    wdg->mModel->setSyncSetupMode(true);
     wdg->ui->bNewFolder->show();
     wdg->mProxyModel->showReadOnlyFolders(false);
     wdg->mModel->showFiles(false);

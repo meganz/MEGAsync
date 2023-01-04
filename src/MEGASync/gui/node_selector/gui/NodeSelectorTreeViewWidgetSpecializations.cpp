@@ -23,10 +23,17 @@ std::unique_ptr<NodeSelectorModel> NodeSelectorTreeViewWidgetCloudDrive::createM
     return std::unique_ptr<NodeSelectorModelCloudDrive>(new NodeSelectorModelCloudDrive);
 }
 
-bool NodeSelectorTreeViewWidgetCloudDrive::isModelEmpty()
+void NodeSelectorTreeViewWidgetCloudDrive::modelLoaded()
 {
     auto rootIndex = mModel->index(0,0);
-    return mModel->rowCount(rootIndex) == 0;
+    if(mModel->rowCount(rootIndex) == 0)
+    {
+        ui->stackedWidget->setCurrentWidget(ui->emptyPage);
+    }
+    else
+    {
+        ui->stackedWidget->setCurrentWidget(ui->treeViewPage);
+    }
 }
 
 QIcon NodeSelectorTreeViewWidgetCloudDrive::getEmptyIcon()
@@ -115,7 +122,6 @@ NodeSelectorTreeViewWidgetSearch::NodeSelectorTreeViewWidgetSearch(SelectTypeSPt
 
 {
     ui->cloudDriveSearch->setChecked(true);
-    ui->searchButtonsWidget->setVisible(true);
     ui->lFolderName->setText(tr("Searching:"));
     ui->bBack->hide();
     ui->bForward->hide();
@@ -184,11 +190,87 @@ QIcon NodeSelectorTreeViewWidgetSearch::getEmptyIcon()
     return QIcon(QString::fromUtf8("://images/node_selector/view/search.png"));
 }
 
-bool NodeSelectorTreeViewWidgetSearch::isModelEmpty()
+void NodeSelectorTreeViewWidgetSearch::modelLoaded()
 {
+    if(!mModel)
+    {
+        return;
+    }
+
     if(qobject_cast<NodeSelectorModelSearch*>(mModel.get())->isSearching())
     {
-        return false;
+        return;
     }
-    return mProxyModel->rowCount() == 0;
+
+    if(mModel->rowCount() == 0)
+    {
+        ui->searchButtonsWidget->setVisible(false);
+        ui->stackedWidget->setCurrentWidget(ui->emptyPage);
+        return;
+    }
+    else
+    {
+        ui->stackedWidget->setCurrentWidget(ui->treeViewPage);
+    }
+
+    QList<NodeSelectorModelItemSearch::Type> AvailableTypes;
+    for(int row = 0; mModel->rowCount() > row; ++row)
+    {
+        auto idx = mModel->index(row, 0);
+        auto search_item = static_cast<NodeSelectorModelItemSearch*>(idx.internalPointer());
+        auto type = search_item->getType();
+        if(!AvailableTypes.contains(type))
+        {
+            AvailableTypes.append(type);
+            if(AvailableTypes.size() == 3)
+            {
+                break;
+            }
+        }
+    }
+
+    ui->backupsSearch->setVisible(AvailableTypes.contains(NodeSelectorModelItemSearch::Type::BACKUP));
+    ui->incomingSharesSearch->setVisible(AvailableTypes.contains(NodeSelectorModelItemSearch::Type::INCOMING_SHARE));
+    ui->cloudDriveSearch->setVisible(AvailableTypes.contains(NodeSelectorModelItemSearch::Type::CLOUD_DRIVE));
+
+    if(ui->cloudDriveSearch->isChecked() && !ui->cloudDriveSearch->isVisible())
+    {
+        if(ui->incomingSharesSearch->isVisible())
+        {
+            ui->incomingSharesSearch->setChecked(true);
+            emit ui->incomingSharesSearch->clicked(true);
+        }
+        else if(ui->backupsSearch->isVisible())
+        {
+            ui->backupsSearch->setChecked(true);
+            emit ui->backupsSearch->clicked(true);
+        }
+    }
+    else if(ui->incomingSharesSearch->isChecked() && !ui->incomingSharesSearch->isVisible())
+    {
+        if(ui->cloudDriveSearch->isVisible())
+        {
+            ui->cloudDriveSearch->setChecked(true);
+            emit ui->cloudDriveSearch->clicked(true);
+        }
+        else if(ui->backupsSearch->isVisible())
+        {
+            ui->backupsSearch->setChecked(true);
+            emit ui->backupsSearch->clicked(true);
+        }
+    }
+    else if(ui->backupsSearch->isChecked() && !ui->backupsSearch->isVisible())
+    {
+        if(ui->cloudDriveSearch->isVisible())
+        {
+            ui->cloudDriveSearch->setChecked(true);
+            emit ui->cloudDriveSearch->clicked(true);
+        }
+        else if(ui->incomingSharesSearch->isVisible())
+        {
+            ui->incomingSharesSearch->setChecked(true);
+            emit ui->incomingSharesSearch->clicked(true);
+        }
+    }
+    ui->searchButtonsWidget->setVisible(true);
 }

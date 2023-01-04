@@ -20,17 +20,20 @@ border:none;
 }</string>
   </property>
   <layout class="QVBoxLayout" name="NodeSelectorWidgetLayout">
+   <property name="spacing">
+    <number>15</number>
+   </property>
    <property name="leftMargin">
     <number>30</number>
    </property>
    <property name="topMargin">
-    <number>30</number>
+    <number>20</number>
    </property>
    <property name="rightMargin">
     <number>30</number>
    </property>
    <property name="bottomMargin">
-    <number>30</number>
+    <number>20</number>
    </property>
    <item>
     <layout class="QGridLayout" name="gridLayout">
@@ -39,6 +42,9 @@ border:none;
      </property>
      <property name="bottomMargin">
       <number>10</number>
+     </property>
+     <property name="horizontalSpacing">
+      <number>2</number>
      </property>
      <item row="0" column="10">
       <widget class="SearchLineEdit" name="leSearch">
@@ -84,14 +90,13 @@ min-height:25px;
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../../../Resources_macx.qrc">
-         <normaloff>:/images/node_selector/arrow-right-ico.png</normaloff>
-         <disabledoff>:/images/node_selector/arrow-right-disabled-ico.png</disabledoff>:/images/node_selector/arrow-right-ico.png</iconset>
+        <iconset resource="../../../Resources_win.qrc">
+         <normaloff>:/images/node_selector/chevron-right.png</normaloff>:/images/node_selector/chevron-right.png</iconset>
        </property>
        <property name="iconSize">
         <size>
-         <width>16</width>
-         <height>16</height>
+         <width>24</width>
+         <height>24</height>
         </size>
        </property>
       </widget>
@@ -189,14 +194,13 @@ color:#3D3D3D;
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../../../Resources_macx.qrc">
-         <normaloff>:/images/node_selector/arrow-left-ico.png</normaloff>
-         <disabledoff>:/images/node_selector/arrow-left-disabled-ico.png</disabledoff>:/images/node_selector/arrow-left-ico.png</iconset>
+        <iconset resource="../../../Resources_win.qrc">
+         <normaloff>:/images/node_selector/chevron-left.png</normaloff>:/images/node_selector/chevron-left.png</iconset>
        </property>
        <property name="iconSize">
         <size>
-         <width>16</width>
-         <height>16</height>
+         <width>24</width>
+         <height>24</height>
         </size>
        </property>
       </widget>

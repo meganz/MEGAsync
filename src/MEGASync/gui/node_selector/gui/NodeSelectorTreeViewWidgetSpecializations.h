@@ -2,7 +2,6 @@
 #define NODESELECTORTREEVIEWWIDGETSPECIALIZATIONS_H
 
 #include "NodeSelectorTreeViewWidget.h"
-
 #include <QWidget>
 #include <QModelIndex>
 #include <QLabel>
@@ -26,7 +25,7 @@ private:
     QString getRootText() override;
     void onRootIndexChanged(const QModelIndex& source_idx) override;
     std::unique_ptr<NodeSelectorModel> createModel() override;
-    bool isModelEmpty() override;
+    void modelLoaded() override;
     QIcon getEmptyIcon() override;
 };
 
@@ -82,7 +81,7 @@ private:
     QString getRootText() override;
     std::unique_ptr<NodeSelectorModel> createModel() override;
     QIcon getEmptyIcon() override;
-    bool isModelEmpty() override;
+    void modelLoaded() override;
 };
 
 #endif // NODESELECTORTREEVIEWWIDGETSPECIALIZATIONS_H

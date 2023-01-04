@@ -292,6 +292,17 @@ QVariant NodeSelectorModelSearch::data(const QModelIndex &index, int role) const
         }
         }
     }
+    else if(index.column() == STATUS && role == Qt::DecorationRole)
+    {
+        NodeSelectorModelItem* item = static_cast<NodeSelectorModelItem*>(index.internalPointer());
+        if(item->getStatus() == NodeSelectorModelItem::Status::SYNC_CHILD)
+        {
+            QIcon statusIcons; //first is selected state icon / second is normal state icon
+            statusIcons.addFile(QLatin1String("://images/Item-sync-press.png"), QSize(), QIcon::Selected); //selected style icon
+            statusIcons.addFile(QLatin1String("://images/Item-sync-rest.png"), QSize(), QIcon::Normal); //normal style icon
+            return statusIcons;
+        }
+    }
     return NodeSelectorModel::data(index, role);
 }
 

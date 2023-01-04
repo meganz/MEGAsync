@@ -18,9 +18,9 @@ NodeSelectorModelItem::NodeSelectorModelItem(std::unique_ptr<MegaNode> node, boo
     mChildrenSet(false),
     mRequestingChildren(false),
     mShowFiles(showFiles),
+    mMegaApi(MegaSyncApp->getMegaApi()),
     mNode(std::move(node)),
-    mOwner(nullptr),
-    mMegaApi(MegaSyncApp->getMegaApi())
+    mOwner(nullptr)
 { 
     mChildrenCounter = mShowFiles ? MegaSyncApp->getMegaApi()->getNumChildren(mNode.get())
             : MegaSyncApp->getMegaApi()->getNumChildFolders(mNode.get());

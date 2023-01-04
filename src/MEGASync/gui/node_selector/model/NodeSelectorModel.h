@@ -110,6 +110,7 @@ public:
     };
 
     explicit NodeSelectorModel(QObject *parent = 0);
+    virtual ~NodeSelectorModel();
 
     int columnCount(const QModelIndex & parent = QModelIndex()) const override;
     QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const override;
@@ -130,7 +131,6 @@ public:
     QVariant getIcon(const QModelIndex &index, NodeSelectorModelItem* item) const;
     QVariant getText(const QModelIndex &index, NodeSelectorModelItem* item) const;
     void setFetchStep(int step);
-    virtual ~NodeSelectorModel();
     void endInsertingRows(){endInsertRows();}
     void beginInsertingRows(const QModelIndex& index, int rowCount){beginInsertRows(index, 0 , rowCount-1);}
 

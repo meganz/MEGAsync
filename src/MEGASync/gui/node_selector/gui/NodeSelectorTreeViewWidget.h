@@ -118,7 +118,7 @@ private:
     virtual std::unique_ptr<NodeSelectorProxyModel> createProxyModel();
     virtual std::unique_ptr<NodeSelectorModel> createModel() = 0;
     virtual bool newFolderBtnVisibleInRoot(){return true;}
-    virtual bool isModelEmpty();
+    virtual void modelLoaded();
     void checkOkButton(const QModelIndexList& selected);
     ButtonIconManager mButtonIconManager;
 

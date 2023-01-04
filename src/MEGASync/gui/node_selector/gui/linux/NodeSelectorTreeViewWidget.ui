@@ -21,13 +21,13 @@ border:none;
   </property>
   <layout class="QVBoxLayout" name="NodeSelectorWidgetLayout">
    <property name="spacing">
-    <number>10</number>
+    <number>15</number>
    </property>
    <property name="leftMargin">
     <number>30</number>
    </property>
    <property name="topMargin">
-    <number>30</number>
+    <number>20</number>
    </property>
    <property name="rightMargin">
     <number>30</number>

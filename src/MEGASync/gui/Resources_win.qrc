@@ -1330,5 +1330,11 @@
         <file>images/node_selector/view/search.png</file>
         <file>images/node_selector/view/search@2x.png</file>
         <file>images/node_selector/view/search@3x.png</file>
+        <file>images/node_selector/chevron-left.png</file>
+        <file>images/node_selector/chevron-left@2x.png</file>
+        <file>images/node_selector/chevron-left@3x.png</file>
+        <file>images/node_selector/chevron-right.png</file>
+        <file>images/node_selector/chevron-right@2x.png</file>
+        <file>images/node_selector/chevron-right@3x.png</file>
     </qresource>
 </RCC>
