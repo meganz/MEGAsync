@@ -34,6 +34,8 @@ StalledIssueFilePath::StalledIssueFilePath(QWidget *parent) :
     auto openIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/ic-open-outside.png"));
     ui->filePathAction->setPixmap(openIcon.pixmap(ui->filePathAction->size()));
     ui->moveFilePathAction->setPixmap(openIcon.pixmap(ui->moveFilePathAction->size()));
+
+    connect(ui->helpIcon, &QPushButton::clicked, this, &StalledIssueFilePath::onHelpIconClicked);
 }
 
 StalledIssueFilePath::~StalledIssueFilePath()
@@ -101,8 +103,20 @@ void StalledIssueFilePath::fillFilePath()
         }
 
         auto hasProblem(mData->getPath().mPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem);
-        hasProblem ?  ui->pathProblemMessage->setText(getSyncPathProblemString(mData->getPath().mPathProblem)) : ui->pathProblemContainer->hide();
-        hasProblem ? ui->filePathContainer->setCursor(Qt::ArrowCursor) : ui->filePathContainer->setCursor(Qt::PointingHandCursor);
+
+        if(hasProblem)
+        {
+            ui->pathProblemMessage->setText(getSyncPathProblemString(mData->getPath().mPathProblem));
+            ui->filePathContainer->setCursor(Qt::ArrowCursor);
+            auto helpLink = getHelpLink(mData->getPath().mPathProblem);
+            helpLink.isEmpty() ? ui->helpIcon->hide() : ui->helpIcon->show();
+        }
+        else
+        {
+            ui->pathProblemContainer->hide();
+            ui->filePathContainer->setCursor(Qt::PointingHandCursor);
+            ui->helpIcon->hide();
+        }
 
         ui->filePathContainer->setProperty(HAS_PROBLEM,hasProblem);
         setStyleSheet(styleSheet());
@@ -111,7 +125,9 @@ void StalledIssueFilePath::fillFilePath()
 
 QString StalledIssueFilePath::getFilePath()
 {
-    return mShowFullPath? mData->getNativeFilePath() : mData->getNativePath();
+    auto filePath = mShowFullPath? mData->getNativeFilePath() : mData->getNativePath();
+    mData->checkTrailingSpaces(filePath);
+    return filePath;
 }
 
 void StalledIssueFilePath::fillMoveFilePath()
@@ -284,6 +300,12 @@ bool StalledIssueFilePath::eventFilter(QObject *watched, QEvent *event)
     return QWidget::eventFilter(watched, event);
 }
 
+void StalledIssueFilePath::onHelpIconClicked()
+{
+    auto helpLink = QUrl(getHelpLink(mData->getPath().mPathProblem));
+    Utilities::openUrl(helpLink);
+}
+
 void StalledIssueFilePath::showHoverAction(QEvent::Type type, QWidget *actionWidget, const QString& path)
 {
     if(type == QEvent::Enter)
@@ -436,4 +458,17 @@ QString StalledIssueFilePath::getSyncPathProblemString(mega::MegaSyncStall::Sync
         }
     }
     return tr("Error not detected");
+}
+
+QString StalledIssueFilePath::getHelpLink(mega::MegaSyncStall::SyncPathProblem pathProblem)
+{
+    switch(pathProblem)
+    {
+        case mega::MegaSyncStall::FilesystemCannotStoreThisName:
+        {
+            return tr("https://help.mega.io/");
+        }
+    }
+
+    return QString();
 }

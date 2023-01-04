@@ -44,28 +44,36 @@ QString StalledIssueData::getMoveFilePath() const
 
 QString StalledIssueData::getNativeFilePath() const
 {
+    QString path;
+
     if(isCloud())
     {
-        return mPath.path;
+        path = mPath.path;
     }
     else
     {
         QFileInfo filePath(mPath.path);
-        return QDir::toNativeSeparators(filePath.filePath());
+        path = QDir::toNativeSeparators(filePath.filePath());
     }
+
+    return path;
 }
 
 QString StalledIssueData::getNativeMoveFilePath() const
 {
+    QString path;
+
     if(isCloud())
     {
-        return mMovePath.path;
+        path = mMovePath.path;
     }
     else
     {
         QFileInfo filePath(mMovePath.path);
-        return QDir::toNativeSeparators(filePath.filePath());
+        path =  QDir::toNativeSeparators(filePath.filePath());
     }
+
+    return path;
 }
 
 QString StalledIssueData::getNativePath() const
@@ -99,22 +107,29 @@ QString StalledIssueData::getNativeMovePath() const
 QString StalledIssueData::getFileName() const
 {
     QFileInfo filePath(getNativeFilePath());
+    QString fileName;
 
     if(filePath.isFile())
     {
-        return filePath.fileName();
-    }
-
-    if(isCloud())
-    {
-        auto splittedIndexPath = mPath.path.split(QString::fromUtf8("/"));
-        return splittedIndexPath.last();
+        fileName = filePath.fileName();
     }
     else
     {
-        auto splittedIndexPath = mPath.path.split(QString::fromUtf8("\\"));
-        return splittedIndexPath.last();
+        if(isCloud())
+        {
+            auto splittedIndexPath = mPath.path.split(QString::fromUtf8("/"));
+            fileName = splittedIndexPath.last();
+        }
+        else
+        {
+            auto splittedIndexPath = mPath.path.split(QString::fromUtf8("\\"));
+            fileName = splittedIndexPath.last();
+        }
     }
+
+    checkTrailingSpaces(fileName);
+
+    return fileName;
 }
 
 bool StalledIssueData::isEqual(const mega::MegaSyncStall* stall) const
@@ -146,6 +161,20 @@ void StalledIssueData::setIsSolved(bool newIsSolved)
     mIsSolved = newIsSolved;
 }
 
+void StalledIssueData::checkTrailingSpaces(QString &name) const
+{
+    auto trimmedPath = name.trimmed();
+    if(trimmedPath != name)
+    {
+        name.prepend(QString::fromUtf8("\""));
+        name.append(QString::fromUtf8("\""));
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+/// \brief StalledIssue::StalledIssue
+/// \param stallIssue
+///
 StalledIssue::StalledIssue(const mega::MegaSyncStall *stallIssue)
 {
     fillIssue(stallIssue);
@@ -332,27 +361,33 @@ mega::MegaSyncStall::SyncStallReason StalledIssue::getReason() const
 
 QString StalledIssue::getFileName(bool preferCloud) const
 {
+    QString fileName;
+
     if (preferCloud)
     {
-        if (mCloudData) return mCloudData->getFileName();
+        if (mCloudData)
+        {
+            fileName = mCloudData->getFileName();
+        }
     }
     else
     {
-        if (mLocalData) return mLocalData->getFileName();
+        if (mLocalData)
+        {
+            fileName = mLocalData->getFileName();
+        }
     }
 
     if(mLocalData)
     {
-        return mLocalData->getFileName();
+        fileName = mLocalData->getFileName();
     }
     else if(mCloudData)
     {
-        return mCloudData->getFileName();
+        fileName = mCloudData->getFileName();
     }
-    else
-    {
-        return QString();
-    }
+
+    return fileName;
 }
 
 bool StalledIssue::operator==(const StalledIssue &data)

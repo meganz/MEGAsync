@@ -52,6 +52,8 @@ public:
     bool isSolved() const;
     void setIsSolved(bool newIsSolved);
 
+    void checkTrailingSpaces(QString& name) const;
+
 private:
     friend class StalledIssue;
     friend class NameConflictedStalledIssue;

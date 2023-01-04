@@ -27,6 +27,9 @@ public:
 protected:
     bool eventFilter(QObject *watched, QEvent *event) override;
 
+private slots:
+    void onHelpIconClicked();
+
 private:
     void showHoverAction(QEvent::Type type, QWidget* actionWidget, const QString &path);
     void updateFileIcons();
@@ -41,6 +44,7 @@ private:
     QString getMoveFilePath();
 
     QString getSyncPathProblemString(mega::MegaSyncStall::SyncPathProblem pathProblem);
+    QString getHelpLink(mega::MegaSyncStall::SyncPathProblem pathProblem);
 
     Ui::StalledIssueFilePath *ui;
     StalledIssueDataPtr mData;

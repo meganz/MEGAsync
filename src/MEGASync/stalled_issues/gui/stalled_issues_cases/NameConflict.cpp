@@ -13,6 +13,8 @@
 static const int RENAME_ID = 0;
 static const int REMOVE_ID = 1;
 
+const char* TITLE_FILENAME = "TITLE_FILENAME";
+
 //NAME CONFLICT TITLE
 //THINK ABOUT ANOTHER WAY TO RESUSE THE STALLED ISSUE ACTION TITLE OR CREATE ONE FOR THE NAME CONFLICT
 NameConflictTitle::NameConflictTitle(int index, QWidget *parent)
@@ -48,18 +50,18 @@ NameConflict::~NameConflict()
     delete ui;
 }
 
-void NameConflict::updateUi(NameConflictedStalledIssue::NameConflictData data)
+void NameConflict::updateUi(NameConflictedStalledIssue::NameConflictData conflictData)
 {
     ui->path->hide();
 
-    if(data.data)
+    if(conflictData.data)
     {
         ui->path->show();
-        ui->path->updateUi(data.data);
+        ui->path->updateUi(conflictData.data);
     }
 
     //Fill conflict names
-    auto conflictedNames = data.conflictedNames;
+    auto conflictedNames = conflictData.conflictedNames;
     auto nameConflictWidgets = ui->nameConflicts->findChildren<NameConflictTitle*>();
     auto totalUpdate(nameConflictWidgets.size() >= conflictedNames.size());
 
@@ -67,6 +69,8 @@ void NameConflict::updateUi(NameConflictedStalledIssue::NameConflictData data)
 
     for(int index = 0; index < conflictedNames.size(); ++index)
     {
+        QString conflictedName(conflictedNames.at(index).conflictedName);
+
         NameConflictTitle* title(nullptr);
         if(totalUpdate)
         {
@@ -76,19 +80,21 @@ void NameConflict::updateUi(NameConflictedStalledIssue::NameConflictData data)
         else
         {
             title = new NameConflictTitle(index, this);
+            title->setProperty(TITLE_FILENAME, conflictedName);
             title->setSolved(false);
             connect(title, &StalledIssueActionTitle::actionClicked, this, &NameConflict::onActionClicked);
 
             ui->nameConflictsLayout->addWidget(title);
         }
 
-        title->setTitle(conflictedNames.at(index).conflictedName);
+        mData.data->checkTrailingSpaces(conflictedName);
+        title->setTitle(conflictedName);
         title->showIcon();
 
         if(title &&
                 (!mData.data
                  || (mData.conflictedNames.size() > index
-                 && (data.conflictedNames.at(index).isSolved() != mData.conflictedNames.at(index).isSolved()))))
+                 && (conflictData.conflictedNames.at(index).isSolved() != mData.conflictedNames.at(index).isSolved()))))
         {
             bool isSolved(conflictedNames.at(index).isSolved());
             title->setSolved(isSolved);
@@ -134,7 +140,7 @@ void NameConflict::updateUi(NameConflictedStalledIssue::NameConflictData data)
         removeConflictedNameWidget(titleToRemove);
     }
 
-    mData = data;
+    mData = conflictData;
 }
 
 void NameConflict::removeConflictedNameWidget(QWidget* widget)
@@ -158,7 +164,8 @@ void NameConflict::onActionClicked(int actionId)
     if(auto chooseTitle = dynamic_cast<NameConflictTitle*>(sender()))
     {
         QFileInfo info;
-        info.setFile(mData.data->getNativePath(), chooseTitle->title());
+        auto titleFileName = chooseTitle->property(TITLE_FILENAME).toString();
+        info.setFile(mData.data->getNativePath(), titleFileName);
 
         auto delegateWidget = dynamic_cast<StalledIssueBaseDelegateWidget*>(parentWidget());
 
@@ -188,12 +195,12 @@ void NameConflict::onActionClicked(int actionId)
 
                 if(mData.isCloud)
                 {
-                   areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveCloudConflictedNameByRename(chooseTitle->title()
+                   areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveCloudConflictedNameByRename(titleFileName
                                                                                            , newName, chooseTitle->getIndex(), delegateWidget->getCurrentIndex());
                 }
                 else
                 {
-                    areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveLocalConflictedNameByRename(chooseTitle->title()
+                    areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveLocalConflictedNameByRename(titleFileName
                                                                                            , newName,chooseTitle->getIndex(), delegateWidget->getCurrentIndex());
                 }
 
@@ -228,12 +235,12 @@ void NameConflict::onActionClicked(int actionId)
                 if(mData.isCloud)
                 {
                     mUtilities.removeRemoteFile(info.filePath());
-                    areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveCloudConflictedNameByRemove(chooseTitle->title(),chooseTitle->getIndex(), delegateWidget->getCurrentIndex());
+                    areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveCloudConflictedNameByRemove(titleFileName,chooseTitle->getIndex(), delegateWidget->getCurrentIndex());
                 }
                 else
                 {
                     mUtilities.removeLocalFile(QDir::toNativeSeparators(info.filePath()));
-                    areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveLocalConflictedNameByRemove(chooseTitle->title(),chooseTitle->getIndex(), delegateWidget->getCurrentIndex());
+                    areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveLocalConflictedNameByRemove(titleFileName,chooseTitle->getIndex(), delegateWidget->getCurrentIndex());
                 }
 
                 if(areAllSolved)
