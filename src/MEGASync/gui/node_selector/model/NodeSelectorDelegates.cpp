@@ -45,11 +45,7 @@ void IconDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 void IconDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const
 {
     QStyledItemDelegate::initStyleOption(option, index);
-    QVariant enabled = index.data(toInt(NodeRowDelegateRoles::ENABLED_ROLE));
-    if (enabled.isValid() && !enabled.toBool())
-    {
-        option->icon = QIcon();
-    }
+    option->icon = QIcon();
 }
 
 

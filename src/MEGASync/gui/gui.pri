@@ -196,11 +196,11 @@ win32 {
                 $$PWD/win/CancelConfirmWidget.ui \
                 $$PWD/win/NodeNameSetterDialog.ui \
                 $$PWD/win/NotificationsSettings.ui \
+                $$PWD/win/LowDiskSpaceDialog.ui \
                 $$PWD/node_selector/gui/win/NodeSelectorTreeViewWidget.ui \
                 $$PWD/node_selector/gui/win/NodeSelectorLoadingDelegate.ui \
                 $$PWD/node_selector/gui/win/NodeSelector.ui \
                 $$PWD/node_selector/gui/win/SearchLineEdit.ui
-                $$PWD/win/LowDiskSpaceDialog.ui
 }
 
 macx {
@@ -245,11 +245,11 @@ macx {
                 $$PWD/macx/CancelConfirmWidget.ui \
                 $$PWD/macx/NodeNameSetterDialog.ui \
                 $$PWD/macx/NotificationsSettings.ui \
+                $$PWD/macx/LowDiskSpaceDialosg.ui \
                 $$PWD/node_selector/gui/macx/NodeSelectorTreeViewWidget.ui \
                 $$PWD/node_selector/gui/macx/NodeSelectorLoadingDelegate.ui \
                 $$PWD/node_selector/gui/macx/NodeSelector.ui \
                 $$PWD/node_selector/gui/macx/SearchLineEdit.ui
-                $$PWD/macx/LowDiskSpaceDialosg.ui
 
     #Asset catalog need to load SF symbol images of toolbar items for custom NSToolbar
     QMAKE_ASSET_CATALOGS += $$PWD/images/Images.xcassets
@@ -317,11 +317,11 @@ unix:!macx {
                 $$PWD/linux/ScanningWidget.ui \
                 $$PWD/linux/NodeNameSetterDialog.ui \
                 $$PWD/linux/NotificationsSettings.ui \
+                $$PWD/linux/LowDiskSpaceDialog.ui \
                 $$PWD/node_selector/gui/linux/NodeSelectorTreeViewWidget.ui \
                 $$PWD/node_selector/gui/linux/NodeSelectorLoadingDelegate.ui \
                 $$PWD/node_selector/gui/linux/NodeSelector.ui \
                 $$PWD/node_selector/gui/linux/SearchLineEdit.ui
-                $$PWD/linux/LowDiskSpaceDialog.ui
 
     HEADERS += $$PWD/PermissionsDialog.h \
                $$PWD/PermissionsWidget.h
