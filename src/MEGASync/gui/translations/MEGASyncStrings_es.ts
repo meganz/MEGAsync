@@ -4665,7 +4665,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. This action cannot be undone.</source>
         <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option.</translatorcomment>
-        <translation>La carpeta se eliminará de MEGA pero no se eliminará de tu ordenador. Esta acción no se puede deshacer.</translation>
+        <translation>La carpeta se eliminará de MEGA pero no se eliminará de tu equipo local. Esta acción no se puede deshacer.</translation>
     </message>
     <message>
         <source>Confirm</source>
