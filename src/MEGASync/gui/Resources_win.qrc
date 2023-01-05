@@ -1334,5 +1334,8 @@
         <file>images/node_selector/chevron-right-active.png</file>
         <file>images/node_selector/chevron-right-active@2x.png</file>
         <file>images/node_selector/chevron-right-active@3x.png</file>
+        <file>images/HD_win.png</file>
+        <file>images/HD_win@2x.png</file>
+        <file>images/HD_win@3x.png</file>
     </qresource>
 </RCC>

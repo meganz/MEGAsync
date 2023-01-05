@@ -126,7 +126,6 @@ void ButtonIconManager::setDefaultIcon(QAbstractButton *button)
 
     if(!iconInfo.isEmpty())
     {
-        //auto newIcon = button->icon();
         QIcon newIcon;
         // The push button is not hovered by mouse
         if(button->isCheckable() && button->isChecked())
@@ -153,7 +152,6 @@ void ButtonIconManager::setHoverIcon(QAbstractButton *button)
     if(!iconInfo.isEmpty())
     {
         auto hoverSelectedAvailable = button->property(HOVER_SELECTED_FLAG).toBool();
-        //auto newIcon = button->icon();
         QIcon newIcon;
         // The push button is hovered by mouse
         if(button->isCheckable() && button->isChecked())
@@ -187,7 +185,6 @@ void ButtonIconManager::setSelectedIcon(QAbstractButton *button)
     if(!iconInfo.isEmpty())
     {
         //The button is checked
-        //auto newIcon = button->icon();
         QIcon newIcon;
         if(button->isChecked())
         {

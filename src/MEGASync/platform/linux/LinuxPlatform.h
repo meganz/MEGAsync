@@ -34,8 +34,8 @@ public:
     static void prepareForSync();
     static QString desktop_file;
     static bool enableTrayIcon(QString executable);
-    static void notifyItemChange(const QString& path, int newState);
-    static void notifySyncFileChange(std::string *localPath, int newState);
+    static void notifyItemChange(const QString &path, int);
+    static void notifySyncFileChange(std::string* localPath, int newState);
     static bool startOnStartup(bool value);
     static bool isStartOnStartupActive();
     static bool isTilingWindowManager();

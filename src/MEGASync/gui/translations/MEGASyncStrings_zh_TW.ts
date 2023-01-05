@@ -278,7 +278,7 @@
     <message>
         <source>[A] has been deleted/deactivated</source>
         <translatorcomment>Label to indicate that [A] has been deleted from your contacts. Placeholder will be replaced by email of user deleted</translatorcomment>
-        <translation>[A]已被刪除/停用</translation>
+        <translation>[A]已被刪除或停用</translation>
     </message>
     <message>
         <source>[A] established you as a contact</source>
@@ -406,7 +406,7 @@
     <message>
         <source>Local Folder</source>
         <translatorcomment>Local folder column header name for backlups table in settings dialog</translatorcomment>
-        <translation>本機資料夾</translation>
+        <translation>本地資料夾</translation>
     </message>
     <message>
         <source>Sort by name</source>
@@ -439,12 +439,12 @@
     <message>
         <source>A folder named &quot;%1&quot; already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
         <translatorcomment>Text shown to the user if there is a name conflict with a folder in the Backups remote folder for the current device</translatorcomment>
-        <translation>您的備份中已存在名稱為「%1」的資料夾。重新命名新資料夾名稱以繼續進行備份。資料夾名稱在你的電腦上不會更改。</translation>
+        <translation>您的備份裡已存在名稱為「%1」的資料夾。請重新命名新資料夾名稱以繼續進行備份。資料夾名稱在你的電腦上不會更改。</translation>
     </message>
     <message>
         <source>If you don&apos;t want to rename the new folder, stop the backup in the [A]Backup centre[/A] for the existing folder. Then setup the backup for the new folder again.</source>
         <translatorcomment>Text instructing the user to go to the backup center to solve the backup name conflict</translatorcomment>
-        <translation>如果您不想重新命名新資料夾，請在[A]備份中心[/A]中停止現有資料夾的備份。然後重新為新資料夾設定備份。</translation>
+        <translation>如果您不想重新命名新資料夾，請在[A]備份中心[/A]中停止現有資料夾的備份。然後再次為新資料夾設定備份。</translation>
     </message>
     <message>
         <source>Rename and backup</source>
@@ -477,7 +477,7 @@
     <message>
         <source>A folder named &quot;%1&quot; already exists in your Backups. Rename the new folder to continue with the backup.</source>
         <translatorcomment>Error message displayed in the top of the rename backup dialog. It indicates that a backup with that name already exists.</translatorcomment>
-        <translation>您的備份中已存在名稱為「%1」的資料夾。請重新命名新資料夾名稱以繼續進行備份。</translation>
+        <translation>您的備份裡已存在名稱為「%1」的資料夾。請重新命名新資料夾名稱以繼續進行備份。</translation>
     </message>
 </context>
 <context>
@@ -533,7 +533,7 @@
     <message>
         <source>Folders will be stored in backups and you can check the status of your backups in backup centre.</source>
         <translatorcomment>Successfull dialog text</translatorcomment>
-        <translation>資料夾將儲存在備份中，您可以在備份中心查看您的備份狀態。</translation>
+        <translation>資料夾將儲存在備份裡，您可以在備份中心查看您的備份狀態。</translation>
     </message>
     <message>
         <source>Show more…</source>
@@ -741,7 +741,7 @@
     <message>
         <source>Only enable this option if tranfers don&apos;t start. Under all other circumstances, using HTTP is satisfactory as MEGA already encrypts all data.</source>
         <translatorcomment>Description label about the option Use HTTPS for transfers that don&amp;apos;t start checkbox.</translatorcomment>
-        <translation>僅於您的傳輸未啟動時才啟用此選項。在其它情況下，由於MEGA已將所有資料進行加密，HTTP選項的安全性已可正常運作。</translation>
+        <translation>僅於您的傳輸未啟動時才啟用此選項。在所有其它情況下，MEGA已將所有資料進行加密，HTTP選項的安全性已可正常運作。</translation>
     </message>
 </context>
 <context>
@@ -852,12 +852,12 @@
     <message>
         <source>Ok</source>
         <translatorcomment>Button label to confirm and close a message box dialog.</translatorcomment>
-        <translation>Ok</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Are you sure you want to exit uploading?</source>
         <translatorcomment>Confirmation message shown when the user is trying to cancel the ongoing upload report.</translatorcomment>
-        <translation>您確定要取消問題報告上傳嗎？</translation>
+        <translation>想要取消上傳您報告的問題嗎？</translation>
     </message>
     <message>
         <source>The bug report will not be submitted if you exit uploading.</source>
@@ -1131,17 +1131,17 @@
     <message>
         <source>Shared Folder Received</source>
         <translatorcomment>Title of the notification when a shared folder has been received</translatorcomment>
-        <translation>已收到共享資料夾</translation>
+        <translation>共享資料夾已收到</translation>
     </message>
     <message>
         <source>Shared Folder Removed</source>
         <translatorcomment>Title of the notification when a shared folder has been removed</translatorcomment>
-        <translation>已移除共享資料夾</translation>
+        <translation>共享資料夾已移除</translation>
     </message>
     <message>
         <source>Shared Folder Updated</source>
         <translatorcomment>Generic label to indicate that there is an update in a shared folder but the name of the shared folder is not available.</translatorcomment>
-        <translation>已更新共享資料夾</translation>
+        <translation>共享資料夾已更新</translation>
     </message>
     <message>
         <source>Payment Info</source>
@@ -1625,12 +1625,12 @@
     <message>
         <source>Please, enter your e-mail address</source>
         <translatorcomment>Message box shown if user does not enter email and try to log in</translatorcomment>
-        <translation>請輸入您的email</translation>
+        <translation>請輸入您的電子郵件地址</translation>
     </message>
     <message>
         <source>Please, enter a valid e-mail address</source>
         <translatorcomment>Message box shown if user has typed an incorrect email</translatorcomment>
-        <translation>請輸入一個有效的email</translation>
+        <translation>請輸入一個有效的電子郵件地址</translation>
     </message>
     <message>
         <source>Please, enter your password</source>
@@ -1645,12 +1645,12 @@
     <message>
         <source>Locked Account</source>
         <translatorcomment>Label to indicate the current account is locked</translatorcomment>
-        <translation>帳戶封鎖</translation>
+        <translation>帳戶已封鎖</translation>
     </message>
     <message>
         <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
         <translatorcomment>Description to explain why the current account is locked. The user needs to verify email in order to continue using the application.</translatorcomment>
-        <translation>為了安全起見，您的帳戶已被暫時封鎖。請驗證您的email並按照步驟解鎖您的帳戶。</translation>
+        <translation>為了安全起見，您的帳戶已被暫時封鎖。請驗證您的電子郵件地址並按照步驟解鎖您的帳戶。</translation>
     </message>
     <message>
         <source>Log out</source>
@@ -1695,7 +1695,7 @@
     <message>
         <source>6 digit code:</source>
         <translatorcomment>Placeholder text on the Two Factor Authentication login dialog telling the user to enter their 6 digit code from the Google Authenticator app.</translatorcomment>
-        <translation>6位數字驗證碼：</translation>
+        <translation>6位數驗證碼：</translation>
     </message>
     <message>
         <source>Invalid code</source>
@@ -1749,7 +1749,7 @@
     <message>
         <source>Import to my cloud drive</source>
         <translatorcomment>Label to indicate if the user wants to import the selected MEGA link(s) to his cloud drive.</translatorcomment>
-        <translation>匯入至我的雲端硬碟</translation>
+        <translation>匯入到我的雲端硬碟</translation>
     </message>
     <message>
         <source>OK</source>
@@ -2104,7 +2104,7 @@
     <message>
         <source>Login or create an account to start using MEGA Desktop app.</source>
         <translatorcomment>Description label to inform the user about next step in order to use MEGA Desktop app. Users will need to login or create an account.</translatorcomment>
-        <translation>登入或建立一個帳戶以開始使用MEGA桌面應用程式。</translation>
+        <translation>登入或建立一個帳戶以開始使用我們的應用程式。</translation>
     </message>
     <message>
         <source>You need to log into MEGA account to use the MEGA desktop app.</source>
@@ -2170,7 +2170,7 @@
     <message>
         <source>Locked Accounts</source>
         <translatorcomment>Title of informative popover which informs users about the lock situation.</translatorcomment>
-        <translation>帳戶封鎖</translation>
+        <translation>帳戶已封鎖</translation>
     </message>
 </context>
 <context>
@@ -2188,7 +2188,7 @@
     <message>
         <source>6 digit code:</source>
         <translatorcomment>Placeholder text on the Two Factor Authentication login dialog telling the user to enter their 6 digit code from the Google Authenticator app.</translatorcomment>
-        <translation>6位數字驗證碼：</translation>
+        <translation>6位數驗證碼：</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2372,7 +2372,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
         <translatorcomment>Notification message launched when a connectivity problem occurs.</translatorcomment>
-        <translation>應用程式無法連接。請檢查您的網路連線和本地防火牆設置。請注意，大多數防毒軟體都包含防火牆。</translation>
+        <translation>應用程式無法連接。請檢查您的網路連線和本地防火牆設定。請注意，大多數防毒軟體都包含防火牆。</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
@@ -2407,7 +2407,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>因為遠端資料夾在垃圾筒中，您的同步 「%1」 已被停用</translation>
+        <translation>因為遠端資料夾在垃圾筒中，您的同步「%1」已停用</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
@@ -2478,7 +2478,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
         <translatorcomment>Message shown to the user to inform that MEGAsync is not able to find a systray to place tray icon</translatorcomment>
-        <translation>我們無法找到系統狀態列來放置應用程式的狀態圖示。請嘗試再次啟動應用程式。</translation>
+        <translation>我們無法找到系統狀態列來放置應用程式的圖示。請嘗試再次啟動應用程式。</translation>
     </message>
     <message>
         <source>Error getting link:</source>
@@ -2493,7 +2493,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>The link can&apos;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
         <translatorcomment>Notification error message shown while generating a public link of a file from an incoming shared folder or from the rubbish bin</translatorcomment>
-        <translation>無法生成連結，因為檔案位於傳入的共享資料夾或垃圾筒中。</translation>
+        <translation>無法生成連結，因為檔案位於傳入的共享資料夾或您的垃圾筒中。</translation>
     </message>
     <message>
         <source>Upload</source>
@@ -2597,7 +2597,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Account Suspended</source>
         <translatorcomment>Title to inform that a business account is actually suspended.</translatorcomment>
-        <translation>帳戶暫停</translation>
+        <translation>帳戶已暫停</translation>
     </message>
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
@@ -2617,7 +2617,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Locked account</source>
         <translatorcomment>Title of the system notification when the account is locked</translatorcomment>
-        <translation>帳戶封鎖</translation>
+        <translation>帳戶已封鎖</translation>
     </message>
     <message>
         <source>Open links</source>
@@ -2784,17 +2784,17 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>因為本機資料夾不存在，您的備份「%1」已停用。</translation>
+        <translation>因為本地資料夾不存在，您的備份「%1」已停用。</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>由於VirtualBox檔案系統比較不具效率，所以不支援共享資料夾同步，因此您的備份「%1」已停用。</translation>
+        <translation>由於該檔案系統的缺陷，因此不支援備份VirtualBox共享的資料夾，所以您的備份「%1」已停用。</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>因為MEGA資料夾在垃圾筒中，您的備份「%1」已停用</translation>
+        <translation>因為MEGA資料夾在垃圾筒中，您的備份「%1」已停用。</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
@@ -2804,7 +2804,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder has changed</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>因為本機資料夾已變更，您的備份「%1」已停用。</translation>
+        <translation>因為本地資料夾已變更，您的備份「%1」已停用。</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder has changed</source>
@@ -2967,7 +2967,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
         <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
-        <translation>超出儲存空間配額。請現在就升級</translation>
+        <translation>超出儲存空間配額。請立即升級。</translation>
     </message>
     <message>
         <source>Decryption error</source>
@@ -2977,7 +2977,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
         <translatorcomment>Error triggered by SDK when an account has been suspended due to copyright violations.</translatorcomment>
-        <translation>帳戶因侵犯版權而被暫停使用。我們向您發送了一封電子郵件，其中包含更多關於此的訊息。</translation>
+        <translation>帳戶因侵犯版權而被暫停使用。我們向您發送了一封電子郵件，其中包含更多關於此內容的訊息。</translation>
     </message>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
@@ -3000,7 +3000,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Locked Accounts</source>
         <translatorcomment>Title of informative message box which informs users about the lock situation.</translatorcomment>
-        <translation>帳戶封鎖</translation>
+        <translation>帳戶已封鎖</translation>
     </message>
     <message>
         <source>It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.</source>
@@ -3014,77 +3014,6 @@ Transfer will automatically resume when you re-open the app.</source>
     </message>
 </context>
 <context>
-    <name>MegaItemModel</name>
-    <message>
-        <source>Folder already synced</source>
-        <translatorcomment>Tooltip text to notify the user that this folder is already synced.</translatorcomment>
-        <translation>資料夾已同步</translation>
-    </message>
-    <message>
-        <source>Folder contents already synced</source>
-        <translatorcomment>Tooltip text to notify the user that some folder inside the folder that he is hovering with mouse is already synced.</translatorcomment>
-        <translation>資料夾內容已同步</translation>
-    </message>
-    <message>
-        <source>Name</source>
-        <translatorcomment>Column title. This column shows the name of a file or folder.</translatorcomment>
-        <translation>名稱</translation>
-    </message>
-    <message>
-        <source>Sort by status</source>
-        <translatorcomment>First column title tooltip(this column title doesn´t contains text, it shows an icon). Sorts the order of the column by node status, for example synced folders first or last.</translatorcomment>
-        <translation>按狀態排序</translation>
-    </message>
-    <message>
-        <source>Sort by owner name</source>
-        <translatorcomment>Owner column title tooltip. Sorts the order of the column by owner name alphabetically.</translatorcomment>
-        <translation>按所有者名稱排序</translation>
-    </message>
-    <message>
-        <source>Sort by date</source>
-        <translatorcomment>Recently used column title tooltip. Sorts the order of the column by date.</translatorcomment>
-        <translation>按日期排序</translation>
-    </message>
-    <message>
-        <source>Sort by name</source>
-        <translatorcomment>Node name column title tooltip. Sorts the order of the column by date.</translatorcomment>
-        <translation>按名稱排序</translation>
-    </message>
-    <message numerus="yes">
-        <source>Today at %1</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened today. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation><numerusform>今天%1</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Yesterday at %1</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened yesterday. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation><numerusform>昨天%1</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%1 at %2</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was previously to yesterday. %1 represents the date (day month and year), while %2 represents the hour). Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation><numerusform>%1 %2</numerusform></translation>
-    </message>
-    <message>
-        <source>Recently used</source>
-        <translatorcomment>Column title. This column shows when this file or folder was changed.</translatorcomment>
-        <translation>上次修改</translation>
-    </message>
-</context>
-<context>
-    <name>MegaItemTreeView</name>
-    <message>
-        <source>Get MEGA link</source>
-        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It creates an MEGA link and copy to Clipboard.</translatorcomment>
-        <translation>取得MEGA連結</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It removes the node (file or folder).</translatorcomment>
-        <translation>刪除</translation>
-    </message>
-</context>
-<context>
     <name>MegaNodeNames</name>
     <message>
         <source>Cloud Drive</source>
@@ -3095,6 +3024,11 @@ Transfer will automatically resume when you re-open the app.</source>
         <source>Backups</source>
         <translatorcomment>Title of the Backups root node</translatorcomment>
         <translation>備份</translation>
+    </message>
+    <message>
+        <source>Incoming shares</source>
+        <translatorcomment>Title of the Incoming shares root node</translatorcomment>
+        <translation>傳入的共享</translation>
     </message>
 </context>
 <context>
@@ -3260,7 +3194,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Account expired (business or Pro Flexi)</source>
         <translatorcomment>Label to show that the current account (either business or Pro Flexi) is expired during a SDK operation.</translatorcomment>
-        <translation>帳戶已過期</translation>
+        <translation>帳戶已停用</translation>
     </message>
 </context>
 <context>
@@ -3318,7 +3252,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Error opening file</source>
         <translatorcomment>Text on an error messagebox because a local file could not be opened</translatorcomment>
-        <translation>無法開啟檔案。請檢查您本機磁碟中的檔案是否未被刪除或移動。</translation>
+        <translation>無法開啟檔案。請檢查您本地磁碟中的檔案是否未被刪除或移動。</translation>
     </message>
     <message numerus="yes">
         <source>Pause transfer</source>
@@ -3365,7 +3299,7 @@ All your transfers in this category will be cancelled.</source>
         <source>Cancel transfers?
 Your incomplete sync transfers won&apos;t be cancelled.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
-        <translation>取消傳輸？
+        <translation>是否取消傳輸？
 您未完成的同步傳輸將不會被取消。所有其它傳輸將被取消。</translation>
     </message>
     <message>
@@ -3373,7 +3307,7 @@ Your incomplete sync transfers won&apos;t be cancelled.</source>
 Your incomplete sync transfers won't be cancelled
 All the other transfers will be cancelled and cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
-        <translation>取消傳輸？
+        <translation>是否取消傳輸？
 您未完成的同步傳輸將不會被取消。
 所有其它傳輸將被取消和清除。</translation>
     </message>
@@ -3430,7 +3364,7 @@ All the selected completed transfers in this category will be cleared.</source>
         <source>Cancel transfers?
 Your selected incomplete sync transfers won&apos;t be cancelled.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
-        <translation>取消傳輸？
+        <translation>是否取消傳輸？
 您選擇的未完成同步傳輸將不會被取消。所有其它選擇的傳輸將被取消。</translation>
     </message>
     <message>
@@ -3481,6 +3415,20 @@ Your selected incomplete sync transfers won&apos;t be cancelled.</source>
         <translation>不允許使用以下字元：
 %1</translation>
     </message>
+    <message>
+        <source>A file with this name already exists in this location.
+Enter a different name.</source>
+        <translatorcomment>Message shown when the user has entered a name which already exists on the folder</translatorcomment>
+        <translation>此位置已存在相同名稱的檔案。
+請輸入一個不同名稱。</translation>
+    </message>
+    <message>
+        <source>A folder with this name already exists in this location.
+Enter a different name</source>
+        <translatorcomment>Message shown when the user has entered a name which already exists on the folder</translatorcomment>
+        <translation>此位置已存在相同名稱的資料夾。
+請輸入一個不同名稱。</translation>
+    </message>
 </context>
 <context>
     <name>NodeSelector</name>
@@ -3493,21 +3441,6 @@ Your selected incomplete sync transfers won&apos;t be cancelled.</source>
         <source>Select a MEGA folder:</source>
         <translatorcomment>Label to indicate the user to select a MEGA folder for a synchronization (String short as possible). Keep capital letters.</translatorcomment>
         <translation>選擇MEGA資料夾：</translation>
-    </message>
-    <message>
-        <source>New folder</source>
-        <translatorcomment>Button label to create a New folder at your MEGA cloud drive. Keep capital letters. String as short as possible.</translatorcomment>
-        <translation>新資料夾</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>OK</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>取消</translation>
     </message>
     <message>
         <source>Error</source>
@@ -3526,11 +3459,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>資料夾無法同步。請確定您的資料夾名稱中沒有 “\”、“/” 或 “：” 等字元。</translation>
     </message>
     <message>
-        <source>Always upload to this destination</source>
-        <translatorcomment>Label to inform the user upload files/folder to a default destination. with a checkbox.</translatorcomment>
-        <translation>總是上傳至這個目的資料夾</translation>
-    </message>
-    <message>
         <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying upload files to a non compatible folder</translatorcomment>
         <translation>您需要讀取與編輯權限或完全存取權限才可上傳到選定的資料夾。</translation>
@@ -3541,17 +3469,9 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>您需要有完整的存取權限才能同步選定的資料夾。</translation>
     </message>
     <message>
-        <source>Are you sure that you want to delete &quot;%1&quot;?</source>
-        <translation>您確定要刪除 「%1」 嗎？</translation>
-    </message>
-    <message>
         <source>Only files can be used for streaming.</source>
         <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
         <translation>只有檔案可用於串流。</translation>
-    </message>
-    <message>
-        <source>Select items</source>
-        <translation>選擇項目</translation>
     </message>
     <message>
         <source>Select a MEGA folder</source>
@@ -3562,16 +3482,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>You no longer have access to this item. Ask the owner to share again.</source>
         <translatorcomment>Error message shown when the user is trying to download an file or folder from an incoming share and the owner stops sharing/removes all items</translatorcomment>
         <translation><numerusform>您沒有權限存取這些項目。請與擁有者聯繫並請求再次共享。</numerusform></translation>
-    </message>
-    <message>
-        <source>Cloud drive</source>
-        <translatorcomment>Node selector button Text. Switch the view to show only the cloud drive nodes (files and folders)</translatorcomment>
-        <translation>雲端硬碟</translation>
-    </message>
-    <message>
-        <source>Incoming shares</source>
-        <translatorcomment>Node selector button Text. Switch the view to show only the incoming shares nodes (files and folders)</translatorcomment>
-        <translation>傳入的共享</translation>
     </message>
     <message numerus="yes">
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
@@ -3590,10 +3500,114 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
                            Second and last part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
         <translation><numerusform>%1。%2個項目已被移除。要重新選擇，請關閉此視窗並重試。</numerusform></translation>
     </message>
+</context>
+<context>
+    <name>NodeSelectorModel</name>
     <message>
-        <source>Backups</source>
-        <translatorcomment>Title of the Backups section</translatorcomment>
-        <translation>備份</translation>
+        <source>Folder already synced</source>
+        <translatorcomment>Tooltip text to notify the user that this folder is already synced.</translatorcomment>
+        <translation>資料夾已同步。</translation>
+    </message>
+    <message>
+        <source>Folder contents already synced</source>
+        <translatorcomment>Tooltip text to notify the user that some folder inside the folder that he is hovering with mouse is already synced.</translatorcomment>
+        <translation>資料夾內容已經同步。</translation>
+    </message>
+    <message>
+        <source>Recently used</source>
+        <translatorcomment>Column title. This column shows when this file or folder was changed.</translatorcomment>
+        <translation>上次修改</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translatorcomment>Column title. This column shows the name of a file or folder.</translatorcomment>
+        <translation>名稱</translation>
+    </message>
+    <message>
+        <source>Sort by status</source>
+        <translatorcomment>First column title tooltip(this column title doesn´t contains text, it shows an icon). Sorts the order of the column by node status, for example synced folders first or last.</translatorcomment>
+        <translation>依狀態排序</translation>
+    </message>
+    <message>
+        <source>Sort by owner name</source>
+        <translatorcomment>Owner column title tooltip. Sorts the order of the column by owner name alphabetically.</translatorcomment>
+        <translation>依擁有者名稱排序</translation>
+    </message>
+    <message>
+        <source>Sort by date</source>
+        <translatorcomment>Recently used column title tooltip. Sorts the order of the column by date.</translatorcomment>
+        <translation>依日期排序</translation>
+    </message>
+    <message>
+        <source>Sort by name</source>
+        <translatorcomment>Node name column title tooltip. Sorts the order of the column by date.</translatorcomment>
+        <translation>依名稱排序</translation>
+    </message>
+    <message numerus="yes">
+        <source>Today at %1</source>
+        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened today. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
+        <translation><numerusform>今天 %1</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Yesterday at %1</source>
+        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened yesterday. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
+        <translation><numerusform>昨天 %1</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 at %2</source>
+        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was previously to yesterday. %1 represents the date (day month and year), while %2 represents the hour). Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
+        <translation><numerusform>%1 %2</numerusform></translation>
+    </message>
+</context>
+<context>
+    <name>NodeSelectorTreeView</name>
+    <message>
+        <source>Get MEGA link</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It creates an MEGA link and copy to Clipboard.</translatorcomment>
+        <translation>取得MEGA連結</translation>
+    </message>
+    <message>
+        <source>Rename</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It renames the node (file or folder).</translatorcomment>
+        <translation>重新命名</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It removes the node (file or folder).</translatorcomment>
+        <translation>刪除</translation>
+    </message>
+</context>
+<context>
+    <name>NodeSelectorTreeViewWidget</name>
+    <message>
+        <source>Always upload to this destination</source>
+        <translatorcomment>Label to inform the user upload files/folder to a default destination. with a checkbox.</translatorcomment>
+        <translation>總是上傳到這個位置</translation>
+    </message>
+    <message>
+        <source>New folder</source>
+        <translatorcomment>Button label to create a New folder at your MEGA cloud drive. Keep capital letters. String as short as possible.</translatorcomment>
+        <translation>新資料夾</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translatorcomment>Label for accept button.</translatorcomment>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Label for cancel button.</translatorcomment>
+        <translation>取消</translation>
+    </message>
+    <message>
+        <source>Are you sure that you want to delete &quot;%1&quot;?</source>
+        <translatorcomment>MessageBox to confirm that the user wants to remove the node. %1 is the node name</translatorcomment>
+        <translation>您確定要刪除「%1」嗎？</translation>
+    </message>
+    <message>
+        <source>Error:</source>
+        <translatorcomment>MessageBox to inform about an error when trying to move or remove a node</translatorcomment>
+        <translation>錯誤：</translation>
     </message>
 </context>
 <context>
@@ -3880,7 +3894,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&apos;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
-        <translation>檔案和資料夾有一個擁有者並且屬於一群使用者的。使用此對話框，您可以將由桌面應用程式建立的新檔案和資料夾的不同存取權限授予同一群使用者和電腦中的其他使用者。如果您不需要變更它們，出於安全理由，請將它們保留為預設值。</translation>
+        <translation>檔案和資料夾有一個擁有者並且屬於一群使用者的。使用此對話框，您可以將經由桌面應用程式建立的新檔案和資料夾的不同存取權限授予同一群組使用者和電腦中的其他使用者。如果您不需要變更它們，出於安全考量，請將它們保留為預設值。</translation>
     </message>
     <message>
         <source>Owner permissions:</source>
@@ -3915,7 +3929,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Great Value</source>
         <translatorcomment>Label to inform about the great value plan, recommended one.</translatorcomment>
-        <translation>超划算</translation>
+        <translation>超值</translation>
     </message>
     <message>
         <source>Current plan</source>
@@ -3965,12 +3979,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Additional storage charged at %1 per %2TB.</source>
         <translatorcomment>Balloon tooltip to inform users that additional storate for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
-        <translation>額外儲存空間按每%2TB收費%1。</translation>
+        <translation>額外儲存空間按每%2&#xa0;TB收費%1。</translation>
     </message>
     <message>
         <source>Additional transfer quota charged at %1 per %2TB.</source>
         <translatorcomment>Balloon tooltip to inform users that additional transfer quota for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
-        <translation>額外傳輸配額按每%2TB收費%1。</translation>
+        <translation>額外傳輸配額按每%2&#xa0;TB收費%1。</translation>
     </message>
     <message numerus="yes">
         <source>minimum %n user</source>
@@ -4074,21 +4088,16 @@ Please delete the folder sync from preferences to cancel them.</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Support for Flexi Pro accounts.
-- New backups feature.
-- Fixed issues detected with macOS Ventura.
-- Fixed detected crashes on Windows, Linux, and macOS.
-- Fixed translation issues.
-- Improved performance.
+        <source>- Detected crashes on Windows, Linux, and masOS fixed.
+- Less device memory will be used by accounts with large amounts of data stored.
+- Application performance improved.
+- Translation issues fixed.
 </source>
-        <translatorcomment>Changelog for v4.8.0 version</translatorcomment>
-        <translation>- 支援Flexi Pro帳戶。
-- 新的備份功能。
-- 修復macOS Ventura檢測到的問題。
-- 修復在Windows、Linux和macOS上檢測到的崩潰問題。
-- 修正翻譯問題。
-- 改進性能。
-</translation>
+        <translatorcomment>Changelog for version v4.8.5</translatorcomment>
+        <translation>- 修復在Windows、Linux和macOS上檢測到的當機問題。
+- 有大量資料儲存的帳戶所使用的裝置記憶體將更少。
+- 改善應用程式性能。
+- 修復翻譯問題。</translation>
     </message>
 </context>
 <context>
@@ -4096,7 +4105,7 @@ Please delete the folder sync from preferences to cancel them.</source>
     <message>
         <source>Proxies</source>
         <translatorcomment>Title of dialog to set proxy settings.</translatorcomment>
-        <translation>Proxy</translation>
+        <translation>代理</translation>
     </message>
     <message>
         <source>Proxy</source>
@@ -4146,7 +4155,7 @@ Please delete the folder sync from preferences to cancel them.</source>
     <message>
         <source>No Proxy</source>
         <translatorcomment>Radio button text to not select any proxy.</translatorcomment>
-        <translation>不使用Proxy</translation>
+        <translation>不使用代理</translation>
     </message>
     <message>
         <source>Manual</source>
@@ -4332,7 +4341,7 @@ Please delete the folder sync from preferences to cancel them.</source>
     <message>
         <source>All Files (*)</source>
         <translatorcomment>File of type option for not filtering files by extension</translatorcomment>
-        <translation>所有檔案（*）</translation>
+        <translation>所有檔案 (*)</translation>
     </message>
     <message>
         <source>Show </source>
@@ -4342,7 +4351,7 @@ Please delete the folder sync from preferences to cancel them.</source>
     <message>
         <source>All files (*)</source>
         <translatorcomment>File of type option for not filtering files by extension</translatorcomment>
-        <translation>所有檔案（*）</translation>
+        <translation>所有檔案 (*)</translation>
     </message>
     <message>
         <source>Directories</source>
@@ -4367,7 +4376,7 @@ Please delete the folder sync from preferences to cancel them.</source>
     <message>
         <source>Recent Places</source>
         <translatorcomment>List of recent filesystem places</translatorcomment>
-        <translation>近期位置</translation>
+        <translation>最近位置</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -4502,27 +4511,27 @@ Do you want to delete it anyway?</source>
     <message>
         <source>%1 TB</source>
         <translatorcomment>File size measured in terabytes</translatorcomment>
-        <translation>%1 TB</translation>
+        <translation>%1&#xa0;TB</translation>
     </message>
     <message>
         <source>%1 GB</source>
         <translatorcomment>File size measured in gigabytes</translatorcomment>
-        <translation>%1 GB</translation>
+        <translation>%1&#xa0;GB</translation>
     </message>
     <message>
         <source>%1 MB</source>
         <translatorcomment>File size measured in megabytes</translatorcomment>
-        <translation>%1 MB</translation>
+        <translation>%1&#xa0;MB</translation>
     </message>
     <message>
         <source>%1 KB</source>
         <translatorcomment>File size measured in kilobytes</translatorcomment>
-        <translation>%1 KB</translation>
+        <translation>%1&#xa0;KB</translation>
     </message>
     <message>
         <source>%1 bytes</source>
         <translatorcomment>File size measured in bytes</translatorcomment>
-        <translation>%1 bytes</translation>
+        <translation>%1&#xa0;位元組</translation>
     </message>
     <message>
         <source>Invalid filename</source>
@@ -4614,7 +4623,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Move this folder from backups to another location in your cloud drive to get full access to your data. This folder will stop being backed up.</source>
         <translatorcomment>Radio button description</translatorcomment>
-        <translation>將此資料夾從備份移動到您雲端硬碟中另一個位置以取得資料的完全存取權限。此資料夾將停止備份。</translation>
+        <translation>將此資料夾從備份移到您雲端硬碟中另一個位置以取得資料的完全存取權限。此資料夾將停止備份。</translation>
     </message>
     <message>
         <source>Move to:</source>
@@ -4645,19 +4654,6 @@ Do you want to delete it anyway?</source>
         <source>Cancel</source>
         <translatorcomment>Button text that cancels</translatorcomment>
         <translation>取消</translation>
-    </message>
-</context>
-<context>
-    <name>RenameLocalNodeDialog</name>
-    <message>
-        <source>File can’t be renamed to &quot;%1&quot;</source>
-        <translatorcomment>Error warning shown when a file can´t be renamed due to an error.</translatorcomment>
-        <translation>檔案無法重新命名為「%1」</translation>
-    </message>
-    <message>
-        <source>Folder can’t be renamed to &quot;%1&quot;</source>
-        <translatorcomment>Error warning shown when a folder can´t be renamed due to an error.</translatorcomment>
-        <translation>資料夾無法重新命名為「%1」</translation>
     </message>
 </context>
 <context>
@@ -4823,7 +4819,7 @@ Do you want to delete it anyway?</source>
 
 Do you want to restart MEGAsync now?</source>
         <translatorcomment>Message displayed asking for confirmation to the user to restart the application for a Full scan operation.</translatorcomment>
-        <translation>應用程式將在啟動時對您的同步資料夾執行完整掃描。您想現在重新啟動應用程式嗎？</translation>
+        <translation>應用程式將在啟動時對您已同步的資料夾執行完整掃描。您想現在重新啟動應用程式嗎？</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -4863,12 +4859,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
         <translatorcomment>Label to inform the user to keep the master key in a secure location.</translatorcomment>
-        <translation>正在匯出您的還原金鑰，請妥善保管。您的還原金鑰可以使您不會因為重新設定密碼而遺失過去上傳的資料。</translation>
+        <translation>匯出您的還原金鑰並妥善保管它可以使您設定密碼時不會遺失資料。</translation>
     </message>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
         <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
-        <translation>始終於實體物品上保存您的還原金鑰（例如：在您的電腦上、外部儲存裝置或列印保存）。</translation>
+        <translation>總是將您的還原金鑰保存在實體物品中（例如您的電腦、外部儲存裝置或列印保存）。</translation>
     </message>
     <message>
         <source>Exclude by size</source>
@@ -4888,7 +4884,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and its consequences. Keep [A] substitution placeholder.</translatorcomment>
-        <translation>在MEGA中您的已同步檔案的先前版本的備份將被永久刪除。請檢查您MEGA帳戶的垃圾筒中的[A]資料夾，以查看在繼續此動作前，是否需要先救回一些檔案。</translation>
+        <translation>在MEGA中您已同步檔案的先前版本的備份將永久被刪除。請在您MEGA帳戶的垃圾筒中檢查您的[A]資料夾以查看在繼續前是否需要保留某些檔案。</translation>
     </message>
     <message>
         <source>Do you want to restart MEGAsync now?</source>
@@ -5073,7 +5069,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your password is not stored by MEGA and we cannot recover it for you. To avoid losing access to your account, save your Recovery Key in a safe place.</source>
         <translatorcomment>Informative text message shown in the Recovery Key section in Security pane, inviting the user to save the Recovery Key in a safe place.</translatorcomment>
-        <translation>MEGA不會儲存您的密碼，我們無法幫您恢復密碼。為避免無法存取您的帳戶，請將您的還原金鑰儲存在安全的地方。</translation>
+        <translation>MEGA不會儲存您的密碼，因此我們無法為您恢復密碼。為避免失去您帳戶的存取權限，請將您的還原金鑰儲存在安全的地方。</translation>
     </message>
     <message>
         <source>Password</source>
@@ -5243,7 +5239,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Pro Lite</source>
         <translatorcomment>Text label indicating the Pro Lite tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro Lite</translation>
+        <translation>Pro&#xa0;Lite</translation>
     </message>
     <message>
         <source>Business</source>
@@ -5263,7 +5259,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>No Proxy</source>
         <translatorcomment>Text label shown when there is no Proxy set in Network pane.</translatorcomment>
-        <translation>不使用Proxy</translation>
+        <translation>不使用代理</translation>
     </message>
     <message>
         <source>Manual</source>
@@ -5298,17 +5294,17 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Pro I</source>
         <translatorcomment>Text label indicating the Pro I tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro I</translation>
+        <translation>Pro&#xa0;I</translation>
     </message>
     <message>
         <source>Pro II</source>
         <translatorcomment>Text label indicating the Pro II tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro II</translation>
+        <translation>Pro&#xa0;II</translation>
     </message>
     <message>
         <source>Pro III</source>
         <translatorcomment>Text label indicating the Pro III tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro III</translation>
+        <translation>Pro&#xa0;III</translation>
     </message>
     <message>
         <source>Export Key</source>
@@ -5383,7 +5379,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Some folders have not backed up. For more information please hover over the yellow warning icon.</source>
         <translatorcomment>Warning message displayed inside settings dialog indicating that there is a problem with a backup.</translatorcomment>
-        <translation>某些資料夾尚未同步。請將滑鼠游標移至黃色警告圖示上以查看更多訊息。</translation>
+        <translation>某些資料夾尚未備份。請將滑鼠游標移至黃色警告圖示上面以查看更多訊息。</translation>
     </message>
     <message>
         <source>Backup folder:</source>
@@ -5478,7 +5474,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Pro Flexi</source>
         <translatorcomment>Text label indicating the Pro Flexi tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro Flexi</translation>
+        <translation>Pro&#xa0;Flexi</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
@@ -5687,7 +5683,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
         <translatorcomment>Label to inform the user that the synchronization stablished will be automatically synchronized.</translatorcomment>
-        <translation>您的本機資料夾與您的MEGA雲端硬碟將自動同步。</translation>
+        <translation>您的本地資料夾與您的MEGA雲端硬碟將自動同步。</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
@@ -5706,7 +5702,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Are you sure you want to cancel this wizard and undo all changes?</source>
         <translatorcomment>Message shown when an user cancel the Setup Wizard.</translatorcomment>
-        <translation>您確定想要取消執行小精靈並恢復所有變更?</translation>
+        <translation>想要取消這個設定精靈並還原所有變更嗎？</translation>
     </message>
     <message>
         <source>Skip</source>
@@ -5794,7 +5790,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Specific folders in your Cloud Drive will be synchronized with a local folder.</source>
         <translatorcomment>Information label to explain the user the selective sync mode of MEGAsync</translatorcomment>
-        <translation>您雲端硬碟中特定的資料夾將與本機電腦中對應的資料夾同步。</translation>
+        <translation>您雲端硬碟中的特定資料夾將與對應的本地資料夾同步。</translation>
     </message>
     <message>
         <source>Select Local folder:</source>
@@ -5814,7 +5810,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your entire Cloud Drive will be synchronized with a local folder.</source>
         <translatorcomment>Label with information about the full sync mode of MEGAsync</translatorcomment>
-        <translation>您整個雲端硬碟將與本機的一個資料夾進行同步。</translation>
+        <translation>您整個雲端硬碟將與本地資料夾進行同步。</translation>
     </message>
     <message>
         <source>Log in</source>
@@ -6050,6 +6046,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Message shown while waiting for the server request with the file info to stream</translatorcomment>
         <translation>請等待⋯</translation>
     </message>
+    <message>
+        <source>Select items</source>
+        <translatorcomment>Window title for node selector when is openned in stream mode</translatorcomment>
+        <translation>選擇項目</translation>
+    </message>
 </context>
 <context>
     <name>SwitchButton</name>
@@ -6104,7 +6105,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You can&apos;t backup this folder as it contains synced folders.</source>
         <translatorcomment>Warning message indicating that the selected folder for sync contains synced folders, ence it can not be synced.</translatorcomment>
-        <translation>您無法備份此資料夾，因為它包含同步資料夾。</translation>
+        <translation>由於此資料夾包含同步資料夾，您無法備份它。</translation>
     </message>
     <message>
         <source>You can&apos;t sync folders that contain synced folders.</source>
@@ -6129,12 +6130,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You can&apos;t backup this folder as it contains backed up folders.</source>
         <translatorcomment>Warning message indicating that the selected folder for backup contains backed up folders, ence it can not be backed up.</translatorcomment>
-        <translation>您無法備份此資料夾，因為它包含備份資料夾。</translation>
+        <translation>由於此資料夾包含備份資料夾，您無法備份它。</translation>
     </message>
     <message>
         <source>You can&apos;t backup this folder as it&apos;s already inside a backed up folder.</source>
         <translatorcomment>Warning message indicating that a folder can´t be backed up as it is inside a backed up folder.</translatorcomment>
-        <translation>您無法備份此資料夾，因為它已在一個備份資料夾中。</translation>
+        <translation>由於此資料夾已位於一個備份資料夾裡，您無法備份它。</translation>
     </message>
     <message>
         <source>Unable to create backup as selected folder is not valid. Try again.</source>
@@ -6144,7 +6145,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Unable to create backup. Try again and if issue continues, contact [A]Support[/A].</source>
         <translatorcomment>Text instructing to try creating a backup again. If it fails again, they should contact support</translatorcomment>
-        <translation>無法建立備份。請稍後再試而且若問題持續存在，請聯繫[A]客服[/A]。</translation>
+        <translation>無法建立備份。請稍後再試，若問題持續存在，請聯繫[A]客服[/A]。</translation>
     </message>
     <message>
         <source>Unable to create backup as the device you&apos;re backing up from doesn&apos;t have a name. Give your device a name and then try again. If issue continues, contact [A]Support[/A].</source>
@@ -6173,7 +6174,7 @@ To continue, select a different folder.</source>
     <message>
         <source>You don&apos;t have enough permissions for this remote folder.</source>
         <translatorcomment>Warning message indicating that a folder can´t be synced as it the remote folder is an incoming share and the current user doesn´t have enought permisions</translatorcomment>
-        <translation>您沒有此共享資料夾的完整存取權限，因此無法進行同步。</translation>
+        <translation>您沒有此共享資料夾的完整存取權限所以無法進行同步。</translation>
     </message>
     <message>
         <source>Invalid remote path.</source>
@@ -6183,7 +6184,7 @@ To continue, select a different folder.</source>
     <message>
         <source>The selected MEGA folder is already synced.</source>
         <translatorcomment>Warning message indicating that the selected folder is already a synced folder.</translatorcomment>
-        <translation>選擇的MEGA資料夾已同步</translation>
+        <translation>所選擇的MEGA資料夾已同步。</translation>
     </message>
     <message>
         <source>Folder contents already synced.</source>
@@ -6201,12 +6202,12 @@ To continue, select a different folder.</source>
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a FAT filesystem.</translatorcomment>
-        <translation>您正在同步的本地資料夾是使用FAT檔案系統格式。該檔案系統於管理大型檔案和修改時間時易產生缺陷，可能導致同步發生問題（例如，在夏季日光節約時間調整時），因此強烈建議您同步使用更可靠的檔案系統的資料夾，如NTFS系統（若想瞭解更多資訊，請點[A]此處[/A]）。</translation>
+        <translation>您正在同步的本地資料夾是使用FAT檔案系統格式。該檔案系統於管理大型檔案和修改時間時易產生缺陷，可能導致同步發生問題（例如，在夏令日光節約時間調整），因此強烈建議您僅同步更可靠的檔案系統的資料夾，如NTFS（若想瞭解更多資訊，請點[A]此處[/A]）。</translation>
     </message>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a local folder shared with VMWare third party app.</translatorcomment>
-        <translation>您正在同步一個與VMWare共享的本地資料夾。這些資料夾不支援檔案系統通知，所以應用程式須不斷掃描以檢測您的檔案和資料夾的變更。如果可以的話，請使用一個不同的資料夾來降低CPU的使用率。</translation>
+        <translation>您正在同步一個透過VMWare共享的本地資料夾。這個資料夾不支援檔案系統通知，所以為了偵測變更和同步，應用程式須不斷地對資料夾和其中的檔案進行掃描。如果可以的話，請使用一個不同的資料夾來降低CPU的使用率。</translation>
     </message>
 </context>
 <context>
@@ -6666,7 +6667,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Clear all archives</source>
         <translatorcomment>Tooltip for clear button when the user is in the archives category</translatorcomment>
-        <translation>清除壓縮中的所有傳輸</translation>
+        <translation>清除封存中的所有傳輸</translation>
     </message>
     <message>
         <source>Clear all documents</source>
@@ -6716,7 +6717,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Cancel all archives</source>
         <translatorcomment>Tooltip for cancel button when the user is in the archives category</translatorcomment>
-        <translation>取消壓縮中的所有傳輸</translation>
+        <translation>取消封存中的所有傳輸</translation>
     </message>
     <message>
         <source>Cancel all documents</source>
@@ -7016,22 +7017,22 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Pro Lite</source>
         <translatorcomment>Label to refer Pro Lite tier</translatorcomment>
-        <translation>Pro Lite</translation>
+        <translation>Pro&#xa0;Lite</translation>
     </message>
     <message>
         <source>Pro I</source>
         <translatorcomment>Label to refer Pro I tier</translatorcomment>
-        <translation>Pro I</translation>
+        <translation>Pro&#xa0;I</translation>
     </message>
     <message>
         <source>Pro II</source>
         <translatorcomment>Label to refer Pro II tier</translatorcomment>
-        <translation>Pro II</translation>
+        <translation>Pro&#xa0;II</translation>
     </message>
     <message>
         <source>Pro III</source>
         <translatorcomment>Label to refer Pro III tier</translatorcomment>
-        <translation>Pro III</translation>
+        <translation>Pro&#xa0;III</translation>
     </message>
     <message numerus="yes">
         <source>%n second ago</source>
@@ -7084,12 +7085,12 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Locked account</source>
         <translatorcomment>Title of dialog that inform user about locked account.</translatorcomment>
-        <translation>帳戶封鎖</translation>
+        <translation>帳戶已封鎖</translation>
     </message>
     <message>
         <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
         <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
-        <translation>為了安全起見，您的帳戶已被暫時封鎖。請驗證您的email並按照步驟解鎖您的帳戶。</translation>
+        <translation>為了安全起見，您的帳戶已被暫時封鎖。請驗證您的電子郵件地址並按照步驟解鎖您的帳戶。</translation>
     </message>
     <message>
         <source>Resend email</source>

@@ -17,7 +17,7 @@ public:
     RecursiveShellNotifier(std::shared_ptr<AbstractShellNotifier> baseNotifier);
     virtual ~RecursiveShellNotifier() = default;
 
-    void notify(const std::string& path) override;
+    void notify(const QString &path) override;
 
 private:
     static void findFoldersRecursively(const QString& path, QStringList& folders);

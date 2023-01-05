@@ -199,20 +199,21 @@ bool WindowsPlatform::enableTrayIcon(QString executable)
 
 void WindowsPlatform::notifyItemChange(const QString& path, int newState)
 {
-    string convertedPath;
-    QString pathCopy(path);
-    if (pathCopy.startsWith(QString::fromUtf8("\\\\?\\")))
-    {
-        pathCopy = pathCopy.mid(4);
-    }
-    convertedPath.assign((const char *)pathCopy.utf16(), pathCopy.size() * sizeof(wchar_t));
-
-    notifyItemChange(&convertedPath, mGeneralNotifier.get());
+    notifyItemChange(path, mGeneralNotifier.get());
 }
 
 void WindowsPlatform::notifySyncFileChange(std::string *localPath, int)
 {
-    notifyItemChange(localPath, mSyncFileNotifier.get());
+    notifyItemChange(QString::fromStdString(*localPath), mSyncFileNotifier.get());
+}
+
+void WindowsPlatform::notifyItemChange(const QString& localPath, AbstractShellNotifier *notifier)
+{
+    QString path = getPreparedPath(localPath);
+    if (!path.isEmpty())
+    {
+        notifier->notify(path);
+    }
 }
 
 //From http://msdn.microsoft.com/en-us/library/windows/desktop/bb776891.aspx
@@ -1508,33 +1509,23 @@ std::shared_ptr<AbstractShellNotifier> WindowsPlatform::getShellNotifier()
     return mGeneralNotifier;
 }
 
-void WindowsPlatform::notifyItemChange(std::string *localPath, AbstractShellNotifier *notifier)
+QString WindowsPlatform::getPreparedPath(const QString& localPath)
 {
-    std::string path = getPreparedPath(localPath);
-    if (path != "")
+    QString preparedPath(localPath);
+    if (!preparedPath.isEmpty())
     {
-        notifier->notify(path);
-    }
-}
-
-string WindowsPlatform::getPreparedPath(std::string *localPath)
-{
-    if (localPath && localPath->size())
-    {
-        std::string path = *localPath;
-        if (!memcmp(path.data(), L"\\\\?\\", 8))
+        if (preparedPath.startsWith(QString::fromUtf8("\\\\?\\")))
         {
-            path = path.substr(8);
+            preparedPath = preparedPath.mid(4);
         }
 
-        path.append("", 1);
-        if (path.length() < MAX_PATH)
+        if (preparedPath.size() < MAX_PATH)
         {
-            return path;
+            return preparedPath;
         }
     }
 
-    return "";
+    return QString();
 }
 
 // Platform-specific strings

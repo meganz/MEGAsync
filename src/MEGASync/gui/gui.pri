@@ -4,6 +4,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/BalloonToolTip.cpp \
     $$PWD/BlurredShadowEffect.cpp \
     $$PWD/ButtonIconManager.cpp \
+    $$PWD/LowDiskSpaceDialog.cpp \
     $$PWD/EventHelper.cpp \
     $$PWD/InfoDialog.cpp \
     $$PWD/MegaDelegateHoverManager.cpp \
@@ -78,6 +79,7 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/BlurredShadowEffect.h \
     $$PWD/ButtonIconManager.h \
     $$PWD/DialogGeometryRetainer.h \
+    $$PWD/LowDiskSpaceDialog.h \
     $$PWD/EventHelper.h \
     $$PWD/InfoDialog.h \
     $$PWD/MegaDelegateHoverManager.h \
@@ -198,6 +200,7 @@ win32 {
                 $$PWD/node_selector/gui/win/NodeSelectorLoadingDelegate.ui \
                 $$PWD/node_selector/gui/win/NodeSelector.ui \
                 $$PWD/node_selector/gui/win/SearchLineEdit.ui
+                $$PWD/win/LowDiskSpaceDialog.ui
 }
 
 macx {
@@ -246,7 +249,7 @@ macx {
                 $$PWD/node_selector/gui/macx/NodeSelectorLoadingDelegate.ui \
                 $$PWD/node_selector/gui/macx/NodeSelector.ui \
                 $$PWD/node_selector/gui/macx/SearchLineEdit.ui
-
+                $$PWD/macx/LowDiskSpaceDialosg.ui
 
     #Asset catalog need to load SF symbol images of toolbar items for custom NSToolbar
     QMAKE_ASSET_CATALOGS += $$PWD/images/Images.xcassets
@@ -318,10 +321,11 @@ unix:!macx {
                 $$PWD/node_selector/gui/linux/NodeSelectorLoadingDelegate.ui \
                 $$PWD/node_selector/gui/linux/NodeSelector.ui \
                 $$PWD/node_selector/gui/linux/SearchLineEdit.ui
-
+                $$PWD/linux/LowDiskSpaceDialog.ui
 
     HEADERS += $$PWD/PermissionsDialog.h \
                $$PWD/PermissionsWidget.h
     SOURCES += $$PWD/PermissionsDialog.cpp \
                $$PWD/PermissionsWidget.cpp
 }
+

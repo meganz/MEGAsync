@@ -25,6 +25,7 @@ public:
             LocalFree(mGuiActivePowerScheme);
             mGuiActivePowerScheme = nullptr;
         }
+
         mKeepPCAwayState = false;
         onKeepPCAwake();
     }
@@ -46,14 +47,13 @@ public:
 public slots:
     bool onKeepPCAwake()
     {
-        bool result(false);
-        QString message;
+        bool keepAwake(false);
 
         if (mKeepPCAwayState)
         {
             if(mPowerRequest == nullptr)
             {
-                bool keepAwake(true);
+                keepAwake = true;
 
                 POWER_REQUEST_CONTEXT _PowerRequestContext;
 
@@ -90,17 +90,13 @@ public slots:
                 DWORD maxValue(UINT_MAX);
                 keepAwake &=PowerWriteDCValueIndex(NULL, mGuiActivePowerScheme, &GUID_IDLE_RESILIENCY_SUBGROUP, &GUID_EXECUTION_REQUIRED_REQUEST_TIMEOUT, maxValue) == ERROR_SUCCESS;
                 keepAwake &=PowerWriteACValueIndex(NULL, mGuiActivePowerScheme, &GUID_IDLE_RESILIENCY_SUBGROUP, &GUID_EXECUTION_REQUIRED_REQUEST_TIMEOUT, maxValue) == ERROR_SUCCESS;
-
-                message = QString(QLatin1String("Sleep settings: System required request set. Result: %1"));
-
-                result = keepAwake;
             }
         }
         else
         {
             if(mPowerRequest != nullptr)
             {
-                bool keepAwake(true);
+                keepAwake = true;
 
                 PowerSetActiveScheme(NULL, mGuiActivePowerScheme);
                 keepAwake &= PowerWriteDCValueIndex(NULL, mGuiActivePowerScheme, &GUID_IDLE_RESILIENCY_SUBGROUP, &GUID_EXECUTION_REQUIRED_REQUEST_TIMEOUT, mDefaultRequestDCTimeout) == ERROR_SUCCESS;
@@ -112,16 +108,10 @@ public slots:
 
                 CloseHandle(mPowerRequest);
                 mPowerRequest = nullptr;
-
-                message = QString(QLatin1String("Sleep settings: System required request cleared. Result: %1"));
-
-                result = keepAwake;
             }
         }
 
-        mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG, message.arg(result).toStdString().c_str());
-
-        return result;
+        return keepAwake;
     }
 
 private:

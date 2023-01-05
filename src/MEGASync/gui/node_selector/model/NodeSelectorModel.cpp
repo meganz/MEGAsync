@@ -160,6 +160,11 @@ void NodeRequester::createBackupRootItems(mega::MegaHandle backupsHandle)
             if(!isAborted())
             {
                 NodeSelectorModelItem* item = new NodeSelectorModelItemBackup(std::move(backupsNode), mShowFiles);
+                //Here we are setting my backups node as vault node in the item, it is not the same vault node that we get
+                //doing megaapi->getVaultNode(), we have to hide it here thats why are doing this trick.
+                //The real vault is the parent of my backups folder
+                //NodeSelectorModelItem* item = new NodeSelectorModelItem(std::move(backupsNode), mShowFiles);
+                //item->setAsVaultNode();
                 mRootItems.append(item);
                 emit megaBackupRootItemsCreated(item);
             }
@@ -589,6 +594,11 @@ void NodeSelectorModel::onNodeAdded(NodeSelectorModelItem* childItem)
     emit levelsAdded(mIndexesActionInfo.indexesToBeExpanded);
 }
 
+bool NodeSelectorModel::addToLoadingList(const std::shared_ptr<mega::MegaNode> node)
+{
+    return node != nullptr;
+}
+
 
 void NodeSelectorModel::removeNode(const QModelIndex &index)
 {
@@ -741,7 +751,7 @@ bool NodeSelectorModel::canBeDeleted() const
 
 void NodeSelectorModel::loadTreeFromNode(const std::shared_ptr<mega::MegaNode> node)
 {
-    //First, we se the loading view as it can take long to load the tree path to the node
+    //First, we set the loading view as it can take long to load the tree path to the node
     emit blockUi(true);
 
     clearIndexesNodeInfo();
@@ -751,7 +761,11 @@ void NodeSelectorModel::loadTreeFromNode(const std::shared_ptr<mega::MegaNode> n
     mNodesToLoad.append(node);
 
     auto p_node = std::shared_ptr<mega::MegaNode>(MegaSyncApp->getMegaApi()->getParentNode(node.get()));
-    while(p_node)
+
+    //The vault node is not represented in the node selector, hence if the parent of a node is the vault
+    //it doesn´t have to be added to the node list to load. If it is added the loading of a specific node
+    //will stops working in backups screen.
+    while(addToLoadingList(p_node))
     {
         mNodesToLoad.append(p_node);
         p_node.reset(MegaSyncApp->getMegaApi()->getParentNode(p_node.get()));

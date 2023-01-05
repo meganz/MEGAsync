@@ -19,13 +19,13 @@ public:
     ThreadedQueueShellNotifier(std::shared_ptr<AbstractShellNotifier> baseNotifier);
     virtual ~ThreadedQueueShellNotifier();
 
-    void notify(const std::string& path) override;
+    void notify(const QString& path) override;
 
 private:
     void doInThread();
 
     std::thread mThread;
-    std::queue<std::string> mPendingNotifications;
+    std::queue<QString> mPendingNotifications;
     std::mutex mQueueAccessMutex;
     std::condition_variable mWaitCondition;
     bool mExit = false;

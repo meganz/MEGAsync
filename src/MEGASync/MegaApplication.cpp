@@ -16,6 +16,7 @@
 #include "UserAttributesManager.h"
 #include "UserAttributesRequests/FullName.h"
 #include "UserAttributesRequests/Avatar.h"
+#include "TransferNotificationMessageBuilder.h"
 #include "UserAttributesRequests/DeviceName.h"
 #include "UserAttributesRequests/MyBackupsHandle.h"
 #include "syncs/gui/SyncsMenu.h"
@@ -3026,58 +3027,6 @@ void MegaApplication::loadSyncExclusionRules(QString email)
     }
 }
 
-std::pair<QString,QString> MegaApplication::buildFinishedTransferTitleAndMessage(const TransferMetaData *data)
-{
-    QString title;
-    QString message;
-    if (data->transfersFileOK && data->transfersFolderOK)
-    {
-        // Multi plural issue : can't resolve in one single string.
-        // see https://stackoverflow.com/questions/51889719/localisation-of-multiple-plurals-in-qt
-        QString fileStringPart = tr("%n file", "", data->transfersFileOK);
-        QString folderStringPart = tr("%n folder", "", data->transfersFolderOK);
-
-        if (data->transferDirection == MegaTransfer::TYPE_UPLOAD)
-        {
-            title = tr("Upload");
-            message = tr("%1 and %2 were successfully uploaded").arg(fileStringPart).arg(folderStringPart);
-        }
-        else if (data->transferDirection == MegaTransfer::TYPE_DOWNLOAD)
-        {
-            title = tr("Download");
-            message = tr("%1 and %2 were successfully downloaded").arg(fileStringPart).arg(folderStringPart);
-        }
-    }
-    else if (data->transfersFileOK)
-    {
-        if (data->transferDirection == MegaTransfer::TYPE_UPLOAD)
-        {
-            title = tr("File Upload");
-            message = tr("%n file was successfully uploaded", "", data->transfersFileOK);
-        }
-        else if (data->transferDirection == MegaTransfer::TYPE_DOWNLOAD)
-        {
-            title = tr("File Download");
-            message = tr("%n file was successfully downloaded", "", data->transfersFileOK);
-        }
-    }
-    else if (data->transfersFolderOK)
-    {
-        if (data->transferDirection == MegaTransfer::TYPE_UPLOAD)
-        {
-            title = tr("Folder Upload");
-            message = tr("%n folder was successfully uploaded", "", data->transfersFolderOK);
-        }
-        else if (data->transferDirection == MegaTransfer::TYPE_DOWNLOAD)
-        {
-            title = tr("Folder Download");
-            message = tr("%n folder was successfully downloaded", "", data->transfersFolderOK);
-        }
-    }
-
-    return std::make_pair(title,message);
-}
-
 long long MegaApplication::computeExclusionSizeLimit(const long long sizeLimitValue, const int unit)
 {
     const double sizeLimitPower = pow(static_cast<double>(1024), static_cast<double>(unit));
@@ -3603,6 +3552,11 @@ bool MegaApplication::isQueueProcessingOngoing()
 
 void MegaApplication::onFolderTransferUpdate(FolderTransferUpdateEvent event)
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     transferProgressController.update(event);
     if (event.stage >= MegaTransfer::STAGE_TRANSFERRING_FILES)
     {
@@ -4312,11 +4266,12 @@ void MegaApplication::showNotificationFinishedTransfers(unsigned long long appDa
     {
         if (preferences->isNotificationEnabled(Preferences::NotificationsTypes::INFO_MESSAGES))
         {
-            std::pair<QString,QString> titleAndMessage = buildFinishedTransferTitleAndMessage(data);
-            if (mOsNotifications && !titleAndMessage.second.isEmpty())
+            TransferNotificationMessageBuilder messageBuilder(data);
+            QString message = messageBuilder.buildMessage();
+            if (mOsNotifications && !message.isEmpty())
             {
                 preferences->setLastTransferNotificationTimestamp();
-                mOsNotifications->sendFinishedTransferNotification(titleAndMessage.first, titleAndMessage.second, data->localPath);
+                mOsNotifications->sendFinishedTransferNotification(messageBuilder.buildTitle(), message, data->localPath);
             }
         }
 
@@ -5568,8 +5523,6 @@ void MegaApplication::processDownloads()
         qDeleteAll(downloadQueue);
         downloadQueue.clear();
     }
-
-    return;
 }
 
 void MegaApplication::logoutActionClicked()
@@ -8280,10 +8233,17 @@ void MegaApplication::onGlobalSyncStateChangedImpl(MegaApi *, bool timeout)
     {
         mThreadPool->push([this]() {
 
+        auto model = getTransfersModel();
+        if (!megaApi || !model)
+        {
+            return;
+        }
+
         indexing = megaApi->isScanning();
         waiting = megaApi->isWaiting();
         syncing = megaApi->isSyncing();
-        auto transferCount = getTransfersModel()->getTransfersCount();
+
+        auto transferCount = model->getTransfersCount();
         transferring = transferCount.pendingUploads || transferCount.pendingDownloads;
 
         Utilities::queueFunctionInAppThread([=](){

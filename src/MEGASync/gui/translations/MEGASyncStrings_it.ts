@@ -406,7 +406,7 @@
     <message>
         <source>Local Folder</source>
         <translatorcomment>Local folder column header name for backlups table in settings dialog</translatorcomment>
-        <translation>Cartella Locale</translation>
+        <translation>Cartella locale</translation>
     </message>
     <message>
         <source>Sort by name</source>
@@ -444,7 +444,7 @@
     <message>
         <source>If you don&apos;t want to rename the new folder, stop the backup in the [A]Backup centre[/A] for the existing folder. Then setup the backup for the new folder again.</source>
         <translatorcomment>Text instructing the user to go to the backup center to solve the backup name conflict</translatorcomment>
-        <translation>Se non vuoi rinominare la cartella, ferma il backup nel [A]Centro backup[/A] per la cartella esistente. Successivamente imposta il backup della nuova cartella nuovamente.</translation>
+        <translation>Se non vuoi rinominare la cartella, ferma il backup nel [A]Centro dei backup[/A] per la cartella esistente. Successivamente imposta il backup della nuova cartella nuovamente.</translation>
     </message>
     <message>
         <source>Rename and backup</source>
@@ -533,7 +533,7 @@
     <message>
         <source>Folders will be stored in backups and you can check the status of your backups in backup centre.</source>
         <translatorcomment>Successfull dialog text</translatorcomment>
-        <translation>Le cartelle verranno archiviate in dei backup e potrai controllare lo stato dei tuoi backup nel Centro backup.</translation>
+        <translation>Le cartelle verranno archiviate in Backup e potrai controllare lo stato dei tuoi backup nel Centro dei backup.</translation>
     </message>
     <message>
         <source>Show more…</source>
@@ -857,7 +857,7 @@
     <message>
         <source>Are you sure you want to exit uploading?</source>
         <translatorcomment>Confirmation message shown when the user is trying to cancel the ongoing upload report.</translatorcomment>
-        <translation>Sei sicuro di voler annullare il caricamento della tua segnalazione?</translation>
+        <translation>Vuoi annullare il caricamento di questo report del problema?</translation>
     </message>
     <message>
         <source>The bug report will not be submitted if you exit uploading.</source>
@@ -922,12 +922,12 @@
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation>Privacy Policy</translation>
+        <translation>Politica sulla privacy</translation>
     </message>
     <message>
         <source>New in this version:</source>
         <translatorcomment>Label for indicate new features/fixes of current MEGAsync version. Keep colon.</translatorcomment>
-        <translation>Nuovo in questa versione:</translation>
+        <translation>Novità di questa versione:</translation>
     </message>
     <message>
         <source>Credits</source>
@@ -1245,7 +1245,7 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>Il tuo account Business è scaduto</translation>
+        <translation>Account disattivato</translation>
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
@@ -1699,7 +1699,7 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message>
         <source>Invalid code</source>
         <translatorcomment>An error message when the 2FA code entered was incorrect.</translatorcomment>
-        <translation>QR Code non valido</translation>
+        <translation>Codice non valido</translation>
     </message>
     <message>
         <source>Next</source>
@@ -1815,7 +1815,7 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message>
         <source>Open Transfer Manager</source>
         <translatorcomment>Tooltip for the button that open transfer manager dialog</translatorcomment>
-        <translation>Apri il Gestore dei trasferimenti</translation>
+        <translation>Apri il gestore dei trasferimenti</translation>
     </message>
     <message>
         <source>Show MEGAsync options</source>
@@ -2093,7 +2093,7 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     </message>
     <message>
         <source>Create Account</source>
-        <translation>Crea un Account</translation>
+        <translation>Crea un account</translation>
     </message>
     <message>
         <source>MEGA Desktop app</source>
@@ -2131,7 +2131,7 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message>
         <source>Choose Users</source>
         <translatorcomment>Label to indicate for which users you want to install MEGAsync.</translatorcomment>
-        <translation>Scegli Utenti</translation>
+        <translation>Scegli utenti</translation>
     </message>
     <message>
         <source>Choose for which users you want to install $(^NameDA).</source>
@@ -2202,7 +2202,7 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message>
         <source>Invalid code</source>
         <translatorcomment>An error message when the 2FA code entered was incorrect.</translatorcomment>
-        <translation>QR Code non valido</translation>
+        <translation>Codice non valido</translation>
     </message>
     <message>
         <source>[A]Lost your authenticator device?[/A]</source>
@@ -2436,7 +2436,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>DEBUG mode disabled</source>
         <translatorcomment>Notification message shown when the DEBUG mode is disabled.</translatorcomment>
-        <translation>Modalità debug disattivata</translation>
+        <translation>Modalità&#xa0;debug disattivata</translation>
     </message>
     <message>
         <source>DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log)</source>
@@ -2531,12 +2531,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Folder Upload</source>
         <translatorcomment>Title of system notifications related to a folder upload</translatorcomment>
-        <translation>Carica Cartella</translation>
+        <translation>Carica cartella</translation>
     </message>
     <message>
         <source>File Upload</source>
         <translatorcomment>Title of system notifications related to a file upload</translatorcomment>
-        <translation>Carica File</translation>
+        <translation>Carica file</translation>
     </message>
     <message>
         <source>Folder Download</source>
@@ -2551,7 +2551,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud drive</source>
         <translatorcomment>Label of context menu to reach Cloud drive section at webclient. It will open your webbrowser and redirects to your cloud drive.</translatorcomment>
-        <translation>Cloud Drive</translation>
+        <translation>Cloud drive</translation>
     </message>
     <message>
         <source>Error transferring folder: </source>
@@ -2566,7 +2566,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>Il tuo account Business è scaduto</translation>
+        <translation>Account disattivato</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -2586,7 +2586,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Payment Failed</source>
         <translatorcomment>Notification title shown when a payment has failed for a business account.</translatorcomment>
-        <translation>Pagamento Fallito</translation>
+        <translation>Pagamento fallito</translation>
     </message>
     <message>
         <source>This month&apos;s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</source>
@@ -2967,7 +2967,7 @@ I trasferimenti riprenderanno automaticamente quando riaprirai l&apos;app.</nume
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
         <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
-        <translation>Spazio di archiviazione superato. Per favore, aggiorna adesso</translation>
+        <translation>Spazio di archiviazione superato. Per favore, aggiorna adesso.</translation>
     </message>
     <message>
         <source>Decryption error</source>
@@ -3014,87 +3014,21 @@ I trasferimenti riprenderanno automaticamente quando riaprirai l&apos;app.</nume
     </message>
 </context>
 <context>
-    <name>MegaItemModel</name>
-    <message>
-        <source>Folder already synced</source>
-        <translatorcomment>Tooltip text to notify the user that this folder is already synced.</translatorcomment>
-        <translation>Cartella già sincronizzata</translation>
-    </message>
-    <message>
-        <source>Folder contents already synced</source>
-        <translatorcomment>Tooltip text to notify the user that some folder inside the folder that he is hovering with mouse is already synced.</translatorcomment>
-        <translation>Contenuti della cartella già sincronizzati</translation>
-    </message>
-    <message>
-        <source>Name</source>
-        <translatorcomment>Column title. This column shows the name of a file or folder.</translatorcomment>
-        <translation>Nome</translation>
-    </message>
-    <message>
-        <source>Sort by status</source>
-        <translatorcomment>First column title tooltip(this column title doesn´t contains text, it shows an icon). Sorts the order of the column by node status, for example synced folders first or last.</translatorcomment>
-        <translation>Elenca per stato</translation>
-    </message>
-    <message>
-        <source>Sort by owner name</source>
-        <translatorcomment>Owner column title tooltip. Sorts the order of the column by owner name alphabetically.</translatorcomment>
-        <translation>Elenca per nome del proprietario</translation>
-    </message>
-    <message>
-        <source>Sort by date</source>
-        <translatorcomment>Recently used column title tooltip. Sorts the order of the column by date.</translatorcomment>
-        <translation>Elenca per data</translation>
-    </message>
-    <message>
-        <source>Sort by name</source>
-        <translatorcomment>Node name column title tooltip. Sorts the order of the column by date.</translatorcomment>
-        <translation>Elenca per nome</translation>
-    </message>
-    <message numerus="yes">
-        <source>Today at %1</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened today. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation><numerusform>Oggi alle %1</numerusform><numerusform>Oggi alle %1</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Yesterday at %1</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened yesterday. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation><numerusform>Ieri alle %1</numerusform><numerusform>Ieri alle %1</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%1 at %2</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was previously to yesterday. %1 represents the date (day month and year), while %2 represents the hour). Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation><numerusform>%1 alle %2</numerusform><numerusform>%1 alle %2</numerusform></translation>
-    </message>
-    <message>
-        <source>Recently used</source>
-        <translatorcomment>Column title. This column shows when this file or folder was changed.</translatorcomment>
-        <translation>Ultima modifica</translation>
-    </message>
-</context>
-<context>
-    <name>MegaItemTreeView</name>
-    <message>
-        <source>Get MEGA link</source>
-        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It creates an MEGA link and copy to Clipboard.</translatorcomment>
-        <translation>Ottieni link MEGA</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It removes the node (file or folder).</translatorcomment>
-        <translation>Cancella</translation>
-    </message>
-</context>
-<context>
     <name>MegaNodeNames</name>
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Title of the Cloud Drive section</translatorcomment>
-        <translation>Cloud Drive</translation>
+        <translation>Cloud drive</translation>
     </message>
     <message>
         <source>Backups</source>
         <translatorcomment>Title of the Backups root node</translatorcomment>
         <translation>Backup</translation>
+    </message>
+    <message>
+        <source>Incoming shares</source>
+        <translatorcomment>Title of the Incoming shares root node</translatorcomment>
+        <translation>Condivisioni in arrivo</translation>
     </message>
 </context>
 <context>
@@ -3260,7 +3194,7 @@ I trasferimenti riprenderanno automaticamente quando riaprirai l&apos;app.</nume
     <message>
         <source>Account expired (business or Pro Flexi)</source>
         <translatorcomment>Label to show that the current account (either business or Pro Flexi) is expired during a SDK operation.</translatorcomment>
-        <translation>Account scaduto</translation>
+        <translation>Account disattivato</translation>
     </message>
 </context>
 <context>
@@ -3480,33 +3414,32 @@ I trasferimenti selezionati ed incompleti non saranno annullati.</translation>
         <translatorcomment>Message shown when the user has entered a not allowed character</translatorcomment>
         <translation>I seguenti caratteri non sono ammessi: %1</translation>
     </message>
+    <message>
+        <source>A file with this name already exists in this location.
+Enter a different name.</source>
+        <translatorcomment>Message shown when the user has entered a name which already exists on the folder</translatorcomment>
+        <translation>Un file con questo nome già esiste in questa posizione.
+Inserisci un nome differente.</translation>
+    </message>
+    <message>
+        <source>A folder with this name already exists in this location.
+Enter a different name</source>
+        <translatorcomment>Message shown when the user has entered a name which already exists on the folder</translatorcomment>
+        <translation>Una cartella con questo nome già esiste in questa posizione.
+Inserisci un nome differente.</translation>
+    </message>
 </context>
 <context>
     <name>NodeSelector</name>
     <message>
         <source>Folder Selection</source>
         <translatorcomment>Label to indicate the user the selection of folders for a synchronization (String short as possible)</translatorcomment>
-        <translation>Selezione Cartella</translation>
+        <translation>Selezione cartella</translation>
     </message>
     <message>
         <source>Select a MEGA folder:</source>
         <translatorcomment>Label to indicate the user to select a MEGA folder for a synchronization (String short as possible). Keep capital letters.</translatorcomment>
         <translation>Scegli una cartella MEGA:</translation>
-    </message>
-    <message>
-        <source>New folder</source>
-        <translatorcomment>Button label to create a New folder at your MEGA cloud drive. Keep capital letters. String as short as possible.</translatorcomment>
-        <translation>Nuova cartella</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>OK</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Annulla</translation>
     </message>
     <message>
         <source>Error</source>
@@ -3525,11 +3458,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Cartella invalida per sincronizzazione. Per favore, assicurati di non utilizzare caratteri come ‘\’, ‘/’ o ‘:’ nei nomi delle tue cartelle.</translation>
     </message>
     <message>
-        <source>Always upload to this destination</source>
-        <translatorcomment>Label to inform the user upload files/folder to a default destination. with a checkbox.</translatorcomment>
-        <translation>Carica sempre su questa destinazione</translation>
-    </message>
-    <message>
         <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying upload files to a non compatible folder</translatorcomment>
         <translation>Hai bisogno dei permessi di &quot;Lettura e scrittura&quot; o &quot;Accesso totale&quot; per poter selezionare la cartella selezionata.</translation>
@@ -3540,17 +3468,9 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Hai bisogno dei permessi di accesso completo per poter sincronizzare la cartella selezionata.</translation>
     </message>
     <message>
-        <source>Are you sure that you want to delete &quot;%1&quot;?</source>
-        <translation>Sei sicuro di voler cancellare “%1”?</translation>
-    </message>
-    <message>
         <source>Only files can be used for streaming.</source>
         <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
         <translation>Solo i file possono essere usati per lo streaming.</translation>
-    </message>
-    <message>
-        <source>Select items</source>
-        <translation>Seleziona foto</translation>
     </message>
     <message>
         <source>Select a MEGA folder</source>
@@ -3561,16 +3481,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>You no longer have access to this item. Ask the owner to share again.</source>
         <translatorcomment>Error message shown when the user is trying to download an file or folder from an incoming share and the owner stops sharing/removes all items</translatorcomment>
         <translation><numerusform>Non hai più accesso a questo oggetto. Chiedi al proprietario di condividerli nuovamente con te.</numerusform><numerusform>Non hai più accesso a questi oggetti. Chiedi al proprietario di condividerlo nuovamente con te.</numerusform></translation>
-    </message>
-    <message>
-        <source>Cloud drive</source>
-        <translatorcomment>Node selector button Text. Switch the view to show only the cloud drive nodes (files and folders)</translatorcomment>
-        <translation>Cloud Drive</translation>
-    </message>
-    <message>
-        <source>Incoming shares</source>
-        <translatorcomment>Node selector button Text. Switch the view to show only the incoming shares nodes (files and folders)</translatorcomment>
-        <translation>Condivisioni in arrivo</translation>
     </message>
     <message numerus="yes">
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
@@ -3589,10 +3499,114 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
                            Second and last part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
         <translation><numerusform>%1. %2 è stato rimosso. Per selezionare nuovamente, chiudi questa finestra e riprova.</numerusform><numerusform>%1. %2 sono stati rimossi. Per selezionare nuovamente, chiudi questa finestra e riprova.</numerusform></translation>
     </message>
+</context>
+<context>
+    <name>NodeSelectorModel</name>
     <message>
-        <source>Backups</source>
-        <translatorcomment>Title of the Backups section</translatorcomment>
-        <translation>Backup</translation>
+        <source>Folder already synced</source>
+        <translatorcomment>Tooltip text to notify the user that this folder is already synced.</translatorcomment>
+        <translation>Cartella già sincronizzata</translation>
+    </message>
+    <message>
+        <source>Folder contents already synced</source>
+        <translatorcomment>Tooltip text to notify the user that some folder inside the folder that he is hovering with mouse is already synced.</translatorcomment>
+        <translation>Contenuti della cartella già sincronizzati</translation>
+    </message>
+    <message>
+        <source>Recently used</source>
+        <translatorcomment>Column title. This column shows when this file or folder was changed.</translatorcomment>
+        <translation>Ultima modifica</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translatorcomment>Column title. This column shows the name of a file or folder.</translatorcomment>
+        <translation>Nome</translation>
+    </message>
+    <message>
+        <source>Sort by status</source>
+        <translatorcomment>First column title tooltip(this column title doesn´t contains text, it shows an icon). Sorts the order of the column by node status, for example synced folders first or last.</translatorcomment>
+        <translation>Elenca per stato</translation>
+    </message>
+    <message>
+        <source>Sort by owner name</source>
+        <translatorcomment>Owner column title tooltip. Sorts the order of the column by owner name alphabetically.</translatorcomment>
+        <translation>Elenca per nome del proprietario</translation>
+    </message>
+    <message>
+        <source>Sort by date</source>
+        <translatorcomment>Recently used column title tooltip. Sorts the order of the column by date.</translatorcomment>
+        <translation>Elenca per data</translation>
+    </message>
+    <message>
+        <source>Sort by name</source>
+        <translatorcomment>Node name column title tooltip. Sorts the order of the column by date.</translatorcomment>
+        <translation>Elenca per nome</translation>
+    </message>
+    <message numerus="yes">
+        <source>Today at %1</source>
+        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened today. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
+        <translation><numerusform>Oggi all&apos;%1</numerusform><numerusform>Oggi alle %1</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Yesterday at %1</source>
+        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened yesterday. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
+        <translation><numerusform>Ieri all&apos;%1</numerusform><numerusform>Ieri alle %1</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 at %2</source>
+        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was previously to yesterday. %1 represents the date (day month and year), while %2 represents the hour). Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
+        <translation><numerusform>%1 all&apos;%2</numerusform><numerusform>%1 alle %2</numerusform></translation>
+    </message>
+</context>
+<context>
+    <name>NodeSelectorTreeView</name>
+    <message>
+        <source>Get MEGA link</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It creates an MEGA link and copy to Clipboard.</translatorcomment>
+        <translation>Ottieni link MEGA</translation>
+    </message>
+    <message>
+        <source>Rename</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It renames the node (file or folder).</translatorcomment>
+        <translation>Rinomina</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It removes the node (file or folder).</translatorcomment>
+        <translation>Elimina</translation>
+    </message>
+</context>
+<context>
+    <name>NodeSelectorTreeViewWidget</name>
+    <message>
+        <source>Always upload to this destination</source>
+        <translatorcomment>Label to inform the user upload files/folder to a default destination. with a checkbox.</translatorcomment>
+        <translation>Carica sempre in questa destinazione</translation>
+    </message>
+    <message>
+        <source>New folder</source>
+        <translatorcomment>Button label to create a New folder at your MEGA cloud drive. Keep capital letters. String as short as possible.</translatorcomment>
+        <translation>Nuova Cartella</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translatorcomment>Label for accept button.</translatorcomment>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Label for cancel button.</translatorcomment>
+        <translation>Annulla</translation>
+    </message>
+    <message>
+        <source>Are you sure that you want to delete &quot;%1&quot;?</source>
+        <translatorcomment>MessageBox to confirm that the user wants to remove the node. %1 is the node name</translatorcomment>
+        <translation>Vuoi veramente eliminare “%1”?</translation>
+    </message>
+    <message>
+        <source>Error:</source>
+        <translatorcomment>MessageBox to inform about an error when trying to move or remove a node</translatorcomment>
+        <translation>Errore:</translation>
     </message>
 </context>
 <context>
@@ -3964,12 +3978,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Additional storage charged at %1 per %2TB.</source>
         <translatorcomment>Balloon tooltip to inform users that additional storate for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
-        <translation>Spazio di archiviazione aggiuntivo a %1 per %2TB.</translation>
+        <translation>Spazio di archiviazione aggiuntivo a %1 per %2&#xa0;TB.</translation>
     </message>
     <message>
         <source>Additional transfer quota charged at %1 per %2TB.</source>
         <translatorcomment>Balloon tooltip to inform users that additional transfer quota for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
-        <translation>Banda di trasferimento aggiuntiva a %1 per %2TB.</translation>
+        <translation>Banda di trasferimento aggiuntiva a %1 per %2&#xa0;TB.</translation>
     </message>
     <message numerus="yes">
         <source>minimum %n user</source>
@@ -4075,21 +4089,16 @@ Per favore, elimina la cartella di sincronizzazione dalle Preferenze per annulla
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Support for Flexi Pro accounts.
-- New backups feature.
-- Fixed issues detected with macOS Ventura.
-- Fixed detected crashes on Windows, Linux, and macOS.
-- Fixed translation issues.
-- Improved performance.
+        <source>- Detected crashes on Windows, Linux, and masOS fixed.
+- Less device memory will be used by accounts with large amounts of data stored.
+- Application performance improved.
+- Translation issues fixed.
 </source>
-        <translatorcomment>Changelog for v4.8.0 version</translatorcomment>
-        <translation>- Aggiunto supporto agli account Pro Flexi.
-- Aggiunta nuova feature per i backup.
-- Sistemati alcuni problemi con macOS Ventura.
-- Sistemati alcuni crash su Windows, Linux, macOS.
-- Sistemati problemi di traduzione.
-- Migliorata la performance.
-</translation>
+        <translatorcomment>Changelog for version v4.8.5</translatorcomment>
+        <translation>- Sistemati alcuni crash su Windows, Linux, e macOS.
+- Minore memoria del dispositivo verrà utilizzata da account con grandi quantità di dati archiviati.
+- Performance dell&apos;applicazione migliorata.
+- Sistemati problemi di traduzione.</translation>
     </message>
 </context>
 <context>
@@ -4142,7 +4151,7 @@ Per favore, elimina la cartella di sincronizzazione dalle Preferenze per annulla
     <message>
         <source>Proxy type:</source>
         <translatorcomment>Label to indicate the type of proxy that is being configured.</translatorcomment>
-        <translation>Tipo di Proxy:</translation>
+        <translation>Tipo di proxy:</translation>
     </message>
     <message>
         <source>No Proxy</source>
@@ -4167,7 +4176,7 @@ Per favore, elimina la cartella di sincronizzazione dalle Preferenze per annulla
     <message>
         <source>Auto-detect</source>
         <translatorcomment>Radio button to select auto detection for proxy configuration.</translatorcomment>
-        <translation>Rileva Automaticamente</translation>
+        <translation>Rileva automaticamente</translation>
     </message>
     <message>
         <source>Update</source>
@@ -4263,7 +4272,7 @@ Per favore, elimina la cartella di sincronizzazione dalle Preferenze per annulla
     <message>
         <source>Create New Folder</source>
         <translatorcomment>Button for creating a new folder</translatorcomment>
-        <translation>Crea Nuova Cartella</translation>
+        <translation>Crea nuova cartella</translation>
     </message>
     <message>
         <source>Create a New Folder</source>
@@ -4353,7 +4362,7 @@ Per favore, elimina la cartella di sincronizzazione dalle Preferenze per annulla
     <message>
         <source>New Folder</source>
         <translatorcomment>Default folder new when creating a new folder</translatorcomment>
-        <translation>Nuova Cartella</translation>
+        <translation>Nuova cartella</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -4378,7 +4387,7 @@ Per favore, elimina la cartella di sincronizzazione dalle Preferenze per annulla
     <message>
         <source>My Computer</source>
         <translatorcomment>Label to name the top level of the filesystem</translatorcomment>
-        <translation>Il mio Computer</translation>
+        <translation>Il mio computer</translation>
     </message>
     <message>
         <source>Drive</source>
@@ -4398,7 +4407,7 @@ Per favore, elimina la cartella di sincronizzazione dalle Preferenze per annulla
     <message>
         <source>File Folder</source>
         <translatorcomment>Label to desing a folder matching Windows Explorer case</translatorcomment>
-        <translation>Cartella di file</translation>
+        <translation>Cartella</translation>
     </message>
     <message>
         <source>Folder</source>
@@ -4503,27 +4512,27 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
     <message>
         <source>%1 TB</source>
         <translatorcomment>File size measured in terabytes</translatorcomment>
-        <translation>%1 TB</translation>
+        <translation>%1&#xa0;TB</translation>
     </message>
     <message>
         <source>%1 GB</source>
         <translatorcomment>File size measured in gigabytes</translatorcomment>
-        <translation>%1 GB</translation>
+        <translation>%1&#xa0;GB</translation>
     </message>
     <message>
         <source>%1 MB</source>
         <translatorcomment>File size measured in megabytes</translatorcomment>
-        <translation>%1 MB</translation>
+        <translation>%1&#xa0;MB</translation>
     </message>
     <message>
         <source>%1 KB</source>
         <translatorcomment>File size measured in kilobytes</translatorcomment>
-        <translation>%1 KB</translation>
+        <translation>%1&#xa0;KB</translation>
     </message>
     <message>
         <source>%1 bytes</source>
         <translatorcomment>File size measured in bytes</translatorcomment>
-        <translation>%1 bytes</translation>
+        <translation>%1&#xa0;bytes</translation>
     </message>
     <message>
         <source>Invalid filename</source>
@@ -4558,7 +4567,7 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
     <message>
         <source>My Computer</source>
         <translatorcomment>Name of the top level of the filesystem in windows platform</translatorcomment>
-        <translation>Il mio Computer</translation>
+        <translation>Il mio computer</translation>
     </message>
     <message>
         <source>Computer</source>
@@ -4615,7 +4624,7 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
     <message>
         <source>Move this folder from backups to another location in your cloud drive to get full access to your data. This folder will stop being backed up.</source>
         <translatorcomment>Radio button description</translatorcomment>
-        <translation>Sposta questa cartella dai backup ad un’altra posizione nel tuo Cloud Drive per ottenere accesso completo ai tuoi dati. Il backup di questa cartella si fermerà.</translation>
+        <translation>Sposta questa cartella dai backup ad un’altra posizione nel tuo Cloud drive per ottenere accesso completo ai tuoi dati. Il backup di questa cartella si fermerà.</translation>
     </message>
     <message>
         <source>Move to:</source>
@@ -4646,19 +4655,6 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
         <source>Cancel</source>
         <translatorcomment>Button text that cancels</translatorcomment>
         <translation>Annulla</translation>
-    </message>
-</context>
-<context>
-    <name>RenameLocalNodeDialog</name>
-    <message>
-        <source>File can’t be renamed to &quot;%1&quot;</source>
-        <translatorcomment>Error warning shown when a file can´t be renamed due to an error.</translatorcomment>
-        <translation>Il file non può essere rinominato come &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <source>Folder can’t be renamed to &quot;%1&quot;</source>
-        <translatorcomment>Error warning shown when a folder can´t be renamed due to an error.</translatorcomment>
-        <translation>La cartella non può essere rinominata come &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
@@ -4854,7 +4850,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Master key</source>
         <translatorcomment>Title of dialog to export master key for the current user.</translatorcomment>
-        <translation>Esporta Chiave di Recupero</translation>
+        <translation>Esporta Chiave di recupero</translation>
     </message>
     <message>
         <source>Unable to write file</source>
@@ -4864,12 +4860,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
         <translatorcomment>Label to inform the user to keep the master key in a secure location.</translatorcomment>
-        <translation>Esportare la Chiave di Recupero e tenerla in un posto sicuro ti permette di reimpostare la password senza perdite di dati.</translation>
+        <translation>Esportare la Chiave di recupero e tenerla in un posto sicuro ti permette di reimpostare la password senza perdite di dati.</translation>
     </message>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
         <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
-        <translation>Mantieni sempre controllo fisico della tua Chiave di Recupero (ad esempio sul tuo computer, su una memoria esterna, o stampata).</translation>
+        <translation>Mantieni sempre controllo fisico della tua Chiave di recupero (ad esempio sul tuo computer, su una memoria esterna, o stampata).</translation>
     </message>
     <message>
         <source>Exclude by size</source>
@@ -5034,7 +5030,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Report Issue</source>
         <translatorcomment>Button label used to submit bug reports to MEGA.</translatorcomment>
-        <translation>Segnala problema</translation>
+        <translation>Segnala un problema</translation>
     </message>
     <message>
         <source>My Account</source>
@@ -5069,12 +5065,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Recovery Key</source>
         <translatorcomment>Section title for MEGA recovery key download in Security pane.</translatorcomment>
-        <translation>Chiave di Recupero</translation>
+        <translation>Chiave di recupero</translation>
     </message>
     <message>
         <source>Your password is not stored by MEGA and we cannot recover it for you. To avoid losing access to your account, save your Recovery Key in a safe place.</source>
         <translatorcomment>Informative text message shown in the Recovery Key section in Security pane, inviting the user to save the Recovery Key in a safe place.</translatorcomment>
-        <translation>La tua password non viene archiviata da MEGA e non possiamo recuperarla per te. Per evitare di perdere accesso al tuo account, salva la tua Chiave di Recupero in un posto sicuro.</translation>
+        <translation>La tua password non viene archiviata da MEGA e non possiamo recuperarla per te. Per evitare di perdere accesso al tuo account, salva la tua Chiave di recupero in un posto sicuro.</translation>
     </message>
     <message>
         <source>Password</source>
@@ -5244,7 +5240,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Pro Lite</source>
         <translatorcomment>Text label indicating the Pro Lite tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro Lite</translation>
+        <translation>Pro&#xa0;Lite</translation>
     </message>
     <message>
         <source>Business</source>
@@ -5299,22 +5295,22 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Pro I</source>
         <translatorcomment>Text label indicating the Pro I tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro I</translation>
+        <translation>Pro&#xa0;I</translation>
     </message>
     <message>
         <source>Pro II</source>
         <translatorcomment>Text label indicating the Pro II tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro II</translation>
+        <translation>Pro&#xa0;II</translation>
     </message>
     <message>
         <source>Pro III</source>
         <translatorcomment>Text label indicating the Pro III tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro III</translation>
+        <translation>Pro&#xa0;III</translation>
     </message>
     <message>
         <source>Export Key</source>
         <translatorcomment>Button label text for export key saving to local machine in a file. Keep string as short as possible.</translatorcomment>
-        <translation>Esporta Chiave</translation>
+        <translation>Esporta chiave</translation>
     </message>
     <message>
         <source>Notifications</source>
@@ -5479,7 +5475,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Pro Flexi</source>
         <translatorcomment>Text label indicating the Pro Flexi tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro Flexi</translation>
+        <translation>Pro&#xa0;Flexi</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
@@ -5688,7 +5684,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
         <translatorcomment>Label to inform the user that the synchronization stablished will be automatically synchronized.</translatorcomment>
-        <translation>La tua cartella locale e il tuo Cloud Drive MEGA saranno sincronizzati automaticamente.</translation>
+        <translation>La tua cartella locale e il tuo Cloud drive MEGA saranno sincronizzati automaticamente.</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
@@ -5707,7 +5703,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Are you sure you want to cancel this wizard and undo all changes?</source>
         <translatorcomment>Message shown when an user cancel the Setup Wizard.</translatorcomment>
-        <translation>Sei sicuro di voler annullare la procedura guidata e annullare tutte le modifiche?</translation>
+        <translation>Vuoi annullare questa azione e tutti i cambiamenti?</translation>
     </message>
     <message>
         <source>Skip</source>
@@ -5746,7 +5742,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
-        <translation>Controlla la tua e-Mail e clicca sul link per conferma il tuo account.</translation>
+        <translation>Controlla la tua e-mail e clicca sul link per conferma il tuo account.</translation>
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
@@ -5795,7 +5791,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Specific folders in your Cloud Drive will be synchronized with a local folder.</source>
         <translatorcomment>Information label to explain the user the selective sync mode of MEGAsync</translatorcomment>
-        <translation>Cartelle specifiche del tuo Cloud Drive verranno sincronizzate con una cartella locale identica.</translation>
+        <translation>Cartelle specifiche del tuo Cloud drive verranno sincronizzate con una cartella locale identica.</translation>
     </message>
     <message>
         <source>Select Local folder:</source>
@@ -5815,7 +5811,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your entire Cloud Drive will be synchronized with a local folder.</source>
         <translatorcomment>Label with information about the full sync mode of MEGAsync</translatorcomment>
-        <translation>Il tuo intero Cloud Drive verrà sincronizzato con una cartella locale.</translation>
+        <translation>Il tuo intero Cloud drive verrà sincronizzato con una cartella locale.</translation>
     </message>
     <message>
         <source>Log in</source>
@@ -5959,7 +5955,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Text of the button to select a file from the Cloud Drive for streaming</translatorcomment>
-        <translation>Cloud Drive</translation>
+        <translation>Cloud drive</translation>
     </message>
     <message>
         <source>Public link</source>
@@ -6050,6 +6046,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Please wait...</source>
         <translatorcomment>Message shown while waiting for the server request with the file info to stream</translatorcomment>
         <translation>Attendere…</translation>
+    </message>
+    <message>
+        <source>Select items</source>
+        <translatorcomment>Window title for node selector when is openned in stream mode</translatorcomment>
+        <translation>Seleziona oggetti</translation>
     </message>
 </context>
 <context>
@@ -6207,7 +6208,7 @@ Per continuare, seleziona un&apos;altra cartella.</translation>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a local folder shared with VMWare third party app.</translatorcomment>
-        <translation>Stai sincronizzando una cartella locale condivisa con VMWare. Queste cartelle non supportano le notifiche di sistema dei file, quindi l&apos;app dovrà continuamente essere attiva per controllare cambiamenti nei tuoi file e nelle tue cartelle. Utilizza un&apos;altra cartella se possibile per ridurre l&apos;utilizzo della CPU.</translation>
+        <translation>Stai sincronizzando una cartella locale condivisa con VMWare. Questa cartella non supporta le notifiche del filesystem, quindi per riscontrare cambiamenti e sincronizzare, l&apos;app dovrà scansionare la cartella e i file al suo interno di continuo. Se possibile, utilizza un&apos;altra cartella per ridurre l&apos;utilizzo della CPU.</translation>
     </message>
 </context>
 <context>
@@ -7017,22 +7018,22 @@ Per ottenere maggior banda, effettua l&apos;upgrade ad un account Pro o attendi 
     <message>
         <source>Pro Lite</source>
         <translatorcomment>Label to refer Pro Lite tier</translatorcomment>
-        <translation>Pro Lite</translation>
+        <translation>Pro&#xa0;Lite</translation>
     </message>
     <message>
         <source>Pro I</source>
         <translatorcomment>Label to refer Pro I tier</translatorcomment>
-        <translation>Pro I</translation>
+        <translation>Pro&#xa0;I</translation>
     </message>
     <message>
         <source>Pro II</source>
         <translatorcomment>Label to refer Pro II tier</translatorcomment>
-        <translation>Pro II</translation>
+        <translation>Pro&#xa0;II</translation>
     </message>
     <message>
         <source>Pro III</source>
         <translatorcomment>Label to refer Pro III tier</translatorcomment>
-        <translation>Pro III</translation>
+        <translation>Pro&#xa0;III</translation>
     </message>
     <message numerus="yes">
         <source>%n second ago</source>

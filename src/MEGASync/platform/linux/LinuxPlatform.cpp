@@ -40,14 +40,25 @@ bool LinuxPlatform::enableTrayIcon(QString /*executable*/)
     return false;
 }
 
-void LinuxPlatform::notifyItemChange(const QString& path, int newState)
+void LinuxPlatform::notifyItemChange(const QString& path, int)
 {
-    notifyItemChange(path.toUtf8().constData(), newState);
+    if (!path.isEmpty())
+    {
+        if (notify_server && !Preferences::instance()->overlayIconsDisabled())
+        {
+            std::string stdPath = path.toStdString();
+            notify_server->notifyItemChange(&stdPath);
+        }
+        mShellNotifier->notify(path);
+    }
 }
 
 void LinuxPlatform::notifySyncFileChange(std::string *localPath, int newState)
 {
-    notifyItemChange(localPath, newState);
+    if(localPath && localPath->size())
+    {
+        notifyItemChange(QString::fromStdString(*localPath), newState);
+    }
 }
 
 // enable or disable MEGASync launching at startup
@@ -568,18 +579,6 @@ void LinuxPlatform::initMenu(QMenu* m)
 std::shared_ptr<AbstractShellNotifier> LinuxPlatform::getShellNotifier()
 {
     return mShellNotifier;
-}
-
-void LinuxPlatform::notifyItemChange(string *localPath, int)
-{
-    if (localPath && localPath->size())
-    {
-        if (notify_server && !Preferences::instance()->overlayIconsDisabled())
-        {
-            notify_server->notifyItemChange(localPath);
-        }
-        mShellNotifier->notify(*localPath);
-    }
 }
 
 // Platform-specific strings

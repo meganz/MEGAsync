@@ -11,7 +11,6 @@
 #include "UserAttributesRequests/FullName.h"
 #include "UserAttributesRequests/MyBackupsHandle.h"
 #include "PowerOptions.h"
-#include "syncs/gui/SyncTooltipCreator.h"
 #include "syncs/gui/Backups/BackupsWizard.h"
 #include "syncs/gui/Backups/AddBackupDialog.h"
 #include "syncs/gui/Backups/RemoveBackupDialog.h"
@@ -1544,6 +1543,8 @@ void SettingsDialog::on_bSyncs_clicked()
     mUi->pSyncs->hide();
     animateSettingPage(SETTING_ANIMATION_SYNCS_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
 #endif
+
+    SyncInfo::instance()->dismissUnattendedDisabledSyncs(MegaSync::TYPE_TWOWAY);
 }
 
 
@@ -1764,6 +1765,8 @@ void SettingsDialog::on_bBackup_clicked()
     mUi->pBackup->hide();
     animateSettingPage(SETTING_ANIMATION_BACKUP_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
 #endif
+
+    SyncInfo::instance()->dismissUnattendedDisabledSyncs(MegaSync::TYPE_BACKUP);
 }
 
 void SettingsDialog::on_bAddBackup_clicked()

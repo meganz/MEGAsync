@@ -22,7 +22,7 @@ QAlertsModel::QAlertsModel(MegaUserAlertList *alerts, bool copy, QObject *parent
 
 void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
 {
-    int numAlerts = alerts->size();
+    int numAlerts = alerts ? alerts->size() : 0;
     int actualnumberofalertstoinsert = 0;
     if (numAlerts)
     {
@@ -40,7 +40,8 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
         }
 
         int deleted = 0;
-        while (copy && actualnumberofalertstoinsert - deleted + (int)alertsMap.size() >= (int)Preferences::MAX_COMPLETED_ITEMS)
+        while (copy && !alertOrder.empty()
+               && actualnumberofalertstoinsert - deleted + (int)alertsMap.size() >= (int)Preferences::MAX_COMPLETED_ITEMS)
         {
             MegaUserAlert *alertToDelete = alertsMap[alertOrder.back()];
             assert(alertToDelete && "something went wrong: no alert to delete");
@@ -74,58 +75,7 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
             if (!copy) //first time, alertsMap should be empty
             {
                 MegaUserAlert *alert = alerts->get(i);
-
-                alertOrder.push_front(alert->getId());
-                alertsMap.insert(alert->getId(), alert);
-                if (!alert->getSeen())
-                {
-                    if (checkAlertType(alert->getType()) != -1)
-                    {
-                        unSeenNotifications[checkAlertType(alert->getType())]++;
-                    }
-                }
-            }
-            else
-            {
-                MegaUserAlert *alert = alerts->get(i)->copy();
-                QMap<int, mega::MegaUserAlert*>::iterator existing = alertsMap.find(alert->getId());
-                if (existing != alertsMap.end())
-                {
-                    MegaUserAlert *old = existing.value();
-                    alertsMap[alert->getId()] = alert;
-                    if (alert->getSeen() != old->getSeen())
-                    {                       
-                        if (checkAlertType(alert->getType()) != -1)
-                        {
-                            unSeenNotifications[checkAlertType(alert->getType())] += alert->getSeen() ? -1 : 1;
-                        }
-                    }
-
-                    AlertItem *udpatedAlertItem = alertItems[alert->getId()];
-                    if (udpatedAlertItem)
-                    {
-                        udpatedAlertItem->setAlertData(alert);
-                    }
-
-                    delete old;
-
-                    //update row element
-                    std::deque<unsigned int>::iterator orderIter = std::find(alertOrder.begin(), alertOrder.end(),alert->getId());
-                    assert(orderIter != alertOrder.end() && (*orderIter) == alert->getId());
-                    if (orderIter != alertOrder.end() && (*orderIter) == alert->getId())
-                    {
-                        const int row = static_cast<int>(std::distance(alertOrder.begin(),orderIter));
-                        if (row < static_cast<int>(alertOrder.size()))
-                        {
-                            emit dataChanged(index(row, 0, QModelIndex()), index(row, 0, QModelIndex()));
-                        }
-                        else
-                        {
-                            assert(false || "unexpected row to update");
-                        }
-                    }
-                }
-                else
+                if (!alert->isRemoved())
                 {
                     alertOrder.push_front(alert->getId());
                     alertsMap.insert(alert->getId(), alert);
@@ -134,6 +84,62 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
                         if (checkAlertType(alert->getType()) != -1)
                         {
                             unSeenNotifications[checkAlertType(alert->getType())]++;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                MegaUserAlert *alert = alerts->get(i)->copy();
+                if (!alert->isRemoved())
+                {
+                    QMap<int, mega::MegaUserAlert*>::iterator existing = alertsMap.find(alert->getId());
+                    if (existing != alertsMap.end())
+                    {
+                        MegaUserAlert *old = existing.value();
+                        alertsMap[alert->getId()] = alert;
+                        if (alert->getSeen() != old->getSeen())
+                        {
+                            if (checkAlertType(alert->getType()) != -1)
+                            {
+                                unSeenNotifications[checkAlertType(alert->getType())] += alert->getSeen() ? -1 : 1;
+                            }
+                        }
+
+                        AlertItem *udpatedAlertItem = alertItems[alert->getId()];
+                        if (udpatedAlertItem)
+                        {
+                            udpatedAlertItem->setAlertData(alert);
+                        }
+
+                        delete old;
+
+                        //update row element
+                        std::deque<unsigned int>::iterator orderIter = std::find(alertOrder.begin(), alertOrder.end(),alert->getId());
+                        assert(orderIter != alertOrder.end() && (*orderIter) == alert->getId());
+                        if (orderIter != alertOrder.end() && (*orderIter) == alert->getId())
+                        {
+                            const int row = static_cast<int>(std::distance(alertOrder.begin(),orderIter));
+                            if (row < static_cast<int>(alertOrder.size()))
+                            {
+                                emit dataChanged(index(row, 0, QModelIndex()), index(row, 0, QModelIndex()));
+                            }
+                            else
+                            {
+                                assert(false || "unexpected row to update");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        alertOrder.push_front(alert->getId());
+                        alertsMap.insert(alert->getId(), alert);
+                        if (!alert->getSeen())
+                        {
+                            if (checkAlertType(alert->getType()) != -1)
+                            {
+                                unSeenNotifications[checkAlertType(alert->getType())]++;
+                            }
                         }
                     }
                 }

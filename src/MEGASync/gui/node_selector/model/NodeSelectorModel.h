@@ -83,7 +83,6 @@ private:
      NodeSelectorModel* mModel;
      QList<NodeSelectorModelItem*> mRootItems;
      mutable QMutex mMutex;
-
      std::shared_ptr<mega::MegaCancelToken> mCancelToken;
 };
 
@@ -179,6 +178,7 @@ private slots:
 private:
     virtual void createRootNodes() = 0;
     virtual int rootItemsCount() const = 0;
+    virtual bool addToLoadingList(const std::shared_ptr<mega::MegaNode> node);
     void createChildItems(std::shared_ptr<mega::MegaNodeList> childNodes, const QModelIndex& index, NodeSelectorModelItem* parent);
 
     QIcon getFolderIcon(NodeSelectorModelItem* item) const;

@@ -24,7 +24,7 @@ ThreadedQueueShellNotifier::~ThreadedQueueShellNotifier()
     mThread.join();
 }
 
-void ThreadedQueueShellNotifier::notify(const std::string& localPath)
+void ThreadedQueueShellNotifier::notify(const QString &localPath)
 {
     // make sure the thread was started
     if (!mThread.joinable())
@@ -42,7 +42,7 @@ void ThreadedQueueShellNotifier::doInThread()
 {
     for (;;)
     {
-        std::string path;
+        QString path;
 
         { // lock scope
             std::unique_lock<std::mutex> lock(mQueueAccessMutex);
@@ -65,7 +65,7 @@ void ThreadedQueueShellNotifier::doInThread()
             }
         } // end of lock scope
 
-        if (!path.empty())
+        if (!path.isEmpty())
         {
             mBaseNotifier->notify(path);
         }
