@@ -7,6 +7,9 @@
 #include <QFontMetrics>
 #include <QAbstractItemView>
 
+
+const int IconDelegate::ICON_HEIGHT = 18;
+
 IconDelegate::IconDelegate(QObject* parent) :
     QStyledItemDelegate(parent)
 {
@@ -19,11 +22,34 @@ IconDelegate::~IconDelegate()
 
 void IconDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
+    QStyledItemDelegate::paint(painter, option, index);
+
     QStyleOptionViewItem opt(option);
     opt.decorationAlignment = index.data(Qt::TextAlignmentRole).value<Qt::Alignment>();
-    opt.decorationPosition = QStyleOptionViewItem::Top;
-    opt.decorationSize = QSize(17, 17);
-    QStyledItemDelegate::paint(painter, opt, index);
+
+    auto icon = index.data(Qt::DecorationRole).value<QIcon>();
+
+    QIcon::Mode iconMode = QIcon::Normal;
+    if(option.state.testFlag(QStyle::State_Selected))
+    {
+        iconMode = QIcon::Selected;
+    }
+    auto pixmap = icon.pixmap(ICON_HEIGHT, iconMode);
+
+    const int x = option.rect.center().x() - ICON_HEIGHT / 2;
+    const int y = option.rect.center().y() - ICON_HEIGHT / 2;
+
+    painter->drawPixmap(QRect(x, y + 1, ICON_HEIGHT, ICON_HEIGHT), pixmap);
+}
+
+void IconDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const
+{
+    QStyledItemDelegate::initStyleOption(option, index);
+    QVariant enabled = index.data(toInt(NodeRowDelegateRoles::ENABLED_ROLE));
+    if (enabled.isValid() && !enabled.toBool())
+    {
+        option->icon = QIcon();
+    }
 }
 
 

@@ -41,17 +41,20 @@ border:none;
       <number>0</number>
      </property>
      <property name="bottomMargin">
-      <number>10</number>
+      <number>0</number>
      </property>
      <property name="horizontalSpacing">
       <number>2</number>
+     </property>
+     <property name="verticalSpacing">
+      <number>8</number>
      </property>
      <item row="0" column="10">
       <widget class="SearchLineEdit" name="leSearch">
        <property name="minimumSize">
         <size>
          <width>150</width>
-         <height>27</height>
+         <height>34</height>
         </size>
        </property>
        <property name="styleSheet">
@@ -60,7 +63,7 @@ border-radius:6px;
 border-width:1px 1px 1px 1px;
 border-style:solid;
 border-color:rgba(0,0,0,0.1);
-min-height:25px;
+min-height:32px;
 }</string>
        </property>
        <property name="frameShape">
@@ -91,7 +94,8 @@ min-height:25px;
        </property>
        <property name="icon">
         <iconset resource="../../../Resources_win.qrc">
-         <normaloff>:/images/node_selector/chevron-right.png</normaloff>:/images/node_selector/chevron-right.png</iconset>
+         <normaloff>:/images/node_selector/chevron-right-active.png</normaloff>
+         <disabledoff>:/images/node_selector/chevron-right.png</disabledoff>:/images/node_selector/chevron-right-active.png</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -195,7 +199,8 @@ color:#3D3D3D;
        </property>
        <property name="icon">
         <iconset resource="../../../Resources_win.qrc">
-         <normaloff>:/images/node_selector/chevron-left.png</normaloff>:/images/node_selector/chevron-left.png</iconset>
+         <normaloff>:/images/node_selector/chevron-left-active.png</normaloff>
+         <disabledoff>:/images/node_selector/chevron-left.png</disabledoff>:/images/node_selector/chevron-left-active.png</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -289,11 +294,11 @@ color:#303233;
        <property name="styleSheet">
         <string notr="true">QToolButton
 {
-  border-radius: 10px;
+  border-radius: 12px;
   font-weight: 600;
-  height:20px;
-  padding-left:5px;
-  padding-right:3px;
+  height:24px;
+  padding-left:8px;
+  padding-right:8px;
   background-color: rgba(0, 0, 0, 0.05);
   color:#616366;
 }
@@ -323,6 +328,12 @@ QToolButton:pressed
          <number>8</number>
         </property>
         <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
          <number>0</number>
         </property>
         <item>
@@ -480,7 +491,8 @@ QToolButton:pressed
           <string notr="true">QTreeView {
     show-decoration-selected: 1;
 	selection-background-color: #3393df;
-	 font-size: 12px;
+	 font-size: 14px;
+	font-weight:400;
  	qproperty-indentation: 18; 
 	outline:0;
 }
@@ -532,7 +544,8 @@ QHeaderView
 {
 background: #FFFFFF;
 font-size: 12px;
-color:#576879;
+font-weight:400;
+color:#303233;
 padding-top: 2px;
 }
 
@@ -745,8 +758,19 @@ font-weight: 400;
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>26</height>
+       <height>35</height>
       </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton
+{
+min-height:32px;
+padding-left:12px;
+padding-right:12px;
+font-size:14px;
+font-weight: 400;
+border-radius:4px;
+}</string>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <property name="leftMargin">
@@ -763,8 +787,38 @@ font-weight: 400;
       </property>
       <item>
        <widget class="QPushButton" name="bNewFolder">
+        <property name="styleSheet">
+         <string notr="true">
+QPushButton
+{
+background-color:qlineargradient( x1:0 y1:0, x2:1 y2:0, stop:0 #AAAAAA, stop:1 #999999);
+color:#FFFFFF;
+border: 1px solid rgba(0, 0, 0, 0.44);
+}
+
+QPushButton:disabled
+{
+background-color: qlineargradient( x1:0 y1:0, x2:1 y2:0, stop:0 rgba(170, 170, 170, 0.3), stop:1 rgba(153, 153, 153, 0.3));
+border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+QPushButton::hover
+{
+background-color:qlineargradient( x1:0 y1:0, x2:1 y2:0, stop:0 #8D8D8D, stop:1 #7A7A7A);
+}</string>
+        </property>
         <property name="text">
          <string>New folder</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../../../Resources_win.qrc">
+          <normaloff>:/images/node_selector/plus.png</normaloff>:/images/node_selector/plus.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>16</width>
+          <height>16</height>
+         </size>
         </property>
        </widget>
       </item>
@@ -783,6 +837,26 @@ font-weight: 400;
       </item>
       <item>
        <widget class="QPushButton" name="bOk">
+        <property name="styleSheet">
+         <string notr="true">QPushButton
+{
+background:#00BFA5;
+border: 1px solid rgba(0, 0, 0, 0.1);
+color:#FFFFFF;
+}
+
+QPushButton:disabled
+{
+background: rgba(0, 191, 165, 0.3);
+color:#FFFFFF;
+}
+
+QPushButton:hover
+{
+background: #00A787;
+color:#FFFFFF;
+}</string>
+        </property>
         <property name="text">
          <string>OK</string>
         </property>
@@ -790,6 +864,25 @@ font-weight: 400;
       </item>
       <item>
        <widget class="QPushButton" name="bCancel">
+        <property name="styleSheet">
+         <string notr="true">QPushButton
+{
+background-color:qlineargradient( x1:0 y1:0, x2:1 y2:0, stop:0 #FFFFFF, stop:1 #FAFAFA);
+color:#333333;
+border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+QPushButton:disabled
+{
+color: rgba(51, 51, 51, 0.3);
+}
+
+QPushButton:hover
+{
+background-color:qlineargradient( x1:0 y1:0, x2:1 y2:0, stop:0 #FAFAFA, stop:1 #F2F2F2);
+color:#333333;
+}</string>
+        </property>
         <property name="text">
          <string>Cancel</string>
         </property>

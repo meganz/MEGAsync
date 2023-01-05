@@ -211,6 +211,16 @@ QGroupBox::title
     border: 1px transparent #FAFAFA; 
     background: transparent;
 }
+
+#wLeftPane QFrame
+{
+min-height:40px;
+}
+
+#wLeftPane QPushbutton
+{
+min-height:40px;
+}
 </string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
@@ -237,6 +247,12 @@ QGroupBox::title
          </property>
          <item>
           <widget class="QFrame" name="fCloudDrive">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>40</height>
+            </size>
+           </property>
            <property name="frameShape">
             <enum>QFrame::NoFrame</enum>
            </property>

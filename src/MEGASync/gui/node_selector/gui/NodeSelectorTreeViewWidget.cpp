@@ -785,7 +785,7 @@ void SyncType::checkOkButton(NodeSelectorTreeViewWidget *wdg, const QModelIndexL
         {
             auto source_idx = wdg->mProxyModel->getIndexFromSource(index);
             NodeSelectorModelItem *item = static_cast<NodeSelectorModelItem*>(source_idx.internalPointer());
-            if(item)
+            if(item && item->isSyncable())
             {
                 item->getNode()->isFolder() ? correctSelected++ : correctSelected;
             }

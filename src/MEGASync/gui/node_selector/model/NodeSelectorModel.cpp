@@ -266,7 +266,7 @@ void NodeRequester::abort()
 
 /* ------------------- MODEL ------------------------- */
 
-const int NodeSelectorModel::ROW_HEIGHT = 20;
+const int NodeSelectorModel::ROW_HEIGHT = 24;
 
 NodeSelectorModel::NodeSelectorModel(QObject *parent) :
     QAbstractItemModel(parent),

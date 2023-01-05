@@ -77,6 +77,10 @@ padding-left:3px;
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="styleSheet">
+      <string notr="true">font-size:14px;
+font-weight:400;</string>
+     </property>
      <property name="text">
       <string notr="true"/>
      </property>

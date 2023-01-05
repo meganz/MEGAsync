@@ -6,12 +6,17 @@
 
 class IconDelegate : public QStyledItemDelegate
 {
+    static const int ICON_HEIGHT;
+
 public:
     explicit IconDelegate(QObject *parent = nullptr);
     ~IconDelegate();
 
     void paint(QPainter* painter, const QStyleOptionViewItem& option,
                const QModelIndex& index) const override;
+
+private:
+    void initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const;
 };
 
 class NodeRowDelegate : public QStyledItemDelegate
