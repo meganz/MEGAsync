@@ -363,7 +363,7 @@ void NodeSelectorTreeViewWidget::setLoadingSceneVisible(bool blockUi)
     ui->tMegaFolders->blockSignals(blockUi);
     ui->tMegaFolders->header()->blockSignals(blockUi);
 
-    mLoadingScene.changeLoadingSceneStatus(blockUi);
+    mLoadingScene.toggleLoadingScene(blockUi);
 }
 
 void NodeSelectorTreeViewWidget::onUiBlocked(bool state)
