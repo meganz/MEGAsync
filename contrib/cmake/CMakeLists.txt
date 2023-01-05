@@ -200,6 +200,7 @@ set (FORMS
     ${MEGAsyncDir}/gui/node_selector/gui/${UiDir}/NodeSelector.ui
     ${MEGAsyncDir}/gui/node_selector/gui/${UiDir}/NodeSelectorLoadingDelegate.ui
     ${MEGAsyncDir}/gui/node_selector/gui/${UiDir}/NodeSelectorTreeViewWidget.ui
+    ${MEGAsyncDir}/gui/node_selector/gui/${UiDir}/SearchLineEdit.ui
     ${MEGAsyncDir}/syncs/gui/Twoways/${UiDir}/FolderBinder.ui
     ${MEGAsyncDir}/syncs/gui/Twoways/${UiDir}/BindFolderDialog.ui
     ${MEGAsyncDir}/syncs/gui/Backups/${UiDir}/BackupsWizard.ui
@@ -327,17 +328,18 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/NodeNameSetterDialog/NewFolderDialog.h
     ${MEGAsyncDir}/gui/NodeNameSetterDialog/RenameNodeDialog.h
     ${MEGAsyncDir}/gui/CancelConfirmWidget.h
-	${MEGAsyncDir}/gui/MegaNodeNames.h
-	${MEGAsyncDir}/gui/node_selector/gui/NodeSelector.h
-	${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorLoadingDelegate.h
-	${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorTreeViewWidgetSpecializations.h
-	${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorTreeViewWidget.h
-	${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorTreeView.h
-	${MEGAsyncDir}/gui/node_selector/model/NodeSelectorDelegates.h
-	${MEGAsyncDir}/gui/node_selector/model/NodeSelectorModel.h
-	${MEGAsyncDir}/gui/node_selector/model/NodeSelectorModelItem.h
-	${MEGAsyncDir}/gui/node_selector/model/NodeSelectorModelSpecialised.h
-	${MEGAsyncDir}/gui/node_selector/model/NodeSelectorProxyModel.h
+    ${MEGAsyncDir}/gui/MegaNodeNames.h
+    ${MEGAsyncDir}/gui/node_selector/gui/NodeSelector.h
+    ${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorLoadingDelegate.h
+    ${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorTreeViewWidgetSpecializations.h
+    ${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorTreeViewWidget.h
+    ${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorTreeView.h
+    ${MEGAsyncDir}/gui/node_selector/gui/SearchLineEdit.h
+    ${MEGAsyncDir}/gui/node_selector/model/NodeSelectorDelegates.h
+    ${MEGAsyncDir}/gui/node_selector/model/NodeSelectorModel.h
+    ${MEGAsyncDir}/gui/node_selector/model/NodeSelectorModelItem.h
+    ${MEGAsyncDir}/gui/node_selector/model/NodeSelectorModelSpecialised.h
+    ${MEGAsyncDir}/gui/node_selector/model/NodeSelectorProxyModel.h
 
     ${MEGAsyncDir}/syncs/gui/SyncTooltipCreator.h
     ${MEGAsyncDir}/syncs/gui/SyncsMenu.h
@@ -531,16 +533,17 @@ set (SRCS
     ${MEGAsyncDir}/gui/NodeNameSetterDialog/NodeNameSetterDialog.cpp
     ${MEGAsyncDir}/gui/NodeNameSetterDialog/NewFolderDialog.cpp
     ${MEGAsyncDir}/gui/NodeNameSetterDialog/RenameNodeDialog.cpp
-	${MEGAsyncDir}/gui/node_selector/gui/NodeSelector.cpp
-	${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorLoadingDelegate.cpp
-	${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorTreeViewWidgetSpecializations.cpp
-	${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorTreeViewWidget.cpp
-	${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorTreeView.cpp
-	${MEGAsyncDir}/gui/node_selector/model/NodeSelectorDelegates.cpp
-	${MEGAsyncDir}/gui/node_selector/model/NodeSelectorModel.cpp
-	${MEGAsyncDir}/gui/node_selector/model/NodeSelectorModelItem.cpp
-	${MEGAsyncDir}/gui/node_selector/model/NodeSelectorModelSpecialised.cpp
-	${MEGAsyncDir}/gui/node_selector/model/NodeSelectorProxyModel.cpp
+    ${MEGAsyncDir}/gui/node_selector/gui/NodeSelector.cpp
+    ${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorLoadingDelegate.cpp
+    ${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorTreeViewWidgetSpecializations.cpp
+    ${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorTreeViewWidget.cpp
+    ${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorTreeView.cpp
+    ${MEGAsyncDir}/gui/node_selector/gui/SearchLineEdit.cpp
+    ${MEGAsyncDir}/gui/node_selector/model/NodeSelectorDelegates.cpp
+    ${MEGAsyncDir}/gui/node_selector/model/NodeSelectorModel.cpp
+    ${MEGAsyncDir}/gui/node_selector/model/NodeSelectorModelItem.cpp
+    ${MEGAsyncDir}/gui/node_selector/model/NodeSelectorModelSpecialised.cpp
+    ${MEGAsyncDir}/gui/node_selector/model/NodeSelectorProxyModel.cpp
 
     ${MEGAsyncDir}/transfers/model/TransfersManagerSortFilterProxyModel.cpp
     ${MEGAsyncDir}/transfers/model/TransfersModel.cpp
