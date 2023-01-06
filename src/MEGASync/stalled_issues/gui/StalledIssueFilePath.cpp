@@ -370,7 +370,7 @@ QString StalledIssueFilePath::getSyncPathProblemString(mega::MegaSyncStall::Sync
         }
         case mega::MegaSyncStall::DetectedHardLink:
         {
-            return tr("Hard link detected.");
+            return tr("Hard link or Reparse Point detected.");
         }
         case mega::MegaSyncStall::DetectedSymlink:
         {
