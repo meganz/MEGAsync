@@ -23,14 +23,14 @@ BrandingText "MEGA Limited"
 
 VIAddVersionKey "CompanyName" "MEGA Limited"
 VIAddVersionKey "FileDescription" "MEGAsync"
-VIAddVersionKey "LegalCopyright" "MEGA Limited 2022"
+VIAddVersionKey "LegalCopyright" "MEGA Limited 2023"
 VIAddVersionKey "ProductName" "MEGAsync"
 
 ; Version info
-VIProductVersion "5.0.0.0"
-VIAddVersionKey "FileVersion" "5.0.0.0"
-VIAddVersionKey "ProductVersion" "5.0.0.0"
-!define PRODUCT_VERSION "5.0.0"
+VIProductVersion "5.0.3.0"
+VIAddVersionKey "FileVersion" "5.0.3.0"
+VIAddVersionKey "ProductVersion" "5.0.3.0"
+!define PRODUCT_VERSION "5.0.3"
 
 !define PRODUCT_PUBLISHER "Mega Limited"
 !define PRODUCT_WEB_SITE "http://www.mega.nz"
@@ -327,7 +327,7 @@ Function showHiDpi
     ${EndIf}
 
     strCpy $BITMAP_WELCOME "$BANNER_PATH\leftbanner\left_banner$0.bmp"
-	
+
     ${NSD_SetImage} $mui.WelcomePage.Image $BITMAP_WELCOME  $mui.WelcomePage.Image.Bitmap
     ${NSD_SetImage} $mui.FinishPage.Image $BITMAP_WELCOME $mui.FinishPage.Image.Bitmap
 
@@ -355,7 +355,7 @@ Function .onInit
      ;Abort
      ;continue:
   ${EndIf}
-  
+
   !insertmacro MULTIUSER_INIT
   StrCpy $APP_NAME "${PRODUCT_NAME} ${PRODUCT_VERSION}"
 
@@ -388,12 +388,12 @@ Function .onInit
   ${IfNot} ${Silent}
     !insertmacro CheckUserToRunElevated
   ${EndIf}
-  
+
   System::Call 'shell32::SHGetSpecialFolderPath(i $HWNDPARENT, t .r1, i ${CSIDL_LOCALAPPDATA}, i0)i.r0'
   strCpy $BANNER_PATH $1
   #${UAC.CallFunctionAsUser} GetPaths
   StrCpy $BANNER_PATH "$BANNER_PATH\MEGAsync"
-  
+
   strCpy $PREVIOUS_OUTPATH GetOutPath
   SetOutPath "$BANNER_PATH\leftbanner"
   File "installer\leftbanner\*"
@@ -756,7 +756,7 @@ modeselected:
   File "${SRCDIR_MEGASYNC}\swresample-3.dll"
   AccessControl::SetFileOwner "$INSTDIR\swresample-3.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\swresample-3.dll" "$USERNAME" "GenericRead + GenericWrite"
-  
+
   ;remove old DLLs that we no longer use (some became static; some have later version number)
   Delete "$INSTDIR\avcodec-57.dll"
   Delete "$INSTDIR\avformat-57.dll"
