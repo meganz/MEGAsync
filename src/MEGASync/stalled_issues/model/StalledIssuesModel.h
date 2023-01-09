@@ -30,8 +30,6 @@ public:
     explicit StalledIssuesReceiver(QObject *parent = nullptr);
     ~StalledIssuesReceiver(){}
 
-    bool setCurrentStalledIssuesToCompare(const StalledIssuesVariantList &currentIssues);
-
 signals:
     void stalledIssuesReady(StalledIssuesReceiver::StalledIssuesReceived);
 
@@ -41,7 +39,6 @@ protected:
 private:
     QMutex mCacheMutex;
     StalledIssuesReceived mCacheStalledIssues;
-    StalledIssuesVariantList mCurrentStalledIssues;
 };
 
 Q_DECLARE_METATYPE(StalledIssuesReceiver::StalledIssuesReceived);

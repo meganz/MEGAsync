@@ -14,45 +14,33 @@ StalledIssuesReceiver::StalledIssuesReceiver(QObject *parent) : QObject(parent),
     qRegisterMetaType<StalledIssuesReceived>("StalledIssuesReceived");
 }
 
-bool StalledIssuesReceiver::setCurrentStalledIssuesToCompare(const StalledIssuesVariantList& currentIssues)
-{
-    if(mCacheMutex.tryLock())
-    {
-        mCurrentStalledIssues = currentIssues;
-        mCacheMutex.unlock();
-        return true;
-    }
-
-    return false;
-}
-
 void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest *request, mega::MegaError*)
 {
-    if (auto stalls = request->getMegaSyncStallList())
+    if (request->getType() == ::mega::MegaRequest::TYPE_GET_SYNC_STALL_LIST)
     {
         QMutexLocker lock(&mCacheMutex);
-
         mCacheStalledIssues.clear();
-        mCurrentStalledIssues.clear();
 
-        for (size_t i = 0; i < stalls->size(); ++i)
+        if (auto stalls = request->getMegaSyncStallList())
         {
-            auto stall = stalls->get(i);
+            for (size_t i = 0; i < stalls->size(); ++i)
+            {
+                auto stall = stalls->get(i);
 
-            if(stall->reason() == mega::MegaSyncStall::SyncStallReason::NamesWouldClashWhenSynced)
-            {
-                auto d = std::make_shared<NameConflictedStalledIssue>(stall);
-                auto variant = std::make_shared<StalledIssueVariant>(d);
-                mCacheStalledIssues.stalledIssues.append(variant);
-            }
-            else
-            {
-                auto d = std::make_shared<StalledIssue>(stall);
-                auto variant = std::make_shared<StalledIssueVariant>(d);
-                mCacheStalledIssues.stalledIssues.append(variant);
+                if(stall->reason() == mega::MegaSyncStall::SyncStallReason::NamesWouldClashWhenSynced)
+                {
+                    auto d = std::make_shared<NameConflictedStalledIssue>(stall);
+                    auto variant = std::make_shared<StalledIssueVariant>(d);
+                    mCacheStalledIssues.stalledIssues.append(variant);
+                }
+                else
+                {
+                    auto d = std::make_shared<StalledIssue>(stall);
+                    auto variant = std::make_shared<StalledIssueVariant>(d);
+                    mCacheStalledIssues.stalledIssues.append(variant);
+                }
             }
         }
-
         emit stalledIssuesReady(mCacheStalledIssues);
     }
 }
@@ -98,69 +86,51 @@ StalledIssuesModel::~StalledIssuesModel()
 
 void StalledIssuesModel::onProcessStalledIssues(StalledIssuesReceiver::StalledIssuesReceived issuesReceived)
 {
-    if(!issuesReceived.isEmpty())
+    mThreadPool->push([this, issuesReceived]()
     {
         reset();
 
-        mThreadPool->push([this, issuesReceived]()
+        mModelMutex.lock();
+        blockSignals(true);
+
+        auto totalRows = rowCount(QModelIndex());
+        auto rowsToBeInserted(static_cast<int>(issuesReceived.stalledIssues.size()));
+
+        if(rowsToBeInserted > 0)
         {
-            mModelMutex.lock();
-            blockSignals(true);
+            beginInsertRows(QModelIndex(), totalRows, totalRows + rowsToBeInserted - 1);
 
-            auto totalRows = rowCount(QModelIndex());
-            auto rowsToBeInserted(static_cast<int>(issuesReceived.stalledIssues.size()));
-
-            if(rowsToBeInserted > 0)
+            for (auto it = issuesReceived.stalledIssues.begin(); it != issuesReceived.stalledIssues.end();)
             {
-                beginInsertRows(QModelIndex(), totalRows, totalRows + rowsToBeInserted - 1);
-
-                for (auto it = issuesReceived.stalledIssues.begin(); it != issuesReceived.stalledIssues.end();)
+                if(mThreadPool->isThreadInterrupted())
                 {
-                    if(mThreadPool->isThreadInterrupted())
-                    {
-                        return;
-                    }
-
-                    std::shared_ptr<StalledIssueVariant> issue(*it);
-                    mStalledIssues.append(issue);
-                    mStalledIssuesByOrder.insert(issue.get(), rowCount(QModelIndex()) - 1);
-                    mCountByFilterCriterion[static_cast<int>(StalledIssue::getCriterionByReason((*it)->consultData()->getReason()))]++;
-
-                    it++;
+                    return;
                 }
 
-                endInsertRows();
+                std::shared_ptr<StalledIssueVariant> issue(*it);
+                mStalledIssues.append(issue);
+                mStalledIssuesByOrder.insert(issue.get(), rowCount(QModelIndex()) - 1);
+                mCountByFilterCriterion[static_cast<int>(StalledIssue::getCriterionByReason((*it)->consultData()->getReason()))]++;
+
+                it++;
             }
 
-            blockSignals(false);
-            mModelMutex.unlock();
+            endInsertRows();
+        }
 
-            emit stalledIssuesCountChanged();
-            emit stalledIssuesReceived(true);
-        });
-    }
-    else
-    {
-        reset();
-    }
+        blockSignals(false);
+        mModelMutex.unlock();
+
+        emit stalledIssuesCountChanged();
+        emit stalledIssuesReceived(true);
+    });
 }
 
 void StalledIssuesModel::updateStalledIssues()
 {
     blockUi();
 
-    if (mMegaApi->isSyncStalled())
-    {
-        //At the moment, we reset and refil the whole model
-        //if(mStalledIssuedReceiver->setCurrentStalledIssuesToCompare(mStalledIssues))
-        //{
-            mMegaApi->getMegaSyncStallList(nullptr);
-        //}
-    }
-    else
-    {
-        emit stalledIssuesReceived(false);
-    }
+    mMegaApi->getMegaSyncStallList(nullptr);
 }
 
 void StalledIssuesModel::updateStalledIssuesWhenReady()
