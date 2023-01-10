@@ -26,7 +26,7 @@ QString PlatformStrings::cancelSyncsWarning()
               "Please delete the folder sync from settings to cancel them.");
 }
 
-QString PlatformStrings::moveFileToBin()
+QString PlatformStrings::movedFileToBin()
 {
     return tr("Moved to recycle bin");
 }

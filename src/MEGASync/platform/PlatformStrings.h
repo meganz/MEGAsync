@@ -15,7 +15,7 @@ public:
     static QString syncsAndBackupsDisableWarning();
     static QString cancelSyncsWarning();
 
-    static QString moveFileToBin();
+    static QString movedFileToBin();
 };
 
 #endif // PLATFORMSTRINGS_H

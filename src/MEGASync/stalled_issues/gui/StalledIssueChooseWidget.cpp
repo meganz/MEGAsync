@@ -87,7 +87,7 @@ void StalledIssueChooseWidget::setData(StalledIssueDataPtr data)
             else
             {
                 icon.addFile(QString::fromUtf8(":/images/StalledIssues/remove_default.png"));
-                ui->chooseTitle->addMessage(PlatformStrings::moveFileToBin(), icon.pixmap(16,16));
+                ui->chooseTitle->addMessage(PlatformStrings::movedFileToBin(), icon.pixmap(16,16));
             }
 
             discardItem = !data->isSolved();
