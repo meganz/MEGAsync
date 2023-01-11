@@ -5881,11 +5881,6 @@ void MegaApplication::externalFolderUpload(qlonglong targetFolder)
     folderUploadSelector->open();
     connect(folderUploadSelector, &QDialog::finished, [this]()
     {
-        if (!folderUploadSelector)
-        {
-            return;
-        }
-
         if (folderUploadSelector->result() == QDialog::Accepted)
         {
             QStringList paths = folderUploadSelector->selectedFiles();
