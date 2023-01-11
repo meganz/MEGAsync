@@ -1,4 +1,5 @@
 #include "ThreadedQueueShellNotifier.h"
+#include "megaapi.h"
 
 ThreadedQueueShellNotifier::ThreadedQueueShellNotifier(std::shared_ptr<AbstractShellNotifier> baseNotifier)
     : ShellNotifierDecorator(baseNotifier)
@@ -24,6 +25,28 @@ ThreadedQueueShellNotifier::~ThreadedQueueShellNotifier()
     mThread.join();
 }
 
+void ThreadedQueueShellNotifier::checkReportQueueSize()
+{
+    // mutex already locked
+
+    auto now = mPendingNotifications.size();
+    auto last = lastReportedQueueSize;
+
+    // report if climbs above 1000, or gets back to 0
+    if ((now > 1000 && last > 1000) ||
+        (now == 0 && last > 1000) ||
+        (now > 1000 && last == 0))
+    {
+        if (now * 10 > last * 12 ||
+            last * 10 > now * 12)
+        {
+            // increased or decreased by factor 1.2 since last report
+            lastReportedQueueSize = now;
+            ::mega::MegaApi::log(::mega::MegaApi::LOG_LEVEL_INFO, ("Queue to nofity shell size is now:" + std::to_string(now)).c_str());
+        }
+    }
+}
+
 void ThreadedQueueShellNotifier::notify(const QString &localPath)
 {
     // make sure the thread was started
@@ -35,6 +58,7 @@ void ThreadedQueueShellNotifier::notify(const QString &localPath)
     std::unique_lock<std::mutex> lock(mQueueAccessMutex);
 
     mPendingNotifications.emplace(localPath);
+    checkReportQueueSize();
     mWaitCondition.notify_one();
 }
 
@@ -72,6 +96,7 @@ void ThreadedQueueShellNotifier::doInThread()
         else if (!path.isEmpty())
         {
             mBaseNotifier->notify(path);
+            checkReportQueueSize();
         }
     }
 }
