@@ -100,7 +100,7 @@ void StalledIssuesDialog::onUiBlocked()
     {
         ui->stalledIssuesTree->blockSignals(true);
         ui->stalledIssuesTree->header()->blockSignals(true);
-        mLoadingScene.changeLoadingSceneStatus(true);
+        mLoadingScene.toggleLoadingScene(true);
     }
 }
 
@@ -110,7 +110,7 @@ void StalledIssuesDialog::onUiUnblocked()
     {
         ui->stalledIssuesTree->blockSignals(false);
         ui->stalledIssuesTree->header()->blockSignals(false);
-        mLoadingScene.changeLoadingSceneStatus(false);
+        mLoadingScene.toggleLoadingScene(false);
     }
 }
 
