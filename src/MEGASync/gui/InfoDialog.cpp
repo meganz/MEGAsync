@@ -1043,8 +1043,6 @@ void InfoDialog::openFolder(QString path)
 
 void InfoDialog::addSync(MegaHandle h)
 {
-    MegaSyncApp->checkAndCloseOpenDialogs();
-
     auto overQuotaDialog = app->showSyncOverquotaDialog();
     auto addSyncLambda = [overQuotaDialog, h, this]()
     {
@@ -1089,8 +1087,6 @@ void InfoDialog::onAddSyncDialogFinished(QPointer<BindFolderDialog> dialog)
 
 void InfoDialog::addBackup()
 {
-    MegaSyncApp->checkAndCloseOpenDialogs();
-
     auto overQuotaDialog = app->showSyncOverquotaDialog();
 
     auto addBackupLambda = [overQuotaDialog, this]()

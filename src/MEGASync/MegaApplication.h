@@ -218,8 +218,6 @@ public:
     void raiseInfoDialog();
     bool isShellNotificationProcessingOngoing();
 
-    void checkAndCloseOpenDialogs();
-
 signals:
     void startUpdaterThread();
     void tryUpdate();
@@ -368,7 +366,6 @@ protected:
     void processDownloadQueue(QString path);
     void disableSyncs();
     void restoreSyncs();
-    void closeDialogs(bool bwoverquota = false);
     void createTransferManagerDialog();
     void calculateInfoDialogCoordinates(QDialog *dialog, int *posx, int *posy);
     void deleteMenu(QMenu *menu);

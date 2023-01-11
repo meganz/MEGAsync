@@ -26,6 +26,8 @@ public:
                 return dialogInfo;
             }
         }
+
+        return std::make_shared<DialogInfo>();
     }
 
     template <class DialogType>
@@ -142,8 +144,14 @@ public:
 private:
     struct DialogInfo
     {
-        QPointer<QDialog> dialog;
         QString dialogClass;
+        QPointer<QDialog> dialog;
+
+        template <class DialogType>
+        DialogType* getDialog()
+        {
+            return qobject_cast<DialogType*>(dialog);
+        }
 
         void clear()
         {
@@ -151,7 +159,13 @@ private:
             removeDialog(dialog);
         }
 
+        bool isEmpty()
+        {
+            return dialog == nullptr;
+        }
+
         bool operator==(const DialogInfo &info);
+
     };
     static QList<std::shared_ptr<DialogInfo>> mOpenedDialogs;
 

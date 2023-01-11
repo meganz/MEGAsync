@@ -1711,20 +1711,6 @@ void MegaApplication::processDownloadQueue(QString path)
     }
 }
 
-void MegaApplication::closeDialogs(bool/* bwoverquota*/)
-{
-//    checkAndCloseOpenDialogs();
-
-//    DialogOpener::removeDialog(mTransferManager);
-//    DialogOpener::removeDialog(mSetupWizard);
-//    DialogOpener::removeDialog(mSettingsDialog);
-//    DialogOpener::removeDialog(mChangeLogDialog);
-//    DialogOpener::removeDialog(mStorageOverquotaDialog);
-//    DialogOpener::removeDialog(mVerifyEmail);
-//    mTransferQuota->closeDialog();
-
-}
-
 void MegaApplication::createTransferManagerDialog()
 {
     if(!mTransferManager)
@@ -1763,8 +1749,6 @@ void MegaApplication::rebootApplication(bool update)
     }
 
     trayIcon->hide();
-    closeDialogs();
-
     QApplication::exit();
 }
 
@@ -2170,7 +2154,6 @@ void MegaApplication::cleanAll()
 
     UserAttributes::UserAttributesManager::instance().reset();
 
-    closeDialogs();
     removeAllFinishedTransfers();
     clearViewedTransfers();
 
@@ -3257,11 +3240,6 @@ void MegaApplication::startUpload(const QString& rawLocalPath, MegaNode* target,
     megaApi->startUpload(localPathArray.constData(), target, fileName, mtime, appData, isSrcTemporary, startFirst, cancelToken, listener);
 }
 
-void MegaApplication::checkAndCloseOpenDialogs()
-{
-    return;
-}
-
 void MegaApplication::cancelScanningStage()
 {
     mBlockingBatch.cancelTransfer();
@@ -3458,7 +3436,6 @@ void MegaApplication::exitApplication()
 {
     reboot = false;
     trayIcon->hide();
-    closeDialogs();
     QApplication::exit();
 }
 
@@ -4765,7 +4742,6 @@ void MegaApplication::importLinksFromWidget(QWidget* parent)
                 return;
             }
 
-            checkAndCloseOpenDialogs();
             //Show the dialog to paste public links
             auto pasteMegaLinksDialog = new PasteMegaLinksDialog(parent);
             DialogOpener::showDialog<PasteMegaLinksDialog>(pasteMegaLinksDialog, this, &MegaApplication::onPasteMegaLinksDialogFinish);
@@ -4896,8 +4872,6 @@ void MegaApplication::uploadActionClickedFromWindowAfterOverQuotaCheck(QWidget* 
         defaultFolderPath = paths.at(0);
     }
 
-    //This will remove any existing instance of mMultiUploadFileDialog
-    checkAndCloseOpenDialogs();
     auto multiUploadFileDialog = new MultiQFileDialog(openFrom,
                                                   QCoreApplication::translate("ShellExtension", "Upload to MEGA"),
                                                   defaultFolderPath, true);
@@ -4962,7 +4936,6 @@ void MegaApplication::downloadActionClickedFromWidget(QWidget* openFrom)
     mTransferQuota->checkDownloadAlertDismissed([this, openFrom](int result){
         if(result == QDialog::Rejected)
         {
-            checkAndCloseOpenDialogs();
             auto downloadNodeSelector = new NodeSelector(NodeSelectorTreeViewWidget::DOWNLOAD_SELECT, openFrom);
             downloadNodeSelector->setModal(false);
             downloadNodeSelector->setSelectedNodeHandle();
@@ -4998,7 +4971,6 @@ void MegaApplication::streamActionClicked()
     mTransferQuota->checkStreamingAlertDismissed([this](int result){
         if(result == QDialog::Rejected)
         {
-            checkAndCloseOpenDialogs();
             auto streamSelector = new StreamingFromMegaDialog(megaApi, megaApiFolders);
             connect(mTransferQuota.get(), &TransferQuota::waitTimeIsOver, streamSelector, &StreamingFromMegaDialog::updateStreamingState);
             DialogOpener::showDialog<StreamingFromMegaDialog>(streamSelector);
@@ -5247,7 +5219,6 @@ void MegaApplication::processUploads()
         }
     }
 
-    checkAndCloseOpenDialogs();
     auto uploadFolderSelector = new UploadToMegaDialog(megaApi);
     uploadFolderSelector->setDefaultFolder(preferences->uploadFolder());
     DialogOpener::showDialog<UploadToMegaDialog>(uploadFolderSelector, [this, uploadFolderSelector]()
@@ -5305,8 +5276,6 @@ void MegaApplication::processDownloads()
         openInfoWizard();
         return;
     }
-
-    checkAndCloseOpenDialogs();
 
     QString defaultPath = preferences->downloadFolder();
     if (preferences->hasDefaultDownloadFolder()
@@ -5566,24 +5535,33 @@ void MegaApplication::externalFileUpload(qlonglong targetFolder)
         return;
     }
 
-    checkAndCloseOpenDialogs();
-
     fileUploadTarget = targetFolder;
+
+    QString  defaultFolderPath;
+    auto previousFileUploadSelector = DialogOpener::findDialogByClass<QFileDialog>();
+    if(!previousFileUploadSelector->isEmpty())
+    {
+        defaultFolderPath = previousFileUploadSelector->getDialog<QFileDialog>()->directory().path();
+    }
 
     auto fileUploadSelector = new QFileDialog();
     fileUploadSelector->setFileMode(QFileDialog::ExistingFiles);
+    fileUploadSelector->setModal(true);
     fileUploadSelector->setOption(QFileDialog::DontUseNativeDialog, false);
 
-#if QT_VERSION < 0x050000
-    QString defaultFolderPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
-#else
-    QString  defaultFolderPath;
-    QStringList paths = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
-    if (paths.size())
+    if(defaultFolderPath.isEmpty())
     {
-        defaultFolderPath = paths.at(0);
-    }
+#if QT_VERSION < 0x050000
+        defaultFolderPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
+#else
+        QStringList paths = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
+        if (paths.size())
+        {
+            defaultFolderPath = paths.at(0);
+        }
 #endif
+    }
+
     fileUploadSelector->setDirectory(defaultFolderPath);
 
     //One of the examples of how to use the DialogOpener::showDialog
@@ -5625,24 +5603,32 @@ void MegaApplication::externalFolderUpload(qlonglong targetFolder)
         return;
     }
 
-    checkAndCloseOpenDialogs();
-
     folderUploadTarget = targetFolder;
+
+    QString  defaultFolderPath;
+    auto previousFileUploadSelector = DialogOpener::findDialogByClass<QFileDialog>();
+    if(!previousFileUploadSelector->isEmpty())
+    {
+        defaultFolderPath = previousFileUploadSelector->getDialog<QFileDialog>()->directory().path();
+    }
 
     auto folderUploadSelector = new QFileDialog();
     folderUploadSelector->setFileMode(QFileDialog::Directory);
+    folderUploadSelector->setModal(true);
     folderUploadSelector->setOption(QFileDialog::ShowDirsOnly, true);
 
-#if QT_VERSION < 0x050000
-    QString defaultFolderPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
-#else
-    QString  defaultFolderPath;
-    QStringList paths = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
-    if (paths.size())
+    if(defaultFolderPath.isEmpty())
     {
-        defaultFolderPath = paths.at(0);
-    }
+#if QT_VERSION < 0x050000
+        defaultFolderPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
+#else
+        QStringList paths = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
+        if (paths.size())
+        {
+            defaultFolderPath = paths.at(0);
+        }
 #endif
+    }
     folderUploadSelector->setDirectory(defaultFolderPath);
 
     //One of the examples of how to use the DialogOpener::showDialog
@@ -6649,7 +6635,6 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
                     if (infoDialog->getLoggedInMode() != blockState)
                     {
                         infoDialog->regenerateLayout(blockState);
-                        closeDialogs();
                     }
                 }
                 else if (!whyamiblockedPeriodicPetition) //Do not force show on periodic whyamiblocked call
@@ -6977,7 +6962,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                          preferences->resetGlobalSettings();
                      }
 
-                     closeDialogs();
                      start();
                      periodicTasks();
                  }
