@@ -202,6 +202,7 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/NodeNameSetterDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/ScanningWidget.ui
     ${MEGAsyncDir}/gui/${UiDir}/CancelConfirmWidget.ui
+    ${MEGAsyncDir}/gui/${UiDir}/LowDiskSpaceDialog.ui
     ${MEGAsyncDir}/gui/node_selector/gui/${UiDir}/NodeSelector.ui
     ${MEGAsyncDir}/gui/node_selector/gui/${UiDir}/NodeSelectorLoadingDelegate.ui
     ${MEGAsyncDir}/gui/node_selector/gui/${UiDir}/NodeSelectorTreeViewWidget.ui
@@ -276,6 +277,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/control/HTTPServer.h
     ${MEGAsyncDir}/control/LinkProcessor.h
     ${MEGAsyncDir}/control/MegaDownloader.h
+    ${MEGAsyncDir}/control/DownloadQueueController.h
     ${MEGAsyncDir}/control/MegaSyncLogger.h
     ${MEGAsyncDir}/control/MegaUploader.h
     ${MEGAsyncDir}/control/Preferences.h
@@ -347,6 +349,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/NodeNameSetterDialog/RenameNodeDialog.h
     ${MEGAsyncDir}/gui/CancelConfirmWidget.h
     ${MEGAsyncDir}/gui/MegaNodeNames.h
+	${MEGAsyncDir}/gui/LowDiskSpaceDialog.h
 	${MEGAsyncDir}/gui/node_selector/gui/NodeSelector.h
 	${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorLoadingDelegate.h
 	${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorTreeViewWidgetSpecializations.h
@@ -361,9 +364,11 @@ set (MOC_INPUT
     ${MEGAsyncDir}/syncs/gui/SyncTooltipCreator.h
     ${MEGAsyncDir}/syncs/gui/SyncsMenu.h
     ${MEGAsyncDir}/syncs/gui/Twoways/SyncTableView.h
+    ${MEGAsyncDir}/syncs/gui/Twoways/SyncTableViewTooltips.h
     ${MEGAsyncDir}/syncs/gui/Twoways/BindFolderDialog.h
     ${MEGAsyncDir}/syncs/gui/Twoways/FolderBinder.h
     ${MEGAsyncDir}/syncs/gui/Backups/BackupTableView.h
+    ${MEGAsyncDir}/syncs/gui/Backups/BackupTableViewTooltips.h
     ${MEGAsyncDir}/syncs/gui/Backups/AddBackupDialog.h
     ${MEGAsyncDir}/syncs/gui/Backups/RemoveBackupDialog.h
     ${MEGAsyncDir}/syncs/gui/Backups/BackupsWizard.h
@@ -568,6 +573,7 @@ set (SRCS
     ${MEGAsyncDir}/gui/ScanningWidget.cpp
     ${MEGAsyncDir}/gui/BlurredShadowEffect.cpp
     ${MEGAsyncDir}/gui/CancelConfirmWidget.cpp
+    ${MEGAsyncDir}/gui/LowDiskSpaceDialog.cpp
     ${MEGAsyncDir}/gui/MegaDelegateHoverManager.cpp
     ${MEGAsyncDir}/gui/NodeNameSetterDialog/NodeNameSetterDialog.cpp
     ${MEGAsyncDir}/gui/NodeNameSetterDialog/NewFolderDialog.cpp
@@ -651,6 +657,7 @@ set (SRCS
     ${MEGAsyncDir}/control/ExportProcessor.cpp
     ${MEGAsyncDir}/control/Utilities.cpp
     ${MEGAsyncDir}/control/MegaDownloader.cpp
+    ${MEGAsyncDir}/control/DownloadQueueController.cpp
     ${MEGAsyncDir}/control/MegaSyncLogger.cpp
     ${MEGAsyncDir}/control/ConnectivityChecker.cpp
     ${MEGAsyncDir}/control/TransferRemainingTime.cpp
@@ -668,9 +675,11 @@ set (SRCS
     ${MEGAsyncDir}/syncs/gui/SyncTooltipCreator.cpp
     ${MEGAsyncDir}/syncs/gui/SyncsMenu.cpp
     ${MEGAsyncDir}/syncs/gui/Twoways/SyncTableView.cpp
+    ${MEGAsyncDir}/syncs/gui/Twoways/SyncTableViewTooltips.cpp
     ${MEGAsyncDir}/syncs/gui/Twoways/BindFolderDialog.cpp
     ${MEGAsyncDir}/syncs/gui/Twoways/FolderBinder.cpp
     ${MEGAsyncDir}/syncs/gui/Backups/BackupTableView.cpp
+    ${MEGAsyncDir}/syncs/gui/Backups/BackupTableViewTooltips.cpp
     ${MEGAsyncDir}/syncs/gui/Backups/AddBackupDialog.cpp
     ${MEGAsyncDir}/syncs/gui/Backups/RemoveBackupDialog.cpp
     ${MEGAsyncDir}/syncs/gui/Backups/BackupsWizard.cpp

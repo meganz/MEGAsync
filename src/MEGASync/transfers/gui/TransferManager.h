@@ -30,9 +30,6 @@ class TransferManager : public QDialog
 {
     Q_OBJECT
 
-    static const QString TRANSFER_QUOTA_WARNING;
-    static const QString TRANSFER_QUOTA_MORE_ABOUT;
-
 public:
     explicit TransferManager(mega::MegaApi *megaApi);
     ~TransferManager();
@@ -126,6 +123,7 @@ private:
 
     void updateCurrentSearchText();
     void updateCurrentCategoryTitle();
+    void updateCurrentOverQuotaLink();
 
     void filterByTab(TransfersWidget::TM_TAB tab);
 

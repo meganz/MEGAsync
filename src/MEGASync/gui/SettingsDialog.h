@@ -10,6 +10,8 @@
 #include "control/Utilities.h"
 #include "syncs/model/SyncItemModel.h"
 #include "syncs/model/BackupItemModel.h"
+#include "syncs/gui/Backups/BackupTableViewTooltips.h"
+#include "syncs/gui/Twoways/SyncTableViewTooltips.h"
 
 #include "syncs/control/SyncController.h"
 #include "syncs/control/SyncInfo.h"
@@ -261,6 +263,8 @@ private:
     bool mHasDefaultUploadOption;
     bool mHasDefaultDownloadOption;
     QPointer<ProxySettings> mProxySettingsDialog;
+    std::unique_ptr<SyncTableViewTooltips> mSyncTableEventFilter;
+    std::unique_ptr<BackupTableViewTooltips> mBackupTableEventFilter;
     QFutureWatcher<bool> mOpenUrlWatcher;
 };
 #endif // SETTINGSDIALOG_H

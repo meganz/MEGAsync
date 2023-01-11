@@ -39,10 +39,6 @@ const char* ITS_ON = "itsOn";
 const char* SEARCH_TEXT = "searchText";
 const char* SEARCH_BUTTON_SELECTED = "selected";
 
-const QString TransferManager::TRANSFER_QUOTA_WARNING = QString::fromUtf8(QT_TR_NOOP("You can't continue downloading as you don't have enough transfer quota left for this IP address."
-                                                                                 "\nTo get more quota, upgrade to a Pro account or wait for [A] until more free quota becomes available on your IP address."));
-const QString TransferManager::TRANSFER_QUOTA_MORE_ABOUT = QLatin1String(QT_TR_NOOP("More about transfer quota"));
-
 TransferManager::TransferManager(MegaApi *megaApi) :
     QDialog(nullptr),
     mUi(new Ui::TransferManager),
@@ -250,9 +246,8 @@ TransferManager::TransferManager(MegaApi *megaApi) :
     onTransferQuotaStateChanged(transferQuotaState);
     mTransferQuotaTimer.setInterval(1000);
     connect(&mTransferQuotaTimer, &QTimer::timeout, this, &TransferManager::onTransferQuotaExceededUpdate);
-    QString moreAboutLink(QLatin1String("<a href=\"https://help.mega.io/plans-storage/space-storage/transfer-quota\"><font color=#333333>%1</font></a>"));
-    mUi->lTransferOverQuotaMoreAbout->setText(moreAboutLink.arg(TRANSFER_QUOTA_MORE_ABOUT));
 
+    updateCurrentOverQuotaLink();
     onUpdatePauseState(mPreferences->getGlobalPaused());
 
     on_tAllTransfers_clicked();
@@ -378,6 +373,12 @@ void TransferManager::updateCurrentCategoryTitle()
         default:
              mUi->lCurrentContent->setText(tr(ALL_TRANSFERS_TITLE));
     }
+}
+
+void TransferManager::updateCurrentOverQuotaLink()
+{
+    QString moreAboutLink(QLatin1String("<a href=\"https://help.mega.io/plans-storage/space-storage/transfer-quota\"><font color=#333333>%1</font></a>"));
+    mUi->lTransferOverQuotaMoreAbout->setText(moreAboutLink.arg(tr("More about transfer quota")));
 }
 
 void TransferManager::filterByTab(TransfersWidget::TM_TAB tab)
@@ -847,7 +848,8 @@ void TransferManager::showTransferQuotaBanner(bool state)
 
 void TransferManager::onTransferQuotaExceededUpdate()
 {
-    QString bannerText(TRANSFER_QUOTA_WARNING);
+    QString bannerText = tr("You can't continue downloading as you don't have enough transfer quota left for this IP address."
+                             "\nTo get more quota, upgrade to a Pro account or wait for [A] until more free quota becomes available on your IP address.");
     auto text = bannerText.replace(QString(QLatin1String("[A]")), MegaSyncApp->getTransferQuota()->getTransferQuotaDeadline().toString(QLatin1String("hh:mm:ss")));
     mUi->lTransferOverQuotaInfo->setText(text);
 }
@@ -1411,6 +1413,7 @@ void TransferManager::changeEvent(QEvent *event)
         mUi->retranslateUi(this);
         updateCurrentCategoryTitle();
         updateCurrentSearchText();
+        updateCurrentOverQuotaLink();
         onUpdatePauseState(mUi->wTransfers->getProxyModel()->getPausedTransfers());
     }
     QDialog::changeEvent(event);

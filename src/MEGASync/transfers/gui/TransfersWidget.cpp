@@ -65,7 +65,7 @@ void TransfersWidget::setupTransfers()
 
 TransfersWidget::~TransfersWidget()
 {
-    mLoadingScene.changeLoadingSceneStatus(false);
+    mLoadingScene.toggleLoadingScene(false);
     delete ui;
     if (tDelegate) delete tDelegate;
     if (mProxyModel) delete mProxyModel;
@@ -87,7 +87,6 @@ void TransfersWidget::configureTransferView()
     ui->tvTransfers->setDropIndicatorShown(true);
     ui->tvTransfers->setDragDropMode(QAbstractItemView::InternalMove);
     ui->tvTransfers->enableContextMenu();
-    ui->tvTransfers->setHeader(nullptr);
 
     mLoadingScene.setView(ui->tvTransfers);
     mDelegateHoverManager.setView(ui->tvTransfers);
@@ -423,7 +422,7 @@ void TransfersWidget::onUiBlocked()
     ui->tvTransfers->blockSignals(true);
     ui->tvTransfers->header()->blockSignals(true);
 
-    mLoadingScene.changeLoadingSceneStatus(true);
+    mLoadingScene.toggleLoadingScene(true);
 
     if(!mScanningIsActive)
     {
@@ -436,7 +435,7 @@ void TransfersWidget::onUiUnblocked()
     ui->tvTransfers->header()->blockSignals(false);
     ui->tvTransfers->blockSignals(false);
 
-    mLoadingScene.changeLoadingSceneStatus(false);
+    mLoadingScene.toggleLoadingScene(false);
 
     emit disableTransferManager(false);
 

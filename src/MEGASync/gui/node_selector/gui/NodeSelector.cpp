@@ -394,11 +394,20 @@ void NodeSelector::setSelectedNodeHandle(std::shared_ptr<MegaNode> node)
 
     if(node)
     {
-        TabItem option = mMegaApi->isInCloud(node.get()) ? CLOUD_DRIVE : SHARES;
+        TabItem option = CLOUD_DRIVE;
+        auto rootNode = std::unique_ptr<mega::MegaNode>(mMegaApi->getRootNode(node.get()));
+        if(mMegaApi->isInShare(rootNode.get()))
+        {
+            option = SHARES;
+        }
+        else if(mMegaApi->isInVault(rootNode.get()))
+        {
+            option = VAULT;
+        }
+
         onOptionSelected(option);
 
         auto tree_view_widget = static_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->currentWidget());
         tree_view_widget->setSelectedNodeHandle(node->getHandle());
-
     }
 }

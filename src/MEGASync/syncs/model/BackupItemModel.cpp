@@ -1,9 +1,7 @@
 #include "Utilities.h"
 #include "syncs/model/BackupItemModel.h"
-#include "syncs/gui/SyncTooltipCreator.h"
-#include "UserAttributesRequests/DeviceName.h"
-#include "UserAttributesRequests/MyBackupsHandle.h"
 #include "syncs/control/SyncController.h"
+#include "syncs/gui/SyncTooltipCreator.h"
 
 #include <QCoreApplication>
 #include <QIcon>
@@ -11,9 +9,7 @@
 
 
 BackupItemModel::BackupItemModel(QObject *parent)
-    : SyncItemModel(parent),
-      mDeviceNameRequest (UserAttributes::DeviceName::requestDeviceName()),
-      mMyBackupsHandleRequest (UserAttributes::MyBackupsHandle::requestMyBackupsHandle())
+    : SyncItemModel(parent)
 {
 }
 
@@ -95,8 +91,6 @@ QVariant BackupItemModel::data(const QModelIndex &index, int role) const
     case Column::ENABLED:
         if(role == Qt::CheckStateRole)
             return sync->getRunState() == ::mega::MegaSync::RUNSTATE_RUNNING ? Qt::Checked : Qt::Unchecked;
-        else if(role == Qt::ToolTipRole)
-            return ::mega::MegaSync::RUNSTATE_RUNNING ? tr("Backup is enabled") : tr("Backup is disabled");
         break;
     case Column::LNAME:
         if(role == Qt::DecorationRole)
@@ -127,8 +121,7 @@ QVariant BackupItemModel::data(const QModelIndex &index, int role) const
             }
             toolTip += SyncTooltipCreator::createForLocal(sync->getLocalFolder(true));
             toolTip += QChar::LineSeparator;
-            toolTip += SyncTooltipCreator::createForRemote(
-                        mMyBackupsHandleRequest->getNodeLocalizedPath(sync->getMegaFolder()));
+            toolTip += SyncTooltipCreator::createForRemote(QString::fromUtf8(sync->getSync()->getLastKnownMegaFolder()));
             return toolTip;
         }
         break;
@@ -210,8 +203,6 @@ QVariant BackupItemModel::data(const QModelIndex &index, int role) const
             dotsMenu.addFile(QLatin1String("://images/icons/options_dots/options-hover.png"), QSize(ICON_SIZE, ICON_SIZE), QIcon::Active);
             return dotsMenu;
         }
-        else if(role == Qt::ToolTipRole)
-            return tr("Click menu for more Backup actions");
         else if(role == Qt::TextAlignmentRole)
             return QVariant::fromValue<Qt::Alignment>(Qt::AlignHCenter);
         break;

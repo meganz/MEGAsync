@@ -87,6 +87,7 @@ private slots:
 private:
     std::shared_ptr<mega::MegaNodeList> mBackupsNodeList;
     mega::MegaHandle mBackupsHandle;
+    bool addToLoadingList(const std::shared_ptr<mega::MegaNode> node) override;
 };
 
 #endif // NODESELECTORMODELSPECIALISED_H

@@ -30,6 +30,7 @@
 #include <QMenu>
 
 #include <assert.h>
+#include <memory>
 
 #ifdef Q_OS_MACOS
     #include "gui/CocoaHelpButton.h"
@@ -105,6 +106,8 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     mRemoteCacheSize (-1),
     mDebugCounter (0)
 {
+    mSyncTableEventFilter = std::unique_ptr<SyncTableViewTooltips>(new SyncTableViewTooltips());
+    mBackupTableEventFilter = std::unique_ptr<BackupTableViewTooltips>(new BackupTableViewTooltips());
     mUi->setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
@@ -255,6 +258,9 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     connect(mApp, &MegaApplication::shellNotificationsProcessed,
             this, &SettingsDialog::onShellNotificationsProcessed);
     mUi->cOverlayIcons->setEnabled(!mApp->isShellNotificationProcessingOngoing());
+
+    mUi->syncTableView->installEventFilter(mSyncTableEventFilter.get());
+    mUi->backupTableView->installEventFilter(mBackupTableEventFilter.get());
 }
 
 SettingsDialog::~SettingsDialog()
@@ -1525,6 +1531,7 @@ void SettingsDialog::loadSyncSettings()
     SyncItemSortModel *sortModel = new SyncItemSortModel(mUi->syncTableView);
     sortModel->setSourceModel(model);
     mUi->syncTableView->setModel(sortModel);
+    mSyncTableEventFilter->setSourceModel(model);
 }
 
 void SettingsDialog::addSyncFolder(MegaHandle megaFolderHandle)
@@ -1778,6 +1785,7 @@ void SettingsDialog::loadBackupSettings()
     SyncItemSortModel *sortModel = new SyncItemSortModel(mUi->syncTableView);
     sortModel->setSourceModel(model);
     mUi->backupTableView->setModel(sortModel);
+    mBackupTableEventFilter->setSourceModel(model);
 }
 
 void SettingsDialog::on_bBackup_clicked()
@@ -2437,3 +2445,4 @@ void SettingsDialog::updateCacheSchedulerDaysLabel()
 {
     mUi->lCacheSchedulerSuffix->setText(tr("day", "", mPreferences->cleanerDaysLimitValue()));
 }
+

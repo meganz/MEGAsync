@@ -133,8 +133,6 @@ QVariant SyncItemModel::data(const QModelIndex &index, int role) const
     case Column::ENABLED:
         if(role == Qt::CheckStateRole)
             return sync->getRunState() == ::mega::MegaSync::RUNSTATE_RUNNING ? Qt::Checked : Qt::Unchecked;
-        else if(role == Qt::ToolTipRole)
-            return sync->getRunState() == ::mega::MegaSync::RUNSTATE_RUNNING ? tr("Sync is enabled") : tr("Sync is disabled");
         break;
     case Column::LNAME:
         if(role == Qt::DecorationRole)
@@ -258,8 +256,6 @@ QVariant SyncItemModel::data(const QModelIndex &index, int role) const
             dotsMenu.addFile(QLatin1String("://images/icons/options_dots/options-hover.png"), QSize(ICON_SIZE, ICON_SIZE), QIcon::Active);
             return dotsMenu;
         }
-        else if(role == Qt::ToolTipRole)
-            return tr("Click menu for more Sync actions");
         else if(role == Qt::TextAlignmentRole)
             return QVariant::fromValue<Qt::Alignment>(Qt::AlignHCenter);
         break;
@@ -293,6 +289,16 @@ bool SyncItemModel::setData(const QModelIndex &index, const QVariant &value, int
 void SyncItemModel::fillData()
 {
     setMode(mega::MegaSync::SyncType::TYPE_TWOWAY);
+}
+
+std::shared_ptr<SyncSettings> SyncItemModel::getSyncSettings(const QModelIndex &index) const
+{
+    if (!index.isValid() || mList.size() <= index.row())
+    {
+        return std::shared_ptr<SyncSettings>();
+    }
+
+    return mList.at(index.row());
 }
 
 void SyncItemModel::insertSync(std::shared_ptr<SyncSettings> sync)
