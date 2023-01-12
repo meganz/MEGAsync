@@ -5546,9 +5546,6 @@ void MegaApplication::externalFileUpload(qlonglong targetFolder)
 
     auto fileUploadSelector = new QFileDialog();
     fileUploadSelector->setFileMode(QFileDialog::ExistingFiles);
-#ifdef WIN32
-    fileUploadSelector->setModal(true);
-#endif
     fileUploadSelector->setOption(QFileDialog::DontUseNativeDialog, false);
 
     if(defaultFolderPath.isEmpty())
@@ -5616,10 +5613,6 @@ void MegaApplication::externalFolderUpload(qlonglong targetFolder)
 
     auto folderUploadSelector = new QFileDialog();
     folderUploadSelector->setFileMode(QFileDialog::Directory);
-#ifdef WIN32
-    //If it is not modal, Qt doesn't use the native file dialog
-    folderUploadSelector->setModal(true);
-#endif
     folderUploadSelector->setOption(QFileDialog::DontUseNativeDialog, false);
     folderUploadSelector->setOption(QFileDialog::ShowDirsOnly, true);
 

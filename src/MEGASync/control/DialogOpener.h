@@ -133,21 +133,20 @@ public:
             dialog->setAttribute(Qt::WA_DeleteOnClose);
 
             auto dialogModality = dialog->windowModality();
-            if(dialog->parent() && dialogModality != Qt::WindowModal)
+            if(dialog->parent())
             {
-                dialog->setWindowModality(Qt::WindowModal);
-                dialog->show();
+                dialog->open();
             }
-//#ifdef __APPLE__
-//            else if(dialogModality == Qt::ApplicationModal && !dialog->parent())
-//            {
-//                dialog->exec();
-//            }
-//#endif
             else
             {
-                dialogModality == Qt::NonModal ? dialog->show() : dialog->open();
+#ifndef __APPLE__
+                dialog->setModal(true);
+#else
+                dialog->setModal(false);
+#endif
+                dialog->show();
             }
+
 
             dialog->raise();
             dialog->activateWindow();
