@@ -183,6 +183,9 @@ void SyncTableView::createStatesContextActions(QMenu* menu, std::shared_ptr<Sync
     syncSuspend->setEnabled(sync->getSync()->getRunState() !=  mega::MegaSync::RUNSTATE_SUSPENDED);
     syncDisable->setEnabled(sync->getSync()->getRunState() !=  mega::MegaSync::RUNSTATE_DISABLED);
 
+    rescanQuick->setEnabled(sync->getSync()->getRunState() ==  mega::MegaSync::RUNSTATE_RUNNING);
+    rescanDeep->setEnabled(sync->getSync()->getRunState() ==  mega::MegaSync::RUNSTATE_RUNNING);
+
     syncRun->setParent(menu);
     syncPause->setParent(menu);
     syncSuspend->setParent(menu);
