@@ -4,6 +4,7 @@
 #include "MegaApplication.h"
 #include "QMegaMessageBox.h"
 #include "control/Utilities.h"
+#include "DialogOpener.h"
 #include "control/AppStatsEvents.h"
 #include "gui/MultiQFileDialog.h"
 #include "gui/Login2FA.h"
@@ -693,9 +694,9 @@ void SetupWizard::on_bLocalFolder_clicked()
     QPointer<MultiQFileDialog> dialog = new MultiQFileDialog(0,  tr("Select local folder"), defaultPath, false);
     dialog->setOptions(QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
     dialog->setFileMode(QFileDialog::DirectoryOnly);
-    Utilities::showFolder<MultiQFileDialog>(dialog, [dialog, this]()
+    DialogOpener::showDialog<MultiQFileDialog>(dialog, [dialog, this]()
     {
-        if (result == QDialog::Accepted && !dialog->selectedFiles().isEmpty())
+        if (dialog->result() == QDialog::Accepted && !dialog->selectedFiles().isEmpty())
         {
             onLocalFolderSet(dialog->selectedFiles().value(0));
         }

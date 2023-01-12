@@ -3,6 +3,7 @@
 #include "gui/MultiQFileDialog.h"
 #include "QMegaMessageBox.h"
 #include "Utilities.h"
+#include "DialogOpener.h"
 
 #include <QPointer>
 

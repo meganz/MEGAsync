@@ -2,6 +2,7 @@
 #include "ui_DownloadFromMegaDialog.h"
 #include "control/Utilities.h"
 #include "gui/MultiQFileDialog.h"
+#include "DialogOpener.h"
 
 #include <QDesktopServices>
 #include <QFileDialog>
