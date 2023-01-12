@@ -329,6 +329,7 @@ void NodeSelectorProxyModel::onModelSortedFiltered()
         {
             nodeSelectorModel->clearIndexesNodeInfo();
         }
+        mExpandMapped = true;
     }
     emit getMegaModel()->blockUi(false);
     itemsToMap.clear();

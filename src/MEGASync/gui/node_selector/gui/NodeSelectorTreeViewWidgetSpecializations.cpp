@@ -172,7 +172,7 @@ void NodeSelectorTreeViewWidgetSearch::onItemDoubleClick(const QModelIndex &inde
 {
     auto sourceIndex = mProxyModel->mapToSource(index);
     NodeSelectorModelItem *item = static_cast<NodeSelectorModelItem*>(sourceIndex.internalPointer());
-    emit nodeDoubleClicked(item->getNode());
+    emit nodeDoubleClicked(item->getNode(), true);
 }
 
 QString NodeSelectorTreeViewWidgetSearch::getRootText()

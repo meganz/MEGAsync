@@ -311,7 +311,7 @@ void NodeSelector::makeConnections(SelectTypeSPtr selectType)
     }
 }
 
-void NodeSelector::setSelectedNodeHandle(std::shared_ptr<MegaNode> node)
+void NodeSelector::setSelectedNodeHandle(std::shared_ptr<MegaNode> node, bool goToInit)
 {
     if(!node)
     {
@@ -333,7 +333,7 @@ void NodeSelector::setSelectedNodeHandle(std::shared_ptr<MegaNode> node)
         onOptionSelected(option);
 
         auto tree_view_widget = static_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->currentWidget());
-        tree_view_widget->setSelectedNodeHandle(node->getHandle());
+        tree_view_widget->setSelectedNodeHandle(node->getHandle(), goToInit);
     }
 }
 

@@ -29,9 +29,6 @@ signals:
 
 private slots:
     void onRootItemCreated(NodeSelectorModelItem*item);
-
-private:
-    bool mLoadingRoot;
 };
 
 class NodeSelectorModelIncomingShares : public NodeSelectorModel

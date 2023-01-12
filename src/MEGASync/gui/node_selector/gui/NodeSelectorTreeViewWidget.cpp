@@ -511,7 +511,7 @@ void NodeSelectorTreeViewWidget::onRequestFinish(MegaApi *, MegaRequest *request
     ui->tMegaFolders->setEnabled(true);
 }
 
-void NodeSelectorTreeViewWidget::setSelectedNodeHandle(const MegaHandle& selectedHandle)
+void NodeSelectorTreeViewWidget::setSelectedNodeHandle(const MegaHandle& selectedHandle, bool goToInit)
 {
     if(selectedHandle == INVALID_HANDLE)
     {
@@ -522,7 +522,15 @@ void NodeSelectorTreeViewWidget::setSelectedNodeHandle(const MegaHandle& selecte
     if (!node)
         return;
 
+    if(goToInit)
+    {
+        mNavigationInfo.clear();
+        setRootIndex(QModelIndex());
+        checkBackForwardButtons();
+    }
+
     mModel->loadTreeFromNode(node);
+
 }
 
 void NodeSelectorTreeViewWidget::setFutureSelectedNodeHandle(const mega::MegaHandle &selectedHandle)
@@ -735,6 +743,12 @@ void NodeSelectorTreeViewWidget::Navigation::appendToForward(const mega::MegaHan
 {
     if(!forwardHandles.contains(handle))
         forwardHandles.append(handle);
+}
+
+void NodeSelectorTreeViewWidget::Navigation::clear()
+{
+    backwardHandles.clear();
+    forwardHandles.clear();
 }
 
 bool SelectType::isAllowedToNavigateInside(NodeSelectorModelItem *item)

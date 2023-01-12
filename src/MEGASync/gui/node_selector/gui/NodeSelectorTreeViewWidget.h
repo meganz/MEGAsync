@@ -28,6 +28,18 @@ class NodeSelectorTreeViewWidget : public QWidget,  public mega::MegaRequestList
 {
     Q_OBJECT
 
+    struct Navigation{
+      QList<mega::MegaHandle> forwardHandles = QList<mega::MegaHandle>();
+      QList<mega::MegaHandle> backwardHandles = QList<mega::MegaHandle>();
+
+      void removeFromForward(const mega::MegaHandle& handle);
+      void remove(const mega::MegaHandle& handle);
+
+      void appendToBackward(const mega::MegaHandle& handle);
+      void appendToForward(const mega::MegaHandle& handle);
+      void clear();
+    };
+
 public:
 
     static const int LABEL_ELIDE_MARGIN;
@@ -38,7 +50,7 @@ public:
     mega::MegaHandle getSelectedNodeHandle();
     void init();
     QList<mega::MegaHandle> getMultiSelectionNodeHandle();
-    void setSelectedNodeHandle(const mega::MegaHandle &selectedHandle);
+    void setSelectedNodeHandle(const mega::MegaHandle &selectedHandle, bool goToInit = false);
     void setFutureSelectedNodeHandle(const mega::MegaHandle &selectedHandle);
     void setDefaultUploadOption(bool value);
     bool getDefaultUploadOption();
@@ -71,6 +83,7 @@ protected:
     Ui::NodeSelectorTreeViewWidget *ui;
     std::unique_ptr<NodeSelectorProxyModel> mProxyModel;
     std::unique_ptr<NodeSelectorModel> mModel;
+    Navigation mNavigationInfo;
 
 private slots:
     void onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
@@ -87,22 +100,9 @@ private slots:
     void onUiBlocked(bool state);
 
 private:
-    struct Navigation{
-      QList<mega::MegaHandle> expandedHandles = QList<mega::MegaHandle>();
-      mega::MegaHandle rootHandle = mega::INVALID_HANDLE;
-      QList<mega::MegaHandle> forwardHandles = QList<mega::MegaHandle>();
-      QList<mega::MegaHandle> backwardHandles = QList<mega::MegaHandle>();
-
-      void removeFromForward(const mega::MegaHandle& handle);
-      void remove(const mega::MegaHandle& handle);
-
-      void appendToBackward(const mega::MegaHandle& handle);
-      void appendToForward(const mega::MegaHandle& handle);
-    };
 
     mega::MegaApi* mMegaApi;
     bool mManuallyResizedColumn;
-    Navigation mNavigationInfo;
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
 
     virtual bool isAllowedToEnterInIndex(const QModelIndex &idx);

@@ -69,7 +69,7 @@ public:
     std::unique_ptr<NodeSelectorProxyModel> createProxyModel() override;
 
 signals:
-    void nodeDoubleClicked(std::shared_ptr<mega::MegaNode> node);
+    void nodeDoubleClicked(std::shared_ptr<mega::MegaNode> node, bool goToInit);
 
 private slots:
     void onBackupsSearchClicked();
