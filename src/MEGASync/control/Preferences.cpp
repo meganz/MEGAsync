@@ -31,7 +31,7 @@ int Preferences::STATE_REFRESH_INTERVAL_MS        = 10000;
 int Preferences::NETWORK_REFRESH_INTERVAL_MS      = 30000;
 int Preferences::FINISHED_TRANSFER_REFRESH_INTERVAL_MS        = 10000;
 
-long long Preferences::OQ_DIALOG_INTERVAL_MS = 604800000; // 7 days
+long long Preferences::OQ_DIALOG_INTERVAL_MS = 604800000; // 7 daysm
 long long Preferences::OQ_NOTIFICATION_INTERVAL_MS = 129600000; // 36 hours
 long long Preferences::ALMOST_OQ_UI_MESSAGE_INTERVAL_MS = 259200000; // 72 hours
 long long Preferences::OQ_UI_MESSAGE_INTERVAL_MS = 129600000; // 36 hours
@@ -45,7 +45,7 @@ std::chrono::milliseconds Preferences::ALMOST_OVER_QUOTA_UI_ALERT_DISABLE_DURATI
 std::chrono::milliseconds Preferences::ALMOST_OVER_QUOTA_OS_NOTIFICATION_DISABLE_DURATION{std::chrono::hours(36)};
 std::chrono::milliseconds Preferences::OVER_QUOTA_ACTION_DIALOGS_DISABLE_TIME{std::chrono::hours{12}};
 
-long long Preferences::MIN_UPDATE_STATS_INTERVAL  = 300000;
+long long Preferences::MIN_UPDATE_STATS_INTERVAL  = 300000;megaa
 long long Preferences::MIN_UPDATE_CLEANING_INTERVAL_MS  = 7200000;
 long long Preferences::MIN_UPDATE_NOTIFICATION_INTERVAL_MS    = 172800000;
 long long Preferences::MIN_REBOOT_INTERVAL_MS                 = 300000;

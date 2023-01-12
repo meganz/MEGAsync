@@ -5809,7 +5809,7 @@ void MegaApplication::externalFileUpload(qlonglong targetFolder)
     fileUploadSelector->setDirectory(defaultFolderPath);
 
     fileUploadSelector->show();
-    connect(fileUploadSelector, &QDialog::finished,[this](){
+    connect(fileUploadSelector.data(), &QDialog::finished,[this](){
 
         if(fileUploadSelector->result() == QDialog::Rejected)
         {
@@ -5892,7 +5892,7 @@ void MegaApplication::externalFolderUpload(qlonglong targetFolder)
     folderUploadSelector->setDirectory(defaultFolderPath);
 
     folderUploadSelector->show();
-    connect(folderUploadSelector, &QDialog::finished, [this]()
+    connect(folderUploadSelector.data(), &QDialog::finished, [this]()
     {
         if (folderUploadSelector->result() == QDialog::Accepted)
         {
