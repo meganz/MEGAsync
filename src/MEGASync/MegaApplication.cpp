@@ -5785,6 +5785,9 @@ void MegaApplication::externalFileUpload(qlonglong targetFolder)
     fileUploadSelector = new QFileDialog();
     fileUploadSelector->setFileMode(QFileDialog::ExistingFiles);
 #ifndef __APPLE__
+    //macOS -> modal + show -> not working
+    //Win & Linux -> show without modal -> not working
+    //QDialog::open sets the dialog to WindowModal, so it doesn´t work on macOS.
     fileUploadSelector->setModal(true);
 #endif
     fileUploadSelector->setAttribute(Qt::WA_DeleteOnClose);
@@ -5866,6 +5869,9 @@ void MegaApplication::externalFolderUpload(qlonglong targetFolder)
     folderUploadSelector->setFileMode(QFileDialog::Directory);
     folderUploadSelector->setAttribute(Qt::WA_DeleteOnClose);
 #ifndef __APPLE__
+    //macOS -> modal + show -> not working
+    //Win & Linux -> show without modal -> not working
+    //QDialog::open sets the dialog to WindowModal, so it doesn´t work on macOS.
     folderUploadSelector->setModal(true);
 #endif
     folderUploadSelector->setOption(QFileDialog::DontUseNativeDialog, false);
