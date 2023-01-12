@@ -5784,6 +5784,9 @@ void MegaApplication::externalFileUpload(qlonglong targetFolder)
 
     fileUploadSelector = new QFileDialog();
     fileUploadSelector->setFileMode(QFileDialog::ExistingFiles);
+#ifdef _WIN32
+    fileUploadSelector->setModal(true);
+#endif
     fileUploadSelector->setAttribute(Qt::WA_DeleteOnClose);
     fileUploadSelector->setOption(QFileDialog::DontUseNativeDialog, false);
 
@@ -5802,7 +5805,7 @@ void MegaApplication::externalFileUpload(qlonglong targetFolder)
 
     fileUploadSelector->setDirectory(defaultFolderPath);
 
-    fileUploadSelector->open();
+    fileUploadSelector->show();
     connect(fileUploadSelector, &QDialog::finished,[this](){
 
         if(fileUploadSelector->result() == QDialog::Rejected)
@@ -5862,6 +5865,10 @@ void MegaApplication::externalFolderUpload(qlonglong targetFolder)
     folderUploadSelector = new QFileDialog();
     folderUploadSelector->setFileMode(QFileDialog::Directory);
     folderUploadSelector->setAttribute(Qt::WA_DeleteOnClose);
+#ifdef _WIN32
+    folderUploadSelector->setModal(true);
+#endif
+    folderUploadSelector->setOption(QFileDialog::DontUseNativeDialog, false);
     folderUploadSelector->setOption(QFileDialog::ShowDirsOnly, true);
 
     if(defaultFolderPath.isEmpty())
@@ -5878,7 +5885,7 @@ void MegaApplication::externalFolderUpload(qlonglong targetFolder)
     }
     folderUploadSelector->setDirectory(defaultFolderPath);
 
-    folderUploadSelector->open();
+    folderUploadSelector->show();
     connect(folderUploadSelector, &QDialog::finished, [this]()
     {
         if (folderUploadSelector->result() == QDialog::Accepted)
