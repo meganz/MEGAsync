@@ -5770,61 +5770,71 @@ void MegaApplication::externalFileUpload(qlonglong targetFolder)
 
     if (folderUploadSelector)
     {
-        Platform::showBackgroundWindow(folderUploadSelector);
-        return;
+        folderUploadSelector->close();
     }
 
     fileUploadTarget = targetFolder;
+    QString  defaultFolderPath;
+
     if (fileUploadSelector)
     {
-        Platform::showBackgroundWindow(fileUploadSelector);
-        return;
+        defaultFolderPath = fileUploadSelector->directory().path();
+        fileUploadSelector->close();
     }
 
     fileUploadSelector = new QFileDialog();
     fileUploadSelector->setFileMode(QFileDialog::ExistingFiles);
+#ifndef __APPLE__
+    //macOS -> modal + show -> not working
+    //Win & Linux -> show without modal -> not working
+    //QDialog::open sets the dialog to WindowModal, so it doesn´t work on macOS.
+    fileUploadSelector->setModal(true);
+#endif
+    fileUploadSelector->setAttribute(Qt::WA_DeleteOnClose);
     fileUploadSelector->setOption(QFileDialog::DontUseNativeDialog, false);
 
-#if QT_VERSION < 0x050000
-    QString defaultFolderPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
-#else
-    QString  defaultFolderPath;
-    QStringList paths = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
-    if (paths.size())
+    if(defaultFolderPath.isEmpty())
     {
-        defaultFolderPath = paths.at(0);
-    }
+#if QT_VERSION < 0x050000
+        defaultFolderPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
+#else
+        QStringList paths = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
+        if (paths.size())
+        {
+            defaultFolderPath = paths.at(0);
+        }
 #endif
+    }
+
     fileUploadSelector->setDirectory(defaultFolderPath);
 
-    Platform::execBackgroundWindow(fileUploadSelector);
-    if (!fileUploadSelector)
-    {
-        return;
-    }
+    fileUploadSelector->show();
+    connect(fileUploadSelector, &QDialog::finished,[this](){
 
-    if (fileUploadSelector->result() == QDialog::Accepted)
-    {
-        QStringList paths = fileUploadSelector->selectedFiles();
-        MegaNode *target = megaApi->getNodeByHandle(fileUploadTarget);
-        int files = 0;
-        for (const auto& path : paths)
+        if(fileUploadSelector->result() == QDialog::Rejected)
         {
-            files++;
-            startUpload(path, target, nullptr);
+            return;
         }
 
-        delete target;
-        HTTPServer::onUploadSelectionAccepted(files, 0);
-    }
-    else
-    {
-        HTTPServer::onUploadSelectionDiscarded();
-    }
+        if (fileUploadSelector->result() == QDialog::Accepted)
+        {
+            QStringList paths = fileUploadSelector->selectedFiles();
+            MegaNode *target = megaApi->getNodeByHandle(fileUploadTarget);
+            int files = 0;
+            for (const auto& path : paths)
+            {
+                files++;
+                startUpload(path, target, nullptr);
+            }
 
-    delete fileUploadSelector;
-    fileUploadSelector = NULL;
-    return;
+            delete target;
+            HTTPServer::onUploadSelectionAccepted(files, 0);
+        }
+        else
+        {
+            HTTPServer::onUploadSelectionDiscarded();
+        }
+    });
 }
 
 void MegaApplication::externalFolderUpload(qlonglong targetFolder)
@@ -5842,57 +5852,61 @@ void MegaApplication::externalFolderUpload(qlonglong targetFolder)
 
     if (fileUploadSelector)
     {
-        fileUploadSelector->activateWindow();
-        fileUploadSelector->raise();
-        return;
+        fileUploadSelector->close();
     }
 
     folderUploadTarget = targetFolder;
+
+    QString  defaultFolderPath;
+
     if (folderUploadSelector)
     {
-        folderUploadSelector->activateWindow();
-        folderUploadSelector->raise();
-        return;
+        defaultFolderPath = folderUploadSelector->directory().path();
+        folderUploadSelector->close();
     }
 
     folderUploadSelector = new QFileDialog();
     folderUploadSelector->setFileMode(QFileDialog::Directory);
+    folderUploadSelector->setAttribute(Qt::WA_DeleteOnClose);
+#ifndef __APPLE__
+    //macOS -> modal + show -> not working
+    //Win & Linux -> show without modal -> not working
+    //QDialog::open sets the dialog to WindowModal, so it doesn´t work on macOS.
+    folderUploadSelector->setModal(true);
+#endif
+    folderUploadSelector->setOption(QFileDialog::DontUseNativeDialog, false);
     folderUploadSelector->setOption(QFileDialog::ShowDirsOnly, true);
 
-#if QT_VERSION < 0x050000
-    QString defaultFolderPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
-#else
-    QString  defaultFolderPath;
-    QStringList paths = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
-    if (paths.size())
+    if(defaultFolderPath.isEmpty())
     {
-        defaultFolderPath = paths.at(0);
-    }
+#if QT_VERSION < 0x050000
+        defaultFolderPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
+#else
+        QStringList paths = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
+        if (paths.size())
+        {
+            defaultFolderPath = paths.at(0);
+        }
 #endif
+    }
     folderUploadSelector->setDirectory(defaultFolderPath);
 
-    Platform::execBackgroundWindow(folderUploadSelector);
-    if (!folderUploadSelector)
+    folderUploadSelector->show();
+    connect(folderUploadSelector, &QDialog::finished, [this]()
     {
-        return;
-    }
+        if (folderUploadSelector->result() == QDialog::Accepted)
+        {
+            QStringList paths = folderUploadSelector->selectedFiles();
+            NodeCount nodeCount = countFilesAndFolders(paths);
 
-    if (folderUploadSelector->result() == QDialog::Accepted)
-    {
-        QStringList paths = folderUploadSelector->selectedFiles();
-        NodeCount nodeCount = countFilesAndFolders(paths);
-
-        processUploads(paths);
-        HTTPServer::onUploadSelectionAccepted(nodeCount.files, nodeCount.folders);
-    }
-    else
-    {
-        HTTPServer::onUploadSelectionDiscarded();
-    }
-
-    delete folderUploadSelector;
-    folderUploadSelector = NULL;
-    return;
+            processUploads(paths);
+            HTTPServer::onUploadSelectionAccepted(nodeCount.files, nodeCount.folders);
+        }
+        else
+        {
+            HTTPServer::onUploadSelectionDiscarded();
+        }
+    });
 }
 
 void MegaApplication::externalFolderSync(qlonglong targetFolder)
