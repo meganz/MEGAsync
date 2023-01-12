@@ -1146,10 +1146,6 @@ void TransfersModel::openFolder(const QFileInfo& info)
             emit showInFolderFinished(Platform::showInFolder(info.filePath()));
         });
     }
-    else
-    {
-        emit showInFolderFinished(false);
-    }
 }
 
 QFileInfo TransfersModel::getFileInfoByIndex(const QModelIndex& index)

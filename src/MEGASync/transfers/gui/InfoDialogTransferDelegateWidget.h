@@ -66,9 +66,6 @@ private:
     void updateTransferCompletedOrFailed(const QExplicitlySharedDataPointer<TransferData> data);
     void updateTransferCompleting(const QExplicitlySharedDataPointer<TransferData> data);
     void updateTransferControlsOnHold(const QString& speedText);
-
-protected:
-    bool mActionButtonsEnabled;
 };
 
 #endif // INFODIALOGTRANSFERDELEGATEWIDGET_H
