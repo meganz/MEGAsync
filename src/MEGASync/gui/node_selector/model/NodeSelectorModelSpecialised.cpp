@@ -308,6 +308,10 @@ QVariant NodeSelectorModelSearch::data(const QModelIndex &index, int role) const
             return statusIcons;
         }
     }
+//    else if(index.column() == OWNER && role == Qt::DecorationRole)
+//    {
+
+//    }
     return NodeSelectorModel::data(index, role);
 }
 

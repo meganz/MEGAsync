@@ -52,7 +52,6 @@ public:
 
 protected:
     void changeEvent(QEvent * event) override;
-    void showEvent(QShowEvent* event) override;
     void keyPressEvent(QKeyEvent *e) override;
     void addBackupsView();
     bool nodeExistWarningMsg(int &access);

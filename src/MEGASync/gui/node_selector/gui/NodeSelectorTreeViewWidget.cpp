@@ -136,7 +136,7 @@ void NodeSelectorTreeViewWidget::showEvent(QShowEvent* )
 {
     if(!mManuallyResizedColumn)
     {
-        ui->tMegaFolders->setColumnWidth(NodeSelectorModel::COLUMN::NODE, qRound(ui->stackedWidget->width() * 0.57));
+        ui->tMegaFolders->setColumnWidth(NodeSelectorModel::COLUMN::NODE, qRound(ui->stackedWidget->width() * 0.50));
     }
 }
 
@@ -144,7 +144,7 @@ void NodeSelectorTreeViewWidget::resizeEvent(QResizeEvent *)
 {
     if(!mManuallyResizedColumn)
     {
-        ui->tMegaFolders->setColumnWidth(NodeSelectorModel::COLUMN::NODE, qRound(ui->stackedWidget->width() * 0.57));
+        ui->tMegaFolders->setColumnWidth(NodeSelectorModel::COLUMN::NODE, qRound(ui->stackedWidget->width() * 0.50));
     }
 }
 

@@ -325,7 +325,6 @@ public:
         if(state)
         {
             mDelayTimerToHide.stop();
-
             if(mDelayTimeToShowInMs > 0)
             {
                 if(!mDelayTimerToShow.isActive())
@@ -340,7 +339,6 @@ public:
         }
         else
         {
-            mLoadingViewSet = false;
             auto delay = std::max(0ll, MIN_TIME_DISPLAYING_VIEW - (QDateTime::currentMSecsSinceEpoch()
                                                 - mStartTime));
             mDelayTimerToHide.start(delay);
@@ -355,6 +353,7 @@ public:
         mView->show();
         mViewLayout->replaceWidget(mLoadingView, mView);
         mLoadingDelegate->setLoading(false);
+        mLoadingViewSet = false;
     }
 
 private:

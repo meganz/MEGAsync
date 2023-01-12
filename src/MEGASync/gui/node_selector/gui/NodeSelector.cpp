@@ -134,11 +134,6 @@ void NodeSelector::changeEvent(QEvent *event)
     QDialog::changeEvent(event);
 }
 
-void NodeSelector::showEvent(QShowEvent *event)
-{
-    QDialog::showEvent(event);
-}
-
 void NodeSelector::keyPressEvent(QKeyEvent *e)
 {
     switch (e->key())
@@ -387,7 +382,7 @@ DownloadNodeSelector::DownloadNodeSelector(QWidget *parent) : NodeSelector(paren
 
 bool DownloadNodeSelector::isSelectionCorrect()
 {
-    bool ret(false);
+    bool ret(true);
     QList<MegaHandle> nodes = getMultiSelectionNodeHandle();
     int wrongNodes(0);
     foreach(auto& nodeHandle, nodes)

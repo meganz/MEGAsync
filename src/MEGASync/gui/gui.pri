@@ -245,7 +245,7 @@ macx {
                 $$PWD/macx/CancelConfirmWidget.ui \
                 $$PWD/macx/NodeNameSetterDialog.ui \
                 $$PWD/macx/NotificationsSettings.ui \
-                $$PWD/macx/LowDiskSpaceDialosg.ui \
+                $$PWD/macx/LowDiskSpaceDialog.ui \
                 $$PWD/node_selector/gui/macx/NodeSelectorTreeViewWidget.ui \
                 $$PWD/node_selector/gui/macx/NodeSelectorLoadingDelegate.ui \
                 $$PWD/node_selector/gui/macx/NodeSelector.ui \

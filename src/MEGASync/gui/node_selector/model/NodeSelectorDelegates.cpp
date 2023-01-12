@@ -27,14 +27,22 @@ void IconDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
     QStyleOptionViewItem opt(option);
     opt.decorationAlignment = index.data(Qt::TextAlignmentRole).value<Qt::Alignment>();
 
-    auto icon = index.data(Qt::DecorationRole).value<QIcon>();
-
-    QIcon::Mode iconMode = QIcon::Normal;
-    if(option.state.testFlag(QStyle::State_Selected))
+    QPixmap pixmap;
+    if(index.data(Qt::DecorationRole).canConvert<QIcon>())
     {
-        iconMode = QIcon::Selected;
+        auto icon = index.data(Qt::DecorationRole).value<QIcon>();
+
+        QIcon::Mode iconMode = QIcon::Normal;
+        if(option.state.testFlag(QStyle::State_Selected))
+        {
+            iconMode = QIcon::Selected;
+        }
+        pixmap = icon.pixmap(ICON_HEIGHT, iconMode);
     }
-    auto pixmap = icon.pixmap(ICON_HEIGHT, iconMode);
+    else
+    {
+        pixmap = index.data(Qt::DecorationRole).value<QPixmap>();
+    }
 
     const int x = option.rect.center().x() - ICON_HEIGHT / 2;
     const int y = option.rect.center().y() - ICON_HEIGHT / 2;
