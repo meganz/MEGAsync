@@ -5784,7 +5784,7 @@ void MegaApplication::externalFileUpload(qlonglong targetFolder)
 
     fileUploadSelector = new QFileDialog();
     fileUploadSelector->setFileMode(QFileDialog::ExistingFiles);
-#ifdef _WIN32
+#ifndef __APPLE__
     fileUploadSelector->setModal(true);
 #endif
     fileUploadSelector->setAttribute(Qt::WA_DeleteOnClose);
@@ -5865,7 +5865,7 @@ void MegaApplication::externalFolderUpload(qlonglong targetFolder)
     folderUploadSelector = new QFileDialog();
     folderUploadSelector->setFileMode(QFileDialog::Directory);
     folderUploadSelector->setAttribute(Qt::WA_DeleteOnClose);
-#ifdef _WIN32
+#ifndef __APPLE__
     folderUploadSelector->setModal(true);
 #endif
     folderUploadSelector->setOption(QFileDialog::DontUseNativeDialog, false);
