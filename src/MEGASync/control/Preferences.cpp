@@ -45,7 +45,7 @@ std::chrono::milliseconds Preferences::ALMOST_OVER_QUOTA_UI_ALERT_DISABLE_DURATI
 std::chrono::milliseconds Preferences::ALMOST_OVER_QUOTA_OS_NOTIFICATION_DISABLE_DURATION{std::chrono::hours(36)};
 std::chrono::milliseconds Preferences::OVER_QUOTA_ACTION_DIALOGS_DISABLE_TIME{std::chrono::hours{12}};
 
-long long Preferences::MIN_UPDATE_STATS_INTERVAL  = 300000;megaa
+long long Preferences::MIN_UPDATE_STATS_INTERVAL  = 300000;
 long long Preferences::MIN_UPDATE_CLEANING_INTERVAL_MS  = 7200000;
 long long Preferences::MIN_UPDATE_NOTIFICATION_INTERVAL_MS    = 172800000;
 long long Preferences::MIN_REBOOT_INTERVAL_MS                 = 300000;
