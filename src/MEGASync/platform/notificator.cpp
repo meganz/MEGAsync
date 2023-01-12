@@ -254,9 +254,9 @@ void Notificator::notifyDBus(Class cls, const QString &title, const QString &tex
     if(dbussSupportsActions && notification)
     {
         // fire with callback to gather ID
-        interface->callWithCallback(QString::fromUtf8("Notify"), args, notification,
-                                    SLOT(dBusNotificationSentCallback(QDBusMessage)),  // FIXME: this never gets connected
-                                    SLOT(dBusNotificationSentErrorCallback(QDBusError))); // FIXME: this never gets connected
+        interface->callWithCallback(QLatin1String("Notify"), args, notification,
+                                    SLOT(dBusNotificationSentCallback(QDBusMessage)),
+                                    SLOT(dBusNotificationSentErrorCallback(QDBusError)));
     }
     else
     {
