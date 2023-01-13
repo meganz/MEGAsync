@@ -33,6 +33,11 @@ NodeSelectorProxyModel *NodeSelectorTreeView::proxyModel() const
 MegaHandle NodeSelectorTreeView::getSelectedNodeHandle()
 {
     MegaHandle ret = INVALID_HANDLE;
+    if(!selectionModel())
+    {
+        return ret;
+    }
+
     if(selectionModel()->selectedRows().size() == 1)
     {
         if(auto node = proxyModel()->getNode(selectionModel()->selectedRows().first()))
@@ -60,6 +65,10 @@ void NodeSelectorTreeView::drawBranches(QPainter *painter, const QRect &rect, co
     {
         QStyleOptionViewItem opt = viewOptions();
         opt.rect = rect;
+        if(!selectionModel())
+        {
+            return;
+        }
         if(selectionModel()->isSelected(index))
         {
             opt.state |= QStyle::State_Selected;
@@ -120,6 +129,11 @@ void NodeSelectorTreeView::mouseDoubleClickEvent(QMouseEvent *event)
 
 void NodeSelectorTreeView::keyPressEvent(QKeyEvent *event)
 {
+    if(!selectionModel())
+    {
+        return;
+    }
+
     QModelIndexList selectedRows = selectionModel()->selectedRows();
 
     static QModelIndex rootIndex = proxyModel()->getIndexFromNode(MegaSyncApp->getRootNode());
@@ -139,8 +153,10 @@ void NodeSelectorTreeView::keyPressEvent(QKeyEvent *event)
 
 void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent *event)
 {
-        if(selectionModel()->selectedRows().size() > 1)
+        if(!selectionModel() || selectionModel()->selectedRows().size() > 1)
+        {
             return;
+        }
 
         if(!indexAt(event->pos()).isValid())
         {
