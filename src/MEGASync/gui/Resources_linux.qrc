@@ -816,18 +816,6 @@
         <file>images/Switches/switch_unchecked_hover.svg</file>
         <file>images/Switches/switch_unchecked_rest.svg</file>
         <file>animations/loading.gif</file>
-        <file>images/node_selector/arrow-left-disabled-ico.png</file>
-        <file>images/node_selector/arrow-left-disabled-ico@2x.png</file>
-        <file>images/node_selector/arrow-left-disabled-ico@3x.png</file>
-        <file>images/node_selector/arrow-left-ico.png</file>
-        <file>images/node_selector/arrow-left-ico@2x.png</file>
-        <file>images/node_selector/arrow-left-ico@3x.png</file>
-        <file>images/node_selector/arrow-right-disabled-ico.png</file>
-        <file>images/node_selector/arrow-right-disabled-ico@2x.png</file>
-        <file>images/node_selector/arrow-right-disabled-ico@3x.png</file>
-        <file>images/node_selector/arrow-right-ico.png</file>
-        <file>images/node_selector/arrow-right-ico@2x.png</file>
-        <file>images/node_selector/arrow-right-ico@3x.png</file>
         <file>images/node_selector/icon-small-MEGA.png</file>
         <file>images/node_selector/icon-small-MEGA@2x.png</file>
         <file>images/node_selector/icon-small-MEGA@3x.png</file>
@@ -1323,5 +1311,17 @@
         <file>images/HD_mac.png</file>
         <file>images/HD_mac@2x.png</file>
         <file>images/HD_mac@3x.png</file>
+        <file>images/node_selector/chevron-right@3x.png</file>
+        <file>images/node_selector/chevron-right@2x.png</file>
+        <file>images/node_selector/chevron-right.png</file>
+        <file>images/node_selector/chevron-right-active@3x.png</file>
+        <file>images/node_selector/chevron-right-active@2x.png</file>
+        <file>images/node_selector/chevron-right-active.png</file>
+        <file>images/node_selector/chevron-left@3x.png</file>
+        <file>images/node_selector/chevron-left@2x.png</file>
+        <file>images/node_selector/chevron-left.png</file>
+        <file>images/node_selector/chevron-left-active@3x.png</file>
+        <file>images/node_selector/chevron-left-active@2x.png</file>
+        <file>images/node_selector/chevron-left-active.png</file>
     </qresource>
 </RCC>

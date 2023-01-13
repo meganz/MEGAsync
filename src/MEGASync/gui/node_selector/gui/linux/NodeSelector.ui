@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>830</width>
+    <width>880</width>
     <height>590</height>
    </rect>
   </property>
@@ -211,6 +211,16 @@ QGroupBox::title
     border: 1px transparent #FAFAFA; 
     background: transparent;
 }
+
+#wLeftPane QFrame
+{
+min-height:36px;
+}
+
+#wLeftPane QPushbutton
+{
+min-height:36px;
+}
 </string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
@@ -237,6 +247,12 @@ QGroupBox::title
          </property>
          <item>
           <widget class="QFrame" name="fCloudDrive">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>36</height>
+            </size>
+           </property>
            <property name="frameShape">
             <enum>QFrame::NoFrame</enum>
            </property>
@@ -321,7 +337,7 @@ QGroupBox::title
            <property name="minimumSize">
             <size>
              <width>0</width>
-             <height>0</height>
+             <height>36</height>
             </size>
            </property>
            <property name="frameShape">
@@ -405,7 +421,7 @@ QGroupBox::title
            <property name="minimumSize">
             <size>
              <width>0</width>
-             <height>0</height>
+             <height>36</height>
             </size>
            </property>
            <property name="maximumSize">

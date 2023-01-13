@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>540</width>
-    <height>445</height>
+    <width>562</width>
+    <height>433</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -38,17 +38,23 @@ border:none;
    <item>
     <layout class="QGridLayout" name="gridLayout">
      <property name="topMargin">
-      <number>0</number>
+      <number>8</number>
      </property>
      <property name="bottomMargin">
-      <number>10</number>
+      <number>4</number>
+     </property>
+     <property name="horizontalSpacing">
+      <number>2</number>
+     </property>
+     <property name="verticalSpacing">
+      <number>8</number>
      </property>
      <item row="0" column="10">
       <widget class="SearchLineEdit" name="leSearch">
        <property name="minimumSize">
         <size>
-         <width>175</width>
-         <height>32</height>
+         <width>150</width>
+         <height>34</height>
         </size>
        </property>
        <property name="styleSheet">
@@ -57,7 +63,7 @@ border-radius:6px;
 border-width:1px 1px 1px 1px;
 border-style:solid;
 border-color:rgba(0,0,0,0.1);
-min-height:30px;
+min-height:32px;
 }</string>
        </property>
        <property name="frameShape">
@@ -88,13 +94,13 @@ min-height:30px;
        </property>
        <property name="icon">
         <iconset resource="../../../Resources_linux.qrc">
-         <normaloff>:/images/node_selector/arrow-right-ico.png</normaloff>
-         <disabledoff>:/images/node_selector/arrow-right-disabled-ico.png</disabledoff>:/images/node_selector/arrow-right-ico.png</iconset>
+         <normaloff>:/images/node_selector/chevron-right-active.png</normaloff>
+         <disabledoff>:/images/node_selector/chevron-right.png</disabledoff>:/images/node_selector/chevron-right-active.png</iconset>
        </property>
        <property name="iconSize">
         <size>
-         <width>16</width>
-         <height>16</height>
+         <width>24</width>
+         <height>24</height>
         </size>
        </property>
       </widget>
@@ -193,13 +199,13 @@ color:#3D3D3D;
        </property>
        <property name="icon">
         <iconset resource="../../../Resources_linux.qrc">
-         <normaloff>:/images/node_selector/arrow-left-ico.png</normaloff>
-         <disabledoff>:/images/node_selector/arrow-left-disabled-ico.png</disabledoff>:/images/node_selector/arrow-left-ico.png</iconset>
+         <normaloff>:/images/node_selector/chevron-left-active.png</normaloff>
+         <disabledoff>:/images/node_selector/chevron-left.png</disabledoff>:/images/node_selector/chevron-left-active.png</iconset>
        </property>
        <property name="iconSize">
         <size>
-         <width>16</width>
-         <height>16</height>
+         <width>24</width>
+         <height>24</height>
         </size>
        </property>
       </widget>
@@ -288,11 +294,11 @@ color:#303233;
        <property name="styleSheet">
         <string notr="true">QToolButton
 {
-  border-radius: 10px;
+  border-radius: 12px;
   font-weight: 600;
-  height:20px;
-  padding-left:5px;
-  padding-right:3px;
+  height:24px;
+  padding-left:8px;
+  padding-right:8px;
   background-color: rgba(0, 0, 0, 0.05);
   color:#616366;
 }
@@ -322,6 +328,12 @@ QToolButton:pressed
          <number>8</number>
         </property>
         <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
          <number>0</number>
         </property>
         <item>
@@ -449,7 +461,7 @@ QToolButton:pressed
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="treeViewPage">
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -470,6 +482,7 @@ QToolButton:pressed
          <property name="font">
           <font>
            <pointsize>-1</pointsize>
+           <bold>false</bold>
           </font>
          </property>
          <property name="focusPolicy">
@@ -479,7 +492,8 @@ QToolButton:pressed
           <string notr="true">QTreeView {
     show-decoration-selected: 1;
 	selection-background-color: #3393df;
-	 font-size: 12px;
+	 font-size: 14px;
+	font-weight:400;
  	qproperty-indentation: 18; 
 	outline:0;
 }
@@ -531,7 +545,8 @@ QHeaderView
 {
 background: #FFFFFF;
 font-size: 12px;
-color:#576879;
+font-weight:400;
+color:#303233;
 padding-top: 2px;
 }
 
@@ -680,17 +695,22 @@ padding-right:10px;
              </size>
             </property>
             <property name="styleSheet">
-             <string notr="true">*{
-color:#3D3D3D;
-font-size:16px;
-font-weight: 700;
-}</string>
+             <string notr="true"/>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_4">
              <item alignment="Qt::AlignRight">
               <widget class="QLabel" name="textLabel">
+               <property name="font">
+                <font>
+                 <pointsize>-1</pointsize>
+                 <bold>true</bold>
+                </font>
+               </property>
                <property name="styleSheet">
-                <string notr="true"/>
+                <string notr="true">*{
+color:#3D3D3D;
+font-size:16px;
+}</string>
                </property>
                <property name="text">
                 <string>No results for:</string>
@@ -699,9 +719,17 @@ font-weight: 700;
              </item>
              <item alignment="Qt::AlignLeft">
               <widget class="QLabel" name="searchNotFoundText">
+               <property name="font">
+                <font>
+                 <pointsize>-1</pointsize>
+                 <bold>false</bold>
+                </font>
+               </property>
                <property name="styleSheet">
                 <string notr="true">*{
-font-weight: 400;
+color:#3D3D3D;
+font-size:16px;
+font-weigth:400;
 }</string>
                </property>
                <property name="text">
@@ -744,29 +772,67 @@ font-weight: 400;
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>16777215</height>
+       <height>35</height>
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true"/>
+      <string notr="true">QPushButton
+{
+min-height:32px;
+padding-left:12px;
+padding-right:12px;
+font-size:14px;
+font-weight: 400;
+border-radius:4px;
+}</string>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <property name="leftMargin">
        <number>0</number>
       </property>
       <property name="topMargin">
-       <number>12</number>
+       <number>0</number>
       </property>
       <property name="rightMargin">
        <number>0</number>
       </property>
       <property name="bottomMargin">
-       <number>8</number>
+       <number>0</number>
       </property>
       <item>
        <widget class="QPushButton" name="bNewFolder">
+        <property name="styleSheet">
+         <string notr="true">
+QPushButton
+{
+background-color:qlineargradient( x1:0 y1:0, x2:1 y2:0, stop:0 #AAAAAA, stop:1 #999999);
+color:#FFFFFF;
+border: 1px solid rgba(0, 0, 0, 0.44);
+}
+
+QPushButton:disabled
+{
+background-color: qlineargradient( x1:0 y1:0, x2:1 y2:0, stop:0 rgba(170, 170, 170, 0.3), stop:1 rgba(153, 153, 153, 0.3));
+border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+QPushButton::hover
+{
+background-color:qlineargradient( x1:0 y1:0, x2:1 y2:0, stop:0 #8D8D8D, stop:1 #7A7A7A);
+}</string>
+        </property>
         <property name="text">
          <string>New folder</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../../../Resources_linux.qrc">
+          <normaloff>:/images/node_selector/plus.png</normaloff>:/images/node_selector/plus.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>16</width>
+          <height>16</height>
+         </size>
         </property>
        </widget>
       </item>
@@ -784,16 +850,55 @@ font-weight: 400;
        </spacer>
       </item>
       <item>
-       <widget class="QPushButton" name="bOk">
+       <widget class="QPushButton" name="bCancel">
+        <property name="styleSheet">
+         <string notr="true">QPushButton
+{
+background-color:qlineargradient( x1:0 y1:0, x2:1 y2:0, stop:0 #FFFFFF, stop:1 #FAFAFA);
+color:#333333;
+border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+QPushButton:disabled
+{
+color: rgba(51, 51, 51, 0.3);
+}
+
+QPushButton:hover
+{
+background-color:qlineargradient( x1:0 y1:0, x2:1 y2:0, stop:0 #FAFAFA, stop:1 #F2F2F2);
+color:#333333;
+}</string>
+        </property>
         <property name="text">
-         <string>OK</string>
+         <string>Cancel</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="bCancel">
+       <widget class="QPushButton" name="bOk">
+        <property name="styleSheet">
+         <string notr="true">QPushButton
+{
+background:#00BFA5;
+border: 1px solid rgba(0, 0, 0, 0.1);
+color:#FFFFFF;
+}
+
+QPushButton:disabled
+{
+background: rgba(0, 191, 165, 0.3);
+color:#FFFFFF;
+}
+
+QPushButton:hover
+{
+background: #00A787;
+color:#FFFFFF;
+}</string>
+        </property>
         <property name="text">
-         <string>Cancel</string>
+         <string>OK</string>
         </property>
        </widget>
       </item>
@@ -816,8 +921,6 @@ font-weight: 400;
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../../Resources_linux.qrc"/>
-  <include location="../../../Resources_linux.qrc"/>
   <include location="../../../Resources_linux.qrc"/>
  </resources>
  <connections/>
