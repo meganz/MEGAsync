@@ -99,7 +99,7 @@ void LinuxSignalHandler(int signum)
 #endif
 
     void messageHandler(QtMsgType type,const QMessageLogContext &context, const QString &msg)
-    {       
+    {
         switch (type)
         {
             case QtInfoMsg:
@@ -572,6 +572,10 @@ int main(int argc, char *argv[])
 
     int toret = app.exec();
 
+#ifdef WIN32
+    extern bool WindowsPlatform_exiting;
+    WindowsPlatform_exiting = true;
+#endif
 
 #ifdef Q_OS_LINUX
     theapp = nullptr;

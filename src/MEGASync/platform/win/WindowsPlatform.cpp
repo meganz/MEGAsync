@@ -74,6 +74,8 @@ std::shared_ptr<AbstractShellNotifier> WindowsPlatform::mGeneralNotifier = nullp
 using namespace std;
 using namespace mega;
 
+bool WindowsPlatform_exiting = false;
+
 void WindowsPlatform::initialize(int, char *[])
 {
     CoInitializeEx(NULL, COINIT_MULTITHREADED);
