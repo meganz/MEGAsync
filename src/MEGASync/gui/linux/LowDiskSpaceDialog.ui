@@ -13,6 +13,15 @@
   <property name="windowTitle">
    <string>Low disk space</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">*{ font-family: &quot;SF Pro&quot;; font-size: 14px; font-weight: 400; }
+
+QPushButton {
+  padding-top: 4px; padding-bottom: 4px; padding-left: 14px; padding-right: 14px;
+  border-style: solid; border-width: 1px; border-color: #d7d6d5; border-radius: 6px;
+}
+</string>
+  </property>
   <layout class="QHBoxLayout" name="horizontalLayout_4">
    <property name="leftMargin">
     <number>24</number>
@@ -78,6 +87,9 @@
          </property>
          <property name="text">
           <string notr="true"/>
+         </property>
+         <property name="pixmap">
+          <pixmap resource="../Resources_linux.qrc">:/images/HD_mac.png</pixmap>
          </property>
          <property name="scaledContents">
           <bool>true</bool>
@@ -181,6 +193,14 @@
          </item>
          <item>
           <widget class="QPushButton" name="bCancel">
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+  background-color : #FCFCFC;
+  color : #000000;
+}
+QPushButton:hover { background-color: #fdfdfd; }
+QPushButton:pressed { background-color: #cacaca; }</string>
+           </property>
            <property name="text">
             <string>Cancel</string>
            </property>
@@ -188,6 +208,14 @@
          </item>
          <item>
           <widget class="QPushButton" name="bTryAgain">
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+  background-color : qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 #4B91F7, stop:1 #367AF6);
+  color : #FFFFFF;
+}
+QPushButton:hover { background-color: #5e95f8; }
+QPushButton:pressed { background-color: #0a58e6; }</string>
+           </property>
            <property name="text">
             <string>Try Again</string>
            </property>
