@@ -347,6 +347,8 @@ NodeSelectorModelItemSearch::NodeSelectorModelItemSearch(std::unique_ptr<mega::M
     else
     {
         mType = NodeSelectorModelItemSearch::Type::INCOMING_SHARE;
+        auto user = std::unique_ptr<mega::MegaUser>(MegaSyncApp->getMegaApi()->getUserFromInShare(mNode.get(), true));
+        setOwner(move(user));
     }
 
     calculateSyncStatus();
