@@ -210,18 +210,6 @@
         <file>images/ico_Import_links@3x.png</file>
         <file>images/ico_Import_links_out@3x.png</file>
         <file>images/ico_Import_links_over@3x.png</file>
-        <file>images/ico_item_link_hover_ico.png</file>
-        <file>images/ico_item_link_hover_ico@2x.png</file>
-        <file>images/ico_item_link_hover_ico@3x.png</file>
-        <file>images/ico_item_link.png</file>
-        <file>images/ico_item_link@2x.png</file>
-        <file>images/ico_item_link@3x.png</file>
-        <file>images/ico_item_retry_hover_ico.png</file>
-        <file>images/ico_item_retry_hover_ico@2x.png</file>
-        <file>images/ico_item_retry_hover_ico@3x.png</file>
-        <file>images/ico_item_retry.png</file>
-        <file>images/ico_item_retry@2x.png</file>
-        <file>images/ico_item_retry@3x.png</file>
         <file>images/ico_MEGA_website_out@3x.png</file>
         <file>images/ico_MEGA_website_over@3x.png</file>
         <file>images/ico_menu_full.png</file>
@@ -437,12 +425,6 @@
         <file>images/Shield_big.png</file>
         <file>images/Shield_big@2x.png</file>
         <file>images/Shield_big@3x.png</file>
-        <file>images/showinfolder_hover_ico.png</file>
-        <file>images/showinfolder_hover_ico@2x.png</file>
-        <file>images/showinfolder_hover_ico@3x.png</file>
-        <file>images/showinfolder.png</file>
-        <file>images/showinfolder@2x.png</file>
-        <file>images/showinfolder@3x.png</file>
         <file>images/small_folder.png</file>
         <file>images/small_folder@2x.png</file>
         <file>images/small_folder@3x.png</file>
@@ -1302,5 +1284,26 @@
         <file>images/StalledIssues/rotate_cw_default.png</file>
         <file>images/StalledIssues/rotate_cw_default@2x.png</file>
         <file>images/StalledIssues/rotate_cw_default@3x.png</file>
+        <file>images/file-question.png</file>
+        <file>images/file-question@2x.png</file>
+        <file>images/file-question@3x.png</file>
+        <file>images/file-question-hover.png</file>
+        <file>images/file-question-hover@2x.png</file>
+        <file>images/file-question-hover@3x.png</file>
+        <file>images/file-search.png</file>
+        <file>images/file-search@2x.png</file>
+        <file>images/file-search@3x.png</file>
+        <file>images/file-search-hover.png</file>
+        <file>images/file-search-hover@2x.png</file>
+        <file>images/file-search-hover@3x.png</file>
+        <file>images/link.png</file>
+        <file>images/link@2x.png</file>
+        <file>images/link@3x.png</file>
+        <file>images/link-hover.png</file>
+        <file>images/link-hover@2x.png</file>
+        <file>images/link-hover@3x.png</file>
+        <file>images/retry.png</file>
+        <file>images/retry@2x.png</file>
+        <file>images/retry@3x.png</file>
     </qresource>
 </RCC>

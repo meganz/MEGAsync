@@ -137,7 +137,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     connect(app->getTransfersModel(), &TransfersModel::transfersCountUpdated, this, &InfoDialog::updateTransfersCount);
     connect(app->getTransfersModel(), &TransfersModel::transfersProcessChanged, this, &InfoDialog::onTransfersStateChanged);
-    connect(app->getTransfersModel(), &TransfersModel::showInFolderFinished, this, &InfoDialog::onShowInFolderFinished);
 
     //Set window properties
 #ifdef Q_OS_LINUX
@@ -600,14 +599,6 @@ void InfoDialog::onTransfersStateChanged()
         }
 
         ui->wStatus->update();
-    }
-}
-
-void InfoDialog::onShowInFolderFinished(bool state)
-{
-    if(!state)
-    {
-        QMegaMessageBox::warning(nullptr, tr("Error"), tr("Folder can't be opened. Check that the folder in your local drive hasn't been deleted or moved."), QMessageBox::Ok);
     }
 }
 

@@ -85,28 +85,44 @@ void MegaDownloader::onAvailableSpaceCheckFinished(bool isDownloadPossible)
     if (isDownloadPossible)
     {
         auto batch = std::shared_ptr<TransferBatch>(new TransferBatch());
-
         mQueueData.addTransferBatch(batch);
+
+        TransferMetaData *metadata = (static_cast<MegaApplication*>(qApp))->getTransferAppData(mQueueData.getCurrentAppDataId());
 
         EventUpdater updater(mQueueData.getDownloadQueueSize());
 
         // Process all nodes in the download queue
-        auto itAppData = mQueueData.getAppDatasBegin();
-        auto itPath = mQueueData.getPathsBegin();
         while (!mQueueData.isDownloadQueueEmpty())
         {
             WrappedNode *wNode = mQueueData.dequeueDownloadQueue();
             MegaNode *node = wNode->getMegaNode();
 
-            bool transferStarted = download(wNode, *itPath, *itAppData, batch->getCancelTokenPtr());
+            QString currentPath;
+            QString appData = QString::number(mQueueData.getCurrentAppDataId());
+
+            if (node->isForeign() && pathMap.contains(node->getParentHandle()))
+            {
+                currentPath = pathMap[node->getParentHandle()];
+            }
+            else
+            {
+                currentPath = mQueueData.getCurrentTargetPath();
+
+                if (metadata)
+                {
+                    mQueueData.update(metadata, node, currentPath);
+                }
+
+                appData.append(QLatin1Char('*'));
+            }
+
+            bool transferStarted = download(wNode, currentPath, appData, batch->getCancelTokenPtr());
             if (transferStarted && wNode->getTransferOrigin() == WrappedNode::FROM_APP)
             {
-                batch->add(*itPath, QString::fromUtf8(node->getName()));
+                batch->add(currentPath, QString::fromUtf8(node->getName()));
             }
             delete wNode;
             updater.update(mQueueData.getDownloadQueueSize());
-
-            ++itPath, ++itAppData;
         }
 
         if (batch->isEmpty())
