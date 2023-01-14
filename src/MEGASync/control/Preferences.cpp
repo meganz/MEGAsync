@@ -17,7 +17,7 @@ const int Preferences::VERSION_CODE = 5006;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
 const QString Preferences::VERSION_STRING = QString::fromAscii("5.0.6");
-QString Preferences::SDK_ID = QString::fromAscii("a1cf4a7");
+QString Preferences::SDK_ID = QString::fromAscii("f49e328");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
 "- Sync Rework ALPHA test version.\n"
 "- All the very latest code changes.\n"));
