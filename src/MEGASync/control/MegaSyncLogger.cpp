@@ -328,6 +328,7 @@ private:
                 else if (!logToDesktop && logDesktopFileOpen)
                 {
                     logDesktopFile.close();
+                    logDesktopFileOpen = false;
                 }
             }
 
@@ -377,7 +378,10 @@ private:
                             logDesktopFile << "<log gap - out of logging memory at this point>\n";
                         }
                     }
-                    logDesktopFile.flush(); //always flush in `active` logging
+                    if (!newMessages)
+                    {
+                        logDesktopFile.flush(); //always flush in `active` logging
+                    }
                 }
 
                 if (g_megaSyncLogger && g_megaSyncLogger->mLogToStdout)
@@ -390,7 +394,10 @@ private:
                     {
                         std::cout << p->message;
                     }
-                    std::cout << std::flush; //always flush into stdout (DEBUG mode)
+                    if (!newMessages)
+                    {
+                        std::cout << std::flush; //always flush into stdout (DEBUG mode)
+                    }
                 }
                 p->notifyWaiter();
                 free(p);
@@ -617,6 +624,20 @@ void LoggingThread::log(int loglevel, const char *message, const char **directMe
                 logListLast->lastmessageRepeats = 0;
             }
 
+#if defined(WIN32) && defined(DEBUG)
+            OutputDebugStringA(std::string(timebuf).c_str());
+            OutputDebugStringA(std::string(threadname).c_str());
+            OutputDebugStringA(std::string(loglevelstring).c_str());
+            if (message)
+            {
+                OutputDebugStringA(std::string(message, messageLen).c_str());
+            }
+            for(int i = 0; i < numberMessages; i++)
+            {
+                OutputDebugStringA(std::string(directMessages[i], directMessagesSizes[i]).c_str());
+            }
+            OutputDebugStringA("\r\n");
+#endif
             if (direct)
             {
                 if (LogLinkedList* newentry = LogLinkedList::create(logListLast, 1 + sizeof(LogLinkedList))) //create a new "empty" element

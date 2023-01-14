@@ -12,6 +12,7 @@ public:
     ~PowerOptions();
 
     static bool keepAwake(bool state);
+    static void appShutdown();
 
 private:
     static std::unique_ptr<PowerOptionsImpl> mPowerOptionsImpl;

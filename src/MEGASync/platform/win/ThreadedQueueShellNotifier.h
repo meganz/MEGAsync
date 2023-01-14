@@ -24,6 +24,9 @@ public:
 private:
     void doInThread();
 
+    void checkReportQueueSize();
+    size_t lastReportedQueueSize = 0;
+
     std::thread mThread;
     std::queue<QString> mPendingNotifications;
     std::mutex mQueueAccessMutex;
