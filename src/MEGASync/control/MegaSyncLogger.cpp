@@ -34,8 +34,8 @@
 #define LOG_TIME_CHARS 22
 #define LOG_LEVEL_CHARS 5
 
-#define MAX_FILESIZE_MB 10    // 10MB of log usually compresses to about 850KB (was 450 before duplicate line detection)
-#define MAX_ROTATE_LOGS 50   // So we expect to keep 42MB or so in compressed logs
+#define MAX_LOG_FILESIZE_MB_DEFAULT 10    // 10MB of log usually compresses to about 850KB (was 450 before duplicate line detection)
+#define MAX_ROTATE_LOGS_DEFAULT 50   // So we expect to keep 42MB or so in compressed logs
 #define MAX_ROTATE_LOGS_TODELETE 50   // If ever reducing the number of logs, we should remove the older ones anyway. This number should be the historical maximum of that value
 
 
@@ -193,6 +193,19 @@ private:
 
     void logThreadFunction(QString filename, QString desktopFilename)
     {
+        size_t logSizeBeforeCompressMb = MAX_LOG_FILESIZE_MB_DEFAULT;
+        if (auto mb = getenv("MEGA_MAX_LOG_FILESIZE_MB"))
+        {
+            logSizeBeforeCompressMb = atoi(mb);
+        }
+        size_t logCountToRotate = MAX_ROTATE_LOGS_DEFAULT;
+        size_t logCountToClean = MAX_ROTATE_LOGS_TODELETE;
+        if (auto count = getenv("MEGA_MAX_ROTATE_LOGS"))
+        {
+            logCountToRotate = atoi(count);
+            logCountToClean = std::max(logCountToRotate, logCountToClean);
+        }
+
     #ifdef WIN32
         std::ofstream outputFile(filename.toStdWString().data(), std::ofstream::out | std::ofstream::app);
     #else
@@ -208,7 +221,7 @@ private:
             if (forceRenew)
             {
                 std::lock_guard<std::mutex> g(logRotationMutex);
-                for (int i = MAX_ROTATE_LOGS_TODELETE; i--; )
+                for (int i = logCountToClean; i--; )
                 {
                     QString toDelete = numberedLogFilename(filename, i);
 
@@ -241,16 +254,16 @@ private:
                     emit g_megaSyncLogger->logCleaned();
                 }
             }
-            else if (forceRotationForReporting || outFileSize > MAX_FILESIZE_MB*1024*1024)
+            else if (forceRotationForReporting || outFileSize > logSizeBeforeCompressMb*1024*1024)
             {
                 std::lock_guard<std::mutex> g(logRotationMutex);
-                for (int i = MAX_ROTATE_LOGS_TODELETE; i--; )
+                for (int i = logCountToClean; i--; )
                 {
                     QString toRename = numberedLogFilename(filename, i);
 
                     if (QFile::exists(toRename))
                     {
-                        if (i + 1 >= MAX_ROTATE_LOGS)
+                        if (i + 1 >= logCountToRotate)
                         {
                             if (!QFile::remove(toRename))
                             {
