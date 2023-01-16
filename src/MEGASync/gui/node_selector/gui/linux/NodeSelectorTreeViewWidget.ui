@@ -481,6 +481,7 @@ QToolButton:pressed
         <widget class="NodeSelectorTreeView" name="tMegaFolders">
          <property name="font">
           <font>
+           <family>SF Pro Display</family>
            <pointsize>-1</pointsize>
            <bold>false</bold>
           </font>
@@ -492,6 +493,7 @@ QToolButton:pressed
           <string notr="true">QTreeView {
     show-decoration-selected: 1;
 	selection-background-color: #3393df;
+    font-family:SF Pro Display;
 	 font-size: 14px;
 	font-weight:400;
  	qproperty-indentation: 18; 
@@ -543,11 +545,12 @@ QTreeView::branch:!selected:open:has-children:adjoins-item {
 
 QHeaderView
 {
-background: #FFFFFF;
 font-size: 12px;
+background: #FFFFFF;
 font-weight:400;
 color:#303233;
 padding-top: 2px;
+font-family:SF Pro Display;
 }
 
 QHeaderView::section {
@@ -557,6 +560,7 @@ border-top:0 px;
 border-bottom:0px;					 					 				 					 	
 border-right:0px;
 padding-left:3px;
+padding-top: 3px;
 }
 
 
@@ -594,7 +598,7 @@ padding-right:10px;
           <enum>QFrame::Plain</enum>
          </property>
          <property name="alternatingRowColors">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="selectionMode">
           <enum>QAbstractItemView::SingleSelection</enum>

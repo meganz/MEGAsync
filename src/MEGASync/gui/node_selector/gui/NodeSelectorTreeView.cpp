@@ -204,6 +204,11 @@ bool NodeSelectorTreeView::mousePressorReleaseEvent(QMouseEvent *event)
 {
     QPoint pos = event->pos();
     QModelIndex index = getIndexFromSourceModel(indexAt(pos));
+    if(!index.isValid())
+    {
+        return false;
+    }
+
     NodeSelectorModelItem *item = static_cast<NodeSelectorModelItem*>(index.internalPointer());
     if(item && item->isCloudDrive())
     {   //this line avoid to cloud drive being collapsed and at same time it allows to select it.

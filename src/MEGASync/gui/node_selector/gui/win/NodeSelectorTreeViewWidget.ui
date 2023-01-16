@@ -482,6 +482,7 @@ QToolButton:pressed
          <property name="font">
           <font>
            <pointsize>-1</pointsize>
+           <bold>false</bold>
           </font>
          </property>
          <property name="focusPolicy">
@@ -593,7 +594,7 @@ padding-right:10px;
           <enum>QFrame::Plain</enum>
          </property>
          <property name="alternatingRowColors">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="selectionMode">
           <enum>QAbstractItemView::SingleSelection</enum>
