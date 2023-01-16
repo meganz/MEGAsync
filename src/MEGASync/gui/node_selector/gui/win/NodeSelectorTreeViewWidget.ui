@@ -560,6 +560,7 @@ border-top:0 px;
 border-bottom:0px;					 					 				 					 	
 border-right:0px;
 padding-left:3px;
+padding-top:3px;
 }
 
 
