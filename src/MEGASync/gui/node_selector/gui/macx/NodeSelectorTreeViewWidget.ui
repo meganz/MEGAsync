@@ -498,48 +498,57 @@ QToolButton:pressed
 	outline:0;
 }
 
+
 QTreeView::item:disabled
 {
 	background-color:transparent;
 }
 
+
 QTreeView::item:hover {
    background-color:transparent;
 }
+
 
 QTreeView::branch:hover {
 background-color:transparent;
 }
 
+
 QTreeView::branch:selected {
 background-color: #3393df;
 }
 
+
 QTreeView::item:selected {
-    border: transparent;
-	 color: white;
     background-color: #3393df;
+	color: white;
 }
+
 
 QTreeView::branch:selected:closed:has-children:adjoins-item {
     border-image: none;
 	image:url(://images/node_selector/Icon-Small-Arrow-Left-hover.png) ;
 }
 
+
 QTreeView::branch:selected:open:has-children:adjoins-item {
     border-image: none;
     image: url(://images/node_selector/Icon-Small-Arrow-Down-hover.png) ;
 }
+
 
 QTreeView::branch:!selected:closed:has-children:adjoins-item {
     border-image: none;
     image: url(://images/node_selector/Icon-Small-Arrow-Left.png) ;
 }
 
+
 QTreeView::branch:!selected:open:has-children:adjoins-item {
     border-image: none;
     image: url(://images/node_selector/Icon-Small-Arrow-Down.png) ;
 }
+
 
 QHeaderView
 {
