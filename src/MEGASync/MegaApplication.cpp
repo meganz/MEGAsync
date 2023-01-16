@@ -5783,6 +5783,7 @@ void MegaApplication::externalFileUpload(qlonglong targetFolder)
     }
 
     fileUploadSelector = new QFileDialog();
+    fileUploadSelector->setFileMode(QFileDialog::ExistingFiles);
 
 #ifndef __APPLE__
     //macOS -> modal + show -> not working
