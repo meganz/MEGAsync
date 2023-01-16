@@ -481,6 +481,7 @@ QToolButton:pressed
         <widget class="NodeSelectorTreeView" name="tMegaFolders">
          <property name="font">
           <font>
+           <family>SF Pro Display</family>
            <pointsize>-1</pointsize>
            <bold>false</bold>
           </font>
@@ -496,6 +497,7 @@ QToolButton:pressed
 	font-weight:400;
  	qproperty-indentation: 18; 
 	outline:0;
+    font-family:SF Pro Display;
 }
 
 QTreeView::item:disabled
@@ -548,6 +550,7 @@ font-size: 12px;
 font-weight:400;
 color:#303233;
 padding-top: 2px;
+font-family:SF Pro Display;
 }
 
 QHeaderView::section {
