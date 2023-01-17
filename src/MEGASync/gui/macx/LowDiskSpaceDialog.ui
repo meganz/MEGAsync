@@ -84,14 +84,11 @@ QPushButton {
            <height>64</height>
           </size>
          </property>
+         <property name="styleSheet">
+          <string notr="true">border-image: url(:/images/HD_mac.png);</string>
+         </property>
          <property name="text">
           <string notr="true"/>
-         </property>
-         <property name="pixmap">
-          <pixmap resource="../Resources_macx.qrc">:/images/HD_mac.png</pixmap>
-         </property>
-         <property name="scaledContents">
-          <bool>true</bool>
          </property>
         </widget>
        </item>

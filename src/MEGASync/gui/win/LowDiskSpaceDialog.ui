@@ -89,14 +89,11 @@ QPushButton {
            <height>64</height>
           </size>
          </property>
+         <property name="styleSheet">
+          <string notr="true">border-image: url(:/images/HD_win.png);</string>
+         </property>
          <property name="text">
           <string notr="true"/>
-         </property>
-         <property name="pixmap">
-          <pixmap resource="../Resources_win.qrc">:/images/HD_win.png</pixmap>
-         </property>
-         <property name="scaledContents">
-          <bool>true</bool>
          </property>
         </widget>
        </item>
