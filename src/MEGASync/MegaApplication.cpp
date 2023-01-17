@@ -5784,6 +5784,7 @@ void MegaApplication::externalFileUpload(qlonglong targetFolder)
 
     fileUploadSelector = new QFileDialog();
     fileUploadSelector->setFileMode(QFileDialog::ExistingFiles);
+
 #ifndef __APPLE__
     //macOS -> modal + show -> not working
     //Win & Linux -> show without modal -> not working
@@ -5806,9 +5807,6 @@ void MegaApplication::externalFileUpload(qlonglong targetFolder)
 #endif
     }
 
-    fileUploadSelector->setDirectory(defaultFolderPath);
-
-    fileUploadSelector->show();
     connect(fileUploadSelector.data(), &QDialog::finished,[this](){
 
         if(fileUploadSelector->result() == QDialog::Rejected)
@@ -5835,6 +5833,11 @@ void MegaApplication::externalFileUpload(qlonglong targetFolder)
             HTTPServer::onUploadSelectionDiscarded();
         }
     });
+
+    fileUploadSelector->setDirectory(defaultFolderPath);
+    fileUploadSelector->show();
+    fileUploadSelector->raise();
+    fileUploadSelector->activateWindow();
 }
 
 void MegaApplication::externalFolderUpload(qlonglong targetFolder)
@@ -5889,9 +5892,9 @@ void MegaApplication::externalFolderUpload(qlonglong targetFolder)
         }
 #endif
     }
+
     folderUploadSelector->setDirectory(defaultFolderPath);
 
-    folderUploadSelector->show();
     connect(folderUploadSelector.data(), &QDialog::finished, [this]()
     {
         if (folderUploadSelector->result() == QDialog::Accepted)
@@ -5907,6 +5910,10 @@ void MegaApplication::externalFolderUpload(qlonglong targetFolder)
             HTTPServer::onUploadSelectionDiscarded();
         }
     });
+
+    folderUploadSelector->show();
+    folderUploadSelector->raise();
+    folderUploadSelector->activateWindow();
 }
 
 void MegaApplication::externalFolderSync(qlonglong targetFolder)
@@ -5957,6 +5964,7 @@ void MegaApplication::externalOpenTransferManager(int tab)
         openInfoWizard();
         return;
     }
+
     transferManagerActionClicked(tab);
 }
 
