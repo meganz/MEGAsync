@@ -49,9 +49,9 @@ QVariant BackupItemModel::headerData(int section, Qt::Orientation orientation, i
             break;
         case Column_UPLOADS:
             if(role == Qt::DisplayRole)
-                return tr("Uploading");
+                return tr("Uploads");
             if(role == Qt::ToolTipRole)
-                return tr("Sort by Uploading");
+                return tr("Sort by Uploads");
         }
     }
     return QVariant();
