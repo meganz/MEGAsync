@@ -541,6 +541,7 @@ void SetupWizard::on_bNext_clicked()
             // If can't sync because remote node does not exist, try to create it
             if (!node)
             {
+                // TODO isCrashed: investigate: is this possible? Is restarting the app enough?
                 auto rootNode = MegaSyncApp->getRootNode();
                 if (!rootNode)
                 {
@@ -605,6 +606,7 @@ void SetupWizard::on_bCancel_clicked()
         setupPreferences();
         auto rootNode = ((MegaApplication*)qApp)->getRootNode();
 
+        // TODO isCrashed: investigate: is this possible? Is restarting the app enough?
         if (!rootNode)
         {
             page_login();

@@ -6840,7 +6840,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             preferences->setAccountStateInGeneral(Preferences::STATE_FETCHNODES_OK);
             preferences->setNeedsFetchNodesInGeneral(false);
 
-            // TODO: check with sdk team if this case is possible
+            // TODO isCrashed: check with sdk team if this case is possible
             if (!mRootNode)
             {
                 QMegaMessageBox::warning(nullptr, tr("Error"), tr("Unable to get the filesystem.\n"
@@ -6934,7 +6934,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         auto vault = getVaultNode();
         auto rubbish = getRubbishNode();
 
-        // TODO: investigate: is this case possible and what should we do? Restart the app?
+        // TODO isCrashed: investigate: is this case possible and what should we do? Restart the app?
         if (!root || !vault || !rubbish)
         {
             break;
@@ -6949,7 +6949,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
         if (!inShares)
         {
-            // TODO: investigate: is this case possible and what should we do? Restart the app?
+            // TODO isCrashed: investigate: is this case possible and what should we do? Restart the app?
             return;
         }
 
@@ -7694,12 +7694,13 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
 
 void MegaApplication::onReloadNeeded(MegaApi*)
 {
+    // TODO isCrashed: onReloadNeeded obsoleted by MegaEvent::EVENT_RELOAD
     if (appfinished)
     {
         return;
     }
 
-    // TODO: investigate this. Could a restart of the app be enough?
+    // TODO isCrashed: investigate this. Could a restart of the app be enough?
 
     //Don't reload the filesystem here because it's unsafe
     //and the most probable cause for this callback is a false positive.
