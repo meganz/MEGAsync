@@ -9,8 +9,6 @@ MegaDelegateHoverManager::MegaDelegateHoverManager() : mView(nullptr)
 
 void MegaDelegateHoverManager::setView(QAbstractItemView *view)
 {
-    Q_ASSERT(view->model());
-
     if(mView)
     {
         mView->viewport()->removeEventFilter(this);
