@@ -193,13 +193,13 @@ private:
 
     void logThreadFunction(QString filename, QString desktopFilename)
     {
-        size_t logSizeBeforeCompressMb = MAX_LOG_FILESIZE_MB_DEFAULT;
+        int logSizeBeforeCompressMb = MAX_LOG_FILESIZE_MB_DEFAULT;
         if (auto mb = getenv("MEGA_MAX_LOG_FILESIZE_MB"))
         {
             logSizeBeforeCompressMb = atoi(mb);
         }
-        size_t logCountToRotate = MAX_ROTATE_LOGS_DEFAULT;
-        size_t logCountToClean = MAX_ROTATE_LOGS_TODELETE;
+        int logCountToRotate = MAX_ROTATE_LOGS_DEFAULT;
+        int logCountToClean = MAX_ROTATE_LOGS_TODELETE;
         if (auto count = getenv("MEGA_MAX_ROTATE_LOGS"))
         {
             logCountToRotate = atoi(count);

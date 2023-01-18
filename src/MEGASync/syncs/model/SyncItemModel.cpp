@@ -59,13 +59,13 @@ QVariant SyncItemModel::headerData(int section, Qt::Orientation orientation, int
             break;
         case Column_DOWNLOADS:
             if(role == Qt::DisplayRole)
-                return tr("Downloading");
+                return tr("Downloads");
             if(role == Qt::ToolTipRole)
                 return tr("Sort by Downloading");
             break;
         case Column_UPLOADS:
             if(role == Qt::DisplayRole)
-                return tr("Uploading");
+                return tr("Uploads");
             if(role == Qt::ToolTipRole)
                 return tr("Sort by Uploading");
             break;
