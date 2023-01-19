@@ -342,7 +342,7 @@ public:
             mLoadingViewSet = false;
             auto delay = std::max(0ll, MIN_TIME_DISPLAYING_VIEW - (QDateTime::currentMSecsSinceEpoch()
                                                 - mStartTime));
-            mDelayTimerToHide.start(delay);
+            delay > 0 ? mDelayTimerToHide.start(delay) : hideLoadingScene();
         }
     }
 
@@ -359,6 +359,7 @@ public:
 private:
     void showLoadingScene() override
     {
+        mLoadingViewSet = true;
         sceneVisibilityChange(true);
         int visibleRows(0);
 
@@ -395,7 +396,6 @@ private:
         mViewLayout->replaceWidget(mView, mLoadingView);
         mStartTime = QDateTime::currentMSecsSinceEpoch();
         mLoadingDelegate->setLoading(true);
-        mLoadingViewSet = true;
     }
 
     QAbstractItemDelegate* mViewDelegate;
