@@ -6833,29 +6833,12 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         if (e->getErrorCode() == MegaError::API_OK)
         {
             //Update/set root node
-            getRootNode(true); //TODO: move this to thread pool, notice that mRootNode is used below
+            getRootNode(true);
             getVaultNode(true);
             getRubbishNode(true);
 
             preferences->setAccountStateInGeneral(Preferences::STATE_FETCHNODES_OK);
             preferences->setNeedsFetchNodesInGeneral(false);
-
-            // TODO isCrashed: check with sdk team if this case is possible
-            if (!mRootNode)
-            {
-                QMegaMessageBox::warning(nullptr, tr("Error"), tr("Unable to get the filesystem.\n"
-                                                       "Please, try again. If the problem persists "
-                                                       "please contact bug@mega.co.nz"), QMessageBox::Ok);
-
-                auto setupWizard = DialogOpener::findDialog<SetupWizard>();
-                if(setupWizard)
-                {
-                    setupWizard->close();
-                }
-
-                rebootApplication(false);
-                break;
-            }
 
             std::unique_ptr<char[]> email(megaApi->getMyEmail());
             bool logged = preferences->logged();
