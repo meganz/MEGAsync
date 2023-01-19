@@ -6929,16 +6929,9 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             break;
         }
 
-
         auto root = getRootNode();
         auto vault = getVaultNode();
         auto rubbish = getRubbishNode();
-
-        // TODO isCrashed: investigate: is this case possible and what should we do? Restart the app?
-        if (!root || !vault || !rubbish)
-        {
-            break;
-        }
 
         //Account details retrieved, update the preferences and the information dialog
         shared_ptr<MegaAccountDetails> details(request->getMegaAccountDetails());
@@ -6946,12 +6939,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         mThreadPool->push([=]()
         {//thread pool function
         shared_ptr<MegaNodeList> inShares(megaApi->getInShares());
-
-        if (!inShares)
-        {
-            // TODO isCrashed: investigate: is this case possible and what should we do? Restart the app?
-            return;
-        }
 
         Utilities::queueFunctionInAppThread([=]()
         {//queued function
