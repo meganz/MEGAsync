@@ -21,6 +21,7 @@
 #include "UserAttributesRequests/MyBackupsHandle.h"
 #include "syncs/gui/SyncsMenu.h"
 #include "TextDecorator.h"
+#include "PowerOptions.h"
 
 #include "mega/types.h"
 
@@ -2241,8 +2242,8 @@ void MegaApplication::cleanAll()
         Platform::notifyItemChange(localFolder, MegaApi::STATE_NONE);
     }
 
+    PowerOptions::appShutdown();
     mSyncController.reset();
-
     UserAttributes::UserAttributesManager::instance().reset();
 
     closeDialogs();
