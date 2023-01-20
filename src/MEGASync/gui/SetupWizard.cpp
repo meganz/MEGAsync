@@ -541,26 +541,14 @@ void SetupWizard::on_bNext_clicked()
             // If can't sync because remote node does not exist, try to create it
             if (!node)
             {
-                // TODO isCrashed: investigate: is this possible? Is restarting the app enough?
                 auto rootNode = MegaSyncApp->getRootNode();
-                if (!rootNode)
-                {
-                    page_login();
-                    QMegaMessageBox::warning(nullptr, tr("Error"), tr("Unable to get the filesystem.\n"
-                                                                      "Please, try again. If the problem persists "
-                                                                      "please contact bug@mega.co.nz"));
-                    done(QDialog::Rejected);
-                    app->rebootApplication(false);
-                }
-                else
-                {
-                    ui->eMegaFolder->setText(QString::fromLatin1("/MEGAsync"));
-                    megaApi->createFolder("MEGAsync", rootNode.get());
-                    creatingDefaultSyncFolder = true;
 
-                    ui->lProgress->setText(tr("Creating folder…"));
-                    page_progress();
-                }
+                ui->eMegaFolder->setText(QString::fromLatin1("/MEGAsync"));
+                megaApi->createFolder("MEGAsync", rootNode.get());
+                creatingDefaultSyncFolder = true;
+
+                ui->lProgress->setText(tr("Creating folder…"));
+                page_progress();
             }
             else
             {
@@ -604,21 +592,6 @@ void SetupWizard::on_bCancel_clicked()
     if (ui->sPages->currentWidget() == ui->pWelcome)
     {
         setupPreferences();
-        auto rootNode = ((MegaApplication*)qApp)->getRootNode();
-
-        // TODO isCrashed: investigate: is this possible? Is restarting the app enough?
-        if (!rootNode)
-        {
-            page_login();
-            QMegaMessageBox::warning(nullptr, tr("Error"), tr("Unable to get the filesystem.\n"
-                                "Please, try again. If the problem persists "
-                                "please contact bug@mega.co.nz"));
-
-            done(QDialog::Rejected);
-            app->rebootApplication(false);
-            return;
-        }
-
         QString localPath (QDir::toNativeSeparators(QDir(ui->eLocalFolder->text()).canonicalPath()));
         QString syncName (SyncController::getSyncNameFromPath(localPath));
         mPreconfiguredSyncs.append(PreConfiguredSync(localPath, selectedMegaFolderHandle, syncName));
