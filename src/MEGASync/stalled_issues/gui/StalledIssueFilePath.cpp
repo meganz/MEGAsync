@@ -198,7 +198,7 @@ QIcon StalledIssueFilePath::getPathIcon(const QFileInfo &fileInfo, bool hasProbl
         //Without extension
         if(fileInfo.completeSuffix().isEmpty())
         {
-            fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/help-circle.png"));
+            fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/drag_generic.png"));
         }
         else
         {

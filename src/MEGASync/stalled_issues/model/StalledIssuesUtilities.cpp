@@ -18,7 +18,8 @@ void StalledIssuesUtilities::ignoreFile(const QString &path)
 
     QFuture<void> addToIgnore = QtConcurrent::run([path]()
     {
-        QDir ignoreDir(path);
+        QFileInfo tempFile(path);
+        QDir ignoreDir(tempFile.path());
 
         while(ignoreDir.exists())
         {
