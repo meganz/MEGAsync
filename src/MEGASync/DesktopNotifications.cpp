@@ -233,7 +233,7 @@ void DesktopNotifications::processAlert(mega::MegaUserAlert* alert)
         if(mPreferences->isNotificationEnabled(Preferences::NotificationsTypes::PENDING_CONTACT_REQUEST_REMINDER))
         {
             auto notification = CreateContacNotification(tr("New Contact Request"),
-                                                         tr("Reminder") + QStringLiteral(": ") + tr("You have a contact request"),
+                                                         tr("Reminder: You have a contact request"),
                                                          email,
                                                          QStringList() << tr("View"));
 

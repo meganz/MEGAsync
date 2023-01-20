@@ -6799,21 +6799,20 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
         }
         else if(!syncsUnattended.isEmpty() || !backupsUnattended.isEmpty())
         {
+            QString megaSyncError (QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(eventNumber)));
+
             if (!syncsUnattended.isEmpty()
                     && !backupsUnattended.isEmpty())
             {
-                showErrorMessage(tr("Your syncs and backups have been disabled").append(QString::fromUtf8(": "))
-                                 .append(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(eventNumber))));
+                showErrorMessage(tr("Your syncs and backups have been disabled: %1").arg(megaSyncError));
             }
             else if (!backupsUnattended.isEmpty())
             {
-                showErrorMessage(tr("Your backups have been disabled").append(QString::fromUtf8(": "))
-                                 .append(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(eventNumber))));
+                showErrorMessage(tr("Your backups have been disabled: %1").arg(megaSyncError));
             }
             else
             {
-                showErrorMessage(tr("Your syncs have been disabled").append(QString::fromUtf8(": "))
-                                 .append(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(eventNumber))));
+                showErrorMessage(tr("Your syncs have been disabled: %1").arg(megaSyncError));
             }
         }
     }
@@ -6965,7 +6964,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         if (e->getErrorCode() != MegaError::API_OK
                 && e->getErrorCode() != MegaError::API_EBUSINESSPASTDUE)
         {
-            showErrorMessage(tr("Error getting link: ") + QString::fromUtf8(" ") + QCoreApplication::translate("MegaError", e->getErrorString()));
+            showErrorMessage(tr("Error getting link: %1").arg(QCoreApplication::translate("MegaError", e->getErrorString())));
         }
 
         break;
@@ -7783,7 +7782,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
     {
         if (e->getErrorCode() != MegaError::API_OK)
         {
-            showErrorMessage(tr("Error transferring folder: ") + QString::fromUtf8(" ") + QCoreApplication::translate("MegaError", MegaError::getErrorString(e->getErrorCode(), MegaError::API_EC_UPLOAD)));
+            showErrorMessage(tr("Error transferring folder: %1").arg(QCoreApplication::translate("MegaError", MegaError::getErrorString(e->getErrorCode(), MegaError::API_EC_UPLOAD))));
         }
 
         return;
@@ -8351,10 +8350,8 @@ void MegaApplication::showSingleSyncDisabledNotification(std::shared_ptr<SyncSet
             if (!syncSetting->isEnabled()
                     && errorCode != MegaSync::Error::LOGGED_OUT)
             {
-                QString errMsg(tr("Your sync \"%1\" has been temporarily disabled").arg(syncName));
-                errMsg += QLatin1String(": ");
-                errMsg += QCoreApplication::translate("MegaSyncError",
-                                                      MegaSync::getMegaSyncErrorCode(errorCode));
+                QString errMsg (tr("Your sync \"%1\" has been temporarily disabled: %2")
+                                .arg(syncName, QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(errorCode))));
                 showErrorMessage(errMsg);
             }
             else if (errorCode != MegaSync::NO_SYNC_ERROR
@@ -8421,10 +8418,8 @@ void MegaApplication::showSingleSyncDisabledNotification(std::shared_ptr<SyncSet
             if (!syncSetting->isEnabled()
                     && errorCode != MegaSync::Error::LOGGED_OUT)
             {
-                QString errMsg (tr("Your backup \"%1\" has been temporarily disabled").arg(syncName));
-                errMsg += QLatin1String(": ");
-                errMsg += QCoreApplication::translate("MegaSyncError",
-                                                      MegaSync::getMegaSyncErrorCode(errorCode));
+                QString errMsg (tr("Your backup \"%1\" has been temporarily disabled: %2")
+                                .arg(syncName, QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(errorCode))));
                 showErrorMessage(errMsg);
             }
             else if (errorCode != MegaSync::NO_SYNC_ERROR
