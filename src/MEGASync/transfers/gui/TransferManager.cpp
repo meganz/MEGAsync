@@ -138,8 +138,8 @@ TransferManager::TransferManager(TransfersWidget::TM_TAB tab, MegaApi *megaApi) 
 
         if(value > TransfersWidget::TYPES_TAB_BASE && value < TransfersWidget::TYPES_LAST)
         {
-            TransfersWidget::TM_TAB tab = static_cast<TransfersWidget::TM_TAB>(value);
-            mNumberLabelsGroup[tab]->parentWidget()->hide();
+            TransfersWidget::TM_TAB tabvalue = static_cast<TransfersWidget::TM_TAB>(value);
+            mNumberLabelsGroup[tabvalue]->parentWidget()->hide();
         }
     }
 
@@ -959,7 +959,7 @@ void TransferManager::onStalledIssuesStateChanged(bool state)
 }
 
 void TransferManager::checkContentInfo()
-{    
+{
     if(mFoundStalledIssues)
     {
         mUi->sCurrentContentInfo->setCurrentWidget(mUi->pStalledIssuesHeaderInfo);
