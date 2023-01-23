@@ -124,8 +124,17 @@ void NodeRequester::createIncomingSharesRootItems(std::shared_ptr<mega::MegaNode
             break;
         }
 
+        mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
+        if(mSyncSetupMode)
+        {
+            if(megaApi->getAccess(nodeList->get(i)) != mega::MegaShare::ACCESS_FULL)
+            {
+                continue;
+            }
+        }
+
         auto node = std::unique_ptr<mega::MegaNode>(nodeList->get(i)->copy());
-        auto user = std::unique_ptr<mega::MegaUser>(MegaSyncApp->getMegaApi()->getUserFromInShare(node.get()));
+        auto user = std::unique_ptr<mega::MegaUser>(megaApi->getUserFromInShare(node.get()));
         NodeSelectorModelItem* item = new NodeSelectorModelItemIncomingShare(std::move(node), mShowFiles);
 
         items.append(item);
@@ -261,6 +270,11 @@ bool NodeRequester::isAborted()
 void NodeRequester::setShowFiles(bool newShowFiles)
 {
     mShowFiles = newShowFiles;
+}
+
+void NodeRequester::setSyncSetupMode(bool value)
+{
+    mSyncSetupMode = value;
 }
 
 void NodeRequester::abort()
@@ -564,6 +578,7 @@ QVariant NodeSelectorModel::headerData(int section, Qt::Orientation orientation,
 void NodeSelectorModel::setSyncSetupMode(bool value)
 {
     mSyncSetupMode = value;
+    mNodeRequesterWorker->setSyncSetupMode(value);
 }
 
 void NodeSelectorModel::addNode(std::shared_ptr<mega::MegaNode> node, const QModelIndex &parent)

@@ -44,6 +44,7 @@ class NodeRequester : public QObject
 public:
     NodeRequester(NodeSelectorModel* model);
     void setShowFiles(bool newShowFiles);
+    void setSyncSetupMode(bool value);
     void lockMutex(bool state) const;
     const std::atomic<bool>& isWorking() const;
     int rootIndexSize() const;
@@ -80,6 +81,7 @@ private:
      std::atomic<bool> mShowFiles{true};
      std::atomic<bool> mAborted{false};
      std::atomic<bool> mSearchCanceled{false};
+     std::atomic<bool> mSyncSetupMode{false};
      NodeSelectorModel* mModel;
      QList<NodeSelectorModelItem*> mRootItems;
      mutable QMutex mMutex;
