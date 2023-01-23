@@ -294,7 +294,7 @@ PowerOptions::~PowerOptions()
 
 bool PowerOptions::keepAwake(bool state)
 {
-    return mPowerOptionsImpl->changeKeepPCAwakeState(state);
+    return mPowerOptionsImpl ? mPowerOptionsImpl->changeKeepPCAwakeState(state) : false;
 }
 
 void PowerOptions::appShutdown()

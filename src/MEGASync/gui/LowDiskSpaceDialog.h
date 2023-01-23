@@ -21,23 +21,9 @@ public:
 
 private:
     static QString toString(qint64 bytes);
-    static QPixmap getHardDrivePixmap();
-    static QString getMacButtonStyle(const QString& backgroundColor,
-                                     const QColor& referenceColor,
-                                    const QColor& textColor);
-    static QString getWinButtonStyle(const QColor &backgroundColor,
-                                     const QColor& textColor);
-    static QString getButtonStyle(const QString& backgroundColor, const QColor &referenceColor,
-                                  const QColor& textColor, int horizontalPadding, int verticalPadding,
-                                  int borderRadius);
-    static QString getStylePaddings(int horizontal, int vertical);
-    static QString getStyleBorders(int radius);
-    static QString getStyleButtonStates(const QColor& referenceColor);
-    void setupUiStyle();
-
+    void setupShadowEffect();
 
     Ui::LowDiskSpaceDialog *ui;
-
     HighDpiResize mHighDpiResize;
 };
 

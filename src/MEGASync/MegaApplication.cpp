@@ -22,7 +22,7 @@
 #include "UserAttributesRequests/MyBackupsHandle.h"
 #include "syncs/gui/SyncsMenu.h"
 #include "TextDecorator.h"
-#include "platform/PowerOptions.h"
+#include "PowerOptions.h"
 
 #include "mega/types.h"
 
@@ -2246,8 +2246,8 @@ void MegaApplication::cleanAll()
         Platform::notifyItemChange(localFolder, MegaApi::STATE_NONE);
     }
 
+    PowerOptions::appShutdown();
     mSyncController.reset();
-
     UserAttributes::UserAttributesManager::instance().reset();
 
     closeDialogs();
@@ -6825,21 +6825,20 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
         }
         else if(!syncsUnattended.isEmpty() || !backupsUnattended.isEmpty())
         {
+            QString megaSyncError (QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(eventNumber)));
+
             if (!syncsUnattended.isEmpty()
                     && !backupsUnattended.isEmpty())
             {
-                showErrorMessage(tr("Your syncs and backups have been disabled").append(QString::fromUtf8(": "))
-                                 .append(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(eventNumber))));
+                showErrorMessage(tr("Your syncs and backups have been disabled: %1").arg(megaSyncError));
             }
             else if (!backupsUnattended.isEmpty())
             {
-                showErrorMessage(tr("Your backups have been disabled").append(QString::fromUtf8(": "))
-                                 .append(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(eventNumber))));
+                showErrorMessage(tr("Your backups have been disabled: %1").arg(megaSyncError));
             }
             else
             {
-                showErrorMessage(tr("Your syncs have been disabled").append(QString::fromUtf8(": "))
-                                 .append(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(eventNumber))));
+                showErrorMessage(tr("Your syncs have been disabled: %1").arg(megaSyncError));
             }
         }
     }
@@ -6991,7 +6990,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         if (e->getErrorCode() != MegaError::API_OK
                 && e->getErrorCode() != MegaError::API_EBUSINESSPASTDUE)
         {
-            showErrorMessage(tr("Error getting link: ") + QString::fromUtf8(" ") + QCoreApplication::translate("MegaError", e->getErrorString()));
+            showErrorMessage(tr("Error getting link: %1").arg(QCoreApplication::translate("MegaError", e->getErrorString())));
         }
 
         break;
@@ -7809,7 +7808,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
     {
         if (e->getErrorCode() != MegaError::API_OK)
         {
-            showErrorMessage(tr("Error transferring folder: ") + QString::fromUtf8(" ") + QCoreApplication::translate("MegaError", MegaError::getErrorString(e->getErrorCode(), MegaError::API_EC_UPLOAD)));
+            showErrorMessage(tr("Error transferring folder: %1").arg(QCoreApplication::translate("MegaError", MegaError::getErrorString(e->getErrorCode(), MegaError::API_EC_UPLOAD))));
         }
 
         return;
