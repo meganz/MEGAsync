@@ -46,7 +46,7 @@ private:
     mega::MegaApi *mMegaApi;
     std::shared_ptr<Preferences> mPreferences;
     std::shared_ptr<LinkProcessor> mLinkProcessor;
-    bool finished;
+    bool mFinished;
 
     void initUiAsLogged();
     void initUiAsUnlogged();

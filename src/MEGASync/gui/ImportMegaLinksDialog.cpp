@@ -75,7 +75,7 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(std::shared_ptr<LinkProcessor> link
     connect(mLinkProcessor.get(), &LinkProcessor::onLinkInfoAvailable, this, &ImportMegaLinksDialog::onLinkInfoAvailable);
     connect(mLinkProcessor.get(), &LinkProcessor::onLinkInfoRequestFinish, this, &ImportMegaLinksDialog::onLinkInfoRequestFinish);
 
-    finished = false;
+    mFinished = false;
     mLinkProcessor->requestLinkInfo();
     ui->bOk->setDefault(true);
 }
@@ -239,7 +239,7 @@ void ImportMegaLinksDialog::onLinkInfoAvailable(int id)
 
 void ImportMegaLinksDialog::onLinkInfoRequestFinish()
 {
-    finished = true;
+    mFinished = true;
     checkLinkValidAndSelected();
 }
 
@@ -314,7 +314,7 @@ void ImportMegaLinksDialog::setInvalidImportFolder()
 void ImportMegaLinksDialog::enableOkButton() const
 {
     const bool downloadOrImportChecked{ui->cDownload->isChecked() || ui->cImport->isChecked()};
-    const bool enable{finished && downloadOrImportChecked && mLinkProcessor->atLeastOneLinkValidAndSelected()};
+    const bool enable{mFinished && downloadOrImportChecked && mLinkProcessor->atLeastOneLinkValidAndSelected()};
     ui->bOk->setEnabled(enable);
 }
 

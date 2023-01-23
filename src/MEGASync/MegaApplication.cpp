@@ -5500,7 +5500,7 @@ void MegaApplication::externalFileUpload(qlonglong targetFolder)
     auto previousFileUploadSelector = DialogOpener::findDialogByClass<QFileDialog>();
     if(!previousFileUploadSelector->isEmpty())
     {
-        defaultFolderPath = previousFileUploadSelector->getDialogByClass<QFileDialog>()->directory().path();
+        defaultFolderPath = previousFileUploadSelector->getDialog()->directory().path();
     }
 
     auto fileUploadSelector = new QFileDialog();
@@ -5567,7 +5567,7 @@ void MegaApplication::externalFolderUpload(qlonglong targetFolder)
     auto previousFileUploadSelector = DialogOpener::findDialogByClass<QFileDialog>();
     if(!previousFileUploadSelector->isEmpty())
     {
-        defaultFolderPath = previousFileUploadSelector->getDialogByClass<QFileDialog>()->directory().path();
+        defaultFolderPath = previousFileUploadSelector->getDialog()->directory().path();
     }
 
     auto folderUploadSelector = new QFileDialog();
@@ -6032,41 +6032,32 @@ void MegaApplication::openSettings(int tab)
 
     if (mSettingsDialog)
     {
-        //If the dialog is active
-        if (mSettingsDialog->isVisible())
+        if (proxyOnly)
         {
-            if (proxyOnly)
-            {
-                mSettingsDialog->showGuestMode();
-            }
-            else
-            {
-                mSettingsDialog->openSettingsTab(tab);
-            }
-            mSettingsDialog->setProxyOnly(proxyOnly);
-            //and visible -> show it
-
-            DialogOpener::showDialog(mSettingsDialog);
-            return;
+            mSettingsDialog->showGuestMode();
         }
 
-        //Otherwise, delete it
-        DialogOpener::removeDialog(mSettingsDialog);
-    }
+        mSettingsDialog->setProxyOnly(proxyOnly);
 
-    //Show a new settings dialog
-    mSettingsDialog = new SettingsDialog(this, proxyOnly);
-    mSettingsDialog->setUpdateAvailable(updateAvailable);
-    mSettingsDialog->setModal(false);
-    connect(mSettingsDialog.data(), &SettingsDialog::userActivity, this, &MegaApplication::registerUserActivity);
-    DialogOpener::showDialog(mSettingsDialog);
-    if (proxyOnly)
-    {
-        mSettingsDialog->showGuestMode();
+        DialogOpener::showDialog(mSettingsDialog);
     }
     else
     {
-        mSettingsDialog->openSettingsTab(tab);
+
+        //Show a new settings dialog
+        mSettingsDialog = new SettingsDialog(this, proxyOnly);
+        mSettingsDialog->setUpdateAvailable(updateAvailable);
+        mSettingsDialog->setModal(false);
+        connect(mSettingsDialog.data(), &SettingsDialog::userActivity, this, &MegaApplication::registerUserActivity);
+        DialogOpener::showDialog(mSettingsDialog);
+        if (proxyOnly)
+        {
+            mSettingsDialog->showGuestMode();
+        }
+        else
+        {
+            mSettingsDialog->openSettingsTab(tab);
+        }
     }
 }
 

@@ -10,33 +10,38 @@
 #include <functional>
 #include <memory>
 
+
 class DialogOpener
 {
 
 private:
-    class DialogInfo
+    class DialogInfoBase
     {
     public:
-        QPointer<QDialog> getDialog() const { return mDialog;}
+        DialogInfoBase() = default;
+        virtual ~DialogInfoBase() = default;
+
         QString getDialogClass() const {return mDialogClass;}
         void setDialogClass(const QString &newDialogClass) {mDialogClass = newDialogClass;}
 
-        template <class DialogType>
+    private:
+        QString mDialogClass;
+    };
+
+    template <class DialogType>
+    class DialogInfo : public DialogInfoBase
+    {
+    public:
+        QPointer<DialogType> getDialog() const { return mDialog;}
         void setDialog(QPointer<DialogType> newDialog)
         {
             mDialog = newDialog;
         }
 
-        template <class DialogType>
-        DialogType* getDialogByClass()
-        {
-            return qobject_cast<DialogType*>(mDialog);
-        }
-
         void clear()
         {
             mDialogClass.clear();
-            DialogOpener::removeDialog(mDialog);
+            DialogOpener::removeDialog<DialogType>(mDialog);
         }
 
         bool isEmpty()
@@ -44,16 +49,20 @@ private:
             return mDialog == nullptr;
         }
 
-        bool operator==(const DialogInfo &info);
+        bool operator==(const DialogInfo &info)
+        {
+            return info.mDialog == mDialog ? true : false;
+        }
+
 
     private:
-        QString mDialogClass;
-        QPointer<QDialog> mDialog;
+        QPointer<DialogType> mDialog;
     };
+
 
 public:
     template <class DialogType>
-    static std::shared_ptr<DialogInfo> findDialogByClass()
+    static std::shared_ptr<DialogInfo<DialogType>> findDialogByClass()
     {
         auto classType = QString::fromUtf8(typeid(DialogType).name());
 
@@ -61,11 +70,11 @@ public:
         {
             if(dialogInfo->getDialogClass() == classType)
             {
-                return dialogInfo;
+                return std::dynamic_pointer_cast<DialogInfo<DialogType>>(dialogInfo);
             }
         }
 
-        return std::make_shared<DialogOpener::DialogInfo>();
+        return std::make_shared<DialogOpener::DialogInfo<DialogType>>();
     }
 
     template <class DialogType>
@@ -77,7 +86,8 @@ public:
         {
             if(dialogInfo->getDialogClass() == classType)
             {
-                return removeDialog(dialogInfo->getDialog());
+                auto dialogInfoByType = std::dynamic_pointer_cast<DialogInfo<DialogType>>(dialogInfo);
+                return removeDialog(dialogInfoByType->getDialog());
             }
         }
 
@@ -89,7 +99,7 @@ public:
     {
         if(dialog)
         {
-            dialog->connect(dialog.data(), &QDialog::finished, [func, dialog](){
+            dialog->connect(dialog.data(), &DialogType::finished, [func, dialog](){
                 func();
             });
             showDialog(dialog);
@@ -101,7 +111,7 @@ public:
     {
         if(dialog)
         {
-            dialog->connect(dialog.data(), &QDialog::finished, [dialog, caller, func](){
+            dialog->connect(dialog.data(), &DialogType::finished, [dialog, caller, func](){
                 (caller->*func)(dialog);
             });
 
@@ -115,20 +125,20 @@ public:
         if(dialog)
         {
             auto classType = QString::fromUtf8(typeid(DialogType).name());
-            auto siblingDialog = findSiblingDialogInfo(dialog.data(),classType);
+            auto siblingDialogInfo = findSiblingDialogInfo<DialogType>(dialog.data(),classType);
 
-            if(siblingDialog)
+            if(siblingDialogInfo)
             {
-                if(siblingDialog->getDialog() != dialog)
+                if(siblingDialogInfo->getDialog() != dialog)
                 {
-                    QRect siblingGeometry = siblingDialog->getDialog()->geometry();
-                    bool siblingIsMaximized = siblingDialog->getDialog()->isMaximized();
+                    QRect siblingGeometry = siblingDialogInfo->getDialog()->geometry();
+                    bool siblingIsMaximized = siblingDialogInfo->getDialog()->isMaximized();
 
-                    removeDialog(siblingDialog->getDialog());
-                    siblingDialog->setDialog(dialog);
-                    siblingDialog->setDialogClass(classType);
+                    removeDialog(siblingDialogInfo->getDialog());
+                    siblingDialogInfo->setDialog(dialog);
+                    siblingDialogInfo->setDialogClass(classType);
 
-                    initDialog(dialog, siblingDialog);
+                    initDialog(dialog);
 
                     if(siblingIsMaximized)
                     {
@@ -142,19 +152,19 @@ public:
             }
             else
             {
-                std::shared_ptr<DialogInfo> info = std::make_shared<DialogInfo>();
+                std::shared_ptr<DialogInfo<DialogType>> info = std::make_shared<DialogInfo<DialogType>>();
                 info->setDialog(dialog);
                 info->setDialogClass(classType);
                 mOpenedDialogs.append(info);
 
-                initDialog(dialog, info);
+                initDialog(dialog);
             }
 
             ExternalDialogOpener externalOpener;
 
             if(dialog->parent())
             {
-                dialog->open();
+                dialog->setWindowModality(Qt::WindowModal);
             }
             else
             {
@@ -163,9 +173,9 @@ public:
 #else
                 dialog->setModal(false);
 #endif
-                dialog->show();
             }
 
+            dialog->show();
             dialog->raise();
             dialog->activateWindow();
         }
@@ -190,10 +200,10 @@ public:
 
 private:
     template <class DialogType>
-    static void initDialog(QPointer<DialogType> dialog, std::shared_ptr<DialogInfo> info)
+    static void initDialog(QPointer<DialogType> dialog)
     {
         dialog->connect(dialog, &QObject::destroyed, [dialog](){
-            auto info = findDialogInfo(dialog);
+            auto info = findDialogInfo<DialogType>(dialog);
             if(info)
             {
                 mOpenedDialogs.removeOne(info);
@@ -204,10 +214,44 @@ private:
         dialog->setAttribute(Qt::WA_DeleteOnClose);
     }
 
-    static QList<std::shared_ptr<DialogInfo>> mOpenedDialogs;
+    static QList<std::shared_ptr<DialogInfoBase>> mOpenedDialogs;
 
-    static std::shared_ptr<DialogInfo> findDialogInfo(QDialog* dialog);
-    static std::shared_ptr<DialogInfo> findSiblingDialogInfo(QDialog* dialog, const QString& classType);
+    template <class DialogType>
+    static std::shared_ptr<DialogInfo<DialogType>> findDialogInfo(QDialog* dialog)
+    {
+        foreach(auto dialogInfo, mOpenedDialogs)
+        {
+            auto dialogInfoByType = std::dynamic_pointer_cast<DialogInfo<DialogType>>(dialogInfo);
+
+            if(dialogInfoByType->getDialog() == dialog)
+            {
+                return dialogInfoByType;
+            }
+        }
+
+        return nullptr;
+    }
+
+    template <class DialogType>
+    static std::shared_ptr<DialogInfo<DialogType>> findSiblingDialogInfo(QDialog*, const QString& classType)
+    {
+        foreach(auto dialogInfo, mOpenedDialogs)
+        {
+            auto dialogInfoByType = std::dynamic_pointer_cast<DialogInfo<DialogType>>(dialogInfo);
+
+            if(dialogInfoByType->getDialog() && !dialogInfoByType->getDialogClass().isEmpty())
+            {
+                if(/*dialogInfo->getDialog() != dialog
+                        && dialogInfo->dialog->parent() == dialog->parent()
+                        && */dialogInfoByType->getDialogClass()  == classType)
+                {
+                    return dialogInfoByType;
+                }
+            }
+        }
+
+        return nullptr;
+    }
 };
 
 
