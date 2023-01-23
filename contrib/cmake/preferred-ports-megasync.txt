@@ -10,7 +10,6 @@ libsodium/92adeffbce95847e141411177248ed04ac49ea9b
 openssl/c303dd024e2dc03a0665ddffbb12a1077933e649 osx:off
 openssl-unix/c303dd024e2dc03a0665ddffbb12a1077933e649 all:off linux:on
 openssl-windows/c303dd024e2dc03a0665ddffbb12a1077933e649 all:off windows:on
-pcre/61b3046e513d189495ee37247e6cc550ee75e471
 sqlite3/c303dd024e2dc03a0665ddffbb12a1077933e649
 zlib/e0a9559a9b24af116388eae242d675bf9fde025c
 
@@ -43,8 +42,7 @@ opengl/94ce0dab56f4d8ba6bd631ba59ed682b02d45c46
 #freeglut (cross platform window manager) not needed; problematic on some platforms, pulling in many, many dependencies
 
 # pdfium libraries, specific version for build stability  (preview/thumbnail generation for pdfs)
-# (see 3rdParty_deps.txt on instructions on how to get source)
-# also, no v8 (javascript execution) etc
+# no v8 (javascript execution) etc
 pdfium/5247
 pdfium-freetype/2-12-1
 

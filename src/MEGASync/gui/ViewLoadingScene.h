@@ -194,7 +194,10 @@ class ViewLoadingSceneBase : public QObject
         mDelayTimeToShowInMs(0)
     {
         mDelayTimerToShow.setSingleShot(true);
-        connect(&mDelayTimerToShow, &QTimer::timeout, this, &ViewLoadingSceneBase::onDelayTimerTimeout);
+        mDelayTimerToHide.setSingleShot(true);
+
+        connect(&mDelayTimerToShow, &QTimer::timeout, this, &ViewLoadingSceneBase::onDelayTimerToShowTimeout);
+        connect(&mDelayTimerToHide, &QTimer::timeout, this, &ViewLoadingSceneBase::onDelayTimerToHideTimeout);
     }
 
     inline void setDelayTimeToShowInMs(int newDelayTimeToShowInMs)
@@ -207,17 +210,24 @@ signals:
 
 protected:
     QTimer mDelayTimerToShow;
+    QTimer mDelayTimerToHide;
     int mDelayTimeToShowInMs;
 
 
 private slots:
-    void onDelayTimerTimeout()
+    void onDelayTimerToShowTimeout()
     {
-        setLoadingSceneVisible();
+        showLoadingScene();
+    }
+
+    void onDelayTimerToHideTimeout()
+    {
+        hideLoadingScene();
     }
 
 private:
-    virtual void setLoadingSceneVisible() = 0;
+    virtual void showLoadingScene() = 0;
+    virtual void hideLoadingScene() = 0;
 };
 
 template <class DelegateWidget>
@@ -271,7 +281,7 @@ public:
         }
     }
 
-    inline void changeLoadingSceneStatus(bool state)
+    inline void toggleLoadingScene(bool state)
     {
         if(!mView)
         {
@@ -314,6 +324,8 @@ public:
 
         if(state)
         {
+            mDelayTimerToHide.stop();
+
             if(mDelayTimeToShowInMs > 0)
             {
                 if(!mDelayTimerToShow.isActive())
@@ -323,7 +335,7 @@ public:
             }
             else
             {
-                setLoadingSceneVisible();
+                showLoadingScene();
             }
         }
         else
@@ -331,19 +343,22 @@ public:
             mLoadingViewSet = false;
             auto delay = std::max(0ll, MIN_TIME_DISPLAYING_VIEW - (QDateTime::currentMSecsSinceEpoch()
                                                 - mStartTime));
-            QTimer::singleShot(delay, this, [this, state] () {
-                sceneVisibilityChange(false);
-                mLoadingModel->setRowCount(0);
-                mLoadingView->hide();
-                mView->show();
-                mViewLayout->replaceWidget(mLoadingView, mView);
-                mLoadingDelegate->setLoading(state);
-            });
+            mDelayTimerToHide.start(delay);
         }
     }
 
+    inline void hideLoadingScene() override
+    {
+        sceneVisibilityChange(false);
+        mLoadingModel->setRowCount(0);
+        mLoadingView->hide();
+        mView->show();
+        mViewLayout->replaceWidget(mLoadingView, mView);
+        mLoadingDelegate->setLoading(false);
+    }
+
 private:
-    inline void setLoadingSceneVisible() override
+    void showLoadingScene() override
     {
         sceneVisibilityChange(true);
         int visibleRows(0);
@@ -384,18 +399,6 @@ private:
         mLoadingViewSet = true;
     }
 
-    int rowCount() const
-    {
-        if(auto proxyModel = dynamic_cast<QSortFilterProxyModel*>(mViewModel))
-        {
-            return proxyModel->sourceModel()->rowCount();
-        }
-        else
-        {
-            return mViewModel->rowCount();
-        }
-    }
-
     QAbstractItemDelegate* mViewDelegate;
     QAbstractItemView* mView;
     QPointer<QAbstractItemModel> mViewModel;
@@ -406,7 +409,6 @@ private:
     QLayout* mViewLayout;
     qint64 mStartTime;
     bool mLoadingViewSet;
-
 };
 
 #endif // VIEWLOADINGSCENE_H

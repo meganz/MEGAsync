@@ -1,10 +1,12 @@
 #ifndef MEGADOWNLOADER_H
 #define MEGADOWNLOADER_H
 
+#include "control/DownloadQueueController.h"
 #include "control/Utilities.h"
 #include "control/TransferBatch.h"
 #include "FolderTransferListener.h"
 #include "TransferMetadata.h"
+#include <QTMegaRequestListener.h>
 
 #include "megaapi.h"
 
@@ -28,7 +30,6 @@ public:
     bool processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, BlockingBatch& downloadBatches,
                               const QString &path, unsigned long long appDataId);
     bool isQueueProcessingOngoing();
-
 protected:
     bool download(WrappedNode *parent, QFileInfo info, QString appData, mega::MegaCancelToken *cancelToken);
 
@@ -40,6 +41,9 @@ signals:
     void startingTransfers();
     void folderTransferUpdated(const FolderTransferUpdateEvent& event);
 
+private slots:
+    void onAvailableSpaceCheckFinished(bool isDownloadPossible);
+
 private:
     void startDownload(WrappedNode* parent, const QString &appData,
                        const QString &currentPathWithSep, mega::MegaCancelToken* cancelToken);
@@ -48,11 +52,12 @@ private:
     bool createDirIfNotPresent(const QString &path);
     static bool hasTransferPriority(const WrappedNode::TransferOrigin& origin);
 
-    void update(TransferMetaData* dataToUpdate, QString& appData, mega::MegaNode* node, const QString& path);
+    static QString createPathWithSeparator(const QString& path);
 
     bool mNoTransferStarted = true;
     bool mProcessingTransferQueue = false;
     std::shared_ptr<FolderTransferListener> listener;
+    DownloadQueueController mQueueData;
 };
 
 #endif // MEGADOWNLOADER_H

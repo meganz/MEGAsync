@@ -197,6 +197,11 @@ void NodeSelectorModelBackups::onMyBackupsHandleReceived(mega::MegaHandle handle
     }
 }
 
+bool NodeSelectorModelBackups::addToLoadingList(const std::shared_ptr<MegaNode> node)
+{
+    return node && node->getType() != mega::MegaNode::TYPE_VAULT;
+}
+
 void NodeSelectorModelBackups::onRootItemCreated(NodeSelectorModelItem *item)
 {
     rootItemsLoaded();

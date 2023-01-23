@@ -741,7 +741,7 @@
     <message>
         <source>Only enable this option if tranfers don&apos;t start. Under all other circumstances, using HTTP is satisfactory as MEGA already encrypts all data.</source>
         <translatorcomment>Description label about the option Use HTTPS for transfers that don&amp;apos;t start checkbox.</translatorcomment>
-        <translation>เปิดใช้งานตัวเลือกนี้ในกรณีที่ยังไม่เริ่มการถ่ายโอนเท่านั้น ส่วนสถานการณ์อื่น ๆ การใช้ HTTP นั้นเป็นที่น่าพอใจแล้ว เนื่องจาก MEGA เข้ารหัสข้อมูลทั้งหมดอยู่แล้ว</translation>
+        <translation>คุณสามารถเปิดใช้งานตัวเลือกนี้ ถ้ายังไม่ได้เริ่มการถ่ายโอนนอกจากนั้นในสถานการณ์อื่น ๆ ใช้ HTTP ก็เพียงพอ เนื่องจาก MEGA จะเข้ารหัสข้อมูลทั้งหมดโดยอัตโนมัติ</translation>
     </message>
 </context>
 <context>
@@ -942,7 +942,7 @@
     <message>
         <source>[A]This software uses Qt ([C] 2018 The Qt Company Ltd) which is covered by GNU LESSER GENERAL PUBLIC LICENSE Version 3[/A]</source>
         <translatorcomment>QT copyright notice shown at changelog dialog. [A][/A] placeholders used to provide ui style and [C] placeholder will be replaced by copyright symbol.</translatorcomment>
-        <translation>[A]ซอฟต์แวร์นี้ใช้ Qt ([C] 2018 บริษัท Qt จำกัด) ซึ่งจะครอบคุลมโดย GNU Lesser General Public License Version 3[/A]</translation>
+        <translation>[A]ซอฟต์แวร์นี้ใช้ Qt ([C] 2018 The Qt Company Ltd) ซึ่งอยู่ภายใต้สัญญาอนุญาต GNU Lesser General Public License Version 3[/A]</translation>
     </message>
 </context>
 <context>
@@ -1246,7 +1246,7 @@
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>บัญชีธุรกิจของคุณหมดอายุแล้ว</translation>
+        <translation>บัญชีถูกปิดใช้งาน</translation>
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
@@ -1720,7 +1720,7 @@
     <message>
         <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
         <translatorcomment>Error message shown when the program detects an issues with SSL key verification.</translatorcomment>
-        <translation>เราไม่สามารถยืนยันคีย์ SSL ได้ คุณอาจได้รับผลกระทบการโจมตีจากการลักลอบดักข้อมูลหรือซอฟต์แวร์ป้องกันไวรัสอาจขัดขวางการสื่อสารของคุณและทำให้เกิดปัญหานี้ กรุณาปิดใช้งานและลองอีกครั้ง</translation>
+        <translation>ไม่สามารถยืนยันคีย์ SSL ของเราได้ คุณอาจถูกโจมตีจากการลักลอบดักข้อมูลหรือโปรแกรมป้องกันไวรัสของคุณอาจจะขัดขวางการสื่อสารของคุณและทำให้เกิดปัญหานี้ได้ กรุณาปิดโปรแกรมป้องกันไวรัสและลองอีกครั้ง</translation>
     </message>
 </context>
 <context>
@@ -2967,7 +2967,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
         <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
-        <translation>เกินโควต้าพื้นที่เก็บข้อมูลแล้ว กรุณาอัปเกรดทันที</translation>
+        <translation>พื้นที่จัดเก็บของคุณเต็มแล้ว กรุณาอัปเกรดทันที</translation>
     </message>
     <message>
         <source>Decryption error</source>
@@ -3014,77 +3014,6 @@ Transfer will automatically resume when you re-open the app.</source>
     </message>
 </context>
 <context>
-    <name>MegaItemModel</name>
-    <message>
-        <source>Folder already synced</source>
-        <translatorcomment>Tooltip text to notify the user that this folder is already synced.</translatorcomment>
-        <translation>มีการซิงค์โฟลเดอร์นี้แล้ว</translation>
-    </message>
-    <message>
-        <source>Folder contents already synced</source>
-        <translatorcomment>Tooltip text to notify the user that some folder inside the folder that he is hovering with mouse is already synced.</translatorcomment>
-        <translation>มีการซิงค์เนื้อหาโฟลเดอร์นี้แล้ว</translation>
-    </message>
-    <message>
-        <source>Name</source>
-        <translatorcomment>Column title. This column shows the name of a file or folder.</translatorcomment>
-        <translation>ชื่อ</translation>
-    </message>
-    <message>
-        <source>Sort by status</source>
-        <translatorcomment>First column title tooltip(this column title doesn´t contains text, it shows an icon). Sorts the order of the column by node status, for example synced folders first or last.</translatorcomment>
-        <translation>เรียงตามสถานะ</translation>
-    </message>
-    <message>
-        <source>Sort by owner name</source>
-        <translatorcomment>Owner column title tooltip. Sorts the order of the column by owner name alphabetically.</translatorcomment>
-        <translation>เรียงตามชื่อเจ้าของ</translation>
-    </message>
-    <message>
-        <source>Sort by date</source>
-        <translatorcomment>Recently used column title tooltip. Sorts the order of the column by date.</translatorcomment>
-        <translation>เรียงตามวันที่</translation>
-    </message>
-    <message>
-        <source>Sort by name</source>
-        <translatorcomment>Node name column title tooltip. Sorts the order of the column by date.</translatorcomment>
-        <translation>เรียงตามชื่อ</translation>
-    </message>
-    <message numerus="yes">
-        <source>Today at %1</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened today. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation><numerusform>วันนี้ เวลา %1</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Yesterday at %1</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened yesterday. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation><numerusform>เมื่อวานนี้ เวลา %1</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%1 at %2</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was previously to yesterday. %1 represents the date (day month and year), while %2 represents the hour). Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation><numerusform>%1 เวลา %2</numerusform></translation>
-    </message>
-    <message>
-        <source>Recently used</source>
-        <translatorcomment>Column title. This column shows when this file or folder was changed.</translatorcomment>
-        <translation>แก้ไขล่าสุด</translation>
-    </message>
-</context>
-<context>
-    <name>MegaItemTreeView</name>
-    <message>
-        <source>Get MEGA link</source>
-        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It creates an MEGA link and copy to Clipboard.</translatorcomment>
-        <translation>รับลิงก์ MEGA</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It removes the node (file or folder).</translatorcomment>
-        <translation>ลบ</translation>
-    </message>
-</context>
-<context>
     <name>MegaNodeNames</name>
     <message>
         <source>Cloud Drive</source>
@@ -3095,6 +3024,11 @@ Transfer will automatically resume when you re-open the app.</source>
         <source>Backups</source>
         <translatorcomment>Title of the Backups root node</translatorcomment>
         <translation>สำรองข้อมูล</translation>
+    </message>
+    <message>
+        <source>Incoming shares</source>
+        <translatorcomment>Title of the Incoming shares root node</translatorcomment>
+        <translation>แชร์ขาเข้า</translation>
     </message>
 </context>
 <context>
@@ -3160,7 +3094,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Reached storage quota limit</source>
         <translatorcomment>Label to show that the account reached storage limit during a SDK operation.</translatorcomment>
-        <translation> เกินโควต้าพื้นที่จัดเก็บ </translation>
+        <translation>&#xa0;เกินโควต้าพื้นที่จัดเก็บ </translation>
     </message>
     <message>
         <source>Foreign target storage quota reached</source>
@@ -3175,7 +3109,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Remote node moved to Rubbish Bin</source>
         <translatorcomment>Label to show that remote node has been moved to Rubbish bin.</translatorcomment>
-        <translation>โฟลเดอร์ซิงค์ระยะไกลถูกย้ายไปที่ถังขยะแล้ว</translation>
+        <translation>โฟลเดอร์ซิงค์ระยะไกลถูกย้ายไปถังขยะแล้ว</translation>
     </message>
     <message>
         <source>Share without full access</source>
@@ -3260,7 +3194,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Account expired (business or Pro Flexi)</source>
         <translatorcomment>Label to show that the current account (either business or Pro Flexi) is expired during a SDK operation.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>บัญชีธุรกิจของคุณหมดอายุแล้ว</translation>
     </message>
 </context>
 <context>
@@ -3481,6 +3415,18 @@ Your selected incomplete sync transfers won&apos;t be cancelled.</source>
         <translation>ไม่อนุญาตให้ใช้อักขระต่อไปนี้:
 %1</translation>
     </message>
+    <message>
+        <source>A file with this name already exists in this location.
+Enter a different name.</source>
+        <translatorcomment>Message shown when the user has entered a name which already exists on the folder</translatorcomment>
+        <translation>มีไฟล์ชื่อนี้อยู่ในตำแหน่งนี้แล้ว กรอกชื่ออื่น</translation>
+    </message>
+    <message>
+        <source>A folder with this name already exists in this location.
+Enter a different name</source>
+        <translatorcomment>Message shown when the user has entered a name which already exists on the folder</translatorcomment>
+        <translation>มีโฟลเดอร์ชื่อนี้อยู่ในตำแหน่งนี้แล้ว กรอกชื่ออื่น</translation>
+    </message>
 </context>
 <context>
     <name>NodeSelector</name>
@@ -3493,21 +3439,6 @@ Your selected incomplete sync transfers won&apos;t be cancelled.</source>
         <source>Select a MEGA folder:</source>
         <translatorcomment>Label to indicate the user to select a MEGA folder for a synchronization (String short as possible). Keep capital letters.</translatorcomment>
         <translation>เลือกโฟลเดอร์ MEGA:</translation>
-    </message>
-    <message>
-        <source>New folder</source>
-        <translatorcomment>Button label to create a New folder at your MEGA cloud drive. Keep capital letters. String as short as possible.</translatorcomment>
-        <translation>โฟลเดอร์ใหม่</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>ตกลง</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>ยกเลิก</translation>
     </message>
     <message>
         <source>Error</source>
@@ -3526,11 +3457,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>โฟลเดอร์สำหรับการซิงโครไนซ์ไม่ถูกต้อง กรุณาตรวจสอบว่าคุณไม่ได้ใช้อักขระเช่น ‘\’ ‘/’ หรือ ‘:’ ในชื่อโฟลเดอร์ของคุณ</translation>
     </message>
     <message>
-        <source>Always upload to this destination</source>
-        <translatorcomment>Label to inform the user upload files/folder to a default destination. with a checkbox.</translatorcomment>
-        <translation>อัปโหลดไปยังปลายทางนี้เสมอ</translation>
-    </message>
-    <message>
         <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying upload files to a non compatible folder</translatorcomment>
         <translation>คุณต้องมีสิทธิ์ในการอ่านและเขียนหรือสิทธิ์การเข้าถึงแบบเต็มที่ เพื่อให้สามารถอัปโหลดไปยังโฟลเดอร์ที่เลือกได้</translation>
@@ -3541,17 +3467,9 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>คุณจะต้องมีสิทธิ์การเข้าถึงแบบเต็มที่เพื่อให้สามารถซิงค์โฟลเดอร์ที่เลือกได้</translation>
     </message>
     <message>
-        <source>Are you sure that you want to delete &quot;%1&quot;?</source>
-        <translation>คุณแน่ใจว่าต้องการลบ “%1” หรือไม่</translation>
-    </message>
-    <message>
         <source>Only files can be used for streaming.</source>
         <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
         <translation>ไฟล์เท่านั้นที่สามารถนำมาใช้กับการสตรีมมิ่ง</translation>
-    </message>
-    <message>
-        <source>Select items</source>
-        <translation>เลือกรายการ</translation>
     </message>
     <message>
         <source>Select a MEGA folder</source>
@@ -3562,16 +3480,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>You no longer have access to this item. Ask the owner to share again.</source>
         <translatorcomment>Error message shown when the user is trying to download an file or folder from an incoming share and the owner stops sharing/removes all items</translatorcomment>
         <translation><numerusform>คุณไม่สามารถเข้าถึงรายการเหล่านี้ได้อีกต่อไป แจ้งให้เจ้าของดำเนินการแชร์อีกครั้ง</numerusform></translation>
-    </message>
-    <message>
-        <source>Cloud drive</source>
-        <translatorcomment>Node selector button Text. Switch the view to show only the cloud drive nodes (files and folders)</translatorcomment>
-        <translation>คลาวด์ไดรฟ์</translation>
-    </message>
-    <message>
-        <source>Incoming shares</source>
-        <translatorcomment>Node selector button Text. Switch the view to show only the incoming shares nodes (files and folders)</translatorcomment>
-        <translation>แชร์ขาเข้า</translation>
     </message>
     <message numerus="yes">
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
@@ -3590,10 +3498,114 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
                            Second and last part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
         <translation><numerusform>%1 มี %2 รายการที่ถูกลบออก หากต้องการเลือกใหม่ ให้ปิดหน้าต่างนี้แล้วลองอีกครั้ง</numerusform></translation>
     </message>
+</context>
+<context>
+    <name>NodeSelectorModel</name>
     <message>
-        <source>Backups</source>
-        <translatorcomment>Title of the Backups section</translatorcomment>
-        <translation>สำรองข้อมูล</translation>
+        <source>Folder already synced</source>
+        <translatorcomment>Tooltip text to notify the user that this folder is already synced.</translatorcomment>
+        <translation>ซิงค์โฟลเดอร์แล้ว</translation>
+    </message>
+    <message>
+        <source>Folder contents already synced</source>
+        <translatorcomment>Tooltip text to notify the user that some folder inside the folder that he is hovering with mouse is already synced.</translatorcomment>
+        <translation>ซิงค์เนื้อหาโฟลเดอร์แล้ว</translation>
+    </message>
+    <message>
+        <source>Recently used</source>
+        <translatorcomment>Column title. This column shows when this file or folder was changed.</translatorcomment>
+        <translation>แก้ไขล่าสุด</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translatorcomment>Column title. This column shows the name of a file or folder.</translatorcomment>
+        <translation>ชื่อ</translation>
+    </message>
+    <message>
+        <source>Sort by status</source>
+        <translatorcomment>First column title tooltip(this column title doesn´t contains text, it shows an icon). Sorts the order of the column by node status, for example synced folders first or last.</translatorcomment>
+        <translation>เรียงตามสถานะ</translation>
+    </message>
+    <message>
+        <source>Sort by owner name</source>
+        <translatorcomment>Owner column title tooltip. Sorts the order of the column by owner name alphabetically.</translatorcomment>
+        <translation>เรียงตามชื่อเจ้าของ</translation>
+    </message>
+    <message>
+        <source>Sort by date</source>
+        <translatorcomment>Recently used column title tooltip. Sorts the order of the column by date.</translatorcomment>
+        <translation>เรียงตามวันที่</translation>
+    </message>
+    <message>
+        <source>Sort by name</source>
+        <translatorcomment>Node name column title tooltip. Sorts the order of the column by date.</translatorcomment>
+        <translation>เรียงตามชื่อ</translation>
+    </message>
+    <message numerus="yes">
+        <source>Today at %1</source>
+        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened today. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
+        <translation><numerusform>วันนี้ เวลา %1</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Yesterday at %1</source>
+        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened yesterday. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
+        <translation><numerusform>เมื่อวานนี้ เวลา %1</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 at %2</source>
+        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was previously to yesterday. %1 represents the date (day month and year), while %2 represents the hour). Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
+        <translation><numerusform>%1 เวลา %2</numerusform></translation>
+    </message>
+</context>
+<context>
+    <name>NodeSelectorTreeView</name>
+    <message>
+        <source>Get MEGA link</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It creates an MEGA link and copy to Clipboard.</translatorcomment>
+        <translation>รับลิงก์ MEGA</translation>
+    </message>
+    <message>
+        <source>Rename</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It renames the node (file or folder).</translatorcomment>
+        <translation>เปลี่ยนชื่อ</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It removes the node (file or folder).</translatorcomment>
+        <translation>ลบ</translation>
+    </message>
+</context>
+<context>
+    <name>NodeSelectorTreeViewWidget</name>
+    <message>
+        <source>Always upload to this destination</source>
+        <translatorcomment>Label to inform the user upload files/folder to a default destination. with a checkbox.</translatorcomment>
+        <translation>อัปโหลดไปยังปลายทางนี้เสมอ</translation>
+    </message>
+    <message>
+        <source>New folder</source>
+        <translatorcomment>Button label to create a New folder at your MEGA cloud drive. Keep capital letters. String as short as possible.</translatorcomment>
+        <translation>โฟล์เดอร์ใหม่</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translatorcomment>Label for accept button.</translatorcomment>
+        <translation>ตกลง</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Label for cancel button.</translatorcomment>
+        <translation>ยกเลิก</translation>
+    </message>
+    <message>
+        <source>Are you sure that you want to delete &quot;%1&quot;?</source>
+        <translatorcomment>MessageBox to confirm that the user wants to remove the node. %1 is the node name</translatorcomment>
+        <translation>คุณแน่ใจหรือไม่ว่าต้องการลบ “%1” ออก</translation>
+    </message>
+    <message>
+        <source>Error:</source>
+        <translatorcomment>MessageBox to inform about an error when trying to move or remove a node</translatorcomment>
+        <translation>ข้อผิดพลาด:</translation>
     </message>
 </context>
 <context>
@@ -3965,12 +3977,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Additional storage charged at %1 per %2TB.</source>
         <translatorcomment>Balloon tooltip to inform users that additional storate for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
-        <translation>พื้นที่จัดเก็บเพิ่มเติม คิดค่าบริการ %1 ต่อ %2 TB</translation>
+        <translation>พื้นที่จัดเก็บเพิ่มเติม คิดค่าบริการอยู่ที่ %1 ต่อ %2&#xa0;TB</translation>
     </message>
     <message>
         <source>Additional transfer quota charged at %1 per %2TB.</source>
         <translatorcomment>Balloon tooltip to inform users that additional transfer quota for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
-        <translation>โควต้าการถ่ายโอนข้อมูลเพิ่มเติม คิดค่าบริการ %1 ต่อ %2 TB</translation>
+        <translation>โควต้าการถ่ายโอนข้อมูลเพิ่มเติม คิดค่าบริการอยู่ที่ %1 ต่อ %2&#xa0;TB</translation>
     </message>
     <message numerus="yes">
         <source>minimum %n user</source>
@@ -4074,21 +4086,17 @@ Please delete the folder sync from preferences to cancel them.</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Support for Flexi Pro accounts.
-- New backups feature.
-- Fixed issues detected with macOS Ventura.
-- Fixed detected crashes on Windows, Linux, and macOS.
-- Fixed translation issues.
-- Improved performance.
+        <source>- Detected crashes on Windows, Linux, and masOS fixed.
+- Less device memory will be used by accounts with large amounts of data stored.
+- Application performance improved.
+- Translation issues fixed.
 </source>
-        <translatorcomment>Changelog for v4.8.0 version</translatorcomment>
-        <translation>- เพิ่มการสนับสนุนบัญชี Pro Flexi
-- เพิ่มฟีเจอร์การสำรองข้อมูลใหม่
-- แก้ไขปัญหาที่ตรวจพบบน macOS Ventura
-- แก้ไขข้อผิดพลาดที่ตรวจพบบน Windows, Linux และ macOS
-- แก้ไขข้อผิดพลาดในการแปลบางจุด
-- ปรับปรุงประสิทธิภาพการทำงานทั่วไป
-</translation>
+        <translatorcomment>Changelog for version v4.8.5</translatorcomment>
+        <translation>- แก้ไขแอปหยุดทำงานที่ตรวจ
+เจอบน Windows, Linux และ macOS
+- บัญชีที่มีข้อมูลจำนวนมากจะใช้หน่วยความจำบนอุปกรณ์ของคุณน้อยลง
+- ปรับปรุงประสิทธิภาพของแอปพลิเคชัน
+- แก้ไขข้อผิดพลาดในการแปลบางจุด</translation>
     </message>
 </context>
 <context>
@@ -4502,27 +4510,27 @@ Do you want to delete it anyway?</source>
     <message>
         <source>%1 TB</source>
         <translatorcomment>File size measured in terabytes</translatorcomment>
-        <translation>%1 TB</translation>
+        <translation>%1&#xa0;TB</translation>
     </message>
     <message>
         <source>%1 GB</source>
         <translatorcomment>File size measured in gigabytes</translatorcomment>
-        <translation>%1 GB</translation>
+        <translation>%1&#xa0;GB</translation>
     </message>
     <message>
         <source>%1 MB</source>
         <translatorcomment>File size measured in megabytes</translatorcomment>
-        <translation>%1 MB</translation>
+        <translation>%1&#xa0;MB</translation>
     </message>
     <message>
         <source>%1 KB</source>
         <translatorcomment>File size measured in kilobytes</translatorcomment>
-        <translation>%1 KB</translation>
+        <translation>%1&#xa0;KB</translation>
     </message>
     <message>
         <source>%1 bytes</source>
         <translatorcomment>File size measured in bytes</translatorcomment>
-        <translation>%1 ไบต์</translation>
+        <translation>%1&#xa0;ไบต์</translation>
     </message>
     <message>
         <source>Invalid filename</source>
@@ -4645,19 +4653,6 @@ Do you want to delete it anyway?</source>
         <source>Cancel</source>
         <translatorcomment>Button text that cancels</translatorcomment>
         <translation>ยกเลิก</translation>
-    </message>
-</context>
-<context>
-    <name>RenameLocalNodeDialog</name>
-    <message>
-        <source>File can’t be renamed to &quot;%1&quot;</source>
-        <translatorcomment>Error warning shown when a file can´t be renamed due to an error.</translatorcomment>
-        <translation>ไม่สามารถเปลี่ยนชื่อไฟล์เป็น &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <source>Folder can’t be renamed to &quot;%1&quot;</source>
-        <translatorcomment>Error warning shown when a folder can´t be renamed due to an error.</translatorcomment>
-        <translation>ไม่สามารถเปลี่ยนชื่อโฟลเดอร์เป็น &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
@@ -5243,7 +5238,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Pro Lite</source>
         <translatorcomment>Text label indicating the Pro Lite tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro Lite</translation>
+        <translation>Pro&#xa0;Lite</translation>
     </message>
     <message>
         <source>Business</source>
@@ -5298,17 +5293,17 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Pro I</source>
         <translatorcomment>Text label indicating the Pro I tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro I</translation>
+        <translation>Pro&#xa0;I</translation>
     </message>
     <message>
         <source>Pro II</source>
         <translatorcomment>Text label indicating the Pro II tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro II</translation>
+        <translation>Pro&#xa0;II</translation>
     </message>
     <message>
         <source>Pro III</source>
         <translatorcomment>Text label indicating the Pro III tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro III</translation>
+        <translation>Pro&#xa0;III</translation>
     </message>
     <message>
         <source>Export Key</source>
@@ -6050,6 +6045,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Message shown while waiting for the server request with the file info to stream</translatorcomment>
         <translation>กรุณารอสักครู่…</translation>
     </message>
+    <message>
+        <source>Select items</source>
+        <translatorcomment>Window title for node selector when is openned in stream mode</translatorcomment>
+        <translation>เลือกรายการ</translation>
+    </message>
 </context>
 <context>
     <name>SwitchButton</name>
@@ -6206,7 +6206,7 @@ To continue, select a different folder.</source>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a local folder shared with VMWare third party app.</translatorcomment>
-        <translation>คุณกำลังซิงค์โฟลเดอร์ภายในเครื่องที่แชร์อยู่กับ VMWare โฟลเดอร์เหล่านี้ไม่สนับสนุนการแจ้งเตือนระบบไฟล์ นั่นจึงทำให้แอปจะต้องสแกนเพื่อตรวจหาการเปลี่ยนแปลงในไฟล์และโฟลเดอร์ของคุณอย่างต่อเนื่อง หากเป็นไปได้ กรุณาใช้โฟลเดอร์อื่นเพื่อลดการใช้งาน CPU</translation>
+        <translation>คุณกำลังซิงค์โฟลเดอร์ในเครื่องที่ใช้แชร์อยู่กับ VMware โฟลเดอร์นี้ไม่สนับสนุนการแจ้งเตือนระบบไฟล์ ดังนั้น เพื่อตรวจจับการเปลี่ยนแปลง แอปจะต้องสแกนโฟลเดอร์และไฟล์ที่อยู่ในนั้นอย่างต่อเนื่อง หากเป็นไปได้ กรุณาใช้โฟลเดอร์อื่นเพื่อลดการใช้งาน CPU ลง</translation>
     </message>
 </context>
 <context>
@@ -6869,17 +6869,17 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
         <translatorcomment>Informative label about how the transfer quota limit works when user reaches over transfer situation.</translatorcomment>
-        <translation>ข้อจำกัดนี้เป็นแบบไดนามิกและขึ้นอยู่กับจำนวนแบนด์วิดธ์ที่ไม่ได้ใช้ที่เรามีให้</translation>
+        <translation>ขีดจำกัดการถ่ายโอนเป็นแบบไดนามิกและขึ้นอยู่กับแบนด์วิธที่มีอยู่</translation>
     </message>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free</source>
         <translatorcomment>Warning label shown when user reaches over transfer quota situation. The user can upgrade Plan or wait %1 time until new free quota is allowed.</translatorcomment>
-        <translation>กรุณาอัปเกรดเป็น Pro เพื่อดำเนินการต่อทันที หรือรอ %1เพื่อให้สามารถใช้ฟรีต่อได้</translation>
+        <translation>กรุณาอัปเกรดเป็นบัญชี Pro เพื่อดำเนินการต่อทันทีหรือรออีก %1 ถึงจะใช้แบบฟรีต่อได้</translation>
     </message>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>* ราคาที่แสดงเป็นสกุลเงินบาทเป็นเพียงการประมาณการเท่านั้น ประวัติการทำธุรกรรมทั้งหมดจะแสดงเป็นสกุลเงินยูโร</translation>
+        <translation>* ราคาในสกุลเงินท้องถิ่นเป็นเพียงการประมาณการเท่านั้น ธุรกรรมที่แสดงทั้งหมดจะถูกเรียกเก็บเงินในสกุลเงินยูโร</translation>
     </message>
     <message>
         <source>Your download could not proceed because it exceeds your free transfer allowance.</source>
@@ -6889,7 +6889,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
         <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over quota state.</translatorcomment>
-        <translation>เลือกการเรียกเก็บเงินรายปีและรับ 12 เดือนในราคา 10</translation>
+        <translation>หากคุณเลือกการเรียกเก็บเงินรายปี คุณสามารถซื้อ 12 เดือนได้ในราคา 10 เดือน</translation>
     </message>
     <message>
         <source>Transfer quota exceeded</source>
@@ -6932,7 +6932,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
         <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over storage state.</translatorcomment>
-        <translation>เลือกการเรียกเก็บเงินรายปีและรับ 12 เดือนในราคาของ 10 เดือน</translation>
+        <translation>หากคุณเลือกการเรียกเก็บเงินรายปี คุณสามารถซื้อ 12 เดือนได้ในราคา 10 เดือน</translation>
     </message>
 </context>
 <context>
@@ -7016,22 +7016,22 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Pro Lite</source>
         <translatorcomment>Label to refer Pro Lite tier</translatorcomment>
-        <translation>Pro Lite</translation>
+        <translation>Pro&#xa0;Lite</translation>
     </message>
     <message>
         <source>Pro I</source>
         <translatorcomment>Label to refer Pro I tier</translatorcomment>
-        <translation>Pro I</translation>
+        <translation>Pro&#xa0;I</translation>
     </message>
     <message>
         <source>Pro II</source>
         <translatorcomment>Label to refer Pro II tier</translatorcomment>
-        <translation>Pro II</translation>
+        <translation>Pro&#xa0;II</translation>
     </message>
     <message>
         <source>Pro III</source>
         <translatorcomment>Label to refer Pro III tier</translatorcomment>
-        <translation>Pro III</translation>
+        <translation>Pro&#xa0;III</translation>
     </message>
     <message numerus="yes">
         <source>%n second ago</source>

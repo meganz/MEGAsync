@@ -1146,10 +1146,6 @@ void TransfersModel::openFolder(const QFileInfo& info)
             emit showInFolderFinished(Platform::showInFolder(info.filePath()));
         });
     }
-    else
-    {
-        emit showInFolderFinished(false);
-    }
 }
 
 QFileInfo TransfersModel::getFileInfoByIndex(const QModelIndex& index)
@@ -1280,7 +1276,7 @@ void TransfersModel::cancelAllTransfers(QWidget* canceledFrom)
         auto d (getTransfer(row));
 
         // Clear (remove rows of) finished transfers
-        if (d && d->isSyncTransfer())
+        if (d && d->isSyncTransfer() && !d->isFinished())
         {
             if(!mSyncsInRowsToCancel)
             {

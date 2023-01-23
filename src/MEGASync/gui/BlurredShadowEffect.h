@@ -3,7 +3,7 @@
 
 #include <QGraphicsEffect>
 
-QGraphicsEffect* CreateBlurredShadowEffect();
-QGraphicsEffect* CreateBlurredShadowEffect(const QColor& shadowColor);
+QGraphicsEffect* CreateBlurredShadowEffect(qreal radius = 2.0);
+QGraphicsEffect* CreateBlurredShadowEffect(const QColor& shadowColor, qreal radius = 2.0);
 
 #endif // BLURREDSHADOWEFFECT_H

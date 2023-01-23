@@ -1,4 +1,5 @@
 #include "FolderTransferListener.h"
+
 #include "Utilities.h"
 
 FolderTransferListener::FolderTransferListener(QObject *parent)

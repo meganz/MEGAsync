@@ -194,8 +194,14 @@ QModelIndexList MegaTransferView::getTransfers(bool onlyVisible, TransferData::T
 
 QModelIndexList MegaTransferView::getSelectedTransfers()
 {
-    auto selection = selectionModel()->selection();
     QModelIndexList indexes;
+
+    if(!selectionModel())
+    {
+        return indexes;
+    }
+
+    auto selection = selectionModel()->selection();
 
     if (selection.size() > 0)
     {
@@ -399,22 +405,18 @@ void MegaTransferView::onCancelVisibleTransfers()
 void MegaTransferView::onCancelSelectedTransfers()
 {
     auto info = getSelectedCancelOrClearInfo();
+    QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
 
-    if(!info.areAllSync)
+    if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
+                                 info.actionText,
+                                 QMessageBox::Yes | QMessageBox::No, QMessageBox::No, info.buttonsText)
+            == QMessageBox::Yes
+            && dialog)
     {
-        QPointer<MegaTransferView> dialog = QPointer<MegaTransferView>(this);
+        QModelIndexList indexes = getSelectedTransfers();
 
-        if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                                     info.actionText,
-                                     QMessageBox::Yes | QMessageBox::No, QMessageBox::No, info.buttonsText)
-                == QMessageBox::Yes
-                && dialog)
-        {
-            QModelIndexList indexes = getSelectedTransfers();
-
-            auto sourceModel = MegaSyncApp->getTransfersModel();
-            sourceModel->cancelAndClearTransfers(indexes, this);
-        }
+        auto sourceModel = MegaSyncApp->getTransfersModel();
+        sourceModel->cancelAndClearTransfers(indexes, this);
     }
 }
 
@@ -947,6 +949,11 @@ void MegaTransferView::moveToTopClicked()
     auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
     if(proxy)
     {
+        if(!selectionModel())
+        {
+            return;
+        }
+
         auto indexes = selectionModel()->selectedRows();
         if(!indexes.isEmpty())
         {
@@ -979,7 +986,12 @@ void MegaTransferView::moveToTopClicked()
 
 void MegaTransferView::moveUpClicked()
 {
-    auto indexes = selectionModel()->selectedRows();
+    QModelIndexList indexes;
+    if(selectionModel())
+    {
+        indexes = selectionModel()->selectedRows();
+    }
+
     if(!indexes.isEmpty())
     {
         auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
@@ -1029,7 +1041,12 @@ void MegaTransferView::moveUpClicked()
 
 void MegaTransferView::moveDownClicked()
 {
-    auto indexes = selectionModel()->selectedRows();
+    QModelIndexList indexes;
+    if(selectionModel())
+    {
+        indexes = selectionModel()->selectedRows();
+    }
+
     if(!indexes.isEmpty())
     {
         auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
@@ -1083,7 +1100,12 @@ void MegaTransferView::moveDownClicked()
 
 void MegaTransferView::moveToBottomClicked()
 {
-    auto indexes = selectionModel()->selectedRows();
+    QModelIndexList indexes;
+    if(selectionModel())
+    {
+        indexes = selectionModel()->selectedRows();
+    }
+
     if(!indexes.isEmpty())
     {
         auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
@@ -1126,10 +1148,20 @@ void MegaTransferView::getLinkClicked()
     QList<int> rows;
     auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
 
-    const auto indexes (proxy ?
-                            proxy->mapSelectionToSource(selectionModel()->selection()).indexes()
-                          : selectionModel()->selection().indexes());
-    for (auto index : indexes)
+    QModelIndexList indexes;
+    if(selectionModel())
+    {
+        if(proxy)
+        {
+            indexes = proxy->mapSelectionToSource(selectionModel()->selection()).indexes();
+        }
+        else
+        {
+            indexes = selectionModel()->selection().indexes();
+        }
+    }
+
+    for (auto index : qAsConst(indexes))
     {
         rows.push_back(index.row());
     }
@@ -1152,10 +1184,20 @@ void MegaTransferView::openInMEGAClicked()
     QList<int> rows;
     auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
 
-    const auto indexes (proxy ?
-                            proxy->mapSelectionToSource(selectionModel()->selection()).indexes()
-                          : selectionModel()->selection().indexes());
-    for (auto index : indexes)
+    QModelIndexList indexes;
+    if(selectionModel())
+    {
+        if(proxy)
+        {
+            indexes = proxy->mapSelectionToSource(selectionModel()->selection()).indexes();
+        }
+        else
+        {
+            indexes = selectionModel()->selection().indexes();
+        }
+    }
+
+    for (auto index : qAsConst(indexes))
     {
         rows.push_back(index.row());
     }

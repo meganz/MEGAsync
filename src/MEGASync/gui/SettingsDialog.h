@@ -9,6 +9,8 @@
 #include "control/Utilities.h"
 #include "syncs/model/SyncItemModel.h"
 #include "syncs/model/BackupItemModel.h"
+#include "syncs/gui/Backups/BackupTableViewTooltips.h"
+#include "syncs/gui/Twoways/SyncTableViewTooltips.h"
 
 #include "syncs/control/SyncController.h"
 #include "syncs/control/SyncInfo.h"
@@ -247,5 +249,7 @@ private:
     QStringList mSyncNames;
     bool mHasDefaultUploadOption;
     bool mHasDefaultDownloadOption;
+    std::unique_ptr<SyncTableViewTooltips> mSyncTableEventFilter;
+    std::unique_ptr<BackupTableViewTooltips> mBackupTableEventFilter;
 };
 #endif // SETTINGSDIALOG_H
