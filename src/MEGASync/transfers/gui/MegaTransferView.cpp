@@ -558,14 +558,14 @@ QMenu* MegaTransferView::createContextMenu()
     Platform::initMenu(contextMenu);
 
     QModelIndexList indexes = selectedIndexes();
+    auto modelSize = model()->rowCount();
 
     bool isTopIndex = false;
     bool isBottomIndex = false;
 
     TransferData::TransferStates overallState;
     TransferData::TransferTypes overallType;
-    long long int movableUploadTransfers(0);
-    long long int movableDownloadTransfers(0);
+    long long int movableTransfers(0);
 
     //TODO use these containers to open links, open folder...etc
     QList<MegaHandle> handlesToOpenByContextMenu;
@@ -579,7 +579,7 @@ QMenu* MegaTransferView::createContextMenu()
             isTopIndex = true;
         }
 
-        if(index.row() == (model()->rowCount() -1))
+        if(index.row() == (modelSize -1))
         {
             isBottomIndex = true;
         }
@@ -620,6 +620,18 @@ QMenu* MegaTransferView::createContextMenu()
             }
         }
 
+        auto isMovableRow = [d, modelSize, &movableTransfers]()
+        {
+            if(modelSize > 1)
+            {
+                if(d->mType & TransferData::TRANSFER_UPLOAD
+                        || d->mType & TransferData::TRANSFER_DOWNLOAD)
+                {
+                    movableTransfers++;
+                }
+            }
+        };
+
         switch (d->getState())
         {
             case TransferData::TRANSFER_ACTIVE:
@@ -627,16 +639,12 @@ QMenu* MegaTransferView::createContextMenu()
             case TransferData::TRANSFER_RETRYING:
             {
                 overallState |= TransferData::TRANSFER_ACTIVE;
-                if(d->mType == TransferData::TRANSFER_UPLOAD)
-                {
-                    movableUploadTransfers++;
-                }
-                else if(d->mType == TransferData::TRANSFER_DOWNLOAD)
-                {
-                    movableDownloadTransfers++;
-                }
+                isMovableRow();
                 break;
             }
+            case TransferData::TRANSFER_PAUSED:
+                isMovableRow();
+
             default:
                 overallState |= d->getState();
         }
@@ -691,7 +699,8 @@ QMenu* MegaTransferView::createContextMenu()
         }
         else
         {
-            if(movableUploadTransfers > 1 || movableDownloadTransfers > 1)
+            //only if all selected indexes can be moved, the move action is enabled
+            if(movableTransfers == indexes.size())
             {
                 actionFlag |= EnableAction::MOVE;
             }
@@ -700,7 +709,7 @@ QMenu* MegaTransferView::createContextMenu()
             {
                 actionFlag |= EnableAction::PAUSE;
             }
-            if(overallState & TransferData::TRANSFER_PAUSED)
+            else if(overallState & TransferData::TRANSFER_PAUSED)
             {
                 actionFlag |= EnableAction::RESUME;
             }
