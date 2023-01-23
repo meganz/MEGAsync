@@ -2,6 +2,7 @@
 
 #include "LowDiskSpaceDialog.h"
 #include "MegaApplication.h"
+#include "DialogOpener.h"
 
 using namespace mega;
 
@@ -47,7 +48,7 @@ void DownloadQueueController::startAvailableSpaceChecking()
 
     if (mFolderCountPendingSizeComputation == 0)
     {
-        emit finishedAvailableSpaceCheck(isDownloadPossible());
+        isDownloadPossible();
     }
 }
 
@@ -91,7 +92,7 @@ void DownloadQueueController::onRequestFinish(MegaApi*, MegaRequest *request, Me
         --mFolderCountPendingSizeComputation;
         if (mFolderCountPendingSizeComputation <= 0)
         {
-            emit finishedAvailableSpaceCheck(isDownloadPossible());
+            isDownloadPossible();
         }
     }
 }
@@ -122,19 +123,17 @@ void DownloadQueueController::update(TransferMetaData *dataToUpdate, MegaNode *n
     }
 }
 
-bool DownloadQueueController::isDownloadPossible()
+void DownloadQueueController::isDownloadPossible()
 {
-    bool retry = true;
-    bool downloadPossible = false;
-    while (!downloadPossible && retry)
+    bool downloadPossible(hasEnoughSpaceForDownloads());
+    if (!downloadPossible)
     {
-        downloadPossible = hasEnoughSpaceForDownloads();
-        if (!downloadPossible)
-        {
-            retry = shouldRetryWhenNotEnoughSpace();
-        }
+        shouldRetryWhenNotEnoughSpace();
     }
-    return downloadPossible;
+    else
+    {
+        emit finishedAvailableSpaceCheck(true);
+    }
 }
 
 bool DownloadQueueController::hasEnoughSpaceForDownloads()
@@ -147,7 +146,7 @@ bool DownloadQueueController::hasEnoughSpaceForDownloads()
     return true;
 }
 
-bool DownloadQueueController::shouldRetryWhenNotEnoughSpace()
+void DownloadQueueController::shouldRetryWhenNotEnoughSpace()
 {
     QStorageInfo destinationDrive(mCurrentTargetPath);
     QString driveName = destinationDrive.name();
@@ -156,10 +155,11 @@ bool DownloadQueueController::shouldRetryWhenNotEnoughSpace()
         driveName = tr("Local Disk");
     }
 
-    LowDiskSpaceDialog dialog(mTotalQueueDiskSize, destinationDrive.bytesAvailable(),
+    LowDiskSpaceDialog* dialog = new LowDiskSpaceDialog(mTotalQueueDiskSize, destinationDrive.bytesAvailable(),
                               destinationDrive.bytesTotal(), driveName);
-    int userChoice = dialog.exec();
-    return (userChoice == QDialog::Accepted);
+    DialogOpener::showDialog<LowDiskSpaceDialog>(dialog, [this, dialog](){
+        dialog->result() == QDialog::Accepted ? isDownloadPossible() : emit finishedAvailableSpaceCheck(false);
+    });
 }
 
 const QString& DownloadQueueController::getCurrentTargetPath() const

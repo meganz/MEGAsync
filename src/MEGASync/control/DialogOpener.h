@@ -2,6 +2,8 @@
 #define DIALOGOPENER_H
 
 #include <HighDpiResize.h>
+#include <ExternalDialogOpener.h>
+#include <DialogGeometryRetainer.h>
 
 #include <QDialog>
 #include <QPointer>
@@ -10,31 +12,43 @@
 
 class DialogOpener
 {
+
 private:
-    struct DialogInfo
+    class DialogInfo
     {
-        QString dialogClass;
-        QPointer<QDialog> dialog;
+    public:
+        QPointer<QDialog> getDialog() const { return mDialog;}
+        QString getDialogClass() const {return mDialogClass;}
+        void setDialogClass(const QString &newDialogClass) {mDialogClass = newDialogClass;}
 
         template <class DialogType>
-        DialogType* getDialog()
+        void setDialog(QPointer<DialogType> newDialog)
         {
-            return qobject_cast<DialogType*>(dialog);
+            mDialog = newDialog;
+        }
+
+        template <class DialogType>
+        DialogType* getDialogByClass()
+        {
+            return qobject_cast<DialogType*>(mDialog);
         }
 
         void clear()
         {
-            dialogClass.clear();
-            removeDialog(dialog);
+            mDialogClass.clear();
+            DialogOpener::removeDialog(mDialog);
         }
 
         bool isEmpty()
         {
-            return dialog == nullptr;
+            return mDialog == nullptr;
         }
 
         bool operator==(const DialogInfo &info);
 
+    private:
+        QString mDialogClass;
+        QPointer<QDialog> mDialog;
     };
 
 public:
@@ -45,7 +59,7 @@ public:
 
         foreach(auto dialogInfo, mOpenedDialogs)
         {
-            if(dialogInfo->dialogClass == classType)
+            if(dialogInfo->getDialogClass() == classType)
             {
                 return dialogInfo;
             }
@@ -61,9 +75,9 @@ public:
 
         foreach(auto dialogInfo, mOpenedDialogs)
         {
-            if(dialogInfo->dialogClass == classType)
+            if(dialogInfo->getDialogClass() == classType)
             {
-                return removeDialog(dialogInfo->dialog);
+                return removeDialog(dialogInfo->getDialog());
             }
         }
 
@@ -105,34 +119,39 @@ public:
 
             if(siblingDialog)
             {
-                removeDialog(siblingDialog->dialog);
-                siblingDialog->dialog = dialog;
-                siblingDialog->dialogClass = classType;
+                if(siblingDialog->getDialog() != dialog)
+                {
+                    QRect siblingGeometry = siblingDialog->getDialog()->geometry();
+                    bool siblingIsMaximized = siblingDialog->getDialog()->isMaximized();
+
+                    removeDialog(siblingDialog->getDialog());
+                    siblingDialog->setDialog(dialog);
+                    siblingDialog->setDialogClass(classType);
+
+                    initDialog(dialog, siblingDialog);
+
+                    if(siblingIsMaximized)
+                    {
+                        dialog->setWindowState(Qt::WindowMaximized);
+                    }
+                    else if(siblingGeometry.isValid())
+                    {
+                        dialog->setGeometry(siblingGeometry);
+                    }
+                }
             }
             else
             {
                 std::shared_ptr<DialogInfo> info = std::make_shared<DialogInfo>();
-                info->dialog = dialog;
-                info->dialogClass = classType;
+                info->setDialog(dialog);
+                info->setDialogClass(classType);
                 mOpenedDialogs.append(info);
+
+                initDialog(dialog, info);
             }
 
-            dialog->connect(dialog, &QObject::destroyed, [dialog](){
-                auto info = findDialogInfo(dialog);
-                if(info)
-                {
-                    mOpenedDialogs.removeOne(info);
-                }
-            });
+            ExternalDialogOpener externalOpener;
 
-            if(!dialog->isVisible())
-            {
-                auto dpiResize = new HighDpiResize(dialog);
-            }
-
-            dialog->setAttribute(Qt::WA_DeleteOnClose);
-
-            auto dialogModality = dialog->windowModality();
             if(dialog->parent())
             {
                 dialog->open();
@@ -147,14 +166,13 @@ public:
                 dialog->show();
             }
 
-
             dialog->raise();
             dialog->activateWindow();
         }
     }
 
     template <class DialogType>
-    static bool removeDialog(QPointer<DialogType>& dialog)
+    static bool removeDialog(QPointer<DialogType> dialog)
     {
         if(dialog)
         {
@@ -171,6 +189,21 @@ public:
     }
 
 private:
+    template <class DialogType>
+    static void initDialog(QPointer<DialogType> dialog, std::shared_ptr<DialogInfo> info)
+    {
+        dialog->connect(dialog, &QObject::destroyed, [dialog](){
+            auto info = findDialogInfo(dialog);
+            if(info)
+            {
+                mOpenedDialogs.removeOne(info);
+            }
+        });
+
+        auto dpiResize = new HighDpiResize(dialog);
+        dialog->setAttribute(Qt::WA_DeleteOnClose);
+    }
+
     static QList<std::shared_ptr<DialogInfo>> mOpenedDialogs;
 
     static std::shared_ptr<DialogInfo> findDialogInfo(QDialog* dialog);

@@ -44,9 +44,9 @@ protected:
 
 private:
 
-    bool isDownloadPossible();
+    void isDownloadPossible();
     bool hasEnoughSpaceForDownloads();
-    bool shouldRetryWhenNotEnoughSpace();
+    void shouldRetryWhenNotEnoughSpace();
 
     mega::MegaApi *mMegaApi;
     const QMap<mega::MegaHandle, QString>& mPathMap;

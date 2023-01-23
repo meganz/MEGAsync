@@ -6,6 +6,7 @@
 #include "control/Utilities.h"
 #include "control/CrashHandler.h"
 #include "control/ExportProcessor.h"
+#include "control/ExternalDialogOpener.h"
 #include "EventUpdater.h"
 #include "platform/Platform.h"
 #include "OverQuotaDialog.h"
@@ -3491,7 +3492,7 @@ void MegaApplication::setupWizardFinished(QPointer<SetupWizard> dialog)
             auto infoWizard = DialogOpener::findDialogByClass<InfoWizard>();
             if(infoWizard)
             {
-                clearDownloadAndPendingLinks(infoWizard->dialog);
+                clearDownloadAndPendingLinks(infoWizard->getDialog());
             }
         }
         else
@@ -3543,7 +3544,7 @@ void MegaApplication::infoWizardDialogFinished(QPointer<InfoWizard> dialog)
     if (dialog->result() != QDialog::Accepted)
     {
         auto setupWizard = DialogOpener::findDialogByClass<SetupWizard>();
-        clearDownloadAndPendingLinks(setupWizard->dialog);
+        clearDownloadAndPendingLinks(setupWizard->getDialog());
     }
 }
 
@@ -4942,9 +4943,11 @@ void MegaApplication::transferManagerActionClicked(int tab)
     }
 
     createTransferManagerDialog();
-    mTransferManager->toggleTab(tab);
 
+    ExternalDialogOpener dialogOpener;
     mTransferManagerGeometryRetainer.showDialog(mTransferManager);
+
+    mTransferManager->toggleTab(tab);
 }
 
 void MegaApplication::loginActionClicked()
@@ -5497,7 +5500,7 @@ void MegaApplication::externalFileUpload(qlonglong targetFolder)
     auto previousFileUploadSelector = DialogOpener::findDialogByClass<QFileDialog>();
     if(!previousFileUploadSelector->isEmpty())
     {
-        defaultFolderPath = previousFileUploadSelector->getDialog<QFileDialog>()->directory().path();
+        defaultFolderPath = previousFileUploadSelector->getDialogByClass<QFileDialog>()->directory().path();
     }
 
     auto fileUploadSelector = new QFileDialog();
@@ -5564,7 +5567,7 @@ void MegaApplication::externalFolderUpload(qlonglong targetFolder)
     auto previousFileUploadSelector = DialogOpener::findDialogByClass<QFileDialog>();
     if(!previousFileUploadSelector->isEmpty())
     {
-        defaultFolderPath = previousFileUploadSelector->getDialog<QFileDialog>()->directory().path();
+        defaultFolderPath = previousFileUploadSelector->getDialogByClass<QFileDialog>()->directory().path();
     }
 
     auto folderUploadSelector = new QFileDialog();
@@ -7001,7 +7004,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 auto infoWizard = DialogOpener::findDialogByClass<InfoWizard>();
                 if(infoWizard)
                 {
-                    clearDownloadAndPendingLinks(infoWizard->dialog);
+                    clearDownloadAndPendingLinks(infoWizard->getDialog());
                 }
 
                 MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting isCrashed true: !mRootNode (fetch node callback)");

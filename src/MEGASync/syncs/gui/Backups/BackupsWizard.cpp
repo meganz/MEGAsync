@@ -346,6 +346,8 @@ void BackupsWizard::setupComplete()
         setMinimumHeight(FINAL_STEP_MIN_SIZE.height());
         setMinimumSize(FINAL_STEP_MIN_SIZE);
         resize(FINAL_STEP_MIN_SIZE);
+
+        MegaSyncApp->createAppMenus();
     }
     else
     {

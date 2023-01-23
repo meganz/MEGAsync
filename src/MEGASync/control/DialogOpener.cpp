@@ -6,7 +6,7 @@ std::shared_ptr<DialogOpener::DialogInfo> DialogOpener::findDialogInfo(QDialog *
 {
     foreach(auto dialogInfo, mOpenedDialogs)
     {
-        if(dialogInfo->dialog == dialog)
+        if(dialogInfo->getDialog() == dialog)
         {
             return dialogInfo;
         }
@@ -19,11 +19,11 @@ std::shared_ptr<DialogOpener::DialogInfo> DialogOpener::findSiblingDialogInfo(QD
 {
     foreach(auto dialogInfo, mOpenedDialogs)
     {
-        if(dialogInfo->dialog && !dialogInfo->dialogClass.isEmpty())
+        if(dialogInfo->getDialog() && !dialogInfo->getDialogClass().isEmpty())
         {
-            if(dialogInfo->dialog != dialog
+            if(dialogInfo->getDialog() != dialog
                     /*&& dialogInfo->dialog->parent() == dialog->parent()*/
-                    && dialogInfo->dialogClass  == classType)
+                    && dialogInfo->getDialogClass()  == classType)
             {
                 return dialogInfo;
             }
@@ -35,5 +35,5 @@ std::shared_ptr<DialogOpener::DialogInfo> DialogOpener::findSiblingDialogInfo(QD
 
 bool DialogOpener::DialogInfo::operator==(const DialogInfo& info)
 {
-    return info.dialog == dialog ? true : false;
+    return info.mDialog == mDialog ? true : false;
 }

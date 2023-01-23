@@ -77,8 +77,6 @@ public:
     void setUiInCancellingStage();
     void updateUiOnFolderTransferUpdate(const FolderTransferUpdateEvent& event);
 
-    void checkAndCloseOpenDialogs();
-
 #ifdef __APPLE__
     void moveArrow(QPoint p);
 #endif
@@ -220,7 +218,6 @@ private:
 
     QPointer<TransferManager> mTransferManager;
 
-    QPointer<BackupsWizard> mBackupsWizard;
     QPointer<AddBackupDialog> mAddBackupDialog;
     QPointer<BindFolderDialog> mAddSyncDialog;
 

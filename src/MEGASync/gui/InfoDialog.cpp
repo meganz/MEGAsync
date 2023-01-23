@@ -14,6 +14,7 @@
 #include "InfoDialog.h"
 #include "ui_InfoDialog.h"
 #include "control/Utilities.h"
+#include "control/ExternalDialogOpener.h"
 #include "MegaApplication.h"
 #include "TransferManager.h"
 #include "MenuItemAction.h"
@@ -82,7 +83,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     mSyncing (false),
     mTransferring (false),
     mTransferManager(nullptr),
-    mBackupsWizard (nullptr),
     mAddBackupDialog (nullptr),
     mAddSyncDialog (nullptr),
     mPreferences (Preferences::instance()),
@@ -300,7 +300,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
 InfoDialog::~InfoDialog()
 {
-    checkAndCloseOpenDialogs();
     removeEventFilter(this);
     delete ui;
     delete gWidget;
@@ -1074,6 +1073,8 @@ void InfoDialog::onAddSyncDialogFinished(QPointer<BindFolderDialog> dialog)
 
     setupSyncController();
     mSyncController->addSync(localFolderPath, handle, syncName, mega::MegaSync::TYPE_TWOWAY);
+
+    app->createAppMenus();
 }
 
 void InfoDialog::addBackup()
@@ -1086,35 +1087,30 @@ void InfoDialog::addBackup()
         {
             // If no backups configured: show wizard, else show "add single backup" dialog
             int nbBackups(SyncInfo::instance()->getNumSyncedFolders(mega::MegaSync::TYPE_BACKUP));
-
-            if (mAddBackupDialog)
+            if(nbBackups > 0)
             {
-                DialogOpener::showDialog(mAddBackupDialog);
+                auto backupDialog = new AddBackupDialog();
+                backupDialog->setWindowModality(Qt::ApplicationModal);
+                
+                setupSyncController();
+
+                DialogOpener::showDialog<AddBackupDialog>(backupDialog,[this, backupDialog]
+                {
+                    if(backupDialog && backupDialog->result() == QDialog::Accepted)
+                    {
+                        QString dirToBackup (backupDialog->getSelectedFolder());
+                        QString backupName (backupDialog->getBackupName());
+                        mSyncController->addBackup(dirToBackup, backupName);
+
+                        app->createAppMenus();
+                    }
+                });
             }
             else
             {
-                mAddBackupDialog = new AddBackupDialog();
-                if (nbBackups > 0)
-                {
-                    setupSyncController();
-
-                    DialogOpener::showDialog(mAddBackupDialog,[this]
-                    {
-                        if(mAddBackupDialog && mAddBackupDialog->result() == QDialog::Accepted)
-                        {
-                            QString dirToBackup (mAddBackupDialog->getSelectedFolder());
-                            QString backupName (mAddBackupDialog->getBackupName());
-                            mSyncController->addBackup(dirToBackup, backupName);
-
-                            app->createAppMenus();
-                        }
-                    });
-
-                }
-                else
-                {
-                    DialogOpener::showDialog(mAddBackupDialog);
-                }
+                auto backupsWizard = new BackupsWizard();
+                backupsWizard->setWindowModality(Qt::ApplicationModal);
+                DialogOpener::showDialog<BackupsWizard>(backupsWizard);
             }
         }
     };
@@ -1259,15 +1255,6 @@ void InfoDialog::leaveBlockingState(bool fromCancellation)
 void InfoDialog::disableCancelling()
 {
     mTransferScanCancelUi->disableCancelling();
-}
-
-void InfoDialog::checkAndCloseOpenDialogs()
-{
-    return;
-
-    DialogOpener::removeDialog(mAddSyncDialog);
-    DialogOpener::removeDialog(mBackupsWizard);
-    DialogOpener::removeDialog(mAddBackupDialog);
 }
 
 void InfoDialog::setUiInCancellingStage()
