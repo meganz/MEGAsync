@@ -26,8 +26,6 @@ LowDiskSpaceDialog::LowDiskSpaceDialog(qint64 neededSize, qint64 freeSize,
 
     connect(ui->bTryAgain, &QPushButton::clicked, this, &QDialog::accept);
     connect(ui->bCancel, &QPushButton::clicked, this, &QDialog::reject);
-
-    mHighDpiResize.init(this);
 }
 
 LowDiskSpaceDialog::~LowDiskSpaceDialog()

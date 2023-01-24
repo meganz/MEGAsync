@@ -44,11 +44,6 @@ private:
             DialogOpener::removeDialog<DialogType>(mDialog);
         }
 
-        bool isEmpty()
-        {
-            return mDialog == nullptr;
-        }
-
         bool operator==(const DialogInfo &info)
         {
             return info.mDialog == mDialog ? true : false;
@@ -74,11 +69,11 @@ public:
             }
         }
 
-        return std::make_shared<DialogOpener::DialogInfo<DialogType>>();
+        return nullptr;
     }
 
     template <class DialogType>
-    static bool removeDialogByClass()
+    static void removeDialogByClass()
     {
         auto classType = QString::fromUtf8(typeid(DialogType).name());
 
@@ -87,11 +82,13 @@ public:
             if(dialogInfo->getDialogClass() == classType)
             {
                 auto dialogInfoByType = std::dynamic_pointer_cast<DialogInfo<DialogType>>(dialogInfo);
-                return removeDialog(dialogInfoByType->getDialog());
+                if(dialogInfoByType)
+                {
+                    removeDialog(dialogInfoByType->getDialog());
+                    break;
+                }
             }
         }
-
-        return false;
     }
 
     template <class DialogType>
@@ -101,8 +98,9 @@ public:
         {
             dialog->connect(dialog.data(), &DialogType::finished, [func, dialog](){
                 func();
+                removeDialog(dialog);
             });
-            showDialog(dialog);
+            showDialogImpl(dialog);
         }
     }
 
@@ -113,14 +111,42 @@ public:
         {
             dialog->connect(dialog.data(), &DialogType::finished, [dialog, caller, func](){
                 (caller->*func)(dialog);
+                removeDialog(dialog);
             });
 
-            showDialog(dialog);
+            showDialogImpl(dialog);
         }
     }
 
     template <class DialogType>
     static void showDialog(QPointer<DialogType> dialog)
+    {
+        if(dialog)
+        {
+            dialog->connect(dialog.data(), &DialogType::finished, [dialog]()
+            {
+                removeDialog(dialog);
+            });
+
+            showDialogImpl(dialog);
+        }
+    }
+
+    template <class DialogType>
+    static void removeDialog(QPointer<DialogType> dialog)
+    {
+        if(dialog)
+        {
+            dialog->close();            
+            dialog->deleteLater();
+        }
+    }
+
+private:
+    static QList<std::shared_ptr<DialogInfoBase>> mOpenedDialogs;
+
+    template <class DialogType>
+    static void showDialogImpl(QPointer<DialogType> dialog)
     {
         if(dialog)
         {
@@ -162,7 +188,7 @@ public:
 
             ExternalDialogOpener externalOpener;
 
-            if(dialog->parent())
+            if(dialog->parentWidget())
             {
                 dialog->setWindowModality(Qt::WindowModal);
             }
@@ -182,24 +208,6 @@ public:
     }
 
     template <class DialogType>
-    static bool removeDialog(QPointer<DialogType> dialog)
-    {
-        if(dialog)
-        {
-            dialog->close();
-            if(!dialog->testAttribute(Qt::WA_DeleteOnClose))
-            {
-                dialog->deleteLater();
-                dialog = nullptr;
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-private:
-    template <class DialogType>
     static void initDialog(QPointer<DialogType> dialog)
     {
         dialog->connect(dialog, &QObject::destroyed, [dialog](){
@@ -210,11 +218,9 @@ private:
             }
         });
 
+        //This depends on QDialog -> Check if we can templatizate it in order to reuse it with QML
         auto dpiResize = new HighDpiResize(dialog);
-        dialog->setAttribute(Qt::WA_DeleteOnClose);
     }
-
-    static QList<std::shared_ptr<DialogInfoBase>> mOpenedDialogs;
 
     template <class DialogType>
     static std::shared_ptr<DialogInfo<DialogType>> findDialogInfo(QDialog* dialog)
@@ -223,7 +229,7 @@ private:
         {
             auto dialogInfoByType = std::dynamic_pointer_cast<DialogInfo<DialogType>>(dialogInfo);
 
-            if(dialogInfoByType->getDialog() == dialog)
+            if(dialogInfoByType && dialogInfoByType->getDialog() == dialog)
             {
                 return dialogInfoByType;
             }
@@ -239,7 +245,7 @@ private:
         {
             auto dialogInfoByType = std::dynamic_pointer_cast<DialogInfo<DialogType>>(dialogInfo);
 
-            if(dialogInfoByType->getDialog() && !dialogInfoByType->getDialogClass().isEmpty())
+            if(dialogInfoByType && !dialogInfoByType->getDialogClass().isEmpty())
             {
                 if(/*dialogInfo->getDialog() != dialog
                         && dialogInfo->dialog->parent() == dialog->parent()

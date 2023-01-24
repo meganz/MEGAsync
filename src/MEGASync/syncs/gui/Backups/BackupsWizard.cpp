@@ -55,7 +55,6 @@ BackupsWizard::BackupsWizard(QWidget* parent) :
     setWindowFlags(windowFlags() | Qt::MSWindowsFixedSizeDialogHint);
 #endif
     mUi->setupUi(this);
-    mHighDpiResize.init(this);
     setupHeaders();
     setupLoadingWindow();
 

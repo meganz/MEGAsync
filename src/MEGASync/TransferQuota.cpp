@@ -227,7 +227,10 @@ void TransferQuota::setOverQuotaDialogPricing(std::shared_ptr<mega::MegaPricing>
 
 void TransferQuota::closeDialog()
 {
-    DialogOpener::removeDialog(mUpgradeDialog);
+    if(mUpgradeDialog)
+    {
+        mUpgradeDialog->close();
+    }
 }
 
 void TransferQuota::checkQuotaAndAlerts()

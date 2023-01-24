@@ -1560,7 +1560,10 @@ void MegaApplication::applyStorageState(int state, bool doNotAskForUserStats)
                     }
                 }
 
-                DialogOpener::removeDialog(mSettingsDialog);
+                if(mSettingsDialog)
+                {
+                    mSettingsDialog->close();
+                }
             }
             else if (storageState == MegaApi::STORAGE_STATE_PAYWALL)
             {
@@ -3544,7 +3547,10 @@ void MegaApplication::infoWizardDialogFinished(QPointer<InfoWizard> dialog)
     if (dialog->result() != QDialog::Accepted)
     {
         auto setupWizard = DialogOpener::findDialogByClass<SetupWizard>();
-        clearDownloadAndPendingLinks(setupWizard->getDialog());
+        if(setupWizard)
+        {
+            clearDownloadAndPendingLinks(setupWizard->getDialog());
+        }
     }
 }
 
@@ -4964,7 +4970,6 @@ void MegaApplication::showSetupWizard(int action)
 {
     mSetupWizard = new SetupWizard(this);
     emit setupWizardCreated();
-    mSetupWizard->setModal(false);
     mSetupWizard->goToStep(action);
     DialogOpener::showDialog(mSetupWizard, this, &MegaApplication::setupWizardFinished);
 }
@@ -5498,7 +5503,7 @@ void MegaApplication::externalFileUpload(qlonglong targetFolder)
 
     QString  defaultFolderPath;
     auto previousFileUploadSelector = DialogOpener::findDialogByClass<QFileDialog>();
-    if(!previousFileUploadSelector->isEmpty())
+    if(previousFileUploadSelector)
     {
         defaultFolderPath = previousFileUploadSelector->getDialog()->directory().path();
     }
@@ -5565,7 +5570,7 @@ void MegaApplication::externalFolderUpload(qlonglong targetFolder)
 
     QString  defaultFolderPath;
     auto previousFileUploadSelector = DialogOpener::findDialogByClass<QFileDialog>();
-    if(!previousFileUploadSelector->isEmpty())
+    if(previousFileUploadSelector)
     {
         defaultFolderPath = previousFileUploadSelector->getDialog()->directory().path();
     }
@@ -5929,8 +5934,7 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
         {
             if (mSetupWizard)
             {
-                mSetupWizard->activateWindow();
-                mSetupWizard->raise();
+                DialogOpener::showDialog(mSetupWizard);
             }
             else
             {
@@ -7025,7 +7029,11 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                     }
 
                     loggedIn(true);
-                    DialogOpener::removeDialog(mSetupWizard);
+
+                    if(mSetupWizard)
+                    {
+                        mSetupWizard->close();
+                    }
                 }
             }
             else // session resumed regularly

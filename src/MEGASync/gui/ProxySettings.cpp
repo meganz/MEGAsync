@@ -84,7 +84,10 @@ void ProxySettings::setManualMode(bool enabled)
 void ProxySettings::onProxyTestError()
 {
     MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Proxy test failed");
-    DialogOpener::removeDialog(mProgressDialog);
+    if(mProgressDialog)
+    {
+        mProgressDialog->close();
+    }
     QMegaMessageBox::critical(this, tr("Error"),
                               tr("Your proxy settings are invalid or the proxy doesn't respond"));
 }
@@ -115,7 +118,10 @@ void ProxySettings::onProxyTestSuccess()
     mPreferences->setProxyUsername(mUi->eProxyUsername->text());
     mPreferences->setProxyPassword(mUi->eProxyPassword->text());
 
-    DialogOpener::removeDialog(mProgressDialog);
+    if(mProgressDialog)
+    {
+        mProgressDialog->close();
+    }
 
     accept();
 }
@@ -175,7 +181,6 @@ void ProxySettings::on_bUpdate_clicked()
 #endif
 
     //Remove it, just in case
-    DialogOpener::removeDialog(mProgressDialog);
     mProgressDialog = new MegaProgressCustomDialog(this);
     mProgressDialog->setWindowModality(Qt::WindowModal);
     DialogOpener::showDialog(mProgressDialog);

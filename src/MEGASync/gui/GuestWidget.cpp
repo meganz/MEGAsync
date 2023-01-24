@@ -132,7 +132,7 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
             }
         }
 
-        DialogOpener::removeDialog(mWhyAmISeeingThisDialog);
+        mWhyAmISeeingThisDialog->close();
         reset_UI_props();
         closing = false;
         page_login();
@@ -332,7 +332,11 @@ void GuestWidget::enableListener()
 
 void GuestWidget::initialize()
 {
-    DialogOpener::removeDialog(mWhyAmISeeingThisDialog);
+    if(mWhyAmISeeingThisDialog)
+    {
+        mWhyAmISeeingThisDialog->close();
+    }
+
     reset_UI_props();
 
     closing = false;
