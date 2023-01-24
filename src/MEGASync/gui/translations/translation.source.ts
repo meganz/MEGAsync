@@ -2964,7 +2964,6 @@ Transfers will automatically resume when you re-open the app.</numerusform>
         <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
         <translation>Your backup &quot;%1&quot; has been temporarily disabled: %2</translation>
     </message>
-    </message>
     <message>
         <source>Stalled</source>
         <translation type="unfinished"></translation>
