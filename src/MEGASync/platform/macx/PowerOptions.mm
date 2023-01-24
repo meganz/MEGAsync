@@ -157,13 +157,3 @@ void PowerOptions::appShutdown()
     // And logging may (will) already have been destroyed (as it uses global objects too).
     mPowerOptionsImpl.reset();
 }
-
-void PowerOptions::appShutdown()
-{
-    // singletons are trouble.
-    // global objects deletion order in different compilation units cannot be predicted.
-    // delete this unpredictable singleton thing before it causes a shutdown crash
-    // as it will try to log some messages on destruction.
-    // And logging may (will) already have been destroyed (as it uses global objects too).
-    mPowerOptionsImpl.reset();
-}
