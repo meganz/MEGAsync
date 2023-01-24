@@ -21,9 +21,12 @@
 #include "UserAttributesRequests/MyBackupsHandle.h"
 #include "syncs/gui/SyncsMenu.h"
 #include "TextDecorator.h"
+#include <QQmlApplicationEngine>
+#include <QQmlContext>
 
 #include "mega/types.h"
 
+#include <QQmlApplicationEngine>
 #include <QTranslator>
 #include <QClipboard>
 #include <QDesktopWidget>
@@ -100,7 +103,8 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     mIsFirstFileTwoWaySynced(false),
     mIsFirstFileBackedUp(false),
     scanStageController(this),
-    mDisableGfx (false)
+    mDisableGfx (false),
+    mEngine(new QQmlEngine(this))
 {
 
 #if defined Q_OS_MACX && !defined QT_DEBUG
@@ -179,7 +183,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 #endif
 
     // For some reason this doesn't work on Windows (done in stylesheet above)
-    // TODO: re-try with Qt > 5.12.12
+    // TODO: re-try with Qt > 5.12.15
     QPalette palette = QToolTip::palette();
     palette.setColor(QPalette::ToolTipBase, QColor("#333333"));
     palette.setColor(QPalette::ToolTipText, QColor("#FAFAFA"));
@@ -437,6 +441,8 @@ void MegaApplication::initialize()
     //Register metatypes to use them in signals/slots
     qRegisterMetaType<QQueue<QString> >("QQueueQString");
     qRegisterMetaTypeStreamOperators<QQueue<QString> >("QQueueQString");
+    qmlRegisterModule("Styles", 1, 0);
+    qmlRegisterSingletonType(QUrl(QString::fromUtf8("qrc:/imports/Styles/Styles.qml")), "Styles", 1, 0, "Styles");
 
     preferences = Preferences::instance();
     connect(preferences.get(), SIGNAL(stateChanged()), this, SLOT(changeState()));
@@ -1015,6 +1021,7 @@ void MegaApplication::updateTrayIcon()
 
 void MegaApplication::start()
 {
+
 #ifdef Q_OS_LINUX
     QSvgRenderer qsr; //to have svg library linked
 #endif

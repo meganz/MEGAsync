@@ -1375,20 +1375,20 @@ void InfoDialog::on_bStorageDetails_clicked()
 {
     if (accountDetailsDialog)
     {
-        accountDetailsDialog->raise();
+       // accountDetailsDialog->raise();
         return;
     }
 
     accountDetailsDialog = new AccountDetailsDialog(this);
     app->updateUserStats(true, true, true, true, USERSTATS_STORAGECLICKED);
     QPointer<AccountDetailsDialog> dialog = accountDetailsDialog;
-    dialog->exec();
+   // dialog->exec();
     if (!dialog)
     {
         return;
     }
 
-    delete accountDetailsDialog;
+    //delete accountDetailsDialog;
     accountDetailsDialog = NULL;
 }
 

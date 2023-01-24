@@ -6,10 +6,7 @@
 #include "HighDpiResize.h"
 
 #include <QDialog>
-
-namespace Ui {
-class AccountDetailsDialog;
-}
+#include <QQuickView>
 
 class AccountDetailsDialog : public QDialog, public IStorageObserver
 {
@@ -20,10 +17,12 @@ public:
     ~AccountDetailsDialog();
     void refresh();
     void updateStorageElements();
+private slots:
+    void cppSlot();
 
 private:
-    Ui::AccountDetailsDialog* mUi;
     HighDpiResize mHighDpiResize;
+    QQuickView* mUi;
 };
 
 #endif // ACCOUNTDETAILSDIALOG_H

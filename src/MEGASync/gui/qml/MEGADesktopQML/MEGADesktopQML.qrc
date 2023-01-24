@@ -1,0 +1,15 @@
+<!DOCTYPE RCC><RCC version="1.0">
+    <qresource prefix="/">
+        <file>./content/App.qml</file>
+        <file>./content/App1.qml</file>
+        <file>./content/Screen01.ui.qml</file>
+        <file>./imports/MEGADesktopQML/Constants.qml</file>
+        <file>./imports/MEGADesktopQML/DirectoryFontLoader.qml</file>
+        <file>./imports/MEGADesktopQML/EventListModel.qml</file>
+        <file>./imports/MEGADesktopQML/EventListSimulator.qml</file>
+        <file>./imports/MEGADesktopQML/qmldir</file>
+        <file>./imports/Styles/qmldir</file>
+        <file>./imports/Styles/Styles.qml</file>
+        <file>./qtquickcontrols2.conf</file>
+    </qresource>
+</RCC>

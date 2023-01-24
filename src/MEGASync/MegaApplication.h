@@ -137,6 +137,7 @@ public:
     void migrateSyncConfToSdk(QString email = QString());
 
     mega::MegaApi *getMegaApi() { return megaApi; }
+    QQmlEngine *qmlEngine() { return mEngine;}
     std::unique_ptr<mega::MegaApiLock> megaApiLock;
 
     void cleanLocalCaches(bool all = false);
@@ -662,6 +663,8 @@ private:
         connect(*action, &QAction::triggered, this, slotFunc);
         (*action)->setEnabled(previousEnabledState);
     }
+
+    QQmlEngine* mEngine;
 
 private slots:
     void onFolderTransferUpdate(FolderTransferUpdateEvent event);

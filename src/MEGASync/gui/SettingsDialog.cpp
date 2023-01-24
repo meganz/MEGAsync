@@ -1379,7 +1379,7 @@ void SettingsDialog::on_bStorageDetails_clicked()
     mAccountDetailsDialog = new AccountDetailsDialog(this);
     mApp->updateUserStats(true, true, true, true, USERSTATS_STORAGECLICKED);
     QPointer<AccountDetailsDialog> dialog = mAccountDetailsDialog;
-    dialog->exec();
+    //dialog->exec();
     if (!dialog)
     {
         return;

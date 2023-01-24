@@ -50,8 +50,11 @@ else()
     set (TARGET_LINK_LIBRARIES_PLATFORM Qt5::Svg Qt5::X11Extras xcb)
 endif()
 
-set (MEGA_QT_REQUIRED_COMPONENTS Core Network Gui Widgets LinguistTools ${QTCOMPONENS_REQUIRED_PLATFORM})
-set (MEGA_QT_LINK_LIBRARIES Qt5::Core Qt5::Widgets Qt5::Gui Qt5::Network ${TARGET_LINK_LIBRARIES_PLATFORM})
+set (MEGA_QT_REQUIRED_COMPONENTS Core Network Gui Widgets LinguistTools Quick Qml ${QTCOMPONENS_REQUIRED_PLATFORM})
+set (MEGA_QT_LINK_LIBRARIES Qt5::Core Qt5::Widgets Qt5::Gui Qt5::Network Qt5::Quick Qt5::Qml ${TARGET_LINK_LIBRARIES_PLATFORM})
+
+list(APPEND QML_DIRS "${RepoDir}/src/MEGASync/gui/qml/MEGADesktopQML/imports")
+set(QML_IMPORT_PATH "${QML_DIRS}" CACHE STRING "Qt Creator extra qml import paths")
 
 set (UNCHECKED_ITERATORS 0 CACHE STRING "")
 
@@ -477,6 +480,7 @@ set (SRCS
     ${FORMS}
     ${MOC_INPUT}
     ${MEGAsyncDir}/gui/Resources_${UiDir}.qrc
+    ${MEGAsyncDir}/gui/qml/MEGADesktopQML/MEGADesktopQML.qrc
 
     ${MEGAsyncDir}/gui/AlertItem.cpp
     ${MEGAsyncDir}/gui/AlertFilterType.cpp
@@ -829,7 +833,7 @@ if (CMAKE_HOST_APPLE)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
 endif()
 
-target_link_libraries(MEGAsync Mega Qt5::Core Qt5::Widgets Qt5::Gui Qt5::Network ${TARGET_LINK_LIBRARIES_PLATFORM})
+target_link_libraries(MEGAsync Mega Qt5::Core Qt5::Widgets Qt5::Gui Qt5::Network Qt5::Quick Qt5::Qml ${TARGET_LINK_LIBRARIES_PLATFORM})
 
 # Amend manifest to tell Windows that the application is DPI aware (needed for Windows 8.1 and up)
 IF (MSVC)

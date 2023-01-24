@@ -1,4 +1,8 @@
-QT       += network
+QT       += network qml quick
+
+QML_IMPORT_PATH = $$PWD/qml/MEGADesktopQML/imports
+
+RESOURCES += $$PWD/qml/MEGADesktopQML/MEGADesktopQML.qrc
 
 SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/BalloonToolTip.cpp \
