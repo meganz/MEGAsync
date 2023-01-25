@@ -944,6 +944,23 @@ bool MegaTransferView::eventFilter(QObject *object, QEvent *event)
     return QTreeView::eventFilter(object, event);
 }
 
+void MegaTransferView::paintEvent(QPaintEvent *event)
+{
+    //This is done to keep the dragging state even if the model has removed/inserted items
+    //as Qt changes the view state when these actions are done.
+    //If the dragging state is changed, the drag and drop line is not painted anymore, so we need to restore it before painting it
+    auto proxy(qobject_cast<TransfersManagerSortFilterProxyModel*>(model()));
+    if(proxy)
+    {
+        if(proxy->isDragging())
+        {
+            setState(DraggingState);
+        }
+    }
+
+    QTreeView::paintEvent(event);
+}
+
 void MegaTransferView::moveToTopClicked()
 {
     auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
