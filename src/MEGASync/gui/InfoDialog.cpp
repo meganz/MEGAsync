@@ -10,6 +10,7 @@
 #include <QFileInfo>
 #include <QEvent>
 #include <QScrollBar>
+#include <QMLDialogWrapper.h>
 
 #include "InfoDialog.h"
 #include "ui_InfoDialog.h"
@@ -1379,7 +1380,8 @@ void InfoDialog::on_bStorageDetails_clicked()
         return;
     }
 
-    accountDetailsDialog = new AccountDetailsDialog(this);
+    //accountDetailsDialog = new AccountDetailsDialog(this);
+    auto esto = new QMLDialogWrapper<AccountDetailsDialog>();
     app->updateUserStats(true, true, true, true, USERSTATS_STORAGECLICKED);
     QPointer<AccountDetailsDialog> dialog = accountDetailsDialog;
    // dialog->exec();

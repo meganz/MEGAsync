@@ -39,6 +39,9 @@ Dialog {
     visible: true
     title: "This is a test dialog"
     modality: Qt.NonModal
+    onAccepted: {
+        Test.cppSlot1public()
+    }
 
     Text {
         text: "Hello MEGASYNC SUPERMEGA!"

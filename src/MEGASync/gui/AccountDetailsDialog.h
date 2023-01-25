@@ -4,25 +4,33 @@
 #include "Utilities.h"
 #include "control/Preferences.h"
 #include "HighDpiResize.h"
+#include "QMLDialogWrapper.h"
 
 #include <QDialog>
 #include <QQuickView>
+#include <QQmlComponent>
 
-class AccountDetailsDialog : public QDialog, public IStorageObserver
+class AccountDetailsDialog : public QMLComponentWrapper, public IStorageObserver
 {
     Q_OBJECT
 
 public:
-    explicit AccountDetailsDialog(QWidget* parent = 0);
+    AccountDetailsDialog(QObject* parent = 0);
     ~AccountDetailsDialog();
     void refresh();
-    void updateStorageElements();
-private slots:
-    void cppSlot();
+    void updateStorageElements() override;
+
+//private slots:
+//    void cppSlot();
+    QUrl getQmlUrl() override;
+
+public slots:
+    void cppSlot1public();
 
 private:
     HighDpiResize mHighDpiResize;
     QQuickView* mUi;
+
 };
 
 #endif // ACCOUNTDETAILSDIALOG_H

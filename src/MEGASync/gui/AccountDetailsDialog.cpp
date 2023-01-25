@@ -17,25 +17,12 @@ using namespace mega;
 static constexpr int PRECISION{100};
 static constexpr int DEFAULT_MIN_PERCENTAGE{1};
 
-AccountDetailsDialog::AccountDetailsDialog(QWidget *parent) :
-    QDialog(parent)
+AccountDetailsDialog::AccountDetailsDialog(QObject *parent) :
+    QMLComponentWrapper(parent)
 {
 
-    //QQmlEngine* engine = new QQmlEngine(this);
-    QQmlEngine* engine = MegaSyncApp->qmlEngine();
-    QQmlComponent* component = new QQmlComponent(engine, QUrl(QString::fromUtf8("qrc:/content/App1.qml")));
-
-//    QQmlComponent* component1 = new QQmlComponent(engine, QUrl(QString::fromUtf8("qrc:/content/App1.qml")));
-//    component1->create();
-    auto obj = component->create();
-    connect(obj, SIGNAL(accepted()), this, SLOT(cppSlot()));
-    //QQmlContext* context = new Qml
-    //engine->setContextForObject(obj, AccountDetailsDialog, "Details")
-
-//    mUi = new QQuickView;
-//    mUi->setSource(QUrl(QString::fromUtf8("qrc:/content/App.qml")));
-//    mUi->setTitle(tr("Account usage details"));
-//    mUi->show();
+    //create(objectContext);
+   // connect(obj, SIGNAL(accepted()), this, SLOT(cppSlot()));
 
     // Setup UI
     //setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -66,6 +53,12 @@ AccountDetailsDialog::AccountDetailsDialog(QWidget *parent) :
     // Subscribe to data updates (but detach after 1 callback)
     MegaSyncApp->attachStorageObserver(*this);
 }
+
+QUrl AccountDetailsDialog::getQmlUrl()
+{
+    return QUrl(QString::fromUtf8("qrc:/content/App1.qml"));
+}
+
 
 AccountDetailsDialog::~AccountDetailsDialog()
 {
@@ -279,7 +272,12 @@ void AccountDetailsDialog::updateStorageElements()
     refresh();
 }
 
-void AccountDetailsDialog::cppSlot()
+//void AccountDetailsDialog::cppSlot()
+//{
+//    qDebug()<<"ejecutando slot en cpp!";
+//}
+
+void AccountDetailsDialog::cppSlot1public()
 {
-    qDebug()<<"ejecutando slot en cpp!";
+    qDebug()<<"slot 1 public from cpp";
 }

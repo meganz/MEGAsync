@@ -14,6 +14,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/MegaDelegateHoverManager.cpp \
     $$PWD/NotificationsSettings.cpp \
     $$PWD/OverQuotaDialog.cpp \
+    $$PWD/QMLDialogWrapper.cpp \
     $$PWD/ScanningWidget.cpp \
     $$PWD/QtPositioningBugFixer.cpp \
     $$PWD/PasswordLineEdit.cpp \
@@ -89,6 +90,7 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/MegaNodeNames.h \
     $$PWD/NotificationsSettings.h \
     $$PWD/OverQuotaDialog.h \
+    $$PWD/QMLDialogWrapper.h \
     $$PWD/ScanningWidget.h \
     $$PWD/QtPositioningBugFixer.h \
     $$PWD/PasswordLineEdit.h \

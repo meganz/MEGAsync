@@ -26,7 +26,6 @@
 
 #include "mega/types.h"
 
-#include <QQmlApplicationEngine>
 #include <QTranslator>
 #include <QClipboard>
 #include <QDesktopWidget>

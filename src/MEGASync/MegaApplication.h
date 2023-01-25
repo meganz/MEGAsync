@@ -12,6 +12,7 @@
 #include <QQueue>
 #include <QNetworkInterface>
 #include <memory>
+#include <QQmlEngine>
 
 #include "gui/TransferManager.h"
 #include "gui/node_selector/gui/NodeSelector.h"
