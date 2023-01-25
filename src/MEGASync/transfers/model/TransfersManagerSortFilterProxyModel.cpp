@@ -1,5 +1,6 @@
 #include "TransfersManagerSortFilterProxyModel.h"
 #include "TransfersModel.h"
+#include "MegaTransferView.h"
 #include "MegaApplication.h"
 #include "TransferManagerDelegateWidget.h"
 #include <megaapi.h>
@@ -523,7 +524,9 @@ QMimeData *TransfersManagerSortFilterProxyModel::mimeData(const QModelIndexList 
         return index1.row() < index2.row();
     });
 
-    return TransfersSortFilterProxyBaseModel::mimeData(sortedIndexes);
+    mInternalMoveMimeData = TransfersSortFilterProxyBaseModel::mimeData(sortedIndexes);
+
+    return mInternalMoveMimeData;
 }
 
 bool TransfersManagerSortFilterProxyModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int destRow, int column, const QModelIndex &parent)
@@ -640,6 +643,11 @@ int TransfersManagerSortFilterProxyModel::activeTransfers() const
 bool TransfersManagerSortFilterProxyModel::isModelProcessing() const
 {
     return mFilterWatcher.isRunning();
+}
+
+bool TransfersManagerSortFilterProxyModel::isDragging() const
+{
+    return mInternalMoveMimeData;
 }
 
 bool TransfersManagerSortFilterProxyModel::moveRows(const QModelIndex &proxyParent, int proxyRow, int count,
