@@ -284,6 +284,7 @@ void NodeSelectorTreeViewWidget::onbNewFolderClicked()
     }
 
     QPointer<NewFolderDialog> dialog(new NewFolderDialog(parentNode, this));
+    dialog->init();
     DialogOpener::showDialog(dialog,  [this, dialog]()
     {
         auto newNode = dialog->getNewNode();
@@ -450,6 +451,7 @@ void NodeSelectorTreeViewWidget::onRenameClicked()
     }
 
     QPointer<RenameRemoteNodeDialog> dialog(new RenameRemoteNodeDialog(std::move(node), nullptr));
+    dialog->init();
     DialogOpener::showDialog(dialog, [this, dialog]
     {
         if(dialog->result() == QDialog::Accepted)

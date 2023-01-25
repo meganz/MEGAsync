@@ -12,6 +12,7 @@ class RenameNodeDialog : public NodeNameSetterDialog
 
 public:
     RenameNodeDialog(QWidget* parent);
+    virtual ~RenameNodeDialog() = default;
 
 protected:
     QString dialogText() override;
@@ -32,6 +33,8 @@ public:
     RenameRemoteNodeDialog(const QString& nodeName, QWidget* parent);
     RenameRemoteNodeDialog(std::unique_ptr<mega::MegaNode>, QWidget* parent);
 
+    ~RenameRemoteNodeDialog() = default;
+
 protected:
     void onDialogAccepted() override;
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
@@ -49,6 +52,7 @@ class RenameLocalNodeDialog : public RenameNodeDialog
 
 public:
     RenameLocalNodeDialog(const QString& nodePath, QWidget* parent);
+    ~RenameLocalNodeDialog() = default;
 
 protected:
     void onDialogAccepted() override;

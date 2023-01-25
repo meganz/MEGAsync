@@ -19,7 +19,9 @@ class NodeNameSetterDialog : public QDialog, public mega::MegaRequestListener
 
 public:
     NodeNameSetterDialog(QWidget* parent);
+    virtual ~NodeNameSetterDialog();
 
+    void init();
     QString getName() const;
 
 protected:
@@ -48,8 +50,6 @@ protected:
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
 
 private:
-    void init();
-
     QTimer mNewFolderErrorTimer;
 
 private slots:

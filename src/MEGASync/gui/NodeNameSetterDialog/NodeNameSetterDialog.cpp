@@ -13,7 +13,11 @@ NodeNameSetterDialog::NodeNameSetterDialog(QWidget *parent)
       mUi(new Ui::NodeNameSetterDialog()),
       mDelegateListener(mega::make_unique<mega::QTMegaRequestListener>(MegaSyncApp->getMegaApi(), this))
 {
-    init();
+}
+
+NodeNameSetterDialog::~NodeNameSetterDialog()
+{
+    delete mUi;
 }
 
 void NodeNameSetterDialog::init()
