@@ -770,9 +770,7 @@ QModelIndex NodeSelectorModel::getIndexFromNode(const std::shared_ptr<mega::Mega
 
 void NodeSelectorModel::rootItemsLoaded()
 {
-    blockSignals(true);
     endResetModel();
-    blockSignals(false);
 }
 
 void NodeSelectorModel::addRootItems()

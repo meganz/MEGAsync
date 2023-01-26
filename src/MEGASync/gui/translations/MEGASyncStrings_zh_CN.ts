@@ -2816,6 +2816,26 @@ Transfer will automatically resume when you re-open the app.</source>
         <translatorcomment>Notification message launched when a backup is disabled. Keep &amp;quot;%1&amp;quot; code because is filled with the name of the backup at runtime and %2 with the reason of the error.</translatorcomment>
         <translation>由于：%2，您的备份“%1”已被禁用</translation>
     </message>
+    <message>
+        <source>Security upgrade</source>
+        <translatorcomment>Title of security upgrade dialog</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>You are currently sharing the following folder: %1</source>
+        <translatorcomment>Additional information shown within Security upgrade dialog if the user has outgoing shares. A list of the shares will be filled at %1 placeholder. Please check screenshot to see the full context of this string along with the other ones.</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Failed to ugrade security. Error: %1</source>
+        <translatorcomment>System notification error shown if an error occur while upgrading security for your account. %1 will be replaced with the error returned from the SDK.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your account&apos;s security is now being upgraded. This will happen only once. If you have seen this message for this account before, press Cancel.</source>
+        <translatorcomment>Error message shown to the user to inform about that the security of his account is going to be upgraded. </translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -3979,12 +3999,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Additional storage charged at %1 per %2TB.</source>
         <translatorcomment>Balloon tooltip to inform users that additional storate for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>额外存储空间按每%2&#xa0;TB%1收费。</translation>
     </message>
     <message>
         <source>Additional transfer quota charged at %1 per %2TB.</source>
         <translatorcomment>Balloon tooltip to inform users that additional transfer quota for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>额外传输流量按每%2&#xa0;TB%1收费。</translation>
     </message>
     <message numerus="yes">
         <source>minimum %n user</source>
@@ -6207,7 +6227,7 @@ To continue, select a different folder.</source>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a local folder shared with VMWare third party app.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>您正在同步一个与VMWare共享的本地文件夹。这个文件夹不支持文件系统通知，所以为了检测变化和同步，应用程序将不得不持续扫描该文件夹和其中的文件。如果可能的话，请使用一个不同的文件夹来降低CPU的使用率。</translation>
     </message>
 </context>
 <context>

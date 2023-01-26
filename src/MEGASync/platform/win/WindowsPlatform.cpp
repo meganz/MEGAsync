@@ -4,6 +4,8 @@
 #include <platform/win/RecursiveShellNotifier.h>
 #include <platform/win/ThreadedQueueShellNotifier.h>
 
+#include <QtPlatformHeaders/QWindowsWindowFunctions>
+
 #include <Shlobj.h>
 #include <Shlwapi.h>
 #include <tlhelp32.h>
@@ -82,6 +84,9 @@ void WindowsPlatform::initialize(int, char *[])
     mGeneralNotifier = std::make_shared<ThreadedQueueShellNotifier>(
                 std::make_shared<RecursiveShellNotifier>(baseNotifier)
                 );
+
+    //In order to show dialogs when the application is inactive (for example, from the webclient)
+    QWindowsWindowFunctions::setWindowActivationBehavior(QWindowsWindowFunctions::AlwaysActivateWindow);
 }
 
 void WindowsPlatform::prepareForSync()
