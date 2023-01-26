@@ -12,12 +12,12 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/4.8.5.0";
-const int Preferences::VERSION_CODE = 4805;
-const int Preferences::BUILD_ID = 3;
+const char Preferences::USER_AGENT[] = "MEGAsync/4.8.6.0";
+const int Preferences::VERSION_CODE = 4806;
+const int Preferences::BUILD_ID = 2;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("4.8.5");
-QString Preferences::SDK_ID = QString::fromAscii("36c9059");
+const QString Preferences::VERSION_STRING = QString::fromAscii("4.8.6");
+QString Preferences::SDK_ID = QString::fromAscii("016322a");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
 "- Detected crashes on Windows, Linux, and masOS fixed.\n"
 "- Less device memory will be used by accounts with large amounts of data stored.\n"
@@ -31,7 +31,7 @@ int Preferences::STATE_REFRESH_INTERVAL_MS        = 10000;
 int Preferences::NETWORK_REFRESH_INTERVAL_MS      = 30000;
 int Preferences::FINISHED_TRANSFER_REFRESH_INTERVAL_MS        = 10000;
 
-long long Preferences::OQ_DIALOG_INTERVAL_MS = 604800000; // 7 days
+long long Preferences::OQ_DIALOG_INTERVAL_MS = 604800000; // 7 daysm
 long long Preferences::OQ_NOTIFICATION_INTERVAL_MS = 129600000; // 36 hours
 long long Preferences::ALMOST_OQ_UI_MESSAGE_INTERVAL_MS = 259200000; // 72 hours
 long long Preferences::OQ_UI_MESSAGE_INTERVAL_MS = 129600000; // 36 hours

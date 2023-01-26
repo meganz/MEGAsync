@@ -2818,6 +2818,26 @@ Transferurile se vor relua automat când redeschizi aplicația.</numerusform></t
         <translatorcomment>Notification message launched when a backup is disabled. Keep &amp;quot;%1&amp;quot; code because is filled with the name of the backup at runtime and %2 with the reason of the error.</translatorcomment>
         <translation>Backupul „%1” ți-a fost dezactivat. Motivul: %2</translation>
     </message>
+    <message>
+        <source>Security upgrade</source>
+        <translatorcomment>Title of security upgrade dialog</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>You are currently sharing the following folder: %1</source>
+        <translatorcomment>Additional information shown within Security upgrade dialog if the user has outgoing shares. A list of the shares will be filled at %1 placeholder. Please check screenshot to see the full context of this string along with the other ones.</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Failed to ugrade security. Error: %1</source>
+        <translatorcomment>System notification error shown if an error occur while upgrading security for your account. %1 will be replaced with the error returned from the SDK.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your account&apos;s security is now being upgraded. This will happen only once. If you have seen this message for this account before, press Cancel.</source>
+        <translatorcomment>Error message shown to the user to inform about that the security of his account is going to be upgraded. </translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -6563,7 +6583,7 @@ Pentru a continua, selectează un alt folder.</translation>
 To get more quota, upgrade to a Pro account or wait for [A] until more free quota becomes available on your IP address.</source>
         <translatorcomment>Message which shows that the user reachs the overquota. [A] is the time to wait until the quota is reset in hh:mm:ss</translatorcomment>
         <translation>Nu poți continua descărcarea deoarece nu mai există suficientă cotă de transfer pentru această adresă IP.
-Pentru a obține mai multă cotă, upgradează la un cont Pro sau așteaptă până când va fi disponibilă mai multă cotă gratuită pentru adresa ta IP.</translation>
+Pentru a obține mai multă cotă, upgradează la un cont Pro sau așteaptă [A] până când va fi disponibilă mai multă cotă gratuită pentru adresa ta IP.</translation>
     </message>
     <message>
         <source>More about transfer quota</source>

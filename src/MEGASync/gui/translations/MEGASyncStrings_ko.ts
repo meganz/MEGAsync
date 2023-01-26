@@ -2795,7 +2795,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>MEGA 폴더가 휴지통에 있어서 백업 &quot;%1&quot;이/가 비활성화 되었습니다.</translation>
+        <translation>MEGA 폴더가 휴지통에 있어서 백업 “%1”이/가 비활성화 되었습니다.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
@@ -2816,6 +2816,26 @@ Transfer will automatically resume when you re-open the app.</source>
         <source>Your backup &quot;%1&quot; has been disabled. Reason: %2</source>
         <translatorcomment>Notification message launched when a backup is disabled. Keep &amp;quot;%1&amp;quot; code because is filled with the name of the backup at runtime and %2 with the reason of the error.</translatorcomment>
         <translation>백업 &quot;%1&quot;이/가 비활성화 되었습니다. 사유: %2</translation>
+    </message>
+    <message>
+        <source>Security upgrade</source>
+        <translatorcomment>Title of security upgrade dialog</translatorcomment>
+        <translation>보안 업그레이드</translation>
+    </message>
+    <message numerus="yes">
+        <source>You are currently sharing the following folder: %1</source>
+        <translatorcomment>Additional information shown within Security upgrade dialog if the user has outgoing shares. A list of the shares will be filled at %1 placeholder. Please check screenshot to see the full context of this string along with the other ones.</translatorcomment>
+        <translation><numerusform>현재 다음의 폴더를 공유 중입니다: %1</numerusform></translation>
+    </message>
+    <message>
+        <source>Failed to ugrade security. Error: %1</source>
+        <translatorcomment>System notification error shown if an error occur while upgrading security for your account. %1 will be replaced with the error returned from the SDK.</translatorcomment>
+        <translation>보안 업그레이드 실패. 오류: %1</translation>
+    </message>
+    <message>
+        <source>Your account&apos;s security is now being upgraded. This will happen only once. If you have seen this message for this account before, press Cancel.</source>
+        <translatorcomment>Error message shown to the user to inform about that the security of his account is going to be upgraded. </translatorcomment>
+        <translation>계정의 보안이 업그레이드 되는 중입니다. 이것은 한번만 실행됩니다. 만약 이 메시지를 이 계정에서 이전에 본 적이 있다면, 취소를 누르세요.</translation>
     </message>
 </context>
 <context>

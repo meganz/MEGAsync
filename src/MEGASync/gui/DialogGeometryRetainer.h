@@ -77,8 +77,8 @@ public:
             }
         }
 
-        mDialog->activateWindow();
         mDialog->raise();
+        mDialog->activateWindow();
 
         mDialog->installEventFilter(this);
     }
