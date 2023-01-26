@@ -93,11 +93,6 @@ height: 16px;
     height: 34px;
 }
 
-#wSearch QPushButton
-{
-    height: 34px;
-}
-
 QGroupBox
 {
     font-size: 12px;
@@ -197,7 +192,6 @@ QGroupBox::title
 {
     border: 1px solid #F5F5F5; 
     background-color: #FAFAFA;
-    color: #333333;
 }
 
 #wLeftPane QFrame[itsOn=false] 
@@ -206,7 +200,7 @@ QGroupBox::title
     background-color: transparent;
 }
 
-#wLeftPane QFrame[itsOn=false]  QLabel
+#wLeftPane QFrame[itsOn=false] &gt; QLabel
 {
     border: 1px transparent #FAFAFA; 
     background: transparent;
@@ -217,13 +211,17 @@ QGroupBox::title
 min-height:40px;
 }
 
-#wLeftPane QPushbutton
+#wLeftPane QPushButton
 {
 min-height:40px;
 }
+
 </string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
+      <property name="topMargin">
+       <number>0</number>
+      </property>
       <item>
        <widget class="QGroupBox" name="wStorage">
         <property name="title">
@@ -283,7 +281,7 @@ min-height:40px;
               <property name="minimumSize">
                <size>
                 <width>0</width>
-                <height>36</height>
+                <height>40</height>
                </size>
               </property>
               <property name="maximumSize">
@@ -309,6 +307,12 @@ min-height:40px;
                <iconset theme="cloud_ico" resource="../../../Resources_win.qrc">
                 <normaloff>:/images/node_selector/sidebar/cloud_ico_default.png</normaloff>:/images/node_selector/sidebar/cloud_ico_default.png</iconset>
               </property>
+              <property name="iconSize">
+               <size>
+                <width>24</width>
+                <height>24</height>
+               </size>
+              </property>
               <property name="checkable">
                <bool>true</bool>
               </property>
@@ -323,6 +327,9 @@ min-height:40px;
               </property>
               <property name="default_icon" stdset="0">
                <string notr="true">qrc:/images/node_selector/sidebar/cloud_ico_default.png</string>
+              </property>
+              <property name="icon_spacing" stdset="0">
+               <UInt>4</UInt>
               </property>
               <attribute name="buttonGroup">
                <string notr="true">buttonGroup</string>
@@ -370,7 +377,7 @@ min-height:40px;
               <property name="minimumSize">
                <size>
                 <width>0</width>
-                <height>36</height>
+                <height>40</height>
                </size>
               </property>
               <property name="font">
@@ -401,6 +408,9 @@ min-height:40px;
               </property>
               <property name="default_icon" stdset="0">
                <string notr="true">qrc:/images/node_selector/sidebar/backup_ico_default.png</string>
+              </property>
+              <property name="icon_spacing" stdset="0">
+               <UInt>4</UInt>
               </property>
               <attribute name="buttonGroup">
                <string notr="true">buttonGroup</string>
@@ -463,7 +473,7 @@ min-height:40px;
               <property name="minimumSize">
                <size>
                 <width>0</width>
-                <height>36</height>
+                <height>40</height>
                </size>
               </property>
               <property name="font">
@@ -494,6 +504,9 @@ min-height:40px;
               </property>
               <property name="default_icon" stdset="0">
                <string notr="true">qrc:/images/node_selector/sidebar/folder-users_default.png</string>
+              </property>
+              <property name="icon_spacing" stdset="0">
+               <UInt>4</UInt>
               </property>
               <attribute name="buttonGroup">
                <string notr="true">buttonGroup</string>

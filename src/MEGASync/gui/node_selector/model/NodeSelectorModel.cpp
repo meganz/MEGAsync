@@ -32,7 +32,6 @@ void NodeRequester::requestNodeAndCreateChildren(NodeSelectorModelItem* item, co
     {
         auto node = item->getNode();
         item->setProperty(INDEX_PROPERTY, parentIndex);
-        qDebug()<<item->getNode()->getName();
         if(!item->requestingChildren() && !item->areChildrenInitialized())
         {
             item->setRequestingChildren(true);
@@ -285,7 +284,7 @@ void NodeRequester::abort()
 
 /* ------------------- MODEL ------------------------- */
 
-const int NodeSelectorModel::ROW_HEIGHT = 24;
+const int NodeSelectorModel::ROW_HEIGHT = 25;
 
 NodeSelectorModel::NodeSelectorModel(QObject *parent) :
     QAbstractItemModel(parent),
@@ -840,6 +839,11 @@ QModelIndex NodeSelectorModel::getIndexFromNode(const std::shared_ptr<mega::Mega
     return QModelIndex();
 }
 
+void NodeSelectorModel::continueLoading(NodeSelectorModelItem *item)
+{
+    Q_UNUSED(item)
+}
+
 void NodeSelectorModel::rootItemsLoaded()
 {
     blockSignals(true);
@@ -904,6 +908,7 @@ void NodeSelectorModel::onChildNodesReady(NodeSelectorModelItem* parent)
     auto index = parent->property(INDEX_PROPERTY).value<QModelIndex>();
     mIndexesActionInfo.indexesToBeExpanded.append(index);
     continueWithNextItemToLoad(index);
+    continueLoading(parent);
 }
 
 bool NodeSelectorModel::continueWithNextItemToLoad(const QModelIndex& parentIndex)

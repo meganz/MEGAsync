@@ -10,6 +10,7 @@ const char* ButtonIconManager::CHECK_STATE = "check_state";
 const char* ButtonIconManager::IGNORE_BUTTON = "ignore_button_manager";
 const char* ButtonIconManager::CHANGE_LATER = "change_if_hover_on_selection";
 
+const char* ButtonIconManager::ICON_SPACING = "icon_spacing";
 const char* ButtonIconManager::BUTTON_FULL_TEXT = "button_full_text";
 const char* ButtonIconManager::BUTTON_ELIDE_TEXT = "button_elide_text";
 const char* ButtonIconManager::NOT_CHANGE_TEXT_COLOR = "not_change_text_color";
@@ -74,6 +75,7 @@ bool ButtonIconManager::eventFilter(QObject * watched, QEvent * event)
             bool buttonTextHasChanged = button->property(BUTTON_ELIDE_TEXT).isValid() && button->text() != button->property(BUTTON_ELIDE_TEXT).toString();
             if(buttonTextHasChanged)
             {
+                addIconSpacing(button);
                 button->setProperty(BUTTON_FULL_TEXT, button->text());
                 elideButtonText(button, button->property(BUTTON_FULL_TEXT).toString());
             }
@@ -98,6 +100,7 @@ bool ButtonIconManager::eventFilter(QObject * watched, QEvent * event)
         {
             if(!button->property(BUTTON_FULL_TEXT).isValid())
             {
+                addIconSpacing(button);
                 button->setProperty(BUTTON_FULL_TEXT, button->text());
             }
 
@@ -274,6 +277,18 @@ bool ButtonIconManager::cleanIconName(IconInfo& info, const QString& separator)
     {
         info.iconName.clear();
         return false;
+    }
+}
+
+void ButtonIconManager::addIconSpacing(QAbstractButton *button)
+{
+    if(button->property(ICON_SPACING).isValid())
+    {
+        QString spaceChar(QLatin1String(" "));
+        uint spacing = button->property(ICON_SPACING).toUInt();
+        uint space_size = button->fontMetrics().width(spaceChar);
+        uint number_of_spaces = spacing / space_size;
+        button->setText(spaceChar.repeated(number_of_spaces) + button->text());
     }
 }
 

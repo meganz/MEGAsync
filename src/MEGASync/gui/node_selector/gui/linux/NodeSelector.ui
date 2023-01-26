@@ -206,7 +206,7 @@ QGroupBox::title
     background-color: transparent;
 }
 
-#wLeftPane QFrame[itsOn=false]  QLabel
+#wLeftPane QFrame[itsOn=false]  &gt; QLabel
 {
     border: 1px transparent #FAFAFA; 
     background: transparent;
@@ -224,6 +224,9 @@ min-height:36px;
 </string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
+      <property name="topMargin">
+       <number>0</number>
+      </property>
       <item>
        <widget class="QGroupBox" name="wStorage">
         <property name="title">
@@ -324,6 +327,9 @@ min-height:36px;
               <property name="default_icon" stdset="0">
                <string notr="true">qrc:/images/node_selector/sidebar/cloud_ico_default.png</string>
               </property>
+              <property name="icon_spacing" stdset="0">
+               <UInt>4</UInt>
+              </property>
               <attribute name="buttonGroup">
                <string notr="true">buttonGroup</string>
               </attribute>
@@ -401,6 +407,9 @@ min-height:36px;
               </property>
               <property name="default_icon" stdset="0">
                <string notr="true">qrc:/images/node_selector/sidebar/backup_ico_default.png</string>
+              </property>
+              <property name="icon_spacing" stdset="0">
+               <UInt>4</UInt>
               </property>
               <attribute name="buttonGroup">
                <string notr="true">buttonGroup</string>
@@ -494,6 +503,9 @@ min-height:36px;
               </property>
               <property name="default_icon" stdset="0">
                <string notr="true">qrc:/images/node_selector/sidebar/folder-users_default.png</string>
+              </property>
+              <property name="icon_spacing" stdset="0">
+               <UInt>4</UInt>
               </property>
               <attribute name="buttonGroup">
                <string notr="true">buttonGroup</string>

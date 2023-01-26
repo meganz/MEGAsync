@@ -34,6 +34,9 @@ NodeSelector::NodeSelector(QWidget *parent) :
     connect(ui->bShowCloudDrive, &QPushButton::clicked, this, &NodeSelector::onbShowCloudDriveClicked);
     connect(ui->bShowBackups, &QPushButton::clicked, this, &NodeSelector::onbShowBackupsFolderClicked);
     connect(ui->bSearch, &QPushButton::clicked, this, &NodeSelector::onbShowSearchClicked);
+    ButtonIconManager::Settings settings;
+    settings.opacityGap = 0.3;
+    mButtonIconManager.setSettings(settings);
 
     foreach(auto& button, ui->wLeftPane->findChildren<QAbstractButton*>())
     {
@@ -56,6 +59,7 @@ NodeSelector::NodeSelector(QWidget *parent) :
     setAllFramesItsOnProperty();
 
     updateNodeSelectorTabs();
+    onOptionSelected(CLOUD_DRIVE);
 }
 
 NodeSelector::~NodeSelector()
@@ -313,11 +317,6 @@ void NodeSelector::makeConnections(SelectTypeSPtr selectType)
 
 void NodeSelector::setSelectedNodeHandle(std::shared_ptr<MegaNode> node, bool goToInit)
 {
-    if(!node)
-    {
-        node = std::shared_ptr<MegaNode>(mMegaApi->getRootNode());
-    }
-
     if(node)
     {
         TabItem option = SHARES;
@@ -329,9 +328,7 @@ void NodeSelector::setSelectedNodeHandle(std::shared_ptr<MegaNode> node, bool go
         {
             option = BACKUPS;
         }
-
         onOptionSelected(option);
-
         auto tree_view_widget = static_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->currentWidget());
         tree_view_widget->setSelectedNodeHandle(node->getHandle(), goToInit);
     }

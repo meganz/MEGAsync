@@ -329,7 +329,6 @@ bool NodeSelectorModelItem::isCloudDrive()
 
 bool NodeSelectorModelItem::isVault()
 {
-    //todo eka: check this
     return false;
 }
 

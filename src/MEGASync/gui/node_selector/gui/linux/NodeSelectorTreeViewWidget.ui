@@ -500,6 +500,11 @@ QToolButton:pressed
 	outline:0;
 }
 
+QTreeView::item:last
+{
+	padding-left:6px;
+}
+
 QTreeView::item:disabled
 {
 	background-color:transparent;
@@ -521,6 +526,10 @@ QTreeView::item:selected {
     border: transparent;
 	 color: white;
     background-color: #3393df;
+}
+
+QTreeView::branch {
+padding-top:2px;
 }
 
 QTreeView::branch:selected:closed:has-children:adjoins-item {
@@ -559,7 +568,7 @@ border-left:1px solid #dadada;
 border-top:0 px;
 border-bottom:0px;					 					 				 					 	
 border-right:0px;
-padding-left:3px;
+padding-left:8px;
 padding-top: 3px;
 }
 

@@ -5069,7 +5069,6 @@ void MegaApplication::downloadActionClicked()
     }
 
     downloadNodeSelector = new DownloadNodeSelector(nullptr);
-    downloadNodeSelector->setSelectedNodeHandle();
     int result = downloadNodeSelector->exec();
     if (!downloadNodeSelector)
     {

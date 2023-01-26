@@ -31,6 +31,9 @@ border:none;
    <number>1</number>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
    <property name="leftMargin">
     <number>3</number>
    </property>
@@ -76,6 +79,10 @@ padding-left:3px;
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font-size:14px;
+font-weight:400;</string>
      </property>
      <property name="text">
       <string notr="true"/>

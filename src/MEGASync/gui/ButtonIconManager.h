@@ -16,6 +16,7 @@ class ButtonIconManager : public QObject
     static const char*   BUTTON_FULL_TEXT;
     static const char*   BUTTON_ELIDE_TEXT;
     static const char*   NOT_CHANGE_TEXT_COLOR;
+    static const char*   ICON_SPACING;
 
     struct IconInfo
     {
@@ -47,7 +48,7 @@ public:
 
     explicit ButtonIconManager(QObject * parent = nullptr);
     void addButton(QAbstractButton* button);
-    void setSettings(const Settings& settings);
+    void setSettings(const Settings& settings){mSettings = settings;};
 
 protected:
     virtual bool eventFilter(QObject * watched, QEvent * event) override;
@@ -57,6 +58,7 @@ private:
     void changeButtonTextColor(QAbstractButton* button, double alpha);
     IconInfo splitIconPath(const QString& iconPath);
     bool cleanIconName(IconInfo& info, const QString& separator);
+    void addIconSpacing(QAbstractButton* button);
 
     void setDefaultIcon(QAbstractButton* button);
     void setHoverIcon(QAbstractButton* button);

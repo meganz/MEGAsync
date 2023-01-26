@@ -26,7 +26,7 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(SelectTypeSPtr mode, QWid
     mSelectType(mode)
 {
     ui->setupUi(this);
-
+    setFocusProxy(ui->tMegaFolders);
     ui->cbAlwaysUploadToLocation->hide();
     ui->bOk->setDefault(true);
     ui->bOk->setEnabled(false);

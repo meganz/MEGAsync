@@ -500,6 +500,11 @@ QToolButton:pressed
      font-family:SF Pro Display;
 }
 
+QTreeView::item:last
+{
+	padding-left:6px;
+}
+
 
 QTreeView::item:disabled
 {
@@ -528,6 +533,9 @@ QTreeView::item:selected {
 	font-size: 14px;
 }
 
+QTreeView::branch {
+padding-top:2px;
+}
 
 QTreeView::branch:selected:closed:has-children:adjoins-item {
     border-image: none;
@@ -569,7 +577,7 @@ border-left:1px solid #dadada;
 border-top:0 px;
 border-bottom:0px;					 					 				 					 	
 border-right:0px;
-padding-left:3px;
+padding-left:8px;
 }
 
 

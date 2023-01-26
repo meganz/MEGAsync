@@ -167,6 +167,7 @@ void NodeSelectorModelBackups::fetchMore(const QModelIndex &parent)
 void NodeSelectorModelBackups::firstLoad()
 {
     connect(this, &NodeSelectorModelBackups::requestBackupsRootCreation, mNodeRequesterWorker, &NodeRequester::createBackupRootItems);
+    connect(this, &NodeSelectorModelBackups::requestBackupsRootCreation, mNodeRequesterWorker, &NodeRequester::createBackupItems);
     connect(mNodeRequesterWorker, &NodeRequester::megaBackupRootItemsCreated, this, &NodeSelectorModelBackups::onRootItemCreated, Qt::QueuedConnection);
 
     auto backupsRequest = UserAttributes::MyBackupsHandle::requestMyBackupsHandle();
@@ -202,6 +203,23 @@ void NodeSelectorModelBackups::onMyBackupsHandleReceived(mega::MegaHandle handle
 bool NodeSelectorModelBackups::addToLoadingList(const std::shared_ptr<MegaNode> node)
 {
     return node && node->getType() != mega::MegaNode::TYPE_VAULT;
+}
+
+void NodeSelectorModelBackups::continueLoading(NodeSelectorModelItem *item)
+{
+    if(item->isVault())
+    {
+        QModelIndex rootIndex(index(0, 0));
+        int rowcount = rowCount(rootIndex);
+       for(int i = 0 ; i < rowcount; i++)
+       {
+           auto idx = index(i, 0, rootIndex);
+           if(canFetchMore(idx))
+           {
+               fetchItemChildren(idx);
+           }
+       }
+    }
 }
 
 void NodeSelectorModelBackups::onRootItemCreated(NodeSelectorModelItem *item)
