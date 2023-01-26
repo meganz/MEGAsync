@@ -41,4 +41,15 @@ private:
                          const QModelIndex &index) const override;
 };
 
+class DateColumnDelegate : public QStyledItemDelegate
+{
+public:
+    explicit DateColumnDelegate(QObject *parent = nullptr);
+    void paint(QPainter* painter, const QStyleOptionViewItem& option,
+               const QModelIndex& index) const override;
+
+private:
+    void initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const override;
+};
+
 #endif // NODESELECTORDELEGATES_H

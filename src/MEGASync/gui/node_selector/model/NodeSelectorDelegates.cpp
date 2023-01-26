@@ -6,6 +6,7 @@
 #include <QToolTip>
 #include <QFontMetrics>
 #include <QAbstractItemView>
+#include <QApplication>
 
 
 const int IconDelegate::ICON_HEIGHT = 18;
@@ -116,4 +117,33 @@ void NodeRowDelegate::initStyleOption(QStyleOptionViewItem *option, const QModel
     {
         option->state &= ~QStyle::State_Enabled;
     }
+}
+
+DateColumnDelegate::DateColumnDelegate(QObject *parent)
+    : QStyledItemDelegate(parent)
+{
+}
+
+void DateColumnDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+    QStyledItemDelegate::paint(painter, option, index);
+    if(option.state & QStyle::State_Selected)
+    {
+        painter->setPen(option.palette.color(QPalette::HighlightedText));
+    }
+    else
+    {
+        painter->setPen(option.palette.color(QPalette::Text));
+    }
+    QRect rect = QApplication::style()->subElementRect(QStyle::SE_ItemViewItemText, &option, qobject_cast<QWidget*>(parent()));
+    rect.adjust(10, 0, -5, 0);
+    QString elideText = option.fontMetrics.elidedText(index.data(Qt::DisplayRole).toString(), Qt::ElideMiddle, rect.width());
+    QApplication::style()->drawItemText(painter, rect, Qt::AlignVCenter, option.palette, true, elideText);
+
+}
+
+void DateColumnDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const
+{
+    QStyledItemDelegate::initStyleOption(option, index);
+    option->text = QString::fromUtf8("");
 }

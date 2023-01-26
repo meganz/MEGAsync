@@ -167,7 +167,6 @@ void NodeSelectorModelBackups::fetchMore(const QModelIndex &parent)
 void NodeSelectorModelBackups::firstLoad()
 {
     connect(this, &NodeSelectorModelBackups::requestBackupsRootCreation, mNodeRequesterWorker, &NodeRequester::createBackupRootItems);
-    connect(this, &NodeSelectorModelBackups::requestBackupsRootCreation, mNodeRequesterWorker, &NodeRequester::createBackupItems);
     connect(mNodeRequesterWorker, &NodeRequester::megaBackupRootItemsCreated, this, &NodeSelectorModelBackups::onRootItemCreated, Qt::QueuedConnection);
 
     auto backupsRequest = UserAttributes::MyBackupsHandle::requestMyBackupsHandle();
