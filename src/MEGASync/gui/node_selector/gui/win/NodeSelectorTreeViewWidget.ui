@@ -500,11 +500,6 @@ QToolButton:pressed
     font-family:SF Pro Display;
 }
 
-QTreeView::item:last
-{
-	padding-left:6px;
-}
-
 QTreeView::item:disabled
 {
 	background-color:transparent;

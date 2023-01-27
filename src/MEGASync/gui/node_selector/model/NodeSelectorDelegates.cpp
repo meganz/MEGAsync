@@ -127,19 +127,24 @@ DateColumnDelegate::DateColumnDelegate(QObject *parent)
 void DateColumnDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     QStyledItemDelegate::paint(painter, option, index);
-    if(option.state & QStyle::State_Selected)
+    painter->save();
+    QPalette::ColorGroup cg = QPalette::Normal;
+    QVariant enabled = index.data(toInt(NodeRowDelegateRoles::ENABLED_ROLE));
+    if (enabled.isValid() && !enabled.toBool())
     {
-        painter->setPen(option.palette.color(QPalette::HighlightedText));
+        cg = QPalette::Disabled;
     }
-    else
-    {
-        painter->setPen(option.palette.color(QPalette::Text));
+    if (option.state & QStyle::State_Selected) {
+        painter->setPen(option.palette.color(cg, QPalette::HighlightedText));
+    } else {
+        painter->setPen(option.palette.color(cg, QPalette::Text));
     }
-    QRect rect = QApplication::style()->subElementRect(QStyle::SE_ItemViewItemText, &option, qobject_cast<QWidget*>(parent()));
+    qDebug()<<option.palette.color(cg, QPalette::Text).name();
+    QRect rect = option.rect;
     rect.adjust(10, 0, -5, 0);
     QString elideText = option.fontMetrics.elidedText(index.data(Qt::DisplayRole).toString(), Qt::ElideMiddle, rect.width());
-    QApplication::style()->drawItemText(painter, rect, Qt::AlignVCenter, option.palette, true, elideText);
-
+    painter->drawText(rect, Qt::AlignVCenter, elideText);
+    painter->restore();
 }
 
 void DateColumnDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const
