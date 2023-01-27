@@ -20,7 +20,7 @@ BEGIN
             VALUE   "CompanyName",      "Mega Limited\0"
             VALUE   "FileDescription",  "MEGAsync\0"
             VALUE   "InternalName",     "MEGAsync.exe\0"
-            VALUE   "LegalCopyright",   "Mega Limited 2022\0"
+            VALUE   "LegalCopyright",   "Mega Limited 2023\0"
             VALUE   "OriginalFilename", "MEGAsync.exe\0"
             VALUE   "ProductName",      "MEGAsync\0"
             VALUE   "ProductVersion",   "5.0.0.0\0"
