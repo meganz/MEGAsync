@@ -373,13 +373,13 @@ bool NodeSelectorProxyModelSearch::filterAcceptsColumn(int source_column, const 
 {
     Q_UNUSED(source_parent)
 
-    if(source_column == NodeSelectorModel::USER)
-    {
-        if(mMode == NodeSelectorModelItemSearch::Type::INCOMING_SHARE)
-        {
-            return true;
-        }
-        return false;
-    }
+//    if(source_column == NodeSelectorModel::USER)
+//    {
+//        if(mMode == NodeSelectorModelItemSearch::Type::INCOMING_SHARE)
+//        {
+//            return true;
+//        }
+//        return false;
+//    }
     return true;
 }

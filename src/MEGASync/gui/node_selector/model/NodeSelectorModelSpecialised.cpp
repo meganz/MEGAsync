@@ -330,8 +330,8 @@ QVariant NodeSelectorModelSearch::data(const QModelIndex &index, int role) const
 
 void NodeSelectorModelSearch::onRootItemsCreated(QList<NodeSelectorModelItem *> items)
 {
-    mSearching = false;
     Q_UNUSED(items)
+    mSearching = false;
     rootItemsLoaded();
     emit levelsAdded(mIndexesActionInfo.indexesToBeExpanded, true);
 }

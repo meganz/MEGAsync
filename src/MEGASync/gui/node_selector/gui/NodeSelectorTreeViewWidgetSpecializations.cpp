@@ -154,18 +154,21 @@ void NodeSelectorTreeViewWidgetSearch::onBackupsSearchClicked()
 {
     auto proxy_model = static_cast<NodeSelectorProxyModelSearch*>(mProxyModel.get());
     proxy_model->setMode(NodeSelectorModelItemSearch::Type::BACKUP);
+    ui->tMegaFolders->setColumnHidden(NodeSelectorModel::USER, true);
 }
 
 void NodeSelectorTreeViewWidgetSearch::onIncomingSharesSearchClicked()
 {
     auto proxy_model = static_cast<NodeSelectorProxyModelSearch*>(mProxyModel.get());
     proxy_model->setMode(NodeSelectorModelItemSearch::Type::INCOMING_SHARE);
+    ui->tMegaFolders->setColumnHidden(NodeSelectorModel::USER, false);
 }
 
 void NodeSelectorTreeViewWidgetSearch::onCloudDriveSearchClicked()
 {
     auto proxy_model = static_cast<NodeSelectorProxyModelSearch*>(mProxyModel.get());
     proxy_model->setMode(NodeSelectorModelItemSearch::Type::CLOUD_DRIVE);
+    ui->tMegaFolders->setColumnHidden(NodeSelectorModel::USER, true);
 }
 
 void NodeSelectorTreeViewWidgetSearch::onItemDoubleClick(const QModelIndex &index)
@@ -173,6 +176,11 @@ void NodeSelectorTreeViewWidgetSearch::onItemDoubleClick(const QModelIndex &inde
     auto sourceIndex = mProxyModel->mapToSource(index);
     NodeSelectorModelItem *item = static_cast<NodeSelectorModelItem*>(sourceIndex.internalPointer());
     emit nodeDoubleClicked(item->getNode(), true);
+}
+
+bool NodeSelectorTreeViewWidgetSearch::nothingChecked() const
+{
+   return !ui->backupsSearch->isChecked() && !ui->cloudDriveSearch->isChecked() && !ui->incomingSharesSearch->isChecked();
 }
 
 QString NodeSelectorTreeViewWidgetSearch::getRootText()
@@ -272,5 +280,24 @@ void NodeSelectorTreeViewWidgetSearch::modelLoaded()
             emit ui->incomingSharesSearch->clicked(true);
         }
     }
+    else if(nothingChecked())
+    {
+        if(ui->cloudDriveSearch->isVisible())
+        {
+            ui->cloudDriveSearch->setChecked(true);
+            emit ui->cloudDriveSearch->clicked(true);
+        }
+        else if(ui->incomingSharesSearch->isVisible())
+        {
+            ui->incomingSharesSearch->setChecked(true);
+            emit ui->incomingSharesSearch->clicked(true);
+        }
+        else if(ui->backupsSearch->isVisible())
+        {
+            ui->backupsSearch->setChecked(true);
+            emit ui->backupsSearch->clicked(true);
+        }
+    }
+
     ui->searchButtonsWidget->setVisible(true);
 }

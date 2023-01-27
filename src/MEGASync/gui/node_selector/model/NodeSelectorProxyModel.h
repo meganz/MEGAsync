@@ -79,12 +79,6 @@ private slots:
 
 class NodeSelectorProxyModelSearch : public NodeSelectorProxyModel
 {
-//    enum class SearchType
-//    {
-//        CLOUD_DRIVE = 0,
-//        INCOMING_SHARES,
-//        BACKUPS
-//    };
 
 public:
     explicit NodeSelectorProxyModelSearch(QObject* parent = nullptr);
@@ -92,7 +86,6 @@ public:
 
 protected:
     bool filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const override;
-    bool filterAcceptsColumn(int source_column, const QModelIndex &source_parent) const override;
 
 private:
     NodeSelectorModelItemSearch::Type mMode;
