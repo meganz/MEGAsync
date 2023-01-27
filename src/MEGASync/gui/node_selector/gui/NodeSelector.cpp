@@ -34,9 +34,6 @@ NodeSelector::NodeSelector(QWidget *parent) :
     connect(ui->bShowCloudDrive, &QPushButton::clicked, this, &NodeSelector::onbShowCloudDriveClicked);
     connect(ui->bShowBackups, &QPushButton::clicked, this, &NodeSelector::onbShowBackupsFolderClicked);
     connect(ui->bSearch, &QPushButton::clicked, this, &NodeSelector::onbShowSearchClicked);
-    ButtonIconManager::Settings settings;
-    settings.opacityGap = 0.3;
-    mButtonIconManager.setSettings(settings);
 
     foreach(auto& button, ui->wLeftPane->findChildren<QAbstractButton*>())
     {
@@ -44,7 +41,7 @@ NodeSelector::NodeSelector(QWidget *parent) :
     }
 
     QColor shadowColor (188, 188, 188);
-    mShadowTab = new QGraphicsDropShadowEffect(ui->buttonGroup); //todo check if it is better deletelater on destructor - May this crash?
+    mShadowTab = new QGraphicsDropShadowEffect(ui->buttonGroup);
     mShadowTab->setBlurRadius(10.);
     mShadowTab->setXOffset(0.);
     mShadowTab->setYOffset(0.);

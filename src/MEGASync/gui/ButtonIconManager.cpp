@@ -166,7 +166,7 @@ void ButtonIconManager::setHoverIcon(QAbstractButton *button)
             }
             else
             {
-                iconInfo.iconName.append(mSettings.hover_suffix);
+                iconInfo.iconName.append(mSettings.selected_suffix);
                 fillIcon(iconInfo, newIcon);
             }
         }

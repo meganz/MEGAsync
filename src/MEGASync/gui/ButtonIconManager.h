@@ -43,7 +43,7 @@ public:
         selected_suffix(QString::fromLatin1("_selected")),
         hover_selected_suffix(QString::fromLatin1("_hover_selected")),
         default_suffix(QString::fromLatin1("_default")),
-        opacityGap(0.5){}
+        opacityGap(0.3){}
     };
 
     explicit ButtonIconManager(QObject * parent = nullptr);
