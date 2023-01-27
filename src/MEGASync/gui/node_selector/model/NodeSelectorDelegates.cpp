@@ -134,12 +134,14 @@ void DateColumnDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
     {
         cg = QPalette::Disabled;
     }
-    if (option.state & QStyle::State_Selected) {
+    if (option.state & QStyle::State_Selected)
+    {
         painter->setPen(option.palette.color(cg, QPalette::HighlightedText));
-    } else {
+    }
+    else
+    {
         painter->setPen(option.palette.color(cg, QPalette::Text));
     }
-    qDebug()<<option.palette.color(cg, QPalette::Text).name();
     QRect rect = option.rect;
     rect.adjust(10, 0, -5, 0);
     QString elideText = option.fontMetrics.elidedText(index.data(Qt::DisplayRole).toString(), Qt::ElideMiddle, rect.width());
