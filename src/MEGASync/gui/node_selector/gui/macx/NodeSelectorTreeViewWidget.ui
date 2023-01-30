@@ -378,6 +378,9 @@ QToolButton:pressed
           <property name="not_change_text_color" stdset="0">
            <bool>true</bool>
           </property>
+          <property name="icon_spacing" stdset="0">
+           <UInt>6</UInt>
+          </property>
           <attribute name="buttonGroup">
            <string notr="true">searchFilterButtonGroup</string>
           </attribute>
@@ -413,6 +416,9 @@ QToolButton:pressed
           <property name="not_change_text_color" stdset="0">
            <bool>true</bool>
           </property>
+          <property name="icon_spacing" stdset="0">
+           <UInt>6</UInt>
+          </property>
           <attribute name="buttonGroup">
            <string notr="true">searchFilterButtonGroup</string>
           </attribute>
@@ -447,6 +453,9 @@ QToolButton:pressed
           </property>
           <property name="not_change_text_color" stdset="0">
            <bool>true</bool>
+          </property>
+          <property name="icon_spacing" stdset="0">
+           <UInt>6</UInt>
           </property>
           <attribute name="buttonGroup">
            <string notr="true">searchFilterButtonGroup</string>

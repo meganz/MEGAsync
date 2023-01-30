@@ -1303,12 +1303,6 @@
         <file>images/node_selector/sidebar/search_selected.png</file>
         <file>images/node_selector/sidebar/search_selected@2x.png</file>
         <file>images/node_selector/sidebar/search_selected@3x.png</file>
-        <file>images/node_selector/sidebar/clear_search_default.png</file>
-        <file>images/node_selector/sidebar/clear_search_default@2x.png</file>
-        <file>images/node_selector/sidebar/clear_search_default@3x.png</file>
-        <file>images/node_selector/sidebar/clear_search_hover.png</file>
-        <file>images/node_selector/sidebar/clear_search_hover@2x.png</file>
-        <file>images/node_selector/sidebar/clear_search_hover@3x.png</file>
         <file>images/node_selector/view/database.png</file>
         <file>images/node_selector/view/database@2x.png</file>
         <file>images/node_selector/view/database@3x.png</file>
