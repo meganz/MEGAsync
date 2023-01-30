@@ -34,6 +34,12 @@ enum class NodeRowDelegateRoles
     last
 };
 
+enum class HeaderRoles
+{
+    ICON_ROLE = toInt(NodeRowDelegateRoles::last),  //ALWAYS use last enum value from previous enum class for new enums
+    last
+};
+
 class NodeSelectorModel;
 
 class NodeRequester : public QObject

@@ -369,17 +369,3 @@ bool NodeSelectorProxyModelSearch::filterAcceptsRow(int sourceRow, const QModelI
     return NodeSelectorProxyModel::filterAcceptsRow(sourceRow, sourceParent);
 }
 
-bool NodeSelectorProxyModelSearch::filterAcceptsColumn(int source_column, const QModelIndex &source_parent) const
-{
-    Q_UNUSED(source_parent)
-
-//    if(source_column == NodeSelectorModel::USER)
-//    {
-//        if(mMode == NodeSelectorModelItemSearch::Type::INCOMING_SHARE)
-//        {
-//            return true;
-//        }
-//        return false;
-//    }
-    return true;
-}

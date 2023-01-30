@@ -53,6 +53,7 @@ NodeSelector::NodeSelector(QWidget *parent) :
     mTabFramesToggleGroup[SHARES] = ui->fIncomingShares;
     mTabFramesToggleGroup[CLOUD_DRIVE] = ui->fCloudDrive;
     ui->wSearch->hide();
+    ui->bSearch->hide();
     setAllFramesItsOnProperty();
 
     updateNodeSelectorTabs();
@@ -83,6 +84,7 @@ void NodeSelector::onSearch(const QString &text)
 {
     ui->bSearch->setText(text);
     ui->wSearch->setVisible(true);
+    ui->bSearch->setVisible(true);
 
     mSearchWidget->search(text);
     mSearchWidget->setSearchText(text);
@@ -155,6 +157,7 @@ void NodeSelector::onbOkClicked()
 void NodeSelector::on_tClearSearchResult_clicked()
 {
     ui->wSearch->hide();
+    ui->bSearch->hide();
     ui->bSearch->setText(QString());
     mSearchWidget->stopSearch();
     if(ui->stackedWidget->currentWidget() == mSearchWidget)

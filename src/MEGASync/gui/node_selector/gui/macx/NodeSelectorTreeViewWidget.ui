@@ -599,7 +599,6 @@ padding-left:8px;
 
 QHeaderView::section::first
 {
-padding-left: 0px;
 border-left:0px;		
 }
 

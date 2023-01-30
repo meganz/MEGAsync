@@ -559,15 +559,16 @@ QVariant NodeSelectorModel::headerData(int section, Qt::Orientation orientation,
             }
             }
         }
-        else if(role == Qt::DecorationRole)
+        else if(role == toInt(HeaderRoles::ICON_ROLE))
         {
-            if(section == STATUS)
-            {
-                return QIcon(QLatin1String("://images/node_selector/icon-small-MEGA.png"));
-            }
-            else if(section == USER)
+            qDebug()<<toInt(HeaderRoles::ICON_ROLE);
+            if(section == USER)
             {
                 return QIcon(QLatin1String("://images/node_selector/icon_small_user.png"));
+            }
+            else if(section == STATUS)
+            {
+                return QIcon(QLatin1String("://images/node_selector/icon-small-MEGA.png"));
             }
         }
     }

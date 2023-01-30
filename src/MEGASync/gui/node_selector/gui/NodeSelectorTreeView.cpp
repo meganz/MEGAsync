@@ -261,7 +261,7 @@ bool NodeSelectorTreeView::handleStandardMouseEvent(QMouseEvent* event)
     return false;
 }
 
-NodSelectorTreeViewHeaderView::NodSelectorTreeViewHeaderView(Qt::Orientation orientation, QWidget *parent) :
+NodeSelectorTreeViewHeaderView::NodeSelectorTreeViewHeaderView(Qt::Orientation orientation, QWidget *parent) :
     QHeaderView(orientation, parent)
 {
     setDefaultAlignment(Qt::AlignLeft);
@@ -269,15 +269,22 @@ NodSelectorTreeViewHeaderView::NodSelectorTreeViewHeaderView(Qt::Orientation ori
     setDefaultSectionSize(35);
 }
 
-void NodSelectorTreeViewHeaderView::paintSection(QPainter *painter, const QRect &rect, int logicalIndex) const
+void NodeSelectorTreeViewHeaderView::paintSection(QPainter *painter, const QRect &rect, int logicalIndex) const
 {
-    QRect vrect = rect; 
-
-#ifdef _WIN32
-    if(logicalIndex == NodeSelectorModel::USER)
-        vrect.moveTo(vrect.x() - 2,vrect.y());
-#endif
-
-    QHeaderView::paintSection(painter, vrect, logicalIndex);
+    painter->save();
+    QHeaderView::paintSection(painter, rect, logicalIndex);
+    painter->restore();
+    if(logicalIndex == NodeSelectorModel::USER || logicalIndex == NodeSelectorModel::STATUS)
+    {  
+        QRect iconRect(QPoint(rect.topLeft()), QSize(18, 18));
+        iconRect.moveCenter(rect.center());
+        QIcon icon = model()->headerData(logicalIndex, Qt::Orientation::Horizontal, toInt(HeaderRoles::ICON_ROLE)).value<QIcon>();
+        if(!icon.isNull())
+        {
+            painter->setRenderHint(QPainter::Antialiasing, true);
+            painter->setRenderHint(QPainter::SmoothPixmapTransform, true);
+            icon.paint(painter, iconRect, Qt::AlignVCenter | Qt::AlignHCenter);
+        }
+    }
 }
 

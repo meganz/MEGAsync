@@ -28,27 +28,26 @@ void IconDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
     QStyleOptionViewItem opt(option);
     opt.decorationAlignment = index.data(Qt::TextAlignmentRole).value<Qt::Alignment>();
 
-    QPixmap pixmap;
+    QIcon icon;
+    QIcon::Mode iconMode = QIcon::Normal;
     if(index.data(Qt::DecorationRole).canConvert<QIcon>())
     {
-        auto icon = index.data(Qt::DecorationRole).value<QIcon>();
+        icon = index.data(Qt::DecorationRole).value<QIcon>();
 
-        QIcon::Mode iconMode = QIcon::Normal;
         if(option.state.testFlag(QStyle::State_Selected))
         {
             iconMode = QIcon::Selected;
         }
-        pixmap = icon.pixmap(ICON_HEIGHT, iconMode);
     }
-    else
+    else if(index.data(Qt::DecorationRole).canConvert<QPixmap>())
     {
-        pixmap = index.data(Qt::DecorationRole).value<QPixmap>();
+        icon.addPixmap(index.data(Qt::DecorationRole).value<QPixmap>());
     }
 
-    const int x = option.rect.center().x() - ICON_HEIGHT / 2;
-    const int y = option.rect.center().y() - ICON_HEIGHT / 2;
+    QRect iconRect(QPoint(option.rect.topLeft()), QSize(ICON_HEIGHT, ICON_HEIGHT));
+    iconRect.moveCenter(option.rect.center());
+    icon.paint(painter, iconRect, Qt::AlignVCenter | Qt::AlignHCenter, iconMode);
 
-    painter->drawPixmap(QRect(x, y + 1, ICON_HEIGHT, ICON_HEIGHT), pixmap);
 }
 
 void IconDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const

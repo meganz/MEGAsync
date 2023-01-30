@@ -1,5 +1,5 @@
-#include "NodeSelectorTreeViewWidget.h"
 #include "ui_NodeSelectorTreeViewWidget.h"
+#include "NodeSelectorTreeViewWidget.h"
 #include "../model/NodeSelectorModel.h"
 #include "../model/NodeSelectorDelegates.h"
 #include "MegaApplication.h"
@@ -172,7 +172,7 @@ void NodeSelectorTreeViewWidget::onExpandReady()
     {
         ui->tMegaFolders->setContextMenuPolicy(Qt::DefaultContextMenu);
         ui->tMegaFolders->setExpandsOnDoubleClick(false);
-        ui->tMegaFolders->setHeader(new NodSelectorTreeViewHeaderView(Qt::Horizontal));
+        ui->tMegaFolders->setHeader(new NodeSelectorTreeViewHeaderView(Qt::Horizontal));
         ui->tMegaFolders->setItemDelegate(new NodeRowDelegate(ui->tMegaFolders));
         ui->tMegaFolders->setItemDelegateForColumn(NodeSelectorModel::STATUS, new IconDelegate(ui->tMegaFolders));
         ui->tMegaFolders->setItemDelegateForColumn(NodeSelectorModel::USER, new IconDelegate(ui->tMegaFolders));
