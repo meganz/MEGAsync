@@ -117,6 +117,7 @@ include(gui/gui.pri)
 include(mega/bindings/qt/sdk.pri)
 include(control/control.pri)
 include(transfers/transfers.pri)
+include(notifications/notifications.pri)
 include(syncs/syncs.pri)
 include(platform/platform.pri)
 include(google_breakpad/google_breakpad.pri)
@@ -140,8 +141,6 @@ DEFINES += QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII
 }
 
 SOURCES += $$PWD/MegaApplication.cpp \
-    $$PWD/DesktopNotifications.cpp \
-    $$PWD/RemovedSharesNotificator.cpp \
     $$PWD/TransferQuota.cpp \
     $$PWD/UserAlertTimedClustering.cpp \
     $$PWD/ScaleFactorManager.cpp \
@@ -150,7 +149,6 @@ SOURCES += $$PWD/MegaApplication.cpp \
     $$PWD/EventUpdater.cpp \
     $$PWD/FolderTransferListener.cpp \
     $$PWD/BlockingStageProgressController.cpp \
-    $$PWD/TransferNotificationMessageBuilder.cpp \
     $$PWD/UserAttributesRequests/Avatar.cpp \
     $$PWD/UserAttributesRequests/CameraUploadFolder.cpp \
     $$PWD/UserAttributesRequests/DeviceName.cpp \
@@ -159,8 +157,6 @@ SOURCES += $$PWD/MegaApplication.cpp \
     $$PWD/UserAttributesRequests/MyChatFilesFolder.cpp
 
 HEADERS += $$PWD/MegaApplication.h \
-    $$PWD/DesktopNotifications.h \
-    $$PWD/RemovedSharesNotificator.h \
     $$PWD/TransferQuota.h \
     $$PWD/UserAlertTimedClustering.h \
     $$PWD/ScaleFactorManager.h \
@@ -170,7 +166,6 @@ HEADERS += $$PWD/MegaApplication.h \
     $$PWD/FolderTransferListener.h \
     $$PWD/BlockingStageProgressController.h \
     $$PWD/FolderTransferEvents.h \
-    $$PWD/TransferNotificationMessageBuilder.h \
     $$PWD/UserAttributesRequests/Avatar.h \
     $$PWD/UserAttributesRequests/CameraUploadFolder.h \
     $$PWD/UserAttributesRequests/DeviceName.h \

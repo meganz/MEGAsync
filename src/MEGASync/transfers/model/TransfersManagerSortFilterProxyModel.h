@@ -8,6 +8,7 @@
 #include <QReadWriteLock>
 #include <QFutureWatcher>
 #include <QMutex>
+#include <QPointer>
 
 class TransferBaseDelegateWidget;
 class TransfersModel;
@@ -55,6 +56,8 @@ public:
         int  transfersCount() const;
 
         bool isModelProcessing() const;
+
+        bool isDragging() const;
 
 signals:
         void modelAboutToBeChanged();
@@ -104,6 +107,7 @@ private:
         ThreadPool* mThreadPool;
         QFutureWatcher<void> mFilterWatcher;
         QString mFilterText;
+        mutable QPointer<QMimeData> mInternalMoveMimeData;
 
         void removeActiveTransferFromCounter(TransferTag tag) const;
         void removePausedTransferFromCounter(TransferTag tag) const;

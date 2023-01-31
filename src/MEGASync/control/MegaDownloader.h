@@ -5,7 +5,7 @@
 #include "control/Utilities.h"
 #include "control/TransferBatch.h"
 #include "FolderTransferListener.h"
-#include "TransferMetadata.h"
+#include "TransferMetaData.h"
 #include <QTMegaRequestListener.h>
 
 #include "megaapi.h"
@@ -16,6 +16,8 @@
 #include <QDir>
 #include <QQueue>
 #include <QMap>
+
+class DownloadTransferMetaData;
 
 class MegaDownloader : public QObject
 {
@@ -28,16 +30,15 @@ public:
     virtual ~MegaDownloader() = default;
 
     bool processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, BlockingBatch& downloadBatches,
-                              const QString &path, unsigned long long appDataId);
+                              const QString &path);
     bool isQueueProcessingOngoing();
 protected:
-    bool download(WrappedNode *parent, QFileInfo info, QString appData, mega::MegaCancelToken *cancelToken);
+    bool download(WrappedNode *parent, QFileInfo info, const std::shared_ptr<DownloadTransferMetaData>& data, mega::MegaCancelToken *cancelToken);
 
     mega::MegaApi *megaApi;
     QMap<mega::MegaHandle, QString> pathMap;
 
 signals:
-    void finishedTransfers(unsigned long long appDataId);
     void startingTransfers();
     void folderTransferUpdated(const FolderTransferUpdateEvent& event);
 
@@ -47,7 +48,8 @@ private slots:
 private:
     void startDownload(WrappedNode* parent, const QString &appData,
                        const QString &currentPathWithSep, mega::MegaCancelToken* cancelToken);
-    void downloadForeignDir(mega::MegaNode *node, const QString &appData, const QString &currentPathWithSep);
+    void downloadForeignDir(mega::MegaNode *node, const std::shared_ptr<DownloadTransferMetaData>& data, const QString &currentPathWithSep);
+
     QString buildEscapedPath(const char* nodeName, QString currentPathWithSep);
     bool createDirIfNotPresent(const QString &path);
     static bool hasTransferPriority(const WrappedNode::TransferOrigin& origin);

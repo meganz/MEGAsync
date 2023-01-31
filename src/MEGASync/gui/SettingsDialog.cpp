@@ -30,6 +30,7 @@
 #include <QMenu>
 
 #include <assert.h>
+#include <memory>
 
 #ifdef Q_OS_MACOS
     #include "gui/CocoaHelpButton.h"
@@ -54,7 +55,7 @@ constexpr auto SETTING_ANIMATION_BACKUP_TAB_HEIGHT{534};
 constexpr auto SETTING_ANIMATION_SECURITY_TAB_HEIGHT{372};
 constexpr auto SETTING_ANIMATION_FOLDERS_TAB_HEIGHT{513};
 constexpr auto SETTING_ANIMATION_NETWORK_TAB_HEIGHT{205};
-constexpr auto SETTING_ANIMATION_NOTIFICATIONS_TAB_HEIGHT{372};
+constexpr auto SETTING_ANIMATION_NOTIFICATIONS_TAB_HEIGHT{422};
 #endif
 
 const QString SYNCS_TAB_MENU_LABEL_QSS = QString::fromUtf8("QLabel{ border-image: url(%1); }");
@@ -105,6 +106,8 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     mRemoteCacheSize (-1),
     mDebugCounter (0)
 {
+    mSyncTableEventFilter = std::unique_ptr<SyncTableViewTooltips>(new SyncTableViewTooltips());
+    mBackupTableEventFilter = std::unique_ptr<BackupTableViewTooltips>(new BackupTableViewTooltips());
     mUi->setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
@@ -230,6 +233,9 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     connect(mApp, &MegaApplication::shellNotificationsProcessed,
             this, &SettingsDialog::onShellNotificationsProcessed);
     mUi->cOverlayIcons->setEnabled(!mApp->isShellNotificationProcessingOngoing());
+
+    mUi->syncTableView->installEventFilter(mSyncTableEventFilter.get());
+    mUi->backupTableView->installEventFilter(mBackupTableEventFilter.get());
 }
 
 SettingsDialog::~SettingsDialog()
@@ -1494,6 +1500,7 @@ void SettingsDialog::loadSyncSettings()
     SyncItemSortModel *sortModel = new SyncItemSortModel(mUi->syncTableView);
     sortModel->setSourceModel(model);
     mUi->syncTableView->setModel(sortModel);
+    mSyncTableEventFilter->setSourceModel(model);
 }
 
 void SettingsDialog::addSyncFolder(MegaHandle megaFolderHandle)
@@ -1748,6 +1755,7 @@ void SettingsDialog::loadBackupSettings()
     SyncItemSortModel *sortModel = new SyncItemSortModel(mUi->syncTableView);
     sortModel->setSourceModel(model);
     mUi->backupTableView->setModel(sortModel);
+    mBackupTableEventFilter->setSourceModel(model);
 }
 
 void SettingsDialog::on_bBackup_clicked()
@@ -2359,3 +2367,4 @@ void SettingsDialog::updateCacheSchedulerDaysLabel()
 {
     mUi->lCacheSchedulerSuffix->setText(tr("day", "", mPreferences->cleanerDaysLimitValue()));
 }
+

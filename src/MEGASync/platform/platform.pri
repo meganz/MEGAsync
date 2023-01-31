@@ -1,12 +1,10 @@
 DEPENDPATH += $$PWD
 INCLUDEPATH += $$PWD
 
-SOURCES += $$PWD/notificator.cpp \
-    $$PWD/ShellNotifier.cpp
+SOURCES += $$PWD/ShellNotifier.cpp
 
 HEADERS +=  $$PWD/Platform.h \
             $$PWD/ShellNotifier.h \
-            $$PWD/notificator.h \
             $$PWD/PowerOptions.h \
             $$PWD/PlatformStrings.h
 win32 {
@@ -163,8 +161,6 @@ macx {
 
     HEADERS += $$PWD/macx/MacXPlatform.h \
         $$PWD/macx/MacXFunctions.h \
-        $$PWD/macx/macnotificationhandler.h \
-        $$PWD/macx/NotificationDelegate.h \
         $$PWD/macx/MacXSystemServiceTask.h  \
         $$PWD/macx/MEGAService.h \
         $$PWD/macx/ClientSide.h \
@@ -183,8 +179,6 @@ macx {
 
     OBJECTIVE_SOURCES += \
             $$PWD/macx/MacXFunctions.mm \
-            $$PWD/macx/macnotificationhandler.mm \
-            $$PWD/macx/NotificationDelegate.mm \
             $$PWD/macx/MacXSystemServiceTask.mm \
             $$PWD/macx/MEGAService.mm \
             $$PWD/macx/ClientSide.mm \
@@ -201,4 +195,5 @@ macx {
 
     LIBS += -framework Cocoa
     LIBS += -framework Security
+    LIBS += -framework UserNotifications
 }

@@ -67,6 +67,7 @@ set (USE_QT 1 CACHE STRING "")
 set (ENABLE_LOG_PERFORMANCE 1 CACHE STRING "")
 set (NO_READLINE 1 CACHE STRING "")
 set (USE_DRIVE_NOTIFICATIONS 1 CACHE STRING "")
+set (USE_PCRE 0 CACHE STRING "")
 if (WIN32)
     set (MEGA_LINK_DYNAMIC_CRT 1)  # since we are linking with QT official DLLs
 else()
@@ -124,6 +125,8 @@ include_directories( "${MEGAsyncDir}/gui/node_selector/gui/${UiDir}")
 include_directories( "${MEGAsyncDir}/gui/node_selector" )
 include_directories( "${MEGAsyncDir}/platform" )
 include_directories( "${MEGAsyncDir}/gui/${UiDir}" )
+include_directories( "${MEGAsyncDir}/notifications/${UiDir}" )
+include_directories( "${MEGAsyncDir}/notifications" )
 include_directories( "${MEGAsyncDir}/transfers/model" )
 include_directories( "${MEGAsyncDir}/transfers/gui" )
 include_directories( "${MEGAsyncDir}/transfers/gui/${UiDir}" )
@@ -241,9 +244,7 @@ endif()
 
 set (MOC_INPUT
     ${MEGAsyncDir}/MegaApplication.h
-    ${MEGAsyncDir}/DesktopNotifications.h
     ${MEGAsyncDir}/TransferQuota.h
-    ${MEGAsyncDir}/RemovedSharesNotificator.h
     ${MEGAsyncDir}/UserAlertTimedClustering.h
     ${MEGAsyncDir}/ScaleFactorManager.h
     ${MEGAsyncDir}/CommonMessages.h
@@ -251,7 +252,13 @@ set (MOC_INPUT
     ${MEGAsyncDir}/EventUpdater.h
     ${MEGAsyncDir}/FolderTransferListener.h
     ${MEGAsyncDir}/BlockingStageProgressController.h
-    ${MEGAsyncDir}/TransferNotificationMessageBuilder.h
+
+    ${MEGAsyncDir}/notifications/DesktopNotifications.h
+    ${MEGAsyncDir}/notifications/RemovedSharesNotificator.h
+    ${MEGAsyncDir}/notifications/TransferNotificationBuilderBase.h
+    ${MEGAsyncDir}/notifications/NotificatorBase.h
+    ${MEGAsyncDir}/notifications/${UiDir}/Notificator.h
+    ${MEGAsyncDir}/notifications/${UiDir}/TransferNotificationBuilder.h
 
     ${MEGAsyncDir}/control/ConnectivityChecker.h
     ${MEGAsyncDir}/control/CrashHandler.h
@@ -348,9 +355,11 @@ set (MOC_INPUT
     ${MEGAsyncDir}/syncs/gui/SyncTooltipCreator.h
     ${MEGAsyncDir}/syncs/gui/SyncsMenu.h
     ${MEGAsyncDir}/syncs/gui/Twoways/SyncTableView.h
+    ${MEGAsyncDir}/syncs/gui/Twoways/SyncTableViewTooltips.h
     ${MEGAsyncDir}/syncs/gui/Twoways/BindFolderDialog.h
     ${MEGAsyncDir}/syncs/gui/Twoways/FolderBinder.h
     ${MEGAsyncDir}/syncs/gui/Backups/BackupTableView.h
+    ${MEGAsyncDir}/syncs/gui/Backups/BackupTableViewTooltips.h
     ${MEGAsyncDir}/syncs/gui/Backups/AddBackupDialog.h
     ${MEGAsyncDir}/syncs/gui/Backups/RemoveBackupDialog.h
     ${MEGAsyncDir}/syncs/gui/Backups/BackupsWizard.h
@@ -362,7 +371,6 @@ set (MOC_INPUT
     ${MEGAsyncDir}/syncs/control/SyncInfo.h
     ${MEGAsyncDir}/syncs/control/SyncController.h
 
-    ${MEGAsyncDir}/platform/notificator.h
     ${MEGAsyncDir}/platform/PlatformStrings.h
     ${MEGAsyncDir}/platform/PowerOptions.h
 
@@ -377,7 +385,8 @@ set (MOC_INPUT
     ${MEGAsyncDir}/transfers/model/TransfersSortFilterProxyBaseModel.h
     ${MEGAsyncDir}/transfers/model/TransfersModel.h
     ${MEGAsyncDir}/transfers/model/InfoDialogTransfersProxyModel.h
-
+    ${MEGAsyncDir}/transfers/model/TransferMetaData.h
+    
     ${MEGAsyncDir}/transfers/gui/TransfersStatusWidget.h
     ${MEGAsyncDir}/transfers/gui/TransferItem.h
     ${MEGAsyncDir}/transfers/gui/InfoDialogTransfersWidget.h
@@ -441,10 +450,13 @@ else()
         ${MEGAsyncDir}/gui/QMacSpinningProgressIndicator.h
         ${MEGAsyncDir}/gui/QSegmentedControl.h
 
+	    ${MEGAsyncDir}/notifications/macx/NotificationHandler.h
+        ${MEGAsyncDir}/notifications/macx/NotificationDelegate.h
+        ${MEGAsyncDir}/notifications/macx/NSUserNotificationHandler.h
+        ${MEGAsyncDir}/notifications/macx/UNUserNotificationHandler.h
+
         ${MEGAsyncDir}/platform/macx/MacXPlatform.h
         ${MEGAsyncDir}/platform/macx/MacXFunctions.h
-        ${MEGAsyncDir}/platform/macx/macnotificationhandler.h
-        ${MEGAsyncDir}/platform/macx/NotificationDelegate.h
         ${MEGAsyncDir}/platform/macx/MacXSystemServiceTask.h
         ${MEGAsyncDir}/platform/macx/MEGAService.h
         ${MEGAsyncDir}/platform/macx/ClientSide.h
@@ -462,9 +474,7 @@ endif()
 
 set (SRCS
     ${MEGAsyncDir}/MegaApplication.cpp
-    ${MEGAsyncDir}/DesktopNotifications.cpp
     ${MEGAsyncDir}/TransferQuota.cpp
-    ${MEGAsyncDir}/RemovedSharesNotificator.cpp
     ${MEGAsyncDir}/UserAlertTimedClustering.cpp
     ${MEGAsyncDir}/ScaleFactorManager.cpp
     ${MEGAsyncDir}/CommonMessages.cpp
@@ -472,7 +482,13 @@ set (SRCS
     ${MEGAsyncDir}/EventUpdater.cpp
     ${MEGAsyncDir}/FolderTransferListener.cpp
     ${MEGAsyncDir}/BlockingStageProgressController.cpp
-    ${MEGAsyncDir}/TransferNotificationMessageBuilder.cpp
+
+    ${MEGAsyncDir}/notifications/TransferNotificationBuilderBase.cpp
+    ${MEGAsyncDir}/notifications/DesktopNotifications.cpp
+    ${MEGAsyncDir}/notifications/RemovedSharesNotificator.cpp
+    ${MEGAsyncDir}/notifications/NotificatorBase.cpp
+    ${MEGAsyncDir}/notifications/${UiDir}/Notificator.cpp
+    ${MEGAsyncDir}/notifications/${UiDir}/TransferNotificationBuilder.cpp
 
     ${FORMS}
     ${MOC_INPUT}
@@ -554,8 +570,9 @@ set (SRCS
     ${MEGAsyncDir}/transfers/model/TransfersManagerSortFilterProxyModel.cpp
     ${MEGAsyncDir}/transfers/model/TransfersModel.cpp
     ${MEGAsyncDir}/transfers/model/InfoDialogTransfersProxyModel.cpp
-
-    ${MEGAsyncDir}/transfers/gui/TransfersStatusWidget.cpp
+    ${MEGAsyncDir}/transfers/model/TransferMetaData.cpp
+    
+	${MEGAsyncDir}/transfers/gui/TransfersStatusWidget.cpp
     ${MEGAsyncDir}/transfers/gui/TransferItem.cpp
     ${MEGAsyncDir}/transfers/gui/InfoDialogTransfersWidget.cpp
     ${MEGAsyncDir}/transfers/gui/TransferManager.cpp
@@ -611,9 +628,11 @@ set (SRCS
     ${MEGAsyncDir}/syncs/gui/SyncTooltipCreator.cpp
     ${MEGAsyncDir}/syncs/gui/SyncsMenu.cpp
     ${MEGAsyncDir}/syncs/gui/Twoways/SyncTableView.cpp
+    ${MEGAsyncDir}/syncs/gui/Twoways/SyncTableViewTooltips.cpp
     ${MEGAsyncDir}/syncs/gui/Twoways/BindFolderDialog.cpp
     ${MEGAsyncDir}/syncs/gui/Twoways/FolderBinder.cpp
     ${MEGAsyncDir}/syncs/gui/Backups/BackupTableView.cpp
+    ${MEGAsyncDir}/syncs/gui/Backups/BackupTableViewTooltips.cpp
     ${MEGAsyncDir}/syncs/gui/Backups/AddBackupDialog.cpp
     ${MEGAsyncDir}/syncs/gui/Backups/RemoveBackupDialog.cpp
     ${MEGAsyncDir}/syncs/gui/Backups/BackupsWizard.cpp
@@ -625,7 +644,6 @@ set (SRCS
     ${MEGAsyncDir}/syncs/control/SyncSettings.cpp
     ${MEGAsyncDir}/syncs/control/SyncInfo.cpp
 
-    ${MEGAsyncDir}/platform/notificator.cpp
     ${MEGAsyncDir}/platform/ShellNotifier.cpp
 
     ${MEGAsyncDir}/qtlockedfile/qtlockedfile.cpp
@@ -705,6 +723,12 @@ else()
         ${MEGAsyncDir}/gui/QMacSpinningProgressIndicator.mm
         ${MEGAsyncDir}/gui/QSegmentedControl.mm
 
+	    ${MEGAsyncDir}/notifications/macx/NotificationHandler.mm
+        ${MEGAsyncDir}/notifications/macx/UNUserNotificationHandler.mm 
+        ${MEGAsyncDir}/notifications/macx/UNUserNotificationDelegate.mm 
+        ${MEGAsyncDir}/notifications/macx/NSUserNotificationHandler.mm 
+        ${MEGAsyncDir}/notifications/macx/NSUserNotificationDelegate.mm 
+
         ${MEGAsyncDir}/qtlockedfile/qtlockedfile_unix.cpp
 
         ${MEGAsyncDir}/google_breakpad/client/mac/handler/exception_handler.cc
@@ -729,8 +753,6 @@ else()
 
 
         ${MEGAsyncDir}/platform/macx/MacXFunctions.h
-        ${MEGAsyncDir}/platform/macx/macnotificationhandler.h
-        ${MEGAsyncDir}/platform/macx/NotificationDelegate.h
         ${MEGAsyncDir}/platform/macx/MacXSystemServiceTask.h
         ${MEGAsyncDir}/platform/macx/MEGAService.h
         ${MEGAsyncDir}/platform/macx/ClientSide.h
@@ -749,8 +771,6 @@ else()
         ${MEGAsyncDir}/platform/macx/PlatformStrings.cpp
         ${MEGAsyncDir}/platform/macx/PowerOptions.mm
         ${MEGAsyncDir}/platform/macx/MacXFunctions.mm
-        ${MEGAsyncDir}/platform/macx/macnotificationhandler.mm
-        ${MEGAsyncDir}/platform/macx/NotificationDelegate.mm
         ${MEGAsyncDir}/platform/macx/MacXSystemServiceTask.mm
         ${MEGAsyncDir}/platform/macx/MEGAService.mm
         ${MEGAsyncDir}/platform/macx/ClientSide.mm
@@ -785,7 +805,7 @@ if(WIN32)
 endif()
 
 
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DCREATE_COMPATIBLE_MINIDUMPS -DLOG_TO_STDOUT -DLOG_TO_LOGGER")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DCREATE_COMPATIBLE_MINIDUMPS -DLOG_TO_LOGGER")
 
 if(CMAKE_HOST_APPLE)
     set(MAC_RESOURCES "${MEGAsyncDir}/app.icns" "${MEGAsyncDir}/folder.icns" "${MEGAsyncDir}/folder_yosemite.icns" "${MEGAsyncDir}/appicon32.tiff")
@@ -822,7 +842,7 @@ else()
 
 if (CMAKE_HOST_APPLE)
     set_source_files_properties(app.icns folder.icns folder_yosemite.icns appicon32.tiff PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
-    set(TARGET_LINK_LIBRARIES_PLATFORM ${TARGET_LINK_LIBRARIES_PLATFORM} "-framework IOKit")
+    set(TARGET_LINK_LIBRARIES_PLATFORM ${TARGET_LINK_LIBRARIES_PLATFORM} "-framework IOKit -framework UserNotifications")
     endif()
 
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
@@ -981,6 +1001,7 @@ target_link_libraries(MEGASync_unit_tests
 target_compile_features(MEGASync_unit_tests PRIVATE cxx_std_14)
 
 target_include_directories(MEGASync_unit_tests PRIVATE ${MEGAsyncDir}
+						                               ${MEGAsyncDir}/notifications
                                                        ${MEGAsyncDir}/transfers
                                                        ${MEGAsyncDir}/transfers/gui
                                                        ${MEGAsyncDir}/transfers/model

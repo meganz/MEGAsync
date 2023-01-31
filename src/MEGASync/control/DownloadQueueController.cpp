@@ -17,11 +17,8 @@ void DownloadQueueController::initialize(QQueue<WrappedNode *> *downloadQueue, B
     mDownloadQueue = downloadQueue;
     mDownloadBatches = &downloadBatches;
 
-    QString appData = QString::number(appDataId);
-    TransferMetaData *metadata = (static_cast<MegaApplication*>(qApp))->getTransferAppData(appDataId);
-
-    prepareAppDatas(appData, metadata);
-    preparePaths(path, metadata);
+    mCurrentTargetPath = path;
+    mCurrentAppDataId = appDataId;
 }
 
 void DownloadQueueController::startAvailableSpaceChecking()
@@ -52,16 +49,6 @@ void DownloadQueueController::startAvailableSpaceChecking()
     {
         emit finishedAvailableSpaceCheck(isDownloadPossible());
     }
-}
-
-QList<QString>::ConstIterator DownloadQueueController::getAppDatasBegin()
-{
-    return mAppDatas.cbegin();
-}
-
-QList<QString>::ConstIterator DownloadQueueController::getPathsBegin()
-{
-    return mPaths.cbegin();
 }
 
 void DownloadQueueController::addTransferBatch(std::shared_ptr<TransferBatch> batch)
@@ -109,75 +96,6 @@ void DownloadQueueController::onRequestFinish(MegaApi*, MegaRequest *request, Me
     }
 }
 
-void DownloadQueueController::prepareAppDatas(const QString &appId, TransferMetaData *metadata)
-{
-    for (auto download : qAsConst(*mDownloadQueue))
-    {
-        MegaNode *node = download->getMegaNode();
-        QString appData = appId;
-
-        if (metadata)
-        {
-            if (!node->isForeign() || !mPathMap.contains(node->getParentHandle()))
-            {
-                // Report that there is still a "root folder" to download/create
-                appData.append(QLatin1Char('*'));
-            }
-        }
-        mAppDatas.push_back(appData);
-    }
-}
-
-void DownloadQueueController::preparePaths(const QString &path, TransferMetaData *metadata)
-{
-    for (auto download : qAsConst(*mDownloadQueue))
-    {
-        MegaNode *node = download->getMegaNode();
-
-        QString currentPath;
-        if (node->isForeign() && mPathMap.contains(node->getParentHandle()))
-        {
-            currentPath = mPathMap[node->getParentHandle()];
-        }
-        else
-        {
-            if (metadata)
-            {
-                update(metadata, node, path);
-            }
-
-            currentPath = path;
-        }
-        mPaths.push_back(currentPath);
-    }
-}
-
-void DownloadQueueController::update(TransferMetaData *dataToUpdate, MegaNode *node, const QString &path)
-{
-    // Update transfer metadata according to node type.
-    node->isFolder() ? dataToUpdate->totalFolders++ : dataToUpdate->totalFiles++;
-
-    // Set the metadata local path to destination path
-    if (dataToUpdate->localPath.isEmpty())
-    {
-        dataToUpdate->localPath = QDir::toNativeSeparators(path);
-
-        // If there is only 1 transfer, set localPath to full path
-        if (dataToUpdate->totalTransfers == 1)
-        {
-            char *escapedName = mMegaApi->escapeFsIncompatible(node->getName(),
-                                                              path.toStdString().c_str());
-            QString nodeName = QString::fromUtf8(escapedName);
-            delete [] escapedName;
-            if (!dataToUpdate->localPath.endsWith(QDir::separator()))
-            {
-                dataToUpdate->localPath += QDir::separator();
-            }
-            dataToUpdate->localPath += nodeName;
-        }
-    }
-}
-
 bool DownloadQueueController::isDownloadPossible()
 {
     bool retry = true;
@@ -195,9 +113,9 @@ bool DownloadQueueController::isDownloadPossible()
 
 bool DownloadQueueController::hasEnoughSpaceForDownloads()
 {
-    if (!mPaths.empty())
+    if (!mCurrentTargetPath.isEmpty())
     {
-        QStorageInfo destinationDrive(mPaths.first());
+        QStorageInfo destinationDrive(mCurrentTargetPath);
         return (mTotalQueueDiskSize < destinationDrive.bytesAvailable());
     }
     return true;
@@ -205,7 +123,7 @@ bool DownloadQueueController::hasEnoughSpaceForDownloads()
 
 bool DownloadQueueController::shouldRetryWhenNotEnoughSpace()
 {
-    QStorageInfo destinationDrive(mPaths.first());
+    QStorageInfo destinationDrive(mCurrentTargetPath);
     QString driveName = destinationDrive.name();
     if (driveName.isEmpty())
     {
@@ -216,4 +134,14 @@ bool DownloadQueueController::shouldRetryWhenNotEnoughSpace()
                               destinationDrive.bytesTotal(), driveName);
     int userChoice = dialog.exec();
     return (userChoice == QDialog::Accepted);
+}
+
+const QString& DownloadQueueController::getCurrentTargetPath() const
+{
+    return mCurrentTargetPath;
+}
+
+unsigned long long DownloadQueueController::getCurrentAppDataId() const
+{
+    return mCurrentAppDataId;
 }

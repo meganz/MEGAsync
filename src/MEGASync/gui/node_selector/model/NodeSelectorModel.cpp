@@ -847,9 +847,7 @@ void NodeSelectorModel::continueLoading(NodeSelectorModelItem *item)
 
 void NodeSelectorModel::rootItemsLoaded()
 {
-    blockSignals(true);
     endResetModel();
-    blockSignals(false);
 }
 
 void NodeSelectorModel::addRootItems()
