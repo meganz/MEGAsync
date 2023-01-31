@@ -50,6 +50,7 @@ void NodeSelectorTreeView::setModel(QAbstractItemModel *model)
 {
     QTreeView::setModel(model);
     connect(proxyModel(), &NodeSelectorProxyModel::navigateReady, this, &NodeSelectorTreeView::onNavigateReady);
+    connect(selectionModel(), &QItemSelectionModel::currentRowChanged, this, &NodeSelectorTreeView::onCurrentRowChanged);
 }
 
 bool NodeSelectorTreeView::viewportEvent(QEvent *event)
@@ -215,6 +216,14 @@ void NodeSelectorTreeView::onNavigateReady(const QModelIndex &index)
         mouseDoubleClickEvent(&mouseEvent);
     }
 }
+
+void NodeSelectorTreeView::onCurrentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
+    Q_UNUSED(previous)
+    QItemSelectionModel::SelectionFlags flags(QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
+    selectionModel()->select(current, flags);
+}
+
 
 bool NodeSelectorTreeView::mousePressorReleaseEvent(QMouseEvent *event)
 {

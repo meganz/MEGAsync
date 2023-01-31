@@ -41,6 +41,7 @@ private slots:
     void renameNode();
     void getMegaLink();
     void onNavigateReady(const QModelIndex& index);
+    void onCurrentRowChanged(const QModelIndex &current, const QModelIndex &previous);
 
 private:
     bool mousePressorReleaseEvent(QMouseEvent* event);
