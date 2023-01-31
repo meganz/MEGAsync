@@ -1,5 +1,5 @@
 #pragma once
-#include "notificator.h"
+#include "Notificator.h"
 #include "RemovedSharesNotificator.h"
 #include "Preferences.h"
 #include "QTMegaRequestListener.h"
@@ -15,6 +15,8 @@ namespace UserAttributes{
 class FullName;
 }
 
+class TransferMetaData;
+
 class DesktopNotifications: public QObject
 {
     Q_OBJECT
@@ -29,21 +31,24 @@ public:
     void addUserAlertList(mega::MegaUserAlertList *alertList);
     void sendOverStorageNotification(int state) const;
     void sendOverTransferNotification(const QString& title) const;
-    void sendFinishedTransferNotification(const QString& title, const QString& message, const QString& extraData) const;
+    void sendFinishedTransferNotification(unsigned long long appDataId) const;
     void sendBusinessWarningNotification(int businessStatus) const;
     void sendInfoNotification(const QString& title, const QString& message) const;
     void sendWarningNotification(const QString& title, const QString& message) const;
     void sendErrorNotification(const QString& title, const QString& message) const;
 
 public slots:
-    void replayIncomingPendingRequest(MegaNotification::Action action) const;
+    void replyIncomingPendingRequest(MegaNotification::Action action) const;
     void viewContactOnWebClient(MegaNotification::Action activationButton) const;
     void redirectToUpgrade(MegaNotification::Action activationButton) const;
     void redirectToPayBusiness(MegaNotification::Action activationButton) const;
-    void showInFolder(MegaNotification::Action action) const;
-    void viewShareOnWebClient(MegaNotification::Action action) const;
+    void actionPressedOnDownloadFinishedTransferNotification(MegaNotification::Action action) const;
+    void actionPressedOnUploadFinishedTransferNotification(MegaNotification::Action action) const;
+    void viewShareOnWebClient() const;
+    void viewShareOnWebClientByHandle(const QString &nodeBase64Handle) const;
+    void getRemoteNodeLink(const QList<std::shared_ptr<mega::MegaNode> > &nodes) const;
     void receiveClusteredAlert(mega::MegaUserAlert* alert, const QString& message) const;
-    void replayNewShareReceived(MegaNotification::Action action) const;
+    void replyNewShareReceived(MegaNotification::Action action) const;
     void viewOnInfoDialogNotifications(MegaNotification::Action action) const;
 
 private slots:
@@ -60,13 +65,12 @@ private:
     int countUnseenAlerts(mega::MegaUserAlertList *alertList);
 
     void processAlert(mega::MegaUserAlert* alert);
-    MegaNotification* CreateContacNotification(const QString& title,
+    MegaNotification* CreateContactNotification(const QString& title,
                                                const QString& message,
-                                               const QString& email,
-                                               const QStringList& actions);
+                                               const QString& email, const QStringList &actions = QStringList());
+    void setActionsToNotification(MegaNotification* notification, QStringList actions) const;
 
-    Notificator* mNotificator;
-    QIcon mAppIcon;
+    std::unique_ptr<Notificator> mNotificator;
     QString mNewContactIconPath, mStorageQuotaFullIconPath, mStorageQuotaWarningIconPath;
     QString mFolderIconPath, mFileDownloadSucceedIconPath;
     RemovedSharesNotificator mRemovedSharedNotificator;

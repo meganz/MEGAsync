@@ -2,25 +2,21 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef NOTIFICATOR_H
-#define NOTIFICATOR_H
+#ifndef NOTIFICATORBASE_H
+#define NOTIFICATORBASE_H
 
 #include <QIcon>
 #include <QObject>
 #include <QPointer>
 #include <QMutex>
 #include <QHash>
+#include <QVariant>
 
 QT_BEGIN_NAMESPACE
 class QSystemTrayIcon;
-
-#ifdef USE_DBUS
-#include <QDBusMessage>
-class QDBusInterface;
-#endif
 QT_END_NAMESPACE
 
-class MegaNotification : public QObject
+class MegaNotificationBase : public QObject
 {
     Q_OBJECT
 
@@ -39,8 +35,8 @@ public:
         legacy = 2
     };
 
-    MegaNotification();
-    virtual ~MegaNotification();
+    MegaNotificationBase();
+    virtual ~MegaNotificationBase() = default;
 
     QString getTitle() const;
     void setTitle(const QString &value);
@@ -51,74 +47,40 @@ public:
     int getExpirationTime() const;
     void setExpirationTime(int value);
     QString getImagePath() const;
-    void setImagePath(const QString &value);
+    virtual void setImagePath(const QString &value);
     int getStyle() const;
     void setStyle(int value);
-    QStringList getActions() const;
+    virtual QStringList getActions() const;
     void setActions(const QStringList &value);
-    QIcon getImage() const;
-    void setImage(const QIcon &value);
     int getType() const;
     void setType(int value);
     int64_t getId() const;
     void setId(const int64_t &value);
-    QString getData() const;
-    void setData(const QString &value);
+    QVariant getData() const;
+    void setData(const QVariant &value);
 
     void emitLegacyNotificationActivated();
 
 protected:
-    QString title;
-    QString text;
-    QString source;
-    int expirationTime;
-    QString imagePath;
-    QIcon image;
-    int style;
+    QString mTitle;
+    QString mText;
+    QString mSource;
+    int mExpirationTime;
+    QString mImagePath;
+    int mStyle;
     QStringList actions;
-    int type;
-    int64_t id;
-    QString data;
+    int mType;
+    int64_t mId;
+    QVariant mData;
 
-#ifdef USE_DBUS
-    int dbusId;
-#endif
 signals:
-    void activated(Action action);
-    void closed(CloseReason reason);
+    void activated(MegaNotificationBase::Action action);
+    void closed(MegaNotificationBase::CloseReason reason);
     void failed();
-
-#ifdef USE_DBUS
-public slots:
-    void dBusNotificationSentCallback(QDBusMessage dbusMssage);
-    void dbusNotificationSentErrorCallback();
-    void dBusNotificationCallback(QDBusMessage dbusMssage);
-#endif
 };
-
-#ifdef _WIN32
-#include "platform/win/wintoastlib.h"
-
-class WinToastNotification : public WinToastLib::IWinToastHandler
-{
-private:
-    static QMutex mutex;
-    QPointer<MegaNotification> notification;
-
-public:
-    WinToastNotification(QPointer<MegaNotification> megaNotification);
-    virtual ~WinToastNotification();
-
-    void toastActivated();
-    void toastActivated(int actionIndex);
-    void toastDismissed(WinToastDismissalReason state);
-    void toastFailed();
-};
-#endif
-
 
 /** Cross-platform desktop notification client. */
-class Notificator: public QObject
+class NotificatorBase: public QObject
 {
     Q_OBJECT
 
@@ -126,8 +88,8 @@ public:
     /** Create a new notificator.
        @note Ownership of trayIcon is not transferred to this object.
     */
-    Notificator(const QString &programName, QSystemTrayIcon *trayIcon, QObject *parent);
-    ~Notificator();
+    NotificatorBase(const QString &programName, QSystemTrayIcon *trayIcon, QObject *parent);
+    virtual ~NotificatorBase() = default;
 
     // Message class
     enum Class
@@ -136,8 +98,6 @@ public:
         Warning,        /**< Notify user of potential problem */
         Critical        /**< An error occurred */
     };
-
-    static QHash<int64_t, MegaNotification *> notifications;
 
 public slots:
     /** Show notification message.
@@ -148,11 +108,10 @@ public slots:
        @param[in] millisTimeout notification timeout in milliseconds (defaults to 10 seconds)
        @note Platform implementations are free to ignore any of the provided fields except for \a text.
      */
-    void notify(Class cls, const QString &title, const QString &text,
-                const QIcon &icon = QIcon(), int millisTimeout = 10000);
-    void notify(MegaNotification *notification);
+    void notify(NotificatorBase::Class cls, const QString &title, const QString &text, int millisTimeout = 10000);
+    void notify(MegaNotificationBase *notification);
 
-private:
+protected:
 
     enum Mode {
         None,                       /**< Ignore informational notifications, and show a modal pop-up dialog for Critical notifications. */
@@ -161,24 +120,17 @@ private:
         UserNotificationCenter      /**< Use the 10.8+ User Notification Center (Mac only) */
     };
 
-    QString programName;
-    Mode mode;
-    QSystemTrayIcon *trayIcon;
-    QString defaultIconPath;
-    MegaNotification* currentNotification;
+    QString mProgramName;
+    Mode mMode;
+    QSystemTrayIcon *mTrayIcon;
+    MegaNotificationBase* mCurrentNotification;
 
-#ifdef USE_DBUS
-    QDBusInterface *interface;
-    bool dbussSupportsActions;
-
-    void notifyDBus(Class cls, const QString &title, const QString &text, const QIcon &icon, int millisTimeout, QStringList actions = QStringList(), MegaNotification *notification = NULL);
-#endif
-    void notifySystray(Class cls, const QString &title, const QString &text, const QIcon &icon, int millisTimeout, bool forceQt = false);
-    void notifySystray(MegaNotification *notification);
+    virtual void notifySystray(Class cls, const QString &title, const QString &text, int millisTimeout, bool forceQt = false);
+    virtual void notifySystray(MegaNotificationBase *notification);
 
 protected slots:
-    void onModernNotificationFailed();
     void onMessageClicked();
+
 };
 
 #endif // NOTIFICATOR_H

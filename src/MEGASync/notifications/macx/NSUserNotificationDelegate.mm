@@ -2,7 +2,7 @@
 #include "notificator.h"
 #include <Cocoa/Cocoa.h>
 
-@implementation NotificationDelegate
+@implementation NSUserNotificationDelegate
 
 - (BOOL)userNotificationCenter:(NSUserNotificationCenter *)center shouldPresentNotification:(NSUserNotification *)notification{
     return YES;
@@ -12,14 +12,14 @@
       didActivateNotification:(NSUserNotification *)notification {
 
     int64_t notificationKey = [[notification identifier] longLongValue];
-    QHash<int64_t, MegaNotification *>::iterator it
+    QHash<int64_t, MegaNotification*>::iterator it
            = Notificator::notifications.find(notificationKey);
     if (it == Notificator::notifications.end())
     {
         return;
     }
 
-    MegaNotification *n = it.value();
+    MegaNotification* n = it.value();
     Notificator::notifications.erase(it);
     switch (notification.activationType)
     {
@@ -66,14 +66,14 @@
 - (void)closeAlert:(NSUserNotification *)notification
 {
     int64_t notificationKey = [[notification identifier] longLongValue];
-    QHash<int64_t, MegaNotification *>::iterator it
+    QHash<int64_t, MegaNotification*>::iterator it
            = Notificator::notifications.find(notificationKey);
     if (it == Notificator::notifications.end())
     {
         return;
     }
 
-    MegaNotification *n = it.value();
+    MegaNotification* n = it.value();
     Notificator::notifications.erase(it);
 
     emit n->closed(MegaNotification::CloseReason::Unknown);
