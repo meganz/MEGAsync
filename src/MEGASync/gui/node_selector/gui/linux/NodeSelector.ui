@@ -9,14 +9,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>880</width>
-    <height>590</height>
+    <width>800</width>
+    <height>489</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>700</width>
-    <height>530</height>
+    <width>600</width>
+    <height>300</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -145,6 +145,9 @@ QGroupBox::title
    <bool>true</bool>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_15" stretch="0,1">
+   <property name="spacing">
+    <number>0</number>
+   </property>
    <property name="leftMargin">
     <number>0</number>
    </property>
