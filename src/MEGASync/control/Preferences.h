@@ -154,6 +154,7 @@ public:
         PENDING_CONTACT_REQUEST_REMINDER,
         CONTACT_ESTABLISHED,
         INFO_MESSAGES,
+        COMPLETED_UPLOADS_DOWNLOADS,
         LAST
     };
     Q_ENUM(NotificationsTypes)

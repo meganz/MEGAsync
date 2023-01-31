@@ -646,7 +646,7 @@ unsigned long long Preferences::transferIdentifier()
 {
     mutex.lock();
     assert(logged());
-    long long value = getValue<long long>(transferIdentifierKey, defaultTransferIdentifier);
+    auto value = getValue<unsigned long long>(transferIdentifierKey, defaultTransferIdentifier);
     value++;
     mSettings->setValue(transferIdentifierKey, value);
     setCachedValue(transferIdentifierKey, value);

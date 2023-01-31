@@ -8,6 +8,7 @@
 #include "SettingsDialog.h"
 #include "platform/PowerOptions.h"
 #include "PlatformStrings.h"
+#include "TransferMetaData.h"
 
 #include <QSharedData>
 
@@ -195,10 +196,36 @@ QExplicitlySharedDataPointer<TransferData> TransferThread::onTransferEvent(MegaT
 
 void TransferThread::onTransferStart(MegaApi *, MegaTransfer *transfer)
 {
+    auto idResult = TransferMetaDataContainer::appDataToId(transfer->getAppData());
+    if(idResult.first && transfer->getFolderTransferTag() <= 0)
+    {
+        if(transfer->getType() == MegaTransfer::TYPE_UPLOAD)
+        {
+            auto data = TransferMetaDataContainer::getAppData<UploadTransferMetaData>(idResult.second);
+            if(!data)
+            {
+                data = TransferMetaDataContainer::createTransferMetaDataWithTransferId<UploadTransferMetaData>(idResult.second, transfer->getParentHandle());
+            }
+
+            data->update(QString::fromUtf8(transfer->getPath()));
+        }
+        else
+        {
+            auto data = TransferMetaDataContainer::getAppData<DownloadTransferMetaData>(idResult.second);
+            if(!data)
+            {
+                data = TransferMetaDataContainer::createTransferMetaDataWithTransferId<DownloadTransferMetaData>(idResult.second, QString::fromUtf8(transfer->getPath()));
+            }
+
+            std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(transfer->getNodeHandle()));
+            data->update(node.get());
+        }
+    }
+
     if (!transfer->isStreamingTransfer()
             && !transfer->isFolderTransfer())
     {
-        {
+        {   
             QMutexLocker counterLock(&mCountersMutex);
             auto fileType = Utilities::getFileType(QString::fromStdString(transfer->getFileName()), QString());
             mTransfersCount.transfersByType[fileType]++;
@@ -280,7 +307,7 @@ void TransferThread::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
     }
 }
 
-void TransferThread::onTransferFinish(MegaApi*, MegaTransfer *transfer, MegaError*)
+void TransferThread::onTransferFinish(MegaApi*, MegaTransfer *transfer, MegaError* e)
 {
     if (!transfer->isStreamingTransfer()
             && !transfer->isFolderTransfer())
@@ -391,6 +418,20 @@ void TransferThread::onTransferFinish(MegaApi*, MegaTransfer *transfer, MegaErro
         }
     }
 
+    //This method is run in other thread, but all the logic related to TransferMetaData should be run in the GUI thread
+    auto idResult = TransferMetaDataContainer::appDataToId(transfer->getAppData());
+    if (idResult.first && transfer->getFolderTransferTag() <= 0)
+    {
+        auto transferCopy = transfer->copy();
+        auto errorCopy = e->copy();
+        Utilities::queueFunctionInAppThread([transferCopy, errorCopy, idResult]()
+        {
+            TransferMetaDataContainer::updateOnTransferFinish(idResult.second, transferCopy, errorCopy);
+
+            delete transferCopy;
+            delete errorCopy;
+        });
+    }
 }
 
 void TransferThread::onTransferTemporaryError(MegaApi*, MegaTransfer *transfer, MegaError *)
@@ -1176,6 +1217,8 @@ void TransfersModel::retryTransferByIndex(const QModelIndex& index)
         indexToRemove.append(index);
         clearFailedTransfers(indexToRemove);
 
+        updateMetaDataBeforeRetryingTransfers(d->mFailedTransfer);
+
         QtConcurrent::run([failedTransferCopy, this](){
             mMegaApi->retryTransfer(failedTransferCopy);
             delete failedTransferCopy;
@@ -1226,6 +1269,8 @@ void TransfersModel::retryTransfers(QModelIndexList indexes)
 
         if(counter % indexPerThread == 0)
         {
+            updateMetaDataBeforeRetryingTransfers(d->mFailedTransfer);
+
             QtConcurrent::run([transfersToRetry, this](){
                 foreach(auto& failedTransferCopy, transfersToRetry)
                 {
@@ -1250,6 +1295,19 @@ void TransfersModel::retryTransfers(QModelIndexList indexes)
     });
 
     clearFailedTransfers(indexes);
+}
+
+void TransfersModel::updateMetaDataBeforeRetryingTransfers(std::shared_ptr<MegaTransfer> transfer)
+{
+    auto idResult = TransferMetaDataContainer::appDataToId(transfer->getAppData());
+    if(idResult.first)
+    {
+        auto data = TransferMetaDataContainer::getAppData(idResult.second);
+        if(data)
+        {
+            data->removeFailingItem(transfer->getNodeHandle());
+        }
+    }
 }
 
 void TransfersModel::openFolderByTag(TransferTag tag)
