@@ -121,7 +121,6 @@ NodeSelectorTreeViewWidgetSearch::NodeSelectorTreeViewWidgetSearch(SelectTypeSPt
     : NodeSelectorTreeViewWidget(mode, parent)
 
 {
-    ui->cloudDriveSearch->setChecked(true);
     ui->lFolderName->setText(tr("Searching:"));
     ui->bBack->hide();
     ui->bForward->hide();
@@ -240,6 +239,7 @@ void NodeSelectorTreeViewWidgetSearch::modelLoaded()
     ui->backupsSearch->setVisible(AvailableTypes.contains(NodeSelectorModelItemSearch::Type::BACKUP));
     ui->incomingSharesSearch->setVisible(AvailableTypes.contains(NodeSelectorModelItemSearch::Type::INCOMING_SHARE));
     ui->cloudDriveSearch->setVisible(AvailableTypes.contains(NodeSelectorModelItemSearch::Type::CLOUD_DRIVE));
+    ui->searchButtonsWidget->setVisible(true);
 
     if(ui->cloudDriveSearch->isChecked() && !ui->cloudDriveSearch->isVisible())
     {
@@ -299,5 +299,4 @@ void NodeSelectorTreeViewWidgetSearch::modelLoaded()
         }
     }
 
-    ui->searchButtonsWidget->setVisible(true);
 }

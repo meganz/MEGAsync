@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>540</width>
-    <height>433</height>
+    <height>348</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,7 +21,7 @@ border:none;
   </property>
   <layout class="QVBoxLayout" name="NodeSelectorWidgetLayout">
    <property name="spacing">
-    <number>15</number>
+    <number>10</number>
    </property>
    <property name="leftMargin">
     <number>30</number>
@@ -47,7 +47,7 @@ border:none;
       <number>2</number>
      </property>
      <property name="verticalSpacing">
-      <number>8</number>
+      <number>10</number>
      </property>
      <item row="0" column="10">
       <widget class="SearchLineEdit" name="leSearch">
@@ -291,6 +291,12 @@ color:#303233;
          <height>0</height>
         </size>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>24</height>
+        </size>
+       </property>
        <property name="styleSheet">
         <string notr="true">QToolButton
 {
@@ -381,6 +387,9 @@ QToolButton:pressed
           <property name="icon_spacing" stdset="0">
            <UInt>6</UInt>
           </property>
+          <property name="hover_selected" stdset="0">
+           <bool>true</bool>
+          </property>
           <attribute name="buttonGroup">
            <string notr="true">searchFilterButtonGroup</string>
           </attribute>
@@ -418,6 +427,9 @@ QToolButton:pressed
           </property>
           <property name="icon_spacing" stdset="0">
            <UInt>6</UInt>
+          </property>
+          <property name="hover_selected" stdset="0">
+           <bool>true</bool>
           </property>
           <attribute name="buttonGroup">
            <string notr="true">searchFilterButtonGroup</string>
@@ -457,6 +469,9 @@ QToolButton:pressed
           <property name="icon_spacing" stdset="0">
            <UInt>6</UInt>
           </property>
+          <property name="hover_selected" stdset="0">
+           <bool>true</bool>
+          </property>
           <attribute name="buttonGroup">
            <string notr="true">searchFilterButtonGroup</string>
           </attribute>
@@ -475,8 +490,8 @@ QToolButton:pressed
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>20</width>
-         <height>4</height>
+         <width>0</width>
+         <height>10</height>
         </size>
        </property>
       </spacer>
@@ -819,7 +834,7 @@ font-weight: 400;
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>35</height>
+       <height>45</height>
       </size>
      </property>
      <property name="styleSheet">
@@ -841,7 +856,7 @@ border-radius:4px;
        <number>0</number>
       </property>
       <property name="topMargin">
-       <number>0</number>
+       <number>6</number>
       </property>
       <property name="rightMargin">
        <number>0</number>
@@ -971,11 +986,8 @@ color:#333333;
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../../Resources_macx.qrc"/>
   <include location="../../../Resources_win.qrc"/>
-  <include location="../../../Resources_macx.qrc"/>
   <include location="../../../Resources_win.qrc"/>
-  <include location="../../../Resources_macx.qrc"/>
   <include location="../../../Resources_win.qrc"/>
  </resources>
  <connections/>

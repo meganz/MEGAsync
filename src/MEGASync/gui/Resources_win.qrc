@@ -1252,21 +1252,12 @@
         <file>images/node_selector/search_filter/small_cloud_default.png</file>
         <file>images/node_selector/search_filter/small_cloud_default@2x.png</file>
         <file>images/node_selector/search_filter/small_cloud_default@3x.png</file>
-        <file>images/node_selector/search_filter/small_cloud_press.png</file>
-        <file>images/node_selector/search_filter/small_cloud_press@2x.png</file>
-        <file>images/node_selector/search_filter/small_cloud_press@3x.png</file>
         <file>images/node_selector/search_filter/small_database_default.png</file>
         <file>images/node_selector/search_filter/small_database_default@2x.png</file>
         <file>images/node_selector/search_filter/small_database_default@3x.png</file>
-        <file>images/node_selector/search_filter/small_database_press.png</file>
-        <file>images/node_selector/search_filter/small_database_press@2x.png</file>
-        <file>images/node_selector/search_filter/small_database_press@3x.png</file>
         <file>images/node_selector/search_filter/small_folder_default.png</file>
         <file>images/node_selector/search_filter/small_folder_default@2x.png</file>
         <file>images/node_selector/search_filter/small_folder_default@3x.png</file>
-        <file>images/node_selector/search_filter/small_folder_press.png</file>
-        <file>images/node_selector/search_filter/small_folder_press@2x.png</file>
-        <file>images/node_selector/search_filter/small_folder_press@3x.png</file>
         <file>images/node_selector/search_filter/small_cloud_hover.png</file>
         <file>images/node_selector/search_filter/small_cloud_hover@2x.png</file>
         <file>images/node_selector/search_filter/small_cloud_hover@3x.png</file>
@@ -1331,5 +1322,14 @@
         <file>images/HD_win.png</file>
         <file>images/HD_win@2x.png</file>
         <file>images/HD_win@3x.png</file>
+        <file>images/node_selector/search_filter/small_cloud_hover_selected.png</file>
+        <file>images/node_selector/search_filter/small_cloud_hover_selected@2x.png</file>
+        <file>images/node_selector/search_filter/small_cloud_hover_selected@3x.png</file>
+        <file>images/node_selector/search_filter/small_database_hover_selected.png</file>
+        <file>images/node_selector/search_filter/small_database_hover_selected@2x.png</file>
+        <file>images/node_selector/search_filter/small_database_hover_selected@3x.png</file>
+        <file>images/node_selector/search_filter/small_folder_hover_selected.png</file>
+        <file>images/node_selector/search_filter/small_folder_hover_selected@2x.png</file>
+        <file>images/node_selector/search_filter/small_folder_hover_selected@3x.png</file>
     </qresource>
 </RCC>
