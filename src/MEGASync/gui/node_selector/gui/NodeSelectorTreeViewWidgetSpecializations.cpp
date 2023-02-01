@@ -204,11 +204,6 @@ void NodeSelectorTreeViewWidgetSearch::modelLoaded()
         return;
     }
 
-    if(qobject_cast<NodeSelectorModelSearch*>(mModel.get())->isSearching())
-    {
-        return;
-    }
-
     if(mModel->rowCount() == 0)
     {
         ui->searchButtonsWidget->setVisible(false);

@@ -182,7 +182,6 @@ void NodeSelectorModelBackups::firstLoad()
     {
         addRootItems();
     }
-
 }
 
 bool NodeSelectorModelBackups::canBeDeleted() const
@@ -241,8 +240,7 @@ void NodeSelectorModelBackups::onRootItemCreated(NodeSelectorModelItem *item)
 }
 
 NodeSelectorModelSearch::NodeSelectorModelSearch(QObject *parent)
-    : NodeSelectorModel(parent),
-      mSearching(false)
+    : NodeSelectorModel(parent)
 {
 
 }
@@ -265,22 +263,14 @@ void NodeSelectorModelSearch::createRootNodes()
 
 void NodeSelectorModelSearch::searchByText(const QString &text)
 {
-    if(mSearching)
-    {
-        mNodeRequesterWorker->restartSearch();
-    }
-    mSearching = true;
+    mNodeRequesterWorker->restartSearch();
     addRootItems();
     emit searchNodes(text);
 }
 
 void NodeSelectorModelSearch::stopSearch()
 {
-    if(mSearching)
-    {
-        mNodeRequesterWorker->restartSearch();
-    }
-    mSearching = false;
+    mNodeRequesterWorker->restartSearch();
 }
 
 int NodeSelectorModelSearch::rootItemsCount() const
@@ -328,10 +318,17 @@ QVariant NodeSelectorModelSearch::data(const QModelIndex &index, int role) const
     return NodeSelectorModel::data(index, role);
 }
 
+void NodeSelectorModelSearch::proxyInvalidateFinished()
+{
+    mNodeRequesterWorker->lockSearchMutex(false);
+}
+
 void NodeSelectorModelSearch::onRootItemsCreated(QList<NodeSelectorModelItem *> items)
 {
     Q_UNUSED(items)
-    mSearching = false;
-    rootItemsLoaded();
-    emit levelsAdded(mIndexesActionInfo.indexesToBeExpanded, true);
+    if(mNodeRequesterWorker->trySearchLock())
+    {
+        rootItemsLoaded();
+        emit levelsAdded(mIndexesActionInfo.indexesToBeExpanded, true);
+    }
 }

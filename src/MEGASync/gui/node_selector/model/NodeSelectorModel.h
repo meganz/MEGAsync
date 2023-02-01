@@ -51,11 +51,14 @@ public:
     NodeRequester(NodeSelectorModel* model);
     void setShowFiles(bool newShowFiles);
     void setSyncSetupMode(bool value);
-    void lockMutex(bool state) const;
+    void lockDataMutex(bool state) const;
     const std::atomic<bool>& isWorking() const;
     int rootIndexSize() const;
     int rootIndexOf(NodeSelectorModelItem *item);
     NodeSelectorModelItem* getRootItem(int index) const;
+
+    bool trySearchLock() const;
+    void lockSearchMutex(bool state) const;
 
     void cancelCurrentRequest();
     void restartSearch();
@@ -90,7 +93,8 @@ private:
      std::atomic<bool> mSyncSetupMode{false};
      NodeSelectorModel* mModel;
      QList<NodeSelectorModelItem*> mRootItems;
-     mutable QMutex mMutex;
+     mutable QMutex mDataMutex;
+     mutable QMutex mSearchMutex;
      std::shared_ptr<mega::MegaCancelToken> mCancelToken;
 };
 
@@ -146,6 +150,8 @@ public:
 
     virtual void firstLoad() = 0;
     void rootItemsLoaded();
+
+    virtual void proxyInvalidateFinished(){}
 
     IndexesActionInfo needsToBeExpandedAndSelected();
     void clearIndexesNodeInfo();

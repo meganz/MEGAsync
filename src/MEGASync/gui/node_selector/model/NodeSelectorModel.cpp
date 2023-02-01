@@ -21,9 +21,19 @@ NodeRequester::NodeRequester(NodeSelectorModel *model)
       mCancelToken(mega::MegaCancelToken::createInstance())
 {}
 
-void NodeRequester::lockMutex(bool state) const
+void NodeRequester::lockDataMutex(bool state) const
 {
-    state ? mMutex.lock() : mMutex.unlock();
+    state ? mDataMutex.lock() : mDataMutex.unlock();
+}
+
+bool NodeRequester::trySearchLock() const
+{
+    return mSearchMutex.tryLock();
+}
+
+void NodeRequester::lockSearchMutex(bool state) const
+{
+    state ? mSearchMutex.lock() : mSearchMutex.unlock();
 }
 
 void NodeRequester::requestNodeAndCreateChildren(NodeSelectorModelItem* item, const QModelIndex& parentIndex, bool showFiles)
@@ -44,9 +54,9 @@ void NodeRequester::requestNodeAndCreateChildren(NodeSelectorModelItem* item, co
 
             if(!isAborted())
             {
-                lockMutex(true);
+                lockDataMutex(true);
                 item->createChildItems(std::unique_ptr<mega::MegaNodeList>(childNodesFiltered));
-                lockMutex(false);
+                lockDataMutex(false);
                 emit nodesReady(item);
             }
             else
@@ -63,7 +73,13 @@ void NodeRequester::search(const QString &text)
     {
         return;
     }
-    qDeleteAll(mRootItems);
+
+
+    {
+        QMutexLocker a(&mSearchMutex);
+        QMutexLocker d(&mDataMutex);
+        qDeleteAll(mRootItems);
+    }
     mRootItems.clear();
     mSearchCanceled = false;
     mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
@@ -95,10 +111,10 @@ void NodeRequester::search(const QString &text)
     }
     else
     {
+        QMutexLocker d(&mDataMutex);
         mRootItems.append(items);
         emit searchItemsCreated(items);
     }
-
 }
 
 void NodeRequester::createCloudDriveRootItem()
@@ -186,9 +202,9 @@ void NodeRequester::createBackupRootItems(mega::MegaHandle backupsHandle)
 
 void NodeRequester::onAddNodeRequested(std::shared_ptr<mega::MegaNode> newNode, const QModelIndex& parentIndex, NodeSelectorModelItem *parentItem)
 {
-    lockMutex(true);
+    lockDataMutex(true);
     auto childItem = parentItem->addNode(newNode);
-    lockMutex(false);
+    lockDataMutex(false);
     childItem->setProperty(INDEX_PROPERTY, mModel->index(parentItem->getNumChildren() -1 ,0, parentIndex));
 
     if(!isAborted())
@@ -203,32 +219,32 @@ void NodeRequester::onAddNodeRequested(std::shared_ptr<mega::MegaNode> newNode, 
 
 void NodeRequester::removeItem(NodeSelectorModelItem* item)
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(&mDataMutex);
     item->deleteLater();
 }
 
 void NodeRequester::removeRootItem(NodeSelectorModelItem* item)
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(&mDataMutex);
     item->deleteLater();
     mRootItems.removeOne(item);
 }
 
 int NodeRequester::rootIndexSize() const
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(&mDataMutex);
     return mRootItems.size();
 }
 
 int NodeRequester::rootIndexOf(NodeSelectorModelItem* item)
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(&mDataMutex);
     return mRootItems.indexOf(item);
 }
 
 NodeSelectorModelItem *NodeRequester::getRootItem(int index) const
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(&mDataMutex);
     return mRootItems.at(index);
 }
 
@@ -424,13 +440,13 @@ QModelIndex NodeSelectorModel::index(int row, int column, const QModelIndex &par
     {
         if (parent.isValid())
         {
-            mNodeRequesterWorker->lockMutex(true);
+            mNodeRequesterWorker->lockDataMutex(true);
             NodeSelectorModelItem* item(static_cast<NodeSelectorModelItem*>(parent.internalPointer()));
             if(item)
             {
                 index =  createIndex(row, column, item->getChild(row).data());
             }
-            mNodeRequesterWorker->lockMutex(false);
+            mNodeRequesterWorker->lockDataMutex(false);
         }
         else if(mNodeRequesterWorker->rootIndexSize() > row)
         {
@@ -474,10 +490,10 @@ int NodeSelectorModel::rowCount(const QModelIndex &parent) const
 {
     if (parent.isValid())
     {
-        mNodeRequesterWorker->lockMutex(true);
+        mNodeRequesterWorker->lockDataMutex(true);
         NodeSelectorModelItem* item = static_cast<NodeSelectorModelItem*>(parent.internalPointer());
         auto rows = item ? item->getNumChildren() : 0;
-        mNodeRequesterWorker->lockMutex(false);
+        mNodeRequesterWorker->lockDataMutex(false);
         return rows;
     }
     return mNodeRequesterWorker->rootIndexSize();
@@ -503,9 +519,9 @@ bool NodeSelectorModel::hasChildren(const QModelIndex &parent) const
     NodeSelectorModelItem* item = static_cast<NodeSelectorModelItem*>(parent.internalPointer());
     if(item && item->getNode())
     {
-        mNodeRequesterWorker->lockMutex(true);
+        mNodeRequesterWorker->lockDataMutex(true);
         auto numChild = item->getNumChildren() > 0;
-        mNodeRequesterWorker->lockMutex(false);
+        mNodeRequesterWorker->lockDataMutex(false);
         return numChild;
     }
     else
@@ -588,9 +604,9 @@ void NodeSelectorModel::addNode(std::shared_ptr<mega::MegaNode> node, const QMod
     {
         clearIndexesNodeInfo();
 
-        mNodeRequesterWorker->lockMutex(true);
+        mNodeRequesterWorker->lockDataMutex(true);
         int numchildren = parentItem->getNumChildren();
-        mNodeRequesterWorker->lockMutex(false);
+        mNodeRequesterWorker->lockDataMutex(false);
 
         beginInsertRows(parent, numchildren, numchildren);
         emit requestAddNode(node, parent, parentItem);
@@ -632,9 +648,9 @@ void NodeSelectorModel::removeNode(const QModelIndex &index)
             {
                 int row = parent->indexOf(item);
                 beginRemoveRows(index.parent(), row, row);
-                mNodeRequesterWorker->lockMutex(true);
+                mNodeRequesterWorker->lockDataMutex(true);
                 auto itemToRemove = parent->findChildNode(node);
-                mNodeRequesterWorker->lockMutex(false);
+                mNodeRequesterWorker->lockDataMutex(false);
                 emit removeItem(itemToRemove);
                 endRemoveRows();
             }

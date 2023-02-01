@@ -314,6 +314,14 @@ void NodeSelectorProxyModel::invalidateModel(const QModelIndexList& parents, boo
 
 void NodeSelectorProxyModel::onModelSortedFiltered()
 {
+    if(mForceInvalidate)
+    {
+        if(auto nodeSelectorModel = dynamic_cast<NodeSelectorModel*>(sourceModel()))
+        {
+            nodeSelectorModel->proxyInvalidateFinished();
+        }
+    }
+
     mForceInvalidate = false;
 
     emit layoutChanged();
@@ -333,6 +341,7 @@ void NodeSelectorProxyModel::onModelSortedFiltered()
     }
     emit getMegaModel()->blockUi(false);
     itemsToMap.clear();
+
 }
 
 NodeSelectorProxyModelSearch::NodeSelectorProxyModelSearch(QObject *parent)
