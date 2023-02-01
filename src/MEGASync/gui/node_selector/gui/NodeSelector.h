@@ -4,7 +4,6 @@
 #include "ButtonIconManager.h"
 #include "NodeNameSetterDialog/NewFolderDialog.h"
 #include "NodeSelectorTreeViewWidget.h"
-#include "megaapi.h"
 
 #include <QDialog>
 #include <QItemSelection>
@@ -20,6 +19,10 @@ class NodeSelectorTreeViewWidgetCloudDrive;
 class NodeSelectorTreeViewWidgetIncomingShares;
 class NodeSelectorTreeViewWidgetBackups;
 class NodeSelectorTreeViewWidgetSearch;
+
+namespace mega {
+class MegaApi;
+}
 
 namespace Ui {
 class NodeSelector;
@@ -87,42 +90,6 @@ private:
     QMap<TabItem, QFrame*> mTabFramesToggleGroup;
 
     bool mManuallyResizedColumn;
-};
-
-class UploadNodeSelector : public NodeSelector
-{
-public:
-    explicit UploadNodeSelector(QWidget *parent = 0);
-
-private:
-    bool isSelectionCorrect() override;
-};
-
-class DownloadNodeSelector : public NodeSelector
-{
-public:
-    explicit DownloadNodeSelector(QWidget *parent = 0);
-
-private:
-    bool isSelectionCorrect() override;
-};
-
-class SyncNodeSelector : public NodeSelector
-{
-public:
-    explicit SyncNodeSelector(QWidget *parent = 0);
-
-private:
-    bool isSelectionCorrect() override;
-};
-
-class StreamNodeSelector : public NodeSelector
-{
-public:
-    explicit StreamNodeSelector(QWidget *parent = 0);
-
-private:
-    bool isSelectionCorrect() override;
 };
 
 #endif // NODESELECTOR_H

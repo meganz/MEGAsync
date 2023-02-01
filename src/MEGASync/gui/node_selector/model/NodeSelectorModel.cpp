@@ -282,6 +282,7 @@ void NodeRequester::cancelCurrentRequest()
 {
     if(mCancelToken)
     {
+        mSearchCanceled = true;
         mCancelToken->cancel();
     }
 }
@@ -602,7 +603,6 @@ QVariant NodeSelectorModel::headerData(int section, Qt::Orientation orientation,
         }
         else if(role == toInt(HeaderRoles::ICON_ROLE))
         {
-            qDebug()<<toInt(HeaderRoles::ICON_ROLE);
             if(section == USER)
             {
                 return QIcon(QLatin1String("://images/node_selector/icon_small_user.png"));
@@ -921,7 +921,6 @@ void NodeSelectorModel::fetchItemChildren(const QModelIndex& parent)
     emit blockUi(true);
 
     NodeSelectorModelItem* item = static_cast<NodeSelectorModelItem*>(parent.internalPointer());
-    qDebug()<<"Fetching item children:"<<item->getNode()->getName();
     if(!item->areChildrenInitialized() && !item->requestingChildren())
     {
         int itemNumChildren = item->getNumChildren();
@@ -998,11 +997,11 @@ QModelIndex NodeSelectorModel::findItemByNodeHandle(const mega::MegaHandle& hand
         QModelIndex child = parent.child(i, COLUMN::NODE);
         if(child.isValid())
         {
-          auto ret = findItemByNodeHandle(handle, child);
-          if(ret.isValid())
-          {
-              return ret;
-          }
+            auto ret = findItemByNodeHandle(handle, child);
+            if(ret.isValid())
+            {
+                return ret;
+            }
         }
     }
 
@@ -1065,27 +1064,19 @@ QIcon NodeSelectorModel::getFolderIcon(NodeSelectorModelItem *item) const
                     QString nodeDeviceId (QString::fromUtf8(node->getDeviceId()));
                     if (!nodeDeviceId.isEmpty())
                     {
-                        std::unique_ptr<mega::MegaNode> parent (MegaSyncApp->getMegaApi()->getNodeByHandle(node->getParentHandle()));
-                        if (parent)
+                        // TODO, future: choose icon according to host OS
+                        if (nodeDeviceId == QString::fromUtf8(MegaSyncApp->getMegaApi()->getDeviceId()))
                         {
-                            QString parentDeviceId (QString::fromUtf8(parent->getDeviceId()));
-                            if (parentDeviceId.isEmpty())
-                            {
-                                // TODO, future: choose icon according to host OS
-                                if (nodeDeviceId == QString::fromUtf8(MegaSyncApp->getMegaApi()->getDeviceId()))
-                                {
 #ifdef Q_OS_WINDOWS
-                                    const QIcon thisDeviceIcon (QLatin1String("://images/icons/pc/pc-win_24.png"));
+                            const QIcon thisDeviceIcon (QLatin1String("://images/icons/pc/pc-win_24.png"));
 #elif defined(Q_OS_MACOS)
-                                    const QIcon thisDeviceIcon (QLatin1String("://images/icons/pc/pc-mac_24.png"));
+                            const QIcon thisDeviceIcon (QLatin1String("://images/icons/pc/pc-mac_24.png"));
 #elif defined(Q_OS_LINUX)
-                                    const QIcon thisDeviceIcon (QLatin1String("://images/icons/pc/pc-linux_24.png"));
+                            const QIcon thisDeviceIcon (QLatin1String("://images/icons/pc/pc-linux_24.png"));
 #endif
-                                    return thisDeviceIcon;
-                                }
-                                return QIcon(QLatin1String("://images/icons/pc/pc_24.png"));
-                            }
+                            return thisDeviceIcon;
                         }
+                        return QIcon(QLatin1String("://images/icons/pc/pc_24.png"));
                     }
                     QIcon icon;
                     icon.addFile(QLatin1String("://images/icons/folder/small-folder.png"), QSize(), QIcon::Normal);

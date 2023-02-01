@@ -71,7 +71,9 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/node_selector/gui/NodeSelectorTreeViewWidgetSpecializations.cpp \
     $$PWD/node_selector/gui/NodeSelector.cpp \
     $$PWD/node_selector/gui/NodeSelectorLoadingDelegate.cpp \
-    $$PWD/node_selector/gui/SearchLineEdit.cpp
+    $$PWD/node_selector/gui/SearchLineEdit.cpp \
+    $$PWD/node_selector/gui/NodeSelectorSpecializations.cpp
+
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/AutoResizeStackedWidget.h \
@@ -148,7 +150,9 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/node_selector/gui/NodeSelectorTreeViewWidgetSpecializations.h \
     $$PWD/node_selector/gui/NodeSelector.h \
     $$PWD/node_selector/gui/NodeSelectorLoadingDelegate.h \
-    $$PWD/node_selector/gui/SearchLineEdit.h
+    $$PWD/node_selector/gui/SearchLineEdit.h \
+    $$PWD/node_selector/gui/NodeSelectorSpecializations.h
+
 
 INCLUDEPATH += $$PWD
 

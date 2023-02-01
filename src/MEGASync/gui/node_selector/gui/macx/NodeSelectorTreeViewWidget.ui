@@ -746,7 +746,7 @@ padding-right:10px;
             </property>
            </widget>
           </item>
-          <item>
+          <item alignment="Qt::AlignHCenter">
            <widget class="QWidget" name="searchEmptyInfoWidget" native="true">
             <property name="minimumSize">
              <size>

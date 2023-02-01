@@ -346,6 +346,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorTreeViewWidget.h
     ${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorTreeView.h
     ${MEGAsyncDir}/gui/node_selector/gui/SearchLineEdit.h
+    ${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorSpecializations.h
     ${MEGAsyncDir}/gui/node_selector/model/NodeSelectorDelegates.h
     ${MEGAsyncDir}/gui/node_selector/model/NodeSelectorModel.h
     ${MEGAsyncDir}/gui/node_selector/model/NodeSelectorModelItem.h
@@ -561,12 +562,12 @@ set (SRCS
     ${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorTreeViewWidget.cpp
     ${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorTreeView.cpp
     ${MEGAsyncDir}/gui/node_selector/gui/SearchLineEdit.cpp
+    ${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorSpecializations.cpp
     ${MEGAsyncDir}/gui/node_selector/model/NodeSelectorDelegates.cpp
     ${MEGAsyncDir}/gui/node_selector/model/NodeSelectorModel.cpp
     ${MEGAsyncDir}/gui/node_selector/model/NodeSelectorModelItem.cpp
     ${MEGAsyncDir}/gui/node_selector/model/NodeSelectorModelSpecialised.cpp
     ${MEGAsyncDir}/gui/node_selector/model/NodeSelectorProxyModel.cpp
-
     ${MEGAsyncDir}/transfers/model/TransfersManagerSortFilterProxyModel.cpp
     ${MEGAsyncDir}/transfers/model/TransfersModel.cpp
     ${MEGAsyncDir}/transfers/model/InfoDialogTransfersProxyModel.cpp

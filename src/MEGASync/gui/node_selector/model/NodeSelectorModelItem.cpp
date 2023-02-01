@@ -360,6 +360,7 @@ int NodeSelectorModelItemSearch::getNumChildren()
 NodeSelectorModelItem *NodeSelectorModelItemSearch::createModelItem(std::unique_ptr<mega::MegaNode> node, bool showFiles, NodeSelectorModelItem *parentItem)
 {
     Q_UNUSED(showFiles)
+    Q_UNUSED(parentItem)
     return nullptr;
 }
 

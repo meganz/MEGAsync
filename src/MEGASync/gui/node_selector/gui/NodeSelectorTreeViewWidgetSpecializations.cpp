@@ -215,17 +215,7 @@ void NodeSelectorTreeViewWidgetSearch::modelLoaded()
     }
 
     changeButtonsWidgetSizePolicy(false);
-
-    if(mModel->rowCount() == 0)
-    {
-        ui->searchButtonsWidget->setVisible(false);
-        ui->stackedWidget->setCurrentWidget(ui->emptyPage);
-        return;
-    }
-    else
-    {
-        ui->stackedWidget->setCurrentWidget(ui->treeViewPage);
-    }
+    NodeSelectorTreeViewWidget::modelLoaded();
 
     NodeSelectorModelItemSearch::Types searchedTypes = NodeSelectorModelItemSearch::Type::NONE;
     auto searchModel = dynamic_cast<NodeSelectorModelSearch*>(mModel.get());

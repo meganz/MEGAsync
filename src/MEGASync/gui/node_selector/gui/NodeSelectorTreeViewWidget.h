@@ -81,6 +81,7 @@ protected:
     void setTitle(const QString& title);
     QModelIndex getParentIncomingShareByIndex(QModelIndex idx);
     SelectTypeSPtr getSelectType(){return mSelectType;}
+    virtual void modelLoaded();
 
     Ui::NodeSelectorTreeViewWidget *ui;
     std::unique_ptr<NodeSelectorProxyModel> mProxyModel;
@@ -120,7 +121,6 @@ private:
     virtual std::unique_ptr<NodeSelectorProxyModel> createProxyModel();
     virtual std::unique_ptr<NodeSelectorModel> createModel() = 0;
     virtual bool newFolderBtnVisibleInRoot(){return true;}
-    virtual void modelLoaded();
     void checkOkButton(const QModelIndexList& selected);
     ButtonIconManager mButtonIconManager;
 
