@@ -350,7 +350,7 @@ NodeSelectorProxyModelSearch::NodeSelectorProxyModelSearch(QObject *parent)
 
 }
 
-void NodeSelectorProxyModelSearch::setMode(NodeSelectorModelItemSearch::Type mode)
+void NodeSelectorProxyModelSearch::setMode(NodeSelectorModelItemSearch::Types mode)
 {
     if(mMode == mode)
     {
@@ -371,7 +371,7 @@ bool NodeSelectorProxyModelSearch::filterAcceptsRow(int sourceRow, const QModelI
     {
         if(NodeSelectorModelItemSearch* item = static_cast<NodeSelectorModelItemSearch*>(index.internalPointer()))
         {
-            return mMode == item->getType();
+            return mMode & item->getType();
         }
     }
 

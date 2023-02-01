@@ -92,7 +92,7 @@ class NodeSelectorModelSearch : public NodeSelectorModel
 {
     Q_OBJECT
 public:
-    explicit NodeSelectorModelSearch(QObject* parent = 0);
+    explicit NodeSelectorModelSearch(NodeSelectorModelItemSearch::Types allowedType, QObject* parent = 0);
     virtual ~NodeSelectorModelSearch();
     void firstLoad() override;
     void createRootNodes() override;
@@ -102,14 +102,20 @@ public:
     bool canFetchMore(const QModelIndex &parent) const override;
     QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const override;
 
+    const NodeSelectorModelItemSearch::Types &searchedTypes() const;
+
 protected:
     void proxyInvalidateFinished() override;
 
 signals:
-    void searchNodes(const QString& text);
+    void searchNodes(const QString& text, NodeSelectorModelItemSearch::Types);
 
 private slots:
-    void onRootItemsCreated(QList<NodeSelectorModelItem*> items);
+    void onRootItemsCreated(QList<NodeSelectorModelItem*> items, NodeSelectorModelItemSearch::Types searchedTypes);
+
+private:
+    NodeSelectorModelItemSearch::Types mAllowedTypes;
+    NodeSelectorModelItemSearch::Types mSearchedTypes;
 };
 
 #endif // NODESELECTORMODELSPECIALISED_H

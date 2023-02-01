@@ -131,6 +131,9 @@ NodeSelectorTreeViewWidgetSearch::NodeSelectorTreeViewWidgetSearch(SelectTypeSPt
 
 void NodeSelectorTreeViewWidgetSearch::search(const QString &text)
 {
+    changeButtonsWidgetSizePolicy(true);
+    ui->stackedWidget->setCurrentWidget(ui->treeViewPage);
+    ui->searchButtonsWidget->setVisible(false);
     auto search_model = static_cast<NodeSelectorModelSearch*>(mModel.get());
     search_model->searchByText(text);
     ui->searchingText->setText(text);
@@ -177,6 +180,13 @@ void NodeSelectorTreeViewWidgetSearch::onItemDoubleClick(const QModelIndex &inde
     emit nodeDoubleClicked(item->getNode(), true);
 }
 
+void NodeSelectorTreeViewWidgetSearch::changeButtonsWidgetSizePolicy(bool state)
+{
+    auto buttonWidgetSizePolicy = ui->searchButtonsWidget->sizePolicy();
+    buttonWidgetSizePolicy.setRetainSizeWhenHidden(state);
+    ui->searchButtonsWidget->setSizePolicy(buttonWidgetSizePolicy);
+}
+
 bool NodeSelectorTreeViewWidgetSearch::nothingChecked() const
 {
    return !ui->backupsSearch->isChecked() && !ui->cloudDriveSearch->isChecked() && !ui->incomingSharesSearch->isChecked();
@@ -189,7 +199,7 @@ QString NodeSelectorTreeViewWidgetSearch::getRootText()
 
 std::unique_ptr<NodeSelectorModel> NodeSelectorTreeViewWidgetSearch::createModel()
 {
-    return std::unique_ptr<NodeSelectorModelSearch>(new NodeSelectorModelSearch);
+    return std::unique_ptr<NodeSelectorModelSearch>(new NodeSelectorModelSearch(getSelectType()->allowedTypes()));
 }
 
 QIcon NodeSelectorTreeViewWidgetSearch::getEmptyIcon()
@@ -204,6 +214,8 @@ void NodeSelectorTreeViewWidgetSearch::modelLoaded()
         return;
     }
 
+    changeButtonsWidgetSizePolicy(false);
+
     if(mModel->rowCount() == 0)
     {
         ui->searchButtonsWidget->setVisible(false);
@@ -215,25 +227,16 @@ void NodeSelectorTreeViewWidgetSearch::modelLoaded()
         ui->stackedWidget->setCurrentWidget(ui->treeViewPage);
     }
 
-    QList<NodeSelectorModelItemSearch::Type> AvailableTypes;
-    for(int row = 0; mModel->rowCount() > row; ++row)
+    NodeSelectorModelItemSearch::Types searchedTypes = NodeSelectorModelItemSearch::Type::NONE;
+    auto searchModel = dynamic_cast<NodeSelectorModelSearch*>(mModel.get());
+    if(searchModel)
     {
-        auto idx = mModel->index(row, 0);
-        auto search_item = static_cast<NodeSelectorModelItemSearch*>(idx.internalPointer());
-        auto type = search_item->getType();
-        if(!AvailableTypes.contains(type))
-        {
-            AvailableTypes.append(type);
-            if(AvailableTypes.size() == 3)
-            {
-                break;
-            }
-        }
+        searchedTypes = searchModel->searchedTypes();
     }
 
-    ui->backupsSearch->setVisible(AvailableTypes.contains(NodeSelectorModelItemSearch::Type::BACKUP));
-    ui->incomingSharesSearch->setVisible(AvailableTypes.contains(NodeSelectorModelItemSearch::Type::INCOMING_SHARE));
-    ui->cloudDriveSearch->setVisible(AvailableTypes.contains(NodeSelectorModelItemSearch::Type::CLOUD_DRIVE));
+    ui->backupsSearch->setVisible(searchedTypes.testFlag(NodeSelectorModelItemSearch::Type::BACKUP));
+    ui->incomingSharesSearch->setVisible(searchedTypes.testFlag(NodeSelectorModelItemSearch::Type::INCOMING_SHARE));
+    ui->cloudDriveSearch->setVisible(searchedTypes.testFlag(NodeSelectorModelItemSearch::Type::CLOUD_DRIVE));
     ui->searchButtonsWidget->setVisible(true);
 
     if(ui->cloudDriveSearch->isChecked() && !ui->cloudDriveSearch->isVisible())

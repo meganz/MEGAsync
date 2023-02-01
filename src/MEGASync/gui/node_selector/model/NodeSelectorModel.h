@@ -63,9 +63,11 @@ public:
     void cancelCurrentRequest();
     void restartSearch();
 
+    const NodeSelectorModelItemSearch::Types &searchedTypes() const;
+
 public slots:
     void requestNodeAndCreateChildren(NodeSelectorModelItem* item, const QModelIndex& parentIndex, bool showFiles);
-    void search(const QString& text);
+    void search(const QString& text, NodeSelectorModelItemSearch::Types typesAllowed);
     void createCloudDriveRootItem();
     void createIncomingSharesRootItems(std::shared_ptr<mega::MegaNodeList> nodeList);
     void createBackupRootItems(mega::MegaHandle backupsHandle);
@@ -80,7 +82,7 @@ signals:
      void megaCloudDriveRootItemCreated(NodeSelectorModelItem* item);
      void megaIncomingSharesRootItemsCreated(QList<NodeSelectorModelItem*> item);
      void megaBackupRootItemsCreated(NodeSelectorModelItem* item);
-     void searchItemsCreated(QList<NodeSelectorModelItem*> item);
+     void searchItemsCreated(QList<NodeSelectorModelItem*> item, NodeSelectorModelItemSearch::Types searchedTypes);
      void nodeAdded(NodeSelectorModelItem* item);
 
 private:
@@ -96,6 +98,7 @@ private:
      mutable QMutex mDataMutex;
      mutable QMutex mSearchMutex;
      std::shared_ptr<mega::MegaCancelToken> mCancelToken;
+     NodeSelectorModelItemSearch::Types mSearchedTypes;
 };
 
 class NodeSelectorModel : public QAbstractItemModel

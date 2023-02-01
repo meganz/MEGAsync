@@ -5,6 +5,7 @@
 #include "QTMegaRequestListener.h"
 #include <megaapi.h>
 #include "NodeSelectorLoadingDelegate.h"
+#include "../model/NodeSelectorModelItem.h"
 #include <ViewLoadingScene.h>
 
 #include <QWidget>
@@ -79,6 +80,7 @@ protected:
     void changeEvent(QEvent* event) override;
     void setTitle(const QString& title);
     QModelIndex getParentIncomingShareByIndex(QModelIndex idx);
+    SelectTypeSPtr getSelectType(){return mSelectType;}
 
     Ui::NodeSelectorTreeViewWidget *ui;
     std::unique_ptr<NodeSelectorProxyModel> mProxyModel;
@@ -141,6 +143,7 @@ public:
     virtual void init(NodeSelectorTreeViewWidget* wdg) = 0;
     virtual void checkOkButton(NodeSelectorTreeViewWidget* wdg, const QModelIndexList &selected) = 0;
     virtual void newFolderButtonVisibility(NodeSelectorTreeViewWidget* wdg){Q_UNUSED(wdg)};
+    virtual NodeSelectorModelItemSearch::Types allowedTypes() = 0;
 };
 
 class DownloadType : public SelectType
@@ -149,6 +152,7 @@ public:
     explicit DownloadType() = default;
     void init(NodeSelectorTreeViewWidget* wdg) override;
     void checkOkButton(NodeSelectorTreeViewWidget* wdg, const QModelIndexList &selected) override;
+    NodeSelectorModelItemSearch::Types allowedTypes();
 };
 
 class SyncType : public SelectType
@@ -159,6 +163,7 @@ public:
     void init(NodeSelectorTreeViewWidget* wdg) override;
     void newFolderButtonVisibility(NodeSelectorTreeViewWidget* wdg) override;
     void checkOkButton(NodeSelectorTreeViewWidget* wdg, const QModelIndexList &selected) override;
+    NodeSelectorModelItemSearch::Types allowedTypes();
 };
 
 class StreamType : public SelectType
@@ -167,6 +172,7 @@ public:
     explicit StreamType() = default;
     void init(NodeSelectorTreeViewWidget* wdg) override;
     void checkOkButton(NodeSelectorTreeViewWidget* wdg, const QModelIndexList &selected) override;
+    NodeSelectorModelItemSearch::Types allowedTypes();
 };
 
 class UploadType : public SelectType
@@ -176,6 +182,7 @@ public:
     void init(NodeSelectorTreeViewWidget* wdg) override;
     void newFolderButtonVisibility(NodeSelectorTreeViewWidget* wdg) override;
     void checkOkButton(NodeSelectorTreeViewWidget* wdg, const QModelIndexList &selected) override;
+    NodeSelectorModelItemSearch::Types allowedTypes();
 };
 
 #endif // NODESELECTORTREEVIEWWIDGET_H

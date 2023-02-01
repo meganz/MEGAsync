@@ -129,19 +129,24 @@ class NodeSelectorModelItemSearch : public NodeSelectorModelItem
 public:
     enum class Type
     {
-        BACKUP = 0,
-        INCOMING_SHARE,
-        CLOUD_DRIVE,
+        NONE = 0x0,
+        BACKUP = 0x01,
+        INCOMING_SHARE = 0x02,
+        CLOUD_DRIVE = 0x04,
     };
+    Q_DECLARE_FLAGS(Types, Type);
 
-    explicit NodeSelectorModelItemSearch(std::unique_ptr<mega::MegaNode> node, NodeSelectorModelItem *parentItem = 0);
+    explicit NodeSelectorModelItemSearch(std::unique_ptr<mega::MegaNode> node, Types type, NodeSelectorModelItem *parentItem = 0);
     ~NodeSelectorModelItemSearch();
-    Type getType(){return mType;}
+    Types getType(){return mType;}
     int getNumChildren() override;
 
 private:
     NodeSelectorModelItem* createModelItem(std::unique_ptr<mega::MegaNode> node, bool showFiles, NodeSelectorModelItem *parentItem = 0) override;
-    Type mType;
+    Types mType;
 };
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(NodeSelectorModelItemSearch::Types)
+Q_DECLARE_METATYPE(NodeSelectorModelItemSearch::Types)
 
 #endif // MODELSELECTORMODELITEM_H

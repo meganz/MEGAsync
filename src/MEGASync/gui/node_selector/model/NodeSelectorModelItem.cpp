@@ -332,20 +332,14 @@ bool NodeSelectorModelItem::isVault()
     return false;
 }
 
-NodeSelectorModelItemSearch::NodeSelectorModelItemSearch(std::unique_ptr<mega::MegaNode> node, NodeSelectorModelItem *parentItem)
-    : NodeSelectorModelItem(std::move(node), false, parentItem)
+NodeSelectorModelItemSearch::NodeSelectorModelItemSearch(std::unique_ptr<mega::MegaNode> node, Types type, NodeSelectorModelItem *parentItem)
+    : NodeSelectorModelItem(std::move(node), false, parentItem),
+      mType(type)
 {
-    if(mMegaApi->isInCloud(mNode.get()))
+    qRegisterMetaType<NodeSelectorModelItemSearch::Types>("NodeSelectorModelItemSearch::Types");
+
+    if(mType & NodeSelectorModelItemSearch::Type::INCOMING_SHARE)
     {
-        mType = NodeSelectorModelItemSearch::Type::CLOUD_DRIVE;
-    }
-    else if(mMegaApi->isInVault(mNode.get()))
-    {
-        mType = NodeSelectorModelItemSearch::Type::BACKUP;
-    }
-    else
-    {
-        mType = NodeSelectorModelItemSearch::Type::INCOMING_SHARE;
         auto user = std::unique_ptr<mega::MegaUser>(MegaSyncApp->getMegaApi()->getUserFromInShare(mNode.get(), true));
         setOwner(move(user));
     }
@@ -366,7 +360,7 @@ int NodeSelectorModelItemSearch::getNumChildren()
 NodeSelectorModelItem *NodeSelectorModelItemSearch::createModelItem(std::unique_ptr<mega::MegaNode> node, bool showFiles, NodeSelectorModelItem *parentItem)
 {
     Q_UNUSED(showFiles)
-    return new NodeSelectorModelItemSearch(move(node), parentItem);
+    return nullptr;
 }
 
 NodeSelectorModelItemIncomingShare::NodeSelectorModelItemIncomingShare(std::unique_ptr<mega::MegaNode> node, bool showFiles, NodeSelectorModelItem *parentItem)

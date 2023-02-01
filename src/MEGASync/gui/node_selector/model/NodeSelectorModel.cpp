@@ -67,13 +67,12 @@ void NodeRequester::requestNodeAndCreateChildren(NodeSelectorModelItem* item, co
     }
 }
 
-void NodeRequester::search(const QString &text)
+void NodeRequester::search(const QString &text, NodeSelectorModelItemSearch::Types typesAllowed)
 {
     if(text.isEmpty())
     {
         return;
     }
-
 
     {
         QMutexLocker a(&mSearchMutex);
@@ -86,6 +85,7 @@ void NodeRequester::search(const QString &text)
 
     auto nodeList = std::unique_ptr<mega::MegaNodeList>(megaApi->search(text.toUtf8(), mCancelToken.get()));
     QList<NodeSelectorModelItem*> items;
+    NodeSelectorModelItemSearch::Types searchedTypes = NodeSelectorModelItemSearch::Type::NONE;
 
     for(int i = 0; i < nodeList->size(); i++)
     {
@@ -100,8 +100,28 @@ void NodeRequester::search(const QString &text)
         auto node = std::unique_ptr<mega::MegaNode>(nodeList->get(i)->copy());
         if(node->isFolder() || (node->isFile() && mShowFiles))
         {
-            auto item = new NodeSelectorModelItemSearch(std::move(node));
-            items.append(item);
+            NodeSelectorModelItemSearch::Types type;
+
+            if(megaApi->isInCloud(node.get()))
+            {
+                type = NodeSelectorModelItemSearch::Type::CLOUD_DRIVE;
+            }
+            else if(megaApi->isInVault(node.get()))
+            {
+                type = NodeSelectorModelItemSearch::Type::BACKUP;
+            }
+            else
+            {
+                type = NodeSelectorModelItemSearch::Type::INCOMING_SHARE;
+            }
+
+            if(typesAllowed & type)
+            {
+                searchedTypes |= type;
+
+                auto item = new NodeSelectorModelItemSearch(std::move(node), type);
+                items.append(item);
+            }
         }
     }
 
@@ -113,7 +133,7 @@ void NodeRequester::search(const QString &text)
     {
         QMutexLocker d(&mDataMutex);
         mRootItems.append(items);
-        emit searchItemsCreated(items);
+        emit searchItemsCreated(items, searchedTypes);
     }
 }
 
@@ -280,6 +300,11 @@ void NodeRequester::finishWorker()
 bool NodeRequester::isAborted()
 {
     return mAborted || (mCancelToken && mCancelToken->isCancelled());
+}
+
+const NodeSelectorModelItemSearch::Types &NodeRequester::searchedTypes() const
+{
+    return mSearchedTypes;
 }
 
 void NodeRequester::setShowFiles(bool newShowFiles)

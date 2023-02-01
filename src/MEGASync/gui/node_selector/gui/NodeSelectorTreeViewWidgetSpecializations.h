@@ -78,6 +78,7 @@ private slots:
     void onItemDoubleClick(const QModelIndex &index) override;
 
 private:
+    void changeButtonsWidgetSizePolicy(bool state);
     bool nothingChecked() const;
     QString getRootText() override;
     std::unique_ptr<NodeSelectorModel> createModel() override;

@@ -82,13 +82,13 @@ class NodeSelectorProxyModelSearch : public NodeSelectorProxyModel
 
 public:
     explicit NodeSelectorProxyModelSearch(QObject* parent = nullptr);
-    void setMode(NodeSelectorModelItemSearch::Type mode);
+    void setMode(NodeSelectorModelItemSearch::Types mode);
 
 protected:
     bool filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const override;
 
 private:
-    NodeSelectorModelItemSearch::Type mMode;
+    NodeSelectorModelItemSearch::Types mMode;
 };
 
 #endif // NODESELECTORPROXYMODEL_H

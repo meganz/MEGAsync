@@ -239,8 +239,9 @@ void NodeSelectorModelBackups::onRootItemCreated(NodeSelectorModelItem *item)
     }
 }
 
-NodeSelectorModelSearch::NodeSelectorModelSearch(QObject *parent)
-    : NodeSelectorModel(parent)
+NodeSelectorModelSearch::NodeSelectorModelSearch(NodeSelectorModelItemSearch::Types allowedTypes, QObject *parent)
+    : NodeSelectorModel(parent),
+      mAllowedTypes(allowedTypes)
 {
 
 }
@@ -265,7 +266,7 @@ void NodeSelectorModelSearch::searchByText(const QString &text)
 {
     mNodeRequesterWorker->restartSearch();
     addRootItems();
-    emit searchNodes(text);
+    emit searchNodes(text, mAllowedTypes);
 }
 
 void NodeSelectorModelSearch::stopSearch()
@@ -323,12 +324,18 @@ void NodeSelectorModelSearch::proxyInvalidateFinished()
     mNodeRequesterWorker->lockSearchMutex(false);
 }
 
-void NodeSelectorModelSearch::onRootItemsCreated(QList<NodeSelectorModelItem *> items)
+void NodeSelectorModelSearch::onRootItemsCreated(QList<NodeSelectorModelItem *> items, NodeSelectorModelItemSearch::Types searchedTypes)
 {
     Q_UNUSED(items)
     if(mNodeRequesterWorker->trySearchLock())
     {
+        mSearchedTypes = searchedTypes;
         rootItemsLoaded();
         emit levelsAdded(mIndexesActionInfo.indexesToBeExpanded, true);
     }
+}
+
+const NodeSelectorModelItemSearch::Types &NodeSelectorModelSearch::searchedTypes() const
+{
+    return mSearchedTypes;
 }

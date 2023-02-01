@@ -775,6 +775,13 @@ void DownloadType::checkOkButton(NodeSelectorTreeViewWidget *wdg, const QModelIn
     wdg->ui->bOk->setEnabled(enable);
 }
 
+NodeSelectorModelItemSearch::Types DownloadType::allowedTypes()
+{
+    return NodeSelectorModelItemSearch::Type::CLOUD_DRIVE
+            | NodeSelectorModelItemSearch::Type::INCOMING_SHARE
+            | NodeSelectorModelItemSearch::Type::BACKUP;
+}
+
 void SyncType::init(NodeSelectorTreeViewWidget *wdg)
 {
     wdg->mModel->setSyncSetupMode(true);
@@ -809,6 +816,11 @@ void SyncType::checkOkButton(NodeSelectorTreeViewWidget *wdg, const QModelIndexL
         enable = correctSelected == selected.size();
     }
     wdg->ui->bOk->setEnabled(enable);
+}
+
+NodeSelectorModelItemSearch::Types SyncType::allowedTypes()
+{
+    return NodeSelectorModelItemSearch::Type::CLOUD_DRIVE | NodeSelectorModelItemSearch::Type::INCOMING_SHARE;
 }
 
 bool SyncType::isAllowedToNavigateInside(NodeSelectorModelItem *item)
@@ -847,6 +859,13 @@ void StreamType::checkOkButton(NodeSelectorTreeViewWidget *wdg, const QModelInde
     wdg->ui->bOk->setEnabled(enable);
 }
 
+NodeSelectorModelItemSearch::Types StreamType::allowedTypes()
+{
+    return NodeSelectorModelItemSearch::Type::CLOUD_DRIVE
+            | NodeSelectorModelItemSearch::Type::INCOMING_SHARE
+            | NodeSelectorModelItemSearch::Type::BACKUP;
+}
+
 void UploadType::init(NodeSelectorTreeViewWidget *wdg)
 {
     wdg->ui->bNewFolder->show();
@@ -868,4 +887,10 @@ void UploadType::checkOkButton(NodeSelectorTreeViewWidget *wdg, const QModelInde
         enable = true;
     }
     wdg->ui->bOk->setEnabled(enable);
+}
+
+NodeSelectorModelItemSearch::Types UploadType::allowedTypes()
+{
+    return NodeSelectorModelItemSearch::Type::CLOUD_DRIVE
+            | NodeSelectorModelItemSearch::Type::INCOMING_SHARE;
 }
