@@ -4865,8 +4865,7 @@ QPointer<OverQuotaDialog> MegaApplication::showSyncOverquotaDialog()
     {
         dialog = OverQuotaDialog::showDialog(OverQuotaDialogType::STORAGE_SYNCS);
     }
-
-    if(mTransferQuota->isOverQuota())
+    else if(mTransferQuota->isOverQuota())
     {
         dialog = OverQuotaDialog::showDialog(OverQuotaDialogType::BANDWITH_SYNC);
     }
