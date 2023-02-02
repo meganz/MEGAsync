@@ -8,6 +8,7 @@
 
 class SyncTableViewTooltips : public QObject
 {
+    Q_OBJECT
 public:
     SyncTableViewTooltips() = default;
     virtual ~SyncTableViewTooltips() = default;

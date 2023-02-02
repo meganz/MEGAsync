@@ -16,7 +16,7 @@ DuplicatedNodeDialog::DuplicatedNodeDialog(QWidget *parent) :
 #ifdef Q_OS_WINDOWS
     setWindowFlags(Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
 #endif
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint | Qt::WindowStaysOnTopHint);
 
     connect(&mFolderCheck, &DuplicatedUploadBase::selectionDone, this, [this](){
         done(QDialog::Accepted);

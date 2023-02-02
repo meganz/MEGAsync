@@ -57,8 +57,6 @@ TransferManager::TransferManager(MegaApi *megaApi) :
     mUiDragBackDrop->setupUi(mDragBackDrop);
     mDragBackDrop->hide();
 
-    mUi->wTransfers->setupTransfers();
-
 #ifdef Q_OS_MACOS
     mUi->leSearchField->setAttribute(Qt::WA_MacShowFocusRect,0);
 #else
@@ -67,6 +65,7 @@ TransferManager::TransferManager(MegaApi *megaApi) :
 #endif
 
     setAttribute(Qt::WA_DeleteOnClose, true);
+    mUi->wTransfers->setupTransfers();
 
     mUi->lTextSearch->installEventFilter(this);
     mUi->leSearchField->installEventFilter(this);
@@ -1477,7 +1476,7 @@ void TransferManager::dragLeaveEvent(QDragLeaveEvent *event)
 
 void TransferManager::updateTransferWidget(QWidget* widgetToShow)
 {
-    if (!mTransferScanCancelUi || !mTransferScanCancelUi->isActive())
+    if ( !mTransferScanCancelUi || !mTransferScanCancelUi->isActive())
     {
         if (mUi->sTransfers->currentWidget() != widgetToShow)
         {

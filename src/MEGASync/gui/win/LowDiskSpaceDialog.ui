@@ -13,6 +13,19 @@
   <property name="windowTitle">
    <string>Low disk space</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">*{
+  font-family: &quot;Segoe UI&quot;; font-size: 14px; font-weight: 400;
+}
+
+QPushButton {
+  padding-top: 5px; padding-bottom: 5px; padding-left: 20px; padding-right: 20px;
+  border-style: solid; border-width: 1px; border-color: #d7d6d5; border-radius: 4px;
+}
+
+
+</string>
+  </property>
   <layout class="QHBoxLayout" name="horizontalLayout_4">
    <property name="leftMargin">
     <number>20</number>
@@ -76,11 +89,11 @@
            <height>64</height>
           </size>
          </property>
+         <property name="styleSheet">
+          <string notr="true">border-image: url(:/images/HD_win.png);</string>
+         </property>
          <property name="text">
           <string notr="true"/>
-         </property>
-         <property name="scaledContents">
-          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -187,6 +200,14 @@
              <height>30</height>
             </size>
            </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+  background-color : rgb(0, 95, 184);
+  color : #FFFFFF;
+}
+QPushButton:hover { background-color: #0081f9; }
+QPushButton:pressed { background-color: #004c93; }</string>
+           </property>
            <property name="text">
             <string>Try Again</string>
            </property>
@@ -199,6 +220,14 @@
              <width>105</width>
              <height>30</height>
             </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+  background-color : #FCFCFC;
+  color : #000000;
+}
+QPushButton:hover { background-color: #fdfdfd; }
+QPushButton:pressed { background-color: #cacaca; }</string>
            </property>
            <property name="text">
             <string>Cancel</string>

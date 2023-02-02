@@ -5,7 +5,7 @@
 #include "control/Utilities.h"
 #include "megaapi.h"
 #include <QTMegaRequestListener.h>
-#include "TransferMetadata.h"
+#include "TransferMetaData.h"
 
 #include <QMap>
 #include <QObject>
@@ -23,9 +23,6 @@ public:
 
     void startAvailableSpaceChecking();
 
-    QList<QString>::ConstIterator getAppDatasBegin();
-    QList<QString>::ConstIterator getPathsBegin();
-
     void addTransferBatch(std::shared_ptr<TransferBatch> batch);
     void removeBatch();
 
@@ -34,6 +31,9 @@ public:
     void clearDownloadQueue();
     WrappedNode* dequeueDownloadQueue();
 
+    unsigned long long getCurrentAppDataId() const;
+    const QString& getCurrentTargetPath() const;
+
 signals:
     void finishedAvailableSpaceCheck(bool isDownloadPossible);
 
@@ -41,9 +41,6 @@ protected:
     void onRequestFinish(mega::MegaApi*, mega::MegaRequest *request, mega::MegaError *e) override;
 
 private:
-    void prepareAppDatas(const QString& appId, TransferMetaData* metadata);
-    void preparePaths(const QString &path, TransferMetaData* metadata);
-    void update(TransferMetaData* dataToUpdate, mega::MegaNode* node, const QString& path);
 
     bool isDownloadPossible();
     bool hasEnoughSpaceForDownloads();
@@ -54,8 +51,8 @@ private:
     std::unique_ptr<mega::QTMegaRequestListener> mListener;
     std::atomic<long> mFolderCountPendingSizeComputation;
     std::atomic<qint64> mTotalQueueDiskSize;
-    QStringList mAppDatas;
-    QStringList mPaths;
+    unsigned long long mCurrentAppDataId;
+    QString mCurrentTargetPath;
     BlockingBatch* mDownloadBatches;
     QQueue<WrappedNode*>* mDownloadQueue;
 };
