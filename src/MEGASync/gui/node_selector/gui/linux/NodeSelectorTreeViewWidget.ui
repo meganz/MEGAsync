@@ -467,7 +467,7 @@ QToolButton:pressed
            <enum>Qt::ToolButtonTextBesideIcon</enum>
           </property>
           <property name="default_icon" stdset="0">
-           <string>qrc:/images/node_selector/search_filter/small_folder_default.png</string>
+           <string notr="true">qrc:/images/node_selector/search_filter/small_folder_default.png</string>
           </property>
           <property name="not_change_text_color" stdset="0">
            <bool>true</bool>
@@ -725,7 +725,7 @@ padding-right:10px;
           <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
            <widget class="QToolButton" name="emptyIcon">
             <property name="text">
-             <string>...</string>
+             <string notr="true"/>
             </property>
             <property name="icon">
              <iconset resource="../../../Resources_linux.qrc">
@@ -786,7 +786,7 @@ font-weigth:400;
 }</string>
                </property>
                <property name="text">
-                <string>TextLabel</string>
+                <string notr="true">TextLabel</string>
                </property>
               </widget>
              </item>

@@ -730,7 +730,7 @@ padding-right:10px;
           <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
            <widget class="QToolButton" name="emptyIcon">
             <property name="text">
-             <string>...</string>
+             <string notr="true"/>
             </property>
             <property name="icon">
              <iconset resource="../../../Resources_win.qrc">
@@ -778,7 +778,7 @@ font-weight: 400;
 }</string>
                </property>
                <property name="text">
-                <string>TextLabel</string>
+                <string notr="true">TextLabel</string>
                </property>
               </widget>
              </item>

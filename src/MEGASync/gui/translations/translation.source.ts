@@ -1311,6 +1311,7 @@ In some cases they may contain details about your data, such as file or folder n
     </message>
     <message>
         <source>Show in MEGA</source>
+        <translatorcomment>Notification button to see the file on the webclient</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1365,6 +1366,53 @@ In some cases they may contain details about your data, such as file or folder n
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
         <translation>You don’t have write permissions in this local folder.</translation>
+    </message>
+</context>
+<context>
+    <name>DownloadNodeSelector</name>
+    <message>
+        <source>Download</source>
+        <translatorcomment>Window title for download node selector</translatorcomment>
+        <translation type="unfinished">Download</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translatorcomment>Title of the dialog</translatorcomment>
+        <translation type="unfinished">Error</translation>
+    </message>
+    <message numerus="yes">
+        <source>The item you selected has been removed. To reselect, close this window and try again.</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>The item you selected has been removed. To reselect, close this window and try again.</numerusform>
+            <numerusform>The items you selected have been removed. To reselect, close this window and try again.</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>You no longer have access to this item. Ask the owner to share again.</source>
+        <translatorcomment>Error message shown when the user is trying to download an file or folder from an incoming share and the owner stops sharing/removes all items</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>You no longer have access to this item. Ask the owner to share again.</numerusform>
+            <numerusform>You no longer have access to these items. Ask the owner to share again.</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 item selected</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
+        First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
+        <translation type="unfinished">
+            <numerusform>%1 item selected</numerusform>
+            <numerusform>%1 items selected</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%1. %2 has been removed. To reselect, close this window and try again.</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
+        First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
+        <translation type="unfinished">
+            <numerusform>%1. %2 has been removed. To reselect, close this window and try again.</numerusform>
+            <numerusform>%1. %2 have been removed. To reselect, close this window and try again.</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -3476,84 +3524,39 @@ Enter a different name.</translation>
 <context>
     <name>NodeSelector</name>
     <message>
-        <source>Folder Selection</source>
-        <translatorcomment>Label to indicate the user the selection of folders for a synchronization (String short as possible)</translatorcomment>
-        <translation>Folder selection</translation>
-    </message>
-    <message>
-        <source>Select a MEGA folder:</source>
-        <translatorcomment>Label to indicate the user to select a MEGA folder for a synchronization (String short as possible). Keep capital letters.</translatorcomment>
-        <translation>Select a MEGA folder:</translation>
-    </message>
-    <message>
         <source>Error</source>
         <translatorcomment>Label to indicate an Error</translatorcomment>
         <translation>Error</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translatorcomment>Label to indicate a Warning message.</translatorcomment>
-        <translation>Warning</translation>
-    </message>
-    <message>
-        <source>Invalid folder for synchronization.
-Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
-        <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation>Invalid folder for synchronization. Please ensure that you don’t use characters like “\”, “/” or “:” in your folder names.</translation>
-    </message>
-    <message>
-        <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
-        <translatorcomment>Error message shown when an user is trying upload files to a non compatible folder</translatorcomment>
-        <translation>You need Read and Write or Full access rights to be able to upload to the selected folder.</translation>
-    </message>
-    <message>
-        <source>You need Full access right to be able to sync the selected folder.</source>
-        <translatorcomment>Error message shown when an user is trying sync a non compatible folder</translatorcomment>
-        <translation>You need Full access rights to be able to sync the selected folder.</translation>
-    </message>
-    <message>
-        <source>Only files can be used for streaming.</source>
-        <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
-        <translation>Only files can be used for streaming.</translation>
     </message>
     <message>
         <source>Select a MEGA folder</source>
         <translatorcomment>Node selector dialog title</translatorcomment>
         <translation>Select a MEGA folder</translation>
     </message>
-    <message numerus="yes">
-        <source>You no longer have access to this item. Ask the owner to share again.</source>
-        <translatorcomment>Error message shown when the user is trying to download an file or folder from an incoming share and the owner stops sharing/removes all items</translatorcomment>
-        <translation>
-            <numerusform>You no longer have access to this item. Ask the owner to share again.</numerusform>
-            <numerusform>You no longer have access to these items. Ask the owner to share again.</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
+    <message>
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
-        <translation>
-            <numerusform>The item you selected has been removed. To reselect, close this window and try again.</numerusform>
-            <numerusform>The items you selected have been removed. To reselect, close this window and try again.</numerusform>
-        </translation>
+        <translation type="unfinished">The item you selected has been removed. To reselect, close this window and try again.</translation>
     </message>
-    <message numerus="yes">
-        <source>%1 item selected</source>
-        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
-                           First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation>
-            <numerusform>%1 item selected</numerusform>
-            <numerusform>%1 items selected</numerusform>
-        </translation>
+    <message>
+        <source>Cloud Drive</source>
+        <translatorcomment>Button text to navigate to cloud drive section</translatorcomment>
+        <translation type="unfinished">Cloud drive</translation>
     </message>
-    <message numerus="yes">
-        <source>%1. %2 has been removed. To reselect, close this window and try again.</source>
-        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
-                           Second and last part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation>
-            <numerusform>%1. %2 has been removed. To reselect, close this window and try again.</numerusform>
-            <numerusform>%1. %2 have been removed. To reselect, close this window and try again.</numerusform>
-        </translation>
+    <message>
+        <source>Backups</source>
+        <translatorcomment>Button text to navigate to backups section</translatorcomment>
+        <translation type="unfinished">Backups</translation>
+    </message>
+    <message>
+        <source>Incoming Shares</source>
+        <translatorcomment>Button text to navigate to incoming shares section</translatorcomment>
+        <translation type="unfinished">Incoming shares</translation>
+    </message>
+    <message>
+        <source>Search</source>
+        <translatorcomment>Search button header</translatorcomment>
+        <translation type="unfinished">Search</translation>
     </message>
 </context>
 <context>
@@ -3654,11 +3657,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>New folder</translation>
     </message>
     <message>
-        <source>OK</source>
-        <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>OK</translation>
-    </message>
-    <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
         <translation>Cancel</translation>
@@ -3672,6 +3670,39 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Error:</source>
         <translatorcomment>MessageBox to inform about an error when trying to move or remove a node</translatorcomment>
         <translation>Error:</translation>
+    </message>
+    <message>
+        <source>Cloud drive</source>
+        <translatorcomment>Button to filter search results from cloud drive</translatorcomment>
+        <translation type="unfinished">Cloud drive</translation>
+    </message>
+    <message>
+        <source>Backups</source>
+        <translatorcomment>Button to filter search results from backups</translatorcomment>
+        <translation type="unfinished">Backups</translation>
+    </message>
+    <message>
+        <source>Incoming Shares</source>
+        <translatorcomment>Button to filter search results from incoming shares</translatorcomment>
+        <translation type="unfinished">Incoming shares</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translatorcomment>Button text to accept and close the dialog</translatorcomment>
+        <translation type="unfinished">OK</translation>
+    </message>
+    <message>
+        <source>No results for:</source>
+        <translatorcomment>Label indicating that there are no results for the current search, searched text will be following this label.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>NodeSelectorTreeViewWidgetSearch</name>
+    <message>
+        <source>Searching:</source>
+        <translatorcomment>Label indicating the current search, searched text will be following this label.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4811,6 +4842,14 @@ Do you want to delete it anyway?</translation>
             <numerusform>%n file</numerusform>
             <numerusform>%n files</numerusform>
         </translation>
+    </message>
+</context>
+<context>
+    <name>SearchLineEdit</name>
+    <message>
+        <source>Search</source>
+        <translatorcomment>Placeholder for a search box</translatorcomment>
+        <translation type="unfinished">Search</translation>
     </message>
 </context>
 <context>
@@ -6043,6 +6082,19 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
 </context>
 <context>
+    <name>StreamNodeSelector</name>
+    <message>
+        <source>Error</source>
+        <translatorcomment>Title of the dialog</translatorcomment>
+        <translation type="unfinished">Error</translation>
+    </message>
+    <message>
+        <source>Only files can be used for streaming.</source>
+        <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
+        <translation type="unfinished">Only files can be used for streaming.</translation>
+    </message>
+</context>
+<context>
     <name>StreamingFromMegaDialog</name>
     <message>
         <source>Stream from MEGA</source>
@@ -6339,6 +6391,30 @@ To continue, select a different folder.</translation>
         <source>Sort by MEGA folder name</source>
         <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by MEGA folder name in case the user clicks.</translatorcomment>
         <translation>Sort by MEGA folder name</translation>
+    </message>
+</context>
+<context>
+    <name>SyncNodeSelector</name>
+    <message>
+        <source>Error</source>
+        <translatorcomment>Title of the dialog</translatorcomment>
+        <translation type="unfinished">Error</translation>
+    </message>
+    <message>
+        <source>You need Full access right to be able to sync the selected folder.</source>
+        <translatorcomment>Error message shown when an user is trying sync a non compatible folder</translatorcomment>
+        <translation type="unfinished">You need Full access rights to be able to sync the selected folder.</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translatorcomment>Title of the dialog</translatorcomment>
+        <translation type="unfinished">Warning</translation>
+    </message>
+    <message>
+        <source>Invalid folder for synchronization.
+Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
+        <translation type="unfinished">Invalid folder for synchronization. Please ensure that you don’t use characters like “\”, “/” or “:” in your folder names.</translation>
     </message>
 </context>
 <context>
@@ -6795,7 +6871,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     </message>
     <message>
         <source>Uploaded 1 file to %1.</source>
-		<translatorcomment>Notification text that inform 1 file has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
+        <translatorcomment>Notification text that inform 1 file has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6805,7 +6881,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     </message>
     <message>
         <source>Downloaded 1 file to %1.</source>
-		<translatorcomment>Notification text that inform 1 file has been downloaded to a folder. The place holder is the target folder name.</translatorcomment>
+        <translatorcomment>Notification text that inform 1 file has been downloaded to a folder. The place holder is the target folder name.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7183,6 +7259,19 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
         <source>Choose annual billing and get 12 months for the price of 10</source>
         <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over storage state.</translatorcomment>
         <translation>Choose annual billing and get 12 months for the price of 10</translation>
+    </message>
+</context>
+<context>
+    <name>UploadNodeSelector</name>
+    <message>
+        <source>Error</source>
+        <translatorcomment>Title of the dialog</translatorcomment>
+        <translation type="unfinished">Error</translation>
+    </message>
+    <message>
+        <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
+        <translatorcomment>Error message shown when an user is trying upload files to a non compatible folder</translatorcomment>
+        <translation type="unfinished">You need Read and Write or Full access rights to be able to upload to the selected folder.</translation>
     </message>
 </context>
 <context>

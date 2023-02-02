@@ -467,7 +467,7 @@ QToolButton:pressed
            <enum>Qt::ToolButtonTextBesideIcon</enum>
           </property>
           <property name="default_icon" stdset="0">
-           <string>qrc:/images/node_selector/search_filter/small_folder_default.png</string>
+           <string notr="true">qrc:/images/node_selector/search_filter/small_folder_default.png</string>
           </property>
           <property name="not_change_text_color" stdset="0">
            <bool>true</bool>
@@ -738,7 +738,7 @@ padding-right:10px;
           <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
            <widget class="QToolButton" name="emptyIcon">
             <property name="text">
-             <string>...</string>
+             <string notr="true"/>
             </property>
             <property name="icon">
              <iconset resource="../../../Resources_macx.qrc">
@@ -786,7 +786,7 @@ font-weight: 400;
 }</string>
                </property>
                <property name="text">
-                <string>TextLabel</string>
+                <string notr="true">TextLabel</string>
                </property>
               </widget>
              </item>
@@ -891,7 +891,7 @@ background-color:qlineargradient( x1:0 y1:0, x2:1 y2:0, stop:0 #8D8D8D, stop:1 #
          <string>New folder</string>
         </property>
         <property name="icon">
-         <iconset resource="../../../Resources_win.qrc">
+         <iconset resource="../../../Resources_macx.qrc">
           <normaloff>:/images/node_selector/plus.png</normaloff>:/images/node_selector/plus.png</iconset>
         </property>
         <property name="iconSize">
