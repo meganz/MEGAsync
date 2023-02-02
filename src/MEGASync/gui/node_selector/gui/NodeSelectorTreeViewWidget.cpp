@@ -50,6 +50,11 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(SelectTypeSPtr mode, QWid
     }
 }
 
+NodeSelectorTreeViewWidget::~NodeSelectorTreeViewWidget()
+{
+    delete ui;
+}
+
 void NodeSelectorTreeViewWidget::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange)
@@ -679,12 +684,6 @@ void NodeSelectorTreeViewWidget::onGenMEGALinkClicked()
         return;
     }
     mMegaApi->exportNode(node.get());
-}
-
-NodeSelectorTreeViewWidget::~NodeSelectorTreeViewWidget()
-{
-    setLoadingSceneVisible(false);
-    delete ui;
 }
 
 void NodeSelectorTreeViewWidget::Navigation::removeFromForward(const mega::MegaHandle &handle)

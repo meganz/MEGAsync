@@ -182,6 +182,7 @@ private:
         return item;
     }
 
+    //These items are removed when the view is removed
     mutable QVector<DelegateWidget*> mLoadingItems;
 };
 
@@ -341,25 +342,25 @@ public:
         {
             auto delay = std::max(0ll, MIN_TIME_DISPLAYING_VIEW - (QDateTime::currentMSecsSinceEpoch()
                                                 - mStartTime));
-            mDelayTimerToHide.start(delay);
+            delay > 0 ? mDelayTimerToHide.start(delay) : hideLoadingScene();
         }
     }
 
     inline void hideLoadingScene() override
     {
-        sceneVisibilityChange(false);
+        mLoadingViewSet = false;
+        emit sceneVisibilityChange(false);
+
         mLoadingModel->setRowCount(0);
         mLoadingView->hide();
         mView->show();
         mViewLayout->replaceWidget(mLoadingView, mView);
         mLoadingDelegate->setLoading(false);
-        mLoadingViewSet = false;
     }
 
 private:
     void showLoadingScene() override
     {
-        sceneVisibilityChange(true);
         int visibleRows(0);
 
         if(mView->isVisible())
@@ -395,7 +396,9 @@ private:
         mViewLayout->replaceWidget(mView, mLoadingView);
         mStartTime = QDateTime::currentMSecsSinceEpoch();
         mLoadingDelegate->setLoading(true);
+
         mLoadingViewSet = true;
+        emit sceneVisibilityChange(true);
     }
 
     QAbstractItemDelegate* mViewDelegate;
