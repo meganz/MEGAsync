@@ -187,11 +187,6 @@ void NodeSelectorTreeViewWidgetSearch::changeButtonsWidgetSizePolicy(bool state)
     ui->searchButtonsWidget->setSizePolicy(buttonWidgetSizePolicy);
 }
 
-bool NodeSelectorTreeViewWidgetSearch::nothingChecked() const
-{
-   return !ui->backupsSearch->isChecked() && !ui->cloudDriveSearch->isChecked() && !ui->incomingSharesSearch->isChecked();
-}
-
 QString NodeSelectorTreeViewWidgetSearch::getRootText()
 {
     return tr("Searching:");
@@ -229,62 +224,30 @@ void NodeSelectorTreeViewWidgetSearch::modelLoaded()
     ui->cloudDriveSearch->setVisible(searchedTypes.testFlag(NodeSelectorModelItemSearch::Type::CLOUD_DRIVE));
     ui->searchButtonsWidget->setVisible(true);
 
-    if(ui->cloudDriveSearch->isChecked() && !ui->cloudDriveSearch->isVisible())
+    QToolButton* buttonToCheck(nullptr);
+
+    auto buttons = ui->searchButtonsWidget->findChildren<QToolButton*>();
+    foreach(auto& button, buttons)
     {
-        if(ui->incomingSharesSearch->isVisible())
+        if(button->isVisible() && button->isChecked())
         {
-            ui->incomingSharesSearch->setChecked(true);
-            emit ui->incomingSharesSearch->clicked(true);
+            buttonToCheck = button;
+            break;
         }
-        else if(ui->backupsSearch->isVisible())
+        else if(!buttonToCheck && button->isVisible())
         {
-            ui->backupsSearch->setChecked(true);
-            emit ui->backupsSearch->clicked(true);
-        }
-    }
-    else if(ui->incomingSharesSearch->isChecked() && !ui->incomingSharesSearch->isVisible())
-    {
-        if(ui->cloudDriveSearch->isVisible())
-        {
-            ui->cloudDriveSearch->setChecked(true);
-            emit ui->cloudDriveSearch->clicked(true);
-        }
-        else if(ui->backupsSearch->isVisible())
-        {
-            ui->backupsSearch->setChecked(true);
-            emit ui->backupsSearch->clicked(true);
-        }
-    }
-    else if(ui->backupsSearch->isChecked() && !ui->backupsSearch->isVisible())
-    {
-        if(ui->cloudDriveSearch->isVisible())
-        {
-            ui->cloudDriveSearch->setChecked(true);
-            emit ui->cloudDriveSearch->clicked(true);
-        }
-        else if(ui->incomingSharesSearch->isVisible())
-        {
-            ui->incomingSharesSearch->setChecked(true);
-            emit ui->incomingSharesSearch->clicked(true);
-        }
-    }
-    else if(nothingChecked())
-    {
-        if(ui->cloudDriveSearch->isVisible())
-        {
-            ui->cloudDriveSearch->setChecked(true);
-            emit ui->cloudDriveSearch->clicked(true);
-        }
-        else if(ui->incomingSharesSearch->isVisible())
-        {
-            ui->incomingSharesSearch->setChecked(true);
-            emit ui->incomingSharesSearch->clicked(true);
-        }
-        else if(ui->backupsSearch->isVisible())
-        {
-            ui->backupsSearch->setChecked(true);
-            emit ui->backupsSearch->clicked(true);
+            buttonToCheck = button;
         }
     }
 
+    checkAndClick(buttonToCheck);
+}
+
+void NodeSelectorTreeViewWidgetSearch::checkAndClick(QToolButton* button)
+{
+    if(button  && button->isVisible())
+    {
+        button->setChecked(true);
+        emit button->clicked(true);
+    }
 }

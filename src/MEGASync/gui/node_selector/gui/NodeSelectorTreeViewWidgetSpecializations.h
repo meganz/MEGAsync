@@ -9,8 +9,6 @@
 
 #include <memory>
 
-
-
 class NodeSelectorProxyModel;
 class NodeSelectorModel;
 
@@ -78,8 +76,8 @@ private slots:
     void onItemDoubleClick(const QModelIndex &index) override;
 
 private:
+    void checkAndClick(QToolButton* button);
     void changeButtonsWidgetSizePolicy(bool state);
-    bool nothingChecked() const;
     QString getRootText() override;
     std::unique_ptr<NodeSelectorModel> createModel() override;
     QIcon getEmptyIcon() override;
