@@ -21,6 +21,11 @@ NodeRequester::NodeRequester(NodeSelectorModel *model)
       mCancelToken(mega::MegaCancelToken::createInstance())
 {}
 
+NodeRequester::~NodeRequester()
+{
+    qDeleteAll(mRootItems);
+}
+
 void NodeRequester::lockDataMutex(bool state) const
 {
     state ? mDataMutex.lock() : mDataMutex.unlock();
@@ -289,13 +294,7 @@ void NodeRequester::cancelCurrentRequest()
 
 void NodeRequester::finishWorker()
 {
-    qDeleteAll(mRootItems);
-    connect(thread(), &QThread::finished, thread(), [this]()
-    {
-        thread()->deleteLater();
-        deleteLater();
-    });
-    thread()->quit();
+
 }
 
 bool NodeRequester::isAborted()
@@ -320,8 +319,8 @@ void NodeRequester::setSyncSetupMode(bool value)
 
 void NodeRequester::abort()
 {
+    cancelCurrentRequest();
     mAborted = true;
-    finishWorker();
 }
 
 /* ------------------- MODEL ------------------------- */
@@ -347,7 +346,6 @@ NodeSelectorModel::NodeSelectorModel(QObject *parent) :
     connect(this, &NodeSelectorModel::requestAddNode, mNodeRequesterWorker, &NodeRequester::onAddNodeRequested, Qt::QueuedConnection);
     connect(this, &NodeSelectorModel::removeItem, mNodeRequesterWorker, &NodeRequester::removeItem);
     connect(this, &NodeSelectorModel::removeRootItem, mNodeRequesterWorker, &NodeRequester::removeRootItem);
-    connect(this, &NodeSelectorModel::deleteWorker, mNodeRequesterWorker, &NodeRequester::abort);
 
     connect(mNodeRequesterWorker, &NodeRequester::nodesReady, this, &NodeSelectorModel::onChildNodesReady, Qt::QueuedConnection);
     connect(mNodeRequesterWorker, &NodeRequester::nodeAdded, this, &NodeSelectorModel::onNodeAdded, Qt::QueuedConnection);
@@ -359,6 +357,12 @@ NodeSelectorModel::NodeSelectorModel(QObject *parent) :
 
 NodeSelectorModel::~NodeSelectorModel()
 {
+    connect(mNodeRequesterThread, &QThread::finished, thread(), [this]()
+    {
+        mNodeRequesterThread->deleteLater();
+        mNodeRequesterWorker->deleteLater();
+    }, Qt::DirectConnection);
+    mNodeRequesterThread->quit();
 }
 
 int NodeSelectorModel::columnCount(const QModelIndex &) const
@@ -797,7 +801,6 @@ void NodeSelectorModel::clearIndexesNodeInfo()
 void NodeSelectorModel::abort()
 {
     mNodeRequesterWorker->cancelCurrentRequest();
-    emit deleteWorker();
 }
 
 bool NodeSelectorModel::canBeDeleted() const

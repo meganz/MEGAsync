@@ -49,6 +49,8 @@ class NodeRequester : public QObject
 
 public:
     NodeRequester(NodeSelectorModel* model);
+    ~NodeRequester();
+
     void setShowFiles(bool newShowFiles);
     void setSyncSetupMode(bool value);
     void lockDataMutex(bool state) const;

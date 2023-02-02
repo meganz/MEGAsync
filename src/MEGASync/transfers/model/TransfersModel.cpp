@@ -654,9 +654,14 @@ TransfersModel::~TransfersModel()
     // Cleanup
     mTransfers.clear();
 
+    connect(mTransferEventThread, &QThread::finished, thread(), [this]()
+    {
+        mTransferEventThread->deleteLater();
+        mTransferEventWorker->deleteLater();
+
+    }, Qt::DirectConnection);
+
     mTransferEventThread->quit();
-    mTransferEventThread->deleteLater();
-    mTransferEventWorker->deleteLater();
     mMegaApi->removeTransferListener(mDelegateListener);
 }
 
