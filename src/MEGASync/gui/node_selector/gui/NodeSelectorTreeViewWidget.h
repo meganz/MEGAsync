@@ -121,6 +121,7 @@ private:
     virtual std::unique_ptr<NodeSelectorProxyModel> createProxyModel();
     virtual std::unique_ptr<NodeSelectorModel> createModel() = 0;
     virtual bool newFolderBtnVisibleInRoot(){return true;}
+    virtual bool newFolderBtnCanBeVisisble(){return true;}
     void checkOkButton(const QModelIndexList& selected);
     ButtonIconManager mButtonIconManager;
 
@@ -152,7 +153,7 @@ public:
     explicit DownloadType() = default;
     void init(NodeSelectorTreeViewWidget* wdg) override;
     void checkOkButton(NodeSelectorTreeViewWidget* wdg, const QModelIndexList &selected) override;
-    NodeSelectorModelItemSearch::Types allowedTypes();
+    NodeSelectorModelItemSearch::Types allowedTypes() override;
 };
 
 class SyncType : public SelectType
@@ -163,7 +164,7 @@ public:
     void init(NodeSelectorTreeViewWidget* wdg) override;
     void newFolderButtonVisibility(NodeSelectorTreeViewWidget* wdg) override;
     void checkOkButton(NodeSelectorTreeViewWidget* wdg, const QModelIndexList &selected) override;
-    NodeSelectorModelItemSearch::Types allowedTypes();
+    NodeSelectorModelItemSearch::Types allowedTypes() override;
 };
 
 class StreamType : public SelectType
@@ -172,7 +173,7 @@ public:
     explicit StreamType() = default;
     void init(NodeSelectorTreeViewWidget* wdg) override;
     void checkOkButton(NodeSelectorTreeViewWidget* wdg, const QModelIndexList &selected) override;
-    NodeSelectorModelItemSearch::Types allowedTypes();
+    NodeSelectorModelItemSearch::Types allowedTypes() override;
 };
 
 class UploadType : public SelectType
@@ -182,7 +183,7 @@ public:
     void init(NodeSelectorTreeViewWidget* wdg) override;
     void newFolderButtonVisibility(NodeSelectorTreeViewWidget* wdg) override;
     void checkOkButton(NodeSelectorTreeViewWidget* wdg, const QModelIndexList &selected) override;
-    NodeSelectorModelItemSearch::Types allowedTypes();
+    NodeSelectorModelItemSearch::Types allowedTypes() override;
 };
 
 #endif // NODESELECTORTREEVIEWWIDGET_H

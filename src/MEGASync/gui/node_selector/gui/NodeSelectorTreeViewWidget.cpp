@@ -1,5 +1,6 @@
 #include "ui_NodeSelectorTreeViewWidget.h"
 #include "NodeSelectorTreeViewWidget.h"
+#include "NodeSelectorTreeViewWidgetSpecializations.h"
 #include "../model/NodeSelectorModel.h"
 #include "../model/NodeSelectorDelegates.h"
 #include "MegaApplication.h"
@@ -784,15 +785,18 @@ NodeSelectorModelItemSearch::Types DownloadType::allowedTypes()
 void SyncType::init(NodeSelectorTreeViewWidget *wdg)
 {
     wdg->mModel->setSyncSetupMode(true);
-    wdg->ui->bNewFolder->show();
+    wdg->ui->bNewFolder->setVisible(wdg->newFolderBtnCanBeVisisble());
     wdg->mProxyModel->showReadOnlyFolders(false);
     wdg->mModel->showFiles(false);
 }
 
 void SyncType::newFolderButtonVisibility(NodeSelectorTreeViewWidget *wdg)
 {
-    auto sourceIndex = wdg->mProxyModel->getIndexFromSource(wdg->ui->tMegaFolders->rootIndex());
-    wdg->ui->bNewFolder->setVisible(sourceIndex.isValid() || wdg->newFolderBtnVisibleInRoot());
+    if(wdg->newFolderBtnCanBeVisisble())
+    {
+        auto sourceIndex = wdg->mProxyModel->getIndexFromSource(wdg->ui->tMegaFolders->rootIndex());
+        wdg->ui->bNewFolder->setVisible(sourceIndex.isValid() || wdg->newFolderBtnVisibleInRoot());
+    }
 }
 
 void SyncType::checkOkButton(NodeSelectorTreeViewWidget *wdg, const QModelIndexList &selected)
@@ -867,15 +871,18 @@ NodeSelectorModelItemSearch::Types StreamType::allowedTypes()
 
 void UploadType::init(NodeSelectorTreeViewWidget *wdg)
 {
-    wdg->ui->bNewFolder->show();
+    wdg->ui->bNewFolder->setVisible(wdg->newFolderBtnCanBeVisisble());
     wdg->mProxyModel->showReadOnlyFolders(false);
     wdg->mModel->showFiles(false);
 }
 
 void UploadType::newFolderButtonVisibility(NodeSelectorTreeViewWidget *wdg)
 {
-    auto sourceIndex = wdg->mProxyModel->getIndexFromSource(wdg->ui->tMegaFolders->rootIndex());
-    wdg->ui->bNewFolder->setVisible(sourceIndex.isValid() || wdg->newFolderBtnVisibleInRoot());
+    if(wdg->newFolderBtnCanBeVisisble())
+    {
+        auto sourceIndex = wdg->mProxyModel->getIndexFromSource(wdg->ui->tMegaFolders->rootIndex());
+        wdg->ui->bNewFolder->setVisible(sourceIndex.isValid() || wdg->newFolderBtnVisibleInRoot());
+    }
 }
 
 void UploadType::checkOkButton(NodeSelectorTreeViewWidget *wdg, const QModelIndexList &selected)

@@ -84,6 +84,7 @@ private:
     std::unique_ptr<NodeSelectorModel> createModel() override;
     QIcon getEmptyIcon() override;
     void modelLoaded() override;
+    bool newFolderBtnCanBeVisisble() override {return false;}
 };
 
 #endif // NODESELECTORTREEVIEWWIDGETSPECIALIZATIONS_H
