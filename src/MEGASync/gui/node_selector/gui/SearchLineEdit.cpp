@@ -46,7 +46,7 @@ bool SearchLineEdit::eventFilter(QObject *obj, QEvent *evnt)
         QKeyEvent* keyEvent = dynamic_cast<QKeyEvent*>(evnt);
         if(keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return)
         {
-            if(!ui->leSearchField->text().isEmpty() || mOldString != ui->leSearchField->text())
+            if(!ui->leSearchField->text().isEmpty() && mOldString != ui->leSearchField->text())
             {
                 mOldString = ui->leSearchField->text();
                 emit search(ui->leSearchField->text());

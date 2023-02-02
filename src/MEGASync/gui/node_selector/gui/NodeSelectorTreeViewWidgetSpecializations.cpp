@@ -11,6 +11,7 @@ NodeSelectorTreeViewWidgetCloudDrive::NodeSelectorTreeViewWidgetCloudDrive(Selec
     : NodeSelectorTreeViewWidget(mode, parent)
 {
     setTitle(MegaNodeNames::getCloudDriveName());
+    ui->searchEmptyInfoWidget->hide();
 }
 
 QString NodeSelectorTreeViewWidgetCloudDrive::getRootText()
@@ -52,6 +53,7 @@ NodeSelectorTreeViewWidgetIncomingShares::NodeSelectorTreeViewWidgetIncomingShar
     : NodeSelectorTreeViewWidget(mode, parent)
 {
     setTitle(MegaNodeNames::getIncomingSharesName());
+    ui->searchEmptyInfoWidget->hide();
 }
 
 QString NodeSelectorTreeViewWidgetIncomingShares::getRootText()
@@ -93,6 +95,7 @@ NodeSelectorTreeViewWidgetBackups::NodeSelectorTreeViewWidgetBackups(SelectTypeS
     : NodeSelectorTreeViewWidget(mode, parent)
 {
     setTitle(MegaNodeNames::getBackupsName());
+    ui->searchEmptyInfoWidget->hide();
 }
 
 QString NodeSelectorTreeViewWidgetBackups::getRootText()
