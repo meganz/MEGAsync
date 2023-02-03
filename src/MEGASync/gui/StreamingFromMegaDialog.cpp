@@ -214,7 +214,7 @@ void StreamingFromMegaDialog::on_bOpenDefault_clicked()
     }
 
     QFileInfo fi(streamURL);
-    QString app = Platform::getDefaultOpenApp(fi.suffix());
+    QString app = Platform::getInstance()->getDefaultOpenApp(fi.suffix());
     openStreamWithApp(app);
 }
 

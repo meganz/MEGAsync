@@ -124,7 +124,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     //Set window properties
 #ifdef Q_OS_LINUX
-    doNotActAsPopup = Platform::getValue("USE_MEGASYNC_AS_REGULAR_WINDOW", false);
+    doNotActAsPopup = Platform::getInstance()->getValue("USE_MEGASYNC_AS_REGULAR_WINDOW", false);
 
     if (!doNotActAsPopup && QSystemTrayIcon::isSystemTrayAvailable())
     {
@@ -133,7 +133,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
         // event.
         Qt::WindowFlags flags = Qt::FramelessWindowHint;
 
-        if (Platform::isTilingWindowManager())
+        if (Platform::getInstance()->isTilingWindowManager())
         {
             flags |= Qt::Dialog;
         }

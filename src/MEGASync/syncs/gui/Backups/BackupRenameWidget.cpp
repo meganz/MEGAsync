@@ -81,5 +81,5 @@ bool BackupRenameWidget::eventFilter(QObject *watched, QEvent *event)
 
 void BackupRenameWidget::openLocalPath(QString link)
 {
-    Platform::showInFolder(link);
+    Platform::getInstance()->showInFolder(link);
 }
