@@ -385,8 +385,10 @@ void NodeSelectorTreeViewWidget::onUiBlocked(bool state)
 
         if(!state)
         {
-            auto selection = ui->tMegaFolders->selectionModel()->selectedIndexes();
-            checkOkButton(selection);
+            if(auto selectionModel = ui->tMegaFolders->selectionModel())
+            {
+                checkOkButton(selectionModel->selectedRows());
+            }
             checkBackForwardButtons();
         }
         else
@@ -401,10 +403,14 @@ void NodeSelectorTreeViewWidget::onUiBlocked(bool state)
 void NodeSelectorTreeViewWidget::onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected)
 {
     Q_UNUSED(deselected)
+    Q_UNUSED(selected)
 
     if(!mUiBlocked)
     {
-        checkOkButton(selected.indexes());
+        if(auto selectionModel = ui->tMegaFolders->selectionModel())
+        {
+            checkOkButton(selectionModel->selectedRows());
+        }
     }
 }
 
