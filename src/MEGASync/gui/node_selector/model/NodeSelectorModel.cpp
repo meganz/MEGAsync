@@ -292,11 +292,6 @@ void NodeRequester::cancelCurrentRequest()
     }
 }
 
-void NodeRequester::finishWorker()
-{
-
-}
-
 bool NodeRequester::isAborted()
 {
     return mAborted || (mCancelToken && mCancelToken->isCancelled());
@@ -357,11 +352,8 @@ NodeSelectorModel::NodeSelectorModel(QObject *parent) :
 
 NodeSelectorModel::~NodeSelectorModel()
 {
-    connect(mNodeRequesterThread, &QThread::finished, thread(), [this]()
-    {
-        mNodeRequesterThread->deleteLater();
-        mNodeRequesterWorker->deleteLater();
-    }, Qt::DirectConnection);
+    connect(mNodeRequesterThread, &QThread::finished, mNodeRequesterThread, &QObject::deleteLater, Qt::DirectConnection);
+    connect(mNodeRequesterThread, &QThread::finished, mNodeRequesterWorker, &QObject::deleteLater, Qt::DirectConnection);
     mNodeRequesterThread->quit();
 }
 

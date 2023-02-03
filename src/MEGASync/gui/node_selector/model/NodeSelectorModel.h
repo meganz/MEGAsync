@@ -88,7 +88,6 @@ signals:
      void nodeAdded(NodeSelectorModelItem* item);
 
 private:
-     void finishWorker();
      bool isAborted();
 
      std::atomic<bool> mShowFiles{true};
