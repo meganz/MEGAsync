@@ -11,13 +11,12 @@
 #include "platform/Platform.h"
 #include "OverQuotaDialog.h"
 #include "ConnectivityChecker.h"
-#include "TransferMetadata.h"
+#include "TransferMetaData.h"
 #include "DuplicatedNodeDialogs/DuplicatedNodeDialog.h"
 #include "PlatformStrings.h"
 #include "UserAttributesManager.h"
 #include "UserAttributesRequests/FullName.h"
 #include "UserAttributesRequests/Avatar.h"
-#include "TransferNotificationMessageBuilder.h"
 #include "UserAttributesRequests/DeviceName.h"
 #include "UserAttributesRequests/MyBackupsHandle.h"
 #include "syncs/gui/SyncsMenu.h"
@@ -528,7 +527,6 @@ void MegaApplication::initialize()
     uploader = new MegaUploader(megaApi, folderTransferListener);
     downloader = new MegaDownloader(megaApi, folderTransferListener);
     connect(uploader, &MegaUploader::startingTransfers, this, &MegaApplication::startingUpload);
-    connect(downloader, &MegaDownloader::finishedTransfers, this, &MegaApplication::showNotificationFinishedTransfers, Qt::QueuedConnection);
     connect(downloader, &MegaDownloader::startingTransfers,
             &scanStageController, &ScanStageController::startDelayedScanStage);
     connect(downloader, &MegaDownloader::folderTransferUpdated, this, &MegaApplication::onFolderTransferUpdate);
@@ -1616,7 +1614,7 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
     noUploadedStarted = true;
 
     auto checkUploadNameDialog = new DuplicatedNodeDialog(node);
-
+    
     auto counter(0);
     EventUpdater checkUpdater(uploadQueue.size());
     while (!uploadQueue.isEmpty())
@@ -1637,9 +1635,7 @@ void MegaApplication::onUploadsCheckedAndReady(QPointer<DuplicatedNodeDialog> ch
     {
         auto uploads = checkDialog->getResolvedConflicts();
 
-        unsigned long long transferId = preferences->transferIdentifier();
-        TransferMetaData* data = new TransferMetaData(MegaTransfer::TYPE_UPLOAD, uploads.size(), uploads.size());
-        transferAppData.insert(transferId, data);
+        auto data = TransferMetaDataContainer::createTransferMetaData<UploadTransferMetaData>(checkDialog->getNode()->getHandle());
         preferences->setOverStorageDismissExecution(0);
 
         auto batch = std::shared_ptr<TransferBatch>(new TransferBatch());
@@ -1652,10 +1648,7 @@ void MegaApplication::onUploadsCheckedAndReady(QPointer<DuplicatedNodeDialog> ch
         foreach(auto uploadInfo, uploads)
         {
             QString filePath = uploadInfo->getLocalPath();
-
-            updateMetadata(data, filePath);
-
-            uploader->upload(filePath, uploadInfo->getNewName(), checkDialog->getNode(), transferId, batch);
+            uploader->upload(filePath, uploadInfo->getNewName(), checkDialog->getNode(), data->getAppId(), batch);
             
             //Do not update the last items, leave Qt to do it in its natural way
             //If you update them, the flag mProcessingUploadQueue will be false and the scanning widget
@@ -1675,6 +1668,7 @@ void MegaApplication::onUploadsCheckedAndReady(QPointer<DuplicatedNodeDialog> ch
         else
         {
             mBlockingBatch.removeBatch();
+            data->remove();
         }
 
         mProcessingUploadQueue = false;
@@ -1705,16 +1699,8 @@ void MegaApplication::processDownloadQueue(QString path)
         return;
     }
 
-    unsigned long long transferId = preferences->transferIdentifier();
-    TransferMetaData *transferData =  new TransferMetaData(MegaTransfer::TYPE_DOWNLOAD,
-                                                           downloadQueue.size(),
-                                                           downloadQueue.size());
-    transferAppData.insert(transferId, transferData);
-    if (!downloader->processDownloadQueue(&downloadQueue, mBlockingBatch, path, transferId))
-    {
-        transferAppData.remove(transferId);
-        delete transferData;
-    }
+
+    downloader->processDownloadQueue(&downloadQueue, mBlockingBatch, path);
 }
 
 void MegaApplication::createTransferManagerDialog()
@@ -2708,18 +2694,6 @@ QPointer<SetupWizard> MegaApplication::getSetupWizard() const
     return mSetupWizard;
 }
 
-TransferMetaData* MegaApplication::getTransferAppData(unsigned long long appDataID)
-{
-    QHash<unsigned long long, TransferMetaData*>::const_iterator it = transferAppData.find(appDataID);
-    if(it == transferAppData.end())
-    {
-        return nullptr;
-    }
-
-    TransferMetaData* value = it.value();
-    return value;
-}
-
 void MegaApplication::renewLocalSSLcert()
 {
     if (!updatingSSLcert)
@@ -3425,30 +3399,6 @@ void MegaApplication::processUploads(const QStringList &uploads)
     processUploadQueue(folderUploadTarget);
 }
 
-void MegaApplication::updateMetadata(TransferMetaData *data, const QString &filePath)
-{
-    // Load parent folder to provide "Show in Folder" option
-    if (data->localPath.isEmpty())
-    {
-        QDir uploadPath(filePath);
-        if (data->totalTransfers > 1)
-        {
-            uploadPath.cdUp();
-        }
-        data->localPath = uploadPath.path();
-    }
-
-    QFileInfo filePathInfo(filePath);
-    if (filePathInfo.isDir())
-    {
-        data->totalFolders++;
-    }
-    else
-    {
-        data->totalFiles++;
-    }
-}
-
 bool MegaApplication::isQueueProcessingOngoing()
 {
     return mProcessingUploadQueue || downloader->isQueueProcessingOngoing();
@@ -4132,29 +4082,9 @@ int MegaApplication::getPrevVersion()
 
 void MegaApplication::showNotificationFinishedTransfers(unsigned long long appDataId)
 {
-    QHash<unsigned long long, TransferMetaData*>::iterator it
-           = transferAppData.find(appDataId);
-    if (it == transferAppData.end())
+    if (mOsNotifications)
     {
-        return;
-    }
-
-    TransferMetaData *data = it.value();
-    if (data->pendingTransfers == 0)
-    {
-        if (preferences->isNotificationEnabled(Preferences::NotificationsTypes::INFO_MESSAGES))
-        {
-            TransferNotificationMessageBuilder messageBuilder(data);
-            QString message = messageBuilder.buildMessage();
-            if (mOsNotifications && !message.isEmpty())
-            {
-                preferences->setLastTransferNotificationTimestamp();
-                mOsNotifications->sendFinishedTransferNotification(messageBuilder.buildTitle(), message, data->localPath);
-            }
-        }
-
-        transferAppData.erase(it);
-        delete data;
+        mOsNotifications->sendFinishedTransferNotification(appDataId);
     }
 }
 
@@ -4898,7 +4828,7 @@ void MegaApplication::downloadActionClickedFromWidget(QWidget* openFrom)
     mTransferQuota->checkDownloadAlertDismissed([this, openFrom](int result){
         if(result == QDialog::Rejected)
         {
-            auto downloadNodeSelector = new NodeSelector(NodeSelectorTreeViewWidget::DOWNLOAD_SELECT, openFrom);
+            auto downloadNodeSelector = new DownloadNodeSelector(nullptr);
             downloadNodeSelector->setModal(false);
             downloadNodeSelector->setSelectedNodeHandle();
 
@@ -5509,6 +5439,14 @@ void MegaApplication::externalFileUpload(qlonglong targetFolder)
 
     auto fileUploadSelector = new QFileDialog();
     fileUploadSelector->setFileMode(QFileDialog::ExistingFiles);
+
+#ifndef __APPLE__
+    //macOS -> modal + show -> not working
+    //Win & Linux -> show without modal -> not working
+    //QDialog::open sets the dialog to WindowModal, so it doesn´t work on macOS.
+    fileUploadSelector->setModal(true);
+#endif
+    fileUploadSelector->setAttribute(Qt::WA_DeleteOnClose);
     fileUploadSelector->setOption(QFileDialog::DontUseNativeDialog, false);
 
     if(defaultFolderPath.isEmpty())
@@ -5534,15 +5472,14 @@ void MegaApplication::externalFileUpload(qlonglong targetFolder)
         if (fileUploadSelector->result() == QFileDialog::Accepted)
         {
             QStringList paths = fileUploadSelector->selectedFiles();
-            MegaNode *target = megaApi->getNodeByHandle(fileUploadTarget);
+            std::unique_ptr<MegaNode> target(megaApi->getNodeByHandle(fileUploadTarget));
             int files = 0;
             for (const auto& path : paths)
             {
                 files++;
-                startUpload(path, target, nullptr);
+                startUpload(path, target.get(), nullptr);
             }
 
-            delete target;
             HTTPServer::onUploadSelectionAccepted(files, 0);
         }
         else
@@ -5660,6 +5597,7 @@ void MegaApplication::externalOpenTransferManager(int tab)
         openInfoWizard();
         return;
     }
+
     transferManagerActionClicked(tab);
 }
 
@@ -7467,75 +7405,16 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
 
     DeferPreferencesSyncForScope deferrer(this);
 
-    // check if it's a top level transfer
-    int folderTransferTag = transfer->getFolderTransferTag();
-    bool isFileTransfer = (folderTransferTag == 0);
-    bool isFolderTransfer = (folderTransferTag == -1);
-    if (isFileTransfer || isFolderTransfer)
+    if(!transfer->isSyncTransfer() && !transfer->isBackupTransfer())
     {
-
-        if(!transfer->isSyncTransfer() && !transfer->isBackupTransfer())
+        if(mBlockingBatch.isValid())
         {
-            if(mBlockingBatch.isValid())
-            {
-                mBlockingBatch.onTransferFinished(Utilities::getNodePath(transfer));
-                updateIfBlockingStageFinished(mBlockingBatch, mBlockingBatch.hasCancelToken());
-                updateFreedCancelToken(transfer);
-            }
-
-            logBatchStatus("onTransferFinish");
+            mBlockingBatch.onTransferFinished(Utilities::getNodePath(transfer));
+            updateIfBlockingStageFinished(mBlockingBatch, mBlockingBatch.hasCancelToken());
+            updateFreedCancelToken(transfer);
         }
 
-        const char *notificationKey = transfer->getAppData();
-        if (notificationKey)
-        {
-            char *endptr;
-            unsigned long long notificationId = strtoll(notificationKey, &endptr, 10);
-            QHash<unsigned long long, TransferMetaData*>::iterator it
-                   = transferAppData.find(notificationId);
-            if (it != transferAppData.end())
-            {
-                TransferMetaData *data = it.value();
-                if ((endptr - notificationKey) != (int64_t)strlen(notificationKey))
-                {
-                    if (e->getErrorCode() == MegaError::API_EINCOMPLETE)
-                    {
-                        data->transfersCancelled++;
-                    }
-                    else if (e->getErrorCode() != MegaError::API_OK)
-                    {
-                        data->transfersFailed++;
-                    }
-                    else
-                    {
-                        isFileTransfer ? data->transfersFileOK++ : data->transfersFolderOK++;
-                    }
-                }
-
-                // update the path before showing the notification, in case the destination file was renamed
-                data->localPath = QString::fromUtf8(transfer->getPath());
-
-#ifdef WIN32 // this should really be done in a function, not all over the code...
-                if (data->localPath.startsWith(QString::fromUtf8("\\\\?\\")))
-                {
-                    data->localPath = data->localPath.mid(4);
-                }
-#endif
-
-                data->pendingTransfers--;
-                showNotificationFinishedTransfers(notificationId);
-            }
-        }
-    }
-
-    if (transfer->isFolderTransfer() && !mBlockingBatch.hasCancelToken())
-    {
-        if (e->getErrorCode() != MegaError::API_OK)
-        {
-            showErrorMessage(tr("Error transferring folder: %1").arg(QCoreApplication::translate("MegaError", MegaError::getErrorString(e->getErrorCode(), MegaError::API_EC_UPLOAD))));
-        }
-
-        return;
+        logBatchStatus("onTransferFinish");
     }
 
     if (transfer->getState() == MegaTransfer::STATE_COMPLETED || transfer->getState() == MegaTransfer::STATE_FAILED)

@@ -1,15 +1,16 @@
 ﻿#include "NodeSelectorProxyModel.h"
-#include "NodeSelectorModelItem.h"
 #include "megaapi.h"
 #include "NodeSelectorModel.h"
 #include "MegaApplication.h"
 #include "QThread"
+#include <QDebug>
 
 NodeSelectorProxyModel::NodeSelectorProxyModel(QObject* parent) :
     QSortFilterProxyModel(parent),
     mSortColumn(NodeSelectorModel::NODE),
     mOrder(Qt::AscendingOrder),
-    mExpandMapped(true)
+    mExpandMapped(true),
+    mForceInvalidate(false)
 {
     mCollator.setCaseSensitivity(Qt::CaseInsensitive);
     mCollator.setNumericMode(true);
@@ -17,6 +18,11 @@ NodeSelectorProxyModel::NodeSelectorProxyModel(QObject* parent) :
 
     connect(&mFilterWatcher, &QFutureWatcher<void>::finished,
             this, &NodeSelectorProxyModel::onModelSortedFiltered);
+
+}
+
+NodeSelectorProxyModel::~NodeSelectorProxyModel()
+{
 
 }
 
@@ -54,6 +60,10 @@ void NodeSelectorProxyModel::sort(int column, Qt::SortOrder order)
                 {
                     auto proxyIndex = mapFromSource((*it));
                     hasChildren(proxyIndex);
+                }
+                if(mForceInvalidate)
+                {
+                    invalidate();
                 }
                 blockSignals(false);
                 sourceModel()->blockSignals(false);
@@ -295,14 +305,25 @@ bool NodeSelectorProxyModel::canBeDeleted() const
     return dynamic_cast<NodeSelectorModel*>(sourceModel())->canBeDeleted();
 }
 
-void NodeSelectorProxyModel::invalidateModel(const QModelIndexList& parents)
+void NodeSelectorProxyModel::invalidateModel(const QModelIndexList& parents, bool force)
 {
     itemsToMap = parents;
+    mForceInvalidate = force;
     sort(mSortColumn, mOrder);
 }
 
 void NodeSelectorProxyModel::onModelSortedFiltered()
 {
+    if(mForceInvalidate)
+    {
+        if(auto nodeSelectorModel = dynamic_cast<NodeSelectorModel*>(sourceModel()))
+        {
+            nodeSelectorModel->proxyInvalidateFinished();
+        }
+    }
+
+    mForceInvalidate = false;
+
     emit layoutChanged();
 
     if(mExpandMapped)
@@ -316,8 +337,44 @@ void NodeSelectorProxyModel::onModelSortedFiltered()
         {
             nodeSelectorModel->clearIndexesNodeInfo();
         }
+        mExpandMapped = true;
     }
-
     emit getMegaModel()->blockUi(false);
     itemsToMap.clear();
+
 }
+
+NodeSelectorProxyModelSearch::NodeSelectorProxyModelSearch(QObject *parent)
+    : NodeSelectorProxyModel(parent), mMode(NodeSelectorModelItemSearch::Type::CLOUD_DRIVE)
+{
+
+}
+
+void NodeSelectorProxyModelSearch::setMode(NodeSelectorModelItemSearch::Types mode)
+{
+    if(mMode == mode)
+    {
+        return;
+    }
+
+    emit getMegaModel()->blockUi(true);
+    mMode = mode;
+    invalidateFilter();
+    emit getMegaModel()->blockUi(false);
+}
+
+bool NodeSelectorProxyModelSearch::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
+{
+    QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
+
+    if(index.isValid())
+    {
+        if(NodeSelectorModelItemSearch* item = static_cast<NodeSelectorModelItemSearch*>(index.internalPointer()))
+        {
+            return mMode & item->getType();
+        }
+    }
+
+    return NodeSelectorProxyModel::filterAcceptsRow(sourceRow, sourceParent);
+}
+

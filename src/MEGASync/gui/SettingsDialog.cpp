@@ -56,7 +56,7 @@ constexpr auto SETTING_ANIMATION_BACKUP_TAB_HEIGHT{534};
 constexpr auto SETTING_ANIMATION_SECURITY_TAB_HEIGHT{372};
 constexpr auto SETTING_ANIMATION_FOLDERS_TAB_HEIGHT{513};
 constexpr auto SETTING_ANIMATION_NETWORK_TAB_HEIGHT{205};
-constexpr auto SETTING_ANIMATION_NOTIFICATIONS_TAB_HEIGHT{372};
+constexpr auto SETTING_ANIMATION_NOTIFICATIONS_TAB_HEIGHT{422};
 #endif
 
 const QString SYNCS_TAB_MENU_LABEL_QSS = QString::fromUtf8("QLabel{ border-image: url(%1); }");
@@ -1952,7 +1952,7 @@ void SettingsDialog::on_bFolders_clicked()
 
 void SettingsDialog::on_bUploadFolder_clicked()
 {
-    QPointer<NodeSelector> nodeSelector = new NodeSelector(NodeSelectorTreeViewWidget::UPLOAD_SELECT, this);
+    QPointer<NodeSelector> nodeSelector = new UploadNodeSelector(this);
     nodeSelector->setWindowModality(Qt::WindowModal);
     std::shared_ptr<MegaNode> defaultNode(mMegaApi->getNodeByPath(mUi->eUploadFolder->text()
                                                                   .toUtf8().constData()));

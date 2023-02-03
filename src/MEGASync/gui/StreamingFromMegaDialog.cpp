@@ -89,11 +89,11 @@ void StreamingFromMegaDialog::closeEvent(QCloseEvent *event)
 
 void StreamingFromMegaDialog::on_bFromCloud_clicked()
 {
-    QPointer<NodeSelector> nodeSelector(new NodeSelector(NodeSelectorTreeViewWidget::STREAM_SELECT, this));
+    QPointer<StreamNodeSelector> nodeSelector(new StreamNodeSelector(this));
     nodeSelector->setWindowTitle(tr("Select items"));
     nodeSelector->setSelectedNodeHandle(mSelectedMegaNode);
 
-    DialogOpener::showDialog<NodeSelector>(nodeSelector, [nodeSelector, this]()
+    DialogOpener::showDialog<StreamNodeSelector>(nodeSelector, [nodeSelector, this]()
     {
         if (nodeSelector->result() == QDialog::Accepted)
         {

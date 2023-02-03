@@ -21,7 +21,7 @@ NodeSelectorModelCloudDrive::NodeSelectorModelCloudDrive(QObject *parent)
 }
 
 void NodeSelectorModelCloudDrive::createRootNodes()
-{
+{    
     emit requestCloudDriveRootCreation();
 }
 
@@ -48,6 +48,7 @@ void NodeSelectorModelCloudDrive::firstLoad()
 
 void NodeSelectorModelCloudDrive::onRootItemCreated(NodeSelectorModelItem *item)
 {
+    Q_UNUSED(item)
     rootItemsLoaded();
 
     //Add the item of the Cloud Drive
@@ -92,6 +93,7 @@ void NodeSelectorModelIncomingShares::onItemInfoUpdated(int role)
 
 void NodeSelectorModelIncomingShares::onRootItemsCreated(QList<NodeSelectorModelItem *> items)
 {
+    Q_UNUSED(items)
     rootItemsLoaded();
 
     if(!mNodesToLoad.isEmpty())
@@ -180,7 +182,6 @@ void NodeSelectorModelBackups::firstLoad()
     {
         addRootItems();
     }
-
 }
 
 bool NodeSelectorModelBackups::canBeDeleted() const
@@ -202,6 +203,23 @@ bool NodeSelectorModelBackups::addToLoadingList(const std::shared_ptr<MegaNode> 
     return node && node->getType() != mega::MegaNode::TYPE_VAULT;
 }
 
+void NodeSelectorModelBackups::continueLoading(NodeSelectorModelItem *item)
+{
+    if(item->isVault())
+    {
+        QModelIndex rootIndex(index(0, 0));
+        int rowcount = rowCount(rootIndex);
+       for(int i = 0 ; i < rowcount; i++)
+       {
+           auto idx = index(i, 0, rootIndex);
+           if(canFetchMore(idx))
+           {
+               fetchItemChildren(idx);
+           }
+       }
+    }
+}
+
 void NodeSelectorModelBackups::onRootItemCreated(NodeSelectorModelItem *item)
 {
     rootItemsLoaded();
@@ -219,4 +237,105 @@ void NodeSelectorModelBackups::onRootItemCreated(NodeSelectorModelItem *item)
             fetchItemChildren(rootIndex);
         }
     }
+}
+
+NodeSelectorModelSearch::NodeSelectorModelSearch(NodeSelectorModelItemSearch::Types allowedTypes, QObject *parent)
+    : NodeSelectorModel(parent),
+      mAllowedTypes(allowedTypes)
+{
+
+}
+
+NodeSelectorModelSearch::~NodeSelectorModelSearch()
+{
+
+}
+
+void NodeSelectorModelSearch::firstLoad()
+{
+    connect(this, &NodeSelectorModelSearch::searchNodes, mNodeRequesterWorker, &NodeRequester::search);
+    connect(mNodeRequesterWorker, &NodeRequester::searchItemsCreated, this, &NodeSelectorModelSearch::onRootItemsCreated, Qt::QueuedConnection);
+}
+
+void NodeSelectorModelSearch::createRootNodes()
+{
+    //pure virtual function in the base class, in first stage this model is empty so not need to put any code here.
+}
+
+void NodeSelectorModelSearch::searchByText(const QString &text)
+{
+    mNodeRequesterWorker->restartSearch();
+    addRootItems();
+    emit searchNodes(text, mAllowedTypes);
+}
+
+void NodeSelectorModelSearch::stopSearch()
+{
+    mNodeRequesterWorker->restartSearch();
+}
+
+int NodeSelectorModelSearch::rootItemsCount() const
+{
+    return 0;
+}
+
+bool NodeSelectorModelSearch::canFetchMore(const QModelIndex &parent) const
+{
+    Q_UNUSED(parent)
+    return false;
+}
+
+QVariant NodeSelectorModelSearch::data(const QModelIndex &index, int role) const
+{
+    if(!index.isValid())
+    {
+        return QVariant();
+    }
+    if(index.column() == NODE)
+    {
+        switch(role)
+        {
+        case toInt(NodeRowDelegateRoles::INDENT_ROLE):
+        {
+            return -15;
+        }
+        case toInt(NodeRowDelegateRoles::SMALL_ICON_ROLE):
+        {
+            return false;
+        }
+        }
+    }
+    else if(index.column() == STATUS && role == Qt::DecorationRole)
+    {
+        NodeSelectorModelItem* item = static_cast<NodeSelectorModelItem*>(index.internalPointer());
+        if(item->getStatus() == NodeSelectorModelItem::Status::SYNC_CHILD)
+        {
+            QIcon statusIcons; //first is selected state icon / second is normal state icon
+            statusIcons.addFile(QLatin1String("://images/Item-sync-press.png"), QSize(), QIcon::Selected); //selected style icon
+            statusIcons.addFile(QLatin1String("://images/Item-sync-rest.png"), QSize(), QIcon::Normal); //normal style icon
+            return statusIcons;
+        }
+    }
+    return NodeSelectorModel::data(index, role);
+}
+
+void NodeSelectorModelSearch::proxyInvalidateFinished()
+{
+    mNodeRequesterWorker->lockSearchMutex(false);
+}
+
+void NodeSelectorModelSearch::onRootItemsCreated(QList<NodeSelectorModelItem *> items, NodeSelectorModelItemSearch::Types searchedTypes)
+{
+    Q_UNUSED(items)
+    if(mNodeRequesterWorker->trySearchLock())
+    {
+        mSearchedTypes = searchedTypes;
+        rootItemsLoaded();
+        emit levelsAdded(mIndexesActionInfo.indexesToBeExpanded, true);
+    }
+}
+
+const NodeSelectorModelItemSearch::Types &NodeSelectorModelSearch::searchedTypes() const
+{
+    return mSearchedTypes;
 }

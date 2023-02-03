@@ -17,13 +17,29 @@
 const char* INDEX_PROPERTY = "INDEX";
 
 NodeRequester::NodeRequester(NodeSelectorModel *model)
-    : mModel(model),
+    : QObject(model),
+      mModel(model),
       mCancelToken(mega::MegaCancelToken::createInstance())
 {}
 
-void NodeRequester::lockMutex(bool state) const
+NodeRequester::~NodeRequester()
 {
-    state ? mMutex.lock() : mMutex.unlock();
+    qDeleteAll(mRootItems);
+}
+
+void NodeRequester::lockDataMutex(bool state) const
+{
+    state ? mDataMutex.lock() : mDataMutex.unlock();
+}
+
+bool NodeRequester::trySearchLock() const
+{
+    return mSearchMutex.tryLock();
+}
+
+void NodeRequester::lockSearchMutex(bool state) const
+{
+    state ? mSearchMutex.lock() : mSearchMutex.unlock();
 }
 
 void NodeRequester::requestNodeAndCreateChildren(NodeSelectorModelItem* item, const QModelIndex& parentIndex, bool showFiles)
@@ -32,7 +48,6 @@ void NodeRequester::requestNodeAndCreateChildren(NodeSelectorModelItem* item, co
     {
         auto node = item->getNode();
         item->setProperty(INDEX_PROPERTY, parentIndex);
-
         if(!item->requestingChildren() && !item->areChildrenInitialized())
         {
             item->setRequestingChildren(true);
@@ -45,9 +60,9 @@ void NodeRequester::requestNodeAndCreateChildren(NodeSelectorModelItem* item, co
 
             if(!isAborted())
             {
-                lockMutex(true);
+                lockDataMutex(true);
                 item->createChildItems(std::unique_ptr<mega::MegaNodeList>(childNodesFiltered));
-                lockMutex(false);
+                lockDataMutex(false);
                 emit nodesReady(item);
             }
             else
@@ -58,13 +73,83 @@ void NodeRequester::requestNodeAndCreateChildren(NodeSelectorModelItem* item, co
     }
 }
 
+void NodeRequester::search(const QString &text, NodeSelectorModelItemSearch::Types typesAllowed)
+{
+    if(text.isEmpty())
+    {
+        return;
+    }
+
+    {
+        QMutexLocker a(&mSearchMutex);
+        QMutexLocker d(&mDataMutex);
+        qDeleteAll(mRootItems);
+    }
+    mRootItems.clear();
+    mSearchCanceled = false;
+    mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
+
+    auto nodeList = std::unique_ptr<mega::MegaNodeList>(megaApi->search(text.toUtf8(), mCancelToken.get()));
+    QList<NodeSelectorModelItem*> items;
+    NodeSelectorModelItemSearch::Types searchedTypes = NodeSelectorModelItemSearch::Type::NONE;
+
+    for(int i = 0; i < nodeList->size(); i++)
+    {
+        if(isAborted() || mSearchCanceled)
+        {
+            break;
+        }
+        if(megaApi->isInRubbish(nodeList->get(i)))
+        {
+            continue;
+        }
+        auto node = std::unique_ptr<mega::MegaNode>(nodeList->get(i)->copy());
+        if(node->isFolder() || (node->isFile() && mShowFiles))
+        {
+            NodeSelectorModelItemSearch::Types type;
+
+            if(megaApi->isInCloud(node.get()))
+            {
+                type = NodeSelectorModelItemSearch::Type::CLOUD_DRIVE;
+            }
+            else if(megaApi->isInVault(node.get()))
+            {
+                type = NodeSelectorModelItemSearch::Type::BACKUP;
+            }
+            else
+            {
+                type = NodeSelectorModelItemSearch::Type::INCOMING_SHARE;
+            }
+
+            if(typesAllowed & type)
+            {
+                searchedTypes |= type;
+
+                auto item = new NodeSelectorModelItemSearch(std::move(node), type);
+                items.append(item);
+            }
+        }
+    }
+
+    if(isAborted() || mSearchCanceled)
+    {
+        qDeleteAll(items);
+    }
+    else
+    {
+        QMutexLocker d(&mDataMutex);
+        mRootItems.append(items);
+        emit searchItemsCreated(items, searchedTypes);
+    }
+}
+
 void NodeRequester::createCloudDriveRootItem()
 {
     auto root = std::unique_ptr<mega::MegaNode>(MegaSyncApp->getMegaApi()->getRootNode());
 
     if(!isAborted())
     {
-        auto item = new NodeSelectorModelItem(std::move(root), mShowFiles);
+        auto item = new NodeSelectorModelItemCloudDrive(std::move(root), mShowFiles);
         mRootItems.append(item);
         emit megaCloudDriveRootItemCreated(item);
     }
@@ -80,9 +165,18 @@ void NodeRequester::createIncomingSharesRootItems(std::shared_ptr<mega::MegaNode
             break;
         }
 
+        mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
+        if(mSyncSetupMode)
+        {
+            if(megaApi->getAccess(nodeList->get(i)) != mega::MegaShare::ACCESS_FULL)
+            {
+                continue;
+            }
+        }
+
         auto node = std::unique_ptr<mega::MegaNode>(nodeList->get(i)->copy());
-        auto user = std::unique_ptr<mega::MegaUser>(MegaSyncApp->getMegaApi()->getUserFromInShare(node.get()));
-        NodeSelectorModelItem* item = new NodeSelectorModelItem(std::move(node), mShowFiles);
+        auto user = std::unique_ptr<mega::MegaUser>(megaApi->getUserFromInShare(node.get()));
+        NodeSelectorModelItem* item = new NodeSelectorModelItemIncomingShare(std::move(node), mShowFiles);
 
         items.append(item);
 
@@ -115,11 +209,12 @@ void NodeRequester::createBackupRootItems(mega::MegaHandle backupsHandle)
         {
             if(!isAborted())
             {
+                NodeSelectorModelItem* item = new NodeSelectorModelItemBackup(std::move(backupsNode), mShowFiles);
                 //Here we are setting my backups node as vault node in the item, it is not the same vault node that we get
                 //doing megaapi->getVaultNode(), we have to hide it here thats why are doing this trick.
                 //The real vault is the parent of my backups folder
-                NodeSelectorModelItem* item = new NodeSelectorModelItem(std::move(backupsNode), mShowFiles);
-                item->setAsVaultNode();
+                //NodeSelectorModelItem* item = new NodeSelectorModelItem(std::move(backupsNode), mShowFiles);
+                //item->setAsVaultNode();
                 mRootItems.append(item);
                 emit megaBackupRootItemsCreated(item);
             }
@@ -133,9 +228,9 @@ void NodeRequester::createBackupRootItems(mega::MegaHandle backupsHandle)
 
 void NodeRequester::onAddNodeRequested(std::shared_ptr<mega::MegaNode> newNode, const QModelIndex& parentIndex, NodeSelectorModelItem *parentItem)
 {
-    lockMutex(true);
+    lockDataMutex(true);
     auto childItem = parentItem->addNode(newNode);
-    lockMutex(false);
+    lockDataMutex(false);
     childItem->setProperty(INDEX_PROPERTY, mModel->index(parentItem->getNumChildren() -1 ,0, parentIndex));
 
     if(!isAborted())
@@ -150,52 +245,57 @@ void NodeRequester::onAddNodeRequested(std::shared_ptr<mega::MegaNode> newNode, 
 
 void NodeRequester::removeItem(NodeSelectorModelItem* item)
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(&mDataMutex);
     item->deleteLater();
 }
 
 void NodeRequester::removeRootItem(NodeSelectorModelItem* item)
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(&mDataMutex);
     item->deleteLater();
     mRootItems.removeOne(item);
 }
 
 int NodeRequester::rootIndexSize() const
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(&mDataMutex);
     return mRootItems.size();
 }
 
 int NodeRequester::rootIndexOf(NodeSelectorModelItem* item)
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(&mDataMutex);
     return mRootItems.indexOf(item);
 }
 
 NodeSelectorModelItem *NodeRequester::getRootItem(int index) const
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(&mDataMutex);
     return mRootItems.at(index);
+}
+
+void NodeRequester::restartSearch()
+{
+    if(mCancelToken)
+    {
+        mCancelToken->cancel();
+        mSearchCanceled = true;
+        mCancelToken.reset(mega::MegaCancelToken::createInstance());
+    }
 }
 
 void NodeRequester::cancelCurrentRequest()
 {
     if(mCancelToken)
     {
+        mSearchCanceled = true;
         mCancelToken->cancel();
     }
 }
 
 void NodeRequester::finishWorker()
 {
-    qDeleteAll(mRootItems);
-    connect(thread(), &QThread::finished, thread(), [this]()
-    {
-        thread()->deleteLater();
-        deleteLater();
-    });
-    thread()->quit();
+
 }
 
 bool NodeRequester::isAborted()
@@ -203,20 +303,30 @@ bool NodeRequester::isAborted()
     return mAborted || (mCancelToken && mCancelToken->isCancelled());
 }
 
+const NodeSelectorModelItemSearch::Types &NodeRequester::searchedTypes() const
+{
+    return mSearchedTypes;
+}
+
 void NodeRequester::setShowFiles(bool newShowFiles)
 {
     mShowFiles = newShowFiles;
 }
 
+void NodeRequester::setSyncSetupMode(bool value)
+{
+    mSyncSetupMode = value;
+}
+
 void NodeRequester::abort()
 {
+    cancelCurrentRequest();
     mAborted = true;
-    finishWorker();
 }
 
 /* ------------------- MODEL ------------------------- */
 
-const int NodeSelectorModel::ROW_HEIGHT = 20;
+const int NodeSelectorModel::ROW_HEIGHT = 25;
 
 NodeSelectorModel::NodeSelectorModel(QObject *parent) :
     QAbstractItemModel(parent),
@@ -237,7 +347,6 @@ NodeSelectorModel::NodeSelectorModel(QObject *parent) :
     connect(this, &NodeSelectorModel::requestAddNode, mNodeRequesterWorker, &NodeRequester::onAddNodeRequested, Qt::QueuedConnection);
     connect(this, &NodeSelectorModel::removeItem, mNodeRequesterWorker, &NodeRequester::removeItem);
     connect(this, &NodeSelectorModel::removeRootItem, mNodeRequesterWorker, &NodeRequester::removeRootItem);
-    connect(this, &NodeSelectorModel::deleteWorker, mNodeRequesterWorker, &NodeRequester::abort);
 
     connect(mNodeRequesterWorker, &NodeRequester::nodesReady, this, &NodeSelectorModel::onChildNodesReady, Qt::QueuedConnection);
     connect(mNodeRequesterWorker, &NodeRequester::nodeAdded, this, &NodeSelectorModel::onNodeAdded, Qt::QueuedConnection);
@@ -249,6 +358,12 @@ NodeSelectorModel::NodeSelectorModel(QObject *parent) :
 
 NodeSelectorModel::~NodeSelectorModel()
 {
+    connect(mNodeRequesterThread, &QThread::finished, thread(), [this]()
+    {
+        mNodeRequesterThread->deleteLater();
+    }, Qt::DirectConnection);
+
+    mNodeRequesterThread->quit();
 }
 
 int NodeSelectorModel::columnCount(const QModelIndex &) const
@@ -293,12 +408,12 @@ QVariant NodeSelectorModel::data(const QModelIndex &index, int role) const
                     }
                     else if(mSyncSetupMode)
                     {
-                        if((item->getStatus() == NodeSelectorModelItem::SYNC)
-                                || (item->getStatus() == NodeSelectorModelItem::SYNC_CHILD))
+                        if((item->getStatus() == NodeSelectorModelItem::Status::SYNC)
+                                || (item->getStatus() == NodeSelectorModelItem::Status::SYNC_CHILD))
                         {
                             return tr("Folder already synced");
                         }
-                        else if(item->getStatus() == NodeSelectorModelItem::SYNC_PARENT)
+                        else if(item->getStatus() == NodeSelectorModelItem::Status::SYNC_PARENT)
                         {
                             return tr("Folder contents already synced");
                         }
@@ -330,6 +445,10 @@ QVariant NodeSelectorModel::data(const QModelIndex &index, int role) const
                 {
                     return item->isCloudDrive() || item->isVault()? -10 : 0;
                 }
+                case toInt(NodeRowDelegateRoles::SMALL_ICON_ROLE):
+                {
+                    return item->isCloudDrive() || item->isVault() ? true : false;
+                }
                 case toInt(NodeRowDelegateRoles::INIT_ROLE):
                 {
                     return item->areChildrenInitialized();
@@ -352,13 +471,13 @@ QModelIndex NodeSelectorModel::index(int row, int column, const QModelIndex &par
     {
         if (parent.isValid())
         {
-            mNodeRequesterWorker->lockMutex(true);
+            mNodeRequesterWorker->lockDataMutex(true);
             NodeSelectorModelItem* item(static_cast<NodeSelectorModelItem*>(parent.internalPointer()));
             if(item)
             {
                 index =  createIndex(row, column, item->getChild(row).data());
             }
-            mNodeRequesterWorker->lockMutex(false);
+            mNodeRequesterWorker->lockDataMutex(false);
         }
         else if(mNodeRequesterWorker->rootIndexSize() > row)
         {
@@ -402,10 +521,10 @@ int NodeSelectorModel::rowCount(const QModelIndex &parent) const
 {
     if (parent.isValid())
     {
-        mNodeRequesterWorker->lockMutex(true);
+        mNodeRequesterWorker->lockDataMutex(true);
         NodeSelectorModelItem* item = static_cast<NodeSelectorModelItem*>(parent.internalPointer());
         auto rows = item ? item->getNumChildren() : 0;
-        mNodeRequesterWorker->lockMutex(false);
+        mNodeRequesterWorker->lockDataMutex(false);
         return rows;
     }
     return mNodeRequesterWorker->rootIndexSize();
@@ -431,9 +550,9 @@ bool NodeSelectorModel::hasChildren(const QModelIndex &parent) const
     NodeSelectorModelItem* item = static_cast<NodeSelectorModelItem*>(parent.internalPointer());
     if(item && item->getNode())
     {
-        mNodeRequesterWorker->lockMutex(true);
+        mNodeRequesterWorker->lockDataMutex(true);
         auto numChild = item->getNumChildren() > 0;
-        mNodeRequesterWorker->lockMutex(false);
+        mNodeRequesterWorker->lockDataMutex(false);
         return numChild;
     }
     else
@@ -487,15 +606,15 @@ QVariant NodeSelectorModel::headerData(int section, Qt::Orientation orientation,
             }
             }
         }
-        else if(role == Qt::DecorationRole)
+        else if(role == toInt(HeaderRoles::ICON_ROLE))
         {
-            if(section == STATUS)
-            {
-                return QIcon(QLatin1String("://images/node_selector/icon-small-MEGA.png"));
-            }
-            else if(section == USER)
+            if(section == USER)
             {
                 return QIcon(QLatin1String("://images/node_selector/icon_small_user.png"));
+            }
+            else if(section == STATUS)
+            {
+                return QIcon(QLatin1String("://images/node_selector/icon-small-MEGA.png"));
             }
         }
     }
@@ -505,6 +624,7 @@ QVariant NodeSelectorModel::headerData(int section, Qt::Orientation orientation,
 void NodeSelectorModel::setSyncSetupMode(bool value)
 {
     mSyncSetupMode = value;
+    mNodeRequesterWorker->setSyncSetupMode(value);
 }
 
 void NodeSelectorModel::addNode(std::shared_ptr<mega::MegaNode> node, const QModelIndex &parent)
@@ -514,9 +634,9 @@ void NodeSelectorModel::addNode(std::shared_ptr<mega::MegaNode> node, const QMod
     {
         clearIndexesNodeInfo();
 
-        mNodeRequesterWorker->lockMutex(true);
+        mNodeRequesterWorker->lockDataMutex(true);
         int numchildren = parentItem->getNumChildren();
-        mNodeRequesterWorker->lockMutex(false);
+        mNodeRequesterWorker->lockDataMutex(false);
 
         beginInsertRows(parent, numchildren, numchildren);
         emit requestAddNode(node, parent, parentItem);
@@ -558,9 +678,9 @@ void NodeSelectorModel::removeNode(const QModelIndex &index)
             {
                 int row = parent->indexOf(item);
                 beginRemoveRows(index.parent(), row, row);
-                mNodeRequesterWorker->lockMutex(true);
+                mNodeRequesterWorker->lockDataMutex(true);
                 auto itemToRemove = parent->findChildNode(node);
-                mNodeRequesterWorker->lockMutex(false);
+                mNodeRequesterWorker->lockDataMutex(false);
                 emit removeItem(itemToRemove);
                 endRemoveRows();
             }
@@ -682,7 +802,6 @@ void NodeSelectorModel::clearIndexesNodeInfo()
 void NodeSelectorModel::abort()
 {
     mNodeRequesterWorker->cancelCurrentRequest();
-    emit deleteWorker();
 }
 
 bool NodeSelectorModel::canBeDeleted() const
@@ -716,7 +835,6 @@ void NodeSelectorModel::loadTreeFromNode(const std::shared_ptr<mega::MegaNode> n
     {
         emit blockUi(false);
         mNodesToLoad.clear();
-        clearIndexesNodeInfo();
     }
 }
 
@@ -729,7 +847,6 @@ bool NodeSelectorModel::fetchMoreRecursively(const QModelIndex& parentIndex)
         if(node)
         {
             auto indexToCheck = getIndexFromNode(node, parentIndex);
-
             if(canFetchMore(indexToCheck))
             {
                 fetchMore(indexToCheck);
@@ -738,7 +855,7 @@ bool NodeSelectorModel::fetchMoreRecursively(const QModelIndex& parentIndex)
             else
             {
                 mIndexesActionInfo.indexesToBeExpanded.append(indexToCheck);
-                continueWithNextItemToLoad(indexToCheck);
+                result = continueWithNextItemToLoad(indexToCheck);
             }
         }
     }
@@ -768,6 +885,11 @@ QModelIndex NodeSelectorModel::getIndexFromNode(const std::shared_ptr<mega::Mega
     return QModelIndex();
 }
 
+void NodeSelectorModel::continueLoading(NodeSelectorModelItem *item)
+{
+    Q_UNUSED(item)
+}
+
 void NodeSelectorModel::rootItemsLoaded()
 {
     endResetModel();
@@ -775,6 +897,7 @@ void NodeSelectorModel::rootItemsLoaded()
 
 void NodeSelectorModel::addRootItems()
 {
+    emit blockUi(true);
     beginResetModel();
     createRootNodes();
 }
@@ -802,7 +925,6 @@ void NodeSelectorModel::fetchItemChildren(const QModelIndex& parent)
     emit blockUi(true);
 
     NodeSelectorModelItem* item = static_cast<NodeSelectorModelItem*>(parent.internalPointer());
-
     if(!item->areChildrenInitialized() && !item->requestingChildren())
     {
         int itemNumChildren = item->getNumChildren();
@@ -829,17 +951,21 @@ void NodeSelectorModel::onChildNodesReady(NodeSelectorModelItem* parent)
     auto index = parent->property(INDEX_PROPERTY).value<QModelIndex>();
     mIndexesActionInfo.indexesToBeExpanded.append(index);
     continueWithNextItemToLoad(index);
+    continueLoading(parent);
 }
 
-void NodeSelectorModel::continueWithNextItemToLoad(const QModelIndex& parentIndex)
+bool NodeSelectorModel::continueWithNextItemToLoad(const QModelIndex& parentIndex)
 {
+    bool result = false;
+
     if(!mNodesToLoad.isEmpty())
     {
         //The last one has been already processed
         mNodesToLoad.removeLast();
         if(!mNodesToLoad.isEmpty())
         {
-            if(!fetchMoreRecursively(parentIndex) && !mNodesToLoad.isEmpty())
+            result = fetchMoreRecursively(parentIndex);
+            if(!result && !mNodesToLoad.isEmpty())
             {
                 //The last node is empty
                 mNodesToLoad.removeLast();
@@ -851,6 +977,7 @@ void NodeSelectorModel::continueWithNextItemToLoad(const QModelIndex& parentInde
     {
         loadLevelFinished();
     }
+    return result;
 }
 
 QModelIndex NodeSelectorModel::findItemByNodeHandle(const mega::MegaHandle& handle, const QModelIndex &parent)
@@ -874,11 +1001,11 @@ QModelIndex NodeSelectorModel::findItemByNodeHandle(const mega::MegaHandle& hand
         QModelIndex child = parent.child(i, COLUMN::NODE);
         if(child.isValid())
         {
-          auto ret = findItemByNodeHandle(handle, child);
-          if(ret.isValid())
-          {
-              return ret;
-          }
+            auto ret = findItemByNodeHandle(handle, child);
+            if(ret.isValid())
+            {
+                return ret;
+            }
         }
     }
 
@@ -941,27 +1068,19 @@ QIcon NodeSelectorModel::getFolderIcon(NodeSelectorModelItem *item) const
                     QString nodeDeviceId (QString::fromUtf8(node->getDeviceId()));
                     if (!nodeDeviceId.isEmpty())
                     {
-                        std::unique_ptr<mega::MegaNode> parent (MegaSyncApp->getMegaApi()->getNodeByHandle(node->getParentHandle()));
-                        if (parent)
+                        // TODO, future: choose icon according to host OS
+                        if (nodeDeviceId == QString::fromUtf8(MegaSyncApp->getMegaApi()->getDeviceId()))
                         {
-                            QString parentDeviceId (QString::fromUtf8(parent->getDeviceId()));
-                            if (parentDeviceId.isEmpty())
-                            {
-                                // TODO, future: choose icon according to host OS
-                                if (nodeDeviceId == QString::fromUtf8(MegaSyncApp->getMegaApi()->getDeviceId()))
-                                {
 #ifdef Q_OS_WINDOWS
-                                    const QIcon thisDeviceIcon (QLatin1String("://images/icons/pc/pc-win_24.png"));
+                            const QIcon thisDeviceIcon (QLatin1String("://images/icons/pc/pc-win_24.png"));
 #elif defined(Q_OS_MACOS)
-                                    const QIcon thisDeviceIcon (QLatin1String("://images/icons/pc/pc-mac_24.png"));
+                            const QIcon thisDeviceIcon (QLatin1String("://images/icons/pc/pc-mac_24.png"));
 #elif defined(Q_OS_LINUX)
-                                    const QIcon thisDeviceIcon (QLatin1String("://images/icons/pc/pc-linux_24.png"));
+                            const QIcon thisDeviceIcon (QLatin1String("://images/icons/pc/pc-linux_24.png"));
 #endif
-                                    return thisDeviceIcon;
-                                }
-                                return QIcon(QLatin1String("://images/icons/pc/pc_24.png"));
-                            }
+                            return thisDeviceIcon;
                         }
+                        return QIcon(QLatin1String("://images/icons/pc/pc_24.png"));
                     }
                     QIcon icon;
                     icon.addFile(QLatin1String("://images/icons/folder/small-folder.png"), QSize(), QIcon::Normal);

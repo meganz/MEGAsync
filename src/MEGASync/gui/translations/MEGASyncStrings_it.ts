@@ -439,7 +439,7 @@
     <message>
         <source>A folder named &quot;%1&quot; already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
         <translatorcomment>Text shown to the user if there is a name conflict with a folder in the Backups remote folder for the current device</translatorcomment>
-        <translation>Una cartella di nome &quot;%1&quot; già esiste nei tuoi Backup. Rinomina la nuova cartella per continuare il backup. Il nome della cartella non verrà cambiato sul tuo computer.</translation>
+        <translation>Una cartella di nome “%1” già esiste nei tuoi Backup. Rinomina la nuova cartella per continuare il backup. Il nome della cartella non verrà cambiato sul tuo computer.</translation>
     </message>
     <message>
         <source>If you don&apos;t want to rename the new folder, stop the backup in the [A]Backup centre[/A] for the existing folder. Then setup the backup for the new folder again.</source>
@@ -477,7 +477,7 @@
     <message>
         <source>A folder named &quot;%1&quot; already exists in your Backups. Rename the new folder to continue with the backup.</source>
         <translatorcomment>Error message displayed in the top of the rename backup dialog. It indicates that a backup with that name already exists.</translatorcomment>
-        <translation>Una cartella di nome &quot;%1&quot; già esiste nei tuoi Backup. Rinomina la nuova cartella per continuare il backup.</translation>
+        <translation>Una cartella di nome “%1” già esiste nei tuoi Backup. Rinomina la nuova cartella per continuare il backup.</translation>
     </message>
 </context>
 <context>
@@ -857,7 +857,7 @@
     <message>
         <source>Are you sure you want to exit uploading?</source>
         <translatorcomment>Confirmation message shown when the user is trying to cancel the ongoing upload report.</translatorcomment>
-        <translation>Vuoi annullare il caricamento di questo report del problema?</translation>
+        <translation>Vuoi annullare il caricamento del report di questo problema?</translation>
     </message>
     <message>
         <source>The bug report will not be submitted if you exit uploading.</source>
@@ -1036,7 +1036,7 @@
     <message>
         <source>MEGAsync has detected a problem. These are the details:</source>
         <translatorcomment>Label to indicate that a crash has occured and the detailed stacktrace of the problem.</translatorcomment>
-        <translation>L&apos;app di MEGA ha riscontrato un problema. Qui i dettagli:</translation>
+        <translation>L&apos;app di MEGA ha riscontrato un problema. Qui ci sono i dettagli:</translation>
     </message>
     <message>
         <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
@@ -1130,17 +1130,17 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message>
         <source>Shared Folder Received</source>
         <translatorcomment>Title of the notification when a shared folder has been received</translatorcomment>
-        <translation>Cartelle condivise ricevute</translation>
+        <translation>Cartella condivisa ricevuta</translation>
     </message>
     <message>
         <source>Shared Folder Removed</source>
         <translatorcomment>Title of the notification when a shared folder has been removed</translatorcomment>
-        <translation>Cartelle condivise rimosse</translation>
+        <translation>Cartella condivisa rimossa</translation>
     </message>
     <message>
         <source>Shared Folder Updated</source>
         <translatorcomment>Generic label to indicate that there is an update in a shared folder but the name of the shared folder is not available.</translatorcomment>
-        <translation>Cartelle condivise aggiornate</translation>
+        <translation>Cartella condivisa aggiornata</translation>
     </message>
     <message>
         <source>Payment Info</source>
@@ -1155,7 +1155,7 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message>
         <source>Shared Folder Activity</source>
         <translatorcomment>Generic label to indicate that there is activity in a shared folder but the name of the shared folder is not available.</translatorcomment>
-        <translation>Attività delle cartelle condivise</translation>
+        <translation>Attività della cartella condivisa</translation>
     </message>
     <message>
         <source>Show</source>
@@ -1250,7 +1250,7 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation>Il tuo account è stato disattivato come di fola lettura finché non procederai con i pagamenti richiesti.</translation>
+        <translation>Il tuo account è stato disattivato come di sola lettura finché non procederai con i pagamenti richiesti.</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -1444,7 +1444,7 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message>
         <source>loading size…</source>
         <translatorcomment>Text shown while the local file/folder size is calculated</translatorcomment>
-        <translation>Calcolando lo spazio…</translation>
+        <translation>Calcolando la dimensione…</translation>
     </message>
     <message>
         <source>Learn more</source>
@@ -1541,7 +1541,7 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message>
         <source>You can not sync a shared folder without Full Access permissions</source>
         <translatorcomment>Label to inform a user about the incompatibility of sync a shared folder without Full Access permissions</translatorcomment>
-        <translation>Non è possibile sincronizzare una cartella condivisa senza le autorizzazioni di accesso complete</translation>
+        <translation>Non è possibile sincronizzare una cartella condivisa senza le autorizzazioni complete di accesso</translation>
     </message>
     <message>
         <source>Select</source>
@@ -1554,7 +1554,7 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message>
         <source>Login</source>
         <translatorcomment>Button label to start the Login process. (String as short as possible)</translatorcomment>
-        <translation>Entra</translation>
+        <translation>Effettua il log&#xa0;in</translation>
     </message>
     <message>
         <source>Create account</source>
@@ -1654,7 +1654,7 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message>
         <source>Log out</source>
         <translatorcomment>Button label to log out the current account.</translatorcomment>
-        <translation>Effettua il logout</translation>
+        <translation>Effettua il log&#xa0;out</translation>
     </message>
     <message>
         <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
@@ -1748,7 +1748,7 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message>
         <source>Import to my cloud drive</source>
         <translatorcomment>Label to indicate if the user wants to import the selected MEGA link(s) to his cloud drive.</translatorcomment>
-        <translation>Importa sul mio cloud drive</translation>
+        <translation>Importa sul mio Cloud drive</translation>
     </message>
     <message>
         <source>OK</source>
@@ -2089,7 +2089,7 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message>
         <source>Log in</source>
         <translatorcomment>Title for explanation about log in</translatorcomment>
-        <translation>Entra</translation>
+        <translation>Effettua il login</translation>
     </message>
     <message>
         <source>Create Account</source>
@@ -2164,7 +2164,7 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message>
         <source>[A]Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.[/A]</source>
         <translatorcomment>Description label to indicate the user that his password may be leaked and needs to perform email verification to continue.</translatorcomment>
-        <translation>[A]La tua password è stata rubata e adesso è usata da altre persone per entrare nei tuoi account, incluso, ma non limitato, il tuo account MEGA.[/A]</translation>
+        <translation>[A]La tua password è stata rubata e adesso è usata da altre persone per entrare nei tuoi account, incluso il, ma non limitato al, tuo account MEGA.[/A]</translation>
     </message>
     <message>
         <source>Locked Accounts</source>
@@ -2406,7 +2406,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>La tua sincronizzazione “%1” è stato disabilitataperché la cartella remota è nel cestino</translation>
+        <translation>La tua sincronizzazione “%1” è stata disabilitata perché la cartella remota è nel cestino</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
@@ -2436,7 +2436,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>DEBUG mode disabled</source>
         <translatorcomment>Notification message shown when the DEBUG mode is disabled.</translatorcomment>
-        <translation>Modalità&#xa0;debug disattivata</translation>
+        <translation>Modalità debug disattivata</translation>
     </message>
     <message>
         <source>DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log)</source>
@@ -2779,17 +2779,17 @@ I trasferimenti riprenderanno automaticamente quando riaprirai l&apos;app.</nume
     <message>
         <source>Your backup &quot;%1&quot; has been temporarily disabled</source>
         <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder displays backup name</translatorcomment>
-        <translation>Il tuo backup &quot;%1&quot; è stato temporaneamente disattivato:</translation>
+        <translation>Il tuo backup “%1” è stato temporaneamente disattivato:</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Il tuo backup &quot;%1&quot; è stato disattivato perché a cartella locale non esiste.</translation>
+        <translation>Il tuo backup “%1” è stato disattivato perché a cartella locale non esiste.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Il tuo backup &quot;%1&quot; è stato disattivato perché la sincronizzazione di cartelle condivise di VirtualBox non è supportata a causa di mancanze in quel filesystem.</translation>
+        <translation>Il tuo backup “%1” è stato disattivato perché la sincronizzazione di cartelle condivise di VirtualBox non è supportata a causa di mancanze in quel filesystem.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
@@ -2799,22 +2799,42 @@ I trasferimenti riprenderanno automaticamente quando riaprirai l&apos;app.</nume
     <message>
         <source>Your backup &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Il tuo backup &quot;%1&quot; è stato disattivato. La cartella di MEGA (o parte di essa) non ha accesso completo.</translation>
+        <translation>Il tuo backup “%1” è stato disattivato. La cartella di MEGA (o parte di essa) non ha accesso completo.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder has changed</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Il tuo backup &quot;%1&quot; è stato disattivato perché la cartella locale è cambiata.</translation>
+        <translation>Il tuo backup “%1” è stato disattivato perché la cartella locale è cambiata.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder has changed</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Il tuo backup &quot;%1&quot; è stato disattivato perché la cartella di MEGA è cambiata.</translation>
+        <translation>Il tuo backup “%1” è stato disattivato perché la cartella di MEGA è cambiata.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled. Reason: %2</source>
         <translatorcomment>Notification message launched when a backup is disabled. Keep &amp;quot;%1&amp;quot; code because is filled with the name of the backup at runtime and %2 with the reason of the error.</translatorcomment>
-        <translation>Il tuo backup &quot;%1&quot; è stato disattivato. Motivo: %2</translation>
+        <translation>Il tuo backup “%1” è stato disattivato. Motivo: %2</translation>
+    </message>
+    <message>
+        <source>Security upgrade</source>
+        <translatorcomment>Title of security upgrade dialog</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>You are currently sharing the following folder: %1</source>
+        <translatorcomment>Additional information shown within Security upgrade dialog if the user has outgoing shares. A list of the shares will be filled at %1 placeholder. Please check screenshot to see the full context of this string along with the other ones.</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Failed to ugrade security. Error: %1</source>
+        <translatorcomment>System notification error shown if an error occur while upgrading security for your account. %1 will be replaced with the error returned from the SDK.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your account&apos;s security is now being upgraded. This will happen only once. If you have seen this message for this account before, press Cancel.</source>
+        <translatorcomment>Error message shown to the user to inform about that the security of his account is going to be upgraded. </translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3010,7 +3030,7 @@ I trasferimenti riprenderanno automaticamente quando riaprirai l&apos;app.</nume
     <message>
         <source>Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.</source>
         <translatorcomment>Description label to indicate the user that his password may be leaked and needs to perform email verification to continue.</translatorcomment>
-        <translation>La tua password è stata rubata e adesso viene usata da persone non identificate per entrare nei tuoi account, incluso, ma non limitato, il tuo account MEGA.</translation>
+        <translation>La tua password è stata rubata e adesso viene usata da persone non identificate per entrare nei tuoi account, incluso il, ma non limitato al, tuo account MEGA.</translation>
     </message>
 </context>
 <context>
@@ -3743,7 +3763,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Upgrade Account</source>
         <translatorcomment>Button label to redirect the user to upgrade account (getting more space and transfer quota)</translatorcomment>
-        <translation>Fai l&apos;upgrade dell&apos;account</translation>
+        <translation>Effettua l&apos;upgrade dell&apos;account</translation>
     </message>
     <message>
         <source>Importing links is temporarily disabled.</source>
@@ -4049,7 +4069,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
         <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (macOS)</translatorcomment>
-        <translation>Una o più sincronizzazioni sono state disabilitate. Vai nelle preferenze per attivarle nuovamente.</translation>
+        <translation>Una o più sincronizzazioni sono state disabilitate. Vai nelle Preferenze per attivarle nuovamente.</translation>
     </message>
     <message>
         <source>Sync transfers cannot be cancelled individually.
@@ -4503,7 +4523,7 @@ Per favore, verifica di aver inserito il nome corretto del file.</translation>
         <source>&apos;%1&apos; is write protected.
 Do you want to delete it anyway?</source>
         <translatorcomment>Warning message when a write protected file is about to be delete</translatorcomment>
-        <translation>″%1″ è protetto dalla scrittura.
+        <translation>“%1” è protetto dalla scrittura.
 Sei sicuro di volerlo eliminare lo stesso?</translation>
     </message>
 </context>
@@ -4562,7 +4582,7 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
     <message>
         <source>Date Modified</source>
         <translatorcomment>Header name of the column that shows file modified dates</translatorcomment>
-        <translation>Data modifica</translation>
+        <translation>Data di modifica</translation>
     </message>
     <message>
         <source>My Computer</source>
@@ -4695,7 +4715,7 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
     <message>
         <source>Scanning</source>
         <translatorcomment>Label used to display when the scanning widget is on the &quot;Scanning&quot; step</translatorcomment>
-        <translation>Scansione</translation>
+        <translation>Scansione…</translation>
     </message>
     <message>
         <source>Creating folders</source>
@@ -5035,7 +5055,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>My Account</source>
         <translatorcomment>Button label used to open MEGA web app account overview section for current account. Keep as short as possible.</translatorcomment>
-        <translation>Account</translation>
+        <translation>Il mio account</translation>
     </message>
     <message>
         <source>Storage Space</source>
@@ -5405,7 +5425,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Are you sure?</source>
         <translatorcomment>Warning message second part asking if you are sure about continuing with the logout.</translatorcomment>
-        <translation>Sei sicuro?</translation>
+        <translation>Vuoi effettuare il log out?</translation>
     </message>
     <message>
         <source>Error adding sync</source>
@@ -5430,7 +5450,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your sync &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
         <translatorcomment>Warning message indicating that an error happened disabling a sync. First placeholder is the sync name and second placeholder is the error message sent by SDK (reason)</translatorcomment>
-        <translation>La tua sincronizzazione &quot;%1&quot; non può essere disattivata. Motivo: %2</translation>
+        <translation>La tua sincronizzazione “%1” non può essere disattivata. Motivo: %2</translation>
     </message>
     <message>
         <source>Error adding backup %1</source>
@@ -5465,7 +5485,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your backup &quot;%1&quot; can&apos;t be enabled. Reason: %2</source>
         <translatorcomment>Error text when enabling a backup failed</translatorcomment>
-        <translation>Il tuo backup &quot;%1&quot; non può essere attivato. Motivo: %2</translation>
+        <translation>Il tuo backup “%1” non può essere attivato. Motivo: %2</translation>
     </message>
     <message>
         <source>Error disabling backup</source>
@@ -5480,7 +5500,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your backup &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
         <translatorcomment>Error text when disabling a backup failed</translatorcomment>
-        <translation>Il tuo backup &quot;%1&quot; non può essere disattivato. Motivo: %2</translation>
+        <translation>Il tuo backup “%1” non può essere disattivato. Motivo: %2</translation>
     </message>
     <message>
         <source>Go to backup centre</source>
@@ -5533,7 +5553,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source> Sync your entire cloud drive</source>
         <translatorcomment>Label displayed to inform the user about the Full sync (Sync the entire cloud drive)</translatorcomment>
-        <translation>Sincronizzazione dell&apos;intero cloud drive</translation>
+        <translation>Sincronizzazione dell&apos;intero Cloud drive</translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -5816,7 +5836,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Log in</source>
         <translatorcomment>Button label to open Login form</translatorcomment>
-        <translation>Entra</translation>
+        <translation>Effettua il login</translation>
     </message>
     <message>
         <source>I agree with the MEGA [A]Terms of Service[/A]</source>
@@ -6221,7 +6241,7 @@ Per continuare, seleziona un&apos;altra cartella.</translation>
     <message>
         <source>Local Folder</source>
         <translatorcomment>Sync table header column title</translatorcomment>
-        <translation>Cartella Locale</translation>
+        <translation>Cartella locale</translation>
     </message>
     <message>
         <source>Sort by folder name</source>
@@ -6313,7 +6333,7 @@ Per continuare, seleziona un&apos;altra cartella.</translation>
     <message>
         <source>Retrying</source>
         <translatorcomment>Transfer is starting again after failure</translatorcomment>
-        <translation>Ritentando</translation>
+        <translation>Ritentando…</translation>
     </message>
     <message>
         <source>Uploading…</source>
@@ -6333,7 +6353,7 @@ Per continuare, seleziona un&apos;altra cartella.</translation>
     <message>
         <source>Completing</source>
         <translatorcomment>Transfer is being completed</translatorcomment>
-        <translation>Completando</translation>
+        <translation>Completando…</translation>
     </message>
     <message>
         <source>Completed</source>
@@ -6373,7 +6393,7 @@ Per continuare, seleziona un&apos;altra cartella.</translation>
     <message>
         <source>Out of transfer quota</source>
         <translatorcomment>Transfer is paused for out of transfer quota</translatorcomment>
-        <translation>Quota di trasferimento superata</translation>
+        <translation>Banda di trasferimento superata</translation>
     </message>
 </context>
 <context>
@@ -6479,7 +6499,7 @@ Per continuare, seleziona un&apos;altra cartella.</translation>
     <message>
         <source>Scanning</source>
         <translatorcomment>State of the Transfers: Message which shows that a folder is being scanned</translatorcomment>
-        <translation>Scansione</translation>
+        <translation>Scansione…</translation>
     </message>
     <message>
         <source>All paused</source>
@@ -6554,7 +6574,7 @@ Per continuare, seleziona un&apos;altra cartella.</translation>
     <message>
         <source>Your MEGA account is full</source>
         <translatorcomment>Message shown when the MEGA account is full</translatorcomment>
-        <translation>Il tuo account MEGA è pieno.</translation>
+        <translation>Il tuo account MEGA è pieno</translation>
     </message>
     <message>
         <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left for this IP address.

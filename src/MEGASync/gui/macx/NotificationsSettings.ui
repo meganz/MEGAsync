@@ -6,15 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>545</width>
-    <height>361</height>
+    <width>535</width>
+    <height>390</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string notr="true"/>
   </property>
   <property name="styleSheet">
-   <string notr="true">#wSeparatorShares, #wSeparatorContacts, #wSeparatorInfo
+   <string notr="true">#wSeparatorShares, #wSeparatorContacts, #wSeparatorInfo, #wSeparatorUploadsDownloads
 {
 background-color: rgba(0,0,0,0.1);
 }
@@ -124,6 +124,70 @@ background-color: rgba(0,0,0,0.1);
       <property name="bottomMargin">
        <number>0</number>
       </property>
+      <item>
+       <widget class="QWidget" name="wSeparatorUploadsDownloads" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>1</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>1</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QGridLayout" name="glUploadsDownloads" rowstretch="0" columnminimumwidth="200,0">
+        <property name="topMargin">
+         <number>18</number>
+        </property>
+        <property name="bottomMargin">
+         <number>18</number>
+        </property>
+        <property name="horizontalSpacing">
+         <number>4</number>
+        </property>
+        <property name="verticalSpacing">
+         <number>12</number>
+        </property>
+        <item row="0" column="1">
+         <widget class="QCheckBox" name="UploadsDownloadsCheck">
+          <property name="text">
+           <string>Completed uploads and downloads</string>
+          </property>
+          <property name="NotificationType" stdset="0">
+           <UInt>8</UInt>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="UploadsDownloadsLabel">
+          <property name="minimumSize">
+           <size>
+            <width>195</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>195</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Uploads and downloads:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
       <item>
        <widget class="QWidget" name="wSeparatorShares" native="true">
         <property name="minimumSize">

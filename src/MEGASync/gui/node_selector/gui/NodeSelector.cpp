@@ -6,6 +6,8 @@
 #include "megaapi.h"
 #include "../model/NodeSelectorProxyModel.h"
 #include "../model/NodeSelectorModel.h"
+#include "NodeSelectorTreeViewWidgetSpecializations.h"
+#include "NodeSelectorSpecializations.h"
 
 #include "MegaNodeNames.h"
 
@@ -15,27 +17,47 @@
 
 using namespace mega;
 
+const char* ITS_ON_NS = "itsOn";
+
 const int NodeSelector::LABEL_ELIDE_MARGIN = 100;
 
-NodeSelector::NodeSelector(NodeSelectorTreeViewWidget::Type selectMode, QWidget *parent) :
+NodeSelector::NodeSelector(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::NodeSelector),
-    mSelectMode(selectMode),
-    mMegaApi(MegaSyncApp->getMegaApi())
+    mMegaApi(MegaSyncApp->getMegaApi()),
+    ui(new Ui::NodeSelector)
 {
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
     ui->setupUi(this);
 
-#ifndef Q_OS_MAC
     connect(ui->bShowIncomingShares, &QPushButton::clicked, this, &NodeSelector::onbShowIncomingSharesClicked);
     connect(ui->bShowCloudDrive, &QPushButton::clicked, this, &NodeSelector::onbShowCloudDriveClicked);
     connect(ui->bShowBackups, &QPushButton::clicked, this, &NodeSelector::onbShowBackupsFolderClicked);
-#else
-    connect(ui->tabBar, &QTabBar::currentChanged, this, &NodeSelector::onOptionSelected);
-#endif
+    connect(ui->bSearch, &QPushButton::clicked, this, &NodeSelector::onbShowSearchClicked);
+
+    foreach(auto& button, ui->wLeftPane->findChildren<QAbstractButton*>())
+    {
+        mButtonIconManager.addButton(button);
+    }
+
+    QColor shadowColor (188, 188, 188);
+    mShadowTab = new QGraphicsDropShadowEffect(ui->buttonGroup);
+    mShadowTab->setBlurRadius(10.);
+    mShadowTab->setXOffset(0.);
+    mShadowTab->setYOffset(0.);
+    mShadowTab->setColor(shadowColor);
+    mShadowTab->setEnabled(true);
+
+    mTabFramesToggleGroup[SEARCH] = ui->fSearchString;
+    mTabFramesToggleGroup[BACKUPS] = ui->fBackups;
+    mTabFramesToggleGroup[SHARES] = ui->fIncomingShares;
+    mTabFramesToggleGroup[CLOUD_DRIVE] = ui->fCloudDrive;
+    ui->wSearch->hide();
+    ui->bSearch->hide();
+    setAllFramesItsOnProperty();
 
     updateNodeSelectorTabs();
+    onOptionSelected(CLOUD_DRIVE);
 }
 
 NodeSelector::~NodeSelector()
@@ -43,42 +65,36 @@ NodeSelector::~NodeSelector()
     delete ui;
 }
 
+void NodeSelector::setAllFramesItsOnProperty()
+{
+    for (auto tabFrame : qAsConst(mTabFramesToggleGroup))
+    {
+        tabFrame->setProperty(ITS_ON_NS, false);
+    }
+}
+
 void NodeSelector::updateNodeSelectorTabs()
 {
-#ifndef Q_OS_MAC
     ui->bShowCloudDrive->setText(MegaNodeNames::getCloudDriveName());
     ui->bShowIncomingShares->setText(MegaNodeNames::getIncomingSharesName());
     ui->bShowBackups->setText(MegaNodeNames::getBackupsName());
-#else
-    for(int index = ui->tabBar->count() - 1; index >= 0; --index)
-    {
-        ui->tabBar->removeTab(index);
-    }
+}
 
-    ui->tabBar->addTab(MegaNodeNames::getCloudDriveName());
-    ui->tabBar->addTab(MegaNodeNames::getIncomingSharesName());
-    ui->tabBar->addTab(MegaNodeNames::getBackupsName());
-#endif
+void NodeSelector::onSearch(const QString &text)
+{
+    ui->bSearch->setText(text);
+    ui->wSearch->setVisible(true);
+    ui->bSearch->setVisible(true);
 
-    for(int page = 0; page < ui->stackedWidget->count(); ++page)
+    mSearchWidget->search(text);
+    mSearchWidget->setSearchText(text);
+    onbShowSearchClicked();
+    ui->bSearch->setChecked(true);
+
+    auto senderViewWidget = dynamic_cast<NodeSelectorTreeViewWidget*>(sender());
+    if(senderViewWidget != mSearchWidget)
     {
-        auto viewContainer = dynamic_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->widget(page));
-        if(viewContainer)
-        {
-            if(page == VAULT && (mSelectMode == NodeSelectorTreeViewWidget::SYNC_SELECT || mSelectMode == NodeSelectorTreeViewWidget::UPLOAD_SELECT))
-            {
-                ui->stackedWidget->removeWidget(viewContainer);
-                hideSelector((NodeSelector::TabItem)page);
-                viewContainer->deleteLater();
-            }
-            else
-            {
-                viewContainer->setSelectionMode(mSelectMode);
-                connect(viewContainer, &NodeSelectorTreeViewWidget::okBtnClicked, this, &NodeSelector::onbOkClicked, Qt::UniqueConnection);
-                connect(viewContainer, &NodeSelectorTreeViewWidget::cancelBtnClicked, this, &NodeSelector::reject, Qt::UniqueConnection);
-                connect(viewContainer, &NodeSelectorTreeViewWidget::onViewReady, this, &NodeSelector::onViewReady, Qt::UniqueConnection);
-            }
-        }
+        senderViewWidget->clearSearchText();
     }
 }
 
@@ -108,7 +124,7 @@ void NodeSelector::setDefaultUploadOption(bool value)
 
 bool NodeSelector::getDefaultUploadOption()
 {
-    return ui->CloudDrive->getDefaultUploadOption();
+    return mCloudDriveWidget->getDefaultUploadOption();
 }
 
 void NodeSelector::changeEvent(QEvent *event)
@@ -121,100 +137,46 @@ void NodeSelector::changeEvent(QEvent *event)
     QDialog::changeEvent(event);
 }
 
-void NodeSelector::showEvent(QShowEvent *event)
+void NodeSelector::keyPressEvent(QKeyEvent *e)
 {
-    QDialog::showEvent(event);
+    switch (e->key())
+    {
+    case Qt::Key_Enter:
+    case Qt::Key_Return:
+    {
+        e->ignore();
+    }
+    }
 }
 
 void NodeSelector::onbOkClicked()
 {
-    bool correctNodeSelected(true);
-
-    if(mSelectMode == NodeSelectorTreeViewWidget::DOWNLOAD_SELECT)
+    for(int page = 0; page < ui->stackedWidget->count(); ++page)
     {
-        auto treeViewWidget = static_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->currentWidget());
-        QList<MegaHandle> nodes = treeViewWidget->getMultiSelectionNodeHandle();
-        int wrongNodes(0);
-        foreach(auto& nodeHandle, nodes)
+        auto viewContainer = dynamic_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->widget(page));
+        if(viewContainer && viewContainer != ui->stackedWidget->currentWidget())
         {
-            auto node = std::unique_ptr<MegaNode>(mMegaApi->getNodeByHandle(nodeHandle));
-            if(!node)
-            {
-                ++wrongNodes;
-            }
-        }
-
-        if(wrongNodes == nodes.size())
-        {
-            correctNodeSelected = false;
-            if(ui->stackedWidget->currentIndex() == CLOUD_DRIVE)
-            {
-                QMegaMessageBox::warning(nullptr, tr("Error"), tr("The item you selected has been removed. To reselect, close this window and try again.", "", wrongNodes), QMessageBox::Ok);
-            }
-            else
-            {
-                QMegaMessageBox::warning(nullptr, tr("Error"), tr("You no longer have access to this item. Ask the owner to share again.", "", wrongNodes), QMessageBox::Ok);
-            }
-        }
-        else if(wrongNodes > 0)
-        {
-            correctNodeSelected = false;
-            QString warningMsg1 = tr("%1 item selected", "", nodes.size()).arg(nodes.size());
-            QString warningMsg = tr("%1. %2 has been removed. To reselect, close this window and try again.", "", wrongNodes).arg(warningMsg1).arg(wrongNodes);
-            QMegaMessageBox::warning(nullptr, tr("Error"), warningMsg, QMessageBox::Ok);
+            viewContainer->abort();
         }
     }
-    else
+
+    isSelectionCorrect() ? accept() : reject();
+}
+
+void NodeSelector::on_tClearSearchResult_clicked()
+{
+    ui->wSearch->hide();
+    ui->bSearch->hide();
+    ui->bSearch->setText(QString());
+    mSearchWidget->stopSearch();
+    if(ui->stackedWidget->currentWidget() == mSearchWidget)
     {
-        auto treeViewWidget = static_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->currentWidget());
-        auto node = std::unique_ptr<MegaNode>(mMegaApi->getNodeByHandle(treeViewWidget->getSelectedNodeHandle()));
-        if (!node)
-        {
-            QMegaMessageBox::warning(nullptr, tr("Error"), tr("The item you selected has been removed. To reselect, close this window and try again."),
-                                                 QMessageBox::Ok);
-            correctNodeSelected = false;
-        }
-        else
-        {
-            int access = mMegaApi->getAccess(node.get());
-            if ((mSelectMode == NodeSelectorTreeViewWidget::UPLOAD_SELECT) && ((access < MegaShare::ACCESS_READWRITE)))
-            {
-                QMegaMessageBox::warning(nullptr, tr("Error"), tr("You need Read & Write or Full access rights to be able to upload to the selected folder."), QMessageBox::Ok);
-                correctNodeSelected = false;
-            }
-            else if ((mSelectMode == NodeSelectorTreeViewWidget::SYNC_SELECT) && (access < MegaShare::ACCESS_FULL))
-            {
-                QMegaMessageBox::warning(nullptr, tr("Error"), tr("You need Full access right to be able to sync the selected folder."), QMessageBox::Ok);
-                correctNodeSelected = false;
-            }
-            else if ((mSelectMode == NodeSelectorTreeViewWidget::STREAM_SELECT) && node->isFolder())
-            {
-                QMegaMessageBox::warning(nullptr, tr("Error"), tr("Only files can be used for streaming."), QMessageBox::Ok);
-                correctNodeSelected = false;
-            }
-            else if (mSelectMode == NodeSelectorTreeViewWidget::SYNC_SELECT)
-            {
-                const char* path = mMegaApi->getNodePath(node.get());
-                auto check = std::unique_ptr<MegaNode>(mMegaApi->getNodeByPath(path));
-                delete [] path;
-                if (!check)
-                {
-                    QMegaMessageBox::warning(nullptr, tr("Warning"), tr("Invalid folder for synchronization.\n"
-                                                         "Please, ensure that you don't use characters like '\\' '/' or ':' in your folder names."),
-                                             QMessageBox::Ok);
-                    correctNodeSelected = false;
-                }
-            }
-        }
+        onbShowCloudDriveClicked();
     }
-    correctNodeSelected ? accept() : reject();
 }
 
 void NodeSelector::onOptionSelected(int index)
 {
-#ifdef Q_OS_MAC
-    onTabSelected(index);
-#else
     switch (index)
     {
         case NodeSelector::CLOUD_DRIVE:
@@ -223,71 +185,43 @@ void NodeSelector::onOptionSelected(int index)
         case NodeSelector::SHARES:
             ui->bShowIncomingShares->click();
             break;
-        case NodeSelector::VAULT:
+        case NodeSelector::BACKUPS:
             ui->bShowBackups->click();
             break;
         default:
             break;
     }
-#endif
-
 }
-
-#ifdef Q_OS_MAC
-void NodeSelector::onTabSelected(int index)
-{
-    auto tabText = ui->tabBar->tabText(index);
-    if(tabText == MegaNodeNames::getCloudDriveName())
-    {
-        onbShowCloudDriveClicked();
-    }
-    else if(tabText == MegaNodeNames::getIncomingSharesName())
-    {
-        onbShowIncomingSharesClicked();
-    }
-    else if(tabText == MegaNodeNames::getBackupsName())
-    {
-        onbShowBackupsFolderClicked();
-    }
-
-    ui->tabBar->setCurrentIndex(index);
-}
-#endif
 
 void NodeSelector::onbShowCloudDriveClicked()
 {
     ui->stackedWidget->setCurrentIndex(CLOUD_DRIVE);
+    setToggledStyle(CLOUD_DRIVE);
 }
 
 void NodeSelector::onbShowIncomingSharesClicked()
 {
     ui->stackedWidget->setCurrentIndex(SHARES);
+    setToggledStyle(SHARES);
 }
 
 void NodeSelector::onbShowBackupsFolderClicked()
 {
-    ui->stackedWidget->setCurrentIndex(VAULT);
+    ui->stackedWidget->setCurrentIndex(BACKUPS);
+    setToggledStyle(BACKUPS);
 }
 
-void NodeSelector::onViewReady(bool isEmpty)
+void NodeSelector::onbShowSearchClicked()
 {
-    if(sender() == ui->Backups && isEmpty)
-    {
-        hideSelector(VAULT);
-        shortCutConnects(VAULT);
-    }
-    else if(sender() == ui->IncomingShares && isEmpty)
-    {
-        hideSelector(SHARES);
-        shortCutConnects(SHARES);
-    }
+    ui->stackedWidget->setCurrentWidget(mSearchWidget);
+    setToggledStyle(SEARCH);
 }
 
 void NodeSelector::shortCutConnects(int ignoreThis)
 {
     // Provide quick access shortcuts for the two panes via Ctrl+1,2
     // Ctrl is auto-magically translated to CMD key by Qt on macOS
-    for (int i = 0; i <= VAULT; ++i)
+    for (int i = 0; i <= BACKUPS; ++i)
     {
         if(i != ignoreThis)
         {
@@ -336,77 +270,75 @@ void NodeSelector::processCloseEvent(NodeSelectorProxyModel *proxy, QCloseEvent 
     }
 }
 
-void NodeSelector::hideSelector(TabItem item)
+void NodeSelector::setToggledStyle(TabItem item)
 {
-    switch(item)
+    setAllFramesItsOnProperty();
+
+    auto btn = mTabFramesToggleGroup[item]->findChildren<QPushButton*>();
+    if(btn.size() > 0)
     {
-        case CLOUD_DRIVE:
+        btn.at(0)->setChecked(true);
+    }
+
+    mTabFramesToggleGroup[item]->setProperty(ITS_ON_NS, true);
+    mTabFramesToggleGroup[item]->setGraphicsEffect(mShadowTab);
+
+    // Reload QSS because it is glitchy
+    ui->wLeftPane->setStyleSheet(ui->wLeftPane->styleSheet());
+}
+
+bool NodeSelector::nodeExistWarningMsg(int &access)
+{
+    bool ret = true;
+    access = MegaShare::ACCESS_UNKNOWN;
+    auto node = std::unique_ptr<MegaNode>(mMegaApi->getNodeByHandle(getSelectedNodeHandle()));
+    if (!node)
+    {
+        QMegaMessageBox::warning(nullptr, tr("Error"), tr("The item you selected has been removed. To reselect, close this window and try again."),
+                                             QMessageBox::Ok);
+        ret = false;
+    }
+    else
+    {
+        access = mMegaApi->getAccess(node.get());
+    }
+    return ret;
+}
+
+void NodeSelector::makeConnections(SelectTypeSPtr selectType)
+{
+    mSearchWidget = new NodeSelectorTreeViewWidgetSearch(selectType);
+    mSearchWidget->setObjectName(QString::fromUtf8("Search"));
+    connect(mSearchWidget, &NodeSelectorTreeViewWidgetSearch::nodeDoubleClicked, this, &NodeSelector::setSelectedNodeHandle);
+    ui->stackedWidget->addWidget(mSearchWidget);
+    for(int page = 0; page < ui->stackedWidget->count(); ++page)
+    {
+        auto viewContainer = dynamic_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->widget(page));
+        if(viewContainer)
         {
-#ifndef Q_OS_MAC
-            ui->bShowCloudDrive->hide();
-#else
-            hideTabSelector(MegaNodeNames::getCloudDriveName());
-#endif
-            break;
-        }
-        case SHARES:
-        {
-#ifndef Q_OS_MAC
-            ui->bShowIncomingShares->hide();
-#else
-            hideTabSelector(MegaNodeNames::getIncomingSharesName());
-#endif
-            break;
-        }
-        case VAULT:
-        {
-#ifndef Q_OS_MAC
-            ui->bShowBackups->hide();
-#else
-            hideTabSelector(MegaNodeNames::getBackupsName());
-#endif
-            break;
+            viewContainer->init();
+            connect(viewContainer, &NodeSelectorTreeViewWidget::okBtnClicked, this, &NodeSelector::onbOkClicked, Qt::UniqueConnection);
+            connect(viewContainer, &NodeSelectorTreeViewWidget::cancelBtnClicked, this, &NodeSelector::reject, Qt::UniqueConnection);
+            connect(viewContainer, &NodeSelectorTreeViewWidget::onSearch, this, &NodeSelector::onSearch, Qt::UniqueConnection);
         }
     }
 }
 
-#ifdef Q_OS_MAC
-void NodeSelector::hideTabSelector(const QString& tabText)
+void NodeSelector::setSelectedNodeHandle(std::shared_ptr<MegaNode> node, bool goToInit)
 {
-    for(int index = 0; index < ui->tabBar->count(); ++index)
-    {
-        if(ui->tabBar->tabText(index) == tabText)
-        {
-            ui->tabBar->removeTab(index);
-            break;
-        }
-    }
-}
-#endif
-
-void NodeSelector::setSelectedNodeHandle(std::shared_ptr<MegaNode> node)
-{
-    if(!node)
-    {
-        node = std::shared_ptr<MegaNode>(mMegaApi->getRootNode());
-    }
-
     if(node)
     {
-        TabItem option = CLOUD_DRIVE;
-        auto rootNode = std::unique_ptr<mega::MegaNode>(mMegaApi->getRootNode(node.get()));
-        if(mMegaApi->isInShare(rootNode.get()))
+        TabItem option = SHARES;
+        if(mMegaApi->isInCloud(node.get()))
         {
-            option = SHARES;
+            option = CLOUD_DRIVE;
         }
-        else if(mMegaApi->isInVault(rootNode.get()))
+        else if(mMegaApi->isInVault(node.get()))
         {
-            option = VAULT;
+            option = BACKUPS;
         }
-
         onOptionSelected(option);
-
         auto tree_view_widget = static_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->currentWidget());
-        tree_view_widget->setSelectedNodeHandle(node->getHandle());
+        tree_view_widget->setSelectedNodeHandle(node->getHandle(), goToInit);
     }
 }

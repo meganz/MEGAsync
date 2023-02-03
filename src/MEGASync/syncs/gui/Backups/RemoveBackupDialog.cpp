@@ -65,7 +65,7 @@ void RemoveBackupDialog::OnChangeButtonClicked()
 {
     if (!mNodeSelector)
     {
-        mNodeSelector = new NodeSelector(NodeSelectorTreeViewWidget::UPLOAD_SELECT, this);
+        mNodeSelector = new UploadNodeSelector(this);
     }
 
     DialogOpener::showDialog(mNodeSelector, [this]

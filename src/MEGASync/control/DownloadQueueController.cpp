@@ -97,32 +97,6 @@ void DownloadQueueController::onRequestFinish(MegaApi*, MegaRequest *request, Me
     }
 }
 
-void DownloadQueueController::update(TransferMetaData *dataToUpdate, MegaNode *node, const QString &path)
-{
-    // Update transfer metadata according to node type.
-    node->isFolder() ? dataToUpdate->totalFolders++ : dataToUpdate->totalFiles++;
-
-    // Set the metadata local path to destination path
-    if (dataToUpdate->localPath.isEmpty())
-    {
-        dataToUpdate->localPath = QDir::toNativeSeparators(path);
-
-        // If there is only 1 transfer, set localPath to full path
-        if (dataToUpdate->totalTransfers == 1)
-        {
-            char *escapedName = mMegaApi->escapeFsIncompatible(node->getName(),
-                                                              path.toStdString().c_str());
-            QString nodeName = QString::fromUtf8(escapedName);
-            delete [] escapedName;
-            if (!dataToUpdate->localPath.endsWith(QDir::separator()))
-            {
-                dataToUpdate->localPath += QDir::separator();
-            }
-            dataToUpdate->localPath += nodeName;
-        }
-    }
-}
-
 void DownloadQueueController::isDownloadPossible()
 {
     bool downloadPossible(hasEnoughSpaceForDownloads());
@@ -132,7 +106,7 @@ void DownloadQueueController::isDownloadPossible()
     }
     else
     {
-        emit finishedAvailableSpaceCheck(true);
+        emit finishedAvailableSpaceCheck(downloadPossible);
     }
 }
 

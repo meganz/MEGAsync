@@ -718,7 +718,7 @@ void SetupWizard::onLocalFolderSet(const QString& path)
 
 void SetupWizard::on_bMegaFolder_clicked()
 {
-    QPointer<NodeSelector> nodeSelector = new NodeSelector(NodeSelectorTreeViewWidget::SYNC_SELECT, this);
+    QPointer<NodeSelector> nodeSelector = new SyncNodeSelector(this);
     std::shared_ptr<MegaNode> defaultNode(megaApi->getNodeByPath(ui->eMegaFolder->text().toUtf8().constData()));
     nodeSelector->setSelectedNodeHandle(defaultNode);
 #ifdef Q_OS_LINUX
