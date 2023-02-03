@@ -19,7 +19,7 @@ const int Preferences::BUILD_ID = 0;
 const QString Preferences::VERSION_STRING = QString::fromAscii("4.8.7");
 QString Preferences::SDK_ID = QString::fromAscii("678295f");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
-"- Detected crashes on Windows, Linux, and masOS fixed.\n"));
+"- Detected crashes on Windows, Linux, and macOS fixed.\n"));
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
