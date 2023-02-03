@@ -57,7 +57,8 @@ protected:
     void changeEvent(QEvent * event) override;
     void keyPressEvent(QKeyEvent *e) override;
     void addBackupsView();
-    bool nodeExistWarningMsg(int &access);
+    int getNodeAccess(std::shared_ptr<mega::MegaNode> node);
+    std::shared_ptr<mega::MegaNode> getSelectedNode();
     void makeConnections(SelectTypeSPtr selectType);
 
     NodeSelectorTreeViewWidgetCloudDrive* mCloudDriveWidget;

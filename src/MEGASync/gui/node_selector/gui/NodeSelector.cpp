@@ -288,23 +288,28 @@ void NodeSelector::setToggledStyle(TabItem item)
     ui->wLeftPane->setStyleSheet(ui->wLeftPane->styleSheet());
 }
 
-bool NodeSelector::nodeExistWarningMsg(int &access)
+int NodeSelector::getNodeAccess(std::shared_ptr<MegaNode> node)
 {
-    bool ret = true;
-    access = MegaShare::ACCESS_UNKNOWN;
-    auto node = std::unique_ptr<MegaNode>(mMegaApi->getNodeByHandle(getSelectedNodeHandle()));
+    int access = MegaShare::ACCESS_UNKNOWN;
+    if (node)
+    {
+        access = mMegaApi->getAccess(node.get());
+    }
+
+    return access;
+}
+
+std::shared_ptr<MegaNode> NodeSelector::getSelectedNode()
+{
+    auto node = std::shared_ptr<MegaNode>(mMegaApi->getNodeByHandle(getSelectedNodeHandle()));
     if (!node)
     {
         QMegaMessageBox::warning(nullptr, tr("Error"), tr("The item you selected has been removed. To reselect, close this window and try again."),
                                              QMessageBox::Ok);
-        ret = false;
     }
-    else
-    {
-        access = mMegaApi->getAccess(node.get());
-    }
-    return ret;
+    return node;
 }
+
 
 void NodeSelector::makeConnections(SelectTypeSPtr selectType)
 {

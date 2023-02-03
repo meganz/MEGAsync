@@ -20,10 +20,12 @@ UploadNodeSelector::UploadNodeSelector(QWidget *parent) : NodeSelector(parent)
 
 bool UploadNodeSelector::isSelectionCorrect()
 {
-    int access;
-    bool ret = nodeExistWarningMsg(access);
-    if(ret)
+    bool ret = false;
+    auto node = getSelectedNode();
+    if(node)
     {
+        ret = true;
+        int access = getNodeAccess(node);
         if (access < mega::MegaShare::ACCESS_READWRITE)
         {
             QMegaMessageBox::warning(nullptr, tr("Error"), tr("You need Read & Write or Full access rights to be able to upload to the selected folder."), QMessageBox::Ok);
@@ -100,10 +102,12 @@ SyncNodeSelector::SyncNodeSelector(QWidget *parent) : NodeSelector(parent)
 
 bool SyncNodeSelector::isSelectionCorrect()
 {
-    int access;
-    bool ret = nodeExistWarningMsg(access);
-    if(!ret)
+    auto node = getSelectedNode();
+    bool ret = false;
+    if(node)
     {
+        ret = true;
+        int access = getNodeAccess(node);
         if (access < mega::MegaShare::ACCESS_FULL)
         {
             QMegaMessageBox::warning(nullptr, tr("Error"), tr("You need Full access right to be able to sync the selected folder."), QMessageBox::Ok);
@@ -144,11 +148,11 @@ StreamNodeSelector::StreamNodeSelector(QWidget *parent) : NodeSelector(parent)
 
 bool StreamNodeSelector::isSelectionCorrect()
 {
-    int access;
-    bool ret = nodeExistWarningMsg(access);
-    if(!ret)
+    auto node = getSelectedNode();
+    bool ret = false;
+    if(node)
     {
-        auto node = std::unique_ptr<mega::MegaNode>(mMegaApi->getNodeByHandle(getSelectedNodeHandle()));
+        ret = true;
         if (node->isFolder())
         {
             QMegaMessageBox::warning(nullptr, tr("Error"), tr("Only files can be used for streaming."), QMessageBox::Ok);
