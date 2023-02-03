@@ -12,17 +12,14 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/4.8.6.0";
-const int Preferences::VERSION_CODE = 4806;
-const int Preferences::BUILD_ID = 2;
+const char Preferences::USER_AGENT[] = "MEGAsync/4.8.7.0";
+const int Preferences::VERSION_CODE = 4807;
+const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("4.8.6");
-QString Preferences::SDK_ID = QString::fromAscii("016322a");
+const QString Preferences::VERSION_STRING = QString::fromAscii("4.8.7");
+QString Preferences::SDK_ID = QString::fromAscii("678295f");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
-"- Detected crashes on Windows, Linux, and masOS fixed.\n"
-"- Less device memory will be used by accounts with large amounts of data stored.\n"
-"- Application performance improved.\n"
-"- Translation issues fixed.\n"));
+"- Detected crashes on Windows, Linux, and macOS fixed.\n"));
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
