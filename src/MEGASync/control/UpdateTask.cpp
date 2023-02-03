@@ -385,7 +385,7 @@ bool UpdateTask::processFile(QNetworkReply *reply)
 #ifdef _WIN32
     if (isPublic)
     {
-        Platform::makePubliclyReadable((LPTSTR)QDir::toNativeSeparators(localFile.fileName()).utf16());
+        Platform::getInstance()->makePubliclyReadable(QDir::toNativeSeparators(localFile.fileName()));
     }
 #endif
 
@@ -417,7 +417,7 @@ bool UpdateTask::performUpdate()
 #ifdef _WIN32
             if (isPublic)
             {
-                Platform::makePubliclyReadable((LPTSTR)QDir::toNativeSeparators(dstDir.absolutePath()).utf16());
+                Platform::getInstance()->makePubliclyReadable(QDir::toNativeSeparators(dstDir.absolutePath()));
             }
 #endif
         }

@@ -1184,7 +1184,7 @@ void TransfersModel::openFolder(const QFileInfo& info)
     {
         QtConcurrent::run([this, info]
         {
-            emit showInFolderFinished(Platform::showInFolder(info.filePath()));
+            emit showInFolderFinished(Platform::getInstance()->showInFolder(info.filePath()));
         });
     }
 }
