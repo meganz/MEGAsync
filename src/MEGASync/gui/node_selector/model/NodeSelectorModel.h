@@ -21,7 +21,11 @@ enum class NodeSelectorModelRoles
 {
     DATE_ROLE = Qt::UserRole,
     IS_FILE_ROLE,
+    IS_SYNCABLE_FOLDER_ROLE,
     STATUS_ROLE,
+    HANDLE_ROLE,
+    MODEL_ITEM_ROLE,
+    NODE_ROLE,
     last
 };
 
@@ -51,7 +55,8 @@ public:
     NodeRequester(NodeSelectorModel* model);
     ~NodeRequester();
 
-    void setShowFiles(bool newShowFiles);
+    void setShowFiles(bool show);
+    void setShowReadOnlyFolders(bool show);
     void setSyncSetupMode(bool value);
     void lockDataMutex(bool state) const;
     const std::atomic<bool>& isWorking() const;
@@ -68,7 +73,7 @@ public:
     const NodeSelectorModelItemSearch::Types &searchedTypes() const;
 
 public slots:
-    void requestNodeAndCreateChildren(NodeSelectorModelItem* item, const QModelIndex& parentIndex, bool showFiles);
+    void requestNodeAndCreateChildren(NodeSelectorModelItem* item, const QModelIndex& parentIndex);
     void search(const QString& text, NodeSelectorModelItemSearch::Types typesAllowed);
     void createCloudDriveRootItem();
     void createIncomingSharesRootItems(std::shared_ptr<mega::MegaNodeList> nodeList);
@@ -91,6 +96,7 @@ private:
      bool isAborted();
 
      std::atomic<bool> mShowFiles{true};
+     std::atomic<bool> mShowReadOnlyFolders{true};
      std::atomic<bool> mAborted{false};
      std::atomic<bool> mSearchCanceled{false};
      std::atomic<bool> mSyncSetupMode{false};
@@ -142,6 +148,7 @@ public:
     void addNode(std::shared_ptr<mega::MegaNode> node, const QModelIndex &parent);
     void removeNode(const QModelIndex &index);
     void showFiles(bool show);
+    void showReadOnlyFolders(bool show);
 
     QVariant getIcon(const QModelIndex &index, NodeSelectorModelItem* item) const;
     QVariant getText(const QModelIndex &index, NodeSelectorModelItem* item) const;
@@ -165,8 +172,7 @@ public:
 
 signals:
     void levelsAdded(const QModelIndexList& parent, bool force = false);
-    void requestChildNodes(NodeSelectorModelItem* parent, const QModelIndex& parentIndex,
-                           int nodeType);
+    void requestChildNodes(NodeSelectorModelItem* parent, const QModelIndex& parentIndex);
     void firstLoadFinished(const QModelIndex& parent);
     void requestAddNode(std::shared_ptr<mega::MegaNode> newNode, const QModelIndex& parentIndex, NodeSelectorModelItem* parent);
     void removeItem(NodeSelectorModelItem* items);
@@ -184,7 +190,6 @@ protected:
     int mRequiredRights;
     bool mDisplayFiles;
     bool mSyncSetupMode;
-    bool mShowFiles;
     mutable IndexesActionInfo mIndexesActionInfo;
     NodeRequester* mNodeRequesterWorker;
     QList<std::shared_ptr<mega::MegaNode>> mNodesToLoad;

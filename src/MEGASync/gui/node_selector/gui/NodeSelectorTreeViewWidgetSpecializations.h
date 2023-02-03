@@ -21,7 +21,7 @@ public:
 
 private:
     QString getRootText() override;
-    void onRootIndexChanged(const QModelIndex& source_idx) override;
+    void onRootIndexChanged(const QModelIndex& idx) override;
     std::unique_ptr<NodeSelectorModel> createModel() override;
     void modelLoaded() override;
     QIcon getEmptyIcon() override;
@@ -37,7 +37,7 @@ public:
 private:
     QString getRootText() override;
     std::unique_ptr<NodeSelectorModel> createModel() override;
-    void onRootIndexChanged(const QModelIndex& source_idx) override;
+    void onRootIndexChanged(const QModelIndex& idx) override;
     bool newFolderBtnVisibleInRoot() override {return false;}
     QIcon getEmptyIcon() override;
 };
@@ -51,7 +51,7 @@ public:
 
 private:
     QString getRootText() override;
-    void onRootIndexChanged(const QModelIndex& source_idx) override;
+    void onRootIndexChanged(const QModelIndex& idx) override;
     std::unique_ptr<NodeSelectorModel> createModel() override;
     QIcon getEmptyIcon() override;
 };

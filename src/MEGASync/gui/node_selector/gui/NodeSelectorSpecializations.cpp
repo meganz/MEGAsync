@@ -115,7 +115,6 @@ bool SyncNodeSelector::isSelectionCorrect()
         }
         else
         {
-            auto node = std::unique_ptr<mega::MegaNode>(mMegaApi->getNodeByHandle(getSelectedNodeHandle()));
             const char* path = mMegaApi->getNodePath(node.get());
             auto check = std::unique_ptr<mega::MegaNode>(mMegaApi->getNodeByPath(path));
             delete [] path;

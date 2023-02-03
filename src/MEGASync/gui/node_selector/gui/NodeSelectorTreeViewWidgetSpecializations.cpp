@@ -66,11 +66,11 @@ std::unique_ptr<NodeSelectorModel> NodeSelectorTreeViewWidgetIncomingShares::cre
     return std::unique_ptr<NodeSelectorModelIncomingShares>(new NodeSelectorModelIncomingShares);
 }
 
-void NodeSelectorTreeViewWidgetIncomingShares::onRootIndexChanged(const QModelIndex &source_idx)
+void NodeSelectorTreeViewWidgetIncomingShares::onRootIndexChanged(const QModelIndex &idx)
 {
-    if(source_idx.isValid())
+    if(idx.isValid())
     {
-        QModelIndex in_share_idx = getParentIncomingShareByIndex(source_idx);
+        QModelIndex in_share_idx = getParentIncomingShareByIndex(idx);
         in_share_idx = in_share_idx.sibling(in_share_idx.row(), NodeSelectorModel::COLUMN::USER);
         QPixmap pm = qvariant_cast<QPixmap>(in_share_idx.data(Qt::DecorationRole));
         QString tooltip = in_share_idx.data(Qt::ToolTipRole).toString();
@@ -113,9 +113,9 @@ QIcon NodeSelectorTreeViewWidgetBackups::getEmptyIcon()
     return QIcon(QString::fromUtf8("://images/node_selector/view/database.png"));
 }
 
-void NodeSelectorTreeViewWidgetBackups::onRootIndexChanged(const QModelIndex &source_idx)
+void NodeSelectorTreeViewWidgetBackups::onRootIndexChanged(const QModelIndex &idx)
 {
-    Q_UNUSED(source_idx)
+    Q_UNUSED(idx)
     ui->tMegaFolders->header()->hideSection(NodeSelectorModel::COLUMN::USER);
 }
 /////////////////////////////////////////////////////////////////
@@ -178,9 +178,8 @@ void NodeSelectorTreeViewWidgetSearch::onCloudDriveSearchClicked()
 
 void NodeSelectorTreeViewWidgetSearch::onItemDoubleClick(const QModelIndex &index)
 {
-    auto sourceIndex = mProxyModel->mapToSource(index);
-    NodeSelectorModelItem *item = static_cast<NodeSelectorModelItem*>(sourceIndex.internalPointer());
-    emit nodeDoubleClicked(item->getNode(), true);
+    auto node = qvariant_cast<std::shared_ptr<MegaNode>>(index.data(toInt(NodeSelectorModelRoles::NODE_ROLE)));
+    emit nodeDoubleClicked(node, true);
 }
 
 void NodeSelectorTreeViewWidgetSearch::changeButtonsWidgetSizePolicy(bool state)
