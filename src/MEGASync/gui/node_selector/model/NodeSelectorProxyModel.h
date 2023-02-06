@@ -57,9 +57,6 @@ signals:
     void navigateReady(const QModelIndex& index);
     void modelAboutToBeChanged();
 
-protected:
-    bool filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const override;
-
 private:
     QVector<QModelIndex> forEach(std::shared_ptr<mega::MegaNodeList> parentNodeList, QModelIndex parent = QModelIndex());
     Filter mFilter;

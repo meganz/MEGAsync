@@ -42,7 +42,7 @@ void NodeRequester::lockSearchMutex(bool state) const
     state ? mSearchMutex.lock() : mSearchMutex.unlock();
 }
 
-void NodeRequester::requestNodeAndCreateChildren(NodeSelectorModelItem* item, const QModelIndex& parentIndex, bool showFiles)
+void NodeRequester::requestNodeAndCreateChildren(NodeSelectorModelItem* item, const QModelIndex& parentIndex)
 {
     if(item)
     {
@@ -54,7 +54,7 @@ void NodeRequester::requestNodeAndCreateChildren(NodeSelectorModelItem* item, co
             mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
 
             auto childNodesFiltered = mega::MegaNodeList::createInstance();
-            showFiles ?
+            mShowFiles ?
                 childNodesFiltered = megaApi->getChildren(node.get(), mega::MegaApi::ORDER_NONE, mCancelToken.get())
                     : childNodesFiltered = megaApi->getChildrenFromType(item->getNode().get(), mega::MegaNode::TYPE_FOLDER, mega::MegaApi::ORDER_NONE, mCancelToken.get());
 
@@ -95,39 +95,51 @@ void NodeRequester::search(const QString &text, NodeSelectorModelItemSearch::Typ
 
     for(int i = 0; i < nodeList->size(); i++)
     {
+        auto node = nodeList->get(i);
         if(isAborted() || mSearchCanceled)
         {
             break;
         }
-        if(megaApi->isInRubbish(nodeList->get(i)))
+        if((node->isFile() && mShowFiles) || megaApi->isInRubbish(node))
         {
             continue;
         }
-        auto node = std::unique_ptr<mega::MegaNode>(nodeList->get(i)->copy());
-        if(node->isFolder() || (node->isFile() && mShowFiles))
+        else if(mSyncSetupMode)
         {
-            NodeSelectorModelItemSearch::Types type;
+            if(megaApi->getAccess(node) != mega::MegaShare::ACCESS_FULL)
+            {
+                continue;
+            }
+        }
+        else if(!mShowReadOnlyFolders)
+        {
+            if(megaApi->getAccess(node) == mega::MegaShare::ACCESS_READ)
+            {
+                continue;
+            }
+        }
 
-            if(megaApi->isInCloud(node.get()))
-            {
-                type = NodeSelectorModelItemSearch::Type::CLOUD_DRIVE;
-            }
-            else if(megaApi->isInVault(node.get()))
-            {
-                type = NodeSelectorModelItemSearch::Type::BACKUP;
-            }
-            else
-            {
-                type = NodeSelectorModelItemSearch::Type::INCOMING_SHARE;
-            }
+        NodeSelectorModelItemSearch::Types type;
 
-            if(typesAllowed & type)
-            {
-                searchedTypes |= type;
+        if(megaApi->isInCloud(node))
+        {
+            type = NodeSelectorModelItemSearch::Type::CLOUD_DRIVE;
+        }
+        else if(megaApi->isInVault(node))
+        {
+            type = NodeSelectorModelItemSearch::Type::BACKUP;
+        }
+        else
+        {
+            type = NodeSelectorModelItemSearch::Type::INCOMING_SHARE;
+        }
 
-                auto item = new NodeSelectorModelItemSearch(std::move(node), type);
-                items.append(item);
-            }
+        if(typesAllowed & type)
+        {
+            searchedTypes |= type;
+            auto nodeUptr = std::unique_ptr<mega::MegaNode>(nodeList->get(i)->copy());
+            auto item = new NodeSelectorModelItemSearch(std::move(nodeUptr), type);
+            items.append(item);
         }
     }
 
@@ -169,6 +181,13 @@ void NodeRequester::createIncomingSharesRootItems(std::shared_ptr<mega::MegaNode
         if(mSyncSetupMode)
         {
             if(megaApi->getAccess(nodeList->get(i)) != mega::MegaShare::ACCESS_FULL)
+            {
+                continue;
+            }
+        }
+        else if(!mShowReadOnlyFolders)
+        {
+            if(megaApi->getAccess(nodeList->get(i)) == mega::MegaShare::ACCESS_READ)
             {
                 continue;
             }
@@ -293,11 +312,6 @@ void NodeRequester::cancelCurrentRequest()
     }
 }
 
-void NodeRequester::finishWorker()
-{
-
-}
-
 bool NodeRequester::isAborted()
 {
     return mAborted || (mCancelToken && mCancelToken->isCancelled());
@@ -308,9 +322,14 @@ const NodeSelectorModelItemSearch::Types &NodeRequester::searchedTypes() const
     return mSearchedTypes;
 }
 
-void NodeRequester::setShowFiles(bool newShowFiles)
+void NodeRequester::setShowFiles(bool show)
 {
-    mShowFiles = newShowFiles;
+    mShowFiles = show;
+}
+
+void NodeRequester::setShowReadOnlyFolders(bool show)
+{
+   mShowReadOnlyFolders = show;
 }
 
 void NodeRequester::setSyncSetupMode(bool value)
@@ -332,8 +351,7 @@ NodeSelectorModel::NodeSelectorModel(QObject *parent) :
     QAbstractItemModel(parent),
     mRequiredRights(mega::MegaShare::ACCESS_READ),
     mDisplayFiles(false),
-    mSyncSetupMode(false),
-    mShowFiles(true)
+    mSyncSetupMode(false)
 {
     mCameraFolderAttribute = UserAttributes::CameraUploadFolder::requestCameraUploadFolder();
     mMyChatFilesFolderAttribute = UserAttributes::MyChatFilesFolder::requestMyChatFilesFolder();
@@ -358,11 +376,8 @@ NodeSelectorModel::NodeSelectorModel(QObject *parent) :
 
 NodeSelectorModel::~NodeSelectorModel()
 {
-    connect(mNodeRequesterThread, &QThread::finished, thread(), [this]()
-    {
-        mNodeRequesterThread->deleteLater();
-    }, Qt::DirectConnection);
-
+    connect(mNodeRequesterThread, &QThread::finished, mNodeRequesterThread, &QObject::deleteLater, Qt::DirectConnection);
+    connect(mNodeRequesterThread, &QThread::finished, mNodeRequesterWorker, &QObject::deleteLater, Qt::DirectConnection);
     mNodeRequesterThread->quit();
 }
 
@@ -380,84 +395,98 @@ QVariant NodeSelectorModel::data(const QModelIndex &index, int role) const
         {
             switch(role)
             {
-                case Qt::DecorationRole:
+            case Qt::DecorationRole:
+            {
+                return getIcon(index, item);
+            }
+            case Qt::DisplayRole:
+            {
+                return getText(index, item);
+            }
+            case Qt::SizeHintRole:
+            {
+                return QSize(0, ROW_HEIGHT);
+            }
+            case  Qt::TextAlignmentRole:
+            {
+                if(index.column() == STATUS || index.column() == USER)
                 {
-                    return getIcon(index, item);
+                    return QVariant::fromValue<Qt::Alignment>(Qt::AlignHCenter | Qt::AlignCenter);
                 }
-                case Qt::DisplayRole:
+                break;
+            }
+            case Qt::ToolTipRole:
+            {
+                if(index.column() == USER)
                 {
-                    return getText(index, item);
+                    return item->getOwnerName();
                 }
-                case Qt::SizeHintRole:
+                else if(mSyncSetupMode)
                 {
-                    return QSize(0, ROW_HEIGHT);
-                }
-                case  Qt::TextAlignmentRole:
-                {
-                    if(index.column() == STATUS || index.column() == USER)
+                    if((item->getStatus() == NodeSelectorModelItem::Status::SYNC)
+                            || (item->getStatus() == NodeSelectorModelItem::Status::SYNC_CHILD))
                     {
-                        return QVariant::fromValue<Qt::Alignment>(Qt::AlignHCenter | Qt::AlignCenter);
+                        return tr("Folder already synced");
                     }
-                    break;
-                }
-                case Qt::ToolTipRole:
-                {
-                    if(index.column() == USER)
+                    else if(item->getStatus() == NodeSelectorModelItem::Status::SYNC_PARENT)
                     {
-                        return item->getOwnerName();
+                        return tr("Folder contents already synced");
                     }
-                    else if(mSyncSetupMode)
-                    {
-                        if((item->getStatus() == NodeSelectorModelItem::Status::SYNC)
-                                || (item->getStatus() == NodeSelectorModelItem::Status::SYNC_CHILD))
-                        {
-                            return tr("Folder already synced");
-                        }
-                        else if(item->getStatus() == NodeSelectorModelItem::Status::SYNC_PARENT)
-                        {
-                            return tr("Folder contents already synced");
-                        }
-                        QToolTip::hideText();
-                    }
-                    break;
+                    QToolTip::hideText();
                 }
-                case toInt(NodeSelectorModelRoles::DATE_ROLE):
-                {
-                    return QVariant::fromValue(item->getNode()->getCreationTime());
-                }
-                case toInt(NodeSelectorModelRoles::IS_FILE_ROLE):
-                {
-                    return QVariant::fromValue(item->getNode()->isFile());
-                }
-                case toInt(NodeSelectorModelRoles::STATUS_ROLE):
-                {
-                    return QVariant::fromValue(item->getStatus());
-                }
-                case toInt(NodeRowDelegateRoles::ENABLED_ROLE):
-                {
-                    if(mSyncSetupMode)
-                    {
-                        return item->isSyncable();
-                    }
-                    return true;
-                }
-                case toInt(NodeRowDelegateRoles::INDENT_ROLE):
-                {
-                    return item->isCloudDrive() || item->isVault()? -10 : 0;
-                }
-                case toInt(NodeRowDelegateRoles::SMALL_ICON_ROLE):
-                {
-                    return item->isCloudDrive() || item->isVault() ? true : false;
-                }
-                case toInt(NodeRowDelegateRoles::INIT_ROLE):
-                {
-                    return item->areChildrenInitialized();
-                }
-                default:
-                {
-                    break;
-                }
-        }
+                break;
+            }
+            case toInt(NodeSelectorModelRoles::DATE_ROLE):
+            {
+                return QVariant::fromValue(item->getNode()->getCreationTime());
+            }
+            case toInt(NodeSelectorModelRoles::IS_FILE_ROLE):
+            {
+                return QVariant::fromValue(item->getNode()->isFile());
+            }
+            case toInt(NodeSelectorModelRoles::IS_SYNCABLE_FOLDER_ROLE):
+            {
+                return QVariant::fromValue(item->isSyncable() && item->getNode()->isFolder());
+            }
+            case toInt(NodeSelectorModelRoles::STATUS_ROLE):
+            {
+                return QVariant::fromValue(item->getStatus());
+            }
+            case toInt(NodeSelectorModelRoles::HANDLE_ROLE):
+            {
+                return QVariant::fromValue(item->getNode() ?
+                                               item->getNode()->getHandle()
+                                             : mega::INVALID_HANDLE);
+            }
+            case toInt(NodeSelectorModelRoles::MODEL_ITEM_ROLE):
+            {
+                return QVariant::fromValue(item);
+            }
+            case toInt(NodeSelectorModelRoles::NODE_ROLE):
+            {
+                return QVariant::fromValue(item->getNode());
+            }
+            case toInt(NodeRowDelegateRoles::ENABLED_ROLE):
+            {
+                return mSyncSetupMode ? item->isSyncable() : true;
+            }
+            case toInt(NodeRowDelegateRoles::INDENT_ROLE):
+            {
+                return item->isCloudDrive() || item->isVault() ? -10 : 0;
+            }
+            case toInt(NodeRowDelegateRoles::SMALL_ICON_ROLE):
+            {
+                return item->isCloudDrive() || item->isVault() ? true : false;
+            }
+            case toInt(NodeRowDelegateRoles::INIT_ROLE):
+            {
+                return item->areChildrenInitialized();
+            }
+            default:
+            {
+                break;
+            }
+            }
         }
     }
     return QVariant();
@@ -697,8 +726,12 @@ void NodeSelectorModel::removeNode(const QModelIndex &index)
 
 void NodeSelectorModel::showFiles(bool show)
 {
-    mShowFiles = show;
-    mNodeRequesterWorker->setShowFiles(mShowFiles);
+    mNodeRequesterWorker->setShowFiles(show);
+}
+
+void NodeSelectorModel::showReadOnlyFolders(bool show)
+{
+    mNodeRequesterWorker->setShowReadOnlyFolders(show);
 }
 
 QVariant NodeSelectorModel::getIcon(const QModelIndex &index, NodeSelectorModelItem* item) const
@@ -933,7 +966,7 @@ void NodeSelectorModel::fetchItemChildren(const QModelIndex& parent)
             blockSignals(true);
             beginInsertRows(parent, 0, itemNumChildren-1);
             blockSignals(false);
-            emit requestChildNodes(item, parent, mShowFiles);
+            emit requestChildNodes(item, parent);
         }
         else
         {

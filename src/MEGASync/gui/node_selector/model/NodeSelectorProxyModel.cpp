@@ -32,12 +32,6 @@ void NodeSelectorProxyModel::showReadOnlyFolders(bool value)
     invalidateFilter();
 }
 
-void NodeSelectorProxyModel::showReadWriteFolders(bool value)
-{
-    mFilter.showReadWriteFolders = value;
-    invalidateFilter();
-}
-
 void NodeSelectorProxyModel::sort(int column, Qt::SortOrder order)
 {
     mOrder = order;
@@ -129,17 +123,7 @@ std::shared_ptr<mega::MegaNode> NodeSelectorProxyModel::getNode(const QModelInde
     {
         return nullptr;
     }
-    QModelIndex source_idx = mapToSource(index);
-    if(!source_idx.isValid())
-    {
-        return nullptr;
-    }
-    NodeSelectorModelItem *item = static_cast<NodeSelectorModelItem*>(source_idx.internalPointer());
-    if (!item)
-    {
-        return nullptr;
-    }
-    return item->getNode();
+    return qvariant_cast<std::shared_ptr<mega::MegaNode>>(index.data(toInt(NodeSelectorModelRoles::NODE_ROLE)));
 }
 
 void NodeSelectorProxyModel::addNode(std::unique_ptr<mega::MegaNode> node, const QModelIndex &parent)
@@ -205,33 +189,6 @@ void NodeSelectorProxyModel::setSourceModel(QAbstractItemModel *sourceModel)
         connect(nodeSelectorModel, &NodeSelectorModel::levelsAdded, this, &NodeSelectorProxyModel::invalidateModel);
         nodeSelectorModel->firstLoad();
     }
-}
-
-bool NodeSelectorProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
-{
-    QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
-
-    if(index.isValid())
-    {
-        if(NodeSelectorModelItem* item = static_cast<NodeSelectorModelItem*>(index.internalPointer()))
-        {
-            if(std::shared_ptr<mega::MegaNode> node = item->getNode())
-            {
-               if(node->isInShare())
-               {
-                   mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
-                   int accs = megaApi->getAccess(node.get());
-                    if((accs == mega::MegaShare::ACCESS_READ && !mFilter.showReadOnly)
-                       || (accs == mega::MegaShare::ACCESS_READWRITE && !mFilter.showReadWriteFolders))
-                    {
-                        return false;
-                    }
-               }
-               return true;
-            }
-        }
-    }
-    return QSortFilterProxyModel::filterAcceptsRow(sourceRow, sourceParent);
 }
 
 QVector<QModelIndex> NodeSelectorProxyModel::forEach(std::shared_ptr<mega::MegaNodeList> parentNodeList, QModelIndex parent)
