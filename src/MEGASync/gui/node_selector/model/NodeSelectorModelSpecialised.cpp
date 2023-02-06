@@ -139,6 +139,7 @@ void NodeSelectorModelIncomingShares::firstLoad()
 ///////////////////////////////////////////////////////////////////////////////////////////////
 NodeSelectorModelBackups::NodeSelectorModelBackups(QObject *parent)
     : NodeSelectorModel(parent)
+    , mBackupDevicesSize(0)
 {
 }
 
@@ -209,14 +210,27 @@ void NodeSelectorModelBackups::continueLoading(NodeSelectorModelItem *item)
     {
         QModelIndex rootIndex(index(0, 0));
         int rowcount = rowCount(rootIndex);
-       for(int i = 0 ; i < rowcount; i++)
-       {
-           auto idx = index(i, 0, rootIndex);
-           if(canFetchMore(idx))
-           {
-               fetchItemChildren(idx);
-           }
-       }
+        mBackupDevicesSize = rowcount;
+        for(int i = 0 ; i < rowcount; i++)
+        {
+            auto idx = index(i, 0, rootIndex);
+            if(canFetchMore(idx))
+            {
+                fetchItemChildren(idx);
+            }
+        }
+    }
+    else
+    {
+        mBackupDevicesSize--;
+    }
+}
+
+void NodeSelectorModelBackups::loadLevelFinished()
+{
+    if(mBackupDevicesSize == 0)
+    {
+        emit levelsAdded(mIndexesActionInfo.indexesToBeExpanded);
     }
 }
 
@@ -230,8 +244,9 @@ void NodeSelectorModelBackups::onRootItemCreated(NodeSelectorModelItem *item)
     }
     else
     {
+
+        QModelIndex rootIndex(index(0, 0));
         //Add the item of the Backups Drive
-        auto rootIndex(index(0,0));
         if(canFetchMore(rootIndex))
         {
             fetchItemChildren(rootIndex);
