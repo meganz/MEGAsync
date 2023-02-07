@@ -131,7 +131,7 @@ std::unique_ptr<MegaNode> UploadToMegaDialog::getUploadFolder()
 
 void UploadToMegaDialog::showNodeSelector()
 {
-    NodeSelector* nodeSelector(new UploadNodeSelector(this));
+    UploadNodeSelector* nodeSelector(new UploadNodeSelector(this));
 
     std::shared_ptr<MegaNode> defaultNode(megaApi->getNodeByPath(ui->eFolderPath->property(NODE_PATH_PROPERTY).toString().toUtf8().constData()));
     nodeSelector->setSelectedNodeHandle(defaultNode);
