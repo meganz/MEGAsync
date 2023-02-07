@@ -210,12 +210,12 @@ void NodeSelectorModelBackups::loadLevelFinished()
     {
         QModelIndex rootIndex(index(0, 0));
         int rowcount = rowCount(rootIndex);
-        mBackupDevicesSize = rowcount;
         for(int i = 0 ; i < rowcount; i++)
         {
             auto idx = index(i, 0, rootIndex);
             if(canFetchMore(idx))
             {
+                mBackupDevicesSize++;
                 fetchItemChildren(idx);
             }
         }

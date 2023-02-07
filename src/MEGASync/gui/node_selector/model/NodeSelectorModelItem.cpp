@@ -15,7 +15,6 @@ NodeSelectorModelItem::NodeSelectorModelItem(std::unique_ptr<MegaNode> node, boo
     QObject(parentItem),
     mOwnerEmail(QString()),
     mStatus(Status::NONE),
-    mChildrenSet(false),
     mRequestingChildren(false),
     mShowFiles(showFiles),
     mMegaApi(MegaSyncApp->getMegaApi()),

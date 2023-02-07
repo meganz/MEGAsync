@@ -69,7 +69,6 @@ protected:
 
     QString mOwnerEmail;
     Status mStatus;
-    bool mChildrenSet;
     bool mRequestingChildren;
     long long mChildrenCounter;
     bool mShowFiles;
