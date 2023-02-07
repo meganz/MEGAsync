@@ -25,3 +25,18 @@ QString PlatformStrings::cancelSyncsWarning()
     return tr("Sync transfers cannot be cancelled individually.\n"
               "Please delete the folder sync from settings to cancel them.");
 }
+
+QString PlatformStrings::fileExplorer()
+{
+    return tr("Show in Explorer");
+}
+
+QString PlatformStrings::settings()
+{
+    return tr("Settings");
+}
+
+QString PlatformStrings::exit()
+{
+    return tr("Exit");
+}

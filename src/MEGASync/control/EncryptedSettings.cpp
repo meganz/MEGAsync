@@ -15,7 +15,7 @@ EncryptedSettings::EncryptedSettings(QString file) :
 
     // Get LocalStorageKey from the OS
     QByteArray fixedSeed("$JY/X?o=h·&%v/M(");
-    QByteArray localKey = Platform::getLocalStorageKey();
+    QByteArray localKey = Platform::getInstance()->getLocalStorageKey();
     QByteArray xLocalKey = XOR(fixedSeed, localKey);
     QByteArray hLocalKey = QCryptographicHash::hash(xLocalKey, QCryptographicHash::Sha1);
     encryptionKey = hLocalKey;
@@ -152,7 +152,7 @@ QString EncryptedSettings::encrypt(const QString key, const QString value) const
     QByteArray k = hash(key).toAscii();
     QByteArray xValue = XOR(k, value.toUtf8());
     QByteArray xKey = XOR(k, group().toAscii());
-    QByteArray xEncrypted = XOR(k, Platform::encrypt(xValue, xKey));
+    QByteArray xEncrypted = XOR(k, Platform::getInstance()->encrypt(xValue, xKey));
     return QString::fromAscii(xEncrypted.toBase64());
 }
 
@@ -166,7 +166,7 @@ QString EncryptedSettings::decrypt(const QString key, const QString value) const
     QByteArray k = hash(key).toAscii();
     QByteArray xValue = XOR(k, QByteArray::fromBase64(value.toAscii()));
     QByteArray xKey = XOR(k, group().toAscii());
-    QByteArray xDecrypted = XOR(k, Platform::decrypt(xValue, xKey));
+    QByteArray xDecrypted = XOR(k, Platform::getInstance()->decrypt(xValue, xKey));
     return QString::fromUtf8(xDecrypted);
 }
 

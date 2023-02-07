@@ -167,7 +167,7 @@ void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent *event)
         }
 
         QMenu customMenu;
-        Platform::initMenu(&customMenu);
+        Platform::getInstance()->initMenu(&customMenu);
         auto node = std::unique_ptr<MegaNode>(mMegaApi->getNodeByHandle(getSelectedNodeHandle()));
         auto parent = std::unique_ptr<MegaNode>(mMegaApi->getParentNode(node.get()));
         auto proxyModel = static_cast<NodeSelectorProxyModel*>(model());

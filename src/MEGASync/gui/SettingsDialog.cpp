@@ -518,7 +518,7 @@ void SettingsDialog::loadSettings()
 
     // if checked: make sure both sources are true
     mUi->cStartOnStartup->setChecked(mPreferences->startOnStartup()
-                                     && Platform::isStartOnStartupActive());
+                                     && Platform::getInstance()->isStartOnStartupActive());
 
     //Language
     mUi->cLanguage->clear();
@@ -1015,7 +1015,7 @@ void SettingsDialog::on_cAutoUpdate_toggled(bool checked)
 void SettingsDialog::on_cStartOnStartup_toggled(bool checked)
 {
     if (mLoadingSettings) return;
-    if (!Platform::startOnStartup(checked))
+    if (!Platform::getInstance()->startOnStartup(checked))
     {
         // in case of failure - make sure configuration keeps the right value
         //LOG_debug << "Failed to " << (checked ? "enable" : "disable") << " MEGASync on startup.";
@@ -1098,7 +1098,7 @@ void SettingsDialog::on_cOverlayIcons_toggled(bool checked)
     mUi->cOverlayIcons->setEnabled(false);
     mPreferences->disableOverlayIcons(!checked);
 #ifdef Q_OS_MACOS
-    Platform::notifyRestartSyncFolders();
+    Platform::getInstance()->notifyRestartSyncFolders();
 #endif
     mApp->notifyChangeToAllFolders();
 }
@@ -1111,14 +1111,14 @@ void SettingsDialog::on_cFinderIcons_toggled(bool checked)
     {
         for (auto syncSetting : mModel->getAllSyncSettings())
         {
-            Platform::addSyncToLeftPane(syncSetting->getLocalFolder(),
+            Platform::getInstance()->addSyncToLeftPane(syncSetting->getLocalFolder(),
                                         syncSetting->name(),
                                         syncSetting->getSyncID());
         }
     }
     else
     {
-        Platform::removeAllSyncsFromLeftPane();
+        Platform::getInstance()->removeAllSyncsFromLeftPane();
     }
     mPreferences->disableLeftPaneIcons(!checked);
 }
