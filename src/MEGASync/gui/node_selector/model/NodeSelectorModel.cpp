@@ -88,7 +88,7 @@ void NodeRequester::search(const QString &text, NodeSelectorModelItemSearch::Typ
     mSearchCanceled = false;
     mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
 
-    auto nodeList = std::unique_ptr<mega::MegaNodeList>(megaApi->search(text.toUtf8(), mCancelToken.get()));
+    auto nodeList = std::unique_ptr<mega::MegaNodeList>(megaApi->search(text.toUtf8().constData(), mCancelToken.get()));
     QList<NodeSelectorModelItem*> items;
     NodeSelectorModelItemSearch::Types searchedTypes = NodeSelectorModelItemSearch::Type::NONE;
 
@@ -99,7 +99,7 @@ void NodeRequester::search(const QString &text, NodeSelectorModelItemSearch::Typ
         {
             break;
         }
-        if((node->isFile() && mShowFiles) || megaApi->isInRubbish(node))
+        if((node->isFile() && !mShowFiles) || megaApi->isInRubbish(node))
         {
             continue;
         }
