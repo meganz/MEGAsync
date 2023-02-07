@@ -467,7 +467,7 @@ QToolButton:pressed
            <enum>Qt::ToolButtonTextBesideIcon</enum>
           </property>
           <property name="default_icon" stdset="0">
-           <string>qrc:/images/node_selector/search_filter/small_folder_default.png</string>
+           <string notr="true">qrc:/images/node_selector/search_filter/small_folder_default.png</string>
           </property>
           <property name="not_change_text_color" stdset="0">
            <bool>true</bool>
