@@ -229,8 +229,7 @@ bool NodeSelectorModelItem::isSyncable()
 
 QPointer<NodeSelectorModelItem> NodeSelectorModelItem::addNode(std::shared_ptr<MegaNode>node)
 {
-    auto nodeCopy(node.get()->copy());
-    auto item = createModelItem(std::unique_ptr<MegaNode>(nodeCopy), mShowFiles, this);
+    auto item = createModelItem(std::unique_ptr<MegaNode>(node->copy()), mShowFiles, this);
     mChildItems.append(item);
     return item;
 }

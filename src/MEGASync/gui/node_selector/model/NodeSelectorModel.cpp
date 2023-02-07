@@ -503,7 +503,11 @@ QModelIndex NodeSelectorModel::index(int row, int column, const QModelIndex &par
             NodeSelectorModelItem* item(static_cast<NodeSelectorModelItem*>(parent.internalPointer()));
             if(item)
             {
-                index =  createIndex(row, column, item->getChild(row).data());
+                auto data = item->getChild(row).data();
+                if(data)
+                {
+                    index =  createIndex(row, column, data);
+                }
             }
             mNodeRequesterWorker->lockDataMutex(false);
         }
@@ -917,11 +921,6 @@ QModelIndex NodeSelectorModel::getIndexFromNode(const std::shared_ptr<mega::Mega
     return QModelIndex();
 }
 
-void NodeSelectorModel::continueLoading(NodeSelectorModelItem *item)
-{
-    Q_UNUSED(item)
-}
-
 void NodeSelectorModel::rootItemsLoaded()
 {
     endResetModel();
@@ -941,6 +940,10 @@ void NodeSelectorModel::loadLevelFinished()
 
 bool NodeSelectorModel::canFetchMore(const QModelIndex &parent) const
 {
+    if(!parent.isValid())
+    {
+        return false;
+    }
     NodeSelectorModelItem* item = static_cast<NodeSelectorModelItem*>(parent.internalPointer());
     if(item)
     {
@@ -983,7 +986,6 @@ void NodeSelectorModel::onChildNodesReady(NodeSelectorModelItem* parent)
     auto index = parent->property(INDEX_PROPERTY).value<QModelIndex>();
     mIndexesActionInfo.indexesToBeExpanded.append(index);
     continueWithNextItemToLoad(index);
-    continueLoading(parent);
 }
 
 bool NodeSelectorModel::continueWithNextItemToLoad(const QModelIndex& parentIndex)

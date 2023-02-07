@@ -204,9 +204,9 @@ bool NodeSelectorModelBackups::addToLoadingList(const std::shared_ptr<MegaNode> 
     return node && node->getType() != mega::MegaNode::TYPE_VAULT;
 }
 
-void NodeSelectorModelBackups::continueLoading(NodeSelectorModelItem *item)
+void NodeSelectorModelBackups::loadLevelFinished()
 {
-    if(item->isVault())
+    if(mIndexesActionInfo.indexesToBeExpanded.size() == 1 && mIndexesActionInfo.indexesToBeExpanded.at(0) == index(0, 0))
     {
         QModelIndex rootIndex(index(0, 0));
         int rowcount = rowCount(rootIndex);
@@ -222,15 +222,14 @@ void NodeSelectorModelBackups::continueLoading(NodeSelectorModelItem *item)
     }
     else
     {
-        mBackupDevicesSize--;
-    }
-}
-
-void NodeSelectorModelBackups::loadLevelFinished()
-{
-    if(mBackupDevicesSize == 0)
-    {
-        emit levelsAdded(mIndexesActionInfo.indexesToBeExpanded);
+        if(mBackupDevicesSize > 0)
+        {
+            mBackupDevicesSize--;
+        }
+        if(mBackupDevicesSize == 0)
+        {
+            emit levelsAdded(mIndexesActionInfo.indexesToBeExpanded);
+        }
     }
 }
 

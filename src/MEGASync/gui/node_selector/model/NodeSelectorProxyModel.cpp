@@ -264,8 +264,6 @@ bool NodeSelectorProxyModel::canBeDeleted() const
 
 void NodeSelectorProxyModel::invalidateModel(const QModelIndexList& parents, bool force)
 {
-//   auto ender =  qobject_cast<QObject*>(sender());
-    qDebug()<<sender()<<parents<<force;
     mItemsToMap = parents;
     mForceInvalidate = force;
     sort(mSortColumn, mOrder);
