@@ -24,7 +24,7 @@ private:
         QString getDialogClass() const {return mDialogClass;}
         void setDialogClass(const QString &newDialogClass) {mDialogClass = newDialogClass;}
 
-    private:
+    protected:
         QString mDialogClass;
     };
 
