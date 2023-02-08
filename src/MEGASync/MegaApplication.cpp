@@ -3620,7 +3620,7 @@ void MegaApplication::processUpgradeSecurityEvent()
                         "this account before, press Cancel.");
     if (!outSharesStrings.isEmpty())
     {
-        message.append(QString::fromUtf8("<br><br>"));
+        message.append(QLatin1String("<br><br>"));
         message.append(tr("You are currently sharing the following folder: %1", "", outSharesStrings.size())
                   .arg(outSharesStrings.toList().join(QLatin1String(", "))));
     }
