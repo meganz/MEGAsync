@@ -276,8 +276,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/control/ThreadPool.h
     ${MEGAsyncDir}/control/UserAttributesManager.h
     ${MEGAsyncDir}/control/TextDecorator.h
-    ${MEGAsyncDir}/control/ExternalDialogOpener.h
-	${MEGAsyncDir}/control/TransferBatch.h
+    ${MEGAsyncDir}/control/TransferBatch.h
 
     ${MEGAsyncDir}/gui/AlertItem.h
     ${MEGAsyncDir}/gui/AlertFilterType.h
@@ -427,6 +426,7 @@ endif (NOT CMAKE_HOST_APPLE)
 if (CMAKE_HOST_WIN32)
     set (MOC_INPUT ${MOC_INPUT}
         ${MEGAsyncDir}/platform/win/WinShellDispatcherTask.h
+        ${MEGAsyncDir}/control/ExternalDialogOpener.h
         )
 elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     set (MOC_INPUT ${MOC_INPUT}
@@ -618,7 +618,6 @@ set (SRCS
     ${MEGAsyncDir}/control/TransferBatch.cpp
     ${MEGAsyncDir}/control/UserAttributesManager.cpp
     ${MEGAsyncDir}/control/TextDecorator.cpp
-    ${MEGAsyncDir}/control/ExternalDialogOpener.cpp
 
     ${MEGAsyncDir}/UserAttributesRequests/DeviceName.cpp
     ${MEGAsyncDir}/UserAttributesRequests/MyBackupsHandle.cpp
@@ -663,6 +662,7 @@ if (CMAKE_HOST_WIN32)
 
         ${MEGAsyncDir}/qtlockedfile/qtlockedfile_win.cpp
 
+    	${MEGAsyncDir}/control/ExternalDialogOpener.cpp
 
         ${MEGAsyncDir}/google_breakpad/client/windows/handler/exception_handler.cc
         ${MEGAsyncDir}/google_breakpad/common/windows/string_utils.cc

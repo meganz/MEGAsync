@@ -1261,3 +1261,9 @@ void MegaListenerFuncExecuter::onRequestFinish(MegaApi *api, MegaRequest *reques
         }
     }
 }
+
+WrappedNode::WrappedNode(TransferOrigin from, MegaNode *node)
+    : mTransfersFrom(from), mNode(node)
+{
+    qRegisterMetaType<QQueue<WrappedNode*>>("QQueue<WrappedNode*>");
+}

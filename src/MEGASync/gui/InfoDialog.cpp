@@ -14,7 +14,6 @@
 #include "InfoDialog.h"
 #include "ui_InfoDialog.h"
 #include "control/Utilities.h"
-#include "control/ExternalDialogOpener.h"
 #include "MegaApplication.h"
 #include "TransferManager.h"
 #include "MenuItemAction.h"
@@ -1031,14 +1030,16 @@ void InfoDialog::openFolder(QString path)
     Utilities::openUrl(QUrl::fromLocalFile(path));
 }
 
-void InfoDialog::addSync(MegaHandle h)
+void InfoDialog::addSync(MegaHandle h, bool fromWebServer)
 {
     auto overQuotaDialog = app->showSyncOverquotaDialog();
-    auto addSyncLambda = [overQuotaDialog, h, this]()
+    auto addSyncLambda = [overQuotaDialog, h, fromWebServer, this]()
     {
         if(!overQuotaDialog || overQuotaDialog->result() == QDialog::Rejected)
         {
             mAddSyncDialog = new BindFolderDialog(app);
+            mAddSyncDialog->setProperty(HTTPServer::FROM_WEBSERVER, fromWebServer);
+
             if (h != mega::INVALID_HANDLE)
             {
                 mAddSyncDialog->setMegaFolder(h);
@@ -1077,11 +1078,11 @@ void InfoDialog::onAddSyncDialogFinished(QPointer<BindFolderDialog> dialog)
     app->createAppMenus();
 }
 
-void InfoDialog::addBackup()
+void InfoDialog::addBackup(bool fromWebServer)
 {
     auto overQuotaDialog = app->showSyncOverquotaDialog();
 
-    auto addBackupLambda = [overQuotaDialog, this]()
+    auto addBackupLambda = [overQuotaDialog, fromWebServer, this]()
     {
         if(!overQuotaDialog || overQuotaDialog->result() == QDialog::Rejected)
         {
@@ -1090,6 +1091,7 @@ void InfoDialog::addBackup()
             if(nbBackups > 0)
             {
                 auto backupDialog = new AddBackupDialog();
+                backupDialog->setProperty(HTTPServer::FROM_WEBSERVER, fromWebServer);
                 backupDialog->setWindowModality(Qt::ApplicationModal);
                 
                 setupSyncController();
@@ -1109,6 +1111,7 @@ void InfoDialog::addBackup()
             else
             {
                 auto backupsWizard = new BackupsWizard();
+                backupsWizard->setProperty(HTTPServer::FROM_WEBSERVER, fromWebServer);
                 backupsWizard->setWindowModality(Qt::ApplicationModal);
                 DialogOpener::showDialog<BackupsWizard>(backupsWizard);
             }

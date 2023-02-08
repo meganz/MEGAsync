@@ -6,7 +6,6 @@ QT       += network
 SOURCES += $$PWD/HTTPServer.cpp \
     $$PWD/DialogOpener.cpp \
     $$PWD/DownloadQueueController.cpp \
-    $$PWD/ExternalDialogOpener.cpp \
     $$PWD/Preferences.cpp \
     $$PWD/LinkProcessor.cpp \
     $$PWD/MegaUploader.cpp \
@@ -29,7 +28,6 @@ HEADERS  +=  $$PWD/HTTPServer.h \
     $$PWD/AppStatsEvents.h \
     $$PWD/DialogOpener.h \
     $$PWD/DownloadQueueController.h \
-    $$PWD/ExternalDialogOpener.h \
     $$PWD/Preferences.h \
     $$PWD/LinkProcessor.h \
     $$PWD/MegaUploader.h \
@@ -48,3 +46,8 @@ HEADERS  +=  $$PWD/HTTPServer.h \
     $$PWD/TextDecorator.h \
     $$PWD/qrcodegen.h \
     $$PWD/gzjoin.h
+
+win32 {
+    SOURCES +=	$$PWD/ExternalDialogOpener.cpp
+    HEADERS +=  $$PWD/ExternalDialogOpener.h
+}

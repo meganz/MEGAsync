@@ -1339,7 +1339,6 @@ void SettingsDialog::on_bMyAccount_clicked()
 void SettingsDialog::on_bStorageDetails_clicked()
 {
     auto accountDetailsDialog = new AccountDetailsDialog(this);
-    accountDetailsDialog->setWindowModality(Qt::WindowModal);
     mApp->updateUserStats(true, true, true, true, USERSTATS_STORAGECLICKED);
     DialogOpener::showDialog<AccountDetailsDialog>(accountDetailsDialog);
 }

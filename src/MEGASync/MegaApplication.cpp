@@ -6,7 +6,6 @@
 #include "control/Utilities.h"
 #include "control/CrashHandler.h"
 #include "control/ExportProcessor.h"
-#include "control/ExternalDialogOpener.h"
 #include "EventUpdater.h"
 #include "platform/Platform.h"
 #include "OverQuotaDialog.h"
@@ -1709,6 +1708,7 @@ void MegaApplication::createTransferManagerDialog()
     {
         mTransferManager = new TransferManager(megaApi);
         mTransferManager->setModal(false);
+        mTransferManager->setProperty(HTTPServer::FROM_WEBSERVER, qobject_cast<HTTPServer *>(sender()) != nullptr);
         infoDialog->setTransferManager(mTransferManager);
 
         // Signal/slot to notify the tracking of unseen completed transfers of Transfer Manager. If Completed tab is
@@ -3285,14 +3285,14 @@ void MegaApplication::startingUpload()
 
 void MegaApplication::ConnectServerSignals(HTTPServer* server)
 {
-    connect(server, SIGNAL(onLinkReceived(QString, QString)), this, SLOT(externalDownload(QString, QString)), Qt::QueuedConnection);
-    connect(server, SIGNAL(onExternalDownloadRequested(QQueue<WrappedNode *>)), this, SLOT(externalDownload(QQueue<WrappedNode *>)));
-    connect(server, SIGNAL(onExternalDownloadRequestFinished()), this, SLOT(processDownloads()), Qt::QueuedConnection);
-    connect(server, SIGNAL(onExternalFileUploadRequested(qlonglong)), this, SLOT(externalFileUpload(qlonglong)), Qt::QueuedConnection);
-    connect(server, SIGNAL(onExternalFolderUploadRequested(qlonglong)), this, SLOT(externalFolderUpload(qlonglong)), Qt::QueuedConnection);
-    connect(server, SIGNAL(onExternalFolderSyncRequested(qlonglong)), this, SLOT(externalFolderSync(qlonglong)), Qt::QueuedConnection);
-    connect(server, SIGNAL(onExternalOpenTransferManagerRequested(int)), this, SLOT(externalOpenTransferManager(int)), Qt::QueuedConnection);
-    connect(server, SIGNAL(onExternalShowInFolderRequested(QString)), this, SLOT(openFolderPath(QString)), Qt::QueuedConnection);
+    connect(server, &HTTPServer::onLinkReceived, this, &MegaApplication::externalLinkDownload, Qt::QueuedConnection);
+    connect(server, &HTTPServer::onExternalDownloadRequested, this, &MegaApplication::externalDownload, Qt::QueuedConnection);
+    connect(server, &HTTPServer::onExternalDownloadRequestFinished, this, &MegaApplication::processDownloads, Qt::QueuedConnection);
+    connect(server, &HTTPServer::onExternalFileUploadRequested, this, &MegaApplication::externalFileUpload, Qt::QueuedConnection);
+    connect(server, &HTTPServer::onExternalFolderUploadRequested, this, &MegaApplication::externalFolderUpload, Qt::QueuedConnection);
+    connect(server, &HTTPServer::onExternalFolderSyncRequested, this, &MegaApplication::externalFolderSync, Qt::QueuedConnection);
+    connect(server, &HTTPServer::onExternalOpenTransferManagerRequested, this, &MegaApplication::externalOpenTransferManager, Qt::QueuedConnection);
+    connect(server, &HTTPServer::onExternalShowInFolderRequested, this, &MegaApplication::openFolderPath, Qt::QueuedConnection);
     connect(server, &HTTPServer::onExternalAddBackup, this, &MegaApplication::externalAddBackup, Qt::QueuedConnection);
 }
 
@@ -4878,8 +4878,6 @@ void MegaApplication::transferManagerActionClicked(int tab)
     }
 
     createTransferManagerDialog();
-
-    ExternalDialogOpener dialogOpener;
     mTransferManagerGeometryRetainer.showDialog(mTransferManager);
 
     mTransferManager->toggleTab(tab);
@@ -5196,6 +5194,7 @@ void MegaApplication::processDownloads()
     }
 
     auto downloadFolderSelector = new DownloadFromMegaDialog(preferences->downloadFolder());
+    downloadFolderSelector->setProperty(HTTPServer::FROM_WEBSERVER, qobject_cast<HTTPServer *>(sender()) != nullptr);
     DialogOpener::showDialog<DownloadFromMegaDialog>(downloadFolderSelector, this, &MegaApplication::onDownloadFromMegaFinished);
 }
 
@@ -5396,7 +5395,7 @@ void MegaApplication::externalDownload(QQueue<WrappedNode *> newDownloadQueue)
     downloadQueue.append(newDownloadQueue);
 }
 
-void MegaApplication::externalDownload(QString megaLink, QString auth)
+void MegaApplication::externalLinkDownload(QString megaLink, QString auth)
 {
     if (appfinished)
     {
@@ -5438,6 +5437,7 @@ void MegaApplication::externalFileUpload(qlonglong targetFolder)
     }
 
     auto fileUploadSelector = new QFileDialog();
+    fileUploadSelector->setProperty(HTTPServer::FROM_WEBSERVER, true);
     fileUploadSelector->setFileMode(QFileDialog::ExistingFiles);
 
 #ifndef __APPLE__
@@ -5512,6 +5512,7 @@ void MegaApplication::externalFolderUpload(qlonglong targetFolder)
     }
 
     auto folderUploadSelector = new QFileDialog();
+    folderUploadSelector->setProperty(HTTPServer::FROM_WEBSERVER, true);
     folderUploadSelector->setFileMode(QFileDialog::Directory);
     folderUploadSelector->setOption(QFileDialog::DontUseNativeDialog, false);
     folderUploadSelector->setOption(QFileDialog::ShowDirsOnly, true);
@@ -5565,7 +5566,7 @@ void MegaApplication::externalFolderSync(qlonglong targetFolder)
 
     if (infoDialog)
     {
-        infoDialog->addSync(targetFolder);
+        infoDialog->addSync(targetFolder, true);
     }
 }
 
@@ -5582,7 +5583,10 @@ void MegaApplication::externalAddBackup()
         return;
     }
 
-    emit addBackup();
+    if(infoDialog)
+    {
+        infoDialog->addBackup(true);
+    }
 }
 
 void MegaApplication::externalOpenTransferManager(int tab)

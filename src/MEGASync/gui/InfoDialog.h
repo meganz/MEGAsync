@@ -63,7 +63,7 @@ public:
     void setOverQuotaMode(bool state);
     void setAccountType(int accType);
     void setDisabledSyncTags(QSet<int> tags);
-    void addBackup();
+    void addBackup(bool fromWebServer = false);
     void clearUserAttributes();
     void setPSAannouncement(int id, QString title, QString text, QString urlImage, QString textButton, QString linkButton);
     bool updateOverStorageState(int state);
@@ -117,7 +117,7 @@ public slots:
     void dlAreaHovered(QMouseEvent *event);
     void upAreaHovered(QMouseEvent *event);
 
-    void addSync(mega::MegaHandle h = mega::INVALID_HANDLE);
+    void addSync(mega::MegaHandle h = mega::INVALID_HANDLE, bool fromWebServer = false);
     void onAddSync(mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
     void onAddBackup();
     void updateDialogState();

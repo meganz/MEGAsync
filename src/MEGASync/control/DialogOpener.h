@@ -2,18 +2,20 @@
 #define DIALOGOPENER_H
 
 #include <HighDpiResize.h>
-#include <ExternalDialogOpener.h>
+
 #include <DialogGeometryRetainer.h>
+
+#ifdef _WIN32
+#include <ExternalDialogOpener.h>
+#endif
 
 #include <QDialog>
 #include <QPointer>
 #include <functional>
 #include <memory>
 
-
 class DialogOpener
 {
-
 private:
     class DialogInfoBase
     {
@@ -53,7 +55,6 @@ private:
     private:
         QPointer<DialogType> mDialog;
     };
-
 
 public:
     template <class DialogType>
@@ -186,20 +187,21 @@ private:
                 initDialog(dialog);
             }
 
+#ifdef _WIN32
             ExternalDialogOpener externalOpener;
-
-            if(dialog->parentWidget())
-            {
-                dialog->setWindowModality(Qt::WindowModal);
-            }
-            else
-            {
-#ifndef __APPLE__
-                dialog->setModal(true);
-#else
-                dialog->setModal(false);
 #endif
+
+#ifdef __APPLE__
+            if(dialog->parentWidget() && dialog->windowModality() == Qt::NonModal)
+            {
+                dialog->setWindowModality(Qt::ApplicationModal);
             }
+#else
+            if(dialog->windowModality() == Qt::NonMoNonModal)
+            {
+                dialog->setWindowModality(Qt::ApplicationModal);
+            }
+#endif
 
             dialog->show();
             dialog->raise();

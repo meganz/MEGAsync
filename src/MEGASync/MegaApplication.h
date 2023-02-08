@@ -267,7 +267,7 @@ public slots:
     void shellViewOnMega(mega::MegaHandle handle, bool versions);
     void exportNodes(QList<mega::MegaHandle> exportList, QStringList extraLinks = QStringList());
     void externalDownload(QQueue<WrappedNode *> newDownloadQueue);
-    void externalDownload(QString megaLink, QString auth);
+    void externalLinkDownload(QString megaLink, QString auth);
     void externalFileUpload(qlonglong targetFolder);
     void externalFolderUpload(qlonglong targetFolder);
     void externalFolderSync(qlonglong targetFolder);
