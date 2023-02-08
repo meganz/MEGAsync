@@ -86,10 +86,10 @@ public slots:
 
 signals:
      void nodesReady(NodeSelectorModelItem* parent);
-     void megaCloudDriveRootItemCreated(NodeSelectorModelItem* item);
-     void megaIncomingSharesRootItemsCreated(QList<NodeSelectorModelItem*> item);
-     void megaBackupRootItemsCreated(NodeSelectorModelItem* item);
-     void searchItemsCreated(QList<NodeSelectorModelItem*> item, NodeSelectorModelItemSearch::Types searchedTypes);
+     void megaCloudDriveRootItemCreated();
+     void megaIncomingSharesRootItemsCreated();
+     void megaBackupRootItemsCreated();
+     void searchItemsCreated(NodeSelectorModelItemSearch::Types searchedTypes);
      void nodeAdded(NodeSelectorModelItem* item);
 
 private:
