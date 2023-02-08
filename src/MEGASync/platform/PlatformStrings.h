@@ -16,6 +16,10 @@ public:
     static QString cancelSyncsWarning();
 
     static QString movedFileToBin();
+
+    static QString fileExplorer();
+    static QString settings();
+    static QString exit();
 };
 
 #endif // PLATFORMSTRINGS_H

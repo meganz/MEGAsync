@@ -156,7 +156,7 @@ void LinuxSignalHandler(int signum)
 
 void removeSyncData(const QString &localFolder, const QString & name, const QString &syncID)
 {
-    Platform::syncFolderRemoved(localFolder, name, syncID);
+    Platform::getInstance()->syncFolderRemoved(localFolder, name, syncID);
 
     #ifdef WIN32
     // unhide debris folder
@@ -224,7 +224,7 @@ int main(int argc, char *argv[])
         }
 
         Utilities::removeRecursively(MegaApplication::applicationDataPath());
-        Platform::uninstall();
+        Platform::getInstance()->uninstall();
 
 #ifdef WIN32
         if (preferences->installationTime() != -1)
@@ -401,6 +401,7 @@ int main(int argc, char *argv[])
 #endif
 
 
+    Platform::create();
     MegaApplication app(argc, argv);
 #if defined(Q_OS_LINUX)
     theapp = &app;
@@ -548,7 +549,7 @@ int main(int argc, char *argv[])
         MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "MEGAsync is already started");
         return 0;
     }
-    Platform::initialize(argc, argv);
+    Platform::getInstance()->initialize(argc, argv);
 
 #if !defined(__APPLE__) && !defined (_WIN32)
     QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/OpenSans-Regular.ttf"));
@@ -572,6 +573,7 @@ int main(int argc, char *argv[])
 
     int toret = app.exec();
 
+    Platform::destroy();
 #ifdef WIN32
     extern bool WindowsPlatform_exiting;
     WindowsPlatform_exiting = true;

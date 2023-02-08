@@ -2,33 +2,31 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef MACNOTIFICATIONHANDLER_H
-#define MACNOTIFICATIONHANDLER_H
+#ifndef NOTIFICATIONHANDLER_H
+#define NOTIFICATIONHANDLER_H
 
 #include <QObject>
 #include "notificator.h"
 
 /** Macintosh-specific notification handler (supports UserNotificationCenter and Growl).
  */
-class MacNotificationHandler : public QObject
+class NotificationHandler : public QObject
 {
     Q_OBJECT
 
 public:
-    MacNotificationHandler();
+    NotificationHandler();
 
-    void showNotification(MegaNotification *notification);
+    virtual void showNotification(MegaNotification *notification) = 0;
+    virtual bool acceptsMultipleSelection() = 0;
 
     /** executes AppleScript */
     void sendAppleScript(const QString &script);
 
-    static MacNotificationHandler *instance();
+    static NotificationHandler *instance();
 
-private:
-    void *notificationDelegate;
+protected:
+    void *mNotificationDelegate;
 };
 
-
-
-
-#endif // MACNOTIFICATIONHANDLER_H
+#endif // NOTIFICATIONHANDLER_H

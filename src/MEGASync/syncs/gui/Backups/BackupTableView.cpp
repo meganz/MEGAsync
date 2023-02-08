@@ -1,6 +1,7 @@
 #include "BackupTableView.h"
 
 #include "platform/Platform.h"
+#include "PlatformStrings.h"
 #include "MenuItemAction.h"
 
 #include <QHeaderView>
@@ -68,11 +69,11 @@ void BackupTableView::showContextMenu(const QPoint &pos, const QModelIndex index
     auto sync = index.data(Qt::UserRole).value<std::shared_ptr<SyncSettings>>();
 
     QMenu *menu(new QMenu(this));
-    Platform::initMenu(menu);
+    Platform::getInstance()->initMenu(menu);
     menu->setAttribute(Qt::WA_DeleteOnClose);
 
     // Show in system file explorer action
-    auto openLocalAction (new MenuItemAction(QCoreApplication::translate("Platform", Platform::fileExplorerString),
+    auto openLocalAction (new MenuItemAction(PlatformStrings::fileExplorer(),
                                              QIcon(QString::fromUtf8("://images/show_in_folder_ico.png"))));
     connect(openLocalAction, &MenuItemAction::triggered, this, [sync]()
     {

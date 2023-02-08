@@ -42,7 +42,7 @@
 #include "gui/QFilterAlertsModel.h"
 #include "gui/MegaAlertDelegate.h"
 #include "gui/VerifyLockMessage.h"
-#include "DesktopNotifications.h"
+#include "notifications/DesktopNotifications.h"
 #include "ScanStageController.h"
 #include "TransferQuota.h"
 #include "DialogGeometryRetainer.h"
@@ -60,7 +60,7 @@ class StalledIssuesModel;
 
 Q_DECLARE_METATYPE(QQueue<QString>)
 
-class Notificator;
+class NotificatorBase;
 class MEGASyncDelegateListener;
 class ShellNotifier;
 class TransferMetadata;
@@ -176,7 +176,6 @@ public:
     bool finishedTransfersWhileBlocked(int transferTag);
 
     mega::MegaTransfer* getFinishedTransferByTag(int tag);
-    TransferMetaData* getTransferAppData(unsigned long long appDataID);
     bool notificationsAreFiltered();
     bool hasNotifications();
     bool hasNotificationsOfType(int type);
@@ -512,8 +511,6 @@ protected:
     QMap<int, mega::MegaTransfer*> finishedTransfers;
     QList<mega::MegaTransfer*> finishedTransferOrder;
     QSet<int> finishedBlockedTransfers;
-
-    QHash<unsigned long long, TransferMetaData*> transferAppData;
 
     bool reboot;
     bool syncActive;

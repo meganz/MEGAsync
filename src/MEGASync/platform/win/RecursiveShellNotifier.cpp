@@ -38,15 +38,3 @@ void RecursiveShellNotifier::findFoldersRecursively(const QString &path, QString
     }
 }
 
-QString RecursiveShellNotifier::toQstring(const std::string& value)
-{
-    return QString::fromUtf16(reinterpret_cast<const ushort*>(value.data()), static_cast<int>(value.size() / 2));
-}
-
-std::string RecursiveShellNotifier::toStdString(const QString& value)
-{
-    std::string stdValue;
-    stdValue.assign(reinterpret_cast<const char*>(value.utf16()), value.size() * sizeof(wchar_t));
-    stdValue += '\000';
-    return stdValue;
-}

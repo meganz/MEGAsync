@@ -107,11 +107,11 @@ public slots:
     }
 
 private:
+#ifdef USE_DBUS
     bool runForGnome(const QDBusConnection& bus)
     {
         auto result(false);
 
-#ifdef USE_DBUS
         QDBusInterface sessionManagerInterface(
                     GNOME_SERVICE, GNOME_PATH,
                     GNOME_SERVICE, bus, this);
@@ -147,16 +147,16 @@ private:
                 log(sessionManagerInterface.interface(),QString(QLatin1String("Uninhibiting")), replyToUnInhibit);
             }
         }
-#endif
 
         return result;
     }
+#endif
 
+#ifdef USE_DBUS
     bool runForFreedesktopScreenSaver(const QDBusConnection& bus)
     {
         auto result(false);
 
-#ifdef USE_DBUS
         QDBusInterface screenSaverInterface(
                     FREEDESKTOP_SCREENSAVER_SERVICE, FREEDESKTOP_SCREENSAVER_PATH,
                     FREEDESKTOP_SCREENSAVER_SERVICE, bus, this);
@@ -164,16 +164,16 @@ private:
         {
             result = runForFreeDesktop(screenSaverInterface);
         }
-#endif
 
         return result;
     }
+#endif
 
+#ifdef USE_DBUS
     bool runForFreedesktopPowerManagement(const QDBusConnection& bus)
     {
         auto result(false);
 
-#ifdef USE_DBUS
         QDBusInterface powerManagementInterface(
                     FREEDESKTOP_POWERMANAGEMENT_SERVICE, FREEDESKTOP_POWERMANAGEMENT_PATH,
                     FREEDESKTOP_POWERMANAGEMENT_SERVICE, bus, this);
@@ -181,16 +181,16 @@ private:
         {
             result = runForFreeDesktop(powerManagementInterface);
         }
-#endif
 
         return result;
     }
+#endif
 
+#ifdef USE_DBUS
     bool runForFreeDesktop(QDBusInterface& interface)
     {
         bool result(false);
 
-#ifdef USE_DBUS
         if(mKeepPCAwakeState)
         {
             QDBusReply<uint> replyToInhibit = interface.call(
@@ -217,16 +217,16 @@ private:
 
             log(interface.interface(),QString(QLatin1String("Uninhibiting")), replyToUnInhibit);
         }
-#endif
 
         return result;
     }
+#endif
 
+#ifdef USE_DBUS
     bool runForSystemD(const QDBusConnection& bus)
     {
         bool result(false);
 
-#ifdef USE_DBUS
         QDBusInterface systemDInterface(
                     FREEDESKTOP_SYSTEMD_SERVICE, FREEDESKTOP_SYSTEMD_PATH,
                     FREEDESKTOP_SYSTEMD_IFACE, bus, this);
@@ -258,13 +258,15 @@ private:
                 }
             }
         }
-#endif
 
         return result;
     }
+#endif
 
+#ifdef USE_DBUS
     template <class ReturnType>
-    void log(const QString& service, const QString operation, const QDBusReply<ReturnType>& reply)
+    void log(const QString& service, const QString operation
+             ,const QDBusReply<ReturnType>& reply)
     {
         if(reply.isValid())
         {
@@ -275,6 +277,7 @@ private:
             mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG, QString(QLatin1String("Service %1. Sleep settings: %1 sleep mode failed: %2")).arg(service, operation, reply.error().message()).toUtf8().constData());
         }
     }
+#endif
 
 private:
     bool mKeepPCAwakeState;

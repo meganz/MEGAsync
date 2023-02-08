@@ -1,17 +1,23 @@
 #ifndef PLATFORM_H
 #define PLATFORM_H
 
-#include "notificator.h"
+#include "AbstractPlatform.h"
+#include "Notificator.h"
+#include "ShellNotifier.h"
 
-#ifdef WIN32
-    #include "platform/win/WindowsPlatform.h"
-    typedef WindowsPlatform Platform;
-#elif __APPLE__
-     #include "platform/macx/MacXPlatform.h"
-    typedef MacXPlatform Platform;
-#else
-    #include "platform/linux/LinuxPlatform.h"
-    typedef LinuxPlatform Platform;
-#endif
+class Platform
+{
+public:
+    Platform() = delete;
+    ~Platform() = delete;
+
+    static void create();
+    static void destroy();
+    static AbstractPlatform* getInstance();
+
+
+private:
+    static AbstractPlatform* mInstance;
+};
 
 #endif // PLATFORM_H

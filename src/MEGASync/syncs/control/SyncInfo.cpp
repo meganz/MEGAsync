@@ -178,13 +178,13 @@ void SyncInfo::activateSync(std::shared_ptr<SyncSettings> syncSetting)
         preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_HGFS_WARNING, true);
     }
 
-    Platform::syncFolderAdded(syncSetting->getLocalFolder(), syncSetting->name(true), syncSetting->getSyncID());
+    Platform::getInstance()->syncFolderAdded(syncSetting->getLocalFolder(), syncSetting->name(true), syncSetting->getSyncID());
 }
 
 void SyncInfo::deactivateSync(std::shared_ptr<SyncSettings> syncSetting)
 {
-    Platform::syncFolderRemoved(syncSetting->getLocalFolder(), syncSetting->name(true), syncSetting->getSyncID());
-    Platform::notifyItemChange(syncSetting->getLocalFolder(), MegaApi::STATE_NONE);
+    Platform::getInstance()->syncFolderRemoved(syncSetting->getLocalFolder(), syncSetting->name(true), syncSetting->getSyncID());
+    Platform::getInstance()->notifyItemChange(syncSetting->getLocalFolder(), MegaApi::STATE_NONE);
 }
 
 void SyncInfo::updateMegaFolder(QString newRemotePath, std::shared_ptr<SyncSettings> cs)

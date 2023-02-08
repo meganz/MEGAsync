@@ -2,18 +2,21 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "macnotificationhandler.h"
+#include "NSUserNotificationHandler.h"
 #include "NotificationDelegate.h"
+
+#include <QOperatingSystemVersion>
 
 #undef slots
 #include <Cocoa/Cocoa.h>
+#include <UserNotifications/UserNotifications.h>
 
-MacNotificationHandler::MacNotificationHandler()
+NSUserNotificationHandler::NSUserNotificationHandler()
 {
-    notificationDelegate = [[NotificationDelegate alloc] init];
+    mNotificationDelegate = [[NSUserNotificationDelegate alloc] init];
 }
 
-void MacNotificationHandler::showNotification(MegaNotification *notification)
+void NSUserNotificationHandler::showNotification(MegaNotification *notification)
 {
     static int64_t currentNotificationId = 1;
 
@@ -40,38 +43,21 @@ void MacNotificationHandler::showNotification(MegaNotification *notification)
 
     //TODO: Migrate to UNUserNotificationCenter 10.14+
     NSUserNotificationCenter *notificationCenterInstance = [NSUserNotificationCenter defaultUserNotificationCenter];
-    [notificationCenterInstance setDelegate:(NotificationDelegate *)notificationDelegate];
+    [notificationCenterInstance setDelegate:(NSUserNotificationDelegate *)mNotificationDelegate];
     [notificationCenterInstance deliverNotification:userNotification];
 
     int expirationTime = notification->getExpirationTime();
     if (expirationTime > 0)
     {
-        [notificationDelegate performSelector:@selector(closeAlert:)
-            withObject:(NotificationDelegate *)userNotification
+        [mNotificationDelegate performSelector:@selector(closeAlert:)
+            withObject:(NSUserNotificationDelegate *)userNotification
             afterDelay: expirationTime / 1000.0];
     }
 
     [userNotification release];
 }
 
-// sendAppleScript just take a QString and executes it as apple script
-void MacNotificationHandler::sendAppleScript(const QString &script)
+bool NSUserNotificationHandler::acceptsMultipleSelection()
 {
-    QByteArray utf8 = script.toUtf8();
-    char* cString = (char *)utf8.constData();
-    NSString *scriptApple = [[NSString alloc] initWithUTF8String:cString];
-
-    NSAppleScript *as = [[NSAppleScript alloc] initWithSource:scriptApple];
-    NSDictionary *err = nil;
-    [as executeAndReturnError:&err];
-    [as release];
-    [scriptApple release];
-}
-
-MacNotificationHandler *MacNotificationHandler::instance()
-{
-    static MacNotificationHandler *s_instance = NULL;
-    if (!s_instance)
-        s_instance = new MacNotificationHandler();
-    return s_instance;
+    return false;
 }

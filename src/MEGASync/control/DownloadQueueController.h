@@ -5,7 +5,7 @@
 #include "control/Utilities.h"
 #include "megaapi.h"
 #include <QTMegaRequestListener.h>
-#include "TransferMetadata.h"
+#include "TransferMetaData.h"
 
 #include <QMap>
 #include <QObject>
@@ -30,8 +30,6 @@ public:
     bool isDownloadQueueEmpty();
     void clearDownloadQueue();
     WrappedNode* dequeueDownloadQueue();
-
-    void update(TransferMetaData* dataToUpdate, mega::MegaNode* node, const QString& path);
 
     unsigned long long getCurrentAppDataId() const;
     const QString& getCurrentTargetPath() const;
