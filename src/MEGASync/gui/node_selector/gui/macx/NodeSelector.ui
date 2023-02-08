@@ -26,7 +26,12 @@
    <bool>false</bool>
   </property>
   <property name="styleSheet">
-   <string notr="true">QDialog
+   <string notr="true">QGroupBox {
+border-radius: 0px;
+background-color: transparent;
+}
+
+QDialog
 {
 background:#FFFFFF;
 }
@@ -232,6 +237,9 @@ min-height:36px;
       </property>
       <item>
        <widget class="QGroupBox" name="wStorage">
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
         <property name="title">
          <string/>
         </property>
