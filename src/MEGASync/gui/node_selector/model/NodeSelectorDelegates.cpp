@@ -148,6 +148,31 @@ void DateColumnDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
     painter->restore();
 }
 
+bool DateColumnDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view, const QStyleOptionViewItem &option, const QModelIndex &index)
+{
+    if ( !event || !view )
+        return false;
+
+    if (event->type() == QEvent::ToolTip)
+    {
+        QRect rect = view->visualRect(index);
+        rect.adjust(10, 0, -5, 0);
+        QString tooltipText = index.data(Qt::DisplayRole).toString();
+        QFontMetrics fm = option.fontMetrics;
+
+        if (rect.width() < (fm.width(tooltipText)))
+        {
+                QToolTip::showText(event->globalPos(), tooltipText);
+                return true;
+        }
+        if ( !QStyledItemDelegate::helpEvent( event, view, option, index ) )
+            QToolTip::hideText();
+        return true;
+    }
+
+    return QStyledItemDelegate::helpEvent(event, view, option, index );
+}
+
 void DateColumnDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const
 {
     QStyledItemDelegate::initStyleOption(option, index);
