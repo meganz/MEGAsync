@@ -34,8 +34,8 @@
 #define LOG_TIME_CHARS 22
 #define LOG_LEVEL_CHARS 5
 
-#define MAX_FILESIZE_MB 10    // 10MB of log usually compresses to about 850KB (was 450 before duplicate line detection)
-#define MAX_ROTATE_LOGS 50   // So we expect to keep 42MB or so in compressed logs
+#define MAX_LOG_FILESIZE_MB_DEFAULT 10    // 10MB of log usually compresses to about 850KB (was 450 before duplicate line detection)
+#define MAX_ROTATE_LOGS_DEFAULT 50   // So we expect to keep 42MB or so in compressed logs
 #define MAX_ROTATE_LOGS_TODELETE 50   // If ever reducing the number of logs, we should remove the older ones anyway. This number should be the historical maximum of that value
 
 
@@ -193,6 +193,19 @@ private:
 
     void logThreadFunction(QString filename, QString desktopFilename)
     {
+        int logSizeBeforeCompressMb = MAX_LOG_FILESIZE_MB_DEFAULT;
+        if (auto mb = getenv("MEGA_MAX_LOG_FILESIZE_MB"))
+        {
+            logSizeBeforeCompressMb = atoi(mb);
+        }
+        int logCountToRotate = MAX_ROTATE_LOGS_DEFAULT;
+        int logCountToClean = MAX_ROTATE_LOGS_TODELETE;
+        if (auto count = getenv("MEGA_MAX_ROTATE_LOGS"))
+        {
+            logCountToRotate = atoi(count);
+            logCountToClean = std::max(logCountToRotate, logCountToClean);
+        }
+
     #ifdef WIN32
         std::ofstream outputFile(filename.toStdWString().data(), std::ofstream::out | std::ofstream::app);
     #else
@@ -208,7 +221,7 @@ private:
             if (forceRenew)
             {
                 std::lock_guard<std::mutex> g(logRotationMutex);
-                for (int i = MAX_ROTATE_LOGS_TODELETE; i--; )
+                for (int i = logCountToClean; i--; )
                 {
                     QString toDelete = numberedLogFilename(filename, i);
 
@@ -241,16 +254,16 @@ private:
                     emit g_megaSyncLogger->logCleaned();
                 }
             }
-            else if (forceRotationForReporting || outFileSize > MAX_FILESIZE_MB*1024*1024)
+            else if (forceRotationForReporting || outFileSize > logSizeBeforeCompressMb*1024*1024)
             {
                 std::lock_guard<std::mutex> g(logRotationMutex);
-                for (int i = MAX_ROTATE_LOGS_TODELETE; i--; )
+                for (int i = logCountToClean; i--; )
                 {
                     QString toRename = numberedLogFilename(filename, i);
 
                     if (QFile::exists(toRename))
                     {
-                        if (i + 1 >= MAX_ROTATE_LOGS)
+                        if (i + 1 >= logCountToRotate)
                         {
                             if (!QFile::remove(toRename))
                             {
@@ -328,6 +341,7 @@ private:
                 else if (!logToDesktop && logDesktopFileOpen)
                 {
                     logDesktopFile.close();
+                    logDesktopFileOpen = false;
                 }
             }
 
@@ -377,7 +391,10 @@ private:
                             logDesktopFile << "<log gap - out of logging memory at this point>\n";
                         }
                     }
-                    logDesktopFile.flush(); //always flush in `active` logging
+                    if (!newMessages)
+                    {
+                        logDesktopFile.flush(); //always flush in `active` logging
+                    }
                 }
 
                 if (g_megaSyncLogger && g_megaSyncLogger->mLogToStdout)
@@ -390,7 +407,10 @@ private:
                     {
                         std::cout << p->message;
                     }
-                    std::cout << std::flush; //always flush into stdout (DEBUG mode)
+                    if (!newMessages)
+                    {
+                        std::cout << std::flush; //always flush into stdout (DEBUG mode)
+                    }
                 }
                 p->notifyWaiter();
                 free(p);
@@ -547,7 +567,7 @@ void MegaSyncLogger::log(const char*, int loglevel, const char*, const char *mes
 
 void LoggingThread::log(int loglevel, const char *message, const char **directMessages, size_t *directMessagesSizes, int numberMessages)
 {
-
+return;
 // todo: do we need this xml logger?
 //#ifdef LOG_TO_LOGGER
 //    //if (mConnected)
@@ -617,6 +637,20 @@ void LoggingThread::log(int loglevel, const char *message, const char **directMe
                 logListLast->lastmessageRepeats = 0;
             }
 
+#if defined(WIN32) && defined(DEBUG)
+            OutputDebugStringA(std::string(timebuf).c_str());
+            OutputDebugStringA(std::string(threadname).c_str());
+            OutputDebugStringA(std::string(loglevelstring).c_str());
+            if (message)
+            {
+                OutputDebugStringA(std::string(message, messageLen).c_str());
+            }
+            for(int i = 0; i < numberMessages; i++)
+            {
+                OutputDebugStringA(std::string(directMessages[i], directMessagesSizes[i]).c_str());
+            }
+            OutputDebugStringA("\r\n");
+#endif
             if (direct)
             {
                 if (LogLinkedList* newentry = LogLinkedList::create(logListLast, 1 + sizeof(LogLinkedList))) //create a new "empty" element

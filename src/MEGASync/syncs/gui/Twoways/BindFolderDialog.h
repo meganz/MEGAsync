@@ -39,7 +39,6 @@ private:
     MegaApplication *mApp;
     QString mSyncName;
     QString mMegaPath;
-    HighDpiResize mHighDpiResize;
 };
 
 #endif // BINDFOLDERDIALOG_H

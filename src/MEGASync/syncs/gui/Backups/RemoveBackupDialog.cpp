@@ -3,6 +3,8 @@
 #include "MegaApplication.h"
 #include "node_selector/gui/NodeSelector.h"
 #include "MegaNodeNames.h"
+#include "Utilities.h"
+#include "DialogOpener.h"
 
 #include <QButtonGroup>
 
@@ -63,17 +65,19 @@ void RemoveBackupDialog::OnChangeButtonClicked()
 {
     if (!mNodeSelector)
     {
-        mNodeSelector = new NodeSelector(NodeSelectorTreeViewWidget::UPLOAD_SELECT, this);
+        mNodeSelector = new UploadNodeSelector(this);
     }
-    int result = mNodeSelector->exec();
-    if (!mNodeSelector || result != QDialog::Accepted)
-    {
-        return;
-    }
-    mTargetFolder = mNodeSelector->getSelectedNodeHandle();
-    auto targetNode = std::unique_ptr<mega::MegaNode>(mMegaApi->getNodeByHandle(mTargetFolder));
-    auto targetRoot = std::unique_ptr<mega::MegaNode>(mMegaApi->getRootNode(targetNode.get()));
 
-    mUi->lTarget->setText(MegaNodeNames::getNodeName(targetRoot->getName())
-                          + QString::fromUtf8(mMegaApi->getNodePath(targetNode.get())));
+    DialogOpener::showDialog(mNodeSelector, [this]
+    {
+        if (mNodeSelector && mNodeSelector->result() == QDialog::Accepted)
+        {
+            mTargetFolder = mNodeSelector->getSelectedNodeHandle();
+            auto targetNode = std::unique_ptr<mega::MegaNode>(mMegaApi->getNodeByHandle(mTargetFolder));
+            auto targetRoot = std::unique_ptr<mega::MegaNode>(mMegaApi->getRootNode(targetNode.get()));
+
+            mUi->lTarget->setText(MegaNodeNames::getNodeName(targetRoot->getName())
+                                  + QString::fromUtf8(mMegaApi->getNodePath(targetNode.get())));
+        }
+    });
 }

@@ -4,6 +4,8 @@
 #include <platform/win/RecursiveShellNotifier.h>
 #include <platform/win/ThreadedQueueShellNotifier.h>
 
+#include <QtPlatformHeaders/QWindowsWindowFunctions>
+
 #include <Shlobj.h>
 #include <Shlwapi.h>
 #include <tlhelp32.h>
@@ -74,6 +76,8 @@ std::shared_ptr<AbstractShellNotifier> WindowsPlatform::mGeneralNotifier = nullp
 using namespace std;
 using namespace mega;
 
+bool WindowsPlatform_exiting = false;
+
 void WindowsPlatform::initialize(int, char *[])
 {
     CoInitializeEx(NULL, COINIT_MULTITHREADED);
@@ -82,6 +86,9 @@ void WindowsPlatform::initialize(int, char *[])
     mGeneralNotifier = std::make_shared<ThreadedQueueShellNotifier>(
                 std::make_shared<RecursiveShellNotifier>(baseNotifier)
                 );
+
+    //In order to show dialogs when the application is inactive (for example, from the webclient)
+    QWindowsWindowFunctions::setWindowActivationBehavior(QWindowsWindowFunctions::AlwaysActivateWindow);
 }
 
 void WindowsPlatform::prepareForSync()
@@ -1426,21 +1433,6 @@ bool WindowsPlatform::isUserActive()
         return false;
     }
     return true;
-}
-
-void WindowsPlatform::showBackgroundWindow(QDialog *window)
-{
-    Q_ASSERT(!window->parent());
-    //Recreate the minimized state in case the dialog is lost behind desktop windows
-    window->showMinimized();
-    window->showNormal();
-}
-
-void WindowsPlatform::execBackgroundWindow(QDialog *window)
-{
-    showBackgroundWindow(window);
-    window->activateWindow();
-    window->exec();
 }
 
 QString WindowsPlatform::getDeviceName()

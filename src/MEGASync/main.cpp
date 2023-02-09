@@ -435,8 +435,8 @@ int main(int argc, char *argv[])
     }
 #endif
 
-    qInstallMsgHandler(msgHandler);
-    qInstallMessageHandler(messageHandler);
+    //qInstallMsgHandler(msgHandler);
+    //qInstallMessageHandler(messageHandler);
 
     app.setStyle(new MegaProxyStyle());
 
@@ -572,6 +572,10 @@ int main(int argc, char *argv[])
 
     int toret = app.exec();
 
+#ifdef WIN32
+    extern bool WindowsPlatform_exiting;
+    WindowsPlatform_exiting = true;
+#endif
 
 #ifdef Q_OS_LINUX
     theapp = nullptr;

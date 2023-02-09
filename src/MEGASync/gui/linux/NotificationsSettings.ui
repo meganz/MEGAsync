@@ -65,11 +65,36 @@
        <number>0</number>
       </property>
       <item>
+       <widget class="QGroupBox" name="UploadsDownloadsGroupBox">
+        <property name="title">
+         <string>Uploads and downloads</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <property name="bottomMargin">
+          <number>10</number>
+         </property>
+         <item>
+          <widget class="QCheckBox" name="CompletedUploadsDownloadsCheck">
+           <property name="text">
+            <string>Completed uploads and downloads</string>
+           </property>
+           <property name="NotificationType" stdset="0">
+            <UInt>8</UInt>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
        <widget class="QGroupBox" name="SharesGroupBox">
         <property name="title">
          <string>Shares</string>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_2">
+         <property name="bottomMargin">
+          <number>10</number>
+         </property>
          <item>
           <widget class="QCheckBox" name="NewSharedCheck">
            <property name="text">
@@ -109,6 +134,9 @@
          <string>Contacts</string>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_4">
+         <property name="bottomMargin">
+          <number>10</number>
+         </property>
          <item>
           <widget class="QCheckBox" name="NewContactCheck">
            <property name="text">
@@ -148,6 +176,9 @@
          <string>Info</string>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_5">
+         <property name="bottomMargin">
+          <number>10</number>
+         </property>
          <item>
           <widget class="QCheckBox" name="DesktopCheck">
            <property name="text">

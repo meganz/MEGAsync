@@ -2,6 +2,7 @@
 
 #include "LowDiskSpaceDialog.h"
 #include "MegaApplication.h"
+#include "DialogOpener.h"
 
 using namespace mega;
 
@@ -47,7 +48,7 @@ void DownloadQueueController::startAvailableSpaceChecking()
 
     if (mFolderCountPendingSizeComputation == 0)
     {
-        emit finishedAvailableSpaceCheck(isDownloadPossible());
+        isDownloadPossible();
     }
 }
 
@@ -91,50 +92,22 @@ void DownloadQueueController::onRequestFinish(MegaApi*, MegaRequest *request, Me
         --mFolderCountPendingSizeComputation;
         if (mFolderCountPendingSizeComputation <= 0)
         {
-            emit finishedAvailableSpaceCheck(isDownloadPossible());
+            isDownloadPossible();
         }
     }
 }
 
-void DownloadQueueController::update(TransferMetaData *dataToUpdate, MegaNode *node, const QString &path)
+void DownloadQueueController::isDownloadPossible()
 {
-    // Update transfer metadata according to node type.
-    node->isFolder() ? dataToUpdate->totalFolders++ : dataToUpdate->totalFiles++;
-
-    // Set the metadata local path to destination path
-    if (dataToUpdate->localPath.isEmpty())
+    bool downloadPossible(hasEnoughSpaceForDownloads());
+    if (!downloadPossible)
     {
-        dataToUpdate->localPath = QDir::toNativeSeparators(path);
-
-        // If there is only 1 transfer, set localPath to full path
-        if (dataToUpdate->totalTransfers == 1)
-        {
-            char *escapedName = mMegaApi->escapeFsIncompatible(node->getName(),
-                                                              path.toStdString().c_str());
-            QString nodeName = QString::fromUtf8(escapedName);
-            delete [] escapedName;
-            if (!dataToUpdate->localPath.endsWith(QDir::separator()))
-            {
-                dataToUpdate->localPath += QDir::separator();
-            }
-            dataToUpdate->localPath += nodeName;
-        }
+        shouldRetryWhenNotEnoughSpace();
     }
-}
-
-bool DownloadQueueController::isDownloadPossible()
-{
-    bool retry = true;
-    bool downloadPossible = false;
-    while (!downloadPossible && retry)
+    else
     {
-        downloadPossible = hasEnoughSpaceForDownloads();
-        if (!downloadPossible)
-        {
-            retry = shouldRetryWhenNotEnoughSpace();
-        }
+        emit finishedAvailableSpaceCheck(downloadPossible);
     }
-    return downloadPossible;
 }
 
 bool DownloadQueueController::hasEnoughSpaceForDownloads()
@@ -147,7 +120,7 @@ bool DownloadQueueController::hasEnoughSpaceForDownloads()
     return true;
 }
 
-bool DownloadQueueController::shouldRetryWhenNotEnoughSpace()
+void DownloadQueueController::shouldRetryWhenNotEnoughSpace()
 {
     QStorageInfo destinationDrive(mCurrentTargetPath);
     QString driveName = destinationDrive.name();
@@ -156,10 +129,11 @@ bool DownloadQueueController::shouldRetryWhenNotEnoughSpace()
         driveName = tr("Local Disk");
     }
 
-    LowDiskSpaceDialog dialog(mTotalQueueDiskSize, destinationDrive.bytesAvailable(),
+    LowDiskSpaceDialog* dialog = new LowDiskSpaceDialog(mTotalQueueDiskSize, destinationDrive.bytesAvailable(),
                               destinationDrive.bytesTotal(), driveName);
-    int userChoice = dialog.exec();
-    return (userChoice == QDialog::Accepted);
+    DialogOpener::showDialog<LowDiskSpaceDialog>(dialog, [this, dialog](){
+        dialog->result() == QDialog::Accepted ? isDownloadPossible() : emit finishedAvailableSpaceCheck(false);
+    });
 }
 
 const QString& DownloadQueueController::getCurrentTargetPath() const

@@ -63,8 +63,7 @@ public:
     void setOverQuotaMode(bool state);
     void setAccountType(int accType);
     void setDisabledSyncTags(QSet<int> tags);
-    void addSync(mega::MegaHandle h);
-    void addBackup();
+    void addBackup(bool fromWebServer = false);
     void clearUserAttributes();
     void setPSAannouncement(int id, QString title, QString text, QString urlImage, QString textButton, QString linkButton);
     bool updateOverStorageState(int state);
@@ -118,7 +117,7 @@ public slots:
     void dlAreaHovered(QMouseEvent *event);
     void upAreaHovered(QMouseEvent *event);
 
-    void addSync();
+    void addSync(mega::MegaHandle h = mega::INVALID_HANDLE, bool fromWebServer = false);
     void onAddSync(mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
     void onAddBackup();
     void updateDialogState();
@@ -217,11 +216,8 @@ private:
     bool isShown = false;
     long long unseenNotifications = 0;
 
-    AccountDetailsDialog* accountDetailsDialog;
-
     QPointer<TransferManager> mTransferManager;
 
-    QPointer<BackupsWizard> mBackupsWizard;
     QPointer<AddBackupDialog> mAddBackupDialog;
     QPointer<BindFolderDialog> mAddSyncDialog;
 
@@ -264,6 +260,7 @@ protected:
     std::shared_ptr<SyncController> mSyncController;
 
  private:
+    void onAddSyncDialogFinished(QPointer<BindFolderDialog> dialog);
     static double computeRatio(long long completed, long long remaining);
     void enableUserActions(bool value);
     void changeStatusState(StatusInfo::TRANSFERS_STATES newState,

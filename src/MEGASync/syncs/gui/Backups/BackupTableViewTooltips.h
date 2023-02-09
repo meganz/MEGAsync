@@ -7,6 +7,7 @@
 
 class BackupTableViewTooltips : public SyncTableViewTooltips
 {
+    Q_OBJECT
 public:
     BackupTableViewTooltips();
 

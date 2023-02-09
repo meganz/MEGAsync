@@ -12,6 +12,7 @@ class NewFolderDialog : public NodeNameSetterDialog
 
 public:
     NewFolderDialog(std::shared_ptr<mega::MegaNode> parentNode, QWidget* parent);
+    ~NewFolderDialog() = default;
 
     std::unique_ptr<mega::MegaNode> getNewNode();
 

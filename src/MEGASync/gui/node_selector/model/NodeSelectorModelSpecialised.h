@@ -29,9 +29,6 @@ signals:
 
 private slots:
     void onRootItemCreated(NodeSelectorModelItem*item);
-
-private:
-    bool mLoadingRoot;
 };
 
 class NodeSelectorModelIncomingShares : public NodeSelectorModel
@@ -88,6 +85,37 @@ private:
     std::shared_ptr<mega::MegaNodeList> mBackupsNodeList;
     mega::MegaHandle mBackupsHandle;
     bool addToLoadingList(const std::shared_ptr<mega::MegaNode> node) override;
+    void continueLoading(NodeSelectorModelItem* item) override;
+};
+
+class NodeSelectorModelSearch : public NodeSelectorModel
+{
+    Q_OBJECT
+public:
+    explicit NodeSelectorModelSearch(NodeSelectorModelItemSearch::Types allowedType, QObject* parent = 0);
+    virtual ~NodeSelectorModelSearch();
+    void firstLoad() override;
+    void createRootNodes() override;
+    void searchByText(const QString& text);
+    void stopSearch();
+    int rootItemsCount() const override;
+    bool canFetchMore(const QModelIndex &parent) const override;
+    QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const override;
+
+    const NodeSelectorModelItemSearch::Types &searchedTypes() const;
+
+protected:
+    void proxyInvalidateFinished() override;
+
+signals:
+    void searchNodes(const QString& text, NodeSelectorModelItemSearch::Types);
+
+private slots:
+    void onRootItemsCreated(QList<NodeSelectorModelItem*> items, NodeSelectorModelItemSearch::Types searchedTypes);
+
+private:
+    NodeSelectorModelItemSearch::Types mAllowedTypes;
+    NodeSelectorModelItemSearch::Types mSearchedTypes;
 };
 
 #endif // NODESELECTORMODELSPECIALISED_H

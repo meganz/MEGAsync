@@ -6,6 +6,7 @@
 #include "Utilities.h"
 #include "MegaApplication.h"
 #include "QMegaMessageBox.h"
+#include "DialogOpener.h"
 
 #include <QDesktopServices>
 #include <QDir>
@@ -15,12 +16,12 @@
 
 using namespace mega;
 
-ImportMegaLinksDialog::ImportMegaLinksDialog(LinkProcessor *processor, QWidget *parent) :
+ImportMegaLinksDialog::ImportMegaLinksDialog(std::shared_ptr<LinkProcessor> linkProcessor, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ImportMegaLinksDialog),
     mMegaApi(MegaSyncApp->getMegaApi()),
     mPreferences(Preferences::instance()),
-    mLinkProcessor(processor)
+    mLinkProcessor(linkProcessor)
 {
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     ui->setupUi(this);
@@ -71,13 +72,12 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(LinkProcessor *processor, QWidget *
         initUiAsUnlogged();
     }
 
-    connect(mLinkProcessor, SIGNAL(onLinkInfoAvailable(int)), this, SLOT(onLinkInfoAvailable(int)));
-    connect(mLinkProcessor, SIGNAL(onLinkInfoRequestFinish()), this, SLOT(onLinkInfoRequestFinish()));
+    connect(mLinkProcessor.get(), &LinkProcessor::onLinkInfoAvailable, this, &ImportMegaLinksDialog::onLinkInfoAvailable);
+    connect(mLinkProcessor.get(), &LinkProcessor::onLinkInfoRequestFinish, this, &ImportMegaLinksDialog::onLinkInfoRequestFinish);
 
-    finished = false;
+    mFinished = false;
     mLinkProcessor->requestLinkInfo();
     ui->bOk->setDefault(true);
-    highDpiResize.init(this);
 }
 
 ImportMegaLinksDialog::~ImportMegaLinksDialog()
@@ -133,70 +133,70 @@ void ImportMegaLinksDialog::on_bLocalFolder_clicked()
         defaultPath = QString::fromUtf8("/");
     }
 
-    QPointer<MultiQFileDialog> dialog = new MultiQFileDialog(0,  tr("Select local folder"), defaultPath, false);
-    dialog->setOptions(QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
-    dialog->setFileMode(QFileDialog::DirectoryOnly);
-    int result = dialog->exec();
-    if (!dialog || result != QDialog::Accepted || dialog->selectedFiles().isEmpty())
+    QPointer<MultiQFileDialog> fileDialog = new MultiQFileDialog(0,  tr("Select local folder"), defaultPath, false);
+    fileDialog->setOptions(QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+    fileDialog->setFileMode(QFileDialog::DirectoryOnly);
+    DialogOpener::showDialog<MultiQFileDialog>(fileDialog, [fileDialog, this]()
     {
-        delete dialog;
-        return;
-    }
-    QString path = dialog->selectedFiles().value(0);
-    delete dialog;
+        if (fileDialog->result() == QDialog::Accepted && !fileDialog->selectedFiles().isEmpty())
+        {
+            QString path = fileDialog->selectedFiles().value(0);
+            onLocalFolderSet(path);
+        }
+    });
 #else
     QString path = QFileDialog::getExistingDirectory(0,  tr("Select local folder"), defaultPath);
+    onLocalFolderSet(path);
 #endif
+}
+
+void ImportMegaLinksDialog::onLocalFolderSet(const QString& path)
+{
     if (path.length())
     {
-        path = QDir::toNativeSeparators(path);
-        QDir dir(path);
+        auto nativePath = QDir::toNativeSeparators(path);
+        QDir dir(nativePath);
         if (!dir.exists() && !dir.mkpath(QString::fromAscii(".")))
         {
             return;
         }
 
-        QTemporaryFile test(path + QDir::separator());
+        QTemporaryFile test(nativePath + QDir::separator());
         if (!test.open())
         {
             QMegaMessageBox::critical(nullptr, tr("Error"), tr("You don't have write permissions in this local folder."));
             return;
         }
 
-        ui->eLocalFolder->setText(path);
+        ui->eLocalFolder->setText(nativePath);
     }
 }
 
 void ImportMegaLinksDialog::on_bMegaFolder_clicked()
 {
-    QPointer<NodeSelector> nodeSelector = new NodeSelector(NodeSelectorTreeViewWidget::UPLOAD_SELECT, this);
-    int result = nodeSelector->exec();
-    if (!nodeSelector || result != QDialog::Accepted)
-    {
-        delete nodeSelector;
-        return;
-    }
+    QPointer<NodeSelector> nodeSelector = new UploadNodeSelector(this);
+    DialogOpener::showDialog(nodeSelector, this, &ImportMegaLinksDialog::onMegaFolderSelectorFinished);
+}
 
-    MegaHandle selectedMegaFolderHandle = nodeSelector->getSelectedNodeHandle();
-    MegaNode *selectedFolder = mMegaApi->getNodeByHandle(selectedMegaFolderHandle);
-    if (!selectedFolder)
+void ImportMegaLinksDialog::onMegaFolderSelectorFinished(QPointer<NodeSelector> nodeSelector)
+{
+    if (nodeSelector->result() == QDialog::Accepted)
     {
-        delete nodeSelector;
-        return;
-    }
+        MegaHandle selectedMegaFolderHandle = nodeSelector->getSelectedNodeHandle();
+        std::shared_ptr<MegaNode> selectedFolder(mMegaApi->getNodeByHandle(selectedMegaFolderHandle));
+        if (!selectedFolder)
+        {
+            return;
+        }
 
-    const char *fPath = mMegaApi->getNodePath(selectedFolder);
-    if (!fPath)
-    {
-        delete nodeSelector;
-        delete selectedFolder;
-        return;
-    }
+        std::unique_ptr<const char[]> fPath(mMegaApi->getNodePath(selectedFolder.get()));
+        if (!fPath)
+        {
+            return;
+        }
 
-    ui->eMegaFolder->setText(QString::fromUtf8(fPath));
-    delete nodeSelector;
-    delete selectedFolder;
-    delete [] fPath;
+        ui->eMegaFolder->setText(QString::fromUtf8(fPath.get()));
+    }
 }
 
 void ImportMegaLinksDialog::onLinkInfoAvailable(int id)
@@ -239,7 +239,7 @@ void ImportMegaLinksDialog::onLinkInfoAvailable(int id)
 
 void ImportMegaLinksDialog::onLinkInfoRequestFinish()
 {
-    finished = true;
+    mFinished = true;
     checkLinkValidAndSelected();
 }
 
@@ -314,7 +314,7 @@ void ImportMegaLinksDialog::setInvalidImportFolder()
 void ImportMegaLinksDialog::enableOkButton() const
 {
     const bool downloadOrImportChecked{ui->cDownload->isChecked() || ui->cImport->isChecked()};
-    const bool enable{finished && downloadOrImportChecked && mLinkProcessor->atLeastOneLinkValidAndSelected()};
+    const bool enable{mFinished && downloadOrImportChecked && mLinkProcessor->atLeastOneLinkValidAndSelected()};
     ui->bOk->setEnabled(enable);
 }
 

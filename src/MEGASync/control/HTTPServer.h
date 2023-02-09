@@ -78,6 +78,7 @@ class HTTPServer: public QTcpServer
 
     public:
         static const unsigned int MAX_REQUEST_TIME_SECS;
+        static const char* FROM_WEBSERVER;
 
         HTTPServer(mega::MegaApi *megaApi, quint16 port, bool sslEnabled);
         ~HTTPServer();

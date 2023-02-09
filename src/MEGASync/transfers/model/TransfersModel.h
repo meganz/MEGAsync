@@ -130,7 +130,7 @@ public:
 
 public slots:
     void onTransferStart(mega::MegaApi*, mega::MegaTransfer* transfer);
-    void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer* transfer, mega::MegaError*);
+    void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer* transfer, mega::MegaError*e);
     void onTransferUpdate(mega::MegaApi*, mega::MegaTransfer* transfer);
     void onTransferTemporaryError(mega::MegaApi*,mega::MegaTransfer* transfer,mega::MegaError*);
 
@@ -323,6 +323,8 @@ private:
     int performPauseResumeVisibleTransfers(const QModelIndexList& indexes, bool pauseState, bool useEventUpdater);
 
     void openFolder(const QFileInfo& info);
+
+    void updateMetaDataBeforeRetryingTransfers(std::shared_ptr<mega::MegaTransfer> transfer);
 
 private:
     mega::MegaApi* mMegaApi;

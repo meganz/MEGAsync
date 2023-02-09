@@ -3,6 +3,8 @@
 #include "megaapi.h"
 #include "MegaApplication.h"
 #include "QMegaMessageBox.h"
+#include "DialogOpener.h"
+#include <InfoWizard.h>
 
 #include "platform/Platform.h"
 #include "gui/Login2FA.h"
@@ -130,7 +132,7 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
             }
         }
 
-        whyAmISeeingThisDialog.reset(nullptr);
+        mWhyAmISeeingThisDialog->close();
         reset_UI_props();
         closing = false;
         page_login();
@@ -330,7 +332,11 @@ void GuestWidget::enableListener()
 
 void GuestWidget::initialize()
 {
-    whyAmISeeingThisDialog.reset(nullptr);
+    if(mWhyAmISeeingThisDialog)
+    {
+        mWhyAmISeeingThisDialog->close();
+    }
+
     reset_UI_props();
 
     closing = false;
@@ -462,14 +468,14 @@ void GuestWidget::on_bLogin_clicked()
         return;
     }
 
-    app->infoWizardDialogFinished(QDialog::Accepted);
+    DialogOpener::removeDialogByClass<InfoWizard>();
     megaApi->login(mEmail.toUtf8().constData(), mPassword.toUtf8().constData());
     loggingStarted = true;
 }
 
 void GuestWidget::on_bCreateAccount_clicked()
 {
-    app->infoWizardDialogFinished(QDialog::Accepted);
+    DialogOpener::removeDialogByClass<InfoWizard>();
     emit forwardAction(SetupWizard::PAGE_NEW_ACCOUNT);
 }
 
@@ -547,19 +553,17 @@ void GuestWidget::on_bVerifySMS_clicked()
 
 void GuestWidget::on_bWhyAmIseen_clicked()
 {
-    if (!whyAmISeeingThisDialog)
+    if (!mWhyAmISeeingThisDialog)
     {
         QString title {QString::fromUtf8(QT_TRANSLATE_NOOP("MegaInfoMessage", "Locked Accounts"))};
         QString firstP {QString::fromUtf8(QT_TRANSLATE_NOOP("MegaInfoMessage","It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."))};
         QString secondP {QString::fromUtf8(QT_TRANSLATE_NOOP("MegaInfoMessage","Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."))};
 
-        whyAmISeeingThisDialog.reset(new MegaInfoMessage(QString::fromUtf8(QT_TRANSLATE_NOOP("MegaInfoMessage","Why am I seeing this?")),title, firstP, secondP,
-                                              QIcon(QString::fromUtf8(":/images/locked_account_ico.png")).pixmap(70.0, 70.0)));
+        mWhyAmISeeingThisDialog = new MegaInfoMessage(QString::fromUtf8(QT_TRANSLATE_NOOP("MegaInfoMessage","Why am I seeing this?")),title, firstP, secondP,
+                                              QIcon(QString::fromUtf8(":/images/locked_account_ico.png")).pixmap(70.0, 70.0));
     }
 
-    whyAmISeeingThisDialog->show();
-    whyAmISeeingThisDialog->activateWindow();
-    whyAmISeeingThisDialog->raise();
+    DialogOpener::showDialog(mWhyAmISeeingThisDialog);
 }
 
 void GuestWidget::fetchNodesAfterBlockCallbak()
@@ -573,7 +577,7 @@ void GuestWidget::connectToSetupWizard()
     auto setupWizard = static_cast<MegaApplication *>(qApp)->getSetupWizard();
     if (setupWizard)
     {
-        connect(setupWizard, SIGNAL(pageChanged(int)), this, SLOT(onSetupWizardPageChanged(int)));
+        connect(setupWizard.data(), SIGNAL(pageChanged(int)), this, SLOT(onSetupWizardPageChanged(int)));
     }
 }
 

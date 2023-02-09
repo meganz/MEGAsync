@@ -30,8 +30,7 @@ private:
     MegaSyncLogger& logger;
     Ui::BugReportDialog *ui;
     int currentTransfer;
-    std::unique_ptr<QProgressDialog> sendProgress;
-    HighDpiResize highDpiResize;
+    QPointer<QProgressDialog> mSendProgress;
 
     long long totalBytes;
     long long transferredBytes;

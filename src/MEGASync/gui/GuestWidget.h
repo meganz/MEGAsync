@@ -8,6 +8,11 @@
 #include "Preferences.h"
 #include "gui/MegaInfoMessage.h"
 
+#include <QPointer>
+#include <QWidget>
+#include <QMenu>
+#include <QPushButton>
+
 #include <memory>
 
 namespace Ui {
@@ -97,7 +102,7 @@ protected:
     bool closing;
     bool loggingStarted;
 
-    std::unique_ptr<MegaInfoMessage> whyAmISeeingThisDialog;
+    QPointer<MegaInfoMessage> mWhyAmISeeingThisDialog;
 
     void page_login();
     void page_fetchnodes();

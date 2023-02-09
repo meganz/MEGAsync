@@ -17,6 +17,8 @@
 
 #include <queue>
 
+extern bool WindowsPlatform_exiting;
+
 class WindowsPlatform
 {
 
@@ -54,8 +56,6 @@ public:
     static QString getDefaultOpenApp(QString extension);
     static void enableDialogBlur(QDialog *dialog);
     static bool registerUpdateJob();
-    static void execBackgroundWindow(QDialog *window);
-    static void showBackgroundWindow(QDialog* window);
     static void uninstall();
     static bool shouldRunHttpServer();
     static bool shouldRunHttpsServer();

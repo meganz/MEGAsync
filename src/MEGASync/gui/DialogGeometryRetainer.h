@@ -11,6 +11,10 @@
 #include <type_traits>
 #include <typeinfo>
 
+#ifdef _WIN32
+#include <control/ExternalDialogOpener.h>
+#endif
+
 class DialogGeometryRetainerBase : public QObject
 {
     Q_OBJECT
@@ -55,6 +59,10 @@ public:
 
         mDialog = dialog;
 
+#ifdef _WIN32
+        ExternalDialogOpener opener;
+#endif
+
         //First time this is used
         if(mDialogClassName.isEmpty() || mDialogGeometry.isEmpty())
         {
@@ -77,8 +85,8 @@ public:
             }
         }
 
-        mDialog->activateWindow();
         mDialog->raise();
+        mDialog->activateWindow();
 
         mDialog->installEventFilter(this);
     }

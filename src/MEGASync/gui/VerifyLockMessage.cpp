@@ -175,6 +175,7 @@ VerifyLockMessage::~VerifyLockMessage()
 
 void VerifyLockMessage::on_bLogout_clicked()
 {
+    close();
     emit logout();
 }
 

@@ -27,8 +27,6 @@ UpgradeDialog::UpgradeDialog(mega::MegaApi* megaApi, std::shared_ptr<mega::MegaP
     updatePlans();
     configureAnimation();
 
-    mHighDpiResize.init(this);
-
     mTimer = new QTimer(this);
     mTimer->setSingleShot(false);
     connect(mTimer, &QTimer::timeout, this, &UpgradeDialog::unitTimeElapsed);

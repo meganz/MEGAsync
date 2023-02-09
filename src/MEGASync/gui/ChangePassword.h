@@ -31,6 +31,9 @@ protected:
 
 private slots:
     void on_bOk_clicked();
+
+private:
+    void show2FA(bool invalidCode);
 };
 
 #endif // CHANGEPASSWORD_H

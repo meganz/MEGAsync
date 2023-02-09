@@ -191,7 +191,14 @@ TransferManager::TransferManager(MegaApi *megaApi) :
                 this, &TransferManager::on_tAllTransfers_clicked);
 
     connect(mUi->wTransfers,
-            &TransfersWidget::disableTransferManager,[this](bool state){
+            &TransfersWidget::loadingViewVisibilityChanged,[this](bool state)
+    {
+        refreshView();
+    });
+
+    connect(mUi->wTransfers,
+            &TransfersWidget::disableTransferManager,[this](bool state)
+    {
         setDisabled(state);
 
         if(!state && mSearchFieldReturnPressed)
@@ -199,8 +206,6 @@ TransferManager::TransferManager(MegaApi *megaApi) :
             mUi->leSearchField->setFocus();
             mSearchFieldReturnPressed = false;
         }
-
-        refreshView();
     });
 
     mScanningTimer.setInterval(60);
@@ -272,6 +277,7 @@ void TransferManager::pauseModel(bool value)
 
 void TransferManager::enterBlockingState()
 {
+    //First of all, show the transfers widget in case the no items page is visible, as the loading view will be visible
     mUi->wTransfers->setScanningWidgetVisible(true);
     enableUserActions(false);
     mTransferScanCancelUi->show();
@@ -286,11 +292,10 @@ void TransferManager::leaveBlockingState(bool fromCancellation)
     mUi->wTransfers->setScanningWidgetVisible(false);
     mTransferScanCancelUi->hide(fromCancellation);
     refreshStateStats();
+    refreshView();
 
     mScanningTimer.stop();
     mScanningAnimationIndex = 1;
-
-    refreshView();
 }
 
 void TransferManager::disableCancelling()
@@ -684,7 +689,7 @@ void TransferManager::refreshFileTypesStats()
         if(value > TransfersWidget::TYPES_TAB_BASE && value < TransfersWidget::TYPES_LAST)
         {
             Utilities::FileType fileType = static_cast<Utilities::FileType>(value - TransfersWidget::TYPES_TAB_BASE);
-            long long number (mModel->getNumberOfTransfersForFileType(fileType));
+            unsigned long long number (mModel->getNumberOfTransfersForFileType(fileType));
 
             QString countLabelText(number > 0 ? QString::number(number) : QString());
 
@@ -712,12 +717,27 @@ void TransferManager::onTransfersDataUpdated()
 {
     mTransfersCount = mModel->getTransfersCount();
 
+    long long oldNumber(0);
+    QLabel* label (mNumberLabelsGroup[mUi->wTransfers->getCurrentTab()]);
+    if(label)
+    {
+        oldNumber = label->text().toLongLong();
+    }
+
     // Refresh stats
     refreshTypeStats();
     refreshFileTypesStats();
     refreshSearchStats();
     refreshStateStats();
-    refreshView();
+
+    if(label)
+    {
+        long long newNumber = label->text().toLongLong();
+        if(oldNumber != newNumber && (oldNumber == 0 || newNumber == 0))
+        {
+            refreshView();
+        }
+    }
 }
 
 void TransferManager::onStorageStateChanged(int storageState)
@@ -1110,7 +1130,7 @@ void TransferManager::onFileTypeButtonClicked(TransfersWidget::TM_TAB tab, Utili
 
 void TransferManager::on_bOpenLinks_clicked()
 {
-    qobject_cast<MegaApplication*>(qApp)->importLinks();
+    qobject_cast<MegaApplication*>(qApp)->importLinksFromWidget(this);
 }
 
 void TransferManager::on_tCogWheel_clicked()
@@ -1120,12 +1140,12 @@ void TransferManager::on_tCogWheel_clicked()
 
 void TransferManager::on_bDownload_clicked()
 {
-    qobject_cast<MegaApplication*>(qApp)->downloadActionClicked();
+    qobject_cast<MegaApplication*>(qApp)->downloadActionClickedFromWidget(this);
 }
 
 void TransferManager::on_bUpload_clicked()
 {
-    qobject_cast<MegaApplication*>(qApp)->uploadActionClickedFromWindow(this);
+    qobject_cast<MegaApplication*>(qApp)->uploadActionClickedFromWidget(this);
 }
 
 void TransferManager::on_leSearchField_returnPressed()
@@ -1217,8 +1237,6 @@ void TransferManager::toggleTab(TransfersWidget::TM_TAB newTab)
             updateCurrentCategoryTitle();
             mUi->wTransfers->textFilterChanged(QString());
         }
-
-        refreshView();
     }
 }
 

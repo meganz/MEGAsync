@@ -4,6 +4,7 @@ INCLUDEPATH += $$PWD
 QT       += network
 
 SOURCES += $$PWD/HTTPServer.cpp \
+    $$PWD/DialogOpener.cpp \
     $$PWD/DownloadQueueController.cpp \
     $$PWD/Preferences.cpp \
     $$PWD/LinkProcessor.cpp \
@@ -25,6 +26,7 @@ SOURCES += $$PWD/HTTPServer.cpp \
 
 HEADERS  +=  $$PWD/HTTPServer.h \
     $$PWD/AppStatsEvents.h \
+    $$PWD/DialogOpener.h \
     $$PWD/DownloadQueueController.h \
     $$PWD/Preferences.h \
     $$PWD/LinkProcessor.h \
@@ -44,3 +46,8 @@ HEADERS  +=  $$PWD/HTTPServer.h \
     $$PWD/TextDecorator.h \
     $$PWD/qrcodegen.h \
     $$PWD/gzjoin.h
+
+win32 {
+    SOURCES +=	$$PWD/ExternalDialogOpener.cpp
+    HEADERS +=  $$PWD/ExternalDialogOpener.h
+}

@@ -88,7 +88,6 @@ class BackupsWizard : public QDialog
         void updateSize();
 
         Ui::BackupsWizard* mUi;
-        HighDpiResize mHighDpiResize;
         std::shared_ptr<UserAttributes::DeviceName> mDeviceNameRequest;
         std::shared_ptr<UserAttributes::MyBackupsHandle> mMyBackupsHandleRequest;
         SyncController mSyncController;

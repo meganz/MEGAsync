@@ -28,9 +28,10 @@ public slots:
     void cppSlot1public();
 
 private:
-    HighDpiResize mHighDpiResize;
-    QQuickView* mUi;
+//    HighDpiResize mHighDpiResize;
+//    QQuickView* mUi;
 
+//    Ui::AccountDetailsDialog* mUi;
 };
 
 #endif // ACCOUNTDETAILSDIALOG_H

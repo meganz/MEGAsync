@@ -24,7 +24,6 @@ private:
     void setupShadowEffect();
 
     Ui::LowDiskSpaceDialog *ui;
-    HighDpiResize mHighDpiResize;
 };
 
 #endif // LOWDISKSPACEDIALOG_H

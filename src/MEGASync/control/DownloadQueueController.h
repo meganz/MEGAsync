@@ -5,7 +5,7 @@
 #include "control/Utilities.h"
 #include "megaapi.h"
 #include <QTMegaRequestListener.h>
-#include "TransferMetadata.h"
+#include "TransferMetaData.h"
 
 #include <QMap>
 #include <QObject>
@@ -31,8 +31,6 @@ public:
     void clearDownloadQueue();
     WrappedNode* dequeueDownloadQueue();
 
-    void update(TransferMetaData* dataToUpdate, mega::MegaNode* node, const QString& path);
-
     unsigned long long getCurrentAppDataId() const;
     const QString& getCurrentTargetPath() const;
 
@@ -44,9 +42,9 @@ protected:
 
 private:
 
-    bool isDownloadPossible();
+    void isDownloadPossible();
     bool hasEnoughSpaceForDownloads();
-    bool shouldRetryWhenNotEnoughSpace();
+    void shouldRetryWhenNotEnoughSpace();
 
     mega::MegaApi *mMegaApi;
     const QMap<mega::MegaHandle, QString>& mPathMap;

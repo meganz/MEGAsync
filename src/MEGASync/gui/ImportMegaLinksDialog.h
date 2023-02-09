@@ -6,18 +6,19 @@
 #include "megaapi.h"
 #include "control/LinkProcessor.h"
 #include "control/Preferences.h"
-#include "HighDpiResize.h"
 
 namespace Ui {
 class ImportMegaLinksDialog;
 }
+
+class NodeSelector;
 
 class ImportMegaLinksDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit ImportMegaLinksDialog(LinkProcessor *linkProcessor, QWidget *parent = 0);
+    explicit ImportMegaLinksDialog(std::shared_ptr<LinkProcessor> linkProcessor, QWidget *parent = 0);
     ~ImportMegaLinksDialog();
 
     bool shouldImport();
@@ -44,9 +45,8 @@ private:
     Ui::ImportMegaLinksDialog *ui;
     mega::MegaApi *mMegaApi;
     std::shared_ptr<Preferences> mPreferences;
-    LinkProcessor *mLinkProcessor;
-    bool finished;
-    HighDpiResize highDpiResize;
+    std::shared_ptr<LinkProcessor> mLinkProcessor;
+    bool mFinished;
 
     void initUiAsLogged();
     void initUiAsUnlogged();
@@ -57,6 +57,9 @@ private:
     void enableLocalFolder(bool enable);
     void enableMegaFolder(bool enable);
     void checkLinkValidAndSelected();
+
+    void onLocalFolderSet(const QString& path);
+    void onMegaFolderSelectorFinished(QPointer<NodeSelector> dialog);
 };
 
 #endif // IMPORTMEGALINKSDIALOG_H

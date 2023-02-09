@@ -29,15 +29,9 @@ OverQuotaDialog::~OverQuotaDialog()
     delete ui;
 }
 
-std::unique_ptr<OverQuotaDialog> OverQuotaDialog::createDialog(OverQuotaDialogType type, QWidget* parent)
-{
-    return mega::make_unique<OverQuotaDialog>(type, parent);
-}
-
-bool OverQuotaDialog::showDialog(OverQuotaDialogType type, QWidget *parent)
+QPointer<OverQuotaDialog> OverQuotaDialog::showDialog(OverQuotaDialogType type, QWidget *parent)
 {
     bool showDialog(false);
-    std::unique_ptr<OverQuotaDialog> dialog;
     switch(type)
     {
     case OverQuotaDialogType::STORAGE_SYNCS:
@@ -110,9 +104,12 @@ bool OverQuotaDialog::showDialog(OverQuotaDialogType type, QWidget *parent)
 
     if(showDialog)
     {
-        return createDialog(type, parent)->exec();
+        QPointer<OverQuotaDialog> dialog = new OverQuotaDialog(type, parent);
+        dialog->setWindowModality(Qt::WindowModal);
+        return dialog;
     }
-    return QDialog::Rejected;
+
+    return nullptr;
 }
 
 void OverQuotaDialog::configureDialog(OverQuotaDialogType type)

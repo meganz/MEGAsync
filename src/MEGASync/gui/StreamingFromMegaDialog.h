@@ -8,7 +8,6 @@
 
 #include "megaapi.h"
 #include "control/LinkProcessor.h"
-#include "HighDpiResize.h"
 #include "QTMegaTransferListener.h"
 #include <memory>
 
@@ -57,7 +56,6 @@ private:
     std::unique_ptr<mega::QTMegaTransferListener> delegateTransferListener;
     std::shared_ptr<mega::MegaNode> mSelectedMegaNode;
     QString streamURL;
-    HighDpiResize highDpiResize;
     LastStreamingSelection lastStreamSelection;
     QString mPublicLink;
 
