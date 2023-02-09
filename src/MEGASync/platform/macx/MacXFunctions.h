@@ -10,10 +10,13 @@
 
 Q_FORWARD_DECLARE_OBJC_CLASS(NSView);
 Q_FORWARD_DECLARE_OBJC_CLASS(NSPopover);
+Q_FORWARD_DECLARE_OBJC_CLASS(NSOpenPanel);
 
 void setMacXActivationPolicy();
 QStringList qt_mac_NSArrayToQStringList(void *nsarray);
-QStringList uploadMultipleFiles(QString uploadTitle);
+void selectMultipleFiles(QString uploadTitle, QString defaultDir, bool showFiles, bool showFolders, bool modal, std::function<void (QStringList)> func);
+void selectSingleFiles(QString uploadTitle, QString defaultDir, bool showFiles, bool showFolders, bool modal, std::function<void (QString)> func);
+void raiseFileSelectionPanels();
 bool startAtLogin(bool opt);
 bool isStartAtLoginActive();
 void addLoginItem();
@@ -37,5 +40,8 @@ QString fromNSString(const NSString *str);
 NSPopover* allocatePopOverWithView(NSView* view, QSize size);
 void showPopOverRelativeToRect(WId view, id popOver, QPointF rect);
 void releaseIdObject(id obj);
+
+static NSOpenPanel *multipleSelectionPanel = NULL;
+static NSOpenPanel *singleSelectionPanel = NULL;
 
 #endif // MACXFUNCTIONS_H

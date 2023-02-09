@@ -105,7 +105,6 @@ QPointer<OverQuotaDialog> OverQuotaDialog::showDialog(OverQuotaDialogType type, 
     if(showDialog)
     {
         QPointer<OverQuotaDialog> dialog = new OverQuotaDialog(type, parent);
-        dialog->setWindowModality(Qt::WindowModal);
         return dialog;
     }
 

@@ -12,7 +12,6 @@
 using namespace mega;
 
 const unsigned int HTTPServer::MAX_REQUEST_TIME_SECS = 1800;
-const char* HTTPServer::FROM_WEBSERVER = "FROM_WEBSERVER";
 
 bool ts_comparator(RequestData* i, RequestData *j)
 {

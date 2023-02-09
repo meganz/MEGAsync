@@ -426,7 +426,6 @@ endif (NOT CMAKE_HOST_APPLE)
 if (CMAKE_HOST_WIN32)
     set (MOC_INPUT ${MOC_INPUT}
         ${MEGAsyncDir}/platform/win/WinShellDispatcherTask.h
-        ${MEGAsyncDir}/control/ExternalDialogOpener.h
         )
 elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     set (MOC_INPUT ${MOC_INPUT}
@@ -661,8 +660,6 @@ if (CMAKE_HOST_WIN32)
     set (SRCS ${SRCS}
 
         ${MEGAsyncDir}/qtlockedfile/qtlockedfile_win.cpp
-
-    	${MEGAsyncDir}/control/ExternalDialogOpener.cpp
 
         ${MEGAsyncDir}/google_breakpad/client/windows/handler/exception_handler.cc
         ${MEGAsyncDir}/google_breakpad/common/windows/string_utils.cc

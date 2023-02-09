@@ -12,7 +12,7 @@
 #include <typeinfo>
 
 #ifdef _WIN32
-#include <control/ExternalDialogOpener.h>
+#include <control/DialogOpener.h>
 #endif
 
 class DialogGeometryRetainerBase : public QObject

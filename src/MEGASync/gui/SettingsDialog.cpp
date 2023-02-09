@@ -368,7 +368,6 @@ void SettingsDialog::showGuestMode()
     mUi->pNetwork->show();
     QPointer<ProxySettings> proxySettingsDialog = new ProxySettings(mApp, this);
     proxySettingsDialog->setAttribute(Qt::WA_DeleteOnClose);
-    proxySettingsDialog->setWindowModality(Qt::WindowModal);
     DialogOpener::showDialog(proxySettingsDialog,
     [proxySettingsDialog, this]()
     {
@@ -1340,7 +1339,7 @@ void SettingsDialog::on_bStorageDetails_clicked()
 {
     auto accountDetailsDialog = new AccountDetailsDialog(this);
     mApp->updateUserStats(true, true, true, true, USERSTATS_STORAGECLICKED);
-    DialogOpener::showDialog<AccountDetailsDialog>(accountDetailsDialog);
+    DialogOpener::showNonModalDialog<AccountDetailsDialog>(accountDetailsDialog);
 }
 
 void SettingsDialog::on_bLogout_clicked()
@@ -1745,15 +1744,14 @@ void SettingsDialog::on_bBackup_clicked()
 
 void SettingsDialog::on_bAddBackup_clicked()
 {
-    AddBackupDialog *addBackup = new AddBackupDialog(this);
-    addBackup->setAttribute(Qt::WA_DeleteOnClose);
-    addBackup->setWindowModality(Qt::WindowModal);
-    addBackup->open();
-
-    connect(addBackup, &AddBackupDialog::accepted, this, [this, addBackup]()
+    QPointer<AddBackupDialog> addBackup = new AddBackupDialog(this);
+    DialogOpener::showDialog(addBackup,[this, addBackup]()
     {
-        syncsStateInformation(SyncStateInformation::SAVING_BACKUPS);
-        mBackupController.addBackup(addBackup->getSelectedFolder(), addBackup->getBackupName());
+        if(addBackup->result() == QDialog::Accepted)
+        {
+            mBackupController.addBackup(addBackup->getSelectedFolder(), addBackup->getBackupName());
+            syncsStateInformation(SyncStateInformation::SAVING_BACKUPS);
+        }
     });
 }
 
@@ -1773,14 +1771,15 @@ void SettingsDialog::on_bDeleteBackup_clicked()
 
 void SettingsDialog::removeBackup(std::shared_ptr<SyncSettings> backup)
 {
-    RemoveBackupDialog *dialog = new RemoveBackupDialog(backup, this);
-    dialog->setAttribute(Qt::WA_DeleteOnClose);
-    dialog->open();
+    QPointer<RemoveBackupDialog> dialog = new RemoveBackupDialog(backup, this);
 
-    connect(dialog, &RemoveBackupDialog::accepted, this, [this, dialog]()
+    DialogOpener::showDialog(dialog,[this, dialog]()
     {
-        syncsStateInformation(SyncStateInformation::SAVING_BACKUPS);
-        mBackupController.removeSync(dialog->backupToRemove(), dialog->targetFolder());
+        if(dialog->result() == QDialog::Accepted)
+        {
+            syncsStateInformation(SyncStateInformation::SAVING_BACKUPS);
+            mBackupController.removeSync(dialog->backupToRemove(), dialog->targetFolder());
+        }
     });
 }
 
@@ -1849,8 +1848,10 @@ void SettingsDialog::on_bExportMasterKey_clicked()
     }
 #endif
 
+
+    DialogBlocker blocker(this);
     QDir dir(defaultPath);
-    QString fileName = QFileDialog::getSaveFileName(0, tr("Export Master key"),
+    QString fileName = QFileDialog::getSaveFileName(nullptr, tr("Export Master key"),
                                                     dir.filePath(tr("MEGA-RECOVERYKEY")),
                                                     QString::fromUtf8("Txt file (*.txt)"), nullptr,
                                                     QFileDialog::ShowDirsOnly
@@ -1952,7 +1953,6 @@ void SettingsDialog::on_bFolders_clicked()
 void SettingsDialog::on_bUploadFolder_clicked()
 {
     QPointer<NodeSelector> nodeSelector = new UploadNodeSelector(this);
-    nodeSelector->setWindowModality(Qt::WindowModal);
     std::shared_ptr<MegaNode> defaultNode(mMegaApi->getNodeByPath(mUi->eUploadFolder->text()
                                                                   .toUtf8().constData()));
     nodeSelector->setSelectedNodeHandle(defaultNode);

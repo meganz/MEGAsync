@@ -23,7 +23,6 @@ BackupNameConflictDialog::BackupNameConflictDialog(const QStringList& candidateP
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     ui->setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
-    setModal(true);
 
     ui->scrollArea->installEventFilter(this);
     ui->scrollArea->verticalScrollBar()->installEventFilter(this);

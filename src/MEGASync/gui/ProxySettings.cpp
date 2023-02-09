@@ -182,7 +182,6 @@ void ProxySettings::on_bUpdate_clicked()
 
     //Remove it, just in case
     mProgressDialog = new MegaProgressCustomDialog(this);
-    mProgressDialog->setWindowModality(Qt::WindowModal);
     DialogOpener::showDialog(mProgressDialog);
 
     mConnectivityChecker->setProxy(proxy);

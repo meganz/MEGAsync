@@ -22,9 +22,19 @@ void MacXPlatform::prepareForSync()
 
 }
 
-QStringList MacXPlatform::multipleUpload(QString uploadTitle)
+void MacXPlatform::multipleFileSelection(QString uploadTitle, QString defaultDir, bool showFiles, bool showFolders, bool modal, std::function<void(QStringList)> func)
 {
-    return uploadMultipleFiles(uploadTitle);
+   selectMultipleFiles(uploadTitle, defaultDir, showFiles, showFolders, modal, func);
+}
+
+void MacXPlatform::singleFileSelection(QString uploadTitle, QString defaultDir, bool showFiles, bool showFolders, bool modal, std::function<void(QString)> func)
+{
+   selectSingleFiles(uploadTitle, defaultDir, showFiles, showFolders, modal, func);
+}
+
+void MacXPlatform::raiseSelectionPanels()
+{
+    raiseFileSelectionPanels();
 }
 
 bool MacXPlatform::enableTrayIcon(QString /*executable*/)

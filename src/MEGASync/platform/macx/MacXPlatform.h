@@ -14,6 +14,7 @@
 #include <QThread>
 #include <QDir>
 #include <QProcess>
+#include <functional>
 
 class MacXPlatform
 {
@@ -26,7 +27,9 @@ private:
 public:
     static void initialize(int argc, char *argv[]);
     static void prepareForSync();
-    static QStringList multipleUpload(QString uploadTitle);
+    static void multipleFileSelection(QString uploadTitle, QString defaultDir, bool showFiles, bool showFolders, bool modal, std::function<void (QStringList)> func);
+    static void singleFileSelection(QString uploadTitle, QString defaultDir, bool showFiles, bool showFolders, bool modal, std::function<void (QString)> func);
+    static void raiseSelectionPanels();
     static bool enableTrayIcon(QString);
     static void notifyItemChange(const QString& path, int newState);
     static void notifySyncFileChange(std::string *localPath, int newState);

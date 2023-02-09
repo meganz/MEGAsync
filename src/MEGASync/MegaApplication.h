@@ -171,7 +171,7 @@ public:
     int getNumUnviewedTransfers();
     void removeFinishedTransfer(int transferTag);
     void removeAllFinishedTransfers();
-    void showVerifyAccountInfo();
+    void showVerifyAccountInfo(std::function<void ()> func = nullptr);
 
     void removeFinishedBlockedTransfer(int transferTag);
     bool finishedTransfersWhileBlocked(int transferTag);
@@ -252,6 +252,9 @@ public slots:
     void uploadActionClicked();
     void uploadActionClickedFromWidget(QWidget *openFrom);
     void uploadActionClickedFromWindowAfterOverQuotaCheck(QWidget *openFrom);
+#ifdef __APPLE__
+    void openNativeFileDialog(QWidget *openFrom, QString defaultDir, bool showFiles, bool showFolders);
+#endif
     void loginActionClicked();
     void copyFileLink(mega::MegaHandle fileHandle, QString nodeKey = QString());
     void downloadActionClicked();
@@ -399,7 +402,6 @@ protected:
     QAction *windowsSettingsAction;
 #endif
 
-    QPointer<VerifyLockMessage> mVerifyEmail;
     QPointer<QMenu> infoDialogMenu;
     QPointer<QMenu> guestMenu;
     QMenu emptyMenu;
@@ -610,6 +612,8 @@ private:
 
     bool dontAskForExitConfirmation(bool force);
     void exitApplication();
+
+    QString getDefaultUploadPath();
 
     struct NodeCount
     {

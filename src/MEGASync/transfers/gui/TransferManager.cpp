@@ -7,6 +7,7 @@
 #include "MegaTransferDelegate.h"
 #include "MegaTransferView.h"
 #include "OverQuotaDialog.h"
+#include "DialogOpener.h"
 
 #include <QMouseEvent>
 #include <QScrollBar>
@@ -1140,12 +1141,13 @@ void TransferManager::on_tCogWheel_clicked()
 
 void TransferManager::on_bDownload_clicked()
 {
-    qobject_cast<MegaApplication*>(qApp)->downloadActionClickedFromWidget(this);
+    MegaSyncApp->downloadActionClickedFromWidget(this);
 }
 
 void TransferManager::on_bUpload_clicked()
 {
-    qobject_cast<MegaApplication*>(qApp)->uploadActionClickedFromWidget(this);
+    DialogBlocker blocker(this);
+    MegaSyncApp->uploadActionClickedFromWidget(this);
 }
 
 void TransferManager::on_leSearchField_returnPressed()

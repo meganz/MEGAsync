@@ -10,9 +10,26 @@
 #endif
 
 #include <QDialog>
+#include <QFileDialog>
 #include <QPointer>
 #include <functional>
 #include <memory>
+
+#ifdef _WIN32
+class ExternalDialogOpener : public QWidget
+{
+public:
+    ExternalDialogOpener();
+    ~ExternalDialogOpener();
+};
+#endif
+
+class DialogBlocker : public QDialog
+{
+public:
+    DialogBlocker(QWidget* parent);
+    ~DialogBlocker();
+};
 
 class DialogOpener
 {
@@ -26,6 +43,8 @@ private:
         QString getDialogClass() const {return mDialogClass;}
         void setDialogClass(const QString &newDialogClass) {mDialogClass = newDialogClass;}
 
+        virtual void raise() = 0;
+
     protected:
         QString mDialogClass;
     };
@@ -38,6 +57,13 @@ private:
         void setDialog(QPointer<DialogType> newDialog)
         {
             mDialog = newDialog;
+        }
+
+        void raise() override
+        {
+            mDialog->show();
+            mDialog->raise();
+            mDialog->activateWindow();
         }
 
         void clear()
@@ -98,7 +124,10 @@ public:
         if(dialog)
         {
             dialog->connect(dialog.data(), &DialogType::finished, [func, dialog](){
-                func();
+                if(func)
+                {
+                    func();
+                }
                 removeDialog(dialog);
             });
             showDialogImpl(dialog);
@@ -111,7 +140,10 @@ public:
         if(dialog)
         {
             dialog->connect(dialog.data(), &DialogType::finished, [dialog, caller, func](){
-                (caller->*func)(dialog);
+                if(caller && func)
+                {
+                    (caller->*func)(dialog);
+                }
                 removeDialog(dialog);
             });
 
@@ -120,15 +152,31 @@ public:
     }
 
     template <class DialogType>
+    static void showNonModalDialog(QPointer<DialogType> dialog)
+    {
+        if(dialog)
+        {
+            if(dialog->parent())
+            {
+                auto dialogGeo = dialog->geometry();
+                auto parentDialogGeo = dialog->parentWidget()->geometry();
+                dialogGeo.moveCenter(parentDialogGeo.center());
+                dialog->setGeometry(dialogGeo);
+                dialog->setParent(nullptr);
+            }
+            removeWhenClose(dialog);
+            dialog->setModal(false);
+            showDialogImpl(dialog, false);
+        }
+    }
+
+
+    template <class DialogType>
     static void showDialog(QPointer<DialogType> dialog)
     {
         if(dialog)
         {
-            dialog->connect(dialog.data(), &DialogType::finished, [dialog]()
-            {
-                removeDialog(dialog);
-            });
-
+            removeWhenClose(dialog);
             showDialogImpl(dialog);
         }
     }
@@ -143,11 +191,28 @@ public:
         }
     }
 
+    static void raiseAllDialogs()
+    {
+        foreach(auto dialogInfo, mOpenedDialogs)
+        {
+            dialogInfo->raise();
+        }
+    }
+
 private:
     static QList<std::shared_ptr<DialogInfoBase>> mOpenedDialogs;
 
     template <class DialogType>
-    static void showDialogImpl(QPointer<DialogType> dialog)
+    static void removeWhenClose(QPointer<DialogType> dialog)
+    {
+        dialog->connect(dialog.data(), &DialogType::finished, [dialog]()
+        {
+            removeDialog(dialog);
+        });
+    }
+
+    template <class DialogType>
+    static void showDialogImpl(QPointer<DialogType> dialog, bool changeWindowModality = true)
     {
         if(dialog)
         {
@@ -191,17 +256,18 @@ private:
             ExternalDialogOpener externalOpener;
 #endif
 
-#ifdef __APPLE__
-            if(dialog->parentWidget() && dialog->windowModality() == Qt::NonModal)
+            if(changeWindowModality)
             {
-                dialog->setWindowModality(Qt::ApplicationModal);
+                if(dialog->parent())
+                {
+                    dialog->setWindowModality(Qt::WindowModal);
+                }
+                else
+                {
+                    dialog->setModal(false);
+                }
             }
-#else
-            if(dialog->windowModality() == Qt::NonMoNonModal)
-            {
-                dialog->setWindowModality(Qt::ApplicationModal);
-            }
-#endif
+
 
             dialog->show();
             dialog->raise();

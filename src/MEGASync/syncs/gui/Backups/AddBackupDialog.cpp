@@ -1,10 +1,15 @@
 #include "AddBackupDialog.h"
 #include "ui_AddBackupDialog.h"
-#include "QMegaMessageBox.h"
 #include "UserAttributesRequests/DeviceName.h"
 #include "UserAttributesRequests/MyBackupsHandle.h"
 #include "Utilities.h"
 
+#ifdef __APPLE__
+#include "DialogOpener.h"
+#include "platform/macx/MacXPlatform.h"
+#endif
+
+#include "QMegaMessageBox.h"
 #include <QFileDialog>
 
 AddBackupDialog::AddBackupDialog(QWidget *parent) :
@@ -47,32 +52,76 @@ QString AddBackupDialog::getBackupName()
 
 void AddBackupDialog::on_changeButton_clicked()
 {
+    auto processPath = [this](QString folderPath)
+    {
+        if (!folderPath.isEmpty())
+        {
+            QString candidateDir (QDir::toNativeSeparators(QDir(folderPath).canonicalPath()));
+            QString warningMessage;
+            auto syncability (SyncController::isLocalFolderSyncable(candidateDir, mega::MegaSync::TYPE_BACKUP, warningMessage));
+
+            if (syncability == SyncController::CANT_SYNC)
+            {
+                QMegaMessageBox::warning(nullptr, QString(), warningMessage, QMessageBox::Ok);
+            }
+            else if (syncability == SyncController::CAN_SYNC
+                     || (syncability == SyncController::WARN_SYNC
+                         && QMegaMessageBox::warning(nullptr, QString(), warningMessage
+                                                     + QLatin1Char('/')
+                                                     + tr("Do you want to continue?"),
+                                                     QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
+                         == QMessageBox::Yes))
+            {
+                mSelectedFolder = candidateDir;
+                mUi->folderLineEdit->setText(folderPath);
+                mUi->addButton->setEnabled(true);
+            }
+        }
+    };
+
+    QString defaultPath = mUi->folderLineEdit->text().trimmed();
+    if (!defaultPath.size())
+    {
+        defaultPath = Utilities::getDefaultBasePath();
+    }
+
+    defaultPath = QDir::toNativeSeparators(defaultPath);
+
+#ifndef _WIN32
+    if (defaultPath.isEmpty())
+    {
+        defaultPath = QString::fromUtf8("/");
+    }
+    QPointer<MultiQFileDialog> fileDialog = new MultiQFileDialog(0,  tr("Choose folder"),
+                                                                 Utilities::getDefaultBasePath(), false);
+    fileDialog->setOptions(QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+    fileDialog->setFileMode(QFileDialog::DirectoryOnly);
+    DialogOpener::showDialog<MultiQFileDialog>(fileDialog, [fileDialog, processPath]()
+    {
+        if (fileDialog->result() == QDialog::Accepted && !fileDialog->selectedFiles().isEmpty())
+        {
+            QString path = fileDialog->selectedFiles().value(0);
+            processPath(path);
+        }
+    });
+#else
     QString folderPath = QFileDialog::getExistingDirectory(this, tr("Choose folder"),
                                                            Utilities::getDefaultBasePath(),
                                                            QFileDialog::DontResolveSymlinks);
-    if (!folderPath.isEmpty())
-    {
-        QString candidateDir (QDir::toNativeSeparators(QDir(folderPath).canonicalPath()));
-        QString warningMessage;
-        auto syncability (SyncController::isLocalFolderSyncable(candidateDir, mega::MegaSync::TYPE_BACKUP, warningMessage));
+    processPath(folderPath);
+#endif
 
-        if (syncability == SyncController::CANT_SYNC)
-        {
-            QMegaMessageBox::warning(nullptr, QString(), warningMessage, QMessageBox::Ok);
-        }
-        else if (syncability == SyncController::CAN_SYNC
-                 || (syncability == SyncController::WARN_SYNC
-                     && QMegaMessageBox::warning(nullptr, QString(), warningMessage
-                                                 + QLatin1Char('/')
-                                                 + tr("Do you want to continue?"),
-                                                 QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
-                     == QMessageBox::Yes))
-        {
-            mSelectedFolder = candidateDir;
-            mUi->folderLineEdit->setText(folderPath);
-            mUi->addButton->setEnabled(true);
-        }
-    }
+//#ifdef __APPLE__
+//    MacXPlatform::singleFileSelection(tr("Choose folder"), Utilities::getDefaultBasePath(),
+//                                 false, true, true,
+//                                processPath);
+//#else
+//    QString folderPath = QFileDialog::getExistingDirectory(this, tr("Choose folder"),
+//                                                           Utilities::getDefaultBasePath(),
+//                                                           QFileDialog::DontResolveSymlinks);
+//    processPath(folderPath);
+//#endif
+
 }
 
 void AddBackupDialog::onDeviceNameSet(const QString &devName)

@@ -1030,15 +1030,14 @@ void InfoDialog::openFolder(QString path)
     Utilities::openUrl(QUrl::fromLocalFile(path));
 }
 
-void InfoDialog::addSync(MegaHandle h, bool fromWebServer)
+void InfoDialog::addSync(MegaHandle h)
 {
     auto overQuotaDialog = app->showSyncOverquotaDialog();
-    auto addSyncLambda = [overQuotaDialog, h, fromWebServer, this]()
+    auto addSyncLambda = [overQuotaDialog, h, this]()
     {
         if(!overQuotaDialog || overQuotaDialog->result() == QDialog::Rejected)
         {
             mAddSyncDialog = new BindFolderDialog(app);
-            mAddSyncDialog->setProperty(HTTPServer::FROM_WEBSERVER, fromWebServer);
 
             if (h != mega::INVALID_HANDLE)
             {
@@ -1078,11 +1077,11 @@ void InfoDialog::onAddSyncDialogFinished(QPointer<BindFolderDialog> dialog)
     app->createAppMenus();
 }
 
-void InfoDialog::addBackup(bool fromWebServer)
+void InfoDialog::addBackup()
 {
     auto overQuotaDialog = app->showSyncOverquotaDialog();
 
-    auto addBackupLambda = [overQuotaDialog, fromWebServer, this]()
+    auto addBackupLambda = [overQuotaDialog, this]()
     {
         if(!overQuotaDialog || overQuotaDialog->result() == QDialog::Rejected)
         {
@@ -1091,8 +1090,6 @@ void InfoDialog::addBackup(bool fromWebServer)
             if(nbBackups > 0)
             {
                 auto backupDialog = new AddBackupDialog();
-                backupDialog->setProperty(HTTPServer::FROM_WEBSERVER, fromWebServer);
-                backupDialog->setWindowModality(Qt::ApplicationModal);
                 
                 setupSyncController();
 
@@ -1111,8 +1108,6 @@ void InfoDialog::addBackup(bool fromWebServer)
             else
             {
                 auto backupsWizard = new BackupsWizard();
-                backupsWizard->setProperty(HTTPServer::FROM_WEBSERVER, fromWebServer);
-                backupsWizard->setWindowModality(Qt::ApplicationModal);
                 DialogOpener::showDialog<BackupsWizard>(backupsWizard);
             }
         }
@@ -1352,9 +1347,9 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
 
 void InfoDialog::on_bStorageDetails_clicked()
 {
-    QPointer<AccountDetailsDialog> accountDetailsDialog = new AccountDetailsDialog(this);
+    QPointer<AccountDetailsDialog> accountDetailsDialog = new AccountDetailsDialog();
     app->updateUserStats(true, true, true, true, USERSTATS_STORAGECLICKED);
-    DialogOpener::showDialog(accountDetailsDialog);
+    DialogOpener::showNonModalDialog(accountDetailsDialog);
 }
 
 void InfoDialog::regenerateLayout(int blockState, InfoDialog* olddialog)
