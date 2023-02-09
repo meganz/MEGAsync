@@ -276,6 +276,17 @@ protected:
 
 };
 
+struct TimeInterval
+{
+    TimeInterval(long long secs, bool secondPrecision);
+
+    int days;
+    int hours;
+    int minutes;
+    int seconds;
+    bool useSecondPrecision;
+};
+
 class Utilities
 {
 public:
@@ -348,6 +359,10 @@ private:
     static QString getExtensionPixmapNameSmall(QString fileName);
     static QString getExtensionPixmapNameMedium(QString fileName);
     static double toDoubleInUnit(unsigned long long bytes, unsigned long long unit);
+    static QString getTimeFormat(const TimeInterval& interval);
+    static QString filledTimeString(const QString& timeFormat, const TimeInterval& interval, bool color);
+
+    static QString cleanedTimeString(const QString& timeString);
 
 //Platform dependent functions
 public:
