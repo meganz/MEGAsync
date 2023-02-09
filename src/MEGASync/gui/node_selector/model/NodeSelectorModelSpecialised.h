@@ -85,7 +85,9 @@ private:
     std::shared_ptr<mega::MegaNodeList> mBackupsNodeList;
     mega::MegaHandle mBackupsHandle;
     bool addToLoadingList(const std::shared_ptr<mega::MegaNode> node) override;
-    void continueLoading(NodeSelectorModelItem* item) override;
+    void loadLevelFinished() override;
+    int mBackupDevicesSize;
+
 };
 
 class NodeSelectorModelSearch : public NodeSelectorModel

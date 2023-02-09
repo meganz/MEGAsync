@@ -3,6 +3,7 @@
 #include "UserAttributesRequests/DeviceName.h"
 #include "UserAttributesRequests/MyBackupsHandle.h"
 #include "Utilities.h"
+#include "Platform.h"
 
 #ifdef __APPLE__
 #include "DialogOpener.h"
@@ -10,7 +11,6 @@
 #endif
 
 #include "QMegaMessageBox.h"
-#include <QFileDialog>
 
 AddBackupDialog::AddBackupDialog(QWidget *parent) :
     QDialog(parent),
@@ -52,10 +52,12 @@ QString AddBackupDialog::getBackupName()
 
 void AddBackupDialog::on_changeButton_clicked()
 {
-    auto processPath = [this](QString folderPath)
+    auto processPath = [this](QStringList folderPaths)
     {
-        if (!folderPath.isEmpty())
+        if (!folderPaths.isEmpty())
         {
+            auto folderPath = folderPaths.first();
+
             QString candidateDir (QDir::toNativeSeparators(QDir(folderPath).canonicalPath()));
             QString warningMessage;
             auto syncability (SyncController::isLocalFolderSyncable(candidateDir, mega::MegaSync::TYPE_BACKUP, warningMessage));
@@ -86,42 +88,7 @@ void AddBackupDialog::on_changeButton_clicked()
     }
 
     defaultPath = QDir::toNativeSeparators(defaultPath);
-
-#ifndef _WIN32
-    if (defaultPath.isEmpty())
-    {
-        defaultPath = QString::fromUtf8("/");
-    }
-    QPointer<MultiQFileDialog> fileDialog = new MultiQFileDialog(0,  tr("Choose folder"),
-                                                                 Utilities::getDefaultBasePath(), false);
-    fileDialog->setOptions(QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
-    fileDialog->setFileMode(QFileDialog::DirectoryOnly);
-    DialogOpener::showDialog<MultiQFileDialog>(fileDialog, [fileDialog, processPath]()
-    {
-        if (fileDialog->result() == QDialog::Accepted && !fileDialog->selectedFiles().isEmpty())
-        {
-            QString path = fileDialog->selectedFiles().value(0);
-            processPath(path);
-        }
-    });
-#else
-    QString folderPath = QFileDialog::getExistingDirectory(this, tr("Choose folder"),
-                                                           Utilities::getDefaultBasePath(),
-                                                           QFileDialog::DontResolveSymlinks);
-    processPath(folderPath);
-#endif
-
-//#ifdef __APPLE__
-//    MacXPlatform::singleFileSelection(tr("Choose folder"), Utilities::getDefaultBasePath(),
-//                                 false, true, true,
-//                                processPath);
-//#else
-//    QString folderPath = QFileDialog::getExistingDirectory(this, tr("Choose folder"),
-//                                                           Utilities::getDefaultBasePath(),
-//                                                           QFileDialog::DontResolveSymlinks);
-//    processPath(folderPath);
-//#endif
-
+    Platform::getInstance()->folderSelector(tr("Choose folder"), defaultPath,false, this, processPath);
 }
 
 void AddBackupDialog::onDeviceNameSet(const QString &devName)

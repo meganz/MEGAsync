@@ -1,9 +1,7 @@
-#include "LinuxPlatform.h"
+#include "PlatformImplementation.h"
 
 #include <QSet>
 #include <QX11Info>
-#include <xcb/xcb.h>
-#include <xcb/xproto.h>
 
 #include <cstdlib>
 #include <cstring>
@@ -12,35 +10,21 @@
 using namespace std;
 using namespace mega;
 
-static xcb_atom_t getAtom(xcb_connection_t * const connection, const char *name);
+PlatformImplementation::PlatformImplementation()
+{
+    autostart_dir = QDir::homePath() + QString::fromAscii("/.config/autostart/");
+    desktop_file = autostart_dir + QString::fromAscii("megasync.desktop");
+    set_icon = QString::fromUtf8("gvfs-set-attribute -t string \"%1\" metadata::custom-icon file://%2");
+    remove_icon = QString::fromUtf8("gvfs-set-attribute -t unset \"%1\" metadata::custom-icon");
+    custom_icon = QString::fromUtf8("/usr/share/icons/hicolor/256x256/apps/mega.png");
+}
 
-ExtServer *LinuxPlatform::ext_server = NULL;
-NotifyServer *LinuxPlatform::notify_server = NULL;
-std::shared_ptr<AbstractShellNotifier> LinuxPlatform::mShellNotifier = nullptr;
-
-static QString autostart_dir = QDir::homePath() + QString::fromAscii("/.config/autostart/");
-
-QString LinuxPlatform::desktop_file = autostart_dir + QString::fromAscii("megasync.desktop");
-QString LinuxPlatform::set_icon = QString::fromUtf8("gvfs-set-attribute -t string \"%1\" metadata::custom-icon file://%2");
-QString LinuxPlatform::remove_icon = QString::fromUtf8("gvfs-set-attribute -t unset \"%1\" metadata::custom-icon");
-QString LinuxPlatform::custom_icon = QString::fromUtf8("/usr/share/icons/hicolor/256x256/apps/mega.png");
-
-void LinuxPlatform::initialize(int /*argc*/, char** /*argv*/)
+void PlatformImplementation::initialize(int /*argc*/, char** /*argv*/)
 {
     mShellNotifier = std::make_shared<SignalShellNotifier>();
 }
 
-void LinuxPlatform::prepareForSync()
-{
-
-}
-
-bool LinuxPlatform::enableTrayIcon(QString /*executable*/)
-{
-    return false;
-}
-
-void LinuxPlatform::notifyItemChange(const QString& path, int)
+void PlatformImplementation::notifyItemChange(const QString& path, int)
 {
     if (!path.isEmpty())
     {
@@ -53,7 +37,7 @@ void LinuxPlatform::notifyItemChange(const QString& path, int)
     }
 }
 
-void LinuxPlatform::notifySyncFileChange(std::string *localPath, int newState)
+void PlatformImplementation::notifySyncFileChange(std::string *localPath, int newState)
 {
     if(localPath && localPath->size())
     {
@@ -63,7 +47,7 @@ void LinuxPlatform::notifySyncFileChange(std::string *localPath, int newState)
 
 // enable or disable MEGASync launching at startup
 // return true if operation succeeded
-bool LinuxPlatform::startOnStartup(bool value)
+bool PlatformImplementation::startOnStartup(bool value)
 {
     // copy desktop file into autostart directory
     if (value)
@@ -106,12 +90,12 @@ bool LinuxPlatform::startOnStartup(bool value)
     return true;
 }
 
-bool LinuxPlatform::isStartOnStartupActive()
+bool PlatformImplementation::isStartOnStartupActive()
 {
     return QFile(desktop_file).exists();
 }
 
-bool LinuxPlatform::isTilingWindowManager()
+bool PlatformImplementation::isTilingWindowManager()
 {
     static const QSet<QString> tiling_wms = {
         QString::fromUtf8("i3")
@@ -121,7 +105,7 @@ bool LinuxPlatform::isTilingWindowManager()
            || tiling_wms.contains(getWindowManagerName());
 }
 
-bool LinuxPlatform::showInFolder(QString pathIn)
+bool PlatformImplementation::showInFolder(QString pathIn)
 {
     QString filebrowser = getDefaultFileBrowserApp();
     // Nautilus on Gnome, does not open the directory if argument is given without surrounding double-quotes;
@@ -132,7 +116,7 @@ bool LinuxPlatform::showInFolder(QString pathIn)
                             + QUrl::fromLocalFile(pathIn).toString() + QString::fromLatin1("\""));
 }
 
-void LinuxPlatform::startShellDispatcher(MegaApplication *receiver)
+void PlatformImplementation::startShellDispatcher(MegaApplication *receiver)
 {
     if (!ext_server)
     {
@@ -145,7 +129,7 @@ void LinuxPlatform::startShellDispatcher(MegaApplication *receiver)
     }
 }
 
-void LinuxPlatform::stopShellDispatcher()
+void PlatformImplementation::stopShellDispatcher()
 {
     if (ext_server)
     {
@@ -160,7 +144,7 @@ void LinuxPlatform::stopShellDispatcher()
     }
 }
 
-void LinuxPlatform::syncFolderAdded(QString syncPath, QString /*syncName*/, QString /*syncID*/)
+void PlatformImplementation::syncFolderAdded(QString syncPath, QString /*syncName*/, QString /*syncID*/)
 {
     if (QFile(custom_icon).exists())
     {
@@ -179,7 +163,7 @@ void LinuxPlatform::syncFolderAdded(QString syncPath, QString /*syncName*/, QStr
     }
 }
 
-void LinuxPlatform::syncFolderRemoved(QString syncPath, QString /*syncName*/, QString /*syncID*/)
+void PlatformImplementation::syncFolderRemoved(QString syncPath, QString /*syncName*/, QString /*syncID*/)
 {
     QFile *folder = new QFile(syncPath);
     if (folder->exists())
@@ -194,42 +178,27 @@ void LinuxPlatform::syncFolderRemoved(QString syncPath, QString /*syncName*/, QS
     }
 }
 
-void LinuxPlatform::notifyRestartSyncFolders()
+void PlatformImplementation::notifyRestartSyncFolders()
 {
 
 }
 
-void LinuxPlatform::notifyAllSyncFoldersAdded()
+void PlatformImplementation::notifyAllSyncFoldersAdded()
 {
 
 }
 
-void LinuxPlatform::notifyAllSyncFoldersRemoved()
+void PlatformImplementation::notifyAllSyncFoldersRemoved()
 {
 
 }
 
-QByteArray LinuxPlatform::encrypt(QByteArray data, QByteArray /*key*/)
-{
-    return data;
-}
-
-QByteArray LinuxPlatform::decrypt(QByteArray data, QByteArray /*key*/)
-{
-    return data;
-}
-
-QByteArray LinuxPlatform::getLocalStorageKey()
-{
-    return QByteArray(128, 0);
-}
-
-QString LinuxPlatform::getDefaultFileBrowserApp()
+QString PlatformImplementation::getDefaultFileBrowserApp()
 {
     return getDefaultOpenAppByMimeType(QString::fromUtf8("inode/directory"));
 }
 
-QString LinuxPlatform::getDefaultOpenApp(QString extension)
+QString PlatformImplementation::getDefaultOpenApp(QString extension)
 {
     char *mimeType = MegaApi::getMimeType(extension.toUtf8().constData());
     if (!mimeType)
@@ -241,7 +210,7 @@ QString LinuxPlatform::getDefaultOpenApp(QString extension)
     return getDefaultOpenAppByMimeType(qsMimeType);
 }
 
-QString LinuxPlatform::getDefaultOpenAppByMimeType(QString mimeType)
+QString PlatformImplementation::getDefaultOpenAppByMimeType(QString mimeType)
 {
     QString getDefaultAppDesktopFileName = QString::fromUtf8("xdg-mime query default ") + mimeType;
 
@@ -297,7 +266,7 @@ QString LinuxPlatform::getDefaultOpenAppByMimeType(QString mimeType)
     return line.mid(5, size);
 }
 
-bool LinuxPlatform::getValue(const char * const name, const bool default_value)
+bool PlatformImplementation::getValue(const char * const name, const bool default_value)
 {
     const char * const value = getenv(name);
 
@@ -307,7 +276,7 @@ bool LinuxPlatform::getValue(const char * const name, const bool default_value)
     return strcmp(value, "0") != 0;
 }
 
-std::string LinuxPlatform::getValue(const char * const name, const std::string &default_value)
+std::string PlatformImplementation::getValue(const char * const name, const std::string &default_value)
 {
     const char * const value = getenv(name);
 
@@ -317,7 +286,7 @@ std::string LinuxPlatform::getValue(const char * const name, const std::string &
     return value;
 }
 
-QString LinuxPlatform::getWindowManagerName()
+QString PlatformImplementation::getWindowManagerName()
 {
     static QString wmName;
     static bool cached = false;
@@ -373,53 +342,14 @@ QString LinuxPlatform::getWindowManagerName()
     return wmName;
 }
 
-void LinuxPlatform::enableDialogBlur(QDialog*)
-{
-
-}
-
-bool LinuxPlatform::registerUpdateJob()
+bool PlatformImplementation::registerUpdateJob()
 {
     return true;
 }
 
-void LinuxPlatform::uninstall()
-{
-
-}
-
-QStringList LinuxPlatform::getListRunningProcesses()
-{
-    QProcess p;
-    p.start(QString::fromUtf8("ps ax -o comm"));
-    p.waitForFinished(2000);
-    QString output = QString::fromUtf8(p.readAllStandardOutput().constData());
-    QString e = QString::fromUtf8(p.readAllStandardError().constData());
-    if (e.size())
-    {
-        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Error for \"ps ax -o comm\" command:");
-        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, e.toUtf8().constData());
-    }
-
-    p.start(QString::fromUtf8("/bin/bash -c \"readlink /proc/*/exe\""));
-    p.waitForFinished(2000);
-    QString output2 = QString::fromUtf8(p.readAllStandardOutput().constData());
-    e = QString::fromUtf8(p.readAllStandardError().constData());
-    if (e.size())
-    {
-        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Error for \"readlink /proc/*/exe\" command:");
-        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, e.toUtf8().constData());
-    }
-    QStringList data = output.split(QString::fromUtf8("\n"));
-
-    data.append(output2.split(QString::fromUtf8("\n")));
-
-    return data;
-}
-
 // Check if it's needed to start the local HTTP server
 // for communications with the webclient
-bool LinuxPlatform::shouldRunHttpServer()
+bool PlatformImplementation::shouldRunHttpServer()
 {
     QStringList data = getListRunningProcesses();
     if (data.size() > 1)
@@ -446,7 +376,7 @@ bool LinuxPlatform::shouldRunHttpServer()
 
 // Check if it's needed to start the local HTTPS server
 // for communications with the webclient
-bool LinuxPlatform::shouldRunHttpsServer()
+bool PlatformImplementation::shouldRunHttpsServer()
 {
     QStringList data = getListRunningProcesses();
 
@@ -474,28 +404,12 @@ bool LinuxPlatform::shouldRunHttpsServer()
     return false;
 }
 
-bool LinuxPlatform::isUserActive()
+bool PlatformImplementation::isUserActive()
 {
     return true;
 }
 
-xcb_atom_t getAtom(xcb_connection_t * const connection, const char *name)
-{
-    xcb_intern_atom_cookie_t cookie =
-      xcb_intern_atom(connection, 0, static_cast<uint16_t>(strlen(name)), name);
-    xcb_intern_atom_reply_t *reply =
-      xcb_intern_atom_reply(connection, cookie, nullptr);
-
-    if (!reply)
-        return XCB_ATOM_NONE;
-
-    xcb_atom_t result = reply->atom;
-    free(reply);
-
-    return result;
-}
-
-QString LinuxPlatform::getDeviceName()
+QString PlatformImplementation::getDeviceName()
 {
     // First, try to read maker and model
     QString vendor;
@@ -529,7 +443,7 @@ QString LinuxPlatform::getDeviceName()
     return deviceName;
 }
 
-void LinuxPlatform::initMenu(QMenu* m)
+void PlatformImplementation::initMenu(QMenu* m)
 {
     if (m)
     {
@@ -566,12 +480,73 @@ void LinuxPlatform::initMenu(QMenu* m)
     }
 }
 
-std::shared_ptr<AbstractShellNotifier> LinuxPlatform::getShellNotifier()
+void PlatformImplementation::fileSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func)
 {
-    return mShellNotifier;
+    if (defaultDir.isEmpty())
+    {
+        defaultDir = QString::fromUtf8("/");
+    }
+    AbstractPlatform::fileSelector(title, defaultDir, multiSelection, parent, func);
 }
 
-// Platform-specific strings
-const char* LinuxPlatform::settingsString {QT_TRANSLATE_NOOP("Platform", "Settings")};
-const char* LinuxPlatform::exitString {QT_TRANSLATE_NOOP("Platform", "Exit")};
-const char* LinuxPlatform::fileExplorerString {QT_TRANSLATE_NOOP("Platform", "Show in folder")};
+void PlatformImplementation::folderSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func)
+{
+    if (defaultDir.isEmpty())
+    {
+        defaultDir = QString::fromUtf8("/");
+    }
+    AbstractPlatform::folderSelector(title, defaultDir, multiSelection, parent, func);
+}
+void PlatformImplementation::fileAndFolderSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func)
+{
+    if (defaultDir.isEmpty())
+    {
+        defaultDir = QString::fromUtf8("/");
+    }
+    AbstractPlatform::fileAndFolderSelector(title, defaultDir, multiSelection, parent, func);
+}
+
+QStringList PlatformImplementation::getListRunningProcesses()
+{
+    QProcess p;
+    p.start(QString::fromUtf8("ps ax -o comm"));
+    p.waitForFinished(2000);
+    QString output = QString::fromUtf8(p.readAllStandardOutput().constData());
+    QString e = QString::fromUtf8(p.readAllStandardError().constData());
+    if (e.size())
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Error for \"ps ax -o comm\" command:");
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, e.toUtf8().constData());
+    }
+
+    p.start(QString::fromUtf8("/bin/bash -c \"readlink /proc/*/exe\""));
+    p.waitForFinished(2000);
+    QString output2 = QString::fromUtf8(p.readAllStandardOutput().constData());
+    e = QString::fromUtf8(p.readAllStandardError().constData());
+    if (e.size())
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Error for \"readlink /proc/*/exe\" command:");
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, e.toUtf8().constData());
+    }
+    QStringList data = output.split(QString::fromUtf8("\n"));
+
+    data.append(output2.split(QString::fromUtf8("\n")));
+
+    return data;
+}
+
+xcb_atom_t PlatformImplementation::getAtom(xcb_connection_t * const connection, const char *name)
+{
+    xcb_intern_atom_cookie_t cookie =
+      xcb_intern_atom(connection, 0, static_cast<uint16_t>(strlen(name)), name);
+    xcb_intern_atom_reply_t *reply =
+      xcb_intern_atom_reply(connection, cookie, nullptr);
+
+    if (!reply)
+        return XCB_ATOM_NONE;
+
+    xcb_atom_t result = reply->atom;
+    free(reply);
+
+    return result;
+}

@@ -64,8 +64,7 @@ private:
     int mSortColumn;
     Qt::SortOrder mOrder;
     QFutureWatcher<void> mFilterWatcher;
-    QEventLoop loop;
-    QModelIndexList itemsToMap;
+    QModelIndexList mItemsToMap;
     bool mExpandMapped;
     bool mForceInvalidate;
 

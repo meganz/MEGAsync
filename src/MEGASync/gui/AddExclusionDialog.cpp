@@ -1,9 +1,9 @@
 #include "AddExclusionDialog.h"
 #include "ui_AddExclusionDialog.h"
-#include "gui/MultiQFileDialog.h"
 #include "QMegaMessageBox.h"
 #include "Utilities.h"
 #include "DialogOpener.h"
+#include "Platform.h"
 
 #include <QPointer>
 
@@ -50,18 +50,17 @@ void AddExclusionDialog::on_bOk_clicked()
 
 void AddExclusionDialog::on_bChoose_clicked()
 {
-#ifdef __APPLE__
-    QPointer<MultiQFileDialog> fileDialog = new MultiQFileDialog(0,  tr("Select the file or folder you want to exclude"), QDir::home().path(), false);
-    fileDialog->setOptions(QFileDialog::DontResolveSymlinks);
-    DialogOpener::showDialog<MultiQFileDialog>(fileDialog,[fileDialog, this](){
-        if (fileDialog->result() == QDialog::Accepted && !fileDialog->selectedFiles().isEmpty())
+    auto processResult = [this](QStringList selection){
+        if(!selection.isEmpty())
         {
-            setTextToExclusionItem(fileDialog->selectedFiles().value(0));
+            setTextToExclusionItem(selection.first());
         }
-    });
+    };
+
+#ifdef __APPLE__
+    Platform::getInstance()->fileAndFolderSelector(tr("Select the file or folder you want to exclude"),QDir::home().path(), false, this, processResult);
 #else
-    QString fPath = QFileDialog::getExistingDirectory(0,  tr("Select the folder you want to exclude"), QDir::home().path());
-    setTextToExclusionItem(fPath);
+    Platform::getInstance()->fileAndFolderSelector(tr("Select the folder you want to exclude"),QDir::home().path(), false, this, processResult);
 #endif
 }
 
@@ -79,14 +78,13 @@ void AddExclusionDialog::setTextToExclusionItem(const QString& path)
 #ifndef __APPLE__
 void AddExclusionDialog::on_bChooseFile_clicked()
 {
-    QPointer<AddExclusionDialog> currentDialog = this;
-    QString fPath = QFileDialog::getOpenFileName(0,  tr("Select the file you want to exclude"), QDir::home().path());
-    if (!currentDialog || !fPath.size())
-    {
-        return;
-    }
-
-    ui->eExclusionItem->setText(QDir::toNativeSeparators(fPath));
+    Platform::getInstance()->fileSelector(tr("Select the file you want to exclude"),QDir::home().path(), false, this,
+                                          [](QStringList selection){
+        if(!selection.isEmpty())
+        {
+            ui->eExclusionItem->setText(QDir::toNativeSeparators(fPath));
+        }
+    });
 }
 #endif
 

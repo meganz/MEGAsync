@@ -425,6 +425,7 @@ endif (NOT CMAKE_HOST_APPLE)
 
 if (CMAKE_HOST_WIN32)
     set (MOC_INPUT ${MOC_INPUT}
+        ${MEGAsyncDir}/platform/win/PlatformImplementation.h
         ${MEGAsyncDir}/platform/win/WinShellDispatcherTask.h
         )
 elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
@@ -433,7 +434,7 @@ elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
         ${MEGAsyncDir}/gui/PermissionsWidget.h
 
 
-        ${MEGAsyncDir}/platform/linux/LinuxPlatform.h
+        ${MEGAsyncDir}/platform/linux/PlatformImplementation.h
         ${MEGAsyncDir}/platform/linux/ExtServer.h
         ${MEGAsyncDir}/platform/linux/NotifyServer.h
         )
@@ -450,12 +451,12 @@ else()
         ${MEGAsyncDir}/gui/QMacSpinningProgressIndicator.h
         ${MEGAsyncDir}/gui/QSegmentedControl.h
 
+        ${MEGAsyncDir}/platform/macx/PlatformImplementation.h
 	    ${MEGAsyncDir}/notifications/macx/NotificationHandler.h
         ${MEGAsyncDir}/notifications/macx/NotificationDelegate.h
         ${MEGAsyncDir}/notifications/macx/NSUserNotificationHandler.h
         ${MEGAsyncDir}/notifications/macx/UNUserNotificationHandler.h
 
-        ${MEGAsyncDir}/platform/macx/MacXPlatform.h
         ${MEGAsyncDir}/platform/macx/MacXFunctions.h
         ${MEGAsyncDir}/platform/macx/MacXSystemServiceTask.h
         ${MEGAsyncDir}/platform/macx/MEGAService.h
@@ -645,6 +646,8 @@ set (SRCS
     ${MEGAsyncDir}/syncs/control/SyncInfo.cpp
 
     ${MEGAsyncDir}/platform/ShellNotifier.cpp
+    ${MEGAsyncDir}/platform/AbstractPlatform.cpp
+    ${MEGAsyncDir}/platform/Platform.cpp
 
     ${MEGAsyncDir}/qtlockedfile/qtlockedfile.cpp
 )
@@ -668,7 +671,7 @@ if (CMAKE_HOST_WIN32)
 
         ${MEGAsyncDir}/platform/win/RecursiveShellNotifier.cpp
         ${MEGAsyncDir}/platform/win/ThreadedQueueShellNotifier.cpp
-        ${MEGAsyncDir}/platform/win/WindowsPlatform.cpp
+        ${MEGAsyncDir}/platform/win/PlatformImplementation.cpp
         ${MEGAsyncDir}/platform/win/WinShellDispatcherTask.cpp
         ${MEGAsyncDir}/platform/win/WinTrayReceiver.cpp
         ${MEGAsyncDir}/platform/win/wintoastlib.cpp
@@ -703,7 +706,7 @@ elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
         ${MEGAsyncDir}/google_breakpad/common/string_conversion.cc
         ${MEGAsyncDir}/google_breakpad/common/convert_UTF.c
 
-        ${MEGAsyncDir}/platform/linux/LinuxPlatform.cpp
+        ${MEGAsyncDir}/platform/linux/PlatformImplementation.cpp
         ${MEGAsyncDir}/platform/linux/ExtServer.cpp
         ${MEGAsyncDir}/platform/linux/NotifyServer.cpp
         ${MEGAsyncDir}/platform/linux/PlatformStrings.cpp
@@ -766,7 +769,7 @@ else()
         ${MEGAsyncDir}/platform/macx/Protocol.h
         ${MEGAsyncDir}/platform/macx/QCustomMacToolbar.h
 
-        ${MEGAsyncDir}/platform/macx/MacXPlatform.cpp
+        ${MEGAsyncDir}/platform/macx/PlatformImplementation.cpp
         ${MEGAsyncDir}/platform/macx/PlatformStrings.cpp
         ${MEGAsyncDir}/platform/macx/PowerOptions.mm
         ${MEGAsyncDir}/platform/macx/MacXFunctions.mm

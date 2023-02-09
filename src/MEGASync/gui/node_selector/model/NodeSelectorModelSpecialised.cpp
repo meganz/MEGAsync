@@ -139,6 +139,7 @@ void NodeSelectorModelIncomingShares::firstLoad()
 ///////////////////////////////////////////////////////////////////////////////////////////////
 NodeSelectorModelBackups::NodeSelectorModelBackups(QObject *parent)
     : NodeSelectorModel(parent)
+    , mBackupDevicesSize(0)
 {
 }
 
@@ -203,20 +204,32 @@ bool NodeSelectorModelBackups::addToLoadingList(const std::shared_ptr<MegaNode> 
     return node && node->getType() != mega::MegaNode::TYPE_VAULT;
 }
 
-void NodeSelectorModelBackups::continueLoading(NodeSelectorModelItem *item)
+void NodeSelectorModelBackups::loadLevelFinished()
 {
-    if(item->isVault())
+    if(mIndexesActionInfo.indexesToBeExpanded.size() == 1 && mIndexesActionInfo.indexesToBeExpanded.at(0) == index(0, 0))
     {
         QModelIndex rootIndex(index(0, 0));
         int rowcount = rowCount(rootIndex);
-       for(int i = 0 ; i < rowcount; i++)
-       {
-           auto idx = index(i, 0, rootIndex);
-           if(canFetchMore(idx))
-           {
-               fetchItemChildren(idx);
-           }
-       }
+        for(int i = 0 ; i < rowcount; i++)
+        {
+            auto idx = index(i, 0, rootIndex);
+            if(canFetchMore(idx))
+            {
+                mBackupDevicesSize++;
+                fetchItemChildren(idx);
+            }
+        }
+    }
+    else
+    {
+        if(mBackupDevicesSize > 0)
+        {
+            mBackupDevicesSize--;
+        }
+        if(mBackupDevicesSize == 0)
+        {
+            emit levelsAdded(mIndexesActionInfo.indexesToBeExpanded);
+        }
     }
 }
 
@@ -230,8 +243,9 @@ void NodeSelectorModelBackups::onRootItemCreated(NodeSelectorModelItem *item)
     }
     else
     {
+
+        QModelIndex rootIndex(index(0, 0));
         //Add the item of the Backups Drive
-        auto rootIndex(index(0,0));
         if(canFetchMore(rootIndex))
         {
             fetchItemChildren(rootIndex);

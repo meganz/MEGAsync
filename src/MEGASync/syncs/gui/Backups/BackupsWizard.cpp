@@ -9,6 +9,7 @@
 #include "UserAttributesRequests/MyBackupsHandle.h"
 #include "syncs/gui/Backups/BackupNameConflictDialog.h"
 #include "syncs/gui/SyncTooltipCreator.h"
+#include "Platform.h"
 
 #include "megaapi.h"
 
@@ -629,61 +630,63 @@ void BackupsWizard::on_bCancel_clicked()
 
 void BackupsWizard::on_bMoreFolders_clicked()
 {
-    QString d (QFileDialog::getExistingDirectory(this,
-                                                 tr("Choose directory"),
-                                                 Utilities::getDefaultBasePath(),
-                                                 QFileDialog::ShowDirsOnly
-                                                 | QFileDialog::DontResolveSymlinks));
-    QDir dir (QDir::cleanPath(d));
-    QString path (QDir::toNativeSeparators(dir.canonicalPath()));
-
-    if (!d.isEmpty() && dir.exists() && isFolderSyncable(path, true))
+    auto processResult = [this](QStringList paths)
     {
-        QStandardItem* existingBackup (nullptr);
-
-        // Check for path collision.
-        int nbBackups (mFoldersModel->rowCount());
-        int row (0);
-
-        while (existingBackup == nullptr && row < nbBackups)
+        if(!paths.isEmpty())
         {
-            auto currItem = mFoldersModel->itemData(mFoldersModel->index(row, 0));
-            if (path == currItem[Qt::UserRole].toString())
+            QDir dir (QDir::cleanPath(paths.first()));
+            QString path (QDir::toNativeSeparators(dir.canonicalPath()));
+
+            if (!path.isEmpty() && dir.exists() && isFolderSyncable(path, true))
             {
-                // If folder is already backed up, set pointer
-                existingBackup = mFoldersModel->item(row);
+                QStandardItem* existingBackup (nullptr);
+
+                // Check for path collision.
+                int nbBackups (mFoldersModel->rowCount());
+                int row (0);
+
+                while (existingBackup == nullptr && row < nbBackups)
+                {
+                    auto currItem = mFoldersModel->itemData(mFoldersModel->index(row, 0));
+                    if (path == currItem[Qt::UserRole].toString())
+                    {
+                        // If folder is already backed up, set pointer
+                        existingBackup = mFoldersModel->item(row);
+                    }
+                    row++;
+                }
+
+                // Add backup
+                QStandardItem* item (nullptr);
+                if (existingBackup != nullptr)
+                {
+                    item = existingBackup;
+                }
+                else
+                {
+                    QIcon icon (QIcon(QLatin1String("://images/icons/folder/folder-mono_24.png")));
+                    item = new QStandardItem(SyncController::getSyncNameFromPath(path));
+                    item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
+                    item->setData(SyncTooltipCreator::createForLocal(path), Qt::ToolTipRole);
+                    item->setData(path, Qt::UserRole);
+                    item->setData(icon, Qt::DecorationRole);
+                    mFoldersModel->insertRow(0, item);
+                }
+                item->setData(Qt::Checked, Qt::CheckStateRole);
+
+                // Jump to item in list
+                auto idx = mFoldersModel->indexFromItem(item);
+                mUi->lvFoldersStep1->scrollTo(idx, QAbstractItemView::PositionAtCenter);
+                mUi->bMoreFolders->setText(tr("More folders"));
+                mUi->wDeviceNameStep1->setProperty(EMPTY_PROPERTY, false);
+                mUi->wDeviceNameStep1->setStyleSheet(mUi->wDeviceNameStep1->styleSheet());
+
+                onItemChanged();
+                updateSize();
             }
-            row++;
         }
-
-        // Add backup
-        QStandardItem* item (nullptr);
-        if (existingBackup != nullptr)
-        {
-            item = existingBackup;
-        }
-        else
-        {
-            QIcon icon (QIcon(QLatin1String("://images/icons/folder/folder-mono_24.png")));
-            item = new QStandardItem(SyncController::getSyncNameFromPath(path));
-            item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
-            item->setData(SyncTooltipCreator::createForLocal(path), Qt::ToolTipRole);
-            item->setData(path, Qt::UserRole);
-            item->setData(icon, Qt::DecorationRole);
-            mFoldersModel->insertRow(0, item);
-        }
-        item->setData(Qt::Checked, Qt::CheckStateRole);
-
-        // Jump to item in list
-        auto idx = mFoldersModel->indexFromItem(item);
-        mUi->lvFoldersStep1->scrollTo(idx, QAbstractItemView::PositionAtCenter);
-        mUi->bMoreFolders->setText(tr("More folders"));
-        mUi->wDeviceNameStep1->setProperty(EMPTY_PROPERTY, false);
-        mUi->wDeviceNameStep1->setStyleSheet(mUi->wDeviceNameStep1->styleSheet());
-
-        onItemChanged();
-        updateSize();
-    }
+    };
+    Platform::getInstance()->folderSelector(tr("Select local folder"),Utilities::getDefaultBasePath(),false,this,processResult);
 }
 
 void BackupsWizard::on_bBack_clicked()

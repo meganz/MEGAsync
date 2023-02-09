@@ -124,7 +124,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     //Set window properties
 #ifdef Q_OS_LINUX
-    doNotActAsPopup = Platform::getValue("USE_MEGASYNC_AS_REGULAR_WINDOW", false);
+    doNotActAsPopup = Platform::getInstance()->getValue("USE_MEGASYNC_AS_REGULAR_WINDOW", false);
 
     if (!doNotActAsPopup && QSystemTrayIcon::isSystemTrayAvailable())
     {
@@ -133,7 +133,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
         // event.
         Qt::WindowFlags flags = Qt::FramelessWindowHint;
 
-        if (Platform::isTilingWindowManager())
+        if (Platform::getInstance()->isTilingWindowManager())
         {
             flags |= Qt::Dialog;
         }
@@ -904,13 +904,25 @@ void InfoDialog::updateDialogState()
     }
     else if(transferOverQuotaEnabled)
     {
+        ui->lOQTitle->setText(tr("Transfer quota exceeded"));
+
+        if(mPreferences->accountType() == Preferences::ACCOUNT_TYPE_FREE)
+        {
+            ui->lOQDesc->setText(tr("Your queued transfers exceed the current quota available for your IP address."));
+            ui->bBuyQuota->setText(tr("Upgrade Account"));
+            ui->bDiscard->setText(tr("I will wait"));
+        }
+        else
+        {
+
+            ui->lOQDesc->setText(tr("You can't continue downloading as you don't have enough transfer quota left on this account. "
+                                    "To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, "
+                                    "you can wait for your plan to renew."));
+            ui->bBuyQuota->setText(tr("Buy new plan"));
+            ui->bDiscard->setText(tr("Dismiss"));
+        }
         ui->bOQIcon->setIcon(QIcon(QString::fromAscii(":/images/transfer_empty_64.png")));
         ui->bOQIcon->setIconSize(QSize(64,64));
-        ui->lOQTitle->setText(tr("Depleted transfer quota."));
-        ui->lOQDesc->setText(tr("All downloads are currently disabled.")
-                                + QString::fromUtf8("<br>")
-                                + tr("Please upgrade to PRO."));
-        ui->bBuyQuota->setText(tr("Upgrade"));
         ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
         overlay->setVisible(false);
         ui->wPSA->hidePSA();
@@ -932,9 +944,11 @@ void InfoDialog::updateDialogState()
         ui->bOQIcon->setIcon(QIcon(QString::fromAscii(":/images/transfer_empty_64.png")));
         ui->bOQIcon->setIconSize(QSize(64,64));
         ui->lOQTitle->setText(tr("Limited available transfer quota"));
-        ui->lOQDesc->setText(tr("Your queued transfers exceed the current quota available for your IP"
-                                " address and can therefore be interrupted."));
-        ui->bBuyQuota->setText(tr("Upgrade"));
+        ui->lOQDesc->setText(tr("Downloading may be interrupted as you have used 90% of your transfer quota on this "
+                                "account. To continue downloading, purchase a new plan, or if you have a recurring "
+                                "subscription with MEGA, you can wait for your plan to renew. "));
+        ui->bBuyQuota->setText(tr("Buy new plan"));
+
         ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
         overlay->setVisible(false);
         ui->wPSA->hidePSA();

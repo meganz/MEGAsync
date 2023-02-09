@@ -50,7 +50,7 @@ void NodeSelectorProxyModel::sort(int column, Qt::SortOrder order)
                 sourceModel()->blockSignals(true);
                 invalidateFilter();
                 QSortFilterProxyModel::sort(column, order);
-                for (auto it = itemsToMap.rbegin(); it != itemsToMap.rend(); ++it)
+                for (auto it = mItemsToMap.crbegin(); it != mItemsToMap.crend(); ++it)
                 {
                     auto proxyIndex = mapFromSource((*it));
                     hasChildren(proxyIndex);
@@ -264,7 +264,7 @@ bool NodeSelectorProxyModel::canBeDeleted() const
 
 void NodeSelectorProxyModel::invalidateModel(const QModelIndexList& parents, bool force)
 {
-    itemsToMap = parents;
+    mItemsToMap = parents;
     mForceInvalidate = force;
     sort(mSortColumn, mOrder);
 }
@@ -289,7 +289,7 @@ void NodeSelectorProxyModel::onModelSortedFiltered()
     }
     else
     {
-        emit navigateReady(itemsToMap.isEmpty() ? QModelIndex() : mapFromSource(itemsToMap.first()));
+        emit navigateReady(mItemsToMap.isEmpty() ? QModelIndex() : mapFromSource(mItemsToMap.first()));
         if(auto nodeSelectorModel = dynamic_cast<NodeSelectorModel*>(sourceModel()))
         {
             nodeSelectorModel->clearIndexesNodeInfo();
@@ -297,8 +297,7 @@ void NodeSelectorProxyModel::onModelSortedFiltered()
         mExpandMapped = true;
     }
     emit getMegaModel()->blockUi(false);
-    itemsToMap.clear();
-
+    mItemsToMap.clear();
 }
 
 NodeSelectorProxyModelSearch::NodeSelectorProxyModelSearch(QObject *parent)

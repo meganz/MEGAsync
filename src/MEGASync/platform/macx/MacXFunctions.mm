@@ -78,116 +78,69 @@ QStringList qt_mac_NSArrayToQStringList(void *nsarray)
     return result;
 }
 
-void selectMultipleFiles(QString uploadTitle, QString defaultDir, bool showFiles, bool showFolders, bool modal, std::function<void(QStringList)> func)
+
+void selectorsImpl(QString title, QString defaultDir, bool multiSelection, bool showFiles, bool showFolders, QWidget *parent, std::function<void (QStringList)> func)
 {
     QStringList uploads;
 
-    if(multipleSelectionPanel)
+    if(panel)
     {
-        [multipleSelectionPanel close];
-        multipleSelectionPanel = NULL;
+        [panel close];
+        panel = NULL;
     }
 
-    if (!multipleSelectionPanel)
+    if (!panel)
     {
-        multipleSelectionPanel = [NSOpenPanel openPanel];
-        if(!modal)
+        panel = [NSOpenPanel openPanel];
+        if(!parent)
         {
-            [multipleSelectionPanel setTitle:[NSString stringWithUTF8String:uploadTitle.toUtf8().constData()]];
+            [panel setTitle:[NSString stringWithUTF8String:title.toUtf8().constData()]];
         }
-        [multipleSelectionPanel setCanChooseFiles: showFiles ? YES : NO];
-        [multipleSelectionPanel setCanChooseDirectories:showFolders ? YES : NO];
-        [multipleSelectionPanel setAllowsMultipleSelection:YES];
+        [panel setCanChooseFiles: showFiles ? YES : NO];
+        [panel setCanChooseDirectories:showFolders ? YES : NO];
+        [panel setAllowsMultipleSelection:multiSelection ? YES : NO];
         if(!defaultDir.isEmpty())
         {
             NSURL *baseURL = [NSURL fileURLWithPath:[NSString stringWithUTF8String:defaultDir.toUtf8().constData()]];
-            [multipleSelectionPanel setDirectoryURL:baseURL];
+            [panel setDirectoryURL:baseURL];
         }
 
-        if(modal)
+        if(parent)
         {
-            NSInteger clicked = [multipleSelectionPanel runModal];
-            if (clicked == NSFileHandlingPanelOKButton)
-            {
-                func(qt_mac_NSArrayToQStringList([multipleSelectionPanel URLs]));
-            }
-            multipleSelectionPanel = NULL;
+            NSView* nsview = (__bridge NSView*)reinterpret_cast<void*>(parent->window()->winId());
+            NSWindow *nswindow = [nsview window];
+            [panel beginSheetModalForWindow: nswindow
+                                             completionHandler:^(NSInteger result) {
+                QStringList selection;
+                if(result  == NSFileHandlingPanelOKButton)
+                {
+                    selection = qt_mac_NSArrayToQStringList([panel URLs]);
+                }
+                func(selection);
+                panel = NULL;
+            }];
         }
         else
         {
-            [multipleSelectionPanel beginWithCompletionHandler:^(NSInteger result){
-
-                if (result == NSFileHandlingPanelOKButton)
+            [panel beginWithCompletionHandler:^(NSInteger result){
+                QStringList selection;
+                if(result  == NSFileHandlingPanelOKButton)
                 {
-                    func(qt_mac_NSArrayToQStringList([multipleSelectionPanel URLs]));
+                    selection = qt_mac_NSArrayToQStringList([panel URLs]);
                 }
-                multipleSelectionPanel = NULL;
+                func(selection);
+                panel = NULL;
             }];
-            raiseFileSelectionPanels();
         }
-    }
-}
-
-void selectSingleFiles(QString uploadTitle, QString defaultDir, bool showFiles, bool showFolders, bool modal, std::function<void(QString)> func)
-{
-    QStringList uploads;
-
-    if(singleSelectionPanel)
-    {
-        [singleSelectionPanel close];
-        singleSelectionPanel = NULL;
-    }
-
-    if (!singleSelectionPanel)
-    {
-        singleSelectionPanel = [NSOpenPanel openPanel];
-        if(!modal)
-        {
-            [singleSelectionPanel setTitle:[NSString stringWithUTF8String:uploadTitle.toUtf8().constData()]];
-        }
-        [singleSelectionPanel setCanChooseFiles: showFiles ? YES : NO];
-        [singleSelectionPanel setCanChooseDirectories:showFolders ? YES : NO];
-        [singleSelectionPanel setAllowsMultipleSelection:NO];
-        if(!defaultDir.isEmpty())
-        {
-            NSURL *baseURL = [NSURL fileURLWithPath:[NSString stringWithUTF8String:defaultDir.toUtf8().constData()]];
-            [singleSelectionPanel setDirectoryURL:baseURL];
-        }
-
-        if(modal)
-        {
-            NSInteger clicked = [singleSelectionPanel runModal];
-            if (clicked == NSFileHandlingPanelOKButton)
-            {
-                func(qt_mac_NSArrayToQStringList([singleSelectionPanel URLs]).first());
-            }
-            singleSelectionPanel = NULL;
-        }
-        else
-        {
-            [singleSelectionPanel beginWithCompletionHandler:^(NSInteger result){
-
-                if (result == NSFileHandlingPanelOKButton)
-                {
-                    func(qt_mac_NSArrayToQStringList([singleSelectionPanel URLs]).first());
-                }
-                singleSelectionPanel = NULL;
-            }];
-            raiseFileSelectionPanels();
-        }
+        raiseFileSelectionPanels();
     }
 }
 
 void raiseFileSelectionPanels()
 {
-    if(multipleSelectionPanel)
+    if(panel)
     {
-        [multipleSelectionPanel orderFrontRegardless];
-    }
-
-    if(singleSelectionPanel)
-    {
-        [singleSelectionPanel orderFrontRegardless];
+        [panel orderFrontRegardless];
     }
 }
 

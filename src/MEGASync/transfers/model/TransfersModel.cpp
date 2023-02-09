@@ -643,6 +643,9 @@ TransfersModel::TransfersModel(QObject *parent) :
     connect(&mClearTransferWatcher, &QFutureWatcher<void>::finished, this, &TransfersModel::onClearTransfersFinished);
     connect(&mAskForMostPriorityTransfersWatcher, &QFutureWatcher<QPair<int,int>>::finished, this, &TransfersModel::onAskForMostPriorityTransfersFinished);
 
+    connect(mTransferEventThread, &QThread::finished, mTransferEventThread, &QObject::deleteLater, Qt::DirectConnection);
+    connect(mTransferEventThread, &QThread::finished, mTransferEventWorker, &QObject::deleteLater, Qt::DirectConnection);
+
     connect(this, &TransfersModel::activeTransfersChanged, this, &TransfersModel::onKeepPCAwake);
 }
 
@@ -653,9 +656,6 @@ TransfersModel::~TransfersModel()
 
     // Cleanup
     mTransfers.clear();
-
-    connect(mTransferEventThread, &QThread::finished, mTransferEventThread, &QObject::deleteLater, Qt::DirectConnection);
-    connect(mTransferEventThread, &QThread::finished, mTransferEventWorker, &QObject::deleteLater, Qt::DirectConnection);
     mTransferEventThread->quit();
 
     mMegaApi->removeTransferListener(mDelegateListener);
@@ -1185,7 +1185,7 @@ void TransfersModel::openFolder(const QFileInfo& info)
     {
         QtConcurrent::run([this, info]
         {
-            emit showInFolderFinished(Platform::showInFolder(info.filePath()));
+            emit showInFolderFinished(Platform::getInstance()->showInFolder(info.filePath()));
         });
     }
 }

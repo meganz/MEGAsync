@@ -29,7 +29,6 @@ StreamingFromMegaDialog::StreamingFromMegaDialog(mega::MegaApi *megaApi, mega::M
     lastStreamSelection{LastStreamingSelection::NOT_SELECTED}
 {
     ui->setupUi(this);
-    setAttribute(Qt::WA_DeleteOnClose, true);
     Qt::WindowFlags flags =  Qt::Window | Qt::WindowSystemMenuHint
                                 | Qt::WindowMinimizeButtonHint
                                 | Qt::WindowCloseButtonHint;
@@ -73,6 +72,7 @@ void StreamingFromMegaDialog::closeEvent(QCloseEvent *event)
     if (!event->spontaneous() || !mSelectedMegaNode)
     {
         event->accept();
+        QDialog::closeEvent(event);
         return;
     }
 
@@ -85,6 +85,8 @@ void StreamingFromMegaDialog::closeEvent(QCloseEvent *event)
     {
         event->ignore();
     }
+
+    QDialog::closeEvent(event);
 }
 
 void StreamingFromMegaDialog::on_bFromCloud_clicked()
@@ -208,7 +210,7 @@ void StreamingFromMegaDialog::on_bOpenDefault_clicked()
     }
 
     QFileInfo fi(streamURL);
-    QString app = Platform::getDefaultOpenApp(fi.suffix());
+    QString app = Platform::getInstance()->getDefaultOpenApp(fi.suffix());
     openStreamWithApp(app);
 }
 

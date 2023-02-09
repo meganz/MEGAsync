@@ -252,9 +252,6 @@ public slots:
     void uploadActionClicked();
     void uploadActionClickedFromWidget(QWidget *openFrom);
     void uploadActionClickedFromWindowAfterOverQuotaCheck(QWidget *openFrom);
-#ifdef __APPLE__
-    void openNativeFileDialog(QWidget *openFrom, QString defaultDir, bool showFiles, bool showFolders);
-#endif
     void loginActionClicked();
     void copyFileLink(mega::MegaHandle fileHandle, QString nodeKey = QString());
     void downloadActionClicked();

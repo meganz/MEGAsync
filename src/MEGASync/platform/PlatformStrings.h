@@ -13,6 +13,10 @@ public:
     static QString backupsDisableWarning();
     static QString syncsAndBackupsDisableWarning();
     static QString cancelSyncsWarning();
+
+    static QString fileExplorer();
+    static QString settings();
+    static QString exit();
 };
 
 #endif // PLATFORMSTRINGS_H

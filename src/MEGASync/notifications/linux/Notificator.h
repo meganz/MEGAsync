@@ -27,7 +27,7 @@ public:
 #ifdef USE_DBUS
 public slots:
     void dBusNotificationSentCallback(QDBusMessage dbusMssage);
-    void dbusNotificationSentErrorCallback();
+    void dbusNotificationSentErrorCallback(QDBusError error);
     void dBusNotificationCallback(QDBusMessage dbusMssage);
 #endif
 

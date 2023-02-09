@@ -2,10 +2,10 @@
 #include "ui_ImportMegaLinksDialog.h"
 #include "gui/ImportListWidgetItem.h"
 #include "gui/node_selector/gui/NodeSelector.h"
-#include "gui/MultiQFileDialog.h"
 #include "Utilities.h"
 #include "MegaApplication.h"
 #include "QMegaMessageBox.h"
+#include "Platform.h"
 #include "DialogOpener.h"
 
 #include <QDesktopServices>
@@ -127,27 +127,13 @@ void ImportMegaLinksDialog::on_bLocalFolder_clicked()
 
     defaultPath = QDir::toNativeSeparators(defaultPath);
 
-#ifndef _WIN32
-    if (defaultPath.isEmpty())
-    {
-        defaultPath = QString::fromUtf8("/");
-    }
-
-    QPointer<MultiQFileDialog> fileDialog = new MultiQFileDialog(0,  tr("Select local folder"), defaultPath, false);
-    fileDialog->setOptions(QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
-    fileDialog->setFileMode(QFileDialog::DirectoryOnly);
-    DialogOpener::showDialog<MultiQFileDialog>(fileDialog, [fileDialog, this]()
-    {
-        if (fileDialog->result() == QDialog::Accepted && !fileDialog->selectedFiles().isEmpty())
+    Platform::getInstance()->folderSelector(tr("Select local folder"),defaultPath,false,this,[this](QStringList selection){
+        if(!selection.isEmpty())
         {
-            QString path = fileDialog->selectedFiles().value(0);
-            onLocalFolderSet(path);
+            QString fPath = selection.first();
+            onLocalFolderSet(fPath);
         }
     });
-#else
-    QString path = QFileDialog::getExistingDirectory(0,  tr("Select local folder"), defaultPath);
-    onLocalFolderSet(path);
-#endif
 }
 
 void ImportMegaLinksDialog::onLocalFolderSet(const QString& path)

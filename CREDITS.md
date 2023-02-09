@@ -5,7 +5,7 @@ We are grateful and thankful for their efforts and the opportunity to rely and
 extend on their existing body of work.
 
 ## Qt SDK
-http://www.qt.io/ © 2016 The Qt Company Ltd.
+http://www.qt.io/ © 2023 The Qt Company Ltd.
 
 ### Description
 Qt is the cross-platform framework for C++ GUI development.
@@ -38,7 +38,7 @@ MEGAsync uses this library to capture crashes on Windows and OS X
 ###### License:
 The BSD 3-Clause License
 
-https://chromium.googlesource.com/breakpad/breakpad/+/master/LICENSE
+https://chromium.googlesource.com/breakpad/breakpad/+/main/LICENSE
 
 --------------------------------------------------------------------
 
@@ -179,31 +179,84 @@ License: MIT license
 
 http://c-ares.haxx.se/license.html
 
+#### sodium:
+Copyright (c) 2013-2023, Frank Denis <j at pureftpd dot org>
+
+Sodium is a modern, portable, easy to use crypto library.
+
+https://libsodium.org/
+
+License: ISC License
+
+https://github.com/jedisct1/libsodium/blob/master/LICENSE
+
+#### SQLite
+SQLite is an in-process library that implements a self-contained, serverless, zero-configuration, transactional SQL database engine.
+
+http://www.sqlite.org/
+
+License: Public Domain
+
+http://www.sqlite.org/copyright.html
+
+#### zlib:
+copyright (c) 1995-2022 Jean-loup Gailly and Mark Adler.
+
+zlib is a general purpose data compression libray.
+
+http://zlib.net/
+
+License: zlib license.
+
+http://zlib.net/zlib_license.html
+
+#### freeimage
+Copyright (c) 2003-2023 by FreeImage. All rights reserved.
+
+FreeImage is an Open Source library project for developers who would like
+ to support popular graphics image formats like PNG, BMP, JPEG, TIFF and
+ others as needed by today's multimedia applications.
+
+This software uses the FreeImage open source image library.
+https://freeimage.sourceforge.io/ for details.
+
+License: FreeImage Public License - Version 1.0.
+
+https://freeimage.sourceforge.io/freeimage-license.txt
+
+#### libmediainfo:
+Copyright (c) MediaArea.net SARL. All rights reserved.
+
+MediaInfo(Lib) is a convenient unified display of the most relevant technical and tag data for video and audio files.
+
+License: BSD 2-Clause License
+
+https://github.com/MediaArea/MediaInfoLib/blob/master/LICENSE
+
 #### libcurl
-Copyright (C) 1998 - 2016, Daniel Stenberg, <daniel@haxx.se>, et al.
+Copyright (c) 1996 - 2023, Daniel Stenberg, <daniel@haxx.se>, et al.
 
 The multiprotocol file transfer library
 
-https://curl.haxx.se/libcurl/
+https://curl.se/libcurl/
 
 License:  MIT/X derivate license
 
-https://curl.haxx.se/docs/copyright.html
+https://curl.se/docs/copyright.html
 
 #### Crypto++
-Copyright (c) 1995-2013 by Wei Dai. (for the compilation) and public domain (for individual files)
+Copyright (c) 1995-2019 by Wei Dai. (for the compilation) and public domain (for individual files)
 
 Crypto++ Library is a free C++ class library of cryptographic schemes.
 
 https://www.cryptopp.com/
 
 License: Crypto++ Library is copyrighted as a compilation and (as of version 5.6.2) 
-
 licensed under the Boost Software License 1.0, while the individual files in 
 the compilation are all public domain.
 
 #### OpenSSL
-Copyright (c) 1998-2016 The OpenSSL Project.  All rights reserved.
+Copyright (c) 1998-2022 The OpenSSL Project. All rights reserved.
 
 A toolkit implementing SSL v2/v3 and TLS protocols with full-strength cryptography world-wide.
 
@@ -214,18 +267,19 @@ License: OpenSSL License
 https://github.com/openssl/openssl/blob/master/LICENSE
 
 #### libuv
+Copyright (c) 2015-present libuv project contributors.
 Copyright Joyent, Inc. and other Node contributors. All rights reserved.
 
 libuv is a multi-platform support library with a focus on asynchronous I/O.
 
-https://github.com/libuv/libuv
+https://libuv.org/
 
 License: MIT
 
 https://github.com/libuv/libuv/blob/v1.x/LICENSE
 
 #### LibRaw
-Copyright © 2008-2018 LibRaw LLC (info@libraw.org)
+Copyright © 2008-2023 LibRaw LLC (info@libraw.org)
 
 LibRaw is a library for reading RAW files obtained from digital photo cameras (CRW/CR2, NEF, RAF, DNG, and others).
 
@@ -241,11 +295,11 @@ Copyright 2014 PDFium Authors. All rights reserved.
 
 PDF generation and rendering library.
 
-https://opensource.google.com/projects/pdfium
+https://pdfium.googlesource.com/pdfium/
 
 License: BSD 3-clause
 
-https://pdfium.googlesource.com/pdfium/+/master/LICENSE
+https://pdfium.googlesource.com/pdfium/+/main/LICENSE
 
 #### FFmpeg
 This software uses code of <a href=http://ffmpeg.org>FFmpeg</a> licensed under the <a href=http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html>LGPLv2.1</a> and its source can be downloaded <a href=https://www.ffmpeg.org/download.html>here</a>

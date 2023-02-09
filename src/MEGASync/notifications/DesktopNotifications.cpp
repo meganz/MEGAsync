@@ -684,35 +684,33 @@ void DesktopNotifications::actionPressedOnDownloadFinishedTransferNotification(M
     {
         return;
     }
-    if(notification)
-    {
-        auto dataId = notification->getData().toULongLong();
-        auto data = TransferMetaDataContainer::getAppData<DownloadTransferMetaData>(dataId);
-        if(data)
-        {
 
-            switch(action)
+    auto dataId = notification->getData().toULongLong();
+    auto data = TransferMetaDataContainer::getAppData<DownloadTransferMetaData>(dataId);
+    if(data)
+    {
+
+        switch(action)
+        {
+        case MegaNotification::Action::firstButton:
+        {
+            if(data->isSingleTransfer() && !data->getLocalPaths().isEmpty())
             {
-            case MegaNotification::Action::firstButton:
-            {
-                if(data->isSingleTransfer() && !data->getLocalPaths().isEmpty())
-                {
-                    Platform::showInFolder(data->getLocalPaths().first());
-                }
-                else
-                {
-                    auto path = data->getData().toString();
-                    QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(path));
-                }
-                break;
+                Platform::getInstance()->showInFolder(data->getLocalPaths().first());
             }
-            case MegaNotification::Action::secondButton:
+            else
             {
                 auto path = data->getData().toString();
                 QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(path));
-                break;
             }
-            }
+            break;
+        }
+        case MegaNotification::Action::secondButton:
+        {
+            auto path = data->getData().toString();
+            QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(path));
+            break;
+        }
         }
     }
 }
@@ -724,7 +722,8 @@ void DesktopNotifications::actionPressedOnUploadFinishedTransferNotification(Meg
     {
         return;
     }
-    if(notification && notification->getData().isValid())
+    
+    if(notification->getData().isValid())
     {
         auto dataId = notification->getData().toULongLong();
         auto data = TransferMetaDataContainer::getAppData(dataId);

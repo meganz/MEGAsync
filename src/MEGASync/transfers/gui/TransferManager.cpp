@@ -73,7 +73,7 @@ TransferManager::TransferManager(MegaApi *megaApi) :
 
     mModel = mUi->wTransfers->getModel();
 
-    Platform::enableDialogBlur(this);
+    Platform::getInstance()->enableDialogBlur(this);
 
     mUi->wSearch->hide();
     mUi->wMediaType->hide();
@@ -1146,7 +1146,6 @@ void TransferManager::on_bDownload_clicked()
 
 void TransferManager::on_bUpload_clicked()
 {
-    DialogBlocker blocker(this);
     MegaSyncApp->uploadActionClickedFromWidget(this);
 }
 
