@@ -81,8 +81,10 @@ void NodeRowDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
 
 bool NodeRowDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view, const QStyleOptionViewItem &option, const QModelIndex &index)
 {
-    if ( !event || !view )
+    if ( !event || !view || !index.isValid())
+    {
         return false;
+    }
 
     if (event->type() == QEvent::ToolTip)
     {
@@ -100,8 +102,10 @@ bool NodeRowDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view, cons
                 QToolTip::showText(event->globalPos(), tooltipText);
                 return true;
         }
-        if ( !QStyledItemDelegate::helpEvent( event, view, option, index ) )
+        if (!QStyledItemDelegate::helpEvent(event, view, option, index))
+        {
             QToolTip::hideText();
+        }
         return true;
     }
 
@@ -150,8 +154,10 @@ void DateColumnDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
 
 bool DateColumnDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view, const QStyleOptionViewItem &option, const QModelIndex &index)
 {
-    if ( !event || !view )
+    if (!event || !view || !index.isValid())
+    {
         return false;
+    }
 
     if (event->type() == QEvent::ToolTip)
     {
@@ -165,12 +171,14 @@ bool DateColumnDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view, c
                 QToolTip::showText(event->globalPos(), tooltipText);
                 return true;
         }
-        if ( !QStyledItemDelegate::helpEvent( event, view, option, index ) )
+        if (!QStyledItemDelegate::helpEvent(event, view, option, index))
+        {
             QToolTip::hideText();
+        }
         return true;
     }
 
-    return QStyledItemDelegate::helpEvent(event, view, option, index );
+    return QStyledItemDelegate::helpEvent(event, view, option, index);
 }
 
 void DateColumnDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const

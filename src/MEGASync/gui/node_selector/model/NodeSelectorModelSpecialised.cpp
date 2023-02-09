@@ -218,16 +218,14 @@ void NodeSelectorModelBackups::loadLevelFinished()
             }
         }
     }
-    else
+
+    if(mBackupDevicesSize > 0)
     {
-        if(mBackupDevicesSize > 0)
-        {
-            mBackupDevicesSize--;
-        }
-        if(mBackupDevicesSize == 0)
-        {
-            emit levelsAdded(mIndexesActionInfo.indexesToBeExpanded);
-        }
+        mBackupDevicesSize--;
+    }
+    if(mBackupDevicesSize == 0)
+    {
+        emit levelsAdded(mIndexesActionInfo.indexesToBeExpanded);
     }
 }
 
