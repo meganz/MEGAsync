@@ -345,7 +345,7 @@ void StalledIssueFilePath::showHoverAction(QEvent::Type type, QWidget *actionWid
             {
                 QtConcurrent::run([=]
                 {
-                    Platform::showInFolder(path);
+                    Platform::getInstance()->showInFolder(path);
                 });
             }
             else
