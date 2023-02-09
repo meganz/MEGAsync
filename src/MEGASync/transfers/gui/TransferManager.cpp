@@ -40,7 +40,7 @@ const QString TransferManager::TRANSFER_QUOTA_WARNING = QString::fromUtf8(QT_TR_
                                                                                  "\nTo get more quota, upgrade to a Pro account or wait for [A] until more free quota becomes available on your IP address."));
 const QString TransferManager::TRANSFER_QUOTA_MORE_ABOUT = QLatin1String(QT_TR_NOOP("More about transfer quota"));
 
-TransferManager::TransferManager(MegaApi *megaApi) :
+TransferManager::TransferManager(TransfersWidget::TM_TAB tab, MegaApi *megaApi) :
     QDialog(nullptr),
     mUi(new Ui::TransferManager),
     mMegaApi(megaApi),
@@ -62,18 +62,6 @@ TransferManager::TransferManager(MegaApi *megaApi) :
     mDragBackDrop->hide();
 
     mUi->wTransfers->setupTransfers();
-
-#ifdef Q_OS_MACOS
-    mUi->leSearchField->setAttribute(Qt::WA_MacShowFocusRect,0);
-#else
-    Qt::WindowFlags flags =  Qt::Window;
-    this->setWindowFlags(flags);
-#endif
-
-    setAttribute(Qt::WA_DeleteOnClose, true);
-
-    mUi->lTextSearch->installEventFilter(this);
-    mUi->leSearchField->installEventFilter(this);
 
     mModel = mUi->wTransfers->getModel();
 
@@ -231,7 +219,6 @@ TransferManager::TransferManager(MegaApi *megaApi) :
     setAcceptDrops(true);
 
     // Init state
-
     auto storageState = MegaSyncApp->getAppliedStorageState();
     auto transferQuotaState = MegaSyncApp->getTransferQuotaState();
     onStorageStateChanged(storageState);
@@ -243,10 +230,7 @@ TransferManager::TransferManager(MegaApi *megaApi) :
 
     onUpdatePauseState(mPreferences->getGlobalPaused());
 
-    on_tAllTransfers_clicked();
-
-    //Update stats
-    onTransfersDataUpdated();
+    toggleTab(tab);
 
     mTransferScanCancelUi = new TransferScanCancelUi(mUi->sTransfers, mTabNoItem[TransfersWidget::ALL_TRANSFERS_TAB]);
     connect(mTransferScanCancelUi, &TransferScanCancelUi::cancelTransfers,
@@ -257,6 +241,18 @@ TransferManager::TransferManager(MegaApi *megaApi) :
     mUi->wUlResults->installEventFilter(this);
     mUi->lTransfers->installEventFilter(this);
     mUi->wLeftPane->installEventFilter(this);
+
+    mUi->lTextSearch->installEventFilter(this);
+    mUi->leSearchField->installEventFilter(this);
+
+#ifdef Q_OS_MACOS
+    mUi->leSearchField->setAttribute(Qt::WA_MacShowFocusRect,0);
+#else
+    Qt::WindowFlags flags =  Qt::Window;
+    this->setWindowFlags(flags);
+#endif
+
+    setAttribute(Qt::WA_DeleteOnClose, true);
 }
 
 
@@ -1474,7 +1470,7 @@ void TransferManager::dragLeaveEvent(QDragLeaveEvent *event)
 
 void TransferManager::updateTransferWidget(QWidget* widgetToShow)
 {
-    if (!mTransferScanCancelUi || !mTransferScanCancelUi->isActive())
+    if ( !mTransferScanCancelUi || !mTransferScanCancelUi->isActive())
     {
         if (mUi->sTransfers->currentWidget() != widgetToShow)
         {

@@ -1771,21 +1771,18 @@ void MegaApplication::closeDialogs(bool/* bwoverquota*/)
     verifyEmail.reset(nullptr);
 }
 
-void MegaApplication::createTransferManagerDialog()
+void MegaApplication::createTransferManagerDialog(TransfersWidget::TM_TAB tab)
 {
-    if(!mTransferManager)
-    {
-        mTransferManager = new TransferManager(megaApi);
-        infoDialog->setTransferManager(mTransferManager);
+    mTransferManager = new TransferManager(tab, megaApi);
+    infoDialog->setTransferManager(mTransferManager);
 
-        // Signal/slot to notify the tracking of unseen completed transfers of Transfer Manager. If Completed tab is
-        // active, tracking is disabled
-        connect(mTransferManager.data() , &TransferManager::userActivity, this, &MegaApplication::registerUserActivity);
-        connect(transferQuota.get(), &TransferQuota::sendState,
-                mTransferManager.data(), &TransferManager::onTransferQuotaStateChanged);
-        connect(mTransferManager.data(), SIGNAL(cancelScanning()), this, SLOT(cancelScanningStage()));
-        scanStageController.updateReference(mTransferManager);
-    }
+    // Signal/slot to notify the tracking of unseen completed transfers of Transfer Manager. If Completed tab is
+    // active, tracking is disabled
+    connect(mTransferManager.data() , &TransferManager::userActivity, this, &MegaApplication::registerUserActivity);
+    connect(transferQuota.get(), &TransferQuota::sendState,
+            mTransferManager.data(), &TransferManager::onTransferQuotaStateChanged);
+    connect(mTransferManager.data(), SIGNAL(cancelScanning()), this, SLOT(cancelScanningStage()));
+    scanStageController.updateReference(mTransferManager);
 }
 
 void MegaApplication::rebootApplication(bool update)
@@ -5179,8 +5176,14 @@ void MegaApplication::transferManagerActionClicked(int tab)
         return;
     }
 
-    createTransferManagerDialog();
-    mTransferManager->toggleTab(tab);
+    if(!mTransferManager)
+    {
+        createTransferManagerDialog(static_cast<TransfersWidget::TM_TAB>(tab));
+    }
+    else
+    {
+        mTransferManager->toggleTab(tab);
+    }
 
     mTransferManagerGeometryRetainer.showDialog(mTransferManager);
 }

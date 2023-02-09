@@ -38,7 +38,7 @@ class TransferManager : public QDialog
     static const QString TRANSFER_QUOTA_MORE_ABOUT;
 
 public:
-    explicit TransferManager(mega::MegaApi *megaApi);
+    explicit TransferManager(TransfersWidget::TM_TAB tab, mega::MegaApi *megaApi);
     ~TransferManager();
 
     void pauseModel(bool state);
