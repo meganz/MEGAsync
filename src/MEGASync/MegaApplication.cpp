@@ -5003,8 +5003,7 @@ void MegaApplication::downloadActionClicked()
         return;
     }
 
-    downloadNodeSelector = new NodeSelector(NodeSelectorTreeViewWidget::DOWNLOAD_SELECT, NULL);
-    downloadNodeSelector->setSelectedNodeHandle();
+    downloadNodeSelector = new DownloadNodeSelector(nullptr);
     int result = downloadNodeSelector->exec();
     if (!downloadNodeSelector)
     {

@@ -489,7 +489,7 @@ protected:
     PasteMegaLinksDialog *pasteMegaLinksDialog;
     ChangeLogDialog *changeLogDialog;
     ImportMegaLinksDialog *importDialog;
-    NodeSelector *downloadNodeSelector;
+    DownloadNodeSelector *downloadNodeSelector;
     QString lastTrayMessage;
     QStringList extraLinks;
     QString currentLanguageCode;

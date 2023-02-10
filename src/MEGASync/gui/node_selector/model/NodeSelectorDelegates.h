@@ -6,12 +6,17 @@
 
 class IconDelegate : public QStyledItemDelegate
 {
+    static const int ICON_HEIGHT;
+
 public:
     explicit IconDelegate(QObject *parent = nullptr);
     ~IconDelegate();
 
     void paint(QPainter* painter, const QStyleOptionViewItem& option,
                const QModelIndex& index) const override;
+
+private:
+    void initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const override;
 };
 
 class NodeRowDelegate : public QStyledItemDelegate
@@ -34,6 +39,18 @@ public:
 private:
     void initStyleOption(QStyleOptionViewItem *option,
                          const QModelIndex &index) const override;
+};
+
+class DateColumnDelegate : public QStyledItemDelegate
+{
+public:
+    explicit DateColumnDelegate(QObject *parent = nullptr);
+    void paint(QPainter* painter, const QStyleOptionViewItem& option,
+               const QModelIndex& index) const override;
+    bool helpEvent(QHelpEvent *event, QAbstractItemView *view, const QStyleOptionViewItem &option, const QModelIndex &index);
+
+private:
+    void initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const override;
 };
 
 #endif // NODESELECTORDELEGATES_H
