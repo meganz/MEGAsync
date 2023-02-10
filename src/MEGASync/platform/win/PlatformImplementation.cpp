@@ -1432,26 +1432,7 @@ bool PlatformImplementation::isUserActive()
     return true;
 }
 
-<<<<<<< HEAD:src/MEGASync/platform/win/WindowsPlatform.cpp
-QString WindowsPlatform::getDeviceName()
-=======
-void PlatformImplementation::showBackgroundWindow(QDialog *window)
-{
-    Q_ASSERT(!window->parent());
-    //Recreate the minimized state in case the dialog is lost behind desktop windows
-    window->showMinimized();
-    window->showNormal();
-}
-
-void PlatformImplementation::execBackgroundWindow(QDialog *window)
-{
-    showBackgroundWindow(window);
-    window->activateWindow();
-    window->exec();
-}
-
 QString PlatformImplementation::getDeviceName()
->>>>>>> 3739de0f28d23910446a51eba96c280c2d88704d:src/MEGASync/platform/win/PlatformImplementation.cpp
 {
     // First, try to read maker and model
     QSettings settings (QLatin1Literal("HKEY_LOCAL_MACHINE\\HARDWARE\\DESCRIPTION\\System\\BIOS"),

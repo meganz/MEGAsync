@@ -141,9 +141,6 @@ QGroupBox::title
 
 </string>
   </property>
-  <property name="modal">
-   <bool>true</bool>
-  </property>
   <layout class="QHBoxLayout" name="horizontalLayout_15" stretch="0,1">
    <property name="spacing">
     <number>0</number>

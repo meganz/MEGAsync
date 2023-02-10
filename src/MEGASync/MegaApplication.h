@@ -45,7 +45,6 @@
 #include "notifications/DesktopNotifications.h"
 #include "ScanStageController.h"
 #include "TransferQuota.h"
-#include "DialogGeometryRetainer.h"
 #include "BlockingStageProgressController.h"
 
 class TransfersModel;
@@ -550,7 +549,6 @@ protected:
     QPointer<TransfersModel> mTransfersModel;
 
     ScanStageController scanStageController;
-    DialogGeometryRetainer<TransferManager> mTransferManagerGeometryRetainer;
     std::shared_ptr<FolderTransferListener> folderTransferListener;
 
     bool mDisableGfx;

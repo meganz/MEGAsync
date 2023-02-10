@@ -1532,10 +1532,9 @@ void SettingsDialog::on_bPermissions_clicked()
     int filePermissions = mMegaApi->getDefaultFilePermissions();
 
     QPointer<PermissionsDialog> dialog = new PermissionsDialog(this);
+    dialog->setFolderPermissions(folderPermissions);
+    dialog->setFilePermissions(filePermissions);
     DialogOpener::showDialog<PermissionsDialog>(dialog, [dialog, &folderPermissions, &filePermissions, this](){
-        dialog->setFolderPermissions(folderPermissions);
-        dialog->setFilePermissions(filePermissions);
-
         if (dialog->result() == QDialog::Accepted)
         {
             filePermissions = dialog->filePermissions();

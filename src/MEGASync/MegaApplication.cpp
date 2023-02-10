@@ -396,7 +396,6 @@ void MegaApplication::showInterface(QString)
     {
         // we saw the file had bytes in it, or if anything went wrong when trying to check that
         showInfoDialog();
-        //If the dialog is active and visible -> show it
         if (mSettingsDialog && mSettingsDialog->isVisible())
         {
             DialogOpener::showDialog(mSettingsDialog);
@@ -2147,6 +2146,7 @@ void MegaApplication::cleanAll()
 
     removeAllFinishedTransfers();
     clearViewedTransfers();
+    DialogOpener::closeAllDialogs();
 
     if(mBlockingBatch.isValid())
     {
@@ -2303,7 +2303,7 @@ void MegaApplication::raiseInfoDialog()
         DialogOpener::raiseAllDialogs();
         if(mTransferManager)
         {
-            mTransferManagerGeometryRetainer.showDialog(mTransferManager);
+            DialogOpener::showGeometryRetainerDialog(mTransferManager);
         }
 #ifdef __APPLE__
         Platform::getInstance()->raiseFileFolderSelectors();
@@ -3459,7 +3459,7 @@ void MegaApplication::setupWizardFinished(QPointer<SetupWizard> dialog)
 
         if (result == QDialog::Rejected)
         {
-            auto infoWizard = DialogOpener::findDialogByClass<InfoWizard>();
+            auto infoWizard = DialogOpener::findDialog<InfoWizard>();
             if(infoWizard)
             {
                 clearDownloadAndPendingLinks(infoWizard->getDialog());
@@ -3513,7 +3513,7 @@ void MegaApplication::infoWizardDialogFinished(QPointer<InfoWizard> dialog)
 
     if (dialog->result() != QDialog::Accepted)
     {
-        auto setupWizard = DialogOpener::findDialogByClass<SetupWizard>();
+        auto setupWizard = DialogOpener::findDialog<SetupWizard>();
         if(setupWizard)
         {
             clearDownloadAndPendingLinks(setupWizard->getDialog());
@@ -4858,7 +4858,7 @@ void MegaApplication::transferManagerActionClicked(int tab)
     }
 
     createTransferManagerDialog();
-    mTransferManagerGeometryRetainer.showDialog(mTransferManager);
+    DialogOpener::showGeometryRetainerDialog(mTransferManager);
 
     mTransferManager->toggleTab(tab);
 }
@@ -5429,7 +5429,7 @@ void MegaApplication::externalFileUpload(qlonglong targetFolder)
     QString  defaultFolderPath = getDefaultUploadPath();
 
     Platform::getInstance()->fileSelector(QCoreApplication::translate("ShellExtension", "Upload to MEGA"), defaultFolderPath,
-                                 true, nullptr, processUpload);
+                                 true, infoDialog, processUpload);
 }
 
 void MegaApplication::externalFolderUpload(qlonglong targetFolder)
@@ -5464,7 +5464,7 @@ void MegaApplication::externalFolderUpload(qlonglong targetFolder)
     QString  defaultFolderPath = getDefaultUploadPath();
 
     Platform::getInstance()->folderSelector(QCoreApplication::translate("ShellExtension", "Upload to MEGA"), defaultFolderPath,
-                                 true, nullptr, processUpload);
+                                 false, nullptr, processUpload);
 }
 
 void MegaApplication::externalFolderSync(qlonglong targetFolder)
@@ -6848,7 +6848,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                                                        "Please, try again. If the problem persists "
                                                        "please contact bug@mega.co.nz"), QMessageBox::Ok);
 
-                auto infoWizard = DialogOpener::findDialogByClass<InfoWizard>();
+                auto infoWizard = DialogOpener::findDialog<InfoWizard>();
                 if(infoWizard)
                 {
                     clearDownloadAndPendingLinks(infoWizard->getDialog());

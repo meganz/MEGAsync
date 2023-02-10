@@ -65,7 +65,6 @@ TransferManager::TransferManager(MegaApi *megaApi) :
     this->setWindowFlags(flags);
 #endif
 
-    setAttribute(Qt::WA_DeleteOnClose, true);
     mUi->wTransfers->setupTransfers();
 
     mUi->lTextSearch->installEventFilter(this);
@@ -1398,6 +1397,10 @@ void TransferManager::closeEvent(QCloseEvent *event)
             close();
         });
         event->ignore();
+    }
+    else
+    {
+        QDialog::closeEvent(event);
     }
 }
 

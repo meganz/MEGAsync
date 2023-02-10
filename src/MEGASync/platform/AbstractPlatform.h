@@ -41,8 +41,6 @@ public:
     virtual std::string getValue(const char * const name, const std::string &default_value);
     virtual QString getWindowManagerName();
     virtual void enableDialogBlur(QDialog *dialog);
-    virtual void execBackgroundWindow(QDialog *window);
-    virtual void showBackgroundWindow(QDialog *window);
     virtual bool registerUpdateJob() = 0;
     virtual void uninstall();
     virtual bool shouldRunHttpServer() = 0;
@@ -51,10 +49,10 @@ public:
     virtual QString getDeviceName() = 0;
     virtual void initMenu(QMenu* m) = 0;
 
-    virtual void fileSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func) = 0;
-    virtual void folderSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func) = 0;
-    virtual void fileAndFolderSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func) = 0;
-    virtual void raiseFileFolderSelectors() = 0;
+    virtual void fileSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func);
+    virtual void folderSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func);
+    virtual void fileAndFolderSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func);
+    virtual void raiseFileFolderSelectors();
 
     virtual void addSyncToLeftPane(QString syncPath, QString syncName, QString uuid);
     virtual void removeAllSyncsFromLeftPane();

@@ -238,9 +238,6 @@ margin: 4px;
 }
 </string>
   </property>
-  <property name="modal">
-   <bool>true</bool>
-  </property>
   <layout class="QVBoxLayout" name="BackupsWizardLayout">
    <property name="spacing">
     <number>25</number>

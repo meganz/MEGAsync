@@ -1,7 +1,6 @@
 #ifndef UTILITIES_H
 #define UTILITIES_H
 
-#include <gui/HighDpiResize.h>
 #include "megaapi.h"
 #include "ThreadPool.h"
 

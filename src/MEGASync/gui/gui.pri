@@ -80,7 +80,6 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/BalloonToolTip.h \
     $$PWD/BlurredShadowEffect.h \
     $$PWD/ButtonIconManager.h \
-    $$PWD/DialogGeometryRetainer.h \
     $$PWD/LowDiskSpaceDialog.h \
     $$PWD/EventHelper.h \
     $$PWD/InfoDialog.h \

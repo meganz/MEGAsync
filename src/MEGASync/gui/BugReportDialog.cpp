@@ -58,7 +58,6 @@ void BugReportDialog::onTransferStart(MegaApi*, MegaTransfer* transfer)
 
     connect(mSendProgress.data(), &QProgressDialog::canceled, this, &BugReportDialog::cancelSendReport);
 
-    mSendProgress->setWindowModality(Qt::WindowModal);
     mSendProgress->setMinimumDuration(0);
     mSendProgress->setMinimum(0);
     mSendProgress->setMaximum(1010);

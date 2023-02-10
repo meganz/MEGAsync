@@ -1,14 +1,18 @@
 #include "DialogOpener.h"
+
 #include <QApplication>
+#include <QOperatingSystemVersion>
 
 QList<std::shared_ptr<DialogOpener::DialogInfoBase>> DialogOpener::mOpenedDialogs = QList<std::shared_ptr<DialogOpener::DialogInfoBase>>();
+QMap<QString, DialogOpener::GeometryInfo> DialogOpener::mSavedGeometries = QMap<QString, DialogOpener::GeometryInfo>();
+
 
 #ifdef _WIN32
 ExternalDialogOpener::ExternalDialogOpener()
-    : QWidget(nullptr, Qt::SubWSubWindow)
+    : QWidget(nullptr, Qt::SubWindow)
 {
 #ifdef _WIN32
-    if(QSysInfo::windowsVersion() <= QSysInfo::WV_WINDOWS10)
+    if(QOperatingSystemVersion::current() <= QOperatingSystemVersion::Windows10)
     {
         setAttribute(Qt::WA_DeleteOnClose, true);
         setWindowFlag(Qt::WindowStaysOnBottomHint, true);

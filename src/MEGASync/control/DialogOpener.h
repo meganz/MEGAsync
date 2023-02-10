@@ -3,17 +3,12 @@
 
 #include <HighDpiResize.h>
 
-#include <DialogGeometryRetainer.h>
-
-#ifdef _WIN32
-#include <ExternalDialogOpener.h>
-#endif
-
 #include <QDialog>
 #include <QFileDialog>
 #include <QPointer>
 #include <functional>
 #include <memory>
+#include <QMap>
 
 #ifdef _WIN32
 class ExternalDialogOpener : public QWidget
@@ -44,6 +39,7 @@ private:
         void setDialogClass(const QString &newDialogClass) {mDialogClass = newDialogClass;}
 
         virtual void raise() = 0;
+        virtual void close() = 0;
 
     protected:
         QString mDialogClass;
@@ -66,6 +62,11 @@ private:
             mDialog->activateWindow();
         }
 
+        void close() override
+        {
+            mDialog->close();
+        }
+
         void clear()
         {
             mDialogClass.clear();
@@ -82,9 +83,16 @@ private:
         QPointer<DialogType> mDialog;
     };
 
+    struct GeometryInfo
+    {
+        bool maximized;
+        QRect geometry;
+        bool isEmpty() const {return geometry.isEmpty();}
+    };
+
 public:
     template <class DialogType>
-    static std::shared_ptr<DialogInfo<DialogType>> findDialogByClass()
+    static std::shared_ptr<DialogInfo<DialogType>> findDialog()
     {
         auto classType = QString::fromUtf8(typeid(DialogType).name());
 
@@ -170,6 +178,18 @@ public:
         }
     }
 
+    template <class DialogType>
+    static void showGeometryRetainerDialog(QPointer<DialogType> dialog)
+    {
+        if(dialog)
+        {
+            removeWhenClose(dialog);
+            showDialogImpl(dialog, false);
+            auto classType = QString::fromUtf8(typeid(DialogType).name());
+            mSavedGeometries.insert(classType, GeometryInfo());
+        }
+    }
+
 
     template <class DialogType>
     static void showDialog(QPointer<DialogType> dialog)
@@ -186,6 +206,15 @@ public:
     {
         if(dialog)
         {
+            auto classType = QString::fromUtf8(typeid(DialogType).name());
+            if(mSavedGeometries.contains(classType))
+            {
+                GeometryInfo info;
+                info.maximized = dialog->isMaximized();
+                info.geometry = dialog->geometry();
+                mSavedGeometries.insert(classType, info);
+            }
+
             dialog->close();            
             dialog->deleteLater();
         }
@@ -199,8 +228,17 @@ public:
         }
     }
 
+    static void closeAllDialogs()
+    {
+        foreach(auto dialogInfo, mOpenedDialogs)
+        {
+            dialogInfo->close();
+        }
+    }
+
 private:
     static QList<std::shared_ptr<DialogInfoBase>> mOpenedDialogs;
+    static QMap<QString, GeometryInfo> mSavedGeometries;
 
     template <class DialogType>
     static void removeWhenClose(QPointer<DialogType> dialog)
@@ -262,14 +300,30 @@ private:
                 {
                     dialog->setWindowModality(Qt::WindowModal);
                 }
-                else
-                {
-                    dialog->setModal(false);
-                }
             }
 
+            auto geoInfo = mSavedGeometries.value(classType, GeometryInfo());
+            if(!geoInfo.isEmpty())
+            {
+                //First time this is used
+                if(geoInfo.maximized)
+                {
+                    auto dialogGeo = dialog->geometry();
+                    dialogGeo.moveCenter(geoInfo.geometry.center());
+                    dialog->move(dialogGeo.topLeft());
+                    dialog->showMaximized();
+                }
+                else
+                {
+                    dialog->setGeometry(geoInfo.geometry);
+                    dialog->show();
+                }
+            }
+            else
+            {
+                dialog->show();
+            }
 
-            dialog->show();
             dialog->raise();
             dialog->activateWindow();
         }
