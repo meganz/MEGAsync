@@ -4802,7 +4802,8 @@ void MegaApplication::downloadActionClickedFromWidget(QWidget* openFrom)
         return;
     }
 
-    mTransferQuota->checkDownloadAlertDismissed([this, openFrom](int result){
+    mTransferQuota->checkDownloadAlertDismissed([this, openFrom](int result)
+    {
         if(result == QDialog::Rejected)
         {
             auto downloadNodeSelector = new DownloadNodeSelector(openFrom);

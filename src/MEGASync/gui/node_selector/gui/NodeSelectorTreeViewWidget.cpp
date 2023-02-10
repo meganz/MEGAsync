@@ -435,7 +435,6 @@ void NodeSelectorTreeViewWidget::onRenameClicked()
             auto selectedIndex = getSelectedIndex();
             if(selectedIndex.isValid())
             {
-                auto sourceIndex = mProxyModel->mapToSource(selectedIndex);
                 auto item = qvariant_cast<NodeSelectorModelItem*>(selectedIndex.data(toInt(NodeSelectorModelRoles::MODEL_ITEM_ROLE)));
                 if(item)
                 {

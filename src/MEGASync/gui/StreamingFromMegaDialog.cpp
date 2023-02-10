@@ -91,7 +91,7 @@ void StreamingFromMegaDialog::closeEvent(QCloseEvent *event)
 
 void StreamingFromMegaDialog::on_bFromCloud_clicked()
 {
-    QPointer<StreamNodeSelector> nodeSelector(new StreamNodeSelector(this));
+    const QPointer<StreamNodeSelector> nodeSelector = new StreamNodeSelector(this);
     nodeSelector->setWindowTitle(tr("Select items"));
     nodeSelector->setSelectedNodeHandle(mSelectedMegaNode);
 
@@ -107,7 +107,7 @@ void StreamingFromMegaDialog::on_bFromCloud_clicked()
 
 void StreamingFromMegaDialog::on_bFromPublicLink_clicked()
 {
-    QPointer<QInputDialog> inputDialog(new QInputDialog(this));
+    const QPointer<QInputDialog> inputDialog = new QInputDialog(this);
     inputDialog->setWindowFlags(inputDialog->windowFlags() & ~Qt::WindowContextHelpButtonHint);
     inputDialog->setWindowTitle(tr("Open link"));
     inputDialog->setLabelText(tr("Enter a MEGA file link:"));
