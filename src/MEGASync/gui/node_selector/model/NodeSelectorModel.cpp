@@ -89,7 +89,7 @@ void NodeRequester::search(const QString &text, NodeSelectorModelItemSearch::Typ
     mSearchCanceled = false;
     mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
 
-    auto nodeList = std::unique_ptr<mega::MegaNodeList>(megaApi->search(text.toUtf8(), mCancelToken.get()));
+    auto nodeList = std::unique_ptr<mega::MegaNodeList>(megaApi->search(text.toUtf8().constData(), mCancelToken.get()));
     QList<NodeSelectorModelItem*> items;
     NodeSelectorModelItemSearch::Types searchedTypes = NodeSelectorModelItemSearch::Type::NONE;
 
@@ -100,7 +100,7 @@ void NodeRequester::search(const QString &text, NodeSelectorModelItemSearch::Typ
         {
             break;
         }
-        if((node->isFile() && mShowFiles) || megaApi->isInRubbish(node))
+        if((node->isFile() && !mShowFiles) || megaApi->isInRubbish(node))
         {
             continue;
         }
@@ -151,7 +151,7 @@ void NodeRequester::search(const QString &text, NodeSelectorModelItemSearch::Typ
     {
         QMutexLocker d(&mDataMutex);
         mRootItems.append(items);
-        emit searchItemsCreated(items, searchedTypes);
+        emit searchItemsCreated(searchedTypes);
     }
 }
 
@@ -163,7 +163,7 @@ void NodeRequester::createCloudDriveRootItem()
     {
         auto item = new NodeSelectorModelItemCloudDrive(std::move(root), mShowFiles);
         mRootItems.append(item);
-        emit megaCloudDriveRootItemCreated(item);
+        emit megaCloudDriveRootItemCreated();
     }
 }
 
@@ -215,7 +215,7 @@ void NodeRequester::createIncomingSharesRootItems(std::shared_ptr<mega::MegaNode
     else
     {
         mRootItems.append(items);
-        emit megaIncomingSharesRootItemsCreated(items);
+        emit megaIncomingSharesRootItemsCreated();
     }
 }
 
@@ -235,13 +235,13 @@ void NodeRequester::createBackupRootItems(mega::MegaHandle backupsHandle)
                 //NodeSelectorModelItem* item = new NodeSelectorModelItem(std::move(backupsNode), mShowFiles);
                 //item->setAsVaultNode();
                 mRootItems.append(item);
-                emit megaBackupRootItemsCreated(item);
             }
         }
     }
-    else
+
+    if(!isAborted())
     {
-        emit megaBackupRootItemsCreated(nullptr);
+        emit megaBackupRootItemsCreated();
     }
 }
 
@@ -380,6 +380,7 @@ NodeSelectorModel::NodeSelectorModel(QObject *parent) :
 NodeSelectorModel::~NodeSelectorModel()
 {
     mNodeRequesterThread->quit();
+    mNodeRequesterThread->wait();
 }
 
 int NodeSelectorModel::columnCount(const QModelIndex &) const

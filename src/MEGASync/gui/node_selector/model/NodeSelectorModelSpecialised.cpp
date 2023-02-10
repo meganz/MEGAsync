@@ -46,9 +46,8 @@ void NodeSelectorModelCloudDrive::firstLoad()
     addRootItems();
 }
 
-void NodeSelectorModelCloudDrive::onRootItemCreated(NodeSelectorModelItem *item)
+void NodeSelectorModelCloudDrive::onRootItemCreated()
 {
-    Q_UNUSED(item)
     rootItemsLoaded();
 
     //Add the item of the Cloud Drive
@@ -91,9 +90,8 @@ void NodeSelectorModelIncomingShares::onItemInfoUpdated(int role)
     }
 }
 
-void NodeSelectorModelIncomingShares::onRootItemsCreated(QList<NodeSelectorModelItem *> items)
+void NodeSelectorModelIncomingShares::onRootItemsCreated()
 {
-    Q_UNUSED(items)
     rootItemsLoaded();
 
     if(!mNodesToLoad.isEmpty())
@@ -220,36 +218,30 @@ void NodeSelectorModelBackups::loadLevelFinished()
             }
         }
     }
-    else
+
+    if(mBackupDevicesSize > 0)
     {
-        if(mBackupDevicesSize > 0)
-        {
-            mBackupDevicesSize--;
-        }
-        if(mBackupDevicesSize == 0)
-        {
-            emit levelsAdded(mIndexesActionInfo.indexesToBeExpanded);
-        }
+        mBackupDevicesSize--;
+    }
+    if(mBackupDevicesSize == 0)
+    {
+        emit levelsAdded(mIndexesActionInfo.indexesToBeExpanded);
     }
 }
 
-void NodeSelectorModelBackups::onRootItemCreated(NodeSelectorModelItem *item)
+void NodeSelectorModelBackups::onRootItemCreated()
 {
     rootItemsLoaded();
 
-    if(!item)
+    QModelIndex rootIndex(index(0, 0));
+    //Add the item of the Backups Drive
+    if(canFetchMore(rootIndex))
     {
-        loadLevelFinished();
+        fetchItemChildren(rootIndex);
     }
     else
     {
-
-        QModelIndex rootIndex(index(0, 0));
-        //Add the item of the Backups Drive
-        if(canFetchMore(rootIndex))
-        {
-            fetchItemChildren(rootIndex);
-        }
+        loadLevelFinished();
     }
 }
 
@@ -338,9 +330,8 @@ void NodeSelectorModelSearch::proxyInvalidateFinished()
     mNodeRequesterWorker->lockSearchMutex(false);
 }
 
-void NodeSelectorModelSearch::onRootItemsCreated(QList<NodeSelectorModelItem *> items, NodeSelectorModelItemSearch::Types searchedTypes)
+void NodeSelectorModelSearch::onRootItemsCreated(NodeSelectorModelItemSearch::Types searchedTypes)
 {
-    Q_UNUSED(items)
     if(mNodeRequesterWorker->trySearchLock())
     {
         mSearchedTypes = searchedTypes;

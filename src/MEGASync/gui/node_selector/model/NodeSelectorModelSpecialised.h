@@ -28,7 +28,7 @@ signals:
     void requestCloudDriveRootCreation();
 
 private slots:
-    void onRootItemCreated(NodeSelectorModelItem*item);
+    void onRootItemCreated();
 };
 
 class NodeSelectorModelIncomingShares : public NodeSelectorModel
@@ -52,7 +52,7 @@ signals:
     void requestIncomingSharesRootCreation(std::shared_ptr<mega::MegaNodeList> nodes);
 
 private slots:
-    void onRootItemsCreated(QList<NodeSelectorModelItem *> item);
+    void onRootItemsCreated();
 
 private:
     std::shared_ptr<mega::MegaNodeList> mSharedNodeList;
@@ -78,7 +78,7 @@ signals:
     void requestBackupsRootCreation(mega::MegaHandle backupHandle);
 
 private slots:
-    void onRootItemCreated(NodeSelectorModelItem* item);
+    void onRootItemCreated();
     void onMyBackupsHandleReceived(mega::MegaHandle handle);
 
 private:
@@ -113,7 +113,7 @@ signals:
     void searchNodes(const QString& text, NodeSelectorModelItemSearch::Types);
 
 private slots:
-    void onRootItemsCreated(QList<NodeSelectorModelItem*> items, NodeSelectorModelItemSearch::Types searchedTypes);
+    void onRootItemsCreated(NodeSelectorModelItemSearch::Types searchedTypes);
 
 private:
     NodeSelectorModelItemSearch::Types mAllowedTypes;

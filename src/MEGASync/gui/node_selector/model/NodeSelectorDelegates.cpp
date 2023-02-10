@@ -81,8 +81,10 @@ void NodeRowDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
 
 bool NodeRowDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view, const QStyleOptionViewItem &option, const QModelIndex &index)
 {
-    if ( !event || !view )
+    if ( !event || !view || !index.isValid())
+    {
         return false;
+    }
 
     if (event->type() == QEvent::ToolTip)
     {
@@ -100,8 +102,10 @@ bool NodeRowDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view, cons
                 QToolTip::showText(event->globalPos(), tooltipText);
                 return true;
         }
-        if ( !QStyledItemDelegate::helpEvent( event, view, option, index ) )
+        if (!QStyledItemDelegate::helpEvent(event, view, option, index))
+        {
             QToolTip::hideText();
+        }
         return true;
     }
 
@@ -146,6 +150,35 @@ void DateColumnDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
     QString elideText = option.fontMetrics.elidedText(index.data(Qt::DisplayRole).toString(), Qt::ElideMiddle, rect.width());
     painter->drawText(rect, Qt::AlignVCenter, elideText);
     painter->restore();
+}
+
+bool DateColumnDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view, const QStyleOptionViewItem &option, const QModelIndex &index)
+{
+    if (!event || !view || !index.isValid())
+    {
+        return false;
+    }
+
+    if (event->type() == QEvent::ToolTip)
+    {
+        QRect rect = view->visualRect(index);
+        rect.adjust(10, 0, -5, 0);
+        QString tooltipText = index.data(Qt::DisplayRole).toString();
+        QFontMetrics fm = option.fontMetrics;
+
+        if (rect.width() < (fm.width(tooltipText)))
+        {
+                QToolTip::showText(event->globalPos(), tooltipText);
+                return true;
+        }
+        if (!QStyledItemDelegate::helpEvent(event, view, option, index))
+        {
+            QToolTip::hideText();
+        }
+        return true;
+    }
+
+    return QStyledItemDelegate::helpEvent(event, view, option, index);
 }
 
 void DateColumnDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const
