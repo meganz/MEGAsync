@@ -107,7 +107,6 @@ void AbstractPlatform::folderSelector(QString title, QString defaultDir, bool mu
         defaultDir = previousFileUploadSelector->getDialog()->directory().path();
     }
 
-    //
     if(!multiSelection)
     {
         QPointer<QFileDialog> fileDialog = new QFileDialog(parent);
@@ -116,13 +115,12 @@ void AbstractPlatform::folderSelector(QString title, QString defaultDir, bool mu
         fileDialog->setOption(QFileDialog::DontResolveSymlinks, true);
         fileDialog->setOption(QFileDialog::DontUseNativeDialog, false);
         fileDialog->setOption(QFileDialog::ShowDirsOnly, true);
-        fileDialog->setFileMode(QFileDialog::Directory);
+        fileDialog->setFileMode(QFileDialog::DirectoryOnly);
         //Orphan native dialogs must be modal in Windows and Linux. On macOS this method has its own implementation.
         if(!parent)
         {
             fileDialog->setModal(true);
         }
-
 
         DialogOpener::showDialog<QFileDialog>(fileDialog, [fileDialog, func]()
         {
