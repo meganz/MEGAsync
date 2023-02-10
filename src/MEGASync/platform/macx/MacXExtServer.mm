@@ -325,7 +325,8 @@ void MacXExtServer::notifyItemChange(QString localPath, int newState)
 
     if (newState == MegaApi::STATE_PENDING
             || newState == MegaApi::STATE_SYNCED
-            || newState == MegaApi::STATE_SYNCING)
+            || newState == MegaApi::STATE_SYNCING
+            || newState == MegaApi::STATE_NONE)
     {
         command.append(":");
         command.append(QString::number(newState).toUtf8().constData());
