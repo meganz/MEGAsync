@@ -5429,7 +5429,7 @@ void MegaApplication::externalFileUpload(qlonglong targetFolder)
     QString  defaultFolderPath = getDefaultUploadPath();
 
     Platform::getInstance()->fileSelector(QCoreApplication::translate("ShellExtension", "Upload to MEGA"), defaultFolderPath,
-                                 true, infoDialog, processUpload);
+                                 true, nullptr, processUpload);
 }
 
 void MegaApplication::externalFolderUpload(qlonglong targetFolder)
