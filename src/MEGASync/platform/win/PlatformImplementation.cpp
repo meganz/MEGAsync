@@ -772,17 +772,20 @@ void PlatformImplementation::syncFolderAdded(QString syncPath, QString syncName,
         addSyncToLeftPane(syncPath, syncName, syncID);
     }
 
-    int iconIndex = 4; // Default to win11.ico
+    int iconIndex = 2; // Default to winXP.ico
 
     auto winVersion = QOperatingSystemVersion::current();
-    if (winVersion < QOperatingSystemVersion::Windows7)
+    auto win11 = QOperatingSystemVersion(QOperatingSystemVersion::Windows, 10, 0, 22000);
+    //FIXME: once QT version update check if QOperatingSystemVersion Windows11 exist
+    if (winVersion >= win11)
     {
-        iconIndex = 2; // winXP.ico
+        iconIndex = 4; // win11.ico
     }
-    else if (winVersion <= QOperatingSystemVersion::Windows10)
+    else if (winVersion >= QOperatingSystemVersion::Windows7)
     {
         iconIndex = 3; // win8.ico
     }
+
 
     QString infoTip = QCoreApplication::translate("WindowsPlatform", "MEGA synced folder");
     SHFOLDERCUSTOMSETTINGS fcs = {0};
