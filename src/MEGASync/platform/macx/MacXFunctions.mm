@@ -5,6 +5,8 @@
 #include <QWidget>
 #include <QProcess>
 #include <Preferences.h>
+#include <QOperatingSystemVersion>
+
 #import "platform/macx/NSPopover+MISSINGBackgroundView.h"
 
 #import <objc/runtime.h>
@@ -14,10 +16,6 @@
 #include <time.h>
 #include <errno.h>
 #include <sys/sysctl.h>
-
-#ifndef kCFCoreFoundationVersionNumber10_9
-    #define kCFCoreFoundationVersionNumber10_9 855.00
-#endif
 
 // A NSViewController that controls a programatically created view
 @interface ProgramaticViewController : NSViewController
@@ -271,7 +269,12 @@ void setFolderIcon(QString path)
     }
 
     NSImage* iconImage = NULL;
-    if (floor(kCFCoreFoundationVersionNumber) > kCFCoreFoundationVersionNumber10_9)
+    auto osVersion = QOperatingSystemVersion::current();
+    if (osVersion >= QOperatingSystemVersion::MacOSBigSur)
+    {
+        iconImage = [[NSImage alloc] initWithContentsOfFile:[appPath stringByAppendingString:@"/Contents/Resources/MacOS11_folder.icns"]];
+    }
+    else if (osVersion >= QOperatingSystemVersion::OSXYosemite)
     {
         iconImage = [[NSImage alloc] initWithContentsOfFile:[appPath stringByAppendingString:@"/Contents/Resources/folder_yosemite.icns"]];
     }
