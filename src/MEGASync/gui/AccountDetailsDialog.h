@@ -23,8 +23,12 @@ public:
 //private slots:
 //    void cppSlot();
     QUrl getQmlUrl() override;
+    QString contextName() override;
 public slots:
     void cppSlot1public();
+
+signals:
+    void testSignal(int value);
 
 private:
 //    HighDpiResize mHighDpiResize;

@@ -59,6 +59,11 @@ QUrl AccountDetailsDialog::getQmlUrl()
     return QUrl(QString::fromUtf8("qrc:/content/App1.qml"));
 }
 
+QString AccountDetailsDialog::contextName()
+{
+    return QString::fromUtf8("AccountDetails");
+}
+
 
 AccountDetailsDialog::~AccountDetailsDialog()
 {
@@ -280,4 +285,5 @@ void AccountDetailsDialog::updateStorageElements()
 void AccountDetailsDialog::cppSlot1public()
 {
     qDebug()<<"slot 1 public from cpp";
+    emit testSignal(22);
 }

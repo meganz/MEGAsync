@@ -39,7 +39,7 @@ Window {
     visible: true
     title: "This is a test window"
 
-    Screen01 {
+    Screen02 {
         id: mainScreen
     }
 }

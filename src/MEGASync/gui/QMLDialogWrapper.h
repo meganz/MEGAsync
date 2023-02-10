@@ -4,6 +4,8 @@
 #include <QQmlComponent>
 #include <QDebug>
 #include <QQmlEngine>
+#include <QQmlContext>
+
 
 class QMLComponentWrapper : public QObject
 {
@@ -12,6 +14,9 @@ public:
     ~QMLComponentWrapper();
 
     virtual QUrl getQmlUrl() = 0;
+    virtual QString contextName(){return QString();}
+    virtual QVariant contextVariant(){return QVariant();}
+
     QQmlEngine* getEngine();
 };
 
@@ -39,19 +44,27 @@ public:
     void close(){}
     QMLDialogWrapper(QObject* parent = nullptr) : QMLDialogWrapperBase(parent)
     {
+        Q_ASSERT((std::is_base_of<QMLComponentWrapper, Type>::value));
         mWrapper = new Type(parent);
         QQmlEngine* engine = mWrapper->getEngine();
-        QQmlComponent qmlComponent(engine);/* = new QQmlComponent(mWrapper->getEngine(), mWrapper);*/
+        QQmlComponent qmlComponent(engine);
         qmlComponent.loadUrl(mWrapper->getQmlUrl());
-        QObject* object = qmlComponent.create();
-        engine->setObjectOwnership(object, QQmlEngine::JavaScriptOwnership);
-        //object->setParent(mWrapper);
-        qDebug()<< object->parent();
+        QObject* object;
+        if(!mWrapper->contextName().isEmpty())
+        {
+            QQmlContext *context = new QQmlContext(engine->rootContext());
+            context->setContextProperty(mWrapper->contextName(), mWrapper);
+            object = qmlComponent.create(context);
+        }
+        else
+        {
+            object = qmlComponent.create();
+        }
         connect(object, SIGNAL(accepted()), this, SLOT(cpp1Slot()));
         connect(object, SIGNAL(rejected()), this, SLOT(dialogClosed()));
         connect(object, SIGNAL(destroyed()), this, SLOT(cpp2Slot()));
     }
-    void dialogClosed(){mWrapper->deleteLater();}
+    void dialogClosed(){}
 
 private:
     QPointer<Type> mWrapper;

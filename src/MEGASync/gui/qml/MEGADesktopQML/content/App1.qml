@@ -27,23 +27,34 @@
 **
 ****************************************************************************/
 
+import QtQml 2.3
 import QtQuick 2.12
 import QtQuick.Window 2.3
 import QtQuick.Dialogs 1.3
 
 Dialog {
     standardButtons: StandardButton.Ok | StandardButton.Cancel
-    width: 350
-    height: 200
     objectName: "app1"
     visible: true
     title: "This is a test dialog"
     modality: Qt.NonModal
+    width: test.width
+    height: test.height
 
-    Text {
-        text: "Hello MEGASYNC SUPERMEGA!"
-        color: "navy"
-        anchors.centerIn: parent
+    Screen02 {
+        id: test
+        buttonText: "ttt"
+        anchors.fill: parent
+        roundButton.onClicked:{
+            AccountDetails.cppSlot1public()
+        }
+        Connections{
+            target: AccountDetails
+            onTestSignal:{
+                console.log("esto es qml!: me llega la señal. VALUE = " + value)
+                test.buttonText = value
+            }
+        }
     }
 }
 
