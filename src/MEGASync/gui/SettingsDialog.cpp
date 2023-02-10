@@ -1847,8 +1847,7 @@ void SettingsDialog::on_bExportMasterKey_clicked()
     }
 #endif
 
-
-    //DialogBlocker blocker(this);
+    DialogBlocker blocker(this);
     QDir dir(defaultPath);
     QString fileName = QFileDialog::getSaveFileName(this, tr("Export Master key"),
                                                     dir.filePath(tr("MEGA-RECOVERYKEY")),

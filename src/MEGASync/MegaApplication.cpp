@@ -2301,10 +2301,6 @@ void MegaApplication::raiseInfoDialog()
         infoDialog->highDpiResize.queueRedraw();
 
         DialogOpener::raiseAllDialogs();
-        if(mTransferManager)
-        {
-            DialogOpener::showGeometryRetainerDialog(mTransferManager);
-        }
 #ifdef __APPLE__
         Platform::getInstance()->raiseFileFolderSelectors();
 #endif
@@ -4992,8 +4988,8 @@ void MegaApplication::createTrayIcon()
         trayIcon = new QSystemTrayIcon();
 
         connect(trayIcon, SIGNAL(messageClicked()), this, SLOT(onMessageClicked()));
-        connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
-                this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
+        connect(trayIcon, &QSystemTrayIcon::activated,
+                this, &MegaApplication::trayIconActivated);
 
     #ifdef __APPLE__
         scanningTimer = new QTimer();
@@ -5776,6 +5772,8 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
         // in windows, a second click on the task bar icon first deactivates the app which closes the infoDialg.
         // This statement prevents us opening it again, so that we have one-click to open the infoDialog, and a second closes it.
         if (!infoDialog || (chrono::steady_clock::now() - infoDialog->lastWindowHideTime > 100ms))
+#else
+        DialogOpener::raiseAllDialogs();
 #endif
         {
             infoDialogTimer->start(200);
