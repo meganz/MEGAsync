@@ -3598,6 +3598,66 @@ bool MegaApplication::isQueueProcessingOngoing()
     return mProcessingUploadQueue || downloader->isQueueProcessingOngoing();
 }
 
+void MegaApplication::processUpgradeSecurityEvent()
+{
+    // Get outShares paths, to show them to the user
+    QSet<QString> outSharesStrings;
+    std::unique_ptr<MegaShareList> outSharesList (megaApi->getOutShares());
+    for (int i = 0; i < outSharesList->size(); ++i)
+    {
+        MegaHandle handle = outSharesList->get(i)->getNodeHandle();
+        std::unique_ptr<char[]> path (megaApi->getNodePathByNodeHandle(handle));
+        outSharesStrings << QString::fromUtf8(path.get());
+    }
+
+    // Prepare the dialog
+    QString title = tr("Security upgrade");
+    QString message = tr("Your account's security is now being upgraded. "
+                        "This will happen only once. If you have seen this message for "
+                        "this account before, press Cancel.");
+    if (!outSharesStrings.isEmpty())
+    {
+        message.append(QLatin1String("<br><br>"));
+        message.append(tr("You are currently sharing the following folder: %1", "", outSharesStrings.size())
+                  .arg(outSharesStrings.toList().join(QLatin1String(", "))));
+    }
+
+    auto upgradeSecurityDialog = new QMessageBox(QMessageBox::Information, title, message,
+                                                 QMessageBox::Ok|QMessageBox::Cancel);
+    upgradeSecurityDialog->setAttribute(Qt::WA_DeleteOnClose);
+
+    HighDpiResize hDpiResizer(upgradeSecurityDialog);
+
+    // Show dialog and:
+    // - upgrade security if user says OK
+    // - exit app if user says Cancel
+    int button = upgradeSecurityDialog->exec();
+
+    QPointer<MegaApplication> currentMegaApp(this);
+    if (!currentMegaApp)
+    {
+        return;
+    }
+
+    if (button == QMessageBox::Ok)
+    {
+        megaApi->upgradeSecurity(new OnFinishOneShot(megaApi, [=](const MegaError& e){
+            if (e.getErrorCode() != MegaError::API_OK)
+            {
+                QString errorTitle = tr("Error");
+                QString errorMessage = tr("Failed to ugrade security. Error: %1")
+                                       .arg(tr(e.getErrorString()));
+                showErrorMessage(errorMessage, errorTitle);
+                exitApplication();
+            }
+        }));
+    }
+    else if (button == QMessageBox::Cancel)
+    {
+        exitApplication();
+    }
+}
+
 void MegaApplication::onFolderTransferUpdate(FolderTransferUpdateEvent event)
 {
     if (appfinished)
@@ -6981,6 +7041,10 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
     else if (event->getType() == MegaEvent::EVENT_BUSINESS_STATUS)
     {
         manageBusinessStatus(event->getNumber());
+    }
+    else if (event->getType() == MegaEvent::EVENT_UPGRADE_SECURITY)
+    {
+        processUpgradeSecurityEvent();
     }
 }
 
