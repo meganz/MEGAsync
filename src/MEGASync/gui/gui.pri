@@ -70,7 +70,10 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/node_selector/gui/NodeSelectorTreeViewWidget.cpp \
     $$PWD/node_selector/gui/NodeSelectorTreeViewWidgetSpecializations.cpp \
     $$PWD/node_selector/gui/NodeSelector.cpp \
-    $$PWD/node_selector/gui/NodeSelectorLoadingDelegate.cpp
+    $$PWD/node_selector/gui/NodeSelectorLoadingDelegate.cpp \
+    $$PWD/node_selector/gui/SearchLineEdit.cpp \
+    $$PWD/node_selector/gui/NodeSelectorSpecializations.cpp
+
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/AutoResizeStackedWidget.h \
@@ -146,7 +149,10 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/node_selector/gui/NodeSelectorTreeViewWidget.h \
     $$PWD/node_selector/gui/NodeSelectorTreeViewWidgetSpecializations.h \
     $$PWD/node_selector/gui/NodeSelector.h \
-    $$PWD/node_selector/gui/NodeSelectorLoadingDelegate.h
+    $$PWD/node_selector/gui/NodeSelectorLoadingDelegate.h \
+    $$PWD/node_selector/gui/SearchLineEdit.h \
+    $$PWD/node_selector/gui/NodeSelectorSpecializations.h
+
 
 INCLUDEPATH += $$PWD
 
@@ -194,10 +200,11 @@ win32 {
                 $$PWD/win/CancelConfirmWidget.ui \
                 $$PWD/win/NodeNameSetterDialog.ui \
                 $$PWD/win/NotificationsSettings.ui \
+                $$PWD/win/LowDiskSpaceDialog.ui \
                 $$PWD/node_selector/gui/win/NodeSelectorTreeViewWidget.ui \
                 $$PWD/node_selector/gui/win/NodeSelectorLoadingDelegate.ui \
                 $$PWD/node_selector/gui/win/NodeSelector.ui \
-                $$PWD/win/LowDiskSpaceDialog.ui
+                $$PWD/node_selector/gui/win/SearchLineEdit.ui
 }
 
 macx {
@@ -242,10 +249,11 @@ macx {
                 $$PWD/macx/CancelConfirmWidget.ui \
                 $$PWD/macx/NodeNameSetterDialog.ui \
                 $$PWD/macx/NotificationsSettings.ui \
+                $$PWD/macx/LowDiskSpaceDialog.ui \
                 $$PWD/node_selector/gui/macx/NodeSelectorTreeViewWidget.ui \
                 $$PWD/node_selector/gui/macx/NodeSelectorLoadingDelegate.ui \
                 $$PWD/node_selector/gui/macx/NodeSelector.ui \
-                $$PWD/macx/LowDiskSpaceDialog.ui
+                $$PWD/node_selector/gui/macx/SearchLineEdit.ui
 
     #Asset catalog need to load SF symbol images of toolbar items for custom NSToolbar
     QMAKE_ASSET_CATALOGS += $$PWD/images/Images.xcassets
@@ -313,10 +321,11 @@ unix:!macx {
                 $$PWD/linux/ScanningWidget.ui \
                 $$PWD/linux/NodeNameSetterDialog.ui \
                 $$PWD/linux/NotificationsSettings.ui \
+                $$PWD/linux/LowDiskSpaceDialog.ui \
                 $$PWD/node_selector/gui/linux/NodeSelectorTreeViewWidget.ui \
                 $$PWD/node_selector/gui/linux/NodeSelectorLoadingDelegate.ui \
                 $$PWD/node_selector/gui/linux/NodeSelector.ui \
-                $$PWD/linux/LowDiskSpaceDialog.ui
+                $$PWD/node_selector/gui/linux/SearchLineEdit.ui
 
     HEADERS += $$PWD/PermissionsDialog.h \
                $$PWD/PermissionsWidget.h

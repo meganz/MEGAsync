@@ -2,6 +2,7 @@
 #define NODESELECTORPROXYMODEL_H
 
 #include "megaapi.h"
+#include "NodeSelectorModelItem.h"
 
 #include <QSortFilterProxyModel>
 #include <QCollator>
@@ -29,6 +30,7 @@ public:
     };
 
     explicit NodeSelectorProxyModel(QObject* parent = nullptr);
+    ~NodeSelectorProxyModel();
 
     void showReadOnlyFolders(bool value);
     void showReadWriteFolders(bool value);
@@ -55,9 +57,6 @@ signals:
     void navigateReady(const QModelIndex& index);
     void modelAboutToBeChanged();
 
-protected:
-    bool filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const override;
-
 private:
     QVector<QModelIndex> forEach(std::shared_ptr<mega::MegaNodeList> parentNodeList, QModelIndex parent = QModelIndex());
     Filter mFilter;
@@ -65,14 +64,27 @@ private:
     int mSortColumn;
     Qt::SortOrder mOrder;
     QFutureWatcher<void> mFilterWatcher;
-    QEventLoop loop;
-    QModelIndexList itemsToMap;
+    QModelIndexList mItemsToMap;
     bool mExpandMapped;
-
+    bool mForceInvalidate;
 
 private slots:
-    void invalidateModel(const QModelIndexList &parents);
+    void invalidateModel(const QModelIndexList &parents, bool force = false);
     void onModelSortedFiltered();
+};
+
+class NodeSelectorProxyModelSearch : public NodeSelectorProxyModel
+{
+
+public:
+    explicit NodeSelectorProxyModelSearch(QObject* parent = nullptr);
+    void setMode(NodeSelectorModelItemSearch::Types mode);
+
+protected:
+    bool filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const override;
+
+private:
+    NodeSelectorModelItemSearch::Types mMode;
 };
 
 #endif // NODESELECTORPROXYMODEL_H

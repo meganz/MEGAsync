@@ -9,18 +9,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
-    <height>590</height>
+    <width>800</width>
+    <height>489</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>540</width>
-    <height>530</height>
+    <width>600</width>
+    <height>300</height>
    </size>
   </property>
   <property name="windowTitle">
    <string>Select a MEGA folder</string>
+  </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
   </property>
   <property name="styleSheet">
    <string notr="true">QDialog
@@ -41,208 +44,638 @@ font-size: 11px;
 QScrollBar:horizontal {
 height: 16px;
 }
+
+#TransferManager
+{
+    border-radius: 4px;
+    border: 1px solid black;
+}
+
+*
+{
+    font-family: Lato;
+}
+
+#wLeftPane
+{
+    background-color: #FAFAFA;
+    border-right: 1px solid #EEEEEE;
+}
+
+#wRightPaneHeader, #sCurrentContent
+{
+    background-color: white;
+}
+
+#lTextSearch
+{
+    color: #666666;
+    font-size: 20px;
+    font-weight: 600;
+    padding-left: 12px;
+    qproperty-alignment: 'AlignLeft | AlignVCenter';
+}
+
+#wStorage QFrame
+{
+    padding-right: 6px;
+    padding-left: 6px;
+}
+
+#wSearch  QFrame
+{
+    padding-right: 6px;
+    padding-left: 6px;
+}
+
+#wStorage QPushButton
+{
+    height: 34px;
+}
+
+QGroupBox
+{
+    font-size: 12px;
+    border: none;
+}
+
+QGroupBox::title
+{
+    font-family: Lato;
+   color: #666666;
+    padding-left: 10px;
+}
+
+#wStorage QPushButton
+{
+    font-size: 14px;
+    color: #15191F;
+    border: none;
+    text-align: left;
+    padding-right: 0px;
+    padding-left: 0px;
+    qProperty-iconSize: 24px;
+}
+
+#wSearch QPushButton
+{
+    font-size: 14px;
+    color: #15191F;
+    border: none;
+    text-align: left;
+    padding-left: -1px;
+    padding-right: 0px;
+    qProperty-iconSize: 24px;
+}
+ 
+#wLeftPane QToolButton
+{
+  border: none;
+}
+
+
 </string>
   </property>
   <property name="modal">
    <bool>true</bool>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QHBoxLayout" name="horizontalLayout_15" stretch="0,1">
    <property name="spacing">
-    <number>9</number>
+    <number>0</number>
    </property>
    <property name="leftMargin">
-    <number>15</number>
+    <number>0</number>
    </property>
    <property name="topMargin">
-    <number>10</number>
+    <number>0</number>
    </property>
    <property name="rightMargin">
-    <number>15</number>
+    <number>0</number>
    </property>
    <property name="bottomMargin">
-    <number>15</number>
+    <number>0</number>
    </property>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
-     <property name="spacing">
-      <number>10</number>
+    <widget class="QWidget" name="wLeftPane" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
      </property>
-     <property name="topMargin">
-      <number>0</number>
+     <property name="minimumSize">
+      <size>
+       <width>256</width>
+       <height>0</height>
+      </size>
      </property>
-     <property name="bottomMargin">
-      <number>5</number>
+     <property name="maximumSize">
+      <size>
+       <width>256</width>
+       <height>16777215</height>
+      </size>
      </property>
-     <item>
-      <widget class="QPushButton" name="bShowCloudDrive">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QPushButton {
-    border: 3px solid #0078d7;
-	border-top-color: transparent;
-	border-left-color: transparent;
-	border-right-color: transparent;
-    border-radius: 0px;
-    background-color: transparent;
-    padding: -2px;
-	font-size:12px;
+     <property name="styleSheet">
+      <string notr="true">#wLeftPane QFrame &gt; QLabel
+{
+    font-weight: bold;
+    color: #999999;
+    font-size: 10px;
+	text-align: right;
+    border-radius: 12px;
 }
 
-QPushButton:checked {
-	border-bottom-color:#0078d7;
-	color:#36230e;
-}
-QPushButton:!checked {
-	border-bottom-color:transparent;
-	color: #666666;
-}
-</string>
-       </property>
-       <property name="text">
-        <string notr="true">Cloud drive</string>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>0</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="checkable">
-        <bool>true</bool>
-       </property>
-       <property name="autoExclusive">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="bShowIncomingShares">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QPushButton {
-    border: 3px solid #0078d7;
-	border-top-color: transparent;
-	border-left-color: transparent;
-	border-right-color: transparent;
-    border-radius: 0px;
-    background-color: transparent;
-    padding: -2px;
-	font-size:12px;
+#wLeftPane QFrame[itsOn=true] 
+{
+	border-radius: 4px;
+    background: solid white;
 }
 
-QPushButton:checked {
-	border-bottom-color:#0078d7;
-	color:#36230e;
-}
-QPushButton:!checked {
-	border-bottom-color:transparent;
-	color: #666666;
-}
-</string>
-       </property>
-       <property name="text">
-        <string notr="true">Incoming shares</string>
-       </property>
-       <property name="checkable">
-        <bool>true</bool>
-       </property>
-       <property name="autoExclusive">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="bShowBackups">
-       <property name="styleSheet">
-        <string notr="true">QPushButton {
-    border: 3px solid #0078d7;
-	border-top-color: transparent;
-	border-left-color: transparent;
-	border-right-color: transparent;
-    border-radius: 0px;
-    background-color: transparent;
-    padding: -2px;
-	font-size:12px;
+#wLeftPane QFrame[itsOn=true]  &gt; QLabel
+{
+    border: 1px solid #F5F5F5; 
+    background-color: #FAFAFA;
 }
 
-QPushButton:checked {
-	border-bottom-color:#0078d7;
-	color:#36230e;
+#wLeftPane QFrame[itsOn=false] 
+{
+	border-radius: none;
+    background-color: transparent;
 }
-QPushButton:!checked {
-	border-bottom-color:transparent;
-	color: #666666;
+
+#wLeftPane QFrame[itsOn=false] &gt; QLabel
+{
+    border: 1px transparent #FAFAFA; 
+    background: transparent;
 }
+
+#wLeftPane QFrame
+{
+min-height:40px;
+}
+
+#wLeftPane QPushButton
+{
+min-height:40px;
+}
+
 </string>
-       </property>
-       <property name="text">
-        <string notr="true">Backups</string>
-       </property>
-       <property name="checkable">
-        <bool>true</bool>
-       </property>
-       <property name="autoExclusive">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer_3">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>0</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-    </layout>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QGroupBox" name="wStorage">
+        <property name="title">
+         <string/>
+        </property>
+        <layout class="QVBoxLayout" name="wSearchLayout_2">
+         <property name="spacing">
+          <number>8</number>
+         </property>
+         <property name="leftMargin">
+          <number>4</number>
+         </property>
+         <property name="topMargin">
+          <number>24</number>
+         </property>
+         <property name="rightMargin">
+          <number>4</number>
+         </property>
+         <property name="bottomMargin">
+          <number>4</number>
+         </property>
+         <item>
+          <widget class="QFrame" name="fCloudDrive">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::NoFrame</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Plain</enum>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QPushButton" name="bShowCloudDrive">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>40</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Lato</family>
+                <pointsize>-1</pointsize>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
+              <property name="text">
+               <string>Cloud Drive</string>
+              </property>
+              <property name="icon">
+               <iconset theme="cloud_ico" resource="../../../Resources_win.qrc">
+                <normaloff>:/images/node_selector/sidebar/cloud_ico_default.png</normaloff>:/images/node_selector/sidebar/cloud_ico_default.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>24</width>
+                <height>24</height>
+               </size>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <property name="autoExclusive">
+               <bool>true</bool>
+              </property>
+              <property name="autoDefault">
+               <bool>false</bool>
+              </property>
+              <property name="flat">
+               <bool>false</bool>
+              </property>
+              <property name="default_icon" stdset="0">
+               <string notr="true">qrc:/images/node_selector/sidebar/cloud_ico_default.png</string>
+              </property>
+              <property name="icon_spacing" stdset="0">
+               <UInt>4</UInt>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">buttonGroup</string>
+              </attribute>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QFrame" name="fBackups">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::NoFrame</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Plain</enum>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QPushButton" name="bShowBackups">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>40</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Lato</family>
+                <pointsize>-1</pointsize>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
+              <property name="text">
+               <string>Backups</string>
+              </property>
+              <property name="icon">
+               <iconset theme="backups_ico" resource="../../../Resources_win.qrc">
+                <normaloff>:/images/node_selector/sidebar/backup_ico_default.png</normaloff>:/images/node_selector/sidebar/backup_ico_default.png</iconset>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <property name="autoExclusive">
+               <bool>true</bool>
+              </property>
+              <property name="autoDefault">
+               <bool>false</bool>
+              </property>
+              <property name="default_icon" stdset="0">
+               <string notr="true">qrc:/images/node_selector/sidebar/backup_ico_default.png</string>
+              </property>
+              <property name="icon_spacing" stdset="0">
+               <UInt>4</UInt>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">buttonGroup</string>
+              </attribute>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QFrame" name="fIncomingShares">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::NoFrame</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Plain</enum>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <property name="spacing">
+             <number>3</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QPushButton" name="bShowIncomingShares">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>40</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Lato</family>
+                <pointsize>-1</pointsize>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
+              <property name="text">
+               <string>Incoming Shares</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../../../Resources_win.qrc">
+                <normaloff>:/images/node_selector/sidebar/folder-users_default.png</normaloff>:/images/node_selector/sidebar/folder-users_default.png</iconset>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <property name="autoExclusive">
+               <bool>true</bool>
+              </property>
+              <property name="autoDefault">
+               <bool>false</bool>
+              </property>
+              <property name="default_icon" stdset="0">
+               <string notr="true">qrc:/images/node_selector/sidebar/folder-users_default.png</string>
+              </property>
+              <property name="icon_spacing" stdset="0">
+               <UInt>4</UInt>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">buttonGroup</string>
+              </attribute>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="wSearch">
+        <property name="title">
+         <string>Search</string>
+        </property>
+        <layout class="QVBoxLayout" name="wSearchLayout">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>4</number>
+         </property>
+         <property name="topMargin">
+          <number>24</number>
+         </property>
+         <property name="rightMargin">
+          <number>4</number>
+         </property>
+         <property name="bottomMargin">
+          <number>4</number>
+         </property>
+         <item alignment="Qt::AlignBottom">
+          <widget class="QFrame" name="fSearchString">
+           <property name="focusPolicy">
+            <enum>Qt::StrongFocus</enum>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::NoFrame</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Plain</enum>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_14">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QPushButton" name="bSearch">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
+              <property name="text">
+               <string notr="true"/>
+              </property>
+              <property name="icon">
+               <iconset resource="../../../Resources_win.qrc">
+                <normaloff>:/images/node_selector/sidebar/search_default.png</normaloff>:/images/node_selector/sidebar/search_default.png</iconset>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <property name="autoDefault">
+               <bool>false</bool>
+              </property>
+              <property name="default_icon" stdset="0">
+               <string notr="true">qrc:/images/node_selector/sidebar/search_default.png</string>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">buttonGroup</string>
+              </attribute>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="tClearSearchResult">
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">*
+{
+padding-top:1px;
+padding-right:1px;
+}</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="../../../Resources_win.qrc">
+                <normaloff>:/images/transfer_manager/sidebar/delete_search_result_default.png</normaloff>:/images/transfer_manager/sidebar/delete_search_result_default.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>16</width>
+                <height>16</height>
+               </size>
+              </property>
+              <property name="default_icon" stdset="0">
+               <string notr="true">qrc:/images/transfer_manager/sidebar/delete_search_result_default.png</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
    </item>
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
-     <property name="currentIndex">
-      <number>2</number>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
      </property>
-     <widget class="NodeSelectorTreeViewWidgetCloudDrive" name="CloudDrive"/>
-     <widget class="NodeSelectorTreeViewWidgetIncomingShares" name="IncomingShares"/>
-     <widget class="NodeSelectorTreeViewWidgetBackups" name="Backups"/>
+     <property name="currentIndex">
+      <number>-1</number>
+     </property>
     </widget>
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>NodeSelectorTreeViewWidgetCloudDrive</class>
-   <extends>QWidget</extends>
-   <header>NodeSelectorTreeViewWidgetSpecializations.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>NodeSelectorTreeViewWidgetIncomingShares</class>
-   <extends>QWidget</extends>
-   <header>NodeSelectorTreeViewWidgetSpecializations.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>NodeSelectorTreeViewWidgetBackups</class>
-   <extends>QWidget</extends>
-   <header>NodeSelectorTreeViewWidgetSpecializations.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
- <resources/>
+ <resources>
+  <include location="../../../Resources_win.qrc"/>
+  <include location="../../../Resources_win.qrc"/>
+  <include location="../../../Resources_win.qrc"/>
+ </resources>
  <connections/>
+ <buttongroups>
+  <buttongroup name="buttonGroup"/>
+ </buttongroups>
 </ui>
