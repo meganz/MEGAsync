@@ -1338,9 +1338,9 @@ void SettingsDialog::on_bMyAccount_clicked()
 
 void SettingsDialog::on_bStorageDetails_clicked()
 {
-    auto accountDetailsDialog = new AccountDetailsDialog(this);
-    mApp->updateUserStats(true, true, true, true, USERSTATS_STORAGECLICKED);
-    DialogOpener::showDialog<AccountDetailsDialog>(accountDetailsDialog);
+//    auto accountDetailsDialog = new AccountDetailsDialog(this);
+//    mApp->updateUserStats(true, true, true, true, USERSTATS_STORAGECLICKED);
+//    DialogOpener::showDialog<AccountDetailsDialog>(accountDetailsDialog);
 }
 
 void SettingsDialog::on_bLogout_clicked()

@@ -63,7 +63,7 @@ QUrl AccountDetailsDialog::getQmlUrl()
 AccountDetailsDialog::~AccountDetailsDialog()
 {
     MegaSyncApp->dettachStorageObserver(*this);
-    delete mUi;
+    //delete mUi;
 }
 
 void AccountDetailsDialog::refresh()

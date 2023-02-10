@@ -197,7 +197,7 @@ private:
                 dialog->setWindowModality(Qt::ApplicationModal);
             }
 #else
-            if(dialog->windowModality() == Qt::NonMoNonModal)
+            if(dialog->windowModality() == Qt::NonModal)
             {
                 dialog->setWindowModality(Qt::ApplicationModal);
             }

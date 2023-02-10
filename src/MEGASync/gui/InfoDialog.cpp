@@ -1353,17 +1353,11 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
 
 void InfoDialog::on_bStorageDetails_clicked()
 {
-    if (accountDetailsDialog)
-    {
-       // accountDetailsDialog->raise();
-        return;
-    }
+    auto accountDetailsDialog = new QMLDialogWrapper<AccountDetailsDialog>();
 
-    //delete accountDetailsDialog;
-    accountDetailsDialog = NULL;
-    QPointer<AccountDetailsDialog> accountDetailsDialog = new QMLDialogWrapper<AccountDetailsDialog>()
+    //QPointer<QMLDialogWrapper<AccountDetailsDialog>> accountDetailsDialog = new QMLDialogWrapper<AccountDetailsDialog>();
     app->updateUserStats(true, true, true, true, USERSTATS_STORAGECLICKED);
-    DialogOpener::showDialog(accountDetailsDialog);
+    //DialogOpener::showDialog(accountDetailsDialog);
 }
 
 void InfoDialog::regenerateLayout(int blockState, InfoDialog* olddialog)

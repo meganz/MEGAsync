@@ -23,7 +23,6 @@ public:
 //private slots:
 //    void cppSlot();
     QUrl getQmlUrl() override;
-
 public slots:
     void cppSlot1public();
 
