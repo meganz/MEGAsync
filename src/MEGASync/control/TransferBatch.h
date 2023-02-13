@@ -1,11 +1,12 @@
 #ifndef TRANSFERBATCH_H
 #define TRANSFERBATCH_H
 
+#include "megaapi.h"
 
 #include <QString>
 #include <QStringList>
 #include <QVector>
-#include "megaapi.h"
+
 #include <memory>
 
 class TransferBatch
