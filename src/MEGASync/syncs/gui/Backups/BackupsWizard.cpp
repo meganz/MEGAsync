@@ -686,7 +686,7 @@ void BackupsWizard::on_bMoreFolders_clicked()
             }
         }
     };
-    Platform::getInstance()->folderSelector(tr("Select local folder"),Utilities::getDefaultBasePath(),false,this,processResult);
+    Platform::getInstance()->folderSelector(tr("Choose directory"),Utilities::getDefaultBasePath(),false,this,processResult);
 }
 
 void BackupsWizard::on_bBack_clicked()
