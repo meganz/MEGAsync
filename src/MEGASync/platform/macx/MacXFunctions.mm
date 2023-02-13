@@ -272,7 +272,7 @@ void setFolderIcon(QString path)
     auto osVersion = QOperatingSystemVersion::current();
     if (osVersion >= QOperatingSystemVersion::MacOSBigSur)
     {
-        iconImage = [[NSImage alloc] initWithContentsOfFile:[appPath stringByAppendingString:@"/Contents/Resources/MacOS11_folder.icns"]];
+        iconImage = [[NSImage alloc] initWithContentsOfFile:[appPath stringByAppendingString:@"/Contents/Resources/folder_bigsur.icns"]];
     }
     else if (osVersion >= QOperatingSystemVersion::OSXYosemite)
     {
