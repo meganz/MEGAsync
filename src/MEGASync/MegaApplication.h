@@ -552,7 +552,7 @@ protected:
 
     ScanStageController scanStageController;
     DialogGeometryRetainer<TransferManager> mTransferManagerGeometryRetainer;
-    std::shared_ptr<FolderTransferListener> folderTransferListener;
+    std::shared_ptr<FolderTransferListener> mFolderTransferListener;
 
     bool mDisableGfx;
 
