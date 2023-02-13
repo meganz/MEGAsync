@@ -277,6 +277,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/control/UserAttributesManager.h
     ${MEGAsyncDir}/control/TextDecorator.h
     ${MEGAsyncDir}/control/TransferBatch.h
+	${MEGAsyncDir}/control/DialogOpener.h
 
     ${MEGAsyncDir}/gui/AlertItem.h
     ${MEGAsyncDir}/gui/AlertFilterType.h
@@ -617,6 +618,7 @@ set (SRCS
     ${MEGAsyncDir}/control/TransferBatch.cpp
     ${MEGAsyncDir}/control/UserAttributesManager.cpp
     ${MEGAsyncDir}/control/TextDecorator.cpp
+	${MEGAsyncDir}/control/DialogOpener.cpp
 
     ${MEGAsyncDir}/UserAttributesRequests/DeviceName.cpp
     ${MEGAsyncDir}/UserAttributesRequests/MyBackupsHandle.cpp
