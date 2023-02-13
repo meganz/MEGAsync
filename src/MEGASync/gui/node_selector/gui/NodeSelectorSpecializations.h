@@ -5,6 +5,8 @@
 
 class UploadNodeSelector : public NodeSelector
 {
+    Q_OBJECT
+
 public:
     explicit UploadNodeSelector(QWidget *parent = 0);
 
@@ -14,6 +16,8 @@ private:
 
 class DownloadNodeSelector : public NodeSelector
 {
+    Q_OBJECT
+
 public:
     explicit DownloadNodeSelector(QWidget *parent = 0);
 
@@ -23,6 +27,8 @@ private:
 
 class SyncNodeSelector : public NodeSelector
 {
+    Q_OBJECT
+
 public:
     explicit SyncNodeSelector(QWidget *parent = 0);
 
@@ -32,6 +38,8 @@ private:
 
 class StreamNodeSelector : public NodeSelector
 {
+    Q_OBJECT
+
 public:
     explicit StreamNodeSelector(QWidget *parent = 0);
 
