@@ -75,7 +75,7 @@ private:
 
         bool operator==(const DialogInfo &info)
         {
-            return info.mDialog == mDialog ? true : false;
+            return (info.mDialog == mDialog);
         }
 
 
@@ -96,12 +96,14 @@ public:
     {
         auto classType = QString::fromUtf8(typeid(DialogType).name());
 
-        foreach(auto dialogInfo, mOpenedDialogs)
+        auto finder = [classType](const auto& dialogInfo) {
+            return (dialogInfo->getDialogClass() == classType);
+        };
+
+        auto itOccurence = std::find_if(mOpenedDialogs.begin(), mOpenedDialogs.end(), finder);
+        if (itOccurence != mOpenedDialogs.end())
         {
-            if(dialogInfo->getDialogClass() == classType)
-            {
-                return std::dynamic_pointer_cast<DialogInfo<DialogType>>(dialogInfo);
-            }
+            return std::dynamic_pointer_cast<DialogInfo<DialogType>>(*itOccurence);
         }
 
         return nullptr;
@@ -110,18 +112,13 @@ public:
     template <class DialogType>
     static void removeDialogByClass()
     {
-        auto classType = QString::fromUtf8(typeid(DialogType).name());
-
-        foreach(auto dialogInfo, mOpenedDialogs)
+        auto dialogInfo = findDialog<DialogType>();
+        if(dialogInfo)
         {
-            if(dialogInfo->getDialogClass() == classType)
+            auto dialogInfoByType = std::dynamic_pointer_cast<DialogInfo<DialogType>>(dialogInfo);
+            if(dialogInfoByType)
             {
-                auto dialogInfoByType = std::dynamic_pointer_cast<DialogInfo<DialogType>>(dialogInfo);
-                if(dialogInfoByType)
-                {
-                    removeDialog(dialogInfoByType->getDialog());
-                    break;
-                }
+                removeDialog(dialogInfoByType->getDialog());
             }
         }
     }
@@ -348,14 +345,16 @@ private:
     template <class DialogType>
     static std::shared_ptr<DialogInfo<DialogType>> findDialogInfo(QDialog* dialog)
     {
-        foreach(auto dialogInfo, mOpenedDialogs)
-        {
+        auto finder = [dialog](const auto& dialogInfo) {
             auto dialogInfoByType = std::dynamic_pointer_cast<DialogInfo<DialogType>>(dialogInfo);
 
-            if(dialogInfoByType && dialogInfoByType->getDialog() == dialog)
-            {
-                return dialogInfoByType;
-            }
+            return (dialogInfoByType && dialogInfoByType->getDialog() == dialog);
+        };
+
+        auto itOccurence = std::find_if(mOpenedDialogs.begin(), mOpenedDialogs.end(), finder);
+        if (itOccurence != mOpenedDialogs.end())
+        {
+            return std::dynamic_pointer_cast<DialogInfo<DialogType>>(*itOccurence);
         }
 
         return nullptr;
@@ -364,19 +363,21 @@ private:
     template <class DialogType>
     static std::shared_ptr<DialogInfo<DialogType>> findSiblingDialogInfo(QDialog*, const QString& classType)
     {
-        foreach(auto dialogInfo, mOpenedDialogs)
-        {
+        auto finder = [classType](const auto& dialogInfo) {
             auto dialogInfoByType = std::dynamic_pointer_cast<DialogInfo<DialogType>>(dialogInfo);
 
             if(dialogInfoByType && !dialogInfoByType->getDialogClass().isEmpty())
             {
-                if(/*dialogInfo->getDialog() != dialog
-                        && dialogInfo->dialog->parent() == dialog->parent()
-                        && */dialogInfoByType->getDialogClass()  == classType)
-                {
-                    return dialogInfoByType;
-                }
+                return (dialogInfoByType->getDialogClass()  == classType);
             }
+
+            return false;
+        };
+
+        auto itOccurence = std::find_if(mOpenedDialogs.begin(), mOpenedDialogs.end(), finder);
+        if (itOccurence != mOpenedDialogs.end())
+        {
+            return std::dynamic_pointer_cast<DialogInfo<DialogType>>(*itOccurence);
         }
 
         return nullptr;

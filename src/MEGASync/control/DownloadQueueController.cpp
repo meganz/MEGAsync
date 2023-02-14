@@ -48,7 +48,7 @@ void DownloadQueueController::startAvailableSpaceChecking()
 
     if (mFolderCountPendingSizeComputation == 0)
     {
-        isDownloadPossible();
+        tryDownload();
     }
 }
 
@@ -92,17 +92,17 @@ void DownloadQueueController::onRequestFinish(MegaApi*, MegaRequest *request, Me
         --mFolderCountPendingSizeComputation;
         if (mFolderCountPendingSizeComputation <= 0)
         {
-            isDownloadPossible();
+            tryDownload();
         }
     }
 }
 
-void DownloadQueueController::isDownloadPossible()
+void DownloadQueueController::tryDownload()
 {
     bool downloadPossible(hasEnoughSpaceForDownloads());
     if (!downloadPossible)
     {
-        shouldRetryWhenNotEnoughSpace();
+        askUserForChoice();
     }
     else
     {
@@ -120,7 +120,7 @@ bool DownloadQueueController::hasEnoughSpaceForDownloads()
     return true;
 }
 
-void DownloadQueueController::shouldRetryWhenNotEnoughSpace()
+void DownloadQueueController::askUserForChoice()
 {
     QStorageInfo destinationDrive(mCurrentTargetPath);
     QString driveName = destinationDrive.name();

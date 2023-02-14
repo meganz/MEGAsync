@@ -1099,12 +1099,16 @@ void InfoDialog::addBackup()
     {
         if(!overQuotaDialog || overQuotaDialog->result() == QDialog::Rejected)
         {
-            // If no backups configured: show wizard, else show "add single backup" dialog
-            int nbBackups(SyncInfo::instance()->getNumSyncedFolders(mega::MegaSync::TYPE_BACKUP));
-            if(nbBackups > 0)
+            bool showWizardIfNoBackups(SyncInfo::instance()->getNumSyncedFolders(mega::MegaSync::TYPE_BACKUP) == 0);
+            if(showWizardIfNoBackups)
+            {
+                auto backupsWizard = new BackupsWizard();
+                DialogOpener::showDialog<BackupsWizard>(backupsWizard);
+            }
+            else
             {
                 auto backupDialog = new AddBackupDialog();
-                
+
                 setupSyncController();
 
                 DialogOpener::showDialog<AddBackupDialog>(backupDialog,[this, backupDialog]
@@ -1118,11 +1122,6 @@ void InfoDialog::addBackup()
                         app->createAppMenus();
                     }
                 });
-            }
-            else
-            {
-                auto backupsWizard = new BackupsWizard();
-                DialogOpener::showDialog<BackupsWizard>(backupsWizard);
             }
         }
     };
