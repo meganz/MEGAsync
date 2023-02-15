@@ -394,28 +394,27 @@ void DesktopNotifications::notifySharedUpdate(mega::MegaUserAlert *alert, const 
     }
     notification->setTitle(sharedFolderName);
     notification->setText(message);
-    if(node)
+    if(node && node->isNodeKeyDecrypted())
     {
         notification->setData(QString::fromUtf8(node->getBase64Handle()));
         const auto megaApi = static_cast<MegaApplication*>(qApp)->getMegaApi();
         const auto fullAccess = megaApi->getAccess(node.get()) >= mega::MegaShare::ACCESS_FULL;
+        QStringList actions (tr("Show"));
+
         if(type == NEW_SHARE && fullAccess)
         {
-#ifdef __APPLE__
-            //Apple do not support multi option with notifications. Just provide default one.
-            notification->setActions(QStringList() << tr("Show"));
-#else
-            notification->setActions(QStringList() << tr("Show") << tr("Sync"));
+#ifndef __APPLE__
+            // Apple do not support multi option with notifications. Just provide default one.
+            // For other platforms, also show "Sync"
+            actions << tr("Sync");
 #endif
-
             QObject::connect(notification, &MegaNotification::activated, this, &DesktopNotifications::replayNewShareReceived);
         }
         else
         {
-            notification->setActions(QStringList() << tr("Show"));
             QObject::connect(notification, &MegaNotification::activated, this, &DesktopNotifications::viewShareOnWebClient);
         }
-
+        notification->setActions(actions);
     }
     notification->setImage(mAppIcon);
     notification->setImagePath(mFolderIconPath);
