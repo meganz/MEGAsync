@@ -17,9 +17,10 @@ public:
 
     //This method is called from two different threads, but it is thread-safe
     bool writeData(const char * data, qint64 len);
+    void appendDataToBuffer(QByteArray data);
 
 signals:
-    void dataReady();
+    void dataReady(QByteArray data);
 
 private:
     MacXLocalSocketPrivate* socketPrivate;
