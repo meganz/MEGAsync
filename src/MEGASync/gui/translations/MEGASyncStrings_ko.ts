@@ -2822,6 +2822,11 @@ Transfer will automatically resume when you re-open the app.</source>
         <translatorcomment>Title of security upgrade dialog</translatorcomment>
         <translation>보안 업그레이드</translation>
     </message>
+    <message>
+        <source>Your account&apos;s security is now being upgraded. This will happen only once. If you have seen this message for this account before, press Cancel.</source>
+        <translatorcomment>Error message shown to the user to inform about that the security of his account is going to be upgraded. </translatorcomment>
+        <translation>계정의 보안이 업그레이드 되는 중입니다. 이것은 한번만 실행됩니다. 만약 이 메시지를 이 계정에서 이전에 본 적이 있다면, 취소를 클릭하세요.</translation>
+    </message>
     <message numerus="yes">
         <source>You are currently sharing the following folder: %1</source>
         <translatorcomment>Additional information shown within Security upgrade dialog if the user has outgoing shares. A list of the shares will be filled at %1 placeholder. Please check screenshot to see the full context of this string along with the other ones.</translatorcomment>
@@ -2831,11 +2836,6 @@ Transfer will automatically resume when you re-open the app.</source>
         <source>Failed to ugrade security. Error: %1</source>
         <translatorcomment>System notification error shown if an error occur while upgrading security for your account. %1 will be replaced with the error returned from the SDK.</translatorcomment>
         <translation>보안 업그레이드 실패. 오류: %1</translation>
-    </message>
-    <message>
-        <source>Your account&apos;s security is now being upgraded. This will happen only once. If you have seen this message for this account before, press Cancel.</source>
-        <translatorcomment>Error message shown to the user to inform about that the security of his account is going to be upgraded. </translatorcomment>
-        <translation>계정의 보안이 업그레이드 되는 중입니다. 이것은 한번만 실행됩니다. 만약 이 메시지를 이 계정에서 이전에 본 적이 있다면, 취소를 누르세요.</translation>
     </message>
 </context>
 <context>
