@@ -2822,7 +2822,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Security upgrade</source>
         <translatorcomment>Title of security upgrade dialog</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Обновление параметров безопасности</translation>
     </message>
     <message numerus="yes">
         <source>You are currently sharing the following folder: %1</source>
@@ -2832,7 +2832,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Failed to ugrade security. Error: %1</source>
         <translatorcomment>System notification error shown if an error occur while upgrading security for your account. %1 will be replaced with the error returned from the SDK.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось обновить параметры безопасности. Ошибка: %1</translation>
     </message>
     <message>
         <source>Your account&apos;s security is now being upgraded. This will happen only once. If you have seen this message for this account before, press Cancel.</source>
