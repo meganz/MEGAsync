@@ -9,8 +9,9 @@
 
 #include <QFile>
 
-LocalAndRemoteDifferentWidget::LocalAndRemoteDifferentWidget(QWidget *parent) :
+LocalAndRemoteDifferentWidget::LocalAndRemoteDifferentWidget(std::shared_ptr<mega::MegaSyncStall> originalstall, QWidget *parent) :
     StalledIssueBaseDelegateWidget(parent),
+    originalStall(originalstall),
     ui(new Ui::LocalAndRemoteDifferentWidget)
 {
     ui->setupUi(this);
@@ -48,9 +49,12 @@ void LocalAndRemoteDifferentWidget::refreshUi()
 }
 
 void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
-{ 
+{
     mUtilities.removeRemoteFile(ui->chooseRemoteCopy->data()->getFilePath());
     MegaSyncApp->getStalledIssuesModel()->solveIssue(false, getCurrentIndex());
+
+    // Prevent this one showing again (if they Refresh) until sync has made a full fresh pass
+    MegaSyncApp->getMegaApi()->clearStalledPath(originalStall.get());
 
     refreshUi();
 }
@@ -59,6 +63,9 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
 {
     mUtilities.removeLocalFile(ui->chooseLocalCopy->data()->getNativeFilePath());
     MegaSyncApp->getStalledIssuesModel()->solveIssue(true, getCurrentIndex());
+
+    // Prevent this one showing again (if they Refresh) until sync has made a full fresh pass
+    MegaSyncApp->getMegaApi()->clearStalledPath(originalStall.get());
 
     refreshUi();
 }

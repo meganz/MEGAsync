@@ -204,6 +204,9 @@ void NameConflict::onActionClicked(int actionId)
                                                                                            , newName,chooseTitle->getIndex(), delegateWidget->getCurrentIndex());
                 }
 
+                // Prevent this one showing again (if they Refresh) until sync has made a full fresh pass
+                MegaSyncApp->getMegaApi()->clearStalledPath(mData.data->original.get());
+
                 if(areAllSolved)
                 {
                     emit allSolved();
@@ -242,6 +245,9 @@ void NameConflict::onActionClicked(int actionId)
                     mUtilities.removeLocalFile(QDir::toNativeSeparators(info.filePath()));
                     areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveLocalConflictedNameByRemove(titleFileName,chooseTitle->getIndex(), delegateWidget->getCurrentIndex());
                 }
+
+                // Prevent this one showing again (if they Refresh) until sync has made a full fresh pass
+                MegaSyncApp->getMegaApi()->clearStalledPath(mData.data->original.get());
 
                 if(areAllSolved)
                 {

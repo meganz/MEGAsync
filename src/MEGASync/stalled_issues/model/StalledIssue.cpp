@@ -2,8 +2,9 @@
 
 #include "MegaApplication.h"
 
-StalledIssueData::StalledIssueData()
-    : mIsCloud(false)
+StalledIssueData::StalledIssueData(std::unique_ptr<mega::MegaSyncStall> originalstall)
+    : original(std::move(originalstall))
+    , mIsCloud(false)
     , mIsSolved(false)
 {
     qRegisterMetaType<StalledIssueDataPtr>("StalledIssueDataPtr");
@@ -178,24 +179,25 @@ void StalledIssueData::checkTrailingSpaces(QString &name) const
 StalledIssue::StalledIssue(const mega::MegaSyncStall *stallIssue)
 {
     fillIssue(stallIssue);
+    originalStall.reset(stallIssue->copy());
 }
 
-bool StalledIssue::initLocalIssue()
+bool StalledIssue::initLocalIssue(const mega::MegaSyncStall *stallIssue)
 {
     if(!mLocalData)
     {
-        mLocalData = QExplicitlySharedDataPointer<StalledIssueData>(new StalledIssueData());
+        mLocalData = QExplicitlySharedDataPointer<StalledIssueData>(new StalledIssueData(std::unique_ptr<mega::MegaSyncStall>(stallIssue->copy())));
         return true;
     }
 
     return false;
 }
 
-bool StalledIssue::initCloudIssue()
+bool StalledIssue::initCloudIssue(const mega::MegaSyncStall *stallIssue)
 {
     if(!mCloudData)
     {
-        mCloudData = QExplicitlySharedDataPointer<StalledIssueData>(new StalledIssueData());
+        mCloudData = QExplicitlySharedDataPointer<StalledIssueData>(new StalledIssueData(std::unique_ptr<mega::MegaSyncStall>(stallIssue->copy())));
         mCloudData->mIsCloud = true;
 
         return true;
@@ -217,7 +219,7 @@ void StalledIssue::fillIssue(const mega::MegaSyncStall *stall)
 
     if(localSourcePathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem || !localSourcePath.isEmpty())
     {
-        initLocalIssue();
+        initLocalIssue(stall);
         getLocalData()->mPath.path = localSourcePath;
         getLocalData()->mPath.mPathProblem = localSourcePathProblem;
 
@@ -231,7 +233,7 @@ void StalledIssue::fillIssue(const mega::MegaSyncStall *stall)
 
     if(localTargetPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem || !localTargetPath.isEmpty())
     {
-        initLocalIssue();
+        initLocalIssue(stall);
         getLocalData()->mMovePath.path = localTargetPath;
         getLocalData()->mMovePath.mPathProblem = localTargetPathProblem;
 
@@ -251,7 +253,7 @@ void StalledIssue::fillIssue(const mega::MegaSyncStall *stall)
 
     if(cloudSourcePathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem || !cloudSourcePath.isEmpty())
     {
-        initCloudIssue();
+        initCloudIssue(stall);
         getCloudData()->mPath.path = cloudSourcePath;
         getCloudData()->mPath.mPathProblem = cloudSourcePathProblem;
 
@@ -265,7 +267,7 @@ void StalledIssue::fillIssue(const mega::MegaSyncStall *stall)
 
     if(cloudTargetPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem || !cloudTargetPath.isEmpty())
     {
-        initCloudIssue();
+        initCloudIssue(stall);
         getCloudData()->mMovePath.path = cloudTargetPath;
         getCloudData()->mMovePath.mPathProblem = cloudTargetPathProblem;
 

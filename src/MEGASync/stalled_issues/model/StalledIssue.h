@@ -29,6 +29,8 @@ public:
         bool isEmpty() const {return path.isEmpty() && mPathProblem == mega::MegaSyncStall::SyncPathProblem::NoProblem;}
     };
 
+    StalledIssueData(std::unique_ptr<mega::MegaSyncStall> originalstall);
+    StalledIssueData(const StalledIssueData&);
     StalledIssueData();
     ~StalledIssueData(){}
 
@@ -54,6 +56,8 @@ public:
 
     void checkTrailingSpaces(QString& name) const;
 
+    std::shared_ptr<mega::MegaSyncStall> original;
+
 private:
     friend class StalledIssue;
     friend class NameConflictedStalledIssue;
@@ -78,7 +82,7 @@ class StalledIssue
 {
 public:
     StalledIssue(){}
-    StalledIssue(const StalledIssue& tdr) : mDetectedMEGASide(tdr.mDetectedMEGASide), mLocalData(tdr.mLocalData), mCloudData(tdr.mCloudData), mReason(tdr.getReason()), mIsSolved(tdr.mIsSolved)  {}
+    //StalledIssue(const StalledIssue& tdr) : mDetectedMEGASide(tdr.mDetectedMEGASide), mLocalData(tdr.mLocalData), mCloudData(tdr.mCloudData), mReason(tdr.getReason()), mIsSolved(tdr.mIsSolved)  {}
     StalledIssue(const mega::MegaSyncStall *stallIssue);
 
     const StalledIssueDataPtr consultLocalData() const;
@@ -103,12 +107,14 @@ public:
     uint8_t hasFiles() const;
     uint8_t hasFolders() const;
 
+    std::shared_ptr<mega::MegaSyncStall> originalStall;
+
 protected:
-    bool initCloudIssue();
+    bool initCloudIssue(const mega::MegaSyncStall *stallIssue);
     const QExplicitlySharedDataPointer<StalledIssueData>& getLocalData() const;
     QExplicitlySharedDataPointer<StalledIssueData> mLocalData;
 
-    bool initLocalIssue();
+    bool initLocalIssue(const mega::MegaSyncStall *stallIssue);
     const QExplicitlySharedDataPointer<StalledIssueData>& getCloudData() const;
     QExplicitlySharedDataPointer<StalledIssueData> mCloudData;
 

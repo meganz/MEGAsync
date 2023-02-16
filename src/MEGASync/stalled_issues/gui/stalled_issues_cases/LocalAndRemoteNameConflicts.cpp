@@ -10,8 +10,9 @@ const QString LocalAndRemoteNameConflicts::FOLDERS_DESCRIPTION = QString::fromLa
 const QString LocalAndRemoteNameConflicts::FILES_AND_FOLDERS_DESCRIPTION = QString::fromLatin1(QT_TR_NOOP("Renaming or removing files or folders can resolve this issue,"
                                                                                                        "\nor click the Folders below to make adjustments in the local filesystem or in MEGA"));
 
-LocalAndRemoteNameConflicts::LocalAndRemoteNameConflicts(QWidget *parent) :
+LocalAndRemoteNameConflicts::LocalAndRemoteNameConflicts(std::shared_ptr<mega::MegaSyncStall> originalstall, QWidget *parent) :
     StalledIssueBaseDelegateWidget(parent),
+    originalStall(originalstall),
     ui(new Ui::LocalAndRemoteNameConflicts)
 {
     ui->setupUi(this);

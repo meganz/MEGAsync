@@ -114,12 +114,12 @@ StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::createBodyWid
         case mega::MegaSyncStall::SyncStallReason::LocalAndRemotePreviouslyUnsyncedDiffer_userMustChoose:
         case mega::MegaSyncStall::SyncStallReason::LocalAndRemoteChangedSinceLastSyncedState_userMustChoose:
         {
-            item = new LocalAndRemoteDifferentWidget(parent);
+            item = new LocalAndRemoteDifferentWidget(issue.consultData()->originalStall, parent);
             break;
         }
         case mega::MegaSyncStall::SyncStallReason::NamesWouldClashWhenSynced:
         {
-            item = new LocalAndRemoteNameConflicts(parent);
+            item = new LocalAndRemoteNameConflicts(issue.consultData()->originalStall, parent);
             break;
         }
         case mega::MegaSyncStall::SyncStallReason::FileIssue:

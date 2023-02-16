@@ -16,10 +16,12 @@ class LocalAndRemoteDifferentWidget : public StalledIssueBaseDelegateWidget
     Q_OBJECT
 
 public:
-    explicit LocalAndRemoteDifferentWidget(QWidget *parent = nullptr);
+    explicit LocalAndRemoteDifferentWidget(std::shared_ptr<mega::MegaSyncStall> orignalstall, QWidget *parent = nullptr);
     ~LocalAndRemoteDifferentWidget();
 
     void refreshUi() override;
+
+    std::shared_ptr<mega::MegaSyncStall> originalStall;
 
 private slots:
     void onLocalButtonClicked(int);
