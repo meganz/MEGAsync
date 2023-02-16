@@ -21,6 +21,7 @@ enum class NodeSelectorModelRoles
 {
     DATE_ROLE = Qt::UserRole,
     IS_FILE_ROLE,
+    IS_FOLDER_ROLE,
     STATUS_ROLE,
     last
 };

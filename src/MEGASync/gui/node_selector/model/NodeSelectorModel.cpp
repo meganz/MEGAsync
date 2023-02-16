@@ -314,6 +314,10 @@ QVariant NodeSelectorModel::data(const QModelIndex &index, int role) const
                 {
                     return QVariant::fromValue(item->getNode()->isFile());
                 }
+                case toInt(NodeSelectorModelRoles::IS_FOLDER_ROLE):
+                {
+                    return QVariant::fromValue(item->getNode()->isFolder());
+                }
                 case toInt(NodeSelectorModelRoles::STATUS_ROLE):
                 {
                     return QVariant::fromValue(item->getStatus());
