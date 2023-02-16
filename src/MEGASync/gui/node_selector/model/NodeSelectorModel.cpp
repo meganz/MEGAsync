@@ -324,6 +324,10 @@ QVariant NodeSelectorModel::data(const QModelIndex &index, int role) const
                 }
                 case toInt(NodeRowDelegateRoles::ENABLED_ROLE):
                 {
+                    if (!item->getNode()->isNodeKeyDecrypted())
+                    {
+                        return false;
+                    }
                     if(mSyncSetupMode)
                     {
                         return item->isSyncable();
