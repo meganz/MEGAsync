@@ -27,10 +27,10 @@ VIAddVersionKey "LegalCopyright" "MEGA Limited 2023"
 VIAddVersionKey "ProductName" "MEGAsync"
 
 ; Version info
-VIProductVersion "5.0.9.0"
-VIAddVersionKey "FileVersion" "5.0.9.0"
-VIAddVersionKey "ProductVersion" "5.0.9.0"
-!define PRODUCT_VERSION "5.0.9"
+VIProductVersion "5.0.10.0"
+VIAddVersionKey "FileVersion" "5.0.10.0"
+VIAddVersionKey "ProductVersion" "5.0.10.0"
+!define PRODUCT_VERSION "5.0.10"
 
 !define PRODUCT_PUBLISHER "Mega Limited"
 !define PRODUCT_WEB_SITE "http://www.mega.nz"
