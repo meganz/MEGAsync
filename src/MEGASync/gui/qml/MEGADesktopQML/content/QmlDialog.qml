@@ -28,28 +28,18 @@
 ****************************************************************************/
 
 import QtQml 2.12
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import "Onboarding"
+import QtQuick.Window 2.12
+import com.qmldialog 1.0 as Cpp
 
-QmlDialog {
-    id: mWindow
-    objectName: "app1"
-    title: "Set up MEGA"
-    modality: Qt.NonModal
-    width: 776
-    height: 544
+Cpp.QmlDialog {
+    id: dialog
 
-    OnboardingFlow {
-        id: onboarding
-        anchors.fill: parent
-      }
+    function accept(){
+        Wrapper.accept()
+    }
 
-    Connections{
-        target: AccountDetails
-        onTestSignal:{
-            console.log("esto es qml!: me llega la señal. VALUE = " + value)
-        }
+    function reject(){
+        Wrapper.reject()
     }
 }
 

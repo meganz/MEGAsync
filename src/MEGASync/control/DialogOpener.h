@@ -138,7 +138,7 @@ public:
     {
         if(dialog)
         {
-            dialog->close();            
+     //       dialog->close();
             dialog->deleteLater();
         }
     }
@@ -152,7 +152,7 @@ private:
         if(dialog)
         {
             auto classType = QString::fromUtf8(typeid(DialogType).name());
-            auto siblingDialogInfo = findSiblingDialogInfo<DialogType>(dialog.data(),classType);
+            auto siblingDialogInfo = findSiblingDialogInfo<DialogType>(classType);
 
             if(siblingDialogInfo)
             {
@@ -221,11 +221,14 @@ private:
         });
 
         //This depends on QDialog -> Check if we can templatizate it in order to reuse it with QML
-        auto dpiResize = new HighDpiResize(dialog);
+        if(auto widgetdialog = dynamic_cast<QDialog*>(dialog.data()))
+        {
+           // auto dpiResize = new HighDpiResize(widgetdialog);
+        }
     }
 
     template <class DialogType>
-    static std::shared_ptr<DialogInfo<DialogType>> findDialogInfo(QDialog* dialog)
+    static std::shared_ptr<DialogInfo<DialogType>> findDialogInfo(DialogType* dialog)
     {
         foreach(auto dialogInfo, mOpenedDialogs)
         {
@@ -241,7 +244,7 @@ private:
     }
 
     template <class DialogType>
-    static std::shared_ptr<DialogInfo<DialogType>> findSiblingDialogInfo(QDialog*, const QString& classType)
+    static std::shared_ptr<DialogInfo<DialogType>> findSiblingDialogInfo(const QString& classType)
     {
         foreach(auto dialogInfo, mOpenedDialogs)
         {

@@ -10,9 +10,10 @@
 #include <QFileInfo>
 #include <QEvent>
 #include <QScrollBar>
-#include <QMLDialogWrapper.h>
+#include "qml/QmlDialog/QmlDialogWrapper.h"
 
 #include "InfoDialog.h"
+#include "AccountDetailsDialog.h"
 #include "ui_InfoDialog.h"
 #include "control/Utilities.h"
 #include "MegaApplication.h"
@@ -1353,11 +1354,13 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
 
 void InfoDialog::on_bStorageDetails_clicked()
 {
-    auto accountDetailsDialog = new QMLDialogWrapper<AccountDetailsDialog>();
-
-    //QPointer<QMLDialogWrapper<AccountDetailsDialog>> accountDetailsDialog = new QMLDialogWrapper<AccountDetailsDialog>();
+    QPointer<QmlDialogWrapper<AccountDetailsDialog>> accountDetailsDialog = new QmlDialogWrapper<AccountDetailsDialog>();
     app->updateUserStats(true, true, true, true, USERSTATS_STORAGECLICKED);
-    //DialogOpener::showDialog(accountDetailsDialog);
+    DialogOpener::showDialog(accountDetailsDialog, [accountDetailsDialog]
+    {
+        qDebug()<<accountDetailsDialog->wrapper()->test();
+        qDebug()<<accountDetailsDialog->result();
+    });
 }
 
 void InfoDialog::regenerateLayout(int blockState, InfoDialog* olddialog)

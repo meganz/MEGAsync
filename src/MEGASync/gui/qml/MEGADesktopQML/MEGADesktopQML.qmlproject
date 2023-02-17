@@ -71,7 +71,7 @@ Project {
 
 
     /* List of plugin directories passed to QML runtime */
-    importPaths: [ "imports", "asset_imports" ]
+    importPaths: [ "imports", "asset_imports", "content"]
 
     /* Required for deployment */
     targetDirectory: "/opt/MEGADesktopQML"

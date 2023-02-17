@@ -4,13 +4,13 @@
 #include "Utilities.h"
 #include "control/Preferences.h"
 #include "HighDpiResize.h"
-#include "QMLDialogWrapper.h"
+#include "qml/QmlDialog/QmlDialogWrapper.h"
 
 #include <QDialog>
 #include <QQuickView>
 #include <QQmlComponent>
 
-class AccountDetailsDialog : public QMLComponentWrapper, public IStorageObserver
+class AccountDetailsDialog : public QMLComponent, public IStorageObserver
 {
     Q_OBJECT
 
@@ -24,6 +24,7 @@ public:
 //    void cppSlot();
     QUrl getQmlUrl() override;
     QString contextName() override;
+    QString test();
 public slots:
     void cppSlot1public();
 

@@ -3,6 +3,7 @@ QT       += network qml quick
 QML_IMPORT_PATH = $$PWD/qml/MEGADesktopQML/imports
 
 RESOURCES += $$PWD/qml/MEGADesktopQML/MEGADesktopQML.qrc
+RESOURCES += $$PWD/qml/MEGADesktopQML/imports/Components/Components.qrc
 
 SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/BalloonToolTip.cpp \
@@ -14,7 +15,6 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/MegaDelegateHoverManager.cpp \
     $$PWD/NotificationsSettings.cpp \
     $$PWD/OverQuotaDialog.cpp \
-    $$PWD/QMLDialogWrapper.cpp \
     $$PWD/ScanningWidget.cpp \
     $$PWD/QtPositioningBugFixer.cpp \
     $$PWD/PasswordLineEdit.cpp \
@@ -77,8 +77,9 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/node_selector/gui/NodeSelector.cpp \
     $$PWD/node_selector/gui/NodeSelectorLoadingDelegate.cpp \
     $$PWD/node_selector/gui/SearchLineEdit.cpp \
-    $$PWD/node_selector/gui/NodeSelectorSpecializations.cpp
-
+    $$PWD/node_selector/gui/NodeSelectorSpecializations.cpp \
+    $$PWD/qml/QmlDialog/QmlDialog.cpp \
+    $$PWD/qml/QmlDialog/QmlDialogWrapper.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/AutoResizeStackedWidget.h \
@@ -93,7 +94,6 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/MegaNodeNames.h \
     $$PWD/NotificationsSettings.h \
     $$PWD/OverQuotaDialog.h \
-    $$PWD/QMLDialogWrapper.h \
     $$PWD/ScanningWidget.h \
     $$PWD/QtPositioningBugFixer.h \
     $$PWD/PasswordLineEdit.h \
@@ -157,7 +157,9 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/node_selector/gui/NodeSelector.h \
     $$PWD/node_selector/gui/NodeSelectorLoadingDelegate.h \
     $$PWD/node_selector/gui/SearchLineEdit.h \
-    $$PWD/node_selector/gui/NodeSelectorSpecializations.h
+    $$PWD/node_selector/gui/NodeSelectorSpecializations.h \
+    $$PWD/qml/QmlDialog/QmlDialog.h \
+    $$PWD/qml/QmlDialog/QmlDialogWrapper.h
 
 
 INCLUDEPATH += $$PWD

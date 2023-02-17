@@ -1334,5 +1334,11 @@
         <file>images/retry.png</file>
         <file>images/retry@2x.png</file>
         <file>images/retry@3x.png</file>
+        <file>images/Onboarding/onboard_step1.png</file>
+        <file>images/Onboarding/onboard_step1@2x.png</file>
+        <file>images/Onboarding/onboard_step1@3x.png</file>
+        <file>images/Onboarding/login_folder.png</file>
+        <file>images/Onboarding/login_folder@2x.png</file>
+        <file>images/Onboarding/login_folder@3x.png</file>
     </qresource>
 </RCC>

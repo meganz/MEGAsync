@@ -18,7 +18,7 @@ static constexpr int PRECISION{100};
 static constexpr int DEFAULT_MIN_PERCENTAGE{1};
 
 AccountDetailsDialog::AccountDetailsDialog(QObject *parent) :
-    QMLComponentWrapper(parent)
+    QMLComponent(parent)
 {
 
     //create(objectContext);
@@ -34,6 +34,8 @@ AccountDetailsDialog::AccountDetailsDialog(QObject *parent) :
 
     // Set transfer quota progress bar color to blue
     //mUi->wCircularTransfer->setProgressBarGradient(QColor(96, 209, 254), QColor(88, 185, 243));
+
+    QTimer::singleShot(5000, this, &AccountDetailsDialog::cppSlot1public);
 
     QIcon icon;
     icon.addFile(QString::fromUtf8(":/images/account_details/versions.png"));
@@ -62,6 +64,11 @@ QUrl AccountDetailsDialog::getQmlUrl()
 QString AccountDetailsDialog::contextName()
 {
     return QString::fromUtf8("AccountDetails");
+}
+
+QString AccountDetailsDialog::test()
+{
+    return tr("patatatatata");
 }
 
 

@@ -15,8 +15,8 @@ Rectangle {
     width: Styles.width
     height: Styles.height
     color: Styles.backgroundColor
-    property alias roundButton: roundButton
-    property string buttonText: qsTr("SuperButtonText")
+    property alias acceptButton: acceptButton
+    property alias cancelButton: cancelButton
 
     ColumnLayout {
         id: columnLayout
@@ -29,14 +29,16 @@ Rectangle {
             Layout.fillWidth: true
             horizontalAlignment: Qt.AlignHCenter
         }
-
-        RoundButton {
-            id: roundButton
-            text: buttonText
+        RowLayout {
             Layout.alignment: Qt.AlignHCenter
+            RoundButton {
+                id: acceptButton
+                text: "accept"
+            }
+            RoundButton {
+                id: cancelButton
+                text: "cancel"
+            }
         }
     }
 }
-
-
-

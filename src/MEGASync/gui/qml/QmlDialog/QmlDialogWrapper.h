@@ -1,0 +1,121 @@
+#ifndef QMLCOMPONENTWRAPPER_H
+#define QMLCOMPONENTWRAPPER_H
+
+#include "QmlDialog.h"
+
+#include <QQmlComponent>
+#include <QDebug>
+#include <QQmlEngine>
+#include <QQmlContext>
+#include <QQuickWindow>
+#include <QEvent>
+#include <QPointer>
+#include <QDialog>
+
+#include <memory>
+
+class QMLComponent : public QObject
+{
+public:
+    QMLComponent(QObject* parent = 0);
+    ~QMLComponent();
+
+    virtual QUrl getQmlUrl() = 0;
+    virtual QString contextName(){return QString();}
+    virtual QVariant contextVariant(){return QVariant();}
+
+    QQmlEngine* getEngine();
+};
+
+class QmlDialogWrapperBase : public QObject
+{
+    Q_OBJECT
+public:
+    QmlDialogWrapperBase(QObject* parent = 0);
+    ~QmlDialogWrapperBase();
+
+    Qt::WindowModality windowModality();
+    void setWindowModality(Qt::WindowModality modality);
+    void setWindowState(Qt::WindowState state);
+    void setGeometry(const QRect &geometry);
+    QRect geometry();
+    bool isMaximized();
+    void show();
+    void close();
+    void activateWindow();
+    void raise();
+    void removeDialog();
+
+    Q_INVOKABLE int result();
+    Q_INVOKABLE void accept();
+    Q_INVOKABLE void reject();
+
+signals:
+    void finished(int result);
+    void requestClose();
+    void accepted();
+    void rejected();
+
+public slots:
+    void onWindowFinished();
+
+protected:
+    QPointer<QmlDialog> mWindow;
+
+private:
+    QDialog::DialogCode mResult;
+};
+
+
+template <class Type>
+class QmlDialogWrapper : public QmlDialogWrapperBase
+{
+
+public:
+    QmlDialogWrapper(QObject* parent = nullptr)
+        : QmlDialogWrapperBase(parent)
+    {
+        Q_ASSERT((std::is_base_of<QMLComponent, Type>::value));
+        QObject::connect(mWrapper->getEngine(), &QQmlEngine::warnings, [](const QList<QQmlError>& warnings) {
+                    for (const QQmlError& e : warnings) {
+                        qDebug() << "error: " << e.toString();
+                    }
+                });
+
+        mWrapper = new Type(parent);
+        QQmlEngine* engine = mWrapper->getEngine();
+        QQmlComponent qmlComponent(engine);
+        qmlComponent.loadUrl(mWrapper->getQmlUrl());
+
+        if (qmlComponent.isReady())
+        {
+            QQmlContext *context = new QQmlContext(engine->rootContext(), this);
+            if(!mWrapper->contextName().isEmpty())
+            {
+                context->setContextProperty(mWrapper->contextName(), mWrapper);
+            }
+            context->setContextProperty(QString::fromUtf8("Wrapper"), this);
+            mWindow = dynamic_cast<QmlDialog*>(qmlComponent.create(context));
+            Q_ASSERT(mWindow);
+            connect(mWindow, &QmlDialog::finished, this, &QmlDialogWrapperBase::onWindowFinished);
+        }
+        else
+        {
+            qDebug() << qmlComponent.errorString();
+        }
+    }
+
+    ~QmlDialogWrapper(){
+        if(!mWrapper->parent())
+        {
+            mWrapper->deleteLater();
+        }
+    }
+
+    Type* wrapper(){ return mWrapper;}
+
+private:
+    QPointer<Type> mWrapper;
+};
+
+#endif // QMLCOMPONENTWRAPPER_H

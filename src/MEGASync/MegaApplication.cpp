@@ -20,6 +20,7 @@
 #include "UserAttributesRequests/MyBackupsHandle.h"
 #include "syncs/gui/SyncsMenu.h"
 #include "TextDecorator.h"
+#include "gui/qml/QmlDialog/QmlDialog.h"
 
 #include <QQmlApplicationEngine>
 #include "DialogOpener.h"
@@ -431,6 +432,12 @@ void MegaApplication::initialize()
     qRegisterMetaType<QQueue<QString> >("QQueueQString");
     qRegisterMetaTypeStreamOperators<QQueue<QString> >("QQueueQString");
     qmlRegisterModule("Styles", 1, 0);
+    qmlRegisterModule("Components", 1, 0);
+    qmlRegisterType<QmlDialog>("com.qmldialog", 1, 0, "QmlDialog");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/Buttons/Button.qml")), "Components", 1, 0, "Button");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/Texts/RichText.qml")), "Components", 1, 0, "RichText");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/TextFields/TextField.qml")), "Components", 1, 0, "TextField");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/TextFields/PasswordTextField.qml")), "Components", 1, 0, "PasswordTextField");
     qmlRegisterSingletonType(QUrl(QString::fromUtf8("qrc:/imports/Styles/Styles.qml")), "Styles", 1, 0, "Styles");
 
     preferences = Preferences::instance();

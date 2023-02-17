@@ -12,5 +12,11 @@
         <file>content/App1.qml</file>
         <file>content/Screen01.ui.qml</file>
         <file>content/Screen02.ui.qml</file>
+        <file>content/Onboarding/OnboardingFlow.qml</file>
+        <file>content/Onboarding/LoginPage.qml</file>
+        <file>content/Onboarding/LoginPageForm.ui.qml</file>
+        <file>content/Onboarding/Welcome.qml</file>
+        <file>content/Onboarding/WelcomeForm.ui.qml</file>
+        <file>content/QmlDialog.qml</file>
     </qresource>
 </RCC>

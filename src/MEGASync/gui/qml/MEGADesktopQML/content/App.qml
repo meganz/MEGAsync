@@ -31,16 +31,18 @@ import QtQuick 2.12
 import QtQuick.Window 2.3
 import QtQuick.Controls 2.5
 import QtQuick.Layouts 1.12
+import "Onboarding"
 
 Window {
-    width: mainScreen.width
-    height: mainScreen.height
+    width: 776
+    height: 544
     objectName: "app"
     visible: true
     title: "This is a test window"
 
-    Screen02 {
-        id: mainScreen
-    }
+    OnboardingFlow {
+        id: onboarding
+        anchors.fill: parent
+      }
 }
 

@@ -1,0 +1,5 @@
+Module Components
+Button 1.0 Buttons/Button.qml
+TextField 1.0 TextFields/TextField.qml
+PasswordTextField 1.0 TextFields/PasswordTextField.qml
+RichText 1.0 Texts/RichText.qml
