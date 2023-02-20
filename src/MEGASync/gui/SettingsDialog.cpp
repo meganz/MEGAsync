@@ -1999,11 +1999,8 @@ void SettingsDialog::on_bDownloadFolder_clicked()
                 }
                 else
                 {
-                    if (!test.open())
-                    {
-                        QMegaMessageBox::critical(nullptr, tr("Error"), tr("You don't have write permissions"
-                                                                           " in this local folder."));
-                    }
+                    QMegaMessageBox::critical(nullptr, tr("Error"), tr("You don't have write permissions"
+                                                                       " in this local folder."));
                 }
             }
         }

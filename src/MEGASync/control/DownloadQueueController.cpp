@@ -135,7 +135,7 @@ void DownloadQueueController::askUserForChoice()
     LowDiskSpaceDialog* dialog = new LowDiskSpaceDialog(mTotalQueueDiskSize, destinationDrive.bytesAvailable(),
                               destinationDrive.bytesTotal(), driveName);
     DialogOpener::showDialog<LowDiskSpaceDialog>(dialog, [this, dialog](){
-        dialog->result() == QDialog::Accepted ? isDownloadPossible() : emit finishedAvailableSpaceCheck(false);
+        dialog->result() == QDialog::Accepted ? tryDownload() : emit finishedAvailableSpaceCheck(false);
     });
 }
 

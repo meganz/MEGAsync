@@ -42,7 +42,7 @@ protected:
 
 private:
 
-    void isDownloadPossible();
+    void tryDownload();
     bool hasEnoughSpaceForDownloads();
     void askUserForChoice();
 

@@ -298,7 +298,7 @@ public slots:
     void triggerInstallUpdate();
     void scanningAnimationStep();
     void setupWizardFinished(QPointer<SetupWizard> dialog);
-    void clearDownloadAndPendingLinks(QDialog *dialog);
+    void clearDownloadAndPendingLinks();
     void infoWizardDialogFinished(QPointer<InfoWizard> dialog);
     void runConnectivityCheck();
     void onConnectivityCheckSuccess();

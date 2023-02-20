@@ -3455,9 +3455,9 @@ void MegaApplication::setupWizardFinished(QPointer<SetupWizard> dialog)
         if (result == QDialog::Rejected)
         {
             auto infoWizard = DialogOpener::findDialog<InfoWizard>();
-            if(infoWizard)
+            if(!infoWizard)
             {
-                clearDownloadAndPendingLinks(infoWizard->getDialog());
+                clearDownloadAndPendingLinks();
             }
         }
         else
@@ -3475,9 +3475,9 @@ void MegaApplication::setupWizardFinished(QPointer<SetupWizard> dialog)
     }
 }
 
-void MegaApplication::clearDownloadAndPendingLinks(QDialog* dialog)
+void MegaApplication::clearDownloadAndPendingLinks()
 {
-    if (!dialog && (downloadQueue.size() || pendingLinks.size()))
+    if (downloadQueue.size() || pendingLinks.size())
     {
         for (QQueue<WrappedNode *>::iterator it = downloadQueue.begin(); it != downloadQueue.end(); ++it)
         {
@@ -3509,9 +3509,9 @@ void MegaApplication::infoWizardDialogFinished(QPointer<InfoWizard> dialog)
     if (dialog->result() != QDialog::Accepted)
     {
         auto setupWizard = DialogOpener::findDialog<SetupWizard>();
-        if(setupWizard)
+        if(!setupWizard)
         {
-            clearDownloadAndPendingLinks(setupWizard->getDialog());
+            clearDownloadAndPendingLinks();
         }
     }
 }
@@ -6846,10 +6846,10 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                                                        "Please, try again. If the problem persists "
                                                        "please contact bug@mega.co.nz"), QMessageBox::Ok);
 
-                auto infoWizard = DialogOpener::findDialog<InfoWizard>();
-                if(infoWizard)
+                auto setupWizard = DialogOpener::findDialog<SetupWizard>();
+                if(setupWizard)
                 {
-                    clearDownloadAndPendingLinks(infoWizard->getDialog());
+                    setupWizard->close();
                 }
 
                 MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting isCrashed true: !mRootNode (fetch node callback)");
