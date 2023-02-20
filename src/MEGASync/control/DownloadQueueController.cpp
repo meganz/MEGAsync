@@ -35,8 +35,11 @@ void DownloadQueueController::startAvailableSpaceChecking()
         }
         else
         {
-            mFolderCountPendingSizeComputation++;
-            mMegaApi->getFolderInfo(node, mListener.get());
+            if(!node->isForeign())
+            {
+                mFolderCountPendingSizeComputation++;
+                mMegaApi->getFolderInfo(node, mListener.get());
+            }
         }
 
         return partialSum;

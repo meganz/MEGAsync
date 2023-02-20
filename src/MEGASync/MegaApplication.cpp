@@ -339,9 +339,9 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 #endif
 
     mDisableGfx = args.contains(QLatin1String("--nogfx")) || args.contains(QLatin1String("/nogfx"));
-    folderTransferListener = std::make_shared<FolderTransferListener>(nullptr);
+    mFolderTransferListener = std::make_shared<FolderTransferListener>();
 
-    connect(folderTransferListener.get(), &FolderTransferListener::folderTransferUpdated,
+    connect(mFolderTransferListener.get(), &FolderTransferListener::folderTransferUpdated,
             this, &MegaApplication::onFolderTransferUpdate);
 
     connect(&scanStageController, &ScanStageController::enableTransferActions,
@@ -525,8 +525,8 @@ void MegaApplication::initialize()
 
     delegateListener = new MEGASyncDelegateListener(megaApi, this, this);
     megaApi->addListener(delegateListener);
-    uploader = new MegaUploader(megaApi, folderTransferListener);
-    downloader = new MegaDownloader(megaApi, folderTransferListener);
+    uploader = new MegaUploader(megaApi, mFolderTransferListener);
+    downloader = new MegaDownloader(megaApi, mFolderTransferListener);
     connect(uploader, &MegaUploader::startingTransfers, this, &MegaApplication::startingUpload);
     connect(downloader, &MegaDownloader::startingTransfers,
             &scanStageController, &ScanStageController::startDelayedScanStage);
@@ -1697,7 +1697,6 @@ void MegaApplication::processDownloadQueue(QString path)
         showErrorMessage(tr("Error: Invalid destination folder. The download has been cancelled"));
         return;
     }
-
 
     downloader->processDownloadQueue(&downloadQueue, mBlockingBatch, path);
 }

@@ -24,6 +24,8 @@
 #include <QtWin>
 #endif
 
+#include <QOperatingSystemVersion>
+
 #if _WIN32_WINNT < 0x0601
 // Windows headers don't define this for WinXP despite the documentation says that they should
 // and it indeed works
@@ -770,12 +772,20 @@ void PlatformImplementation::syncFolderAdded(QString syncPath, QString syncName,
         addSyncToLeftPane(syncPath, syncName, syncID);
     }
 
-#pragma warning(push)
-#pragma warning(disable: 4996) // declared deprecated
-    DWORD dwVersion = GetVersion();
-#pragma warning(pop)
-    DWORD dwMajorVersion = (DWORD)(LOBYTE(LOWORD(dwVersion)));
-    int iconIndex = (dwMajorVersion<6) ? 2 : 3;
+    int iconIndex = 2; // Default to winXP.ico
+
+    auto winVersion = QOperatingSystemVersion::current();
+    auto win11 = QOperatingSystemVersion(QOperatingSystemVersion::Windows, 10, 0, 22000);
+    //FIXME: once QT version update check if QOperatingSystemVersion Windows11 exist
+    if (winVersion >= win11)
+    {
+        iconIndex = 4; // win11.ico
+    }
+    else if (winVersion >= QOperatingSystemVersion::Windows7)
+    {
+        iconIndex = 3; // win8.ico
+    }
+
 
     QString infoTip = QCoreApplication::translate("WindowsPlatform", "MEGA synced folder");
     SHFOLDERCUSTOMSETTINGS fcs = {0};
@@ -832,7 +842,6 @@ void PlatformImplementation::syncFolderAdded(QString syncPath, QString syncName,
     {
         SetFileAttributesW((LPCWSTR)debrisPath.utf16(), fad.dwFileAttributes | FILE_ATTRIBUTE_HIDDEN);
     }
-
 }
 
 void PlatformImplementation::syncFolderRemoved(QString syncPath, QString syncName, QString syncID)

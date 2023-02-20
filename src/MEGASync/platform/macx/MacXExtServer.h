@@ -33,8 +33,8 @@ protected:
     QQueue<QString> exportQueue;
 
 public slots:
-   void acceptConnection();
-   void onClientData();
+   void acceptConnection(QPointer<MacXLocalSocket> client);
+   void onClientData(QByteArray data);
 
    void doSendToAll(QByteArray str);
 
@@ -53,7 +53,8 @@ signals:
    void newUploadQueue(QQueue<QString> uploadQueue);
    void newExportQueue(QQueue<QString> exportQueue);
    void viewOnMega(QByteArray localPath, bool versions);
-   void sendToAll(QByteArray str);
 };
+
+Q_DECLARE_METATYPE(QPointer<MacXLocalSocket>);
 
 #endif // MACXEXTSERVER_H

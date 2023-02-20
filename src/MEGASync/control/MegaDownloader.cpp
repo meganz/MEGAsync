@@ -45,7 +45,6 @@ bool MegaDownloader::processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, B
     mQueueData.initialize(downloadQueue, downloadBatches, data->getAppId(), path);
     mQueueData.startAvailableSpaceChecking();
     return true;
-
 }
 
 bool MegaDownloader::isQueueProcessingOngoing()
@@ -89,7 +88,6 @@ bool MegaDownloader::download(WrappedNode* parent, QFileInfo info, const std::sh
 
 void MegaDownloader::onAvailableSpaceCheckFinished(bool isDownloadPossible)
 {
-
     if (isDownloadPossible)
     {
         auto appData = TransferMetaDataContainer::getAppData<DownloadTransferMetaData>(mQueueData.getCurrentAppDataId());
