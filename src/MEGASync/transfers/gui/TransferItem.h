@@ -132,6 +132,7 @@ public:
     int64_t getRawFinishedTime() const;
     int64_t getSecondsSinceFinished() const;
     QString getFormattedFinishedTime() const;
+    QString getFullFormattedFinishedTime() const;
 
 private:
     QString         mPath;

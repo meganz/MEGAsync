@@ -98,7 +98,7 @@ void StreamingFromMegaDialog::closeEvent(QCloseEvent *event)
 
 void StreamingFromMegaDialog::on_bFromCloud_clicked()
 {
-    const unique_ptr<NodeSelector> nodeSelector{::mega::make_unique<NodeSelector>(NodeSelectorTreeViewWidget::STREAM_SELECT, this)};
+    const QPointer<StreamNodeSelector> nodeSelector = new StreamNodeSelector(this);
     nodeSelector->setWindowTitle(tr("Select items"));
     nodeSelector->setSelectedNodeHandle(mSelectedMegaNode);
     int result = nodeSelector->exec();
@@ -108,11 +108,12 @@ void StreamingFromMegaDialog::on_bFromCloud_clicked()
     }
     MegaNode *node = megaApi->getNodeByHandle(nodeSelector->getSelectedNodeHandle());
     updateFileInfoFromNode(node);
+    nodeSelector->deleteLater();
 }
 
 void StreamingFromMegaDialog::on_bFromPublicLink_clicked()
 {
-    const unique_ptr<QInputDialog> inputDialog{::mega::make_unique<QInputDialog>(this)};
+    const QPointer<QInputDialog> inputDialog = new QInputDialog(this);
     inputDialog->setWindowFlags(inputDialog->windowFlags() & ~Qt::WindowContextHelpButtonHint);
     inputDialog->setWindowTitle(tr("Open link"));
     inputDialog->setLabelText(tr("Enter a MEGA file link:"));
@@ -125,6 +126,7 @@ void StreamingFromMegaDialog::on_bFromPublicLink_clicked()
     mPublicLink = inputDialog->textValue();
 
     requestNodeToLinkProcessor();
+    inputDialog->deleteLater();
 }
 
 void StreamingFromMegaDialog::requestNodeToLinkProcessor()
@@ -214,7 +216,7 @@ void StreamingFromMegaDialog::on_bOpenDefault_clicked()
     }
 
     QFileInfo fi(streamURL);
-    QString app = Platform::getDefaultOpenApp(fi.suffix());
+    QString app = Platform::getInstance()->getDefaultOpenApp(fi.suffix());
     openStreamWithApp(app);
 }
 

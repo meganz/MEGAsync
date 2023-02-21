@@ -88,7 +88,7 @@ QString DeviceName::getDeviceName() const
 
 QString DeviceName::getDefaultDeviceName()
 {
-    QString deviceName = Platform::getDeviceName();
+    QString deviceName = Platform::getInstance()->getDeviceName();
     // If empty, use generic one.
     return deviceName.isEmpty() ? tr("My computer") : deviceName;
 }

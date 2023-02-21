@@ -42,7 +42,7 @@
 #include "gui/QFilterAlertsModel.h"
 #include "gui/MegaAlertDelegate.h"
 #include "gui/VerifyLockMessage.h"
-#include "DesktopNotifications.h"
+#include "notifications/DesktopNotifications.h"
 #include "ScanStageController.h"
 #include "TransferQuota.h"
 #include "DialogGeometryRetainer.h"
@@ -59,7 +59,7 @@ class TransfersModel;
 
 Q_DECLARE_METATYPE(QQueue<QString>)
 
-class Notificator;
+class NotificatorBase;
 class MEGASyncDelegateListener;
 class ShellNotifier;
 class TransferMetadata;
@@ -174,7 +174,6 @@ public:
     bool finishedTransfersWhileBlocked(int transferTag);
 
     mega::MegaTransfer* getFinishedTransferByTag(int tag);
-    TransferMetaData* getTransferAppData(unsigned long long appDataID);
     bool notificationsAreFiltered();
     bool hasNotifications();
     bool hasNotificationsOfType(int type);
@@ -490,7 +489,7 @@ protected:
     PasteMegaLinksDialog *pasteMegaLinksDialog;
     ChangeLogDialog *changeLogDialog;
     ImportMegaLinksDialog *importDialog;
-    NodeSelector *downloadNodeSelector;
+    DownloadNodeSelector *downloadNodeSelector;
     QString lastTrayMessage;
     QStringList extraLinks;
     QString currentLanguageCode;
@@ -511,8 +510,6 @@ protected:
     QMap<int, mega::MegaTransfer*> finishedTransfers;
     QList<mega::MegaTransfer*> finishedTransferOrder;
     QSet<int> finishedBlockedTransfers;
-
-    QHash<unsigned long long, TransferMetaData*> transferAppData;
 
     bool reboot;
     bool syncActive;
@@ -555,14 +552,13 @@ protected:
 
     ScanStageController scanStageController;
     DialogGeometryRetainer<TransferManager> mTransferManagerGeometryRetainer;
-    std::shared_ptr<FolderTransferListener> folderTransferListener;
+    std::shared_ptr<FolderTransferListener> mFolderTransferListener;
 
     bool mDisableGfx;
 
 private:
     void loadSyncExclusionRules(QString email = QString());
 
-    static std::pair<QString,QString> buildFinishedTransferTitleAndMessage(const TransferMetaData *data);
     static long long computeExclusionSizeLimit(const long long sizeLimitValue, const int unit);
 
     QList<QNetworkInterface> findNewNetworkInterfaces();

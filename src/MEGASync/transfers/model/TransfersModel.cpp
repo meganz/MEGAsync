@@ -8,6 +8,7 @@
 #include "SettingsDialog.h"
 #include "platform/PowerOptions.h"
 #include "PlatformStrings.h"
+#include "TransferMetaData.h"
 
 #include <QSharedData>
 
@@ -195,10 +196,36 @@ QExplicitlySharedDataPointer<TransferData> TransferThread::onTransferEvent(MegaT
 
 void TransferThread::onTransferStart(MegaApi *, MegaTransfer *transfer)
 {
+    auto idResult = TransferMetaDataContainer::appDataToId(transfer->getAppData());
+    if(idResult.first && transfer->getFolderTransferTag() <= 0)
+    {
+        if(transfer->getType() == MegaTransfer::TYPE_UPLOAD)
+        {
+            auto data = TransferMetaDataContainer::getAppData<UploadTransferMetaData>(idResult.second);
+            if(!data)
+            {
+                data = TransferMetaDataContainer::createTransferMetaDataWithTransferId<UploadTransferMetaData>(idResult.second, transfer->getParentHandle());
+            }
+
+            data->update(QString::fromUtf8(transfer->getPath()));
+        }
+        else
+        {
+            auto data = TransferMetaDataContainer::getAppData<DownloadTransferMetaData>(idResult.second);
+            if(!data)
+            {
+                data = TransferMetaDataContainer::createTransferMetaDataWithTransferId<DownloadTransferMetaData>(idResult.second, QString::fromUtf8(transfer->getPath()));
+            }
+
+            std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(transfer->getNodeHandle()));
+            data->update(node.get());
+        }
+    }
+
     if (!transfer->isStreamingTransfer()
             && !transfer->isFolderTransfer())
     {
-        {
+        {   
             QMutexLocker counterLock(&mCountersMutex);
             auto fileType = Utilities::getFileType(QString::fromStdString(transfer->getFileName()), QString());
             mTransfersCount.transfersByType[fileType]++;
@@ -280,7 +307,7 @@ void TransferThread::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
     }
 }
 
-void TransferThread::onTransferFinish(MegaApi*, MegaTransfer *transfer, MegaError*)
+void TransferThread::onTransferFinish(MegaApi*, MegaTransfer *transfer, MegaError* e)
 {
     if (!transfer->isStreamingTransfer()
             && !transfer->isFolderTransfer())
@@ -391,6 +418,20 @@ void TransferThread::onTransferFinish(MegaApi*, MegaTransfer *transfer, MegaErro
         }
     }
 
+    //This method is run in other thread, but all the logic related to TransferMetaData should be run in the GUI thread
+    auto idResult = TransferMetaDataContainer::appDataToId(transfer->getAppData());
+    if (idResult.first && transfer->getFolderTransferTag() <= 0)
+    {
+        auto transferCopy = transfer->copy();
+        auto errorCopy = e->copy();
+        Utilities::queueFunctionInAppThread([transferCopy, errorCopy, idResult]()
+        {
+            TransferMetaDataContainer::updateOnTransferFinish(idResult.second, transferCopy, errorCopy);
+
+            delete transferCopy;
+            delete errorCopy;
+        });
+    }
 }
 
 void TransferThread::onTransferTemporaryError(MegaApi*, MegaTransfer *transfer, MegaError *)
@@ -602,6 +643,9 @@ TransfersModel::TransfersModel(QObject *parent) :
     connect(&mClearTransferWatcher, &QFutureWatcher<void>::finished, this, &TransfersModel::onClearTransfersFinished);
     connect(&mAskForMostPriorityTransfersWatcher, &QFutureWatcher<QPair<int,int>>::finished, this, &TransfersModel::onAskForMostPriorityTransfersFinished);
 
+    connect(mTransferEventThread, &QThread::finished, mTransferEventThread, &QObject::deleteLater, Qt::DirectConnection);
+    connect(mTransferEventThread, &QThread::finished, mTransferEventWorker, &QObject::deleteLater, Qt::DirectConnection);
+
     connect(this, &TransfersModel::activeTransfersChanged, this, &TransfersModel::onKeepPCAwake);
 }
 
@@ -612,10 +656,8 @@ TransfersModel::~TransfersModel()
 
     // Cleanup
     mTransfers.clear();
-
     mTransferEventThread->quit();
-    mTransferEventThread->deleteLater();
-    mTransferEventWorker->deleteLater();
+
     mMegaApi->removeTransferListener(mDelegateListener);
 }
 
@@ -1002,7 +1044,7 @@ void TransfersModel::processSyncFailedTransfers()
     }
 }
 
-void TransfersModel::getLinks(QList<int>& rows)
+void TransfersModel::getLinks(const QList<int> &rows)
 {
     if (!rows.isEmpty())
     {
@@ -1015,38 +1057,28 @@ void TransfersModel::getLinks(QList<int>& rows)
         {
             auto d (getTransfer(row));
 
-            MegaNode *node (nullptr);
-
-            if (d->getState() == TransferData::TRANSFER_FAILED)
-            {
-                auto transfer = mMegaApi->getTransferByTag(d->mTag);
-                if(transfer)
-                {
-                    node = transfer->getPublicMegaNode();
-                }
-            }
-            else if(d->mNodeHandle)
-            {
-                node = ((MegaApplication*)qApp)->getMegaApi()->getNodeByHandle(d->mNodeHandle);
-            }
+            std::unique_ptr<MegaNode> node(getNodeToOpenByRow(row));
 
             if (!node || !node->isPublic())
             {
-                exportList.push_back(d->mNodeHandle);
+                if(!exportList.contains(d->mNodeHandle))
+                {
+                    exportList.push_back(d->mNodeHandle);
+                }
             }
             else if (node)
             {
-                char *handle = node->getBase64Handle();
-                char *key = node->getBase64Key();
+                std::unique_ptr<char[]> handle(node->getBase64Handle());
+                std::unique_ptr<char[]>key(node->getBase64Key());
                 if (handle && key)
                 {
                     QString link = Preferences::BASE_URL + QString::fromUtf8("/#!%1!%2")
-                            .arg(QString::fromUtf8(handle), QString::fromUtf8(key));
-                    linkList.push_back(link);
+                            .arg(QString::fromUtf8(handle.get()), QString::fromUtf8(key.get()));
+                    if(!linkList.contains(link))
+                    {
+                        linkList.push_back(link);
+                    }
                 }
-                delete [] key;
-                delete [] handle;
-                delete node;
             }
         }
         if (exportList.size() || linkList.size())
@@ -1056,49 +1088,109 @@ void TransfersModel::getLinks(QList<int>& rows)
     }
 }
 
-void TransfersModel::openInMEGA(QList<int> &rows)
+void TransfersModel::openInMEGA(const QList<int> &rows)
 {
     if (!rows.isEmpty())
     {
         QMutexLocker lock(&mModelMutex);
+        QStringList urlsOpened;
 
         for (auto row : rows)
         {
-            auto d (getTransfer(row));
-
-            MegaNode *node (nullptr);
-
-            if (d->getState() == TransferData::TRANSFER_FAILED)
-            {
-                auto transfer = mMegaApi->getTransferByTag(d->mTag);
-                if(transfer)
-                {
-                    node = transfer->getPublicMegaNode();
-                }
-            }
-            else if(d->mNodeHandle)
-            {
-                node = ((MegaApplication*)qApp)->getMegaApi()->getNodeByHandle(d->mNodeHandle);
-            }
+            auto node = getParentNodeToOpenByRow(row);
 
             if (node)
             {
-                char *handle = node->getBase64Handle();
-                char *key = node->getBase64Key();
+                std::unique_ptr<char[]> handle(node->getBase64Handle());
+                std::unique_ptr<char[]> key(node->getBase64Key());
                 if (handle && key)
                 {
-                    QString url = QString::fromUtf8("mega://#fm/") + QString::fromUtf8(handle);
-                    Utilities::openUrl(QUrl(url));
+                    QString url = QString::fromUtf8("mega://#fm/") + QString::fromUtf8(handle.get());
+                    if(!urlsOpened.contains(url))
+                    {
+                        urlsOpened.append(url);
+                        Utilities::openUrl(QUrl(url));
+                    }
                 }
-                delete [] key;
-                delete [] handle;
-                delete node;
             }
         }
     }
 }
 
+std::unique_ptr<MegaNode> TransfersModel::getNodeToOpenByRow(int row)
+{
+    auto d (getTransfer(row));
+
+    std::unique_ptr<MegaNode> node;
+
+    if (d->getState() == TransferData::TRANSFER_FAILED)
+    {
+        auto transfer = mMegaApi->getTransferByTag(d->mTag);
+        if(transfer)
+        {
+            node.reset(transfer->getPublicMegaNode()->copy());
+        }
+    }
+    else if(d->mNodeHandle)
+    {
+        node.reset(mMegaApi->getNodeByHandle(d->mNodeHandle));
+    }
+
+    return node;
+}
+
+//Returns the node if the parent node does not exist
+std::unique_ptr<MegaNode> TransfersModel::getParentNodeToOpenByRow(int row)
+{
+    auto node = getNodeToOpenByRow(row);
+    std::unique_ptr<mega::MegaNode> parentNode(mMegaApi->getParentNode(node.get()));
+    if(parentNode)
+    {
+        return parentNode;
+    }
+    else
+    {
+        return node;
+    }
+}
+
 void TransfersModel::openFolderByIndex(const QModelIndex& index)
+{
+    QFileInfo fileInfo = getFileInfoByIndex(index);
+    openFolder(fileInfo);
+}
+
+void TransfersModel::openFoldersByIndexes(const QModelIndexList &indexes)
+{
+    QStringList openedFolders;
+
+    for (auto index : indexes)
+    {
+        if (index.isValid())
+        {
+            QFileInfo fileInfo = getFileInfoByIndex(index);
+            auto path(fileInfo.path());
+            if(!openedFolders.contains(path))
+            {
+                openedFolders.append(path);
+                openFolder(fileInfo);
+            }
+        }
+    }
+}
+
+void TransfersModel::openFolder(const QFileInfo& info)
+{
+    if(info.exists())
+    {
+        QtConcurrent::run([this, info]
+        {
+            emit showInFolderFinished(Platform::getInstance()->showInFolder(info.filePath()));
+        });
+    }
+}
+
+QFileInfo TransfersModel::getFileInfoByIndex(const QModelIndex& index)
 {
     QMutexLocker lock(&mModelMutex);
 
@@ -1106,21 +1198,7 @@ void TransfersModel::openFolderByIndex(const QModelIndex& index)
                 qvariant_cast<TransferItem>(index.data(Qt::DisplayRole)));
     auto d (transferItem.getTransferData());
     auto path = d->path();
-    if (d && !path.isEmpty())
-    {
-        QFileInfo fileInfo(path);
-        if(fileInfo.exists())
-        {
-            QtConcurrent::run([this, path]
-            {
-                emit showInFolderFinished(Platform::showInFolder(path));
-            });
-        }
-        else
-        {
-            emit showInFolderFinished(false);
-        }
-    }
+    return QFileInfo(path);
 }
 
 void TransfersModel::retryTransferByIndex(const QModelIndex& index)
@@ -1140,11 +1218,12 @@ void TransfersModel::retryTransferByIndex(const QModelIndex& index)
         indexToRemove.append(index);
         clearFailedTransfers(indexToRemove);
 
+        updateMetaDataBeforeRetryingTransfers(d->mFailedTransfer);
+
         QtConcurrent::run([failedTransferCopy, this](){
             mMegaApi->retryTransfer(failedTransferCopy);
             delete failedTransferCopy;
         });
-
     }
     else
     {
@@ -1191,6 +1270,8 @@ void TransfersModel::retryTransfers(QModelIndexList indexes)
 
         if(counter % indexPerThread == 0)
         {
+            updateMetaDataBeforeRetryingTransfers(d->mFailedTransfer);
+
             QtConcurrent::run([transfersToRetry, this](){
                 foreach(auto& failedTransferCopy, transfersToRetry)
                 {
@@ -1215,6 +1296,19 @@ void TransfersModel::retryTransfers(QModelIndexList indexes)
     });
 
     clearFailedTransfers(indexes);
+}
+
+void TransfersModel::updateMetaDataBeforeRetryingTransfers(std::shared_ptr<MegaTransfer> transfer)
+{
+    auto idResult = TransferMetaDataContainer::appDataToId(transfer->getAppData());
+    if(idResult.first)
+    {
+        auto data = TransferMetaDataContainer::getAppData(idResult.second);
+        if(data)
+        {
+            data->removeFailingItem(transfer->getNodeHandle());
+        }
+    }
 }
 
 void TransfersModel::openFolderByTag(TransferTag tag)

@@ -11,6 +11,7 @@ SOURCES += $$PWD/model/TransfersModel.cpp \
            $$PWD/gui/InfoDialogTransferLoadingItem.cpp \
            $$PWD/model/InfoDialogTransfersProxyModel.cpp \
            $$PWD/model/TransfersManagerSortFilterProxyModel.cpp \
+           $$PWD/model/TransferMetaData.cpp \
            $$PWD/gui/InfoDialogTransferDelegateWidget.cpp \
            $$PWD/gui/InfoDialogTransfersWidget.cpp \
            $$PWD/gui/MegaTransferDelegate.cpp  \
@@ -35,6 +36,7 @@ HEADERS += $$PWD/model/InfoDialogTransfersProxyModel.h \
            $$PWD/model/TransfersManagerSortFilterProxyModel.h \
            $$PWD/model/TransfersSortFilterProxyBaseModel.h \
            $$PWD/model/TransfersModel.h \
+           $$PWD/model/TransferMetaData.h \
            $$PWD/gui/InfoDialogTransferDelegateWidget.h \
            $$PWD/gui/InfoDialogTransfersWidget.h \
            $$PWD/gui/MegaTransferDelegate.h  \
