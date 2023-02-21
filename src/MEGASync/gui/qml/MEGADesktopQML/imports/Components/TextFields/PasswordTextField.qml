@@ -9,25 +9,47 @@ Check out https://doc.qt.io/qtcreator/creator-quick-ui-forms.html for details on
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import Components 1.0 as Custom
+import Styles 1.0
 
 Custom.TextField {
     id: control
-    echoMode: TextInput.Password
+    textField.echoMode: TextInput.Password
+    textField.onTextChanged: {
+        if(textField.text.length === 0)
+        {
+            button.iconColor = Styles.lightTheme ?  "#C1C2C4" : "#797C80"
+        }
+        else
+        {
+            button.iconColor = Styles.lightTheme ? "#616366" : "#A9ABAD"
+        }
+    }
     RoundButton {
+        property string iconSource: "images/eye.svg"
+        property string iconColor: "#C1C2C4"
+
+        id: button
         anchors.right: control.right
         palette.button: "transparent"
-        icon.source: "images/eye.png"
+        icon.source: iconSource
+        icon.color: iconColor
+        icon.height: 16
+        icon.width: 16
+        height: control.height
+        width: control.height
         MouseArea{
             id: mouseArea
             anchors.fill: parent
             onClicked: {
-                if(control.echoMode == TextInput.Password)
+                if(textField.echoMode === TextInput.Password)
                 {
-                    control.echoMode = TextInput.Normal
+                    textField.echoMode = TextInput.Normal
+                    button.iconSource = "images/eye-off.svg"
                 }
-                else if(control.echoMode == TextInput.Normal)
+                else if(textField.echoMode === TextInput.Normal)
                 {
-                    control.echoMode = TextInput.Password
+                    textField.echoMode = TextInput.Password
+                    button.iconSource = "images/eye.svg"
                 }
             }
             cursorShape: Qt.PointingHandCursor

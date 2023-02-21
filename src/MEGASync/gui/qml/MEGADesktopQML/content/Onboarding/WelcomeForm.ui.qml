@@ -60,12 +60,13 @@ Item {
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 Layout.maximumWidth: bottomRect.width / 1.5
             }
-            Custom.Button {
+            /*Custom.*/RoundButton {
                 id: continueButton
                 text: qsTr("Lets jump into it")
                 font.pixelSize: 16
                 Layout.topMargin: 36
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                radius: 8
                 palette {
                     button: "#F0373A"
                     buttonText: "white"

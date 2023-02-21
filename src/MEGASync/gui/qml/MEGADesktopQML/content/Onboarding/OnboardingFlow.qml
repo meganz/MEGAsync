@@ -11,7 +11,7 @@ import QtQuick.Layouts 1.11
 import QtQuick.Controls 2.12
 
 Item {
-    anchors.fill: parent
+    //anchors.fill: parent
     id: rootItem
 
     StackView
@@ -28,15 +28,9 @@ Item {
     }
     Component{
         id: loginPage
-        LoginPage{
-            //returnButton.onClicked: {stack.replace(welcomePage) /*rootItem.state= "welcomePage"*/}
-        }
+        RegisterFlow{}
+//        LoginPage{
+//            //returnButton.onClicked: {stack.replace(welcomePage) /*rootItem.state= "welcomePage"*/}
+//        }
     }
 }
-/*##^##
-Designer {
-    D{i:0;autoSize:true;formeditorZoom:0.33;height:5000;width:5000}D{i:4;flowX:366.969696969697;flowY:230.15151515151518}
-D{i:7;flowX:754.5454545454546;flowY:31.99999999999997}D{i:5;flowX:1270.9090909090908;flowY:263}
-}
-##^##*/
-

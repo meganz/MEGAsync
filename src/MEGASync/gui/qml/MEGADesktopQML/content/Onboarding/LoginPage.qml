@@ -9,4 +9,18 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12
 
 LoginPageForm {
+    createAccountButton.onClicked: {
+        registerStack.replace(registerPage)
+    }
+        Component{
+            id: registerPage
+            RegisterPage{}
+        }
 }
+
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+##^##*/

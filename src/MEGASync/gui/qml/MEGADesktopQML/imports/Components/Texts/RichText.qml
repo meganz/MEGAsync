@@ -7,17 +7,14 @@ this file manually, you might introduce QML code that is not supported by Qt Des
 Check out https://doc.qt.io/qtcreator/creator-quick-ui-forms.html for details on .ui.qml files.
 */
 import QtQuick 2.12
+import Styles 1.0
 
 Text {
     id: control
+    color: Styles.textColor
     Component.onCompleted: {
         control.text = control.text.replace("[b]","<b>")
         control.text = control.text.replace("[/b]","</b>")
     }
 }
-/*##^##
-Designer {
-    D{i:0;autoSize:true;height:480;width:640}
-}
-##^##*/
 

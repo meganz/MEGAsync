@@ -10,88 +10,62 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import Components 1.0 as Custom
+import Styles 1.0
 
-Item {
-    id: root
+Rectangle {
+    property alias createAccountButton: createAccountButton
 
-    Image {
-        id: image
-        source: "../../../../images/Onboarding/login_folder.png"
-        anchors.left: root.left
-        anchors.verticalCenter: root.verticalCenter
+    id: loginForm
+    color: Styles.backgroundColor
+    ColumnLayout {
+        spacing: 16
+        anchors {
+            verticalCenter: loginForm.verticalCenter
+            left: loginForm.left
+            right: loginForm.right
+            leftMargin: 40
+            rightMargin: 40
+        }
+        Custom.RichText {
+            Layout.alignment: Qt.AlignCenter
+            font.pixelSize: 20
+            text: qsTr("Login into your [b]MEGA account[/b]")
+        }
+        Custom.TextField {
+            Layout.fillWidth: true
+            placeholderText: qsTr("Email")
+        }
+        Custom.PasswordTextField {
+            Layout.fillWidth: true
+            placeholderText: qsTr("Password")
+        }
+        Text {
+            Layout.alignment: Qt.AlignCenter
+            text: qsTr("Forgot password?")
+            color: Styles.textColor
+        }
     }
 
-    Rectangle {
-        id: rightRect
+    RowLayout {
+        spacing: 8
         anchors {
-            left: image.right
-            top: root.top
-            bottom: root.bottom
-            right: root.right
-        }
-        color: "#F6F6F6"
-
-        ColumnLayout {
-            spacing: 16
-            anchors {
-                verticalCenter: rightRect.verticalCenter
-                left: rightRect.left
-                right: rightRect.right
-                leftMargin: 40
-                rightMargin: 40
-            }
-            Custom.RichText {
-                Layout.alignment: Qt.AlignCenter
-                font.pixelSize: 20
-                text: qsTr("Login into your [b]MEGA account[/b]")
-                color: "#04101E"
-            }
-            Custom.TextField {
-                Layout.fillWidth: true
-                font.pixelSize: 14
-                placeholderText: qsTr("Email")
-            }
-            Custom.PasswordTextField {
-                Layout.fillWidth: true
-                font.pixelSize: 14
-                placeholderText: qsTr("Password")
-            }
-            Text {
-                font.pixelSize: 14
-                Layout.alignment: Qt.AlignCenter
-                text: qsTr("Forgot password?")
-            }
+            right: loginForm.right
+            bottom: loginForm.bottom
+            rightMargin: 32
+            bottomMargin: 24
         }
 
-        RowLayout {
-            spacing: 8
-            anchors {
-                right: rightRect.right
-                bottom: rightRect.bottom
-                rightMargin: 32
-                bottomMargin: 24
-            }
+        Custom.Button {
+            id: createAccountButton
+            text: qsTr("Create account")
+            Layout.alignment: Qt.AlignRight
+        }
 
-            Custom.Button {
-                id: createAccountButton
-                text: qsTr("Create account")
-                Layout.alignment: Qt.AlignRight
-                palette {
-                    button: "transparent"
-                    windowText: "red"
-                    buttonText: "white"
-                }
-            }
-
-            Custom.Button {
-                id: loginButton
-                text: qsTr("Login")
-                Layout.alignment: Qt.AlignRight
-                palette {
-                    button: "black"
-                    buttonText: "white"
-                }
-            }
+        Custom.Button {
+            id: loginButton
+            primary: true
+            text: qsTr("Login")
+            Layout.alignment: Qt.AlignRight
         }
     }
 }
