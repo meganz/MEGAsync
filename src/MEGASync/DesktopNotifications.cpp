@@ -373,7 +373,14 @@ void DesktopNotifications::notifySharedUpdate(mega::MegaUserAlert *alert, const 
 {
     auto notification = new MegaNotification();
     const auto node = getMegaNode(alert);
-    QString sharedFolderName{QString::fromUtf8(node ? node->getName() : alert->getName())};
+
+    QString sharedFolderName;
+
+    if (node && node->isNodeKeyDecrypted())
+    {
+        sharedFolderName = QString::fromUtf8(node->getName());
+    }
+
     if(sharedFolderName.isEmpty())
     {
         switch (type) {

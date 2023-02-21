@@ -247,13 +247,14 @@ void AlertItem::setAlertHeading(MegaUserAlert *alert)
         {
             ui->sIconWidget->setCurrentWidget(ui->pSharedFolder);
             ui->sIconWidget->show();
-            mNotificationHeading = QString::fromUtf8(mAlertNode ? mAlertNode->getName() : alert->getName());
 
-            if (mNotificationHeading == QLatin1String("NO_KEY"))
+            if (mAlertNode)
             {
-                mNotificationHeading = QCoreApplication::translate("MegaError", "Decryption error");
+                mNotificationHeading = mAlertNode->isNodeKeyDecrypted() ? QString::fromUtf8(mAlertNode->getName())
+                                                                        : QCoreApplication::translate("MegaError", "Decryption error");
             }
-            else if (mNotificationHeading.isEmpty())
+
+            if (mNotificationHeading.isEmpty())
             {
                 mNotificationHeading = tr("Shared Folder Activity");
             }
