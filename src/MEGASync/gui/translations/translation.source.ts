@@ -2132,16 +2132,6 @@ In some cases they may contain details about your data, such as file or folder n
         <translation type="unfinished">Transfer quota exceeded</translation>
     </message>
     <message>
-        <source>Buy new plan</source>
-        <translatorcomment>Button label to upgrade the current account to an upper Pro level.</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Downloading may be interrupted as you have used 90% of your transfer quota on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew. </source>
-        <translatorcomment>Informative label to indicate that your queued transfers may be interrupted because the current account is above 90 percent of the transfer quota of the current account.</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
         <source>Your queued transfers exceed the current quota available for your IP address.</source>
         <translatorcomment>Informative label to indicate that your queued transfers exceed the current quota available for IP. Applies to free users.</translatorcomment>
         <translation type="unfinished"></translation>
@@ -2159,6 +2149,14 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew.</source>
         <translatorcomment>Informative label to indicate that your queued transfers may be interrupted because the current account does not have enough transfer quota.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Buy new plan</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Downloading may be interrupted as you have used 90% of your transfer quota on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew. </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2873,60 +2871,61 @@ Transfers will automatically resume when you re-open the app.</numerusform>
         <translation>Your backup ”%1“ has been disabled. Reason: %2</translation>
     </message>
     <message>
-        <source>Your syncs and backups have been disabled: %1</source>
-        <translatorcomment>Warning message shown when  all the syncs and backups have been disabled. The placeholder %1 shows the reason;</translatorcomment>
-        <translation>Your syncs and backups have been disabled: %1</translation>
-    </message>
-    <message>
-        <source>Your backups have been disabled: %1</source>
-        <translatorcomment>Warning message shown when  all the backups have been disabled. The placeholder %1 shows the reason;</translatorcomment>
-        <translation>Your backups have been disabled: %1</translation>
-    </message>
-    <message>
-        <source>Your syncs have been disabled: %1</source>
-        <translatorcomment>Warning message shown when  all the syncs have been disabled. The placeholder %1 shows the reason;</translatorcomment>
-        <translation>Your syncs have been disabled: %1</translation>
-    </message>
-    <message>
-        <source>Error getting link: %1</source>
-        <translatorcomment>Notification message launched when an error occurs getting a public link for a file/folder. Placeholder %1 displays the reason.</translatorcomment>
-        <translation>Error getting link: %1</translation>
-    </message>
-    <message>
-        <source>Error transferring folder: %1</source>
-        <translatorcomment>Label to indicate that has been an error during a folder transfer.  Placeholder %1 displays the reason.</translatorcomment>
-        <translation>Error transferring folder: %1</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been temporarily disabled: %2</source>
-        <translatorcomment>Warning message shown when a sync is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation>Your sync &quot;%1&quot; has been temporarily disabled: %2</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been temporarily disabled: %2</source>
-        <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation>Your backup &quot;%1&quot; has been temporarily disabled: %2</translation>
-    </message>
-    <message>
         <source>Security upgrade</source>
         <translatorcomment>Title of security upgrade dialog</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Security upgrade</translation>
     </message>
     <message>
         <source>Your account&apos;s security is now being upgraded. This will happen only once. If you have seen this message for this account before, press Cancel.</source>
         <translatorcomment>Error message shown to the user to inform about that the security of his account is going to be upgraded. </translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Your account’s security is now being upgraded. This will happen only once. If you’ve seen this message for this account before, click Cancel.</translation>
     </message>
     <message numerus="yes">
         <source>You are currently sharing the following folder: %1</source>
         <translatorcomment>Additional information shown within Security upgrade dialog if the user has outgoing shares. A list of the shares will be filled at %1 placeholder. Please check screenshot to see the full context of this string along with the other ones.</translatorcomment>
-        <translation type="unfinished">
-            <numerusform>You are currently sharing the following folder: %1</numerusform>
-            <numerusform>You are currently sharing the following folders: %1</numerusform>
+        <translation>
+            <numerusform>You’re currently sharing the following folder: %1</numerusform>
+            <numerusform>You’re currently sharing the following folders: %1</numerusform>
         </translation>
     </message>
     <message>
         <source>Failed to ugrade security. Error: %1</source>
+        <translatorcomment>System notification error shown if an error occur while upgrading security for your account. %1 will be replaced with the error returned from the SDK.</translatorcomment>
+        <translation>Failed to upgrade security. Error: %1</translation>
+    </message>
+    <message>
+        <source>Your syncs and backups have been disabled: %1</source>
+        <translatorcomment>Warning message shown when all the syncs and backups have been disabled. The placeholder %1 shows the reason;</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your backups have been disabled: %1</source>
+        <translatorcomment>Warning message shown when all the backups have been disabled. The placeholder %1 shows the reason;</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your syncs have been disabled: %1</source>
+        <translatorcomment>Warning message shown when  all the syncs have been disabled. The placeholder %1 shows the reason;</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error getting link: %1</source>
+        <translatorcomment>Notification message launched when an error occurs getting a public link for a file/folder. Placeholder %1 displays the reason.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been temporarily disabled: %2</source>
+        <translatorcomment>Warning message shown when a sync is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been temporarily disabled: %2</source>
+        <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error transferring folder: %1</source>
+        <translatorcomment>Label to indicate that has been an error during a folder transfer.  Placeholder %1 displays the reason.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3724,14 +3723,14 @@ Enter a different name.</translation>
         <translation type="unfinished">Incoming shares</translation>
     </message>
     <message>
-        <source>Ok</source>
-        <translatorcomment>Button text to accept and close the dialog</translatorcomment>
-        <translation type="unfinished">OK</translation>
-    </message>
-    <message>
         <source>No results for:</source>
         <translatorcomment>Label indicating that there are no results for the current search, searched text will be following this label.</translatorcomment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translatorcomment>Button text to accept and close the dialog</translatorcomment>
+        <translation type="unfinished">OK</translation>
     </message>
 </context>
 <context>
@@ -4240,7 +4239,8 @@ Please delete the folder sync from preferences to cancel them.</source>
 - Detected crashes on Windows, Linux, and macOS fixed.
 </source>
         <translatorcomment>Changelog for v4.8.8</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Upgraded security
+- Fixed detected crashes on Windows, Linux, and macOS</translation>
     </message>
 </context>
 <context>
@@ -4746,7 +4746,7 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Stop backup</source>
         <translatorcomment>Backup removal dialog window title (Linux and windows)</translatorcomment>
-        <translation type="unfinished">Stop backup</translation>
+        <translation>Stop backup</translation>
     </message>
     <message>
         <source>Stop backing up folder?</source>
@@ -6799,6 +6799,26 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
 <context>
     <name>TransferNotificationBuilderBase</name>
     <message>
+        <source>Uploaded 1 file to %1.</source>
+        <translatorcomment>Notification text that inform 1 file has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Uploaded 1 folder to %1.</source>
+        <translatorcomment>Notification text that inform 1 folder has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File uploaded</source>
+        <translatorcomment>Notification title when a file has been uploaded</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folder uploaded</source>
+        <translatorcomment>Notification title when a folder has been uploaded</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Show in MEGA</source>
         <translatorcomment>Notification button to see the file on the webclient</translatorcomment>
         <translation type="unfinished"></translation>
@@ -6809,6 +6829,16 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
         <translation type="unfinished">Get link</translation>
     </message>
     <message>
+        <source>Downloaded 1 file to %1.</source>
+        <translatorcomment>Notification text that inform 1 file has been downloaded to a folder. The place holder is the target folder name.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Downloaded 1 folder to %1.</source>
+        <translatorcomment>Notification text that inform 1 folder has been downloaded to a folder. The place holder is the target folder name.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Show in folder</source>
         <translatorcomment>Notification button to see the file on the local file explorer</translatorcomment>
         <translation type="unfinished">Show in folder</translation>
@@ -6817,6 +6847,16 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
         <source>Open</source>
         <translatorcomment>Notification button to open the file</translatorcomment>
         <translation type="unfinished">Open</translation>
+    </message>
+    <message>
+        <source>File downloaded</source>
+        <translatorcomment>Notification title when a file has been downloaded</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folder downloaded</source>
+        <translatorcomment>Notification title when a folder has been downloaded</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
         <source>%n upload successful</source>
@@ -6843,6 +6883,19 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
         </translation>
     </message>
     <message numerus="yes">
+        <source>Uploaded %n items to %1</source>
+        <translatorcomment>Notification text that inform n items (files or folders) has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Items uploaded</source>
+        <translatorcomment>Notification title when a more than one transfer (file or folders) have been uploaded</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
         <source>%n download successful</source>
         <translatorcomment>Notification text that inform that an download was successful. %1 is the number of downloads. This string goes always with the %n download cancelled and/or %n download failed strings.</translatorcomment>
         <translation type="unfinished">
@@ -6866,64 +6919,6 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
             <numerusform></numerusform>
         </translation>
     </message>
-    <message>
-        <source>File uploaded</source>
-        <translatorcomment>Notification title when a file has been uploaded</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Folder uploaded</source>
-        <translatorcomment>Notification title when a folder has been uploaded</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>File downloaded</source>
-        <translatorcomment>Notification title when a file has been downloaded</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Folder downloaded</source>
-        <translatorcomment>Notification title when a folder has been downloaded</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Items uploaded</source>
-        <translatorcomment>Notification title when a more than one transfer (file or folders) have been uploaded</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Items downloaded</source>
-        <translatorcomment>Notification title when a more than one transfer (file or folders) have been downloaded</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Uploaded 1 file to %1.</source>
-        <translatorcomment>Notification text that inform 1 file has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Uploaded 1 folder to %1.</source>
-        <translatorcomment>Notification text that inform 1 folder has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Downloaded 1 file to %1.</source>
-        <translatorcomment>Notification text that inform 1 file has been downloaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Downloaded 1 folder to %1.</source>
-        <translatorcomment>Notification text that inform 1 folder has been downloaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message numerus="yes">
-        <source>Uploaded %n items to %1</source>
-        <translatorcomment>Notification text that inform n items (files or folders) has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
     <message numerus="yes">
         <source>Downloaded %n items to %1</source>
         <translatorcomment>Notification text that inform n items (files or folders) has been downloaded to a folder. The place holder is the target folder name.</translatorcomment>
@@ -6931,6 +6926,11 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
             <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
+    </message>
+    <message>
+        <source>Items downloaded</source>
+        <translatorcomment>Notification title when a more than one transfer (file or folders) have been downloaded</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
