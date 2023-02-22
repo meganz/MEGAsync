@@ -5,8 +5,10 @@
         <file>Texts/RichText.qml</file>
         <file>TextFields/TextField.qml</file>
         <file>TextFields/PasswordTextField.qml</file>
-        <file>TextFields/images/eye.png</file>
-        <file>TextFields/images/eye@2x.png</file>
-        <file>TextFields/images/eye@3x.png</file>
+        <file>TextFields/images/eye.svg</file>
+        <file>TextFields/images/eye-off.svg</file>
+        <file>Images/SvgImage.qml</file>
+        <file>CheckBoxes/CheckBox.qml</file>
+        <file>CheckBoxes/images/check.svg</file>
     </qresource>
 </RCC>

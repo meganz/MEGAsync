@@ -1,7 +1,33 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12 as Qml
 import Styles 1.0
+import Components 1.0
 Qml.RoundButton {
+    function getTextColor(){
+        if(primary)
+        {
+            if(Styles.lightTheme)
+            {
+                return "#FAFAFB"
+            }
+            else
+            {
+                return "#04101E"
+            }
+        }
+        else
+        {
+            if(Styles.lightTheme)
+            {
+                return "#04101E"
+            }
+            else
+            {
+                return "#F4F4F5"
+            }
+        }
+    }
+
     id: button
     property bool primary: false
     property bool iconRight: false
@@ -23,30 +49,7 @@ Qml.RoundButton {
 
     contentItem: Text {
         id: textItem
-        color:{
-            if(primary)
-            {
-                if(Styles.lightTheme)
-                {
-                    "#FAFAFB"
-                }
-                else
-                {
-                    "#04101E"
-                }
-            }
-            else
-            {
-                if(Styles.lightTheme)
-                {
-                    "#04101E"
-                }
-                else
-                {
-                    "#F4F4F5"
-                }
-            }
-        }
+        color: getTextColor()
         text: button.text
         font {
             pixelSize: 14
@@ -72,9 +75,10 @@ Qml.RoundButton {
         border.width: 2
         radius:6
 
-        Image {
+        SvgImage {
             id: icon
             source: iconSource
+            color: getTextColor()
             sourceSize.width: 10
             sourceSize.height: 10
             x:{

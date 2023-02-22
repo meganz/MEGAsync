@@ -10,11 +10,18 @@ import QtQuick 2.12
 import Styles 1.0
 
 Text {
+    property string url: url
     id: control
     color: Styles.textColor
+    textFormat: Text.RichText
     Component.onCompleted: {
         control.text = control.text.replace("[b]","<b>")
         control.text = control.text.replace("[/b]","</b>")
+        control.text = control.text.replace("[a]","<b>
+                                            <a style=\"text-decoration:none\"
+                                            style=\"color:#DD1405;\" href=\"" + url + "\">")
+        control.text = control.text.replace("[/a]","</a></b></font>")
     }
+    onLinkActivated: Qt.openUrlExternally(url)
 }
 

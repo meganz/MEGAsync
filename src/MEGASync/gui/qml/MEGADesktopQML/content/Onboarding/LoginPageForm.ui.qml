@@ -43,6 +43,7 @@ Rectangle {
             Layout.alignment: Qt.AlignCenter
             text: qsTr("Forgot password?")
             color: Styles.textColor
+            font.pixelSize: 14
         }
     }
 

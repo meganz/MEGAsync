@@ -25,7 +25,7 @@ Custom.TextField {
         }
     }
     RoundButton {
-        property string iconSource: "images/eye.svg"
+        property url iconSource: "images/eye.svg"
         property string iconColor: "#C1C2C4"
 
         id: button

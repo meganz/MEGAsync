@@ -1340,5 +1340,12 @@
         <file>images/Onboarding/login_folder.png</file>
         <file>images/Onboarding/login_folder@2x.png</file>
         <file>images/Onboarding/login_folder@3x.png</file>
+        <file>images/onboarding/login_folder.png</file>
+        <file>images/onboarding/login_folder@2x.png</file>
+        <file>images/onboarding/login_folder@3x.png</file>
+        <file>images/onboarding/onboard_step1.png</file>
+        <file>images/onboarding/onboard_step1@2x.png</file>
+        <file>images/onboarding/onboard_step1@3x.png</file>
+        <file>images/onboarding/arrow_right.svg</file>
     </qresource>
 </RCC>

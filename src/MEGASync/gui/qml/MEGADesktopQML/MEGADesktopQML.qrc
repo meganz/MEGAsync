@@ -17,6 +17,12 @@
         <file>content/Onboarding/LoginPageForm.ui.qml</file>
         <file>content/Onboarding/Welcome.qml</file>
         <file>content/Onboarding/WelcomeForm.ui.qml</file>
+        <file>content/Onboarding/RegisterFlow.qml</file>
+        <file>content/Onboarding/RegisterFlowForm.ui.qml</file>
+        <file>content/Onboarding/RegisterPage.qml</file>
+        <file>content/Onboarding/RegisterPageForm.ui.qml</file>
+        <file>content/Onboarding/Welcome.qml</file>
+        <file>content/Onboarding/WelcomeForm.ui.qml</file>
         <file>content/QmlDialog.qml</file>
     </qresource>
 </RCC>

@@ -16,7 +16,7 @@ Item {
     property alias continueButton: continueButton
     id: onboardingWindow
     Image {
-        source: "../../../../images/Onboarding/onboard_step1.png"
+        source: "../../../../images/onboarding/onboard_step1.png"
         anchors.bottom: bottomRect.top
         anchors.horizontalCenter: parent.horizontalCenter
     }

@@ -18,7 +18,7 @@ Rectangle {
     Image {
         id: image
         fillMode: Image.Tile
-        source: "../../../../images/Onboarding/login_folder.png"
+        source: "../../../../images/onboarding/login_folder.png"
         anchors.left: root.left
         anchors.verticalCenter: root.verticalCenter
     }

@@ -1,12 +1,19 @@
 import QtQuick 2.12
 import Styles 1.0
-import QtGraphicalEffects 1.15
+import QtGraphicalEffects 1.0
 import QtQuick.Controls 2.12
 
 
-Image{
+Item
+{
     property alias color: overlay.color
-    id: image
+    property alias source: image.source
+    property alias sourceSize: image.sourceSize
+
+    Image{
+        id: image
+        anchors.centerIn: parent
+    }
     ColorOverlay {
         id: overlay
         source: image
@@ -14,5 +21,3 @@ Image{
         anchors.fill: image
     }
 }
-
-
