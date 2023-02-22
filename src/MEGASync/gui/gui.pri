@@ -34,7 +34,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/MegaProgressCustomDialog.cpp \
     $$PWD/UpgradeDialog.cpp \
     $$PWD/PlanWidget.cpp \
-    $$PWD/InfoWizard.cpp \
+    $$PWD/Onboarding.cpp \
     $$PWD/QMegaMessageBox.cpp \
     $$PWD/AvatarWidget.cpp \
     $$PWD/MenuItemAction.cpp \
@@ -113,7 +113,7 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/MegaProgressCustomDialog.h \
     $$PWD/UpgradeDialog.h \
     $$PWD/PlanWidget.h \
-    $$PWD/InfoWizard.h \
+    $$PWD/Onboarding.h \
     $$PWD/QMegaMessageBox.h \
     $$PWD/AvatarWidget.h \
     $$PWD/MenuItemAction.h \
@@ -187,7 +187,6 @@ win32 {
                 $$PWD/win/MegaProgressCustomDialog.ui \
                 $$PWD/win/PlanWidget.ui \
                 $$PWD/win/UpgradeDialog.ui \
-                $$PWD/win/InfoWizard.ui \
                 $$PWD/win/AddExclusionDialog.ui \
                 $$PWD/win/StatusInfo.ui \
                 $$PWD/win/PSAwidget.ui \
@@ -236,7 +235,6 @@ macx {
                 $$PWD/macx/MegaProgressCustomDialog.ui \
                 $$PWD/macx/PlanWidget.ui \
                 $$PWD/macx/UpgradeDialog.ui \
-                $$PWD/macx/InfoWizard.ui \
                 $$PWD/macx/AddExclusionDialog.ui \
                 $$PWD/macx/StatusInfo.ui \
                 $$PWD/macx/PSAwidget.ui \
@@ -308,7 +306,6 @@ unix:!macx {
                 $$PWD/linux/MegaProgressCustomDialog.ui \
                 $$PWD/linux/PlanWidget.ui \
                 $$PWD/linux/UpgradeDialog.ui \
-                $$PWD/linux/InfoWizard.ui \
                 $$PWD/linux/AddExclusionDialog.ui \
                 $$PWD/linux/StatusInfo.ui \
                 $$PWD/linux/PSAwidget.ui \

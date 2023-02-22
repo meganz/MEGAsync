@@ -4,7 +4,6 @@
 #include "MegaApplication.h"
 #include "QMegaMessageBox.h"
 #include "DialogOpener.h"
-#include <InfoWizard.h>
 
 #include "platform/Platform.h"
 #include "gui/Login2FA.h"
@@ -468,14 +467,14 @@ void GuestWidget::on_bLogin_clicked()
         return;
     }
 
-    DialogOpener::removeDialogByClass<InfoWizard>();
+    //DialogOpener::removeDialogByClass<InfoWizard>(); //TODO onboarding something here?
     megaApi->login(mEmail.toUtf8().constData(), mPassword.toUtf8().constData());
     loggingStarted = true;
 }
 
 void GuestWidget::on_bCreateAccount_clicked()
 {
-    DialogOpener::removeDialogByClass<InfoWizard>();
+    //DialogOpener::removeDialogByClass<InfoWizard>(); //TODO onboarding something here?
     emit forwardAction(SetupWizard::PAGE_NEW_ACCOUNT);
 }
 

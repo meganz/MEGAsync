@@ -14,6 +14,9 @@ import Styles 1.0
 
 Rectangle {
     property alias createAccountButton: createAccountButton
+    property alias loginButton: loginButton
+    property string password: password.textField.text
+    property string email: email.textField.text
 
     id: loginForm
     color: Styles.backgroundColor
@@ -32,10 +35,12 @@ Rectangle {
             text: qsTr("Login into your [b]MEGA account[/b]")
         }
         Custom.TextField {
+            id: email
             Layout.fillWidth: true
             placeholderText: qsTr("Email")
         }
         Custom.PasswordTextField {
+            id: password
             Layout.fillWidth: true
             placeholderText: qsTr("Password")
         }

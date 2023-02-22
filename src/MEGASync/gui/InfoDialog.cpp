@@ -1358,7 +1358,7 @@ void InfoDialog::on_bStorageDetails_clicked()
     app->updateUserStats(true, true, true, true, USERSTATS_STORAGECLICKED);
     DialogOpener::showDialog(accountDetailsDialog, [accountDetailsDialog]
     {
-        qDebug()<<accountDetailsDialog->wrapper()->test();
+        //qDebug()<<accountDetailsDialog->wrapper()->test();
         qDebug()<<accountDetailsDialog->result();
     });
 }
@@ -1514,7 +1514,7 @@ void InfoDialog::animateStates(bool opt)
 
 void InfoDialog::onUserAction(int action)
 {
-    app->userAction(action);
+    //app->userAction(action); TODO ONBOARDING
 }
 
 void InfoDialog::resetLoggedInMode()

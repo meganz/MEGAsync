@@ -66,12 +66,6 @@ QString AccountDetailsDialog::contextName()
     return QString::fromUtf8("AccountDetails");
 }
 
-QString AccountDetailsDialog::test()
-{
-    return tr("patatatatata");
-}
-
-
 AccountDetailsDialog::~AccountDetailsDialog()
 {
     MegaSyncApp->dettachStorageObserver(*this);

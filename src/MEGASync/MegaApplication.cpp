@@ -21,6 +21,8 @@
 #include "syncs/gui/SyncsMenu.h"
 #include "TextDecorator.h"
 #include "gui/qml/QmlDialog/QmlDialog.h"
+#include "Onboarding.h"
+#include "gui/qml/QmlDialog/QmlDialogWrapper.h"
 
 #include <QQmlApplicationEngine>
 #include "DialogOpener.h"
@@ -1277,7 +1279,7 @@ void MegaApplication::loggedIn(bool fromWizard)
         return;
     }
 
-    DialogOpener::removeDialogByClass<InfoWizard>();
+    DialogOpener::removeDialogByClass<Onboarding>();
 
     //Send pending crash report log if neccessary
     if (!crashReportFilePath.isNull() && megaApi)
@@ -3458,10 +3460,10 @@ void MegaApplication::setupWizardFinished(QPointer<SetupWizard> dialog)
 
         if (result == QDialog::Rejected)
         {
-            auto infoWizard = DialogOpener::findDialogByClass<InfoWizard>();
-            if(infoWizard)
+            auto onboarding = DialogOpener::findDialogByClass<QmlDialogWrapper<Onboarding>>();
+            if(onboarding)
             {
-                clearDownloadAndPendingLinks(infoWizard->getDialog());
+                //clearDownloadAndPendingLinks(onboarding->getDialog());//TODO ONBOARDING
             }
         }
         else
@@ -3503,22 +3505,22 @@ void MegaApplication::clearDownloadAndPendingLinks(QDialog* dialog)
     }
 }
 
-void MegaApplication::infoWizardDialogFinished(QPointer<InfoWizard> dialog)
-{
-    if (appfinished)
-    {
-        return;
-    }
+//void MegaApplication::infoWizardDialogFinished(QPointer<QmlDialogWrapper<Onboarding>> dialog)
+//{
+//    if (appfinished)
+//    {
+//        return;
+//    }
 
-    if (dialog->result() != QDialog::Accepted)
-    {
-        auto setupWizard = DialogOpener::findDialogByClass<SetupWizard>();
-        if(setupWizard)
-        {
-            clearDownloadAndPendingLinks(setupWizard->getDialog());
-        }
-    }
-}
+//    if (dialog->result() != QDialog::Accepted)
+//    {
+//        auto setupWizard = DialogOpener::findDialogByClass<SetupWizard>();
+//        if(setupWizard)
+//        {
+//           // clearDownloadAndPendingLinks(setupWizard->getDialog());//TODO FIX THIS
+//        }
+//    }
+//}
 
 void MegaApplication::unlink(bool keepLogs)
 {
@@ -4906,7 +4908,7 @@ void MegaApplication::loginActionClicked()
         return;
     }
 
-    userAction(SetupWizard::PAGE_LOGIN);
+   // userAction(SetupWizard::PAGE_LOGIN); // TODO ONBOARDING
 }
 
 void MegaApplication::showSetupWizard(int action)
@@ -4917,26 +4919,26 @@ void MegaApplication::showSetupWizard(int action)
     DialogOpener::showDialog(mSetupWizard, this, &MegaApplication::setupWizardFinished);
 }
 
-void MegaApplication::userAction(int action)
-{
-    if (appfinished)
-    {
-        return;
-    }
+//void MegaApplication::userAction(int action)
+//{
+//    if (appfinished)
+//    {
+//        return;
+//    }
 
-    if (!preferences->logged())
-    {
-        switch (action)
-        {
-            case InfoWizard::LOGIN_CLICKED:
-                showInfoDialog();
-                break;
-            default:
-                showSetupWizard(action);
-                break;
-        }
-    }
-}
+//    if (!preferences->logged())
+//    {
+//        switch (action)
+//        {
+//            case InfoWizard::LOGIN_CLICKED:
+//                showInfoDialog();
+//                break;
+//            default:
+//                showSetupWizard(action);
+//                break;
+//        }
+//    }
+//}
 
 void MegaApplication::applyNotificationFilter(int opt)
 {
@@ -5959,9 +5961,16 @@ void MegaApplication::openInfoWizard()
         return;
     }
 
-    auto infoWizard = new InfoWizard();
-    connect(infoWizard, &InfoWizard::actionButtonClicked, this, &MegaApplication::userAction);
-    DialogOpener::showDialog<InfoWizard>(infoWizard, this, &MegaApplication::infoWizardDialogFinished);
+    QPointer<QmlDialogWrapper<Onboarding>> onboarding = new QmlDialogWrapper<Onboarding>();
+    //connect(infoWizard, &InfoWizard::actionButtonClicked, this, &MegaApplication::userAction);
+    //DialogOpener::showDialog<QPointer<QmlDialogWrapper<Onboarding>>>(onboarding, this, &MegaApplication::letslogin);
+    DialogOpener::showDialog(onboarding, [onboarding]
+    {
+        //qDebug()<<onboarding->wrapper()->test();
+        qDebug()<<onboarding->result();
+
+    });
+
 }
 
 void MegaApplication::openSettings(int tab)
@@ -6953,11 +6962,11 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                                                        "Please, try again. If the problem persists "
                                                        "please contact bug@mega.co.nz"), QMessageBox::Ok);
 
-                auto infoWizard = DialogOpener::findDialogByClass<InfoWizard>();
-                if(infoWizard)
-                {
-                    clearDownloadAndPendingLinks(infoWizard->getDialog());
-                }
+//                auto onboarding = DialogOpener::findDialogByClass<Onboarding>();
+//                if(onboarding)
+//                {
+//                   // clearDownloadAndPendingLinks(onboarding->getDialog()); TODO ONBOARDING
+//                }
 
                 MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting isCrashed true: !mRootNode (fetch node callback)");
                 preferences->setCrashed(true);

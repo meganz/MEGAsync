@@ -12,10 +12,16 @@ LoginPageForm {
     createAccountButton.onClicked: {
         registerStack.replace(registerPage)
     }
-        Component{
-            id: registerPage
-            RegisterPage{}
+    loginButton.onClicked: {
+        if(email.length !== 0 && password.length !== 0)
+        {
+            Onboarding.loginInfo(email, password)
         }
+    }
+    Component{
+        id: registerPage
+        RegisterPage{}
+    }
 }
 
 

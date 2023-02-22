@@ -27,7 +27,6 @@
 #include "gui/MultiQFileDialog.h"
 #include "gui/PasteMegaLinksDialog.h"
 #include "gui/ChangeLogDialog.h"
-#include "gui/InfoWizard.h"
 #include "control/Preferences.h"
 #include "control/HTTPServer.h"
 #include "control/MegaUploader.h"
@@ -302,15 +301,16 @@ public slots:
     void scanningAnimationStep();
     void setupWizardFinished(QPointer<SetupWizard> dialog);
     void clearDownloadAndPendingLinks(QDialog *dialog);
-    void infoWizardDialogFinished(QPointer<InfoWizard> dialog);
+    //void infoWizardDialogFinished(QPointer<QmlDialogWrapper<Onboarding>> dialog);
     void runConnectivityCheck();
     void onConnectivityCheckSuccess();
     void onConnectivityCheckError();
     void proExpirityTimedOut();
-    void userAction(int action);
+    //void userAction(int action);
     void showSetupWizard(int action);
     void applyNotificationFilter(int opt);
     void changeState();
+
 #ifdef _WIN32
     void changeDisplay(QScreen *disp);
 #endif
