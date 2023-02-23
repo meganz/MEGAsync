@@ -57,18 +57,7 @@ TransferManager::TransferManager(TransfersWidget::TM_TAB tab, MegaApi *megaApi) 
     mUiDragBackDrop->setupUi(mDragBackDrop);
     mDragBackDrop->hide();
 
-#ifdef Q_OS_MACOS
-    mUi->leSearchField->setAttribute(Qt::WA_MacShowFocusRect,0);
-#else
-    Qt::WindowFlags flags =  Qt::Window;
-    this->setWindowFlags(flags);
-#endif
-
-    setAttribute(Qt::WA_DeleteOnClose, true);
     mUi->wTransfers->setupTransfers();
-
-    mUi->lTextSearch->installEventFilter(this);
-    mUi->leSearchField->installEventFilter(this);
 
     mModel = mUi->wTransfers->getModel();
 

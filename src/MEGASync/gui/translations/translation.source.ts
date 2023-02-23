@@ -6891,32 +6891,32 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
         <source>%n upload successful</source>
         <translatorcomment>Notification text that inform that an upload was successful. %1 is the number of uploads. This string goes always with the %n upload cancelled and/or %n upload failed strings.</translatorcomment>
         <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+            <numerusform>%n upload successful</numerusform>
+            <numerusform>%n uploads successful</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>, %n upload cancelled</source>
         <translatorcomment>Appended text that inform that an upload was cancelled. %1 is the number of cancelled uploads. This string goes always appended to the %n upload successful</translatorcomment>
         <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+            <numerusform>, %n upload cancelled</numerusform>
+            <numerusform>, %n uploads cancelled</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>, %n upload failed</source>
         <translatorcomment>Appended text that inform that an upload has failed. %1 is the number of failed uploads. This string goes always appended to the %n upload successful</translatorcomment>
         <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+            <numerusform>, %n upload failed</numerusform>
+            <numerusform>, %n uploads failed</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>Uploaded %n items to %1</source>
         <translatorcomment>Notification text that inform n items (files or folders) has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
         <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+            <numerusform>Uploaded %n item to %1</numerusform>
+            <numerusform>Uploaded %n items to %1</numerusform>
         </translation>
     </message>
     <message>
@@ -6928,32 +6928,32 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
         <source>%n download successful</source>
         <translatorcomment>Notification text that inform that an download was successful. %1 is the number of downloads. This string goes always with the %n download cancelled and/or %n download failed strings.</translatorcomment>
         <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+            <numerusform>%n download successful</numerusform>
+            <numerusform>%n downloads successful</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>, %n download cancelled</source>
         <translatorcomment>Appended text that inform that an download was cancelled. %1 is the number of cancelled downloads. This string goes always appended to the %n download successful</translatorcomment>
         <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+            <numerusform>, %n download cancelled</numerusform>
+            <numerusform>, %n downloads cancelled</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>, %n download failed</source>
         <translatorcomment>Appended text that inform that an download has failed. %1 is the number of failed downloads. This string goes always appended to the %n download successful</translatorcomment>
         <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+            <numerusform>, %n download failed</numerusform>
+            <numerusform>, %n downloads failed</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>Downloaded %n items to %1</source>
         <translatorcomment>Notification text that inform n items (files or folders) has been downloaded to a folder. The place holder is the target folder name.</translatorcomment>
         <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+            <numerusform>Downloaded %n item to %1</numerusform>
+            <numerusform>Downloaded %n items to %1</numerusform>
         </translation>
     </message>
     <message>
