@@ -928,6 +928,7 @@
     </message>
     <message>
         <source>Cancelling…</source>
+        <translatorcomment>Message displayed while transfers cancelling is in progress</translatorcomment>
         <translation>Cancelling…</translation>
     </message>
 </context>
@@ -968,38 +969,47 @@
     <name>ChangePassword</name>
     <message>
         <source>Change password</source>
+        <translatorcomment>Windows title of the Change password dialog</translatorcomment>
         <translation>Change password</translation>
     </message>
     <message>
         <source>New password</source>
+        <translatorcomment>Label displayed next to control where the user can enter the new password</translatorcomment>
         <translation>New password</translation>
     </message>
     <message>
         <source>Confirm new password</source>
+        <translatorcomment>Label displayed next to control where the user can enter the new password confirmation</translatorcomment>
         <translation>Confirm new password</translation>
     </message>
     <message>
         <source>Cancel</source>
+        <translatorcomment>Button label to close the Change password dialog discarding the information</translatorcomment>
         <translation>Cancel</translation>
     </message>
     <message>
         <source>OK</source>
+        <translatorcomment>Button label to close the Change password dialog saving the new information</translatorcomment>
         <translation>OK</translation>
     </message>
     <message>
         <source>Error</source>
+        <translatorcomment>Title of the error dialog displayed when there is an issue related to the Change password dialog</translatorcomment>
         <translation>Error</translation>
     </message>
     <message>
         <source>Please enter your password</source>
+        <translatorcomment>Error message displayed when an empty password has been provided</translatorcomment>
         <translation>Please enter your password</translation>
     </message>
     <message>
         <source>The entered passwords don&apos;t match</source>
+        <translatorcomment>Error message displayed when the new password and its confirmation are not the same</translatorcomment>
         <translation>The entered passwords don’t match</translation>
     </message>
     <message>
         <source>Please, enter a stronger password</source>
+        <translatorcomment>Error message displayed when an the new password is too weak</translatorcomment>
         <translation>Please enter a stronger password</translation>
     </message>
     <message>
@@ -1627,6 +1637,7 @@ In some cases they may contain details about your data, such as file or folder n
     </message>
     <message>
         <source>Error</source>
+        <translatorcomment>Title of the error dialog displayed when there is an error with FolderBinder dialog</translatorcomment>
         <translation>Error</translation>
     </message>
     <message>
@@ -1868,6 +1879,7 @@ In some cases they may contain details about your data, such as file or folder n
     </message>
     <message>
         <source>Error</source>
+        <translatorcomment>Title of the error dialog displayed when there is an error with ImportMegaLinks dialog</translatorcomment>
         <translation>Error</translation>
     </message>
     <message>
@@ -1915,6 +1927,7 @@ In some cases they may contain details about your data, such as file or folder n
     </message>
     <message>
         <source>The process is taking longer than expected. Please wait...</source>
+        <translatorcomment>Message displayed in the InfoDialog when a process is busy for a longer time than normal due to Mega servers being busy</translatorcomment>
         <translation>This process is taking longer than expected. Please wait.</translation>
     </message>
     <message>
@@ -2153,10 +2166,12 @@ In some cases they may contain details about your data, such as file or folder n
     </message>
     <message>
         <source>Buy new plan</source>
+        <translatorcomment>Button label for button to buy a new plan when there is not enough transfer quota in current non-free plan</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Downloading may be interrupted as you have used 90% of your transfer quota on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew. </source>
+        <translatorcomment>Message displayed in the InfoDialog when the transfer quota reaches warning stage</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2206,6 +2221,7 @@ In some cases they may contain details about your data, such as file or folder n
     </message>
     <message>
         <source>Create Account</source>
+        <translatorcomment>Button label for creating a new MEGA account</translatorcomment>
         <translation>Create account</translation>
     </message>
     <message>
@@ -2360,6 +2376,7 @@ In some cases they may contain details about your data, such as file or folder n
     <name>MegaApplication</name>
     <message>
         <source>MEGAsync</source>
+        <translatorcomment>Title of error dialog displayed when the account is blocked</translatorcomment>
         <translation>MEGA</translation>
     </message>
     <message>
@@ -2601,14 +2618,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Fetching file list...</source>
+        <translatorcomment>Tooltip for Desktop app tray icon while the app is fetching data in syncing process</translatorcomment>
         <translation>Fetching file list…</translation>
     </message>
     <message>
         <source>Transfer canceled</source>
+        <translatorcomment>Message displayed when the setup wizard was canceled and there were pending transfers</translatorcomment>
         <translation>Transfer canceled</translation>
     </message>
     <message>
         <source>You are not logged in</source>
+        <translatorcomment>Tooltip displayed in Desktop app tray icon when no user is logged in</translatorcomment>
         <translation>You are not logged in</translation>
     </message>
     <message>
@@ -2647,6 +2667,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Please consider updating your operating system.</source>
+        <translatorcomment>Message displayed in warning dialog when running in a deprecated OS</translatorcomment>
         <translation>Please consider updating your operating system.</translation>
     </message>
     <message>
@@ -4073,6 +4094,7 @@ Enter a different name.</translation>
     <name>PlanWidget</name>
     <message>
         <source>month</source>
+        <translatorcomment>Label displaying the period for which the pricing refers to</translatorcomment>
         <translation>month</translation>
     </message>
     <message>
@@ -4210,6 +4232,7 @@ Please delete the folder sync from preferences to cancel them.</source>
     </message>
     <message>
         <source>Exit</source>
+        <translatorcomment>Label displayed on actions exiting Desktop application when on Windows or Linux</translatorcomment>
         <translation type="unfinished">Exit</translation>
     </message>
     <message>
@@ -4224,6 +4247,7 @@ Please delete the folder sync from preferences to cancel them.</source>
     </message>
     <message>
         <source>Quit</source>
+        <translatorcomment>Label displayed on actions exiting Desktop application when on Mac</translatorcomment>
         <translation type="unfinished">Quit</translation>
     </message>
     <message>
@@ -5860,6 +5884,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>MEGAsync</source>
+        <translatorcomment>Title of the dialog displayed when trying to cancel the wizard</translatorcomment>
         <translation>MEGA</translation>
     </message>
     <message>
@@ -5904,10 +5929,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
+        <translatorcomment>Error message displayed when the user is trying to log in without having confirmed his account</translatorcomment>
         <translation>Please check your email and click the link to confirm your account.</translation>
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
+        <translatorcomment>Error message displayed when trying to login and too many login attemps have been made before</translatorcomment>
         <translation>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</translation>
     </message>
     <message>
@@ -6608,10 +6635,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Upload</source>
+        <translatorcomment>Label of the button to start a new upload</translatorcomment>
         <translation>Upload</translation>
     </message>
     <message>
         <source>Download</source>
+        <translatorcomment>Label of the button to start a new download</translatorcomment>
         <translation>Download</translation>
     </message>
     <message>
