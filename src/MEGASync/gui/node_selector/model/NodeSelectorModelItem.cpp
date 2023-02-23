@@ -235,24 +235,33 @@ QPixmap NodeSelectorModelItem::getOwnerIcon()
 QIcon NodeSelectorModelItem::getStatusIcons()
 {
     QIcon statusIcons; //first is selected state icon / second is normal state icon
-    switch(mStatus)
+
+    if (mNode && !mNode->isNodeKeyDecrypted())
     {
-    case STATUS::SYNC:
-    {
-        statusIcons.addFile(QLatin1String("://images/Item-sync-press.png"), QSize(), QIcon::Selected); //selected style icon
-        statusIcons.addFile(QLatin1String("://images/Item-sync-rest.png"), QSize(), QIcon::Normal); //normal style icon
-        break;
+        statusIcons.addFile(QLatin1String("://images/node_selector/alert-circle-hover.png"), QSize(), QIcon::Selected); //selected style icon
+        statusIcons.addFile(QLatin1String("://images/node_selector/alert-circle-default.png"), QSize(), QIcon::Normal); //normal style icon
     }
-    case STATUS::SYNC_PARENT:
+    else
     {
-        statusIcons.addFile(QLatin1String("://images/Item-sync-press.png"), QSize(), QIcon::Selected); //selected style icon
-        statusIcons.addFile(QLatin1String("://images/node_selector/icon-small-sync-disabled.png"), QSize(), QIcon::Normal); //normal style icon
-        break;
-    }
-    default:
-    {
-        break;
-    }
+        switch(mStatus)
+        {
+            case STATUS::SYNC:
+            {
+                statusIcons.addFile(QLatin1String("://images/Item-sync-press.png"), QSize(), QIcon::Selected); //selected style icon
+                statusIcons.addFile(QLatin1String("://images/Item-sync-rest.png"), QSize(), QIcon::Normal); //normal style icon
+                break;
+            }
+            case STATUS::SYNC_PARENT:
+            {
+                statusIcons.addFile(QLatin1String("://images/Item-sync-press.png"), QSize(), QIcon::Selected); //selected style icon
+                statusIcons.addFile(QLatin1String("://images/node_selector/icon-small-sync-disabled.png"), QSize(), QIcon::Normal); //normal style icon
+                break;
+            }
+            default:
+            {
+                break;
+            }
+        }
     }
 
     return statusIcons;
