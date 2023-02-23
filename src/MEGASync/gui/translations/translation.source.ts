@@ -1594,6 +1594,7 @@ In some cases they may contain details about your data, such as file or folder n
     </message>
     <message>
         <source>View previous versions</source>
+        <translatorcomment>Entry in OS Context menu to open the "Previous versions" of an entry in the webclient</translatorcomment>
         <translation>View previous versions</translation>
     </message>
     <message numerus="yes">
@@ -2212,6 +2213,7 @@ In some cases they may contain details about your data, such as file or folder n
     <name>InfoWizard</name>
     <message>
         <source>You are not logged in</source>
+        <translatorcomment>Window title of the wizard displayed the first time Desktop app is run</translatorcomment>
         <translation>You are not logged in</translation>
     </message>
     <message>
