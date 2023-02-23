@@ -373,7 +373,14 @@ void DesktopNotifications::notifySharedUpdate(mega::MegaUserAlert *alert, const 
 {
     auto notification = new MegaNotification();
     const auto node = getMegaNode(alert);
-    QString sharedFolderName{QString::fromUtf8(node ? node->getName() : alert->getName())};
+
+    QString sharedFolderName;
+
+    if (node && node->isNodeKeyDecrypted())
+    {
+        sharedFolderName = QString::fromUtf8(node->getName());
+    }
+
     if(sharedFolderName.isEmpty())
     {
         switch (type) {
@@ -394,14 +401,16 @@ void DesktopNotifications::notifySharedUpdate(mega::MegaUserAlert *alert, const 
     }
     notification->setTitle(sharedFolderName);
     notification->setText(message);
-    if(node && node->isNodeKeyDecrypted())
+    if(node)
     {
         notification->setData(QString::fromUtf8(node->getBase64Handle()));
         const auto megaApi = static_cast<MegaApplication*>(qApp)->getMegaApi();
         const auto fullAccess = megaApi->getAccess(node.get()) >= mega::MegaShare::ACCESS_FULL;
         QStringList actions (tr("Show"));
 
-        if(type == NEW_SHARE && fullAccess)
+        if(type == NEW_SHARE
+           && fullAccess
+           && node->isNodeKeyDecrypted())
         {
 #ifndef __APPLE__
             // Apple do not support multi option with notifications. Just provide default one.
