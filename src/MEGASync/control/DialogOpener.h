@@ -96,7 +96,7 @@ public:
     {
         auto classType = QString::fromUtf8(typeid(DialogType).name());
 
-        auto finder = [classType](const auto& dialogInfo) {
+        auto finder = [classType](const std::shared_ptr<DialogInfoBase>& dialogInfo) {
             return (dialogInfo->getDialogClass() == classType);
         };
 
@@ -212,7 +212,6 @@ public:
                 mSavedGeometries.insert(classType, info);
             }
 
-            dialog->close();            
             dialog->deleteLater();
         }
     }
@@ -252,7 +251,7 @@ private:
         if(dialog)
         {
             auto classType = QString::fromUtf8(typeid(DialogType).name());
-            auto siblingDialogInfo = findSiblingDialogInfo<DialogType>(dialog.data(),classType);
+            auto siblingDialogInfo = findSiblingDialogInfo<DialogType>(classType);
 
             if(siblingDialogInfo)
             {
@@ -343,9 +342,9 @@ private:
     }
 
     template <class DialogType>
-    static std::shared_ptr<DialogInfo<DialogType>> findDialogInfo(QDialog* dialog)
+    static std::shared_ptr<DialogInfo<DialogType>> findDialogInfo(QPointer<DialogType> dialog)
     {
-        auto finder = [dialog](const auto& dialogInfo) {
+        auto finder = [dialog](const std::shared_ptr<DialogInfoBase> dialogInfo) {
             auto dialogInfoByType = std::dynamic_pointer_cast<DialogInfo<DialogType>>(dialogInfo);
 
             return (dialogInfoByType && dialogInfoByType->getDialog() == dialog);
@@ -361,9 +360,9 @@ private:
     }
 
     template <class DialogType>
-    static std::shared_ptr<DialogInfo<DialogType>> findSiblingDialogInfo(QDialog*, const QString& classType)
+    static std::shared_ptr<DialogInfo<DialogType>> findSiblingDialogInfo(const QString& classType)
     {
-        auto finder = [classType](const auto& dialogInfo) {
+        auto finder = [classType](const std::shared_ptr<DialogInfoBase> dialogInfo) {
             auto dialogInfoByType = std::dynamic_pointer_cast<DialogInfo<DialogType>>(dialogInfo);
 
             if(dialogInfoByType && !dialogInfoByType->getDialogClass().isEmpty())

@@ -7,7 +7,7 @@
 
 #ifdef __APPLE__
 #include "DialogOpener.h"
-#include "platform/macx/MacXPlatform.h"
+#include "platform/macx/PlatformImplementation.h"
 #endif
 
 #include "QMegaMessageBox.h"
