@@ -44,12 +44,5 @@ QmlDialog {
         id: onboarding
         anchors.fill: parent
       }
-
-    Connections{
-        target: AccountDetails
-        onTestSignal:{
-            console.log("esto es qml!: me llega la señal. VALUE = " + value)
-        }
-    }
 }
 

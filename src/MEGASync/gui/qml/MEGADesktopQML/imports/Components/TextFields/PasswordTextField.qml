@@ -30,13 +30,15 @@ Custom.TextField {
 
         id: button
         anchors.right: control.right
+        anchors.top: control.top
+
         palette.button: "transparent"
         icon.source: iconSource
         icon.color: iconColor
         icon.height: 16
         icon.width: 16
-        height: control.height
-        width: control.height
+        height: outRect.height
+        width: outRect.height
         MouseArea{
             id: mouseArea
             anchors.fill: parent

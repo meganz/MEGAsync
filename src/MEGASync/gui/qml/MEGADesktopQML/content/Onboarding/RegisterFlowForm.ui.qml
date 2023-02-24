@@ -15,6 +15,7 @@ import Styles 1.0
 Rectangle {
     id: root
     color: Styles.alternateBackgroundColor
+    border.color: "#ffffff"
     Image {
         id: image
         fillMode: Image.Tile

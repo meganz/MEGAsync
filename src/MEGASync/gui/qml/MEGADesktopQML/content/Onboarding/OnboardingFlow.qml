@@ -11,7 +11,6 @@ import QtQuick.Layouts 1.11
 import QtQuick.Controls 2.12
 
 Item {
-    //anchors.fill: parent
     id: rootItem
 
     StackView
@@ -23,14 +22,11 @@ Item {
     Component{
         id: welcomePage
         Welcome{
-            continueButton.onClicked: { stack.replace(loginPage)/*rootItem.state= "loginPage"*/}
+            continueButton.onClicked: { stack.replace(loginPage)}
         }
     }
     Component{
         id: loginPage
         RegisterFlow{}
-//        LoginPage{
-//            //returnButton.onClicked: {stack.replace(welcomePage) /*rootItem.state= "welcomePage"*/}
-//        }
     }
 }

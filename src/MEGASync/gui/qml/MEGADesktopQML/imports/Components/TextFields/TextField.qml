@@ -10,87 +10,174 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12 as Qml
 import Styles 1.0
 import QtQuick.Layouts 1.12
+import Components 1.0 as Custom
 
-Rectangle
+Item
 {
     property alias textField: textField
+    property alias outRect: outRect
     property alias placeholderText: textField.placeholderText
     property alias font: textField.font
+    property bool showInformativeText: true
+    property string informativeTextIcon: ""
+    property string informativeText: ""
+    property color textColor: Styles.textColor
+    property bool error: false
+    id: root
+    implicitHeight: outRect.height
 
-    id: outRect
-    border.width: 4
-    implicitHeight: 50
-    radius: 12
-    border.color: {
-        if(textField.focus)
+    function getBorderColor()
+    {
+        if(error)
         {
-            if(Styles.lightTheme)
-            {
-                "#BDD9FF"
-            }
-            else
-            {
-                "#2647D0"
-            }
+            return Styles.lightTheme ?  "#E31B57" : "#FD6F90";
+        }
+        else if(textField.focus)
+        {
+            return Styles.lightTheme ? "#04101E" : "#F4F4F5";
         }
         else
         {
-            color: Styles.backgroundColor
+        return Styles.lightTheme ?  "#D8D9DB" : "#616366";
+        }
+    }
+    function getTextColor()
+    {
+        if(error)
+        {
+            return Styles.lightTheme ?  "#E31B57" : "#FD6F90";
+        }
+        else
+        {
+            return Styles.textColor
         }
     }
 
-    Qml.TextField {
-        id: textField
-        anchors{
-            fill: parent
-            margins:outRect.border.width
-        }
-        selectByMouse: true
-        Layout.fillHeight: true
-        Layout.fillWidth: true
-        Layout.margins: 4
-        color: Styles.lightTheme ? "#303233" : "#F3F4F4"
-        placeholderTextColor: Styles.lightTheme ? "#A9ABAD" : "#919397"
-        topPadding: 12
-        rightPadding: 14
-        bottomPadding: 12
-        leftPadding: 14
-        font.pixelSize: 14
-
-        background: Rectangle {
-            id: inRect
-            implicitWidth: 200
-            implicitHeight: 36
-            color: Styles.alternateBackgroundColor
-            border.color: {
-                if(textField.focus)
+    Rectangle
+    {
+        id: outRect
+        border.width: 4
+        implicitHeight: 50
+        radius: 12
+        border.color: {
+            if(textField.focus)
+            {
+                if(Styles.lightTheme)
                 {
-                    if(Styles.lightTheme)
-                    {
-                        "#04101E"
-                    }
-                    else
-                    {
-                        "#F4F4F5"
-                    }
+                    "#BDD9FF"
                 }
                 else
                 {
-                    if(Styles.lightTheme)
-                    {
-                        "#D8D9DB"
-                    }
-                    else
-                    {
-                        "#616366"
-                    }
+                    "#2647D0"
                 }
             }
-            border.width: 2
-            radius: 8
+            else
+            {
+                color: Styles.backgroundColor
+            }
+        }
+        anchors{
+            top: root.top
+            right: root.right
+            left: root.left
+        }
+
+        Qml.TextField {
+            id: textField
+            anchors{
+                fill: outRect
+                margins:outRect.border.width
+            }
+            selectByMouse: true
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+            Layout.margins: 4
+            color: Styles.lightTheme ? "#303233" : "#F3F4F4"
+            placeholderTextColor: Styles.lightTheme ? "#A9ABAD" : "#919397"
+            topPadding: 12
+            rightPadding: 14
+            bottomPadding: 12
+            leftPadding: 14
+            font.pixelSize: 14
+
+            background: Rectangle {
+                id: inRect
+                implicitWidth: 200
+                implicitHeight: 36
+                color: Styles.alternateBackgroundColor
+                border.color: getBorderColor()
+                border.width: 2
+                radius: 8
+            }
+        }
+    }
+
+    Loader{
+        id:loader
+        sourceComponent: informativeTextIcon.length !== 0 ? textWithIcon : onlyText
+        anchors{
+            top: outRect.bottom
+            left: root.left
+            leftMargin: textField.leftPadding
+            topMargin: 6
+            right: root.right
+            bottom: root.bottom
+        }
+        height: item.implicitHeight
+        visible: showInformativeText
+        onVisibleChanged: {
+            console.log(item.implicitHeight )
+            root.implicitHeight = outRect.height + (item ? item.implicitHeight : 0)
+        }
+    }
+
+    Component{
+        id: textWithIcon
+        RowLayout{
+            Layout.leftMargin: textField.leftPadding
+            spacing: 8
+
+            Custom.SvgImage{
+                id: textIcon
+                height: 8
+                width: 8
+                source: informativeTextIcon
+                color: getTextColor()
+                Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                Layout.fillWidth: false
+                Layout.topMargin: 4
+                Layout.leftMargin: 6
+            }
+
+            Custom.RichText{
+                id: infoText
+                wrapMode: Text.WordWrap
+                text: informativeText
+                Layout.fillWidth: true
+                Layout.alignment: Qt.AlignLeft
+                color: getTextColor()
+            }
+        }
+    }
+
+    Component{
+        id: onlyText
+        RowLayout{
+            Layout.leftMargin: textField.leftPadding
+
+            Custom.RichText{
+                id: infoText
+                wrapMode: Text.WordWrap
+                text: informativeText
+                Layout.leftMargin: 6
+                Layout.fillWidth: true
+                color: getBorderColor()
+            }
         }
     }
 }
+
+
 
 
 

@@ -7,15 +7,17 @@ Check out https://doc.qt.io/qtcreator/creator-quick-ui-forms.html for details on
 
 import QtQuick 2.12
 import QtQuick.Controls 2.12
+//import Onboarding 1.0
 
 LoginPageForm {
+
     createAccountButton.onClicked: {
         registerStack.replace(registerPage)
     }
     loginButton.onClicked: {
         if(email.length !== 0 && password.length !== 0)
         {
-            Onboarding.loginInfo(email, password)
+            OnboardCpp.onLoginClicked({/* [OnboardEnum.EMAIL]:*/ email, /*[OnboardEnum.PASSWORD]:*/ password })
         }
     }
     Component{
@@ -25,8 +27,4 @@ LoginPageForm {
 }
 
 
-/*##^##
-Designer {
-    D{i:0;autoSize:true;height:480;width:640}
-}
-##^##*/
+

@@ -15,8 +15,8 @@ import Styles 1.0
 Rectangle {
     property alias createAccountButton: createAccountButton
     property alias loginButton: loginButton
-    property string password: password.textField.text
     property string email: email.textField.text
+    property string password: password.textField.text
 
     id: loginForm
     color: Styles.backgroundColor

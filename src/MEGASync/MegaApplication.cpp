@@ -5962,8 +5962,6 @@ void MegaApplication::openInfoWizard()
     }
 
     QPointer<QmlDialogWrapper<Onboarding>> onboarding = new QmlDialogWrapper<Onboarding>();
-    //connect(infoWizard, &InfoWizard::actionButtonClicked, this, &MegaApplication::userAction);
-    //DialogOpener::showDialog<QPointer<QmlDialogWrapper<Onboarding>>>(onboarding, this, &MegaApplication::letslogin);
     DialogOpener::showDialog(onboarding, [onboarding]
     {
         //qDebug()<<onboarding->wrapper()->test();
