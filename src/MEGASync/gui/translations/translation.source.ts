@@ -2635,6 +2635,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Transfer manager</source>
+        <translatorcomment>Entry option to open Transfer manager from tray icon menu in Windows</translatorcomment>
         <translation>Transfer manager</translation>
     </message>
     <message>
