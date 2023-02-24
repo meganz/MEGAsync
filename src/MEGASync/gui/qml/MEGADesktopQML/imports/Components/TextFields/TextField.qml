@@ -141,6 +141,7 @@ Item
                 id: textIcon
                 height: 8
                 width: 8
+                sourceSize: Qt.size(20,20)
                 source: informativeTextIcon
                 color: getTextColor()
                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
@@ -156,6 +157,7 @@ Item
                 Layout.fillWidth: true
                 Layout.alignment: Qt.AlignLeft
                 color: getTextColor()
+                Layout.leftMargin: 6
             }
         }
     }

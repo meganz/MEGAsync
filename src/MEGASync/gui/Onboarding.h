@@ -4,14 +4,12 @@
 #include "qml/QmlDialog/QmlDialogWrapper.h"
 #include "QTMegaRequestListener.h"
 #include "Preferences.h"
-#include <qqml.h>
 #include <QDialog>
 
 
 class Onboarding : public QMLComponent, public mega::MegaRequestListener
 {
     Q_OBJECT
-    QML_ELEMENT
 
 public:
     enum RegisterForm{

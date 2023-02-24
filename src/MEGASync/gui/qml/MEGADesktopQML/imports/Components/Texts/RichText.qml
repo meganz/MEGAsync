@@ -14,6 +14,7 @@ Text {
     id: control
     color: Styles.textColor
     textFormat: Text.RichText
+    font.pixelSize: 14
     Component.onCompleted: {
         control.text = control.text.replace("[b]","<b>")
         control.text = control.text.replace("[/b]","</b>")
