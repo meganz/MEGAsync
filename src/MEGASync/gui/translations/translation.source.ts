@@ -1903,7 +1903,7 @@ In some cases they may contain details about your data, such as file or folder n
     </message>
     <message>
         <source>Settings</source>
-        <translatorcomment>This is the string used to refer to settings, or preferences, in Windows and Linux. .</translatorcomment>
+        <translatorcomment>This is the string used to refer to settings, or preferences, in Windows and Linux.</translatorcomment>
         <translation>Settings</translation>
     </message>
     <message>
@@ -4229,7 +4229,7 @@ Please delete the folder sync from preferences to cancel them.</source>
     </message>
     <message>
         <source>Settings</source>
-        <translatorcomment>This is the string used to refer to settings, or preferences, in Windows and Linux. .</translatorcomment>
+        <translatorcomment>This is the string used to refer to settings, or preferences, in Windows and Linux.</translatorcomment>
         <translation type="unfinished">Settings</translation>
     </message>
     <message>
@@ -4244,7 +4244,7 @@ Please delete the folder sync from preferences to cancel them.</source>
     </message>
     <message>
         <source>Preferences</source>
-        <translatorcomment>This is the string used to refer to settings, or preferences, in macOS. .</translatorcomment>
+        <translatorcomment>This is the string used to refer to settings, or preferences, in macOS.</translatorcomment>
         <translation type="unfinished">Preferences</translation>
     </message>
     <message>
