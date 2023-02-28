@@ -44,6 +44,7 @@ TransfersWidget::TransfersWidget(QWidget* parent) :
         mButtonIconManager.addButton(button);
     }
 }
+
 void TransfersWidget::setupTransfers()
 {
     mProxyModel = new TransfersManagerSortFilterProxyModel(ui->tvTransfers);

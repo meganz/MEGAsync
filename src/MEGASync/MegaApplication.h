@@ -355,7 +355,7 @@ protected:
     void disableSyncs();
     void restoreSyncs();
     void closeDialogs(bool bwoverquota = false);
-    void createTransferManagerDialog();
+    void createTransferManagerDialog(TransfersWidget::TM_TAB tab);
     void calculateInfoDialogCoordinates(QDialog *dialog, int *posx, int *posy);
     void deleteMenu(QMenu *menu);
     void startHttpServer();
@@ -659,6 +659,8 @@ private:
         connect(*action, &QAction::triggered, this, slotFunc);
         (*action)->setEnabled(previousEnabledState);
     }
+
+    void processUpgradeSecurityEvent();
 
 private slots:
     void onFolderTransferUpdate(FolderTransferUpdateEvent event);

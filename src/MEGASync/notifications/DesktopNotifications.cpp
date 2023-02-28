@@ -392,7 +392,7 @@ void DesktopNotifications::notifySharedUpdate(mega::MegaUserAlert *alert, const 
     }
     notification->setTitle(sharedFolderName);
     notification->setText(message);
-    if(node)
+    if(node && node->isNodeKeyDecrypted())
     {
         notification->setData(QString::fromUtf8(node->getBase64Handle()));
         const auto megaApi = static_cast<MegaApplication*>(qApp)->getMegaApi();
