@@ -1214,16 +1214,16 @@ void TransfersModel::retryTransferByIndex(const QModelIndex& index)
         auto failedTransferCopy = d->mFailedTransfer->copy();
         mModelMutex.unlock();
 
-        QModelIndexList indexToRemove;
-        indexToRemove.append(index);
-        clearFailedTransfers(indexToRemove);
-
         updateMetaDataBeforeRetryingTransfers(d->mFailedTransfer);
 
         QtConcurrent::run([failedTransferCopy, this](){
             mMegaApi->retryTransfer(failedTransferCopy);
             delete failedTransferCopy;
         });
+
+        QModelIndexList indexToRemove;
+        indexToRemove.append(index);
+        clearFailedTransfers(indexToRemove);
     }
     else
     {
