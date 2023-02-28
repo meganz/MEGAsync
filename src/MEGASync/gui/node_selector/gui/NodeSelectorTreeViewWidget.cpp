@@ -397,7 +397,6 @@ void NodeSelectorTreeViewWidget::onUiBlocked(bool state)
 
 void NodeSelectorTreeViewWidget::onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected)
 {
-    Q_UNUSED(selected)
     Q_UNUSED(deselected)
     Q_UNUSED(selected)
 
