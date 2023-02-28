@@ -44,6 +44,15 @@ TransfersWidget::TransfersWidget(QWidget* parent) :
         mButtonIconManager.addButton(button);
     }
 }
+
+TransfersWidget::~TransfersWidget()
+{
+    mLoadingScene.toggleLoadingScene(false);
+    delete ui;
+    if (tDelegate) delete tDelegate;
+    if (mProxyModel) delete mProxyModel;
+}
+
 void TransfersWidget::setupTransfers()
 {
     mProxyModel = new TransfersManagerSortFilterProxyModel(ui->tvTransfers);
@@ -63,14 +72,6 @@ void TransfersWidget::setupTransfers()
     configureTransferView();
 }
 
-TransfersWidget::~TransfersWidget()
-{
-    mLoadingScene.toggleLoadingScene(false);
-    delete ui;
-    if (tDelegate) delete tDelegate;
-    if (mProxyModel) delete mProxyModel;
-}
-
 void TransfersWidget::configureTransferView()
 {
     if (!mModel)
@@ -81,7 +82,6 @@ void TransfersWidget::configureTransferView()
     tDelegate = new MegaTransferDelegate(mProxyModel, ui->tvTransfers);
     ui->tvTransfers->setup(this);
     ui->tvTransfers->setItemDelegate(tDelegate);
-    ui->tvTransfers->setModel(mProxyModel);
     ui->tvTransfers->setDragEnabled(true);
     ui->tvTransfers->viewport()->setAcceptDrops(true);
     ui->tvTransfers->setDropIndicatorShown(true);
@@ -432,6 +432,12 @@ void TransfersWidget::onUiBlocked()
 
 void TransfersWidget::onUiUnblocked()
 {
+    //Set the model to the tvTransfers when the proxy model finishes filtering the first time
+    if(!ui->tvTransfers->model())
+    {
+        ui->tvTransfers->setModel(mProxyModel);
+    }
+
     ui->tvTransfers->header()->blockSignals(false);
     ui->tvTransfers->blockSignals(false);
 

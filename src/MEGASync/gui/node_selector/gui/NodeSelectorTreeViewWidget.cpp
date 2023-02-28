@@ -392,50 +392,45 @@ void NodeSelectorTreeViewWidget::onUiBlocked(bool state)
 
 void NodeSelectorTreeViewWidget::onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected)
 {
+    Q_UNUSED(selected)
     Q_UNUSED(deselected)
 
     if(!mUiBlocked)
     {
-        checkOkButton(selected.indexes());
+        auto selectionModel = ui->tMegaFolders->selectionModel();
+        checkOkButton(selectionModel ? selectionModel->selectedRows() : QModelIndexList());
     }
 }
 
 void NodeSelectorTreeViewWidget::checkOkButton(const QModelIndexList &selected)
 {
-    auto result(false);
+    bool enable = !selected.isEmpty();
 
-    if(!selected.isEmpty())
+    if (enable)
     {
-        if(mSelectMode == UPLOAD_SELECT || mSelectMode == DOWNLOAD_SELECT)
+        auto idx = selected.cbegin();
+        while (enable && idx != selected.cend())
         {
-            result = true;
-        }
-        else
-        {
-            int correctSelected(0);
-
-            foreach(auto& index, selected)
+            if (idx->isValid())
             {
-                auto source_idx = mProxyModel->getIndexFromSource(index);
-                NodeSelectorModelItem *item = static_cast<NodeSelectorModelItem*>(source_idx.internalPointer());
-                if(item)
+                enable = idx->data(toInt(NodeRowDelegateRoles::ENABLED_ROLE)).toBool();
+                if (enable)
                 {
-                    if(mSelectMode == STREAM_SELECT)
+                    if (mSelectMode == STREAM_SELECT)
                     {
-                        item->getNode()->isFile() ? correctSelected++ : correctSelected;
+                        enable = idx->data(toInt(NodeSelectorModelRoles::IS_FILE_ROLE)).toBool();
                     }
-                    else if(mSelectMode == SYNC_SELECT)
+                    else if (mSelectMode == SYNC_SELECT)
                     {
-                        item->getNode()->isFolder() ? correctSelected++ : correctSelected;
+                        enable = idx->data(toInt(NodeSelectorModelRoles::IS_FOLDER_ROLE)).toBool();
                     }
                 }
             }
-
-            result = correctSelected == selected.size();
+            idx++;
         }
     }
 
-    ui->bOk->setEnabled(result);
+    ui->bOk->setEnabled(enable);
 }
 
 void NodeSelectorTreeViewWidget::onRenameClicked()

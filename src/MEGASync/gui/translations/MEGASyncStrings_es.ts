@@ -2821,7 +2821,12 @@ Las transferencias se reanudarán automáticamente en cuanto vuelvas a abrir la 
     <message>
         <source>Security upgrade</source>
         <translatorcomment>Title of security upgrade dialog</translatorcomment>
-        <translation>Actualización de la seguridad</translation>
+        <translation>Actualización de seguridad</translation>
+    </message>
+    <message>
+        <source>Your account&apos;s security is now being upgraded. This will happen only once. If you have seen this message for this account before, press Cancel.</source>
+        <translatorcomment>Error message shown to the user to inform about that the security of his account is going to be upgraded. </translatorcomment>
+        <translation>La seguridad de tu cuenta se está actualizando. Este proceso solo se realizará una vez. Si has visto este mensaje antes para esta misma cuenta, haz clic en Cancelar.</translation>
     </message>
     <message numerus="yes">
         <source>You are currently sharing the following folder: %1</source>
@@ -2831,12 +2836,7 @@ Las transferencias se reanudarán automáticamente en cuanto vuelvas a abrir la 
     <message>
         <source>Failed to ugrade security. Error: %1</source>
         <translatorcomment>System notification error shown if an error occur while upgrading security for your account. %1 will be replaced with the error returned from the SDK.</translatorcomment>
-        <translation>No se ha podido actualizar la seguridad. Error: %1</translation>
-    </message>
-    <message>
-        <source>Your account&apos;s security is now being upgraded. This will happen only once. If you have seen this message for this account before, press Cancel.</source>
-        <translatorcomment>Error message shown to the user to inform about that the security of his account is going to be upgraded. </translatorcomment>
-        <translation>La seguridad de tu cuenta se está actualizando. y solo pasará una vez. Si has visto este mensaje antes para esta misma cuenta, haz clic en Cancelar.</translation>
+        <translation>No se ha podido realizar la actualización de seguridad. Error: %1</translation>
     </message>
 </context>
 <context>
