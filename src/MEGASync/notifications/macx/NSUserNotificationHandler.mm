@@ -46,14 +46,6 @@ void NSUserNotificationHandler::showNotification(MegaNotification *notification)
     [notificationCenterInstance setDelegate:(NSUserNotificationDelegate *)mNotificationDelegate];
     [notificationCenterInstance deliverNotification:userNotification];
 
-    int expirationTime = notification->getExpirationTime();
-    if (expirationTime > 0)
-    {
-        [mNotificationDelegate performSelector:@selector(closeAlert:)
-            withObject:(NSUserNotificationDelegate *)userNotification
-            afterDelay: expirationTime / 1000.0];
-    }
-
     [userNotification release];
 }
 
