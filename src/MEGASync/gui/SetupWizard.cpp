@@ -480,6 +480,7 @@ void SetupWizard::on_bNext_clicked()
             ui->bMegaFolder->show();
             ui->eMegaFolder->show();
             ui->lMegaFolder->show();
+            //TODO: Review usage of lAdditionalSyncs when new onboarding wizard is completed
             ui->lAdditionalSyncs->setText(QString::fromUtf8(""));
             ui->lAdditionalSyncs->show();
         }
