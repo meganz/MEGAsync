@@ -1432,10 +1432,11 @@ void TransfersModel::showSyncCancelledWarning()
     if(syncsInRowsToCancel())
     {
         QPointer<QMessageBox> removeSync = new QMessageBox(QMessageBox::Warning, QLatin1Literal("MEGAsync"),
-                                                          PlatformStrings::cancelSyncsWarning(),
+                                                           tr("Sync transfers cannot be cancelled individually.\n"
+                                                                         "Please delete the folder sync from settings to cancel them."),
                                                            QMessageBox::No | QMessageBox::Yes, mCancelledFrom);
         removeSync->setButtonText(QMessageBox::No, tr("Dismiss"));
-        removeSync->setButtonText(QMessageBox::Yes, PlatformStrings::openSettings());
+        removeSync->setButtonText(QMessageBox::Yes, tr("Open settings"));
 
         auto result = removeSync->exec();
 

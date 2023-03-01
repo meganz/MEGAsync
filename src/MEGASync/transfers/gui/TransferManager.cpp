@@ -134,8 +134,8 @@ TransferManager::TransferManager(TransfersWidget::TM_TAB tab, MegaApi *megaApi) 
 
         if(value > TransfersWidget::TYPES_TAB_BASE && value < TransfersWidget::TYPES_LAST)
         {
-            TransfersWidget::TM_TAB tab = static_cast<TransfersWidget::TM_TAB>(value);
-            mNumberLabelsGroup[tab]->parentWidget()->hide();
+            TransfersWidget::TM_TAB currentTab = static_cast<TransfersWidget::TM_TAB>(value);
+            mNumberLabelsGroup[currentTab]->parentWidget()->hide();
         }
     }
 

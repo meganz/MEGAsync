@@ -1398,25 +1398,25 @@ if (!preferences->lastExecutionTime())
         if (haveSyncs && haveBackups)
         {
             syncsTypesToDismiss = {MegaSync::TYPE_TWOWAY, MegaSync::TYPE_BACKUP};
-            message = PlatformStrings::syncsAndBackupsDisableWarning();
+            message = tr("Some syncs and backups have been disabled. Go to settings to enable them again.");
         }
         else if (haveBackups)
         {
             settingsTabToOpen = SettingsDialog::BACKUP_TAB;
             syncsTypesToDismiss = {MegaSync::TYPE_BACKUP};
-            message = PlatformStrings::backupsDisableWarning();
+            message = tr("One or more backups have been disabled. Go to settings to enable them again.");
         }
         else if (haveSyncs)
         {
             syncsTypesToDismiss = {MegaSync::TYPE_TWOWAY};
-            message = PlatformStrings::syncsDisableWarning();
+            message = tr("One or more syncs have been disabled. Go to settings to enable them again.");
         }
 
         // Display the message if it has been set
         if (!message.isEmpty())
         {
             QMessageBox msgBox (QMessageBox::Warning, QCoreApplication::applicationName(), message);
-            QString buttonText (PlatformStrings::openSettings());
+            QString buttonText(tr("Open settings"));
             QPushButton *openPreferences = msgBox.addButton(buttonText, QMessageBox::YesRole);
 
             msgBox.addButton(tr("Dismiss"), QMessageBox::NoRole);
@@ -6387,7 +6387,7 @@ void MegaApplication::createTrayIconMenus()
         guestSettingsAction->deleteLater();
         guestSettingsAction = nullptr;
     }
-    guestSettingsAction = new QAction(PlatformStrings::settings(), this);
+    guestSettingsAction = new QAction(tr("Settings"), this);
 
     // When triggered, open "Settings" window. As the user is not logged in, it
     // will only show proxy settings.
@@ -6443,7 +6443,7 @@ void MegaApplication::createInfoDialogMenus()
     }
 
     recreateAction(&windowsExitAction, PlatformStrings::exit(), &MegaApplication::tryExitApplication);
-    recreateAction(&windowsSettingsAction, PlatformStrings::settings(), &MegaApplication::openSettings);
+    recreateAction(&windowsSettingsAction, tr("Settings"), &MegaApplication::openSettings);
     recreateAction(&windowsImportLinksAction, tr("Open links"), &MegaApplication::importLinks);
     recreateAction(&windowsUploadAction, tr("Upload"), &MegaApplication::uploadActionClicked);
     recreateAction(&windowsDownloadAction, tr("Download"), &MegaApplication::downloadActionClicked);
@@ -6520,7 +6520,7 @@ void MegaApplication::createInfoDialogMenus()
 
     recreateMenuAction(&exitAction, PlatformStrings::exit(),
                        "://images/ico_quit.png", &MegaApplication::tryExitApplication);
-    recreateMenuAction(&settingsAction, PlatformStrings::settings(),
+    recreateMenuAction(&settingsAction, tr("Settings"),
                        "://images/ico_preferences.png", &MegaApplication::openSettings);
     recreateMenuAction(&myCloudAction, tr("Cloud drive"), "://images/ico-cloud-drive.png", &MegaApplication::goToMyCloud);
 
@@ -6648,7 +6648,7 @@ void MegaApplication::createGuestMenu()
         settingsActionGuest->deleteLater();
         settingsActionGuest = NULL;
     }
-    settingsActionGuest = new MenuItemAction(PlatformStrings::settings(), QIcon(QString::fromUtf8("://images/ico_preferences.png")));
+    settingsActionGuest = new MenuItemAction(tr("Settings"), QIcon(QString::fromUtf8("://images/ico_preferences.png")));
 
     connect(settingsActionGuest, &QAction::triggered, this, &MegaApplication::openSettings);
 
