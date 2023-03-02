@@ -6196,11 +6196,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Error generating streaming link</translation>
     </message>
     <message>
-        <source>Decryption error</source>
-        <translatorcomment>Text shown when there is an error decrypting a public link for streaming</translatorcomment>
-        <translation>Decryption error</translation>
-    </message>
-    <message>
         <source>Error getting link information</source>
         <translatorcomment>Error message shown when a there is an error getting the information of a public link</translatorcomment>
         <translation>Error getting link information</translation>

@@ -8,6 +8,7 @@
 #include "../model/NodeSelectorProxyModel.h"
 #include "../model/NodeSelectorModel.h"
 #include "NodeNameSetterDialog/RenameNodeDialog.h"
+#include <MegaNodeNames.h>
 
 const int NodeSelectorTreeViewWidget::LABEL_ELIDE_MARGIN = 100;
 const int NodeSelectorTreeViewWidget::LOADING_VIEW_THRESSHOLD = 500;
@@ -418,7 +419,8 @@ void NodeSelectorTreeViewWidget::onRenameClicked()
 {
     auto node = std::unique_ptr<MegaNode>(mMegaApi->getNodeByHandle(getSelectedNodeHandle()));
     int access = mMegaApi->getAccess(node.get());
-    if (!node || access < MegaShare::ACCESS_FULL)
+    //This is for an extra protection as we don´t show the rename action if one of this conditions are not met
+    if (!node || access < MegaShare::ACCESS_FULL  || !node->isNodeKeyDecrypted())
     {
         return;
     }
@@ -450,7 +452,8 @@ void NodeSelectorTreeViewWidget::onDeleteClicked()
 {
     auto node = std::unique_ptr<MegaNode>(mMegaApi->getNodeByHandle(getSelectedNodeHandle()));
     int access = mMegaApi->getAccess(node.get());
-    if (!node || access < MegaShare::ACCESS_FULL)
+    //This is for an extra protection as we don´t show the rename action if one of this conditions are not met
+    if (!node || access < MegaShare::ACCESS_FULL || !node->isNodeKeyDecrypted())
     {
         return;
     }
@@ -472,11 +475,9 @@ void NodeSelectorTreeViewWidget::onDeleteClicked()
         ui->bForward->setEnabled(false);
         ui->bNewFolder->setEnabled(false);
         ui->bOk->setEnabled(false);
-        const char *name = node->getName();
+        //Double protection in case the node properties changed while the node is deleted
         if (access == MegaShare::ACCESS_FULL
-                || !strcmp(name, "NO_KEY")
-                || !strcmp(name, "CRYPTO_ERROR")
-                || !strcmp(name, "BLANK"))
+                && node->isNodeKeyDecrypted())
         {
             mMegaApi->remove(node.get(), mDelegateListener.get());
         }
@@ -629,13 +630,8 @@ void NodeSelectorTreeViewWidget::setRootIndex(const QModelIndex &proxy_idx)
     auto node = item->getNode();
     if(node)
     {
-        QString nodeName = QString::fromUtf8(node->getName());
+        QString nodeName = MegaNodeNames::getNodeName(node.get());
         QFontMetrics fm = ui->lFolderName->fontMetrics();
-
-        if(nodeName == QLatin1String("NO_KEY") || nodeName == QLatin1String("CRYPTO_ERROR"))
-        {
-            nodeName = QCoreApplication::translate("MegaError", "Decryption error");
-        }
 
         QString elidedText = fm.elidedText(nodeName, Qt::ElideMiddle, ui->tMegaFolders->width() - LABEL_ELIDE_MARGIN);
         ui->lFolderName->setText(elidedText);
