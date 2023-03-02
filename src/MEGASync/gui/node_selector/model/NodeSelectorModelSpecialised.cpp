@@ -56,6 +56,10 @@ void NodeSelectorModelCloudDrive::onRootItemCreated()
     {
         fetchItemChildren(rootIndex);
     }
+    else
+    {
+        emit blockUi(false);
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
