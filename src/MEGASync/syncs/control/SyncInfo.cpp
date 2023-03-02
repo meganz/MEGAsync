@@ -4,6 +4,7 @@
 #include "control/AppStatsEvents.h"
 #include "QMegaMessageBox.h"
 #include "UserAttributesRequests/MyBackupsHandle.h"
+#include <MegaNodeNames.h>
 
 #include <assert.h>
 

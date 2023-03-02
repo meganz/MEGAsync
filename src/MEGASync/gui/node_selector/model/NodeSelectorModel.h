@@ -31,8 +31,7 @@ enum class NodeSelectorModelRoles
 
 enum class NodeRowDelegateRoles
 {
-    ENABLED_ROLE = toInt(NodeSelectorModelRoles::last),  //ALWAYS use last enum value from previous enum class for new enums
-    INDENT_ROLE,
+    INDENT_ROLE = toInt(NodeSelectorModelRoles::last),  //ALWAYS use last enum value from previous enum class for new enums
     SMALL_ICON_ROLE,
     INIT_ROLE,
     last
@@ -169,6 +168,8 @@ public:
     void abort();
 
     virtual bool canBeDeleted() const;
+
+    Qt::ItemFlags flags(const QModelIndex &index) const override;
 
 signals:
     void levelsAdded(const QModelIndexList& parent, bool force = false);

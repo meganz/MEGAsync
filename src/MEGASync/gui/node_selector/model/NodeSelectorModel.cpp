@@ -467,10 +467,6 @@ QVariant NodeSelectorModel::data(const QModelIndex &index, int role) const
             {
                 return QVariant::fromValue(item->getNode());
             }
-            case toInt(NodeRowDelegateRoles::ENABLED_ROLE):
-            {
-                return mSyncSetupMode ? item->isSyncable() : true;
-            }
             case toInt(NodeRowDelegateRoles::INDENT_ROLE):
             {
                 return item->isCloudDrive() || item->isVault() ? -10 : 0;
@@ -491,6 +487,25 @@ QVariant NodeSelectorModel::data(const QModelIndex &index, int role) const
         }
     }
     return QVariant();
+}
+
+Qt::ItemFlags NodeSelectorModel::flags(const QModelIndex &index) const
+{
+    auto flags = QAbstractItemModel::flags(index);
+
+    if (index.isValid())
+    {
+        NodeSelectorModelItem* item = static_cast<NodeSelectorModelItem*>(index.internalPointer());
+        if (item)
+        {
+            if((mSyncSetupMode && !item->isSyncable()) || (item->getNode() && !item->getNode()->isNodeKeyDecrypted()))
+            {
+                flags &= ~(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+            }
+        }
+    }
+
+    return flags;
 }
 
 QModelIndex NodeSelectorModel::index(int row, int column, const QModelIndex &parent) const
@@ -773,17 +788,12 @@ QVariant NodeSelectorModel::getText(const QModelIndex &index, NodeSelectorModelI
         {
             if(item->isVault() || item->isCloudDrive())
             {
-                return MegaNodeNames::getNodeName(item->getNode()->getName());
+                return MegaNodeNames::getRootNodeName(item->getNode().get());
             }
-
-            QString nodeName = QString::fromUtf8(item->getNode()->getName());
-
-            if(nodeName == QLatin1String("NO_KEY") || nodeName == QLatin1String("CRYPTO_ERROR"))
+            else
             {
-                nodeName = QCoreApplication::translate("MegaError", "Decryption error");
+                return MegaNodeNames::getNodeName(item->getNode().get());
             }
-
-            return QVariant(nodeName);
         }
         case COLUMN::DATE:
         {

@@ -2323,16 +2323,6 @@ void MegaApplication::cleanAll()
     }
 }
 
-void MegaApplication::onDupplicateLink(QString, QString name, MegaHandle handle)
-{
-    if (appfinished)
-    {
-        return;
-    }
-
-    addRecentFile(name, handle);
-}
-
 void MegaApplication::onInstallUpdateClicked()
 {
     if (appfinished)
@@ -4568,14 +4558,6 @@ void MegaApplication::updateUserStats(bool storage, bool transfer, bool pro, boo
     }
 }
 
-void MegaApplication::addRecentFile(QString/* fileName*/, long long/* fileHandle*/, QString/* localPath*/, QString/* nodeKey*/)
-{
-    if (appfinished)
-    {
-        return;
-    }
-}
-
 void MegaApplication::checkForUpdates()
 {
     if (appfinished)
@@ -4892,8 +4874,6 @@ void MegaApplication::importLinks()
         preferences->setOverStorageDismissExecution(0);
 
         connect(linkProcessor, SIGNAL(onLinkImportFinish()), this, SLOT(onLinkImportFinished()));
-        connect(linkProcessor, SIGNAL(onDupplicateLink(QString, QString, mega::MegaHandle)),
-                this, SLOT(onDupplicateLink(QString, QString, mega::MegaHandle)));
         linkProcessor->importLinks(importDialog->getImportPath());
     }
     else
@@ -7799,34 +7779,6 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
     {
         lastTsBusinessWarning = QDateTime::currentMSecsSinceEpoch();
         mOsNotifications->sendBusinessWarningNotification(businessStatus);
-    }
-
-    //Show the transfer in the "recently updated" list
-    if (e->getErrorCode() == MegaError::API_OK && transfer->getNodeHandle() != INVALID_HANDLE)
-    {
-        QString localPath;
-        if (transfer->getPath())
-        {
-            localPath = QString::fromUtf8(transfer->getPath());
-        }
-
-#ifdef WIN32
-        if (localPath.startsWith(QString::fromUtf8("\\\\?\\")))
-        {
-            localPath = localPath.mid(4);
-        }
-#endif
-
-        MegaNode *node = transfer->getPublicMegaNode();
-        QString publicKey;
-        if (node)
-        {
-            const char* key = node->getBase64Key();
-            publicKey = QString::fromUtf8(key);
-            delete [] key;
-            delete node;
-        }
-        addRecentFile(QString::fromUtf8(transfer->getFileName()), transfer->getNodeHandle(), localPath, publicKey);
     }
 
     // Check if we have ot send a EVENT_1ST_***_FILE

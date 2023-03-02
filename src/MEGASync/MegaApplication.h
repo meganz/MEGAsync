@@ -153,7 +153,6 @@ public:
     void stopUpdateTask();
     void applyProxySettings();
     void updateUserStats(bool storage, bool transfer, bool pro, bool force, int source);
-    void addRecentFile(QString fileName, long long fileHandle, QString localPath = QString(), QString nodeKey = QString());
     void checkForUpdates();
     // Actually show InfoDialog view, not tray menu.
     void showTrayMenu(QPoint *point = NULL);
@@ -286,7 +285,6 @@ public slots:
     void checkOverQuotaStates();
     void periodicTasks();
     void cleanAll();
-    void onDupplicateLink(QString link, QString name, mega::MegaHandle handle);
     void onInstallUpdateClicked();
     void onAboutClicked();
     void showInfoDialog();
