@@ -5531,10 +5531,11 @@ void MegaApplication::copyFileLink(MegaHandle fileHandle, QString nodeKey)
         return;
     }
 
+    QString gettingLinkError = tr("Error getting link: File not found");
     MegaNode *node = megaApi->getNodeByHandle(fileHandle);
     if (!node)
     {
-        showErrorMessage(tr("Error getting link:") + QString::fromUtf8(" ") + tr("File not found"));
+        showErrorMessage(gettingLinkError);
         return;
     }
 
@@ -5553,7 +5554,7 @@ void MegaApplication::copyFileLink(MegaHandle fileHandle, QString nodeKey)
     const char *fp = megaApi->getFingerprint(node);
     if (!fp)
     {
-        showErrorMessage(tr("Error getting link:") + QString::fromUtf8(" ") + tr("File not found"));
+        showErrorMessage(gettingLinkError);
         delete node;
         return;
     }
