@@ -1,15 +1,16 @@
 ﻿#include "NodeSelectorProxyModel.h"
-#include "NodeSelectorModelItem.h"
 #include "megaapi.h"
 #include "NodeSelectorModel.h"
 #include "MegaApplication.h"
 #include "QThread"
+#include <QDebug>
 
 NodeSelectorProxyModel::NodeSelectorProxyModel(QObject* parent) :
     QSortFilterProxyModel(parent),
     mSortColumn(NodeSelectorModel::NODE),
     mOrder(Qt::AscendingOrder),
-    mExpandMapped(true)
+    mExpandMapped(true),
+    mForceInvalidate(false)
 {
     mCollator.setCaseSensitivity(Qt::CaseInsensitive);
     mCollator.setNumericMode(true);
@@ -20,15 +21,14 @@ NodeSelectorProxyModel::NodeSelectorProxyModel(QObject* parent) :
 
 }
 
+NodeSelectorProxyModel::~NodeSelectorProxyModel()
+{
+
+}
+
 void NodeSelectorProxyModel::showReadOnlyFolders(bool value)
 {
     mFilter.showReadOnly = value;
-    invalidateFilter();
-}
-
-void NodeSelectorProxyModel::showReadWriteFolders(bool value)
-{
-    mFilter.showReadWriteFolders = value;
     invalidateFilter();
 }
 
@@ -50,10 +50,14 @@ void NodeSelectorProxyModel::sort(int column, Qt::SortOrder order)
                 sourceModel()->blockSignals(true);
                 invalidateFilter();
                 QSortFilterProxyModel::sort(column, order);
-                for (auto it = itemsToMap.rbegin(); it != itemsToMap.rend(); ++it)
+                for (auto it = mItemsToMap.crbegin(); it != mItemsToMap.crend(); ++it)
                 {
                     auto proxyIndex = mapFromSource((*it));
                     hasChildren(proxyIndex);
+                }
+                if(mForceInvalidate)
+                {
+                    invalidate();
                 }
                 blockSignals(false);
                 sourceModel()->blockSignals(false);
@@ -119,17 +123,7 @@ std::shared_ptr<mega::MegaNode> NodeSelectorProxyModel::getNode(const QModelInde
     {
         return nullptr;
     }
-    QModelIndex source_idx = mapToSource(index);
-    if(!source_idx.isValid())
-    {
-        return nullptr;
-    }
-    NodeSelectorModelItem *item = static_cast<NodeSelectorModelItem*>(source_idx.internalPointer());
-    if (!item)
-    {
-        return nullptr;
-    }
-    return item->getNode();
+    return qvariant_cast<std::shared_ptr<mega::MegaNode>>(index.data(toInt(NodeSelectorModelRoles::NODE_ROLE)));
 }
 
 void NodeSelectorProxyModel::addNode(std::unique_ptr<mega::MegaNode> node, const QModelIndex &parent)
@@ -195,37 +189,6 @@ void NodeSelectorProxyModel::setSourceModel(QAbstractItemModel *sourceModel)
         connect(nodeSelectorModel, &NodeSelectorModel::levelsAdded, this, &NodeSelectorProxyModel::invalidateModel);
         nodeSelectorModel->firstLoad();
     }
-}
-
-bool NodeSelectorProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
-{
-    QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
-
-    if(index.isValid())
-    {
-        if(NodeSelectorModelItem* item = static_cast<NodeSelectorModelItem*>(index.internalPointer()))
-        {
-            if(std::shared_ptr<mega::MegaNode> node = item->getNode())
-            {
-               if (!node->isNodeKeyDecrypted() && !mFilter.showReadOnly)
-               {
-                   return false;
-               }
-               if(node->isInShare())
-               {
-                   mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
-                   int accs = megaApi->getAccess(node.get());
-                    if((accs == mega::MegaShare::ACCESS_READ && !mFilter.showReadOnly)
-                       || (accs == mega::MegaShare::ACCESS_READWRITE && !mFilter.showReadWriteFolders))
-                    {
-                        return false;
-                    }
-               }
-               return true;
-            }
-        }
-    }
-    return QSortFilterProxyModel::filterAcceptsRow(sourceRow, sourceParent);
 }
 
 QVector<QModelIndex> NodeSelectorProxyModel::forEach(std::shared_ptr<mega::MegaNodeList> parentNodeList, QModelIndex parent)
@@ -299,14 +262,25 @@ bool NodeSelectorProxyModel::canBeDeleted() const
     return dynamic_cast<NodeSelectorModel*>(sourceModel())->canBeDeleted();
 }
 
-void NodeSelectorProxyModel::invalidateModel(const QModelIndexList& parents)
+void NodeSelectorProxyModel::invalidateModel(const QModelIndexList& parents, bool force)
 {
-    itemsToMap = parents;
+    mItemsToMap = parents;
+    mForceInvalidate = force;
     sort(mSortColumn, mOrder);
 }
 
 void NodeSelectorProxyModel::onModelSortedFiltered()
 {
+    if(mForceInvalidate)
+    {
+        if(auto nodeSelectorModel = dynamic_cast<NodeSelectorModel*>(sourceModel()))
+        {
+            nodeSelectorModel->proxyInvalidateFinished();
+        }
+    }
+
+    mForceInvalidate = false;
+
     emit layoutChanged();
 
     if(mExpandMapped)
@@ -315,13 +289,48 @@ void NodeSelectorProxyModel::onModelSortedFiltered()
     }
     else
     {
-        emit navigateReady(itemsToMap.isEmpty() ? QModelIndex() : mapFromSource(itemsToMap.first()));
+        emit navigateReady(mItemsToMap.isEmpty() ? QModelIndex() : mapFromSource(mItemsToMap.first()));
         if(auto nodeSelectorModel = dynamic_cast<NodeSelectorModel*>(sourceModel()))
         {
             nodeSelectorModel->clearIndexesNodeInfo();
         }
+        mExpandMapped = true;
+    }
+    emit getMegaModel()->blockUi(false);
+    mItemsToMap.clear();
+}
+
+NodeSelectorProxyModelSearch::NodeSelectorProxyModelSearch(QObject *parent)
+    : NodeSelectorProxyModel(parent), mMode(NodeSelectorModelItemSearch::Type::CLOUD_DRIVE)
+{
+
+}
+
+void NodeSelectorProxyModelSearch::setMode(NodeSelectorModelItemSearch::Types mode)
+{
+    if(mMode == mode)
+    {
+        return;
     }
 
+    emit getMegaModel()->blockUi(true);
+    mMode = mode;
+    invalidateFilter();
     emit getMegaModel()->blockUi(false);
-    itemsToMap.clear();
 }
+
+bool NodeSelectorProxyModelSearch::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
+{
+    QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
+
+    if(index.isValid())
+    {
+        if(NodeSelectorModelItemSearch* item = static_cast<NodeSelectorModelItemSearch*>(index.internalPointer()))
+        {
+            return mMode & item->getType();
+        }
+    }
+
+    return NodeSelectorProxyModel::filterAcceptsRow(sourceRow, sourceParent);
+}
+

@@ -3,25 +3,23 @@
 
 #include "MacXLocalSocket.h"
 
+#include <QPointer>
+
 class MacXLocalServerPrivate;
 class MacXLocalServer : public QObject
 {
     Q_OBJECT
 
 public:
-    MacXLocalServer();
+    MacXLocalServer(QObject *parent);
     ~MacXLocalServer();
 
     bool listen(QString name);
-    MacXLocalSocket* nextPendingConnection();
-    bool hasPendingConnections();
-    void appendPendingConnection(MacXLocalSocket* client);
 
 signals:
-    void newConnection();
+    void newConnection(QPointer<MacXLocalSocket> client);
 
 private:
-    QList<MacXLocalSocket*> pendingConnections;
     MacXLocalServerPrivate *serverPrivate;
     bool listening;
 };

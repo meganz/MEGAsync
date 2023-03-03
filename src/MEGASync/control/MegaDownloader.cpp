@@ -1,11 +1,14 @@
 #include "MegaDownloader.h"
 
 #include "EventUpdater.h"
+#include "LowDiskSpaceDialog.h"
 #include "MegaApplication.h"
 #include "Utilities.h"
 #include "TransferBatch.h"
+#include "transfers/model/TransferMetaData.h"
 
 #include <QDateTime>
+#include <QFileIconProvider>
 #include <QPointer>
 
 #include <memory>
@@ -13,13 +16,17 @@
 using namespace mega;
 
 MegaDownloader::MegaDownloader(MegaApi* _megaApi, std::shared_ptr<FolderTransferListener> _listener)
-    : QObject(), megaApi(_megaApi), listener(_listener)
+    : QObject(), megaApi(_megaApi), listener(_listener), mQueueData(_megaApi, pathMap)
 {
+    connect(&mQueueData, &DownloadQueueController::finishedAvailableSpaceCheck,
+            this, &MegaDownloader::onAvailableSpaceCheckFinished);
 }
 
 bool MegaDownloader::processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, BlockingBatch& downloadBatches,
-                                          const QString& path, unsigned long long appDataId)
+                                          const QString& path)
 {
+    auto data = TransferMetaDataContainer::createTransferMetaData<DownloadTransferMetaData>(path);
+
     mNoTransferStarted = true;
     // If the destination path doesn't exist and we can't create it,
     // empty queue and abort transfer.
@@ -28,64 +35,15 @@ bool MegaDownloader::processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, B
     {
         qDeleteAll(*downloadQueue);
         downloadQueue->clear();
+
+        data->remove();
+
         return false;
     }
 
-    // Get transfer's metadata
-    TransferMetaData *data = (static_cast<MegaApplication*>(qApp))->getTransferAppData(appDataId);
-
-    auto batch = std::shared_ptr<TransferBatch>(new TransferBatch());
-
-    downloadBatches.add(batch);
-
-    EventUpdater updater(downloadQueue->size(), 20);
     mProcessingTransferQueue = true;
-
-    // Process all nodes in the download queue
-    while (!downloadQueue->isEmpty())
-    {
-        static QString currentPath;
-
-        QString appData = QString::number(appDataId);
-        WrappedNode *wNode = downloadQueue->dequeue();
-        MegaNode *node = wNode->getMegaNode();
-
-        // Get path from pathMap or build it if necessary
-        if (node->isForeign() && pathMap.contains(node->getParentHandle()))
-        {
-            currentPath = pathMap[node->getParentHandle()];
-        }
-        else
-        {
-            if (data)
-            {
-                update(data, appData, node, path);
-            }
-
-            currentPath = path;
-        }
-
-        // We now have all the necessary info to effectively download.
-        bool transferStarted = download(wNode, currentPath, appData, batch->getCancelTokenPtr());
-        if (transferStarted && wNode->getTransferOrigin() == WrappedNode::FROM_APP)
-        {
-            batch->add(currentPath, QString::fromUtf8(node->getName()));
-        }
-        delete wNode;
-
-        if(!downloadQueue->isEmpty())
-        {
-            updater.update(downloadQueue->size());
-        }
-    }
-
-    if (batch->isEmpty())
-    {
-        downloadBatches.removeBatch();
-    }
-
-    pathMap.clear();
-    mProcessingTransferQueue = false;
+    mQueueData.initialize(downloadQueue, downloadBatches, data->getAppId(), path);
+    mQueueData.startAvailableSpaceChecking();
     return true;
 }
 
@@ -94,7 +52,7 @@ bool MegaDownloader::isQueueProcessingOngoing()
     return mProcessingTransferQueue;
 }
 
-bool MegaDownloader::download(WrappedNode* parent, QFileInfo info, QString appData, MegaCancelToken* cancelToken)
+bool MegaDownloader::download(WrappedNode* parent, QFileInfo info, const std::shared_ptr<DownloadTransferMetaData> &data, MegaCancelToken* cancelToken)
 {
     QPointer<MegaDownloader> safePointer = this;
 
@@ -103,11 +61,7 @@ bool MegaDownloader::download(WrappedNode* parent, QFileInfo info, QString appDa
         return false;
     }
 
-    QString currentPathWithSep = QDir::toNativeSeparators(info.absoluteFilePath());
-    if (!currentPathWithSep.endsWith(QDir::separator()))
-    {
-        currentPathWithSep += QDir::separator();
-    }
+    QString currentPathWithSep = createPathWithSeparator(info.absoluteFilePath());
 
     // Extract MEGA node from wrapped node for more readable code
     // Both parent and node should be not null at this point.
@@ -122,14 +76,66 @@ bool MegaDownloader::download(WrappedNode* parent, QFileInfo info, QString appDa
             emit startingTransfers();
             mNoTransferStarted = false;
         }
-        startDownload(parent, appData, currentPathWithSep, tokenToUse);
+        startDownload(parent, QString::number(data->getAppId()), currentPathWithSep, tokenToUse);
         return true;
     }
     else
     {
-        downloadForeignDir(node, appData, currentPathWithSep);
+        downloadForeignDir(node, data, currentPathWithSep);
         return false;
     }
+}
+
+void MegaDownloader::onAvailableSpaceCheckFinished(bool isDownloadPossible)
+{
+    if (isDownloadPossible)
+    {
+        auto appData = TransferMetaDataContainer::getAppData<DownloadTransferMetaData>(mQueueData.getCurrentAppDataId());
+        appData->setPendingTransfers(mQueueData.getDownloadQueueSize());
+
+        auto batch = std::shared_ptr<TransferBatch>(new TransferBatch());
+        mQueueData.addTransferBatch(batch);
+        EventUpdater updater(mQueueData.getDownloadQueueSize());
+
+        // Process all nodes in the download queue
+        while (!mQueueData.isDownloadQueueEmpty())
+        {
+            WrappedNode *wNode = mQueueData.dequeueDownloadQueue();
+            MegaNode *node = wNode->getMegaNode();
+
+            QString currentPath;
+
+            if (node->isForeign() && pathMap.contains(node->getParentHandle()))
+            {
+                currentPath = pathMap[node->getParentHandle()];
+            }
+            else
+            {
+                currentPath = mQueueData.getCurrentTargetPath();
+            }
+
+            bool transferStarted = download(wNode, currentPath, appData, batch->getCancelTokenPtr());
+            if (transferStarted && wNode->getTransferOrigin() == WrappedNode::FROM_APP)
+            {
+                batch->add(currentPath, QString::fromUtf8(node->getName()));
+            }
+            delete wNode;
+            updater.update(mQueueData.getDownloadQueueSize());
+        }
+
+        if (batch->isEmpty())
+        {
+            mQueueData.removeBatch();
+        }
+    }
+    else
+    {
+        TransferMetaDataContainer::removeAppData(mQueueData.getCurrentAppDataId());
+        mQueueData.clearDownloadQueue();
+    }
+
+    pathMap.clear();
+    mProcessingTransferQueue = false;
 }
 
 void MegaDownloader::startDownload(WrappedNode *parent, const QString& appData,
@@ -141,7 +147,7 @@ void MegaDownloader::startDownload(WrappedNode *parent, const QString& appData,
     megaApi->startDownload(parent->getMegaNode(), localPath.constData(), name, appData.toUtf8().constData(), startFirst, cancelToken, listener.get());
 }
 
-void MegaDownloader::downloadForeignDir(MegaNode *node, const QString& appData, const QString& currentPathWithSep)
+void MegaDownloader::downloadForeignDir(MegaNode *node, const std::shared_ptr<DownloadTransferMetaData> &data, const QString& currentPathWithSep)
 {
     // Downloading amounts to creating the dir if it doesn't exist.
 
@@ -152,28 +158,12 @@ void MegaDownloader::downloadForeignDir(MegaNode *node, const QString& appData, 
     }
 
     // Once the folder has been checked for existence/created with success:
-    // - check if this was A "root folder" for the transfer (if yes, update
+    // - check if this was A "root folder" for the transfer with updateForeignDir (if yes, update
     //     transfer metadata)
     // - check if this was the last pending transfer. If yes, emit notification.
-    QByteArray appDataArray = appData.toUtf8();
-    char *endptr;
-    unsigned long long notificationId = strtoull(appDataArray.constData(), &endptr, 10);
-    TransferMetaData *data = ((MegaApplication*)qApp)->getTransferAppData(notificationId);
     if (data)
     {
-        // Thus, if there is a '*', this was a "root folder", and we successfully transfered it.
-        if (*endptr == '*')
-        {
-            data->transfersFolderOK++;
-        }
-
-        // Update pending transfers in metadata, and notify if this was the last.
-        data->pendingTransfers--;
-        if (data->pendingTransfers == 0)
-        {
-            //Transfers finished, show notification
-            emit finishedTransfers(notificationId);
-        }
+        data->updateForeignDir();
     }
 
     // Add path to pathMap
@@ -199,33 +189,14 @@ bool MegaDownloader::hasTransferPriority(const WrappedNode::TransferOrigin &orig
     }
 }
 
-void MegaDownloader::update(TransferMetaData *dataToUpdate, QString& appData, MegaNode *node, const QString &path)
+QString MegaDownloader::createPathWithSeparator(const QString &path)
 {
-    // Update transfer metadata according to node type.
-    node->isFolder() ? dataToUpdate->totalFolders++ : dataToUpdate->totalFiles++;
-
-    // Report that there is still a "root folder" to download/create
-    appData.append(QString::fromUtf8("*"));
-
-    // Set the metadata local path to destination path
-    if (dataToUpdate->localPath.isEmpty())
+    QString pathWithSep = QDir::toNativeSeparators(path);
+    if (!pathWithSep.endsWith(QDir::separator()))
     {
-        dataToUpdate->localPath = QDir::toNativeSeparators(path);
-
-        // If there is only 1 transfer, set localPath to full path
-        if (dataToUpdate->totalTransfers == 1)
-        {
-            char *escapedName = megaApi->escapeFsIncompatible(node->getName(),
-                                                              path.toStdString().c_str());
-            QString nodeName = QString::fromUtf8(escapedName);
-            delete [] escapedName;
-            if (!dataToUpdate->localPath.endsWith(QDir::separator()))
-            {
-                dataToUpdate->localPath += QDir::separator();
-            }
-            dataToUpdate->localPath += nodeName;
-        }
+        pathWithSep += QDir::separator();
     }
+    return pathWithSep;
 }
 
 QString MegaDownloader::buildEscapedPath(const char *nodeName, QString currentPathWithSep)
@@ -254,3 +225,4 @@ bool MegaDownloader::createDirIfNotPresent(const QString& path)
     }
     return true;
 }
+

@@ -8,11 +8,8 @@ class PlatformStrings : QObject
 {
     Q_OBJECT
 public:
-    static QString openSettings();
-    static QString syncsDisableWarning();
-    static QString backupsDisableWarning();
-    static QString syncsAndBackupsDisableWarning();
-    static QString cancelSyncsWarning();
+    static QString fileExplorer();
+    static QString exit();
 };
 
 #endif // PLATFORMSTRINGS_H

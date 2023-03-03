@@ -21,8 +21,6 @@ public:
 
 private:
     static void findFoldersRecursively(const QString& path, QStringList& folders);
-    static QString toQstring(const std::string& value);
-    static std::string toStdString(const QString& value);
 };
 
 #endif // RECURSIVESHELLNOTIFIER_H

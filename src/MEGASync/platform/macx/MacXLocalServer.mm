@@ -7,8 +7,9 @@
 
 using namespace mega;
 
-MacXLocalServer::MacXLocalServer()
-    :serverPrivate(new MacXLocalServerPrivate())
+MacXLocalServer::MacXLocalServer(QObject* parent)
+    :QObject(parent),
+      serverPrivate(new MacXLocalServerPrivate())
 {
     listening = false;
     serverPrivate->localServer = this;
@@ -20,8 +21,7 @@ MacXLocalServer::~MacXLocalServer()
     {
         [serverPrivate->connection registerName:nil];
     }
-    qDeleteAll(pendingConnections);
-    pendingConnections.clear();
+
     delete serverPrivate;
 }
 
@@ -36,24 +36,4 @@ bool MacXLocalServer::listen(QString name)
 
     MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Error opening shell ext server");
     return false;
-}
-
-MacXLocalSocket* MacXLocalServer::nextPendingConnection()
-{
-    if (pendingConnections.isEmpty())
-    {
-        return NULL;
-    }
-
-    return pendingConnections.takeFirst();
-}
-
-bool MacXLocalServer::hasPendingConnections()
-{
-    return !pendingConnections.isEmpty();
-}
-
-void MacXLocalServer::appendPendingConnection(MacXLocalSocket *client)
-{
-    pendingConnections.append(client);
 }

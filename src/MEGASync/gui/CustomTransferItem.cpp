@@ -186,6 +186,7 @@ void CustomTransferItem::mouseHoverTransfer(bool isHover, const QPoint &pos)
     if (isHover)
     {
         actionButtonsEnabled = true;
+        bool transferedFileStillExists = QFile(fullpath).exists();
         if (transferError < 0)
         {
             if (!isSyncTransfer)
@@ -205,12 +206,14 @@ void CustomTransferItem::mouseHoverTransfer(bool isHover, const QPoint &pos)
             bool in = ui->lActionTransfer->rect().contains(ui->lActionTransfer->mapFrom(this, pos));
             setActionTransferIcon(QString::fromAscii("://images/ico_item_link%1.png").arg(QString::fromAscii(in?"":"_greyed")));
 
-            in = ui->lShowInFolder->rect().contains(ui->lShowInFolder->mapFrom(this, pos));
-            setShowInFolderIcon(QString::fromAscii("://images/showinfolder%1.png").arg(QString::fromAscii(in?"":"_greyed")));
-
-            ui->lShowInFolder->show();
+            if (transferedFileStillExists)
+            {
+                in = ui->lShowInFolder->rect().contains(ui->lShowInFolder->mapFrom(this, pos));
+                setShowInFolderIcon(QString::fromAscii("://images/showinfolder%1.png").arg(QString::fromAscii(in?"":"_greyed")));
+                ui->lShowInFolder->show();
+            }
         }
-        else
+        else if (transferedFileStillExists)
         {
             bool in = ui->lActionTransfer->rect().contains(ui->lActionTransfer->mapFrom(this, pos));
             setActionTransferIcon(QString::fromAscii("://images/showinfolder%1.png").arg(QString::fromAscii(in?"":"_greyed")));

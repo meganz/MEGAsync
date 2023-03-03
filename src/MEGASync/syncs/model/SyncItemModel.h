@@ -42,6 +42,8 @@ public:
     bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) override;
     virtual void fillData();
 
+    std::shared_ptr<SyncSettings> getSyncSettings(const QModelIndex &index) const;
+
 protected:
     QList<std::shared_ptr<SyncSettings>> getList() const;
     void setList(QList<std::shared_ptr<SyncSettings>> list);
