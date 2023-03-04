@@ -6401,7 +6401,7 @@ A folytatáshoz válasszon másik mappát.</translation>
     <message>
         <source>Transfer Manager</source>
         <translatorcomment>Title of the dialog of Transfer Manager</translatorcomment>
-        <translation>Transfer manager</translation>
+        <translation>Átvitelkezelő</translation>
     </message>
     <message>
         <source>Downloads</source>
@@ -6416,7 +6416,7 @@ A folytatáshoz válasszon másik mappát.</translation>
     <message>
         <source>Completed</source>
         <translatorcomment>Label of tab to access all completed transfers</translatorcomment>
-        <translation>Completed</translation>
+        <translation>Elkészült</translation>
     </message>
     <message>
         <source>Upload</source>
@@ -6429,7 +6429,7 @@ A folytatáshoz válasszon másik mappát.</translation>
     <message>
         <source>Open links</source>
         <translatorcomment>Menu action item to open MEGA public links. It will let you to import and/or download.</translatorcomment>
-        <translation>Open links</translation>
+        <translation>Linkek megnyitása</translation>
     </message>
     <message>
         <source>Transfers</source>
@@ -6439,159 +6439,159 @@ A folytatáshoz válasszon másik mappát.</translation>
     <message>
         <source>Search</source>
         <translatorcomment>Title for text search window</translatorcomment>
-        <translation>Search</translation>
+        <translation>Keresés</translation>
     </message>
     <message>
         <source>Transferring</source>
         <translatorcomment>Label to indicate that MEGA Desktop App is in a transferring state (ongoing transfers are running)</translatorcomment>
-        <translation>Transferring</translation>
+        <translation>Átvitel/translation>
     </message>
     <message>
         <source>All transfers</source>
         <translatorcomment>Title for All transfers category</translatorcomment>
-        <translation>All transfers</translation>
+        <translation>Összes átvitel</translation>
     </message>
     <message>
         <source>Failed</source>
         <translatorcomment>Title for Failed transfers category</translatorcomment>
-        <translation>Failed</translation>
+        <translation>Meghiúsult</translation>
     </message>
     <message>
         <source>Media type</source>
         <translatorcomment>Title of the groupbox which contains all the media categories</translatorcomment>
-        <translation>Media type</translation>
+        <translation>Médiatípus</translation>
     </message>
     <message>
         <source>Archives</source>
         <translatorcomment>Categories for archive type transfers</translatorcomment>
-        <translation>Archives</translation>
+        <translation>Archívumok</translation>
     </message>
     <message>
         <source>Documents</source>
         <translatorcomment>Categories for document type transfers</translatorcomment>
-        <translation>Documents</translation>
+        <translation>Dokumentumok</translation>
     </message>
     <message>
         <source>Images</source>
         <translatorcomment>Categories for image type transfers</translatorcomment>
-        <translation>Images</translation>
+        <translation>Képek</translation>
     </message>
     <message>
         <source>Videos</source>
         <translatorcomment>Categories for video type transfers</translatorcomment>
-        <translation>Videos</translation>
+        <translation>Videók</translation>
     </message>
     <message>
         <source>Audio</source>
         <translatorcomment>Categories for audio type transfers</translatorcomment>
-        <translation>Audio</translation>
+        <translation>Hangok</translation>
     </message>
     <message>
         <source>Other</source>
         <translatorcomment>Categories for other type transfers</translatorcomment>
-        <translation>Other</translation>
+        <translation>Egyéb</translation>
     </message>
     <message>
         <source>Up to date</source>
         <translatorcomment>All transfers have been finished</translatorcomment>
-        <translation>Up to date</translation>
+        <translation>Naprakész</translation>
     </message>
     <message>
         <source>Scanning</source>
         <translatorcomment>State of the Transfers: Message which shows that a folder is being scanned</translatorcomment>
-        <translation>Scanning…</translation>
+        <translation>Beolvasás…</translation>
     </message>
     <message>
         <source>All paused</source>
         <translatorcomment>Message which shows that the global pause is set</translatorcomment>
-        <translation>All paused</translation>
+        <translation>Mind szüneteltetve</translation>
     </message>
     <message>
         <source>All</source>
         <translatorcomment>Title for all searched transfers by text</translatorcomment>
-        <translation>All</translation>
+        <translation>Összes</translation>
     </message>
     <message>
         <source>Search:</source>
         <translatorcomment>Title to show the text used to search</translatorcomment>
-        <translation>Search:</translation>
+        <translation>Keresés:</translation>
     </message>
     <message>
         <source>Retry all</source>
         <translatorcomment>Button text for retry all button in Failed category</translatorcomment>
-        <translation>Retry all</translation>
+        <translation>Összes újra</translation>
     </message>
     <message>
         <source>No uploads</source>
         <translatorcomment>Empty window message for upload category</translatorcomment>
-        <translation>No uploads</translation>
+        <translation>Nincsenek feltöltések</translation>
     </message>
     <message>
         <source>No downloads</source>
         <translatorcomment>Empty window message for download category</translatorcomment>
-        <translation>No downloads</translation>
+        <translation>Nincsenek leltöltések</translation>
     </message>
     <message>
         <source>No transfers</source>
         <translatorcomment>Empty window message for generic categories</translatorcomment>
-        <translation>No transfers</translation>
+        <translation>Nincsenek átvitelek</translation>
     </message>
     <message>
         <source>No search results</source>
         <translatorcomment>Empty window message for search category</translatorcomment>
-        <translation>No search results</translation>
+        <translation>Nincsenek keresési találatok</translation>
     </message>
     <message>
         <source>No completed transfers</source>
         <translatorcomment>Empty window message for completed category</translatorcomment>
-        <translation>No completed transfers</translation>
+        <translation>Nincsenek befejezett átvitelek</translation>
     </message>
     <message>
         <source>Resume all transfers</source>
         <translatorcomment>Global pause button tooltip</translatorcomment>
-        <translation>Resume all transfers</translation>
+        <translation>Összes átvitel folytatása</translation>
     </message>
     <message>
         <source>Pause all transfers</source>
         <translatorcomment>Global resume button tooltip</translatorcomment>
-        <translation>Pause all transfers</translation>
+        <translation>Összes átvitel szüneteltetése</translation>
     </message>
     <message numerus="yes">
         <source>%1 result found</source>
         <translatorcomment>Message shown with search results,when there are only uploads or downloads, but not both at the same time</translatorcomment>
-        <translation><numerusform>%1 result found</numerusform><numerusform>%1 results found</numerusform></translation>
+        <translation><numerusform>%1 találat</numerusform><numerusform>%1 találat</numerusform></translation>
     </message>
     <message>
         <source>Upgrade now</source>
         <translatorcomment>Button to open web explorer to see MEGA paid plans</translatorcomment>
-        <translation>Upgrade now</translation>
+        <translation>Upgrade most/translation>
     </message>
     <message>
         <source>Transfer quota exceeded</source>
         <translatorcomment>Subtitle Transfer Quota exceeded state message</translatorcomment>
-        <translation>Transfer quota exceeded</translation>
+        <translation>Az átviteli kvóta túllépve</translation>
     </message>
     <message>
         <source>Your MEGA account is full</source>
         <translatorcomment>Message shown when the MEGA account is full</translatorcomment>
-        <translation>Your MEGA account is full</translation>
+        <translation>Megtelt a MEGA-fiókja</translation>
     </message>
     <message>
         <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left for this IP address.
 To get more quota, upgrade to a Pro account or wait for [A] until more free quota becomes available on your IP address.</source>
         <translatorcomment>Message which shows that the user reachs the overquota. [A] is the time to wait until the quota is reset in hh:mm:ss</translatorcomment>
-        <translation>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left for this IP address.
-To get more quota, upgrade to a Pro account or wait for [A] until more free quota becomes available on your IP address.</translation>
+        <translation>Nem folytathatja a letöltést, mivel nincs elegendő átviteli kvótája ehhez az IP-címhez.
+Ha több kvótát szeretne szerezni, frissítsen Pro-fiókra, vagy várjon [A]-ig, amíg több ingyenes kvóta válik elérhetővé IP-címén.</translation>
     </message>
     <message>
         <source>More about transfer quota</source>
         <translatorcomment>Link button to send the user to the transfer quota information blog website</translatorcomment>
-        <translation>More about transfer quota</translation>
+        <translation>További információ az átviteli kvótáról</translation>
     </message>
     <message numerus="yes">
         <source>Issue found</source>
         <translatorcomment>Message shown when there are some failed transfers/syncs/backups</translatorcomment>
-        <translation><numerusform>Issue found</numerusform><numerusform>Issues found</numerusform></translation>
+        <translation><numerusform>hiba található</numerusform><numerusform>hiba található</numerusform></translation>
     </message>
 </context>
 <context>
@@ -6599,7 +6599,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Drop to Upload</source>
         <translatorcomment>Let the user know that files can be dropped there</translatorcomment>
-        <translation>Drop to upload</translation>
+        <translation>Húzza a feltöltéshez</translation>
     </message>
 </context>
 <context>
