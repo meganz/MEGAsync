@@ -643,7 +643,7 @@
     <message>
         <source>View in backup centre</source>
         <translatorcomment>Text for a button allowing the user to view the newly created backup i nthe Backup center (in the webclient)</translatorcomment>
-        <translation>View in Backup centre</translation>
+        <translation>Megtekintés a Mentéskezelőben</translation>
     </message>
 </context>
 <context>
@@ -696,12 +696,12 @@
     <message>
         <source>Downloads:</source>
         <translatorcomment>Label to indicate the limit of download connections per transfer.</translatorcomment>
-        <translation>Downloads:</translation>
+        <translation>Letöltések:</translation>
     </message>
     <message>
         <source>Uploads:</source>
         <translatorcomment>Label to indicate the limit of upload connections per transfer.</translatorcomment>
-        <translation>Uploads:</translation>
+        <translation>Feltöltések:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -769,7 +769,7 @@
     <message>
         <source>Add</source>
         <translatorcomment>Button label to confirm and add the selected folders for a sync</translatorcomment>
-        <translation>Add</translation>
+        <translation>Hozzáadás</translation>
     </message>
     <message>
         <source>Add synchronised folder:</source>
@@ -1166,7 +1166,7 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Sync</source>
         <translatorcomment>Button label of system notification to set a new sync when an incoming shared folder is received</translatorcomment>
-        <translation>Sync</translation>
+        <translation>Szinkronizálás</translation>
     </message>
     <message>
         <source>You have unread notifications</source>
@@ -1294,7 +1294,7 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Download from MEGA</source>
         <translatorcomment>Label and Title of the dialog displayed when a user is trying to retrieve a file/folder from MEGA.(MAX 20 characters)</translatorcomment>
-        <translation>Download from MEGA</translation>
+        <translation>Letöltés a MEGA-ról</translation>
     </message>
     <message>
         <source>Please select the download folder for your files:</source>
@@ -1744,7 +1744,7 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Download to my computer</source>
         <translatorcomment>Label to indicate if the user wants to download the imported MEGA link(s) to his computer.</translatorcomment>
-        <translation>Download to my computer</translation>
+        <translation>Letöltés a számítógépemre</translation>
     </message>
     <message>
         <source>Import to my cloud drive</source>
@@ -1801,7 +1801,7 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Settings</source>
         <translatorcomment>This is the string used to refer to settings, or preferences, in Windows and Linux. .</translatorcomment>
-        <translation>Settings</translation>
+        <translation>Beállítások</translation>
     </message>
     <message>
         <source>Blocked file: %1</source>
@@ -1811,17 +1811,17 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Upgrade to PRO</source>
         <translatorcomment>Button label to start the process of upgrading an account (String as short as possible)</translatorcomment>
-        <translation>Upgrade account</translation>
+        <translation>Fiók váltása PRO-ra</translation>
     </message>
     <message>
         <source>Open Transfer Manager</source>
         <translatorcomment>Tooltip for the button that open transfer manager dialog</translatorcomment>
-        <translation>Open transfer manager</translation>
+        <translation>Átvitelkezelő megnyitása</translation>
     </message>
     <message>
         <source>Show MEGAsync options</source>
         <translatorcomment>Tooltip for the button that opens MEGAsync options menu</translatorcomment>
-        <translation>Show options</translation>
+        <translation>Opciók mutatása</translation>
     </message>
     <message>
         <source>The process is taking longer than expected. Please wait...</source>
@@ -1830,7 +1830,7 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Upload to MEGA now</source>
         <translatorcomment>Label shown at main dialog when the user is already logged in to inform that he can start uploading files to MEGA</translatorcomment>
-        <translation>Upload to MEGA now</translation>
+        <translation>Töltse fel a MEGA-ra most</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -1875,12 +1875,12 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Transfers</source>
         <translatorcomment>Label to open transfer section at main dialog</translatorcomment>
-        <translation>Transfers</translation>
+        <translation>Átvitelek</translation>
     </message>
     <message>
         <source>Notifications</source>
         <translatorcomment>Label to open notifications section at main dialog</translatorcomment>
-        <translation>Notifications</translation>
+        <translation>Értesítések</translation>
     </message>
     <message>
         <source>Storage</source>
@@ -1940,7 +1940,7 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Upgrade account</source>
         <translatorcomment>Button label to forward the user to the webclient for upgrade the current account.</translatorcomment>
-        <translation>Upgrade account</translation>
+        <translation>Fiók upgrade</translation>
     </message>
     <message>
         <source>You must act immediately to save your data</source>
@@ -2235,7 +2235,7 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>About MEGAsync</source>
         <translatorcomment>Title of the dialog that displays the version code of MEGAsync.</translatorcomment>
-        <translation>About</translation>
+        <translation>Névjegy</translation>
     </message>
     <message>
         <source>The link has been copied to the clipboard</source>
@@ -2255,12 +2255,12 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>About</source>
         <translatorcomment>Label to indicate the About option for the application (MAX 20 characters)</translatorcomment>
-        <translation>About</translation>
+        <translation>Névjegy</translation>
     </message>
     <message>
         <source>Up to date</source>
         <translatorcomment>Label of tray icon to indicate that MEGAsync is up to date and there isn&apos;t any available update.</translatorcomment>
-        <translation>Up to date</translation>
+        <translation>Naprakész</translation>
     </message>
     <message>
         <source>Paused</source>
@@ -2498,12 +2498,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload</source>
         <translatorcomment>Label for the menu item that opens the dialog to upload files to MEGA</translatorcomment>
-        <translation>Upload</translation>
+        <translation>Feltöltés</translation>
     </message>
     <message>
         <source>Download</source>
         <translatorcomment>Label for the menu item that opens the dialog to download files from MEGA</translatorcomment>
-        <translation>Download</translation>
+        <translation>Letöltés</translation>
     </message>
     <message>
         <source>Please consider updating your operating system.</source>
@@ -2512,7 +2512,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Stream</source>
         <translatorcomment>Label and title of the dialog displayed when a user wants to stream a file/folder from MEGA. MAX 20 characters. Keep capital letters.</translatorcomment>
-        <translation>Stream</translation>
+        <translation>Közvetítés</translation>
     </message>
     <message>
         <source>MEGAsync will continue to work, however you might not receive new updates.</source>
@@ -2745,7 +2745,7 @@ Transfers will automatically resume when you re-open the app.</numerusform></tra
     <message>
         <source>Exit app</source>
         <translatorcomment>One of the messagebox options: Close the app and pause the active transfers</translatorcomment>
-        <translation>Exit app</translation>
+        <translation>Kilépés az appból</translation>
     </message>
     <message>
         <source>Stay in app</source>
@@ -3595,7 +3595,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Delete</source>
         <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It removes the node (file or folder).</translatorcomment>
-        <translation>Delete</translation>
+        <translation>Törlés</translation>
     </message>
 </context>
 <context>
@@ -3765,7 +3765,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Upgrade Account</source>
         <translatorcomment>Button label to redirect the user to upgrade account (getting more space and transfer quota)</translatorcomment>
-        <translation>Upgrade account</translation>
+        <translation>Fiók upgrade</translation>
     </message>
     <message>
         <source>Importing links is temporarily disabled.</source>
@@ -4018,22 +4018,22 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Preferences</source>
         <translatorcomment>Label to indicate the Preferences option for the application (MacOS)</translatorcomment>
-        <translation>Preferences</translation>
+        <translation>Tulajdonságok</translation>
     </message>
     <message>
         <source>Quit</source>
         <translatorcomment>Label displayed to let the user quit the application (MacOS). Max 20 characters. Keep capital letter.</translatorcomment>
-        <translation>Quit</translation>
+        <translation>Kilépés</translation>
     </message>
     <message>
         <source>Settings</source>
         <translatorcomment>Label to indicate the Settings option for the application (Windows and Linux)</translatorcomment>
-        <translation>Settings</translation>
+        <translation>Beállítások</translation>
     </message>
     <message>
         <source>Exit</source>
         <translatorcomment>Label to indicate the Exit option for the application (Linux and Windows) (MAX 20 characters)</translatorcomment>
-        <translation>Exit</translation>
+        <translation>Kilépés</translation>
     </message>
     <message>
         <source>Show in folder</source>
@@ -4748,7 +4748,7 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Account</source>
         <translatorcomment>Tab label of Account dialog. Max 15 characters.</translatorcomment>
-        <translation>Account</translation>
+        <translation>Fiók</translation>
     </message>
     <message>
         <source>Bandwidth</source>
@@ -4758,7 +4758,7 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Help</source>
         <translatorcomment>Button label for Help in the lower left section of the dialog.</translatorcomment>
-        <translation>Help</translation>
+        <translation>Súgó</translation>
     </message>
     <message>
         <source>Start on startup</source>
@@ -4768,12 +4768,12 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Update automatically</source>
         <translatorcomment>Label to let the user enable automatic updates with a checkbox.</translatorcomment>
-        <translation>Update automatically</translation>
+        <translation>Automatikus frissítés</translation>
     </message>
     <message>
         <source>Language</source>
         <translatorcomment>Label to let the user select the desired language for the application using a dropdown menu.</translatorcomment>
-        <translation>Language</translation>
+        <translation>Nyelv</translation>
     </message>
     <message>
         <source>Details</source>
@@ -4793,7 +4793,7 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Delete</source>
         <translatorcomment>Button label to delete a synchronization. String as short as possible.</translatorcomment>
-        <translation>Delete</translation>
+        <translation>Törlés</translation>
     </message>
     <message>
         <source>Add</source>
@@ -4855,12 +4855,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Uploads:</source>
         <translatorcomment>Label to indicate the default folder for uploads.</translatorcomment>
-        <translation>Uploads:</translation>
+        <translation>Feltöltések:</translation>
     </message>
     <message>
         <source>Downloads:</source>
         <translatorcomment>Label to indicate the default folder for downloads.</translatorcomment>
-        <translation>Downloads:</translation>
+        <translation>Letöltések:</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
@@ -4985,7 +4985,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>General</source>
         <translatorcomment>Title for the Settings -&gt; General pane tab button. Keep as short as possible.</translatorcomment>
-        <translation>General</translation>
+        <translation>Általános</translation>
     </message>
     <message>
         <source>Sync</source>
@@ -4995,7 +4995,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Security</source>
         <translatorcomment>Title for the Settings -&gt; Security pane tab button. Keep as short as possible.</translatorcomment>
-        <translation>Security</translation>
+        <translation>Biztonság</translation>
     </message>
     <message>
         <source>Folders</source>
@@ -5015,7 +5015,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Check for Updates</source>
         <translatorcomment>Label for button to check for application updates. Keep as short as possible.</translatorcomment>
-        <translation>Check for updates</translation>
+        <translation>Frissítések keresése</translation>
     </message>
     <message>
         <source>%1 (local cache)</source>
@@ -5045,7 +5045,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Please let us know if you encounter any issues. Help us by providing as much detail as possible.</source>
         <translatorcomment>Descriptive text label used to encourage users to submit bug reports via the Report Issue button.</translatorcomment>
-        <translation>Please let us know if you encounter any issues. Help us by providing as much detail as possible.</translation>
+        <translation>Kérjük, tudassa velünk, ha bármilyen problémába ütközik. Segítsen nekünk azzal, hogy a lehető legtöbb részletet megadja.</translation>
     </message>
     <message>
         <source>Report Issue</source>
@@ -5060,17 +5060,17 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Storage Space</source>
         <translatorcomment>Section title for account storage details.</translatorcomment>
-        <translation>Storage space</translation>
+        <translation>Tárhely foglaltság</translation>
     </message>
     <message>
         <source>Transfer Quota</source>
         <translatorcomment>Section title for account transfer quota details.</translatorcomment>
-        <translation>Transfer quota</translation>
+        <translation>Átviteli kvóta</translation>
     </message>
     <message>
         <source>Synced folders</source>
         <translatorcomment>Section title for Synchronized folders table view.</translatorcomment>
-        <translation>Synced folders</translation>
+        <translation>Szinkronizált mappák</translation>
     </message>
     <message>
         <source>Purchase more storage</source>
@@ -5085,22 +5085,22 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Recovery Key</source>
         <translatorcomment>Section title for MEGA recovery key download in Security pane.</translatorcomment>
-        <translation>Recovery key</translation>
+        <translation>Helyreállítási kulcs</translation>
     </message>
     <message>
         <source>Your password is not stored by MEGA and we cannot recover it for you. To avoid losing access to your account, save your Recovery Key in a safe place.</source>
         <translatorcomment>Informative text message shown in the Recovery Key section in Security pane, inviting the user to save the Recovery Key in a safe place.</translatorcomment>
-        <translation>Your password is not stored by MEGA and we cannot recover it for you. To avoid losing access to your account, save your Recovery key in a safe place.</translation>
+        <translation>Jelszavát nem a MEGA tárolja, és így nem tudjuk visszaállítani. A fiókjához való hozzáférés elvesztésének elkerülése érdekében mentse el a helyreállítási kulcsot egy biztonságos helyen.</translation>
     </message>
     <message>
         <source>Password</source>
         <translatorcomment>Section title for Password change in Security pane.</translatorcomment>
-        <translation>Password</translation>
+        <translation>Jelszó</translation>
     </message>
     <message>
         <source>Change Password</source>
         <translatorcomment>Button label text allowing the user to change his account password. Keep as short as possible.</translatorcomment>
-        <translation>Change password</translation>
+        <translation>Jelszó megváltoztatása</translation>
     </message>
     <message>
         <source>Default Folders</source>
@@ -5145,7 +5145,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Session history</source>
         <translatorcomment>Button label text for opening account login history in MEGA online app in Security pane. Keep as short as possible.</translatorcomment>
-        <translation>Session history</translation>
+        <translation>Előzmények</translation>
     </message>
     <message>
         <source>Preferences</source>
@@ -5175,7 +5175,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Issue report:</source>
         <translatorcomment>Label for Issue reporting in General pane.(macOS)</translatorcomment>
-        <translation>Issue report:</translation>
+        <translation>Hibabejelentés:</translation>
     </message>
     <message>
         <source>Storage space:</source>
@@ -5195,7 +5195,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your account security depends on the strength of your password. Passwords should be unique and impossible to guess. We recommend using a password manager.</source>
         <translatorcomment>Informative text with password best practice for the user.</translatorcomment>
-        <translation>Your account security depends on the strength of your password. Passwords should be unique and impossible to guess. We recommend using a password manager.</translation>
+        <translation>Fiókja biztonsága a jelszava erősségétől függ. A jelszavaknak egyedinek kell lenniük, hogy azokat lehetetlen legyen kitalálni. Javasoljuk jelszókezelő használatát.</translation>
     </message>
     <message>
         <source>Excluded file and folder names:</source>
@@ -5225,7 +5225,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Enable Windows Explorer integration</source>
         <translatorcomment>Checkbox label displayed on Windows, allowing the user to enable / disable the Windows Explorer integration.</translatorcomment>
-        <translation>Enable Windows Explorer integration</translation>
+        <translation>Windows intéző integráció</translation>
     </message>
     <message>
         <source>B</source>
@@ -5255,7 +5255,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Free</source>
         <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Free</translation>
+        <translation>Ingyenes</translation>
     </message>
     <message>
         <source>Pro Lite</source>
@@ -5335,17 +5335,17 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Notifications</source>
         <translatorcomment>Title for the Settings -&gt; Notifications pane tab button. Keep as short as possible.</translatorcomment>
-        <translation>Notifications</translation>
+        <translation>Értesítések</translation>
     </message>
     <message>
         <source>Launch at login</source>
         <translatorcomment>Label to let the user start MEGAsync on login with a checkbox.</translatorcomment>
-        <translation>Launch at login</translation>
+        <translation>Indítás bejelentkezéskor</translation>
     </message>
     <message numerus="yes">
         <source>Used quota for the last %n hour:</source>
         <translatorcomment>Informative text shown in Account pane for Free account type. Indicates the used quota in the last %n specified number of hours. Keep the %n subsitution argument.</translatorcomment>
-        <translation><numerusform>Used quota for the last hour:</numerusform><numerusform>Used quota for the last %n hours:</numerusform></translation>
+        <translation><numerusform>Felhasznált kvóta az utolsó órában:</numerusform><numerusform>Felhasznált kvóta az utolsó %n órában:</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>day</source>
@@ -5355,12 +5355,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Sleep settings</source>
         <translatorcomment>Sleep/Active mode: Settings dialog groupbox title for keeping the pc awake when there are active transfers (WIndows and Linux)</translatorcomment>
-        <translation>Sleep mode</translation>
+        <translation>Alvó mód</translation>
     </message>
     <message>
         <source>Sleep mode:</source>
         <translatorcomment>Sleep/Active mode: Settings dialog groupbox title for keeping the pc awake when there are active transfers (macOS)</translatorcomment>
-        <translation>Sleep mode:</translation>
+        <translation>Alvó mód:</translation>
     </message>
     <message>
         <source>Sleep mode can&apos;t be setup</source>
@@ -5375,7 +5375,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Backup</source>
         <translatorcomment>Toolbar button text</translatorcomment>
-        <translation>Backup</translation>
+        <translation>Mentés</translation>
     </message>
     <message>
         <source>Backups</source>
@@ -5385,12 +5385,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Backup Folder</source>
         <translatorcomment>Groupbox title, inside the remote backup folder path will be displayed (Linux and windows)</translatorcomment>
-        <translation>Backup folder</translation>
+        <translation>Mentési mappa</translation>
     </message>
     <message>
         <source>View in MEGA</source>
         <translatorcomment>Button text that opens backups folder in webclient</translatorcomment>
-        <translation>View in MEGA</translation>
+        <translation>Megtekintés a MEGA-ban</translation>
     </message>
     <message>
         <source>Saving backups…</source>
@@ -5505,12 +5505,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Go to backup centre</source>
         <translatorcomment>Button text that opens backup center in webclient</translatorcomment>
-        <translation>Go to Backup centre</translation>
+        <translation>Ugrás a Mentéskezelőbe</translation>
     </message>
     <message>
         <source>Prevent the computer from going to sleep when transfers or syncs are in progress.</source>
         <translatorcomment>Sleep/Active mode: Feature description label for keeping the pc awake when there are active transfers</translatorcomment>
-        <translation>Prevent the computer from going to sleep when transfers or syncs are in progress.</translation>
+        <translation>A számítógép alvó állapotba kerülésének megakadályozása átvitel vagy szinkronizálás közben.</translation>
     </message>
 </context>
 <context>
@@ -5864,7 +5864,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload to MEGA</source>
         <translatorcomment>Label displayed when a user is trying to upload a file/folder to MEGA from the shell extension. String as short as possible.</translatorcomment>
-        <translation>Upload to MEGA</translation>
+        <translation>Feltöltés a MEGA-ra</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -5942,7 +5942,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Up to date</source>
         <translatorcomment>Information label in the main dialog to show that MEGAsync is up to date</translatorcomment>
-        <translation>Up to date</translation>
+        <translation>Naprakész</translation>
     </message>
     <message>
         <source>Scanning</source>
@@ -6338,7 +6338,7 @@ To continue, select a different folder.</translation>
     <message>
         <source>Uploading…</source>
         <translatorcomment>Transfer is being uploaded</translatorcomment>
-        <translation>Uploading…</translation>
+        <translation>Feltöltés…</translation>
     </message>
     <message>
         <source>Downloading…</source>
@@ -6406,12 +6406,12 @@ To continue, select a different folder.</translation>
     <message>
         <source>Downloads</source>
         <translatorcomment>Label of tab to access all active downloads</translatorcomment>
-        <translation>Downloads</translation>
+        <translation>Letöltések</translation>
     </message>
     <message>
         <source>Uploads</source>
         <translatorcomment>Label of tab to access all active uploads</translatorcomment>
-        <translation>Uploads</translation>
+        <translation>Feltöltések</translation>
     </message>
     <message>
         <source>Completed</source>
@@ -6420,11 +6420,11 @@ To continue, select a different folder.</translation>
     </message>
     <message>
         <source>Upload</source>
-        <translation>Upload</translation>
+        <translation>Feltöltés</translation>
     </message>
     <message>
         <source>Download</source>
-        <translation>Download</translation>
+        <translation>Letöltés</translation>
     </message>
     <message>
         <source>Open links</source>
@@ -6434,7 +6434,7 @@ To continue, select a different folder.</translation>
     <message>
         <source>Transfers</source>
         <translatorcomment>Transfer manager title</translatorcomment>
-        <translation>Transfers</translation>
+        <translation>Átvitelek</translation>
     </message>
     <message>
         <source>Search</source>
@@ -6962,7 +6962,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Upload to MEGA</source>
         <translatorcomment>Label and Title of the dialog displayed when a user is trying to upload a file/folder to MEGA.(MAX 20 characters)</translatorcomment>
-        <translation>Upload to MEGA</translation>
+        <translation>Feltöltés a MEGA-ra</translation>
     </message>
     <message>
         <source>Please, select the upload folder for your files:</source>
@@ -7033,7 +7033,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Bytes</source>
         <translatorcomment>Label to indicate bytes unit.</translatorcomment>
-        <translation>Bytes</translation>
+        <translation>bájt</translation>
     </message>
     <message>
         <source>Pro Lite</source>
