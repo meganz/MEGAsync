@@ -4038,17 +4038,17 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Show in folder</source>
         <translatorcomment>Label to indicate the &quot;Show in folder&quot; option to open local folder of a sync (Linux)</translatorcomment>
-        <translation>Show in folder</translation>
+        <translation>Mutatás mappában</translation>
     </message>
     <message>
         <source>Show in Explorer</source>
         <translatorcomment>Label to indicate the &quot;Show in Explorer&quot; option to open local folder of a sync (Windows). Keep Explorer name as it is the app name of file explorer on Windows.</translatorcomment>
-        <translation>Show in Explorer</translation>
+        <translation>Mutatás Intézőben</translation>
     </message>
     <message>
         <source>Show in Finder</source>
         <translatorcomment>Label to indicate the &quot;Show in Finder&quot; option to open local folder of a sync (macOS). Keep Finder name as it is the app name of file explorer on macOS.</translatorcomment>
-        <translation>Show in Finder</translation>
+        <translation>Mutatás a keresőben</translation>
     </message>
 </context>
 <context>
@@ -4056,22 +4056,22 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Open settings</source>
         <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
-        <translation>Open Settings</translation>
+        <translation>Beállítások megnyitása</translation>
     </message>
     <message>
         <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
         <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (Windows and Linux)</translatorcomment>
-        <translation>One or more syncs have been disabled. Go to Settings to re-enable them.</translation>
+        <translation>Egy vagy több szinkronizálás le van tiltva. Nyissa meg a Beállításokat az újbóli engedélyezésükhöz.</translation>
     </message>
     <message>
         <source>Open preferences</source>
         <translatorcomment>Button label to open MEGAsync preferences dialog (MacOS).</translatorcomment>
-        <translation>Open Preferences</translation>
+        <translation>Tulajdonságok megnyitása</translation>
     </message>
     <message>
         <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
         <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (macOS)</translatorcomment>
-        <translation>One or more syncs have been disabled. Go to Preferences to re-enable them.</translation>
+        <translation>Egy vagy több szinkronizálás le van tiltva. Nyissa meg a Tulajdonságokat az újbóli engedélyezésükhöz.</translation>
     </message>
     <message>
         <source>Sync transfers cannot be cancelled individually.
@@ -6886,37 +6886,37 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Depleted transfer quota</source>
         <translatorcomment>Label to indicate that transfer quota has been depleted.</translatorcomment>
-        <translation>Depleted transfer quota</translation>
+        <translation>Kimerült átviteli kvóta</translation>
     </message>
     <message>
         <source>This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
         <translatorcomment>Informative label about how the transfer quota limit works when user reaches over transfer situation.</translatorcomment>
-        <translation>This limit is dynamic and depends on the amount of unused bandwidth we have available.</translation>
+        <translation>Ez a korlát dinamikus, és a rendelkezésre álló kihasználatlan sávszélességünktől függ.</translation>
     </message>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free</source>
         <translatorcomment>Warning label shown when user reaches over transfer quota situation. The user can upgrade Plan or wait %1 time until new free quota is allowed.</translatorcomment>
-        <translation>Please upgrade to Pro to continue immediately, or wait %1 to continue for free</translation>
+        <translation>Az azonnali folytatáshoz frissítsen Pro verzióra, vagy várjon %1-t az ingyenes folytatáshoz</translation>
     </message>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>* The local currency price is an estimate only. All transactions shown charged in Euros.</translation>
+        <translation>* A helyi pénznemben megadott ár csak hozzávetőleges. Minden tranzakció euróban kerül felszámításra.</translation>
     </message>
     <message>
         <source>Your download could not proceed because it exceeds your free transfer allowance.</source>
         <translatorcomment>Informative message to inform users that downloads could not continue because user has reached over transfer situation.</translatorcomment>
-        <translation>Your download could not proceed because it exceeds your free transfer allowance.</translation>
+        <translation>A letöltés nem folytatódhat, mert meghaladná az ingyenes átviteli keretet.</translation>
     </message>
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
         <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over quota state.</translatorcomment>
-        <translation>Choose annual billing and get 12 months for the price of 10</translation>
+        <translation>Válassza az éves számlázást, és 12 hónapot kap 10 áráért</translation>
     </message>
     <message>
         <source>Transfer quota exceeded</source>
         <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
-        <translation>Transfer quota exceeded</translation>
+        <translation>Az átviteli kvóta túllépve</translation>
     </message>
 </context>
 <context>
@@ -6924,37 +6924,37 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Storage full</source>
         <translatorcomment>Title of the over storage dialog</translatorcomment>
-        <translation>Storage full</translation>
+        <translation>A tárhely megtelt</translation>
     </message>
     <message>
         <source>Please upgrade to PRO to enjoy more storage space (your uploads will automatically resume).</source>
         <translatorcomment>Label to encourage the user to upgrade his account</translatorcomment>
-        <translation>Please upgrade your account to enjoy more storage space (your uploads will automatically resume).</translation>
+        <translation>Frissítse fiókját, hogy több tárhelyre tegyen szert (a feltöltései automatikusan folytatódnak).</translation>
     </message>
     <message>
         <source>Your MEGA account is full</source>
         <translatorcomment>Label shown to inform the user that the actual account is over storage.</translatorcomment>
-        <translation>Your MEGA account is full.</translation>
+        <translation>A MEGA fiókja megtelt</translation>
     </message>
     <message>
         <source>To increase this limit, you can upgrade your account, which will give you ample extra storage space.</source>
         <translatorcomment>Informative message shown when user reaches over storage situation, encouraging to upgrade and get more extra storage space.</translatorcomment>
-        <translation>To increase this limit, you can upgrade your account, which will give you ample extra storage space.</translation>
+        <translation>Ennek a korlátnak a növeléséhez upgradelheti a fiókját, ami bőséges extra tárhelyet biztosít.</translation>
     </message>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>* The local currency price is an estimate only. All transactions shown charged in Euros.</translation>
+        <translation>* A helyi pénznemben megadott ár csak hozzávetőleges. Minden tranzakció euróban kerül felszámításra.</translation>
     </message>
     <message>
         <source>100% of the %1 available used on your account.</source>
         <translatorcomment>Informative message for the user when it is in over storage situation, letting know about the %1 space used and reaching the 100% limit of his current storage amount.</translatorcomment>
-        <translation>100% of the %1 available used on your account.</translation>
+        <translation>Még 1% és eléri a 100%-ot a fiókjában.</translation>
     </message>
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
         <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over storage state.</translatorcomment>
-        <translation>Choose annual billing and get 12 months for the price of 10</translation>
+        <translation>Válassza az éves számlázást, és 12 hónapot kap 10 áráért</translation>
     </message>
 </context>
 <context>
@@ -6967,7 +6967,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Please, select the upload folder for your files:</source>
         <translatorcomment>Label to inform the user of the destination local folder for the files to be uploaded (MAX 50 characters)</translatorcomment>
-        <translation>Please select the upload folder for your files:</translation>
+        <translation>Válassza ki a fájljaihoz a feltöltési mappát:</translation>
     </message>
     <message>
         <source>MEGA folder:</source>
@@ -6977,7 +6977,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Always upload to this destination</source>
         <translatorcomment>Label to let the user select a default upload folder with a checkbox.</translatorcomment>
-        <translation>Always upload to this destination</translation>
+        <translation>Mindig ide töltse fel</translation>
     </message>
     <message>
         <source>OK</source>
@@ -6992,7 +6992,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Choose</source>
         <translatorcomment>Button label to select the upload folder (String as short as possible)</translatorcomment>
-        <translation>Choose</translation>
+        <translation>Választás</translation>
     </message>
 </context>
 <context>
@@ -7000,7 +7000,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>My computer</source>
         <translatorcomment>Text that will be used as the folder name of the backup in case the device name couldn´t be fetched correctly.</translatorcomment>
-        <translation>My computer</translation>
+        <translation>Saját számítógép</translation>
     </message>
 </context>
 <context>
@@ -7008,7 +7008,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>just now</source>
         <translatorcomment>Label to indicate that a transfer has finished right now</translatorcomment>
-        <translation>just now</translation>
+        <translation>éppen most</translation>
     </message>
     <message>
         <source>TB</source>
@@ -7038,52 +7038,52 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Pro Lite</source>
         <translatorcomment>Label to refer Pro Lite tier</translatorcomment>
-        <translation>Pro&#xa0;Lite</translation>
+        <translation>Pro Lite</translation>
     </message>
     <message>
         <source>Pro I</source>
         <translatorcomment>Label to refer Pro I tier</translatorcomment>
-        <translation>Pro&#xa0;I</translation>
+        <translation>Pro I</translation>
     </message>
     <message>
         <source>Pro II</source>
         <translatorcomment>Label to refer Pro II tier</translatorcomment>
-        <translation>Pro&#xa0;II</translation>
+        <translation>Pro II</translation>
     </message>
     <message>
         <source>Pro III</source>
         <translatorcomment>Label to refer Pro III tier</translatorcomment>
-        <translation>Pro&#xa0;III</translation>
+        <translation>Pro III</translation>
     </message>
     <message numerus="yes">
         <source>%n second ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n seconds ago</translatorcomment>
-        <translation><numerusform>%n second ago</numerusform><numerusform>%n seconds ago</numerusform></translation>
+        <translation><numerusform>%n mp-cel ezelőtt</numerusform><numerusform>%n mp-cel ezelőtt</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n minute ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n minutes ago</translatorcomment>
-        <translation><numerusform>%n minute ago</numerusform><numerusform>%n minutes ago</numerusform></translation>
+        <translation><numerusform>%n perccel ezelőtt</numerusform><numerusform>%n perccel ezelőtt</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n hour ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n hours ago</translatorcomment>
-        <translation><numerusform>%n hour ago</numerusform><numerusform>%n hours ago</numerusform></translation>
+        <translation><numerusform>%n órával ezelőtt</numerusform><numerusform>%n órával ezelőtt</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n day ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n days ago</translatorcomment>
-        <translation><numerusform>%n day ago</numerusform><numerusform>%n days ago</numerusform></translation>
+        <translation><numerusform>%n nappal ezelőtt</numerusform><numerusform>%n nappal ezelőtt</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n months ago</translatorcomment>
-        <translation><numerusform>%n month ago</numerusform><numerusform>%n months ago</numerusform></translation>
+        <translation><numerusform>%n hónappal ezelőtt</numerusform><numerusform>%n hónappal ezelőtt</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n year ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n years ago</translatorcomment>
-        <translation><numerusform>%n year ago</numerusform><numerusform>%n years ago</numerusform></translation>
+        <translation><numerusform>%n évvel ezelőtt</numerusform><numerusform>%n évvel ezelőtt</numerusform></translation>
     </message>
 </context>
 <context>
@@ -7091,52 +7091,52 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Why am I seeing this?</source>
         <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
-        <translation>Why am I seeing this?</translation>
+        <translation>Miért látom ezt?</translation>
     </message>
     <message>
         <source>Log out</source>
         <translatorcomment>Button label to log out the current account</translatorcomment>
-        <translation>Log&#xa0;out</translation>
+        <translation>Kijelentkezés</translation>
     </message>
     <message>
         <source>Verify your email</source>
         <translatorcomment>Label to verify a locked account. It will redirect to webclient to confirm email.</translatorcomment>
-        <translation>Verify your email</translation>
+        <translation>Erősítse meg az e-mail címét</translation>
     </message>
     <message>
         <source>Locked account</source>
         <translatorcomment>Title of dialog that inform user about locked account.</translatorcomment>
-        <translation>Locked account</translation>
+        <translation>Zárolt fiók</translation>
     </message>
     <message>
         <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
         <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
-        <translation>Your account has been temporarily locked for your safety. Please verify your email and follow its steps to unlock your account.</translation>
+        <translation>Fiókját az Ön biztonsága érdekében ideiglenesen zároltuk. Kérjük, igazolja e-mail-címét, és kövesse az ott leírt lépéseket a fiók zárolásának feloldásához.</translation>
     </message>
     <message>
         <source>Resend email</source>
         <translatorcomment>Button label to send email with detailed information abot how to unlock the account</translatorcomment>
-        <translation>Resend email</translation>
+        <translation>Email újraküldése</translation>
     </message>
     <message>
         <source>Verify your account</source>
         <translatorcomment>Label to verify a locked account. It will redirect to webclient to confirm phone number.</translatorcomment>
-        <translation>Verify your account</translation>
+        <translation>Igazolja fiókját</translation>
     </message>
     <message>
         <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
         <translatorcomment>Description label to inform user that the account has been locked and needs phone number verification to unlock.</translatorcomment>
-        <translation>Your account has been temporarily locked due to potential abuse. Please verify your phone number to unlock your account.</translation>
+        <translation>Fiókját lehetséges visszaélés miatt ideiglenesen zároltuk. Kérjük, igazolja telefonszámát a fiók zárolásának feloldásához.</translation>
     </message>
     <message>
         <source>Verify now</source>
         <translatorcomment>Button label to forward user to webclient to unlock account (phone number verification or email verification)</translatorcomment>
-        <translation>Verify now</translation>
+        <translation>Ellenőrzés most</translation>
     </message>
     <message>
         <source>Email sent</source>
         <translatorcomment>Informative label to indicate that an email has been send to the user in order to unlock his account.</translatorcomment>
-        <translation>Email sent</translation>
+        <translation>Email elküldve</translation>
     </message>
 </context>
 <context>
@@ -7146,24 +7146,24 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
 
 Do you want to create one?</source>
         <translatorcomment>Warning message shown when there is no valid link in Windows Start Menu. Explain the causes of not having it and let the user to recreate it.</translatorcomment>
-        <translation>%1 did not find a valid link in Start Menu. Not having a link may prevent the correct functioning of desktop notifications.
+        <translation>%1 nem talált érvényes hivatkozást a Start menüben. A hivatkozás hiánya megakadályozhatja az asztali értesítések megfelelő működését.
 
-Do you want to create one?</translation>
+Létrehoz egyet?</translation>
     </message>
     <message>
         <source>Yes (recommended)</source>
         <translatorcomment>Button text for to confirm the creation of link at Start Menu (Windows only)</translatorcomment>
-        <translation>Yes (recommended)</translation>
+        <translation>Igen (javasolt)</translation>
     </message>
     <message>
         <source>No</source>
         <translatorcomment>Button text to not discard warning message.</translatorcomment>
-        <translation>No</translation>
+        <translation>Nem</translation>
     </message>
     <message>
         <source>No (never ask again)</source>
         <translatorcomment>Button text to discard the option and never ask again if the problem is detected in the future.</translatorcomment>
-        <translation>No (never ask again)</translation>
+        <translation>Nem (ne kérdezze többet)</translation>
     </message>
 </context>
 <context>
