@@ -5689,32 +5689,32 @@ Do you want to restart MEGAsync now?</source>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when a problem occurs while fetching filesystem from the cloud drive.</translatorcomment>
-        <translation>Unable to get the file system. Please try again. If the problem persists please contact us at bug@mega.nz</translation>
+        <translation>Nem sikerült beolvasni a fájlrendszert. Próbálja újra. Ha a probléma továbbra is fennáll, kérjük, írjon nekünk a bug@mega.nz címre</translation>
     </message>
     <message>
         <source>Set up Assistant - MEGAsync</source>
         <translatorcomment>Title of the setup assistant dialog. Keep capital letters.</translatorcomment>
-        <translation>Set up assistant</translation>
+        <translation>Segéd beállítása</translation>
     </message>
     <message>
         <source>Full sync</source>
         <translatorcomment>Label displayed to show Full sync mode. Max 18 characters.</translatorcomment>
-        <translation>Full sync</translation>
+        <translation>Teljes szinkronizálás</translation>
     </message>
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
         <translatorcomment>Label to inform the user that the synchronization stablished will be automatically synchronized.</translatorcomment>
-        <translation>Your local folder and your MEGA Cloud drive will be automatically synchronized.</translation>
+        <translation>A helyi mappát és a MEGA felhő meghajtót a rendszer automatikusan fogja szinkronizálja.</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
         <translatorcomment>Message of confirmation to continue with the current operation.</translatorcomment>
-        <translation>Do you want to continue?</translation>
+        <translation>Folytatja?</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an account has been blocked.</translatorcomment>
-        <translation>Your account has been blocked. Please contact support@mega.nz</translation>
+        <translation>A fiókja zárolva. Vegye fel velünk a kapcsolatot a support@mega.nz címen</translation>
     </message>
     <message>
         <source>MEGAsync</source>
@@ -5723,140 +5723,140 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Are you sure you want to cancel this wizard and undo all changes?</source>
         <translatorcomment>Message shown when an user cancel the Setup Wizard.</translatorcomment>
-        <translation>Want to cancel this wizard and undo all changes?</translation>
+        <translation>Szeretné visszavonni ezt a varázslót, és visszavonni az összes módosítást?</translation>
     </message>
     <message>
         <source>Skip</source>
         <translatorcomment>Button label to skip the Setup Wizard configuration.</translatorcomment>
-        <translation>Skip</translation>
+        <translation>Kihagyás</translation>
     </message>
     <message>
         <source>Logging out...</source>
         <translatorcomment>Label shown when an user is logging out from his account.</translatorcomment>
-        <translation>Logging out…</translation>
+        <translation>Kijelentkezés…</translation>
     </message>
     <message>
         <source>Very Weak</source>
         <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Very Weak security </translatorcomment>
-        <translation>Very weak</translation>
+        <translation>Nagyon gyenge</translation>
     </message>
     <message>
         <source>Weak</source>
         <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Weak security </translatorcomment>
-        <translation>Weak</translation>
+        <translation>Gyenge</translation>
     </message>
     <message>
         <source>Medium</source>
         <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Medium security </translatorcomment>
-        <translation>Medium</translation>
+        <translation>Közepes</translation>
     </message>
     <message>
         <source>Good</source>
         <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Good security </translatorcomment>
-        <translation>Good</translation>
+        <translation>Jó</translation>
     </message>
     <message>
         <source>Strong</source>
         <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Strong security </translatorcomment>
-        <translation>Strong</translation>
+        <translation>Erős</translation>
     </message>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
-        <translation>Please check your email and click the link to confirm your account.</translation>
+        <translation>Ellenőrizze e-mailjeit, és kattintson a linkre a fiók megerősítéséhez.</translation>
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
-        <translation>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</translation>
+        <translation>Túl sokszor próbált bejelentkezni.[BR]Kérjük, várjon %1-t, majd próbálja újra.</translation>
     </message>
     <message>
         <source>When you finish this assistant, you will be able to sync additional folders using the settings dialog</source>
         <translatorcomment>Label to inform the user about the possibility to add new synchronizations through settings dialog once the initial setup wizard is at final stage</translatorcomment>
-        <translation>When you finish this assistant, you will be able to sync additional folders using the settings dialog</translation>
+        <translation>Ha befejezi ezt a segégletet, további mappákat is szinkronizálhat a beállítások párbeszédpanel segítségével</translation>
     </message>
     <message>
         <source>First name:</source>
         <translatorcomment>Label for first name field in the create account form</translatorcomment>
-        <translation>First name:</translation>
+        <translation>Keresztnév:</translation>
     </message>
     <message>
         <source>Last name:</source>
         <translatorcomment>Label for last name field in the create account form</translatorcomment>
-        <translation>Last name:</translation>
+        <translation>Vezetéknév:</translation>
     </message>
     <message>
         <source>Check your inbox</source>
         <translatorcomment>Label shown when the user has just created an account and needs to check his inbox to verify it</translatorcomment>
-        <translation>Check your inbox</translation>
+        <translation>Ellenőrizze a postafiókját</translation>
     </message>
     <message>
         <source>Sync specific folders in your cloud drive</source>
         <translatorcomment>Label to inform the user about the selective sync mode of MEGAsync</translatorcomment>
-        <translation>Sync specific folders in your Cloud drive</translation>
+        <translation>Egyes mappák szinkronizálása a felhőmeghajtón</translation>
     </message>
     <message>
         <source>Selective sync:</source>
         <translatorcomment>Label next to information about the selective sync mode.</translatorcomment>
-        <translation>Selective sync</translation>
+        <translation>Szelektív szinkronizálás</translation>
     </message>
     <message>
         <source>Please, enter your last name</source>
         <translatorcomment>Label displayed when the user has not filled the last name field.</translatorcomment>
-        <translation>Please enter your last name</translation>
+        <translation>Adja meg a vezetéknevét</translation>
     </message>
     <message>
         <source>Set up selective sync</source>
         <translatorcomment>Label shown when user is setting up the selective sync mode of MEGAsync</translatorcomment>
-        <translation>Set up selective sync</translation>
+        <translation>Szelektív szinkronizálás beállítása</translation>
     </message>
     <message>
         <source>Specific folders in your Cloud Drive will be synchronized with a local folder.</source>
         <translatorcomment>Information label to explain the user the selective sync mode of MEGAsync</translatorcomment>
-        <translation>Specific folders in your Cloud drive will be synchronised with a matching local folder.</translation>
+        <translation>A felhőmeghajtó bizonyos mappái szinkronizálva lesznek a megfelelő helyi mappával.</translation>
     </message>
     <message>
         <source>Select Local folder:</source>
         <translatorcomment>Label displayed to let the user select a local folder for a synchronization.</translatorcomment>
-        <translation>Select local folder</translation>
+        <translation>Válassza ki a helyi mappát</translation>
     </message>
     <message>
         <source>Set up full sync</source>
         <translatorcomment>Label shown when user is setting up full sync mode of MEGAsync</translatorcomment>
-        <translation>Set up full sync</translation>
+        <translation>Teljes szinkronizálás beállítása</translation>
     </message>
     <message>
         <source>Full Sync</source>
         <translatorcomment>Label displayed to show Full sync mode.</translatorcomment>
-        <translation>Full sync</translation>
+        <translation>Teljes szinkronizálás</translation>
     </message>
     <message>
         <source>Your entire Cloud Drive will be synchronized with a local folder.</source>
         <translatorcomment>Label with information about the full sync mode of MEGAsync</translatorcomment>
-        <translation>Your entire Cloud drive will be synchronized with a local folder.</translation>
+        <translation>A teljes felhőmeghajtó szinkronizálva lesz egy helyi mappával.</translation>
     </message>
     <message>
         <source>Log in</source>
         <translatorcomment>Button label to open Login form</translatorcomment>
-        <translation>Log&#xa0;in</translation>
+        <translation>Bejelentkezés</translation>
     </message>
     <message>
         <source>I agree with the MEGA [A]Terms of Service[/A]</source>
         <translatorcomment>Label to agree with the Terms of use. Keep the [A] and [/A] tags, they are used for HTML code insertion. Keep the string as short as possible.</translatorcomment>
-        <translation>I agree with the MEGA [A]Terms of Service[/A]</translation>
+        <translation>Elfogadom a MEGA [A]Általános Szerződési Feltételeit[/A]</translation>
     </message>
     <message>
         <source>Enjoy MEGAsync</source>
         <translatorcomment>Label displayed when user completes the setup wizard</translatorcomment>
-        <translation>Enjoy our app</translation>
+        <translation>Élvezze alkalmazásunkat</translation>
     </message>
     <message>
         <source>We are all done</source>
         <translatorcomment>Label shown when the user completes the initial setup wizard</translatorcomment>
-        <translation>We are all done</translation>
+        <translation>Minden elkészült</translation>
     </message>
     <message>
         <source>Creating folder…</source>
         <translatorcomment>Label shown when an user is creating a remote folder.</translatorcomment>
-        <translation>Creating folder…</translation>
+        <translation>Mappa létrehozása…</translation>
     </message>
 </context>
 <context>
@@ -5869,17 +5869,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Get MEGA link</source>
         <translatorcomment>Label displayed when a user is trying to get public link of a file/folder to MEGA from the shell extension. String as short as possible.</translatorcomment>
-        <translation>Get MEGA link</translation>
+        <translation>MEGA link lekérése</translation>
     </message>
     <message>
         <source>Share with a MEGA user</source>
         <translatorcomment>Label displayed when a user is trying to share a public link of a file/folder with a user. String as short as possible.</translatorcomment>
-        <translation>Share with a MEGA user</translation>
+        <translation>Megosztás egy MEGA felhasználóval</translation>
     </message>
     <message>
         <source>Send to a MEGA user</source>
         <translatorcomment>Label displayed when a user is trying to send a public link of a file/folder to a user. String as short as possible.</translatorcomment>
-        <translation>Send to a MEGA user</translation>
+        <translation>Küldés egy MEGA felhasználónak</translation>
     </message>
     <message>
         <source>%1 (%2, %3)</source>
@@ -5894,27 +5894,27 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Remove from left pane</source>
         <translatorcomment>Context menu option to remove MEGA item from explorer left pane</translatorcomment>
-        <translation>Remove from left pane</translation>
+        <translation>Eltávolítás a bal panelről</translation>
     </message>
     <message>
         <source>View on MEGA</source>
         <translatorcomment>Context menu option to view a file or folder through web browser within your MEGA account</translatorcomment>
-        <translation>View on MEGA</translation>
+        <translation>Megtekintés a MEGA-n</translation>
     </message>
     <message>
         <source>View previous versions</source>
         <translatorcomment>Context menu option to view previous versions of a file through web browser within your MEGA account</translatorcomment>
-        <translation>View previous versions</translation>
+        <translation>Korábbi verziók megtekintése</translation>
     </message>
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Label to indicate file count. Keep %n code because it will be filled with the number of files at runtime.</translatorcomment>
-        <translation><numerusform>%n file</numerusform><numerusform>%n files</numerusform></translation>
+        <translation><numerusform>%n fájl</numerusform><numerusform>%n fájl</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Label to indicate folder count. Keep %n code because it will be filled with the number of folders at runtime.</translatorcomment>
-        <translation><numerusform>%n folder</numerusform><numerusform>%n folders</numerusform></translation>
+        <translation><numerusform>%n mappa</numerusform><numerusform>%n mappa</numerusform></translation>
     </message>
 </context>
 <context>
@@ -5922,22 +5922,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Starting</source>
         <translatorcomment>Information label in the main dialog to show that MEGAsync is starting</translatorcomment>
-        <translation>Starting</translation>
+        <translation>Kezdés</translation>
     </message>
     <message>
         <source>Paused</source>
         <translatorcomment>Information label in the main dialog to show that all transfers are paused</translatorcomment>
-        <translation>Paused</translation>
+        <translation>Szünetel</translation>
     </message>
     <message>
         <source>Waiting</source>
         <translatorcomment>Information label in the main dialog to show that MEGAsync is at waiting state</translatorcomment>
-        <translation>Waiting</translation>
+        <translation>Wárakozás</translation>
     </message>
     <message>
         <source>Account full</source>
         <translatorcomment>Information label in the main dialog to show that the current account is full.</translatorcomment>
-        <translation>Account full</translation>
+        <translation>A fiók megtelt</translation>
     </message>
     <message>
         <source>Up to date</source>
@@ -5947,17 +5947,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Scanning</source>
         <translatorcomment>Information label in the main dialog to show that MEGAsync is at scanning state</translatorcomment>
-        <translation>Scanning</translation>
+        <translation>Beolvasás</translation>
     </message>
     <message>
         <source>Syncing</source>
         <translatorcomment>Information label in the main dialog to show that MEGAsync is in syncing state.</translatorcomment>
-        <translation>Syncing</translation>
+        <translation>Szinkronizálás</translation>
     </message>
     <message>
         <source>Transferring</source>
         <translatorcomment>Information label in the main dialog to show that MEGAsync has ongoing transfers</translatorcomment>
-        <translation>Transferring</translation>
+        <translation>Átvitel</translation>
     </message>
 </context>
 <context>
@@ -5965,37 +5965,37 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Stream from MEGA</source>
         <translatorcomment>Title of the dialog to stream files from MEGA</translatorcomment>
-        <translation>Stream from MEGA</translation>
+        <translation>Streamelés a MEGA-ról</translation>
     </message>
     <message>
         <source>Select media from...</source>
         <translatorcomment>Label just above of the buttons to select files for streaming</translatorcomment>
-        <translation>Select media from…</translation>
+        <translation>Média választása…</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Text of the button to select a file from the Cloud Drive for streaming</translatorcomment>
-        <translation>Cloud drive</translation>
+        <translation>Felhőmeghajtó</translation>
     </message>
     <message>
         <source>Public link</source>
         <translatorcomment>Text of the button to select a file from a public link for streaming</translatorcomment>
-        <translation>Public link</translation>
+        <translation>Nyilvános hivatkozás</translation>
     </message>
     <message>
         <source>File info:</source>
         <translatorcomment>Text just before of the information of the file selected for streaming</translatorcomment>
-        <translation>File info:</translation>
+        <translation>Fájlinformáció:</translation>
     </message>
     <message>
         <source>Nothing selected</source>
         <translatorcomment>Text shown when no files have been selected for streaming yet</translatorcomment>
-        <translation>Nothing selected</translation>
+        <translation>Semmi nincs kiválasztva</translation>
     </message>
     <message>
         <source>Open with:</source>
         <translatorcomment>Text above the buttons to open a streaming link</translatorcomment>
-        <translation>Open with:</translation>
+        <translation>Megnyitás ezzel:</translation>
     </message>
     <message>
         <source>Default application</source>
