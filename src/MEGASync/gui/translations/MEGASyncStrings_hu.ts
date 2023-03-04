@@ -26,7 +26,7 @@
     <message>
         <source>Of that, size taken up by file versions:</source>
         <translatorcomment>Label to indicate the amount of size occupied by file versions.</translatorcomment>
-        <translation>Size taken up by file versions</translation>
+        <translation>A fájlverziók által elfoglalt méret</translation>
     </message>
     <message>
         <source>Cloud drive</source>
@@ -127,7 +127,7 @@
     <message>
         <source>Choose</source>
         <translatorcomment>Label of button that pop up a selection dialog to choose a file or a folder to be excluded for the synchonization</translatorcomment>
-        <translation>Choose</translation>
+        <translation>Választás</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -969,7 +969,7 @@
     </message>
     <message>
         <source>Error</source>
-        <translation>Error</translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <source>Please enter your password</source>
@@ -1324,7 +1324,7 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Choose</source>
         <translatorcomment>Button label to select the download folder (String as short as possible)</translatorcomment>
-        <translation>Choose</translation>
+        <translation>Választás</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -1334,7 +1334,7 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Error</source>
         <translatorcomment>Title of dialog if an error occurs selecting the download local folder.</translatorcomment>
-        <translation>Error</translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
@@ -1425,7 +1425,7 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Rename</source>
         <translatorcomment>Action title and button text for the Rename action for folders/files</translatorcomment>
-        <translation>Rename</translation>
+        <translation>Átnevezés</translation>
     </message>
     <message>
         <source>Replace</source>
@@ -1533,11 +1533,11 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Choose</source>
         <translatorcomment>Button label to select the folders (local and remote) for a synchronization (String as short as possible) (macOS)</translatorcomment>
-        <translation>Choose</translation>
+        <translation>Választás</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Error</translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <source>You can not sync a shared folder without Full Access permissions</source>
@@ -1600,7 +1600,7 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Error</source>
         <translatorcomment>Label shown to show an error</translatorcomment>
-        <translation>Error</translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <source>Incorrect email and/or password.</source>
@@ -1774,11 +1774,11 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Choose</source>
         <translatorcomment>Label button for Choose action</translatorcomment>
-        <translation>Choose</translation>
+        <translation>Választás</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Error</translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
@@ -2015,7 +2015,7 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Error</source>
         <translatorcomment>Title of the dialog</translatorcomment>
-        <translation>Error</translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <source>Folder can&apos;t be opened. Check that the folder in your local drive hasn&apos;t been deleted or moved.</source>
@@ -2331,7 +2331,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Error</source>
         <translatorcomment>Label to indicate an error. Keep capital letter.</translatorcomment>
-        <translation>Error</translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <source>Starting</source>
@@ -3268,7 +3268,7 @@ Transfers will automatically resume when you re-open the app.</numerusform></tra
     <message>
         <source>Error</source>
         <translatorcomment>Error messagebox title</translatorcomment>
-        <translation>Error</translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <source>Error opening file</source>
@@ -3502,24 +3502,24 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>You no longer have access to this item. Ask the owner to share again.</source>
         <translatorcomment>Error message shown when the user is trying to download an file or folder from an incoming share and the owner stops sharing/removes all items</translatorcomment>
-        <translation><numerusform>You no longer have access to this item. Ask the owner to share again.</numerusform><numerusform>You no longer have access to these items. Ask the owner to share again.</numerusform></translation>
+        <translation><numerusform>Már nincs hozzáférése ehhez az elemhez. Kérje meg a tulajdonost, hogy ossza meg újra.</numerusform><numerusform>Már nincs hozzáférése ezekhez az elemekhez. Kérje meg a tulajdonost, hogy ossza meg újra.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
-        <translation><numerusform>The item you selected has been removed. To reselect, close this window and try again.</numerusform><numerusform>The items you selected have been removed. To reselect, close this window and try again.</numerusform></translation>
+        <translation><numerusform>A kiválasztott elem eltávolítva. Az újra kiválasztáshoz zárja be ezt az ablakot, és próbálja újra.</numerusform><numerusform>A kiválasztott elemek eltávolítva. Az újra kiválasztáshoz zárja be ezt az ablakot, és próbálja újra.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 item selected</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
                            First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation><numerusform>%1 item selected</numerusform><numerusform>%1 items selected</numerusform></translation>
+        <translation><numerusform>%1 elem kiválasztva</numerusform><numerusform>%1 elem kiválasztva</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1. %2 has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
                            Second and last part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation><numerusform>%1. %2 has been removed. To reselect, close this window and try again.</numerusform><numerusform>%1. %2 have been removed. To reselect, close this window and try again.</numerusform></translation>
+        <translation><numerusform>%1. %2 eltávolítva. Az újra kiválasztáshoz zárja be ezt az ablakot, és próbálja újra.</numerusform><numerusform>%1. %2 eltávolítva. Az újra kiválasztáshoz zárja be ezt az ablakot, és próbálja újra.</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3527,57 +3527,57 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Folder already synced</source>
         <translatorcomment>Tooltip text to notify the user that this folder is already synced.</translatorcomment>
-        <translation>Folder already synced</translation>
+        <translation>A mappa már szinkronizálva van</translation>
     </message>
     <message>
         <source>Folder contents already synced</source>
         <translatorcomment>Tooltip text to notify the user that some folder inside the folder that he is hovering with mouse is already synced.</translatorcomment>
-        <translation>Folder contents already synced</translation>
+        <translation>A mappa tartalma már szinkronizálva van</translation>
     </message>
     <message>
         <source>Recently used</source>
         <translatorcomment>Column title. This column shows when this file or folder was changed.</translatorcomment>
-        <translation>Last modified</translation>
+        <translation>Utolsó módosítás</translation>
     </message>
     <message>
         <source>Name</source>
         <translatorcomment>Column title. This column shows the name of a file or folder.</translatorcomment>
-        <translation>Name</translation>
+        <translation>Név</translation>
     </message>
     <message>
         <source>Sort by status</source>
         <translatorcomment>First column title tooltip(this column title doesn´t contains text, it shows an icon). Sorts the order of the column by node status, for example synced folders first or last.</translatorcomment>
-        <translation>Sort by status</translation>
+        <translation>Rendezés állapot alapján</translation>
     </message>
     <message>
         <source>Sort by owner name</source>
         <translatorcomment>Owner column title tooltip. Sorts the order of the column by owner name alphabetically.</translatorcomment>
-        <translation>Sort by owner name</translation>
+        <translation>Rendezés tulajdonos alapján</translation>
     </message>
     <message>
         <source>Sort by date</source>
         <translatorcomment>Recently used column title tooltip. Sorts the order of the column by date.</translatorcomment>
-        <translation>Sort by date</translation>
+        <translation>Rendezés dátum alapján</translation>
     </message>
     <message>
         <source>Sort by name</source>
         <translatorcomment>Node name column title tooltip. Sorts the order of the column by date.</translatorcomment>
-        <translation>Sort by name</translation>
+        <translation>Rendezés név alapján</translation>
     </message>
     <message numerus="yes">
         <source>Today at %1</source>
         <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened today. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation><numerusform>Today at %1</numerusform><numerusform>Today at %1</numerusform></translation>
+        <translation><numerusform>Ma %1-kor</numerusform><numerusform>Ma %1-kor</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Yesterday at %1</source>
         <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened yesterday. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation><numerusform>Yesterday at %1</numerusform><numerusform>Yesterday at %1</numerusform></translation>
+        <translation><numerusform>Tegnap %1-kor</numerusform><numerusform>Tegnap %1-kor</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 at %2</source>
         <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was previously to yesterday. %1 represents the date (day month and year), while %2 represents the hour). Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation><numerusform>%1 at %2</numerusform><numerusform>%1 at %2</numerusform></translation>
+        <translation><numerusform>%1 %2-kor</numerusform><numerusform>%1 %2-kor</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3585,12 +3585,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Get MEGA link</source>
         <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It creates an MEGA link and copy to Clipboard.</translatorcomment>
-        <translation>Get MEGA link</translation>
+        <translation>MEGA link lekérése</translation>
     </message>
     <message>
         <source>Rename</source>
         <translatorcomment>Contextual menu text that appears when we right click on a folder/file on node selector. It renames the node (file or folder).</translatorcomment>
-        <translation>Rename</translation>
+        <translation>Átnevezés</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -3696,7 +3696,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Shares:</source>
         <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
-        <translation>Shares:</translation>
+        <translation>Megosztások:</translation>
     </message>
     <message>
         <source>System notifications:</source>
@@ -3826,7 +3826,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Dismiss</source>
         <translatorcomment>Button label to dismiss and hide a PSA announcement</translatorcomment>
-        <translation>Dismiss</translation>
+        <translation>Elvetés</translation>
     </message>
 </context>
 <context>
@@ -3834,12 +3834,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Show password</source>
         <translatorcomment>Password box eye icon tooltip</translatorcomment>
-        <translation>Show password</translation>
+        <translation>Jelszó mutatása</translation>
     </message>
     <message>
         <source>Hide password</source>
         <translatorcomment>Password box eye icon tooltip</translatorcomment>
-        <translation>Hide password</translation>
+        <translation>Jelszó elrejtése</translation>
     </message>
 </context>
 <context>
@@ -3847,12 +3847,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Enter one or multiple MEGA file links</source>
         <translatorcomment>Label to indicate the user to write down the links to be imported. String as short as possible.</translatorcomment>
-        <translation>Enter one or multiple MEGA file links</translation>
+        <translation>Adjon meg egy vagy több MEGA fájl hivatkozást</translation>
     </message>
     <message>
         <source>Submit</source>
         <translatorcomment>Label for submit button. Keep capital letter.</translatorcomment>
-        <translation>Submit</translation>
+        <translation>Beküldés</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -3862,7 +3862,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Warning</source>
         <translatorcomment>Label displayed for a Warning message. Keep capital letter.</translatorcomment>
-        <translation>Warning</translation>
+        <translation>Figyelmeztetés</translation>
     </message>
     <message>
         <source>Enter one or more MEGA file links</source>
@@ -4206,7 +4206,7 @@ Please delete the folder sync from preferences to cancel them.</source>
     <message>
         <source>Error</source>
         <translatorcomment>Title of warning message shown when there is any error while testing the proxy settings.</translatorcomment>
-        <translation>Error</translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
@@ -4818,12 +4818,12 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Warning</source>
         <translatorcomment>Title label for Warning message box. Keep capital letter.</translatorcomment>
-        <translation>Warning</translation>
+        <translation>Figyelmeztetés</translation>
     </message>
     <message>
         <source>Error</source>
         <translatorcomment>Title label for an Error message box. Keep capital letter.</translatorcomment>
-        <translation>Error</translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <source>Clear</source>
@@ -4845,7 +4845,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Choose</source>
         <translatorcomment>Button label to choose a local/remote folder for downloads and uploads.</translatorcomment>
-        <translation>Choose</translation>
+        <translation>Választás</translation>
     </message>
     <message>
         <source>Default folders</source>
