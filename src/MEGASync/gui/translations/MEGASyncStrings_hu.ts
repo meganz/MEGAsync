@@ -3401,17 +3401,17 @@ Your selected incomplete sync transfers won&apos;t be cancelled. All the other s
     <message>
         <source>Yes, cancel</source>
         <translatorcomment>Dialog button to do the proposed actions (cancel the transfers)</translatorcomment>
-        <translation>Yes, cancel</translation>
+        <translation>Igen, törlés</translation>
     </message>
     <message>
         <source>No, continue</source>
         <translatorcomment>Dialog button to abort the proposed action</translatorcomment>
-        <translation>No, continue</translation>
+        <translation>Nem, folytatás</translation>
     </message>
     <message>
         <source>Yes, clear</source>
         <translatorcomment>Dialog button to do the proposed actions (clear the transfers)</translatorcomment>
-        <translation>Yes, clear</translation>
+        <translation>Igen, törlés</translation>
     </message>
 </context>
 <context>
@@ -3419,12 +3419,12 @@ Your selected incomplete sync transfers won&apos;t be cancelled. All the other s
     <message>
         <source>Enter the new folder name</source>
         <translatorcomment>Dialog text to ask the user to enter a new name for the folder</translatorcomment>
-        <translation>Enter new folder name</translation>
+        <translation>Adja meg az új mappanevet</translation>
     </message>
     <message>
         <source>New folder</source>
         <translatorcomment>Title of the new folder dialog</translatorcomment>
-        <translation>New folder</translation>
+        <translation>Új mappa</translation>
     </message>
 </context>
 <context>
@@ -3433,22 +3433,22 @@ Your selected incomplete sync transfers won&apos;t be cancelled. All the other s
         <source>The following characters are not allowed:
 %1</source>
         <translatorcomment>Message shown when the user has entered a not allowed character</translatorcomment>
-        <translation>The following characters are not allowed:
+        <translation>A következő karakterek nem megengedettek:
 %1</translation>
     </message>
     <message>
         <source>A file with this name already exists in this location.
 Enter a different name.</source>
         <translatorcomment>Message shown when the user has entered a name which already exists on the folder</translatorcomment>
-        <translation>A file with this name already exists in this location.
-Enter a different name.</translation>
+        <translation>Ezen a helyen már létezik ilyen nevű fájl.
+Adjon meg egy másik nevet.</translation>
     </message>
     <message>
         <source>A folder with this name already exists in this location.
 Enter a different name</source>
         <translatorcomment>Message shown when the user has entered a name which already exists on the folder</translatorcomment>
-        <translation>A folder with this name already exists in this location.
-Enter a different name.</translation>
+        <translation>Ezen a helyen már létezik ilyen nevű mappa.
+Adjon meg egy másik nevet.</translation>
     </message>
 </context>
 <context>
@@ -3456,48 +3456,48 @@ Enter a different name.</translation>
     <message>
         <source>Folder Selection</source>
         <translatorcomment>Label to indicate the user the selection of folders for a synchronization (String short as possible)</translatorcomment>
-        <translation>Folder selection</translation>
+        <translation>Mappa választás</translation>
     </message>
     <message>
         <source>Select a MEGA folder:</source>
         <translatorcomment>Label to indicate the user to select a MEGA folder for a synchronization (String short as possible). Keep capital letters.</translatorcomment>
-        <translation>Select a MEGA folder:</translation>
+        <translation>MEGA mappa választása:</translation>
     </message>
     <message>
         <source>Error</source>
         <translatorcomment>Label to indicate an Error</translatorcomment>
-        <translation>Error</translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <source>Warning</source>
         <translatorcomment>Label to indicate a Warning message.</translatorcomment>
-        <translation>Warning</translation>
+        <translation>Figyelmeztetés</translation>
     </message>
     <message>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation>Invalid folder for synchronization. Please ensure that you don’t use characters like “\”, “/” or “:” in your folder names.</translation>
+        <translation>Érvénytelen mappa a szinkronizáláshoz. Ügyeljen arra, hogy ne használjon olyan karaktereket a mappanevekben, mint a „\”, „/” vagy „:”.</translation>
     </message>
     <message>
         <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying upload files to a non compatible folder</translatorcomment>
-        <translation>You need Read and Write or Full access rights to be able to upload to the selected folder.</translation>
+        <translation>A kiválasztott mappába való feltöltéshez olvasási és írási vagy teljes hozzáférési jogosultság szükséges.</translation>
     </message>
     <message>
         <source>You need Full access right to be able to sync the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying sync a non compatible folder</translatorcomment>
-        <translation>You need Full access rights to be able to sync the selected folder.</translation>
+        <translation>A kiválasztott mappa szinkronizálásához teljes hozzáférési jogosultságra van szükség.</translation>
     </message>
     <message>
         <source>Only files can be used for streaming.</source>
         <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
-        <translation>Only files can be used for streaming.</translation>
+        <translation>Csak fájlok használhatók streamelésre.</translation>
     </message>
     <message>
         <source>Select a MEGA folder</source>
         <translatorcomment>Node selector dialog title</translatorcomment>
-        <translation>Select a MEGA folder</translation>
+        <translation>Válasszon egy MEGA mappát</translation>
     </message>
     <message numerus="yes">
         <source>You no longer have access to this item. Ask the owner to share again.</source>
@@ -6599,7 +6599,7 @@ Ha több kvótát szeretne szerezni, frissítsen Pro-fiókra, vagy várjon [A]-i
     <message>
         <source>Drop to Upload</source>
         <translatorcomment>Let the user know that files can be dropped there</translatorcomment>
-        <translation>Húzza a feltöltéshez</translation>
+        <translation>Húzza ide a feltöltéshez</translation>
     </message>
 </context>
 <context>
@@ -6607,12 +6607,12 @@ Ha több kvótát szeretne szerezni, frissítsen Pro-fiókra, vagy várjon [A]-i
     <message>
         <source>Limited available transfer quota.</source>
         <translatorcomment>System notification title to inform the user about limited available transfer quota. Above 90 percent of transfer quota usage reached.</translatorcomment>
-        <translation>Limited available transfer quota.</translation>
+        <translation>Korlátozott mennyiségű átviteli kvóta.</translation>
     </message>
     <message>
         <source>Depleted transfer quota.</source>
         <translatorcomment>System notification title to inform the user about depleted transfer quota situation.</translatorcomment>
-        <translation>Depleted transfer quota.</translation>
+        <translation>Kimerült átviteli kvóta.</translation>
     </message>
 </context>
 <context>
@@ -6620,7 +6620,7 @@ Ha több kvótát szeretne szerezni, frissítsen Pro-fiókra, vagy várjon [A]-i
     <message>
         <source>Dismiss</source>
         <translatorcomment>Option to close the dialog without taking any action</translatorcomment>
-        <translation>Dismiss</translation>
+        <translation>Elvetés</translation>
     </message>
 </context>
 <context>
@@ -6628,52 +6628,52 @@ Ha több kvótát szeretne szerezni, frissítsen Pro-fiókra, vagy várjon [A]-i
     <message>
         <source>Name</source>
         <translatorcomment>Name of the file to transfer</translatorcomment>
-        <translation>Name</translation>
+        <translation>Név</translation>
     </message>
     <message>
         <source>Size</source>
         <translatorcomment>Size of the file to transfer</translatorcomment>
-        <translation>Size</translation>
+        <translation>Méret</translation>
     </message>
     <message>
         <source>Speed</source>
         <translatorcomment>speed table header column name of the file to transfer in All transfers and uploads/downloads categories</translatorcomment>
-        <translation>Speed</translation>
+        <translation>Sebesség</translation>
     </message>
     <message>
         <source>Status</source>
         <translatorcomment>Status (paused, completed, queue...) of the file to transfer</translatorcomment>
-        <translation>Status</translation>
+        <translation>Állapot</translation>
     </message>
     <message>
         <source>Time left</source>
         <translatorcomment>Time table header column name for all transfers, downloads, uploads categories (where there are only active transfers)</translatorcomment>
-        <translation>Time left</translation>
+        <translation>Hátralévő idő</translation>
     </message>
     <message>
         <source>Time completed</source>
         <translatorcomment>Time table header column name for completed transfers categories</translatorcomment>
-        <translation>Time completed</translation>
+        <translation>Elkészülési idő</translation>
     </message>
     <message>
         <source>Avg. speed</source>
         <translatorcomment>speed table header column name for completed and failed transfers categories</translatorcomment>
-        <translation>Avg speed</translation>
+        <translation>Átl sebesség</translation>
     </message>
     <message>
         <source>Time</source>
         <translatorcomment>Time table header column name for media types and search categories</translatorcomment>
-        <translation>Time</translation>
+        <translation>Idő</translation>
     </message>
     <message>
         <source>Clear all completed</source>
         <translatorcomment>Tooltip for clear button when the user is in the completed category</translatorcomment>
-        <translation>Clear all completed</translation>
+        <translation>Minden befejezett törlése</translation>
     </message>
     <message>
         <source>Clear all search results</source>
         <translatorcomment>Tooltip for clear button when the user is in the search category</translatorcomment>
-        <translation>Clear all search results</translation>
+        <translation>Minden keresési eredmény törlése</translation>
     </message>
     <message>
         <source>Clear all audios</source>
