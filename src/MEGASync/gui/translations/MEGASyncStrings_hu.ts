@@ -6000,77 +6000,77 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Default application</source>
         <translatorcomment>Text of the button to open a streaming link with the default application in the system</translatorcomment>
-        <translation>Default application</translation>
+        <translation>Alapértelmezett alkalmazás</translation>
     </message>
     <message>
         <source>Choose application</source>
         <translatorcomment>Text of the button to open a streaming link with a custom application</translatorcomment>
-        <translation>Choose application</translation>
+        <translation>Alkalmazás választása</translation>
     </message>
     <message>
         <source>Close</source>
         <translatorcomment>Text of the button to close the dialog to stream files from MEGA</translatorcomment>
-        <translation>Close</translation>
+        <translation>Bezárás</translation>
     </message>
     <message>
         <source>Are you sure that you want to stop the streaming?</source>
         <translatorcomment>Warning message shown when the dialog to stream files from MEGA is going to be closed and there is a file selected for streaming</translatorcomment>
-        <translation>Are you sure that you want to stop the streaming?</translation>
+        <translation>Biztos benne, hogy le akarja állítani a streamelést??</translation>
     </message>
     <message>
         <source>Error</source>
         <translatorcomment>Title for dialogs with error messages</translatorcomment>
-        <translation>Error</translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <source>File not found</source>
         <translatorcomment>Error message shown when a file is not found</translatorcomment>
-        <translation>File not found</translation>
+        <translation>A fájl nem található</translation>
     </message>
     <message>
         <source>Open link</source>
         <translatorcomment>Title of the dialog to enter a MEGA file link for streaming</translatorcomment>
-        <translation>Open link</translation>
+        <translation>Hivatkozás megnyitása</translation>
     </message>
     <message>
         <source>Enter a MEGA file link:</source>
         <translatorcomment>Text of the dialog to enter a MEGA file link for streaming</translatorcomment>
-        <translation>Enter a MEGA file link:</translation>
+        <translation>Adjon meg egy MEGA fájl hivatkozást:</translation>
     </message>
     <message>
         <source>The link has been copied to the clipboard</source>
         <translatorcomment>Text shown when a streaming link has been copied to the clipboard</translatorcomment>
-        <translation>The link has been copied to the clipboard</translation>
+        <translation>A hivatkozás a vágólapra másolva</translation>
     </message>
     <message>
         <source>Error generating streaming link</source>
         <translatorcomment>Text shown when there is an error generating an streaming link</translatorcomment>
-        <translation>Error generating streaming link</translation>
+        <translation>Hiba a streaming link generálásakor</translation>
     </message>
     <message>
         <source>Decryption error</source>
         <translatorcomment>Text shown when there is an error decrypting a public link for streaming</translatorcomment>
-        <translation>Decryption error</translation>
+        <translation>Dekódolási hiba</translation>
     </message>
     <message>
         <source>Error getting link information</source>
         <translatorcomment>Error message shown when a there is an error getting the information of a public link</translatorcomment>
-        <translation>Error getting link information</translation>
+        <translation>Hiba a link információinak lekérésekor</translation>
     </message>
     <message>
         <source>Stream error: transfer overquota</source>
         <translatorcomment>Informative label to indicate the user that there is a stream error because of transfer overquota situation.</translatorcomment>
-        <translation>Streaming error: transfer quota exceeded.</translation>
+        <translation>Streamelési hiba: az átviteli kvóta túllépve.</translation>
     </message>
     <message>
         <source>Please wait...</source>
         <translatorcomment>Message shown while waiting for the server request with the file info to stream</translatorcomment>
-        <translation>Please wait…</translation>
+        <translation>Kérjük, várjon…</translation>
     </message>
     <message>
         <source>Select items</source>
         <translatorcomment>Window title for node selector when is openned in stream mode</translatorcomment>
-        <translation>Select items</translation>
+        <translation>Elemek kiválasztása</translation>
     </message>
 </context>
 <context>
@@ -6091,111 +6091,111 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You can&apos;t backup this folder as it&apos;s already synced.</source>
         <translatorcomment>Warning message indicating that a folder can´t be backed up as it is synced.</translatorcomment>
-        <translation>You can&apos;t back up this folder as it&apos;s already synced.</translation>
+        <translation>Erről a mappáról nem készíthet biztonsági másolatot, mivel az már szinkronizálva van.</translation>
     </message>
     <message>
         <source>Folder is already backed up. Select a different one.</source>
         <translatorcomment>Warning message indicating that a folder can´t be backed up as it is already backed up.</translatorcomment>
-        <translation>Folder is already backed up. Select a different one.</translation>
+        <translation>A mappáról már készült biztonsági másolat. Válasszon egy másikat.</translation>
     </message>
     <message>
         <source>You can&apos;t sync this folder as it&apos;s already synced.</source>
         <translatorcomment>Warning message indicating that a folder can´t be synced again as it is already synced.</translatorcomment>
-        <translation>You can&apos;t sync this folder as it&apos;s already synced.</translation>
+        <translation>Ezt a mappát nem tudja szinkronizálni, mivel már szinkronizálva van.</translation>
     </message>
     <message>
         <source>You can&apos;t sync this folder as it&apos;s already backed up.</source>
         <translatorcomment>Warning message indicating that a folder can´t be synced as it is backed up.</translatorcomment>
-        <translation>You can&apos;t sync this folder as it&apos;s already backed up.</translation>
+        <translation>Ezt a mappát nem szinkronizálhatja, mivel már készült róla biztonsági másolat.</translation>
     </message>
     <message>
         <source>You can&apos;t backup this folder as it&apos;s already inside a synced folder.</source>
         <translatorcomment>Warning message indicating that a folder can´t be backed up as it is inside a backed up folder.</translatorcomment>
-        <translation>You can&apos;t back up this folder as it&apos;s inside a synced folder.</translation>
+        <translation>Erről a mappáról nem készíthet biztonsági másolatot, mivel egy szinkronizált mappában van.</translation>
     </message>
     <message>
         <source>You can&apos;t sync folders that are inside synced folders.</source>
         <translatorcomment>Warning message indicating that a folder can´t be synced as it is inside a synced folder.</translatorcomment>
-        <translation>You can&apos;t sync folders that are inside synced folders.</translation>
+        <translation>Nem szinkronizálhatja azokat a mappákat, amelyek a szinkronizált mappákon belül vannak.</translation>
     </message>
     <message>
         <source>You can&apos;t sync folders that are inside backed up folders.</source>
         <translatorcomment>Warning message indicating that a folder can´t be synced as it is inside a backed up folder.</translatorcomment>
-        <translation>You can&apos;t sync folders that are inside backed up folders.</translation>
+        <translation>Nem szinkronizálhatja azokat a mappákat, amelyek a biztonsági másolatban lévő mappákban találhatók.</translation>
     </message>
     <message>
         <source>You can&apos;t backup this folder as it contains synced folders.</source>
         <translatorcomment>Warning message indicating that the selected folder for sync contains synced folders, ence it can not be synced.</translatorcomment>
-        <translation>You can&apos;t back up this folder as it contains synced folders.</translation>
+        <translation>Erről a mappáról nem készíthet biztonsági másolatot, mivel szinkronizált mappákat tartalmaz.</translation>
     </message>
     <message>
         <source>You can&apos;t sync folders that contain synced folders.</source>
         <translatorcomment>Warning message indicating that the selected folder for sync contains synced folders, hence it can not be synced.</translatorcomment>
-        <translation>You can&apos;t sync folders that contain synced folders.</translation>
+        <translation>Nem szinkronizálhatja azokat a mappákat, amelyek szinkronizált mappákat tartalmaznak.</translation>
     </message>
     <message>
         <source>You can&apos;t sync folders that contain backed up folders.</source>
         <translatorcomment>Warning message indicating that a folder can´t be synced as it contains backed up folders.</translatorcomment>
-        <translation>You can&apos;t sync folders that contain backed up folders.</translation>
+        <translation>Nem szinkronizálhatja azokat a mappákat, amelyek biztonsági másolat mappákat tartalmaznak</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Warning message indicating that the user doesn´t have write permissions on that folder</translatorcomment>
-        <translation>You don’t have write permissions in this local folder.</translation>
+        <translation>Nincs írási jogosultsága ebbe a helyi mappába.</translation>
     </message>
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
         <translatorcomment>Warning message indicating that megasync is not going to be able to download anything in the selected folder.</translatorcomment>
-        <translation>The app won’t be able to download anything here.</translation>
+        <translation>Az alkalmazás nem fog tudni letölteni semmit ide.</translation>
     </message>
     <message>
         <source>You can&apos;t backup this folder as it contains backed up folders.</source>
         <translatorcomment>Warning message indicating that the selected folder for backup contains backed up folders, ence it can not be backed up.</translatorcomment>
-        <translation>You can&apos;t back up this folder as it contains backed up folders.</translation>
+        <translation>Erről a mappáról nem tud biztonsági másolatot készíteni, mivel biztonsági másolat mappákat tartalmaz.</translation>
     </message>
     <message>
         <source>You can&apos;t backup this folder as it&apos;s already inside a backed up folder.</source>
         <translatorcomment>Warning message indicating that a folder can´t be backed up as it is inside a backed up folder.</translatorcomment>
-        <translation>You can&apos;t back up this folder as it&apos;s already inside a backed up folder.</translation>
+        <translation>Erről a mappáról nem készíthet biztonsági másolatot, mivel az már egy biztonsági másolat mappában található.</translation>
     </message>
     <message>
         <source>Unable to create backup as selected folder is not valid. Try again.</source>
         <translatorcomment>Text instructing to try creating a backup again. Failure cause: node is not valid</translatorcomment>
-        <translation>Unable to create backup as selected folder is not valid. Try again.</translation>
+        <translation>Nem lehet biztonsági másolatot készíteni, mivel a kiválasztott mappa érvénytelen. Próbálja újra.</translation>
     </message>
     <message>
         <source>Unable to create backup. Try again and if issue continues, contact [A]Support[/A].</source>
         <translatorcomment>Text instructing to try creating a backup again. If it fails again, they should contact support</translatorcomment>
-        <translation>Unable to create backup. Try again and if the issue continues, contact [A]Support[/A].</translation>
+        <translation>Nem lehet biztonsági másolatot készíteni. Próbálja újra, és ha a probléma továbbra is fennáll, forduljon az [A]ügyfélszolgálathoz[/A].</translation>
     </message>
     <message>
         <source>Unable to create backup as the device you&apos;re backing up from doesn&apos;t have a name. Give your device a name and then try again. If issue continues, contact [A]Support[/A].</source>
         <translatorcomment>Text instructing to try creating a backup again.Failure cause: the device does not have a name. If it fails again, they should contact support</translatorcomment>
-        <translation>Unable to create backup as the computer you&apos;re backing up from doesn&apos;t have a name. Give your computer a name, then try again. If the issue continues, contact [A]Support[/A].</translation>
+        <translation>Nem lehet biztonsági másolatot készíteni, mivel a számítógépnek, amelyről biztonsági mentést készít, nincs neve. Adjon nevet a számítógépének, majd próbálja újra. Ha a probléma továbbra is fennáll, forduljon az [A]ügyfélszolgálathoz[/A].</translation>
     </message>
     <message>
         <source>Unable to create backup. For further information, contact [A]Support[/A].</source>
         <translatorcomment>Text instructing to try creating a backup again.They should contact support</translatorcomment>
-        <translation>Unable to create backup. For further information, contact [A]Support[/A].</translation>
+        <translation>Nem lehet biztonsági másolatot készíteni. További információért forduljon az [A]ügyfélszolgálathoz[/A].</translation>
     </message>
     <message>
         <source>You can’t backup “%1” as it’s the root folder. The root folder is either; the top-level folder on your device or computer that holds all your folders and files or the folder where the system or program is installed. We don’t allow users to back up root folders as it may cause file conflicts or errors.
 To continue, select a different folder.</source>
         <translatorcomment>Warning message displayed if user tries to backup the system main hard disk.</translatorcomment>
-        <translation>You can’t back up “%1” as it’s the root folder. The root folder is either the top-level folder on your computer that holds all your folders and files or the folder where the system or program is installed. We don’t allow users to back up root folders as it may cause file conflicts or errors.
-To continue, select a different folder.</translation>
+        <translation>Nem készíthet biztonsági másolatot a(z) „%1” mappáról, mivel az a gyökérmappa. A gyökérmappa vagy a számítógép legfelső szintű mappája, amely az összes mappát és fájlt tartalmazza, vagy az a mappa, ahová a rendszer vagy a program telepítve van. Nem engedélyezzük a felhasználóknak, hogy biztonsági másolatot készítsenek a gyökérmappákról, mivel ez fájlütközést vagy hibákat okozhat.
+A folytatáshoz válasszon másik mappát.</translation>
     </message>
     <message>
         <source>You can’t sync “%1” as it’s the root folder. The root folder is either; the top-level folder on your device or computer that holds all your folders and files or the folder where the system or program is installed. We don’t allow users to sync root folders as it may cause file conflicts or errors.
 To continue, select a different folder.</source>
         <translatorcomment>Warning message displayed if user tries to sync the system main hard disk.</translatorcomment>
-        <translation>You can’t sync “%1” as it’s the root folder. The root folder is either the top-level folder on your computer that holds all your folders and files or the folder where the system or program is installed. We don’t allow users to sync root folders as it may cause file conflicts or errors.
-To continue, select a different folder.</translation>
+        <translation>A(z) „%1” nem szinkronizálható, mivel az a gyökérmappa. A gyökérmappa vagy a számítógép legfelső szintű mappája, amely az összes mappát és fájlt tartalmazza, vagy az a mappa, ahová a rendszer vagy a program telepítve van. Nem engedélyezzük a felhasználóknak a gyökérmappák szinkronizálását, mivel ez fájlütközést vagy hibákat okozhat.
+A folytatáshoz válasszon másik mappát.</translation>
     </message>
     <message>
         <source>You don&apos;t have enough permissions for this remote folder.</source>
         <translatorcomment>Warning message indicating that a folder can´t be synced as it the remote folder is an incoming share and the current user doesn´t have enought permisions</translatorcomment>
-        <translation>You don&apos;t have full-access permission to this shared folder and can&apos;t sync it. </translation>
+        <translation>Nem rendelkezik teljes hozzáférési engedéllyel ehhez a megosztott mappához, így nem tudja szinkronizálni. </translation>
     </message>
     <message>
         <source>Invalid remote path.</source>
