@@ -548,7 +548,7 @@
     <message>
         <source>Cancel</source>
         <translatorcomment>Button text to cancel the creation of backups</translatorcomment>
-        <translation>Cancel</translation>
+        <translation>Mégse</translation>
     </message>
     <message>
         <source>Next</source>
@@ -661,12 +661,12 @@
     <message>
         <source>No limit</source>
         <translatorcomment>Radio button text to indicate no limit for transfer rate.</translatorcomment>
-        <translation>No limit</translation>
+        <translation>Nincs korlát</translation>
     </message>
     <message>
         <source>Limit to:</source>
         <translatorcomment>Radio button text to indicate the limit for transfer rate.</translatorcomment>
-        <translation>Limit to:</translation>
+        <translation>Korlát:</translation>
     </message>
     <message>
         <source>KB/s</source>
@@ -676,22 +676,22 @@
     <message>
         <source>Auto</source>
         <translatorcomment>Radio button text to indicate automatic rate limit.</translatorcomment>
-        <translation>Auto</translation>
+        <translation>Automatikus</translation>
     </message>
     <message>
         <source>(Max. 90% of available bandwidth)</source>
         <translatorcomment>Label to indicate that auto rate option will take a maximum of 90% of the available bandwidth.</translatorcomment>
-        <translation>(Max. 90% of available bandwidth)</translation>
+        <translation>(Max. az elérhető sávszélesség 90%-a)</translation>
     </message>
     <message>
         <source>Download rate limit</source>
         <translatorcomment>Section title for download rate limit details.</translatorcomment>
-        <translation>Download rate limit</translation>
+        <translation>Letöltési korlát</translation>
     </message>
     <message>
         <source>Number of connections per transfer</source>
         <translatorcomment>Section title for number of connections per transfer details.</translatorcomment>
-        <translation>Number of connections per transfer</translation>
+        <translation>Kapcsolatok száma átvitelenként</translation>
     </message>
     <message>
         <source>Downloads:</source>
@@ -706,12 +706,12 @@
     <message>
         <source>Cancel</source>
         <translatorcomment>Button label for cancel dialog.</translatorcomment>
-        <translation>Cancel</translation>
+        <translation>Mégse</translation>
     </message>
     <message>
         <source>Apply</source>
         <translatorcomment>Button label for apply and confirm the bandwidth changes (Windows and Linux)</translatorcomment>
-        <translation>Apply</translation>
+        <translation>Alkamazás</translation>
     </message>
     <message>
         <source>Upload rate limit:</source>
@@ -736,12 +736,12 @@
     <message>
         <source>Use HTTPS for transfers that don&apos;t start</source>
         <translatorcomment>Checkbox label to set the option to use https for transfer connections.</translatorcomment>
-        <translation>Use HTTPS for transfers that don&apos;t start</translation>
+        <translation>HTTPS használata az el nem induló átvitelekhez</translation>
     </message>
     <message>
         <source>Only enable this option if tranfers don&apos;t start. Under all other circumstances, using HTTP is satisfactory as MEGA already encrypts all data.</source>
         <translatorcomment>Description label about the option Use HTTPS for transfers that don&amp;apos;t start checkbox.</translatorcomment>
-        <translation>Only enable this option if transfers don&apos;t start. Under all other circumstances, using HTTP is satisfactory as MEGA already encrypts all data.</translation>
+        <translation>Csak akkor engedélyezze ezt a lehetőséget, ha az átvitel nem indul el. Minden más esetben a HTTP használata elegendő, mivel a MEGA már titkosítja az összes adatot.</translation>
     </message>
 </context>
 <context>
@@ -754,7 +754,7 @@
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Cancel</translation>
+        <translation>Mégse</translation>
     </message>
     <message>
         <source>Add folder</source>
@@ -812,7 +812,7 @@
     <message>
         <source>Cancel</source>
         <translatorcomment>Button label to cancel the dialog.</translatorcomment>
-        <translation>Cancel</translation>
+        <translation>Mégse</translation>
     </message>
     <message>
         <source>Submit</source>
@@ -961,7 +961,7 @@
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Cancel</translation>
+        <translation>Mégse</translation>
     </message>
     <message>
         <source>OK</source>
@@ -1047,7 +1047,7 @@
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Cancel</translation>
+        <translation>Mégse</translation>
     </message>
     <message>
         <source>Send report</source>
@@ -1319,7 +1319,7 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Cancel</translation>
+        <translation>Mégse</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -1580,7 +1580,7 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Cancel</source>
         <translatorcomment>Button label to cancel the current operation</translatorcomment>
-        <translation>Cancel</translation>
+        <translation>Mégse</translation>
     </message>
     <message>
         <source>Setting up your account...</source>
@@ -1759,7 +1759,7 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Cancel</translation>
+        <translation>Mégse</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -2193,7 +2193,7 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Cancel</source>
         <translatorcomment>Button text to cancel 2FA dialog</translatorcomment>
-        <translation>Cancel</translation>
+        <translation>Mégse</translation>
     </message>
     <message>
         <source>Next</source>
@@ -3618,7 +3618,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Cancel</translation>
+        <translation>Mégse</translation>
     </message>
     <message>
         <source>Are you sure that you want to delete &quot;%1&quot;?</source>
@@ -3636,7 +3636,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Shares</source>
         <translatorcomment>Notification category for shared folders and nodes</translatorcomment>
-        <translation>Shares</translation>
+        <translation>Megosztások</translation>
     </message>
     <message>
         <source>New shared folder from contact</source>
@@ -3646,12 +3646,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Added or removed files</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation>Added or removed files</translation>
+        <translation>Hozzáadott vagy eltávolított fájlok</translation>
     </message>
     <message>
         <source>Access to a shared folder was removed</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation>Access to a shared folder was removed</translation>
+        <translation>Megosztott mappához való hozzáférés eltávolítva</translation>
     </message>
     <message>
         <source>Contacts</source>
@@ -3701,12 +3701,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>System notifications:</source>
         <translatorcomment>Title of a checkbox for disconnectig all notifications</translatorcomment>
-        <translation>System notifications:</translation>
+        <translation>Rendszerértesítések:</translation>
     </message>
     <message>
         <source>Info notifications</source>
         <translatorcomment>Title of a checkbox for disconnectig secondary info notifications</translatorcomment>
-        <translation>Info notifications</translation>
+        <translation>Információs értesítések</translation>
     </message>
 </context>
 <context>
@@ -3857,7 +3857,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button. Keep capital letter.</translatorcomment>
-        <translation>Cancel</translation>
+        <translation>Mégse</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -3890,7 +3890,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Folders</source>
         <translatorcomment>Header for the section that allows to set the default permissions for new folders created by MEGAsync. Please keep the first capital letter</translatorcomment>
-        <translation>Folders</translation>
+        <translation>Mappák</translation>
     </message>
     <message>
         <source>Numeric value:</source>
@@ -4186,12 +4186,12 @@ Please delete the folder sync from preferences to cancel them.</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Button text for cancel option.</translatorcomment>
-        <translation>Cancel</translation>
+        <translation>Mégse</translation>
     </message>
     <message>
         <source>Apply</source>
         <translatorcomment>Button text for Apply option.(Linux and Windows)</translatorcomment>
-        <translation>Apply</translation>
+        <translation>Alkamazás</translation>
     </message>
     <message>
         <source>Auto-detect</source>
@@ -4616,7 +4616,7 @@ Do you want to delete it anyway?</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Cancel</translation>
+        <translation>Mégse</translation>
     </message>
 </context>
 <context>
@@ -4674,7 +4674,7 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Cancel</source>
         <translatorcomment>Button text that cancels</translatorcomment>
-        <translation>Cancel</translation>
+        <translation>Mégse</translation>
     </message>
 </context>
 <context>
@@ -4705,7 +4705,7 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Cancel</source>
         <translatorcomment>Button text to cancel the scanning of transfers</translatorcomment>
-        <translation>Cancel</translation>
+        <translation>Mégse</translation>
     </message>
     <message>
         <source>Don&apos;t close the app. If you close, transfers not yet queued will be lost.</source>
@@ -4753,7 +4753,7 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Bandwidth</source>
         <translatorcomment>Tab label of Bandwidth dialog. Max 15 characters.</translatorcomment>
-        <translation>Bandwidth</translation>
+        <translation>Sávszélesség</translation>
     </message>
     <message>
         <source>Help</source>
@@ -4803,7 +4803,7 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Auto</source>
         <translatorcomment>Label to indicate that management of rate upload limit is automatic.</translatorcomment>
-        <translation>Auto</translation>
+        <translation>Automatikus</translation>
     </message>
     <message>
         <source>Data temporarily unavailable</source>
@@ -4850,7 +4850,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Default folders</source>
         <translatorcomment>Label to indicate the default path section for Uploads and Downloads.</translatorcomment>
-        <translation>Default folders</translation>
+        <translation>Alapértelmezett mappák</translation>
     </message>
     <message>
         <source>Uploads:</source>
@@ -4890,7 +4890,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Exclude by size</source>
         <translatorcomment>Section title for controls to let the user exclude files from being synced by size.</translatorcomment>
-        <translation>Exclude by size</translation>
+        <translation>Kizárás méret alapján</translation>
     </message>
     <message>
         <source>Excluded file and folder names</source>
@@ -5005,7 +5005,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Network</source>
         <translatorcomment>Title for the Settings -&gt; Network pane tab button. Keep as short as possible.</translatorcomment>
-        <translation>Network</translation>
+        <translation>Hálózat</translation>
     </message>
     <message>
         <source>Enable overlay icons</source>
@@ -5115,12 +5115,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Exclude files smaller than</source>
         <translatorcomment>Checkbox label text allowing the user to enable / disable file exclusion from synchronization, smaller than the specified size.</translatorcomment>
-        <translation>Exclude files smaller than</translation>
+        <translation>Ennél kisebb fájlok kizárása:</translation>
     </message>
     <message>
         <source>Exclude files bigger than</source>
         <translatorcomment>Checkbox label text allowing the user to enable / disable file exclusion from synchronization, bigger than the specified size.</translatorcomment>
-        <translation>Exclude files bigger than</translation>
+        <translation>Ennél nagyobb fájlok kizárása:</translation>
     </message>
     <message>
         <source>Restart MEGA Desktop App to apply changes.</source>
@@ -5130,7 +5130,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Change Settings…</source>
         <translatorcomment>Button label text for Bandwidth and Proxy settings in Network pane.</translatorcomment>
-        <translation>Change settings…</translation>
+        <translation>Beállítások módosítása…</translation>
     </message>
     <message>
         <source>Proxies</source>
@@ -5205,17 +5205,17 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Exclude by size:</source>
         <translatorcomment>Label for controls to let the user exclude files from being synced by size.(macOS)</translatorcomment>
-        <translation>Exclude by size:</translation>
+        <translation>Kizárás méret alapján:</translation>
     </message>
     <message>
         <source>Download rate limit:</source>
         <translatorcomment>Form label text indicating the active download rate limit.</translatorcomment>
-        <translation>Download rate limit:</translation>
+        <translation>Korlát letöltésnél:</translation>
     </message>
     <message>
         <source>Upload rate limit:</source>
         <translatorcomment>Form label text indicating the active upload rate limit.</translatorcomment>
-        <translation>Upload rate limit:</translation>
+        <translation>Korlát feltöltésnél:</translation>
     </message>
     <message>
         <source>Proxy settings:</source>
@@ -5588,7 +5588,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Button label to let the user cancel the wizard assistant.</translatorcomment>
-        <translation>Cancel</translation>
+        <translation>Mégse</translation>
     </message>
     <message>
         <source>Error</source>
@@ -6078,12 +6078,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>On</source>
         <translatorcomment>Checked state of a swith button</translatorcomment>
-        <translation>On</translation>
+        <translation>Be</translation>
     </message>
     <message>
         <source>Off</source>
         <translatorcomment>Unchecked state of a swith button</translatorcomment>
-        <translation>Off</translation>
+        <translation>Ki</translation>
     </message>
 </context>
 <context>
@@ -6987,7 +6987,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Cancel</translation>
+        <translation>Mégse</translation>
     </message>
     <message>
         <source>Choose</source>
