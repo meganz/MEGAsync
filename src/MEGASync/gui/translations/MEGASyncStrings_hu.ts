@@ -6200,22 +6200,22 @@ A folytatáshoz válasszon másik mappát.</translation>
     <message>
         <source>Invalid remote path.</source>
         <translatorcomment>The selected remote path for the sync creation is invalid</translatorcomment>
-        <translation>This MEGA folder can&apos;t be synced. </translation>
+        <translation>Ez a MEGA mappa nem szinkronizálható. </translation>
     </message>
     <message>
         <source>The selected MEGA folder is already synced.</source>
         <translatorcomment>Warning message indicating that the selected folder is already a synced folder.</translatorcomment>
-        <translation>The selected MEGA folder has already been synced.</translation>
+        <translation>A kiválasztott MEGA mappa már szinkronizálva van.</translation>
     </message>
     <message>
         <source>Folder contents already synced.</source>
         <translatorcomment>Warning message indicating that the selected folder have got an active sync bellow the selected path.</translatorcomment>
-        <translation>Folder contents have already been synced.</translation>
+        <translation>A mappa tartalma már szinkronizálásra került.</translation>
     </message>
     <message>
         <source>Folder already synced.</source>
         <translatorcomment>Warning message indicating that the selected folder have got a parent that is already synced.</translatorcomment>
-        <translation>Folder has already been synced.</translation>
+        <translation>A mappa már szinkronizálva lett.</translation>
     </message>
 </context>
 <context>
@@ -6223,12 +6223,12 @@ A folytatáshoz válasszon másik mappát.</translation>
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a FAT filesystem.</translatorcomment>
-        <translation>You are syncing a local folder formatted with a FAT file system. The FAT file system has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it’s strongly recommended that you only sync folders formatted with more reliable file systems like NTFS (more information [A]here[/A]).</translation>
+        <translation>FAT fájlrendszerrel formázott helyi mappát szinkronizál. A FAT fájlrendszerben hiányosságok vannak a nagy fájlok kezelésében és a módosítási időkkel, amelyek szinkronizálási problémákat okozhatnak (pl. nyári időszámításkor), ezért erősen ajánlott, hogy csak megbízhatóbb fájlrendszerrel, például NTFS-sel formázott mappákat szinkronizáljon (további információ [A]itt[ /A]).</translation>
     </message>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a local folder shared with VMWare third party app.</translatorcomment>
-        <translation>You&apos;re syncing a local folder shared with VMWare. This folder doesn&apos;t support file system notifications, so to detect changes and sync, the app will have to continuously scan the folder and the files within it. If possible, use a different folder to reduce CPU usage.</translation>
+        <translation>Egy VMWare-rel megosztott helyi mappát szinkronizál. Ez a mappa nem támogatja a fájlrendszer-értesítéseket, így a változások észleléséhez és a szinkronizáláshoz az alkalmazásnak folyamatosan ellenőriznie kell a mappát és a benne lévő fájlokat. Ha lehetséges, használjon másik mappát a CPU-használat csökkentése érdekében.</translation>
     </message>
 </context>
 <context>
@@ -6236,42 +6236,42 @@ A folytatáshoz válasszon másik mappát.</translation>
     <message>
         <source>Sort by state</source>
         <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by state in case the user clicks.</translatorcomment>
-        <translation>Sort by state</translation>
+        <translation>Rendezés állapot szerint</translation>
     </message>
     <message>
         <source>Local Folder</source>
         <translatorcomment>Sync table header column title</translatorcomment>
-        <translation>Local folder</translation>
+        <translation>Helyi mappa</translation>
     </message>
     <message>
         <source>Sort by folder name</source>
         <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by folder name in case the user clicks.</translatorcomment>
-        <translation>Sort by folder name</translation>
+        <translation>Rendezés mappanév szerint</translation>
     </message>
     <message>
         <source>MEGA Folder</source>
         <translatorcomment>Sync table header column title</translatorcomment>
-        <translation>MEGA folder</translation>
+        <translation>MEGA mappa</translation>
     </message>
     <message>
         <source>Sort by MEGA folder name</source>
         <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by MEGA folder name in case the user clicks.</translatorcomment>
-        <translation>Sort by MEGA folder name</translation>
+        <translation>Rendezés MEGA mappanév szerint</translation>
     </message>
     <message>
         <source>Sync is enabled</source>
         <translatorcomment>Checkbox tooltip in case the sync is enabled.</translatorcomment>
-        <translation>Sync is enabled</translation>
+        <translation>A szinkronizálás engedélyezve van</translation>
     </message>
     <message>
         <source>Sync is disabled</source>
         <translatorcomment>Checkbox tooltip in case the sync is disabled.</translatorcomment>
-        <translation>Sync is disabled</translation>
+        <translation>A szinkronizálás le van tiltva</translation>
     </message>
     <message>
         <source>Click menu for more Sync actions</source>
         <translatorcomment>Menu column item tooltip.</translatorcomment>
-        <translation>Click menu for more sync actions</translation>
+        <translation>További szinkronizálási műveletekért kattintson a menüre</translation>
     </message>
 </context>
 <context>
@@ -6279,12 +6279,12 @@ A folytatáshoz válasszon másik mappát.</translation>
     <message>
         <source>Open in MEGA</source>
         <translatorcomment>Context menu option that opens the folder in MEGA webclient.</translatorcomment>
-        <translation>Open in MEGA</translation>
+        <translation>Megnyitás a MEGA-ban</translation>
     </message>
     <message>
         <source>Remove synced folder</source>
         <translatorcomment>Context menu option that removes the sync.</translatorcomment>
-        <translation>Remove synced folder</translation>
+        <translation>Szinkronizált mappa eltávolítása</translation>
     </message>
 </context>
 <context>
@@ -6292,12 +6292,12 @@ A folytatáshoz válasszon másik mappát.</translation>
     <message>
         <source>Local path:</source>
         <translatorcomment>Part of the tooltip text. It indicates that it will be followed by the local path of the sync.</translatorcomment>
-        <translation>Local path:</translation>
+        <translation>Helyi elérési út:</translation>
     </message>
     <message>
         <source>MEGA path:</source>
         <translatorcomment>Part of the tooltip text. It indicates that it will be followed by the remote path of the sync.</translatorcomment>
-        <translation>MEGA path:</translation>
+        <translation>MEGA elérési út:</translation>
     </message>
 </context>
 <context>
@@ -6305,22 +6305,22 @@ A folytatáshoz válasszon másik mappát.</translation>
     <message>
         <source>Add Sync</source>
         <translatorcomment>Menu option used to add sync</translatorcomment>
-        <translation>Add sync</translation>
+        <translation>Szinkronizálás hozzáadása</translation>
     </message>
     <message>
         <source>Syncs</source>
         <translatorcomment>Menu option that shows syncs menu</translatorcomment>
-        <translation>Syncs</translation>
+        <translation>Szinkronizálások</translation>
     </message>
     <message>
         <source>Backups</source>
         <translatorcomment>Menu option that shows backups menu</translatorcomment>
-        <translation>Backups</translation>
+        <translation>Biztonsági másolatok/translation>
     </message>
     <message>
         <source>Add Backup</source>
         <translatorcomment>Menu option used to add backups</translatorcomment>
-        <translation>Add backup</translation>
+        <translation>Biztonsági másolat hozzáadása</translation>
     </message>
 </context>
 <context>
@@ -6328,12 +6328,12 @@ A folytatáshoz válasszon másik mappát.</translation>
     <message>
         <source>Starting…</source>
         <translatorcomment>Transfer is being started but no bytes have been transferred yet</translatorcomment>
-        <translation>Starting…</translation>
+        <translation>Kezdés…</translation>
     </message>
     <message>
         <source>Retrying</source>
         <translatorcomment>Transfer is starting again after failure</translatorcomment>
-        <translation>Retrying…</translation>
+        <translation>Újrapróbálás…</translation>
     </message>
     <message>
         <source>Uploading…</source>
@@ -6343,57 +6343,57 @@ A folytatáshoz válasszon másik mappát.</translation>
     <message>
         <source>Downloading…</source>
         <translatorcomment>Transfer is being downloaded</translatorcomment>
-        <translation>Downloading…</translation>
+        <translation>Letöltés…</translation>
     </message>
     <message>
         <source>Syncing…</source>
         <translatorcomment>Transfer is being synced</translatorcomment>
-        <translation>Syncing…</translation>
+        <translation>Szinkronizálás…</translation>
     </message>
     <message>
         <source>Completing</source>
         <translatorcomment>Transfer is being completed</translatorcomment>
-        <translation>Completing…</translation>
+        <translation>Befejezés…</translation>
     </message>
     <message>
         <source>Completed</source>
         <translatorcomment>Transfer is completed</translatorcomment>
-        <translation>Completed</translation>
+        <translation>Elkészült</translation>
     </message>
     <message>
         <source>Paused</source>
         <translatorcomment>Transfer is paused</translatorcomment>
-        <translation>Paused</translation>
+        <translation>Szünetel</translation>
     </message>
     <message>
         <source>Failed</source>
         <translatorcomment>Transfer has failed</translatorcomment>
-        <translation>Failed</translation>
+        <translation>Meghiúsult</translation>
     </message>
     <message>
         <source>In queue</source>
         <translatorcomment>Transfer is active but not being processed yet</translatorcomment>
-        <translation>In queue</translation>
+        <translation>Várólistán</translation>
     </message>
     <message>
         <source>(in queue)</source>
         <translatorcomment>Transfer is paused and no bytes have been transferred yet</translatorcomment>
-        <translation>(in queue)</translation>
+        <translation>(várólistán)</translation>
     </message>
     <message>
         <source>Retry</source>
         <translatorcomment>Retry button text</translatorcomment>
-        <translation>Retry</translation>
+        <translation>Újra</translation>
     </message>
     <message>
         <source>Out of storage space</source>
         <translatorcomment>Transfer is paused for out of storage space</translatorcomment>
-        <translation>Storage quota exceeded</translation>
+        <translation>Tárhely elfogyott</translation>
     </message>
     <message>
         <source>Out of transfer quota</source>
         <translatorcomment>Transfer is paused for out of transfer quota</translatorcomment>
-        <translation>Transfer quota exceeded</translation>
+        <translation>Tárhely kvóta túllépve</translation>
     </message>
 </context>
 <context>
