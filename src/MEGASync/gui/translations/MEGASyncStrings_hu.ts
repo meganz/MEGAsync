@@ -5518,72 +5518,72 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Create a new MEGA account</source>
         <translatorcomment>Label displayed when a user is creating a new MEGA account.</translatorcomment>
-        <translation>Create a new MEGA account</translation>
+        <translation>Új MEGA fiók létrehozása</translation>
     </message>
     <message>
         <source>Email:</source>
         <translatorcomment>Label for field email at create account. String as short as possible.</translatorcomment>
-        <translation>Email:</translation>
+        <translation>Email-cím:</translation>
     </message>
     <message>
         <source>Password:</source>
         <translatorcomment>Label for field password at create account. String as short as possible.</translatorcomment>
-        <translation>Password:</translation>
+        <translation>Jelszó:</translation>
     </message>
     <message>
         <source>Repeat password:</source>
         <translatorcomment>Label for field repeat password at create account. String as short as possible.</translatorcomment>
-        <translation>Repeat password:</translation>
+        <translation>Jelszó mégegyszer:</translation>
     </message>
     <message>
         <source>Log in to your MEGA account</source>
         <translatorcomment>Label to let the user login with his credentials.</translatorcomment>
-        <translation>Log in to your MEGA account</translation>
+        <translation>Belépés a MEGA fiókba</translation>
     </message>
     <message>
         <source>Please verify your account using the confirmation link that we have sent to your email account</source>
         <translatorcomment>Label displayed at last step of creation account process to inform the user to verify the new created account.</translatorcomment>
-        <translation>Please verify your account using the confirmation link that we have sent to your email account</translation>
+        <translation>Igazolja fiókját az e-mail címére küldött megerősítő link segítségével</translation>
     </message>
     <message>
         <source>Choose install type</source>
         <translatorcomment>Label displayed to inform the user about the installation type for the synchronizations (selective or full sync)</translatorcomment>
-        <translation>Choose install type</translation>
+        <translation>Válassza ki a telepítés típusát</translation>
     </message>
     <message>
         <source> Sync your entire cloud drive</source>
         <translatorcomment>Label displayed to inform the user about the Full sync (Sync the entire cloud drive)</translatorcomment>
-        <translation>Sync your entire Cloud drive</translation>
+        <translation>Szinkronizálja a teljes felhőmeghajtót</translation>
     </message>
     <message>
         <source>Selective sync</source>
         <translatorcomment>Label displayed to show Selective sync mode. Max 18 characters.</translatorcomment>
-        <translation>Selective sync</translation>
+        <translation>Szelektív szinkronizálás</translation>
     </message>
     <message>
         <source>Local folder:</source>
         <translatorcomment>Label displayed to show the local folder synchronized.</translatorcomment>
-        <translation>Local folder:</translation>
+        <translation>Helyi mappa:</translation>
     </message>
     <message>
         <source>MEGA folder:</source>
         <translatorcomment>Label displayed to show the MEGA folder synchronized.</translatorcomment>
-        <translation>MEGA folder:</translation>
+        <translation>MEGA mappa:</translation>
     </message>
     <message>
         <source>Change</source>
         <translatorcomment>Button label to change the local or remote folder during the process of createn a new synchronization. String as short as possible.</translatorcomment>
-        <translation>Change</translation>
+        <translation>Módosítás</translation>
     </message>
     <message>
         <source>Back</source>
         <translatorcomment>Button label to let the user go back through the wizard assistant.</translatorcomment>
-        <translation>Back</translation>
+        <translation>Vissza</translation>
     </message>
     <message>
         <source>Next</source>
         <translatorcomment>Button label to let the user go next through the wizard assistant.</translatorcomment>
-        <translation>Next</translation>
+        <translation>Következő</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -5593,97 +5593,97 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Error</source>
         <translatorcomment>Label of error.</translatorcomment>
-        <translation>Error</translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <source>User already exists</source>
         <translatorcomment>Message displayed when a user is trying to create an account with the name of an existing user.</translatorcomment>
-        <translation>User already exists</translation>
+        <translation>A felhasználó már létezik</translation>
     </message>
     <message>
         <source>Fetching file list...</source>
         <translatorcomment>Label displayed while the application is retrieving all file list from the server.</translatorcomment>
-        <translation>Fetching file list…</translation>
+        <translation>Fájllista lekérése…</translation>
     </message>
     <message>
         <source>Incorrect email and/or password.</source>
         <translatorcomment>Message displayed when a user is trying to loging with an incorrect email/password.</translatorcomment>
-        <translation>Invalid email or password.</translation>
+        <translation>Érvénytelen email-cím vagy jelszó.</translation>
     </message>
     <message>
         <source>MEGA folder doesn&apos;t exist</source>
         <translatorcomment>Label displayed when an error occurs with a remote folder.</translatorcomment>
-        <translation>MEGA folder doesn’t exist</translation>
+        <translation>A MEGA folder nem létezik</translation>
     </message>
     <message>
         <source>Finish</source>
         <translatorcomment>Button label to let the user that the wizard assistant has finished.</translatorcomment>
-        <translation>Finish</translation>
+        <translation>Befejezés</translation>
     </message>
     <message>
         <source>Please, enter your e-mail address</source>
         <translatorcomment>Label displayed when the user has not filled the email field.</translatorcomment>
-        <translation>Please enter your email address</translation>
+        <translation>Adja meg az email-címét</translation>
     </message>
     <message>
         <source>Please, enter a valid e-mail address</source>
         <translatorcomment>Label displayed when the user has filled an invalid email address.</translatorcomment>
-        <translation>Please enter a valid email address</translation>
+        <translation>Érvényes email-címet adjon meg</translation>
     </message>
     <message>
         <source>Please, enter your password</source>
         <translatorcomment>Label displayed when the user has not filled the password field.</translatorcomment>
-        <translation>Please enter your password</translation>
+        <translation>Adja meg a jelszavát</translation>
     </message>
     <message>
         <source>Please, enter your name</source>
         <translatorcomment>Label displayed when the user has not filled the name field.</translatorcomment>
-        <translation>Please enter your name</translation>
+        <translation>Adja meg a nevét</translation>
     </message>
     <message>
         <source>Please, enter a stronger password</source>
         <translatorcomment>Label displayed when the user has filled a password not enough secure.</translatorcomment>
-        <translation>Please enter a stronger password</translation>
+        <translation>Erősebb jelszót adjon meg</translation>
     </message>
     <message>
         <source>The entered passwords don&apos;t match</source>
         <translatorcomment>Label displayed when the user has filled different password.</translatorcomment>
-        <translation>The entered passwords don’t match</translation>
+        <translation>A megadott jelszavak nem egyeznek</translation>
     </message>
     <message>
         <source>You have to accept our terms of service</source>
         <translatorcomment>Label displayed when the user has not check the agreement of terms of service.</translatorcomment>
-        <translation>You have to accept our Terms of Service</translation>
+        <translation>El kell fogadnia a Szolgáltatási feltételeket</translation>
     </message>
     <message>
         <source>Creating account...</source>
         <translatorcomment>Label displayed when the account is being created.</translatorcomment>
-        <translation>Creating account…</translation>
+        <translation>Fiók létrehozása…</translation>
     </message>
     <message>
         <source>Warning</source>
         <translatorcomment>Label warning.</translatorcomment>
-        <translation>Warning</translation>
+        <translation>Figyelmeztetés</translation>
     </message>
     <message>
         <source>Please, select a local folder</source>
         <translatorcomment>Label displayed when the user has not select a local folder.</translatorcomment>
-        <translation>Please select a local folder</translation>
+        <translation>Válasszon egy helyi mappát</translation>
     </message>
     <message>
         <source>Please, select a MEGA folder</source>
         <translatorcomment>Label displayed when the user has not select a MEGA folder.</translatorcomment>
-        <translation>Please select a MEGA folder</translation>
+        <translation>Válasszon egy MEGA mappát</translation>
     </message>
     <message>
         <source>Select local folder</source>
         <translatorcomment>Label displayed to let the user select a local folder for a synchronization.</translatorcomment>
-        <translation>Select local folder</translation>
+        <translation>Helyi mappa választása</translation>
     </message>
     <message>
         <source>Logging in...</source>
         <translatorcomment>Label displayed when the user is logging in.</translatorcomment>
-        <translation>Logging in…</translation>
+        <translation>Bejelentkezés…</translation>
     </message>
     <message>
         <source>Unable to get the filesystem.
