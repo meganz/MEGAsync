@@ -444,7 +444,7 @@
     <message>
         <source>If you don&apos;t want to rename the new folder, stop the backup in the [A]Backup centre[/A] for the existing folder. Then setup the backup for the new folder again.</source>
         <translatorcomment>Text instructing the user to go to the backup center to solve the backup name conflict</translatorcomment>
-        <translation>Ha nem szeretné átnevezni az új mappát, állítsa le a mentést a meglévő mappa [A]Biztonsági mentési központjában[/A]. Ezután állítsa be újra a biztonsági másolatot az új mappához.</translation>
+        <translation>Ha nem szeretné átnevezni az új mappát, állítsa le a meglévő mappa mentését [A]Mentéskezelőben[/A]. Ezután állítsa be újra a biztonsági másolatot az új mappához.</translation>
     </message>
     <message>
         <source>Rename and backup</source>
@@ -538,12 +538,12 @@
     <message>
         <source>Show more…</source>
         <translatorcomment>Button text that expands failed backup list</translatorcomment>
-        <translation>Show more</translation>
+        <translation>Több mutatása</translation>
     </message>
     <message>
         <source>Back</source>
         <translatorcomment>Button text to navigate back in the backup wizard</translatorcomment>
-        <translation>Back</translation>
+        <translation>Vissza</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -553,92 +553,92 @@
     <message>
         <source>Next</source>
         <translatorcomment>Button text to navigate back in the backup wizard</translatorcomment>
-        <translation>Next</translation>
+        <translation>Következő</translation>
     </message>
     <message>
         <source>Try again</source>
         <translatorcomment>Button text shown in error dialog, it allows the user to go to first step on backup wizard and start the process again</translatorcomment>
-        <translation>Try again</translation>
+        <translation>Újrapróbálás</translation>
     </message>
     <message>
         <source>Dismiss</source>
         <translatorcomment>Button text shown in success dialog, it closes the dialog.</translatorcomment>
-        <translation>Dismiss</translation>
+        <translation>Elvetés</translation>
     </message>
     <message>
         <source>Setup</source>
         <translatorcomment>Step 2 button text that will initiate the creation of the backups.</translatorcomment>
-        <translation>Set up</translation>
+        <translation>Beállítás</translation>
     </message>
     <message>
         <source>Collapse</source>
         <translatorcomment>Error dialog button text that will collapse the list of failed backups.</translatorcomment>
-        <translation>Collapse</translation>
+        <translation>Összeomlás</translation>
     </message>
     <message>
         <source>Add folders</source>
         <translatorcomment>Button Text, the user will be able to select new folders to backup if clicks here.</translatorcomment>
-        <translation>Add folders</translation>
+        <translation>Mappák hozzáadása</translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Label that indicates the number of folders that are going to be backed up.</translatorcomment>
-        <translation><numerusform>%n folder</numerusform><numerusform>%n folders</numerusform></translation>
+        <translation><numerusform>%n mappa</numerusform><numerusform>%n mappa</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Backup created</source>
         <translatorcomment>Backup successfully created dialog title</translatorcomment>
-        <translation><numerusform>Backup created</numerusform><numerusform>Backups created</numerusform></translation>
+        <translation><numerusform>Biztonsági másolat létrehozva</numerusform><numerusform>Biztonsági másolat létrehozva</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>We&apos;re backing up your folder. The time this takes depends on the files in this folder.</source>
         <translatorcomment>Label indicating that the backup configuration was successfull and it is being uploaded.</translatorcomment>
-        <translation><numerusform>We&apos;re backing up your folder. The time this takes depends on the files in this folder.</numerusform><numerusform>We&apos;re backing up your folders. The time this takes depends on the files in the folders.</numerusform></translation>
+        <translation><numerusform>Biztonsági másolatot készítünk a mappájáról. Ennek időtartama a mappában lévő fájloktól függ.</numerusform><numerusform>Biztonsági másolatot készítünk a mappájáról. Ennek időtartama a mappában lévő fájloktól függ.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Problem backing up folder</source>
         <translatorcomment>Label that indicates that there happened an error backing up a folder/folders</translatorcomment>
-        <translation><numerusform>Problem backing up folder</numerusform><numerusform>Problem backing up folders</numerusform></translation>
+        <translation><numerusform>Probléma a mappa mentése közben</numerusform><numerusform>Probléma a mappák mentése közben</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>This folder wasn&apos;t backed up. Try again.</source>
         <translatorcomment>Label that indicates that there happened an error backing up a folder/folders</translatorcomment>
-        <translation><numerusform>This folder wasn&apos;t backed up. Try again.</numerusform><numerusform>These folders weren&apos;t backed up. Try again.</numerusform></translation>
+        <translation><numerusform>A mappáról nem készült el a biztonsági másolat. Próbálja újra.</numerusform><numerusform>A mappákról nem készült el a biztonsági másolat. Próbálja újra.</numerusform></translation>
     </message>
     <message>
         <source>Folder is already selected. Select a different folder.</source>
         <translatorcomment>Warning message that indicates that the folder that the user is trying to select is already selected</translatorcomment>
-        <translation>Folder is already selected. Select a different folder.</translation>
+        <translation>A mappa már ki van választva. Válasszon másik mappát.</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
         <translatorcomment>Text shown at the end of a warning dialog, asking the user if they want to proceed with the action in spite of the warning</translatorcomment>
-        <translation>Do you want to continue?</translation>
+        <translation>Folytatni akarja?</translation>
     </message>
     <message>
         <source>1. [B]Select[/B] folders to backup</source>
         <translatorcomment>Title for the first step of the backups wizard, instructing the user to select folders to backup</translatorcomment>
-        <translation>1. [B]Select[/B] folders to back up</translation>
+        <translation>1. [B]Válassza ki[/B] a mappákat a biztonsági másolathoz</translation>
     </message>
     <message>
         <source>2. [B]Confirm[/B] backup settings</source>
         <translatorcomment>Title for the second step of the backups wizard, instructing the user to confirm his choice</translatorcomment>
-        <translation>2. [B]Confirm[/B] backup settings</translation>
+        <translation>2. [B]Erősítse meg[/B] a mentési beállításokat</translation>
     </message>
     <message>
         <source>Are you sure you want to cancel? All changes will be lost.</source>
         <translatorcomment>Warning dialog that appears when user click in cancel button in backup wizard and it will be closed.</translatorcomment>
-        <translation>Want to cancel? All changes will be lost.</translation>
+        <translation>Megszakítja? Minden változtatás elveszik.</translation>
     </message>
     <message>
         <source>Choose directory</source>
         <translatorcomment>Folder selector window title text</translatorcomment>
-        <translation>Select folder</translation>
+        <translation>Mappa választása</translation>
     </message>
     <message>
         <source>Error: %1</source>
         <translatorcomment>Placeholder will show the error message, this is being shown in a tooltip</translatorcomment>
-        <translation>Error: %1</translation>
+        <translation>Hiba: %1</translation>
     </message>
     <message>
         <source>View in backup centre</source>
@@ -651,12 +651,12 @@
     <message>
         <source>Bandwidth</source>
         <translatorcomment>Title of the dialog to manage Bandwidth settings/preferences.</translatorcomment>
-        <translation>Bandwidth</translation>
+        <translation>Sávszélesség</translation>
     </message>
     <message>
         <source>Upload rate limit</source>
         <translatorcomment>Section title for upload rate limit details.</translatorcomment>
-        <translation>Upload rate limit</translation>
+        <translation>Feltöltési sebességkorlát</translation>
     </message>
     <message>
         <source>No limit</source>
@@ -686,7 +686,7 @@
     <message>
         <source>Download rate limit</source>
         <translatorcomment>Section title for download rate limit details.</translatorcomment>
-        <translation>Letöltési korlát</translation>
+        <translation>Letöltési sebességkorlát</translation>
     </message>
     <message>
         <source>Number of connections per transfer</source>
@@ -716,12 +716,12 @@
     <message>
         <source>Upload rate limit:</source>
         <translatorcomment>Label to indicate the limit of upload rate on macOS.</translatorcomment>
-        <translation>Upload rate limit:</translation>
+        <translation>Feltöltési sebességkorlát:</translation>
     </message>
     <message>
         <source>Download rate limit:</source>
         <translatorcomment>Label to indicate the limit of download rate on macOS.</translatorcomment>
-        <translation>Download rate limit:</translation>
+        <translation>Letöltési sebességkorlát:</translation>
     </message>
     <message>
         <source>Number of connections per transfer:</source>
@@ -731,7 +731,7 @@
     <message>
         <source>Update</source>
         <translatorcomment>Button label for apply and confirm the bandwidth changes (macOS)</translatorcomment>
-        <translation>Update</translation>
+        <translation>Frissítés</translation>
     </message>
     <message>
         <source>Use HTTPS for transfers that don&apos;t start</source>
@@ -749,7 +749,7 @@
     <message>
         <source>Please select a local folder and a MEGA folder</source>
         <translatorcomment>Message displayed when an user is adding a synchronized folder an either local or remote folder are empty.</translatorcomment>
-        <translation>Please select a local folder and a MEGA folder</translation>
+        <translation>Válasszon egy helyi és egy MEGA mappát</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -759,12 +759,12 @@
     <message>
         <source>Add folder</source>
         <translatorcomment>Title for dialog when adding new folders for a sync (Windows and Linux)</translatorcomment>
-        <translation>Add folder</translation>
+        <translation>Mappa hozzáadása</translation>
     </message>
     <message>
         <source>Add synchronised folder</source>
         <translatorcomment>Section title for add synchronised folder details.</translatorcomment>
-        <translation>Add synchronised folder</translation>
+        <translation>Szinkronizált mappa hozzáadása</translation>
     </message>
     <message>
         <source>Add</source>
@@ -774,12 +774,12 @@
     <message>
         <source>Add synchronised folder:</source>
         <translatorcomment>Label to indicate the user to add synchronised folder (macOS)</translatorcomment>
-        <translation>Add synchronised folder:</translation>
+        <translation>Szinkronizált mappa hozzáadása:</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
         <translatorcomment>Warning dialog body text that show up a warning message but allows you to continue.</translatorcomment>
-        <translation>Do you want to continue?</translation>
+        <translation>Folytatni akarja?</translation>
     </message>
 </context>
 <context>
@@ -787,27 +787,27 @@
     <message>
         <source>Bug report</source>
         <translatorcomment>Title of the dialog used to send bug reports to support team.</translatorcomment>
-        <translation>Report issue</translation>
+        <translation>Hiba jelentése</translation>
     </message>
     <message>
         <source>Please clearly describe the issue you encountered. The more details, the easier for us to resolve. Your submission will be reviewed by our development team.</source>
         <translatorcomment>Label to indicate the user that needs to describe the issue through the text edit field of bug report form.</translatorcomment>
-        <translation>Please clearly describe the issue you encountered. The more details you provide, the easier it will be for us to resolve. Your submission will be reviewed by our development team.</translation>
+        <translation>Kérjük, világosan írja le a problémát, amellyel találkozott. Minél több részletet ad meg, annál könnyebben tudjuk megoldani. Beadványát fejlesztőcsapatunk megvizsgálja.</translation>
     </message>
     <message>
         <source>Title</source>
         <translatorcomment>Label to indicate the title field of form bug report. The user will fill it with a suitable title describing his bug report.</translatorcomment>
-        <translation>Title</translation>
+        <translation>Tárgy</translation>
     </message>
     <message>
         <source>Describe the problem</source>
         <translatorcomment>Label to indicate the description input field of form bug report. The user will fill it with a description of the bug and any specific detail that wants to be included.</translatorcomment>
-        <translation>Describe the issue</translation>
+        <translation>A hiba leírása</translation>
     </message>
     <message>
         <source>Attach diagnostic log files to assist with debugging</source>
         <translatorcomment>Check box to confirm the attachment and upload of log files generated by MEGAsync to our support team.</translatorcomment>
-        <translation>Attach diagnostic log files to assist with debugging</translation>
+        <translation>Diagnosztikai naplófájlok csatolása a könnyebb hibakeresésért</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -817,37 +817,37 @@
     <message>
         <source>Submit</source>
         <translatorcomment>Button label to confirm and submit bug report and log files to support team.</translatorcomment>
-        <translation>Submit</translation>
+        <translation>Beküldés</translation>
     </message>
     <message>
         <source>Optional</source>
         <translatorcomment>Label to indicate that title field of bug report form is not mandatory.</translatorcomment>
-        <translation>Optional</translation>
+        <translation>Opcionális</translation>
     </message>
     <message>
         <source>Bug report is uploading, it may take a few minutes</source>
         <translatorcomment>Label to indicate that the bug report is being uploaded to our support team.</translatorcomment>
-        <translation>Your reported issue is uploading, it may take a few minutes.</translation>
+        <translation>A bejelentett probléma feltöltése folyamatban, ez eltarthat néhány percig.</translation>
     </message>
     <message>
         <source>Bug report success!</source>
         <translatorcomment>Confirmation message shown when a bug report is successfully uploaded.</translatorcomment>
-        <translation>Your issue has been reported successfully.</translation>
+        <translation>A probléma sikeresen bejelentve.</translation>
     </message>
     <message>
         <source>Your bug report has been submitted, a confirmation email will sent to you accordingly.</source>
         <translatorcomment>Label to inform the user that he will receive a confirmation email </translatorcomment>
-        <translation>Your issue has been submitted, a confirmation email will be sent to you.</translation>
+        <translation>A problémát bejelentve, egy visszaigazoló e-mailt kap erről.</translation>
     </message>
     <message>
         <source>Error on submitting bug report</source>
         <translatorcomment>Error message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation>Error while uploading reported issue.</translation>
+        <translation>Hiba a probléma bejelentése közben.</translation>
     </message>
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation>Your issue cannot be uploaded due to an error. Please try again later or contact our support team via [A]support@mega.nz[/A] if the problem persists.</translation>
+        <translation>A hibabejelentőt nem lehetett feltölteni. Próbálja újra később, vagy lépjen kapcsolatba ügyfélszolgálatunkkal a [A]support@mega.nz[/A] címen, ha a probléma továbbra is fennáll.</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -857,32 +857,32 @@
     <message>
         <source>Are you sure you want to exit uploading?</source>
         <translatorcomment>Confirmation message shown when the user is trying to cancel the ongoing upload report.</translatorcomment>
-        <translation>Want to cancel uploading your reported issue?</translation>
+        <translation>Megszakítja a hibabejelentő feltöltését?</translation>
     </message>
     <message>
         <source>The bug report will not be submitted if you exit uploading.</source>
         <translatorcomment>Informative message shown to the user to inform that if he exits the dialog the bug report upload will not be submitted.</translatorcomment>
-        <translation>The issue will not be reported if you cancel uploading it.</translation>
+        <translation>Ha megszakítja a feltöltést a hiba nem kerül bejelentésre.</translation>
     </message>
     <message>
         <source>Continue</source>
         <translatorcomment>Button label to continue the upload of bug report.</translatorcomment>
-        <translation>Continue</translation>
+        <translation>Folytatás</translation>
     </message>
     <message>
         <source>Yes</source>
         <translatorcomment>Button label to confirm a message box.</translatorcomment>
-        <translation>Yes</translation>
+        <translation>Igen</translation>
     </message>
     <message>
         <source>There is an ongoing report being uploaded.</source>
         <translatorcomment>Informative message shown when user is trying to upload a bug report while there is an ongoing upload.</translatorcomment>
-        <translation>There is currently another reported issue being uploaded.</translation>
+        <translation>Jelenleg egy másik hibabejelentő feltöltése folyik.</translation>
     </message>
     <message>
         <source>Please wait until the current upload is completed.</source>
         <translatorcomment>Informative message shown to the user to inform that needs to wait until the current bug report upload is completed to start a new one bug report.</translatorcomment>
-        <translation>Please wait until the current upload is completed.</translation>
+        <translation>Várja meg, amíg az aktuális feltöltés befejeződik.</translation>
     </message>
 </context>
 <context>
@@ -890,26 +890,26 @@
     <message>
         <source>Cancel transfers?</source>
         <translatorcomment>Dialog main text</translatorcomment>
-        <translation>Cancel transfers?</translation>
+        <translation>Átvitelek leállítása?</translation>
     </message>
     <message>
         <source>No, continue</source>
         <translatorcomment>Button to continue folder scanning cancellation</translatorcomment>
-        <translation>No, continue</translation>
+        <translation>Nem, folytatódjon</translation>
     </message>
     <message>
         <source>Yes, cancel</source>
         <translatorcomment>Button to abort a folder scanning</translatorcomment>
-        <translation>Yes, cancel</translation>
+        <translation>Igen, megszakítás</translation>
     </message>
     <message>
         <source>All the queued transfers from your current download will be cancelled.</source>
         <translatorcomment>Dialog messages which warns the user about the potential problems of cancelling the folder scanning</translatorcomment>
-        <translation>All the queued transfers from your current download will be cancelled.</translation>
+        <translation>Az aktuális letöltés összes sorban álló tétele törlődik.</translation>
     </message>
     <message>
         <source>Cancelling…</source>
-        <translation>Cancelling…</translation>
+        <translation>Megszakítás…</translation>
     </message>
 </context>
 <context>
@@ -917,47 +917,47 @@
     <message>
         <source>Terms of Service</source>
         <translatorcomment>Label for Terms of Service link.</translatorcomment>
-        <translation>Terms of Service</translation>
+        <translation>Szolgáltatási feltételek</translation>
     </message>
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation>Privacy Policy</translation>
+        <translation>Adatvédelem</translation>
     </message>
     <message>
         <source>New in this version:</source>
         <translatorcomment>Label for indicate new features/fixes of current MEGAsync version. Keep colon.</translatorcomment>
-        <translation>New in this version:</translation>
+        <translation>A verzió újdonságai:</translation>
     </message>
     <message>
         <source>Credits</source>
         <translatorcomment>Label for a link that redirects to an credits section in the web that shows information, licenses, etc. about all third-party libraries used by MEGAsync</translatorcomment>
-        <translation>Credits</translation>
+        <translation>Külső eszközök</translation>
     </message>
     <message>
         <source>All rights reserved.</source>
         <translatorcomment>Tail part of the footer message after copyright year Mega Limited.</translatorcomment>
-        <translation>All rights reserved.</translation>
+        <translation>Minden jog fenntartva.</translation>
     </message>
     <message>
         <source>[A]This software uses Qt ([C] 2018 The Qt Company Ltd) which is covered by GNU LESSER GENERAL PUBLIC LICENSE Version 3[/A]</source>
         <translatorcomment>QT copyright notice shown at changelog dialog. [A][/A] placeholders used to provide ui style and [C] placeholder will be replaced by copyright symbol.</translatorcomment>
-        <translation>[A]This software uses Qt ([C] 2018 The Qt Company Ltd) which is covered by GNU Lesser General Public License Version 3[/A]</translation>
+        <translation>[A]Ez a szoftver a Qt-t ([C] 2018 The Qt Company Ltd) használja, amelyre a GNU Lesser General Public License 3-as verziója vonatkozik[/A]</translation>
     </message>
 </context>
 <context>
     <name>ChangePassword</name>
     <message>
         <source>Change password</source>
-        <translation>Change password</translation>
+        <translation>Jelszó megváltoztatása</translation>
     </message>
     <message>
         <source>New password</source>
-        <translation>New password</translation>
+        <translation>Új jelszó</translation>
     </message>
     <message>
         <source>Confirm new password</source>
-        <translation>Confirm new password</translation>
+        <translation>Új jelszó mégegyszer</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -973,25 +973,25 @@
     </message>
     <message>
         <source>Please enter your password</source>
-        <translation>Please enter your password</translation>
+        <translation>Írja be a jelszavát</translation>
     </message>
     <message>
         <source>The entered passwords don&apos;t match</source>
-        <translation>The entered passwords don’t match</translation>
+        <translation>A megadott jelszavak nem egyeznek</translation>
     </message>
     <message>
         <source>Please, enter a stronger password</source>
-        <translation>Please enter a stronger password</translation>
+        <translation>Erősebb jelszót adjon meg</translation>
     </message>
     <message>
         <source>Too many requests. Please wait.</source>
         <translatorcomment>Message shown when the SDK is waiting for the server to complete a request due to a rate limit (API error -4) - (String as short as possible).</translatorcomment>
-        <translation>Too many requests. Please wait.</translation>
+        <translation>Túl sok lekérés. Kérjük, várjon.</translation>
     </message>
     <message>
         <source>You have entered your current password, please enter a new password.</source>
         <translatorcomment>Informative message shown when user is trying to change his password with the current one.</translatorcomment>
-        <translation>You have entered your current password, please enter a new password.</translation>
+        <translation>A jelenlegi jelszavát adta meg, kérjük, egy új jelszót adjon meg.</translation>
     </message>
 </context>
 <context>
