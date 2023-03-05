@@ -6,7 +6,7 @@
     <message>
         <source>Account usage details</source>
         <translatorcomment>Title of the dialog that displays account usage details for the actual logged user.</translatorcomment>
-        <translation>Fiókhasználati részletek</translation>
+        <translation>Fiókhasználat részletei</translation>
     </message>
     <message>
         <source>Loading...</source>
@@ -1007,23 +1007,23 @@
     <message numerus="yes">
         <source>Your Pro membership plan will expire in %n day</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in %n days. Placeholder will be replaced by the remaining days until plan will expire.</translatorcomment>
-        <translation><numerusform>Your Pro membership plan will expire in %n day</numerusform><numerusform>Your Pro membership plan will expire in %n days</numerusform></translation>
+        <translation><numerusform>A Pro tagsági csomagja %n napon belül lejár</numerusform><numerusform>A Pro tagsági csomagja %n napon belül lejár</numerusform></translation>
     </message>
     <message>
         <source>Pro membership plan expiring soon</source>
         <translatorcomment>Label to indicate that the PRO membership will expire soon.</translatorcomment>
-        <translation>Pro membership plan expiring soon</translation>
+        <translation>A Pro tagsági csomagja hamarosan lejár</translation>
     </message>
     <message numerus="yes">
         <source>Your Pro membership plan expired %n day ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired %n days ago. Placeholder will be replaced by the days from the expiration of the PRO membership.</translatorcomment>
-        <translation><numerusform>Your Pro membership plan expired %n day ago</numerusform><numerusform>Your Pro membership plan expired %n days ago</numerusform></translation>
+        <translation><numerusform>A Pro tagsági csomagja %n napja lejárt</numerusform><numerusform>A Pro tagsági csomagja %n napja lejárt</numerusform></translation>
     </message>
     <message>
         <source>The following characters are not allowed:
 %1</source>
         <translatorcomment>Text introducing the prohibited characters (the list replaces the placeholder)</translatorcomment>
-        <translation>The following characters are not allowed:
+        <translation>A következő karakterek nem megengedettek:
 %1</translation>
     </message>
 </context>
@@ -1032,17 +1032,17 @@
     <message>
         <source>Error report</source>
         <translatorcomment>Title of the dialog displayed when an crash report occurred.</translatorcomment>
-        <translation>Error report</translation>
+        <translation>Hibajelentés</translation>
     </message>
     <message>
         <source>MEGAsync has detected a problem. These are the details:</source>
         <translatorcomment>Label to indicate that a crash has occured and the detailed stacktrace of the problem.</translatorcomment>
-        <translation>The MEGA App has detected a problem. These are the details:</translation>
+        <translation>A MEGA app hibát észlelt. Ezek a részletek:</translation>
     </message>
     <message>
         <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
         <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
-        <translation>You can help us to improve the MEGA App by sending this error report. It doesn’t contain any personal information. If you want to give us more details, please write them below:</translation>
+        <translation>Ha elküldi ezt a hibajelentést, segíthet nekünk a MEGA app fejlesztésében. Ez nem tartalmaz semmilyen személyes adatot. Ha további részleteket szeretne közölni velünk, kérjük, írja meg ezeket alább:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1052,13 +1052,13 @@
     <message>
         <source>Send report</source>
         <translatorcomment>Label for Send report button.</translatorcomment>
-        <translation>Send report</translation>
+        <translation>Jelentés küldése</translation>
     </message>
     <message>
         <source>Attach diagnostic log files to assist with debugging[Br](in some cases it may contain details about your data, such as file or folder names)</source>
         <translatorcomment>Checkbox to let the user attach diagnostic log files for analysis when an application crash occurs. Keep [Br] place holder.</translatorcomment>
-        <translation>Attach diagnostic log files to assist with debugging.
-In some cases they may contain details about your data, such as file or folder names.</translation>
+        <translation>Diagnosztikai naplófájlok csatolása a könnyebb hibakeresés érdekében.
+Egyes esetekben részleteket tartalmazhatnak az adatairól, például fájlok vagy mappák nevét.</translation>
     </message>
 </context>
 <context>
@@ -1066,87 +1066,87 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>[A] has left the shared folder</source>
         <translatorcomment>Label to indicate that [A] has left a shared folder. Placeholder will be replaced by email of the user that left the folder.</translatorcomment>
-        <translation>[A] has left the shared folder</translation>
+        <translation>[A] elhagyta a megosztott mappát</translation>
     </message>
     <message>
         <source>Access to shared folder was removed</source>
         <translatorcomment>Label to indicate that the access for a shared folder has been removed.</translatorcomment>
-        <translation>Access to shared folder was removed</translation>
+        <translation>A megosztott mappához való hozzáférés megszüntetve</translation>
     </message>
     <message>
         <source>Access to shared folder was removed by [A]</source>
         <translatorcomment>Label to indicate that the access for a shared folder has been removed by [A]. Keep placeholder. It will be replaced at runtime with specific email.</translatorcomment>
-        <translation>Access to a shared folder was removed by [A]</translation>
+        <translation>[A] megszüntette a hozzáférést egy megosztott mappához</translation>
     </message>
     <message>
         <source>New Contact Request</source>
         <translatorcomment>Title of the notification when a contact request has been received</translatorcomment>
-        <translation>New contact request</translation>
+        <translation>Új kapcsolatfelvételi kérelem</translation>
     </message>
     <message>
         <source>[A] sent you a contact request</source>
         <translatorcomment>Label to indicate that [A] sent you a contact request. Placeholder will be replaced by email of user that sent the request.</translatorcomment>
-        <translation>[A] sent you a contact request</translation>
+        <translation>[A] kapcsolatfelvételi kérelmet küldött</translation>
     </message>
     <message>
         <source>Accept</source>
         <translatorcomment>Button label of system notification to accept the notification.</translatorcomment>
-        <translation>Accept</translation>
+        <translation>Elfogadás</translation>
     </message>
     <message>
         <source>Reject</source>
         <translatorcomment>Button label of system notification to reject the notification of incoming contact request.</translatorcomment>
-        <translation>Reject</translation>
+        <translation>Elutasítás</translation>
     </message>
     <message>
         <source>Reminder</source>
         <translatorcomment>Label to indicate a reminder about a contact request.</translatorcomment>
-        <translation>Reminder</translation>
+        <translation>Emlékeztető</translation>
     </message>
     <message>
         <source>You have a contact request</source>
         <translatorcomment>Label to indicate that actual user has received a new contact request.</translatorcomment>
-        <translation>You have a contact request</translation>
+        <translation>Van egy kapcsolatfelvételi kérelme</translation>
     </message>
     <message>
         <source>View</source>
         <translatorcomment>Button label of system notification to view all unread notifications.</translatorcomment>
-        <translation>View</translation>
+        <translation>Megtekintés</translation>
     </message>
     <message>
         <source>New Contact Established</source>
         <translatorcomment>Title of the notification when a contact relationship has been established.</translatorcomment>
-        <translation>New contact</translation>
+        <translation>Új kapcsolat</translation>
     </message>
     <message>
         <source>New contact with [A] has been established</source>
         <translatorcomment>Label to indicate that contact relationship with [A] has been established Placeholder will be replaced by email of the user who established the contact.</translatorcomment>
-        <translation>New contact with [A] has been established</translation>
+        <translation>Új kapcsolat jött létre vele: [A]</translation>
     </message>
     <message>
         <source>Chat</source>
         <translatorcomment>Button of system notification that forwards the user to webclient to chat section.</translatorcomment>
-        <translation>Chat</translation>
+        <translation>Beszélgetés</translation>
     </message>
     <message>
         <source>Shared Folder Received</source>
         <translatorcomment>Title of the notification when a shared folder has been received</translatorcomment>
-        <translation>Shared folder received</translation>
+        <translation>Megosztott mappa érkezett</translation>
     </message>
     <message>
         <source>Shared Folder Removed</source>
         <translatorcomment>Title of the notification when a shared folder has been removed</translatorcomment>
-        <translation>Shared folder removed</translation>
+        <translation>Megosztott mappa eltávolítva</translation>
     </message>
     <message>
         <source>Shared Folder Updated</source>
         <translatorcomment>Generic label to indicate that there is an update in a shared folder but the name of the shared folder is not available.</translatorcomment>
-        <translation>Shared folder updated</translation>
+        <translation>Megosztott mappa frissítve</translation>
     </message>
     <message>
         <source>Payment Info</source>
         <translatorcomment>Notification label related to a payment.</translatorcomment>
-        <translation>Payment info</translation>
+        <translation>Fizetési információ</translation>
     </message>
     <message>
         <source>Upgrade</source>
@@ -1156,12 +1156,12 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Shared Folder Activity</source>
         <translatorcomment>Generic label to indicate that there is activity in a shared folder but the name of the shared folder is not available.</translatorcomment>
-        <translation>Shared folder activity</translation>
+        <translation>Megosztott mappa tevékenység</translation>
     </message>
     <message>
         <source>Show</source>
         <translatorcomment>Button label of system notification to show incoming shared folder received.</translatorcomment>
-        <translation>Show</translation>
+        <translation>Mutatás</translation>
     </message>
     <message>
         <source>Sync</source>
@@ -1171,32 +1171,32 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>You have unread notifications</source>
         <translatorcomment>Label to indicate that actual user has unread notification.</translatorcomment>
-        <translation>You have unread notifications</translation>
+        <translation>Olvasatlan értesítései vannak</translation>
     </message>
     <message>
         <source>Your publicly shared file ([A]) has been reinstated</source>
         <translatorcomment>Label to indicate that public shared file has been reinstated. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
-        <translation>Your publicly shared file ([A]) has been reinstated</translation>
+        <translation>Nyilvánosan megosztott fájlja ([A]) visszaállításra került</translation>
     </message>
     <message>
         <source>Your publicly shared file ([A]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared file has been taken down. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
-        <translation>Your publicly shared file ([A]) has been taken down</translation>
+        <translation>Nyilvánosan megosztott fájlját ([A]) eltávolították</translation>
     </message>
     <message>
         <source>Your publicly shared folder ([A]) has been reinstated</source>
         <translatorcomment>Label to indicate that public shared folder has been reinstated. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
-        <translation>Your publicly shared folder ([A]) has been reinstated</translation>
+        <translation>Nyilvánosan megosztott mappája ([A]) visszaállításra került</translation>
     </message>
     <message>
         <source>Your publicly shared folder ([A]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder has been taken down. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
-        <translation>Your publicly shared folder ([A]) has been taken down</translation>
+        <translation>YNyilvánosan megosztott mappáját ([A]) eltávolították</translation>
     </message>
     <message>
         <source>Your taken down has been reinstated</source>
         <translatorcomment>Label to indicate that your public shared has been reinstated.</translatorcomment>
-        <translation>Your public share has been reinstated.</translation>
+        <translation>Nyilvános megosztása visszaállításra került.</translation>
     </message>
     <message>
         <source>Your publicly shared has been taken down</source>
