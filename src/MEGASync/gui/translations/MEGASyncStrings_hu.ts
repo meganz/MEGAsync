@@ -1201,92 +1201,92 @@ Egyes esetekben részleteket tartalmazhatnak az adatairól, például fájlok va
     <message>
         <source>Your publicly shared has been taken down</source>
         <translatorcomment>Label to indicate that your public shared has been taken down.</translatorcomment>
-        <translation>Your public share has been taken down.</translation>
+        <translation>Nyilvános megosztását eltávolították.</translation>
     </message>
     <message>
         <source>Takedown Notice</source>
         <translatorcomment>Notification label related to takedown notice</translatorcomment>
-        <translation>Takedown notice</translation>
+        <translation>Levételi értesítés</translation>
     </message>
     <message>
         <source>Your account is almost full.</source>
         <translatorcomment>Title of the system notification when the account is almost full.</translatorcomment>
-        <translation>Your account is almost full.</translation>
+        <translation>A fiókja majdnem megtelt.</translation>
     </message>
     <message>
         <source>Your account is full.</source>
         <translatorcomment>Title of the system notification when the account is full.</translatorcomment>
-        <translation>Your account is full.</translation>
+        <translation>A fiókja megtelt</translation>
     </message>
     <message>
         <source>Your data is at risk</source>
         <translatorcomment>System notification title to indicate that your data is at risk due to the current account is in over quota storage state for long time without fixing the situation.</translatorcomment>
-        <translation>Your data is at risk</translation>
+        <translation>Az adatai veszélyben vannak</translation>
     </message>
     <message>
         <source>Show in folder</source>
         <translatorcomment>Button label of system notification to open the selected completed transfer using the specific file browser</translatorcomment>
-        <translation>Show in folder</translation>
+        <translation>Mutatás mappában</translation>
     </message>
     <message>
         <source>Payment Failed</source>
         <translatorcomment>Notification title shown when a payment has failed for a business account.</translatorcomment>
-        <translation>Payment failed</translation>
+        <translation>A fizetés meghiúsult</translation>
     </message>
     <message>
         <source>Please resolve your payment issue to avoid suspension of your account.</source>
         <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
-        <translation>Please resolve your payment issue as soon as possible to avoid any suspension of your business account</translation>
+        <translation>Kérjük, a lehető leghamarabb oldja meg fizetési problémát, hogy elkerülje az üzleti fiókja felfüggesztését</translation>
     </message>
     <message>
         <source>Pay Now</source>
         <translatorcomment>Button text to redirect the user to fix issues with pending payments for the current business account.</translatorcomment>
-        <translation>Pay now</translation>
+        <translation>Fizetés most</translation>
     </message>
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>Account deactivated</translation>
+        <translation>Fiók deaktiválva</translation>
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation>Your account has been deactivated as read-only until you proceed with the needed payments.</translation>
+        <translation>Fiókját írásvédettként deaktiváltuk, amíg nem folytatja a szükséges kifizetéseket.</translation>
     </message>
     <message>
         <source>Account Suspended</source>
         <translatorcomment>Title to inform that a business account is actually suspended.</translatorcomment>
-        <translation>Account suspended</translation>
+        <translation>Fiók felfüggesztve</translation>
     </message>
     <message>
         <source>Contact your business account administrator to resolve the issue and activate your account.</source>
         <translatorcomment>Notification text to inform the user to contact his master business account to resolve the issue and reactivate the account.</translatorcomment>
-        <translation>Contact your business account administrator to resolve the issue and activate your account.</translation>
+        <translation>A probléma megoldásához és a fiók aktiválásához forduljon üzleti fiókjának rendszergazdájához.</translation>
     </message>
     <message numerus="yes">
         <source>[A] added %n item</source>
         <translatorcomment>Label to indicate that [A] has added %n items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and %n with the number of added items.</translatorcomment>
-        <translation><numerusform>[A] added %n item</numerusform><numerusform>[A] added %n items</numerusform></translation>
+        <translation><numerusform>[A] hozzáadott %n elemet</numerusform><numerusform>[A] hozzáadott %n elemet</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>You have %n day left to save your data</source>
         <translatorcomment>Notification content to inform the days the user have to save the date before possible deletion. %n will be replaced with remaining days amount.</translatorcomment>
-        <translation><numerusform>You have %n day left to save your data</numerusform><numerusform>You have %n days left to save your data</numerusform></translation>
+        <translation><numerusform>%n napja maradt az adatai lementésére</numerusform><numerusform>%n napja maradt az adatai lementésére</numerusform></translation>
     </message>
     <message>
         <source>Upgrade now to a Pro account.</source>
         <translatorcomment>Notification message shown to encourage the user to upgrade his account</translatorcomment>
-        <translation>Upgrade now to a Pro account.</translation>
+        <translation>Frissítsen most Pro-fiókra.</translation>
     </message>
     <message>
         <source>Get Pro</source>
         <translatorcomment>Notification button to redirect the user to upgrade account.</translatorcomment>
-        <translation>Get Pro</translation>
+        <translation>Szerezze be a Pro-t</translation>
     </message>
     <message>
         <source>New shared folder from [A]</source>
         <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
-        <translation>New shared folder from [A]</translation>
+        <translation>Új megosztott mappa tőle: [A]</translation>
     </message>
 </context>
 <context>
@@ -1299,17 +1299,17 @@ Egyes esetekben részleteket tartalmazhatnak az adatairól, például fájlok va
     <message>
         <source>Please select the download folder for your files:</source>
         <translatorcomment>Label to inform the user of the destination local folder for the files to be downloaded (MAX 50 characters)</translatorcomment>
-        <translation>Please select the download folder for your files:</translation>
+        <translation>Válassza ki a fájl letöltési mappáját:</translation>
     </message>
     <message>
         <source>Local folder:</source>
         <translatorcomment>Label to indicate the user the local folder in which the selected files/folders will be downloaded (String short as possible)</translatorcomment>
-        <translation>Local folder:</translation>
+        <translation>Helyi mappa:</translation>
     </message>
     <message>
         <source>Always download to this destination</source>
         <translatorcomment>Label to let the user select a default download folder with a checkbox.</translatorcomment>
-        <translation>Always download to this destination</translation>
+        <translation>Mindig ide töltse le</translation>
     </message>
     <message>
         <source>OK</source>
@@ -1329,7 +1329,7 @@ Egyes esetekben részleteket tartalmazhatnak az adatairól, például fájlok va
     <message>
         <source>Select local folder</source>
         <translatorcomment>Title of the dialog in which the user select the download folder.</translatorcomment>
-        <translation>Select local folder</translation>
+        <translation>Helyi mappa kiválasztása</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1339,7 +1339,7 @@ Egyes esetekben részleteket tartalmazhatnak az adatairól, például fájlok va
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
-        <translation>You don’t have write permissions in this local folder.</translation>
+        <translation>Nincs írási jogosultsága ebbe a helyi mappába.</translation>
     </message>
 </context>
 <context>
@@ -1347,57 +1347,57 @@ Egyes esetekben részleteket tartalmazhatnak az adatairól, például fájlok va
     <message>
         <source>A folder named [A] already exists at this destination</source>
         <translatorcomment>Dialog text shown when a folder with the same name has been found on the cloud. [A] folder name</translatorcomment>
-        <translation>A folder named [A] already exists at this destination.</translation>
+        <translation>Egy [A] nevű mappa már létezik ezen a célhelyen.</translation>
     </message>
     <message>
         <source>The new folder will be merged with the folder at this destination.</source>
         <translatorcomment>Text explaining the result of the folder merge action</translatorcomment>
-        <translation>The new folder will be merged with the folder at this destination.</translation>
+        <translation>Az új mappa egyesítve lesz az ezen a helyen található mappával.</translation>
     </message>
     <message>
         <source>The folder at this destination will be maintained.</source>
         <translatorcomment>Text explaining the result of the folder skip action</translatorcomment>
-        <translation>The folder at this destination will be maintained.</translation>
+        <translation>Az ezen a célhelyen lévő mappa megmarad.</translation>
     </message>
     <message>
         <source>A file named [A] already exists at this destination</source>
         <translatorcomment>Dialog text shown when a file with the same name has been found on the cloud. [A] file name</translatorcomment>
-        <translation>A file named [A] already exists at this destination.</translation>
+        <translation>Egy [A] nevű fájl már létezik ezen a célhelyen.</translation>
     </message>
     <message>
         <source>The file at this destination will be replaced with the new file.</source>
         <translatorcomment>Text explaining the result of the file upload and replace action</translatorcomment>
-        <translation>The file at this destination will be replaced with the new file.</translation>
+        <translation>Az ezen a helyen lévő fájl lecserélődik az új fájlra.</translation>
     </message>
     <message>
         <source>The file will be renamed as:</source>
         <translatorcomment>Text explaining the result of the file rename action</translatorcomment>
-        <translation>The file will be renamed as:</translation>
+        <translation>A fájl át lesz nevezve erre:</translation>
     </message>
     <message>
         <source>The file at this destination will be maintained.</source>
         <translatorcomment>Text explaining the result of the fileip action</translatorcomment>
-        <translation>The file at this destination will be maintained.</translation>
+        <translation>Az ezen a célhelyen lévő fájl megmarad.</translation>
     </message>
     <message>
         <source>Folder already exists</source>
         <translatorcomment>Dialog title when a folder with the same name has been found on the cloud</translatorcomment>
-        <translation>Folder already exists</translation>
+        <translation>A mappa már létezik</translation>
     </message>
     <message>
         <source>File already exists</source>
         <translatorcomment>Dialog title when a file with the same name has been found on the cloud</translatorcomment>
-        <translation>File already exists</translation>
+        <translation>A fájl már létezik</translation>
     </message>
     <message numerus="yes">
         <source>Apply to all %1 duplicates</source>
         <translatorcomment>Checkbox text to apply the action to all the following conflicts. %1 is the number of conflicts</translatorcomment>
-        <translation><numerusform>Apply to the other duplicate</numerusform><numerusform>Apply to all %1 duplicates</numerusform></translation>
+        <translation><numerusform>Alkalmazza a másik másolatra</numerusform><numerusform>Alkalmazza mind a %1 másolatra</numerusform></translation>
     </message>
     <message>
         <source>The file at this destination will be updated with a new version.</source>
         <translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
-        <translation>The file at this destination will be updated with a new version.</translation>
+        <translation>Az ezen a célhelyen található fájl egy új verzióval frissül.</translation>
     </message>
 </context>
 <context>
@@ -1405,22 +1405,22 @@ Egyes esetekben részleteket tartalmazhatnak az adatairól, például fájlok va
     <message>
         <source>Skip</source>
         <translatorcomment>Action title for the skip action</translatorcomment>
-        <translation>Skip</translation>
+        <translation>Kihagyás</translation>
     </message>
     <message>
         <source>Skip this file</source>
         <translatorcomment>Button text for the skip action for files</translatorcomment>
-        <translation>Skip this file</translation>
+        <translation>A fájl kihagyása</translation>
     </message>
     <message>
         <source>Skip this folder</source>
         <translatorcomment>Button text for the skip action for folders</translatorcomment>
-        <translation>Skip this folder</translation>
+        <translation>A mappa kihagyása</translation>
     </message>
     <message>
         <source>Merge</source>
         <translatorcomment>Action title and button text for the Merge action for folders</translatorcomment>
-        <translation>Merge</translation>
+        <translation>Összefűzés</translation>
     </message>
     <message>
         <source>Rename</source>
@@ -1430,27 +1430,27 @@ Egyes esetekben részleteket tartalmazhatnak az adatairól, például fájlok va
     <message>
         <source>Replace</source>
         <translatorcomment>Action title and button text for the Replace action for folders/files</translatorcomment>
-        <translation>Replace</translation>
+        <translation>Csere</translation>
     </message>
     <message>
         <source>Update</source>
         <translatorcomment>Action title and button text for the Update action for files</translatorcomment>
-        <translation>Update</translation>
+        <translation>Frissítés</translation>
     </message>
     <message>
         <source>loading time…</source>
         <translatorcomment>Text shown while the local file/folder modified time is calculated</translatorcomment>
-        <translation>Calculating time…</translation>
+        <translation>Idő kiszámítása…</translation>
     </message>
     <message>
         <source>loading size…</source>
         <translatorcomment>Text shown while the local file/folder size is calculated</translatorcomment>
-        <translation>Calculating size…</translation>
+        <translation>Méret kiszámítása…</translation>
     </message>
     <message>
         <source>Learn more</source>
         <translatorcomment>Underline link label to open a help.mega.io article</translatorcomment>
-        <translation>Learn more</translation>
+        <translation>Tudjon meg többet</translation>
     </message>
 </context>
 <context>
@@ -1458,22 +1458,22 @@ Egyes esetekben részleteket tartalmazhatnak az adatairól, például fájlok va
     <message>
         <source>All notifications</source>
         <translatorcomment>Label to indicate that all types of notifications will be shown.</translatorcomment>
-        <translation>All notifications</translation>
+        <translation>Minden értesítés</translation>
     </message>
     <message>
         <source>Contacts</source>
         <translatorcomment>Label to indicate that only contact notifications will be shown.</translatorcomment>
-        <translation>Contacts</translation>
+        <translation>Névjegyek</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Label to indicate that only Incoming Shares notifications will be shown.</translatorcomment>
-        <translation>Incoming shares</translation>
+        <translation>Bejövő megosztások</translation>
     </message>
     <message>
         <source>Payment</source>
         <translatorcomment>Label to indicate that only Payment notifications will be shown.</translatorcomment>
-        <translation>Payment</translation>
+        <translation>Fizetés</translation>
     </message>
 </context>
 <context>
@@ -1481,17 +1481,17 @@ Egyes esetekben részleteket tartalmazhatnak az adatairól, például fájlok va
     <message>
         <source>Get MEGA link</source>
         <translatorcomment>Finder context menu option to generate a public MEGA link</translatorcomment>
-        <translation>Get MEGA link</translation>
+        <translation>MEGA link lekérése</translation>
     </message>
     <message>
         <source>View on MEGA</source>
         <translatorcomment>Finder context menu option to view a synced file through web browser within your MEGA account</translatorcomment>
-        <translation>View on MEGA</translation>
+        <translation>Megtekintés a MEGA-n</translation>
     </message>
     <message>
         <source>No options available</source>
         <translatorcomment>Finder context menu label when no option is available for selected items</translatorcomment>
-        <translation>No options available</translation>
+        <translation>Nincs elérhető opció</translation>
     </message>
     <message>
         <source>Click the toolbar item for a menu.</source>
