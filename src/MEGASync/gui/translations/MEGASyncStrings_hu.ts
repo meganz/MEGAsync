@@ -97,17 +97,17 @@
     <message>
         <source>Add exclusion</source>
         <translatorcomment>Title of the dialog displayed when an user is adding a new exclusion rule for the synchronizations.</translatorcomment>
-        <translation>Add exclusion</translation>
+        <translation>Kivétel hozzáadása</translation>
     </message>
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization.</translation>
+        <translation>Adjon meg egy nevet, egy abszolút elérési utat (a * és ? helyettesítő karakterek megengedettek), vagy válassza ki, hogy melyik fájlt vagy mappát szeretné kizárni a szinkronizálásból.</translation>
     </message>
     <message>
         <source>Choose File</source>
         <translatorcomment>Label of button that pop up a selection dialog to choose a file to be excluded for the synchonization</translatorcomment>
-        <translation>Choose file</translation>
+        <translation>Fájl választása</translation>
     </message>
     <message>
         <source>Choose Folder</source>
@@ -218,7 +218,7 @@
     <message>
         <source>Contact Established</source>
         <translatorcomment>Notification label that indicates the user has established a new contact relationship</translatorcomment>
-        <translation>Contact relationship established</translation>
+        <translation>Névjegy kapcsolat létrejött</translation>
     </message>
     <message>
         <source>Contact Blocked</source>
@@ -228,17 +228,17 @@
     <message>
         <source>Contact Updated</source>
         <translatorcomment>Notification label that indicates that the user has ignored, accept or denied a contact request.</translatorcomment>
-        <translation>Contact request updated</translation>
+        <translation>Kapcsolatfelvételi kérelem frissítve</translation>
     </message>
     <message>
         <source>Contact Accepted</source>
         <translatorcomment>Notification label that indicates that the user has accepted a contact request</translatorcomment>
-        <translation>Contact request accepted</translation>
+        <translation>Kapcsolatfelvételi kérelem elfogadva</translation>
     </message>
     <message>
         <source>Contact Denied</source>
         <translatorcomment>Notification label that indicates that the user has denied a contact request</translatorcomment>
-        <translation>Contact request declined</translation>
+        <translation>Kapcsolatfelvételi kérelem eluasítva</translation>
     </message>
     <message>
         <source>Payment Info</source>
@@ -248,7 +248,7 @@
     <message>
         <source>Takedown Notice</source>
         <translatorcomment>Notification label related to takedown notice</translatorcomment>
-        <translation>Takedown notice</translation>
+        <translation>Levételi értesítés</translation>
     </message>
     <message>
         <source>Notification</source>
@@ -258,77 +258,77 @@
     <message>
         <source>[A] sent you a contact request</source>
         <translatorcomment>Label to indicate that [A] sent you a contact request. Placeholder will be replaced by email of user that sent the request.</translatorcomment>
-        <translation>[A] sent you a contact request</translation>
+        <translation>[A] kapcsolatfelvételi kérelmet küldött</translation>
     </message>
     <message>
         <source>[A] cancelled their contact request</source>
         <translatorcomment>Label to indicate that [A] cancelled a contact request. Placeholder will be replaced by email of user that cancelled the request.</translatorcomment>
-        <translation>[A] cancelled their contact request</translation>
+        <translation>[A] visszavonta kapcsolatfelvételi kérelmét</translation>
     </message>
     <message>
         <source>You have a contact request</source>
         <translatorcomment>Label to indicate that actual user has received a new contact request.</translatorcomment>
-        <translation>You have a contact request</translation>
+        <translation>Kapcsolatfelvételi kérelme van</translation>
     </message>
     <message>
         <source>[A] deleted you as a contact</source>
         <translatorcomment>Label to indicate that [A] deleted you as a contact. Placeholder will be replaced by email of user that deleted the contact.</translatorcomment>
-        <translation>[A] deleted you as a contact</translation>
+        <translation>[A] törölte Önt a kapcsolatok közül</translation>
     </message>
     <message>
         <source>[A] has been deleted/deactivated</source>
         <translatorcomment>Label to indicate that [A] has been deleted from your contacts. Placeholder will be replaced by email of user deleted</translatorcomment>
-        <translation>[A] has been deleted or deactivated</translation>
+        <translation>[A] törölve vagy deaktiválva</translation>
     </message>
     <message>
         <source>[A] established you as a contact</source>
         <translatorcomment>Label to indicate that [A] has established you as a contact. Placeholder will be replaced by email of user.</translatorcomment>
-        <translation>[A] accepted your contact request</translation>
+        <translation>[A] elfogadta kapcsolatfelvételi kérelmét</translation>
     </message>
     <message>
         <source>[A] blocked you as contact</source>
         <translatorcomment>Label to indicate that [A] has blocked you as a contact. Placeholder will be replaced by email of user.</translatorcomment>
-        <translation>[A] blocked you as contact</translation>
+        <translation>[A] letiltotta kapcsolatukat</translation>
     </message>
     <message>
         <source>You ignored a contact request</source>
         <translatorcomment>Label to indicate that the user has ignored a contact request.</translatorcomment>
-        <translation>You ignored a contact request</translation>
+        <translation>Figyelmen kívül hagyta a kapcsolatfelvételi kérést</translation>
     </message>
     <message>
         <source>You accepted a contact request</source>
         <translatorcomment>Label to indicate that the user has accepted a contact request.</translatorcomment>
-        <translation>You accepted a contact request</translation>
+        <translation>Elfogadta a kapcsolatfelvételi kérést</translation>
     </message>
     <message>
         <source>You denied a contact request</source>
         <translatorcomment>Label to indicate that the user has denied a contact request.</translatorcomment>
-        <translation>You denied a contact request</translation>
+        <translation>Elutasította a kapcsolatfelvételi kérést</translation>
     </message>
     <message>
         <source>[A] accepted your contact request</source>
         <translatorcomment>Label to indicate that [A] accepted you as a contact. Placeholder will be replaced by email of user that accepted the request.</translatorcomment>
-        <translation>[A] accepted your contact request</translation>
+        <translation>[A] elfogadta kapcsolatfelvételi kérelmét</translation>
     </message>
     <message>
         <source>[A] denied your contact request</source>
         <translatorcomment>Label to indicate that [A] denied your contact request. Placeholder will be replaced by email of user that denied the request.</translatorcomment>
-        <translation>[A] denied your contact request</translation>
+        <translation>[A] elutasította kapcsolatfelvételi kérelmét</translation>
     </message>
     <message>
         <source>[A] has left the shared folder</source>
         <translatorcomment>Label to indicate that [A] has left a shared folder. Placeholder will be replaced by email of the user that left the folder.</translatorcomment>
-        <translation>[A] has left the shared folder</translation>
+        <translation>[A] elhagyta a megosztott mappát</translation>
     </message>
     <message>
         <source>Your payment for the [A] plan was received</source>
         <translatorcomment>Label to indicate that the user has paid for a [A] PRO plan. Placeholder will be replaced by the PRO plan name</translatorcomment>
-        <translation>Your payment for the [A] plan was received</translation>
+        <translation>Az [A]-ra vonatkozó befizetése beérkezett</translation>
     </message>
     <message>
         <source>Your payment for the [A] plan was unsuccessful</source>
         <translatorcomment>Label to indicate that the the payment for a [A] PRO plan has failed. Placeholder will be replaced by the PRO plan name</translatorcomment>
-        <translation>Your payment for the [A] plan was unsuccessful</translation>
+        <translation>Az [A]-ra vonatkozó befizetése sikertelen</translation>
     </message>
     <message>
         <source>Your publicly shared has been taken down</source>
@@ -383,12 +383,12 @@
     <message numerus="yes">
         <source>[A] added %n item</source>
         <translatorcomment>Label to indicate that [A] has added %n items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and %n with the number of added items.</translatorcomment>
-        <translation><numerusform>[A] added %n item</numerusform><numerusform>[A] added %n items</numerusform></translation>
+        <translation><numerusform>[A] hozzáadott %n elemet</numerusform><numerusform>[A] hozzáadott %n elemet</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>[A] removed %n item</source>
         <translatorcomment>Label to indicate that [A] has removed %n items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and %n with the number of removed items.</translatorcomment>
-        <translation><numerusform>[A] removed %n item</numerusform><numerusform>[A] removed %n items</numerusform></translation>
+        <translation><numerusform>[A] eltávolított %n elemet</numerusform><numerusform>[A] eltávolított %n elemet</numerusform></translation>
     </message>
     <message>
         <source>New shared folder from [A]</source>
@@ -462,22 +462,22 @@
     <message>
         <source>Local folder %1:</source>
         <translatorcomment>Backup rename widget dialog label. Placeholder will display the conflict count. In the right of the label the local folder path will be displayed</translatorcomment>
-        <translation>Local folder %1:</translation>
+        <translation>Helyi mappa %1:</translation>
     </message>
     <message>
         <source>Rename backup folder</source>
         <translatorcomment>Placeholder for the backup rename widget line edit.</translatorcomment>
-        <translation>Rename backup folder</translation>
+        <translation>A mentési mappa átnevezése</translation>
     </message>
     <message>
         <source>Backup folder:</source>
         <translatorcomment>In the right of this label the line edit will be displayed. This line edit will be used by the user to change the backup name.</translatorcomment>
-        <translation>Backup folder:</translation>
+        <translation>Mentési mappa:</translation>
     </message>
     <message>
         <source>A folder named &quot;%1&quot; already exists in your Backups. Rename the new folder to continue with the backup.</source>
         <translatorcomment>Error message displayed in the top of the rename backup dialog. It indicates that a backup with that name already exists.</translatorcomment>
-        <translation>A folder named “%1” already exists in your Backups. Rename the new folder to continue with the backup.</translation>
+        <translation>A „%1” nevű mappa már létezik a mentések között. A biztonsági mentés folytatásához nevezze át az új mappát.</translation>
     </message>
 </context>
 <context>
@@ -485,12 +485,12 @@
     <message>
         <source>Open in MEGA</source>
         <translatorcomment>Menu action that opens MEGA webclient to show this backup</translatorcomment>
-        <translation>Open in MEGA</translation>
+        <translation>Emgnyitás a MEGA-ban</translation>
     </message>
     <message>
         <source>Remove backup</source>
         <translatorcomment>Menu action removes the backup</translatorcomment>
-        <translation>Stop backup</translation>
+        <translation>Mentés leállítása</translation>
     </message>
 </context>
 <context>
@@ -498,42 +498,42 @@
     <message>
         <source>Setup backups</source>
         <translatorcomment>Backup wizard window title</translatorcomment>
-        <translation>Set up backups</translation>
+        <translation>Biztonsági mentések beállítása</translation>
     </message>
     <message>
         <source>You can back up folders from your computer to MEGA. Files will automatically back up when the desktop app is running.</source>
         <translatorcomment>Backup wizard body text</translatorcomment>
-        <translation>You can back up folders from your computer to MEGA. Files will automatically back up when the desktop app is running.</translation>
+        <translation>A számítógépén lévő mappákról biztonsági másolatot készíthet a MEGA-ba. A fájlokról automatikusan biztonsági másolat készül, amikor az asztali alkalmazás fut.</translation>
     </message>
     <message>
         <source>No folders available</source>
         <translatorcomment>Backup wizard text that indicates that here aren´t any folder available for backup.</translatorcomment>
-        <translation>No folders available</translation>
+        <translation>Nincs elérhető mappa</translation>
     </message>
     <message>
         <source>More folders</source>
         <translatorcomment>Button text that opens a window where you can choose a folder to backup</translatorcomment>
-        <translation>More folders</translation>
+        <translation>További mappák</translation>
     </message>
     <message>
         <source>All folders have been synced or backed up.</source>
         <translatorcomment>Label that indicates that all the folders in the system have been synced or backed up</translatorcomment>
-        <translation>All folders have been synced or backed up.</translation>
+        <translation>Az összes mappa szinkronizálva vagy biztonsági másolat készült róluk.</translation>
     </message>
     <message>
         <source>Selected backup folders</source>
         <translatorcomment>This is the title for a table that shows the full list of selected folders for backup</translatorcomment>
-        <translation>Selected backup folders</translation>
+        <translation>Kiválasztott mentési mappák</translation>
     </message>
     <message>
         <source>Backup to</source>
         <translatorcomment>Line edit title, in this line edit the remote folder for backups will be displayed</translatorcomment>
-        <translation>Back up to</translation>
+        <translation>Mentés ide:</translation>
     </message>
     <message>
         <source>Folders will be stored in backups and you can check the status of your backups in backup centre.</source>
         <translatorcomment>Successfull dialog text</translatorcomment>
-        <translation>Folders will be stored in Backups and you can check the status of your backups in Backup centre.</translation>
+        <translation>A mappák a Biztonsági mentésekben lesznek tárolva, a mentések állapotát a Biztonsági mentés központban ellenőrizheti.</translation>
     </message>
     <message>
         <source>Show more…</source>
