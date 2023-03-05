@@ -1496,21 +1496,21 @@ Egyes esetekben részleteket tartalmazhatnak az adatairól, például fájlok va
     <message>
         <source>Click the toolbar item for a menu.</source>
         <translatorcomment>Tooltip for MEGA finder toolbar button</translatorcomment>
-        <translation>Click the toolbar item for a menu.</translation>
+        <translation>Kattintson az eszköztár elemre a menühöz.</translation>
     </message>
     <message>
         <source>View previous versions</source>
-        <translation>View previous versions</translation>
+        <translation>Korábbi verziók megtekintése</translation>
     </message>
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Context menu option label to indicate the user has selected %n number of files</translatorcomment>
-        <translation><numerusform>%n file</numerusform><numerusform>%n files</numerusform></translation>
+        <translation><numerusform>%n fájl</numerusform><numerusform>%n fájl</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Context menu option label to indicate the user has selected %n number of folders</translatorcomment>
-        <translation><numerusform>%n folder</numerusform><numerusform>%n folders</numerusform></translation>
+        <translation><numerusform>%n mappa</numerusform><numerusform>%n mappa</numerusform></translation>
     </message>
 </context>
 <context>
@@ -1518,17 +1518,17 @@ Egyes esetekben részleteket tartalmazhatnak az adatairól, például fájlok va
     <message>
         <source>Local folder:</source>
         <translatorcomment>Label to indicate the user the local folder for a synchronization (String short as possible)</translatorcomment>
-        <translation>Local folder:</translation>
+        <translation>Helyi mappa:</translation>
     </message>
     <message>
         <source>MEGA folder:</source>
         <translatorcomment>Label to indicate the user the MEGA folder for a synchronization (String short as possible)</translatorcomment>
-        <translation>MEGA folder:</translation>
+        <translation>MEGA mappa:</translation>
     </message>
     <message>
         <source>Select local folder</source>
         <translatorcomment>Title of the dialog in which the user select the local default folder.for a synchronization.</translatorcomment>
-        <translation>Select local folder</translation>
+        <translation>Helyi mappa kiválasztása</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -1542,12 +1542,12 @@ Egyes esetekben részleteket tartalmazhatnak az adatairól, például fájlok va
     <message>
         <source>You can not sync a shared folder without Full Access permissions</source>
         <translatorcomment>Label to inform a user about the incompatibility of sync a shared folder without Full Access permissions</translatorcomment>
-        <translation>You cannot sync a shared folder without full access permissions</translation>
+        <translation>Nem szinkronizálhat megosztott mappákat teljes hozzáférési engedély nélkül</translation>
     </message>
     <message>
         <source>Select</source>
         <translatorcomment>Button label to select the folders (local and remote) for a synchronization (String as short as possible) (Win and Linux)</translatorcomment>
-        <translation>Select</translation>
+        <translation>Kiválasztás</translation>
     </message>
 </context>
 <context>
@@ -1555,27 +1555,27 @@ Egyes esetekben részleteket tartalmazhatnak az adatairól, például fájlok va
     <message>
         <source>Login</source>
         <translatorcomment>Button label to start the Login process. (String as short as possible)</translatorcomment>
-        <translation>Log&#xa0;in</translation>
+        <translation>Bejelentkezés</translation>
     </message>
     <message>
         <source>Create account</source>
         <translatorcomment>Button label to start the creation of an account process. (String as short as possible)</translatorcomment>
-        <translation>Create account</translation>
+        <translation>Fiók létrehozása</translation>
     </message>
     <message>
         <source>Email address</source>
         <translatorcomment>Tip shown in email line edit before typing the user email address.</translatorcomment>
-        <translation>Email address</translation>
+        <translation>Email-cím</translation>
     </message>
     <message>
         <source>Password</source>
         <translatorcomment>Tip shown in password line edit before typing the user password</translatorcomment>
-        <translation>Password</translation>
+        <translation>Jelszó</translation>
     </message>
     <message>
         <source>Forgot password?</source>
         <translatorcomment>Button label that redirects to the web page with information about forgotten passwords.</translatorcomment>
-        <translation>Forgot password?</translation>
+        <translation>Elfelejtett jelszó?</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1585,17 +1585,17 @@ Egyes esetekben részleteket tartalmazhatnak az adatairól, például fájlok va
     <message>
         <source>Setting up your account...</source>
         <translatorcomment>Label shown at main dialog during the initial setup of synced folders.</translatorcomment>
-        <translation>Setting up your account…</translation>
+        <translation>A fiók beállítása…</translation>
     </message>
     <message>
         <source>Logging in...</source>
         <translatorcomment>Label shown at main dialog to show the current operation. In this case logging in.</translatorcomment>
-        <translation>Logging in…</translation>
+        <translation>Bejelentkezés…</translation>
     </message>
     <message>
         <source>Fetching file list...</source>
         <translatorcomment>Label shown at main dialog to show the current operation. In this case fetching file information from servers.</translatorcomment>
-        <translation>Fetching file list…</translation>
+        <translation>Fájllista lekérése…</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1605,122 +1605,122 @@ Egyes esetekben részleteket tartalmazhatnak az adatairól, például fájlok va
     <message>
         <source>Incorrect email and/or password.</source>
         <translatorcomment>Message box shown when user enters incorrect email and/or password at login</translatorcomment>
-        <translation>Invalid email or password.</translation>
+        <translation>Érvénytelen email-cím vagy jelszó.</translation>
     </message>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
         <translatorcomment>Label shown when a user has created and account to inform that he needs to check his e-mail and confirm his account.</translatorcomment>
-        <translation>Please check your email and click the link to confirm your account.</translation>
+        <translation>Kérjük, ellenőrizze e-mailjeit, és kattintson a linkre a fiók megerősítéséhez.</translation>
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
         <translatorcomment>Label shown at main dialog to inform the user that he has failed to log in several times and has to wait before trying again.</translatorcomment>
-        <translation>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</translation>
+        <translation>Túl sokszor próbált bejelentkezni.[BR]Várjon, %1-ig, majd próbálja újra.</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Label shown at main dialog to show that the account has been blocked and the user needs to contact the support team.</translatorcomment>
-        <translation>Your account has been blocked. Please contact support@mega.nz</translation>
+        <translation>A fiókja blokkolva. Kérjük, írjon a support@mega.nz címre</translation>
     </message>
     <message>
         <source>Please, enter your e-mail address</source>
         <translatorcomment>Message box shown if user does not enter email and try to log in</translatorcomment>
-        <translation>Please enter your email address</translation>
+        <translation>Adja meg email-címét</translation>
     </message>
     <message>
         <source>Please, enter a valid e-mail address</source>
         <translatorcomment>Message box shown if user has typed an incorrect email</translatorcomment>
-        <translation>Please enter a valid email address</translation>
+        <translation>Érvényes email-címet adjon meg</translation>
     </message>
     <message>
         <source>Please, enter your password</source>
         <translatorcomment>Message box shown if user does not enter a password</translatorcomment>
-        <translation>Please enter your password</translation>
+        <translation>Adja meg a jelszót</translation>
     </message>
     <message>
         <source>Logging out...</source>
         <translatorcomment>Label shown at main dialog to show the current operation. In this case logging out from the account.</translatorcomment>
-        <translation>Logging out…</translation>
+        <translation>Kijelentkezés…</translation>
     </message>
     <message>
         <source>Locked Account</source>
         <translatorcomment>Label to indicate the current account is locked</translatorcomment>
-        <translation>Locked account</translation>
+        <translation>Zárolt fiók</translation>
     </message>
     <message>
         <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
         <translatorcomment>Description to explain why the current account is locked. The user needs to verify email in order to continue using the application.</translatorcomment>
-        <translation>Your account has been temporarily locked for your safety. Please verify your email and follow its steps to unlock your account.</translation>
+        <translation>Fiókját a biztonsága érdekében ideiglenesen zároltuk. Ellenőrizze emailjeit és kövesse a benne található lépéseket a fiók zárolásának feloldásához.</translation>
     </message>
     <message>
         <source>Log out</source>
         <translatorcomment>Button label to log out the current account.</translatorcomment>
-        <translation>Log&#xa0;out</translation>
+        <translation>Kijelentkezés</translation>
     </message>
     <message>
         <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
         <translatorcomment>Description to explain why the current account is locked. The user needs to verify his phone number in order to continue using the application.</translatorcomment>
-        <translation>Your account has been temporarily locked due to potential abuse. Please verify your phone number to unlock your account.</translation>
+        <translation>Fiókját lehetséges visszaélés miatt ideiglenesen zároltuk. Kérjük, igazolja telefonszámát a fiók zárolásának feloldásához.</translation>
     </message>
     <message>
         <source>Verify now</source>
         <translatorcomment>Button label to forward the user to webclient, in order to verify and unlock the account.</translatorcomment>
-        <translation>Verify now</translation>
+        <translation>Igazolás most</translation>
     </message>
     <message>
         <source>Creating account...</source>
         <translatorcomment>Informative label during creation of an account using MEGAsync</translatorcomment>
-        <translation>Creating account…</translation>
+        <translation>Fiók létrehozása…</translation>
     </message>
     <message>
         <source>Why am I seeing this?</source>
         <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
-        <translation>Why am I seeing this?</translation>
+        <translation>Miért látom ezt?</translation>
     </message>
     <message>
         <source>Resend email</source>
         <translatorcomment>Button label to send email with detailed information abot how to unlock the account</translatorcomment>
-        <translation>Resend email</translation>
+        <translation>Email újraküldése</translation>
     </message>
     <message>
         <source>Email sent</source>
         <translatorcomment>Informative label to indicate that an email has been send to the user in order to unlock his account.</translatorcomment>
-        <translation>Email sent</translation>
+        <translation>Email elküldve</translation>
     </message>
     <message>
         <source>Please enter the code generated by your authentication app</source>
         <translatorcomment>Description text of the label displayed to introduce the 6-digit code for the 2FA</translatorcomment>
-        <translation>Please enter the code generated by your authentication app</translation>
+        <translation>Kérjük, adja meg a hitelesítő alkalmazás által generált kódot</translation>
     </message>
     <message>
         <source>6 digit code:</source>
         <translatorcomment>Placeholder text on the Two Factor Authentication login dialog telling the user to enter their 6 digit code from the Google Authenticator app.</translatorcomment>
-        <translation>6-digit code:</translation>
+        <translation>6 számjegyű kód:</translation>
     </message>
     <message>
         <source>Invalid code</source>
         <translatorcomment>An error message when the 2FA code entered was incorrect.</translatorcomment>
-        <translation>Invalid code</translation>
+        <translation>Hibás kód</translation>
     </message>
     <message>
         <source>Next</source>
         <translatorcomment>Button to go for next step in 2FA verification.</translatorcomment>
-        <translation>Next</translation>
+        <translation>Következő</translation>
     </message>
     <message>
         <source>[A]Lost your authenticator device?[/A]</source>
         <translatorcomment>Label with hyperlink to recovery website when user is entering incorrect 2FA code during login stage</translatorcomment>
-        <translation>[A]Lost your authenticator device?[/A]</translation>
+        <translation>[A]Elvesztette a hitelesítő eszközét?[/A]</translation>
     </message>
     <message>
         <source>Log into MEGA</source>
         <translatorcomment>Label shown at login dialog where the user can introduce his user and password</translatorcomment>
-        <translation>Log in to MEGA</translation>
+        <translation>Bejelentkezés a MEGA-ba</translation>
     </message>
     <message>
         <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
         <translatorcomment>Error message shown when the program detects an issues with SSL key verification.</translatorcomment>
-        <translation>Our SSL key can’t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</translation>
+        <translation>Az SSL-kulcsunkat nem tudjuk ellenőrizni. Előfordulhat, hogy a kommunikációt lehallgatják vagy víruskereső szoftvere blokkolja, és ez okozhatja ezt a problémát. Kapcsolja ki, majd próbálja újra.</translation>
     </message>
 </context>
 <context>
@@ -1728,7 +1728,7 @@ Egyes esetekben részleteket tartalmazhatnak az adatairól, például fájlok va
     <message>
         <source>Your download has started</source>
         <translatorcomment>Notification shown when a web download is started.</translatorcomment>
-        <translation>Your download has started</translation>
+        <translation>A letöltés elindult</translation>
     </message>
 </context>
 <context>
@@ -1736,7 +1736,7 @@ Egyes esetekben részleteket tartalmazhatnak az adatairól, például fájlok va
     <message>
         <source>Please wait...</source>
         <translatorcomment>Label to indicate the user that needs to wait until MEGAsync fetches link information from the server</translatorcomment>
-        <translation>Please wait…</translation>
+        <translation>Kérjük, várjon…</translation>
     </message>
 </context>
 <context>
@@ -1749,7 +1749,7 @@ Egyes esetekben részleteket tartalmazhatnak az adatairól, például fájlok va
     <message>
         <source>Import to my cloud drive</source>
         <translatorcomment>Label to indicate if the user wants to import the selected MEGA link(s) to his cloud drive.</translatorcomment>
-        <translation>Import to my Cloud drive</translation>
+        <translation>Importálás a felhőmeghajtómra</translation>
     </message>
     <message>
         <source>OK</source>
@@ -1764,12 +1764,12 @@ Egyes esetekben részleteket tartalmazhatnak az adatairól, például fájlok va
     <message>
         <source>Select local folder</source>
         <translatorcomment>Title of the dialog in which the user select the local default folder.for downloads.</translatorcomment>
-        <translation>Select local folder</translation>
+        <translation>Helyi mappa kiválasztása</translation>
     </message>
     <message>
         <source>Not found</source>
         <translatorcomment>Label to indicate that an imported link can&apos;t be found.</translatorcomment>
-        <translation>Not found</translation>
+        <translation>Nem található</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -1783,12 +1783,12 @@ Egyes esetekben részleteket tartalmazhatnak az adatairól, például fájlok va
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message shown when a user is trying to download a file to a local folder without the right permissions.</translatorcomment>
-        <translation>You don’t have write permissions in this local folder.</translation>
+        <translation>Nincs írási jogosultsága ebbe a helyi mappába.</translation>
     </message>
     <message>
         <source>Open links</source>
         <translatorcomment>Title for the dialog used to open links in order to import and/or download.</translatorcomment>
-        <translation>Open links</translation>
+        <translation>Linkek megnyitása</translation>
     </message>
 </context>
 <context>
@@ -1796,7 +1796,7 @@ Egyes esetekben részleteket tartalmazhatnak az adatairól, például fájlok va
     <message>
         <source>Add Sync</source>
         <translatorcomment>Button label to add a new synchronization (String as short as possible)</translatorcomment>
-        <translation>Add sync</translation>
+        <translation>Szinkronizálás hozzáadása</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -1806,7 +1806,7 @@ Egyes esetekben részleteket tartalmazhatnak az adatairól, például fájlok va
     <message>
         <source>Blocked file: %1</source>
         <translatorcomment>Label to show the blocked file that has stopped the synchronization engine</translatorcomment>
-        <translation>Blocked file: %1</translation>
+        <translation>Blokkolt fájl: %1</translation>
     </message>
     <message>
         <source>Upgrade to PRO</source>
@@ -1825,7 +1825,7 @@ Egyes esetekben részleteket tartalmazhatnak az adatairól, például fájlok va
     </message>
     <message>
         <source>The process is taking longer than expected. Please wait...</source>
-        <translation>This process is taking longer than expected. Please wait.</translation>
+        <translation>A folyamat a vártnál tovább tart. Várjon..</translation>
     </message>
     <message>
         <source>Upload to MEGA now</source>
@@ -1835,42 +1835,42 @@ Egyes esetekben részleteket tartalmazhatnak az adatairól, például fájlok va
     <message>
         <source>Dismiss</source>
         <translatorcomment>Button label to dismiss (hide) overquota dialogs.</translatorcomment>
-        <translation>Dismiss</translation>
+        <translation>Elvetés</translation>
     </message>
     <message>
         <source>Buy more space</source>
         <translatorcomment>Button label to redirect the user to upgrade the account in the website.</translatorcomment>
-        <translation>Buy more space</translation>
+        <translation>További tárhely vásárlása</translation>
     </message>
     <message>
         <source>You&apos;re running out of storage space.</source>
         <translatorcomment>Label to inform the user that the account is running out of storage space.</translatorcomment>
-        <translation>You’re running out of space!</translation>
+        <translation>Ki fog fogyni a tárhelyből!</translation>
     </message>
     <message>
         <source>Upgrade to PRO now before your account runs full and your uploads to MEGA stop.</source>
         <translatorcomment>Label to encourage the user to upgrade his account before uploads stop</translatorcomment>
-        <translation>Upgrade now before your account becomes full and your uploads to MEGA stop.</translation>
+        <translation>Frissítsen most, mielőtt fiókja megtelik, és a MEGA-ba való feltöltések leállnak.</translation>
     </message>
     <message>
         <source>Your MEGA account is full.</source>
         <translatorcomment>Label shown to inform the user that the actual account is over storage.</translatorcomment>
-        <translation>Your MEGA account is full.</translation>
+        <translation>A MEGA fiókja megtelt.</translation>
     </message>
     <message>
         <source>All file uploads are currently disabled.</source>
         <translatorcomment>Label to inform the user that all uploads are stopped because the account is over storage.</translatorcomment>
-        <translation>All file uploads are currently disabled.</translation>
+        <translation>Jelenleg minden fájlfeltöltés le van tiltva.</translation>
     </message>
     <message>
         <source>Please upgrade to PRO.</source>
         <translatorcomment>Label to encourage the user to upgrade to PRO</translatorcomment>
-        <translation>Please upgrade your account.</translation>
+        <translation>Kérjük, frissítse a fiókját.</translation>
     </message>
     <message>
         <source>Upload</source>
         <translatorcomment>Label to indicate an upload.</translatorcomment>
-        <translation>Upload</translation>
+        <translation>Feltöltés</translation>
     </message>
     <message>
         <source>Transfers</source>
@@ -1885,57 +1885,57 @@ Egyes esetekben részleteket tartalmazhatnak az adatairól, például fájlok va
     <message>
         <source>Storage</source>
         <translatorcomment>Label to indicate the storage section of current account</translatorcomment>
-        <translation>Storage</translation>
+        <translation>Tárhely</translation>
     </message>
     <message>
         <source>Transfer</source>
         <translatorcomment>Label to indicate the transfer quota section of current account</translatorcomment>
-        <translation>Transfer</translation>
+        <translation>Átvitel</translation>
     </message>
     <message>
         <source>Open notification settings</source>
         <translatorcomment>Button label to redirect the user to notification settings for configuration</translatorcomment>
-        <translation>Open notification settings</translation>
+        <translation>Értesítési beállítások megnyitása</translation>
     </message>
     <message>
         <source>No notifications</source>
         <translatorcomment>Label to indicate that there aren&apos;t notifications available at this moment.</translatorcomment>
-        <translation>No notifications</translation>
+        <translation>Nincsenek értesítések</translation>
     </message>
     <message>
         <source>Pause/Resume</source>
         <translatorcomment>Tooltip of button that let the user Pause/Resume transfers.</translatorcomment>
-        <translation>Pause/Resume</translation>
+        <translation>Szünet/folytatás</translation>
     </message>
     <message>
         <source>Open Downloads</source>
         <translatorcomment>Tooltip of button that let the user open downloads section of transfer manager.</translatorcomment>
-        <translation>Open downloads</translation>
+        <translation>Letöltések megnyitása</translation>
     </message>
     <message>
         <source>Open Uploads</source>
         <translatorcomment>Tooltip of button that let the user open uploads section of transfer manager.</translatorcomment>
-        <translation>Open uploads</translation>
+        <translation>Feltöltések megnyitása</translation>
     </message>
     <message>
         <source>No notifications for contacts</source>
         <translatorcomment>Label to indicate that there aren&apos;t notifications of contacts</translatorcomment>
-        <translation>No notifications for contacts</translation>
+        <translation>Nincsenek értesítések a névjegyekhez</translation>
     </message>
     <message>
         <source>No notifications for incoming shares</source>
         <translatorcomment>Label to indicate that there aren&apos;t notifications of incoming shares</translatorcomment>
-        <translation>No notifications for incoming shares</translation>
+        <translation>Nincsenek értesítések bejövő megosztásokról</translation>
     </message>
     <message>
         <source>No notifications for payments</source>
         <translatorcomment>Label to indicate that there aren&apos;t notifications of payments</translatorcomment>
-        <translation>No notifications for payments</translation>
+        <translation>Nincsenek értesítések fizetésekről</translation>
     </message>
     <message>
         <source>%1 used</source>
         <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1</translatorcomment>
-        <translation>%1 used</translation>
+        <translation>%1 foglalt</translation>
     </message>
     <message>
         <source>Upgrade account</source>
@@ -1945,17 +1945,17 @@ Egyes esetekben részleteket tartalmazhatnak az adatairól, például fájlok va
     <message>
         <source>You must act immediately to save your data</source>
         <translatorcomment>Label to inform the user that deadline for upgrade has been reached. The user needs to fix the situation asap to avoid data deletion.</translatorcomment>
-        <translation>You must act immediately to save your data</translation>
+        <translation>Azonnal intézkednie kell az adatai mentéséről</translation>
     </message>
     <message>
         <source>Depleted transfer quota.</source>
         <translatorcomment>Title to indicate a situation of depleted transfer quota for the current account.</translatorcomment>
-        <translation>Depleted transfer quota.</translation>
+        <translation>Kimerült átviteli kvóta.</translation>
     </message>
     <message>
         <source>All downloads are currently disabled.</source>
         <translatorcomment>Informative label to indicate that all downloads are currently disabled because a situation of over transfer quota.</translatorcomment>
-        <translation>All downloads are currently disabled.</translation>
+        <translation>Jelenleg minden letöltés le van tiltva.</translation>
     </message>
     <message>
         <source>Upgrade</source>
@@ -1965,37 +1965,37 @@ Egyes esetekben részleteket tartalmazhatnak az adatairól, például fájlok va
     <message>
         <source>Limited available transfer quota</source>
         <translatorcomment>Title to indicate that current account has limited transfer quota. Transfer usage above 90 per cent of the total.</translatorcomment>
-        <translation>Limited available transfer quota</translation>
+        <translation>Korlátozottan elérhető átviteli kvóta</translation>
     </message>
     <message>
         <source>Your queued transfers exceed the current quota available for your IP address and can therefore be interrupted.</source>
         <translatorcomment>Informative label to indicate that your queued transfers may be interrupted because the current account is above 90 percent of the transfer quota of the current account.</translatorcomment>
-        <translation>Your queued transfers exceed the current quota available for your IP address and may therefore be interrupted.</translation>
+        <translation>A sorba állított átvitelek meghaladják az IP-címéhez jelenleg rendelkezésre álló kvótát, ezért megszakadhatnak.</translation>
     </message>
     <message>
         <source>One or more syncs have been disabled</source>
         <translatorcomment>Label to indicate that some syncs have been disable due to some error.</translatorcomment>
-        <translation>One or more syncs have been disabled</translation>
+        <translation>Egy vagy több szinkronizálás le lett tiltva</translation>
     </message>
     <message>
         <source>Something went wrong while trying to sync your folders.</source>
         <translatorcomment>Label to indicate that an error occurs while trying to resume the syncs</translatorcomment>
-        <translation>Something went wrong while trying to sync your folders.</translation>
+        <translation>Valami hiba történt a mappák szinkronizálása közben.</translation>
     </message>
     <message>
         <source>Open Preferences</source>
         <translatorcomment>Button label to open MEGAsync preferences dialog (MacOS).</translatorcomment>
-        <translation>Open Preferences</translation>
+        <translation>Tulajdonságok megnyitása</translation>
     </message>
     <message>
         <source>Open Settings</source>
         <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
-        <translation>Open Settings</translation>
+        <translation>Beállítások megnyitása</translation>
     </message>
     <message>
         <source>Your data is at risk</source>
         <translatorcomment>Label to indicate that your data is at risk due to the current account is in over quota storage state for long time without fixing the situation.</translatorcomment>
-        <translation>Your data is at risk</translation>
+        <translation>Az adatai veszélyben vannak</translation>
     </message>
     <message numerus="yes">
         <source>We have contacted you by email to [A] on [B] but you still have %n file taking up [D] in your MEGA account, which requires you to have [E].</source>
