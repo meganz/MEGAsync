@@ -1207,6 +1207,12 @@
         <file>images/Small_Pro_Flexi.png</file>
         <file>images/Small_Pro_Flexi@2x.png</file>
         <file>images/Small_Pro_Flexi@3x.png</file>
+        <file>images/node_selector/alert-circle-default.png</file>
+        <file>images/node_selector/alert-circle-default@2x.png</file>
+        <file>images/node_selector/alert-circle-default@3x.png</file>
+        <file>images/node_selector/alert-circle-hover.png</file>
+        <file>images/node_selector/alert-circle-hover@2x.png</file>
+        <file>images/node_selector/alert-circle-hover@3x.png</file>
         <file>images/node_selector/search_icon.png</file>
         <file>images/node_selector/search_icon@2x.png</file>
         <file>images/node_selector/search_icon@3x.png</file>

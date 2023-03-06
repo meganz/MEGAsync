@@ -2964,7 +2964,7 @@ Transfers will automatically resume when you re-open the app.</numerusform>
     </message>
     <message>
         <source>Error getting link: File not found</source>
-	<translatorcomment>Notification message shown an error of file not found while getting a public link.</translatorcomment>
+        <translatorcomment>Notification message shown an error of file not found while getting a public link.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
