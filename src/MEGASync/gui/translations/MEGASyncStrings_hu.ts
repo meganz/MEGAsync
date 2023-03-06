@@ -2152,7 +2152,7 @@ Egyes esetekben részleteket tartalmazhatnak az adatairól, például fájlok va
     <message>
         <source>Install just for me</source>
         <translatorcomment>Label to indicate that MEGAsync installation on Windows is just for the current user.</translatorcomment>
-        <translation>Telepítsd csak számomra</translation>
+        <translation>Telepítse csak számomra</translation>
     </message>
 </context>
 <context>
@@ -2220,17 +2220,17 @@ Egyes esetekben részleteket tartalmazhatnak az adatairól, például fájlok va
     <message>
         <source>Logging in</source>
         <translatorcomment>Label of tray icon showing a Logging in state. Keep capital letters.</translatorcomment>
-        <translation>Logging in</translation>
+        <translation>Bejelentkezés...</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click here to open the status window.</source>
         <translatorcomment>Notification message that MEGAsync is actually running.</translatorcomment>
-        <translation>The app is now running. Click here to open the status window.</translation>
+        <translation>Az alkalmazás most fut. Kattintson ide az állapotablak megnyitásához.</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
         <translatorcomment>Notification message launched when a problem occurs uploading files to a destination folder in MEGA.</translatorcomment>
-        <translation>Error: Invalid destination folder. The upload has been cancelled</translation>
+        <translation>Hiba: érvénytelen célmappa. A feltöltés megszakadt</translation>
     </message>
     <message>
         <source>About MEGAsync</source>
@@ -2240,17 +2240,17 @@ Egyes esetekben részleteket tartalmazhatnak az adatairól, például fájlok va
     <message>
         <source>The link has been copied to the clipboard</source>
         <translatorcomment>Notification message launched when a link to a file has been copied succesfully to the clipboard.</translatorcomment>
-        <translation>The link has been copied to the clipboard</translation>
+        <translation>A hivatkozás a vágólapra másolva</translation>
     </message>
     <message>
         <source>The links have been copied to the clipboard</source>
         <translatorcomment>Notification message launched when some links have been copied succesfully to the clipboard.</translatorcomment>
-        <translation>The links have been copied to the clipboard</translation>
+        <translation>A hivatkozások a vágólapra másolva</translation>
     </message>
     <message>
         <source>Logging in...</source>
         <translatorcomment>Notification message showing a Logging in state. Keep capital letters.</translatorcomment>
-        <translation>Logging in…</translation>
+        <translation>Bejelentkezés…</translation>
     </message>
     <message>
         <source>About</source>
@@ -2265,68 +2265,68 @@ Egyes esetekben részleteket tartalmazhatnak az adatairól, például fájlok va
     <message>
         <source>Paused</source>
         <translatorcomment>Label of tray icon to indicate that MEGAsync is in a paused state.</translatorcomment>
-        <translation>Paused</translation>
+        <translation>Szünetel</translation>
     </message>
     <message>
         <source>Scanning</source>
         <translatorcomment>Label of tray icon to indicate that MEGAsync is in a scanning state.</translatorcomment>
-        <translation>Scanning</translation>
+        <translation>Beolvasás</translation>
     </message>
     <message>
         <source>Syncing</source>
         <translatorcomment>Label of tray icon to indicate that MEGAsync is in a syncing state.</translatorcomment>
-        <translation>Syncing</translation>
+        <translation>Szinkronizálás</translation>
     </message>
     <message>
         <source>MEGAsync has been updated</source>
         <translatorcomment>Notification message launched when an update has been succesfully applied.</translatorcomment>
-        <translation>The app has been updated</translation>
+        <translation>Az alkalmazás frissítve lett</translation>
     </message>
     <message>
         <source>Waiting</source>
         <translatorcomment>Label of tray icon to indicate that MEGAsync is in a waiting state.</translatorcomment>
-        <translation>Waiting</translation>
+        <translation>Várakozás</translation>
     </message>
     <message>
         <source>Update available!</source>
         <translatorcomment>Label of tray icon to indicate that there is an update available to download.</translatorcomment>
-        <translation>An update is available</translation>
+        <translation>Frissítés érhető el</translation>
     </message>
     <message>
         <source>An update will be applied during the next application restart</source>
         <translatorcomment>Notification message launched when an update is already downloaded but not applied yet. It will be applied during the next application restart.</translatorcomment>
-        <translation>An update will be applied during the next application restart</translation>
+        <translation>A frissítés az alkalmazás következő újraindításakor kerül alkalmazásra</translation>
     </message>
     <message>
         <source>Installing update...</source>
         <translatorcomment>Notification message launched when an update is being installed.</translatorcomment>
-        <translation>Installing update…</translation>
+        <translation>Frissítés telepítése…</translation>
     </message>
     <message>
         <source>Checking for updates...</source>
         <translatorcomment>Notification message launched when the user wants to check if there are any available update at the moment.</translatorcomment>
-        <translation>Checking for updates…</translation>
+        <translation>Frissítések keresése…</translation>
     </message>
     <message>
         <source>Install update</source>
         <translatorcomment>Label to indicate the user that there is an available update downloaded to be installed.</translatorcomment>
-        <translation>Install update</translation>
+        <translation>Frissítés telepítése</translation>
     </message>
     <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>There was a problem installing the update. Please try again later or download the latest version from: https://mega.nz/sync</translation>
+        <translation>Hiba történt a frissítés telepítése során. Próbálja újra később vagy töltse le a legújabb verziót a https://mega.nz/sync címről</translation>
     </message>
     <message>
         <source>Update available. Downloading...</source>
         <translatorcomment>Notification message launched when an update for MEGAsync is being downloaded.</translatorcomment>
-        <translation>Update available. Downloading…</translation>
+        <translation>Frissítés érhető el. Letöltés…</translation>
     </message>
     <message>
         <source>No update available at this time</source>
         <translatorcomment>Notification message launched when a user is cheking if there are any available updates.</translatorcomment>
-        <translation>No update available at this time</translation>
+        <translation>Jelenleg nem érhető el frissítés</translation>
     </message>
     <message>
         <source>Error</source>
@@ -2336,68 +2336,68 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Starting</source>
         <translatorcomment>Label of tray icon to indicate that MEGAsync is starting.</translatorcomment>
-        <translation>Starting</translation>
+        <translation>Indítás</translation>
     </message>
     <message>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs while fetching nodes from the server.</translatorcomment>
-        <translation>Unable to get the file system. Please try again. If the problem persists please contact us at bug@mega.nz</translation>
+        <translation>Nem sikerült beolvasni a fájlrendszert. Próbáld újra. Ha a probléma továbbra is fennáll, írjon nekünk a bug@mega.nz címre</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
         <translatorcomment>Notification message launched when an user logged in succesfully. String as short as possible.</translatorcomment>
-        <translation>The app is now running. Click here to open the status window.</translation>
+        <translation>Az alkalmazás most fut. Kattintson ide az állapotablak megnyitásához.</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
         <translatorcomment>Notification message launched when an user logged in succesfully. String as short as possible.</translatorcomment>
-        <translation>The app is now running. Click here to open the status window.</translation>
+        <translation>Az alkalmazás most fut. Kattintson ide az állapotablak megnyitásához.</translation>
     </message>
     <message>
         <source>Show status</source>
         <translatorcomment>Label displayed to let the user displays the Information dialog of MEGAsync. MAX 20 characters. Keep capital letter.</translatorcomment>
-        <translation>Show status</translation>
+        <translation>Állapot mutatása</translation>
     </message>
     <message>
         <source>Your config is corrupt, please start over</source>
         <translatorcomment>Message displayed when an error occurs loading configurations from Settings file.</translatorcomment>
-        <translation>Your config is corrupted, please start over</translation>
+        <translation>A konfiguráció sérült, kezdje elölről</translation>
     </message>
     <message>
         <source>Error getting link: </source>
         <translatorcomment>Notification message launched when an error occurs getting a public link for a file/folder. Keep colon.</translatorcomment>
-        <translation>Error getting link:</translation>
+        <translation>Hiba a link lekérésekor:</translation>
     </message>
     <message>
         <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
         <translatorcomment>Notification message launched when a connectivity problem occurs.</translatorcomment>
-        <translation>The app is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</translation>
+        <translation>Az alkalmazás nem tud csatlakozni. Ellenőrizze internetkapcsolatát és a helyi tűzfal beállításait. Vegye figyelembe, hogy a legtöbb víruskereső szoftver is tartalmaz tűzfalat.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Your sync “%1” has been disabled because the remote folder doesn’t exist</translation>
+        <translation>„%1” szinkronizálása le lett tiltva, mert a távoli mappa nem létezik</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Your sync “%1” has been disabled because the local folder doesn’t exist</translation>
+        <translation>„%1” szinkronizálása le lett tiltva, mert a helyi mappa nem létezik</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs (BLOCK ACCOUNT) during a login operation.</translatorcomment>
-        <translation>Your account has been blocked. Please contact support@mega.nz</translation>
+        <translation>Fiókját blokkolva lett. Kérjük, írjon a support@mega.nz címre</translation>
     </message>
     <message>
         <source>Login error: %1</source>
         <translatorcomment>Message displayed during a login operation. Keep &quot;%1&quot; code because it will be fill with the error message.</translatorcomment>
-        <translation>Login error: %1</translation>
+        <translation>Bejelentkezési hiba: %1</translation>
     </message>
     <message>
         <source>You have been logged out on this computer from another location</source>
         <translatorcomment>Message displayed when the current account has been logged out from other computer/website.</translatorcomment>
-        <translation>You have been logged out on this computer from another location</translation>
+        <translation>Kijelentkezett erről a számítógépről egy másik helyen</translation>
     </message>
     <message>
         <source>You have been logged out because of this error: %1</source>
