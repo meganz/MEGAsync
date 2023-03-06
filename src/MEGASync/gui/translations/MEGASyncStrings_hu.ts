@@ -2020,37 +2020,37 @@ Egyes esetekben részleteket tartalmazhatnak az adatairól, például fájlok va
     <message>
         <source>Folder can&apos;t be opened. Check that the folder in your local drive hasn&apos;t been deleted or moved.</source>
         <translatorcomment>Warning message text to let the user know that the local folder could not be opened</translatorcomment>
-        <translation>Folder can&apos;t be opened. Check that the folder in your local drive hasn&apos;t been deleted or moved.</translation>
+        <translation>A mappa nem nyitható meg. Ellenőrizze, hogy a helyi meghajtón lévő mappát nem törölték le vagy helyezték át.</translation>
     </message>
     <message>
         <source>Some syncs and backups have been disabled</source>
         <translatorcomment>Warning message title shown on info dialog</translatorcomment>
-        <translation>Some syncs and backups have been disabled</translation>
+        <translation>Néhány szinkronizálás és biztonsági mentés le van tiltva</translation>
     </message>
     <message>
         <source>Something went wrong while trying to backup and sync your folders.</source>
         <translatorcomment>Warning message body shown on info dialog</translatorcomment>
-        <translation>Something went wrong while trying to back up and sync your folders.</translation>
+        <translation>Hiba történt a mappák biztonsági mentése / szinkronizálása közben.</translation>
     </message>
     <message>
         <source>One or more backups have been disabled</source>
         <translatorcomment>Warning message title shown on info dialog</translatorcomment>
-        <translation>One or more backups have been disabled</translation>
+        <translation>Egy vagy több biztonsági mentés le van tiltva</translation>
     </message>
     <message>
         <source>Something went wrong while trying to backup your folders.</source>
         <translatorcomment>Warning message body shown on info dialog</translatorcomment>
-        <translation>Something went wrong while trying to back up your folders.</translation>
+        <translation>Hiba történt a mappák biztonsági mentése közben.</translation>
     </message>
     <message>
         <source>Error adding %1:</source>
         <translatorcomment>Error label displayed when it fails adding a sync or backup. Placeholder will show the name of the sync. After the two dots an error message is displayed</translatorcomment>
-        <translation>Error adding %1:</translation>
+        <translation>%1 hozzáadásakor az alábbi hiba történt:</translation>
     </message>
     <message>
         <source>Add Backup</source>
         <translatorcomment>Tooltip message shown while hovering backups button.</translatorcomment>
-        <translation>Add backup</translation>
+        <translation>Biztonsági másolat hozzáadása</translation>
     </message>
 </context>
 <context>
@@ -2058,73 +2058,73 @@ Egyes esetekben részleteket tartalmazhatnak az adatairól, például fájlok va
     <message>
         <source>Show in folder</source>
         <translatorcomment>Tooltip for show transfer in folder</translatorcomment>
-        <translation>Show in folder</translation>
+        <translation>Mutatás mappában</translation>
     </message>
     <message>
         <source>Retry</source>
         <translatorcomment>Tooltip for retry failed transfer</translatorcomment>
-        <translation>Retry</translation>
+        <translation>Újra</translation>
     </message>
     <message>
         <source>Failed: %1</source>
         <translatorcomment>Tooltip for show transfer failed reason. %1 is a placeholder for the SDK error reason.</translatorcomment>
-        <translation>Failed: %1</translation>
+        <translation>Meghiúsult: %1</translation>
     </message>
     <message>
         <source>Copy link to file</source>
         <translatorcomment>Tooltip for copy linr</translatorcomment>
-        <translation>Copy link to clipboard</translation>
+        <translation>Hivatkozás másolása a vágólapra</translation>
     </message>
     <message>
         <source>Added [A]</source>
         <translatorcomment>Message shown when the transfer has finished. [A] place holder stands for elapsed time since the transfer finished</translatorcomment>
-        <translation>Added [A]</translation>
+        <translation>[A] hozzáadva</translation>
     </message>
 </context>
 <context>
     <name>InfoWizard</name>
     <message>
         <source>You are not logged in</source>
-        <translation>You are not logged in</translation>
+        <translation>Nincs bejelentkezve</translation>
     </message>
     <message>
         <source>Log in</source>
         <translatorcomment>Title for explanation about log in</translatorcomment>
-        <translation>Log&#xa0;in</translation>
+        <translation>Bejelentkezés</translation>
     </message>
     <message>
         <source>Create Account</source>
-        <translation>Create account</translation>
+        <translation>Fiók létrehozása</translation>
     </message>
     <message>
         <source>MEGA Desktop app</source>
         <translatorcomment>Title of MEGA Desktop app within initial information wizard.</translatorcomment>
-        <translation>MEGA Desktop App</translation>
+        <translation>MEGA Desktop Alkalmazás</translation>
     </message>
     <message>
         <source>Login or create an account to start using MEGA Desktop app.</source>
         <translatorcomment>Description label to inform the user about next step in order to use MEGA Desktop app. Users will need to login or create an account.</translatorcomment>
-        <translation>Log in or create an account to start using our app.</translation>
+        <translation>Alkalmazásunk használatához jelentkezzen be vagy hozzon létre egy fiókot.</translation>
     </message>
     <message>
         <source>You need to log into MEGA account to use the MEGA desktop app.</source>
         <translatorcomment>Description label to indicate the user needs to log in in order to fully use MEGA desktop app.</translatorcomment>
-        <translation>Log in to your MEGA account to use our app.</translation>
+        <translation>Alkalmazásunk használatához jelentkezzen be MEGA-fiókjába.</translation>
     </message>
     <message>
         <source>Create account</source>
         <translatorcomment>Button label to offer the user the option to create an account</translatorcomment>
-        <translation>Create account</translation>
+        <translation>Fiók létrehozása</translation>
     </message>
     <message>
         <source>Create account to join MEGA collaboration platform.</source>
         <translatorcomment>Description label to encourage user to create a MEGA account.</translatorcomment>
-        <translation>Create an account to join the MEGA collaboration platform.</translation>
+        <translation>Hozzon létre egy fiókot a MEGA együttműködési platformhoz való csatlakozáshoz.</translation>
     </message>
     <message>
         <source>Know more about MEGA desktop app. [A]Read more[/A]</source>
         <translatorcomment>Label with hyperlink to sync client webpage to know more about MEGA desktop app. Keep placeholders.</translatorcomment>
-        <translation>Learn more about our app. [A]Read more[/A]</translation>
+        <translation>Tudjon meg többet alkalmazásunkról. [A]További információ[/A]</translation>
     </message>
 </context>
 <context>
@@ -2132,27 +2132,27 @@ Egyes esetekben részleteket tartalmazhatnak az adatairól, például fájlok va
     <message>
         <source>Choose Users</source>
         <translatorcomment>Label to indicate for which users you want to install MEGAsync.</translatorcomment>
-        <translation>Choose users</translation>
+        <translation>Válasszon felhasználókat</translation>
     </message>
     <message>
         <source>Choose for which users you want to install $(^NameDA).</source>
         <translatorcomment>Label to indicate for which users you want to install MEGAsync. Preserve $(^NameDA) code</translatorcomment>
-        <translation>Choose for which users you want to install $(^NameDA).</translation>
+        <translation>Válassza ki, mely felhasználók számára szeretné telepíteni a $(^NameDA) programot.</translation>
     </message>
     <message>
         <source>Select whether you want to install $(^NameDA) for yourself only or for all users of this computer. $(^ClickNext)</source>
         <translatorcomment>Label to indicate the type of installation. Preserve $(^NameDA)  and $(^ClickNext) codes.</translatorcomment>
-        <translation>Select whether you want to install $(^NameDA) for yourself only or for all users of this computer. $(^ClickNext)</translation>
+        <translation>Válassza ki, hogy a $(^NameDA) programot csak saját maga részére vagy a számítógép összes felhasználója részére telepíti-e. $(^ClickNext)</translation>
     </message>
     <message>
         <source>Install for anyone using this computer</source>
         <translatorcomment>Label to indicate that MEGAsync installation on Windows is for anyone using this computer.</translatorcomment>
-        <translation>Install for anyone using this computer</translation>
+        <translation>Telepítés mindenki számára ezen a számítógépen</translation>
     </message>
     <message>
         <source>Install just for me</source>
         <translatorcomment>Label to indicate that MEGAsync installation on Windows is just for the current user.</translatorcomment>
-        <translation>Install just for me</translation>
+        <translation>Telepítsd csak számomra</translation>
     </message>
 </context>
 <context>
@@ -2160,17 +2160,17 @@ Egyes esetekben részleteket tartalmazhatnak az adatairól, például fájlok va
     <message>
         <source>[A]It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.[/A]</source>
         <translatorcomment>Description label to inform the user about possible data breach in other systems.</translatorcomment>
-        <translation>[A]It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.[/A]</translation>
+        <translation>[A]Lehetséges, hogy ugyanazt a jelszót használja MEGA-fiókjához, mint más szolgáltatásokhoz, és ezen szolgáltatások közül legalább az egyik adatvédelmi incidenst szenvedett.[/A]</translation>
     </message>
     <message>
         <source>[A]Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.[/A]</source>
         <translatorcomment>Description label to indicate the user that his password may be leaked and needs to perform email verification to continue.</translatorcomment>
-        <translation>[A]Your password leaked and is now being used by bad actors to log in to your accounts, including, but not limited to, your MEGA account.[/A]</translation>
+        <translation>[A]A jelszava kiszivárgott, és most rossz-szándékú személyek használják a fiókjaiba való bejelentkezéshez, beleértve, de nem kizárólagosan, a MEGA-fiókját is.[/A]</translation>
     </message>
     <message>
         <source>Locked Accounts</source>
         <translatorcomment>Title of informative popover which informs users about the lock situation.</translatorcomment>
-        <translation>Locked accounts</translation>
+        <translation>Zárolt fiókok</translation>
     </message>
 </context>
 <context>
@@ -2178,17 +2178,17 @@ Egyes esetekben részleteket tartalmazhatnak az adatairól, például fájlok va
     <message>
         <source>Login Verification</source>
         <translatorcomment>A dialog title for the form which collects the user’s 2FA code for login.</translatorcomment>
-        <translation>Login verification</translation>
+        <translation>Bejelentkezés ellenőrzése</translation>
     </message>
     <message>
         <source>Please enter the code generated by your authentication app</source>
         <translatorcomment>Description text of the label displayed to introduce the 6-digit code for the 2FA</translatorcomment>
-        <translation>Please enter the code generated by your authentication app</translation>
+        <translation>Kérjük, adja meg a hitelesítő alkalmazása által generált kódot</translation>
     </message>
     <message>
         <source>6 digit code:</source>
         <translatorcomment>Placeholder text on the Two Factor Authentication login dialog telling the user to enter their 6 digit code from the Google Authenticator app.</translatorcomment>
-        <translation>6-digit code:</translation>
+        <translation>6 számjegyű kód:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2198,17 +2198,17 @@ Egyes esetekben részleteket tartalmazhatnak az adatairól, például fájlok va
     <message>
         <source>Next</source>
         <translatorcomment>Button text to confirm 2FA dialog</translatorcomment>
-        <translation>Next</translation>
+        <translation>Következő</translation>
     </message>
     <message>
         <source>Invalid code</source>
         <translatorcomment>An error message when the 2FA code entered was incorrect.</translatorcomment>
-        <translation>Invalid code</translation>
+        <translation>Hibás kód</translation>
     </message>
     <message>
         <source>[A]Lost your authenticator device?[/A]</source>
         <translatorcomment>Label with hyperlink to recovery website when user is entering incorrect 2FA code during login stage</translatorcomment>
-        <translation>[A]Lost your authenticator device?[/A]</translation>
+        <translation>[A]Elvesztette a hitelesítő eszközét?[/A]</translation>
     </message>
 </context>
 <context>
