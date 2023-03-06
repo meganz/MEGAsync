@@ -2402,47 +2402,47 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You have been logged out because of this error: %1</source>
         <translatorcomment>Message displayed when the current account has been logged due to an error. Keep &quot;%1&quot; code because it will be filled with the error message.</translatorcomment>
-        <translation>You have been logged out because of this error: %1</translation>
+        <translation>Ki lett léptetve az alábbi hiba miatt: %1</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Your sync “%1” has been disabled because the remote folder is in the Rubbish bin</translation>
+        <translation>„%1” szinkronizálása le van tiltva, mert a távoli mappa Lomtárban van</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the local folder has changed(moved/deleted/...). Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Your sync “%1” has been disabled because the local folder has changed</translation>
+        <translation>„%1” szinkronizálása le van tiltva, mert a helyi mappa megváltozott</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Your sync “%1” has been disabled. The remote folder (or part of it) doesn’t have full access</translation>
+        <translation>„%1” szinkronizálása le van tiltva. A távoli mappához (vagy annak egy részéhez) nincs teljes hozzáférése</translation>
     </message>
     <message>
         <source>Over quota</source>
         <translatorcomment>Label to indicate a state of over quota</translatorcomment>
-        <translation>Over quota</translation>
+        <translation>Kvóta túllépés</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
         <translatorcomment>Notification message launched when an user is trying to sync a non valid VirtualBox shared folder . Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Your sync “%1” has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that file system.</translation>
+        <translation>„%1” szinkronizálása le van tiltva, mert a VirtualBox megosztott mappáinak szinkronizálása nem támogatott a fájlrendszerének hiányosságai miatt.</translation>
     </message>
     <message>
         <source>Error getting link information</source>
         <translatorcomment>Notification  error message shown while getting information from a public link.</translatorcomment>
-        <translation>Error getting link information</translation>
+        <translation>Hiba a link információinak lekérésekor</translation>
     </message>
     <message>
         <source>DEBUG mode disabled</source>
         <translatorcomment>Notification message shown when the DEBUG mode is disabled.</translatorcomment>
-        <translation>Debug mode disabled</translation>
+        <translation>Hibakeresési mód kikapcsolva</translation>
     </message>
     <message>
         <source>DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log)</source>
         <translatorcomment>Notification message shown when the DEBUG mode is enabled.</translatorcomment>
-        <translation>Debug mode enabled. A log called “MEGAsync.log” is being created on your computer.</translation>
+        <translation>Hibakeresési mód bekapcsolva. Egy „MEGAsync.log” nevű napló létrehozása folyamatban van a számítógépen.</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The download has been cancelled</source>
