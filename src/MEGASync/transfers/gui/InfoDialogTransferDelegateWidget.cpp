@@ -15,8 +15,7 @@ const QRect InfoDialogTransferDelegateWidget::FullRect = QRect(0,0,400,60);
 InfoDialogTransferDelegateWidget::InfoDialogTransferDelegateWidget(QWidget *parent) :
     TransferBaseDelegateWidget(parent),
     mUi(new Ui::InfoDialogTransferDelegateWidget),
-    mMegaApi(MegaSyncApp->getMegaApi()),
-    mActionButtonsEnabled(false)
+    mMegaApi(MegaSyncApp->getMegaApi())
 {
     mUi->setupUi(this);
 
@@ -243,30 +242,20 @@ TransferBaseDelegateWidget::ActionHoverType InfoDialogTransferDelegateWidget::mo
     {
         if (mIsHover)
         {
-            mActionButtonsEnabled = true;
             if (getData()->mErrorCode < 0)
             {
                 if (!getData()->isSyncTransfer())
                 {
                     bool in = isMouseHoverInAction(mUi->lActionTransfer, pos);
                     mUi->lActionTransfer->setToolTip(tr("Retry"));
-                    update = setActionTransferIcon(mUi->lActionTransfer,
-                                                   QString::fromLatin1("://images/ico_item_retry%1.png").arg(QString::fromLatin1(in?"_hover_ico":"")));
-                    if(in)
-                    {
-                        hoverType = ActionHoverType::HOVER_ENTER;
-                    }
-                    else if(update)
-                    {
-                        hoverType = ActionHoverType::HOVER_LEAVE;
-                    }
+                    setActionTransferIcon(mUi->lActionTransfer, QString::fromLatin1("://images/retry.png"));
+                    hoverType = (in) ? ActionHoverType::HOVER_ENTER : ActionHoverType::HOVER_LEAVE;
                 }
                 else
                 {
                     update = setActionTransferIcon(mUi->lActionTransfer,
                                                    QString::fromAscii("://images/error.png"));
                     mUi->lActionTransfer->setToolTip(tr("Failed: %1").arg(QString::fromStdString(getData()->mFailedTransfer->getLastError().getErrorString())));
-                    mActionButtonsEnabled = false;
 
                     if(update)
                     {
@@ -284,7 +273,7 @@ TransferBaseDelegateWidget::ActionHoverType InfoDialogTransferDelegateWidget::mo
                 {
                     inAction = isMouseHoverInAction(mUi->lActionTransfer, pos);
                     update = setActionTransferIcon(mUi->lActionTransfer,
-                                                   QString::fromAscii("://images/ico_item_link%1.png").arg(QString::fromAscii(inAction?"_hover_ico":"")));
+                                                   QString::fromAscii("://images/link%1.png").arg(QString::fromAscii(inAction ? "-hover" : "")));
                     mUi->lActionTransfer->setToolTip(tr("Copy link to file"));
                 }
                 else
@@ -296,34 +285,22 @@ TransferBaseDelegateWidget::ActionHoverType InfoDialogTransferDelegateWidget::mo
                 mUi->lShowInFolder->show();
 
                 bool inShowFolder = isMouseHoverInAction(mUi->lShowInFolder, pos);
-                update |= setActionTransferIcon(mUi->lShowInFolder,
-                                                QString::fromAscii("://images/showinfolder%1.png").arg(QString::fromAscii(inShowFolder?"_hover_ico":"")));
 
-                if(inAction || inShowFolder)
-                {
-                    hoverType = ActionHoverType::HOVER_ENTER;
-                }
-                else if(update)
-                {
-                    hoverType = ActionHoverType::HOVER_LEAVE;
-                }
+                bool fileExists = QFile(getData()->path()).exists();
+
+                const char* baseIconName = (fileExists) ? "://images/file-search%1.png" : "://images/file-question%1.png";
+                update |= setActionTransferIcon(mUi->lShowInFolder, QString::fromAscii(baseIconName).arg(QString::fromAscii(inShowFolder?"-hover":"")));
+                QString tooltipText = (fileExists) ? tr("Show in folder") : tr("Deleted or moved file");
+                mUi->lShowInFolder->setToolTip(tooltipText);
+
+                hoverType = (inAction || inShowFolder) ? ActionHoverType::HOVER_ENTER : ActionHoverType::HOVER_LEAVE;
             }
         }
         else
         {
-            mActionButtonsEnabled = false;
-            if (getData()->mErrorCode < 0)
-            {
-                update = setActionTransferIcon(mUi->lActionTransfer,
-                                               QString::fromAscii("://images/error.png"));
-                mUi->lActionTransfer->setIconSize(QSize(24,24));
-            }
-            else
-            {
-                update = setActionTransferIcon(mUi->lActionTransfer,
-                                               QString::fromAscii("://images/success.png"));
-                mUi->lActionTransfer->setIconSize(QSize(24,24));
-            }
+            const char* iconName = (getData()->mErrorCode < 0) ? "://images/error.png" : "://images/success.png";
+            update = setActionTransferIcon(mUi->lActionTransfer, QString::fromAscii(iconName));
+            mUi->lActionTransfer->setIconSize(QSize(24,24));
 
             if(update)
             {

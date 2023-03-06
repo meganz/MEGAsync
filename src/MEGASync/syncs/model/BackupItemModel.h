@@ -3,11 +3,6 @@
 
 #include "syncs/model/SyncItemModel.h"
 
-namespace UserAttributes{
-class DeviceName;
-class MyBackupsHandle;
-}
-
 class BackupItemModel : public SyncItemModel
 {
     Q_OBJECT
@@ -31,9 +26,6 @@ public:
     void fillData() override;
 
 private:
-    std::shared_ptr<UserAttributes::DeviceName> mDeviceNameRequest;
-    std::shared_ptr<UserAttributes::MyBackupsHandle> mMyBackupsHandleRequest;
-
     void sendDataChanged(int pos) override;
 
 };

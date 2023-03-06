@@ -52,6 +52,7 @@ void TransferManagerDelegateWidget::updateTransferState()
     bool showTPauseResume(true);
     bool showTCancelClear(true);
     QString timeString;
+    QString timeTooltip;
     QString statusString;
 
     auto state = getData()->getState();
@@ -210,6 +211,7 @@ void TransferManagerDelegateWidget::updateTransferState()
             }
 
             timeString = getData()->getFormattedFinishedTime();
+            timeTooltip = getData()->getFullFormattedFinishedTime();
             speedString = QString::fromUtf8("…");
 
             break;
@@ -252,6 +254,7 @@ void TransferManagerDelegateWidget::updateTransferState()
             }
             speedString = Utilities::getSizeString(getData()->mSpeed) + QLatin1Literal("/s");
             timeString = getData()->getFormattedFinishedTime();
+            timeTooltip = getData()->getFullFormattedFinishedTime();
             break;
         }
         default:
@@ -309,8 +312,10 @@ void TransferManagerDelegateWidget::updateTransferState()
 
     // Speed
     mUi->bItemSpeed->setText(speedString);
-    // Remaining time
+
+    // Remaining or finished time
     mUi->lItemTime->setText(timeString);
+    mUi->lItemTime->setToolTip(timeTooltip);
 
 
     mUi->lSyncIcon->setVisible(getData()->isSyncTransfer());

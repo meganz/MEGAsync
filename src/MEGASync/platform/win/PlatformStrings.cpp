@@ -1,27 +1,11 @@
 #include "PlatformStrings.h"
 
-QString PlatformStrings::openSettings()
+QString PlatformStrings::fileExplorer()
 {
-    return tr("Open settings");
+    return tr("Show in Explorer");
 }
 
-QString PlatformStrings::syncsDisableWarning()
+QString PlatformStrings::exit()
 {
-    return tr("One or more syncs have been disabled. Go to settings to enable them again.");
-}
-
-QString PlatformStrings::backupsDisableWarning()
-{
-    return tr("One or more backups have been disabled. Go to settings to enable them again.");
-}
-
-QString PlatformStrings::syncsAndBackupsDisableWarning()
-{
-    return tr("Some syncs and backups have been disabled. Go to settings to enable them again.");
-}
-
-QString PlatformStrings::cancelSyncsWarning()
-{
-    return tr("Sync transfers cannot be cancelled individually.\n"
-              "Please delete the folder sync from settings to cancel them.");
+    return tr("Exit");
 }

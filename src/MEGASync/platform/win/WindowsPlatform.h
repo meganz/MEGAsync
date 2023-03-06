@@ -17,6 +17,8 @@
 
 #include <queue>
 
+extern bool WindowsPlatform_exiting;
+
 class WindowsPlatform
 {
 

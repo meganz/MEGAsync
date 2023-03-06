@@ -28,9 +28,8 @@ void TransferBatch::add(const QString &nodePath, const QString& nodeName)
             nodePathWithNativeSeparators = nodePathWithNativeSeparators + QDir::separator();
         }
 
-        auto escapedChar = MegaSyncApp->getMegaApi()->unescapeFsIncompatible(nodeName.toStdString().c_str());
-        nodePathWithNativeSeparators = nodePathWithNativeSeparators + QString::fromUtf8(escapedChar);
-        delete [] escapedChar;
+        std::unique_ptr<char[]> escapedChar(MegaSyncApp->getMegaApi()->unescapeFsIncompatible(nodeName.toStdString().c_str()));
+        nodePathWithNativeSeparators = nodePathWithNativeSeparators + QString::fromUtf8(escapedChar.get());
     }
 
     mPendingNodes.push_back(nodePathWithNativeSeparators);
@@ -44,9 +43,8 @@ void TransferBatch::cancel()
 void TransferBatch::onScanCompleted(const QString& nodePath)
 {
     std::string nodePathCopy = nodePath.toStdString();
-    auto escapedChar = MegaSyncApp->getMegaApi()->unescapeFsIncompatible(nodePathCopy.c_str());
-    QString convertedNodePath = QDir::toNativeSeparators(QString::fromUtf8(escapedChar));
-    delete [] escapedChar;
+    std::unique_ptr<char[]>  escapedChar(MegaSyncApp->getMegaApi()->unescapeFsIncompatible(nodePathCopy.c_str()));
+    QString convertedNodePath = QDir::toNativeSeparators(QString::fromUtf8(escapedChar.get()));
 
     auto it = std::find(mPendingNodes.begin(), mPendingNodes.end(), convertedNodePath);
     if (it != mPendingNodes.end())

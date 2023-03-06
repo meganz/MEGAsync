@@ -530,8 +530,10 @@ HRESULT	WinToast::validateShellLinkHelper(_Out_ bool& wasChanged) {
     const std::wstring& path = Util::findShellLink(_appName);
     if (path.empty())
     {
+#ifndef NDEBUG
         const std::wstring& defaultPath = Util::getShellLinkPath(_appName, Util::CURRENT_USER);
         DEBUG_MSG("Error, shell link not found. Try to create a new one in: " << defaultPath.c_str());
+#endif
         return E_FAIL;
     }
 

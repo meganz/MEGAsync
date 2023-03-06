@@ -25,6 +25,7 @@ void TransferBaseDelegateWidget::updateUi(const QExplicitlySharedDataPointer<Tra
 
     if(!sameTag)
     {
+        mLastActionTransferIconName.clear();
         setType();
         setFileNameAndType();
     }
