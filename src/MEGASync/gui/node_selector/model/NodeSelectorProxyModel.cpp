@@ -207,6 +207,10 @@ bool NodeSelectorProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &
         {
             if(std::shared_ptr<mega::MegaNode> node = item->getNode())
             {
+               if (!node->isNodeKeyDecrypted() && !mFilter.showReadOnly)
+               {
+                   return false;
+               }
                if(node->isInShare())
                {
                    mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
