@@ -2998,12 +2998,12 @@ Az átvitelek automatikusan folytatódnak, amikor újra megnyitja az alkalmazás
     <message>
         <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
         <translatorcomment>Error triggered by SDK when an account has been suspended due to copyright violations.</translatorcomment>
-        <translation>Account suspended due to copyright violations. We sent you an email with more information about this.</translation>
+        <translation>A fiók szerzői jogok megsértése miatt felfüggesztve. Ezzel kapcsolatban további információkat tartalmazó e-mailt küldtünk Önnek.</translation>
     </message>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
-        <translation>Account terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of others&apos; rights, sharing and importing illegal data, or system abuse.</translation>
+        <translation>A fiók a MEGA szolgáltatási feltételeinek megsértése, például mások jogaival való visszaélés, illegális adatok megosztása és importálása vagy rendszerrel való visszaélés miatt.</translation>
     </message>
 </context>
 <context>
@@ -3011,27 +3011,27 @@ Az átvitelek automatikusan folytatódnak, amikor újra megnyitja az alkalmazás
     <message>
         <source>Why am I seeing this?</source>
         <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
-        <translation>Why am I seeing this?</translation>
+        <translation>Miért látom ezt?</translation>
     </message>
     <message>
         <source>Close</source>
         <translatorcomment>Button label to close current message box</translatorcomment>
-        <translation>Close</translation>
+        <translation>Bezárás</translation>
     </message>
     <message>
         <source>Locked Accounts</source>
         <translatorcomment>Title of informative message box which informs users about the lock situation.</translatorcomment>
-        <translation>Locked accounts</translation>
+        <translation>Zárolt fiókok</translation>
     </message>
     <message>
         <source>It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.</source>
         <translatorcomment>Description label to inform the user about possible data breach in other systems.</translatorcomment>
-        <translation>It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.</translation>
+        <translation>Lehetséges, hogy ugyanazt a jelszót használja MEGA-fiókjához, mint más szolgáltatásokhoz, és ezen utóbbi szolgáltatások közül legalább egy adatvédelmi incidenst szenvedett el.</translation>
     </message>
     <message>
         <source>Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.</source>
         <translatorcomment>Description label to indicate the user that his password may be leaked and needs to perform email verification to continue.</translatorcomment>
-        <translation>Your password leaked and is now being used by bad actors to log in to your accounts, including, but not limited to, your MEGA account.</translation>
+        <translation>A jelszava kiszivárgott, és most rosszhiszeműen használják a fiókjaiba való bejelentkezéshez, beleértve, de nem kizárólagosan, a MEGA-fiókját is.</translation>
     </message>
 </context>
 <context>
@@ -3039,17 +3039,17 @@ Az átvitelek automatikusan folytatódnak, amikor újra megnyitja az alkalmazás
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Title of the Cloud Drive section</translatorcomment>
-        <translation>Cloud drive</translation>
+        <translation>Felhőmeghajtó</translation>
     </message>
     <message>
         <source>Backups</source>
         <translatorcomment>Title of the Backups root node</translatorcomment>
-        <translation>Backups</translation>
+        <translation>Mentések</translation>
     </message>
     <message>
         <source>Incoming shares</source>
         <translatorcomment>Title of the Incoming shares root node</translatorcomment>
-        <translation>Incoming shares</translation>
+        <translation>Beérkező megosztások</translation>
     </message>
 </context>
 <context>
@@ -3062,7 +3062,7 @@ Az átvitelek automatikusan folytatódnak, amikor újra megnyitja az alkalmazás
     <message>
         <source>Please wait...</source>
         <translatorcomment>Message shown when a proxy task is being processed</translatorcomment>
-        <translation>Please wait…</translation>
+        <translation>Várjon…</translation>
     </message>
 </context>
 <context>
@@ -3070,132 +3070,132 @@ Az átvitelek automatikusan folytatódnak, amikor újra megnyitja az alkalmazás
     <message>
         <source>No error</source>
         <translatorcomment>Label to show that an SDK operation has been completed successfully.</translatorcomment>
-        <translation>No error</translation>
+        <translation>Nincs hiba</translation>
     </message>
     <message>
         <source>Unknown error</source>
         <translatorcomment>Label to show that an unknown error occurs during a SDK operation.</translatorcomment>
-        <translation>Unknown error</translation>
+        <translation>Ismeretlen hiba</translation>
     </message>
     <message>
         <source>File system not supported</source>
         <translatorcomment>Label to show that an error related with a file system not supported for a sync occurs during a SDK operation.</translatorcomment>
-        <translation>The file system is not supported</translation>
+        <translation>A fájlrendszer nem támogatott</translation>
     </message>
     <message>
         <source>Remote node is not valid</source>
         <translatorcomment>Label to show that remote node is invalid for a sync during a SDK operation.</translatorcomment>
-        <translation>The remote sync path is not valid</translation>
+        <translation>A távoli szinkronizálási útvonal nem érvényes</translation>
     </message>
     <message>
         <source>Local path is not valid</source>
         <translatorcomment>Label to show that local path is invalid for a sync during a SDK operation.</translatorcomment>
-        <translation>The local path is not valid</translation>
+        <translation>A helyi elérési út nem érvényes</translation>
     </message>
     <message>
         <source>Initial scan failed</source>
         <translatorcomment>Label to show that initial scan of a sync failed during a SDK operation.</translatorcomment>
-        <translation>The initial scan failed</translation>
+        <translation>A kezdeti vizsgálat nem sikerült</translation>
     </message>
     <message>
         <source>Local path temporarily unavailable</source>
         <translatorcomment>Label to show that local path is temporarely unavailable for a sync during a SDK operation.</translatorcomment>
-        <translation>The local path is temporarily unavailable</translation>
+        <translation>A helyi elérési út átmenetileg nem elérhető</translation>
     </message>
     <message>
         <source>Local path not available</source>
         <translatorcomment>Label to show that local path is unavailable for a sync during a SDK operation.</translatorcomment>
-        <translation>The local path is unavailable</translation>
+        <translation>A helyi elérési út nem elérhető</translation>
     </message>
     <message>
         <source>Remote node not found</source>
         <translatorcomment>Label to show that remote node was not found for a sync during a SDK operation.</translatorcomment>
-        <translation>The remote sync folder has not been found</translation>
+        <translation>A távoli szinkronizálási mappa nem található</translation>
     </message>
     <message>
         <source>Reached storage quota limit</source>
         <translatorcomment>Label to show that the account reached storage limit during a SDK operation.</translatorcomment>
-        <translation>Storage quota exceeded</translation>
+        <translation>A tárhely kvóta túllépve</translation>
     </message>
     <message>
         <source>Foreign target storage quota reached</source>
         <translatorcomment>Label to show that foreign target account has exceeded its storage quota during a SDK operation.</translatorcomment>
-        <translation>The sync folder owner’s account has exceeded their storage quota.</translation>
+        <translation>A szinkronizálási mappa tulajdonosának fiókja túllépte a tárhelykvótáját.</translation>
     </message>
     <message>
         <source>Remote path has changed</source>
         <translatorcomment>Label to show that remote path has changed for a sync during a SDK operation.</translatorcomment>
-        <translation>The remote sync folder path has changed</translation>
+        <translation>A távoli szinkronizálási mappa elérési útja megváltozott</translation>
     </message>
     <message>
         <source>Remote node moved to Rubbish Bin</source>
         <translatorcomment>Label to show that remote node has been moved to Rubbish bin.</translatorcomment>
-        <translation>The remote sync folder has been moved to the Rubbish bin</translation>
+        <translation>A távoli szinkronizálási mappa áthelyezésre került a Lomtárba</translation>
     </message>
     <message>
         <source>Share without full access</source>
         <translatorcomment>SDK error label shown when trying to sync into a shared folder without full access.</translatorcomment>
-        <translation>You don’t have full access to the remote sync folder</translation>
+        <translation>Nincs teljes hozzáférése a távoli szinkronizálási mappához</translation>
     </message>
     <message>
         <source>Local fingerprint mismatch</source>
         <translatorcomment>SDK error label shown when local fingerprint mismatches.</translatorcomment>
-        <translation>A local file system change has been detected</translation>
+        <translation>Egy helyi fájlrendszer-változás észlelve</translation>
     </message>
     <message>
         <source>Put nodes error</source>
         <translatorcomment>SDK error label shown when a put nodes fails.</translatorcomment>
-        <translation>Error creating new items in MEGA</translation>
+        <translation>Hiba az új elemek létrehozásakor a MEGA-ban</translation>
     </message>
     <message>
         <source>Active sync below path</source>
         <translatorcomment>SDK error label shown when setting a sync and there is an active sync with path inside the selected remote target</translatorcomment>
-        <translation>There is already an active sync within your remote folder</translation>
+        <translation>Már van egy aktív szinkronizálás a távoli mappájában</translation>
     </message>
     <message>
         <source>Active sync above path</source>
         <translatorcomment>SDK error label shown when setting a sync and there is an active sync with a remote path as includes the selected remote target.</translatorcomment>
-        <translation>The remote folder is already part of an existing active sync</translation>
+        <translation>A távoli mappa már egy meglévő aktív szinkronizálás része</translation>
     </message>
     <message>
         <source>Remote node has been deleted</source>
         <translatorcomment>SDK error label shown when remote node has been deleted</translatorcomment>
-        <translation>The remote sync folder has been deleted</translation>
+        <translation>A távoli szinkronizálási mappa törölve lett</translation>
     </message>
     <message>
         <source>Remote node is inside Rubbish Bin</source>
         <translatorcomment>SDK error label shown when remote node is inside Rubbish bin.</translatorcomment>
-        <translation>The remote sync folder is in your Rubbish bin</translation>
+        <translation>A távoli szinkronizálási mappa a Lomtárában található</translation>
     </message>
     <message>
         <source>Unsupported VBoxSharedFolderFS filesystem</source>
         <translatorcomment>SDK error label shown when local filesystem is the unsupported VBoxSharedFolderFS during setting a sync</translatorcomment>
-        <translation>VBoxSharedFolderFS file systems are not supported</translation>
+        <translation>A VBoxSharedFolderFS fájlrendszerek nem támogatottak</translation>
     </message>
     <message>
         <source>Local path collides with an existing sync</source>
         <translatorcomment>SDK error label shown when local path collides due to an existing sync while setting a new one.</translatorcomment>
-        <translation>The local path is already synced</translation>
+        <translation>A helyi elérési út már szinkronizálva van</translation>
     </message>
     <message>
         <source>Local filesystem is FAT</source>
         <translatorcomment>SDK error label shown when local filesystem is FAT during setting a sync</translatorcomment>
-        <translation>FAT file systems are not supported</translation>
+        <translation>A FAT fájlrendszerek nem támogatottak</translation>
     </message>
     <message>
         <source>Local filesystem is HGFS</source>
         <translatorcomment>SDK error label shown when local filesystem is HGFS during setting a sync</translatorcomment>
-        <translation>HGFS file systems are not supported</translation>
+        <translation>A HGFS fájlrendszerek nem támogatottak</translation>
     </message>
     <message>
         <source>Your account is blocked</source>
         <translatorcomment>SDK error shown when your account is blocked</translatorcomment>
-        <translation>Your account has been locked</translation>
+        <translation>A fiókja zárolásra került</translation>
     </message>
     <message>
         <source>Unknown temporary error</source>
         <translatorcomment>SDK error label shown for a unknown temporary error.</translatorcomment>
-        <translation>Unknown temporary error</translation>
+        <translation>Ismeretlen ideiglenes hiba</translation>
     </message>
     <message>
         <source>Too many changes in account, local state invalid</source>
