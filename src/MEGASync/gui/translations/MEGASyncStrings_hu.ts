@@ -4507,8 +4507,8 @@ Ellenőrizze, hogy a megfelelő könyvtárnevet adta-e meg.</translation>
         <source>%1 already exists.
 Do you want to replace it?</source>
         <translatorcomment>Warning message thrown when the file alredy exists when saving</translatorcomment>
-        <translation>%1 already exists.
-Do you want to replace it?</translation>
+        <translation>%1 már létezik.
+Le akarja cserélni?</translation>
     </message>
     <message>
         <source>%1
@@ -4516,15 +4516,15 @@ File not found.
 Please verify the correct file name was given.</source>
         <translatorcomment>Warning message when the file name to open is incorrect</translatorcomment>
         <translation>%1
-File not found.
-Please verify the correct file name was given.</translation>
+Fájl nem található.
+Ellenőrizze, hogy a megfelelő fájlnevet adta-e meg.</translation>
     </message>
     <message>
         <source>&apos;%1&apos; is write protected.
 Do you want to delete it anyway?</source>
         <translatorcomment>Warning message when a write protected file is about to be delete</translatorcomment>
-        <translation>“%1” is write protected.
-Do you want to delete it anyway?</translation>
+        <translation>„%1” írásvédett.
+Mindenképp törli?</translation>
     </message>
 </context>
 <context>
@@ -4552,63 +4552,63 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>%1 bytes</source>
         <translatorcomment>File size measured in bytes</translatorcomment>
-        <translation>%1&#xa0;bytes</translation>
+        <translation>%1&#xa0;bájt</translation>
     </message>
     <message>
         <source>Invalid filename</source>
         <translatorcomment>Name of an invalid filename</translatorcomment>
-        <translation>Invalid filename</translation>
+        <translation>Érvénytelen fáljnév</translation>
     </message>
     <message>
         <source>Name</source>
         <translatorcomment>Header name of the column that shows file names</translatorcomment>
-        <translation>Name</translation>
+        <translation>Név</translation>
     </message>
     <message>
         <source>Size</source>
         <translatorcomment>Header name of the column that shows files sizes</translatorcomment>
-        <translation>Size</translation>
+        <translation>Méret</translation>
     </message>
     <message>
         <source>Kind</source>
         <translatorcomment>Header name of the column that shows file kind. Used by QT on QT standard dialogs. For MacOS platforms only.</translatorcomment>
-        <translation>Kind</translation>
+        <translation>Fajta</translation>
     </message>
     <message>
         <source>Type</source>
         <translatorcomment>Header name of the column that shows file type. Used by QT on QT standard dialogs. For Windows/Linux platforms.</translatorcomment>
-        <translation>Type</translation>
+        <translation>Típus/translation>
     </message>
     <message>
         <source>Date Modified</source>
         <translatorcomment>Header name of the column that shows file modified dates</translatorcomment>
-        <translation>Date modified</translation>
+        <translation>Módosítás dátuma</translation>
     </message>
     <message>
         <source>My Computer</source>
         <translatorcomment>Name of the top level of the filesystem in windows platform</translatorcomment>
-        <translation>My computer</translation>
+        <translation>Sajátgép</translation>
     </message>
     <message>
         <source>Computer</source>
         <translatorcomment>Name of the top level of the filesystem in unix platform</translatorcomment>
-        <translation>Computer</translation>
+        <translation>Számítógép</translation>
     </message>
     <message>
         <source>&lt;b&gt;The name &quot;%1&quot; cannot be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuation marks.</source>
         <translatorcomment>Alert message when file name is incorrect</translatorcomment>
-        <translation>&lt;b&gt;The name “%1” cannot be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuation marks.</translation>
+        <translation>&lt;b&gt;A „%1” név nem használható.&lt;/b&gt;&lt;p&gt;Próbáljon másik nevet használni, kevesebb karakterrel vagy írásjelek nélkül.</translation>
     </message>
 </context>
 <context>
     <name>QPlatformTheme</name>
     <message>
         <source>&amp;Yes</source>
-        <translation>&amp;Yes</translation>
+        <translation>&amp;Igen</translation>
     </message>
     <message>
         <source>&amp;No</source>
-        <translation>&amp;No</translation>
+        <translation>&amp;Nem</translation>
     </message>
     <message>
         <source>OK</source>
@@ -4624,52 +4624,52 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Stop backup</source>
         <translatorcomment>Backup removal dialog window title (Linux and windows)</translatorcomment>
-        <translation>Stop backup</translation>
+        <translation>Biztonsági mentést leállítása</translation>
     </message>
     <message>
         <source>Stop backing up folder?</source>
         <translatorcomment>Backup removal dialog title</translatorcomment>
-        <translation>Stop backing up folder?</translation>
+        <translation>Leállítja a mappa biztonsági mentését?</translation>
     </message>
     <message>
         <source>To stop backing up this folder, you need to either move it or delete it.</source>
         <translatorcomment>Backup removal title description</translatorcomment>
-        <translation>To stop backing up this folder, you need to either move it or delete it.</translation>
+        <translation>A mappa biztonsági mentésének leállításához át kell helyeznie vagy törölnie kell azt.</translation>
     </message>
     <message>
         <source>Move folder</source>
         <translatorcomment>Radio button option label</translatorcomment>
-        <translation>Move folder</translation>
+        <translation>Mappa áthelyezése</translation>
     </message>
     <message>
         <source>Move this folder from backups to another location in your cloud drive to get full access to your data. This folder will stop being backed up.</source>
         <translatorcomment>Radio button description</translatorcomment>
-        <translation>Move this folder from backups to another location in your Cloud drive to get full access to your data. This folder will stop being backed up.</translation>
+        <translation>Mappa áthelyezése a biztonsági mentések közül egy másik helyre a felhőmeghajtón, hogy teljes hozzáférést kapjon adataihoz. A mappa biztonsági mentése leáll.</translation>
     </message>
     <message>
         <source>Move to:</source>
         <translatorcomment>Label in the left of a line edit where the target location will be displayed</translatorcomment>
-        <translation>Move to:</translation>
+        <translation>Áthelyezés ide:</translation>
     </message>
     <message>
         <source>Change</source>
         <translatorcomment>Button text to change the target folder</translatorcomment>
-        <translation>Change</translation>
+        <translation>Módosítás</translation>
     </message>
     <message>
         <source>Delete folder permanently</source>
         <translatorcomment>Radio button option text</translatorcomment>
-        <translation>Delete folder permanently</translation>
+        <translation>Mappa végleges törlése</translation>
     </message>
     <message>
         <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. This action cannot be undone.</source>
         <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option.</translatorcomment>
-        <translation>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. This action cannot be undone.</translation>
+        <translation>A mappa törlődik a MEGA-ból. Nem törlődik a számítógépéről. Ez a művelet nem visszavonható.</translation>
     </message>
     <message>
         <source>Confirm</source>
         <translatorcomment>Button text that accepts</translatorcomment>
-        <translation>Confirm</translation>
+        <translation>Megerősítés</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -4682,22 +4682,22 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Enter new file name</source>
         <translatorcomment>Title of the rename file dialog </translatorcomment>
-        <translation>Enter new file name</translation>
+        <translation>Adja meg az új fájlnevet</translation>
     </message>
     <message>
         <source>Enter new folder name</source>
         <translatorcomment>Title of the rename folder dialog </translatorcomment>
-        <translation>Enter new folder name</translation>
+        <translation>Adja meg az új mappanevet</translation>
     </message>
     <message>
         <source>Rename file</source>
         <translatorcomment>Dialog title for file renaming</translatorcomment>
-        <translation>Rename file</translation>
+        <translation>Fájl átnevezése</translation>
     </message>
     <message>
         <source>Rename folder</source>
         <translatorcomment>Dialog title for folder renaming</translatorcomment>
-        <translation>Rename folder</translation>
+        <translation>Mappa átnevezése</translation>
     </message>
 </context>
 <context>
@@ -4710,17 +4710,17 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Don&apos;t close the app. If you close, transfers not yet queued will be lost.</source>
         <translatorcomment>Message displayed in scanning widget to warn the user of consequences of closing the app.</translatorcomment>
-        <translation>Don&apos;t close the app. If you close, transfers not yet queued will be lost.</translation>
+        <translation>Ne zárja be az alkalmazást. Ha bezárja, a még sorra nem került átvitelek elvesznek.</translation>
     </message>
     <message>
         <source>Scanning</source>
         <translatorcomment>Label used to display when the scanning widget is on the &quot;Scanning&quot; step</translatorcomment>
-        <translation>Scanning…</translation>
+        <translation>Beolvasás…</translation>
     </message>
     <message>
         <source>Creating folders</source>
         <translatorcomment>Label used to display when the scanning widget is on the &quot;Creating folders&quot; step</translatorcomment>
-        <translation>Creating folders…</translation>
+        <translation>Mappák létrehozása…</translation>
     </message>
     <message>
         <source>%1/%2</source>
@@ -4730,17 +4730,17 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>found %1, %2</source>
         <translatorcomment>Label used to display current status of scanning step. %1 is the string with number of folders found so far, %2 is the string with number of files found so far.</translatorcomment>
-        <translation>found %1, %2</translation>
+        <translation>found %1, %2 találat</translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Part of the string used to display number of folders in scanning step. %1 is the number of folders found so far.</translatorcomment>
-        <translation><numerusform>%n folder</numerusform><numerusform>%n folders</numerusform></translation>
+        <translation><numerusform>%n mappa</numerusform><numerusform>%n mappa</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Part of the string used to display number of files in scanning step. %1 is the number of files found so far.</translatorcomment>
-        <translation><numerusform>%n file</numerusform><numerusform>%n files</numerusform></translation>
+        <translation><numerusform>%n fájl</numerusform><numerusform>%n fájl</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4763,7 +4763,7 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Start on startup</source>
         <translatorcomment>Label to let the user start MEGAsync on startup of the operating system with a checkbox.</translatorcomment>
-        <translation>Start on startup</translation>
+        <translation>Indítás a Windowszal együtt</translation>
     </message>
     <message>
         <source>Update automatically</source>
@@ -4778,12 +4778,12 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Details</source>
         <translatorcomment>Button label to show the account usage details for the current user of the application. String as short as possible.</translatorcomment>
-        <translation>Details</translation>
+        <translation>Részletek</translation>
     </message>
     <message>
         <source>Log out</source>
         <translatorcomment>Button label to log out of the application. String as short as possible.</translatorcomment>
-        <translation>Log&#xa0;out</translation>
+        <translation>Kijelentkezés</translation>
     </message>
     <message>
         <source>Upgrade</source>
@@ -4798,7 +4798,7 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Add</source>
         <translatorcomment>Button label to add a synchronization. String as short as possible.</translatorcomment>
-        <translation>Add</translation>
+        <translation>Hozzáadás</translation>
     </message>
     <message>
         <source>Auto</source>
@@ -4808,12 +4808,12 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Data temporarily unavailable</source>
         <translatorcomment>Label to indicate that the usage data is temporarily unavailable. String as short as possible.</translatorcomment>
-        <translation>Data temporarily unavailable</translation>
+        <translation>Az adatok átmenetileg nem elérhetők</translation>
     </message>
     <message>
         <source>%1 (%2%) of %3 used</source>
         <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically.</translatorcomment>
-        <translation>%1 (%2%) of %3 used</translation>
+        <translation>%1 (%2%) / %3 felhasználva</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -4828,19 +4828,19 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Clear</source>
         <translatorcomment>Label for button to let the user clear the debris or file versions cache. Keep capital letter.</translatorcomment>
-        <translation>Clear</translation>
+        <translation>Törlés</translation>
     </message>
     <message>
         <source>Full scan</source>
         <translatorcomment>Title of the message dialog for Full scan operation.</translatorcomment>
-        <translation>Full scan</translation>
+        <translation>Teljes beolvasá</translation>
     </message>
     <message>
         <source>MEGAsync will perform a full scan of your synced folders when it starts.
 
 Do you want to restart MEGAsync now?</source>
         <translatorcomment>Message displayed asking for confirmation to the user to restart the application for a Full scan operation.</translatorcomment>
-        <translation>The app will perform a full scan of your synced folders when it starts. Do you want to restart the app now?</translation>
+        <translation>Az alkalmazás a szinkronizált mappák teljes átvizsgálását indítja el. Szeretné most újraindítani az alkalmazást?</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -4865,27 +4865,27 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message displayed when a user is trying to download a file to a folder without write permissions.</translatorcomment>
-        <translation>You don’t have write permissions in this local folder.</translation>
+        <translation>Nincs írási jogosultsága ebbe a helyi mappába.</translation>
     </message>
     <message>
         <source>Export Master key</source>
         <translatorcomment>Title of dialog to export master key for the current user.</translatorcomment>
-        <translation>Export Recovery key</translation>
+        <translation>Helyreállítási kulcs exportálása</translation>
     </message>
     <message>
         <source>Unable to write file</source>
         <translatorcomment>Title for message box displayed when an error occurs exporting the master key to a file.</translatorcomment>
-        <translation>Unable to write file</translation>
+        <translation>Nem lehet a fájlt írni</translation>
     </message>
     <message>
         <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
         <translatorcomment>Label to inform the user to keep the master key in a secure location.</translatorcomment>
-        <translation>Exporting the Recovery key and keeping it in a secure location enables you to set a new password without data loss.</translation>
+        <translation>A helyreállítási kulcs exportálása és biztonságos helyen tartása lehetővé teszi, hogy adatvesztés nélkül állítson be új jelszót.</translation>
     </message>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
         <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
-        <translation>Always keep physical control of your Recovery key (e.g. on your computer, an external storage, or print).</translation>
+        <translation>Mindig tartsa fizikai felügyelet alatt a helyreállítási kulcsot (pl. a számítógépén, egy külső tárolón vagy a nyomtatón).</translation>
     </message>
     <message>
         <source>Exclude by size</source>
@@ -4895,77 +4895,77 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Excluded file and folder names</source>
         <translatorcomment>Section title for controls to indicate the file and folder names excluded from synchronization.</translatorcomment>
-        <translation>Excluded file and folder names</translation>
+        <translation>Kizárt fájl- és mappanevek</translation>
     </message>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
         <translatorcomment>Message shown to inform the user about the deletion of the local cache and its consequences</translatorcomment>
-        <translation>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please check your backup folders to see if you need to rescue something before continuing:</translation>
+        <translation>A számítógépen lévő szinkronizált fájlok korábbi verzióinak biztonsági másolatai véglegesen törlődnek. Mielőtt folytatná, ellenőrizze a biztonsági mentési mappáit, hogy lássa, nem kell-e mentenie valamit:</translation>
     </message>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and its consequences. Keep [A] substitution placeholder.</translatorcomment>
-        <translation>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please check your [A] folder in the Rubbish bin of your MEGA account to see if you need to rescue something before continuing.</translation>
+        <translation>A MEGA-ban szinkronizált fájlok korábbi verzióinak biztonsági másolatai véglegesen törlődnek.  A folytatás előtt ellenőrizze a [A] mappát MEGA-fiókja Lomtárjában, hogy megtudja, nem kell-e megmentenie valamit.</translation>
     </message>
     <message>
         <source>Do you want to restart MEGAsync now?</source>
         <translatorcomment>Message shown when clicking on restart MEGAsync button in Settings.</translatorcomment>
-        <translation>Do you want to restart the app now?</translation>
+        <translation>Szeretné most újraindítani az alkalmazást?</translation>
     </message>
     <message>
         <source>Permissions</source>
         <translatorcomment>Text of a button that opens a dialog to set the default permissions for new files and folders. The translation should be as short as possible.</translatorcomment>
-        <translation>Permissions</translation>
+        <translation>Engedélyek</translation>
     </message>
     <message>
         <source>Clear local backup</source>
         <translatorcomment>Title label for the warning to the user before clearing the local backup cache. Keep as short as possible.</translatorcomment>
-        <translation>Clear local backup</translation>
+        <translation>Helyi biztonsági mentés törlése</translation>
     </message>
     <message>
         <source>Do you want to delete your local backup now?</source>
         <translatorcomment>Confirmation prompt for the local sync cache clear action message box.</translatorcomment>
-        <translation>Do you want to delete your local backups now?</translation>
+        <translation>Szeretné most törölni a helyi biztonsági másolatokat?</translation>
     </message>
     <message>
         <source>Clear remote backup</source>
         <translatorcomment>Title label for the warning to the user before clearing the remote sync cache. Keep as short as possible.</translatorcomment>
-        <translation>Clear remote backup</translation>
+        <translation>Távoli biztonsági mentés törlése</translation>
     </message>
     <message>
         <source>Do you want to delete your remote backup now?</source>
         <translatorcomment>Confirmation prompt for the remote sync cache clear action message box.</translatorcomment>
-        <translation>Do you want to delete your remote backup now?</translation>
+        <translation>Szeretné most törölni a távoli biztonsági másolatot?</translation>
     </message>
     <message>
         <source>Restart</source>
         <translatorcomment>Label for restart button.to relaunch MEGAsync app.</translatorcomment>
-        <translation>Restart</translation>
+        <translation>Újraindítás</translation>
     </message>
     <message>
         <source>Local folder with a backup of files deleted in MEGA</source>
         <translatorcomment>Tooltip shown when hovering local debris label.</translatorcomment>
-        <translation>A local folder with a backup of files deleted in MEGA</translation>
+        <translation>Helyi mappa a MEGA-ban törölt fájlok biztonsági másolatával</translation>
     </message>
     <message>
         <source>Folder in MEGA with a backup of files deleted in the local computer</source>
         <translatorcomment>Tooltip shown when hovering remote SyncDebris label.</translatorcomment>
-        <translation>A folder in MEGA with a backup of files deleted in the local computer</translation>
+        <translation>MEGA mappa a helyi számítógépről törölt fájlok biztonsági másolatával</translation>
     </message>
     <message>
         <source>Disabling file versioning will prevent the creation and storage of new file versions. Do you want to continue?</source>
         <translatorcomment>Informative text shown when user is trying to disable file versioning before proceeding.</translatorcomment>
-        <translation>Disabling file versioning will prevent the creation and storage of new file versions. Do you want to continue?</translation>
+        <translation>A fájlok verziószámának letiltása megakadályozza az új fájlverziók létrehozását és tárolását. Folytatja?</translation>
     </message>
     <message>
         <source>You are about to permanently remove all file versions. Would you like to proceed?</source>
         <translatorcomment>Informative text asking for confirmation when user is trying to remove all file versions of the current account.</translatorcomment>
-        <translation>You are about to permanently remove all file versions. Would you like to proceed?</translation>
+        <translation>Az összes fájlverzió végleges eltávolítására készül. Szeretné folytatni?</translation>
     </message>
     <message>
         <source>%1 used</source>
         <translatorcomment>Label to indicate the total amount of storage/bandwidth used by the account. Keep placeholder %1.</translatorcomment>
-        <translation>%1 used</translation>
+        <translation>%1 használva</translation>
     </message>
     <message>
         <source>MEGA-RECOVERYKEY</source>
@@ -4975,12 +4975,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Error enabling sync</source>
         <translatorcomment>Title error message shown when an error occurs while trying to enable a sync.</translatorcomment>
-        <translation>Error enabling sync</translation>
+        <translation>Hiba a szinkronizálás engedélyezésekor</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; can&apos;t be enabled. Reason: %2</source>
         <translatorcomment>Error message shown when an error occurs trying to enable a sync. %1 is name of sync and %2 is reason of error.</translatorcomment>
-        <translation>Your sync “%1” can’t be enabled. Reason: %2</translation>
+        <translation>„%1” szinkronizálása nem engedélyezhető. Oka: %2</translation>
     </message>
     <message>
         <source>General</source>
@@ -4990,7 +4990,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Sync</source>
         <translatorcomment>Title for the Settings -&gt; Sync pane tab button. Keep as short as possible.</translatorcomment>
-        <translation>Sync</translation>
+        <translation>Szinkronizálás</translation>
     </message>
     <message>
         <source>Security</source>
@@ -5000,7 +5000,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Folders</source>
         <translatorcomment>Title for the Settings -&gt; Folders pane tab button. Keep as short as possible.</translatorcomment>
-        <translation>Folders</translation>
+        <translation>Mappák</translation>
     </message>
     <message>
         <source>Network</source>
@@ -5010,7 +5010,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Enable overlay icons</source>
         <translatorcomment>Label for checkbox to enable / disable native file explorer icons for synchronized folders.</translatorcomment>
-        <translation>Enable overlay icons</translation>
+        <translation>Fedvény ikonok engedélyezése</translation>
     </message>
     <message>
         <source>Check for Updates</source>
