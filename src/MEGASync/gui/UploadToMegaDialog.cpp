@@ -151,5 +151,6 @@ void UploadToMegaDialog::showNodeSelector()
         }
     }
 
+    ui->bOK->setFocus();
     nodeSelector->deleteLater();
 }
