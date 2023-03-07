@@ -3603,12 +3603,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Always upload to this destination</source>
         <translatorcomment>Label to inform the user upload files/folder to a default destination. with a checkbox.</translatorcomment>
-        <translation>Always upload to this destination</translation>
+        <translation>Mindig ide töltse fel</translation>
     </message>
     <message>
         <source>New folder</source>
         <translatorcomment>Button label to create a New folder at your MEGA cloud drive. Keep capital letters. String as short as possible.</translatorcomment>
-        <translation>New folder</translation>
+        <translation>Új mappa</translation>
     </message>
     <message>
         <source>OK</source>
@@ -3623,12 +3623,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Are you sure that you want to delete &quot;%1&quot;?</source>
         <translatorcomment>MessageBox to confirm that the user wants to remove the node. %1 is the node name</translatorcomment>
-        <translation>Are you sure that you want to delete “%1”?</translation>
+        <translation>Biztosan törölni szeretné a következőt: „%1”?</translation>
     </message>
     <message>
         <source>Error:</source>
         <translatorcomment>MessageBox to inform about an error when trying to move or remove a node</translatorcomment>
-        <translation>Error:</translation>
+        <translation>Hiba:</translation>
     </message>
 </context>
 <context>
@@ -3641,7 +3641,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>New shared folder from contact</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation>New shared folder from contact</translation>
+        <translation>Új megosztott mappa partnertől</translation>
     </message>
     <message>
         <source>Added or removed files</source>
@@ -3656,42 +3656,42 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Contacts</source>
         <translatorcomment>Notification category for contact notifications</translatorcomment>
-        <translation>Contacts</translation>
+        <translation>Partnerek</translation>
     </message>
     <message>
         <source>New contact request</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation>New contact request</translation>
+        <translation>Új kapcsolatfelvételi kérelem</translation>
     </message>
     <message>
         <source>Pending contact request reminder</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation>Pending contact request reminder</translation>
+        <translation>Függőkapcsolatfelvételi kérés emlékeztetője</translation>
     </message>
     <message>
         <source>Someone has accepted your contact request</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation>Someone has accepted your contact request</translation>
+        <translation>Valaki elfogadta a kapcsolatfelvételi kérelmét</translation>
     </message>
     <message>
         <source>Info</source>
         <translatorcomment>Notification category for non-critical info notifications</translatorcomment>
-        <translation>Info</translation>
+        <translation>Információ</translation>
     </message>
     <message>
         <source>Someone accepted your contact request</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation>Someone accepted your contact request</translation>
+        <translation>Valaki elfogadta a kapcsolatfelvételi kérelmét</translation>
     </message>
     <message>
         <source>Info:</source>
         <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
-        <translation>Info:</translation>
+        <translation>Információ:</translation>
     </message>
     <message>
         <source>Contacts:</source>
         <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
-        <translation>Contacts:</translation>
+        <translation>Partnerek:</translation>
     </message>
     <message>
         <source>Shares:</source>
@@ -3722,7 +3722,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>[A] removed %n item</source>
         <translatorcomment>Label to indicate that [A] has removed %n items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and %n with the number of removed items.</translatorcomment>
-        <translation><numerusform>[A] removed %n item</numerusform><numerusform>[A] removed %n items</numerusform></translation>
+        <translation><numerusform>[A] eltávolított %n elemet</numerusform><numerusform>[A] eltávolított %n elemet</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3730,37 +3730,37 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Storage full</source>
         <translatorcomment>Label to indicate the full storage for the current account is full.</translatorcomment>
-        <translation>Storage Full</translation>
+        <translation>A tárhely megtelt</translation>
     </message>
     <message>
         <source>You have exceeded the available storage space for your account. You can add syncs but they will remain disabled until there is enough space on your account.</source>
         <translatorcomment>Informative label to indicate the user has exceeded the storage limit, letting set syncs but disabled until there is enough free storage space within the account.</translatorcomment>
-        <translation>You have exceeded the available storage space for your account. You can add syncs but they will remain disabled until there is enough space in your account.</translation>
+        <translation>Túllépte a fiókjában rendelkezésre álló tárhelyet. Hozzáadhat szinkronizálást, de azok le lesznek tiltva, amíg nincs elég hely a fiókjában.</translation>
     </message>
     <message>
         <source>Buy more space</source>
         <translatorcomment>Button label to redirect the user to upgrade account (getting more space and transfer quota)</translatorcomment>
-        <translation>Buy more space</translation>
+        <translation>Vásároljon több helyet</translation>
     </message>
     <message>
         <source>Uploads are temporarily disabled.</source>
         <translatorcomment>Label to indicate that uploads are temporarily disabled due to a storage space limit has been reached.</translatorcomment>
-        <translation>Uploads are temporarily disabled.</translation>
+        <translation>A feltöltések ideiglenesen le vannak tiltva.</translation>
     </message>
     <message>
         <source>You have exceeded the available storage space for your account. You can add uploads but transfers will remain queued until there is enough space on your account.</source>
         <translatorcomment>Informative label to indicate the user has exceeded the storage limit, letting to add new uploads that will be queued until there is enough free storage space within the account.</translatorcomment>
-        <translation>You have exceeded the available storage space for your account. You can add uploads but transfers will remain queued until there is enough space in your account.</translation>
+        <translation>Túllépte a fiókjában rendelkezésre álló tárhelyet. Hozzáadhat feltöltéseket, de az átvitelek sorban állók maradnak, amíg nincs elég hely a fiókjában.</translation>
     </message>
     <message>
         <source>Syncs are temporarily disabled.</source>
         <translatorcomment>Label to indicate that syncs are temporarily disabled due to transfer quota limit has been reached.</translatorcomment>
-        <translation>Syncs are temporarily disabled.</translation>
+        <translation>A szinkronizálások átmenetileg le vannak tiltva.</translation>
     </message>
     <message>
         <source>You have exceeded the available transfer quota for your account. You can add syncs but they will remain disable until there is enough bandwidth on your account.</source>
         <translatorcomment>Informative label to indicate the user has exceeded the available transfer quota limit, letting to add new syncs that will be disabled until the situation is fixed.</translatorcomment>
-        <translation>You have exceeded the available transfer quota for your account. You can add syncs but they will remain disabled until your account has more transfer quota available.</translation>
+        <translation>Túllépte a fiókjában rendelkezésre álló tárhelyet. Hozzáadhat szinkronizálást, de azok letiltva maradnak, amíg fiókjában több átviteli kvóta nem áll rendelkezésre.</translation>
     </message>
     <message>
         <source>Upgrade Account</source>
@@ -3770,37 +3770,37 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Importing links is temporarily disabled.</source>
         <translatorcomment>Label to indicate that import links feature is temporarily disabled due to a situation of over transfer quota. User will be able to import but not to download.</translatorcomment>
-        <translation>Importing links is temporarily disabled.</translation>
+        <translation>A linkek importálása átmenetileg le van tiltva.</translation>
     </message>
     <message>
         <source>You have exceeded the available transfer quota for your account. You can import links but transfers will remain queued until there is enough bandwidth on your account.</source>
         <translatorcomment>Informative label to indicate the user has exceeded the available transfer quota limit, letting to import links but not download until there is enough bandwidth for the account.</translatorcomment>
-        <translation>You have exceeded the available transfer quota for your account. You can import links but transfers will remain queued until your account has more transfer quota available.</translation>
+        <translation>Túllépte a fiókjában rendelkezésre álló tárhelyet. Importálhat linkeket, de az átvitelek sorban állók maradnak, amíg fiókjában több átviteli kvóta nem áll rendelkezésre.</translation>
     </message>
     <message>
         <source>Downloads are temporarily disabled.</source>
         <translatorcomment>Label to indicate that downloads are temporarily disabled due to a situation of over transfer quota.</translatorcomment>
-        <translation>Downloads are temporarily disabled.</translation>
+        <translation>A letöltések átmenetileg le vannak tiltva.</translation>
     </message>
     <message>
         <source>You have exceeded the available transfer quota for your account. You can add downloads but transfers will remain queued until there is enough bandwidth on your account.</source>
         <translatorcomment>Informative label to indicate the user has exceeded the available transfer quota limit, letting to add new downloads that will remain queued until there is enough bandwidth for the current account.</translatorcomment>
-        <translation>You have exceeded the available transfer quota for your account. You can add downloads but transfers will remain queued until your account has more transfer quota available.</translation>
+        <translation>Túllépte a fiókjában rendelkezésre álló tárhelyet. Hozzáadhat letöltéseket, de az átvitelek sorban állók maradnak, amíg fiókjában több átviteli kvóta nem áll rendelkezésre.</translation>
     </message>
     <message>
         <source>Streams are temporarily disabled.</source>
         <translatorcomment>Label to indicate that streaming transfers  of MEGAsync (context menu, stream option) is temporarily disabled due to a situation of over transfer quota.</translatorcomment>
-        <translation>Streaming is temporarily disabled.</translation>
+        <translation>A streamelés átmenetileg le van tiltva.</translation>
     </message>
     <message>
         <source>You have exceeded the available transfer quota for your account. You can add streams but transfers will remain queued until there is enough bandwidth on your account.</source>
         <translatorcomment>Informative label to indicate the user has exceeded the available transfer quota limit, letting to start stream transfer but will remain stuck until there is enough bandwidth on the current account.</translatorcomment>
-        <translation>You have exceeded the available transfer quota for your account. You can add streams but transfers will remain queued until your account has more transfer quota available.</translation>
+        <translation>Túllépte a fiókjában rendelkezésre álló tárhelyet. You can add streams but transfers will remain queued until your account has more transfer quota available.</translation>
     </message>
     <message>
         <source>Depleted transfer quota</source>
         <translatorcomment>Label to indicate that transfer quota has been depleted.</translatorcomment>
-        <translation>Depleted transfer quota</translation>
+        <translation>Kimerült átviteli kvóta</translation>
     </message>
 </context>
 <context>
