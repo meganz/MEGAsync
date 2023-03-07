@@ -2387,7 +2387,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs (BLOCK ACCOUNT) during a login operation.</translatorcomment>
-        <translation>Fiókját blokkolva lett. Kérjük, írjon a support@mega.nz címre</translation>
+        <translation>Fiókja blokkolva lett. Kérjük, írjon a support@mega.nz címre</translation>
     </message>
     <message>
         <source>Login error: %1</source>
@@ -2447,53 +2447,53 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Error: Invalid destination folder. The download has been cancelled</source>
         <translatorcomment>Notification message shown when an error occurs while downloading a file to a invalid destination folder.</translatorcomment>
-        <translation>Error: Invalid destination folder. The download has been cancelled.</translation>
+        <translation>Hiba: Érvénytelen célmappa. A letöltés megszakadt.</translation>
     </message>
     <message>
         <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
         <translatorcomment>Notification message shown when SSL checks fails.</translatorcomment>
-        <translation>Our SSL key can’t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</translation>
+        <translation>Az SSL-kulcsunkat nem tudjuk ellenőrizni. Előfordulhat, hogy a kommunikációt lehallgatják vagy víruskereső szoftvere blokkolja, és ez okozhatja ezt a problémát. Kapcsolja ki, majd próbálja újra.</translation>
     </message>
     <message>
         <source>No Internet connection</source>
         <translatorcomment>Tooltip shown when there is not an active Internet connection.</translatorcomment>
-        <translation>No Internet connection</translation>
+        <translation>Nincs internetkapcsolat</translation>
     </message>
     <message>
         <source>Fetching file list...</source>
-        <translation>Fetching file list…</translation>
+        <translation>Fájllista lekérése…</translation>
     </message>
     <message>
         <source>Transfer canceled</source>
-        <translation>Transfer canceled</translation>
+        <translation>Az átvitel megszakítva</translation>
     </message>
     <message>
         <source>You are not logged in</source>
-        <translation>You are not logged in</translation>
+        <translation>Nincs bejelentkezve</translation>
     </message>
     <message>
         <source>Transfer manager</source>
-        <translation>Transfer manager</translation>
+        <translation>Átvitelkezelő</translation>
     </message>
     <message>
         <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
         <translatorcomment>Message shown to the user to inform that MEGAsync is not able to find a systray to place tray icon</translatorcomment>
-        <translation>We couldn&apos;t find a system tray to place the app tray icon into. Try launching the app again.</translation>
+        <translation>Nem található tálca, amelyen elhelyezhető lenne az alkalmazás ikonja. Próbálja újra elindítani az alkalmazást.</translation>
     </message>
     <message>
         <source>Error getting link:</source>
         <translatorcomment>Notification message shown when an error occurs while getting a public link .</translatorcomment>
-        <translation>Error getting link:</translation>
+        <translation>Hiba a link lekérésekor:</translation>
     </message>
     <message>
         <source>File not found</source>
         <translatorcomment>Notification message shown an error of file not found while getting a public link .</translatorcomment>
-        <translation>File not found</translation>
+        <translation>A fájl nem található</translation>
     </message>
     <message>
         <source>The link can&apos;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
         <translatorcomment>Notification error message shown while generating a public link of a file from an incoming shared folder or from the rubbish bin</translatorcomment>
-        <translation>The link can’t be generated because the file is inside an incoming shared folder or your Rubbish bin.</translation>
+        <translation>A hivatkozást nem lehet létrehozni, mert a fájl egy bejövő megosztott mappában vagy a Lomtárban található.</translation>
     </message>
     <message>
         <source>Upload</source>
@@ -2507,97 +2507,97 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Please consider updating your operating system.</source>
-        <translation>Please consider updating your operating system.</translation>
+        <translation>Fontolja meg az operációs rendszere frissítését.</translation>
     </message>
     <message>
         <source>Stream</source>
         <translatorcomment>Label and title of the dialog displayed when a user wants to stream a file/folder from MEGA. MAX 20 characters. Keep capital letters.</translatorcomment>
-        <translation>Közvetítés</translation>
+        <translation>Streamingelés</translation>
     </message>
     <message>
         <source>MEGAsync will continue to work, however you might not receive new updates.</source>
         <translatorcomment>Message shown to the user to inform that he is using an operating system that will be unsupported soon</translatorcomment>
-        <translation>The app will continue to work, however you may not receive new updates.</translation>
+        <translation>Az alkalmazás továbbra is működni fog, de előfordulhat, hogy nem kap új frissítéseket.</translation>
     </message>
     <message>
         <source>Password changed</source>
         <translatorcomment>Title of the dialog displayed when the change password process finish successful.</translatorcomment>
-        <translation>Password changed</translation>
+        <translation>A jelszó megváltozott</translation>
     </message>
     <message>
         <source>Your password has been changed.</source>
         <translatorcomment>Success message shown when the password has been changed</translatorcomment>
-        <translation>Your password has been changed.</translation>
+        <translation>A jelszava megváltozott</translation>
     </message>
     <message>
         <source>Folder Upload</source>
         <translatorcomment>Title of system notifications related to a folder upload</translatorcomment>
-        <translation>Folder upload</translation>
+        <translation>Mappa feltöltése</translation>
     </message>
     <message>
         <source>File Upload</source>
         <translatorcomment>Title of system notifications related to a file upload</translatorcomment>
-        <translation>File upload</translation>
+        <translation>Fájl feltöltése</translation>
     </message>
     <message>
         <source>Folder Download</source>
         <translatorcomment>Title of system notifications related to a folder download</translatorcomment>
-        <translation>Folder download</translation>
+        <translation>Mappa letöltése</translation>
     </message>
     <message>
         <source>File Download</source>
         <translatorcomment>Title of system notifications related to a file download</translatorcomment>
-        <translation>File download</translation>
+        <translation>Fájl letöltése</translation>
     </message>
     <message>
         <source>Cloud drive</source>
         <translatorcomment>Label of context menu to reach Cloud drive section at webclient. It will open your webbrowser and redirects to your cloud drive.</translatorcomment>
-        <translation>Cloud drive</translation>
+        <translation>Felhőmeghajtó</translation>
     </message>
     <message>
         <source>Error transferring folder: </source>
         <translatorcomment>Label to indicate that has been an error during a folder transfer.</translatorcomment>
-        <translation>Error transferring folder:</translation>
+        <translation>Hiba a mappa átvitele során:</translation>
     </message>
     <message>
         <source>Pay Now</source>
         <translatorcomment>Button text to redirect the user to fix issues with pending payments for the current business account.</translatorcomment>
-        <translation>Pay now</translation>
+        <translation>Fizetés most</translation>
     </message>
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation>Account deactivated</translation>
+        <translation>A fiók deaktiválva</translation>
     </message>
     <message>
         <source>Dismiss</source>
         <translatorcomment>Button text to discard a notification or message box</translatorcomment>
-        <translation>Dismiss</translation>
+        <translation>Elvetés</translation>
     </message>
     <message>
         <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message shown to admin business account when a payment has failed. </translatorcomment>
-        <translation>Your Business account has been deactivated due to payment failure. You won&apos;t be able to access the data stored in your account until you&apos;ve made a payment and reactivated your subscription.</translation>
+        <translation>Céges fiókját fizetési hiba miatt deaktiváltuk. Addig nem férhet hozzá a fiókjában tárolt adatokhoz, amíg nem teljesíti a befizetést a fiók újraaktiválásához.</translation>
     </message>
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
         <translatorcomment>Message shown to business users when there is an issue with the account. Keep placeholders, will be replaced at runtime.</translatorcomment>
-        <translation>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</translation>
+        <translation>[A]Fontos:[/A] A probléma megoldásához és a fiók aktiválásához forduljon a céges fiók rendszergazdájához.</translation>
     </message>
     <message>
         <source>Payment Failed</source>
         <translatorcomment>Notification title shown when a payment has failed for a business account.</translatorcomment>
-        <translation>Payment failed</translation>
+        <translation>A fizetés meghiúsult</translation>
     </message>
     <message>
         <source>This month&apos;s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</source>
         <translatorcomment>Informative message shown to the user when a payment has failed for a business account.</translatorcomment>
-        <translation>This month’s payment has failed. Please resolve your payment issue as soon as possible to avoid your account being deactivated.</translation>
+        <translation>Az e havi fizetés meghiúsult. Kérjük, mielőbb oldja meg fizetési problémát, hogy elkerülje fiókja deaktiválását.</translation>
     </message>
     <message>
         <source>Account Suspended</source>
         <translatorcomment>Title to inform that a business account is actually suspended.</translatorcomment>
-        <translation>Account suspended</translation>
+        <translation>A fiók felfüggesztve</translation>
     </message>
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
