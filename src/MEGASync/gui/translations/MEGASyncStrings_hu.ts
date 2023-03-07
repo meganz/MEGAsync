@@ -2800,42 +2800,42 @@ Az átvitelek automatikusan folytatódnak, amikor újra megnyitja az alkalmazás
     <message>
         <source>Your backup &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Your backup ”%1“ has been disabled. The MEGA folder (or part of it) doesn&apos;t have full access.</translation>
+        <translation>„%1” biztonsági mentése le van tiltva. A MEGA mappához (vagy annak egy részéhez) nem rendelkezik teljes hozzáféréssel.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder has changed</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Your backup ”%1“ has been disabled because the local folder has changed.</translation>
+        <translation>„%1” biztonsági mentés le van tiltva, mert a helyi mappa megváltozott.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder has changed</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Your backup ”%1“ has been disabled because the MEGA folder has changed.</translation>
+        <translation>„%1” biztonsági mentés le van tiltva, mert a MEGA mappa megváltozott.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled. Reason: %2</source>
         <translatorcomment>Notification message launched when a backup is disabled. Keep &amp;quot;%1&amp;quot; code because is filled with the name of the backup at runtime and %2 with the reason of the error.</translatorcomment>
-        <translation>Your backup ”%1“ has been disabled. Reason: %2</translation>
+        <translation>„%1” biztonsági mentés le van tiltva. Oka: %2</translation>
     </message>
     <message>
         <source>Security upgrade</source>
         <translatorcomment>Title of security upgrade dialog</translatorcomment>
-        <translation>Security upgrade</translation>
+        <translation>Biztonsági frissítés</translation>
     </message>
     <message numerus="yes">
         <source>You are currently sharing the following folder: %1</source>
         <translatorcomment>Additional information shown within Security upgrade dialog if the user has outgoing shares. A list of the shares will be filled at %1 placeholder. Please check screenshot to see the full context of this string along with the other ones.</translatorcomment>
-        <translation type="unfinished"><numerusform>You are currently sharing the following folder: %1</numerusform><numerusform>You are currently sharing the following folders: %1</numerusform></translation>
+        <translation type="unfinished"><numerusform>Jelenleg a következő mappát osztja meg: %1</numerusform><numerusform>Jelenleg a következő mappákat osztja meg: %1: %1</numerusform></translation>
     </message>
     <message>
         <source>Failed to ugrade security. Error: %1</source>
         <translatorcomment>System notification error shown if an error occur while upgrading security for your account. %1 will be replaced with the error returned from the SDK.</translatorcomment>
-        <translation type="unfinished">Failed to ugrade security. Error: %1</translation>
+        <translation type="unfinished">Nem sikerült a biztonsági frissítés. Hiba: %1</translation>
     </message>
     <message>
         <source>Your account&apos;s security is now being upgraded. This will happen only once. If you have seen this message for this account before, press Cancel.</source>
         <translatorcomment>Error message shown to the user to inform about that the security of his account is going to be upgraded. </translatorcomment>
-        <translation type="unfinished">Your account&apos;s security is now being upgraded. This will happen only once. If you have seen this message for this account before, press Cancel.</translation>
+        <translation type="unfinished">Fiókjának biztonsági frissítése folyamatban van. Ez csak egyszer fog megtörténni. Ha korábban már látta ezt az üzenetet ehhez a fiókhoz, nyomja meg a Mégse gombot.</translation>
     </message>
 </context>
 <context>
@@ -2843,157 +2843,157 @@ Az átvitelek automatikusan folytatódnak, amikor újra megnyitja az alkalmazás
     <message>
         <source>No error</source>
         <translatorcomment>Label to show that an SDK operation has been complete successfully.</translatorcomment>
-        <translation>No error</translation>
+        <translation>Nincs hiba</translation>
     </message>
     <message>
         <source>Internal error</source>
         <translatorcomment>Label to show that an Internal error occurs during a SDK operation.</translatorcomment>
-        <translation>Internal error</translation>
+        <translation>Belső hiba</translation>
     </message>
     <message>
         <source>Invalid argument</source>
         <translatorcomment>Label to show that an error of Invalid argument occurs during a SDK operation.</translatorcomment>
-        <translation>Invalid argument</translation>
+        <translation>Érvénytelen argumentum</translation>
     </message>
     <message>
         <source>Request failed, retrying</source>
         <translatorcomment>Label to show that a request error occurs during a SDK operation.</translatorcomment>
-        <translation>Request failed, retrying</translation>
+        <translation>A lekérés sikertelen, újrapróbálás</translation>
     </message>
     <message>
         <source>Rate limit exceeded</source>
         <translatorcomment>Label to show that the rate limit has been reached during a SDK operation.</translatorcomment>
-        <translation>Rate limit exceeded</translation>
+        <translation>Korlát túllépve</translation>
     </message>
     <message>
         <source>Failed permanently</source>
         <translatorcomment>Label to show that a SDK operation has failed permanently.</translatorcomment>
-        <translation>Failed permanently</translation>
+        <translation>Véglegesen meghiúsult</translation>
     </message>
     <message>
         <source>Too many concurrent connections or transfers</source>
         <translatorcomment>Label to show that an error for multiple concurrent connections or transfers occurs during a SDK operation.</translatorcomment>
-        <translation>Too many concurrent connections or transfers</translation>
+        <translation>Túl sok egyidejű kapcsolat vagy átvitel</translation>
     </message>
     <message>
         <source>Out of range</source>
         <translatorcomment>Label to show that an error of Out of range occurs during a SDK operation.</translatorcomment>
-        <translation>Out of range</translation>
+        <translation>Tartományon kívül</translation>
     </message>
     <message>
         <source>Expired</source>
         <translatorcomment>Label to show that an error related with expiration occurs during a SDK operation.</translatorcomment>
-        <translation>Expired</translation>
+        <translation>Lejárt</translation>
     </message>
     <message>
         <source>Not found</source>
         <translatorcomment>Label to show that an error related with a resource Not found occurs during a SDK operation.</translatorcomment>
-        <translation>Not found</translation>
+        <translation>Nem található</translation>
     </message>
     <message>
         <source>Circular linkage detected</source>
         <translatorcomment>Label to show that an error related with a circular linkage occurs during a SDK operation.</translatorcomment>
-        <translation>Circular linkage detected</translation>
+        <translation>Körkörös kapcsolat észlelve</translation>
     </message>
     <message>
         <source>Access denied</source>
         <translatorcomment>Label to show that an error related with an denied access occurs during a SDK operation.</translatorcomment>
-        <translation>Access denied</translation>
+        <translation>Hozzáférés megtagadva</translation>
     </message>
     <message>
         <source>Already exists</source>
         <translatorcomment>Label to show that an error related with an existent resource occurs during a SDK operation.</translatorcomment>
-        <translation>Already exists</translation>
+        <translation>Már létezik</translation>
     </message>
     <message>
         <source>Incomplete</source>
         <translatorcomment>Label to show that an error related with an Incomplete SDK operation.</translatorcomment>
-        <translation>Incomplete</translation>
+        <translation>Befejezetlen</translation>
     </message>
     <message>
         <source>Invalid key/Decryption error</source>
         <translatorcomment>Label to show that an error related with the decryption process of a node occurs during a SDK operation.</translatorcomment>
-        <translation>Invalid key/Decryption error</translation>
+        <translation>Érvénytelen kulcs/dekódolási hiba</translation>
     </message>
     <message>
         <source>Bad session ID</source>
         <translatorcomment>Label to show that an error related with a bad session ID occurs during a SDK operation.</translatorcomment>
-        <translation>Bad session ID</translation>
+        <translation>Hibás munkamenet-azonosító</translation>
     </message>
     <message>
         <source>Blocked</source>
         <translatorcomment>Label to show that an error related with a blocked account occurs during a SDK operation.</translatorcomment>
-        <translation>Blocked</translation>
+        <translation>Blokkolt</translation>
     </message>
     <message>
         <source>Over quota</source>
         <translatorcomment>Label to show that an error related with an over quota occurs during a SDK operation.</translatorcomment>
-        <translation>Over quota</translation>
+        <translation>Kvóta túllépés</translation>
     </message>
     <message>
         <source>Temporarily not available</source>
         <translatorcomment>Label to show that an error related with a temporary problem occurs during a SDK operation.</translatorcomment>
-        <translation>Temporarily not available</translation>
+        <translation>Átmenetileg nem elérhető</translation>
     </message>
     <message>
         <source>Connection overflow</source>
         <translatorcomment>Label to show that an error related with too many connections occurs during a SDK operation.</translatorcomment>
-        <translation>Connection overflow</translation>
+        <translation>Kapcsolat túlcsordulás</translation>
     </message>
     <message>
         <source>Write error</source>
         <translatorcomment>Label to show that an error related with an write error occurs during a SDK operation.</translatorcomment>
-        <translation>Write error</translation>
+        <translation>Írási hiba</translation>
     </message>
     <message>
         <source>Read error</source>
         <translatorcomment>Label to show that an error related with an read error occurs during a SDK operation.</translatorcomment>
-        <translation>Read error</translation>
+        <translation>Olvasási hiba</translation>
     </message>
     <message>
         <source>Invalid application key</source>
         <translatorcomment>Label to show that an error related with an invalid or missing application key occurs during a SDK operation.</translatorcomment>
-        <translation>Invalid application key</translation>
+        <translation>Érvénytelen alkalmazáskulcs</translation>
     </message>
     <message>
         <source>Unknown error</source>
         <translatorcomment>Label to show that an error related with an unknown error occurs during a SDK operation.</translatorcomment>
-        <translation>Unknown error</translation>
+        <translation>Ismeretlen hiba</translation>
     </message>
     <message>
         <source>SSL verification failed</source>
         <translatorcomment>Error shown when SSL check has failed</translatorcomment>
-        <translation>SSL verification failed</translation>
+        <translation>Sikertlen SSL-hitelesítés</translation>
     </message>
     <message>
         <source>Not enough quota</source>
         <translatorcomment>Label shown when current account does not have enough quota to complete the operation</translatorcomment>
-        <translation>Not enough quota</translation>
+        <translation>Elégtelen kvóta</translation>
     </message>
     <message>
         <source>Terms of Service breached</source>
         <translatorcomment>Error shown when terms of service are breached during download.</translatorcomment>
-        <translation>Terms of Service breached</translation>
+        <translation>Az Általános Szerződési Feltételek megsértve</translation>
     </message>
     <message>
         <source>Not accessible due to ToS/AUP violation</source>
         <translatorcomment>Error shown when import a link that has violated ToS/AUP.</translatorcomment>
-        <translation>Not accessible as it violated our Terms of Service</translation>
+        <translation>Nem érhető el a szolgáltatási feltételek megsértése miatt</translation>
     </message>
     <message>
         <source>Upload produces recursivity</source>
         <translatorcomment>Error label to indicate a situation of recursivity during uploads</translatorcomment>
-        <translation>Transfer failed due to a recursive directory structure</translation>
+        <translation>Az átvitel meghiúsult egy rekurzív könyvtárstruktúra miatt</translation>
     </message>
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
         <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
-        <translation>Storage quota exceeded. Please upgrade now.</translation>
+        <translation>Tárhely kvóta túllépés. Kérjük, frissítsen most.</translation>
     </message>
     <message>
         <source>Decryption error</source>
         <translatorcomment>String shown when a file/folder name can not be decrypted.</translatorcomment>
-        <translation>Decryption error</translation>
+        <translation>Dekódolási hiba</translation>
     </message>
     <message>
         <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
