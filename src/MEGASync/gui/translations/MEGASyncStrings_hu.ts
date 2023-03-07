@@ -5500,7 +5500,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your backup &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
         <translatorcomment>Error text when disabling a backup failed</translatorcomment>
-        <translation>Your backup ”%1“ can&apos;t be disabled. Reason: %2</translation>
+        <translation>„%1” biztonsági mentés nem tiltható le. Oka: %2</translation>
     </message>
     <message>
         <source>Go to backup centre</source>
@@ -5841,7 +5841,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>I agree with the MEGA [A]Terms of Service[/A]</source>
         <translatorcomment>Label to agree with the Terms of use. Keep the [A] and [/A] tags, they are used for HTML code insertion. Keep the string as short as possible.</translatorcomment>
-        <translation>Elfogadom a MEGA [A]Általános Szerződési Feltételeit[/A]</translation>
+        <translation>Elfogadom a MEGA [A]Általános Szerződési Feltételei[/A]-t</translation>
     </message>
     <message>
         <source>Enjoy MEGAsync</source>
@@ -5932,7 +5932,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Waiting</source>
         <translatorcomment>Information label in the main dialog to show that MEGAsync is at waiting state</translatorcomment>
-        <translation>Wárakozás</translation>
+        <translation>Várakozás</translation>
     </message>
     <message>
         <source>Account full</source>
@@ -5957,7 +5957,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Transferring</source>
         <translatorcomment>Information label in the main dialog to show that MEGAsync has ongoing transfers</translatorcomment>
-        <translation>Átvitel</translation>
+        <translation>Átvitel...</translation>
     </message>
 </context>
 <context>
@@ -5980,7 +5980,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Public link</source>
         <translatorcomment>Text of the button to select a file from a public link for streaming</translatorcomment>
-        <translation>Nyilvános hivatkozás</translation>
+        <translation>Nyilvános link</translation>
     </message>
     <message>
         <source>File info:</source>
@@ -6564,12 +6564,12 @@ A folytatáshoz válasszon másik mappát.</translation>
     <message>
         <source>Upgrade now</source>
         <translatorcomment>Button to open web explorer to see MEGA paid plans</translatorcomment>
-        <translation>Upgrade most/translation>
+        <translation>Frissítés most/translation>
     </message>
     <message>
         <source>Transfer quota exceeded</source>
         <translatorcomment>Subtitle Transfer Quota exceeded state message</translatorcomment>
-        <translation>Az átviteli kvóta túllépve</translation>
+        <translation>Átviteli kvóta túllépve</translation>
     </message>
     <message>
         <source>Your MEGA account is full</source>
@@ -6678,62 +6678,62 @@ Ha több kvótát szeretne szerezni, frissítsen Pro-fiókra, vagy várjon [A]-i
     <message>
         <source>Clear all audios</source>
         <translatorcomment>Tooltip for clear button when the user is in the audios category</translatorcomment>
-        <translation>Clear all transfers in Audio</translation>
+        <translation>Minden átvitel törlése a Hangoknál</translation>
     </message>
     <message>
         <source>Clear all videos</source>
         <translatorcomment>Tooltip for clear button when the user is in the videos category</translatorcomment>
-        <translation>Clear all transfers in Videos</translation>
+        <translation>Minden átvitel törlése a Videóknál</translation>
     </message>
     <message>
         <source>Clear all archives</source>
         <translatorcomment>Tooltip for clear button when the user is in the archives category</translatorcomment>
-        <translation>Clear all transfers in Archives</translation>
+        <translation>Minden átvitel törlése az Archivumnál</translation>
     </message>
     <message>
         <source>Clear all documents</source>
         <translatorcomment>Tooltip for clear button when the user is in the documents category</translatorcomment>
-        <translation>Clear all transfers in Documents</translation>
+        <translation>Minden átvitel törlése a Dokumentumoknál</translation>
     </message>
     <message>
         <source>Clear all images</source>
         <translatorcomment>Tooltip for clear button when the user is in the images category</translatorcomment>
-        <translation>Clear all transfers in Images</translation>
+        <translation>Minden átvitel törlése a Képeknél</translation>
     </message>
     <message>
         <source>Clear all transfers</source>
         <translatorcomment>Tooltip for clear button when the user is in the others category</translatorcomment>
-        <translation>Clear all transfers</translation>
+        <translation>Minden átvitel törlése</translation>
     </message>
     <message>
         <source>Cancel all downloads</source>
         <translatorcomment>Tooltip for cancel button when the user is in the downloads category</translatorcomment>
-        <translation>Cancel all transfers in Downloads </translation>
+        <translation>Minden átvitel megszakítása a Letöltéseknél</translation>
     </message>
     <message>
         <source>Cancel all uploads</source>
         <translatorcomment>Tooltip for cancel button when the user is in the uploads category</translatorcomment>
-        <translation>Cancel all transfers in Uploads</translation>
+        <translation>Minden átvitel megszakítása a Feltöltéseknél</translation>
     </message>
     <message>
         <source>Cancel all failed</source>
         <translatorcomment>Tooltip for cancel button when the user is in the failed category</translatorcomment>
-        <translation>Cancel all transfers in Failed</translation>
+        <translation>Minden átvitel megszakítása a Meghiúsultaknál</translation>
     </message>
     <message>
         <source>Cancel all search results</source>
         <translatorcomment>Tooltip for cancel button when the user is in the search category</translatorcomment>
-        <translation>Cancel all search results</translation>
+        <translation>Minden keresési eredmény törlése</translation>
     </message>
     <message>
         <source>Cancel all audios</source>
         <translatorcomment>Tooltip for cancel button when the user is in the audios category</translatorcomment>
-        <translation>Cancel all transfers in Audio</translation>
+        <translation>Minden átvitel megszakítása a Hangoknál</translation>
     </message>
     <message>
         <source>Cancel all videos</source>
         <translatorcomment>Tooltip for cancel button when the user is in the videos category</translatorcomment>
-        <translation>Cancel all transfers in Videos</translation>
+        <translation>Minden átvitel megszakítása a Videóknál</translation>
     </message>
     <message>
         <source>Cancel all archives</source>
@@ -6743,142 +6743,142 @@ Ha több kvótát szeretne szerezni, frissítsen Pro-fiókra, vagy várjon [A]-i
     <message>
         <source>Cancel all documents</source>
         <translatorcomment>Tooltip for cancel button when the user is in the documents category</translatorcomment>
-        <translation>Cancel all transfers in Documents</translation>
+        <translation>Minden átvitel megszakítása a Documentumoknál</translation>
     </message>
     <message>
         <source>Cancel all images</source>
         <translatorcomment>Tooltip for cancel button when the user is in the images category</translatorcomment>
-        <translation>Cancel all transfers in Images</translation>
+        <translation>Minden átvitel megszakítása a Képeknél</translation>
     </message>
     <message>
         <source>Cancel all transfers</source>
         <translatorcomment>Tooltip for cancel button when the user is in the all transfers category</translatorcomment>
-        <translation>Cancel all transfers</translation>
+        <translation>Minden átvitel megszakítása</translation>
     </message>
     <message>
         <source>Cancel and clear all search results</source>
         <translatorcomment>Tooltip for cancel button when the user is in the search category and there are completed transfers</translatorcomment>
-        <translation>Cancel and clear all search results</translation>
+        <translation>Minden keresés megszakítása és a találatok törlése</translation>
     </message>
     <message>
         <source>Cancel and clear all audios</source>
         <translatorcomment>Tooltip for cancel button when the user is in the audios category and there are completed transfers</translatorcomment>
-        <translation>Cancel and clear all audios</translation>
+        <translation>Megszakítás és az összes hang törlése</translation>
     </message>
     <message>
         <source>Cancel and clear all videos</source>
         <translatorcomment>Tooltip for cancel button when the user is in the videos category and there are completed transfers</translatorcomment>
-        <translation>Cancel and clear all videos</translation>
+        <translation>Megszakítás és az összes videó törlése</translation>
     </message>
     <message>
         <source>Cancel and clear all archives</source>
         <translatorcomment>Tooltip for cancel button when the user is in the archives category and there are completed transfers</translatorcomment>
-        <translation>Cancel and clear all archives</translation>
+        <translation>Megszakítás és az összes archívum törlése</translation>
     </message>
     <message>
         <source>Cancel and clear all documents</source>
         <translatorcomment>Tooltip for cancel button when the user is in the documents category and there are completed transfers</translatorcomment>
-        <translation>Cancel and clear all documents</translation>
+        <translation>Megszakítás és az összes dokumentum törlése</translation>
     </message>
     <message>
         <source>Cancel and clear all images</source>
         <translatorcomment>Tooltip for cancel button when the user is in the images category and there are completed transfers</translatorcomment>
-        <translation>Cancel and clear all images</translation>
+        <translation>Megszakítás és az összes kép törlése</translation>
     </message>
     <message>
         <source>Cancel and clear all transfers</source>
         <translatorcomment>Tooltip for cancel button when the user is in the all transfers category and there are completed transfers</translatorcomment>
-        <translation>Cancel and clear all transfers</translation>
+        <translation>Megszakítás és az összes átvitel törlése</translation>
     </message>
     <message>
         <source>Resume all downloads</source>
         <translatorcomment>Tooltip for Resume button when the user is in the downloads category</translatorcomment>
-        <translation>Resume all downloads</translation>
+        <translation>Minden letöltés folytatása</translation>
     </message>
     <message>
         <source>Resume all uploads</source>
         <translatorcomment>Tooltip for Resume button when the user is in the uploads category</translatorcomment>
-        <translation>Resume all uploads</translation>
+        <translation>Minden feltöltés folytatása</translation>
     </message>
     <message>
         <source>Resume all search results</source>
         <translatorcomment>Tooltip for Resume button when the user is in the search category</translatorcomment>
-        <translation>Resume all search results</translation>
+        <translation>Az összes keresési eredmény folytatása</translation>
     </message>
     <message>
         <source>Resume all audios</source>
         <translatorcomment>Tooltip for Resume button when the user is in the audios category</translatorcomment>
-        <translation>Resume all audios</translation>
+        <translation>Az összes hang folytatása</translation>
     </message>
     <message>
         <source>Resume all videos</source>
         <translatorcomment>Tooltip for Resume button when the user is in the videos category</translatorcomment>
-        <translation>Resume all videos</translation>
+        <translation>Az összes videó folytatása</translation>
     </message>
     <message>
         <source>Resume all archives</source>
         <translatorcomment>Tooltip for Resume button when the user is in the archives category</translatorcomment>
-        <translation>Resume all archives</translation>
+        <translation>Az összes archívum folytatása</translation>
     </message>
     <message>
         <source>Resume all documents</source>
         <translatorcomment>Tooltip for Resume button when the user is in the documents category</translatorcomment>
-        <translation>Resume all documents</translation>
+        <translation>Az összes adokumentum folytatása</translation>
     </message>
     <message>
         <source>Resume all images</source>
         <translatorcomment>Tooltip for Resume button when the user is in the images category</translatorcomment>
-        <translation>Resume all images</translation>
+        <translation>Az összes kép folytatása</translation>
     </message>
     <message>
         <source>Resume all transfers</source>
         <translatorcomment>Tooltip for Resume button when the user is in the all transfers category</translatorcomment>
-        <translation>Resume all transfers</translation>
+        <translation>Az összes átvitel folytatása</translation>
     </message>
     <message>
         <source>Pause all downloads</source>
         <translatorcomment>Tooltip for Pause button when the user is in the downloads category</translatorcomment>
-        <translation>Pause all downloads</translation>
+        <translation>Az összes letöltés szüneteltetése</translation>
     </message>
     <message>
         <source>Pause all uploads</source>
         <translatorcomment>Tooltip for Pause button when the user is in the uploads category</translatorcomment>
-        <translation>Pause all uploads</translation>
+        <translation>Az összes feltöltés szüneteltetése</translation>
     </message>
     <message>
         <source>Pause all search results</source>
         <translatorcomment>Tooltip for Pause button when the user is in the search category</translatorcomment>
-        <translation>Pause all search results</translation>
+        <translation>Az összes keresési eredmény szüneteltetése</translation>
     </message>
     <message>
         <source>Pause all audios</source>
         <translatorcomment>Tooltip for Pause button when the user is in the audios category</translatorcomment>
-        <translation>Pause all audios</translation>
+        <translation>Az összes hang szüneteltetése</translation>
     </message>
     <message>
         <source>Pause all videos</source>
         <translatorcomment>Tooltip for Pause button when the user is in the videos category</translatorcomment>
-        <translation>Pause all videos</translation>
+        <translation>Az összes videó szüneteltetése</translation>
     </message>
     <message>
         <source>Pause all archives</source>
         <translatorcomment>Tooltip for Pause button when the user is in the archives category</translatorcomment>
-        <translation>Pause all archives</translation>
+        <translation>Az összes archívum szüneteltetése</translation>
     </message>
     <message>
         <source>Pause all documents</source>
         <translatorcomment>Tooltip for Pause button when the user is in the documents category</translatorcomment>
-        <translation>Pause all documents</translation>
+        <translation>Az összes dokumentum szüneteltetése</translation>
     </message>
     <message>
         <source>Pause all images</source>
         <translatorcomment>Tooltip for Pause button when the user is in the images category</translatorcomment>
-        <translation>Pause all images</translation>
+        <translation>Az összes kép szüneteltetése</translation>
     </message>
     <message>
         <source>Pause all transfers</source>
         <translatorcomment>Tooltip for Pause button when the user is in the all transfers category</translatorcomment>
-        <translation>Pause all transfers</translation>
+        <translation>Az összes átvitel szüneteltetése</translation>
     </message>
 </context>
 <context>
@@ -7171,7 +7171,7 @@ Létrehoz egyet?</translation>
     <message>
         <source>MEGA synced folder</source>
         <translatorcomment>Label to indicate the synced MEGA folder.</translatorcomment>
-        <translation>MEGA synced folder</translation>
+        <translation>MEGA szinkronizált mappa</translation>
     </message>
 </context>
 </TS>
