@@ -120,13 +120,13 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
                         if (orderIter != alertOrder.end() && (*orderIter) == alert->getId())
                         {
                             const int row = static_cast<int>(std::distance(alertOrder.begin(),orderIter));
-                            if (row < static_cast<int>(alertOrder.size()))
+                            if (row >= 0 && row < static_cast<int>(alertOrder.size()))
                             {
                                 emit dataChanged(index(row, 0, QModelIndex()), index(row, 0, QModelIndex()));
                             }
                             else
                             {
-                                assert(false || "unexpected row to update");
+                                Q_ASSERT_X(false, "QAlertsModel::insertAlerts()", "unexpected row to update");
                             }
                         }
                     }

@@ -539,16 +539,22 @@ void SyncInfo::saveUnattendedDisabledSyncs()
 
 void SyncInfo::addUnattendedDisabledSync(MegaHandle tag, mega::MegaSync::SyncType type)
 {
-    unattendedDisabledSyncs[type].insert(tag);
-    saveUnattendedDisabledSyncs();
-    emit syncDisabledListUpdated();
+    if(unattendedDisabledSyncs.contains(type))
+    {
+        unattendedDisabledSyncs[type].insert(tag);
+        saveUnattendedDisabledSyncs();
+        emit syncDisabledListUpdated();
+    }
 }
 
 void SyncInfo::removeUnattendedDisabledSync(MegaHandle tag, mega::MegaSync::SyncType type)
 {
-    unattendedDisabledSyncs[type].remove(tag);
-    saveUnattendedDisabledSyncs();
-    emit syncDisabledListUpdated();
+    if(unattendedDisabledSyncs.contains(type))
+    {
+        unattendedDisabledSyncs[type].remove(tag);
+        saveUnattendedDisabledSyncs();
+        emit syncDisabledListUpdated();
+    }
 }
 
 void SyncInfo::setUnattendedDisabledSyncs(const QSet<MegaHandle>& tags)
