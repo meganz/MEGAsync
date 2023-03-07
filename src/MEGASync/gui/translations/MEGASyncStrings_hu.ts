@@ -3200,22 +3200,22 @@ Az átvitelek automatikusan folytatódnak, amikor újra megnyitja az alkalmazás
     <message>
         <source>Too many changes in account, local state invalid</source>
         <translatorcomment>SDK error label shown to inform the user that local state of a sync is invalid due to too many changes.</translatorcomment>
-        <translation>Invalid sync status due to too many changes in your account</translation>
+        <translation>Érvénytelen szinkronizálási állapot a fiókjában történt túl sok módosítás miatt</translation>
     </message>
     <message>
         <source>Undefined error</source>
         <translatorcomment>Label to show that an undefined error occurs during a SDK operation.</translatorcomment>
-        <translation>Undefined error</translation>
+        <translation>Meghatározatlan hiba</translation>
     </message>
     <message>
         <source>You can&apos;t run MEGA Desktop App from this location. Move it into the Applications folder then run it.</source>
         <translatorcomment>Error message shown when the user is trying to run MEGA Desktop App from a path different than Applications. Only affects to macOS.</translatorcomment>
-        <translation>You can&apos;t run the desktop app from this location. Move it into the Applications folder then run it.</translation>
+        <translation>Erről a helyről nem futtathatja az asztali alkalmazást.  Helyezze át az Alkalmazások mappába, majd futtassa onnan.</translation>
     </message>
     <message>
         <source>Account expired (business or Pro Flexi)</source>
         <translatorcomment>Label to show that the current account (either business or Pro Flexi) is expired during a SDK operation.</translatorcomment>
-        <translation>Account deactivated</translation>
+        <translation>Fiók deaktiválva</translation>
     </message>
 </context>
 <context>
@@ -3223,47 +3223,47 @@ Az átvitelek automatikusan folytatódnak, amikor újra megnyitja az alkalmazás
     <message>
         <source>Move to top</source>
         <translatorcomment>Label of context menu option to move selected transfer to top of the list and give it highest priority</translatorcomment>
-        <translation>Move to top</translation>
+        <translation>Mozgatás felülre</translation>
     </message>
     <message>
         <source>Move up</source>
         <translatorcomment>Label of context menu option to move selected transfer one step up of the list and give it more priority</translatorcomment>
-        <translation>Move up</translation>
+        <translation>Mozgatás fel</translation>
     </message>
     <message>
         <source>Move down</source>
         <translatorcomment>Label of context menu option to move selected transfer one step down of the list and give it less priority</translatorcomment>
-        <translation>Move down</translation>
+        <translation>Mozgatás le</translation>
     </message>
     <message>
         <source>Move to bottom</source>
         <translatorcomment>Label of context menu option to move selected transfer to the bottom of the list and give it lowest priority</translatorcomment>
-        <translation>Move to bottom</translation>
+        <translation>Mozgatás alulra</translation>
     </message>
     <message>
         <source>Open</source>
         <translatorcomment>Label of context menu option to open selected completed transfer</translatorcomment>
-        <translation>Open</translation>
+        <translation>Megnyitás</translation>
     </message>
     <message>
         <source>Show in folder</source>
         <translatorcomment>Label of context menu option to open the selected completed transfer using the specific file browser</translatorcomment>
-        <translation>Show in folder</translation>
+        <translation>Mutatás mappában</translation>
     </message>
     <message>
         <source>Clear</source>
         <translatorcomment>Label of context menu option to clear selected transfer item of completed view</translatorcomment>
-        <translation>Clear</translation>
+        <translation>Törlés</translation>
     </message>
     <message>
         <source>Get link</source>
         <translatorcomment>Context menu action to get transfer link</translatorcomment>
-        <translation>Get link</translation>
+        <translation>Link lekérése</translation>
     </message>
     <message>
         <source>Open in MEGA</source>
         <translatorcomment>Context menu action to open the transfer in MEGA webclient</translatorcomment>
-        <translation>Open in MEGA</translation>
+        <translation>Megnyitás a MEGA-ban</translation>
     </message>
     <message>
         <source>Error</source>
@@ -3273,130 +3273,130 @@ Az átvitelek automatikusan folytatódnak, amikor újra megnyitja az alkalmazás
     <message>
         <source>Error opening file</source>
         <translatorcomment>Text on an error messagebox because a local file could not be opened</translatorcomment>
-        <translation>File can&apos;t be opened. Check that the file in your local drive hasn&apos;t been deleted or moved.</translation>
+        <translation>A fájl nem nyitható meg. Ellenőrizze, hogy a helyi meghajtón lévő fájlt nem törölték le vagy helyezték át.</translation>
     </message>
     <message numerus="yes">
         <source>Pause transfer</source>
         <translatorcomment>Context menu action to pause transfer</translatorcomment>
-        <translation><numerusform>Pause transfer</numerusform><numerusform>Pause transfers</numerusform></translation>
+        <translation><numerusform>Átvitel szüneteltetése</numerusform><numerusform>Átvitelek szüneteltetése</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Resume transfer</source>
         <translatorcomment>Context menu action to resume transfer</translatorcomment>
-        <translation><numerusform>Resume transfer</numerusform><numerusform>Resume transfers</numerusform></translation>
+        <translation><numerusform>Átvitel folytatása</numerusform><numerusform>Átvitelek folytatása</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Cancel transfer</source>
         <translatorcomment>Context menu action to cancel transfer</translatorcomment>
-        <translation><numerusform>Cancel transfer</numerusform><numerusform>Cancel transfers</numerusform></translation>
+        <translation><numerusform>Átvitel megszakítása</numerusform><numerusform>Átvitelek megszakítása</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Clear transfer</source>
         <translatorcomment>Tooltip for the clear button in a transfer row</translatorcomment>
-        <translation><numerusform>Clear transfer</numerusform><numerusform>Clear transfers</numerusform></translation>
+        <translation><numerusform>Átvitel törlése</numerusform><numerusform>Átvitelek törlése</numerusform></translation>
     </message>
     <message>
         <source>Cancel transfers?
 All your transfers will be cancelled.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in the all transfers category</translatorcomment>
-        <translation>Cancel transfers?
-All your transfers will be cancelled.</translation>
+        <translation>Átvitelek megszakítása?
+Minden átvitele megszakításra kerül.</translation>
     </message>
     <message>
         <source>Cancel transfers?
 All your transfers in this category will be cancelled and cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category</translatorcomment>
-        <translation>Cancel transfers?
-All your transfers in this category will be cancelled and cleared.</translation>
+        <translation>Átvitelek megszakítása?
+Minden átvitele megszakításra és törlésre kerül ebben a kategóriában.</translation>
     </message>
     <message>
         <source>Cancel transfers?
 All your transfers in this category will be cancelled.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in a category other than all transfers category</translatorcomment>
-        <translation>Cancel transfers?
-All your transfers in this category will be cancelled.</translation>
+        <translation>Átvitelek megszakítása?
+Minden átvitele megszakításra kerül ebben a kategóriában.</translation>
     </message>
     <message>
         <source>Cancel transfers?
 Your incomplete sync transfers won&apos;t be cancelled.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
-        <translation>Cancel transfers?
-Your incomplete sync transfers won&apos;t be cancelled. All the other transfers will be cancelled. </translation>
+        <translation>Átvitelek megszakítása?
+A be nem fejezett szinkronizálási átvitelek nem törlődnek. Az összes többi törlésre kerül.</translation>
     </message>
     <message>
         <source>Cancel transfers?
 Your incomplete sync transfers won't be cancelled
 All the other transfers will be cancelled and cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
-        <translation>Cancel transfers?
-Your incomplete sync transfers won&apos;t be cancelled.
-All the other transfers will be cancelled and cleared.</translation>
+        <translation>Átvitelek megszakítása?
+A be nem fejezett szinkronizálási átvitelek nem törlődnek.
+Minden egyéb átvitel megszakításra és törlésre kerül.</translation>
     </message>
     <message>
         <source>Clear transfers?
 All your completed transfers will be cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to clear all the transfers in the completed category</translatorcomment>
-        <translation>Clear transfers?
-All your completed transfers will be cleared.</translation>
+        <translation>Átvitelek megszakítása?
+Minden elkészült átvitele törlésre kerül.</translation>
     </message>
     <message>
         <source>Clear transfers?
 All your completed transfers in this category will be cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to clear all the transfers in a category other than the completed category</translatorcomment>
-        <translation>Clear transfers?
-All your completed transfers in this category will be cleared.</translation>
+        <translation>Átvitelek megszakítása?
+Minden elkészült átvitele törlésre kerül ebben a kategóriában.</translation>
     </message>
     <message>
         <source>Cancel transfers?
 All your selected transfers will be cancelled.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel all the selected transfers</translatorcomment>
-        <translation>Cancel transfers?
-All your selected transfers will be cancelled.</translation>
+        <translation>Átvitelek megszakítása?
+Minden kijelölt átvitele törlésre kerül.</translation>
     </message>
     <message>
         <source>Cancel transfers?
 All your selected transfers will be cancelled and cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers</translatorcomment>
-        <translation>Cancel transfers?
-All your selected transfers will be cancelled and cleared.</translation>
+        <translation>Átvitelek megszakítása?
+Minden kijelölt átvitele megszakításra és törlésre kerül.</translation>
     </message>
     <message>
         <source>Cancel transfers?
 Your selected incomplete sync transfers won't be cancelled
 All the other selected transfers will be cancelled and cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
-        <translation>Cancel transfers?
-Your selected incomplete sync transfers won&apos;t be cancelled
-All the other selected transfers will be cancelled and cleared.</translation>
+        <translation>Átvitelek megszakítása?
+A kijelölt be nem fejezett szinkronizációs átvitelei nem kerülnek megszakításra.
+Minden más kijelölt átvitele megszakításra és törlésre kerül.</translation>
     </message>
     <message>
         <source>Cancel transfer?</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel a single transfer</translatorcomment>
-        <translation>Cancel transfer?</translation>
+        <translation>Átvitelek megszakítása?</translation>
     </message>
     <message>
-        <source>Clear transfers?
+        <source>Cancel transfers?
 All the selected completed transfers in this category will be cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to clear the selected completed transfer</translatorcomment>
-        <translation>Clear transfers?
-All the selected completed transfers in this category will be cleared.</translation>
+        <translation>Átvitelek megszakítása?
+Minden kijelölt elkészült átvitel törlésre kerül ebben a kategóriában.</translation>
     </message>
     <message>
         <source>Cancel transfers?
 Your selected incomplete sync transfers won&apos;t be cancelled.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
-        <translation>Cancel transfers?
-Your selected incomplete sync transfers won&apos;t be cancelled. All the other selected transfers will be cancelled. </translation>
+        <translation>Átvitelek megszakítása?
+A kijelölt be nem fejezett szinkronizációs átvitelei nem kerülnek megszakításra. Minden más kijelölt átvitele megszakításra kerül. </translation>
     </message>
     <message>
         <source>Clear transfer?</source>
         <translatorcomment>Messagebox text to confirm if the user wants to clear a single selected completed transfer</translatorcomment>
-        <translation>Clear transfer?</translation>
+        <translation>Átvitelek törlése?</translation>
     </message>
     <message numerus="yes">
         <source>Cancel and clear transfer</source>
         <translatorcomment>Context menu action to resume cancel the active transfers and clear the completed transfers (multiple transfers selected)</translatorcomment>
-        <translation><numerusform>Cancel and clear transfer</numerusform><numerusform>Cancel and clear transfers</numerusform></translation>
+        <translation><numerusform>Átvitel megszakítása és törlése</numerusform><numerusform>Átvitelek megszakítása és törlése</numerusform></translation>
     </message>
     <message>
         <source>Yes, cancel</source>
@@ -3547,22 +3547,22 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Sort by status</source>
         <translatorcomment>First column title tooltip(this column title doesn´t contains text, it shows an icon). Sorts the order of the column by node status, for example synced folders first or last.</translatorcomment>
-        <translation>Rendezés állapot alapján</translation>
+        <translation>Rendezés állapot szerint</translation>
     </message>
     <message>
         <source>Sort by owner name</source>
         <translatorcomment>Owner column title tooltip. Sorts the order of the column by owner name alphabetically.</translatorcomment>
-        <translation>Rendezés tulajdonos alapján</translation>
+        <translation>Rendezés tulajdonos szerint</translation>
     </message>
     <message>
         <source>Sort by date</source>
         <translatorcomment>Recently used column title tooltip. Sorts the order of the column by date.</translatorcomment>
-        <translation>Rendezés dátum alapján</translation>
+        <translation>Rendezés dátum szerint</translation>
     </message>
     <message>
         <source>Sort by name</source>
         <translatorcomment>Node name column title tooltip. Sorts the order of the column by date.</translatorcomment>
-        <translation>Rendezés név alapján</translation>
+        <translation>Rendezés név szerint</translation>
     </message>
     <message numerus="yes">
         <source>Today at %1</source>
