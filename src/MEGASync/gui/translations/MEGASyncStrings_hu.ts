@@ -3808,12 +3808,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Storage full</source>
         <translatorcomment>Label to indicate that current account has reached storage limit.</translatorcomment>
-        <translation>Storage full</translation>
+        <translation>A tárhely megtelt</translation>
     </message>
     <message>
         <source>Dismiss</source>
         <translatorcomment>Button label to dismiss the warning about storage full.</translatorcomment>
-        <translation>Dismiss</translation>
+        <translation>Elvetés</translation>
     </message>
     <message>
         <source>Upgrade</source>
@@ -3867,17 +3867,17 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Enter one or more MEGA file links</source>
         <translatorcomment>Message displayed when a user tries to import some links but the field is empty.</translatorcomment>
-        <translation>Enter one or more MEGA links</translation>
+        <translation>Adjon meg egy vagy több MEGA linket</translation>
     </message>
     <message>
         <source>Invalid MEGA Link</source>
         <translatorcomment>Label to indicate that MEGA link processed is invalid/incorrect </translatorcomment>
-        <translation>Invalid MEGA Link</translation>
+        <translation>Érvénytelen MEGA link</translation>
     </message>
     <message>
         <source>Open links</source>
         <translatorcomment>Window title for dialog to enter MEGA public links</translatorcomment>
-        <translation>Open links</translation>
+        <translation>Linkek megnyitása</translation>
     </message>
 </context>
 <context>
@@ -3885,7 +3885,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Permissions for new folders and files</source>
         <translatorcomment>Title of the dialog that allows to change the default permissions for new files and folders created by MEGAsync.</translatorcomment>
-        <translation>Permissions for new folders and files</translation>
+        <translation>Engedélyek új mappákhoz és fájlokhoz</translation>
     </message>
     <message>
         <source>Folders</source>
@@ -3895,32 +3895,32 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Numeric value:</source>
         <translatorcomment>Numeric value that represents the permissions that will be applied to new files and folders.</translatorcomment>
-        <translation>Numeric value:</translation>
+        <translation>Numerikus érték:</translation>
     </message>
     <message>
         <source>Group permissions:</source>
         <translatorcomment>Label just before the new group permissions that will be applied to new files and folders</translatorcomment>
-        <translation>Group permissions:</translation>
+        <translation>Csoportengedélyek:</translation>
     </message>
     <message>
         <source>Public permissions:</source>
         <translatorcomment>Label just before the new public permissions that will be applied to new files and folders</translatorcomment>
-        <translation>Public permissions:</translation>
+        <translation>Nyilvános engedélyek:</translation>
     </message>
     <message>
         <source>Files</source>
         <translatorcomment>Header for the section that allows to set the default permissions for new files created by MEGAsync. Please keep the first capital letter</translatorcomment>
-        <translation>Files</translation>
+        <translation>Fájlok</translation>
     </message>
     <message>
         <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&apos;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
-        <translation>Files and folders have an owner and belong to a group of users. Using this dialog, you can grant different access permissions for new files and folders created by the desktop app to users that belong to the same group and to the rest of the users in the computer. If you don’t need to change them, please leave them on the default settings for security reasons.</translation>
+        <translation>A fájloknak és mappáknak van tulajdonosuk, és a felhasználók egy csoportjához tartoznak. Ezen a párbeszédpanelen különböző hozzáférési engedélyeket adhat az asztali alkalmazás által létrehozott új fájlokhoz és mappákhoz az azonos csoporthoz tartozó felhasználóknak és a számítógép többi felhasználójának. Ha nem szükséges módosítania ezeket, hagyja az alapértelmezett beállításokon biztonsági okokból.</translation>
     </message>
     <message>
         <source>Owner permissions:</source>
         <translatorcomment>Label just before the new owner permissions that will be applied to new files and folders</translatorcomment>
-        <translation>Owner permissions:</translation>
+        <translation>Tulajdonosi engedélyek:</translation>
     </message>
 </context>
 <context>
@@ -3928,74 +3928,74 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Read</source>
         <translatorcomment>Text next to a checkbox that allows to grant read permissions for new files and folder</translatorcomment>
-        <translation>Read</translation>
+        <translation>Olvasás</translation>
     </message>
     <message>
         <source>Write</source>
         <translatorcomment>Text next to a checkbox that allows to grant write permissions for new files and folder</translatorcomment>
-        <translation>Write</translation>
+        <translation>Írás</translation>
     </message>
     <message>
         <source>Execution</source>
         <translatorcomment>Text next to a checkbox that allows to grant execution permissions for new files and folder</translatorcomment>
-        <translation>Execution</translation>
+        <translation>Végrehajtás</translation>
     </message>
 </context>
 <context>
     <name>PlanWidget</name>
     <message>
         <source>month</source>
-        <translation>month</translation>
+        <translation>hónap</translation>
     </message>
     <message>
         <source>Great Value</source>
         <translatorcomment>Label to inform about the great value plan, recommended one.</translatorcomment>
-        <translation>Great value</translation>
+        <translation>Nagyszerű érték</translation>
     </message>
     <message>
         <source>Current plan</source>
         <translatorcomment>Label that indicates the current pro plan of the user account.</translatorcomment>
-        <translation>Current plan</translation>
+        <translation>Aktuális terv</translation>
     </message>
     <message>
         <source>%1 per user</source>
         <translatorcomment>Label to indicate the price per user of business plan. %1 will be replaced with specific price.</translatorcomment>
-        <translation>%1 per user</translation>
+        <translation>%1 felhasználónként</translation>
     </message>
     <message>
         <source>storage</source>
         <translatorcomment>Label to indicate the specific storage of a pro plan.</translatorcomment>
-        <translation>storage</translation>
+        <translation>tárhely</translation>
     </message>
     <message>
         <source>transfer</source>
         <translatorcomment>Label to indicate the specific transfer quota of a pro plan.</translatorcomment>
-        <translation>transfer</translation>
+        <translation>átvitel</translation>
     </message>
     <message>
         <source>Great value for secure cloud storage, sharing and communication.</source>
         <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of Pro I plan.</translatorcomment>
-        <translation>Great value for secure cloud storage, sharing and communication.</translation>
+        <translation>Nagyszerű érték a biztonságos felhőalapú tároláshoz, megosztáshoz és kommunikációhoz.</translation>
     </message>
     <message>
         <source>Rest easy knowing you have plenty of secure cloud storage.</source>
         <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of Pro II plan.</translatorcomment>
-        <translation>Rest easy knowing you have plenty of secure cloud storage.</translation>
+        <translation>Döljőn hátra, tudván, hogy rengeteg biztonságos felhőtárhellyel rendelkezik.</translation>
     </message>
     <message>
         <source>Store even more with our premium secure cloud storage offering.</source>
         <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of Pro III plan.</translatorcomment>
-        <translation>Store even more with our premium secure cloud storage offering.</translation>
+        <translation>Tároljon még többet a prémium minőségű, biztonságos felhőalapú tárhely ajánlatunkkal.</translation>
     </message>
     <message>
         <source>With our end-to-end encryption, the way your team works has never been more secure and private.</source>
         <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of business plan.</translatorcomment>
-        <translation>With our end-to-end encryption, the way your team works has never been more secure and private.</translation>
+        <translation>Végpontok közötti titkosításunk révén csapata munkamódszere soha nem volt még biztonságosabb és privátabb.</translation>
     </message>
     <message>
         <source>Get started with secure file storage.</source>
         <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of Pro Lite plan.</translatorcomment>
-        <translation>Get started with secure file storage.</translation>
+        <translation>Kezdje el a biztonságos fájltárolást.</translation>
     </message>
     <message>
         <source>Additional storage charged at %1 per %2TB.</source>
