@@ -4000,17 +4000,17 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Additional storage charged at %1 per %2TB.</source>
         <translatorcomment>Balloon tooltip to inform users that additional storate for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
-        <translation>Additional storage charged at %1 per %2&#xa0;TB.</translation>
+        <translation>A további tárhely díja %1 / %2TB.</translation>
     </message>
     <message>
         <source>Additional transfer quota charged at %1 per %2TB.</source>
         <translatorcomment>Balloon tooltip to inform users that additional transfer quota for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
-        <translation>Additional transfer quota charged at %1 per %2&#xa0;TB.</translation>
+        <translation>A további átviteli kvóta díja %1 / %2TB.</translation>
     </message>
     <message numerus="yes">
         <source>minimum %n user</source>
         <translatorcomment>Label to inform about the minimum number of users for a business plan. %1 will be replaced with the minimum number of users.</translatorcomment>
-        <translation><numerusform>minimum %n user</numerusform><numerusform>minimum %n users</numerusform></translation>
+        <translation><numerusform>legalább %n felhasználó</numerusform><numerusform>legalább %n felhasználó</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4083,27 +4083,27 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Sync transfers cannot be cancelled individually.
 Please delete the folder sync from preferences to cancel them.</source>
         <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for macOS)</translatorcomment>
-        <translation>Sync transfers can&apos;t be cancelled. To remove the sync, go to Preferences in the desktop app and delete the synced folder.</translation>
+        <translation>A szinkronizálási átvitelek nem szakíthatók meg. A szinkronizálás eltávolításához nyissa meg a Tulajdonságokat az asztali alkalmazásban és törölje a szinkronizált mappát.</translation>
     </message>
     <message>
         <source>One or more backups have been disabled. Go to settings to enable them again.</source>
         <translatorcomment>Warning message shown when some backups are disabled. Tell the userto go to settings to solve the issue (win/linux)</translatorcomment>
-        <translation>One or more backups have been disabled. Go to Settings to enable them again.</translation>
+        <translation>Egy vagy több biztonsági mentés le van tiltva. Nyissa meg a Beállításokat az újbóli engedélyezéséhez.</translation>
     </message>
     <message>
         <source>Some syncs and backups have been disabled. Go to settings to enable them again.</source>
         <translatorcomment>Warning message shown when some backups and syncs are disabled. Tell the userto go to settings to solve the issue (win/linux)</translatorcomment>
-        <translation>Some syncs and backups have been disabled. Go to Settings to enable them again.</translation>
+        <translation>Néhány szinkronizálás és biztonsági mentés le van tiltva. Nyissa meg a Beállításokat az újbóli engedélyezéséhez.</translation>
     </message>
     <message>
         <source>One or more backups have been disabled. Go to preferences to enable them again.</source>
         <translatorcomment>Warning message shown when some backups are disabled. Tell the userto go to settings to solve the issue (mac)</translatorcomment>
-        <translation>One or more backups have been disabled. Go to Preferences to enable them again.</translation>
+        <translation>Egy vagy több biztonsági mentés le van tiltva. Nyissa meg a Tulajdonságokat az újbóli engedélyezéséhez.</translation>
     </message>
     <message>
         <source>Some syncs and backups have been disabled. Go to preferences to enable them again.</source>
         <translatorcomment>Warning message shown when some backups and syncs are disabled. Tell the userto go to settings to solve the issue (mac)</translatorcomment>
-        <translation>Some syncs and backups have been disabled. Go to Preferences to enable them again.</translation>
+        <translation>Néhány szinkronizálás és biztonsági mentés le van tiltva. Nyissa meg a Tulajdonságokat az újbóli engedélyezéséhez.</translation>
     </message>
 </context>
 <context>
@@ -4115,10 +4115,10 @@ Please delete the folder sync from preferences to cancel them.</source>
 - Translation issues fixed.
 </source>
         <translatorcomment>Changelog for version v4.8.5</translatorcomment>
-        <translation>- Detected crashes on Windows, Linux, and macOS fixed.
-- Less device memory will be used by accounts with large amounts of data stored.
-- Application performance improved.
-- Translation issues fixed.</translation>
+        <translation>- A beazonosított összeomlások Windows, Linux és macOS rendszeren javítva.
+- A nagy mennyiségű adatot tartalmazó fiókok kevesebb eszközmemóriát fognak használni.
+- Az alkalmazás teljesítménye javult.
+- Fordítási hibák javíva.</translation>
     </message>
 </context>
 <context>
@@ -4136,7 +4136,7 @@ Please delete the folder sync from preferences to cancel them.</source>
     <message>
         <source>Proxy settings:</source>
         <translatorcomment>Label to indicate the proxy current setting. It could be no proxy or custom manual proxy.</translatorcomment>
-        <translation>Proxy settings:</translation>
+        <translation>Proxy beállítások:</translation>
     </message>
     <message>
         <source>HTTP</source>
@@ -4151,37 +4151,37 @@ Please delete the folder sync from preferences to cancel them.</source>
     <message>
         <source>Proxy server requires a password</source>
         <translatorcomment>Checkbox to indicate if the proxy needs authentication (username and password)</translatorcomment>
-        <translation>Proxy server requires a password</translation>
+        <translation>A proxyszerverhez jelszó szükséges</translation>
     </message>
     <message>
         <source>Username:</source>
         <translatorcomment>Label to indicate the username of the proxy that is being configured.</translatorcomment>
-        <translation>Username:</translation>
+        <translation>Felhasználónév:</translation>
     </message>
     <message>
         <source>Server:</source>
         <translatorcomment>Label to indicate the server name/ip of the proxy that is being configured.</translatorcomment>
-        <translation>Server:</translation>
+        <translation>Szerver:</translation>
     </message>
     <message>
         <source>Password:</source>
         <translatorcomment>Label to indicate the password of the proxy that is being configured.</translatorcomment>
-        <translation>Password:</translation>
+        <translation>Jelszó:</translation>
     </message>
     <message>
         <source>Proxy type:</source>
         <translatorcomment>Label to indicate the type of proxy that is being configured.</translatorcomment>
-        <translation>Proxy type:</translation>
+        <translation>Proxy típus:</translation>
     </message>
     <message>
         <source>No Proxy</source>
         <translatorcomment>Radio button text to not select any proxy.</translatorcomment>
-        <translation>No proxy</translation>
+        <translation>Nincs proxy</translation>
     </message>
     <message>
         <source>Manual</source>
         <translatorcomment>Radio button to select manual proxy configuration.</translatorcomment>
-        <translation>Manual</translation>
+        <translation>Kézi</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -4196,12 +4196,12 @@ Please delete the folder sync from preferences to cancel them.</source>
     <message>
         <source>Auto-detect</source>
         <translatorcomment>Radio button to select auto detection for proxy configuration.</translatorcomment>
-        <translation>Auto-detect</translation>
+        <translation>Automatikus</translation>
     </message>
     <message>
         <source>Update</source>
         <translatorcomment>Button text for Update option. (macOS)</translatorcomment>
-        <translation>Update</translation>
+        <translation>Frissítés</translation>
     </message>
     <message>
         <source>Error</source>
@@ -4211,7 +4211,7 @@ Please delete the folder sync from preferences to cancel them.</source>
     <message>
         <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
         <translatorcomment>Message shown when there is an error testing the proxy settings.</translatorcomment>
-        <translation>Your proxy settings are invalid or the proxy doesn’t respond</translation>
+        <translation>A proxy beállításai érvénytelenek, vagy a proxy nem válaszol</translation>
     </message>
 </context>
 <context>
@@ -4219,12 +4219,12 @@ Please delete the folder sync from preferences to cancel them.</source>
     <message>
         <source>&amp;Yes</source>
         <translatorcomment>Label for confirm button. Keep capital letter.</translatorcomment>
-        <translation>&amp;Yes</translation>
+        <translation>&amp;Igen</translation>
     </message>
     <message>
         <source>&amp;No</source>
         <translatorcomment>Label for No button. Keep capital letter.</translatorcomment>
-        <translation>&amp;No</translation>
+        <translation>&amp;Nem</translation>
     </message>
     <message>
         <source>&amp;OK</source>
@@ -4234,7 +4234,7 @@ Please delete the folder sync from preferences to cancel them.</source>
     <message>
         <source>&amp;Cancel</source>
         <translatorcomment>Label for cancel button. Keep capital letter.</translatorcomment>
-        <translation>&amp;Cancel</translation>
+        <translation>&amp;Mégse</translation>
     </message>
 </context>
 <context>
@@ -4242,197 +4242,197 @@ Please delete the folder sync from preferences to cancel them.</source>
     <message>
         <source>Look in:</source>
         <translatorcomment>Label to indicate the current filesystem path containing the files and folders that are being listed</translatorcomment>
-        <translation>Look in:</translation>
+        <translation>Keresés itt:</translation>
     </message>
     <message>
         <source>Back</source>
         <translatorcomment>Button for going backwards in the navigating in the filesystem</translatorcomment>
-        <translation>Back</translation>
+        <translation>Vissza</translation>
     </message>
     <message>
         <source>Go back</source>
         <translatorcomment>Back button message used by assistive technologies (such as screen readers)</translatorcomment>
-        <translation>Go back</translation>
+        <translation>Visszalépés</translation>
     </message>
     <message>
         <source>Alt+Left</source>
         <translatorcomment>Shortcut for Back button.It is shown in the button tooltip.</translatorcomment>
-        <translation>Alt+Left</translation>
+        <translation>Alt+bal</translation>
     </message>
     <message>
         <source>Forward</source>
         <translatorcomment>Button for going forward in the navigating in the filesystem</translatorcomment>
-        <translation>Forward</translation>
+        <translation>Előre</translation>
     </message>
     <message>
         <source>Go forward</source>
         <translatorcomment>Forward button message used by assistive technologies (such as screen readers)</translatorcomment>
-        <translation>Go forward</translation>
+        <translation>Előrelépés</translation>
     </message>
     <message>
         <source>Alt+Right</source>
         <translatorcomment>Shortcut for Forward button.It is shown in the button tooltip.</translatorcomment>
-        <translation>Alt+Right</translation>
+        <translation>Alt+jobb</translation>
     </message>
     <message>
         <source>Parent Directory</source>
         <translatorcomment>Button to move to the parent directory</translatorcomment>
-        <translation>Parent directory</translation>
+        <translation>Szülőkönyvtár</translation>
     </message>
     <message>
         <source>Go to the parent directory</source>
         <translatorcomment>Parent directory button message used by assistive technologies (such as screen readers)</translatorcomment>
-        <translation>Go to the parent directory</translation>
+        <translation>A szülőkönyvtárba lépés</translation>
     </message>
     <message>
         <source>Alt+Up</source>
         <translatorcomment>Shortcut for Parent Directory button.It is shown in the button tooltip.</translatorcomment>
-        <translation>Alt+Up</translation>
+        <translation>Alt+fel</translation>
     </message>
     <message>
         <source>Create New Folder</source>
         <translatorcomment>Button for creating a new folder</translatorcomment>
-        <translation>Create new folder</translation>
+        <translation>Új mappa létrehozása</translation>
     </message>
     <message>
         <source>Create a New Folder</source>
         <translatorcomment>Create a new folder button message used by assistive technologies (such as screen readers)</translatorcomment>
-        <translation>Create a new folder</translation>
+        <translation>Új mappa létrehozása</translation>
     </message>
     <message>
         <source>List View</source>
         <translatorcomment>Button for changing to filesystem list view mode</translatorcomment>
-        <translation>List view</translation>
+        <translation>Listanézet</translation>
     </message>
     <message>
         <source>Change to list view mode</source>
         <translatorcomment>Change to list view mode button message used by assistive technologies (such as screen readers)</translatorcomment>
-        <translation>Change to list view mode</translation>
+        <translation>Váltás listanézetre</translation>
     </message>
     <message>
         <source>Detail View</source>
         <translatorcomment>Button for changing to filesystem detail view mode</translatorcomment>
-        <translation>Detailed view</translation>
+        <translation>Részletes nézet</translation>
     </message>
     <message>
         <source>Change to detail view mode</source>
         <translatorcomment>Change to detail view mode button message used by assistive technologies (such as screen readers)</translatorcomment>
-        <translation>Change to detail view mode</translation>
+        <translation>Váltás részletes nézet módra</translation>
     </message>
     <message>
         <source>Sidebar</source>
         <translatorcomment>Name of the side bar area of the window</translatorcomment>
-        <translation>Sidebar</translation>
+        <translation>Oldalsáv</translation>
     </message>
     <message>
         <source>List of places and bookmarks</source>
         <translatorcomment>Name to indicate the list of places and bookmarks area of the window</translatorcomment>
-        <translation>List of places and bookmarks</translation>
+        <translation>Helyek és könyvjelzők listája</translation>
     </message>
     <message>
         <source>Files</source>
         <translatorcomment>Label for a list of files</translatorcomment>
-        <translation>Files</translation>
+        <translation>Fájlok</translation>
     </message>
     <message>
         <source>Files of type:</source>
         <translatorcomment>Label for choosing a type for filtering files</translatorcomment>
-        <translation>Files of type:</translation>
+        <translation>Fájltípusok:</translation>
     </message>
     <message>
         <source>Find Directory</source>
         <translatorcomment>Window title when opening a directory</translatorcomment>
-        <translation>Find directory</translation>
+        <translation>Könyvtár keresése</translation>
     </message>
     <message>
         <source>Open</source>
         <translatorcomment>Window title when opening a file</translatorcomment>
-        <translation>Open</translation>
+        <translation>Megnyitás</translation>
     </message>
     <message>
         <source>Save As</source>
         <translatorcomment>Window title when saving a file</translatorcomment>
-        <translation>Save as</translation>
+        <translation>Mentés másként</translation>
     </message>
     <message>
         <source>Directory:</source>
         <translatorcomment>Selected directory text box label when choosing a directory</translatorcomment>
-        <translation>Directory:</translation>
+        <translation>Könyvtár:</translation>
     </message>
     <message>
         <source>All Files (*)</source>
         <translatorcomment>File of type option for not filtering files by extension</translatorcomment>
-        <translation>All files (*)</translation>
+        <translation>Összes fájltípus (*)</translation>
     </message>
     <message>
         <source>Show </source>
         <translatorcomment>Contextual menu from file list headers that allow to enable or disable diferent columns (size, type, data modified)</translatorcomment>
-        <translation>Show </translation>
+        <translation>Mutatás </translation>
     </message>
     <message>
         <source>All files (*)</source>
         <translatorcomment>File of type option for not filtering files by extension</translatorcomment>
-        <translation>All files (*)</translation>
+        <translation>Összes fájltípus (*)</translation>
     </message>
     <message>
         <source>Directories</source>
         <translatorcomment>Name of the option for showing only directories</translatorcomment>
-        <translation>Directories</translation>
+        <translation>Könyvtárak</translation>
     </message>
     <message>
         <source>New Folder</source>
         <translatorcomment>Default folder new when creating a new folder</translatorcomment>
-        <translation>New folder</translation>
+        <translation>Új mappa</translation>
     </message>
     <message>
         <source>Delete</source>
         <translatorcomment>Deleting warning dialog window title</translatorcomment>
-        <translation>Delete</translation>
+        <translation>Törlés</translation>
     </message>
     <message>
         <source>Could not delete directory.</source>
         <translatorcomment>Info message shown when failing deleting a directory</translatorcomment>
-        <translation>Could not delete directory.</translation>
+        <translation>Nem sikerült törölni a könyvtárat.</translation>
     </message>
     <message>
         <source>Recent Places</source>
         <translatorcomment>List of recent filesystem places</translatorcomment>
-        <translation>Recent places</translation>
+        <translation>Legutóbbi helyek</translation>
     </message>
     <message>
         <source>Remove</source>
         <translatorcomment>Contextual action for removing a new file or folder in the sidebar</translatorcomment>
-        <translation>Remove</translation>
+        <translation>Eltávolítás</translation>
     </message>
     <message>
         <source>My Computer</source>
         <translatorcomment>Label to name the top level of the filesystem</translatorcomment>
-        <translation>My computer</translation>
+        <translation>Sajátgép</translation>
     </message>
     <message>
         <source>Drive</source>
         <translatorcomment>Label to name physical storage drives</translatorcomment>
-        <translation>Drive</translation>
+        <translation>Meghajtó</translation>
     </message>
     <message>
         <source>%1 File</source>
         <translatorcomment>Option for filtering files by extension. %1 is a file name suffix, for example txt.</translatorcomment>
-        <translation>%1 file</translation>
+        <translation>%1 fájl</translation>
     </message>
     <message>
         <source>File</source>
         <translatorcomment>Label to desing a file matching</translatorcomment>
-        <translation>File</translation>
+        <translation>Fájl/translation>
     </message>
     <message>
         <source>File Folder</source>
         <translatorcomment>Label to desing a folder matching Windows Explorer case</translatorcomment>
-        <translation>Folder</translation>
+        <translation>Mappa</translation>
     </message>
     <message>
         <source>Folder</source>
         <translatorcomment>Label to desing a folder matching all other platforms</translatorcomment>
-        <translation>Folder</translation>
+        <translation>Mappa</translation>
     </message>
     <message>
         <source>Alias</source>
@@ -4442,57 +4442,57 @@ Please delete the folder sync from preferences to cancel them.</source>
     <message>
         <source>Shortcut</source>
         <translatorcomment>Label used in Qt file/folder choosing dialog. Not being used at the moment.</translatorcomment>
-        <translation>Shortcut</translation>
+        <translation>Parancsikon</translation>
     </message>
     <message>
         <source>Unknown</source>
         <translatorcomment>Label used in Qt file/folder choosing dialog. Not being used at the moment.</translatorcomment>
-        <translation>Unknown</translation>
+        <translation>Ismeretlen</translation>
     </message>
     <message>
         <source>&amp;Open</source>
         <translatorcomment>Ok Button text when the dialog is executed for opening a file. The ampersand means that the key after can be used for triggers the action instead of using the mouse to click it. The shortcut key chosen cannot be the same as the one chosen on the next strings (File &amp;name, &amp;Choose, &amp;Save).</translatorcomment>
-        <translation>&amp;Open</translation>
+        <translation>&amp;Megnyitás</translation>
     </message>
     <message>
         <source>&amp;Choose</source>
         <translatorcomment>Ok Button text when the dialog is executed for choosing a directory. The ampersand means that the key after can be used for triggers the action instead of using the mouse to click it. The shortcut key chosen cannot be the same as the one chosen on the next strings (File &amp;name, &amp;Open, &amp;Save).</translatorcomment>
-        <translation>&amp;Choose</translation>
+        <translation>&amp;Választás</translation>
     </message>
     <message>
         <source>&amp;Save</source>
         <translatorcomment>Ok Button text when the dialog is executed for saving a file. The ampersand means that the key after can be used for triggers the action instead of using the mouse to click it. The shortcut key chosen cannot be the same as the one chosen on the next strings (File &amp;name, &amp;Open, &amp;Choose).</translatorcomment>
-        <translation>&amp;Save</translation>
+        <translation>&amp;Mentés</translation>
     </message>
     <message>
         <source>&amp;Rename</source>
         <translatorcomment>Contextual menu action for renaming a folder or a file. The ampersand means that the key after can be used for triggers the action instead of using the mouse to click it. The shortcut key chosen cannot be the same as the one chosen on the next strings (&amp;Delete, Show &amp;hidden files, &amp;New Folder).</translatorcomment>
-        <translation>&amp;Rename</translation>
+        <translation>&amp;Átnevezés</translation>
     </message>
     <message>
         <source>&amp;Delete</source>
         <translatorcomment>Contextual menu action for deleting a folder or a file. The ampersand means that the key after can be used for triggers the action instead of using the mouse to click it. The shortcut key chosen cannot be the same as the one chosen on the next strings (&amp;Rename, Show &amp;hidden files, &amp;New Folder).</translatorcomment>
-        <translation>&amp;Delete</translation>
+        <translation>&amp;Törlés</translation>
     </message>
     <message>
         <source>Show &amp;hidden files</source>
         <translatorcomment>Contextual menu action for showing or not showing hidden files. The ampersand means that the key after can be used for triggers the action instead of using the mouse to click it. The shortcut key chosen cannot be the same as the one chosen on the next strings (&amp;Rename, &amp;Delete, &amp;New Folder).</translatorcomment>
-        <translation>Show &amp;hidden files</translation>
+        <translation>Show &amp;rejtett fájlok</translation>
     </message>
     <message>
         <source>&amp;New Folder</source>
         <translatorcomment>Contextual menu action for creating a new folder. The ampersand means that the key after can be used for triggers the action instead of using the mouse to click it. The shortcut key chosen cannot be the same as the one chosen on the next strings (&amp;Rename, &amp;Delete, Show &amp;hidden files).</translatorcomment>
-        <translation>&amp;New folder</translation>
+        <translation>&amp;Új mappa</translation>
     </message>
     <message>
         <source>Are you sure you want to delete &apos;%1&apos;?</source>
         <translatorcomment>Warning message shown before deleting a file or a folder.</translatorcomment>
-        <translation>Are you sure you want to delete “%1”?</translation>
+        <translation>Biztosan törli a következőt: „%1”?</translation>
     </message>
     <message>
         <source>File &amp;name:</source>
         <translatorcomment>Selected file text box label when opening a file. The ampersand means that the key after can be used for triggers the action instead of using the mouse to click it. The shortcut key chosen cannot be the same as the one chosen on the next strings (&amp;Open, &amp;Choose, &amp;Save).</translatorcomment>
-        <translation>File &amp;name:</translation>
+        <translation>Fájl &amp;név:</translation>
     </message>
     <message>
         <source>%1
@@ -4500,8 +4500,8 @@ Directory not found.
 Please verify the correct directory name was given.</source>
         <translatorcomment>Warning message when the directory name to open is incorrect</translatorcomment>
         <translation>%1
-Directory not found.
-Please verify the correct directory name was given.</translation>
+Könyvtár nem található.
+Ellenőrizze, hogy a megfelelő könyvtárnevet adta-e meg.</translation>
     </message>
     <message>
         <source>%1 already exists.
