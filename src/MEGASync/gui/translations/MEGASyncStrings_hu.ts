@@ -2602,145 +2602,145 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
         <translatorcomment>Informative message shown when a business account is expired and the user can only browse data and none operation (upload, download, creation..) is allowed.</translatorcomment>
-        <translation>Your account has [A]been deactivated[/A]. You can only browse your data.</translation>
+        <translation>Fiókját [A]deaktiváltuk[/A]. Az adatait csak böngészheti.</translation>
     </message>
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
         <translatorcomment>Informative message shown when a user is trying to upload data to a inshare that is in overquota state. %1 will be replaced with sharer account to inform the user.</translatorcomment>
-        <translation>Your upload(s) cannot proceed because %1’s account is full.</translation>
+        <translation>A feltöltés(ek) nem folytatódhatnak, mert %1 fiókja megtelt.</translation>
     </message>
     <message>
         <source>contact</source>
         <translatorcomment>Label to indicate a contact of a user.</translatorcomment>
-        <translation>contact</translation>
+        <translation>kapcsolat</translation>
     </message>
     <message>
         <source>Locked account</source>
         <translatorcomment>Title of the system notification when the account is locked</translatorcomment>
-        <translation>Locked account</translation>
+        <translation>Zárolt fiók</translation>
     </message>
     <message>
         <source>Open links</source>
         <translatorcomment>Menu action item to open MEGA public links. It will let you to import and/or download.</translatorcomment>
-        <translation>Open links</translation>
+        <translation>Hivatkozások megnyitása</translation>
     </message>
     <message>
         <source>Your account has been disabled by your administrator. Please contact your business account administrator for further details.</source>
         <translatorcomment>Warning shown to the user when the administrator of a business account disables him.</translatorcomment>
-        <translation>Your account has been deactivated by your administrator. Please contact your business account administrator for further details.</translation>
+        <translation>Fiókját a rendszergazda deaktiválta. További részletekért forduljon céges fiókjának rendszergazdájához.</translation>
     </message>
     <message>
         <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
         <translatorcomment>Informative message box shown if user is running an old Win version (vista or previous), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation>The app will continue to work, however, updates will no longer be supported for versions prior to Windows 7.</translation>
+        <translation>Az alkalmazás továbbra is működni fog, azonban a frissítések már nem támogatottak a Windows 7 előtti verziókon.</translation>
     </message>
     <message>
         <source>Transferring</source>
         <translatorcomment>Label of tray icon to indicate that MEGAsync is in a transferring state (ongoing transfers are running)</translatorcomment>
-        <translation>Transferring</translation>
+        <translation>Átvitel...</translation>
     </message>
     <message>
         <source>One or more syncs have been disabled</source>
         <translatorcomment>Tooltip to indicate that some syncs have been disable due to some error.</translatorcomment>
-        <translation>One or more syncs have been disabled</translation>
+        <translation>Egy vagy több szinkronizálás le van tiltva</translation>
     </message>
     <message>
         <source>Error adding sync</source>
         <translatorcomment>Error message title shown when an error occurs adding a sync.</translatorcomment>
-        <translation>Error adding sync</translation>
+        <translation>Hiba szinkronizálás hozzáadásakor</translation>
     </message>
     <message>
         <source>This sync can&apos;t be added: %1. Reason: %2</source>
         <translatorcomment>Error message shown when there is an error adding a sync. %1 will be replaced with name of sync and %2 with the reason of the error.</translatorcomment>
-        <translation>This sync can’t be added: %1. Reason: %2</translation>
+        <translation>Ez a szinkronizálás nem adható hozzá: %1. Oka: %2</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been temporarily disabled</source>
         <translatorcomment>Notification message launched when a sync is temporarily disabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime.</translatorcomment>
-        <translation>Your sync “%1” has been temporarily disabled</translation>
+        <translation>„%1” szinkronizálása ideiglenesen le van tiltva</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. Reason: %2</source>
         <translatorcomment>Notification message launched when a sync is disabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime and %2 with the reason of the error.</translatorcomment>
-        <translation>Your sync “%1” has been disabled. Reason: %2</translation>
+        <translation>„%1” szinkronizálása le van tiltva. Oka: %2</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been enabled</source>
         <translatorcomment>Notificaton message shown when %1 sync has been enable. %1 will be replaced with sync name at runtime.</translatorcomment>
-        <translation>Your sync “%1” has been enabled</translation>
+        <translation>„%1” szinkronizálása engedélyezve van</translation>
     </message>
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
         <translatorcomment>Informative message box shown if user is running an old OSX version (previous than Yosemite), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation>The app will continue to work, however updates will no longer be supported for versions prior to macOS Sierra.</translation>
+        <translation>Az alkalmazás továbbra is működni fog, azonban a frissítések már nem támogatottak a macOS Sierra előtti verziókon.</translation>
     </message>
     <message>
         <source>Your syncs have been disabled</source>
         <translatorcomment>Notification message launched when your syncs have been disabled.</translatorcomment>
-        <translation>Your syncs have been disabled</translation>
+        <translation>A szinkronizálás le van tiltva</translation>
     </message>
     <message>
         <source>Thank you for your collaboration</source>
         <translatorcomment>Informative message shown when a user makes a report to thank for his help.</translatorcomment>
-        <translation>Thank you for your collaboration</translation>
+        <translation>Köszönjük az együttműködését</translation>
     </message>
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>File count, where %n is the number of files. Used to build the &quot;Files and folders successfully uploaded/downloaded&quot; string.</translatorcomment>
-        <translation><numerusform>%n file</numerusform><numerusform>%n files</numerusform></translation>
+        <translation><numerusform>%n fájl</numerusform><numerusform>%n fájl</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Folder count, where %n is the number of folders. Used to build the &quot;Files and folders successfully uploaded/downloaded&quot; string.</translatorcomment>
-        <translation><numerusform>%n folder</numerusform><numerusform>%n folders</numerusform></translation>
+        <translation><numerusform>%n mappa</numerusform><numerusform>%n mappa</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n file was successfully uploaded</source>
         <translatorcomment>System notification to inform the user that %1 files were successfully uploaded</translatorcomment>
-        <translation><numerusform>%n file was successfully uploaded</numerusform><numerusform>%n files were successfully uploaded</numerusform></translation>
+        <translation><numerusform>%n fájl sikeresen feltöltve</numerusform><numerusform>%n fájl sikeresen feltöltve</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n file was successfully downloaded</source>
         <translatorcomment>System notification to inform the user that %1 files were successfully downloaded</translatorcomment>
-        <translation><numerusform>%n file was successfully downloaded</numerusform><numerusform>%n files were successfully downloaded</numerusform></translation>
+        <translation><numerusform>%n fájl sikeresen letöltve</numerusform><numerusform>%n fájl sikeresen letöltve</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n folder was successfully uploaded</source>
         <translatorcomment>System notification to inform the user that %n folders were successfully uploaded</translatorcomment>
-        <translation><numerusform>%n folder was successfully uploaded</numerusform><numerusform>%n folders were successfully uploaded</numerusform></translation>
+        <translation><numerusform>%n mappa sikeresen feltöltve</numerusform><numerusform>%n mappa sikeresen feltöltve</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n folder was successfully downloaded</source>
         <translatorcomment>System notification to inform the user that %n folders were successfully downloaded</translatorcomment>
-        <translation><numerusform>%n folder was successfully downloaded</numerusform><numerusform>%n folders were successfully downloaded</numerusform></translation>
+        <translation><numerusform>%n mappa sikeresen letöltve</numerusform><numerusform>%n mappa sikeresen feltöltve</numerusform></translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available. Click on this message to install it</source>
         <translatorcomment>System notification to inform the user that there is a new version of MEGAsync available for update. Windows version.</translatorcomment>
-        <translation>A new version of this app is available. Click on this message to install it.</translation>
+        <translation>Elérhető az alkalmazás új verziója. Kattintson erre az üzenetre a telepítéshez.</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available</source>
         <translatorcomment>System notification to inform the user that there is a new version of MEGAsync available for update. macOS version cannot be installed making click so, a new string is provided</translatorcomment>
-        <translation>A new version of this app is available.</translation>
+        <translation>Elérhető az alkalmazás új verziója.</translation>
     </message>
     <message>
         <source>%1 and %2 were successfully uploaded</source>
         <translatorcomment>System notification to inform the user that %1 files and %2 folders were successfully uploaded. The %1 is a sentence part for files and %2 for folders.</translatorcomment>
-        <translation>Uploaded %1 and %2</translation>
+        <translation>%1 és %2 feltöltve</translation>
     </message>
     <message>
         <source>%1 and %2 were successfully downloaded</source>
         <translatorcomment>System notification to inform the user that %1 files and %2 folders were successfully downloaded. The %1 is a sentence part for files and %2 for folders.</translatorcomment>
-        <translation>Downloaded %1 and %2</translation>
+        <translation>%1 és %2 letöltve</translation>
     </message>
     <message numerus="yes">
         <source>There is an active transfer. Exit the app?
 Transfer will automatically resume when you re-open the app.</source>
         <translatorcomment>Messagebox text to let the user know that there are active transfers when closing the app. The user will be able to exit and pause them, or stop the exit action.</translatorcomment>
-        <translation><numerusform>There is an active transfer. Exit the app?
-Transfer will automatically resume when you re-open the app.</numerusform><numerusform>There are active transfers. Exit the app?
-Transfers will automatically resume when you re-open the app.</numerusform></translation>
+        <translation><numerusform>Folyamatban van egy aktív átvitel. Ki akar lépni?
+Az átvitel automatikusan folytatódik, amikor újra megnyitja az alkalmazást.</numerusform><numerusform>Folyamatban vannak aktív átvitelek. Ki akar lépni?
+Az átvitelek automatikusan folytatódnak, amikor újra megnyitja az alkalmazást.</numerusform></translation>
     </message>
     <message>
         <source>Exit app</source>
@@ -2750,52 +2750,52 @@ Transfers will automatically resume when you re-open the app.</numerusform></tra
     <message>
         <source>Stay in app</source>
         <translatorcomment>One of the messagebox options: Keep the app open and continue with the active transfers</translatorcomment>
-        <translation>Stay in app</translation>
+        <translation>Maradás</translation>
     </message>
     <message>
         <source>Some syncs and backups have been disabled</source>
         <translatorcomment>Tooltip message for tray icon when some syncs and backups are disabled</translatorcomment>
-        <translation>Some syncs and backups have been disabled</translation>
+        <translation>Néhány szinkronizálás és biztonsági mentés le van tiltva</translation>
     </message>
     <message>
         <source>One or more backups have been disabled</source>
         <translatorcomment>Tooltip message for tray icon when some backups are disabled</translatorcomment>
-        <translation>One or more backups have been disabled</translation>
+        <translation>Egy vagy több biztonsági mentés le van tiltva</translation>
     </message>
     <message>
         <source>Error adding %1:</source>
         <translatorcomment>Error label displayed when it fails adding a sync or backup. Placeholder will show the name of the sync. After the two dots an error message is displayed</translatorcomment>
-        <translation>Error adding %1:</translation>
+        <translation>Hiba a %1 hozzáadásakor:</translation>
     </message>
     <message>
         <source>Your syncs and backups have been disabled</source>
         <translatorcomment>Warning message shown when  all the syncs and backups have been disabled</translatorcomment>
-        <translation>Your syncs and backups have been disabled:</translation>
+        <translation>A szinkronizálás és a biztonsági mentések le vannak tiltva:</translation>
     </message>
     <message>
         <source>Your backups have been disabled</source>
         <translatorcomment>Warning message shown when all the backups have been disabled</translatorcomment>
-        <translation>Your backups have been disabled:</translation>
+        <translation>A biztonsági mentések le vannak tiltva:</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been temporarily disabled</source>
         <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder displays backup name</translatorcomment>
-        <translation>Your backup ”%1“ has been temporarily disabled:</translation>
+        <translation>„%1” biztonsági mentése ideiglenesen le van tiltva:</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Your backup ”%1“ has been disabled because the local folder doesn&apos;t exist.</translation>
+        <translation>„%1” biztonsági mentése le van tiltva, mert a helyi mappa nem létezik.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Your backup “%1” has been disabled because backing up VirtualBox shared folders is not supported due to deficiencies in that file system.</translation>
+        <translation>„%1” biztonsági mentés le van tiltva, mert a VirtualBox megosztott mappáinak biztonsági mentése nem támogatott a fájlrendszerének hiányosságai miatt.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Your backup ”%1“ has been disabled because the MEGA folder is in the Rubbish bin.</translation>
+        <translation>„%1” biztonsági mentés le van tiltva, mert a MEGA mappa a Lomtárban van.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
