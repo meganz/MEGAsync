@@ -1385,25 +1385,25 @@ if (!preferences->lastExecutionTime())
         if (haveSyncs && haveBackups)
         {
             syncsTypesToDismiss = {MegaSync::TYPE_TWOWAY, MegaSync::TYPE_BACKUP};
-            message = PlatformStrings::syncsAndBackupsDisableWarning();
+            message = tr("Some syncs and backups have been disabled. Go to settings to enable them again.");
         }
         else if (haveBackups)
         {
             settingsTabToOpen = SettingsDialog::BACKUP_TAB;
             syncsTypesToDismiss = {MegaSync::TYPE_BACKUP};
-            message = PlatformStrings::backupsDisableWarning();
+            message = tr("One or more backups have been disabled. Go to settings to enable them again.");
         }
         else if (haveSyncs)
         {
             syncsTypesToDismiss = {MegaSync::TYPE_TWOWAY};
-            message = PlatformStrings::syncsDisableWarning();
+            message = tr("One or more syncs have been disabled. Go to settings to enable them again.");
         }
 
         // Display the message if it has been set
         if (!message.isEmpty())
         {
             QMessageBox msgBox (QMessageBox::Warning, QCoreApplication::applicationName(), message);
-            QString buttonText (PlatformStrings::openSettings());
+            QString buttonText(tr("Open settings"));
             QPushButton *openPreferences = msgBox.addButton(buttonText, QMessageBox::YesRole);
 
             msgBox.addButton(tr("Dismiss"), QMessageBox::NoRole);
@@ -1701,21 +1701,18 @@ void MegaApplication::processDownloadQueue(QString path)
     downloader->processDownloadQueue(&downloadQueue, mBlockingBatch, path);
 }
 
-void MegaApplication::createTransferManagerDialog()
+void MegaApplication::createTransferManagerDialog(TransfersWidget::TM_TAB tab)
 {
-    if(!mTransferManager)
-    {
-        mTransferManager = new TransferManager(megaApi);
-        infoDialog->setTransferManager(mTransferManager);
+    mTransferManager = new TransferManager(tab, megaApi);
+    infoDialog->setTransferManager(mTransferManager);
 
-        // Signal/slot to notify the tracking of unseen completed transfers of Transfer Manager. If Completed tab is
-        // active, tracking is disabled
-        connect(mTransferManager.data() , &TransferManager::userActivity, this, &MegaApplication::registerUserActivity);
-        connect(mTransferQuota.get(), &TransferQuota::sendState,
-                mTransferManager.data(), &TransferManager::onTransferQuotaStateChanged);
-        connect(mTransferManager.data(), SIGNAL(cancelScanning()), this, SLOT(cancelScanningStage()));
-        scanStageController.updateReference(mTransferManager);
-    }
+    // Signal/slot to notify the tracking of unseen completed transfers of Transfer Manager. If Completed tab is
+    // active, tracking is disabled
+    connect(mTransferManager.data() , &TransferManager::userActivity, this, &MegaApplication::registerUserActivity);
+    connect(mTransferQuota.get(), &TransferQuota::sendState,
+            mTransferManager.data(), &TransferManager::onTransferQuotaStateChanged);
+    connect(mTransferManager.data(), SIGNAL(cancelScanning()), this, SLOT(cancelScanningStage()));
+    scanStageController.updateReference(mTransferManager);
 }
 
 void MegaApplication::rebootApplication(bool update)
@@ -2223,16 +2220,6 @@ void MegaApplication::cleanAll()
         sleep(2);
 #endif
     }
-}
-
-void MegaApplication::onDupplicateLink(QString, QString name, MegaHandle handle)
-{
-    if (appfinished)
-    {
-        return;
-    }
-
-    addRecentFile(name, handle);
 }
 
 void MegaApplication::onInstallUpdateClicked()
@@ -3416,6 +3403,66 @@ bool MegaApplication::isQueueProcessingOngoing()
     return mProcessingUploadQueue || downloader->isQueueProcessingOngoing();
 }
 
+void MegaApplication::processUpgradeSecurityEvent()
+{
+    // Get outShares paths, to show them to the user
+    QSet<QString> outSharesStrings;
+    std::unique_ptr<MegaShareList> outSharesList (megaApi->getOutShares());
+    for (int i = 0; i < outSharesList->size(); ++i)
+    {
+        MegaHandle handle = outSharesList->get(i)->getNodeHandle();
+        std::unique_ptr<char[]> path (megaApi->getNodePathByNodeHandle(handle));
+        outSharesStrings << QString::fromUtf8(path.get());
+    }
+
+    // Prepare the dialog
+    QString title = tr("Security upgrade");
+    QString message = tr("Your account's security is now being upgraded. "
+                        "This will happen only once. If you have seen this message for "
+                        "this account before, press Cancel.");
+    if (!outSharesStrings.isEmpty())
+    {
+        message.append(QLatin1String("<br><br>"));
+        message.append(tr("You are currently sharing the following folder: %1", "", outSharesStrings.size())
+                  .arg(outSharesStrings.toList().join(QLatin1String(", "))));
+    }
+
+    auto upgradeSecurityDialog = new QMessageBox(QMessageBox::Information, title, message,
+                                                 QMessageBox::Ok|QMessageBox::Cancel);
+    upgradeSecurityDialog->setAttribute(Qt::WA_DeleteOnClose);
+
+    HighDpiResize hDpiResizer(upgradeSecurityDialog);
+
+    // Show dialog and:
+    // - upgrade security if user says OK
+    // - exit app if user says Cancel
+    int button = upgradeSecurityDialog->exec();
+
+    QPointer<MegaApplication> currentMegaApp(this);
+    if (!currentMegaApp)
+    {
+        return;
+    }
+
+    if (button == QMessageBox::Ok)
+    {
+        megaApi->upgradeSecurity(new OnFinishOneShot(megaApi, [=](const MegaError& e){
+            if (e.getErrorCode() != MegaError::API_OK)
+            {
+                QString errorTitle = tr("Error");
+                QString errorMessage = tr("Failed to ugrade security. Error: %1")
+                                       .arg(tr(e.getErrorString()));
+                showErrorMessage(errorMessage, errorTitle);
+                exitApplication();
+            }
+        }));
+    }
+    else if (button == QMessageBox::Cancel)
+    {
+        exitApplication();
+    }
+}
+
 void MegaApplication::onFolderTransferUpdate(FolderTransferUpdateEvent event)
 {
     if (appfinished)
@@ -3534,6 +3581,7 @@ void MegaApplication::unlink(bool keepLogs)
     whyamiblockedPeriodicPetition = false;
     megaApi->logout(true, nullptr);
     megaApiFolders->setAccountAuth(nullptr);
+    DialogOpener::closeAllDialogs();
     Platform::getInstance()->notifyAllSyncFoldersRemoved();
 
     for (unsigned i = 3; i--; )
@@ -4397,14 +4445,6 @@ void MegaApplication::updateUserStats(bool storage, bool transfer, bool pro, boo
     }
 }
 
-void MegaApplication::addRecentFile(QString/* fileName*/, long long/* fileHandle*/, QString/* localPath*/, QString/* nodeKey*/)
-{
-    if (appfinished)
-    {
-        return;
-    }
-}
-
 void MegaApplication::checkForUpdates()
 {
     if (appfinished)
@@ -4687,8 +4727,6 @@ void MegaApplication::onImportDialogFinish(QPointer<ImportMegaLinksDialog> dialo
             preferences->setOverStorageDismissExecution(0);
 
             connect(mLinkProcessor.get(), &LinkProcessor::onLinkImportFinish, this, &MegaApplication::onLinkImportFinished);
-            connect(mLinkProcessor.get(), &LinkProcessor::onDupplicateLink,
-                    this, &MegaApplication::onDupplicateLink);
             mLinkProcessor->importLinks(dialog->getImportPath());
         }
     }
@@ -4853,10 +4891,16 @@ void MegaApplication::transferManagerActionClicked(int tab)
         return;
     }
 
-    createTransferManagerDialog();
-    DialogOpener::showGeometryRetainerDialog(mTransferManager);
+    if(!mTransferManager)
+    {
+        createTransferManagerDialog(static_cast<TransfersWidget::TM_TAB>(tab));
+    }
+    else
+    {
+        mTransferManager->toggleTab(tab);
+    }
 
-    mTransferManager->toggleTab(tab);
+    DialogOpener::showGeometryRetainerDialog(mTransferManager);
 }
 
 void MegaApplication::loginActionClicked()
@@ -5241,10 +5285,11 @@ void MegaApplication::copyFileLink(MegaHandle fileHandle, QString nodeKey)
         return;
     }
 
+    QString gettingLinkError = tr("Error getting link: File not found");
     MegaNode *node = megaApi->getNodeByHandle(fileHandle);
     if (!node)
     {
-        showErrorMessage(tr("Error getting link:") + QString::fromUtf8(" ") + tr("File not found"));
+        showErrorMessage(gettingLinkError);
         return;
     }
 
@@ -5263,7 +5308,7 @@ void MegaApplication::copyFileLink(MegaHandle fileHandle, QString nodeKey)
     const char *fp = megaApi->getFingerprint(node);
     if (!fp)
     {
-        showErrorMessage(tr("Error getting link:") + QString::fromUtf8(" ") + tr("File not found"));
+        showErrorMessage(gettingLinkError);
         delete node;
         return;
     }
@@ -5971,7 +6016,7 @@ void MegaApplication::createTrayIconMenus()
         guestSettingsAction->deleteLater();
         guestSettingsAction = nullptr;
     }
-    guestSettingsAction = new QAction(PlatformStrings::settings(), this);
+    guestSettingsAction = new QAction(tr("Settings"), this);
 
     // When triggered, open "Settings" window. As the user is not logged in, it
     // will only show proxy settings.
@@ -6027,7 +6072,7 @@ void MegaApplication::createInfoDialogMenus()
     }
 
     recreateAction(&windowsExitAction, PlatformStrings::exit(), &MegaApplication::tryExitApplication);
-    recreateAction(&windowsSettingsAction, PlatformStrings::settings(), &MegaApplication::openSettings);
+    recreateAction(&windowsSettingsAction, tr("Settings"), &MegaApplication::openSettings);
     recreateAction(&windowsImportLinksAction, tr("Open links"), &MegaApplication::importLinks);
     recreateAction(&windowsUploadAction, tr("Upload"), &MegaApplication::uploadActionClicked);
     recreateAction(&windowsDownloadAction, tr("Download"), &MegaApplication::downloadActionClicked);
@@ -6104,7 +6149,7 @@ void MegaApplication::createInfoDialogMenus()
 
     recreateMenuAction(&exitAction, PlatformStrings::exit(),
                        "://images/ico_quit.png", &MegaApplication::tryExitApplication);
-    recreateMenuAction(&settingsAction, PlatformStrings::settings(),
+    recreateMenuAction(&settingsAction, tr("Settings"),
                        "://images/ico_preferences.png", &MegaApplication::openSettings);
     recreateMenuAction(&myCloudAction, tr("Cloud drive"), "://images/ico-cloud-drive.png", &MegaApplication::goToMyCloud);
 
@@ -6232,7 +6277,7 @@ void MegaApplication::createGuestMenu()
         settingsActionGuest->deleteLater();
         settingsActionGuest = nullptr;
     }
-    settingsActionGuest = new MenuItemAction(PlatformStrings::settings(), QIcon(QString::fromUtf8("://images/ico_preferences.png")));
+    settingsActionGuest = new MenuItemAction(tr("Settings"), QIcon(QString::fromUtf8("://images/ico_preferences.png")));
 
     connect(settingsActionGuest, &QAction::triggered, this, &MegaApplication::openSettings);
 
@@ -6498,6 +6543,10 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
     else if (event->getType() == MegaEvent::EVENT_BUSINESS_STATUS)
     {
         manageBusinessStatus(event->getNumber());
+    }
+    else if (event->getType() == MegaEvent::EVENT_UPGRADE_SECURITY)
+    {
+        processUpgradeSecurityEvent();
     }
 }
 
@@ -7380,34 +7429,6 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
     {
         lastTsBusinessWarning = QDateTime::currentMSecsSinceEpoch();
         mOsNotifications->sendBusinessWarningNotification(businessStatus);
-    }
-
-    //Show the transfer in the "recently updated" list
-    if (e->getErrorCode() == MegaError::API_OK && transfer->getNodeHandle() != INVALID_HANDLE)
-    {
-        QString localPath;
-        if (transfer->getPath())
-        {
-            localPath = QString::fromUtf8(transfer->getPath());
-        }
-
-#ifdef WIN32
-        if (localPath.startsWith(QString::fromUtf8("\\\\?\\")))
-        {
-            localPath = localPath.mid(4);
-        }
-#endif
-
-        MegaNode *node = transfer->getPublicMegaNode();
-        QString publicKey;
-        if (node)
-        {
-            const char* key = node->getBase64Key();
-            publicKey = QString::fromUtf8(key);
-            delete [] key;
-            delete node;
-        }
-        addRecentFile(QString::fromUtf8(transfer->getFileName()), transfer->getNodeHandle(), localPath, publicKey);
     }
 
     // Check if we have ot send a EVENT_1ST_***_FILE

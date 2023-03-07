@@ -29,7 +29,7 @@
    <enum>Qt::DefaultContextMenu</enum>
   </property>
   <property name="windowTitle">
-   <string>Preferences</string>
+   <string>Settings</string>
   </property>
   <property name="styleSheet">
    <string notr="true">QGroupBox {

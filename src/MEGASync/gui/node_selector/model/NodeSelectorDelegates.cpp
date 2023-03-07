@@ -115,8 +115,7 @@ bool NodeRowDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view, cons
 void NodeRowDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const
 {
     QStyledItemDelegate::initStyleOption(option, index);
-    QVariant enabled = index.data(toInt(NodeRowDelegateRoles::ENABLED_ROLE));
-    if (enabled.isValid() && !enabled.toBool())
+    if(!index.flags().testFlag(Qt::ItemIsEnabled))
     {
         option->state &= ~QStyle::State_Enabled;
     }
@@ -132,8 +131,7 @@ void DateColumnDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
     QStyledItemDelegate::paint(painter, option, index);
     painter->save();
     QPalette::ColorGroup cg = QPalette::Normal;
-    QVariant enabled = index.data(toInt(NodeRowDelegateRoles::ENABLED_ROLE));
-    if (enabled.isValid() && !enabled.toBool())
+    if(!index.flags().testFlag(Qt::ItemIsEnabled))
     {
         cg = QPalette::Disabled;
     }

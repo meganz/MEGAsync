@@ -35,7 +35,7 @@ class TransferManager : public QDialog
     Q_OBJECT
 
 public:
-    explicit TransferManager(mega::MegaApi *megaApi);
+    explicit TransferManager(TransfersWidget::TM_TAB tab, mega::MegaApi *megaApi);
     ~TransferManager();
 
     void pauseModel(bool state);

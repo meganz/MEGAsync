@@ -155,7 +155,6 @@ public:
     void stopUpdateTask();
     void applyProxySettings();
     void updateUserStats(bool storage, bool transfer, bool pro, bool force, int source);
-    void addRecentFile(QString fileName, long long fileHandle, QString localPath = QString(), QString nodeKey = QString());
     void checkForUpdates();
     // Actually show InfoDialog view, not tray menu.
     void showTrayMenu(QPoint *point = NULL);
@@ -290,7 +289,6 @@ public slots:
     void checkOverQuotaStates();
     void periodicTasks();
     void cleanAll();
-    void onDupplicateLink(QString link, QString name, mega::MegaHandle handle);
     void onInstallUpdateClicked();
     void onAboutClicked();
     void showInfoDialog();
@@ -364,7 +362,7 @@ protected:
     void processDownloadQueue(QString path);
     void disableSyncs();
     void restoreSyncs();
-    void createTransferManagerDialog();
+    void createTransferManagerDialog(TransfersWidget::TM_TAB tab);
     void calculateInfoDialogCoordinates(QDialog *dialog, int *posx, int *posy);
     void deleteMenu(QMenu *menu);
     void startHttpServer();
@@ -658,6 +656,8 @@ private:
         connect(*action, &QAction::triggered, this, slotFunc);
         (*action)->setEnabled(previousEnabledState);
     }
+
+    void processUpgradeSecurityEvent();
 
 private slots:
     void onFolderTransferUpdate(FolderTransferUpdateEvent event);

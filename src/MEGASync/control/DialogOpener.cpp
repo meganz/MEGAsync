@@ -7,11 +7,10 @@ QList<std::shared_ptr<DialogOpener::DialogInfoBase>> DialogOpener::mOpenedDialog
 QMap<QString, DialogOpener::GeometryInfo> DialogOpener::mSavedGeometries = QMap<QString, DialogOpener::GeometryInfo>();
 
 
-#ifdef _WIN32
+#ifdef Q_OS_WINDOWS
 ExternalDialogOpener::ExternalDialogOpener()
     : QWidget(nullptr, Qt::SubWindow)
 {
-#ifdef _WIN32
     if(QOperatingSystemVersion::current() <= QOperatingSystemVersion::Windows10)
     {
         setAttribute(Qt::WA_DeleteOnClose, true);
@@ -22,7 +21,6 @@ ExternalDialogOpener::ExternalDialogOpener()
         raise();
         activateWindow();
     }
-#endif
 }
 
 ExternalDialogOpener::~ExternalDialogOpener()

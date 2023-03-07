@@ -15,6 +15,8 @@ class UploadToMegaDialog : public QDialog, public mega::MegaRequestListener
 {
     Q_OBJECT
 
+    static const QString ERROR_STRING;
+
 public:
 
     static const char* NODE_PATH_PROPERTY;

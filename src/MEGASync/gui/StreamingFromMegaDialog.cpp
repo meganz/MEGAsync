@@ -7,6 +7,7 @@
 #include "QMegaMessageBox.h"
 #include "platform/Platform.h"
 #include "control/Utilities.h"
+#include <MegaNodeNames.h>
 
 #include <QCloseEvent>
 #include <QInputDialog>
@@ -149,17 +150,15 @@ void StreamingFromMegaDialog::onLinkInfoAvailable()
 
     if (mSelectedMegaNode)
     {
-        QString name = QString::fromUtf8(mSelectedMegaNode->getName());
-        if (!name.compare(QLatin1String("NO_KEY")) || !name.compare(QLatin1String("CRYPTO_ERROR")))
+        updateFileInfo(MegaNodeNames::getNodeName(mSelectedMegaNode.get()),
+                       mSelectedMegaNode->isNodeKeyDecrypted() ? LinkStatus::CORRECT : LinkStatus::WARNING);
+        if (!mSelectedMegaNode->isNodeKeyDecrypted())
         {
-            updateFileInfo(tr("Decryption error"), LinkStatus::WARNING);
             streamURL.clear();
         }
         else
         {
-            updateFileInfo(name, LinkStatus::CORRECT);
             generateStreamURL();
-
         }
     }
     else
@@ -343,7 +342,7 @@ void StreamingFromMegaDialog::updateFileInfoFromNode(MegaNode *node)
     }
     lastStreamSelection = LastStreamingSelection::FROM_LOCAL_NODE;
     mSelectedMegaNode = std::shared_ptr<MegaNode>(node);
-    updateFileInfo(QString::fromUtf8(mSelectedMegaNode->getName()), LinkStatus::CORRECT);
+    updateFileInfo(MegaNodeNames::getNodeName(node), LinkStatus::CORRECT);
     generateStreamURL();
     hideStreamingError();
 }
@@ -411,7 +410,7 @@ void StreamingFromMegaDialog::onTransferTemporaryError(mega::MegaApi*, mega::Meg
     const bool errorIsOverQuota{e->getErrorCode() == MegaError::API_EOVERQUOTA};
     if(transfer->isStreamingTransfer() && errorIsOverQuota)
     {
-        updateFileInfo(QString::fromUtf8(mSelectedMegaNode->getName()), LinkStatus::TRANSFER_OVER_QUOTA);
+        updateFileInfo(MegaNodeNames::getNodeName(mSelectedMegaNode.get()), LinkStatus::TRANSFER_OVER_QUOTA);
         showStreamingError();
 
         show();

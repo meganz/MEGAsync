@@ -5,8 +5,9 @@
 #include "Utilities.h"
 #include "MegaApplication.h"
 #include "QMegaMessageBox.h"
-#include "Platform.h"
 #include "DialogOpener.h"
+#include <MegaNodeNames.h>
+#include "Platform.h"
 
 #include <QDesktopServices>
 #include <QDir>
@@ -193,14 +194,13 @@ void ImportMegaLinksDialog::onLinkInfoAvailable(int id)
     int e = mLinkProcessor->getError(id);
     if (node && (e == MegaError::API_OK))
     {
-        QString name = QString::fromUtf8(node->getName());
-        if (!name.compare(QLatin1String("NO_KEY")) || !name.compare(QLatin1String("CRYPTO_ERROR")))
+        if (!node->isNodeKeyDecrypted())
         {
-            item->setData(QCoreApplication::translate("MegaError", "Decryption error"), ImportListWidgetItem::WARNING, mMegaApi->getSize(node.get()), !(node->getType() == MegaNode::TYPE_FILE));
+            item->setData(MegaNodeNames::getNodeName(node.get()), ImportListWidgetItem::WARNING, mMegaApi->getSize(node.get()), !(node->getType() == MegaNode::TYPE_FILE));
         }
         else
         {
-            item->setData(name, ImportListWidgetItem::CORRECT, mMegaApi->getSize(node.get()), !(node->getType() == MegaNode::TYPE_FILE));
+            item->setData(QString::fromUtf8(node->getName()), ImportListWidgetItem::CORRECT, mMegaApi->getSize(node.get()), !(node->getType() == MegaNode::TYPE_FILE));
         }
     }
     else

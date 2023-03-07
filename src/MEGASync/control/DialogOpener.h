@@ -10,7 +10,7 @@
 #include <memory>
 #include <QMap>
 
-#ifdef _WIN32
+#ifdef Q_OS_WINDOWS
 class ExternalDialogOpener : public QWidget
 {
 public:
@@ -286,7 +286,7 @@ private:
                 initDialog(dialog);
             }
 
-#ifdef _WIN32
+#ifdef Q_OS_WINDOWS
             ExternalDialogOpener externalOpener;
 #endif
 

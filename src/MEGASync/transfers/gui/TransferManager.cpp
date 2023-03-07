@@ -37,7 +37,7 @@ const char* ITS_ON = "itsOn";
 const char* SEARCH_TEXT = "searchText";
 const char* SEARCH_BUTTON_SELECTED = "selected";
 
-TransferManager::TransferManager(MegaApi *megaApi) :
+TransferManager::TransferManager(TransfersWidget::TM_TAB tab, MegaApi *megaApi) :
     QDialog(nullptr),
     mUi(new Ui::TransferManager),
     mMegaApi(megaApi),
@@ -58,17 +58,7 @@ TransferManager::TransferManager(MegaApi *megaApi) :
     mUiDragBackDrop->setupUi(mDragBackDrop);
     mDragBackDrop->hide();
 
-#ifdef Q_OS_MACOS
-    mUi->leSearchField->setAttribute(Qt::WA_MacShowFocusRect,0);
-#else
-    Qt::WindowFlags flags =  Qt::Window;
-    this->setWindowFlags(flags);
-#endif
-
     mUi->wTransfers->setupTransfers();
-
-    mUi->lTextSearch->installEventFilter(this);
-    mUi->leSearchField->installEventFilter(this);
 
     mModel = mUi->wTransfers->getModel();
 
@@ -145,8 +135,8 @@ TransferManager::TransferManager(MegaApi *megaApi) :
 
         if(value > TransfersWidget::TYPES_TAB_BASE && value < TransfersWidget::TYPES_LAST)
         {
-            TransfersWidget::TM_TAB tab = static_cast<TransfersWidget::TM_TAB>(value);
-            mNumberLabelsGroup[tab]->parentWidget()->hide();
+            TransfersWidget::TM_TAB currentTab = static_cast<TransfersWidget::TM_TAB>(value);
+            mNumberLabelsGroup[currentTab]->parentWidget()->hide();
         }
     }
 
@@ -231,7 +221,6 @@ TransferManager::TransferManager(MegaApi *megaApi) :
     setAcceptDrops(true);
 
     // Init state
-
     auto storageState = MegaSyncApp->getAppliedStorageState();
     auto transferQuotaState = MegaSyncApp->getTransferQuotaState();
     onStorageStateChanged(storageState);
@@ -242,10 +231,7 @@ TransferManager::TransferManager(MegaApi *megaApi) :
     updateCurrentOverQuotaLink();
     onUpdatePauseState(mPreferences->getGlobalPaused());
 
-    on_tAllTransfers_clicked();
-
-    //Update stats
-    onTransfersDataUpdated();
+    toggleTab(tab);
 
     mTransferScanCancelUi = new TransferScanCancelUi(mUi->sTransfers, mTabNoItem[TransfersWidget::ALL_TRANSFERS_TAB]);
     connect(mTransferScanCancelUi, &TransferScanCancelUi::cancelTransfers,
@@ -256,6 +242,18 @@ TransferManager::TransferManager(MegaApi *megaApi) :
     mUi->wUlResults->installEventFilter(this);
     mUi->lTransfers->installEventFilter(this);
     mUi->wLeftPane->installEventFilter(this);
+
+    mUi->lTextSearch->installEventFilter(this);
+    mUi->leSearchField->installEventFilter(this);
+
+#ifdef Q_OS_MACOS
+    mUi->leSearchField->setAttribute(Qt::WA_MacShowFocusRect,0);
+#else
+    Qt::WindowFlags flags =  Qt::Window;
+    this->setWindowFlags(flags);
+#endif
+
+    setAttribute(Qt::WA_DeleteOnClose, true);
 }
 
 
