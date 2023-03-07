@@ -26,12 +26,6 @@ NodeSelectorProxyModel::~NodeSelectorProxyModel()
 
 }
 
-void NodeSelectorProxyModel::showReadOnlyFolders(bool value)
-{
-    mFilter.showReadOnly = value;
-    invalidateFilter();
-}
-
 void NodeSelectorProxyModel::sort(int column, Qt::SortOrder order)
 {
     mOrder = order;
