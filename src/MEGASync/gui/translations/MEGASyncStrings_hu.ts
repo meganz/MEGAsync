@@ -5020,27 +5020,27 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>%1 (local cache)</source>
         <translatorcomment>Section label name for local cache summary and actions. Keep %1 placeholder, which is used to fill in the platform specific name for local sync cache (debris).</translatorcomment>
-        <translation>%1 (local cache)</translation>
+        <translation>%1 (helyi gyorsítótár)</translation>
     </message>
     <message>
         <source>Space used:</source>
         <translatorcomment>Label used to indicate ammount of space in byte denominations for local, remote cache and file versions.</translatorcomment>
-        <translation>Space used:</translation>
+        <translation>Felhasznált terület:</translation>
     </message>
     <message>
         <source>Remove files older than</source>
         <translatorcomment>Label for checkbox to remove local cache files older than a specified number of days.</translatorcomment>
-        <translation>Remove files older than</translation>
+        <translation>Ennél régebbi fájlok eltávolítása:</translation>
     </message>
     <message>
         <source>SyncDebris (remote cache)</source>
         <translatorcomment>Section label name for remote cache summary and clear action.</translatorcomment>
-        <translation>SyncDebris (remote cache)</translation>
+        <translation>SyncDebris (távoli gyorsítótár)</translation>
     </message>
     <message>
         <source>Enable file versioning</source>
         <translatorcomment>Label for checkbox to enable / disable file versioning.</translatorcomment>
-        <translation>Enable file versioning</translation>
+        <translation>Fájlverzió engedélyezése</translation>
     </message>
     <message>
         <source>Please let us know if you encounter any issues. Help us by providing as much detail as possible.</source>
@@ -5050,12 +5050,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Report Issue</source>
         <translatorcomment>Button label used to submit bug reports to MEGA.</translatorcomment>
-        <translation>Report issue</translation>
+        <translation>Probléma bejelentése</translation>
     </message>
     <message>
         <source>My Account</source>
         <translatorcomment>Button label used to open MEGA web app account overview section for current account. Keep as short as possible.</translatorcomment>
-        <translation>My account</translation>
+        <translation>A fiókom</translation>
     </message>
     <message>
         <source>Storage Space</source>
@@ -5075,12 +5075,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Purchase more storage</source>
         <translatorcomment>Button text inviting the user to buy more storage using MEGA online service. Opens the Web Browser. Keep text as short as possible.</translatorcomment>
-        <translation>Purchase more storage</translation>
+        <translation>Több tárhely vásárlása</translation>
     </message>
     <message>
         <source>Some folders have not synchronised. For more information please hover over the yellow warning icon.</source>
         <translatorcomment>Warning text message shown in Sync pane when folders are not synchronizing, inviting the user to use the warning message icon for each affected sync to find out more.</translatorcomment>
-        <translation>Some folders have not synchronised. For more information please hover over the yellow warning icon.</translation>
+        <translation>Egyes mappák nem lettek szinkronizálva. További információért vigye az egérmutatót a sárga figyelmeztető ikon fölé.</translation>
     </message>
     <message>
         <source>Recovery Key</source>
@@ -5105,12 +5105,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Default Folders</source>
         <translatorcomment>Section title text for Upload and Download folder defaults in Folders pane.</translatorcomment>
-        <translation>Default folders</translation>
+        <translation>Alapértelmezett mappák</translation>
     </message>
     <message>
         <source>Move…</source>
         <translatorcomment>Button label text allowing the user to change the default Uploads or Downloads folders for the app.</translatorcomment>
-        <translation>Move…</translation>
+        <translation>Áthelyezés…</translation>
     </message>
     <message>
         <source>Exclude files smaller than</source>
@@ -5125,7 +5125,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Restart MEGA Desktop App to apply changes.</source>
         <translatorcomment>Informative text shown in Folders pane, letting the user know that an application restart is required to apply the changes he just made.</translatorcomment>
-        <translation>Restart the app to apply changes.</translation>
+        <translation>A módosítások alkalmazásához indítsa újra az alkalmazást.</translation>
     </message>
     <message>
         <source>Change Settings…</source>
@@ -5140,7 +5140,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Force a Full Scan</source>
         <translatorcomment>Button label text for allowing the user to initiate a full scan of synchronized folders, after restarting MEGA Desktop Application. Keep as short as possible.</translatorcomment>
-        <translation>Force a full scan</translation>
+        <translation>Teljes vizsgálat kényszerítése</translation>
     </message>
     <message>
         <source>Session history</source>
@@ -5150,27 +5150,27 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Preferences</source>
         <translatorcomment>Dialog window title for Settings on macOS. Keep as short as possible.</translatorcomment>
-        <translation>Preferences</translation>
+        <translation>Tulajdonságok</translation>
     </message>
     <message>
         <source>Language:</source>
         <translatorcomment>Form text label shown next to the language change drop down menu, on macOS. Keep as short as possible.</translatorcomment>
-        <translation>Language:</translation>
+        <translation>Nyelv:</translation>
     </message>
     <message>
         <source>%1 (local cache):</source>
         <translatorcomment>Section label name for local cache summary and actions. Keep %1 placeholder, which is used to fill in the platform specific name for local sync cache (debris) (macOS)</translatorcomment>
-        <translation>%1 (local cache):</translation>
+        <translation>%1 (helyi gyorsítótár):</translation>
     </message>
     <message>
         <source>SyncDebris (remote cache):</source>
         <translatorcomment>Section label name for remote cache summary and clear action.(macOS)</translatorcomment>
-        <translation>SyncDebris (remote cache):</translation>
+        <translation>SyncDebris (távoli gyorsítótár):</translation>
     </message>
     <message>
         <source>File versions:</source>
         <translatorcomment>Label for File versions settings in General pane.(macOS)</translatorcomment>
-        <translation>File versions:</translation>
+        <translation>Fájlverziók:</translation>
     </message>
     <message>
         <source>Issue report:</source>
@@ -5180,17 +5180,17 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Storage space:</source>
         <translatorcomment>Label for account storage details.(macOS)</translatorcomment>
-        <translation>Storage space:</translation>
+        <translation>Tárhely:</translation>
     </message>
     <message>
         <source>Transfer quota:</source>
         <translatorcomment>Label for account transfer quota details.(macOS)</translatorcomment>
-        <translation>Transfer quota:</translation>
+        <translation>Átviteli kvóta:</translation>
     </message>
     <message>
         <source>Your MEGA account is full. Uploads are disabled and folder synchronisation is paused.</source>
         <translatorcomment>Warning text message shown in Sync pane when account storage is full.</translatorcomment>
-        <translation>Your MEGA account is full. Uploads are disabled and folder synchronisation is paused.</translation>
+        <translation>Megtelt a MEGA-fiókja. A feltöltések le vannak tiltva, és a mappák szinkronizálása szünetel.</translation>
     </message>
     <message>
         <source>Your account security depends on the strength of your password. Passwords should be unique and impossible to guess. We recommend using a password manager.</source>
@@ -5200,7 +5200,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Excluded file and folder names:</source>
         <translatorcomment>Label for controls to indicate the file and folder names excluded from synchronization.(macOS)</translatorcomment>
-        <translation>Excluded file and folder names:</translation>
+        <translation>Kizárt fájl- és mappanevek:</translation>
     </message>
     <message>
         <source>Exclude by size:</source>
@@ -5220,12 +5220,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Proxy settings:</source>
         <translatorcomment>Form label text indicating the active Proxy settings.</translatorcomment>
-        <translation>Proxy settings:</translation>
+        <translation>Proxy beállítások:</translation>
     </message>
     <message>
         <source>Enable Windows Explorer integration</source>
         <translatorcomment>Checkbox label displayed on Windows, allowing the user to enable / disable the Windows Explorer integration.</translatorcomment>
-        <translation>Windows intéző integráció</translation>
+        <translation>Windows Intéző integráció</translation>
     </message>
     <message>
         <source>B</source>
@@ -5250,7 +5250,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Install Update</source>
         <translatorcomment>Button label text shown in General pane when there is an update available. Keep as short as possible.</translatorcomment>
-        <translation>Install update</translation>
+        <translation>Frissítés telepítése</translation>
     </message>
     <message>
         <source>Free</source>
@@ -5265,52 +5265,52 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Business</source>
         <translatorcomment>Text label indicating the Business tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Business</translation>
+        <translation>Céges</translation>
     </message>
     <message>
         <source>Restart MEGAsync</source>
         <translatorcomment>Title text of dialog shown when clicking on Restart application button. Keep as short as possible.</translatorcomment>
-        <translation>Restart</translation>
+        <translation>Újraindítás</translation>
     </message>
     <message>
         <source>No limit</source>
         <translatorcomment>Text label shown when there is no limit set for Upload and Download rate limits in Network pane.</translatorcomment>
-        <translation>No limit</translation>
+        <translation>Nincs korlát</translation>
     </message>
     <message>
         <source>No Proxy</source>
         <translatorcomment>Text label shown when there is no Proxy set in Network pane.</translatorcomment>
-        <translation>No proxy</translation>
+        <translation>Nincs proxy</translation>
     </message>
     <message>
         <source>Manual</source>
         <translatorcomment>Text label shown when there is a Proxy set in Network pane.</translatorcomment>
-        <translation>Manual</translation>
+        <translation>Kézi</translation>
     </message>
     <message>
         <source>Settings</source>
         <translatorcomment>Dialog window title for Settings on Windows &amp; Linux. Keep as short as possible.</translatorcomment>
-        <translation>Settings</translation>
+        <translation>Beállítások</translation>
     </message>
     <message>
         <source>File versions</source>
         <translatorcomment>Section title label for File versions settings in General pane.</translatorcomment>
-        <translation>File versions</translation>
+        <translation>Fájlverziók</translation>
     </message>
     <message>
         <source>Issue report</source>
         <translatorcomment>Section title label for Issue reporting in General pane.</translatorcomment>
-        <translation>Issue report</translation>
+        <translation>Probléma bejelentés</translation>
     </message>
     <message>
         <source>Choose which files or folders you want to exclude from synchronisation.</source>
         <translatorcomment>Informative text message encouraging the user to choose files / folders for exclusion in Folders pane.</translatorcomment>
-        <translation>Choose folders or files you wish to exclude from synchronisation</translation>
+        <translation>Válassza ki azokat a mappákat vagy fájlokat, amelyeket ki szeretne zárni a szinkronizálásból</translation>
     </message>
     <message>
         <source>Saving synchronised folders…</source>
         <translatorcomment>Temporary text label shown while saving changes to Synchronized folders on Windows\Linux. Keep the 3 suspense periods, indicating to the user that the action is in in progress.</translatorcomment>
-        <translation>Saving synchronised folders…</translation>
+        <translation>Szinkronizált mappák mentése…</translation>
     </message>
     <message>
         <source>Pro I</source>
@@ -5330,7 +5330,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Key</source>
         <translatorcomment>Button label text for export key saving to local machine in a file. Keep string as short as possible.</translatorcomment>
-        <translation>Export key</translation>
+        <translation>Kulcs exportálása</translation>
     </message>
     <message>
         <source>Notifications</source>
@@ -5350,7 +5350,7 @@ Do you want to restart MEGAsync now?</source>
     <message numerus="yes">
         <source>day</source>
         <translatorcomment>Suffix text label for number of days to keep files in local cache.</translatorcomment>
-        <translation><numerusform>day</numerusform><numerusform>days</numerusform></translation>
+        <translation><numerusform>nap</numerusform><numerusform>nap</numerusform></translation>
     </message>
     <message>
         <source>Sleep settings</source>
@@ -5365,12 +5365,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Sleep mode can&apos;t be setup</source>
         <translatorcomment>Sleep/Active mode: Error messagebox title when the pc awake mode could not be activated after activating the feature using the checkbox.</translatorcomment>
-        <translation>Sleep mode can&apos;t be set up</translation>
+        <translation>Az alvó üzemmód nem állítható be</translation>
     </message>
     <message>
         <source>Your operating system doesn&apos;t allow its sleep setting to be overwritten.</source>
         <translatorcomment>Sleep/Active mode: Error messagebox text when the pc awake mode could not be activated after activating the feature using the checkbox.</translatorcomment>
-        <translation>Your operating system doesn&apos;t allow its sleep setting to be overwritten.</translation>
+        <translation>Az operációs rendszere nem teszi lehetővé az alvó mód beállításainak felülírását.</translation>
     </message>
     <message>
         <source>Backup</source>
@@ -5380,7 +5380,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Backups</source>
         <translatorcomment>Backups table title</translatorcomment>
-        <translation>Backups</translation>
+        <translation>Biztonsági mentések</translation>
     </message>
     <message>
         <source>Backup Folder</source>
@@ -5395,102 +5395,102 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Saving backups…</source>
         <translatorcomment>Label text displayed while backups settings are being saved</translatorcomment>
-        <translation>Saving backups…</translation>
+        <translation>Mentési beállítások tárolása…</translation>
     </message>
     <message>
         <source>Some folders have not backed up. For more information please hover over the yellow warning icon.</source>
         <translatorcomment>Warning message displayed inside settings dialog indicating that there is a problem with a backup.</translatorcomment>
-        <translation>Some folders haven&apos;t been backed up. For more information, hover over the yellow warning icon.</translation>
+        <translation>Néhány mappáról nem készült biztonsági másolat. További információért vigye az egérmutatót a sárga figyelmeztető ikon fölé.</translation>
     </message>
     <message>
         <source>Backup folder:</source>
         <translatorcomment>Line edit title, remote backup folder path will be displayed (macOS)</translatorcomment>
-        <translation>Backup folder:</translation>
+        <translation>Mentési mappa:</translation>
     </message>
     <message>
         <source>Synchronizations and backups will stop working.</source>
         <translatorcomment>Warning message displayed on logout if there are active syncs and backups</translatorcomment>
-        <translation>Syncs and backups will be disabled.</translation>
+        <translation>A szinkronizálás és a biztonsági mentések le lesznek tiltva.</translation>
     </message>
     <message>
         <source>Backups will stop working.</source>
         <translatorcomment>Warning message displayed on logout if there are active backups (not syncs)</translatorcomment>
-        <translation>Backups will be disabled.</translation>
+        <translation>A biztonsági mentések le lesznek tiltva.</translation>
     </message>
     <message>
         <source>Synchronizations will stop working.</source>
         <translatorcomment>Warning message displayed on logout if there are active syncs (not backups)</translatorcomment>
-        <translation>Syncs will be disabled.</translation>
+        <translation>A szinkronizálások le lesznek tiltva.</translation>
     </message>
     <message>
         <source>Are you sure?</source>
         <translatorcomment>Warning message second part asking if you are sure about continuing with the logout.</translatorcomment>
-        <translation>Want to log out?</translation>
+        <translation>Ki akar jelentkezni?</translation>
     </message>
     <message>
         <source>Error adding sync</source>
         <translatorcomment>Warning message title indicating that an error happened adding a sync.</translatorcomment>
-        <translation>Error adding sync</translation>
+        <translation>Hiba a szinkronizálás hozzáadásakor</translation>
     </message>
     <message>
         <source>Error removing sync</source>
         <translatorcomment>Warning message title indicating that an error happened removing a sync.</translatorcomment>
-        <translation>Error removing sync</translation>
+        <translation>Hiba a szinkronizálás eltávolításakor</translation>
     </message>
     <message>
         <source>Your sync can&apos;t be removed. Reason: %1</source>
         <translatorcomment>Warning message title indicating that an error happened removing a sync. the reason is given at runtime in place of the placeholder</translatorcomment>
-        <translation>Your sync can&apos;t be removed. Reason: %1</translation>
+        <translation>A szinkronizálást nem lehet eltávolítani. Oka: %1</translation>
     </message>
     <message>
         <source>Error disabling sync</source>
         <translatorcomment>Warning message title indicating that an error happened disabling a sync.</translatorcomment>
-        <translation>Error disabling sync</translation>
+        <translation>Hiba a szinkronizálás letiltásakor</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
         <translatorcomment>Warning message indicating that an error happened disabling a sync. First placeholder is the sync name and second placeholder is the error message sent by SDK (reason)</translatorcomment>
-        <translation>Your sync ”%1“ can&apos;t be disabled. Reason: %2</translation>
+        <translation>„%1” szinkronizálást nem lehet letiltani. Oka: %2</translation>
     </message>
     <message>
         <source>Error adding backup %1</source>
         <translatorcomment>Error message dialog title. Placeholder shows the backup name</translatorcomment>
-        <translation>Error adding backup %1</translation>
+        <translation>Hiba a %1 biztonsági másolat hozzáadásakor</translation>
     </message>
     <message>
         <source>Error removing backup</source>
         <translatorcomment>Error message dialog title</translatorcomment>
-        <translation>Error stopping backup</translation>
+        <translation>Hiba a biztonsági mentés leállításakor</translation>
     </message>
     <message>
         <source>Your backup can&apos;t be removed. Reason: %1</source>
         <translatorcomment>Warning message title indicating that an error happened removing a backup. the reason is given at runtime in place of the placeholder</translatorcomment>
-        <translation>Your backup can&apos;t be stopped. Reason: %1</translation>
+        <translation>A biztonsági mentést nem lehet leállítani. Oka: %1</translation>
     </message>
     <message>
         <source>Error moving or removing remote backup folder</source>
         <translatorcomment>Title of the dialog shown when the deletion or move of the remote backup folder failed</translatorcomment>
-        <translation>Error moving or deleting MEGA backup folder</translation>
+        <translation>Hiba történt a MEGA biztonsági mentési mappa áthelyezése vagy törlése során</translation>
     </message>
     <message>
         <source>Failed to move or remove the remote backup folder. Reason: %1</source>
         <translatorcomment>Error text when the deletion or move of the remote backup folder failed</translatorcomment>
-        <translation>Unable to move or delete the MEGA backup folder. Reason: %1</translation>
+        <translation>Nem lehet áthelyezni vagy törölni a MEGA biztonsági mentési mappát. Oka: %1</translation>
     </message>
     <message>
         <source>Error enabling backup</source>
         <translatorcomment>Title of the dialog shown when enabling a backup failed</translatorcomment>
-        <translation>Error enabling backup</translation>
+        <translation>Hiba a biztonsági mentés engedélyezésekor</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; can&apos;t be enabled. Reason: %2</source>
         <translatorcomment>Error text when enabling a backup failed</translatorcomment>
-        <translation>Your backup ”%1“ can&apos;t be enabled. Reason: %2</translation>
+        <translation>A „%1” biztonsági mentés nem engedélyezhető. Oka: %2</translation>
     </message>
     <message>
         <source>Error disabling backup</source>
         <translatorcomment>Title of the dialog shown when enabling a backup failed</translatorcomment>
-        <translation>Error disabling backup</translation>
+        <translation>Hiba a biztonsági mentés letiltásakor</translation>
     </message>
     <message>
         <source>Pro Flexi</source>
