@@ -112,7 +112,8 @@ void NodeRequester::search(const QString &text, NodeSelectorModelItemSearch::Typ
         }
         else if(!mShowReadOnlyFolders)
         {
-            if(megaApi->getAccess(node) == mega::MegaShare::ACCESS_READ)
+            if(megaApi->getAccess(node) == mega::MegaShare::ACCESS_READ
+               || !node->isNodeKeyDecrypted())
             {
                 continue;
             }
@@ -186,7 +187,8 @@ void NodeRequester::createIncomingSharesRootItems(std::shared_ptr<mega::MegaNode
         }
         else if(!mShowReadOnlyFolders)
         {
-            if(megaApi->getAccess(nodeList->get(i)) == mega::MegaShare::ACCESS_READ)
+            if(megaApi->getAccess(nodeList->get(i)) == mega::MegaShare::ACCESS_READ
+               || !nodeList->get(i)->isNodeKeyDecrypted())
             {
                 continue;
             }
