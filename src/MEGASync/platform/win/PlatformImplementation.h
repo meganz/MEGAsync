@@ -67,8 +67,8 @@ public:
 private:
     void removeSyncFromLeftPane(QString syncPath, QString syncName, QString uuid);
 
-    void notifyItemChange(const QString& localPath, AbstractShellNotifier* notifier);
-    QString getPreparedPath(const QString& localPath);
+    void notifyItemChange(const QString& localPath, std::shared_ptr<AbstractShellNotifier> notifier);
+    QString getPreparedPath(std::string *localPath);
 
     WinShellDispatcherTask *shellDispatcherTask = nullptr;
     std::shared_ptr<AbstractShellNotifier> mSyncFileNotifier = nullptr;
