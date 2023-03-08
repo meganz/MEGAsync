@@ -2639,11 +2639,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>We couldn’t find a system tray to place the app tray icon into. Try launching the app again.</translation>
     </message>
     <message>
-        <source>The link can&apos;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
-        <translatorcomment>Notification error message shown while generating a public link of a file from an incoming shared folder or from the rubbish bin</translatorcomment>
-        <translation>The link can’t be generated because the file is inside an incoming shared folder or your Rubbish bin.</translation>
-    </message>
-    <message>
         <source>Upload</source>
         <translatorcomment>Label for the menu item that opens the dialog to upload files to MEGA</translatorcomment>
         <translation>Upload</translation>
@@ -2921,11 +2916,6 @@ Transfers will automatically resume when you re-open the app.</numerusform>
         <source>Open settings</source>
         <translatorcomment>Button label to open MEGAsync settings dialog.</translatorcomment>
         <translation type="unfinished">Open Settings</translation>
-    </message>
-    <message>
-        <source>Error getting link: File not found</source>
-        <translatorcomment>Notification message shown an error of file not found while getting a public link.</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Settings</source>
