@@ -2824,6 +2824,11 @@ Transfer will automatically resume when you re-open the app.</source>
         <translatorcomment>Title of security upgrade dialog</translatorcomment>
         <translation>Обновление параметров безопасности</translation>
     </message>
+    <message>
+        <source>Your account&apos;s security is now being upgraded. This will happen only once. If you have seen this message for this account before, press Cancel.</source>
+        <translatorcomment>Error message shown to the user to inform about that the security of his account is going to be upgraded. </translatorcomment>
+        <translation>Параметры безопасности вашего аккаунта сейчас обновляются. Это произойдёт только один раз. Если вы видели это сообщение для этого аккаунта раньше, нажмите «Отмена».</translation>
+    </message>
     <message numerus="yes">
         <source>You are currently sharing the following folder: %1</source>
         <translatorcomment>Additional information shown within Security upgrade dialog if the user has outgoing shares. A list of the shares will be filled at %1 placeholder. Please check screenshot to see the full context of this string along with the other ones.</translatorcomment>
@@ -2833,11 +2838,6 @@ Transfer will automatically resume when you re-open the app.</source>
         <source>Failed to ugrade security. Error: %1</source>
         <translatorcomment>System notification error shown if an error occur while upgrading security for your account. %1 will be replaced with the error returned from the SDK.</translatorcomment>
         <translation>Не удалось обновить параметры безопасности. Ошибка: %1</translation>
-    </message>
-    <message>
-        <source>Your account&apos;s security is now being upgraded. This will happen only once. If you have seen this message for this account before, press Cancel.</source>
-        <translatorcomment>Error message shown to the user to inform about that the security of his account is going to be upgraded. </translatorcomment>
-        <translation>Параметры безопасности вашего аккаунта сейчас обновляются. Это произойдёт только один раз. Если вы видели это сообщение для этого аккаунта раньше, нажмите «Отмена».</translation>
     </message>
 </context>
 <context>
