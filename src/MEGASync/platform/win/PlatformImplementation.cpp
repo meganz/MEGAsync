@@ -204,20 +204,20 @@ bool PlatformImplementation::enableTrayIcon(QString executable)
 
 void PlatformImplementation::notifyItemChange(const QString& path, int)
 {
-    notifyItemChange(path, mShellNotifier.get());
+    notifyItemChange(path, mShellNotifier);
 }
 
 void PlatformImplementation::notifySyncFileChange(std::string *localPath, int)
 {
-    notifyItemChange(QString::fromStdString(*localPath), mSyncFileNotifier.get());
+    QString path = getPreparedPath(localPath);
+    notifyItemChange(path, mSyncFileNotifier);
 }
 
-void PlatformImplementation::notifyItemChange(const QString& localPath, AbstractShellNotifier *notifier)
+void PlatformImplementation::notifyItemChange(const QString& localPath, std::shared_ptr<AbstractShellNotifier> notifier)
 {
-    QString path = getPreparedPath(localPath);
-    if (!path.isEmpty())
+    if (!localPath.isEmpty())
     {
-        notifier->notify(path);
+        notifier->notify(localPath);
     }
 }
 
@@ -1517,21 +1517,24 @@ void PlatformImplementation::initMenu(QMenu* m)
     }
 }
 
-QString PlatformImplementation::getPreparedPath(const QString& localPath)
+QString PlatformImplementation::getPreparedPath(std::string *localPath)
 {
-    QString preparedPath(localPath);
+    // The path we have here is, on Windows, an utf16-encoded string (using wchars) in a std::string buffer.
+    QString preparedPath = QString::fromWCharArray(reinterpret_cast<const wchar_t *>(localPath->data()),
+                                                   static_cast<int>(localPath->size() / (sizeof(wchar_t)
+                                                                                         / sizeof (char))));
     if (!preparedPath.isEmpty())
     {
-        if (preparedPath.startsWith(QString::fromUtf8("\\\\?\\")))
+        if (preparedPath.startsWith(QLatin1String("\\\\?\\")))
         {
             preparedPath = preparedPath.mid(4);
         }
 
-        if (preparedPath.size() < MAX_PATH)
+        if (preparedPath.size() >= MAX_PATH)
         {
-            return preparedPath;
+            preparedPath.clear();
         }
     }
 
-    return QString();
+    return preparedPath;
 }

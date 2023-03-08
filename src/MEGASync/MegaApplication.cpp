@@ -8220,7 +8220,7 @@ void MegaApplication::onSyncStateChanged(MegaApi *api, MegaSync *sync)
 
 void MegaApplication::onSyncFileStateChanged(MegaApi *, MegaSync *, string *localPath, int newState)
 {
-    if (appfinished)
+    if (appfinished || !localPath || localPath->empty())
     {
         return;
     }
