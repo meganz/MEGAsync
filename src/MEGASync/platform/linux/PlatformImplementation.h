@@ -39,7 +39,6 @@ public:
     bool shouldRunHttpsServer() override;
     bool isUserActive() override;
     QString getDeviceName() override;
-    void initMenu(QMenu* m) override;
 
 private:
     QStringList getListRunningProcesses();

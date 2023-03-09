@@ -56,7 +56,6 @@ public:
     bool shouldRunHttpsServer() override;
     bool isUserActive() override;
     QString getDeviceName() override;
-    void initMenu(QMenu* m) override;
 
     void addSyncToLeftPane(QString syncPath, QString syncName, QString uuid) override;
     void removeAllSyncsFromLeftPane() override;

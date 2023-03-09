@@ -1480,43 +1480,6 @@ QString PlatformImplementation::getDeviceName()
     return deviceName;
 }
 
-void PlatformImplementation::initMenu(QMenu* m)
-{
-    if (m)
-    {
-        m->setStyleSheet(QLatin1String("QMenu {"
-                                           "background: #ffffff;"
-                                           "padding-top: 6px;"
-                                           "padding-bottom: 6px;"
-                                           "border: 1px solid #B8B8B8;"
-                                       "}"
-                                       "QMenu::separator {"
-                                           "height: 1px;"
-                                           "margin: 6px 10px 6px 10px;"
-                                           "background-color: rgba(0, 0, 0, 0.1);"
-                                       "}"
-                                       // For vanilla QMenus (only in TransferManager and NodeSelectorTreeView (NodeSelector))
-                                       "QMenu::item {"
-                                           "font-family: Lato;"
-                                           "font-size: 14px;"
-                                           "margin: 6px 16px 6px 16px;"
-                                           "color: #777777;"
-                                           "padding-right: 16px;"
-                                       "}"
-                                       "QMenu::item:selected {"
-                                           "color: #000000;"
-                                       "}"
-                                       // For menus with MenuItemActions
-                                       "QLabel {"
-                                           "font-family: Lato;"
-                                           "font-size: 14px;"
-                                           "padding: 0px;"
-                                       "}"
-                                       ));
-        m->ensurePolished();
-    }
-}
-
 QString PlatformImplementation::getPreparedPath(std::string *localPath)
 {
     // The path we have here is, on Windows, an utf16-encoded string (using wchars) in a std::string buffer.

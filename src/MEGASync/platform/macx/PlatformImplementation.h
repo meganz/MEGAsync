@@ -31,7 +31,7 @@ public:
     bool shouldRunHttpsServer() override;
     bool isUserActive() override;
     QString getDeviceName() override;
-    void initMenu(QMenu* m) override;
+    void initMenu(QMenu* m, const char* objectName, const bool applyDefaultStyling = true) override;
 
     QStringList multipleUpload(QString uploadTitle) override;
 

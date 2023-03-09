@@ -89,6 +89,7 @@ MenuItemAction::~MenuItemAction()
 
 void MenuItemAction::setLabelText(const QString& title)
 {
+    setObjectName(title);
     // Force polish to update font Info with .ui StyleSheet
     this->mTitle->ensurePolished();
     auto f (this->mTitle->fontMetrics());

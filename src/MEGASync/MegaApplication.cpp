@@ -6297,6 +6297,7 @@ void MegaApplication::createTrayIconMenus()
     {
         initialTrayMenu->deleteLater();
         initialTrayMenu = new QMenu();
+        Platform::getInstance()->initMenu(initialTrayMenu, "TrayMenu", false);
     }
 
     if (guestSettingsAction)
@@ -6349,6 +6350,7 @@ void MegaApplication::createInfoDialogMenus()
     {
         windowsMenu->deleteLater();
         windowsMenu = new QMenu();
+        Platform::getInstance()->initMenu(windowsMenu, "WindowsMenu", false);
     }
     else
     {
@@ -6426,7 +6428,7 @@ void MegaApplication::createInfoDialogMenus()
     {
         infoDialogMenu->deleteLater();
         infoDialogMenu = new QMenu();
-        Platform::getInstance()->initMenu(infoDialogMenu);
+        Platform::getInstance()->initMenu(infoDialogMenu, "InfoDialogMenu");
 
         //Highlight menu entry on mouse over
         connect(infoDialogMenu, SIGNAL(hovered(QAction*)), this, SLOT(highLightMenuEntry(QAction*)), Qt::QueuedConnection);
@@ -6529,7 +6531,7 @@ void MegaApplication::createGuestMenu()
     {
         guestMenu->deleteLater();
         guestMenu = new QMenu();
-        Platform::getInstance()->initMenu(guestMenu);
+        Platform::getInstance()->initMenu(guestMenu, "GuestMenu");
     }
 
     if (exitActionGuest)
