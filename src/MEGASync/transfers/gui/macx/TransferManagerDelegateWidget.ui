@@ -849,7 +849,7 @@ QProgressBar::chunk
             <number>0</number>
            </property>
            <property name="rightMargin">
-            <number>10</number>
+            <number>5</number>
            </property>
            <property name="bottomMargin">
             <number>0</number>
@@ -864,7 +864,7 @@ QProgressBar::chunk
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_9">
               <property name="spacing">
-               <number>5</number>
+               <number>3</number>
               </property>
               <property name="leftMargin">
                <number>0</number>
@@ -883,13 +883,13 @@ QProgressBar::chunk
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
-                  <height>0</height>
+                  <height>63</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
                   <width>16777215</width>
-                  <height>16777215</height>
+                  <height>63</height>
                  </size>
                 </property>
                 <property name="text">
@@ -899,6 +899,18 @@ QProgressBar::chunk
               </item>
               <item>
                <widget class="QLabel" name="lItemPausedQueued_2">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>63</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>63</height>
+                 </size>
+                </property>
                 <property name="text">
                  <string notr="true"/>
                 </property>
