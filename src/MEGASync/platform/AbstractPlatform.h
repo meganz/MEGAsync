@@ -49,7 +49,7 @@ public:
     virtual bool shouldRunHttpsServer() = 0;
     virtual bool isUserActive() = 0;
     virtual QString getDeviceName() = 0;
-    virtual void initMenu(QMenu* m) = 0;
+    virtual void initMenu(QMenu* m, const char* objectName, const bool applyDefaultStyling = true);
 
     virtual QStringList multipleUpload(QString uploadTitle);
 
