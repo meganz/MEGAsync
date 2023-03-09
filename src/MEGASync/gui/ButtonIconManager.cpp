@@ -72,13 +72,7 @@ bool ButtonIconManager::eventFilter(QObject * watched, QEvent * event)
                 button->setProperty(CHECK_STATE, button->isChecked());
             }
 
-            bool buttonTextHasChanged = button->property(BUTTON_ELIDE_TEXT).isValid() && button->text() != button->property(BUTTON_ELIDE_TEXT).toString();
-            if(buttonTextHasChanged)
-            {
-                addIconSpacing(button);
-                button->setProperty(BUTTON_FULL_TEXT, button->text());
-                elideButtonText(button, button->property(BUTTON_FULL_TEXT).toString());
-            }
+            updateButtonFullName(button);
         }
         else if(button->isCheckable() && event->type() == QEvent::MouseButtonPress)
         {
@@ -98,12 +92,7 @@ bool ButtonIconManager::eventFilter(QObject * watched, QEvent * event)
     {
         if(!button->text().isEmpty())
         {
-            if(!button->property(BUTTON_FULL_TEXT).isValid())
-            {
-                addIconSpacing(button);
-                button->setProperty(BUTTON_FULL_TEXT, button->text());
-            }
-
+            updateButtonFullName(button);
             elideButtonText(button, button->property(BUTTON_FULL_TEXT).toString());
         }
     }
@@ -289,6 +278,17 @@ void ButtonIconManager::addIconSpacing(QAbstractButton *button)
         uint space_size = button->fontMetrics().width(spaceChar);
         uint number_of_spaces = spacing / space_size;
         button->setText(spaceChar.repeated(number_of_spaces) + button->text());
+    }
+}
+
+void ButtonIconManager::updateButtonFullName(QAbstractButton *button)
+{
+    bool buttonTextHasChanged = (button->property(BUTTON_ELIDE_TEXT).isValid() && button->text() != button->property(BUTTON_ELIDE_TEXT).toString())
+            || (!button->property(BUTTON_ELIDE_TEXT).isValid() && button->text() != button->property(BUTTON_FULL_TEXT));
+    if(buttonTextHasChanged)
+    {
+        addIconSpacing(button);
+        button->setProperty(BUTTON_FULL_TEXT, button->text());
     }
 }
 

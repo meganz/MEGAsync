@@ -28,8 +28,9 @@ TransferManagerDelegateWidget::TransferManagerDelegateWidget(QWidget *parent) :
 
     mUi->wTransferName->installEventFilter(this);
 
-    mUi->lItemPaused->installEventFilter(this);
     mUi->lItemPausedQueued_1->installEventFilter(this);
+    mUi->lItemFailed->installEventFilter(this);
+    mUi->lItemPaused->installEventFilter(this);
     mUi->lRetryMsg->installEventFilter(this);
     mUi->lItemFailed->installEventFilter(this);
     mUi->tItemRetry->installEventFilter(this);
@@ -337,7 +338,7 @@ void TransferManagerDelegateWidget::setFileNameAndType()
 
     // File name
     mUi->lTransferName->setToolTip(getData()->mFilename);
-    mUi->lTransferName->setText(getData()->mFilename);
+    adjustFileName();
 }
 
 void TransferManagerDelegateWidget::setType()
@@ -356,6 +357,14 @@ void TransferManagerDelegateWidget::setType()
     }
 
     mUi->bItemSpeed->setIcon(icon);
+}
+
+void TransferManagerDelegateWidget::adjustFileName()
+{
+    mUi->lTransferName->setText(mUi->lTransferName->fontMetrics()
+                                .elidedText(getData()->mFilename, Qt::ElideMiddle,
+                                           getNameAvailableSize(mUi->wTransferName, mUi->lSyncIcon, mUi->nameSpacer)));
+    mUi->lTransferName->adjustSize();
 }
 
 TransferBaseDelegateWidget::ActionHoverType TransferManagerDelegateWidget::mouseHoverTransfer(bool isHover, const QPoint &pos)
@@ -500,10 +509,23 @@ bool TransferManagerDelegateWidget::eventFilter(QObject *watched, QEvent *event)
     {
         if(watched == mUi->wTransferName)
         {
-            mUi->lTransferName->setText(mUi->lTransferName->fontMetrics()
-                                        .elidedText(getData()->mFilename, Qt::ElideMiddle,
-                                                   getNameAvailableSize(mUi->wTransferName, mUi->lSyncIcon, mUi->nameSpacer)));
-            mUi->lTransferName->adjustSize();
+           adjustFileName();
+        }
+
+        else if(watched == mUi->lItemPausedQueued_1)
+        {
+            mUi->lItemPausedQueued_1->setText(mUi->lItemPausedQueued_1->fontMetrics().elidedText(mUi->lItemPausedQueued_1->text(), Qt::ElideMiddle,mUi->lItemPausedQueued_1->width()
+                                          ));
+
+            mUi->lItemPausedQueued_2->setText(mUi->lItemPausedQueued_2->fontMetrics().elidedText(mUi->lItemPausedQueued_2->text(), Qt::ElideMiddle,mUi->lItemPausedQueued_2->width()
+                                          ));
+            mUi->lItemPausedQueued_1->parentWidget()->adjustSize();
+        }
+        else if(watched == mUi->lItemFailed)
+        {
+            mUi->lItemFailed->setText(mUi->lItemFailed->fontMetrics().elidedText(mUi->lItemFailed->text(), Qt::ElideMiddle,mUi->lItemPausedQueued_1->width()
+                                          ));
+            mUi->lItemFailed->parentWidget()->adjustSize();
         }
         else if(auto label = dynamic_cast<QWidget*>(watched))
         {

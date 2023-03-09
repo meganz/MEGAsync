@@ -726,6 +726,7 @@ void TransferManager::onTransfersDataUpdated()
     refreshFileTypesStats();
     refreshSearchStats();
     refreshStateStats();
+    checkActionAndMediaVisibility();
 
     if(label)
     {
@@ -1188,38 +1189,42 @@ void TransferManager::toggleTab(TransfersWidget::TM_TAB newTab)
             pushButton->setChecked(true);
         }
 
+        auto previousTab = mUi->wTransfers->getCurrentTab();
+        mUi->wTransfers->setCurrentTab(newTab);
+
         //The rest of cases
-        if (mUi->wTransfers->getCurrentTab() == TransfersWidget::COMPLETED_TAB
-                || mUi->wTransfers->getCurrentTab() == TransfersWidget::FAILED_TAB
-                || (mUi->wTransfers->getCurrentTab() > TransfersWidget::TYPES_TAB_BASE && mUi->wTransfers->getCurrentTab() < TransfersWidget::TYPES_LAST))
+        if (previousTab == TransfersWidget::COMPLETED_TAB
+                || previousTab == TransfersWidget::FAILED_TAB
+                || (previousTab > TransfersWidget::TYPES_TAB_BASE && previousTab < TransfersWidget::TYPES_LAST))
         {
             long long transfers(0);
 
-            if(mUi->wTransfers->getCurrentTab() == TransfersWidget::COMPLETED_TAB)
+            if(previousTab == TransfersWidget::COMPLETED_TAB)
             {
                 transfers = mTransfersCount.completedDownloads() + mTransfersCount.completedUploads();
             }
-            else if(mUi->wTransfers->getCurrentTab() == TransfersWidget::FAILED_TAB)
+            else if(previousTab == TransfersWidget::FAILED_TAB)
             {
                 transfers = mTransfersCount.totalFailedTransfers();
             }
             else
             {
-                Utilities::FileType fileType = static_cast<Utilities::FileType>(mUi->wTransfers->getCurrentTab() - TransfersWidget::TYPES_TAB_BASE);
+                Utilities::FileType fileType = static_cast<Utilities::FileType>(previousTab - TransfersWidget::TYPES_TAB_BASE);
                 transfers = mModel->getNumberOfTransfersForFileType(fileType);
             }
 
             if(transfers == 0)
             {
-                auto countLabel(mNumberLabelsGroup[mUi->wTransfers->getCurrentTab()]);
+                auto countLabel(mNumberLabelsGroup[previousTab]);
                 if(countLabel->parentWidget()->isVisible())
                 {
                     countLabel->parentWidget()->hide();
                 }
+
+                //In case the media group must be hidden
+                checkActionAndMediaVisibility();
             }
         }
-
-        mUi->wTransfers->setCurrentTab(newTab);
 
         // Set current header widget: search or not
         if (newTab == TransfersWidget::SEARCH_TAB)
@@ -1254,7 +1259,6 @@ void TransferManager::refreshView()
             }
 
             updateTransferWidget(widgetToShow);
-            checkActionAndMediaVisibility();
         }
     }
 }
