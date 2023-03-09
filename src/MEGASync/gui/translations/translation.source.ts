@@ -1489,9 +1489,9 @@ In some cases they may contain details about your data, such as file or folder n
         </translation>
     </message>
     <message>
-        <source>The file at this destination will be updated with a new version.</source>
+        <source>The file at this destination will be updated if the new file is different.</source>
         <translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
-        <translation>The file at this destination will be updated with a new version.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
