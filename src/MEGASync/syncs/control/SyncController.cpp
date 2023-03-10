@@ -82,7 +82,7 @@ void SyncController::removeSync(std::shared_ptr<SyncSettings> syncSetting, const
     MegaHandle backupRoot = syncSetting->getMegaHandle();
     MegaHandle backupId = syncSetting->backupId();
 
-    mApi->removeSync(backupId, new OnFinishOneShot(mApi, [=](const MegaError& e){
+    mApi->removeSync(backupId, new OnFinishOneShot(mApi, [=](const mega::MegaRequest&, const MegaError& e){
         if (e.getErrorCode() != MegaError::API_OK)
         {
             QString errorMsg = QString::fromUtf8(e.getErrorString());
@@ -97,7 +97,7 @@ void SyncController::removeSync(std::shared_ptr<SyncSettings> syncSetting, const
         {
             // We now have to delete or remove the remote folder
             mApi->moveOrRemoveDeconfiguredBackupNodes(backupRoot, remoteHandle,
-                                                      new OnFinishOneShot(mApi, [=](const MegaError& e){
+                                                      new OnFinishOneShot(mApi, [=](const mega::MegaRequest&, const MegaError& e){
                 if (e.getErrorCode() != MegaError::API_OK)
                 {
                     QString errorMsg = QString::fromUtf8(e.getErrorString());
@@ -130,7 +130,7 @@ void SyncController::enableSync(std::shared_ptr<SyncSettings> syncSetting)
                  .toUtf8().constData());
 
     mApi->setSyncRunState(syncSetting->backupId(), MegaSync::RUNSTATE_RUNNING,
-                          new OnFinishOneShot(mApi, [=](const MegaError& e){
+                          new OnFinishOneShot(mApi, [=](const MegaRequest&, const MegaError& e){
         int errorCode (e.getErrorCode());
         auto syncErrorCode (static_cast<MegaSync::Error>(e.getSyncError()));
 
@@ -180,7 +180,7 @@ void SyncController::disableSync(std::shared_ptr<SyncSettings> syncSetting)
                  .toUtf8().constData());
 
     mApi->setSyncRunState(syncSetting->backupId(), MegaSync::RUNSTATE_DISABLED,
-                          new OnFinishOneShot(mApi, [=](const MegaError& e){
+                          new OnFinishOneShot(mApi, [=](const mega::MegaRequest&, const MegaError& e){
         // NOTE: As of sdk commit 94e2b9dd1db6a886e21cc1ee826bda58c8c33f99, this never fails
         // and errorCode is always MegaError::API_OK.
         auto errorCode (e.getErrorCode());
