@@ -1,9 +1,11 @@
-QT       += network qml quick
+QT += network qml quick
 
-QML_IMPORT_PATH = $$PWD/qml/MEGADesktopQML/imports
+QML_IMPORT_PATH += $$PWD/qml \
+    $$PWD/onboarding/qml
 
-RESOURCES += $$PWD/qml/MEGADesktopQML/MEGADesktopQML.qrc
-RESOURCES += $$PWD/qml/MEGADesktopQML/imports/Components/Components.qrc
+RESOURCES += \
+    $$PWD/onboarding/qml/onboarding.qrc \
+    $$PWD/qml/qml.qrc
 
 SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/BalloonToolTip.cpp \
@@ -34,7 +36,6 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/MegaProgressCustomDialog.cpp \
     $$PWD/UpgradeDialog.cpp \
     $$PWD/PlanWidget.cpp \
-    $$PWD/Onboarding.cpp \
     $$PWD/QMegaMessageBox.cpp \
     $$PWD/AvatarWidget.cpp \
     $$PWD/MenuItemAction.cpp \
@@ -78,8 +79,9 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/node_selector/gui/NodeSelectorLoadingDelegate.cpp \
     $$PWD/node_selector/gui/SearchLineEdit.cpp \
     $$PWD/node_selector/gui/NodeSelectorSpecializations.cpp \
-    $$PWD/qml/QmlDialog/QmlDialog.cpp \
-    $$PWD/qml/QmlDialog/QmlDialogWrapper.cpp
+    $$PWD/qml/QmlDialog.cpp \
+    $$PWD/qml/QmlDialogWrapper.cpp \
+    $$PWD/onboarding/Onboarding.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/AutoResizeStackedWidget.h \
@@ -113,7 +115,6 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/MegaProgressCustomDialog.h \
     $$PWD/UpgradeDialog.h \
     $$PWD/PlanWidget.h \
-    $$PWD/Onboarding.h \
     $$PWD/QMegaMessageBox.h \
     $$PWD/AvatarWidget.h \
     $$PWD/MenuItemAction.h \
@@ -158,9 +159,9 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/node_selector/gui/NodeSelectorLoadingDelegate.h \
     $$PWD/node_selector/gui/SearchLineEdit.h \
     $$PWD/node_selector/gui/NodeSelectorSpecializations.h \
-    $$PWD/qml/QmlDialog/QmlDialog.h \
-    $$PWD/qml/QmlDialog/QmlDialogWrapper.h
-
+    $$PWD/qml/QmlDialog.h \
+    $$PWD/qml/QmlDialogWrapper.h \
+    $$PWD/onboarding/Onboarding.h
 
 INCLUDEPATH += $$PWD
 

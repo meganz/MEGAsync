@@ -58,7 +58,7 @@ AccountDetailsDialog::AccountDetailsDialog(QObject *parent) :
 
 QUrl AccountDetailsDialog::getQmlUrl()
 {
-    return QUrl(QString::fromUtf8("qrc:/content/App1.qml"));
+    return QUrl(QString::fromUtf8("qrc:/main.qml"));
 }
 
 QString AccountDetailsDialog::contextName()

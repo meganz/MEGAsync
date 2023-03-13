@@ -20,9 +20,9 @@
 #include "UserAttributesRequests/MyBackupsHandle.h"
 #include "syncs/gui/SyncsMenu.h"
 #include "TextDecorator.h"
-#include "gui/qml/QmlDialog/QmlDialog.h"
-#include "Onboarding.h"
-#include "gui/qml/QmlDialog/QmlDialogWrapper.h"
+#include "qml/QmlDialog.h"
+#include "onboarding/Onboarding.h"
+#include "qml/QmlDialogWrapper.h"
 
 #include <QQmlApplicationEngine>
 #include "DialogOpener.h"
@@ -433,17 +433,25 @@ void MegaApplication::initialize()
     //Register metatypes to use them in signals/slots
     qRegisterMetaType<QQueue<QString> >("QQueueQString");
     qRegisterMetaTypeStreamOperators<QQueue<QString> >("QQueueQString");
-    qmlRegisterModule("Styles", 1, 0);
-    qmlRegisterModule("Components", 1, 0);
-    qmlRegisterType<QmlDialog>("com.qmldialog", 1, 0, "QmlDialog");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/Buttons/Button.qml")), "Components", 1, 0, "Button");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/Texts/RichText.qml")), "Components", 1, 0, "RichText");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/TextFields/TextField.qml")), "Components", 1, 0, "TextField");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/TextFields/PasswordTextField.qml")), "Components", 1, 0, "PasswordTextField");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/Images/SvgImage.qml")), "Components", 1, 0, "SvgImage");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/CheckBoxes/CheckBox.qml")), "Components", 1, 0, "CheckBox");
 
-    qmlRegisterSingletonType(QUrl(QString::fromUtf8("qrc:/imports/Styles/Styles.qml")), "Styles", 1, 0, "Styles");
+    qmlRegisterModule("Components", 1, 0);
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/Button.qml")), "Components", 1, 0, "Button");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/RoundButton.qml")), "Components", 1, 0, "RoundButton");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/RichText.qml")), "Components", 1, 0, "RichText");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/TextField.qml")), "Components", 1, 0, "TextField");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/PasswordTextField.qml")), "Components", 1, 0, "PasswordTextField");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/images/SvgImage.qml")), "Components", 1, 0, "SvgImage");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/checkBoxes/CheckBox.qml")), "Components", 1, 0, "CheckBox");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/Button.qml")), "Components", 1, 0, "Button");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/dialogs/QmlDialog.qml")), "Components", 1, 0, "QmlDialog");
+
+    qmlRegisterModule("Common", 1, 0);
+    qmlRegisterSingletonType(QUrl(QString::fromUtf8("qrc:/common/Styles.qml")), "Common", 1, 0, "Styles");
+
+    qmlRegisterModule("Onboard", 1, 0);
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/OnboardingDialog.qml")), "Onboard", 1, 0, "OnboardingDialog");
+
+    qmlRegisterType<QmlDialog>("com.qmldialog", 1, 0, "QmlDialog");
 
     preferences = Preferences::instance();
     connect(preferences.get(), SIGNAL(stateChanged()), this, SLOT(changeState()));

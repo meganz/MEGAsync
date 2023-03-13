@@ -10,7 +10,7 @@
 #include <QFileInfo>
 #include <QEvent>
 #include <QScrollBar>
-#include "qml/QmlDialog/QmlDialogWrapper.h"
+#include "qml/QmlDialogWrapper.h"
 
 #include "InfoDialog.h"
 #include "AccountDetailsDialog.h"
