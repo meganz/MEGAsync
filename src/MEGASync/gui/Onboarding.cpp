@@ -8,6 +8,8 @@ using namespace mega;
 Onboarding::Onboarding(QObject *parent)
     : QMLComponent(parent)
     , mMegaApi(MegaSyncApp->getMegaApi())
+    , mEmail(QString())
+    , mPassword(QString())
 {
     mDelegateListener = new QTMegaRequestListener(mMegaApi, this);
     mMegaApi->addRequestListener(mDelegateListener);
@@ -39,11 +41,15 @@ void Onboarding::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *err
     {
     case MegaRequest::TYPE_LOGIN:
     {
-        if (error->getErrorCode() == MegaError::API_EMFAREQUIRED
-                || error->getErrorCode() == MegaError::API_EFAILED
+        if (error->getErrorCode() == MegaError::API_EFAILED
                 || error->getErrorCode() == MegaError::API_EEXPIRED)
         {
             //se oculta boton cancel?
+        }
+        else if(error->getErrorCode() == MegaError::API_EMFAREQUIRED)
+        {
+            //twoFA required
+            emit twoFARequired();
         }
         else if(error->getErrorCode() == MegaError::API_OK)
         {
@@ -67,18 +73,29 @@ void Onboarding::onLoginClicked(const QVariantMap &crd)
 //        qDebug<<cred<< crd.value(cred);
 //    }
     qDebug()<<crd;
-    //mMegaApi->login(email.toUtf8().constData(), password.toUtf8().constData());
+    mEmail = crd.value(QString::number(EMAIL)).toString();
+    mPassword = crd.value(QString::number(PASSWORD)).toString();
+    mMegaApi->login(mEmail.toUtf8().constData(), mPassword.toUtf8().constData());
 }
 
-//void InfoWizard::on_bLogin_clicked()
-//{
-//    emit actionButtonClicked(LOGIN_CLICKED);
-//    accept();
-//}
+void Onboarding::onRegisterClicked(const QVariantMap &crd)
+{
+    QString name = crd.value(QString::number(FIRST_NAME)).toString();
+    QString lastName = crd.value(QString::number(LAST_NAME)).toString();
+    QString email = crd.value(QString::number(EMAIL)).toString();
+    QString password = crd.value(QString::number(PASSWORD)).toString();
+    qDebug()<<crd;
+    mMegaApi->createAccount(email.toUtf8().constData(),
+                           password.toUtf8().constData(),
+                           name.toUtf8().constData(),
+                            lastName.toUtf8().constData());
+}
 
-//void InfoWizard::on_bCreateAccount_clicked()
-//{
-//    emit actionButtonClicked(CREATE_ACCOUNT_CLICKED);
-//    accept();
-//}
+void Onboarding::onTwoFACompleted(const QString &pin)
+{
+    mMegaApi->multiFactorAuthLogin(mEmail.toUtf8().constData(),
+                                   mPassword.toUtf8().constData(),
+                                   pin.toUtf8().constData());
+}
+
 

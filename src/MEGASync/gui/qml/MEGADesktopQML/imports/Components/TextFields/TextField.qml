@@ -23,6 +23,7 @@ Item
     property string informativeText: ""
     property color textColor: Styles.textColor
     property bool error: false
+    property int fieldHeight: 50
     id: root
     implicitHeight: outRect.height
 
@@ -53,27 +54,32 @@ Item
         }
     }
 
+    function getExternalFocusedRectColor()
+    {
+        if(Styles.lightTheme)
+        {
+            return "#BDD9FF"
+        }
+        else
+        {
+            return "#2647D0"
+        }
+    }
+
     Rectangle
     {
         id: outRect
         border.width: 4
-        implicitHeight: 50
+        implicitHeight: fieldHeight
         radius: 12
         border.color: {
             if(textField.focus)
             {
-                if(Styles.lightTheme)
-                {
-                    "#BDD9FF"
-                }
-                else
-                {
-                    "#2647D0"
-                }
+                getExternalFocusedRectColor()
             }
             else
             {
-                color: Styles.backgroundColor
+                Styles.backgroundColor
             }
         }
         anchors{
@@ -99,6 +105,7 @@ Item
             bottomPadding: 12
             leftPadding: 14
             font.pixelSize: 14
+            selectionColor: getExternalFocusedRectColor()
 
             background: Rectangle {
                 id: inRect
@@ -123,10 +130,9 @@ Item
             right: root.right
             bottom: root.bottom
         }
-        height: item.implicitHeight
+        height: 50//item.implicitHeight TODO: FIXME
         visible: showInformativeText
         onVisibleChanged: {
-            console.log(item.implicitHeight )
             root.implicitHeight = outRect.height + (item ? item.implicitHeight : 0)
         }
     }

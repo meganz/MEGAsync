@@ -30,11 +30,19 @@ public:
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* error) override;
 
     Q_INVOKABLE void onLoginClicked(const QVariantMap& crd);
+    Q_INVOKABLE void onRegisterClicked(const QVariantMap& crd);
+    Q_INVOKABLE void onTwoFACompleted(const QString& pin);
+
+signals:
+    void twoFARequired();
+
 public slots:
 
 private:
     mega::QTMegaRequestListener *mDelegateListener;
     mega::MegaApi *mMegaApi;
+    QString mEmail;
+    QString mPassword;
 };
 
 #endif // ONBOARDING_H

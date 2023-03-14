@@ -10,5 +10,6 @@
         <file>Images/SvgImage.qml</file>
         <file>CheckBoxes/CheckBox.qml</file>
         <file>CheckBoxes/images/check.svg</file>
+        <file>TextFields/TwoFA.qml</file>
     </qresource>
 </RCC>

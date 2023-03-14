@@ -24,5 +24,7 @@
         <file>content/Onboarding/Welcome.qml</file>
         <file>content/Onboarding/WelcomeForm.ui.qml</file>
         <file>content/QmlDialog.qml</file>
+        <file>content/Onboarding/TwoFAPage.qml</file>
+        <file>content/Onboarding/TwoFAPageForm.ui.qml</file>
     </qresource>
 </RCC>

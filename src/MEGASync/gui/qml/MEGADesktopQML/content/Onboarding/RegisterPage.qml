@@ -19,11 +19,9 @@ RegisterPageForm{
                 return;
             }
         }
-        console.log(OnboardCpp.RegisterForm.EMAIL)
-
-        OnboardCpp.onLoginClicked({"[OnboardEnum.EMAIL]": formInfoMap['email'],
-                                      "[OnboardEnum.PASSWORD]": formInfoMap['password'],
-                                      "[OnboardEnum.FIRST_NAME]": formInfoMap['firstName'],
-                                      "[OnboardEnum.LAST_NAME]": formInfoMap['lastName']});
+        OnboardCpp.onRegisterClicked({2: formInfoMap['email'],
+                                      3: formInfoMap['password'],
+                                      0: formInfoMap['firstName'],
+                                      1: formInfoMap['lastName']});
     }
 }

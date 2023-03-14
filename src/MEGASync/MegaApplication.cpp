@@ -440,6 +440,7 @@ void MegaApplication::initialize()
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/Texts/RichText.qml")), "Components", 1, 0, "RichText");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/TextFields/TextField.qml")), "Components", 1, 0, "TextField");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/TextFields/PasswordTextField.qml")), "Components", 1, 0, "PasswordTextField");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/TextFields/TwoFA.qml")), "Components", 1, 0, "TwoFA");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/Images/SvgImage.qml")), "Components", 1, 0, "SvgImage");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/CheckBoxes/CheckBox.qml")), "Components", 1, 0, "CheckBox");
 

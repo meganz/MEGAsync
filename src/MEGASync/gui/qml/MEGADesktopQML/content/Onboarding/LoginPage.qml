@@ -10,19 +10,32 @@ import QtQuick.Controls 2.12
 //import Onboarding 1.0
 
 LoginPageForm {
-
+    id: loginPage
     createAccountButton.onClicked: {
         registerStack.replace(registerPage)
     }
     loginButton.onClicked: {
         if(email.length !== 0 && password.length !== 0)
         {
-            OnboardCpp.onLoginClicked({/* [OnboardEnum.EMAIL]:*/ email, /*[OnboardEnum.PASSWORD]:*/ password })
+            OnboardCpp.onLoginClicked({/* [OnboardEnum.EMAIL]:*/2:email, /*[OnboardEnum.PASSWORD]:*/3: password })
         }
+        registerStack.replace(twoFactorAuthPage)
+    }
+    Connections{
+        target: OnboardCpp
+        onTwoFARequired:{
+            registerStack.replace(twoFactorAuthPage)
+        }
+
     }
     Component{
         id: registerPage
         RegisterPage{}
+    }
+
+    Component{
+        id:twoFactorAuthPage
+        TwoFAPage{}
     }
 }
 
