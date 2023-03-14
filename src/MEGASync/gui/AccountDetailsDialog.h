@@ -4,7 +4,7 @@
 #include "Utilities.h"
 #include "control/Preferences.h"
 #include "HighDpiResize.h"
-#include "qml/QmlDialog/QmlDialogWrapper.h"
+#include "qml/QmlDialogWrapper.h"
 
 #include <QDialog>
 #include <QQuickView>

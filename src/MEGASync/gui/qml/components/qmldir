@@ -1,0 +1,8 @@
+module Components
+Button 1.0 buttons/Button.qml
+TextField 1.0 textFields/TextField.qml
+PasswordTextField 1.0 textFields/PasswordTextField.qml
+RichText 1.0 texts/RichText.qml
+CheckBox 1.0 checkBoxes/CheckBox.qml
+SvgImage 1.0 images/SvgImage.qml
+QmlDialog 1.0 dialogs/QmlDialog.qml
