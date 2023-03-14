@@ -14,16 +14,12 @@ Item {
     property alias outRect: outRect
     property alias placeholderText: textField.placeholderText
     property alias font: textField.font
-
     property bool showInformativeText: true
     property bool error: false
     property string informativeTextIcon: ""
     property string informativeText: ""
     property color textColor: Styles.textColor
-    property bool error: false
     property int fieldHeight: 50
-    id: root
-    implicitHeight: outRect.height
 
     /*
      * Components
@@ -117,8 +113,6 @@ Item {
             right: root.right
             bottom: root.bottom
         }
-        height: 50//item.implicitHeight TODO: FIXME
-        visible: showInformativeText
 
         onVisibleChanged: {
             root.implicitHeight = outRect.height + (item ? item.implicitHeight : 0)

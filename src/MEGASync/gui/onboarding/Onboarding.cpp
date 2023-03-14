@@ -8,6 +8,8 @@ using namespace mega;
 Onboarding::Onboarding(QObject *parent)
     : QMLComponent(parent)
     , mMegaApi(MegaSyncApp->getMegaApi())
+    , mEmail(QString())
+    , mPassword(QString())
 {
     mDelegateListener = new QTMegaRequestListener(mMegaApi, this);
     mMegaApi->addRequestListener(mDelegateListener);
@@ -39,12 +41,16 @@ void Onboarding::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *err
     {
         case MegaRequest::TYPE_LOGIN:
         {
-            if (error->getErrorCode() == MegaError::API_EMFAREQUIRED
-                    || error->getErrorCode() == MegaError::API_EFAILED
+            if (error->getErrorCode() == MegaError::API_EFAILED
                     || error->getErrorCode() == MegaError::API_EEXPIRED)
             {
                 //se oculta boton cancel?
                 qDebug() << "Onboarding::onRequestFinish -> TYPE_LOGIN Error code -> " << error->getErrorCode();
+            }
+            else if(error->getErrorCode() == MegaError::API_EMFAREQUIRED)
+            {
+                //twoFA required
+                emit twoFARequired();
             }
             else if(error->getErrorCode() == MegaError::API_OK)
             {
@@ -102,15 +108,11 @@ void Onboarding::onForgotPasswordClicked()
     Utilities::openUrl(QUrl(QString::fromUtf8("mega://#recovery")));
 }
 
-//void InfoWizard::on_bLogin_clicked()
-//{
-//    emit actionButtonClicked(LOGIN_CLICKED);
-//    accept();
-//}
+void Onboarding::onTwoFACompleted(const QString &pin)
+{
+    mMegaApi->multiFactorAuthLogin(mEmail.toUtf8().constData(),
+                                   mPassword.toUtf8().constData(),
+                                   pin.toUtf8().constData());
+}
 
-//void InfoWizard::on_bCreateAccount_clicked()
-//{
-//    emit actionButtonClicked(CREATE_ACCOUNT_CLICKED);
-//    accept();
-//}
 

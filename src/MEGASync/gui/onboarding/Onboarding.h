@@ -29,8 +29,8 @@ public:
     void onRequestStart(mega::MegaApi* api, mega::MegaRequest *request) override;
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* error) override;
 
-    Q_INVOKABLE void onLoginClicked(const QVariantMap& crd);
-    Q_INVOKABLE void onRegisterClicked(const QVariantMap& crd);
+    Q_INVOKABLE void onLoginClicked(const QVariantMap& data);
+    Q_INVOKABLE void onRegisterClicked(const QVariantMap& data);
     Q_INVOKABLE void onTwoFACompleted(const QString& pin);
 
 signals:
