@@ -34,9 +34,23 @@ RowLayout {
             height: parent.height
             width: parent.width
 
+            ColumnLayout {
+                Layout.alignment: Qt.AlignTop
+                Layout.leftMargin: 32
+                Layout.topMargin: 32
+                spacing: 12
+
+                BackupHeader {
+                }
+
+                BackupComputerName {
+                    Layout.fillWidth: false
+                    Layout.preferredWidth: 488
+                }
+            }
+
             BackupContentPanel {
                 id: backupContentPanel
-                Layout.preferredHeight: 36
                 Layout.alignment: Qt.AlignBottom
                 Layout.bottomMargin: 24
                 Layout.leftMargin: 245
