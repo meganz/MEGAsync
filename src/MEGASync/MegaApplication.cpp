@@ -3429,38 +3429,38 @@ void MegaApplication::processUpgradeSecurityEvent()
 
     auto upgradeSecurityDialog = new QMessageBox(QMessageBox::Information, title, message,
                                                  QMessageBox::Ok|QMessageBox::Cancel);
-    upgradeSecurityDialog->setAttribute(Qt::WA_DeleteOnClose);
 
-    HighDpiResize hDpiResizer(upgradeSecurityDialog);
+    //    // Show dialog and:
+    //    // - upgrade security if user says OK
+    //    // - exit app if user says Cancel
+    DialogOpener::showDialog<QMessageBox>(upgradeSecurityDialog, [this, upgradeSecurityDialog](){
 
-    // Show dialog and:
-    // - upgrade security if user says OK
-    // - exit app if user says Cancel
-    int button = upgradeSecurityDialog->exec();
+        QPointer<MegaApplication> currentMegaApp(this);
+        if (!currentMegaApp)
+        {
+            return;
+        }
 
-    QPointer<MegaApplication> currentMegaApp(this);
-    if (!currentMegaApp)
-    {
-        return;
-    }
+        int button =upgradeSecurityDialog->result();
+        if (button == QMessageBox::Ok)
+        {
+            megaApi->upgradeSecurity(new OnFinishOneShot(megaApi, [=](const MegaError& e){
+                if (e.getErrorCode() != MegaError::API_OK)
+                {
+                    QString errorTitle = tr("Error");
+                    QString errorMessage = tr("Failed to ugrade security. Error: %1")
+                                           .arg(tr(e.getErrorString()));
+                    showErrorMessage(errorMessage, errorTitle);
+                    exitApplication();
+                }
+            }));
+        }
+        else if (button == QMessageBox::Cancel)
+        {
+            exitApplication();
+        }
 
-    if (button == QMessageBox::Ok)
-    {
-        megaApi->upgradeSecurity(new OnFinishOneShot(megaApi, [=](const MegaError& e){
-            if (e.getErrorCode() != MegaError::API_OK)
-            {
-                QString errorTitle = tr("Error");
-                QString errorMessage = tr("Failed to ugrade security. Error: %1")
-                                       .arg(tr(e.getErrorString()));
-                showErrorMessage(errorMessage, errorTitle);
-                exitApplication();
-            }
-        }));
-    }
-    else if (button == QMessageBox::Cancel)
-    {
-        exitApplication();
-    }
+    });
 }
 
 void MegaApplication::onFolderTransferUpdate(FolderTransferUpdateEvent event)
