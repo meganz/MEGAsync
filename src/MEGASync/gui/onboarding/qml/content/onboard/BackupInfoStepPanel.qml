@@ -204,6 +204,9 @@ Item {
                 }
             ] // states
 
+            /*
+             * Child objects
+             */
             BackupInfoStep {
                 id: step1_computerName
 

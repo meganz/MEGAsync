@@ -6,23 +6,23 @@ import Common 1.0
 
 RowLayout {
     id: root
+
+    /*
+     * Object properties
+     */
+
     height: 520
     width: 776
 
+    /*
+     * Child objects
+     */
+
     BackupInfoStepPanel {
         id: backupInfoStepPanel
+
         Layout.preferredHeight: root.height
         Layout.preferredWidth: 224
-
-        Connections {
-            target: backupContentPanel
-            onNextButtonClicked: {
-                backupInfoStepPanel.next()
-            }
-            onPreviousButtonClicked: {
-                backupInfoStepPanel.previous()
-            }
-        }
     }
 
     Rectangle {
@@ -34,40 +34,33 @@ RowLayout {
             height: parent.height
             width: parent.width
 
-            ColumnLayout {
-                Layout.alignment: Qt.AlignTop
-                Layout.leftMargin: 32
-                Layout.topMargin: 32
-                spacing: 12
-
-                BackupHeader {
-                }
-
-                BackupComputerName {
-                    Layout.fillWidth: false
-                    Layout.preferredWidth: 488
-                }
+            BackupContentPanel {
+                id: contentStack
             }
 
-            BackupContentPanel {
-                id: backupContentPanel
+            BackupFooter {
+                id: backupFooter
+
                 Layout.alignment: Qt.AlignBottom
                 Layout.bottomMargin: 24
                 Layout.leftMargin: 245
             }
+
         }
+
     }
 
-    /*
-    StackView {
-        id: registerStack
+    Connections {
+        target: backupFooter
 
-        initialItem: loginPage
-        anchors {
-            left: image.right
-            top: root.top
-            bottom: root.bottom
-            right: root.right
+        onNextButtonClicked: {
+            backupInfoStepPanel.next();
+            contentStack.next();
         }
-    }*/
-} // Rectangle -> root
+
+        onPreviousButtonClicked: {
+            backupInfoStepPanel.previous();
+            contentStack.previous();
+        }
+    }
+}

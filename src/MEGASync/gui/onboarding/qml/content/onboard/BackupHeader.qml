@@ -7,11 +7,18 @@ import Components 1.0 as Custom
 ColumnLayout {
 
     /*
+     * Properties
+     */
+
+    property string title: ""
+    property string description: ""
+
+    /*
      * Child objects
      */
 
     Text {
-        text: qsTr("Set up MEGA");
+        text: title
         Layout.preferredHeight: 20
         font.family: "Inter"
         font.styleName: "normal"
@@ -21,7 +28,7 @@ ColumnLayout {
     }
 
     Text {
-        text: qsTr("You can assign the name for personal use or workgroup membership of this computer.");
+        text: description
         Layout.topMargin: 12
         Layout.preferredHeight: 40
         Layout.fillWidth: true
