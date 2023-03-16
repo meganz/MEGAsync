@@ -139,7 +139,7 @@ ColumnLayout {
                 } else if(box.state === box.stateSelected) {
                     box.state = box.stateDeselected;
                 } else {
-                    console.error("BackupInstallationTypeButton: state does not exist -> " + box.state);
+                    console.error("SyncsInstallationTypeButton: state does not exist -> " + box.state);
                 }
             }
         }

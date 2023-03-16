@@ -82,7 +82,7 @@ Item {
                     name: stepsLayout.stateStep1ComputerName
                     PropertyChanges {
                         target: step1_computerName;
-                        toState: BackupInfoStep.ToStates.Current
+                        toState: SyncsInfoStep.ToStates.Current
                     }
                     PropertyChanges {
                         target: step2_line;
@@ -90,14 +90,14 @@ Item {
                     }
                     PropertyChanges {
                         target: step2_installationType;
-                        toState: BackupInfoStep.ToStates.Disabled
+                        toState: SyncsInfoStep.ToStates.Disabled
                     }
                 },
                 State {
                     name: stepsLayout.stateStep2InstallationType
                     PropertyChanges {
                         target: step1_computerName;
-                        toState: BackupInfoStep.ToStates.Done
+                        toState: SyncsInfoStep.ToStates.Done
                     }
                     PropertyChanges {
                         target: step2_line;
@@ -105,15 +105,15 @@ Item {
                     }
                     PropertyChanges {
                         target: step2_installationType;
-                        toState: BackupInfoStep.ToStates.Current
+                        toState: SyncsInfoStep.ToStates.Current
                     }
                     PropertyChanges {
                         target: step3_line;
                         color: Styles.buttonSecondaryPressed
                     }
                     PropertyChanges {
-                        target: step3_backup;
-                        toState: BackupInfoStep.ToStates.Disabled
+                        target: step3_syncs;
+                        toState: SyncsInfoStep.ToStates.Disabled
                     }
                     PropertyChanges {
                         target: step3_1_line;
@@ -121,14 +121,14 @@ Item {
                     }
                     PropertyChanges {
                         target: step3_1_selectFolder;
-                        toState: BackupInfoSubStep.ToStates.Disabled
+                        toState: SyncsInfoSubStep.ToStates.Disabled
                     }
                 },
                 State {
                     name: stepsLayout.stateStep31SelectFolders
                     PropertyChanges {
                         target: step1_computerName;
-                        toState: BackupInfoStep.ToStates.DoneLight
+                        toState: SyncsInfoStep.ToStates.DoneLight
                     }
                     PropertyChanges {
                         target: step2_line;
@@ -136,15 +136,15 @@ Item {
                     }
                     PropertyChanges {
                         target: step2_installationType;
-                        toState: BackupInfoStep.ToStates.DoneLight
+                        toState: SyncsInfoStep.ToStates.DoneLight
                     }
                     PropertyChanges {
                         target: step3_line;
                         color: Styles.buttonPrimaryPressed
                     }
                     PropertyChanges {
-                        target: step3_backup;
-                        toState: BackupInfoStep.ToStates.Current
+                        target: step3_syncs;
+                        toState: SyncsInfoStep.ToStates.Current
                     }
                     PropertyChanges {
                         target: step3_1_line;
@@ -152,7 +152,7 @@ Item {
                     }
                     PropertyChanges {
                         target: step3_1_selectFolder;
-                        toState: BackupInfoSubStep.ToStates.Current
+                        toState: SyncsInfoSubStep.ToStates.Current
                     }
                     PropertyChanges {
                         target: step3_2_line;
@@ -160,14 +160,14 @@ Item {
                     }
                     PropertyChanges {
                         target: step3_2_confirm;
-                        toState: BackupInfoSubStep.ToStates.Disabled
+                        toState: SyncsInfoSubStep.ToStates.Disabled
                     }
                 },
                 State {
                     name: stepsLayout.stateStep32Confirm
                     PropertyChanges {
                         target: step1_computerName;
-                        toState: BackupInfoStep.ToStates.DoneLight
+                        toState: SyncsInfoStep.ToStates.DoneLight
                     }
                     PropertyChanges {
                         target: step2_line;
@@ -175,15 +175,15 @@ Item {
                     }
                     PropertyChanges {
                         target: step2_installationType;
-                        toState: BackupInfoStep.ToStates.DoneLight
+                        toState: SyncsInfoStep.ToStates.DoneLight
                     }
                     PropertyChanges {
                         target: step3_line;
                         color: Styles.buttonPrimaryPressed
                     }
                     PropertyChanges {
-                        target: step3_backup;
-                        toState: BackupInfoStep.ToStates.DoneConfirm
+                        target: step3_syncs;
+                        toState: SyncsInfoStep.ToStates.DoneConfirm
                     }
                     PropertyChanges {
                         target: step3_1_line;
@@ -191,7 +191,7 @@ Item {
                     }
                     PropertyChanges {
                         target: step3_1_selectFolder;
-                        toState: BackupInfoSubStep.ToStates.Done
+                        toState: SyncsInfoSubStep.ToStates.Done
                     }
                     PropertyChanges {
                         target: step3_2_line;
@@ -199,7 +199,7 @@ Item {
                     }
                     PropertyChanges {
                         target: step3_2_confirm;
-                        toState: BackupInfoSubStep.ToStates.Current
+                        toState: SyncsInfoSubStep.ToStates.Current
                     }
                 }
             ] // states
@@ -207,7 +207,7 @@ Item {
             /*
              * Child objects
              */
-            BackupInfoStep {
+            SyncsInfoStep {
                 id: step1_computerName
 
                 title: qsTr("Computer name")
@@ -225,7 +225,7 @@ Item {
                 Layout.leftMargin: 43
             }
 
-            BackupInfoStep {
+            SyncsInfoStep {
                 id: step2_installationType
 
                 title: qsTr("Installation type")
@@ -242,8 +242,8 @@ Item {
                 Layout.leftMargin: 43
             }
 
-            BackupInfoStep {
-                id: step3_backup
+            SyncsInfoStep {
+                id: step3_syncs
 
                 title: qsTr("Synchronize")
                 Layout.leftMargin: 32
@@ -265,7 +265,7 @@ Item {
                     Layout.leftMargin: 43
                 }
 
-                BackupInfoSubStep {
+                SyncsInfoSubStep {
                     id: step3_1_selectFolder
 
                     title: qsTr("Select Folders")
@@ -282,7 +282,7 @@ Item {
                     Layout.leftMargin: 43
                 }
 
-                BackupInfoSubStep {
+                SyncsInfoSubStep {
                     id: step3_2_confirm
 
                     title: qsTr("Confirm")

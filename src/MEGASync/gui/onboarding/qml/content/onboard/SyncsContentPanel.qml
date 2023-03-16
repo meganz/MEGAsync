@@ -59,7 +59,7 @@ Item {
 
                 spacing: 12
 
-                BackupHeader {
+                SyncsHeader {
                     title: qsTr("Set up MEGA")
                     description: qsTr("You can assign the name for personal use or workgroup membership of this computer.")
                     Layout.fillWidth: false
@@ -68,7 +68,7 @@ Item {
                     Layout.leftMargin: 32
                 }
 
-                BackupComputerName {
+                SyncsComputerName {
                     Layout.fillWidth: false
                     Layout.preferredWidth: 488
                     Layout.leftMargin: 32
@@ -85,7 +85,7 @@ Item {
 
                 spacing: 12
 
-                BackupHeader {
+                SyncsHeader {
                     title: qsTr("Choose how you want to use MEGA")
                     description: qsTr("Choose a installation type")
                     Layout.fillWidth: false
@@ -94,7 +94,7 @@ Item {
                     Layout.leftMargin: 32
                 }
 
-                BackupInstallationType {
+                SyncsInstallationType {
                     id: installationTypeContent
 
                     Layout.fillWidth: false

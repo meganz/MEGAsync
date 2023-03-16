@@ -22,7 +22,7 @@ Item {
      */
 
     property string title: ""
-    property int toState: BackupInfoStep.ToStates.Disabled
+    property int toState: SyncsInfoStep.ToStates.Disabled
 
     /*
      * Object properties
@@ -53,11 +53,11 @@ Item {
         readonly property string stateDoneLight: "DONE_LIGHT"
 
         property var statesMap: new Map([
-            [BackupInfoStep.ToStates.Disabled, stateDisabled],
-            [BackupInfoStep.ToStates.Current, stateCurrent],
-            [BackupInfoStep.ToStates.Done, stateDone],
-            [BackupInfoStep.ToStates.DoneConfirm, stateDoneConfirm],
-            [BackupInfoStep.ToStates.DoneLight, stateDoneLight]
+            [SyncsInfoStep.ToStates.Disabled, stateDisabled],
+            [SyncsInfoStep.ToStates.Current, stateCurrent],
+            [SyncsInfoStep.ToStates.Done, stateDone],
+            [SyncsInfoStep.ToStates.DoneConfirm, stateDoneConfirm],
+            [SyncsInfoStep.ToStates.DoneLight, stateDoneLight]
         ])
 
         /*

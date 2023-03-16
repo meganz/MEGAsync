@@ -30,7 +30,7 @@ ColumnLayout {
      * Child objects
      */
 
-    BackupInstallationTypeButton {
+    SyncsInstallationTypeButton {
         id: syncButton
 
         title: qsTr("Sync")
@@ -38,14 +38,14 @@ ColumnLayout {
         imageSource: "../../../../images/Onboarding/sync.svg"
 
         onSelected: {
-            backupButton.deselect();
+            syncsButton.deselect();
             fuseButton.deselect();
-            root.optionSelected(BackupInstallationType.SelectedOption.Sync);
+            root.optionSelected(SyncsInstallationType.SelectedOption.Sync);
         }
     }
 
-    BackupInstallationTypeButton {
-        id: backupButton
+    SyncsInstallationTypeButton {
+        id: syncsButton
 
         title: qsTr("Backup")
         description: qsTr("Automatically update your files from your computers to MEGA cloud. Files in your computer won’t be affected by the cloud.")
@@ -54,11 +54,11 @@ ColumnLayout {
         onSelected: {
             syncButton.deselect();
             fuseButton.deselect();
-            root.optionSelected(BackupInstallationType.SelectedOption.Backup);
+            root.optionSelected(SyncsInstallationType.SelectedOption.Backup);
         }
     }
 
-    BackupInstallationTypeButton {
+    SyncsInstallationTypeButton {
         id: fuseButton
 
         title: qsTr("Fuse")
@@ -66,9 +66,9 @@ ColumnLayout {
         imageSource: "../../../../images/Onboarding/fuse.svg"
 
         onSelected: {
-            backupButton.deselect();
+            syncsButton.deselect();
             syncButton.deselect();
-            root.optionSelected(BackupInstallationType.SelectedOption.Fuse);
+            root.optionSelected(SyncsInstallationType.SelectedOption.Fuse);
         }
     }
 }

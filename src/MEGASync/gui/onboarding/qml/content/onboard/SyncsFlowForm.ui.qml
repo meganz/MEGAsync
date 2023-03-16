@@ -18,8 +18,8 @@ RowLayout {
      * Child objects
      */
 
-    BackupInfoStepPanel {
-        id: backupInfoStepPanel
+    SyncsInfoStepPanel {
+        id: syncsInfoStepPanel
 
         Layout.preferredHeight: root.height
         Layout.preferredWidth: 224
@@ -28,18 +28,18 @@ RowLayout {
     Rectangle {
         color: "#FAFAFB"
         Layout.preferredHeight: root.height
-        Layout.preferredWidth: root.width - backupInfoStepPanel.width
+        Layout.preferredWidth: root.width - syncsInfoStepPanel.width
 
         ColumnLayout {
             height: parent.height
             width: parent.width
 
-            BackupContentPanel {
+            SyncsContentPanel {
                 id: contentStack
             }
 
-            BackupFooter {
-                id: backupFooter
+            SyncsFooter {
+                id: syncsFooter
 
                 Layout.alignment: Qt.AlignBottom
                 Layout.bottomMargin: 24
@@ -51,15 +51,15 @@ RowLayout {
     }
 
     Connections {
-        target: backupFooter
+        target: syncsFooter
 
         onNextButtonClicked: {
-            backupInfoStepPanel.next();
+            syncsInfoStepPanel.next();
             contentStack.next();
         }
 
         onPreviousButtonClicked: {
-            backupInfoStepPanel.previous();
+            syncsInfoStepPanel.previous();
             contentStack.previous();
         }
     }
