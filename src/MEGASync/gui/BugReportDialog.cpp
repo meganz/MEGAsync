@@ -79,7 +79,7 @@ void BugReportDialog::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
     int permil = (totalBytes > 0) ? static_cast<int>((1000 * transferredBytes) / totalBytes) : 0;
     if (!warningShown)
     {
-        if (permil != lastpermil)
+        if (permil != lastpermil && mSendProgress)
         {
             mSendProgress->setValue(permil);
             lastpermil = permil;
@@ -101,13 +101,18 @@ void BugReportDialog::onTransferFinish(MegaApi*, MegaTransfer*, MegaError* error
 
     if (error->getErrorCode() == MegaError::API_OK)
     {
-        mSendProgress->setValue(mSendProgress->maximum());
-
+        if(mSendProgress)
+        {
+            mSendProgress->setValue(mSendProgress->maximum());
+        }
         createSupportTicket();
     }
     else
     {
-        mSendProgress->close();
+        if(mSendProgress)
+        {
+            mSendProgress->close();
+        }
 
         if (error->getErrorCode() == MegaError::API_EEXIST)
         {

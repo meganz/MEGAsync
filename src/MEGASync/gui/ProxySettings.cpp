@@ -178,7 +178,6 @@ void ProxySettings::on_bUpdate_clicked()
     }
 #endif
 
-    //Remove it, just in case
     mProgressDialog = new MegaProgressCustomDialog(this);
     DialogOpener::showDialog(mProgressDialog);
 
