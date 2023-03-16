@@ -14,7 +14,6 @@ ChangePassword::ChangePassword(QWidget* parent) :
     mDelegateListener (new QTMegaRequestListener(mMegaApi, this))
 {
     mUi->setupUi(this);
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     mUi->bOk->setDefault(true);
 }
 

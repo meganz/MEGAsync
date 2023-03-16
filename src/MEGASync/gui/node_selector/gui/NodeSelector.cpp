@@ -26,8 +26,6 @@ NodeSelector::NodeSelector(QWidget *parent) :
     mMegaApi(MegaSyncApp->getMegaApi()),
     ui(new Ui::NodeSelector)
 {
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-
     ui->setupUi(this);
 
     connect(ui->bShowIncomingShares, &QPushButton::clicked, this, &NodeSelector::onbShowIncomingSharesClicked);

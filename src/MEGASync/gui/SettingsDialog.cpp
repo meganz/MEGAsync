@@ -109,7 +109,6 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     mSyncTableEventFilter = std::unique_ptr<SyncTableViewTooltips>(new SyncTableViewTooltips());
     mBackupTableEventFilter = std::unique_ptr<BackupTableViewTooltips>(new BackupTableViewTooltips());
     mUi->setupUi(this);
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
     mUi->bOpenBackupFolder->setEnabled(false);
 

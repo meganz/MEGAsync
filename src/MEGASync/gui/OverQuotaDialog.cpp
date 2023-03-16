@@ -14,9 +14,6 @@ OverQuotaDialog::OverQuotaDialog(OverQuotaDialogType type, QWidget *parent) :
     ui->setupUi(this);
     ui->labelTitle->setWordWrap(false);
 
-#ifndef __APPLE__
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-#endif
     connect(ui->buttonDismiss, &QPushButton::clicked, this, &QDialog::reject);
     connect(ui->buttonUpgrade, &QPushButton::clicked, this, &OverQuotaDialog::onUpgradeClicked);
     connect(ui->labelTitle, &CustomLabel::labelSizeChange, this, &OverQuotaDialog::onTitleLengthChanged);

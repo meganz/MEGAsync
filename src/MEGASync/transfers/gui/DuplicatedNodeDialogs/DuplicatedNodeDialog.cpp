@@ -17,7 +17,7 @@ DuplicatedNodeDialog::DuplicatedNodeDialog(std::shared_ptr<mega::MegaNode> node)
 #ifdef Q_OS_WINDOWS
     setWindowFlags(Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
 #endif
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint | Qt::WindowStaysOnTopHint);
+    setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
 
     connect(&mFolderCheck, &DuplicatedUploadBase::selectionDone, this, [this](){
         onConflictProcessed();

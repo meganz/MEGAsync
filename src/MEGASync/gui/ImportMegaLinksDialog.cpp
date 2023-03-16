@@ -24,7 +24,6 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(std::shared_ptr<LinkProcessor> link
     mPreferences(Preferences::instance()),
     mLinkProcessor(linkProcessor)
 {
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     ui->setupUi(this);
 
     static const int MAX_ITEMS_DISPLAYED = 8;

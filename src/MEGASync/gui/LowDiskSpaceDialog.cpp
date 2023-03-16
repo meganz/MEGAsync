@@ -15,8 +15,6 @@ LowDiskSpaceDialog::LowDiskSpaceDialog(qint64 neededSize, qint64 freeSize,
     ui->setupUi(this);
     setupShadowEffect();
 
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-
     auto message = tr("There is not enough space on %1. You need an additional %2 to download these files.");
     ui->lExplanation->setText(message.arg(driveName, toString(neededSize-freeSize)));
 

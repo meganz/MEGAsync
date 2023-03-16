@@ -259,7 +259,7 @@ private:
                 {
                     QRect siblingGeometry = siblingDialogInfo->getDialog()->geometry();
                     bool siblingIsMaximized = siblingDialogInfo->getDialog()->isMaximized();
-
+                    dialog->setWindowFlags(siblingDialogInfo->getDialog()->windowFlags());
                     removeDialog(siblingDialogInfo->getDialog());
                     siblingDialogInfo->setDialog(dialog);
                     siblingDialogInfo->setDialogClass(classType);
@@ -282,6 +282,7 @@ private:
                 info->setDialog(dialog);
                 info->setDialogClass(classType);
                 mOpenedDialogs.append(info);
+                dialog->setWindowFlags(dialog->windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
                 initDialog(dialog);
             }

@@ -13,7 +13,6 @@ AddExclusionDialog::AddExclusionDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->bOk->setDefault(true);
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 }
 
 AddExclusionDialog::~AddExclusionDialog()

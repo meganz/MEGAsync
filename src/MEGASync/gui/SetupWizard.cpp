@@ -24,7 +24,6 @@ SetupWizard::SetupWizard(MegaApplication *app, QWidget *parent) :
     ui(new Ui::SetupWizard)
 {
     ui->setupUi(this);
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowModality(Qt::WindowModal);
 
     animationTimer = new QTimer(this);

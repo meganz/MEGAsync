@@ -20,7 +20,6 @@ BackupNameConflictDialog::BackupNameConflictDialog(const QStringList& candidateP
     {
         mBackupNames.insert(path, SyncController::getSyncNameFromPath(path));
     }
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     ui->setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
 

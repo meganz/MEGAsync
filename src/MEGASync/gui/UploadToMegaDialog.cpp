@@ -18,8 +18,6 @@ UploadToMegaDialog::UploadToMegaDialog(MegaApi *megaApi, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::UploadToMegaDialog)
 {
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-
     ui->setupUi(this);
 
     this->megaApi = megaApi;

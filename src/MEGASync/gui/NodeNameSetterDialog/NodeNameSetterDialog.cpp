@@ -23,7 +23,6 @@ NodeNameSetterDialog::~NodeNameSetterDialog()
 void NodeNameSetterDialog::init()
 {
     // Initialize the mNewFolder input Dialog
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     mUi->setupUi(this);
 
     title();

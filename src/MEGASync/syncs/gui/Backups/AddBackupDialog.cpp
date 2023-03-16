@@ -20,7 +20,6 @@ AddBackupDialog::AddBackupDialog(QWidget *parent) :
     mDeviceNameRequest (UserAttributes::DeviceName::requestDeviceName())
 {
     mUi->setupUi(this);
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
     connect(mDeviceNameRequest.get(), &UserAttributes::DeviceName::attributeReady,
             this, &AddBackupDialog::onDeviceNameSet);

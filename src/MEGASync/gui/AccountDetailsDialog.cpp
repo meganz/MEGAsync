@@ -19,7 +19,6 @@ AccountDetailsDialog::AccountDetailsDialog(QWidget *parent) :
 {
     // Setup UI
     mUi->setupUi(this);
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
     // Set progressbars precision
     mUi->pbCloudDrive->setMaximum(PRECISION);

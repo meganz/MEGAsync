@@ -50,7 +50,7 @@ BackupsWizard::BackupsWizard(QWidget* parent) :
     mCurrentStep (STEP_1_INIT)
 {
     // Setup UI
-    setWindowFlags((windowFlags() | Qt::WindowCloseButtonHint) & ~Qt::WindowContextHelpButtonHint);
+    setWindowFlags((windowFlags() | Qt::WindowCloseButtonHint));
 
 #ifdef _WIN32
     setWindowFlags(windowFlags() | Qt::MSWindowsFixedSizeDialogHint);

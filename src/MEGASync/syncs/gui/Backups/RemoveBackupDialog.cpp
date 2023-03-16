@@ -16,7 +16,6 @@ RemoveBackupDialog::RemoveBackupDialog(std::shared_ptr<SyncSettings> backup, QWi
     mTargetFolder(MegaSyncApp->getRootNode()->getHandle()),
     mNodeSelector(nullptr)
 {
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     mUi->setupUi(this);
     mUi->lTarget->setReadOnly(true);
     connect(mUi->bConfirm, &QPushButton::clicked, this, &QDialog::accept);
