@@ -35,6 +35,7 @@ public:
 
 signals:
     void twoFARequired();
+    void userPassFailed();
 
 public slots:
     void onForgotPasswordClicked();

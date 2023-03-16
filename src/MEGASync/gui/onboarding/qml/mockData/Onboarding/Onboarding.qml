@@ -9,6 +9,9 @@ Item {
         PASSWORD = 3
     }
 
+    signal userPassFailed
+    signal twoFARequired
+
     function onForgotPasswordClicked() {
         console.info("onForgotPasswordClicked()");
     }

@@ -22,8 +22,20 @@ LoginPageForm {
 
     Component{
         id: registerPage
-
         RegisterPage {}
+    }
+
+
+    Component{
+        id:twoFactorAuthPage
+        TwoFAPage{}
+    }
+
+    Connections{
+        target: Onboarding
+        onTwoFARequired:{
+            registerStack.replace(twoFactorAuthPage)
+        }
     }
 }
 

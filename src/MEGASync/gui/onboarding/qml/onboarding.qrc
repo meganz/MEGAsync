@@ -1,15 +1,17 @@
-<!DOCTYPE RCC><RCC version="1.0">
-<qresource>
-<file>./content/onboard/LoginPage.qml</file>
-<file>./content/onboard/LoginPageForm.ui.qml</file>
-<file>./content/onboard/OnboardingDialog.qml</file>
-<file>./content/onboard/OnboardingFlow.qml</file>
-<file>./content/onboard/RegisterFlow.qml</file>
-<file>./content/onboard/RegisterFlowForm.ui.qml</file>
-<file>./content/onboard/RegisterPage.qml</file>
-<file>./content/onboard/RegisterPageForm.ui.qml</file>
-<file>./content/onboard/Welcome.qml</file>
-<file>./content/onboard/WelcomeForm.ui.qml</file>
-<file>./main.qml</file>
-</qresource>
+<RCC>
+    <qresource prefix="/">
+        <file>content/onboard/LoginPage.qml</file>
+        <file>content/onboard/LoginPageForm.ui.qml</file>
+        <file>content/onboard/OnboardingDialog.qml</file>
+        <file>content/onboard/OnboardingFlow.qml</file>
+        <file>content/onboard/RegisterFlow.qml</file>
+        <file>content/onboard/RegisterFlowForm.ui.qml</file>
+        <file>content/onboard/RegisterPage.qml</file>
+        <file>content/onboard/RegisterPageForm.ui.qml</file>
+        <file>content/onboard/Welcome.qml</file>
+        <file>content/onboard/WelcomeForm.ui.qml</file>
+        <file>main.qml</file>
+        <file>content/onboard/TwoFAPage.qml</file>
+        <file>content/onboard/TwoFAPageForm.ui.qml</file>
+    </qresource>
 </RCC>

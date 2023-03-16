@@ -7,28 +7,24 @@ RegisterPageForm {
     }
 
     registerButton.onClicked: {
-        if (formData.get(Onboarding.OnboardEnum.PASSWORD)
-                !== formData.get(re_password)) {
+
+
+        if (formData[Onboarding.OnboardEnum.PASSWORD]
+                !== re_password) {
             passwordError = true;
-            return;
+            //return;
         } else {
             passwordError = false;
         }
 
-        for (let [key, value] of formData) {
-            if (value === "") {
-                console.log("RegisterPageForm: empty input text");
-                return;
-            }
-        }
+//        for (let [key, value] of formData) {
+//            if (value === "") {
+//                console.log("RegisterPageForm: empty input text");
+//                return;
+//            }
+//        }
 
-        Onboarding.onRegisterClicked({[Onboarding.OnboardEnum.EMAIL]:
-                                        formData.get(Onboarding.OnboardEnum.EMAIL),
-                                      [Onboarding.OnboardEnum.PASSWORD]:
-                                        formData.get(Onboarding.OnboardEnum.PASSWORD),
-                                      [Onboarding.OnboardEnum.FIRST_NAME]:
-                                        formData.get(Onboarding.OnboardEnum.FIRST_NAME),
-                                      [Onboarding.OnboardEnum.LAST_NAME]:
-                                        formData.get(Onboarding.OnboardEnum.LAST_NAME)});
+        var formData = {[Onboarding.PASSWORD]: password, [Onboarding.EMAIL]: email, [Onboarding.FIRST_NAME]: name, [Onboarding.LAST_NAME]: last_name}
+        Onboarding.onRegisterClicked(formData);
     }
 }

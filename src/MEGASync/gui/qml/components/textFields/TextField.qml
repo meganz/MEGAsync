@@ -22,6 +22,11 @@ Item {
     property int fieldHeight: 50
 
     /*
+     * Signals
+     */
+    signal backPressed()
+
+    /*
      * Components
      */
     implicitHeight: outRect.height
@@ -92,6 +97,14 @@ Item {
                 border.color: getBorderColor()
                 border.width: 2
                 radius: 8
+            }
+
+            Keys.onPressed:
+            {
+                if(event.key === Qt.Key_Backspace)
+                {
+                    root.backPressed();
+                }
             }
 
         } // Qml.TextField -> textField

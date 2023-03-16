@@ -3,6 +3,7 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import Common 1.0
+import Onboarding 1.0
 
 Rectangle {
     property alias createAccountButton: createAccountButton
@@ -14,7 +15,13 @@ Rectangle {
 
     id: loginForm
     color: Styles.backgroundColor
-
+    Connections {
+        target: Onboarding
+        onUserPassFailed: {
+            email.error = true
+            password.error = true
+        }
+    }
     ColumnLayout {
         spacing: 16
         anchors {
@@ -82,3 +89,9 @@ Rectangle {
         }
     }
 }
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+##^##*/

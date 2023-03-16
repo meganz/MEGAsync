@@ -15,9 +15,7 @@ TwoFAPageForm {
     acceptButton.onClicked: {
         if(key.length === 6)
         {
-            console.log(loginPage.email);
-            console.log(loginPage.password);
-            OnboardCpp.onTwoFACompleted(key);
+            Onboarding.onTwoFACompleted(key);
         }
     }
 }

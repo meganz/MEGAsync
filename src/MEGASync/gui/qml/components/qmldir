@@ -1,6 +1,7 @@
 module Components
 Button 1.0 buttons/Button.qml
 TextField 1.0 textFields/TextField.qml
+TwoFA 1.0 textFields/TwoFA.qml
 PasswordTextField 1.0 textFields/PasswordTextField.qml
 RichText 1.0 texts/RichText.qml
 CheckBox 1.0 checkBoxes/CheckBox.qml

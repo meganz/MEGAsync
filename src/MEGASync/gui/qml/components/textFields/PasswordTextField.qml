@@ -19,6 +19,8 @@ Custom.TextField {
         }
     }
 
+    height: outRect.height
+
     RoundButton {
         id: button
 

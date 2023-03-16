@@ -10,14 +10,13 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import Components 1.0 as Custom
-import Styles 1.0
 
 Item {
+    id: root
     property string key2fa: digit1.textField.text + digit2.textField.text + digit3.textField.text + digit4.textField.text + digit5.textField.text + digit6.textField.text
     property int fHeight: 72
     property int fWidth: 60
     property bool hasError: false
-    id: root
 
     Custom.TextField {
         id: digit1
@@ -39,6 +38,7 @@ Item {
                 textField.select(0,1);
             }
         }
+
     }
     Custom.TextField {
         id: digit2
@@ -60,6 +60,10 @@ Item {
             {
                 textField.select(0,1);
             }
+        }
+        onBackPressed:
+        {
+            digit1.textField.focus = true;
         }
     }
     Custom.TextField {
@@ -83,6 +87,10 @@ Item {
                 textField.select(0,1);
             }
         }
+        onBackPressed:
+        {
+            digit2.textField.focus = true;
+        }
     }
     Custom.TextField {
         id: digit4
@@ -104,6 +112,10 @@ Item {
             {
                 textField.select(0,1);
             }
+        }
+        onBackPressed:
+        {
+            digit3.textField.focus = true;
         }
     }
     Custom.TextField {
@@ -127,6 +139,10 @@ Item {
                 textField.select(0,1);
             }
         }
+        onBackPressed:
+        {
+            digit4.textField.focus = true;
+        }
     }
     Custom.TextField {
         id: digit6
@@ -143,10 +159,10 @@ Item {
                 textField.select(0,1);
             }
         }
-//        textField.Keys.onBackPressed:
-//        {
-//            console.log("return pressed");
-//        }
+        onBackPressed:
+        {
+            digit5.textField.focus = true;
+        }
     }
     Rectangle{
         visible: hasError

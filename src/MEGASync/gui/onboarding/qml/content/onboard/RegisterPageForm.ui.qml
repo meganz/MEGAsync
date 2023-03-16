@@ -18,12 +18,13 @@ Rectangle {
 
     property bool passwordError: false
 
-    readonly property int re_password: Onboarding.OnboardEnum.PASSWORD + 1
+    readonly property string password: password.textField.text
+    readonly property string re_password: repeatPassword.textField.text
+    readonly property string email: email.textField.text
+    readonly property string name: firstName.textField.text
+    readonly property string last_name: lastName.textField.text
 
-    property var formData: (new Map([[Onboarding.OnboardEnum.EMAIL, email.textField.text], [Onboarding.OnboardEnum.PASSWORD, password.textField.text], [Onboarding.OnboardEnum.FIRST_NAME, firstName.textField.text], [Onboarding.OnboardEnum.LAST_NAME, lastName.textField.text], [re_password, repeatPassword.textField.text]]))
-
-
-    /*
+     /*
      * Component
      */
     color: Styles.backgroundColor
@@ -149,3 +150,10 @@ Read more about [a]MEGA’s end-to-end encryption.[/a]")
         }
     } // RowLayout -> buttonLayout
 }
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+##^##*/
+

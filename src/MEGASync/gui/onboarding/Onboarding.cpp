@@ -41,6 +41,7 @@ void Onboarding::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *err
     {
         case MegaRequest::TYPE_LOGIN:
         {
+        qDebug()<<error->getErrorCode()<<error->getErrorString();
             if (error->getErrorCode() == MegaError::API_EFAILED
                     || error->getErrorCode() == MegaError::API_EEXPIRED)
             {
@@ -63,9 +64,13 @@ void Onboarding::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *err
                     preferences->setHasLoggedIn(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000);
                 }
                 qDebug() << "Onboarding::onRequestFinish -> TYPE_LOGIN API_OK";
-            } else {
-                qDebug() << "Onboarding::onRequestFinish -> TYPE_LOGIN Error code -> " << error->getErrorCode();
             }
+            else
+            {
+                qDebug() << "Onboarding::onRequestFinish -> TYPE_LOGIN Error code -> " << error->getErrorCode();
+                emit userPassFailed();
+            }
+            break;
         }
         case MegaRequest::TYPE_CREATE_ACCOUNT:
         {
