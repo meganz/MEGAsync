@@ -6,12 +6,12 @@ Component {
 
     ColumnLayout {
         spacing: 12
+        width: 488
 
         Header {
             title: qsTr("Choose how you want to use MEGA")
             description: qsTr("Choose a installation type")
-            Layout.fillWidth: false
-            Layout.preferredWidth: 488
+            Layout.preferredWidth: parent.width
             Layout.topMargin: 32
             Layout.leftMargin: 32
         }
@@ -19,9 +19,9 @@ Component {
         InstallationType {
             id: installationTypeContent
 
-            Layout.fillWidth: false
-            Layout.preferredWidth: 488
+            Layout.preferredWidth: parent.width
             Layout.leftMargin: 32
+            Layout.topMargin: 24
         }
 
         Connections {

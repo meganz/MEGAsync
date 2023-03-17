@@ -11,7 +11,7 @@ Rectangle {
      * Object properties
      */
 
-    width: 488
+    width: parent.width
     height: 48
     color: Styles.pageBackground
     border.color: Styles.borderStrong

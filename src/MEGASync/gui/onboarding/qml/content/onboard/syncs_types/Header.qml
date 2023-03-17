@@ -30,17 +30,12 @@ ColumnLayout {
     Text {
         text: description
         Layout.topMargin: 12
-        Layout.preferredHeight: 40
         Layout.fillWidth: true
         font.family: "Inter"
         font.styleName: "normal"
         font.weight: Font.Light
         font.pixelSize: 14
-        lineHeight: 20
-        lineHeightMode: Text.FixedHeight
         wrapMode: Text.WordWrap
-        maximumLineCount: 2
-        Layout.fillHeight: false
     }
 
 } // RowLayout -> mainLayout

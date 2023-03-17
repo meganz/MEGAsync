@@ -6,8 +6,16 @@ import Common 1.0
 import Components 1.0 as Custom
 
 ColumnLayout {
-    id: root
+
+    /*
+     * Properties
+     */
+
     property alias buttonGroup: buttonGroup
+
+    /*
+     * Enums
+     */
 
     enum SelectedOption {
         Sync = 0,
@@ -25,18 +33,19 @@ ColumnLayout {
      * Object properties
      */
 
-    width: 488
+    width: parent.width
 
     /*
      * Child objects
      */
 
-    ButtonGroup{
+    ButtonGroup {
         id: buttonGroup
     }
-    ColumnLayout
-    {
+
+    ColumnLayout {
         spacing: 20
+
         InstallationTypeButton {
             id: syncButton
 
