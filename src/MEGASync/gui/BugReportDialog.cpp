@@ -12,7 +12,9 @@ using namespace mega;
 BugReportDialog::BugReportDialog(QWidget *parent, MegaSyncLogger& logger) :
     QDialog(parent),
     logger(logger),
-    ui(new Ui::BugReportDialog)
+    ui(new Ui::BugReportDialog),
+    mTransferFinished(false),
+    mTransferError(MegaError::API_OK)
 {
     ui->setupUi(this);
 
@@ -51,6 +53,8 @@ void BugReportDialog::onTransferStart(MegaApi*, MegaTransfer* transfer)
     }
 
     totalBytes = transfer->getTotalBytes();
+    mTransferError = MegaError::API_OK;
+    mTransferFinished = false;
 
     mSendProgress = new QProgressDialog(this);
 
@@ -75,11 +79,11 @@ void BugReportDialog::onTransferStart(MegaApi*, MegaTransfer* transfer)
 
 void BugReportDialog::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
 {
-    transferredBytes = transfer->getTransferredBytes();
-    int permil = (totalBytes > 0) ? static_cast<int>((1000 * transferredBytes) / totalBytes) : 0;
-    if (!warningShown)
+    if (mSendProgress && transfer->getState() == MegaTransfer::STATE_ACTIVE)
     {
-        if (permil != lastpermil && mSendProgress)
+        transferredBytes = transfer->getTransferredBytes();
+        int permil = (totalBytes > 0) ? static_cast<int>((1000 * transferredBytes) / totalBytes) : 0;
+        if (permil > lastpermil)
         {
             mSendProgress->setValue(permil);
             lastpermil = permil;
@@ -89,46 +93,20 @@ void BugReportDialog::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
 
 void BugReportDialog::onTransferFinish(MegaApi*, MegaTransfer*, MegaError* error)
 {
+    disconnect(mSendProgress.data(), &QProgressDialog::canceled, this, &BugReportDialog::cancelSendReport);
+
     mSendProgress->reset();
     totalBytes = 0;
     transferredBytes = 0;
     currentTransfer = 0;
     lastpermil = -3;
 
-    QMessageBox msgBox;
-    HighDpiResize hDpiResizer(&msgBox);
-    msgBox.setWindowTitle(tr("Bug report"));
+    mTransferError = error->getErrorCode();
+    mTransferFinished = true;
 
-    if (error->getErrorCode() == MegaError::API_OK)
+    if (!warningShown)
     {
-        if(mSendProgress)
-        {
-            mSendProgress->setValue(mSendProgress->maximum());
-        }
-        createSupportTicket();
-    }
-    else
-    {
-        if(mSendProgress)
-        {
-            mSendProgress->close();
-        }
-
-        if (error->getErrorCode() == MegaError::API_EEXIST)
-        {
-            msgBox.setIcon(QMessageBox::Information);
-            msgBox.setText(tr("Error on submitting bug report"));
-            msgBox.setTextFormat(Qt::RichText);
-            msgBox.setInformativeText(tr("There is an ongoing report being uploaded.")
-                                      + QString::fromUtf8("<br>") +
-                                      tr("Please wait until the current upload is completed."));
-            msgBox.addButton(tr("Ok"), QMessageBox::AcceptRole);
-            msgBox.exec();
-        }
-        else
-        {
-            showErrorMessage();
-        }
+        postUpload();
     }
 
     logger.resumeAfterReporting();
@@ -175,7 +153,6 @@ void BugReportDialog::onRequestFinish(MegaApi*, MegaRequest* request, MegaError*
         default:
             break;
     }
-
     accept();
 }
 
@@ -189,19 +166,50 @@ void BugReportDialog::showErrorMessage()
     QMessageBox msgBox;
     HighDpiResize hDpiResizer(&msgBox);
     msgBox.setWindowTitle(tr("Bug report"));
-    msgBox.setIcon(QMessageBox::Warning);
     msgBox.setText(tr("Error on submitting bug report"));
     msgBox.setTextFormat(Qt::RichText);
-    msgBox.setInformativeText(
-                tr("Bug report can't be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]")
-                    .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<span style=\"font-weight: bold; text-decoration:none;\">"))
-                    .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>"))
-                     + QString::fromAscii("\n"));
-
     msgBox.addButton(tr("Ok"), QMessageBox::AcceptRole);
+
+    if (mTransferFinished && mTransferError == MegaError::API_EEXIST)
+    {
+        msgBox.setIcon(QMessageBox::Information);
+        msgBox.setInformativeText(tr("There is an ongoing report being uploaded.")
+                                  + QString::fromUtf8("<br>") +
+                                  tr("Please wait until the current upload is completed."));
+    }
+    else
+    {
+        msgBox.setIcon(QMessageBox::Warning);
+        msgBox.setInformativeText(
+                    tr("Bug report can't be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]")
+                        .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<span style=\"font-weight: bold; text-decoration:none;\">"))
+                        .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>"))
+                         + QString::fromAscii("\n"));
+    }
+
     errorShown = true;
     msgBox.exec();
     errorShown = false;
+}
+
+void BugReportDialog::postUpload()
+{
+    if (mTransferError == MegaError::API_OK)
+    {
+        if(mSendProgress)
+        {
+            mSendProgress->setValue(mSendProgress->maximum());
+        }
+        createSupportTicket();
+    }
+    else
+    {
+        if(mSendProgress)
+        {
+            mSendProgress->close();
+        }
+        showErrorMessage();
+    }
 }
 
 void BugReportDialog::createSupportTicket()
@@ -271,6 +279,8 @@ void BugReportDialog::cancelSendReport()
         return;
     }
 
+    megaApi->pauseTransferByTag(currentTransfer, true);
+
     QMessageBox msgBox;
     HighDpiResize hDpiResizer(&msgBox);
     msgBox.setIcon(QMessageBox::Warning);
@@ -284,29 +294,35 @@ void BugReportDialog::cancelSendReport()
 
     warningShown = true;
     int ret = msgBox.exec();
-    warningShown = false;
 
     if (ret == QMessageBox::RejectRole)
     {
-        if (currentTransfer)
+        if (!mTransferFinished && currentTransfer)
         {
             megaApi->cancelTransferByTag(currentTransfer);
         }
         preparing = false;
+        warningShown = false;
         reject();
     }
     else if (ret == QMessageBox::AcceptRole)
     {
-        if (currentTransfer && mSendProgress)
+        warningShown = false;
+        if (mTransferFinished)
+        {
+            postUpload();
+        }
+        else if (currentTransfer && mSendProgress)
         {
             mSendProgress->setValue(lastpermil);
+            megaApi->pauseTransferByTag(currentTransfer, false);
         }
     }
 }
 
 void BugReportDialog::onDescriptionChanged()
 {
-    ui->bSubmit->setEnabled(ui->teDescribeBug->toPlainText().isEmpty() ? false : true);
+    ui->bSubmit->setEnabled(!ui->teDescribeBug->toPlainText().isEmpty());
 }
 
 void BugReportDialog::on_teDescribeBug_textChanged()
