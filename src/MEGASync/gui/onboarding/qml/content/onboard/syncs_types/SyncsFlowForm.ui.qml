@@ -18,7 +18,7 @@ RowLayout {
      * Child objects
      */
 
-    SyncsInfoStepPanel {
+    InfoStepPanel {
         id: syncsInfoStepPanel
 
         Layout.preferredHeight: root.height
@@ -34,11 +34,11 @@ RowLayout {
             height: parent.height
             width: parent.width
 
-            SyncsContentPanel {
+            ContentPanel {
                 id: contentStack
             }
 
-            SyncsFooter {
+            Footer {
                 id: syncsFooter
 
                 Layout.alignment: Qt.AlignBottom

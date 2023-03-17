@@ -11,7 +11,7 @@ ColumnLayout {
      */
 
     Image {
-        source: "../../../../images/Onboarding/pc.svg"
+        source: "../../../../../images/Onboarding/pc.svg"
         Layout.topMargin: 12
     }
 

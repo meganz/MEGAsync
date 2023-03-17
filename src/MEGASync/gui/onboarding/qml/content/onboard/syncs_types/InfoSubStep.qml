@@ -19,7 +19,7 @@ Item {
      */
 
     property string title: ""
-    property int toState: SyncsInfoSubStep.ToStates.Disabled
+    property int toState: InfoSubStep.ToStates.Disabled
 
     /*
      * Object properties
@@ -47,9 +47,9 @@ Item {
         readonly property string stateDone: "DONE"
 
         property var statesMap: new Map([
-            [SyncsInfoSubStep.ToStates.Disabled, stateDisabled],
-            [SyncsInfoSubStep.ToStates.Current, stateCurrent],
-            [SyncsInfoSubStep.ToStates.Done, stateDone]
+            [InfoSubStep.ToStates.Disabled, stateDisabled],
+            [InfoSubStep.ToStates.Current, stateCurrent],
+            [InfoSubStep.ToStates.Done, stateDone]
         ])
 
         /*

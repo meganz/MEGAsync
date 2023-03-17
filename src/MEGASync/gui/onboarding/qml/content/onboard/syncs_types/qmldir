@@ -1,0 +1,4 @@
+module Onboard.Syncs_types_types
+SyncsFlow 1.0 SyncsFlow.qml
+Header 1.0 Header.qml
+InfoAccount 1.0 InfoAccount.qml

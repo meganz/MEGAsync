@@ -37,30 +37,30 @@ ColumnLayout {
     ColumnLayout
     {
         spacing: 20
-        SyncsInstallationTypeButton {
+        InstallationTypeButton {
             id: syncButton
 
             title: qsTr("Sync")
             description: qsTr("Sync your files between your computers with MEGA cloud, any change from one side will apply to another side.")
-            imageSource: "../../../../images/Onboarding/sync.svg"
+            imageSource: "../../../../../images/Onboarding/sync.svg"
             ButtonGroup.group: buttonGroup
         }
 
-        SyncsInstallationTypeButton {
+        InstallationTypeButton {
             id: backupsButton
 
             title: qsTr("Backup")
             description: qsTr("Automatically update your files from your computers to MEGA cloud. Files in your computer won’t be affected by the cloud.")
-            imageSource: "../../../../images/Onboarding/cloud.svg"
+            imageSource: "../../../../../images/Onboarding/cloud.svg"
             ButtonGroup.group: buttonGroup
         }
 
-        SyncsInstallationTypeButton {
+        InstallationTypeButton {
             id: fuseButton
 
             title: qsTr("Fuse")
             description: qsTr("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.")
-            imageSource: "../../../../images/Onboarding/fuse.svg"
+            imageSource: "../../../../../images/Onboarding/fuse.svg"
             ButtonGroup.group: buttonGroup
         }
     }

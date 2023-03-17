@@ -32,7 +32,7 @@ Rectangle {
             spacing: 8
 
             Custom.SvgImage {
-                source: "../../../../images/Onboarding/shield.svg"
+                source: "../../../../../images/Onboarding/shield.svg"
             }
 
             Text {
