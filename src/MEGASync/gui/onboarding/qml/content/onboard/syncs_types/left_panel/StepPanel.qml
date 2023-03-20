@@ -29,6 +29,7 @@ Item {
         } else if(stepsLayout.state === stepsLayout.stateStep31SelectFolders) {
             stepsLayout.state = stepsLayout.stateStep32Confirm;
         }
+
     }
 
     function previous() {
@@ -82,7 +83,7 @@ Item {
                     name: stepsLayout.stateStep1ComputerName
                     PropertyChanges {
                         target: step1_computerName;
-                        toState: InfoStep.ToStates.Current
+                        toState: Step.ToStates.Current
                     }
                     PropertyChanges {
                         target: step2_line;
@@ -90,14 +91,14 @@ Item {
                     }
                     PropertyChanges {
                         target: step2_installationType;
-                        toState: InfoStep.ToStates.Disabled
+                        toState: Step.ToStates.Disabled
                     }
                 },
                 State {
                     name: stepsLayout.stateStep2InstallationType
                     PropertyChanges {
                         target: step1_computerName;
-                        toState: InfoStep.ToStates.Done
+                        toState: Step.ToStates.Done
                     }
                     PropertyChanges {
                         target: step2_line;
@@ -105,7 +106,7 @@ Item {
                     }
                     PropertyChanges {
                         target: step2_installationType;
-                        toState: InfoStep.ToStates.Current
+                        toState: Step.ToStates.Current
                     }
                     PropertyChanges {
                         target: step3_line;
@@ -113,7 +114,7 @@ Item {
                     }
                     PropertyChanges {
                         target: step3_syncs;
-                        toState: InfoStep.ToStates.Disabled
+                        toState: Step.ToStates.Disabled
                     }
                     PropertyChanges {
                         target: step3_1_line;
@@ -121,14 +122,14 @@ Item {
                     }
                     PropertyChanges {
                         target: step3_1_selectFolder;
-                        toState: InfoSubStep.ToStates.Disabled
+                        toState: SubStep.ToStates.Disabled
                     }
                 },
                 State {
                     name: stepsLayout.stateStep31SelectFolders
                     PropertyChanges {
                         target: step1_computerName;
-                        toState: InfoStep.ToStates.DoneLight
+                        toState: Step.ToStates.DoneLight
                     }
                     PropertyChanges {
                         target: step2_line;
@@ -136,7 +137,7 @@ Item {
                     }
                     PropertyChanges {
                         target: step2_installationType;
-                        toState: InfoStep.ToStates.DoneLight
+                        toState: Step.ToStates.DoneLight
                     }
                     PropertyChanges {
                         target: step3_line;
@@ -144,7 +145,7 @@ Item {
                     }
                     PropertyChanges {
                         target: step3_syncs;
-                        toState: InfoStep.ToStates.Current
+                        toState: Step.ToStates.Current
                     }
                     PropertyChanges {
                         target: step3_1_line;
@@ -152,7 +153,7 @@ Item {
                     }
                     PropertyChanges {
                         target: step3_1_selectFolder;
-                        toState: InfoSubStep.ToStates.Current
+                        toState: SubStep.ToStates.Current
                     }
                     PropertyChanges {
                         target: step3_2_line;
@@ -160,14 +161,14 @@ Item {
                     }
                     PropertyChanges {
                         target: step3_2_confirm;
-                        toState: InfoSubStep.ToStates.Disabled
+                        toState: SubStep.ToStates.Disabled
                     }
                 },
                 State {
                     name: stepsLayout.stateStep32Confirm
                     PropertyChanges {
                         target: step1_computerName;
-                        toState: InfoStep.ToStates.DoneLight
+                        toState: Step.ToStates.DoneLight
                     }
                     PropertyChanges {
                         target: step2_line;
@@ -175,7 +176,7 @@ Item {
                     }
                     PropertyChanges {
                         target: step2_installationType;
-                        toState: InfoStep.ToStates.DoneLight
+                        toState: Step.ToStates.DoneLight
                     }
                     PropertyChanges {
                         target: step3_line;
@@ -183,7 +184,7 @@ Item {
                     }
                     PropertyChanges {
                         target: step3_syncs;
-                        toState: InfoStep.ToStates.DoneConfirm
+                        toState: Step.ToStates.DoneConfirm
                     }
                     PropertyChanges {
                         target: step3_1_line;
@@ -191,7 +192,7 @@ Item {
                     }
                     PropertyChanges {
                         target: step3_1_selectFolder;
-                        toState: InfoSubStep.ToStates.Done
+                        toState: SubStep.ToStates.Done
                     }
                     PropertyChanges {
                         target: step3_2_line;
@@ -199,7 +200,7 @@ Item {
                     }
                     PropertyChanges {
                         target: step3_2_confirm;
-                        toState: InfoSubStep.ToStates.Current
+                        toState: SubStep.ToStates.Current
                     }
                 }
             ] // states
@@ -207,7 +208,7 @@ Item {
             /*
              * Child objects
              */
-            InfoStep {
+            Step {
                 id: step1_computerName
 
                 title: qsTr("Computer name")
@@ -225,7 +226,7 @@ Item {
                 Layout.leftMargin: 43
             }
 
-            InfoStep {
+            Step {
                 id: step2_installationType
 
                 title: qsTr("Installation type")
@@ -242,7 +243,7 @@ Item {
                 Layout.leftMargin: 43
             }
 
-            InfoStep {
+            Step {
                 id: step3_syncs
 
                 title: qsTr("Synchronize")
@@ -265,7 +266,7 @@ Item {
                     Layout.leftMargin: 43
                 }
 
-                InfoSubStep {
+                SubStep {
                     id: step3_1_selectFolder
 
                     title: qsTr("Select Folders")
@@ -282,7 +283,7 @@ Item {
                     Layout.leftMargin: 43
                 }
 
-                InfoSubStep {
+                SubStep {
                     id: step3_2_confirm
 
                     title: qsTr("Confirm")
@@ -294,7 +295,7 @@ Item {
         } // ColumnLayout -> stepsLayout
 
         Image {
-            source: "../../../../../images/Onboarding/help-circle.svg"
+            source: "../../../../../../images/Onboarding/help-circle.svg"
             Layout.leftMargin: 32
             Layout.topMargin: 173
             Layout.alignment: Qt.AlignTop

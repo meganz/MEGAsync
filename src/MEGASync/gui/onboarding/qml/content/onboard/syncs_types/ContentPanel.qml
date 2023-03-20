@@ -47,8 +47,7 @@ Item {
         property int currentItemStack: 0
         property var itemStack: [
             computerNamePage,
-            installationTypePage,
-            backupSelectFolders
+            installationTypePage
         ]
 
         width: parent.width
@@ -60,10 +59,6 @@ Item {
 
         InstallationTypePageForm {
             id: installationTypePage
-        }
-
-        SelectFoldersPageForm {
-            id: backupSelectFolders
         }
 
     } //StackView -> configurationStack
