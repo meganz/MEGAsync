@@ -11,6 +11,7 @@ class WindowsApiShellNotifier : public AbstractShellNotifier
 public :
     void notify(const QString& path) override
     {
+        logNotify("WindowsAPIShellNotifier", path);
         SHChangeNotify(SHCNE_UPDATEITEM, SHCNF_PATH, path.utf16(), NULL);
     }
 };

@@ -274,10 +274,6 @@ void LinkProcessor::importLinks(MegaNode *node)
                 remainingNodes++;
                 megaApi->copyNode(mLinkNode[i].get(), node, delegateListener);
             }
-            else
-            {
-                emit onDupplicateLink(linkList[i], QString::fromUtf8(name), duplicateHandle);
-            }
         }
     }
     delete children;

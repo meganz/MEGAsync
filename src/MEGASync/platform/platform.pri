@@ -1,16 +1,17 @@
 DEPENDPATH += $$PWD
 INCLUDEPATH += $$PWD
 
-SOURCES += $$PWD/notificator.cpp \
+SOURCES += $$PWD/AbstractPlatform.cpp \
+    $$PWD/Platform.cpp \
     $$PWD/ShellNotifier.cpp
 
 HEADERS +=  $$PWD/Platform.h \
+            $$PWD/AbstractPlatform.h \
             $$PWD/ShellNotifier.h \
-            $$PWD/notificator.h \
             $$PWD/PowerOptions.h \
             $$PWD/PlatformStrings.h
 win32 {
-    SOURCES +=	$$PWD/win/WindowsPlatform.cpp \
+    SOURCES +=	$$PWD/win/PlatformImplementation.cpp \
     $$PWD/win/RecursiveShellNotifier.cpp \
     $$PWD/win/ThreadedQueueShellNotifier.cpp \
 		$$PWD/win/WinShellDispatcherTask.cpp \
@@ -19,7 +20,7 @@ win32 {
                 $$PWD/win/PowerOptions.cpp \
                 $$PWD/win/PlatformStrings.cpp
 
-    HEADERS  += $$PWD/win/WindowsPlatform.h \
+    HEADERS  += $$PWD/win/PlatformImplementation.h \
     $$PWD/win/RecursiveShellNotifier.h \
     $$PWD/win/ThreadedQueueShellNotifier.h \
 		$$PWD/win/WinShellDispatcherTask.h \
@@ -51,12 +52,12 @@ unix:!macx {
 
 	INSTALLS += distro version
 
-    SOURCES += $$PWD/linux/LinuxPlatform.cpp \
+    SOURCES += $$PWD/linux/PlatformImplementation.cpp \
         $$PWD/linux/ExtServer.cpp \
         $$PWD/linux/NotifyServer.cpp \
         $$PWD/linux/PowerOptions.cpp \
         $$PWD/linux/PlatformStrings.cpp
-    HEADERS += $$PWD/linux/LinuxPlatform.h \
+    HEADERS += $$PWD/linux/PlatformImplementation.h \
         $$PWD/linux/ExtServer.h \
         $$PWD/linux/NotifyServer.h
 
@@ -157,14 +158,12 @@ unix:!macx {
 }
 
 macx {
-    SOURCES += $$PWD/macx/MacXPlatform.cpp \
+    SOURCES += $$PWD/macx/PlatformImplementation.cpp \
         $$PWD/macx/MacXExtServerService.cpp \
         $$PWD/macx/PlatformStrings.cpp
 
-    HEADERS += $$PWD/macx/MacXPlatform.h \
+    HEADERS += $$PWD/macx/PlatformImplementation.h \
         $$PWD/macx/MacXFunctions.h \
-        $$PWD/macx/macnotificationhandler.h \
-        $$PWD/macx/NotificationDelegate.h \
         $$PWD/macx/MacXSystemServiceTask.h  \
         $$PWD/macx/MEGAService.h \
         $$PWD/macx/ClientSide.h \
@@ -183,8 +182,6 @@ macx {
 
     OBJECTIVE_SOURCES += \
             $$PWD/macx/MacXFunctions.mm \
-            $$PWD/macx/macnotificationhandler.mm \
-            $$PWD/macx/NotificationDelegate.mm \
             $$PWD/macx/MacXSystemServiceTask.mm \
             $$PWD/macx/MEGAService.mm \
             $$PWD/macx/ClientSide.mm \
@@ -201,4 +198,5 @@ macx {
 
     LIBS += -framework Cocoa
     LIBS += -framework Security
+    LIBS += -framework UserNotifications
 }

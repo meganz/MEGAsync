@@ -5,6 +5,7 @@ SOURCES += $$PWD/gui/Backups/AddBackupDialog.cpp \
            $$PWD/gui/Backups/BackupNameConflictDialog.cpp \
            $$PWD/gui/Backups/BackupRenameWidget.cpp \
            $$PWD/gui/Backups/BackupTableView.cpp \
+           $$PWD/gui/Backups/BackupTableViewTooltips.cpp \
            $$PWD/gui/Backups/BackupsWizard.cpp \
            $$PWD/gui/Backups/RemoveBackupDialog.cpp \
            $$PWD/gui/SyncTooltipCreator.cpp \
@@ -12,6 +13,7 @@ SOURCES += $$PWD/gui/Backups/AddBackupDialog.cpp \
            $$PWD/gui/Twoways/BindFolderDialog.cpp \
            $$PWD/gui/Twoways/FolderBinder.cpp \
            $$PWD/gui/Twoways/SyncTableView.cpp \
+           $$PWD/gui/Twoways/SyncTableViewTooltips.cpp \
            $$PWD/model/BackupItemModel.cpp \
            $$PWD/model/SyncItemModel.cpp \
            $$PWD/control/SyncInfo.cpp \
@@ -22,6 +24,7 @@ HEADERS += $$PWD/gui/Backups/AddBackupDialog.h \
            $$PWD/gui/Backups/BackupNameConflictDialog.h \
            $$PWD/gui/Backups/BackupRenameWidget.h \
            $$PWD/gui/Backups/BackupTableView.h \
+           $$PWD/gui/Backups/BackupTableViewTooltips.h \
            $$PWD/gui/Backups/BackupsWizard.h \
            $$PWD/gui/Backups/RemoveBackupDialog.h \
            $$PWD/gui/SyncTooltipCreator.h \
@@ -29,6 +32,7 @@ HEADERS += $$PWD/gui/Backups/AddBackupDialog.h \
            $$PWD/gui/Twoways/BindFolderDialog.h \
            $$PWD/gui/Twoways/FolderBinder.h \
            $$PWD/gui/Twoways/SyncTableView.h \
+           $$PWD/gui/Twoways/SyncTableViewTooltips.h \
            $$PWD/model/BackupItemModel.h \
            $$PWD/model/SyncItemModel.h \
            $$PWD/control/SyncController.h \

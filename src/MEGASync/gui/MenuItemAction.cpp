@@ -34,15 +34,22 @@ MenuItemAction::MenuItemAction(const QString& title, const QString& value,
 }
 
 MenuItemAction::MenuItemAction(const QString& title, const QIcon& icon,
-                               bool manageHoverStates, int treeDepth, const QSize& iconSize, QObject* parent)
+                               bool manageHoverStates, int treeDepth, const QSize& iconSize, QObject *parent)
     : MenuItemAction (title, QString(), icon, QIcon(), manageHoverStates, treeDepth, iconSize, parent)
 {
 }
 
 MenuItemAction::MenuItemAction(const QString& title, const QString& value, const QIcon& icon,
-                               bool manageHoverStates, int treeDepth, const QSize& iconSize, QObject* parent)
+                               bool manageHoverStates, int treeDepth, const QSize& iconSize, QObject *parent)
     : MenuItemAction (title, value, icon,  QIcon(), manageHoverStates, treeDepth, iconSize, parent)
 {
+}
+
+MenuItemAction::MenuItemAction(const QString& title, const QIcon& icon,
+               QObject *parent)
+    : MenuItemAction (title, QString(), icon,  QIcon(), false, 0, QSize(24, 24), parent)
+{
+
 }
 
 void MenuItemAction::setIcon(const QIcon& icon)
@@ -82,6 +89,7 @@ MenuItemAction::~MenuItemAction()
 
 void MenuItemAction::setLabelText(const QString& title)
 {
+    setObjectName(title);
     // Force polish to update font Info with .ui StyleSheet
     this->mTitle->ensurePolished();
     auto f (this->mTitle->fontMetrics());

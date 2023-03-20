@@ -21,16 +21,25 @@ enum class NodeSelectorModelRoles
 {
     DATE_ROLE = Qt::UserRole,
     IS_FILE_ROLE,
-    IS_FOLDER_ROLE,
+    IS_SYNCABLE_FOLDER_ROLE,
     STATUS_ROLE,
+    HANDLE_ROLE,
+    MODEL_ITEM_ROLE,
+    NODE_ROLE,
     last
 };
 
 enum class NodeRowDelegateRoles
 {
-    ENABLED_ROLE = toInt(NodeSelectorModelRoles::last),  //ALWAYS use last enum value from previous enum class for new enums
-    INDENT_ROLE,
+    INDENT_ROLE = toInt(NodeSelectorModelRoles::last),  //ALWAYS use last enum value from previous enum class for new enums
+    SMALL_ICON_ROLE,
     INIT_ROLE,
+    last
+};
+
+enum class HeaderRoles
+{
+    ICON_ROLE = toInt(NodeRowDelegateRoles::last),  //ALWAYS use last enum value from previous enum class for new enums
     last
 };
 
@@ -43,18 +52,28 @@ class NodeRequester : public QObject
 
 public:
     NodeRequester(NodeSelectorModel* model);
-    void setShowFiles(bool newShowFiles);
-    void lockMutex(bool state) const;
+    ~NodeRequester();
+
+    void setShowFiles(bool show);
+    void setShowReadOnlyFolders(bool show);
+    void setSyncSetupMode(bool value);
+    void lockDataMutex(bool state) const;
     const std::atomic<bool>& isWorking() const;
     int rootIndexSize() const;
     int rootIndexOf(NodeSelectorModelItem *item);
     NodeSelectorModelItem* getRootItem(int index) const;
 
+    bool trySearchLock() const;
+    void lockSearchMutex(bool state) const;
+
     void cancelCurrentRequest();
+    void restartSearch();
+
+    const NodeSelectorModelItemSearch::Types &searchedTypes() const;
 
 public slots:
-    void requestNodeAndCreateChildren(NodeSelectorModelItem* item, const QModelIndex& parentIndex, bool showFiles);
-
+    void requestNodeAndCreateChildren(NodeSelectorModelItem* item, const QModelIndex& parentIndex);
+    void search(const QString& text, NodeSelectorModelItemSearch::Types typesAllowed);
     void createCloudDriveRootItem();
     void createIncomingSharesRootItems(std::shared_ptr<mega::MegaNodeList> nodeList);
     void createBackupRootItems(mega::MegaHandle backupsHandle);
@@ -66,21 +85,26 @@ public slots:
 
 signals:
      void nodesReady(NodeSelectorModelItem* parent);
-     void megaCloudDriveRootItemCreated(NodeSelectorModelItem* item);
-     void megaIncomingSharesRootItemsCreated(QList<NodeSelectorModelItem*> item);
-     void megaBackupRootItemsCreated(NodeSelectorModelItem* item);
+     void megaCloudDriveRootItemCreated();
+     void megaIncomingSharesRootItemsCreated();
+     void megaBackupRootItemsCreated();
+     void searchItemsCreated(NodeSelectorModelItemSearch::Types searchedTypes);
      void nodeAdded(NodeSelectorModelItem* item);
 
 private:
-     void finishWorker();
      bool isAborted();
 
      std::atomic<bool> mShowFiles{true};
+     std::atomic<bool> mShowReadOnlyFolders{true};
      std::atomic<bool> mAborted{false};
+     std::atomic<bool> mSearchCanceled{false};
+     std::atomic<bool> mSyncSetupMode{false};
      NodeSelectorModel* mModel;
      QList<NodeSelectorModelItem*> mRootItems;
-     mutable QMutex mMutex;
+     mutable QMutex mDataMutex;
+     mutable QMutex mSearchMutex;
      std::shared_ptr<mega::MegaCancelToken> mCancelToken;
+     NodeSelectorModelItemSearch::Types mSearchedTypes;
 };
 
 class NodeSelectorModel : public QAbstractItemModel
@@ -106,6 +130,7 @@ public:
     };
 
     explicit NodeSelectorModel(QObject *parent = 0);
+    virtual ~NodeSelectorModel();
 
     int columnCount(const QModelIndex & parent = QModelIndex()) const override;
     QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const override;
@@ -122,11 +147,11 @@ public:
     void addNode(std::shared_ptr<mega::MegaNode> node, const QModelIndex &parent);
     void removeNode(const QModelIndex &index);
     void showFiles(bool show);
+    void showReadOnlyFolders(bool show);
 
     QVariant getIcon(const QModelIndex &index, NodeSelectorModelItem* item) const;
     QVariant getText(const QModelIndex &index, NodeSelectorModelItem* item) const;
     void setFetchStep(int step);
-    virtual ~NodeSelectorModel();
     void endInsertingRows(){endInsertRows();}
     void beginInsertingRows(const QModelIndex& index, int rowCount){beginInsertRows(index, 0 , rowCount-1);}
 
@@ -136,16 +161,19 @@ public:
     virtual void firstLoad() = 0;
     void rootItemsLoaded();
 
+    virtual void proxyInvalidateFinished(){}
+
     IndexesActionInfo needsToBeExpandedAndSelected();
     void clearIndexesNodeInfo();
     void abort();
 
     virtual bool canBeDeleted() const;
 
+    Qt::ItemFlags flags(const QModelIndex &index) const override;
+
 signals:
-    void levelsAdded(const QModelIndexList& parent);
-    void requestChildNodes(NodeSelectorModelItem* parent, const QModelIndex& parentIndex,
-                           int nodeType);
+    void levelsAdded(const QModelIndexList& parent, bool force = false);
+    void requestChildNodes(NodeSelectorModelItem* parent, const QModelIndex& parentIndex);
     void firstLoadFinished(const QModelIndex& parent);
     void requestAddNode(std::shared_ptr<mega::MegaNode> newNode, const QModelIndex& parentIndex, NodeSelectorModelItem* parent);
     void removeItem(NodeSelectorModelItem* items);
@@ -158,12 +186,11 @@ protected:
     void fetchItemChildren(const QModelIndex& parent);
     void addRootItems();
     virtual void loadLevelFinished();
-    void continueWithNextItemToLoad(const QModelIndex &parentIndex);
+    bool continueWithNextItemToLoad(const QModelIndex &parentIndex);
 
     int mRequiredRights;
     bool mDisplayFiles;
     bool mSyncSetupMode;
-    bool mShowFiles;
     mutable IndexesActionInfo mIndexesActionInfo;
     NodeRequester* mNodeRequesterWorker;
     QList<std::shared_ptr<mega::MegaNode>> mNodesToLoad;

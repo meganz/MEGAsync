@@ -8,9 +8,12 @@ const char* ButtonIconManager::ICON_PREFIX = "default_icon";
 const char* ButtonIconManager::HOVER_SELECTED_FLAG = "hover_selected";
 const char* ButtonIconManager::CHECK_STATE = "check_state";
 const char* ButtonIconManager::IGNORE_BUTTON = "ignore_button_manager";
+const char* ButtonIconManager::CHANGE_LATER = "change_if_hover_on_selection";
 
+const char* ButtonIconManager::ICON_SPACING = "icon_spacing";
 const char* ButtonIconManager::BUTTON_FULL_TEXT = "button_full_text";
 const char* ButtonIconManager::BUTTON_ELIDE_TEXT = "button_elide_text";
+const char* ButtonIconManager::NOT_CHANGE_TEXT_COLOR = "not_change_text_color";
 
 const QString QRC_PREFIX = QLatin1Literal("qrc");
 
@@ -55,18 +58,21 @@ bool ButtonIconManager::eventFilter(QObject * watched, QEvent * event)
         else if(event->type() == QEvent::Paint)
         {
             bool checkstateHasChanged = button->isCheckable() && (button->property(CHECK_STATE).toBool() != button->isChecked());
-            if(checkstateHasChanged)
+            bool changeLater = button->property(CHANGE_LATER).isValid() ? button->property(CHANGE_LATER).toBool() : false;
+            bool change(true);
+
+            if(changeLater)
+            {
+               change = !button->rect().contains(button->mapFromGlobal(QCursor::pos()));
+            }
+
+            if(checkstateHasChanged && change)
             {
                 setDefaultIcon(button);
                 button->setProperty(CHECK_STATE, button->isChecked());
             }
 
-            bool buttonTextHasChanged = button->property(BUTTON_ELIDE_TEXT).isValid() && button->text() != button->property(BUTTON_ELIDE_TEXT).toString();
-            if(buttonTextHasChanged)
-            {
-                button->setProperty(BUTTON_FULL_TEXT, button->text());
-                elideButtonText(button, button->property(BUTTON_FULL_TEXT).toString());
-            }
+            updateButtonFullName(button);
         }
         else if(button->isCheckable() && event->type() == QEvent::MouseButtonPress)
         {
@@ -86,11 +92,7 @@ bool ButtonIconManager::eventFilter(QObject * watched, QEvent * event)
     {
         if(!button->text().isEmpty())
         {
-            if(!button->property(BUTTON_FULL_TEXT).isValid())
-            {
-                button->setProperty(BUTTON_FULL_TEXT, button->text());
-            }
-
+            updateButtonFullName(button);
             elideButtonText(button, button->property(BUTTON_FULL_TEXT).toString());
         }
     }
@@ -116,8 +118,7 @@ void ButtonIconManager::setDefaultIcon(QAbstractButton *button)
 
     if(!iconInfo.isEmpty())
     {
-        auto newIcon = button->icon();
-
+        QIcon newIcon;
         // The push button is not hovered by mouse
         if(button->isCheckable() && button->isChecked())
         {
@@ -143,7 +144,7 @@ void ButtonIconManager::setHoverIcon(QAbstractButton *button)
     if(!iconInfo.isEmpty())
     {
         auto hoverSelectedAvailable = button->property(HOVER_SELECTED_FLAG).toBool();
-        auto newIcon = button->icon();
+        QIcon newIcon;
         // The push button is hovered by mouse
         if(button->isCheckable() && button->isChecked())
         {
@@ -154,7 +155,7 @@ void ButtonIconManager::setHoverIcon(QAbstractButton *button)
             }
             else
             {
-                iconInfo.iconName.append(mSettings.hover_suffix);
+                iconInfo.iconName.append(mSettings.selected_suffix);
                 fillIcon(iconInfo, newIcon);
             }
         }
@@ -176,7 +177,7 @@ void ButtonIconManager::setSelectedIcon(QAbstractButton *button)
     if(!iconInfo.isEmpty())
     {
         //The button is checked
-        auto newIcon = button->icon();
+        QIcon newIcon;
         if(button->isChecked())
         {
             iconInfo.iconName.append(mSettings.selected_suffix);
@@ -212,7 +213,9 @@ void ButtonIconManager::elideButtonText(QAbstractButton* button, const QString& 
 
 void ButtonIconManager::changeButtonTextColor(QAbstractButton* button, double alphaValue)
 {
-    if(!button->text().isEmpty())
+    if(!button->text().isEmpty()
+       && ((button->property(NOT_CHANGE_TEXT_COLOR).isValid() && !button->property(NOT_CHANGE_TEXT_COLOR).toBool())
+            || !button->property(NOT_CHANGE_TEXT_COLOR).isValid()))
     {
         QColor textColor(button->palette().color(QPalette::ColorRole::ButtonText));
         textColor.setAlphaF(alphaValue);
@@ -263,6 +266,29 @@ bool ButtonIconManager::cleanIconName(IconInfo& info, const QString& separator)
     {
         info.iconName.clear();
         return false;
+    }
+}
+
+void ButtonIconManager::addIconSpacing(QAbstractButton *button)
+{
+    if(button->property(ICON_SPACING).isValid())
+    {
+        QString spaceChar(QLatin1String(" "));
+        uint spacing = button->property(ICON_SPACING).toUInt();
+        uint space_size = button->fontMetrics().width(spaceChar);
+        uint number_of_spaces = spacing / space_size;
+        button->setText(spaceChar.repeated(number_of_spaces) + button->text());
+    }
+}
+
+void ButtonIconManager::updateButtonFullName(QAbstractButton *button)
+{
+    bool buttonTextHasChanged = (button->property(BUTTON_ELIDE_TEXT).isValid() && button->text() != button->property(BUTTON_ELIDE_TEXT).toString())
+            || (!button->property(BUTTON_ELIDE_TEXT).isValid() && button->text() != button->property(BUTTON_FULL_TEXT));
+    if(buttonTextHasChanged)
+    {
+        addIconSpacing(button);
+        button->setProperty(BUTTON_FULL_TEXT, button->text());
     }
 }
 

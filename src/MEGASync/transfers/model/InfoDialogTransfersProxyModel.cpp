@@ -125,10 +125,8 @@ bool InfoDialogTransfersProxyModel::filterAcceptsRow(int sourceRow, const QModel
        const auto d (qvariant_cast<TransferItem>(index.data()).getTransferData());
        if(d)
        {
-           accept = (d->getState() & TransferData::TransferState::TRANSFER_COMPLETED
-                     || d->getState() & TransferData::TransferState::TRANSFER_COMPLETING
-                     || d->getState() & TransferData::TransferState::TRANSFER_ACTIVE
-                     || d->getState() & TransferData::TransferState::TRANSFER_FAILED);
+           accept = (d->getState() & (TransferData::FINISHED_STATES_MASK
+                                      | TransferData::ACTIVE_STATES_MASK));
 
            if(!accept && (d->mTag == mNextUploadSourceRow || d->mTag == mNextDownloadSourceRow))
            {
