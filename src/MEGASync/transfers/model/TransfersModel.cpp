@@ -1702,7 +1702,7 @@ void TransfersModel::pauseResumeAllTransfers(bool state)
             blockModelSignals(false);
 
             setUiBlockedModeByCounter(tagsUpdated);
-            emit pauseStateChanged(mAreAllPaused);
+            //emit pauseStateChanged(mAreAllPaused);
         });
     }
     else
@@ -1710,7 +1710,7 @@ void TransfersModel::pauseResumeAllTransfers(bool state)
         auto tagsUpdated = performPauseResumeAllTransfers(activeTransfers, true);
         setUiBlockedModeByCounter(tagsUpdated);
 
-        emit pauseStateChanged(mAreAllPaused);
+        //emit pauseStateChanged(mAreAllPaused);
     }
 }
 
@@ -1776,7 +1776,7 @@ void TransfersModel::pauseResumeTransferByTag(TransferTag tag, bool pauseState)
         {
             mMegaApi->pauseTransfers(pauseState);
             mAreAllPaused = false;
-            emit pauseStateChangedByTransferResume();
+            //emit pauseStateChangedByTransferResume();
         }
 
         if(pauseState)
@@ -1805,6 +1805,12 @@ void TransfersModel::pauseResumeTransferByIndex(const QModelIndex &index, bool p
                 qvariant_cast<TransferItem>(index.data(Qt::DisplayRole)));
 
     pauseResumeTransferByTag(transferItem.getTransferData()->mTag, pauseState);
+}
+
+void TransfersModel::globalPauseStateChanged(bool state)
+{
+    mAreAllPaused = state;
+    emit pauseStateChanged(state);
 }
 
 void TransfersModel::lockModelMutex(bool lock)

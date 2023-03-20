@@ -4,7 +4,6 @@
 #include <HighDpiResize.h>
 
 #include <QDialog>
-#include <QFileDialog>
 #include <QPointer>
 #include <functional>
 #include <memory>
