@@ -484,7 +484,7 @@ void PlatformImplementation::fileSelector(QString title, QString defaultDir, boo
 {
     if (defaultDir.isEmpty())
     {
-        defaultDir = QString::fromUtf8("/");
+        defaultDir = QLatin1String("/");
     }
     AbstractPlatform::fileSelector(title, defaultDir, multiSelection, parent, func);
 }
@@ -493,7 +493,7 @@ void PlatformImplementation::folderSelector(QString title, QString defaultDir, b
 {
     if (defaultDir.isEmpty())
     {
-        defaultDir = QString::fromUtf8("/");
+        defaultDir = QLatin1String("/");
     }
     AbstractPlatform::folderSelector(title, defaultDir, multiSelection, parent, func);
 }
@@ -501,7 +501,7 @@ void PlatformImplementation::fileAndFolderSelector(QString title, QString defaul
 {
     if (defaultDir.isEmpty())
     {
-        defaultDir = QString::fromUtf8("/");
+        defaultDir = QLatin1String("/");
     }
     AbstractPlatform::fileAndFolderSelector(title, defaultDir, multiSelection, parent, func);
 }

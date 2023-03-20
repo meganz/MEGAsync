@@ -17,7 +17,7 @@ void PlatformImplementation::fileSelector(QString title, QString defaultDir, boo
 {
     if (defaultDir.isEmpty())
     {
-        defaultDir = QString::fromUtf8("/");
+        defaultDir = QLatin1String("/");
     }
 
     selectorsImpl(title,defaultDir,multiSelection, true, false, parent, func);
@@ -27,7 +27,7 @@ void PlatformImplementation::folderSelector(QString title, QString defaultDir, b
 {
     if (defaultDir.isEmpty())
     {
-        defaultDir = QString::fromUtf8("/");
+        defaultDir = QLatin1String("/");
     }
 
     selectorsImpl(title,defaultDir, multiSelection, false, true, parent, func);
@@ -37,7 +37,7 @@ void PlatformImplementation::fileAndFolderSelector(QString title, QString defaul
 {
     if (defaultDir.isEmpty())
     {
-        defaultDir = QString::fromUtf8("/");
+        defaultDir = QLatin1String("/");
     }
 
     selectorsImpl(title,defaultDir, multiSelection, true, true, parent, func);

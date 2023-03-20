@@ -5,11 +5,6 @@
 #include "Utilities.h"
 #include "Platform.h"
 
-#ifdef __APPLE__
-#include "DialogOpener.h"
-#include "platform/macx/PlatformImplementation.h"
-#endif
-
 #include "QMegaMessageBox.h"
 
 AddBackupDialog::AddBackupDialog(QWidget *parent) :
