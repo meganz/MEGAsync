@@ -4623,7 +4623,7 @@ void MegaApplication::removeAllFinishedTransfers()
 void MegaApplication::showVerifyAccountInfo(std::function<void()> func)
 {
     QPointer<VerifyLockMessage> verifyEmail = new VerifyLockMessage(blockState, infoDialog ? true : false);
-    connect(verifyEmail.data(), SIGNAL(logout()), this, SLOT(unlink));
+    connect(verifyEmail.data(), SIGNAL(logout()), this, SLOT(unlink()));
 
     DialogOpener::showDialog(verifyEmail, func);
 }
