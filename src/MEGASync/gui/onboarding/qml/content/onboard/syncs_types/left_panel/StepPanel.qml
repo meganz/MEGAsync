@@ -21,15 +21,23 @@ Item {
      * Functions
      */
 
+    function changeToStep31() {
+        stepsLayout.state = stepsLayout.stateStep31SelectFolders;
+    }
+
     function next() {
+        var last = false;
         if(stepsLayout.state === stepsLayout.stateStep1ComputerName) {
             stepsLayout.state = stepsLayout.stateStep2InstallationType;
         } else if(stepsLayout.state === stepsLayout.stateStep2InstallationType) {
             stepsLayout.state = stepsLayout.stateStep31SelectFolders;
         } else if(stepsLayout.state === stepsLayout.stateStep31SelectFolders) {
             stepsLayout.state = stepsLayout.stateStep32Confirm;
+        } else {
+            last = true;
         }
 
+        return !last;
     }
 
     function previous() {

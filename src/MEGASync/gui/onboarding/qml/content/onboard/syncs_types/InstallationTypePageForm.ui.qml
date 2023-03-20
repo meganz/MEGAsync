@@ -2,7 +2,13 @@ import QtQuick 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.0
 
-Component {
+SyncsPage {
+
+    property alias content: content
+
+    /*
+     * Child objects
+     */
 
     ColumnLayout {
         spacing: 12
@@ -17,19 +23,12 @@ Component {
         }
 
         InstallationType {
-            id: installationTypeContent
+            id: content
 
             Layout.preferredWidth: parent.width
             Layout.leftMargin: 32
             Layout.topMargin: 24
         }
-
-        Connections {
-            target: installationTypeContent
-
-            onOptionSelected: (option) => {
-                console.log("Selected option -> " + option);
-            }
-        }
     }
+
 }

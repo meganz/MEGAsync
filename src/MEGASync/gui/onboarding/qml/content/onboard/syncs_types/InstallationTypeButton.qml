@@ -6,11 +6,19 @@ import Common 1.0
 import Components 1.0 as Custom
 
 Button {
+    id: btn
+
+    enum Type {
+        Sync = 0,
+        Backup = 1,
+        Fuse = 2
+    }
+
     property string title: ""
     property string description: ""
     property string imageSource: ""
+    property int type: InstallationTypeButton.Type.Sync
 
-    id: btn
     Layout.preferredWidth: parent.width
     Layout.fillWidth: true
     Layout.preferredHeight: 96
@@ -20,61 +28,61 @@ Button {
 
     background:
         Rectangle {
-        id: box
+            id: box
 
-        /*
-         * Object properties
-         */
+            /*
+             * Object properties
+             */
 
-        border.width: 2
-        radius: 8
-        color: Styles.surface1
-        border.color: btn.checked ? Styles.borderStrongSelected : Styles.borderStrong
+            border.width: 2
+            radius: 8
+            color: Styles.surface1
+            border.color: btn.checked ? Styles.borderStrongSelected : Styles.borderStrong
 
-        /*
-         * Child objects
-         */
+            /*
+             * Child objects
+             */
 
-        RowLayout {
-            anchors.fill: parent
-            spacing: 16
+            RowLayout {
+                anchors.fill: parent
+                spacing: 16
 
-            Custom.SvgImage {
-                id: icon
-                color: btn.checked ? Styles.iconAccent : Styles.iconSecondary
-                Layout.leftMargin: 24
-                source: imageSource
-            }
-
-            ColumnLayout {
-
-                Text {
-                    text: title
-                    color: Styles.buttonPrimaryHover
-                    Layout.preferredHeight: 24
-                    font.pixelSize: 16
-                    font.weight: Font.Bold
-                    font.family: "Inter"
-                    font.styleName: "normal"
-                    lineHeight: 24
+                Custom.SvgImage {
+                    id: icon
+                    color: btn.checked ? Styles.iconAccent : Styles.iconSecondary
+                    Layout.leftMargin: 24
+                    source: imageSource
                 }
 
-                Text {
-                    text: description
-                    wrapMode: Text.WordWrap
-                    lineHeightMode: Text.FixedHeight
-                    Layout.preferredWidth: 324
-                    color: Styles.toastBackground
-                    Layout.preferredHeight: 32
-                    font.pixelSize: 10
-                    font.weight: Font.Light
-                    font.family: "Inter"
-                    font.styleName: "normal"
-                    lineHeight: 16
+                ColumnLayout {
+
+                    Text {
+                        text: title
+                        color: Styles.buttonPrimaryHover
+                        Layout.preferredHeight: 24
+                        font.pixelSize: 16
+                        font.weight: Font.Bold
+                        font.family: "Inter"
+                        font.styleName: "normal"
+                        lineHeight: 24
+                    }
+
+                    Text {
+                        text: description
+                        wrapMode: Text.WordWrap
+                        lineHeightMode: Text.FixedHeight
+                        Layout.preferredWidth: 324
+                        color: Styles.toastBackground
+                        Layout.preferredHeight: 32
+                        font.pixelSize: 10
+                        font.weight: Font.Light
+                        font.family: "Inter"
+                        font.styleName: "normal"
+                        lineHeight: 16
+                    }
                 }
             }
-        }
-    } // Rectangle
+        } // Rectangle
 
     MouseArea {
         anchors.fill: parent

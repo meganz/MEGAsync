@@ -11,6 +11,7 @@ Button {
     property string title: ""
     property string description: ""
     property string imageSource: ""
+    property int type: InstallationTypeButton.Type.Sync
 
     Layout.preferredWidth: 230
     Layout.preferredHeight: parent.height

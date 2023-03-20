@@ -4,7 +4,7 @@ import QtQuick.Controls 2.0
 
 import Onboard.Syncs_types 1.0
 
-Component {
+SyncsPage {
 
     ColumnLayout {
         spacing: 34
