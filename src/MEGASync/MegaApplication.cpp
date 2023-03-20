@@ -988,7 +988,7 @@ void MegaApplication::updateTrayIcon()
         icon = icons["logging"];
     }
 
-    QString tooltip = QString::fromUtf8("%1 %2\n%3").arg(QCoreApplication::applicationName()).arg(Preferences::VERSION_STRING).arg(tooltipState);
+    QString tooltip = QString::fromUtf8("%1 %2\n%3").arg(QString::fromUtf8("MEGA")).arg(Preferences::VERSION_STRING).arg(tooltipState);
 
     if (updateAvailable)
     {

@@ -2821,6 +2821,11 @@ Các phiên truyền tải sẽ được tự động tiếp tục khi bạn m�
         <translatorcomment>Title of security upgrade dialog</translatorcomment>
         <translation>Nâng&#xa0;cấp bảo&#xa0;mật</translation>
     </message>
+    <message>
+        <source>Your account&apos;s security is now being upgraded. This will happen only once. If you have seen this message for this account before, press Cancel.</source>
+        <translatorcomment>Error message shown to the user to inform about that the security of his account is going to be upgraded. </translatorcomment>
+        <translation>Bảo&#xa0;mật tài&#xa0;khoản của bạn hiện đang được nâng&#xa0;cấp. Điều&#xa0;này sẽ chỉ xảy&#xa0;ra một&#xa0;lần. Nếu bạn đã thấy thông&#xa0;báo này cho tài&#xa0;khoản trước&#xa0;đây, click Hủy.</translation>
+    </message>
     <message numerus="yes">
         <source>You are currently sharing the following folder: %1</source>
         <translatorcomment>Additional information shown within Security upgrade dialog if the user has outgoing shares. A list of the shares will be filled at %1 placeholder. Please check screenshot to see the full context of this string along with the other ones.</translatorcomment>
@@ -2830,11 +2835,6 @@ Các phiên truyền tải sẽ được tự động tiếp tục khi bạn m�
         <source>Failed to ugrade security. Error: %1</source>
         <translatorcomment>System notification error shown if an error occur while upgrading security for your account. %1 will be replaced with the error returned from the SDK.</translatorcomment>
         <translation>Thất&#xa0;bại nâng&#xa0;cấp bảo&#xa0;mật. Lỗi: %1</translation>
-    </message>
-    <message>
-        <source>Your account&apos;s security is now being upgraded. This will happen only once. If you have seen this message for this account before, press Cancel.</source>
-        <translatorcomment>Error message shown to the user to inform about that the security of his account is going to be upgraded. </translatorcomment>
-        <translation>Bảo&#xa0;mật tài&#xa0;khoản của bạn hiện đang được nâng&#xa0;cấp. Điều&#xa0;này sẽ chỉ xảy&#xa0;ra một&#xa0;lần. Nếu bạn đã thấy thông&#xa0;báo này cho tài&#xa0;khoản trước&#xa0;đây, nhấn Hủy.</translation>
     </message>
 </context>
 <context>

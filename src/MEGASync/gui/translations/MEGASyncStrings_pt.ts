@@ -2822,6 +2822,11 @@ As transferências continuarão automaticamente quando você abrir o aplicativo 
         <translatorcomment>Title of security upgrade dialog</translatorcomment>
         <translation>Upgrade de segurança</translation>
     </message>
+    <message>
+        <source>Your account&apos;s security is now being upgraded. This will happen only once. If you have seen this message for this account before, press Cancel.</source>
+        <translatorcomment>Error message shown to the user to inform about that the security of his account is going to be upgraded. </translatorcomment>
+        <translation>Está sendo realizado um upgrade de segurança da sua conta. Este procedimento acontecerá somente uma vez: se você já tiver visto esta mensagem nesta conta, clique em Cancelar.</translation>
+    </message>
     <message numerus="yes">
         <source>You are currently sharing the following folder: %1</source>
         <translatorcomment>Additional information shown within Security upgrade dialog if the user has outgoing shares. A list of the shares will be filled at %1 placeholder. Please check screenshot to see the full context of this string along with the other ones.</translatorcomment>
@@ -2831,11 +2836,6 @@ As transferências continuarão automaticamente quando você abrir o aplicativo 
         <source>Failed to ugrade security. Error: %1</source>
         <translatorcomment>System notification error shown if an error occur while upgrading security for your account. %1 will be replaced with the error returned from the SDK.</translatorcomment>
         <translation>Não foi possível fazer o upgrade de segurança. Erro: %1</translation>
-    </message>
-    <message>
-        <source>Your account&apos;s security is now being upgraded. This will happen only once. If you have seen this message for this account before, press Cancel.</source>
-        <translatorcomment>Error message shown to the user to inform about that the security of his account is going to be upgraded. </translatorcomment>
-        <translation>Está sendo realizado um upgrade de segurança da sua conta. Este procedimento acontecerá somente uma vez: se você já tiver visto esta mensagem nesta conta, clique em Cancelar.</translation>
     </message>
 </context>
 <context>
