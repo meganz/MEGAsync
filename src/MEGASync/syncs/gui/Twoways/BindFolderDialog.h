@@ -1,7 +1,6 @@
 #ifndef BINDFOLDERDIALOG_H
 #define BINDFOLDERDIALOG_H
 
-#include "HighDpiResize.h"
 #include <megaapi.h>
 
 #include <QDialog>

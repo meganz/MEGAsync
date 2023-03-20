@@ -3,7 +3,6 @@
 
 #include "syncs/control/SyncInfo.h"
 #include "syncs/control/SyncController.h"
-#include "HighDpiResize.h"
 
 #include "megaapi.h"
 
