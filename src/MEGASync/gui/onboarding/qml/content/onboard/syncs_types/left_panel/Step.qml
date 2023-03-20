@@ -22,7 +22,7 @@ Item {
      */
 
     property string title: ""
-    property int toState: InfoStep.ToStates.Disabled
+    property int toState: Step.ToStates.Disabled
 
     /*
      * Object properties
@@ -53,11 +53,11 @@ Item {
         readonly property string stateDoneLight: "DONE_LIGHT"
 
         property var statesMap: new Map([
-            [InfoStep.ToStates.Disabled, stateDisabled],
-            [InfoStep.ToStates.Current, stateCurrent],
-            [InfoStep.ToStates.Done, stateDone],
-            [InfoStep.ToStates.DoneConfirm, stateDoneConfirm],
-            [InfoStep.ToStates.DoneLight, stateDoneLight]
+            [Step.ToStates.Disabled, stateDisabled],
+            [Step.ToStates.Current, stateCurrent],
+            [Step.ToStates.Done, stateDone],
+            [Step.ToStates.DoneConfirm, stateDoneConfirm],
+            [Step.ToStates.DoneLight, stateDoneLight]
         ])
 
         /*
@@ -102,7 +102,7 @@ Item {
                 PropertyChanges {
                     target: checkImage
                     visible: true
-                    source: "../../../../../images/Onboarding/check-circle_medium-regular-solid.svg"
+                    source: "../../../../../../images/Onboarding/check-circle_medium-regular-solid.svg"
                 }
             },
             State {
@@ -132,7 +132,7 @@ Item {
                 PropertyChanges {
                     target: checkImage;
                     visible: true
-                    source: "../../../../../images/Onboarding/check-circle_medium-regular-outline.svg"
+                    source: "../../../../../../images/Onboarding/check-circle_medium-regular-outline.svg"
                 }
             }
         ]
