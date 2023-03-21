@@ -979,7 +979,7 @@ void MegaApplication::updateTrayIcon()
         icon = icons["logging"];
     }
 
-    QString tooltip = QString::fromUtf8("%1 %2\n%3").arg(QCoreApplication::applicationName()).arg(Preferences::VERSION_STRING).arg(tooltipState);
+    QString tooltip = QString::fromUtf8("%1 %2\n%3").arg(QString::fromUtf8("MEGA")).arg(Preferences::VERSION_STRING).arg(tooltipState);
 
     if (updateAvailable)
     {
@@ -5265,70 +5265,6 @@ void MegaApplication::logoutActionClicked()
     unlink();
 }
 
-//Called when the user wants to generate the public link for a node
-void MegaApplication::copyFileLink(MegaHandle fileHandle, QString nodeKey)
-{
-    if (appfinished)
-    {
-        return;
-    }
-
-    if (nodeKey.size())
-    {
-        //Public node
-        const char* base64Handle = MegaApi::handleToBase64(fileHandle);
-        QString handle = QString::fromUtf8(base64Handle);
-        QString linkForClipboard = Preferences::BASE_URL + QString::fromUtf8("/#!%1!%2").arg(handle).arg(nodeKey);
-        delete [] base64Handle;
-        QApplication::clipboard()->setText(linkForClipboard);
-        showInfoMessage(tr("The link has been copied to the clipboard"));
-        return;
-    }
-
-    QString gettingLinkError = tr("Error getting link: File not found");
-    MegaNode *node = megaApi->getNodeByHandle(fileHandle);
-    if (!node)
-    {
-        showErrorMessage(gettingLinkError);
-        return;
-    }
-
-    char *path = megaApi->getNodePath(node);
-    if (path && strncmp(path, "//bin/", 6) && megaApi->checkAccess(node, MegaShare::ACCESS_OWNER).getErrorCode() == MegaError::API_OK)
-    {
-        //Launch the creation of the import link, it will be handled in the "onRequestFinish" callback
-        megaApi->exportNode(node);
-
-        delete node;
-        delete [] path;
-        return;
-    }
-    delete [] path;
-
-    const char *fp = megaApi->getFingerprint(node);
-    if (!fp)
-    {
-        showErrorMessage(gettingLinkError);
-        delete node;
-        return;
-    }
-    MegaNode *exportableNode = megaApi->getExportableNodeByFingerprint(fp, node->getName());
-    if (exportableNode)
-    {
-        //Launch the creation of the import link, it will be handled in the "onRequestFinish" callback
-        megaApi->exportNode(exportableNode);
-
-        delete node;
-        delete [] fp;
-        delete exportableNode;
-        return;
-    }
-
-    delete node;
-    delete [] fp;
-    showErrorMessage(tr("The link can't be generated because the file is in an incoming shared folder or in your Rubbish Bin"));
-}
-
 //Called when the user wants to upload a list of files and/or folders from the shell
 void MegaApplication::shellUpload(QQueue<QString> newUploadQueue)
 {
@@ -6009,6 +5945,7 @@ void MegaApplication::createTrayIconMenus()
     {
         initialTrayMenu->deleteLater();
         initialTrayMenu = new QMenu();
+        Platform::getInstance()->initMenu(initialTrayMenu, "TrayMenu", false);
     }
 
     if (guestSettingsAction)
@@ -6061,6 +5998,7 @@ void MegaApplication::createInfoDialogMenus()
     {
         windowsMenu->deleteLater();
         windowsMenu = new QMenu();
+        Platform::getInstance()->initMenu(windowsMenu, "WindowsMenu", false);
     }
     else
     {
@@ -6138,7 +6076,7 @@ void MegaApplication::createInfoDialogMenus()
     {
         infoDialogMenu->deleteLater();
         infoDialogMenu = new QMenu();
-        Platform::getInstance()->initMenu(infoDialogMenu);
+        Platform::getInstance()->initMenu(infoDialogMenu, "InfoDialogMenu");
 
         //Highlight menu entry on mouse over
         connect(infoDialogMenu, SIGNAL(hovered(QAction*)), this, SLOT(highLightMenuEntry(QAction*)), Qt::QueuedConnection);
@@ -6241,7 +6179,7 @@ void MegaApplication::createGuestMenu()
     {
         guestMenu->deleteLater();
         guestMenu = new QMenu();
-        Platform::getInstance()->initMenu(guestMenu);
+        Platform::getInstance()->initMenu(guestMenu, "GuestMenu");
     }
 
     if (exitActionGuest)
@@ -7872,7 +7810,7 @@ void MegaApplication::onSyncStateChanged(MegaApi *api, MegaSync *sync)
 
 void MegaApplication::onSyncFileStateChanged(MegaApi *, MegaSync *, string *localPath, int newState)
 {
-    if (appfinished)
+    if (appfinished || !localPath || localPath->empty())
     {
         return;
     }

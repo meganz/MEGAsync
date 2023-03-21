@@ -108,7 +108,7 @@ void SyncTableView::onCellClicked(const QModelIndex &index)
 void SyncTableView::showContextMenu(const QPoint &pos, const QModelIndex index)
 {
     QMenu *menu(new QMenu(this));
-    Platform::getInstance()->initMenu(menu);
+    Platform::getInstance()->initMenu(menu, "SyncContextMenu");
     menu->setAttribute(Qt::WA_DeleteOnClose);
 
     // Show in file explorer action

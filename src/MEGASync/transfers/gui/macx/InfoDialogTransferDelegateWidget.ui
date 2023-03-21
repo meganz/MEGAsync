@@ -345,7 +345,7 @@
                  </property>
                 </widget>
                </item>
-               <item>
+               <item alignment="Qt::AlignLeft">
                 <widget class="QLabel" name="lElapsedTime">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -807,7 +807,7 @@ background-color: rgba(0, 0, 0, 8%);
                         </property>
                        </widget>
                       </item>
-                      <item>
+                      <item alignment="Qt::AlignLeft">
                        <widget class="QLabel" name="lSpeed">
                         <property name="minimumSize">
                          <size>

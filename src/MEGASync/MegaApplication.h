@@ -251,7 +251,6 @@ public slots:
     void uploadActionClickedFromWidget(QWidget *openFrom);
     void uploadActionClickedFromWindowAfterOverQuotaCheck(QWidget *openFrom);
     void loginActionClicked();
-    void copyFileLink(mega::MegaHandle fileHandle, QString nodeKey = QString());
     void downloadActionClicked();
     void downloadActionClickedFromWidget(QWidget *openFrom);
     void streamActionClicked();

@@ -824,8 +824,8 @@ void InfoDialog::onAddBackup()
 void InfoDialog::updateDialogState()
 {
     updateState();
-    const bool transferOverQuotaEnabled{transferQuotaState == QuotaState::FULL &&
-                transferOverquotaAlertEnabled};
+    const bool transferOverQuotaEnabled{(transferQuotaState == QuotaState::FULL || transferQuotaState == QuotaState::OVERQUOTA)
+                && transferOverquotaAlertEnabled};
 
     if (storageState == Preferences::STATE_PAYWALL)
     {
@@ -876,7 +876,7 @@ void InfoDialog::updateDialogState()
     }
     else if(storageState == Preferences::STATE_OVER_STORAGE)
     {
-        const bool transferIsOverQuota{transferQuotaState == QuotaState::FULL};
+        const bool transferIsOverQuota{transferQuotaState == QuotaState::FULL || transferQuotaState == QuotaState::OVERQUOTA};
         const bool userIsFree{mPreferences->accountType() == Preferences::Preferences::ACCOUNT_TYPE_FREE};
         if(transferIsOverQuota && userIsFree)
         {
@@ -1641,7 +1641,7 @@ void InfoDialog::on_bNotificationsSettings_clicked()
 
 void InfoDialog::on_bDiscard_clicked()
 {
-    if(transferQuotaState == QuotaState::FULL)
+    if(transferQuotaState == QuotaState::FULL || transferQuotaState == QuotaState::OVERQUOTA)
     {
         transferOverquotaAlertEnabled = false;
         emit transferOverquotaMsgVisibilityChange(transferOverquotaAlertEnabled);

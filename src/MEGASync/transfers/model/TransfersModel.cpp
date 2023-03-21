@@ -1438,7 +1438,7 @@ void TransfersModel::showSyncCancelledWarning()
         removeSync->setButtonText(QMessageBox::Yes, tr("Open settings"));
         removeSync->open();
 
-        connect(removeSync, &QMessageBox::finished, [this, removeSync](){
+        connect(removeSync.data(), &QMessageBox::finished, [this, removeSync](){
             if(removeSync->result() == QMessageBox::Yes)
             {
                 MegaSyncApp->openSettings(SettingsDialog::SYNCS_TAB);

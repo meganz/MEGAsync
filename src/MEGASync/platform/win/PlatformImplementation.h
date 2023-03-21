@@ -54,7 +54,6 @@ public:
     bool shouldRunHttpsServer() override;
     bool isUserActive() override;
     QString getDeviceName() override;
-    void initMenu(QMenu* m) override;
 
     void addSyncToLeftPane(QString syncPath, QString syncName, QString uuid) override;
     void removeAllSyncsFromLeftPane() override;
@@ -65,8 +64,8 @@ public:
 private:
     void removeSyncFromLeftPane(QString syncPath, QString syncName, QString uuid);
 
-    void notifyItemChange(const QString& localPath, AbstractShellNotifier* notifier);
-    QString getPreparedPath(const QString& localPath);
+    void notifyItemChange(const QString& localPath, std::shared_ptr<AbstractShellNotifier> notifier);
+    QString getPreparedPath(std::string *localPath);
 
     WinShellDispatcherTask *shellDispatcherTask = nullptr;
     std::shared_ptr<AbstractShellNotifier> mSyncFileNotifier = nullptr;

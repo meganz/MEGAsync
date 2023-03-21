@@ -59,6 +59,7 @@ private:
     IconInfo splitIconPath(const QString& iconPath);
     bool cleanIconName(IconInfo& info, const QString& separator);
     void addIconSpacing(QAbstractButton* button);
+    void updateButtonFullName(QAbstractButton* button);
 
     void setDefaultIcon(QAbstractButton* button);
     void setHoverIcon(QAbstractButton* button);

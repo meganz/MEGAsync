@@ -12,6 +12,9 @@ public:
 
     virtual void notify(const QString& path) = 0;
 
+protected:
+    static void logNotify(const char *tag, const QString& path);
+
 signals:
     void shellNotificationProcessed();
 };

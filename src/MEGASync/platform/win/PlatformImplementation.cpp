@@ -204,20 +204,20 @@ bool PlatformImplementation::enableTrayIcon(QString executable)
 
 void PlatformImplementation::notifyItemChange(const QString& path, int)
 {
-    notifyItemChange(path, mShellNotifier.get());
+    notifyItemChange(path, mShellNotifier);
 }
 
 void PlatformImplementation::notifySyncFileChange(std::string *localPath, int)
 {
-    notifyItemChange(QString::fromStdString(*localPath), mSyncFileNotifier.get());
+    QString path = getPreparedPath(localPath);
+    notifyItemChange(path, mSyncFileNotifier);
 }
 
-void PlatformImplementation::notifyItemChange(const QString& localPath, AbstractShellNotifier *notifier)
+void PlatformImplementation::notifyItemChange(const QString& localPath, std::shared_ptr<AbstractShellNotifier> notifier)
 {
-    QString path = getPreparedPath(localPath);
-    if (!path.isEmpty())
+    if (!localPath.isEmpty())
     {
-        notifier->notify(path);
+        notifier->notify(localPath);
     }
 }
 
@@ -1465,58 +1465,24 @@ QString PlatformImplementation::getDeviceName()
     return deviceName;
 }
 
-void PlatformImplementation::initMenu(QMenu* m)
+QString PlatformImplementation::getPreparedPath(std::string *localPath)
 {
-    if (m)
-    {
-        m->setStyleSheet(QLatin1String("QMenu {"
-                                           "background: #ffffff;"
-                                           "padding-top: 6px;"
-                                           "padding-bottom: 6px;"
-                                           "border: 1px solid #B8B8B8;"
-                                       "}"
-                                       "QMenu::separator {"
-                                           "height: 1px;"
-                                           "margin: 6px 10px 6px 10px;"
-                                           "background-color: rgba(0, 0, 0, 0.1);"
-                                       "}"
-                                       // For vanilla QMenus (only in TransferManager and NodeSelectorTreeView (NodeSelector))
-                                       "QMenu::item {"
-                                           "font-family: Lato;"
-                                           "font-size: 14px;"
-                                           "margin: 6px 16px 6px 16px;"
-                                           "color: #777777;"
-                                           "padding-right: 16px;"
-                                       "}"
-                                       "QMenu::item:selected {"
-                                           "color: #000000;"
-                                       "}"
-                                       // For menus with MenuItemActions
-                                       "QLabel {"
-                                           "font-family: Lato;"
-                                           "font-size: 14px;"
-                                           "padding: 0px;"
-                                       "}"
-                                       ));
-        m->ensurePolished();
-    }
-}
-
-QString PlatformImplementation::getPreparedPath(const QString& localPath)
-{
-    QString preparedPath(localPath);
+    // The path we have here is, on Windows, an utf16-encoded string (using wchars) in a std::string buffer.
+    QString preparedPath = QString::fromWCharArray(reinterpret_cast<const wchar_t *>(localPath->data()),
+                                                   static_cast<int>(localPath->size() / (sizeof(wchar_t)
+                                                                                         / sizeof (char))));
     if (!preparedPath.isEmpty())
     {
-        if (preparedPath.startsWith(QString::fromUtf8("\\\\?\\")))
+        if (preparedPath.startsWith(QLatin1String("\\\\?\\")))
         {
             preparedPath = preparedPath.mid(4);
         }
 
-        if (preparedPath.size() < MAX_PATH)
+        if (preparedPath.size() >= MAX_PATH)
         {
-            return preparedPath;
+            preparedPath.clear();
         }
     }
 
-    return QString();
+    return preparedPath;
 }

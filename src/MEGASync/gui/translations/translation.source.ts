@@ -1999,7 +1999,7 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Open notification settings</source>
         <translatorcomment>Button label to redirect the user to notification settings for configuration</translatorcomment>
-        <translation>Open notification settings</translation>
+        <translation>Open notification Settings</translation>
     </message>
     <message>
         <source>No notifications</source>
@@ -2639,11 +2639,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>We couldn’t find a system tray to place the app tray icon into. Try launching the app again.</translation>
     </message>
     <message>
-        <source>The link can&apos;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
-        <translatorcomment>Notification error message shown while generating a public link of a file from an incoming shared folder or from the rubbish bin</translatorcomment>
-        <translation>The link can’t be generated because the file is inside an incoming shared folder or your Rubbish bin.</translation>
-    </message>
-    <message>
         <source>Upload</source>
         <translatorcomment>Label for the menu item that opens the dialog to upload files to MEGA</translatorcomment>
         <translation>Upload</translation>
@@ -2903,6 +2898,31 @@ Transfers will automatically resume when you re-open the app.</numerusform>
         <translation>Failed to upgrade security. Error: %1</translation>
     </message>
     <message>
+        <source>Some syncs and backups have been disabled. Go to settings to enable them again.</source>
+        <translatorcomment>Warning message shown when some backups and syncs are disabled. Tell the userto go to settings to solve the issue.</translatorcomment>
+        <translation type="unfinished">Some syncs and backups have been disabled. Go to Settings to enable them again.</translation>
+    </message>
+    <message>
+        <source>One or more backups have been disabled. Go to settings to enable them again.</source>
+        <translatorcomment>Warning message shown when some backups are disabled. Tell the userto go to settings to solve the issue.</translatorcomment>
+        <translation type="unfinished">One or more backups have been disabled. Go to Settings to enable them again.</translation>
+    </message>
+    <message>
+        <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
+        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again.</translatorcomment>
+        <translation type="unfinished">One or more syncs have been disabled. Go to Settings to re-enable them.</translation>
+    </message>
+    <message>
+        <source>Open settings</source>
+        <translatorcomment>Button label to open MEGAsync settings dialog.</translatorcomment>
+        <translation type="unfinished">Open Settings</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translatorcomment>This is the string used to refer to settings.</translatorcomment>
+        <translation type="unfinished">Settings</translation>
+    </message>
+    <message>
         <source>Your syncs and backups have been disabled: %1</source>
         <translatorcomment>Warning message shown when all the syncs and backups have been disabled. The placeholder %1 shows the reason;</translatorcomment>
         <translation type="unfinished"></translation>
@@ -2935,36 +2955,6 @@ Transfers will automatically resume when you re-open the app.</numerusform>
     <message>
         <source>Error transferring folder: %1</source>
         <translatorcomment>Label to indicate that has been an error during a folder transfer.  Placeholder %1 displays the reason.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Some syncs and backups have been disabled. Go to settings to enable them again.</source>
-        <translatorcomment>Warning message shown when some backups and syncs are disabled. Tell the userto go to settings to solve the issue.</translatorcomment>
-        <translation type="unfinished">Some syncs and backups have been disabled. Go to Settings to enable them again.</translation>
-    </message>
-    <message>
-        <source>One or more backups have been disabled. Go to settings to enable them again.</source>
-        <translatorcomment>Warning message shown when some backups are disabled. Tell the userto go to settings to solve the issue.</translatorcomment>
-        <translation type="unfinished">One or more backups have been disabled. Go to Settings to enable them again.</translation>
-    </message>
-    <message>
-        <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
-        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again.</translatorcomment>
-        <translation type="unfinished">One or more syncs have been disabled. Go to Settings to re-enable them.</translation>
-    </message>
-    <message>
-        <source>Open settings</source>
-        <translatorcomment>Button label to open MEGAsync settings dialog.</translatorcomment>
-        <translation type="unfinished">Open Settings</translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translatorcomment>This is the string used to refer to settings.</translatorcomment>
-        <translation type="unfinished">Settings</translation>
-    </message>
-    <message>
-        <source>Error getting link: File not found</source>
-        <translatorcomment>Notification message shown an error of file not found while getting a public link.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3508,7 +3498,7 @@ Your selected incomplete sync transfers won&apos;t be cancelled
 All the other selected transfers will be cancelled and cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
         <translation>Cancel transfers?
-Your selected incomplete sync transfers won’t be cancelled
+Your selected incomplete sync transfers won’t be cancelled.
 All the other selected transfers will be cancelled and cleared.</translation>
     </message>
     <message>
@@ -5895,7 +5885,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>When you finish this assistant, you will be able to sync additional folders using the settings dialog</source>
         <translatorcomment>Label to inform the user about the possibility to add new synchronizations through settings dialog once the initial setup wizard is at final stage</translatorcomment>
-        <translation>When you finish this assistant, you will be able to sync additional folders using the settings dialog</translation>
+        <translation>When you finish this assistant, you will be able to sync additional folders using the Settings dialog</translation>
     </message>
     <message>
         <source>First name:</source>
