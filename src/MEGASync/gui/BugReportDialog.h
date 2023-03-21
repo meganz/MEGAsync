@@ -1,10 +1,11 @@
 #ifndef BUGREPORTDIALOG_H
 #define BUGREPORTDIALOG_H
 
-#include <QDialog>
 #include "megaapi.h"
 #include "QTMegaTransferListener.h"
 #include "MegaApplication.h"
+
+#include <QDialog>
 #include <QProgressDialog>
 
 namespace Ui {
@@ -39,7 +40,11 @@ private:
     bool warningShown;
     bool errorShown;
     bool preparing = false;
+    bool mTransferFinished;
+    int mTransferError;
     QString reportFileName;
+    bool mHadGlobalPause;
+    bool mTransferNeedsResume;
 
     const static int mMaxDescriptionLength = 3000;
 
@@ -49,7 +54,11 @@ protected:
     mega::QTMegaRequestListener *delegateRequestListener;
 
     void showErrorMessage();
+    void postUpload();
     void createSupportTicket();
+
+private:
+    void cancelCurrentReportUpload();
 
 private slots:
     void on_bSubmit_clicked();
@@ -58,7 +67,6 @@ private slots:
     void onDescriptionChanged();
     void onReadyForReporting();
     void on_teDescribeBug_textChanged();
-
 };
 
 #endif // BUGREPORTDIALOG_H

@@ -7150,6 +7150,10 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 preferences->setUploadsPaused(paused);
                 preferences->setDownloadsPaused(paused);
                 preferences->setGlobalPaused(paused);
+                if(mTransfersModel)
+                {
+                    mTransfersModel->globalPauseStateChanged(paused);
+                }
                 this->paused = paused;
                 break;
         }
