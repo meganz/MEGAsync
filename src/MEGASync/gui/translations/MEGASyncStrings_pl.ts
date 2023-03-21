@@ -266,11 +266,6 @@
         <translation>[A] anulował prośbę o kontakt</translation>
     </message>
     <message>
-        <source>You have a contact request</source>
-        <translatorcomment>Label to indicate that actual user has received a new contact request.</translatorcomment>
-        <translation>Masz prośbę o kontakt</translation>
-    </message>
-    <message>
         <source>[A] deleted you as a contact</source>
         <translatorcomment>Label to indicate that [A] deleted you as a contact. Placeholder will be replaced by email of user that deleted the contact.</translatorcomment>
         <translation>[A] usunął cię jako kontakt</translation>
@@ -341,11 +336,6 @@
         <translation>Twój usunięty link został przywrócony.</translation>
     </message>
     <message>
-        <source>Reminder</source>
-        <translatorcomment>Label to indicate a reminder about a contact request.</translatorcomment>
-        <translation>Przypomnienie</translation>
-    </message>
-    <message>
         <source>Access to shared folder was removed by [A]</source>
         <translatorcomment>Label to indicate that the access for a shared folder has been removed by [A]. Keep placeholder. It will be replaced at runtime with specific email.</translatorcomment>
         <translation>Dostęp do udostępnionego katalogu został usunięty przez [A]</translation>
@@ -395,6 +385,11 @@
         <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
         <translation>Nowy katalog współdzielony z [A]</translation>
     </message>
+    <message>
+        <source>Reminder: You have a contact request</source>
+        <translatorcomment>Label to indicate a reminder about a contact request.</translatorcomment>
+        <translation>Przypomnienie: masz nowe zaproszenie</translation>
+    </message>
 </context>
 <context>
     <name>BackupItemModel</name>
@@ -412,21 +407,6 @@
         <source>Sort by name</source>
         <translatorcomment>Backup table header label tooltip that indicates that if you click here the column will be sorted by name</translatorcomment>
         <translation>Sortuj według nazwy</translation>
-    </message>
-    <message>
-        <source>Backup is enabled</source>
-        <translatorcomment>Checkbox tooltip that is displayed when it is checked.(Backup enabled)</translatorcomment>
-        <translation>Kopia zapasowa jest włączona</translation>
-    </message>
-    <message>
-        <source>Backup is disabled</source>
-        <translatorcomment>Checkbox tooltip that is displayed when it is unchecked.(Backup disabled)</translatorcomment>
-        <translation>Kopia zapasowa jest wyłączona</translation>
-    </message>
-    <message>
-        <source>Click menu for more Backup actions</source>
-        <translatorcomment>Menu column tooltip (three dots in the table)</translatorcomment>
-        <translation>Kliknij menu, aby uzyskać więcej opcji związanych z tworzeniem kopii zapasowych</translation>
     </message>
 </context>
 <context>
@@ -453,7 +433,7 @@
     </message>
     <message>
         <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
-        <translatorcomment>Text informing the user that they can&amp;apos;t have duplicated backup names and instructing them to rename them</translatorcomment>
+        <translatorcomment>Text informing the user that they can&apos;t have duplicated backup names and instructing them to rename them</translatorcomment>
         <translation>Nie można tworzyć kopii zapasowych katalogów o tej samej nazwie. Zmień ich nazwy, aby kontynuować tworzenie kopii zapasowej. Nazwy katalogów nie zostaną zmienione na komputerze.</translation>
     </message>
 </context>
@@ -491,6 +471,24 @@
         <source>Remove backup</source>
         <translatorcomment>Menu action removes the backup</translatorcomment>
         <translation>Wstrzymaj tworzenie kopii</translation>
+    </message>
+</context>
+<context>
+    <name>BackupTableViewTooltips</name>
+    <message>
+        <source>Backup is enabled</source>
+        <translatorcomment>Checkbox tooltip that is displayed when it is checked.(Backup enabled)</translatorcomment>
+        <translation>Kopia zapasowa jest włączona</translation>
+    </message>
+    <message>
+        <source>Backup is disabled</source>
+        <translatorcomment>Checkbox tooltip that is displayed when it is unchecked.(Backup disabled)</translatorcomment>
+        <translation>Kopia zapasowa jest wyłączona</translation>
+    </message>
+    <message>
+        <source>Click menu for more Backup actions</source>
+        <translatorcomment>Menu column tooltip (three dots in the table)</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -538,7 +536,7 @@
     <message>
         <source>Show more…</source>
         <translatorcomment>Button text that expands failed backup list</translatorcomment>
-        <translation>Pokaż więcej...</translation>
+        <translation>Pokaż więcej&#8230;</translation>
     </message>
     <message>
         <source>Back</source>
@@ -593,7 +591,7 @@
     <message numerus="yes">
         <source>We&apos;re backing up your folder. The time this takes depends on the files in this folder.</source>
         <translatorcomment>Label indicating that the backup configuration was successfull and it is being uploaded.</translatorcomment>
-        <translation><numerusform>Wykonujemy kopię zapasową katalogu. Czas jaki to zajmie zależy od plików znajdujących się w katalogu.</numerusform><numerusform>Wykonujemy kopię zapasową katalogów. Czas jaki to zajmie zależy od plików znajdujących się w katalogach.</numerusform><numerusform>Wykonujemy kopię zapasową katalogów. Czas jaki to zajmie zależy od plików znajdujących się w katalogach.</numerusform><numerusform>Wykonujemy kopię zapasową katalogów. Czas jaki to zajmie zależy od plików znajdujących się w katalogach.</numerusform></translation>
+        <translation><numerusform>Wykonujemy kopię zapasową katalogu. Czas jaki to zajmie zależy od plików znajdujących się w tym katalogu.</numerusform><numerusform>Wykonujemy kopię zapasową katalogów. Czas jaki to zajmie zależy od plików znajdujących się w katalogach.</numerusform><numerusform>Wykonujemy kopię zapasową katalogów. Czas jaki to zajmie zależy od plików znajdujących się w katalogach.</numerusform><numerusform>Wykonujemy kopię zapasową katalogów. Czas jaki to zajmie zależy od plików znajdujących się w katalogach.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Problem backing up folder</source>
@@ -650,7 +648,7 @@
     <name>BandwidthSettings</name>
     <message>
         <source>Bandwidth</source>
-        <translatorcomment>Title of the dialog to manage Bandwidth settings/preferences.</translatorcomment>
+        <translatorcomment>Title of the dialog to manage Bandwidth settings.</translatorcomment>
         <translation>Przepustowość</translation>
     </message>
     <message>
@@ -740,7 +738,7 @@
     </message>
     <message>
         <source>Only enable this option if tranfers don&apos;t start. Under all other circumstances, using HTTP is satisfactory as MEGA already encrypts all data.</source>
-        <translatorcomment>Description label about the option Use HTTPS for transfers that don&amp;apos;t start checkbox.</translatorcomment>
+        <translatorcomment>Description label about the option Use HTTPS for transfers that don&apos;t start checkbox.</translatorcomment>
         <translation>Włącz tę opcję tylko wtedy, gdy tranfery nie startują. We wszystkich innych okolicznościach użycie HTTP jest zadowalające, ponieważ MEGA już szyfruje wszystkie dane.</translation>
     </message>
 </context>
@@ -832,7 +830,7 @@
     <message>
         <source>Bug report success!</source>
         <translatorcomment>Confirmation message shown when a bug report is successfully uploaded.</translatorcomment>
-        <translation>Twój problem został zgłoszony pomyślnie.</translation>
+        <translation>Twój problem został zgłoszony.</translation>
     </message>
     <message>
         <source>Your bug report has been submitted, a confirmation email will sent to you accordingly.</source>
@@ -909,6 +907,7 @@
     </message>
     <message>
         <source>Cancelling…</source>
+        <translatorcomment>Message displayed while transfers cancelling is in progress</translatorcomment>
         <translation>Anulowanie…</translation>
     </message>
 </context>
@@ -949,38 +948,47 @@
     <name>ChangePassword</name>
     <message>
         <source>Change password</source>
+        <translatorcomment>Windows title of the Change password dialog</translatorcomment>
         <translation>Zmień hasło</translation>
     </message>
     <message>
         <source>New password</source>
+        <translatorcomment>Label displayed next to control where the user can enter the new password</translatorcomment>
         <translation>Nowe hasło</translation>
     </message>
     <message>
         <source>Confirm new password</source>
+        <translatorcomment>Label displayed next to control where the user can enter the new password confirmation</translatorcomment>
         <translation>Potwierdź hasło</translation>
     </message>
     <message>
         <source>Cancel</source>
+        <translatorcomment>Button label to close the Change password dialog discarding the information</translatorcomment>
         <translation>Anuluj</translation>
     </message>
     <message>
         <source>OK</source>
+        <translatorcomment>Button label to close the Change password dialog saving the new information</translatorcomment>
         <translation>OK</translation>
     </message>
     <message>
         <source>Error</source>
+        <translatorcomment>Title of the error dialog displayed when there is an issue related to the Change password dialog</translatorcomment>
         <translation>Błąd</translation>
     </message>
     <message>
         <source>Please enter your password</source>
+        <translatorcomment>Error message displayed when an empty password has been provided</translatorcomment>
         <translation>Wprowadź hasło</translation>
     </message>
     <message>
         <source>The entered passwords don&apos;t match</source>
-        <translation>Wprowadzone hasła są niepoprawne</translation>
+        <translatorcomment>Error message displayed when the new password and its confirmation are not the same</translatorcomment>
+        <translation>Wprowadzone hasła nie pasują</translation>
     </message>
     <message>
         <source>Please, enter a stronger password</source>
+        <translatorcomment>Error message displayed when an the new password is too weak</translatorcomment>
         <translation>Wprowadź silniejsze hasło</translation>
     </message>
     <message>
@@ -1099,16 +1107,6 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
         <translation>Odrzuć</translation>
     </message>
     <message>
-        <source>Reminder</source>
-        <translatorcomment>Label to indicate a reminder about a contact request.</translatorcomment>
-        <translation>Przypomnienie</translation>
-    </message>
-    <message>
-        <source>You have a contact request</source>
-        <translatorcomment>Label to indicate that actual user has received a new contact request.</translatorcomment>
-        <translation>Masz prośbę o kontakt</translation>
-    </message>
-    <message>
         <source>View</source>
         <translatorcomment>Button label of system notification to view all unread notifications.</translatorcomment>
         <translation>Pokaż</translation>
@@ -1224,11 +1222,6 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
         <translation>Twoje dane są zagrożone</translation>
     </message>
     <message>
-        <source>Show in folder</source>
-        <translatorcomment>Button label of system notification to open the selected completed transfer using the specific file browser</translatorcomment>
-        <translation>Pokaż w katalogu</translation>
-    </message>
-    <message>
         <source>Payment Failed</source>
         <translatorcomment>Notification title shown when a payment has failed for a business account.</translatorcomment>
         <translation>Płatność anulowana</translation>
@@ -1288,6 +1281,16 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
         <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
         <translation>Nowy katalog współdzielony z [A]</translation>
     </message>
+    <message>
+        <source>Reminder: You have a contact request</source>
+        <translatorcomment>Label to indicate a reminder about a contact request.</translatorcomment>
+        <translation>Przypomnienie: masz nowe zaproszenie</translation>
+    </message>
+    <message>
+        <source>Show in MEGA</source>
+        <translatorcomment>Notification button to redirect the user to remote location. It will open webclient at specific location.</translatorcomment>
+        <translation>Pokaż na MEGA</translation>
+    </message>
 </context>
 <context>
     <name>DownloadFromMegaDialog</name>
@@ -1340,6 +1343,49 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
         <translation>Nie masz uprawnień zapisu do tego lokalnego katalogu.</translation>
+    </message>
+</context>
+<context>
+    <name>DownloadNodeSelector</name>
+    <message>
+        <source>Download</source>
+        <translatorcomment>Window title for download node selector</translatorcomment>
+        <translation>Pobierz</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translatorcomment>Title of the dialog</translatorcomment>
+        <translation>Błąd</translation>
+    </message>
+    <message numerus="yes">
+        <source>The item you selected has been removed. To reselect, close this window and try again.</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
+        <translation><numerusform>Wybrany element został usunięty. Aby ponownie wybrać, zamknij to okno i spróbuj ponownie.</numerusform><numerusform>Wybrane przez Ciebie elementy zostały usunięte. Aby ponownie wybrać, zamknij to okno i spróbuj ponownie.</numerusform><numerusform>Wybrane przez Ciebie elementy zostały usunięte. Aby ponownie wybrać, zamknij to okno i spróbuj ponownie.</numerusform><numerusform>Wybrane przez Ciebie elementy zostały usunięte. Aby ponownie wybrać, zamknij to okno i spróbuj ponownie.</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>You no longer have access to this item. Ask the owner to share again.</source>
+        <translatorcomment>Error message shown when the user is trying to download an file or folder from an incoming share and the owner stops sharing/removes all items</translatorcomment>
+        <translation><numerusform>Nie masz już dostępu do tego elementu. Poproś osobę, która podzieliła się nim z Tobą, aby udostępniła go ponownie.</numerusform><numerusform>Nie masz już dostępu do tych elementów. Poproś osobę, która się nimi podzieliła, aby podzieliła się nimi ponownie.</numerusform><numerusform>Nie masz już dostępu do tych elementów. Poproś osobę, która się nimi podzieliła, aby podzieliła się nimi ponownie.</numerusform><numerusform>Nie masz już dostępu do tych elementów. Poproś osobę, która się nimi podzieliła, aby podzieliła się nimi ponownie.</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 item selected</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
+        First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
+        <translation><numerusform>%1 element wybrany.</numerusform><numerusform>%1 wybranych elementów.</numerusform><numerusform>%1 wybranych elementów.</numerusform><numerusform>%1 wybranych elementów.</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1. %2 has been removed. To reselect, close this window and try again.</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
+        First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
+        <translation><numerusform>%1. %2 został usunięty. Aby ponownie wybrać, zamknij to okno i spróbuj ponownie.</numerusform><numerusform>%1. %2 zostały usunięte. Aby ponownie wybrać, zamknij to okno i spróbuj ponownie.</numerusform><numerusform>%1. %2 zostały usunięte. Aby ponownie wybrać, zamknij to okno i spróbuj ponownie.</numerusform><numerusform>%1. %2 zostały usunięte. Aby ponownie wybrać, zamknij to okno i spróbuj ponownie.</numerusform></translation>
+    </message>
+</context>
+<context>
+    <name>DownloadQueueController</name>
+    <message>
+        <source>Local Disk</source>
+        <translatorcomment>Default drive name shown on the low space dialog when downloading files</translatorcomment>
+        <translation>Dysk lokalny</translation>
     </message>
 </context>
 <context>
@@ -1440,12 +1486,12 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
     <message>
         <source>loading time…</source>
         <translatorcomment>Text shown while the local file/folder modified time is calculated</translatorcomment>
-        <translation>Obliczanie czasu...</translation>
+        <translation>Obliczanie czasu&#8230;</translation>
     </message>
     <message>
         <source>loading size…</source>
         <translatorcomment>Text shown while the local file/folder size is calculated</translatorcomment>
-        <translation>Obliczanie wielkości...</translation>
+        <translation>Obliczanie wielkości&#8230;</translation>
     </message>
     <message>
         <source>Learn more</source>
@@ -1500,6 +1546,7 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
     </message>
     <message>
         <source>View previous versions</source>
+        <translatorcomment>Entry in OS Context menu to open the &quot;Previous versions&quot; of an entry in the webclient</translatorcomment>
         <translation>Zobacz poprzednie wersje</translation>
     </message>
     <message numerus="yes">
@@ -1537,6 +1584,7 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
     </message>
     <message>
         <source>Error</source>
+        <translatorcomment>Title of the error dialog displayed when there is an error with FolderBinder dialog</translatorcomment>
         <translation>Błąd</translation>
     </message>
     <message>
@@ -1720,7 +1768,7 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
     <message>
         <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
         <translatorcomment>Error message shown when the program detects an issues with SSL key verification.</translatorcomment>
-        <translation>Nasz certyfikat SSL nie został zweryfikowany. Prawdopodobnie Twoje urządzenia ma wirusa lub włączone oprogramowanie antywirusowe, który modyfikuje komunikację z serwisem. Zablokuj oprogramowanie i spróbuj ponownie.</translation>
+        <translation>Nasz klucz SSL nie może zostać zweryfikowany. Możesz być dotknięty atakiem man-in-the-middle lub Twoje oprogramowanie antywirusowe może przechwytywać Twoją komunikację i powodować ten problem. Proszę wyłączyć je i spróbować ponownie.</translation>
     </message>
 </context>
 <context>
@@ -1778,6 +1826,7 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
     </message>
     <message>
         <source>Error</source>
+        <translatorcomment>Title of the error dialog displayed when there is an error with ImportMegaLinks dialog</translatorcomment>
         <translation>Błąd</translation>
     </message>
     <message>
@@ -1800,7 +1849,7 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
     </message>
     <message>
         <source>Settings</source>
-        <translatorcomment>This is the string used to refer to settings, or preferences, in Windows and Linux. .</translatorcomment>
+        <translatorcomment>This is the string used to refer to settings for all platforms.</translatorcomment>
         <translation>Ustawienia</translation>
     </message>
     <message>
@@ -1825,6 +1874,7 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
     </message>
     <message>
         <source>The process is taking longer than expected. Please wait...</source>
+        <translatorcomment>Message displayed in the InfoDialog when a process is busy for a longer time than normal due to Mega servers being busy</translatorcomment>
         <translation>Ten proces zajmuje więcej czasu niż standardowo. Prosimy czekać.</translation>
     </message>
     <message>
@@ -1948,29 +1998,9 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
         <translation>Musisz działać natychmiast, aby zachować swoje dane</translation>
     </message>
     <message>
-        <source>Depleted transfer quota.</source>
-        <translatorcomment>Title to indicate a situation of depleted transfer quota for the current account.</translatorcomment>
-        <translation>Wyczerpany limit transferu.</translation>
-    </message>
-    <message>
-        <source>All downloads are currently disabled.</source>
-        <translatorcomment>Informative label to indicate that all downloads are currently disabled because a situation of over transfer quota.</translatorcomment>
-        <translation>Wszystkie pliki do pobrania są obecnie wyłączone.</translation>
-    </message>
-    <message>
-        <source>Upgrade</source>
-        <translatorcomment>Button label to upgrade the current account.</translatorcomment>
-        <translation>Zmień</translation>
-    </message>
-    <message>
         <source>Limited available transfer quota</source>
         <translatorcomment>Title to indicate that current account has limited transfer quota. Transfer usage above 90 per cent of the total.</translatorcomment>
         <translation>Ograniczenia dostępnego transferu</translation>
-    </message>
-    <message>
-        <source>Your queued transfers exceed the current quota available for your IP address and can therefore be interrupted.</source>
-        <translatorcomment>Informative label to indicate that your queued transfers may be interrupted because the current account is above 90 percent of the transfer quota of the current account.</translatorcomment>
-        <translation>Twoje transfery w kolejce przekraczają aktualny limit dostępny dla Twojego adresu IP i dlatego mogą zostać przerwane.</translation>
     </message>
     <message>
         <source>One or more syncs have been disabled</source>
@@ -1983,13 +2013,8 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
         <translation>Coś poszło nie tak podczas próby synchronizacji folderów.</translation>
     </message>
     <message>
-        <source>Open Preferences</source>
-        <translatorcomment>Button label to open MEGAsync preferences dialog (MacOS).</translatorcomment>
-        <translation>Otwórz ustawienia</translation>
-    </message>
-    <message>
         <source>Open Settings</source>
-        <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
+        <translatorcomment>Button label to open MEGAsync settings dialog (used for all platforms).</translatorcomment>
         <translation>Otwórz ustawienia</translation>
     </message>
     <message>
@@ -2016,11 +2041,6 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
         <source>Error</source>
         <translatorcomment>Title of the dialog</translatorcomment>
         <translation>Błąd</translation>
-    </message>
-    <message>
-        <source>Folder can&apos;t be opened. Check that the folder in your local drive hasn&apos;t been deleted or moved.</source>
-        <translatorcomment>Warning message text to let the user know that the local folder could not be opened</translatorcomment>
-        <translation>Katalog nie może być otwarty. Sprawdź, czy katalog na dysku lokalnym nie został usunięty lub przeniesiony.</translation>
     </message>
     <message>
         <source>Some syncs and backups have been disabled</source>
@@ -2052,6 +2072,41 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
         <translatorcomment>Tooltip message shown while hovering backups button.</translatorcomment>
         <translation>Dodaj kopię zapasową</translation>
     </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
+        <translation>Przekroczono limit transferu</translation>
+    </message>
+    <message>
+        <source>Your queued transfers exceed the current quota available for your IP address.</source>
+        <translatorcomment>Informative label to indicate that your queued transfers exceed the current quota available for IP. Applies to free users.</translatorcomment>
+        <translation>Twoje transfery w kolejce przekraczają aktualny limit dostępny dla Twojego adresu IP.</translation>
+    </message>
+    <message>
+        <source>Upgrade Account</source>
+        <translatorcomment>Button label to upgrade the current account.</translatorcomment>
+        <translation>Zmień konto</translation>
+    </message>
+    <message>
+        <source>I will wait</source>
+        <translatorcomment>Button label to dismiss (hide) overquota dialogs. Shown for free users only if they do not want to upgrade account for extra transfer quota.</translatorcomment>
+        <translation>Poczekam</translation>
+    </message>
+    <message>
+        <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew.</source>
+        <translatorcomment>Informative label to indicate that your queued transfers may be interrupted because the current account does not have enough transfer quota.</translatorcomment>
+        <translation>Nie możesz kontynuować pobierania, ponieważ nie masz wystarczającej ilości transferu na tym koncie. Aby kontynuować pobieranie, kup nowy plan lub jeśli masz cykliczną subskrypcję w firmie MEGA, możesz poczekać na odnowienie planu.</translation>
+    </message>
+    <message>
+        <source>Buy new plan</source>
+        <translatorcomment>Button label for button to buy a new plan when there is not enough transfer quota in current non-free plan</translatorcomment>
+        <translation>Kup nowy plan</translation>
+    </message>
+    <message>
+        <source>Downloading may be interrupted as you have used 90% of your transfer quota on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew. </source>
+        <translatorcomment>Message displayed in the InfoDialog when the transfer quota reaches warning stage</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>InfoDialogTransferDelegateWidget</name>
@@ -2072,7 +2127,7 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
     </message>
     <message>
         <source>Copy link to file</source>
-        <translatorcomment>Tooltip for copy linr</translatorcomment>
+        <translatorcomment>Tooltip for copy link</translatorcomment>
         <translation>Kopiuj link do schowka</translation>
     </message>
     <message>
@@ -2080,11 +2135,17 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
         <translatorcomment>Message shown when the transfer has finished. [A] place holder stands for elapsed time since the transfer finished</translatorcomment>
         <translation>Dodano [A]</translation>
     </message>
+    <message>
+        <source>Deleted or moved file</source>
+        <translatorcomment>Tooltip when the file completed was removed or deleted</translatorcomment>
+        <translation>Usunięty lub przeniesiony plik</translation>
+    </message>
 </context>
 <context>
     <name>InfoWizard</name>
     <message>
         <source>You are not logged in</source>
+        <translatorcomment>Window title of the wizard displayed the first time Desktop app is run</translatorcomment>
         <translation>Nie jesteś zalogowany</translation>
     </message>
     <message>
@@ -2094,6 +2155,7 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
     </message>
     <message>
         <source>Create Account</source>
+        <translatorcomment>Button label for creating a new MEGA account</translatorcomment>
         <translation>Utwórz konto</translation>
     </message>
     <message>
@@ -2212,9 +2274,43 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
     </message>
 </context>
 <context>
+    <name>LowDiskSpaceDialog</name>
+    <message>
+        <source>Low disk space</source>
+        <translatorcomment>Dialog title</translatorcomment>
+        <translation>Mało miejsca na dysku</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Button text to abort downloading the files</translatorcomment>
+        <translation>Anuluj</translation>
+    </message>
+    <message>
+        <source>Try Again</source>
+        <translatorcomment>Button text to retry downloading the files</translatorcomment>
+        <translation>Ponów</translation>
+    </message>
+    <message>
+        <source>There is not enough space on %1. You need an additional %2 to download these files.</source>
+        <translatorcomment>Label explaining the problem, %1 is the download target disk name. %2 is the needed size to continue with the download (the size unit depends on the quantity) </translatorcomment>
+        <translation>Nie ma wystarczającej ilości miejsca na %1. Potrzebujesz dodatkowego %2, aby pobrać te pliki.</translation>
+    </message>
+    <message>
+        <source>Free space: %1</source>
+        <translatorcomment>Label informing about the local disk free space</translatorcomment>
+        <translation>Wolne miejsce: %1</translation>
+    </message>
+    <message>
+        <source>Total size: %1</source>
+        <translatorcomment>Label informing about the total local disk space</translatorcomment>
+        <translation>Całkowity rozmiar: %1</translation>
+    </message>
+</context>
+<context>
     <name>MegaApplication</name>
     <message>
         <source>MEGAsync</source>
+        <translatorcomment>Title of error dialog displayed when the account is blocked</translatorcomment>
         <translation>MEGA</translation>
     </message>
     <message>
@@ -2365,11 +2461,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Twoja konfiguracja zawiera błędy, prosimy spróbować ponownie</translation>
     </message>
     <message>
-        <source>Error getting link: </source>
-        <translatorcomment>Notification message launched when an error occurs getting a public link for a file/folder. Keep colon.</translatorcomment>
-        <translation>Błąd w pobraniu linku:</translation>
-    </message>
-    <message>
         <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
         <translatorcomment>Notification message launched when a connectivity problem occurs.</translatorcomment>
         <translation>Aplikacja nie może się połączyć. Proszę sprawdzić połączenie z Internetem i lokalną konfigurację zapory. Należy pamiętać, że większość oprogramowania antywirusowego zawiera zaporę ogniową.</translation>
@@ -2377,12 +2468,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Synchronizacja „%1” została zablokowana, ponieważ zdalny katalog nie istnieje</translation>
+        <translation>Synchronizacja “%1” została zablokowana, ponieważ zdalny katalog nie istnieje</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Twoja synchronizacja „%1” została zablokowana ponieważ lokalny katalog nie istnieje</translation>
+        <translation>Twoja synchronizacja “%1” została zablokowana ponieważ lokalny katalog nie istnieje</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -2417,7 +2508,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Twoja synchronizacja „%1” została zablokowana. Zdalny katalog (lub jego część) nie posiada pełnego dostępu</translation>
+        <translation>Twoja synchronizacja “%1” została wyłączona. Zdalny folder (lub jego część) nie ma pełnego dostępu</translation>
     </message>
     <message>
         <source>Over quota</source>
@@ -2452,7 +2543,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
         <translatorcomment>Notification message shown when SSL checks fails.</translatorcomment>
-        <translation>Nasz certyfikat SSL nie został zweryfikowany. Prawdopodobnie Twoje urządzenia ma wirusa lub włączone oprogramowanie antywirusowe, który modyfikuje komunikację z serwisem. Zablokuj oprogramowanie i spróbuj ponownie.</translation>
+        <translation>Nasz klucz SSL nie może zostać zweryfikowany. Możesz być dotknięty atakiem man-in-the-middle lub Twoje oprogramowanie antywirusowe może przechwytywać Twoją komunikację i powodować ten problem. Proszę wyłączyć je i spróbować ponownie.</translation>
     </message>
     <message>
         <source>No Internet connection</source>
@@ -2461,34 +2552,28 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Fetching file list...</source>
+        <translatorcomment>Tooltip for Desktop app tray icon while the app is fetching data in syncing process</translatorcomment>
         <translation>Pobieram listę plików…</translation>
     </message>
     <message>
         <source>Transfer canceled</source>
+        <translatorcomment>Message displayed when the setup wizard was canceled and there were pending transfers</translatorcomment>
         <translation>Transfer anulowany</translation>
     </message>
     <message>
         <source>You are not logged in</source>
+        <translatorcomment>Tooltip displayed in Desktop app tray icon when no user is logged in</translatorcomment>
         <translation>Nie jesteś zalogowany</translation>
     </message>
     <message>
         <source>Transfer manager</source>
+        <translatorcomment>Entry option to open Transfer manager from tray icon menu in Windows</translatorcomment>
         <translation>Manager przesyłania</translation>
     </message>
     <message>
         <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
         <translatorcomment>Message shown to the user to inform that MEGAsync is not able to find a systray to place tray icon</translatorcomment>
-        <translation>Nie mogliśmy znaleźć zasobnika systemowego, w którym można umieścić ikonę zasobnika aplikacji. Spróbuj ponownie uruchomić aplikację.</translation>
-    </message>
-    <message>
-        <source>Error getting link:</source>
-        <translatorcomment>Notification message shown when an error occurs while getting a public link .</translatorcomment>
-        <translation>Błąd w pobraniu linku:</translation>
-    </message>
-    <message>
-        <source>File not found</source>
-        <translatorcomment>Notification message shown an error of file not found while getting a public link .</translatorcomment>
-        <translation>Plik nie znaleziony</translation>
+        <translation>Nie mogliśmy znaleźć elementu systemowego, w którym można umieścić ikonę zasobnika aplikacji. Spróbuj ponownie uruchomić aplikację.</translation>
     </message>
     <message>
         <source>The link can&apos;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
@@ -2507,6 +2592,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Please consider updating your operating system.</source>
+        <translatorcomment>Message displayed in warning dialog when running in a deprecated OS</translatorcomment>
         <translation>Zalecamy aktualizację systemu operacyjnego.</translation>
     </message>
     <message>
@@ -2530,34 +2616,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Twoje hasło zostało zmienione.</translation>
     </message>
     <message>
-        <source>Folder Upload</source>
-        <translatorcomment>Title of system notifications related to a folder upload</translatorcomment>
-        <translation>Wgraj katalog</translation>
-    </message>
-    <message>
-        <source>File Upload</source>
-        <translatorcomment>Title of system notifications related to a file upload</translatorcomment>
-        <translation>Wgraj plik</translation>
-    </message>
-    <message>
-        <source>Folder Download</source>
-        <translatorcomment>Title of system notifications related to a folder download</translatorcomment>
-        <translation>Katalog pobrań</translation>
-    </message>
-    <message>
-        <source>File Download</source>
-        <translatorcomment>Title of system notifications related to a file download</translatorcomment>
-        <translation>Pobrany plik</translation>
-    </message>
-    <message>
         <source>Cloud drive</source>
         <translatorcomment>Label of context menu to reach Cloud drive section at webclient. It will open your webbrowser and redirects to your cloud drive.</translatorcomment>
         <translation>Dysk</translation>
-    </message>
-    <message>
-        <source>Error transferring folder: </source>
-        <translatorcomment>Label to indicate that has been an error during a folder transfer.</translatorcomment>
-        <translation>Błąd podczas przesyłania folderu:</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -2607,7 +2668,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
         <translatorcomment>Informative message shown when a user is trying to upload data to a inshare that is in overquota state. %1 will be replaced with sharer account to inform the user.</translatorcomment>
-        <translation>Nie można kontynuować przesyłania, ponieważ konto w %1 jest pełne.</translation>
+        <translation>Twoje ładowanie nie może być kontynuowane, ponieważ konto %1 jest pełne.</translation>
     </message>
     <message>
         <source>contact</source>
@@ -2652,12 +2713,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>This sync can&apos;t be added: %1. Reason: %2</source>
         <translatorcomment>Error message shown when there is an error adding a sync. %1 will be replaced with name of sync and %2 with the reason of the error.</translatorcomment>
-        <translation>Nie można dodać tej synchronizacji: %1. Powód: %2</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been temporarily disabled</source>
-        <translatorcomment>Notification message launched when a sync is temporarily disabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime.</translatorcomment>
-        <translation>Twoja synchronizacja „%1” została tymczasowo wyłączona</translation>
+        <translation>Ta synchronizacja nie może być dodana: %1. Powód: %2</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. Reason: %2</source>
@@ -2675,44 +2731,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Aplikacja będzie nadal działać, jednak aktualizacje nie będą już wspierane dla wersji wcześniejszych niż macOS Sierra.</translation>
     </message>
     <message>
-        <source>Your syncs have been disabled</source>
-        <translatorcomment>Notification message launched when your syncs have been disabled.</translatorcomment>
-        <translation>Twoje synchronizacje zostały wyłączone</translation>
-    </message>
-    <message>
         <source>Thank you for your collaboration</source>
         <translatorcomment>Informative message shown when a user makes a report to thank for his help.</translatorcomment>
         <translation>Dziękujemy za współpracę</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n file</source>
-        <translatorcomment>File count, where %n is the number of files. Used to build the &quot;Files and folders successfully uploaded/downloaded&quot; string.</translatorcomment>
-        <translation><numerusform>%n plik</numerusform><numerusform>%n pliki</numerusform><numerusform>%n pliki</numerusform><numerusform>%n pliki</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n folder</source>
-        <translatorcomment>Folder count, where %n is the number of folders. Used to build the &quot;Files and folders successfully uploaded/downloaded&quot; string.</translatorcomment>
-        <translation><numerusform>%n katalog</numerusform><numerusform>%n katalogów</numerusform><numerusform>%n katalogów</numerusform><numerusform>%n katalogów</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n file was successfully uploaded</source>
-        <translatorcomment>System notification to inform the user that %1 files were successfully uploaded</translatorcomment>
-        <translation><numerusform>%n plik wgrany</numerusform><numerusform>%n plików wgranych</numerusform><numerusform>%n plików wgranych</numerusform><numerusform>%n plików wgranych</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n file was successfully downloaded</source>
-        <translatorcomment>System notification to inform the user that %1 files were successfully downloaded</translatorcomment>
-        <translation><numerusform>%n plik został pobrany</numerusform><numerusform>%n pliki zostały pobrane</numerusform><numerusform>%n pliki zostały pobrane</numerusform><numerusform>%n pliki zostały pobrane</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n folder was successfully uploaded</source>
-        <translatorcomment>System notification to inform the user that %n folders were successfully uploaded</translatorcomment>
-        <translation><numerusform>%n katalog wgrany</numerusform><numerusform>%n katalogów wgranych</numerusform><numerusform>%n katalogów wgranych</numerusform><numerusform>%n katalogów wgranych</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n folder was successfully downloaded</source>
-        <translatorcomment>System notification to inform the user that %n folders were successfully downloaded</translatorcomment>
-        <translation><numerusform>%n katalog pobrany</numerusform><numerusform>%n katalogów pobranych</numerusform><numerusform>%n katalogów pobranych</numerusform><numerusform>%n katalogów pobranych</numerusform></translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available. Click on this message to install it</source>
@@ -2723,16 +2744,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>A new version of MEGAsync is available</source>
         <translatorcomment>System notification to inform the user that there is a new version of MEGAsync available for update. macOS version cannot be installed making click so, a new string is provided</translatorcomment>
         <translation>Dostępna jest nowa wersja tej aplikacji.</translation>
-    </message>
-    <message>
-        <source>%1 and %2 were successfully uploaded</source>
-        <translatorcomment>System notification to inform the user that %1 files and %2 folders were successfully uploaded. The %1 is a sentence part for files and %2 for folders.</translatorcomment>
-        <translation>Wgrano %1 i %2</translation>
-    </message>
-    <message>
-        <source>%1 and %2 were successfully downloaded</source>
-        <translatorcomment>System notification to inform the user that %1 files and %2 folders were successfully downloaded. The %1 is a sentence part for files and %2 for folders.</translatorcomment>
-        <translation>Pobrano %1 i %2</translation>
     </message>
     <message numerus="yes">
         <source>There is an active transfer. Exit the app?
@@ -2770,29 +2781,14 @@ Transfery zostaną automatycznie wznowione po ponownym otwarciu aplikacji.</nume
         <translation>Błąd podczas dodawania %1:</translation>
     </message>
     <message>
-        <source>Your syncs and backups have been disabled</source>
-        <translatorcomment>Warning message shown when  all the syncs and backups have been disabled</translatorcomment>
-        <translation>Twoje synchronizacje i kopie zapasowe zostały wyłączone:</translation>
-    </message>
-    <message>
-        <source>Your backups have been disabled</source>
-        <translatorcomment>Warning message shown when all the backups have been disabled</translatorcomment>
-        <translation>Twoje kopie zapasowe zostały wyłączone:</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been temporarily disabled</source>
-        <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder displays backup name</translatorcomment>
-        <translation>Twoja kopia &quot;%1&quot; została tymczasowo wyłączona.</translation>
-    </message>
-    <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Twoja kopia zapasowa &quot;%1&quot; została wyłączona, ponieważ lokalny katalog nie istnieje</translation>
+        <translation>Twoja kopia zapasowa &#8220;%1&#8221; została wyłączona, ponieważ lokalny katalog nie istnieje</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Twoja kopia zapasowa &quot;%1&quot; została wyłączona, ponieważ synchronizacja folderów współdzielonych VirtualBoxa nie jest obsługiwana z powodu braków w tym systemie plików.</translation>
+        <translation>Twoja kopia zapasowa &#8220;%1&#8221; została wyłączona, ponieważ synchronizacja folderów współdzielonych VirtualBoxa nie jest obsługiwana z powodu braków w tym systemie plików.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
@@ -2802,22 +2798,22 @@ Transfery zostaną automatycznie wznowione po ponownym otwarciu aplikacji.</nume
     <message>
         <source>Your backup &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Twoja kopia zapasowa &quot;%1&quot; została wyłączona. Zdalny katalog (lub jego część) nie ma pełnego dostępu</translation>
+        <translation>Twój backup “%1” został wyłączony. Nie masz pełnego dostępu do katalogu MEGA (lub do jego części).</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder has changed</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Twoja kopia zapasowa &quot;%1&quot; została wyłączona, ponieważ lokalny katalog uległ zmianie</translation>
+        <translation>Twoja kopia zapasowa &#8220;%1&#8221; została wyłączona, ponieważ lokalny katalog uległ zmianie</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder has changed</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Twoja kopia zapasowa &quot;%1&quot; została wyłączona, ponieważ zmienił się katalog zdalny</translation>
+        <translation>Twoja kopia zapasowa &#8220;%1&#8221; została wyłączona, ponieważ zmienił się katalog zdalny</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled. Reason: %2</source>
-        <translatorcomment>Notification message launched when a backup is disabled. Keep &amp;quot;%1&amp;quot; code because is filled with the name of the backup at runtime and %2 with the reason of the error.</translatorcomment>
-        <translation>Twoja kopia zapasowa &quot;%1&quot; została wyłączona. Powód: %2</translation>
+        <translatorcomment>Notification message launched when a backup is disabled. Keep &quot;%1&quot; code because is filled with the name of the backup at runtime and %2 with the reason of the error.</translatorcomment>
+        <translation>Twoja kopia zapasowa &#8220;%1&#8221; została wyłączona. Powód: %2</translation>
     </message>
     <message>
         <source>Security upgrade</source>
@@ -2838,6 +2834,71 @@ Transfery zostaną automatycznie wznowione po ponownym otwarciu aplikacji.</nume
         <source>Failed to ugrade security. Error: %1</source>
         <translatorcomment>System notification error shown if an error occur while upgrading security for your account. %1 will be replaced with the error returned from the SDK.</translatorcomment>
         <translation>Nie udało się zaktualizować zabezpieczeń. Błąd: %1</translation>
+    </message>
+    <message>
+        <source>Some syncs and backups have been disabled. Go to settings to enable them again.</source>
+        <translatorcomment>Warning message shown when some backups and syncs are disabled. Tell the userto go to settings to solve the issue.</translatorcomment>
+        <translation>Niektóre synchronizacje i kopie zapasowe zostały wyłączone. Przejdź do ustawień, aby włączyć je ponownie.</translation>
+    </message>
+    <message>
+        <source>One or more backups have been disabled. Go to settings to enable them again.</source>
+        <translatorcomment>Warning message shown when some backups are disabled. Tell the userto go to settings to solve the issue.</translatorcomment>
+        <translation>Jedna lub więcej kopii zapasowych zostało wyłączonych. Przejdź do ustawień, aby włączyć je ponownie.</translation>
+    </message>
+    <message>
+        <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
+        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again.</translatorcomment>
+        <translation>Jedna lub więcej synchronizacji zostało wyłączonych. Przejdź do Ustawień, aby włączyć je ponownie.</translation>
+    </message>
+    <message>
+        <source>Open settings</source>
+        <translatorcomment>Button label to open MEGAsync settings dialog.</translatorcomment>
+        <translation>Otwórz ustawienia</translation>
+    </message>
+    <message>
+        <source>Error getting link: File not found</source>
+        <translatorcomment>Notification message shown an error of file not found while getting a public link.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translatorcomment>This is the string used to refer to settings.</translatorcomment>
+        <translation>Ustawienia</translation>
+    </message>
+    <message>
+        <source>Your syncs and backups have been disabled: %1</source>
+        <translatorcomment>Warning message shown when all the syncs and backups have been disabled. The placeholder %1 shows the reason;</translatorcomment>
+        <translation>Twoje synchronizacje i kopie zapasowe zostały wyłączone: %1</translation>
+    </message>
+    <message>
+        <source>Your backups have been disabled: %1</source>
+        <translatorcomment>Warning message shown when all the backups have been disabled. The placeholder %1 shows the reason;</translatorcomment>
+        <translation>Twoje kopie zapasowe zostały wyłączone: %1</translation>
+    </message>
+    <message>
+        <source>Your syncs have been disabled: %1</source>
+        <translatorcomment>Warning message shown when  all the syncs have been disabled. The placeholder %1 shows the reason;</translatorcomment>
+        <translation>Twoje synchronizacje zostały wyłączone: %1</translation>
+    </message>
+    <message>
+        <source>Error getting link: %1</source>
+        <translatorcomment>Notification message launched when an error occurs getting a public link for a file/folder. Placeholder %1 displays the reason.</translatorcomment>
+        <translation>Error getting link: %1</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been temporarily disabled: %2</source>
+        <translatorcomment>Warning message shown when a sync is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
+        <translation>Twoja synchronizacja &#8220;%1&#8221; została tymczasowo wyłączona: %2</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been temporarily disabled: %2</source>
+        <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
+        <translation>Twój backup &#8220;%1&#8221; został tymczasowo wyłączony: %2</translation>
+    </message>
+    <message>
+        <source>Error transferring folder: %1</source>
+        <translatorcomment>Label to indicate that has been an error during a folder transfer.  Placeholder %1 displays the reason.</translatorcomment>
+        <translation>Błąd przy przenoszeniu katalogu: %1</translation>
     </message>
 </context>
 <context>
@@ -3122,7 +3183,7 @@ Transfery zostaną automatycznie wznowione po ponownym otwarciu aplikacji.</nume
     <message>
         <source>Foreign target storage quota reached</source>
         <translatorcomment>Label to show that foreign target account has exceeded its storage quota during a SDK operation.</translatorcomment>
-        <translation>Na koncie właściciela folderu synchronizacji przekroczono limit miejsca.</translation>
+        <translation>Konto właściciela katalogu synchronizacyjnego przekroczyło swój limit pamięci masowej.</translation>
     </message>
     <message>
         <source>Remote path has changed</source>
@@ -3137,7 +3198,7 @@ Transfery zostaną automatycznie wznowione po ponownym otwarciu aplikacji.</nume
     <message>
         <source>Share without full access</source>
         <translatorcomment>SDK error label shown when trying to sync into a shared folder without full access.</translatorcomment>
-        <translation>Nie masz pełnego dostępu do katalogu zdalnej synchronizacji</translation>
+        <translation>Nie masz pełnego dostępu do katalogu synchronizacji zdalnej</translation>
     </message>
     <message>
         <source>Local fingerprint mismatch</source>
@@ -3212,7 +3273,7 @@ Transfery zostaną automatycznie wznowione po ponownym otwarciu aplikacji.</nume
     <message>
         <source>You can&apos;t run MEGA Desktop App from this location. Move it into the Applications folder then run it.</source>
         <translatorcomment>Error message shown when the user is trying to run MEGA Desktop App from a path different than Applications. Only affects to macOS.</translatorcomment>
-        <translation>Nie możesz uruchomić MEGA Desktop App z tej lokalizacji. Przenieś ją do katalogu Aplikacje, a następnie uruchom.</translation>
+        <translation>Nie można uruchomić aplikacji desktopowej z tej lokalizacji. Przenieś ją do katalogu Aplikacje, a następnie uruchom.</translation>
     </message>
     <message>
         <source>Account expired (business or Pro Flexi)</source>
@@ -3367,9 +3428,9 @@ Wszystkie wybrane transfery zostaną anulowane i usunięte.</translation>
 Your selected incomplete sync transfers won't be cancelled
 All the other selected transfers will be cancelled and cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
-        <translation>Usunąć transfery?
-Wszystkie wybrane niekompletne transfery nie zostaną anulowane
-Wszystkie pozostałem wybrane transfery zostaną anulowane i usunięte,</translation>
+        <translation>Anulować transfery? 
+Wybrane niepełne transfery synchronizacyjne nie zostaną anulowane.
+Wszystkie pozostałe wybrane transfery zostaną anulowane i wyczyszczone.</translation>
     </message>
     <message>
         <source>Cancel transfer?</source>
@@ -3456,72 +3517,39 @@ Wprowadź inną nazwę.</translation>
 <context>
     <name>NodeSelector</name>
     <message>
-        <source>Folder Selection</source>
-        <translatorcomment>Label to indicate the user the selection of folders for a synchronization (String short as possible)</translatorcomment>
-        <translation>Wybór katalogu</translation>
-    </message>
-    <message>
-        <source>Select a MEGA folder:</source>
-        <translatorcomment>Label to indicate the user to select a MEGA folder for a synchronization (String short as possible). Keep capital letters.</translatorcomment>
-        <translation>Wybierz katalog na MEGA:</translation>
-    </message>
-    <message>
         <source>Error</source>
         <translatorcomment>Label to indicate an Error</translatorcomment>
         <translation>Błąd</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translatorcomment>Label to indicate a Warning message.</translatorcomment>
-        <translation>Ostrzeżenie</translation>
-    </message>
-    <message>
-        <source>Invalid folder for synchronization.
-Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
-        <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation>Nieprawidłowy katalog do synchronizacji. Upewnij się, że w nazwach katalogów nie używasz znaków takich jak “\”, “/” lub “:”.</translation>
-    </message>
-    <message>
-        <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
-        <translatorcomment>Error message shown when an user is trying upload files to a non compatible folder</translatorcomment>
-        <translation>Aby móc przesłać dane do wybranego katalogu, potrzebujesz praw dostępu do odczytu i zapisu lub pełnych praw dostępu.</translation>
-    </message>
-    <message>
-        <source>You need Full access right to be able to sync the selected folder.</source>
-        <translatorcomment>Error message shown when an user is trying sync a non compatible folder</translatorcomment>
-        <translation>Wymagane są&#xa0;pełne uprawnienia aby synchronizować ten katalog.</translation>
-    </message>
-    <message>
-        <source>Only files can be used for streaming.</source>
-        <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
-        <translation>Tylko pliki mogą być udostępniane.</translation>
     </message>
     <message>
         <source>Select a MEGA folder</source>
         <translatorcomment>Node selector dialog title</translatorcomment>
         <translation>Wybierz katalog MEGA</translation>
     </message>
-    <message numerus="yes">
-        <source>You no longer have access to this item. Ask the owner to share again.</source>
-        <translatorcomment>Error message shown when the user is trying to download an file or folder from an incoming share and the owner stops sharing/removes all items</translatorcomment>
-        <translation><numerusform>Nie masz już dostępu do tygo elementu. Poproś właściciela o ponowne udostępnienie.</numerusform><numerusform>Nie masz już dostępu do tych elementów. Poproś właściciela o ponowne udostępnienie.</numerusform><numerusform>Nie masz już dostępu do tych elementów. Poproś właściciela o ponowne udostępnienie.</numerusform><numerusform>Nie masz już dostępu do tych elementów. Poproś właściciela o ponowne udostępnienie.</numerusform></translation>
-    </message>
-    <message numerus="yes">
+    <message>
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
-        <translation><numerusform>Wybrany element został usunięty. Aby ponownie wybrać, zamknij to okno i spróbuj ponownie.</numerusform><numerusform>Wybrane przez Ciebie elementy zostały usunięte. Aby ponownie wybrać, zamknij to okno i spróbuj ponownie.</numerusform><numerusform>Wybrane przez Ciebie elementy zostały usunięte. Aby ponownie wybrać, zamknij to okno i spróbuj ponownie.</numerusform><numerusform>Wybrane przez Ciebie elementy zostały usunięte. Aby ponownie wybrać, zamknij to okno i spróbuj ponownie.</numerusform></translation>
+        <translation>Wybrany element został usunięty. Aby ponownie wybrać, zamknij to okno i spróbuj ponownie.</translation>
     </message>
-    <message numerus="yes">
-        <source>%1 item selected</source>
-        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
-                           First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation><numerusform>%1 element zaznaczony</numerusform><numerusform>%1 elementów zaznaczonych</numerusform><numerusform>%1 elementów zaznaczonych</numerusform><numerusform>%1 elementów zaznaczonych</numerusform></translation>
+    <message>
+        <source>Cloud Drive</source>
+        <translatorcomment>Button text to navigate to cloud drive section</translatorcomment>
+        <translation>Dysk w chmurze</translation>
     </message>
-    <message numerus="yes">
-        <source>%1. %2 has been removed. To reselect, close this window and try again.</source>
-        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
-                           Second and last part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation><numerusform>%1. %2 został usunięty. Aby wybrać ponownie, zamknij to okno i spróbuj ponownie.</numerusform><numerusform>%1. %2 zostało usuniętych. Aby wybrać ponownie, zamknij to okno i spróbuj ponownie.</numerusform><numerusform>%1. %2 zostało usuniętych. Aby wybrać ponownie, zamknij to okno i spróbuj ponownie.</numerusform><numerusform>%1. %2 zostało usuniętych. Aby wybrać ponownie, zamknij to okno i spróbuj ponownie.</numerusform></translation>
+    <message>
+        <source>Backups</source>
+        <translatorcomment>Button text to navigate to backups section</translatorcomment>
+        <translation>Kopie zapasowe</translation>
+    </message>
+    <message>
+        <source>Incoming Shares</source>
+        <translatorcomment>Button text to navigate to incoming shares section</translatorcomment>
+        <translation>Przychodzące udostępnienia</translation>
+    </message>
+    <message>
+        <source>Search</source>
+        <translatorcomment>Search button header</translatorcomment>
+        <translation>Szukaj</translation>
     </message>
 </context>
 <context>
@@ -3613,11 +3641,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Nowy katalog</translation>
     </message>
     <message>
-        <source>OK</source>
-        <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>OK</translation>
-    </message>
-    <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
         <translation>Anuluj</translation>
@@ -3631,6 +3654,39 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Error:</source>
         <translatorcomment>MessageBox to inform about an error when trying to move or remove a node</translatorcomment>
         <translation>Błąd:</translation>
+    </message>
+    <message>
+        <source>Cloud drive</source>
+        <translatorcomment>Button to filter search results from cloud drive</translatorcomment>
+        <translation>Dysk</translation>
+    </message>
+    <message>
+        <source>Backups</source>
+        <translatorcomment>Button to filter search results from backups</translatorcomment>
+        <translation>Kopie zapasowe</translation>
+    </message>
+    <message>
+        <source>Incoming Shares</source>
+        <translatorcomment>Button to filter search results from incoming shares</translatorcomment>
+        <translation>Przychodzące udostępnienia</translation>
+    </message>
+    <message>
+        <source>No results for:</source>
+        <translatorcomment>Label indicating that there are no results for the current search, searched text will be following this label.</translatorcomment>
+        <translation>Brak wyników dla:</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translatorcomment>Button text to accept and close the dialog</translatorcomment>
+        <translation>OK</translation>
+    </message>
+</context>
+<context>
+    <name>NodeSelectorTreeViewWidgetSearch</name>
+    <message>
+        <source>Searching:</source>
+        <translatorcomment>Label indicating the current search, searched text will be following this label.</translatorcomment>
+        <translation>Szukanie:</translation>
     </message>
 </context>
 <context>
@@ -3709,6 +3765,21 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Info notifications</source>
         <translatorcomment>Title of a checkbox for disconnectig secondary info notifications</translatorcomment>
         <translation>Informacje o powiadomieniach</translation>
+    </message>
+    <message>
+        <source>Uploads and downloads</source>
+        <translatorcomment>Notification category for completed transfers notifications</translatorcomment>
+        <translation>Przesyłanie i pobieranie</translation>
+    </message>
+    <message>
+        <source>Completed uploads and downloads</source>
+        <translatorcomment>Title of a checkbox for disconnectig completed transfer notifications</translatorcomment>
+        <translation>Zakończone wysyłanie i pobieranie</translation>
+    </message>
+    <message>
+        <source>Uploads and downloads:</source>
+        <translatorcomment>Notification category for completed transfers notifications (macx)</translatorcomment>
+        <translation>Wysyłanie i pobieranie:</translation>
     </message>
 </context>
 <context>
@@ -3947,6 +4018,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <name>PlanWidget</name>
     <message>
         <source>month</source>
+        <translatorcomment>Label displaying the period for which the pricing refers to</translatorcomment>
         <translation>miesiąc</translation>
     </message>
     <message>
@@ -3963,16 +4035,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>%1 per user</source>
         <translatorcomment>Label to indicate the price per user of business plan. %1 will be replaced with specific price.</translatorcomment>
         <translation>%1 na użytkownika</translation>
-    </message>
-    <message>
-        <source>storage</source>
-        <translatorcomment>Label to indicate the specific storage of a pro plan.</translatorcomment>
-        <translation>powierzchnia</translation>
-    </message>
-    <message>
-        <source>transfer</source>
-        <translatorcomment>Label to indicate the specific transfer quota of a pro plan.</translatorcomment>
-        <translation>transfer</translation>
     </message>
     <message>
         <source>Great value for secure cloud storage, sharing and communication.</source>
@@ -4014,113 +4076,54 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translatorcomment>Label to inform about the minimum number of users for a business plan. %1 will be replaced with the minimum number of users.</translatorcomment>
         <translation><numerusform>minimum %n użytkownik</numerusform><numerusform>minimum %n użytkowników</numerusform><numerusform>minimum %n użytkowników</numerusform><numerusform>minimum %n użytkowników</numerusform></translation>
     </message>
+    <message>
+        <source>[A] storage</source>
+        <translatorcomment>Label to indicate the specific storage of a pro plan. [A] is a placeholder for the value of the storage, it must be kept in the translated strings.</translatorcomment>
+        <translation>[A] powierzchni</translation>
+    </message>
+    <message>
+        <source>[A] transfer</source>
+        <translatorcomment>Label to indicate the specific transfer quota of a pro plan. [A] is a placeholder for the value of the transfer quota, it must be kept in the translated strings.</translatorcomment>
+        <translation>[A] transferów</translation>
+    </message>
 </context>
 <context>
-    <name>Platform</name>
-    <message>
-        <source>Preferences</source>
-        <translatorcomment>Label to indicate the Preferences option for the application (MacOS)</translatorcomment>
-        <translation>Preferencje</translation>
-    </message>
-    <message>
-        <source>Quit</source>
-        <translatorcomment>Label displayed to let the user quit the application (MacOS). Max 20 characters. Keep capital letter.</translatorcomment>
-        <translation>Wyjdź</translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translatorcomment>Label to indicate the Settings option for the application (Windows and Linux)</translatorcomment>
-        <translation>Ustawienia</translation>
-    </message>
-    <message>
-        <source>Exit</source>
-        <translatorcomment>Label to indicate the Exit option for the application (Linux and Windows) (MAX 20 characters)</translatorcomment>
-        <translation>Wyjdź</translation>
-    </message>
+    <name>PlatformStrings</name>
     <message>
         <source>Show in folder</source>
         <translatorcomment>Label to indicate the &quot;Show in folder&quot; option to open local folder of a sync (Linux)</translatorcomment>
         <translation>Pokaż w katalogu</translation>
     </message>
     <message>
-        <source>Show in Explorer</source>
-        <translatorcomment>Label to indicate the &quot;Show in Explorer&quot; option to open local folder of a sync (Windows). Keep Explorer name as it is the app name of file explorer on Windows.</translatorcomment>
-        <translation>Pokaż w Eksploratorze</translation>
+        <source>Exit</source>
+        <translatorcomment>Label displayed on actions exiting Desktop application when on Windows or Linux</translatorcomment>
+        <translation>Wyjdź</translation>
     </message>
     <message>
         <source>Show in Finder</source>
         <translatorcomment>Label to indicate the &quot;Show in Finder&quot; option to open local folder of a sync (macOS). Keep Finder name as it is the app name of file explorer on macOS.</translatorcomment>
         <translation>Pokaż w Finderze</translation>
     </message>
-</context>
-<context>
-    <name>PlatformStrings</name>
     <message>
-        <source>Open settings</source>
-        <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
-        <translation>Otwórz ustawienia</translation>
+        <source>Quit</source>
+        <translatorcomment>Label displayed on actions exiting Desktop application when on Mac</translatorcomment>
+        <translation>Zamknij</translation>
     </message>
     <message>
-        <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
-        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (Windows and Linux)</translatorcomment>
-        <translation>Jedna lub więcej synchronizacji zostało wyłączonych. Przejdź do Ustawień, aby ponownie je włączyć.</translation>
-    </message>
-    <message>
-        <source>Open preferences</source>
-        <translatorcomment>Button label to open MEGAsync preferences dialog (MacOS).</translatorcomment>
-        <translation>Otwórz ustawienia</translation>
-    </message>
-    <message>
-        <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
-        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (macOS)</translatorcomment>
-        <translation>Jedna lub więcej synchronizacji zostało wyłączonych. Przejdź do ustawień, aby ponownie je włączyć.</translation>
-    </message>
-    <message>
-        <source>Sync transfers cannot be cancelled individually.
-Please delete the folder sync from settings to cancel them.</source>
-        <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for windows and linux)</translatorcomment>
-        <translation>Transferów synchronizacji nie można anulować. Aby usunąć synchronizację, przejdź do Ustawień w aplikacji desktopowej i usuń synchronizowany katalog.</translation>
-    </message>
-    <message>
-        <source>Sync transfers cannot be cancelled individually.
-Please delete the folder sync from preferences to cancel them.</source>
-        <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for macOS)</translatorcomment>
-        <translation>Transferów synchronizacji nie można anulować. Aby usunąć synchronizację, przejdź do Preferencji w aplikacji desktopowej i usuń synchronizowany katalog.</translation>
-    </message>
-    <message>
-        <source>One or more backups have been disabled. Go to settings to enable them again.</source>
-        <translatorcomment>Warning message shown when some backups are disabled. Tell the userto go to settings to solve the issue (win/linux)</translatorcomment>
-        <translation>Jedna lub więcej kopii zapasowych zostało wyłączonych. Przejdź do ustawień, aby włączyć je ponownie.</translation>
-    </message>
-    <message>
-        <source>Some syncs and backups have been disabled. Go to settings to enable them again.</source>
-        <translatorcomment>Warning message shown when some backups and syncs are disabled. Tell the userto go to settings to solve the issue (win/linux)</translatorcomment>
-        <translation>Niektóre synchronizacje i kopie zapasowe zostały wyłączone. Przejdź do ustawień, aby włączyć je ponownie.</translation>
-    </message>
-    <message>
-        <source>One or more backups have been disabled. Go to preferences to enable them again.</source>
-        <translatorcomment>Warning message shown when some backups are disabled. Tell the userto go to settings to solve the issue (mac)</translatorcomment>
-        <translation>Jedna lub więcej kopii zapasowych zostało wyłączonych. Przejdź do preferencji, aby włączyć je ponownie.</translation>
-    </message>
-    <message>
-        <source>Some syncs and backups have been disabled. Go to preferences to enable them again.</source>
-        <translatorcomment>Warning message shown when some backups and syncs are disabled. Tell the userto go to settings to solve the issue (mac)</translatorcomment>
-        <translation>Niektóre synchronizacje i kopie zapasowe zostały wyłączone. Przejdź do preferencji, aby włączyć je ponownie.</translation>
+        <source>Show in Explorer</source>
+        <translatorcomment>Label to indicate the &quot;Show in Explorer&quot; option to open local folder of a sync (Windows). Keep Explorer name as it is the app name of file explorer on Windows.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Detected crashes on Windows, Linux, and masOS fixed.
-- Less device memory will be used by accounts with large amounts of data stored.
-- Application performance improved.
-- Translation issues fixed.
+        <source>- Security upgraded.
+- Detected crashes on Windows, Linux, and macOS fixed.
 </source>
-        <translatorcomment>Changelog for version v4.8.5</translatorcomment>
-        <translation>- Naprawiono wykryte awarie w systemach Windows, Linux i macOS.
-- Mniej pamięci urządzenia będzie wykorzystywane przez konta z zapisanymi dużymi ilościami danych.
-- Poprawiono wydajność aplikacji.
-- Poprawiono problemy z tłumaczeniem.</translation>
+        <translatorcomment>Changelog for v4.8.8</translatorcomment>
+        <translation>- Zaktualizowane zabezpieczenia.
+- Naprawiono wykryte błędy w systemach Windows, Linux i macOS</translation>
     </message>
 </context>
 <context>
@@ -4213,7 +4216,7 @@ Please delete the folder sync from preferences to cancel them.</source>
     <message>
         <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
         <translatorcomment>Message shown when there is an error testing the proxy settings.</translatorcomment>
-        <translation>Twoje ustawienia serwera proxy są nieprawidłowe lub serwer nie odpowiada</translation>
+        <translation>Ustawienia proxy są nieprawidłowe lub proxy nie odpowiada.</translation>
     </message>
 </context>
 <context>
@@ -4606,18 +4609,22 @@ Czy mimo to chcesz je usunąć?</translation>
     <name>QPlatformTheme</name>
     <message>
         <source>&amp;Yes</source>
+        <translatorcomment>Label for Yes button in message boxes</translatorcomment>
         <translation>&amp;Tak</translation>
     </message>
     <message>
         <source>&amp;No</source>
+        <translatorcomment>Label for No button in message boxes</translatorcomment>
         <translation>&amp;Nie</translation>
     </message>
     <message>
         <source>OK</source>
+        <translatorcomment>Label for Ok button in message boxes</translatorcomment>
         <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
+        <translatorcomment>Label for Cancel button in message boxes</translatorcomment>
         <translation>Anuluj</translation>
     </message>
 </context>
@@ -4666,7 +4673,7 @@ Czy mimo to chcesz je usunąć?</translation>
     <message>
         <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. This action cannot be undone.</source>
         <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option.</translatorcomment>
-        <translation>Katalog zostanie usunięty z programu MEGA. Nie zostanie on usunięty z komputera. Tej akcji nie można cofnąć.</translation>
+        <translation>Katalog zostanie usunięty z programu MEGA. Nie zostanie on usunięty z komputera. Tej czynności nie można cofnąć.</translation>
     </message>
     <message>
         <source>Confirm</source>
@@ -4712,7 +4719,7 @@ Czy mimo to chcesz je usunąć?</translation>
     <message>
         <source>Don&apos;t close the app. If you close, transfers not yet queued will be lost.</source>
         <translatorcomment>Message displayed in scanning widget to warn the user of consequences of closing the app.</translatorcomment>
-        <translation>Nie zamykaj aplikacji. Jeśli zamkniesz, transfery, które nie są jeszcze w kolejce, zostaną utracone.</translation>
+        <translation>Nie zamykaj aplikacji. Jeśli zamkniesz, przelewy, które jeszcze nie są w kolejce, zostaną utracone.</translation>
     </message>
     <message>
         <source>Scanning</source>
@@ -4743,6 +4750,14 @@ Czy mimo to chcesz je usunąć?</translation>
         <source>%n file</source>
         <translatorcomment>Part of the string used to display number of files in scanning step. %1 is the number of files found so far.</translatorcomment>
         <translation><numerusform>%n plik</numerusform><numerusform>%n plików</numerusform><numerusform>%n plików</numerusform><numerusform>%n plików</numerusform></translation>
+    </message>
+</context>
+<context>
+    <name>SearchLineEdit</name>
+    <message>
+        <source>Search</source>
+        <translatorcomment>Placeholder for a search box</translatorcomment>
+        <translation>Szukaj</translation>
     </message>
 </context>
 <context>
@@ -4982,7 +4997,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your sync &quot;%1&quot; can&apos;t be enabled. Reason: %2</source>
         <translatorcomment>Error message shown when an error occurs trying to enable a sync. %1 is name of sync and %2 is reason of error.</translatorcomment>
-        <translation>Nie można włączyć synchronizacji „%1”. Powód: %2</translation>
+        <translation>Twoja synchronizacja “%1” nie może być włączona. Powód: %2</translation>
     </message>
     <message>
         <source>General</source>
@@ -5150,11 +5165,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Historia sesji</translation>
     </message>
     <message>
-        <source>Preferences</source>
-        <translatorcomment>Dialog window title for Settings on macOS. Keep as short as possible.</translatorcomment>
-        <translation>Ustawienia</translation>
-    </message>
-    <message>
         <source>Language:</source>
         <translatorcomment>Form text label shown next to the language change drop down menu, on macOS. Keep as short as possible.</translatorcomment>
         <translation>Język:</translation>
@@ -5227,7 +5237,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Enable Windows Explorer integration</source>
         <translatorcomment>Checkbox label displayed on Windows, allowing the user to enable / disable the Windows Explorer integration.</translatorcomment>
-        <translation>Włącz integrację z Eksploratorem Windows</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>B</source>
@@ -5397,7 +5407,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Saving backups…</source>
         <translatorcomment>Label text displayed while backups settings are being saved</translatorcomment>
-        <translation>Zapisywanie kopii zapasowych...</translation>
+        <translation>Zapisywanie kopii zapasowych&#8230;</translation>
     </message>
     <message>
         <source>Some folders have not backed up. For more information please hover over the yellow warning icon.</source>
@@ -5452,7 +5462,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your sync &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
         <translatorcomment>Warning message indicating that an error happened disabling a sync. First placeholder is the sync name and second placeholder is the error message sent by SDK (reason)</translatorcomment>
-        <translation>Twoja synchronizacja &quot;%1&quot; nie może być wyłączona. Powód: %2</translation>
+        <translation>Twoja synchronizacja &#8220;%1&#8221; nie może być wyłączona. Powód: %2</translation>
     </message>
     <message>
         <source>Error adding backup %1</source>
@@ -5487,7 +5497,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your backup &quot;%1&quot; can&apos;t be enabled. Reason: %2</source>
         <translatorcomment>Error text when enabling a backup failed</translatorcomment>
-        <translation>Twoja kopia zapasowa &quot;%1&quot; nie może być włączona. Powód: %2</translation>
+        <translation>Twoja kopia zapasowa &#8220;%1&#8221; nie może być włączona. Powód: %2</translation>
     </message>
     <message>
         <source>Error disabling backup</source>
@@ -5502,7 +5512,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your backup &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
         <translatorcomment>Error text when disabling a backup failed</translatorcomment>
-        <translation>Twoja kopia zapasowa &quot;%1&quot; nie może być wyłączona. Powód: %2</translation>
+        <translation>Twoja kopia zapasowa &#8220;%1&#8221; nie może być wyłączona. Powód: %2</translation>
     </message>
     <message>
         <source>Go to backup centre</source>
@@ -5615,7 +5625,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>MEGA folder doesn&apos;t exist</source>
         <translatorcomment>Label displayed when an error occurs with a remote folder.</translatorcomment>
-        <translation>Katalog na MEGA nie istnieje</translation>
+        <translation>Katalog MEGA nie istnieje</translation>
     </message>
     <message>
         <source>Finish</source>
@@ -5650,7 +5660,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>The entered passwords don&apos;t match</source>
         <translatorcomment>Label displayed when the user has filled different password.</translatorcomment>
-        <translation>Wprowadzone hasła są niepoprawne</translation>
+        <translation>Wprowadzone hasła nie pasują</translation>
     </message>
     <message>
         <source>You have to accept our terms of service</source>
@@ -5720,6 +5730,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>MEGAsync</source>
+        <translatorcomment>Title of the dialog displayed when trying to cancel the wizard</translatorcomment>
         <translation>MEGA</translation>
     </message>
     <message>
@@ -5764,16 +5775,18 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
+        <translatorcomment>Error message displayed when the user is trying to log in without having confirmed his account</translatorcomment>
         <translation>Sprawdź pocztę i kliknij w link w celu weryfikacji.</translation>
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
+        <translatorcomment>Error message displayed when trying to login and too many login attemps have been made before</translatorcomment>
         <translation>Dokonano za dużo nieprawidłowch logowań.[BR]Odczekaj do %1 i spróbuj ponownie.</translation>
     </message>
     <message>
         <source>When you finish this assistant, you will be able to sync additional folders using the settings dialog</source>
         <translatorcomment>Label to inform the user about the possibility to add new synchronizations through settings dialog once the initial setup wizard is at final stage</translatorcomment>
-        <translation>Kiedy zakończysz ten proces, zawsze będziesz mógł zmienić ustawienia w dowolnym momencie</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>First name:</source>
@@ -5963,6 +5976,19 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
 </context>
 <context>
+    <name>StreamNodeSelector</name>
+    <message>
+        <source>Error</source>
+        <translatorcomment>Title of the dialog</translatorcomment>
+        <translation>Błąd</translation>
+    </message>
+    <message>
+        <source>Only files can be used for streaming.</source>
+        <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
+        <translation>Nie można przesyłać strumieniowo katalogów. Wybierz plik do przesłania strumieniowego.</translation>
+    </message>
+</context>
+<context>
     <name>StreamingFromMegaDialog</name>
     <message>
         <source>Stream from MEGA</source>
@@ -6050,11 +6076,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Błąd podczas tworzenia linku</translation>
     </message>
     <message>
-        <source>Decryption error</source>
-        <translatorcomment>Text shown when there is an error decrypting a public link for streaming</translatorcomment>
-        <translation>Błąd opisu</translation>
-    </message>
-    <message>
         <source>Error getting link information</source>
         <translatorcomment>Error message shown when a there is an error getting the information of a public link</translatorcomment>
         <translation>Błąd w pobieraniu informacji o linku</translation>
@@ -6103,7 +6124,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You can&apos;t sync this folder as it&apos;s already synced.</source>
         <translatorcomment>Warning message indicating that a folder can´t be synced again as it is already synced.</translatorcomment>
-        <translation>Nie można zsynchronizować tego katalogu, ponieważ jest on już zsynchronizowany.</translation>
+        <translation>Nie można zsynchronizować tego katalogiu, ponieważ jest on już zsynchronizowany.</translation>
     </message>
     <message>
         <source>You can&apos;t sync this folder as it&apos;s already backed up.</source>
@@ -6202,7 +6223,7 @@ Aby kontynuować, wybierz inny katalog.</translation>
     <message>
         <source>Invalid remote path.</source>
         <translatorcomment>The selected remote path for the sync creation is invalid</translatorcomment>
-        <translation>Ten MEGA katalog nie może być zsynchronizowany.</translation>
+        <translation>Ten katalog na MEGA nie może być zsynchronizowany.</translation>
     </message>
     <message>
         <source>The selected MEGA folder is already synced.</source>
@@ -6260,20 +6281,29 @@ Aby kontynuować, wybierz inny katalog.</translation>
         <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by MEGA folder name in case the user clicks.</translatorcomment>
         <translation>Sortuj według nazwy katalogu MEGA</translation>
     </message>
+</context>
+<context>
+    <name>SyncNodeSelector</name>
     <message>
-        <source>Sync is enabled</source>
-        <translatorcomment>Checkbox tooltip in case the sync is enabled.</translatorcomment>
-        <translation>Synchronizacja jest włączona</translation>
+        <source>Error</source>
+        <translatorcomment>Title of the dialog</translatorcomment>
+        <translation>Błąd</translation>
     </message>
     <message>
-        <source>Sync is disabled</source>
-        <translatorcomment>Checkbox tooltip in case the sync is disabled.</translatorcomment>
-        <translation>Synchronizacja jest wyłączona</translation>
+        <source>You need Full access right to be able to sync the selected folder.</source>
+        <translatorcomment>Error message shown when an user is trying sync a non compatible folder</translatorcomment>
+        <translation>Aby zsynchronizować ten katalog, musisz mieć do niego pełne uprawnienia.</translation>
     </message>
     <message>
-        <source>Click menu for more Sync actions</source>
-        <translatorcomment>Menu column item tooltip.</translatorcomment>
-        <translation>Kliknij menu, aby uzyskać więcej opcji związanych z synchronizacją</translation>
+        <source>Warning</source>
+        <translatorcomment>Title of the dialog</translatorcomment>
+        <translation>Ostrzeżenie</translation>
+    </message>
+    <message>
+        <source>Invalid folder for synchronization.
+Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
+        <translation>Nie można zsynchronizować katalogu. Upewnij się, że nie używasz &#8220;/&quot;, &#8220;/&#8221; lub &#8220;:&#8221; w nazwach katalogów.</translation>
     </message>
 </context>
 <context>
@@ -6287,6 +6317,24 @@ Aby kontynuować, wybierz inny katalog.</translation>
         <source>Remove synced folder</source>
         <translatorcomment>Context menu option that removes the sync.</translatorcomment>
         <translation>Usuń zsynchronizowany katalog</translation>
+    </message>
+</context>
+<context>
+    <name>SyncTableViewTooltips</name>
+    <message>
+        <source>Sync is enabled</source>
+        <translatorcomment>Checkbox tooltip that is displayed when it is checked.(sync enabled)</translatorcomment>
+        <translation>Synchronizacja jest włączona</translation>
+    </message>
+    <message>
+        <source>Sync is disabled</source>
+        <translatorcomment>Checkbox tooltip that is displayed when it is unchecked.(sync disabled)</translatorcomment>
+        <translation>Synchronizacja jest wyłączona</translation>
+    </message>
+    <message>
+        <source>Click menu for more Sync actions</source>
+        <translatorcomment>Menu column tooltip (three dots in the table)</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6350,7 +6398,7 @@ Aby kontynuować, wybierz inny katalog.</translation>
     <message>
         <source>Syncing…</source>
         <translatorcomment>Transfer is being synced</translatorcomment>
-        <translation>Synchronizacja...</translation>
+        <translation>Synchronizacja&#8230;</translation>
     </message>
     <message>
         <source>Completing</source>
@@ -6422,10 +6470,12 @@ Aby kontynuować, wybierz inny katalog.</translation>
     </message>
     <message>
         <source>Upload</source>
+        <translatorcomment>Label of the button to start a new upload</translatorcomment>
         <translation>Wgrywane</translation>
     </message>
     <message>
         <source>Download</source>
+        <translatorcomment>Label of the button to start a new download</translatorcomment>
         <translation>Pobierz</translation>
     </message>
     <message>
@@ -6605,6 +6655,119 @@ Aby uzyskać więcej limitu, uaktualnij konto do wersji Pro lub poczekaj [A], a�
     </message>
 </context>
 <context>
+    <name>TransferNotificationBuilderBase</name>
+    <message>
+        <source>Uploaded 1 file to %1.</source>
+        <translatorcomment>Notification text that inform 1 file has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
+        <translation>Przesłano 1 plik do %1.</translation>
+    </message>
+    <message>
+        <source>Uploaded 1 folder to %1.</source>
+        <translatorcomment>Notification text that inform 1 folder has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
+        <translation>Przesłano 1 katalog do %1.</translation>
+    </message>
+    <message>
+        <source>File uploaded</source>
+        <translatorcomment>Notification title when a file has been uploaded</translatorcomment>
+        <translation>Plik wgrany</translation>
+    </message>
+    <message>
+        <source>Folder uploaded</source>
+        <translatorcomment>Notification title when a folder has been uploaded</translatorcomment>
+        <translation>Katalog wgrany</translation>
+    </message>
+    <message>
+        <source>Show in MEGA</source>
+        <translatorcomment>Notification button to see the file on the webclient</translatorcomment>
+        <translation>Pokaż na MEGA</translation>
+    </message>
+    <message>
+        <source>Get link</source>
+        <translatorcomment>Notification button to get the file link</translatorcomment>
+        <translation>Pobierz link</translation>
+    </message>
+    <message>
+        <source>Downloaded 1 file to %1.</source>
+        <translatorcomment>Notification text that inform 1 file has been downloaded to a folder. The place holder is the target folder name.</translatorcomment>
+        <translation>Pobrano 1 plik do %1.</translation>
+    </message>
+    <message>
+        <source>Downloaded 1 folder to %1.</source>
+        <translatorcomment>Notification text that inform 1 folder has been downloaded to a folder. The place holder is the target folder name.</translatorcomment>
+        <translation>Pobrano 1 katalog do %1.</translation>
+    </message>
+    <message>
+        <source>Show in folder</source>
+        <translatorcomment>Notification button to see the file on the local file explorer</translatorcomment>
+        <translation>Pokaż w katalogu</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translatorcomment>Notification button to open the file</translatorcomment>
+        <translation>Otwórz</translation>
+    </message>
+    <message>
+        <source>File downloaded</source>
+        <translatorcomment>Notification title when a file has been downloaded</translatorcomment>
+        <translation>Plik pobrany</translation>
+    </message>
+    <message>
+        <source>Folder downloaded</source>
+        <translatorcomment>Notification title when a folder has been downloaded</translatorcomment>
+        <translation>Katalog pobrany</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n upload successful</source>
+        <translatorcomment>Notification text that inform that an upload was successful. %1 is the number of uploads. This string goes always with the %n upload cancelled and/or %n upload failed strings.</translatorcomment>
+        <translation><numerusform>%n wgrany pomyślnie</numerusform><numerusform>%n wgrane pomyślnie</numerusform><numerusform>%n wgrane pomyślnie</numerusform><numerusform>%n wgrane pomyślnie</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>, %n upload cancelled</source>
+        <translatorcomment>Appended text that inform that an upload was cancelled. %1 is the number of cancelled uploads. This string goes always appended to the %n upload successful</translatorcomment>
+        <translation><numerusform>, %n anulowane</numerusform><numerusform>, %n anulowane</numerusform><numerusform>, %n anulowane</numerusform><numerusform>, %n anulowane</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>, %n upload failed</source>
+        <translatorcomment>Appended text that inform that an upload has failed. %1 is the number of failed uploads. This string goes always appended to the %n upload successful</translatorcomment>
+        <translation><numerusform>, %n nie powiódł się</numerusform><numerusform>, %n nie powiodły się</numerusform><numerusform>, %n nie powiodły się</numerusform><numerusform>, %n nie powiodły się</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Uploaded %n items to %1</source>
+        <translatorcomment>Notification text that inform n items (files or folders) has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
+        <translation><numerusform>Wgrano %n element do %1</numerusform><numerusform>Wgrano %n elementów do %1</numerusform><numerusform>Wgrano %n elementów do %1</numerusform><numerusform>Wgrano %n elementów do %1</numerusform></translation>
+    </message>
+    <message>
+        <source>Items uploaded</source>
+        <translatorcomment>Notification title when a more than one transfer (file or folders) have been uploaded</translatorcomment>
+        <translation>Elementy wgrane</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n download successful</source>
+        <translatorcomment>Notification text that inform that an download was successful. %1 is the number of downloads. This string goes always with the %n download cancelled and/or %n download failed strings.</translatorcomment>
+        <translation><numerusform>%n pobranie powiodło się</numerusform><numerusform>%n pobrań powiodło się</numerusform><numerusform>%n pobrań powiodło się</numerusform><numerusform>%n pobrań powiodło się</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>, %n download cancelled</source>
+        <translatorcomment>Appended text that inform that an download was cancelled. %1 is the number of cancelled downloads. This string goes always appended to the %n download successful</translatorcomment>
+        <translation><numerusform>, %n anulowane</numerusform><numerusform>, %n anulowanych</numerusform><numerusform>, %n anulowanych</numerusform><numerusform>, %n anulowanych</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>, %n download failed</source>
+        <translatorcomment>Appended text that inform that an download has failed. %1 is the number of failed downloads. This string goes always appended to the %n download successful</translatorcomment>
+        <translation><numerusform>, %n nie powiodło się</numerusform><numerusform>, %n nie powiodło się</numerusform><numerusform>, %n nie powiodło się</numerusform><numerusform>, %n nie powiodło się</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Downloaded %n items to %1</source>
+        <translatorcomment>Notification text that inform n items (files or folders) has been downloaded to a folder. The place holder is the target folder name.</translatorcomment>
+        <translation><numerusform>Pobrano %n element do %1</numerusform><numerusform>Pobrano %n elementów do %1</numerusform><numerusform>Pobrano %n elementów do %1</numerusform><numerusform>Pobrano %n elementów do %1</numerusform></translation>
+    </message>
+    <message>
+        <source>Items downloaded</source>
+        <translatorcomment>Notification title when a more than one transfer (file or folders) have been downloaded</translatorcomment>
+        <translation>Elementy pobrane</translation>
+    </message>
+</context>
+<context>
     <name>TransferQuota</name>
     <message>
         <source>Limited available transfer quota.</source>
@@ -6623,6 +6786,17 @@ Aby uzyskać więcej limitu, uaktualnij konto do wersji Pro lub poczekaj [A], a�
         <source>Dismiss</source>
         <translatorcomment>Option to close the dialog without taking any action</translatorcomment>
         <translation>Anuluj</translation>
+    </message>
+    <message>
+        <source>Sync transfers cannot be cancelled individually.
+Please delete the folder sync from settings to cancel them.</source>
+        <translatorcomment>Message displayed when the user is trying to cancel a sync transfer.</translatorcomment>
+        <translation>Transferów synchronizacji nie można anulować. Aby usunąć synchronizację, przejdź do Ustawień w aplikacji desktopowej i usuń synchronizowany katalog.</translation>
+    </message>
+    <message>
+        <source>Open settings</source>
+        <translatorcomment>Button label to open the Settings dialog</translatorcomment>
+        <translation>Otwórz ustawienia</translation>
     </message>
 </context>
 <context>
@@ -6960,6 +7134,19 @@ Aby uzyskać więcej limitu, uaktualnij konto do wersji Pro lub poczekaj [A], a�
     </message>
 </context>
 <context>
+    <name>UploadNodeSelector</name>
+    <message>
+        <source>Error</source>
+        <translatorcomment>Title of the dialog</translatorcomment>
+        <translation>Błąd</translation>
+    </message>
+    <message>
+        <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
+        <translatorcomment>Error message shown when an user is trying upload files to a non compatible folder</translatorcomment>
+        <translation>Aby przesłać ten katalog, musisz mieć do niego uprawnienia do odczytu i zapisu lub pełnego dostępu.</translation>
+    </message>
+</context>
+<context>
     <name>UploadToMegaDialog</name>
     <message>
         <source>Upload to MEGA</source>
@@ -7086,6 +7273,41 @@ Aby uzyskać więcej limitu, uaktualnij konto do wersji Pro lub poczekaj [A], a�
         <source>%n year ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n years ago</translatorcomment>
         <translation><numerusform>%n rok temu</numerusform><numerusform>%n lata temu</numerusform><numerusform>%n lata temu</numerusform><numerusform>%n lata temu</numerusform></translation>
+    </message>
+    <message>
+        <source>[DAYS] [HOURS]</source>
+        <translatorcomment>String used to control formatting of time intervals. [DAYS] will be replaced by the days count and [HOURS] by the hours. This is used for example in the Time remaining column of Transfer Manager.</translatorcomment>
+        <translation>[DAYS] [HOURS]</translation>
+    </message>
+    <message>
+        <source>[HOURS] [MINUTES]</source>
+        <translatorcomment>String used to control formatting of time intervals. [HOURS] will be replaced by the hours count and [MINUTES] by the minutes. This is used for example in the Time remaining column of Transfer Manager.</translatorcomment>
+        <translation>[HOURS] [MINUTES]</translation>
+    </message>
+    <message>
+        <source>[MINUTES] [SECONDS]</source>
+        <translatorcomment>String used to control formatting of time intervals. [MINUTES] will be replaced by the minutes count and [SECONDS] by the seconds. This is used for example in the Time remaining column of Transfer Manager.</translatorcomment>
+        <translation>[MINUTES] [SECONDS]</translation>
+    </message>
+    <message>
+        <source>%1 [A]d[/A]</source>
+        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [DAYS] [HOURS] string, replacing the [DAYS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the days. The space needs to be non-breaking.</translatorcomment>
+        <translation>%1 [A]d[/A]</translation>
+    </message>
+    <message>
+        <source>%1 [A]h[/A]</source>
+        <translatorcomment>String controlling the formatting of the hour count for time intervals. It is used in [DAYS] [HOURS] and [HOURS] [MINUTES] strings, replacing the [HOURS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the hours. The space needs to be non-breaking.</translatorcomment>
+        <translation>%1 [A]g[/A]</translation>
+    </message>
+    <message>
+        <source>%1 [A]m[/A]</source>
+        <translatorcomment>String controlling the formatting of the minute count for time intervals. It is used in [HOURS] [MINUTES] and [MINUTES] [SECONDS] strings, replacing the [MINUTES] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the minutes. The space needs to be non-breaking.</translatorcomment>
+        <translation>%1 [A]m[/A]</translation>
+    </message>
+    <message>
+        <source>%1 [A]s[/A]</source>
+        <translatorcomment>String controlling the formatting of the seconds count for time intervals. It is used in the [MINUTES] [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the seconds. The space needs to be non-breaking.</translatorcomment>
+        <translation>%1 [A]s[/A]</translation>
     </message>
 </context>
 <context>

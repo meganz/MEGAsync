@@ -266,11 +266,6 @@
         <translation>[A] heeft het contact verzoek geannuleerd</translation>
     </message>
     <message>
-        <source>You have a contact request</source>
-        <translatorcomment>Label to indicate that actual user has received a new contact request.</translatorcomment>
-        <translation>U heeft een contact verzoek</translation>
-    </message>
-    <message>
         <source>[A] deleted you as a contact</source>
         <translatorcomment>Label to indicate that [A] deleted you as a contact. Placeholder will be replaced by email of user that deleted the contact.</translatorcomment>
         <translation>[A] heeft u als contact verwijderd</translation>
@@ -341,11 +336,6 @@
         <translation>Uw publieke deling is hersteld.</translation>
     </message>
     <message>
-        <source>Reminder</source>
-        <translatorcomment>Label to indicate a reminder about a contact request.</translatorcomment>
-        <translation>Herinnering</translation>
-    </message>
-    <message>
         <source>Access to shared folder was removed by [A]</source>
         <translatorcomment>Label to indicate that the access for a shared folder has been removed by [A]. Keep placeholder. It will be replaced at runtime with specific email.</translatorcomment>
         <translation>Toegang tot een gedeelde map was verwijderd door [A]</translation>
@@ -395,6 +385,11 @@
         <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
         <translation>Nieuwe gedeelde map van [A]</translation>
     </message>
+    <message>
+        <source>Reminder: You have a contact request</source>
+        <translatorcomment>Label to indicate a reminder about a contact request.</translatorcomment>
+        <translation>Herinnering: u hebt een contact verzoek</translation>
+    </message>
 </context>
 <context>
     <name>BackupItemModel</name>
@@ -413,21 +408,6 @@
         <translatorcomment>Backup table header label tooltip that indicates that if you click here the column will be sorted by name</translatorcomment>
         <translation>Sorteren op naam</translation>
     </message>
-    <message>
-        <source>Backup is enabled</source>
-        <translatorcomment>Checkbox tooltip that is displayed when it is checked.(Backup enabled)</translatorcomment>
-        <translation>Back-up is ingeschakeld</translation>
-    </message>
-    <message>
-        <source>Backup is disabled</source>
-        <translatorcomment>Checkbox tooltip that is displayed when it is unchecked.(Backup disabled)</translatorcomment>
-        <translation>Back-up is uitgeschakeld</translation>
-    </message>
-    <message>
-        <source>Click menu for more Backup actions</source>
-        <translatorcomment>Menu column tooltip (three dots in the table)</translatorcomment>
-        <translation>Klik menu voor meer Back-up acties</translation>
-    </message>
 </context>
 <context>
     <name>BackupNameConflictDialog</name>
@@ -439,12 +419,12 @@
     <message>
         <source>A folder named &quot;%1&quot; already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
         <translatorcomment>Text shown to the user if there is a name conflict with a folder in the Backups remote folder for the current device</translatorcomment>
-        <translation>Er bestaat al een map met de naam &quot;%1&quot; in uw Back-ups. Hernoem de nieuwe map om door te gaan met de back-up. De mapnaam verandert niet op uw computer.</translation>
+        <translation>Er bestaat al een map met de naam &#8220;%1&#8221; in uw Back-ups. Hernoem de nieuwe map om door te gaan met de back-up. De mapnaam verandert niet op uw computer.</translation>
     </message>
     <message>
         <source>If you don&apos;t want to rename the new folder, stop the backup in the [A]Backup centre[/A] for the existing folder. Then setup the backup for the new folder again.</source>
         <translatorcomment>Text instructing the user to go to the backup center to solve the backup name conflict</translatorcomment>
-        <translation>Als u de naam van de nieuwe map niet wilt wijzigen, stopt u de back-up in het [A]Back-up centrum[/A] voor de bestaande map. Stel vervolgens de back-up voor de nieuwe map opnieuw in.</translation>
+        <translation>Als u de naam van de nieuwe map niet wilt wijzigen, stopt u de back-up in het [A]Back-upcentrum[/A] voor de bestaande map. Stel vervolgens de back-up voor de nieuwe map opnieuw in.</translation>
     </message>
     <message>
         <source>Rename and backup</source>
@@ -453,7 +433,7 @@
     </message>
     <message>
         <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
-        <translatorcomment>Text informing the user that they can&amp;apos;t have duplicated backup names and instructing them to rename them</translatorcomment>
+        <translatorcomment>Text informing the user that they can&apos;t have duplicated backup names and instructing them to rename them</translatorcomment>
         <translation>U kunt geen back-up maken van mappen met dezelfde naam. Hernoem ze om door te gaan met de back-up. Mapnamen veranderen niet op uw computer.</translation>
     </message>
 </context>
@@ -477,7 +457,7 @@
     <message>
         <source>A folder named &quot;%1&quot; already exists in your Backups. Rename the new folder to continue with the backup.</source>
         <translatorcomment>Error message displayed in the top of the rename backup dialog. It indicates that a backup with that name already exists.</translatorcomment>
-        <translation>Er bestaat al een map met de naam &quot;%1&quot; in uw Back-ups. Hernoem de nieuwe map om door te gaan met de back-up.</translation>
+        <translation>Er bestaat al een map met de naam &#8220;%1&#8221; in uw Back-ups. Hernoem de nieuwe map om door te gaan met de back-up.</translation>
     </message>
 </context>
 <context>
@@ -491,6 +471,24 @@
         <source>Remove backup</source>
         <translatorcomment>Menu action removes the backup</translatorcomment>
         <translation>Back-up stoppen</translation>
+    </message>
+</context>
+<context>
+    <name>BackupTableViewTooltips</name>
+    <message>
+        <source>Backup is enabled</source>
+        <translatorcomment>Checkbox tooltip that is displayed when it is checked.(Backup enabled)</translatorcomment>
+        <translation>Back-up is ingeschakeld</translation>
+    </message>
+    <message>
+        <source>Backup is disabled</source>
+        <translatorcomment>Checkbox tooltip that is displayed when it is unchecked.(Backup disabled)</translatorcomment>
+        <translation>Back-up is uitgeschakeld</translation>
+    </message>
+    <message>
+        <source>Click menu for more Backup actions</source>
+        <translatorcomment>Menu column tooltip (three dots in the table)</translatorcomment>
+        <translation>Klik op het 3 punten menu voor meer back-up acties</translation>
     </message>
 </context>
 <context>
@@ -593,7 +591,7 @@
     <message numerus="yes">
         <source>We&apos;re backing up your folder. The time this takes depends on the files in this folder.</source>
         <translatorcomment>Label indicating that the backup configuration was successfull and it is being uploaded.</translatorcomment>
-        <translation><numerusform>We maken een back-up van uw map. Hoe lang dit duurt, hangt af van de bestanden in deze map.</numerusform><numerusform>We maken een back-up van uw mappen. Hoe lang dit duurt, hangt af van de bestanden in deze map.</numerusform></translation>
+        <translation><numerusform>We maken een back-up van uw map. Hoe lang dit duurt, is afhankelijk van de bestanden in de map.</numerusform><numerusform>We maken een back-up van uw mappen. Hoe lang dit duurt, is afhankelijk van de bestanden in de mappen.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Problem backing up folder</source>
@@ -603,7 +601,7 @@
     <message numerus="yes">
         <source>This folder wasn&apos;t backed up. Try again.</source>
         <translatorcomment>Label that indicates that there happened an error backing up a folder/folders</translatorcomment>
-        <translation><numerusform>Er is geen back-up gemaakt van deze map. Probeer het nogmaals.</numerusform><numerusform>Van deze mappen is geen back-up gemaakt. Probeer het nogmaals.</numerusform></translation>
+        <translation><numerusform>Van deze map is geen back-up gemaakt. Probeer het opnieuw.</numerusform><numerusform>Van deze mappen is geen back-up gemaakt. Probeer het opnieuw.</numerusform></translation>
     </message>
     <message>
         <source>Folder is already selected. Select a different folder.</source>
@@ -650,7 +648,7 @@
     <name>BandwidthSettings</name>
     <message>
         <source>Bandwidth</source>
-        <translatorcomment>Title of the dialog to manage Bandwidth settings/preferences.</translatorcomment>
+        <translatorcomment>Title of the dialog to manage Bandwidth settings.</translatorcomment>
         <translation>Bandbreedte</translation>
     </message>
     <message>
@@ -740,8 +738,8 @@
     </message>
     <message>
         <source>Only enable this option if tranfers don&apos;t start. Under all other circumstances, using HTTP is satisfactory as MEGA already encrypts all data.</source>
-        <translatorcomment>Description label about the option Use HTTPS for transfers that don&amp;apos;t start checkbox.</translatorcomment>
-        <translation>Schakel deze optie alleen in als overdrachten niet starten. Onder alle andere omstandigheden is het gebruik van HTTP bevredigend, aangezien MEGA alle gegevens al versleutelt.</translation>
+        <translatorcomment>Description label about the option Use HTTPS for transfers that don&apos;t start checkbox.</translatorcomment>
+        <translation>Schakel deze optie alleen in als de overdracht niet start. Onder alle andere omstandigheden is het gebruik van HTTP bevredigend, aangezien MEGA alle gegevens al codeert.</translation>
     </message>
 </context>
 <context>
@@ -832,7 +830,7 @@
     <message>
         <source>Bug report success!</source>
         <translatorcomment>Confirmation message shown when a bug report is successfully uploaded.</translatorcomment>
-        <translation>Uw probleem is succesvol gerapporteerd.</translation>
+        <translation>Uw probleem is gemeld.</translation>
     </message>
     <message>
         <source>Your bug report has been submitted, a confirmation email will sent to you accordingly.</source>
@@ -909,7 +907,8 @@
     </message>
     <message>
         <source>Cancelling…</source>
-        <translation>Annuleren...</translation>
+        <translatorcomment>Message displayed while transfers cancelling is in progress</translatorcomment>
+        <translation>Annuleren&#8230;</translation>
     </message>
 </context>
 <context>
@@ -949,38 +948,47 @@
     <name>ChangePassword</name>
     <message>
         <source>Change password</source>
+        <translatorcomment>Windows title of the Change password dialog</translatorcomment>
         <translation>Wijzig wachtwoord</translation>
     </message>
     <message>
         <source>New password</source>
+        <translatorcomment>Label displayed next to control where the user can enter the new password</translatorcomment>
         <translation>Nieuw wachtwoord</translation>
     </message>
     <message>
         <source>Confirm new password</source>
+        <translatorcomment>Label displayed next to control where the user can enter the new password confirmation</translatorcomment>
         <translation>Bevestig nieuw wachtwoord</translation>
     </message>
     <message>
         <source>Cancel</source>
+        <translatorcomment>Button label to close the Change password dialog discarding the information</translatorcomment>
         <translation>Annuleren</translation>
     </message>
     <message>
         <source>OK</source>
+        <translatorcomment>Button label to close the Change password dialog saving the new information</translatorcomment>
         <translation>OK</translation>
     </message>
     <message>
         <source>Error</source>
+        <translatorcomment>Title of the error dialog displayed when there is an issue related to the Change password dialog</translatorcomment>
         <translation>Fout</translation>
     </message>
     <message>
         <source>Please enter your password</source>
+        <translatorcomment>Error message displayed when an empty password has been provided</translatorcomment>
         <translation>Voer uw wachtwoord in</translation>
     </message>
     <message>
         <source>The entered passwords don&apos;t match</source>
+        <translatorcomment>Error message displayed when the new password and its confirmation are not the same</translatorcomment>
         <translation>De ingevoerde wachtwoorden komen niet overeen</translation>
     </message>
     <message>
         <source>Please, enter a stronger password</source>
+        <translatorcomment>Error message displayed when an the new password is too weak</translatorcomment>
         <translation>Gebruik een sterker wachtwoord</translation>
     </message>
     <message>
@@ -1052,7 +1060,7 @@
     <message>
         <source>Send report</source>
         <translatorcomment>Label for Send report button.</translatorcomment>
-        <translation>Rapport verzenden</translation>
+        <translation>Rapport versturen</translation>
     </message>
     <message>
         <source>Attach diagnostic log files to assist with debugging[Br](in some cases it may contain details about your data, such as file or folder names)</source>
@@ -1097,16 +1105,6 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
         <source>Reject</source>
         <translatorcomment>Button label of system notification to reject the notification of incoming contact request.</translatorcomment>
         <translation>Weigeren</translation>
-    </message>
-    <message>
-        <source>Reminder</source>
-        <translatorcomment>Label to indicate a reminder about a contact request.</translatorcomment>
-        <translation>Herinnering</translation>
-    </message>
-    <message>
-        <source>You have a contact request</source>
-        <translatorcomment>Label to indicate that actual user has received a new contact request.</translatorcomment>
-        <translation>U heeft een contact verzoek</translation>
     </message>
     <message>
         <source>View</source>
@@ -1224,11 +1222,6 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
         <translation>Uw gegevens lopen risico</translation>
     </message>
     <message>
-        <source>Show in folder</source>
-        <translatorcomment>Button label of system notification to open the selected completed transfer using the specific file browser</translatorcomment>
-        <translation>Weergeven in map</translation>
-    </message>
-    <message>
         <source>Payment Failed</source>
         <translatorcomment>Notification title shown when a payment has failed for a business account.</translatorcomment>
         <translation>Betaling mislukt</translation>
@@ -1288,6 +1281,16 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
         <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
         <translation>Nieuwe gedeelde map van [A]</translation>
     </message>
+    <message>
+        <source>Reminder: You have a contact request</source>
+        <translatorcomment>Label to indicate a reminder about a contact request.</translatorcomment>
+        <translation>Herinnering: u hebt een contact verzoek</translation>
+    </message>
+    <message>
+        <source>Show in MEGA</source>
+        <translatorcomment>Notification button to redirect the user to remote location. It will open webclient at specific location.</translatorcomment>
+        <translation>Weergeven in MEGA</translation>
+    </message>
 </context>
 <context>
     <name>DownloadFromMegaDialog</name>
@@ -1340,6 +1343,49 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
         <translation>U heeft geen schrijf rechten voor deze lokale map.</translation>
+    </message>
+</context>
+<context>
+    <name>DownloadNodeSelector</name>
+    <message>
+        <source>Download</source>
+        <translatorcomment>Window title for download node selector</translatorcomment>
+        <translation>Downloaden</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translatorcomment>Title of the dialog</translatorcomment>
+        <translation>Fout</translation>
+    </message>
+    <message numerus="yes">
+        <source>The item you selected has been removed. To reselect, close this window and try again.</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
+        <translation><numerusform>Het item die u had geselecteerd was verwijderd. Om te herselecteren, sluit dit venster en probeer nogmaals.</numerusform><numerusform>De items die u had geselecteerd waren verwijderd. Om te herselecteren, sluit dit venster en probeer nogmaals.</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>You no longer have access to this item. Ask the owner to share again.</source>
+        <translatorcomment>Error message shown when the user is trying to download an file or folder from an incoming share and the owner stops sharing/removes all items</translatorcomment>
+        <translation><numerusform>U heeft geen toegang meer tot dit item. Vraag de persoon die het met u heeft gedeeld om het opnieuw te delen.</numerusform><numerusform>U heeft geen toegang meer tot deze items. Vraag de persoon die ze met u heeft gedeeld om ze opnieuw te delen.</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 item selected</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
+        First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
+        <translation><numerusform>%1 item geselecteerd.</numerusform><numerusform>%1 items geselecteerd.</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1. %2 has been removed. To reselect, close this window and try again.</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
+        First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
+        <translation><numerusform>%1. %2 was verwijderd. Om te her selecteren, sluit dit venster en probeer nogmaals.</numerusform><numerusform>%1. %2 waren verwijderd. Om te her selecteren, sluit dit venster en probeer nogmaals.</numerusform></translation>
+    </message>
+</context>
+<context>
+    <name>DownloadQueueController</name>
+    <message>
+        <source>Local Disk</source>
+        <translatorcomment>Default drive name shown on the low space dialog when downloading files</translatorcomment>
+        <translation>Lokale schijf</translation>
     </message>
 </context>
 <context>
@@ -1500,6 +1546,7 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     </message>
     <message>
         <source>View previous versions</source>
+        <translatorcomment>Entry in OS Context menu to open the &quot;Previous versions&quot; of an entry in the webclient</translatorcomment>
         <translation>Vorige versies weergeven</translation>
     </message>
     <message numerus="yes">
@@ -1537,6 +1584,7 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     </message>
     <message>
         <source>Error</source>
+        <translatorcomment>Title of the error dialog displayed when there is an error with FolderBinder dialog</translatorcomment>
         <translation>Fout</translation>
     </message>
     <message>
@@ -1720,7 +1768,7 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     <message>
         <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
         <translatorcomment>Error message shown when the program detects an issues with SSL key verification.</translatorcomment>
-        <translation>Onze SLL sleutel kan niet geverifieerd worden. U kunt getroffen zijn door een aanval of uw antivirus software kan uw communicatie onderscheppen en dit probleem veroorzaken. Schakel het uit en probeer nogmaals.</translation>
+        <translation>Onze SSL-sleutel kan niet worden geverifieerd. U kunt worden getroffen door een man-in-the-middle-aanval of uw antivirussoftware kan uw communicatie onderscheppen en dit probleem veroorzaken. Schakel het uit en probeer het opnieuw.</translation>
     </message>
 </context>
 <context>
@@ -1778,6 +1826,7 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     </message>
     <message>
         <source>Error</source>
+        <translatorcomment>Title of the error dialog displayed when there is an error with ImportMegaLinks dialog</translatorcomment>
         <translation>Fout</translation>
     </message>
     <message>
@@ -1800,7 +1849,7 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     </message>
     <message>
         <source>Settings</source>
-        <translatorcomment>This is the string used to refer to settings, or preferences, in Windows and Linux. .</translatorcomment>
+        <translatorcomment>This is the string used to refer to settings for all platforms.</translatorcomment>
         <translation>Instellingen</translation>
     </message>
     <message>
@@ -1825,6 +1874,7 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     </message>
     <message>
         <source>The process is taking longer than expected. Please wait...</source>
+        <translatorcomment>Message displayed in the InfoDialog when a process is busy for a longer time than normal due to Mega servers being busy</translatorcomment>
         <translation>Dit process duurt langer dan verwacht. Wacht alstublieft.</translation>
     </message>
     <message>
@@ -1895,7 +1945,7 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     <message>
         <source>Open notification settings</source>
         <translatorcomment>Button label to redirect the user to notification settings for configuration</translatorcomment>
-        <translation>Open melding instellingen</translation>
+        <translation>Notificatie Instellingen openen</translation>
     </message>
     <message>
         <source>No notifications</source>
@@ -1948,29 +1998,9 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
         <translation>U moet meteen reageren om uw gegevens te redden</translation>
     </message>
     <message>
-        <source>Depleted transfer quota.</source>
-        <translatorcomment>Title to indicate a situation of depleted transfer quota for the current account.</translatorcomment>
-        <translation>Uitgeput overdrachtstegoed.</translation>
-    </message>
-    <message>
-        <source>All downloads are currently disabled.</source>
-        <translatorcomment>Informative label to indicate that all downloads are currently disabled because a situation of over transfer quota.</translatorcomment>
-        <translation>Alle downloads zijn momenteel uitgeschakeld.</translation>
-    </message>
-    <message>
-        <source>Upgrade</source>
-        <translatorcomment>Button label to upgrade the current account.</translatorcomment>
-        <translation>Upgraden</translation>
-    </message>
-    <message>
         <source>Limited available transfer quota</source>
         <translatorcomment>Title to indicate that current account has limited transfer quota. Transfer usage above 90 per cent of the total.</translatorcomment>
         <translation>Gelimiteerd beschikbaar overdrachtstegoed</translation>
-    </message>
-    <message>
-        <source>Your queued transfers exceed the current quota available for your IP address and can therefore be interrupted.</source>
-        <translatorcomment>Informative label to indicate that your queued transfers may be interrupted because the current account is above 90 percent of the transfer quota of the current account.</translatorcomment>
-        <translation>Uw wachtende overdrachten overschrijden het huidige tegoed beschikbaar voor uw IP-adres en kan daarom onderbroken worden.</translation>
     </message>
     <message>
         <source>One or more syncs have been disabled</source>
@@ -1983,13 +2013,8 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
         <translation>Er is iets misgegaan bij het synchroniseren van uw mappen.</translation>
     </message>
     <message>
-        <source>Open Preferences</source>
-        <translatorcomment>Button label to open MEGAsync preferences dialog (MacOS).</translatorcomment>
-        <translation>Voorkeuren openen</translation>
-    </message>
-    <message>
         <source>Open Settings</source>
-        <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
+        <translatorcomment>Button label to open MEGAsync settings dialog (used for all platforms).</translatorcomment>
         <translation>Instellingen openen</translation>
     </message>
     <message>
@@ -2016,11 +2041,6 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
         <source>Error</source>
         <translatorcomment>Title of the dialog</translatorcomment>
         <translation>Fout</translation>
-    </message>
-    <message>
-        <source>Folder can&apos;t be opened. Check that the folder in your local drive hasn&apos;t been deleted or moved.</source>
-        <translatorcomment>Warning message text to let the user know that the local folder could not be opened</translatorcomment>
-        <translation>Map kan niet worden geopend. Controleer of de map op uw lokale schijf niet is verwijderd of verplaatst.</translation>
     </message>
     <message>
         <source>Some syncs and backups have been disabled</source>
@@ -2052,6 +2072,41 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
         <translatorcomment>Tooltip message shown while hovering backups button.</translatorcomment>
         <translation>Back-up toevoegen</translation>
     </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
+        <translation>Overdracht tegoed overschreden</translation>
+    </message>
+    <message>
+        <source>Your queued transfers exceed the current quota available for your IP address.</source>
+        <translatorcomment>Informative label to indicate that your queued transfers exceed the current quota available for IP. Applies to free users.</translatorcomment>
+        <translation>Uw overdrachten in de wachtrij overschrijden het huidige beschikbare tegoed voor uw IP-adres.</translation>
+    </message>
+    <message>
+        <source>Upgrade Account</source>
+        <translatorcomment>Button label to upgrade the current account.</translatorcomment>
+        <translation>Account upgraden</translation>
+    </message>
+    <message>
+        <source>I will wait</source>
+        <translatorcomment>Button label to dismiss (hide) overquota dialogs. Shown for free users only if they do not want to upgrade account for extra transfer quota.</translatorcomment>
+        <translation>Ik zal wachten</translation>
+    </message>
+    <message>
+        <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew.</source>
+        <translatorcomment>Informative label to indicate that your queued transfers may be interrupted because the current account does not have enough transfer quota.</translatorcomment>
+        <translation>U kunt niet doorgaan met downloaden omdat u niet genoeg overdrachtstegoed meer hebt op dit account. Als u wilt doorgaan met downloaden, een nieuw abonnement wilt kopen of als u een terugkerend abonnement bij MEGA hebt, kunt u wachten tot uw abonnement wordt verlengd.</translation>
+    </message>
+    <message>
+        <source>Buy new plan</source>
+        <translatorcomment>Button label for button to buy a new plan when there is not enough transfer quota in current non-free plan</translatorcomment>
+        <translation>Nieuw abonnement kopen</translation>
+    </message>
+    <message>
+        <source>Downloading may be interrupted as you have used 90% of your transfer quota on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew. </source>
+        <translatorcomment>Message displayed in the InfoDialog when the transfer quota reaches warning stage</translatorcomment>
+        <translation>Het downloaden kan worden onderbroken omdat u 90% van uw overdrachtstegoed op dit account hebt gebruikt. Als u wilt doorgaan met downloaden, een nieuw abonnement wilt kopen of als u een doorlopend abonnement hebt bij MEGA, kunt u wachten tot uw abonnement wordt verlengd.</translation>
+    </message>
 </context>
 <context>
     <name>InfoDialogTransferDelegateWidget</name>
@@ -2072,7 +2127,7 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     </message>
     <message>
         <source>Copy link to file</source>
-        <translatorcomment>Tooltip for copy linr</translatorcomment>
+        <translatorcomment>Tooltip for copy link</translatorcomment>
         <translation>Link kopiëren naar klembord</translation>
     </message>
     <message>
@@ -2080,11 +2135,17 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
         <translatorcomment>Message shown when the transfer has finished. [A] place holder stands for elapsed time since the transfer finished</translatorcomment>
         <translation>Toegevoegd [A]</translation>
     </message>
+    <message>
+        <source>Deleted or moved file</source>
+        <translatorcomment>Tooltip when the file completed was removed or deleted</translatorcomment>
+        <translation>Verwijderd of verplaatst bestand</translation>
+    </message>
 </context>
 <context>
     <name>InfoWizard</name>
     <message>
         <source>You are not logged in</source>
+        <translatorcomment>Window title of the wizard displayed the first time Desktop app is run</translatorcomment>
         <translation>U bent niet ingelogd</translation>
     </message>
     <message>
@@ -2094,6 +2155,7 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     </message>
     <message>
         <source>Create Account</source>
+        <translatorcomment>Button label for creating a new MEGA account</translatorcomment>
         <translation>Account creëren</translation>
     </message>
     <message>
@@ -2212,9 +2274,43 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     </message>
 </context>
 <context>
+    <name>LowDiskSpaceDialog</name>
+    <message>
+        <source>Low disk space</source>
+        <translatorcomment>Dialog title</translatorcomment>
+        <translation>Weinig schijfruimte</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Button text to abort downloading the files</translatorcomment>
+        <translation>Annuleren</translation>
+    </message>
+    <message>
+        <source>Try Again</source>
+        <translatorcomment>Button text to retry downloading the files</translatorcomment>
+        <translation>Probeer opnieuw</translation>
+    </message>
+    <message>
+        <source>There is not enough space on %1. You need an additional %2 to download these files.</source>
+        <translatorcomment>Label explaining the problem, %1 is the download target disk name. %2 is the needed size to continue with the download (the size unit depends on the quantity) </translatorcomment>
+        <translation>Er is niet genoeg ruimte op %1. u heeft een extra %2 nodig om deze bestanden te downloaden.</translation>
+    </message>
+    <message>
+        <source>Free space: %1</source>
+        <translatorcomment>Label informing about the local disk free space</translatorcomment>
+        <translation>Vrije ruimte: %1</translation>
+    </message>
+    <message>
+        <source>Total size: %1</source>
+        <translatorcomment>Label informing about the total local disk space</translatorcomment>
+        <translation>Totale grootte: %1</translation>
+    </message>
+</context>
+<context>
     <name>MegaApplication</name>
     <message>
         <source>MEGAsync</source>
+        <translatorcomment>Title of error dialog displayed when the account is blocked</translatorcomment>
         <translation>MEGA</translation>
     </message>
     <message>
@@ -2365,11 +2461,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Uw configuratie is corrupt, begin opnieuw</translation>
     </message>
     <message>
-        <source>Error getting link: </source>
-        <translatorcomment>Notification message launched when an error occurs getting a public link for a file/folder. Keep colon.</translatorcomment>
-        <translation>Fout tijdens het verkrijgen van de link:</translation>
-    </message>
-    <message>
         <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
         <translatorcomment>Notification message launched when a connectivity problem occurs.</translatorcomment>
         <translation>De applicatie kan geen verbinding maken. Controleer uw Internetverbinding en lokale firewallconfiguratie. Noteer dat de meeste antivirussoftware een firewall bevatten.</translation>
@@ -2377,12 +2468,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Uw synchronisatie “%1”  is gestopt omdat de externe map niet bestaat</translation>
+        <translation>Uw synchronisatie &#8220;%1&#8221; is gestopt omdat de externe map niet bestaat</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Uw synchronisatie “%1” is uitgeschakeld omdat de lokale map niet bestaat</translation>
+        <translation>Uw sync &#8220;%1&#8221; is uitgeschakeld omdat de lokale map niet bestaat</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -2417,7 +2508,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Uw synchronisatie “%1” is uitgeschakeld. De externe map (of een deel ervan) heeft geen volledige toegang</translation>
+        <translation>Uw synchronisatie “%1”  is uitgeschakeld. De externe map (of een deel ervan) heeft geen volledige toegang</translation>
     </message>
     <message>
         <source>Over quota</source>
@@ -2452,7 +2543,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
         <translatorcomment>Notification message shown when SSL checks fails.</translatorcomment>
-        <translation>Onze SLL sleutel kan niet geverifieerd worden. U kunt getroffen zijn door een aanval of uw antivirus software kan uw communicatie onderscheppen en dit probleem veroorzaken. Schakel het uit en probeer nogmaals.</translation>
+        <translation>Onze SSL-sleutel kan niet worden geverifieerd. U kunt worden getroffen door een man-in-the-middle-aanval of uw antivirussoftware kan uw communicatie onderscheppen en dit probleem veroorzaken. Schakel het uit en probeer het opnieuw.</translation>
     </message>
     <message>
         <source>No Internet connection</source>
@@ -2461,34 +2552,28 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Fetching file list...</source>
+        <translatorcomment>Tooltip for Desktop app tray icon while the app is fetching data in syncing process</translatorcomment>
         <translation>Bestandslijst ophalen…</translation>
     </message>
     <message>
         <source>Transfer canceled</source>
+        <translatorcomment>Message displayed when the setup wizard was canceled and there were pending transfers</translatorcomment>
         <translation>Overdracht geannuleerd</translation>
     </message>
     <message>
         <source>You are not logged in</source>
+        <translatorcomment>Tooltip displayed in Desktop app tray icon when no user is logged in</translatorcomment>
         <translation>U bent niet ingelogd</translation>
     </message>
     <message>
         <source>Transfer manager</source>
+        <translatorcomment>Entry option to open Transfer manager from tray icon menu in Windows</translatorcomment>
         <translation>Overdracht beheerder</translation>
     </message>
     <message>
         <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
         <translatorcomment>Message shown to the user to inform that MEGAsync is not able to find a systray to place tray icon</translatorcomment>
-        <translation>We konden geen systeemvak vinden om het applicatie-vakpictogram in te plaatsen. Probeer de applicatie opnieuw te starten.</translation>
-    </message>
-    <message>
-        <source>Error getting link:</source>
-        <translatorcomment>Notification message shown when an error occurs while getting a public link .</translatorcomment>
-        <translation>Fout tijdens het verkrijgen van de link:</translation>
-    </message>
-    <message>
-        <source>File not found</source>
-        <translatorcomment>Notification message shown an error of file not found while getting a public link .</translatorcomment>
-        <translation>Bestand niet gevonden</translation>
+        <translation>We konden geen systeemvak vinden om de applicatie-vakpictogram in te plaatsen. Probeer de applicatie opnieuw te starten.</translation>
     </message>
     <message>
         <source>The link can&apos;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
@@ -2507,6 +2592,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Please consider updating your operating system.</source>
+        <translatorcomment>Message displayed in warning dialog when running in a deprecated OS</translatorcomment>
         <translation>Overweeg het updaten van uw besturingssysteem.</translation>
     </message>
     <message>
@@ -2530,34 +2616,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Uw wachtwoord is gewijzigd.</translation>
     </message>
     <message>
-        <source>Folder Upload</source>
-        <translatorcomment>Title of system notifications related to a folder upload</translatorcomment>
-        <translation>Map upload</translation>
-    </message>
-    <message>
-        <source>File Upload</source>
-        <translatorcomment>Title of system notifications related to a file upload</translatorcomment>
-        <translation>Bestandsupload</translation>
-    </message>
-    <message>
-        <source>Folder Download</source>
-        <translatorcomment>Title of system notifications related to a folder download</translatorcomment>
-        <translation>Map Download</translation>
-    </message>
-    <message>
-        <source>File Download</source>
-        <translatorcomment>Title of system notifications related to a file download</translatorcomment>
-        <translation>Bestandsdownload</translation>
-    </message>
-    <message>
         <source>Cloud drive</source>
         <translatorcomment>Label of context menu to reach Cloud drive section at webclient. It will open your webbrowser and redirects to your cloud drive.</translatorcomment>
         <translation>Cloud schijf</translation>
-    </message>
-    <message>
-        <source>Error transferring folder: </source>
-        <translatorcomment>Label to indicate that has been an error during a folder transfer.</translatorcomment>
-        <translation>Fout overdragen map:</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -2577,7 +2638,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message shown to admin business account when a payment has failed. </translatorcomment>
-        <translation>Uw Business-account is gedeactiveerd vanwege een mislukte betaling. U heeft pas toegang tot de gegevens die in uw account zijn opgeslagen nadat u een betaling heeft gedaan en uw abonnement opnieuw heeft geactiveerd.</translation>
+        <translation>Uw Zakelijke-account is gedeactiveerd vanwege een mislukte betaling. U heeft geen toegang tot de gegevens die in uw account zijn opgeslagen totdat u een betaling hebt gedaan en uw abonnement opnieuw hebt geactiveerd.</translation>
     </message>
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
@@ -2607,7 +2668,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
         <translatorcomment>Informative message shown when a user is trying to upload data to a inshare that is in overquota state. %1 will be replaced with sharer account to inform the user.</translatorcomment>
-        <translation>Uw upload(s) kunnen niet doorgaan omdat %1 van het account vol is.</translation>
+        <translation>Uw uploads kunnen niet doorgaan omdat %1&#8217;s account vol is.</translation>
     </message>
     <message>
         <source>contact</source>
@@ -2652,12 +2713,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>This sync can&apos;t be added: %1. Reason: %2</source>
         <translatorcomment>Error message shown when there is an error adding a sync. %1 will be replaced with name of sync and %2 with the reason of the error.</translatorcomment>
-        <translation>Deze synchronisatie kan niet worden toegevoegd: %1. Reden: %2</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been temporarily disabled</source>
-        <translatorcomment>Notification message launched when a sync is temporarily disabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime.</translatorcomment>
-        <translation>Uw synchronisatie “%1” is tijdelijk uitgeschakeld</translation>
+        <translation>Deze synchronisatie kan niet toegevoegd worden: %1. Reden: %2</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. Reason: %2</source>
@@ -2675,44 +2731,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>De applicatie blijft werken, maar updates worden binnenkort niet meer ondersteund voor versies vóór macOS Sierra.</translation>
     </message>
     <message>
-        <source>Your syncs have been disabled</source>
-        <translatorcomment>Notification message launched when your syncs have been disabled.</translatorcomment>
-        <translation>Uw synchronisaties zijn uitgeschakeld</translation>
-    </message>
-    <message>
         <source>Thank you for your collaboration</source>
         <translatorcomment>Informative message shown when a user makes a report to thank for his help.</translatorcomment>
         <translation>Bedankt voor uw samenwerking</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n file</source>
-        <translatorcomment>File count, where %n is the number of files. Used to build the &quot;Files and folders successfully uploaded/downloaded&quot; string.</translatorcomment>
-        <translation><numerusform>%n bestand</numerusform><numerusform>%n bestanden</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n folder</source>
-        <translatorcomment>Folder count, where %n is the number of folders. Used to build the &quot;Files and folders successfully uploaded/downloaded&quot; string.</translatorcomment>
-        <translation><numerusform>%n map</numerusform><numerusform>%n mappen</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n file was successfully uploaded</source>
-        <translatorcomment>System notification to inform the user that %1 files were successfully uploaded</translatorcomment>
-        <translation><numerusform>%n bestand was succesvol geüpload</numerusform><numerusform>%n bestanden waren succesvol geüpload</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n file was successfully downloaded</source>
-        <translatorcomment>System notification to inform the user that %1 files were successfully downloaded</translatorcomment>
-        <translation><numerusform>%n bestand was succesvol gedownload</numerusform><numerusform>%n bestanden waren succesvol gedownload</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n folder was successfully uploaded</source>
-        <translatorcomment>System notification to inform the user that %n folders were successfully uploaded</translatorcomment>
-        <translation><numerusform>%n map was succesvol geüpload</numerusform><numerusform>%n mappen waren succesvol geüpload</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n folder was successfully downloaded</source>
-        <translatorcomment>System notification to inform the user that %n folders were successfully downloaded</translatorcomment>
-        <translation><numerusform>%n map was succesvol gedownload</numerusform><numerusform>%n mappen waren succesvol gedownload</numerusform></translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available. Click on this message to install it</source>
@@ -2723,16 +2744,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>A new version of MEGAsync is available</source>
         <translatorcomment>System notification to inform the user that there is a new version of MEGAsync available for update. macOS version cannot be installed making click so, a new string is provided</translatorcomment>
         <translation>Er is een nieuwe versie van deze applicatie beschikbaar.</translation>
-    </message>
-    <message>
-        <source>%1 and %2 were successfully uploaded</source>
-        <translatorcomment>System notification to inform the user that %1 files and %2 folders were successfully uploaded. The %1 is a sentence part for files and %2 for folders.</translatorcomment>
-        <translation>%1 en %2 geüpload</translation>
-    </message>
-    <message>
-        <source>%1 and %2 were successfully downloaded</source>
-        <translatorcomment>System notification to inform the user that %1 files and %2 folders were successfully downloaded. The %1 is a sentence part for files and %2 for folders.</translatorcomment>
-        <translation>%1 en %2 gedownload</translation>
     </message>
     <message numerus="yes">
         <source>There is an active transfer. Exit the app?
@@ -2768,24 +2779,9 @@ Overdrachten worden automatisch hervat wanneer u de applicatie heropend.</numeru
         <translation>Fout bij toevoegen %1:</translation>
     </message>
     <message>
-        <source>Your syncs and backups have been disabled</source>
-        <translatorcomment>Warning message shown when  all the syncs and backups have been disabled</translatorcomment>
-        <translation>Uw synchronisaties en back-ups zijn uitgeschakeld:</translation>
-    </message>
-    <message>
-        <source>Your backups have been disabled</source>
-        <translatorcomment>Warning message shown when all the backups have been disabled</translatorcomment>
-        <translation>Uw back-ups zijn uitgeschakeld:</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been temporarily disabled</source>
-        <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder displays backup name</translatorcomment>
-        <translation>Uw back-up &quot;%1&quot; is tijdelijk uitgeschakeld:</translation>
-    </message>
-    <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Uw back-up &quot;%1&quot; is uitgeschakeld omdat de lokale map niet bestaat.</translation>
+        <translation>Uw backup ”%1“ is uitgeschakeld omdat de lokale map niet bestaat.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
@@ -2795,27 +2791,27 @@ Overdrachten worden automatisch hervat wanneer u de applicatie heropend.</numeru
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Uw back-up &quot;%1&quot; was uitgeschakeld omdat de MEGA map in de Prullenbak is.</translation>
+        <translation>Uw back-up &#8220;%1&#8221; was uitgeschakeld omdat de MEGA map in de Prullenbak is.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Uw back-up “%1” is uitgeschakeld. De MEGA map (of een deel ervan) heeft geen volledige toegang.</translation>
+        <translation>Uw backup “%1” was uitgeschakeld. U heeft geen volledige toegang tot de MEGA map (of een deel ervan).</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder has changed</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Uw back-up &quot;%1&quot; is uitgeschakeld omdat de lokale map is gewijzigd.</translation>
+        <translation>Uw back-up &#8220;%1&#8221; is uitgeschakeld omdat de lokale map is gewijzigd.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder has changed</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Uw back-up &quot;%1&quot; is uitgeschakeld omdat de MEGA map is gewijzigd.</translation>
+        <translation>Uw back-up &#8220;%1&#8221; is uitgeschakeld omdat de MEGA map is gewijzigd.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled. Reason: %2</source>
-        <translatorcomment>Notification message launched when a backup is disabled. Keep &amp;quot;%1&amp;quot; code because is filled with the name of the backup at runtime and %2 with the reason of the error.</translatorcomment>
-        <translation>Uw back-up &quot;%1&quot; is uitgeschakeld. Reden: %2</translation>
+        <translatorcomment>Notification message launched when a backup is disabled. Keep &quot;%1&quot; code because is filled with the name of the backup at runtime and %2 with the reason of the error.</translatorcomment>
+        <translation>Uw back-up &#8220;%1&#8221; is uitgeschakeld. Reden: %2</translation>
     </message>
     <message>
         <source>Security upgrade</source>
@@ -2836,6 +2832,71 @@ Overdrachten worden automatisch hervat wanneer u de applicatie heropend.</numeru
         <source>Failed to ugrade security. Error: %1</source>
         <translatorcomment>System notification error shown if an error occur while upgrading security for your account. %1 will be replaced with the error returned from the SDK.</translatorcomment>
         <translation>Mislukt om beveiliging te upgraden. Fout: %1</translation>
+    </message>
+    <message>
+        <source>Some syncs and backups have been disabled. Go to settings to enable them again.</source>
+        <translatorcomment>Warning message shown when some backups and syncs are disabled. Tell the userto go to settings to solve the issue.</translatorcomment>
+        <translation>Sommige synchronisaties en back-ups zijn uitgeschakeld. Ga naar Instellingen om ze weer in te schakelen.</translation>
+    </message>
+    <message>
+        <source>One or more backups have been disabled. Go to settings to enable them again.</source>
+        <translatorcomment>Warning message shown when some backups are disabled. Tell the userto go to settings to solve the issue.</translatorcomment>
+        <translation>Één of meer back-ups zijn uitgeschakeld. Ga naar Instellingen om ze weer in te schakelen.</translation>
+    </message>
+    <message>
+        <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
+        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again.</translatorcomment>
+        <translation>Een of meer synchronisaties zijn uitgeschakeld. Ga naar Instellingen om ze weer in te schakelen.</translation>
+    </message>
+    <message>
+        <source>Open settings</source>
+        <translatorcomment>Button label to open MEGAsync settings dialog.</translatorcomment>
+        <translation>Instellingen Openen</translation>
+    </message>
+    <message>
+        <source>Error getting link: File not found</source>
+        <translatorcomment>Notification message shown an error of file not found while getting a public link.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translatorcomment>This is the string used to refer to settings.</translatorcomment>
+        <translation>Instellingen</translation>
+    </message>
+    <message>
+        <source>Your syncs and backups have been disabled: %1</source>
+        <translatorcomment>Warning message shown when all the syncs and backups have been disabled. The placeholder %1 shows the reason;</translatorcomment>
+        <translation>Uw synchronisaties en back-ups zijn uitgeschakeld: %1</translation>
+    </message>
+    <message>
+        <source>Your backups have been disabled: %1</source>
+        <translatorcomment>Warning message shown when all the backups have been disabled. The placeholder %1 shows the reason;</translatorcomment>
+        <translation>Uw back-ups zijn uitgeschakeld: %1</translation>
+    </message>
+    <message>
+        <source>Your syncs have been disabled: %1</source>
+        <translatorcomment>Warning message shown when  all the syncs have been disabled. The placeholder %1 shows the reason;</translatorcomment>
+        <translation>Uw synchronisaties zijn uitgeschakeld: %1</translation>
+    </message>
+    <message>
+        <source>Error getting link: %1</source>
+        <translatorcomment>Notification message launched when an error occurs getting a public link for a file/folder. Placeholder %1 displays the reason.</translatorcomment>
+        <translation>Fout bij ophalen van link: %1</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been temporarily disabled: %2</source>
+        <translatorcomment>Warning message shown when a sync is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
+        <translation>Uw synchronisatie &#8220;%1&#8221; was tijdelijk uitgeschakeld: %2</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been temporarily disabled: %2</source>
+        <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
+        <translation>Uw back-up &#8220;%1&#8221; is tijdelijk uitgeschakeld: %2</translation>
+    </message>
+    <message>
+        <source>Error transferring folder: %1</source>
+        <translatorcomment>Label to indicate that has been an error during a folder transfer.  Placeholder %1 displays the reason.</translatorcomment>
+        <translation>Fout bij overdragen map: %1</translation>
     </message>
 </context>
 <context>
@@ -3003,7 +3064,7 @@ Overdrachten worden automatisch hervat wanneer u de applicatie heropend.</numeru
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
-        <translation>Uw account is beëindigd vanwege een schending van de Algemene Voorwaarden van MEGA, zoals misbruik van rechten van anderen; het delen en/of importeren van illegale gegevens; of systeemmisbruik.</translation>
+        <translation>Uw account was beëindigd door een schending van MEGA’s Algemene Voorwaarden, zoals misbruik van rechten van anderen; het delen en importen van illegale gegevens; of systeem misbruik.</translation>
     </message>
 </context>
 <context>
@@ -3120,7 +3181,7 @@ Overdrachten worden automatisch hervat wanneer u de applicatie heropend.</numeru
     <message>
         <source>Foreign target storage quota reached</source>
         <translatorcomment>Label to show that foreign target account has exceeded its storage quota during a SDK operation.</translatorcomment>
-        <translation>Het account van de eigenaar van de synchronisatiemap heeft zijn opslaglimiet overschreden.</translation>
+        <translation>Het account van de eigenaar van de synchronisatiemap heeft zijn opslagtegoed overschreden.</translation>
     </message>
     <message>
         <source>Remote path has changed</source>
@@ -3135,7 +3196,7 @@ Overdrachten worden automatisch hervat wanneer u de applicatie heropend.</numeru
     <message>
         <source>Share without full access</source>
         <translatorcomment>SDK error label shown when trying to sync into a shared folder without full access.</translatorcomment>
-        <translation>U heeft geen volledige toegang tot de map voor externe synchronisatie</translation>
+        <translation>U hebt geen volledige toegang tot de externe synchronisatiemap</translation>
     </message>
     <message>
         <source>Local fingerprint mismatch</source>
@@ -3210,7 +3271,7 @@ Overdrachten worden automatisch hervat wanneer u de applicatie heropend.</numeru
     <message>
         <source>You can&apos;t run MEGA Desktop App from this location. Move it into the Applications folder then run it.</source>
         <translatorcomment>Error message shown when the user is trying to run MEGA Desktop App from a path different than Applications. Only affects to macOS.</translatorcomment>
-        <translation>U kunt de desktop applicatie niet uitvoeren vanaf deze locatie. Verplaats het naar de map Applicatie en voer het uit.</translation>
+        <translation>U kunt de desktop-applicatie niet vanaf deze locatie uitvoeren. Verplaats het naar de map Toepassingen en voer het vervolgens uit.</translation>
     </message>
     <message>
         <source>Account expired (business or Pro Flexi)</source>
@@ -3365,8 +3426,8 @@ Your selected incomplete sync transfers won't be cancelled
 All the other selected transfers will be cancelled and cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
         <translation>Overdrachten annuleren?
-Uw geselecteerde incomplete gesynchroniseerde overdrachten worden niet geannuleerd
-All de andere geselecteerde overdrachten worden geannuleerd en gewist.</translation>
+Uw geselecteerde incomplete gesynchroniseerde overdrachten worden niet geannuleerd.
+Alle andere geselecteerde overdrachten worden geannuleerd en gewist.</translation>
     </message>
     <message>
         <source>Cancel transfer?</source>
@@ -3454,72 +3515,39 @@ Voer een andere naam in.</translation>
 <context>
     <name>NodeSelector</name>
     <message>
-        <source>Folder Selection</source>
-        <translatorcomment>Label to indicate the user the selection of folders for a synchronization (String short as possible)</translatorcomment>
-        <translation>Map selectie</translation>
-    </message>
-    <message>
-        <source>Select a MEGA folder:</source>
-        <translatorcomment>Label to indicate the user to select a MEGA folder for a synchronization (String short as possible). Keep capital letters.</translatorcomment>
-        <translation>Selecteer een MEGA map:</translation>
-    </message>
-    <message>
         <source>Error</source>
         <translatorcomment>Label to indicate an Error</translatorcomment>
         <translation>Fout</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translatorcomment>Label to indicate a Warning message.</translatorcomment>
-        <translation>Waarschuwing</translation>
-    </message>
-    <message>
-        <source>Invalid folder for synchronization.
-Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
-        <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation>Ongeldige map voor synchronisatie. Zorg ervoor dat u geen tekens zoals “\”, “/” of “:” gebruikt in uw map namen.</translation>
-    </message>
-    <message>
-        <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
-        <translatorcomment>Error message shown when an user is trying upload files to a non compatible folder</translatorcomment>
-        <translation>U heeft Lezen en Schrijven of Volledige toegangsrechten nodig om de geselecteerde map te kunnen uploaden.</translation>
-    </message>
-    <message>
-        <source>You need Full access right to be able to sync the selected folder.</source>
-        <translatorcomment>Error message shown when an user is trying sync a non compatible folder</translatorcomment>
-        <translation>U heeft Volledig toegangsrechten nodig om de geselecteerde map te synchroniseren.</translation>
-    </message>
-    <message>
-        <source>Only files can be used for streaming.</source>
-        <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
-        <translation>Alleen bestanden kunnen worden gebruikt voor streaming.</translation>
     </message>
     <message>
         <source>Select a MEGA folder</source>
         <translatorcomment>Node selector dialog title</translatorcomment>
         <translation>Selecteer een MEGA map</translation>
     </message>
-    <message numerus="yes">
-        <source>You no longer have access to this item. Ask the owner to share again.</source>
-        <translatorcomment>Error message shown when the user is trying to download an file or folder from an incoming share and the owner stops sharing/removes all items</translatorcomment>
-        <translation><numerusform>U heeft niet langer toegang tot dit item. Vraag de eigenaar om het opnieuw te delen</numerusform><numerusform>U heeft niet langer toegang tot deze items. Vraag de eigenaar om het opnieuw te delen</numerusform></translation>
-    </message>
-    <message numerus="yes">
+    <message>
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
-        <translation><numerusform>Het item die u had geselecteed was verwijderd. Om te herselecteren, sluit dit venster en probeer nogmaals.</numerusform><numerusform>De items die u had selecteerd zijn verwijderd. Om te herselecteren, sluit dit venster en probeer nogmaals.</numerusform></translation>
+        <translation>Het item die u had geselecteed was verwijderd. Om te herselecteren, sluit dit venster en probeer nogmaals.</translation>
     </message>
-    <message numerus="yes">
-        <source>%1 item selected</source>
-        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
-                           First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation><numerusform>%1 item geselecteerd</numerusform><numerusform>%1 items geselecteerd</numerusform></translation>
+    <message>
+        <source>Cloud Drive</source>
+        <translatorcomment>Button text to navigate to cloud drive section</translatorcomment>
+        <translation>Cloud schijf</translation>
     </message>
-    <message numerus="yes">
-        <source>%1. %2 has been removed. To reselect, close this window and try again.</source>
-        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
-                           Second and last part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation><numerusform>%1.%2 was verwijderd. Om te herselecteren, sluit dit venster en probeer nogmaals.</numerusform><numerusform>%1.%2 waren verwijderd. Om te herselecteren, sluit dit venster en probeer nogmaals.</numerusform></translation>
+    <message>
+        <source>Backups</source>
+        <translatorcomment>Button text to navigate to backups section</translatorcomment>
+        <translation>Back-ups</translation>
+    </message>
+    <message>
+        <source>Incoming Shares</source>
+        <translatorcomment>Button text to navigate to incoming shares section</translatorcomment>
+        <translation>Binnenkomende delingen</translation>
+    </message>
+    <message>
+        <source>Search</source>
+        <translatorcomment>Search button header</translatorcomment>
+        <translation>Zoeken</translation>
     </message>
 </context>
 <context>
@@ -3611,11 +3639,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Nieuwe map</translation>
     </message>
     <message>
-        <source>OK</source>
-        <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>OK</translation>
-    </message>
-    <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
         <translation>Annuleren</translation>
@@ -3629,6 +3652,39 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Error:</source>
         <translatorcomment>MessageBox to inform about an error when trying to move or remove a node</translatorcomment>
         <translation>Fout:</translation>
+    </message>
+    <message>
+        <source>Cloud drive</source>
+        <translatorcomment>Button to filter search results from cloud drive</translatorcomment>
+        <translation>Cloud schijf</translation>
+    </message>
+    <message>
+        <source>Backups</source>
+        <translatorcomment>Button to filter search results from backups</translatorcomment>
+        <translation>Back-ups</translation>
+    </message>
+    <message>
+        <source>Incoming Shares</source>
+        <translatorcomment>Button to filter search results from incoming shares</translatorcomment>
+        <translation>Binnenkomende delingen</translation>
+    </message>
+    <message>
+        <source>No results for:</source>
+        <translatorcomment>Label indicating that there are no results for the current search, searched text will be following this label.</translatorcomment>
+        <translation>Geen resultaten voor:</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translatorcomment>Button text to accept and close the dialog</translatorcomment>
+        <translation>OK</translation>
+    </message>
+</context>
+<context>
+    <name>NodeSelectorTreeViewWidgetSearch</name>
+    <message>
+        <source>Searching:</source>
+        <translatorcomment>Label indicating the current search, searched text will be following this label.</translatorcomment>
+        <translation>Zoeken:</translation>
     </message>
 </context>
 <context>
@@ -3707,6 +3763,21 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Info notifications</source>
         <translatorcomment>Title of a checkbox for disconnectig secondary info notifications</translatorcomment>
         <translation>Informatiemeldingen</translation>
+    </message>
+    <message>
+        <source>Uploads and downloads</source>
+        <translatorcomment>Notification category for completed transfers notifications</translatorcomment>
+        <translation>Uploads en downloads</translation>
+    </message>
+    <message>
+        <source>Completed uploads and downloads</source>
+        <translatorcomment>Title of a checkbox for disconnectig completed transfer notifications</translatorcomment>
+        <translation>Voltooide uploads en downloads</translation>
+    </message>
+    <message>
+        <source>Uploads and downloads:</source>
+        <translatorcomment>Notification category for completed transfers notifications (macx)</translatorcomment>
+        <translation>Uploads en downloads:</translation>
     </message>
 </context>
 <context>
@@ -3945,6 +4016,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <name>PlanWidget</name>
     <message>
         <source>month</source>
+        <translatorcomment>Label displaying the period for which the pricing refers to</translatorcomment>
         <translation>maand</translation>
     </message>
     <message>
@@ -3961,16 +4033,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>%1 per user</source>
         <translatorcomment>Label to indicate the price per user of business plan. %1 will be replaced with specific price.</translatorcomment>
         <translation>%1 per gebruiker</translation>
-    </message>
-    <message>
-        <source>storage</source>
-        <translatorcomment>Label to indicate the specific storage of a pro plan.</translatorcomment>
-        <translation>opslag</translation>
-    </message>
-    <message>
-        <source>transfer</source>
-        <translatorcomment>Label to indicate the specific transfer quota of a pro plan.</translatorcomment>
-        <translation>overdracht</translation>
     </message>
     <message>
         <source>Great value for secure cloud storage, sharing and communication.</source>
@@ -4012,114 +4074,54 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translatorcomment>Label to inform about the minimum number of users for a business plan. %1 will be replaced with the minimum number of users.</translatorcomment>
         <translation><numerusform>minimaal %n gebruiker</numerusform><numerusform>minimaal %n gebruikers</numerusform></translation>
     </message>
+    <message>
+        <source>[A] storage</source>
+        <translatorcomment>Label to indicate the specific storage of a pro plan. [A] is a placeholder for the value of the storage, it must be kept in the translated strings.</translatorcomment>
+        <translation>[A] opslag</translation>
+    </message>
+    <message>
+        <source>[A] transfer</source>
+        <translatorcomment>Label to indicate the specific transfer quota of a pro plan. [A] is a placeholder for the value of the transfer quota, it must be kept in the translated strings.</translatorcomment>
+        <translation>[A] overdracht</translation>
+    </message>
 </context>
 <context>
-    <name>Platform</name>
-    <message>
-        <source>Preferences</source>
-        <translatorcomment>Label to indicate the Preferences option for the application (MacOS)</translatorcomment>
-        <translation>Voorkeuren</translation>
-    </message>
-    <message>
-        <source>Quit</source>
-        <translatorcomment>Label displayed to let the user quit the application (MacOS). Max 20 characters. Keep capital letter.</translatorcomment>
-        <translation>Stoppen</translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translatorcomment>Label to indicate the Settings option for the application (Windows and Linux)</translatorcomment>
-        <translation>Instellingen</translation>
-    </message>
-    <message>
-        <source>Exit</source>
-        <translatorcomment>Label to indicate the Exit option for the application (Linux and Windows) (MAX 20 characters)</translatorcomment>
-        <translation>Verlaten</translation>
-    </message>
+    <name>PlatformStrings</name>
     <message>
         <source>Show in folder</source>
         <translatorcomment>Label to indicate the &quot;Show in folder&quot; option to open local folder of a sync (Linux)</translatorcomment>
         <translation>Weergeven in map</translation>
     </message>
     <message>
-        <source>Show in Explorer</source>
-        <translatorcomment>Label to indicate the &quot;Show in Explorer&quot; option to open local folder of a sync (Windows). Keep Explorer name as it is the app name of file explorer on Windows.</translatorcomment>
-        <translation>Weergeven in Verkenner</translation>
+        <source>Exit</source>
+        <translatorcomment>Label displayed on actions exiting Desktop application when on Windows or Linux</translatorcomment>
+        <translation>Sluiten</translation>
     </message>
     <message>
         <source>Show in Finder</source>
         <translatorcomment>Label to indicate the &quot;Show in Finder&quot; option to open local folder of a sync (macOS). Keep Finder name as it is the app name of file explorer on macOS.</translatorcomment>
         <translation>Weergeven in Finder</translation>
     </message>
-</context>
-<context>
-    <name>PlatformStrings</name>
     <message>
-        <source>Open settings</source>
-        <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
-        <translation>Instellingen openen</translation>
+        <source>Quit</source>
+        <translatorcomment>Label displayed on actions exiting Desktop application when on Mac</translatorcomment>
+        <translation>Stop</translation>
     </message>
     <message>
-        <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
-        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (Windows and Linux)</translatorcomment>
-        <translation>Één of meer synchronisaties zijn uitgeschakeld. Ga naar Instellingen om ze weer in te schakelen.</translation>
-    </message>
-    <message>
-        <source>Open preferences</source>
-        <translatorcomment>Button label to open MEGAsync preferences dialog (MacOS).</translatorcomment>
-        <translation>Voorkeuren openen</translation>
-    </message>
-    <message>
-        <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
-        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (macOS)</translatorcomment>
-        <translation>Één of meer synchronisaties zijn uitgeschakeld. Ga naar Voorkeuren om ze weer in te schakelen.</translation>
-    </message>
-    <message>
-        <source>Sync transfers cannot be cancelled individually.
-Please delete the folder sync from settings to cancel them.</source>
-        <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for windows and linux)</translatorcomment>
-        <translation>Sync-overdrachten kunnen niet worden geannuleerd. Om de synchronisatie te verwijderen, gaat u naar Instellingen in de desktop-applicatie en verwijdert u de gesynchroniseerde map. </translation>
-    </message>
-    <message>
-        <source>Sync transfers cannot be cancelled individually.
-Please delete the folder sync from preferences to cancel them.</source>
-        <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for macOS)</translatorcomment>
-        <translation>Synchronisatie overdrachten kunnen niet individueel geannuleerd worden.
-Om de synchronisatie te verwijderen, gaat u naar Voorkeuren in de desktop-applicatie en verwijdert u de gesynchroniseerde map. </translation>
-    </message>
-    <message>
-        <source>One or more backups have been disabled. Go to settings to enable them again.</source>
-        <translatorcomment>Warning message shown when some backups are disabled. Tell the userto go to settings to solve the issue (win/linux)</translatorcomment>
-        <translation>Één of meer back-ups zijn uitgeschakeld. Ga naar Instellingen om ze weer in te schakelen.</translation>
-    </message>
-    <message>
-        <source>Some syncs and backups have been disabled. Go to settings to enable them again.</source>
-        <translatorcomment>Warning message shown when some backups and syncs are disabled. Tell the userto go to settings to solve the issue (win/linux)</translatorcomment>
-        <translation>Sommige synchronisaties en back-ups zijn uitgeschakeld. Ga naar Instellingen om ze weer in te schakelen.</translation>
-    </message>
-    <message>
-        <source>One or more backups have been disabled. Go to preferences to enable them again.</source>
-        <translatorcomment>Warning message shown when some backups are disabled. Tell the userto go to settings to solve the issue (mac)</translatorcomment>
-        <translation>Één of meer back-ups zijn uitgeschakeld. Ga naar Voorkeuren om ze weer in te schakelen.</translation>
-    </message>
-    <message>
-        <source>Some syncs and backups have been disabled. Go to preferences to enable them again.</source>
-        <translatorcomment>Warning message shown when some backups and syncs are disabled. Tell the userto go to settings to solve the issue (mac)</translatorcomment>
-        <translation>Sommige synchronisaties en back-ups zijn uitgeschakeld. Ga naar Voorkeuren om ze weer in te schakelen.</translation>
+        <source>Show in Explorer</source>
+        <translatorcomment>Label to indicate the &quot;Show in Explorer&quot; option to open local folder of a sync (Windows). Keep Explorer name as it is the app name of file explorer on Windows.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Detected crashes on Windows, Linux, and masOS fixed.
-- Less device memory will be used by accounts with large amounts of data stored.
-- Application performance improved.
-- Translation issues fixed.
+        <source>- Security upgraded.
+- Detected crashes on Windows, Linux, and macOS fixed.
 </source>
-        <translatorcomment>Changelog for version v4.8.5</translatorcomment>
-        <translation>- Gedetecteerde crashes op Windows, Linux en macOS verholpen.
-- Er wordt minder apparaatgeheugen gebruikt door accounts met grote hoeveelheden opgeslagen gegevens. 
-- Applicatieprestaties verbeterd. 
-- Vertaalproblemen opgelost.</translation>
+        <translatorcomment>Changelog for v4.8.8</translatorcomment>
+        <translation>- Verbeterde beveiliging
+- Gedetecteerde crashes op Windows, Linux en macOS gerepareerd</translation>
     </message>
 </context>
 <context>
@@ -4212,7 +4214,7 @@ Om de synchronisatie te verwijderen, gaat u naar Voorkeuren in de desktop-applic
     <message>
         <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
         <translatorcomment>Message shown when there is an error testing the proxy settings.</translatorcomment>
-        <translation>Uw proxy instellingen zijn ongeldig of de proxy reageert niet</translation>
+        <translation>Uw proxy-instellingen zijn ongeldig of de proxy reageert niet</translation>
     </message>
 </context>
 <context>
@@ -4393,7 +4395,7 @@ Om de synchronisatie te verwijderen, gaat u naar Voorkeuren in de desktop-applic
     <message>
         <source>Could not delete directory.</source>
         <translatorcomment>Info message shown when failing deleting a directory</translatorcomment>
-        <translation>Kan lokatie niet verwijderen.</translation>
+        <translation>Kan map niet verwijderen.</translation>
     </message>
     <message>
         <source>Recent Places</source>
@@ -4501,7 +4503,7 @@ Directory not found.
 Please verify the correct directory name was given.</source>
         <translatorcomment>Warning message when the directory name to open is incorrect</translatorcomment>
         <translation>%1
-Directory niet gevonden.
+Map niet gevonden.
 Controleer of de juiste directory naam was gegeven.</translation>
     </message>
     <message>
@@ -4605,18 +4607,22 @@ Wilt u deze toch verwijderen?</translation>
     <name>QPlatformTheme</name>
     <message>
         <source>&amp;Yes</source>
+        <translatorcomment>Label for Yes button in message boxes</translatorcomment>
         <translation>&amp;Ja</translation>
     </message>
     <message>
         <source>&amp;No</source>
+        <translatorcomment>Label for No button in message boxes</translatorcomment>
         <translation>&amp;Nee</translation>
     </message>
     <message>
         <source>OK</source>
+        <translatorcomment>Label for Ok button in message boxes</translatorcomment>
         <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
+        <translatorcomment>Label for Cancel button in message boxes</translatorcomment>
         <translation>Annuleren</translation>
     </message>
 </context>
@@ -4711,12 +4717,12 @@ Wilt u deze toch verwijderen?</translation>
     <message>
         <source>Don&apos;t close the app. If you close, transfers not yet queued will be lost.</source>
         <translatorcomment>Message displayed in scanning widget to warn the user of consequences of closing the app.</translatorcomment>
-        <translation>Sluit de applicatie niet. Als u sluit, gaan overdrachten die nog niet in de wachtrij staan verloren.</translation>
+        <translation>Sluit de applicatie niet. Als u sluit, gaan overdrachten die nog niet in de wachtrij staan ​​verloren.</translation>
     </message>
     <message>
         <source>Scanning</source>
         <translatorcomment>Label used to display when the scanning widget is on the &quot;Scanning&quot; step</translatorcomment>
-        <translation>Scannen...</translation>
+        <translation>Scannen&#8230;</translation>
     </message>
     <message>
         <source>Creating folders</source>
@@ -4742,6 +4748,14 @@ Wilt u deze toch verwijderen?</translation>
         <source>%n file</source>
         <translatorcomment>Part of the string used to display number of files in scanning step. %1 is the number of files found so far.</translatorcomment>
         <translation><numerusform>%n bestand</numerusform><numerusform>%n bestanden</numerusform></translation>
+    </message>
+</context>
+<context>
+    <name>SearchLineEdit</name>
+    <message>
+        <source>Search</source>
+        <translatorcomment>Placeholder for a search box</translatorcomment>
+        <translation>Zoeken</translation>
     </message>
 </context>
 <context>
@@ -4981,7 +4995,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your sync &quot;%1&quot; can&apos;t be enabled. Reason: %2</source>
         <translatorcomment>Error message shown when an error occurs trying to enable a sync. %1 is name of sync and %2 is reason of error.</translatorcomment>
-        <translation>Uw synchronisatie “%1” kan niet worden ingeschakeld. Reden: %2</translation>
+        <translation>Uw synchronisatie “%11” kan niet worden ingeschakeld. Reden:%2</translation>
     </message>
     <message>
         <source>General</source>
@@ -5149,11 +5163,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Sessie geschiedenis</translation>
     </message>
     <message>
-        <source>Preferences</source>
-        <translatorcomment>Dialog window title for Settings on macOS. Keep as short as possible.</translatorcomment>
-        <translation>Voorkeuren</translation>
-    </message>
-    <message>
         <source>Language:</source>
         <translatorcomment>Form text label shown next to the language change drop down menu, on macOS. Keep as short as possible.</translatorcomment>
         <translation>Taal:</translation>
@@ -5226,7 +5235,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Enable Windows Explorer integration</source>
         <translatorcomment>Checkbox label displayed on Windows, allowing the user to enable / disable the Windows Explorer integration.</translatorcomment>
-        <translation>Integratie van Windows Verkenner inschakelen</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>B</source>
@@ -5401,7 +5410,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Some folders have not backed up. For more information please hover over the yellow warning icon.</source>
         <translatorcomment>Warning message displayed inside settings dialog indicating that there is a problem with a backup.</translatorcomment>
-        <translation>Van sommige mappen is geen back-up gemaakt. Plaats de muisaanwijzer op het gele waarschuwingspictogram voor meer informatie. </translation>
+        <translation>Van sommige mappen is geen back-up gemaakt. Plaats de muisaanwijzer op het gele waarschuwingspictogram voor meer informatie.</translation>
     </message>
     <message>
         <source>Backup folder:</source>
@@ -5451,7 +5460,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your sync &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
         <translatorcomment>Warning message indicating that an error happened disabling a sync. First placeholder is the sync name and second placeholder is the error message sent by SDK (reason)</translatorcomment>
-        <translation>Uw synchronisatie &quot;%1&quot; kan niet worden uitgeschakeld. Reden: %2</translation>
+        <translation>Uw synchronisatie ”%11“ kan niet worden uitgeschakeld. Reden: %2</translation>
     </message>
     <message>
         <source>Error adding backup %1</source>
@@ -5466,7 +5475,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your backup can&apos;t be removed. Reason: %1</source>
         <translatorcomment>Warning message title indicating that an error happened removing a backup. the reason is given at runtime in place of the placeholder</translatorcomment>
-        <translation>Uw back-up kan niet verwijderd worden. Reden: %1</translation>
+        <translation>Uw back-up kan niet worden gestopt. Reden: %1</translation>
     </message>
     <message>
         <source>Error moving or removing remote backup folder</source>
@@ -5486,7 +5495,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your backup &quot;%1&quot; can&apos;t be enabled. Reason: %2</source>
         <translatorcomment>Error text when enabling a backup failed</translatorcomment>
-        <translation>Uw back-up &quot;%1&quot; kan niet ingeschakeld worden. Reden: %2</translation>
+        <translation>Uw back-up ”%11“ kan niet ingeschakeld worden. Reden: %2</translation>
     </message>
     <message>
         <source>Error disabling backup</source>
@@ -5501,7 +5510,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your backup &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
         <translatorcomment>Error text when disabling a backup failed</translatorcomment>
-        <translation>Uw back-up &quot;%1&quot; kan niet uitgeschakeld worden. Reden: %2</translation>
+        <translation>Uw back-up ”%1“ kan niet uitgeschakeld worden. Reden: %2</translation>
     </message>
     <message>
         <source>Go to backup centre</source>
@@ -5649,7 +5658,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>The entered passwords don&apos;t match</source>
         <translatorcomment>Label displayed when the user has filled different password.</translatorcomment>
-        <translation>De ingevulde wachtwoorden komen niet overeen</translation>
+        <translation>De ingevoerde wachtwoorden komen niet overeen</translation>
     </message>
     <message>
         <source>You have to accept our terms of service</source>
@@ -5719,6 +5728,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>MEGAsync</source>
+        <translatorcomment>Title of the dialog displayed when trying to cancel the wizard</translatorcomment>
         <translation>MEGA</translation>
     </message>
     <message>
@@ -5763,16 +5773,18 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
+        <translatorcomment>Error message displayed when the user is trying to log in without having confirmed his account</translatorcomment>
         <translation>Check uw email en klik op de link in het bericht om uw account te bevestigen.</translation>
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
+        <translatorcomment>Error message displayed when trying to login and too many login attemps have been made before</translatorcomment>
         <translation>U heeft te vaak geprobeerd om in te loggen.[BR] Wacht alstublieft tot %1 en probeer het opnieuw.</translation>
     </message>
     <message>
         <source>When you finish this assistant, you will be able to sync additional folders using the settings dialog</source>
         <translatorcomment>Label to inform the user about the possibility to add new synchronizations through settings dialog once the initial setup wizard is at final stage</translatorcomment>
-        <translation>Wanneer u deze assistentie klaar heeft, bent u in staat om aanvullende mappen te synchroniseren door gebruik van de instellingen dialoog</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>First name:</source>
@@ -5962,6 +5974,19 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
 </context>
 <context>
+    <name>StreamNodeSelector</name>
+    <message>
+        <source>Error</source>
+        <translatorcomment>Title of the dialog</translatorcomment>
+        <translation>Fout</translation>
+    </message>
+    <message>
+        <source>Only files can be used for streaming.</source>
+        <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
+        <translation>U kunt geen mappen streamen. Selecteer een bestand om te streamen.</translation>
+    </message>
+</context>
+<context>
     <name>StreamingFromMegaDialog</name>
     <message>
         <source>Stream from MEGA</source>
@@ -6049,11 +6074,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Fout bij genereren van afspelende link</translation>
     </message>
     <message>
-        <source>Decryption error</source>
-        <translatorcomment>Text shown when there is an error decrypting a public link for streaming</translatorcomment>
-        <translation>Decoderingsfout</translation>
-    </message>
-    <message>
         <source>Error getting link information</source>
         <translatorcomment>Error message shown when a there is an error getting the information of a public link</translatorcomment>
         <translation>Fout bij het verkrijgen van link informatie</translation>
@@ -6107,7 +6127,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You can&apos;t sync this folder as it&apos;s already backed up.</source>
         <translatorcomment>Warning message indicating that a folder can´t be synced as it is backed up.</translatorcomment>
-        <translation>U kunt deze map niet synchroniseren omdat er al een back-up van is gemaakt.</translation>
+        <translation>U kunt geen synchronisatie van deze map maken omdat er al een back-up van is gemaakt.</translation>
     </message>
     <message>
         <source>You can&apos;t backup this folder as it&apos;s already inside a synced folder.</source>
@@ -6117,7 +6137,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You can&apos;t sync folders that are inside synced folders.</source>
         <translatorcomment>Warning message indicating that a folder can´t be synced as it is inside a synced folder.</translatorcomment>
-        <translation>U kunt geen mappen synchroniseren die zich in gesynchroniseerde mappen bevinden.</translation>
+        <translation>U kunt geen mappen synchroniseren die binnenin een gesynchroniseerde map zijn.</translation>
     </message>
     <message>
         <source>You can&apos;t sync folders that are inside backed up folders.</source>
@@ -6132,7 +6152,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You can&apos;t sync folders that contain synced folders.</source>
         <translatorcomment>Warning message indicating that the selected folder for sync contains synced folders, hence it can not be synced.</translatorcomment>
-        <translation>U kunt geen mappen synchroniseren die gesynchroniseerde mappen bevatten.</translation>
+        <translation>U kunt geen mappen synchroniseren die gesynchroniseerde map bevatten.</translation>
     </message>
     <message>
         <source>You can&apos;t sync folders that contain backed up folders.</source>
@@ -6260,20 +6280,29 @@ Selecteer een andere map om door te gaan.
         <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by MEGA folder name in case the user clicks.</translatorcomment>
         <translation>Sorteren op MEGA map naam</translation>
     </message>
+</context>
+<context>
+    <name>SyncNodeSelector</name>
     <message>
-        <source>Sync is enabled</source>
-        <translatorcomment>Checkbox tooltip in case the sync is enabled.</translatorcomment>
-        <translation>Synchronisatie is ingeschakeld</translation>
+        <source>Error</source>
+        <translatorcomment>Title of the dialog</translatorcomment>
+        <translation>Fout</translation>
     </message>
     <message>
-        <source>Sync is disabled</source>
-        <translatorcomment>Checkbox tooltip in case the sync is disabled.</translatorcomment>
-        <translation>Synchronisatie is uitgeschakeld</translation>
+        <source>You need Full access right to be able to sync the selected folder.</source>
+        <translatorcomment>Error message shown when an user is trying sync a non compatible folder</translatorcomment>
+        <translation>Om deze map te synchroniseren, moet u er volledige toegangsrechten voor hebben.</translation>
     </message>
     <message>
-        <source>Click menu for more Sync actions</source>
-        <translatorcomment>Menu column item tooltip.</translatorcomment>
-        <translation>Klik op menu voor meer synchronisatie acties</translation>
+        <source>Warning</source>
+        <translatorcomment>Title of the dialog</translatorcomment>
+        <translation>Waarschuwing</translation>
+    </message>
+    <message>
+        <source>Invalid folder for synchronization.
+Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
+        <translation>Kan map niet synchroniseren. Zorg ervoor dat u geen “\”, “/” of “:” in mapnamen gebruikt.</translation>
     </message>
 </context>
 <context>
@@ -6287,6 +6316,24 @@ Selecteer een andere map om door te gaan.
         <source>Remove synced folder</source>
         <translatorcomment>Context menu option that removes the sync.</translatorcomment>
         <translation>Verwijder gesynchroniseerde map</translation>
+    </message>
+</context>
+<context>
+    <name>SyncTableViewTooltips</name>
+    <message>
+        <source>Sync is enabled</source>
+        <translatorcomment>Checkbox tooltip that is displayed when it is checked.(sync enabled)</translatorcomment>
+        <translation>Synchronisatie is ingeschakeld</translation>
+    </message>
+    <message>
+        <source>Sync is disabled</source>
+        <translatorcomment>Checkbox tooltip that is displayed when it is unchecked.(sync disabled)</translatorcomment>
+        <translation>Synchronisatie is uitgeschakeld</translation>
+    </message>
+    <message>
+        <source>Click menu for more Sync actions</source>
+        <translatorcomment>Menu column tooltip (three dots in the table)</translatorcomment>
+        <translation>Klik op het 3 punten menu voor meer synchronisatie acties</translation>
     </message>
 </context>
 <context>
@@ -6335,7 +6382,7 @@ Selecteer een andere map om door te gaan.
     <message>
         <source>Retrying</source>
         <translatorcomment>Transfer is starting again after failure</translatorcomment>
-        <translation>Opnieuw proberen...</translation>
+        <translation>Opnieuw proberen&#8230;</translation>
     </message>
     <message>
         <source>Uploading…</source>
@@ -6345,12 +6392,12 @@ Selecteer een andere map om door te gaan.
     <message>
         <source>Downloading…</source>
         <translatorcomment>Transfer is being downloaded</translatorcomment>
-        <translation>Downloaden...</translation>
+        <translation>Downloaden&#8230;</translation>
     </message>
     <message>
         <source>Syncing…</source>
         <translatorcomment>Transfer is being synced</translatorcomment>
-        <translation>Synchroniseren...</translation>
+        <translation>Synchroniseren&#8230;</translation>
     </message>
     <message>
         <source>Completing</source>
@@ -6422,10 +6469,12 @@ Selecteer een andere map om door te gaan.
     </message>
     <message>
         <source>Upload</source>
+        <translatorcomment>Label of the button to start a new upload</translatorcomment>
         <translation>Uploaden</translation>
     </message>
     <message>
         <source>Download</source>
+        <translatorcomment>Label of the button to start a new download</translatorcomment>
         <translation>Downloaden</translation>
     </message>
     <message>
@@ -6501,7 +6550,7 @@ Selecteer een andere map om door te gaan.
     <message>
         <source>Scanning</source>
         <translatorcomment>State of the Transfers: Message which shows that a folder is being scanned</translatorcomment>
-        <translation>Scannen...</translation>
+        <translation>Scannen&#8230;</translation>
     </message>
     <message>
         <source>All paused</source>
@@ -6582,8 +6631,8 @@ Selecteer een andere map om door te gaan.
         <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left for this IP address.
 To get more quota, upgrade to a Pro account or wait for [A] until more free quota becomes available on your IP address.</source>
         <translatorcomment>Message which shows that the user reachs the overquota. [A] is the time to wait until the quota is reset in hh:mm:ss</translatorcomment>
-        <translation>U kunt niet doorgaan met downloaden omdat u niet genoeg overdrachtstegoed over hebt voor dit IP-adres.
-Om meer tegoed te krijgen, upgrade naar een Pro-account of wacht [A] tot er meer gratis tegoed beschikbaar komt op uw IP-adres.</translation>
+        <translation>U kunt niet doorgaan met downloaden omdat u niet genoeg overdrachtstegoed meer heeft voor dit IP-adres.
+Om meer tegoed te krijgen, upgradet u naar een Pro-account of wacht voor [A] tot er meer gratis tegoed beschikbaar komt op uw IP-adres.</translation>
     </message>
     <message>
         <source>More about transfer quota</source>
@@ -6605,6 +6654,119 @@ Om meer tegoed te krijgen, upgrade naar een Pro-account of wacht [A] tot er meer
     </message>
 </context>
 <context>
+    <name>TransferNotificationBuilderBase</name>
+    <message>
+        <source>Uploaded 1 file to %1.</source>
+        <translatorcomment>Notification text that inform 1 file has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
+        <translation>1 bestand geüpload naar %1.</translation>
+    </message>
+    <message>
+        <source>Uploaded 1 folder to %1.</source>
+        <translatorcomment>Notification text that inform 1 folder has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
+        <translation>1 map geüpload naar %1.</translation>
+    </message>
+    <message>
+        <source>File uploaded</source>
+        <translatorcomment>Notification title when a file has been uploaded</translatorcomment>
+        <translation>Bestand geüpload</translation>
+    </message>
+    <message>
+        <source>Folder uploaded</source>
+        <translatorcomment>Notification title when a folder has been uploaded</translatorcomment>
+        <translation>Map geüpload</translation>
+    </message>
+    <message>
+        <source>Show in MEGA</source>
+        <translatorcomment>Notification button to see the file on the webclient</translatorcomment>
+        <translation>Weergeven in MEGA</translation>
+    </message>
+    <message>
+        <source>Get link</source>
+        <translatorcomment>Notification button to get the file link</translatorcomment>
+        <translation>Link ophalen</translation>
+    </message>
+    <message>
+        <source>Downloaded 1 file to %1.</source>
+        <translatorcomment>Notification text that inform 1 file has been downloaded to a folder. The place holder is the target folder name.</translatorcomment>
+        <translation>1 bestand gedownload naar %1.</translation>
+    </message>
+    <message>
+        <source>Downloaded 1 folder to %1.</source>
+        <translatorcomment>Notification text that inform 1 folder has been downloaded to a folder. The place holder is the target folder name.</translatorcomment>
+        <translation>1 bestand gedownload naar %1.</translation>
+    </message>
+    <message>
+        <source>Show in folder</source>
+        <translatorcomment>Notification button to see the file on the local file explorer</translatorcomment>
+        <translation>Weergeven in map</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translatorcomment>Notification button to open the file</translatorcomment>
+        <translation>Openen</translation>
+    </message>
+    <message>
+        <source>File downloaded</source>
+        <translatorcomment>Notification title when a file has been downloaded</translatorcomment>
+        <translation>Bestand gedownload</translation>
+    </message>
+    <message>
+        <source>Folder downloaded</source>
+        <translatorcomment>Notification title when a folder has been downloaded</translatorcomment>
+        <translation>Map gedownload</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n upload successful</source>
+        <translatorcomment>Notification text that inform that an upload was successful. %1 is the number of uploads. This string goes always with the %n upload cancelled and/or %n upload failed strings.</translatorcomment>
+        <translation><numerusform>%n upload succesvol</numerusform><numerusform>%n uploads succesvol</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>, %n upload cancelled</source>
+        <translatorcomment>Appended text that inform that an upload was cancelled. %1 is the number of cancelled uploads. This string goes always appended to the %n upload successful</translatorcomment>
+        <translation><numerusform>, %n upload geannuleerd</numerusform><numerusform>, %n uploads geannuleerd</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>, %n upload failed</source>
+        <translatorcomment>Appended text that inform that an upload has failed. %1 is the number of failed uploads. This string goes always appended to the %n upload successful</translatorcomment>
+        <translation><numerusform>, %n upload geannuleerd</numerusform><numerusform>, %n uploads mislukt</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Uploaded %n items to %1</source>
+        <translatorcomment>Notification text that inform n items (files or folders) has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
+        <translation><numerusform>%n item geüpload naar %1</numerusform><numerusform>%n items geüpload naar %1</numerusform></translation>
+    </message>
+    <message>
+        <source>Items uploaded</source>
+        <translatorcomment>Notification title when a more than one transfer (file or folders) have been uploaded</translatorcomment>
+        <translation>Items geüpload</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n download successful</source>
+        <translatorcomment>Notification text that inform that an download was successful. %1 is the number of downloads. This string goes always with the %n download cancelled and/or %n download failed strings.</translatorcomment>
+        <translation><numerusform>%n download succesvol</numerusform><numerusform>%n downloads succesvol</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>, %n download cancelled</source>
+        <translatorcomment>Appended text that inform that an download was cancelled. %1 is the number of cancelled downloads. This string goes always appended to the %n download successful</translatorcomment>
+        <translation><numerusform>, %n downloads geannuleerd</numerusform><numerusform>, %n downloads geannuleerd</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>, %n download failed</source>
+        <translatorcomment>Appended text that inform that an download has failed. %1 is the number of failed downloads. This string goes always appended to the %n download successful</translatorcomment>
+        <translation><numerusform>, %n downloads mislukt</numerusform><numerusform>, %n downloads mislukt</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Downloaded %n items to %1</source>
+        <translatorcomment>Notification text that inform n items (files or folders) has been downloaded to a folder. The place holder is the target folder name.</translatorcomment>
+        <translation><numerusform>%n item gedownload naar %1</numerusform><numerusform>%n items gedownload naar %1</numerusform></translation>
+    </message>
+    <message>
+        <source>Items downloaded</source>
+        <translatorcomment>Notification title when a more than one transfer (file or folders) have been downloaded</translatorcomment>
+        <translation>Items gedownload</translation>
+    </message>
+</context>
+<context>
     <name>TransferQuota</name>
     <message>
         <source>Limited available transfer quota.</source>
@@ -6623,6 +6785,17 @@ Om meer tegoed te krijgen, upgrade naar een Pro-account of wacht [A] tot er meer
         <source>Dismiss</source>
         <translatorcomment>Option to close the dialog without taking any action</translatorcomment>
         <translation>Sluiten</translation>
+    </message>
+    <message>
+        <source>Sync transfers cannot be cancelled individually.
+Please delete the folder sync from settings to cancel them.</source>
+        <translatorcomment>Message displayed when the user is trying to cancel a sync transfer.</translatorcomment>
+        <translation>Synchronisatie-overdrachten kunnen niet worden geannuleerd. Om de synchronisatie te verwijderen, gaat u naar Instellingen in de desktop-applicatie en verwijder de gesynchroniseerde map. </translation>
+    </message>
+    <message>
+        <source>Open settings</source>
+        <translatorcomment>Button label to open the Settings dialog</translatorcomment>
+        <translation>Instellingen Openen</translation>
     </message>
 </context>
 <context>
@@ -6685,7 +6858,7 @@ Om meer tegoed te krijgen, upgrade naar een Pro-account of wacht [A] tot er meer
     <message>
         <source>Clear all videos</source>
         <translatorcomment>Tooltip for clear button when the user is in the videos category</translatorcomment>
-        <translation>Alle overdrachten in Video&apos;s wissen</translation>
+        <translation>Alle overdrachten in Video&#8217;s wissen</translation>
     </message>
     <message>
         <source>Clear all archives</source>
@@ -6765,12 +6938,12 @@ Om meer tegoed te krijgen, upgrade naar een Pro-account of wacht [A] tot er meer
     <message>
         <source>Cancel and clear all audios</source>
         <translatorcomment>Tooltip for cancel button when the user is in the audios category and there are completed transfers</translatorcomment>
-        <translation>Annuleer en wis alle audio&apos;s</translation>
+        <translation>Annuleer en wis alle audio&#8217;s</translation>
     </message>
     <message>
         <source>Cancel and clear all videos</source>
         <translatorcomment>Tooltip for cancel button when the user is in the videos category and there are completed transfers</translatorcomment>
-        <translation>Annuleer en wis alle video&apos;s</translation>
+        <translation>Annuleer en wis alle video&#8217;s</translation>
     </message>
     <message>
         <source>Cancel and clear all archives</source>
@@ -6810,12 +6983,12 @@ Om meer tegoed te krijgen, upgrade naar een Pro-account of wacht [A] tot er meer
     <message>
         <source>Resume all audios</source>
         <translatorcomment>Tooltip for Resume button when the user is in the audios category</translatorcomment>
-        <translation>Alle audio&apos;s hervatten</translation>
+        <translation>Alle audio&#8217;s hervatten</translation>
     </message>
     <message>
         <source>Resume all videos</source>
         <translatorcomment>Tooltip for Resume button when the user is in the videos category</translatorcomment>
-        <translation>Alle video&apos;s hervatten</translation>
+        <translation>Alle video&#8217;s hervatten</translation>
     </message>
     <message>
         <source>Resume all archives</source>
@@ -6855,12 +7028,12 @@ Om meer tegoed te krijgen, upgrade naar een Pro-account of wacht [A] tot er meer
     <message>
         <source>Pause all audios</source>
         <translatorcomment>Tooltip for Pause button when the user is in the audios category</translatorcomment>
-        <translation>Alle audio&apos;s pauzeren</translation>
+        <translation>Alle audio&#8217;s pauzeren</translation>
     </message>
     <message>
         <source>Pause all videos</source>
         <translatorcomment>Tooltip for Pause button when the user is in the videos category</translatorcomment>
-        <translation>Alle video&apos;s pauzeren</translation>
+        <translation>Alle video&#8217;s pauzeren</translation>
     </message>
     <message>
         <source>Pause all archives</source>
@@ -6903,7 +7076,7 @@ Om meer tegoed te krijgen, upgrade naar een Pro-account of wacht [A] tot er meer
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>* De prijs in lokale valuta is slechts een schatting. Alle getoonde transacties worden in euro&apos;s in rekening gebracht.</translation>
+        <translation>* De prijs in lokale valuta is slechts een schatting. Alle getoonde transacties worden in euro&#8217;s in rekening gebracht.</translation>
     </message>
     <message>
         <source>Your download could not proceed because it exceeds your free transfer allowance.</source>
@@ -6946,7 +7119,7 @@ Om meer tegoed te krijgen, upgrade naar een Pro-account of wacht [A] tot er meer
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>* De prijs in lokale valuta is slechts een schatting. Alle getoonde transacties worden in euro&apos;s in rekening gebracht.</translation>
+        <translation>* De prijs in lokale valuta is slechts een schatting. Alle getoonde transacties worden in euro&#8217;s in rekening gebracht.</translation>
     </message>
     <message>
         <source>100% of the %1 available used on your account.</source>
@@ -6957,6 +7130,19 @@ Om meer tegoed te krijgen, upgrade naar een Pro-account of wacht [A] tot er meer
         <source>Choose annual billing and get 12 months for the price of 10</source>
         <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over storage state.</translatorcomment>
         <translation>Kies voor jaarlijkse facturering en krijg 12 maanden voor de prijs van 10</translation>
+    </message>
+</context>
+<context>
+    <name>UploadNodeSelector</name>
+    <message>
+        <source>Error</source>
+        <translatorcomment>Title of the dialog</translatorcomment>
+        <translation>Fout</translation>
+    </message>
+    <message>
+        <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
+        <translatorcomment>Error message shown when an user is trying upload files to a non compatible folder</translatorcomment>
+        <translation>Om deze map te uploaden, moet u lees- en schrijfrechten of volledige toegangsrechten hebben.</translation>
     </message>
 </context>
 <context>
@@ -7086,6 +7272,41 @@ Om meer tegoed te krijgen, upgrade naar een Pro-account of wacht [A] tot er meer
         <source>%n year ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n years ago</translatorcomment>
         <translation><numerusform>%n jaar geleden</numerusform><numerusform>%n jaar geleden</numerusform></translation>
+    </message>
+    <message>
+        <source>[DAYS] [HOURS]</source>
+        <translatorcomment>String used to control formatting of time intervals. [DAYS] will be replaced by the days count and [HOURS] by the hours. This is used for example in the Time remaining column of Transfer Manager.</translatorcomment>
+        <translation>[DAYS] [HOURS]</translation>
+    </message>
+    <message>
+        <source>[HOURS] [MINUTES]</source>
+        <translatorcomment>String used to control formatting of time intervals. [HOURS] will be replaced by the hours count and [MINUTES] by the minutes. This is used for example in the Time remaining column of Transfer Manager.</translatorcomment>
+        <translation>[HOURS] [MINUTES]</translation>
+    </message>
+    <message>
+        <source>[MINUTES] [SECONDS]</source>
+        <translatorcomment>String used to control formatting of time intervals. [MINUTES] will be replaced by the minutes count and [SECONDS] by the seconds. This is used for example in the Time remaining column of Transfer Manager.</translatorcomment>
+        <translation>[MINUTES] [SECONDS]</translation>
+    </message>
+    <message>
+        <source>%1 [A]d[/A]</source>
+        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [DAYS] [HOURS] string, replacing the [DAYS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the days. The space needs to be non-breaking.</translatorcomment>
+        <translation>%1 [A]d[/A]</translation>
+    </message>
+    <message>
+        <source>%1 [A]h[/A]</source>
+        <translatorcomment>String controlling the formatting of the hour count for time intervals. It is used in [DAYS] [HOURS] and [HOURS] [MINUTES] strings, replacing the [HOURS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the hours. The space needs to be non-breaking.</translatorcomment>
+        <translation>%1 [A]u[/A]</translation>
+    </message>
+    <message>
+        <source>%1 [A]m[/A]</source>
+        <translatorcomment>String controlling the formatting of the minute count for time intervals. It is used in [HOURS] [MINUTES] and [MINUTES] [SECONDS] strings, replacing the [MINUTES] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the minutes. The space needs to be non-breaking.</translatorcomment>
+        <translation>%1 [A]m[/A]</translation>
+    </message>
+    <message>
+        <source>%1 [A]s[/A]</source>
+        <translatorcomment>String controlling the formatting of the seconds count for time intervals. It is used in the [MINUTES] [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the seconds. The space needs to be non-breaking.</translatorcomment>
+        <translation>%1 [A]s[/A]</translation>
     </message>
 </context>
 <context>

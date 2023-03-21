@@ -266,11 +266,6 @@
         <translation>[A] ได้ยกเลิกคำขอการติดต่อ</translation>
     </message>
     <message>
-        <source>You have a contact request</source>
-        <translatorcomment>Label to indicate that actual user has received a new contact request.</translatorcomment>
-        <translation>คุณมีคำขอผู้ติดต่อ</translation>
-    </message>
-    <message>
         <source>[A] deleted you as a contact</source>
         <translatorcomment>Label to indicate that [A] deleted you as a contact. Placeholder will be replaced by email of user that deleted the contact.</translatorcomment>
         <translation>[A] ได้ลบคุณจากผู้ติดต่อ</translation>
@@ -341,11 +336,6 @@
         <translation>การแชร์สาธารณะของคุณได้รับการคืนสถานะแล้ว</translation>
     </message>
     <message>
-        <source>Reminder</source>
-        <translatorcomment>Label to indicate a reminder about a contact request.</translatorcomment>
-        <translation>การแจ้งเตือน</translation>
-    </message>
-    <message>
         <source>Access to shared folder was removed by [A]</source>
         <translatorcomment>Label to indicate that the access for a shared folder has been removed by [A]. Keep placeholder. It will be replaced at runtime with specific email.</translatorcomment>
         <translation>การเข้าถึงโฟลเดอร์ที่แชร์ถูกลบโดย [A]</translation>
@@ -395,6 +385,11 @@
         <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
         <translation>โฟลเดอร์แชร์ใหม่จาก [A]</translation>
     </message>
+    <message>
+        <source>Reminder: You have a contact request</source>
+        <translatorcomment>Label to indicate a reminder about a contact request.</translatorcomment>
+        <translation>แจ้งเตือน: คุณมีคำขอผู้ติดต่อใหม่</translation>
+    </message>
 </context>
 <context>
     <name>BackupItemModel</name>
@@ -413,21 +408,6 @@
         <translatorcomment>Backup table header label tooltip that indicates that if you click here the column will be sorted by name</translatorcomment>
         <translation>เรียงตามชื่อ</translation>
     </message>
-    <message>
-        <source>Backup is enabled</source>
-        <translatorcomment>Checkbox tooltip that is displayed when it is checked.(Backup enabled)</translatorcomment>
-        <translation>การสำรองข้อมูลถูกเปิดใช้งานแล้ว</translation>
-    </message>
-    <message>
-        <source>Backup is disabled</source>
-        <translatorcomment>Checkbox tooltip that is displayed when it is unchecked.(Backup disabled)</translatorcomment>
-        <translation>การสำรองข้อมูลถูกปิดใช้งานแล้ว</translation>
-    </message>
-    <message>
-        <source>Click menu for more Backup actions</source>
-        <translatorcomment>Menu column tooltip (three dots in the table)</translatorcomment>
-        <translation>คลิกที่เมนูเพื่อดำเนินการเพิ่มเติมเกี่ยวกับการสำรองข้อมูล</translation>
-    </message>
 </context>
 <context>
     <name>BackupNameConflictDialog</name>
@@ -439,7 +419,7 @@
     <message>
         <source>A folder named &quot;%1&quot; already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
         <translatorcomment>Text shown to the user if there is a name conflict with a folder in the Backups remote folder for the current device</translatorcomment>
-        <translation>ในสำเนาสำรองของคุณ มีโฟลเดอร์ชื่อ &quot;%1&quot; อยู่แล้ว เปลี่ยนชื่อโฟลเดอร์ใหม่เพื่อดำเนินการสำรองข้อมูลต่อ ส่วนชื่อโฟลเดอร์บนคอมพิวเตอร์จะไม่มีการเปลี่ยนแปลงแต่อย่างใด</translation>
+        <translation>ในสำเนาสำรองของคุณ มีโฟลเดอร์ชื่อ &#8220;%1&#8221; อยู่แล้ว เปลี่ยนชื่อโฟลเดอร์ใหม่เพื่อดำเนินการสำรองข้อมูลต่อ ส่วนชื่อโฟลเดอร์บนคอมพิวเตอร์จะไม่มีการเปลี่ยนแปลงแต่อย่างใด</translation>
     </message>
     <message>
         <source>If you don&apos;t want to rename the new folder, stop the backup in the [A]Backup centre[/A] for the existing folder. Then setup the backup for the new folder again.</source>
@@ -453,8 +433,8 @@
     </message>
     <message>
         <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
-        <translatorcomment>Text informing the user that they can&amp;apos;t have duplicated backup names and instructing them to rename them</translatorcomment>
-        <translation>คุณไม่สามารถสำรองข้อมูลโฟลเดอร์ที่มีชื่อเดียวกันได้ เปลี่ยนชื่อเพื่อดำเนินการสำรองข้อมูลต่อไป ส่วนชื่อโฟลเดอร์บนคอมพิวเตอร์จะไม่มีการเปลี่ยนแปลงแต่อย่างใด</translation>
+        <translatorcomment>Text informing the user that they can&apos;t have duplicated backup names and instructing them to rename them</translatorcomment>
+        <translation>คุณไม่สามารถสำรองโฟลเดอร์ที่มีชื่อเดียวกันได้ หากต้องการสำรองข้อมูลต่อ กรุณาเปลี่ยนชื่อใหม่ ส่วนชื่อโฟลเดอร์บนคอมพิวเตอร์ของคุณจะไม่เปลี่ยนแปลง</translation>
     </message>
 </context>
 <context>
@@ -477,7 +457,7 @@
     <message>
         <source>A folder named &quot;%1&quot; already exists in your Backups. Rename the new folder to continue with the backup.</source>
         <translatorcomment>Error message displayed in the top of the rename backup dialog. It indicates that a backup with that name already exists.</translatorcomment>
-        <translation>ในสำเนาสำรองของคุณ มีโฟลเดอร์ชื่อ &quot;%1&quot; อยู่แล้ว เปลี่ยนชื่อโฟลเดอร์ใหม่เพื่อดำเนินการสำรองข้อมูลต่อ</translation>
+        <translation>ในสำเนาสำรองของคุณ มีโฟลเดอร์ชื่อ &#8220;%1&#8221; อยู่แล้ว เปลี่ยนชื่อโฟลเดอร์ใหม่เพื่อดำเนินการสำรองข้อมูลต่อ</translation>
     </message>
 </context>
 <context>
@@ -491,6 +471,24 @@
         <source>Remove backup</source>
         <translatorcomment>Menu action removes the backup</translatorcomment>
         <translation>หยุดสำรองข้อมูล</translation>
+    </message>
+</context>
+<context>
+    <name>BackupTableViewTooltips</name>
+    <message>
+        <source>Backup is enabled</source>
+        <translatorcomment>Checkbox tooltip that is displayed when it is checked.(Backup enabled)</translatorcomment>
+        <translation>เปิดใช้งานการสำรองข้อมูลแล้ว</translation>
+    </message>
+    <message>
+        <source>Backup is disabled</source>
+        <translatorcomment>Checkbox tooltip that is displayed when it is unchecked.(Backup disabled)</translatorcomment>
+        <translation>ปิดใช้งานการสำรองข้อมูลแล้ว</translation>
+    </message>
+    <message>
+        <source>Click menu for more Backup actions</source>
+        <translatorcomment>Menu column tooltip (three dots in the table)</translatorcomment>
+        <translation>คลิกที่เมนูจุดสามจุดเพื่อดำเนินการเพิ่มเติมเกี่ยวกับการสำรองข้อมูล</translation>
     </message>
 </context>
 <context>
@@ -650,7 +648,7 @@
     <name>BandwidthSettings</name>
     <message>
         <source>Bandwidth</source>
-        <translatorcomment>Title of the dialog to manage Bandwidth settings/preferences.</translatorcomment>
+        <translatorcomment>Title of the dialog to manage Bandwidth settings.</translatorcomment>
         <translation>แบนด์วิดธ์</translation>
     </message>
     <message>
@@ -740,8 +738,8 @@
     </message>
     <message>
         <source>Only enable this option if tranfers don&apos;t start. Under all other circumstances, using HTTP is satisfactory as MEGA already encrypts all data.</source>
-        <translatorcomment>Description label about the option Use HTTPS for transfers that don&amp;apos;t start checkbox.</translatorcomment>
-        <translation>คุณสามารถเปิดใช้งานตัวเลือกนี้ ถ้ายังไม่ได้เริ่มการถ่ายโอนนอกจากนั้นในสถานการณ์อื่น ๆ ใช้ HTTP ก็เพียงพอ เนื่องจาก MEGA จะเข้ารหัสข้อมูลทั้งหมดโดยอัตโนมัติ</translation>
+        <translatorcomment>Description label about the option Use HTTPS for transfers that don&apos;t start checkbox.</translatorcomment>
+        <translation>เปิดใช้งานตัวเลือกนี้ในกรณีการถ่ายโอนล้มเหลวระหว่างที่กำลังเริ่มต้น ส่วนกรณีอื่น ๆ การใช้ HTTP ก็เพียงพอแล้ว เนื่องจาก MEGA เข้ารหัสข้อมูลทั้งหมดแล้ว</translation>
     </message>
 </context>
 <context>
@@ -909,6 +907,7 @@
     </message>
     <message>
         <source>Cancelling…</source>
+        <translatorcomment>Message displayed while transfers cancelling is in progress</translatorcomment>
         <translation>กำลังยกเลิก…</translation>
     </message>
 </context>
@@ -949,38 +948,47 @@
     <name>ChangePassword</name>
     <message>
         <source>Change password</source>
+        <translatorcomment>Windows title of the Change password dialog</translatorcomment>
         <translation>เปลี่ยนรหัสผ่าน</translation>
     </message>
     <message>
         <source>New password</source>
+        <translatorcomment>Label displayed next to control where the user can enter the new password</translatorcomment>
         <translation>รหัสผ่านใหม่</translation>
     </message>
     <message>
         <source>Confirm new password</source>
+        <translatorcomment>Label displayed next to control where the user can enter the new password confirmation</translatorcomment>
         <translation>ยืนยันรหัสผ่านใหม่</translation>
     </message>
     <message>
         <source>Cancel</source>
+        <translatorcomment>Button label to close the Change password dialog discarding the information</translatorcomment>
         <translation>ยกเลิก</translation>
     </message>
     <message>
         <source>OK</source>
+        <translatorcomment>Button label to close the Change password dialog saving the new information</translatorcomment>
         <translation>ตกลง</translation>
     </message>
     <message>
         <source>Error</source>
+        <translatorcomment>Title of the error dialog displayed when there is an issue related to the Change password dialog</translatorcomment>
         <translation>ผิดพลาด</translation>
     </message>
     <message>
         <source>Please enter your password</source>
+        <translatorcomment>Error message displayed when an empty password has been provided</translatorcomment>
         <translation>กรุณากรอกรหัสผ่านของคุณ</translation>
     </message>
     <message>
         <source>The entered passwords don&apos;t match</source>
-        <translation>รหัสผ่านที่กรอกไม่ตรงกัน</translation>
+        <translatorcomment>Error message displayed when the new password and its confirmation are not the same</translatorcomment>
+        <translation>รหัสผ่านที่คุณกรอกไม่ตรงกัน</translation>
     </message>
     <message>
         <source>Please, enter a stronger password</source>
+        <translatorcomment>Error message displayed when an the new password is too weak</translatorcomment>
         <translation>กรุณากรอกรหัสผ่านที่คาดเดายากกว่านี้</translation>
     </message>
     <message>
@@ -1099,16 +1107,6 @@
         <translation>ปฏิเสธ</translation>
     </message>
     <message>
-        <source>Reminder</source>
-        <translatorcomment>Label to indicate a reminder about a contact request.</translatorcomment>
-        <translation>การแจ้งเตือน</translation>
-    </message>
-    <message>
-        <source>You have a contact request</source>
-        <translatorcomment>Label to indicate that actual user has received a new contact request.</translatorcomment>
-        <translation>คุณมีคำขอผู้ติดต่อ</translation>
-    </message>
-    <message>
         <source>View</source>
         <translatorcomment>Button label of system notification to view all unread notifications.</translatorcomment>
         <translation>ดู</translation>
@@ -1224,11 +1222,6 @@
         <translation>ข้อมูลของคุณตกอยู่ในความเสี่ยง</translation>
     </message>
     <message>
-        <source>Show in folder</source>
-        <translatorcomment>Button label of system notification to open the selected completed transfer using the specific file browser</translatorcomment>
-        <translation>แสดงในโฟลเดอร์</translation>
-    </message>
-    <message>
         <source>Payment Failed</source>
         <translatorcomment>Notification title shown when a payment has failed for a business account.</translatorcomment>
         <translation>ชำระเงินไม่สำเร็จ</translation>
@@ -1288,6 +1281,16 @@
         <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
         <translation>โฟลเดอร์แชร์ใหม่จาก [A]</translation>
     </message>
+    <message>
+        <source>Reminder: You have a contact request</source>
+        <translatorcomment>Label to indicate a reminder about a contact request.</translatorcomment>
+        <translation>แจ้งเตือน: คุณมีคำขอผู้ติดต่อใหม่</translation>
+    </message>
+    <message>
+        <source>Show in MEGA</source>
+        <translatorcomment>Notification button to redirect the user to remote location. It will open webclient at specific location.</translatorcomment>
+        <translation>แสดงใน MEGA</translation>
+    </message>
 </context>
 <context>
     <name>DownloadFromMegaDialog</name>
@@ -1343,6 +1346,49 @@
     </message>
 </context>
 <context>
+    <name>DownloadNodeSelector</name>
+    <message>
+        <source>Download</source>
+        <translatorcomment>Window title for download node selector</translatorcomment>
+        <translation>ดาวน์โหลด</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translatorcomment>Title of the dialog</translatorcomment>
+        <translation>ผิดพลาด</translation>
+    </message>
+    <message numerus="yes">
+        <source>The item you selected has been removed. To reselect, close this window and try again.</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
+        <translation><numerusform>รายการที่คุณเลือกถูกลบออกแล้ว หากต้องการเลือกใหม่ ให้ปิดหน้าต่างนี้แล้วลองอีกครั้ง</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>You no longer have access to this item. Ask the owner to share again.</source>
+        <translatorcomment>Error message shown when the user is trying to download an file or folder from an incoming share and the owner stops sharing/removes all items</translatorcomment>
+        <translation><numerusform>คุณไม่สามารถเข้าถึงรายการเหล่านี้ได้อีกต่อไป ขอให้คนที่แชร์ให้กับคุณให้ทำการแชร์ใหม่อีกครั้ง</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 item selected</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
+        First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
+        <translation><numerusform>รายการที่เลือกไว้ %1 รายการ</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1. %2 has been removed. To reselect, close this window and try again.</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
+        First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
+        <translation><numerusform>%1 มี %2 รายการถูกลบออกแล้ว หากต้องการเลือกใหม่ ให้ปิดหน้าต่างนี้แล้วลองอีกครั้ง</numerusform></translation>
+    </message>
+</context>
+<context>
+    <name>DownloadQueueController</name>
+    <message>
+        <source>Local Disk</source>
+        <translatorcomment>Default drive name shown on the low space dialog when downloading files</translatorcomment>
+        <translation>ดิสก์บนเครื่อง</translation>
+    </message>
+</context>
+<context>
     <name>DuplicatedNodeDialog</name>
     <message>
         <source>A folder named [A] already exists at this destination</source>
@@ -1382,12 +1428,12 @@
     <message>
         <source>Folder already exists</source>
         <translatorcomment>Dialog title when a folder with the same name has been found on the cloud</translatorcomment>
-        <translation>โฟลเดอร์นี้มีการใช้งานแล้ว</translation>
+        <translation>มีโฟลเดอร์อยู่แล้ว</translation>
     </message>
     <message>
         <source>File already exists</source>
         <translatorcomment>Dialog title when a file with the same name has been found on the cloud</translatorcomment>
-        <translation>มีไฟล์นี้อยู่แล้ว</translation>
+        <translation>มีไฟล์อยู่แล้ว</translation>
     </message>
     <message numerus="yes">
         <source>Apply to all %1 duplicates</source>
@@ -1500,6 +1546,7 @@
     </message>
     <message>
         <source>View previous versions</source>
+        <translatorcomment>Entry in OS Context menu to open the &quot;Previous versions&quot; of an entry in the webclient</translatorcomment>
         <translation>ดูเวอร์ชันก่อนหน้า</translation>
     </message>
     <message numerus="yes">
@@ -1537,6 +1584,7 @@
     </message>
     <message>
         <source>Error</source>
+        <translatorcomment>Title of the error dialog displayed when there is an error with FolderBinder dialog</translatorcomment>
         <translation>ผิดพลาด</translation>
     </message>
     <message>
@@ -1778,12 +1826,13 @@
     </message>
     <message>
         <source>Error</source>
+        <translatorcomment>Title of the error dialog displayed when there is an error with ImportMegaLinks dialog</translatorcomment>
         <translation>ผิดพลาด</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message shown when a user is trying to download a file to a local folder without the right permissions.</translatorcomment>
-        <translation>คุณไม่มีสิทธิ์เขียนในโฟลเดอร์บนเครื่อง</translation>
+        <translation>คุณไม่มีสิทธิ์เขียนลงโฟลเดอร์บนเครื่อง</translation>
     </message>
     <message>
         <source>Open links</source>
@@ -1800,7 +1849,7 @@
     </message>
     <message>
         <source>Settings</source>
-        <translatorcomment>This is the string used to refer to settings, or preferences, in Windows and Linux. .</translatorcomment>
+        <translatorcomment>This is the string used to refer to settings for all platforms.</translatorcomment>
         <translation>ตั้งค่า</translation>
     </message>
     <message>
@@ -1825,6 +1874,7 @@
     </message>
     <message>
         <source>The process is taking longer than expected. Please wait...</source>
+        <translatorcomment>Message displayed in the InfoDialog when a process is busy for a longer time than normal due to Mega servers being busy</translatorcomment>
         <translation>กระบวนการนี้ใช้เวลานานกว่าที่คาดไว้ กรุณารอสักครู่</translation>
     </message>
     <message>
@@ -1948,29 +1998,9 @@
         <translation>คุณต้องดำเนินการทันทีเพื่อปกป้องข้อมูลของคุณ</translation>
     </message>
     <message>
-        <source>Depleted transfer quota.</source>
-        <translatorcomment>Title to indicate a situation of depleted transfer quota for the current account.</translatorcomment>
-        <translation>โควต้าการถ่ายโอนหมดแล้ว</translation>
-    </message>
-    <message>
-        <source>All downloads are currently disabled.</source>
-        <translatorcomment>Informative label to indicate that all downloads are currently disabled because a situation of over transfer quota.</translatorcomment>
-        <translation>การดาวน์โหลดทั้งหมดถูกปิดใช้งานในขณะนี้</translation>
-    </message>
-    <message>
-        <source>Upgrade</source>
-        <translatorcomment>Button label to upgrade the current account.</translatorcomment>
-        <translation>อัปเกรด</translation>
-    </message>
-    <message>
         <source>Limited available transfer quota</source>
         <translatorcomment>Title to indicate that current account has limited transfer quota. Transfer usage above 90 per cent of the total.</translatorcomment>
         <translation>จำกัดโควต้าการถ่ายโอน</translation>
-    </message>
-    <message>
-        <source>Your queued transfers exceed the current quota available for your IP address and can therefore be interrupted.</source>
-        <translatorcomment>Informative label to indicate that your queued transfers may be interrupted because the current account is above 90 percent of the transfer quota of the current account.</translatorcomment>
-        <translation>การถ่ายโอนที่ยังอยู่ในคิวของคุณตอนนี้ เกินโควต้าทีให้ไว้สำหรับ IP ของคุณแล้วและอาจหยุดชะงักได้</translation>
     </message>
     <message>
         <source>One or more syncs have been disabled</source>
@@ -1983,13 +2013,8 @@
         <translation>เกิดข้อผิดพลาดขึ้น ขณะพยายามซิงค์โฟลเดอร์ของคุณ</translation>
     </message>
     <message>
-        <source>Open Preferences</source>
-        <translatorcomment>Button label to open MEGAsync preferences dialog (MacOS).</translatorcomment>
-        <translation>เปิดการกำหนดลักษณะ</translation>
-    </message>
-    <message>
         <source>Open Settings</source>
-        <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
+        <translatorcomment>Button label to open MEGAsync settings dialog (used for all platforms).</translatorcomment>
         <translation>เปิดการตั้งค่า</translation>
     </message>
     <message>
@@ -2016,11 +2041,6 @@
         <source>Error</source>
         <translatorcomment>Title of the dialog</translatorcomment>
         <translation>ผิดพลาด</translation>
-    </message>
-    <message>
-        <source>Folder can&apos;t be opened. Check that the folder in your local drive hasn&apos;t been deleted or moved.</source>
-        <translatorcomment>Warning message text to let the user know that the local folder could not be opened</translatorcomment>
-        <translation>ไม่สามารถเปิดโฟลเดอร์ได้ ตรวจสอบว่าโฟลเดอร์ในไดรฟ์บนเครื่องของคุณไม่ได้ถูกลบหรือย้ายออก</translation>
     </message>
     <message>
         <source>Some syncs and backups have been disabled</source>
@@ -2052,6 +2072,41 @@
         <translatorcomment>Tooltip message shown while hovering backups button.</translatorcomment>
         <translation>เพิ่มการสำรองข้อมูล</translation>
     </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
+        <translation>เกินโควต้าการถ่ายโอนแล้ว</translation>
+    </message>
+    <message>
+        <source>Your queued transfers exceed the current quota available for your IP address.</source>
+        <translatorcomment>Informative label to indicate that your queued transfers exceed the current quota available for IP. Applies to free users.</translatorcomment>
+        <translation>จำนวนการถ่ายโอนที่รออยู่ในคิวของคุณสูงกว่าโควต้าปัจจุบันที่อนุญาตสำหรับที่อยู่ IP ของคุณแล้ว</translation>
+    </message>
+    <message>
+        <source>Upgrade Account</source>
+        <translatorcomment>Button label to upgrade the current account.</translatorcomment>
+        <translation>อัปเกรดบัญชี</translation>
+    </message>
+    <message>
+        <source>I will wait</source>
+        <translatorcomment>Button label to dismiss (hide) overquota dialogs. Shown for free users only if they do not want to upgrade account for extra transfer quota.</translatorcomment>
+        <translation>ฉันจะรอ</translation>
+    </message>
+    <message>
+        <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew.</source>
+        <translatorcomment>Informative label to indicate that your queued transfers may be interrupted because the current account does not have enough transfer quota.</translatorcomment>
+        <translation>คุณไม่สามารถดาวน์โหลดต่อได้เนื่องจากมีปริมาณการถ่ายโอนคงเหลือไม่เพียงพอสำหรับบัญชีนี้ หากต้องการดาวน์โหลดต่อ ให้สมัครใช้งานแผนใหม่ หรือหากคุณมีการสมัครใช้งาน MEGA ที่ต่ออายุอัตโนมัติอยู่แล้ว คุณสามารถรอจนกว่าจะเริ่มรอบการเรียกเก็บเงินถัดไป</translation>
+    </message>
+    <message>
+        <source>Buy new plan</source>
+        <translatorcomment>Button label for button to buy a new plan when there is not enough transfer quota in current non-free plan</translatorcomment>
+        <translation>ซื้อแผนใหม่</translation>
+    </message>
+    <message>
+        <source>Downloading may be interrupted as you have used 90% of your transfer quota on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew. </source>
+        <translatorcomment>Message displayed in the InfoDialog when the transfer quota reaches warning stage</translatorcomment>
+        <translation>การดาวน์โหลดอาจถูกหยุดชั่วคราว เนื่องจากคุณใช้โควต้าการถ่ายโอนของบัญชีนี้ไปแล้ว 90% หากต้องการดาวน์โหลดต่อ ให้สมัครใช้งานแผนใหม่ หรือหากคุณมีการสมัครใช้งาน MEGA แบบต่ออายุอัตโนมัติอยู่แล้ว คุณสามารถรอจนกว่าจะเริ่มรอบการเรียกเก็บเงินถัดไป</translation>
+    </message>
 </context>
 <context>
     <name>InfoDialogTransferDelegateWidget</name>
@@ -2072,7 +2127,7 @@
     </message>
     <message>
         <source>Copy link to file</source>
-        <translatorcomment>Tooltip for copy linr</translatorcomment>
+        <translatorcomment>Tooltip for copy link</translatorcomment>
         <translation>คัดลอกลิงก์ไปยังคลิปบอร์ด</translation>
     </message>
     <message>
@@ -2080,11 +2135,17 @@
         <translatorcomment>Message shown when the transfer has finished. [A] place holder stands for elapsed time since the transfer finished</translatorcomment>
         <translation>เพิ่มเมื่อ [A]</translation>
     </message>
+    <message>
+        <source>Deleted or moved file</source>
+        <translatorcomment>Tooltip when the file completed was removed or deleted</translatorcomment>
+        <translation>ไฟล์ถูกลบหรือย้ายออกแล้ว</translation>
+    </message>
 </context>
 <context>
     <name>InfoWizard</name>
     <message>
         <source>You are not logged in</source>
+        <translatorcomment>Window title of the wizard displayed the first time Desktop app is run</translatorcomment>
         <translation>คุณยังไม่ได้เข้าสู่ระบบ</translation>
     </message>
     <message>
@@ -2094,6 +2155,7 @@
     </message>
     <message>
         <source>Create Account</source>
+        <translatorcomment>Button label for creating a new MEGA account</translatorcomment>
         <translation>สร้างบัญชี</translation>
     </message>
     <message>
@@ -2212,9 +2274,43 @@
     </message>
 </context>
 <context>
+    <name>LowDiskSpaceDialog</name>
+    <message>
+        <source>Low disk space</source>
+        <translatorcomment>Dialog title</translatorcomment>
+        <translation>ความจำดิสก์เหลือน้อย</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Button text to abort downloading the files</translatorcomment>
+        <translation>ยกเลิก</translation>
+    </message>
+    <message>
+        <source>Try Again</source>
+        <translatorcomment>Button text to retry downloading the files</translatorcomment>
+        <translation>ลองอีกครั้ง</translation>
+    </message>
+    <message>
+        <source>There is not enough space on %1. You need an additional %2 to download these files.</source>
+        <translatorcomment>Label explaining the problem, %1 is the download target disk name. %2 is the needed size to continue with the download (the size unit depends on the quantity) </translatorcomment>
+        <translation>มีพื้นที่ไม่เพียงพอบน %1 คุณต้องใช้พื้นที่เพิ่มเติมเพื่อดาวน์โหลดไฟล์ที่มีขนาด %2 ได้</translation>
+    </message>
+    <message>
+        <source>Free space: %1</source>
+        <translatorcomment>Label informing about the local disk free space</translatorcomment>
+        <translation>พื้นที่ว่าง: %1</translation>
+    </message>
+    <message>
+        <source>Total size: %1</source>
+        <translatorcomment>Label informing about the total local disk space</translatorcomment>
+        <translation>ขนาดรวม: %1</translation>
+    </message>
+</context>
+<context>
     <name>MegaApplication</name>
     <message>
         <source>MEGAsync</source>
+        <translatorcomment>Title of error dialog displayed when the account is blocked</translatorcomment>
         <translation>MEGA</translation>
     </message>
     <message>
@@ -2365,11 +2461,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>การปรับแต่งของคุณเสียหาย กรุณาเริ่มใหม่</translation>
     </message>
     <message>
-        <source>Error getting link: </source>
-        <translatorcomment>Notification message launched when an error occurs getting a public link for a file/folder. Keep colon.</translatorcomment>
-        <translation>ผิดพลาดการรับลิงก์:</translation>
-    </message>
-    <message>
         <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
         <translatorcomment>Notification message launched when a connectivity problem occurs.</translatorcomment>
         <translation>แอปไม่สามารถเชื่อมต่อได้ กรุณาตรวจสอบการเชื่อมต่ออินเทอร์เน็ตและการกำหนดค่าไฟร์วอลล์ภายในของคุณ โปรดทราบว่าซอฟต์แวร์ป้องกันไวรัสส่วนใหญ่จะมีไฟร์วอลล์มาให้อยู่แล้ว</translation>
@@ -2377,12 +2468,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>การซิงค์ “%1” ของคุณถูกปิดใช้งานแล้ว เนื่องจากโฟลเดอร์ระยะไกล (remote) ไม่มีอยู่</translation>
+        <translation>การซิงค์ ”%1″ ของคุณถูกปิดใช้งานแล้ว เนื่องจากไม่มีโฟลเดอร์ระยะไกล</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>การซิงค์ “%1” ของคุณถูกปิดใช้งานแล้ว เนื่องจากไม่มีโฟลเดอร์บนเครื่อง</translation>
+        <translation>การซิงค์ ”%1″ ของคุณถูกปิดใช้งานแล้ว เนื่องจากไม่มีโฟลเดอร์บนเครื่อง</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -2417,7 +2508,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>การซิงค์ “%1” ของคุณได้ถูกปิดการใช้งาน โฟลเดอร์ระยะไกล (หรือบางส่วน) ไม่มีสิทธิ์การเข้าถึงแบบเต็มที่</translation>
+        <translation>การซิงค์ “%1” ของคุณได้ถูกปิดใช้งาน โฟลเดอร์ระยะไกล (หรือบางส่วน) ไม่มีสิทธิ์การเข้าถึงแบบเต็มที่</translation>
     </message>
     <message>
         <source>Over quota</source>
@@ -2452,7 +2543,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
         <translatorcomment>Notification message shown when SSL checks fails.</translatorcomment>
-        <translation>เราไม่สามารถยืนยันคีย์ SSL ได้ คุณอาจได้รับผลกระทบการโจมตีจากการลักลอบดักข้อมูลหรือซอฟต์แวร์ป้องกันไวรัสอาจขัดขวางการสื่อสารของคุณและทำให้เกิดปัญหานี้ กรุณาปิดใช้งานและลองอีกครั้ง</translation>
+        <translation>ไม่สามารถยืนยันคีย์ SSL ของเราได้ คุณอาจถูกโจมตีจากการลักลอบดักข้อมูลหรือโปรแกรมป้องกันไวรัสของคุณอาจจะขัดขวางการสื่อสารของคุณและทำให้เกิดปัญหานี้ได้ กรุณาปิดโปรแกรมป้องกันไวรัสและลองอีกครั้ง</translation>
     </message>
     <message>
         <source>No Internet connection</source>
@@ -2461,34 +2552,28 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Fetching file list...</source>
+        <translatorcomment>Tooltip for Desktop app tray icon while the app is fetching data in syncing process</translatorcomment>
         <translation>กำลังดึงรายการแฟ้ม…</translation>
     </message>
     <message>
         <source>Transfer canceled</source>
+        <translatorcomment>Message displayed when the setup wizard was canceled and there were pending transfers</translatorcomment>
         <translation>ยกเลิกการถ่ายโอน</translation>
     </message>
     <message>
         <source>You are not logged in</source>
+        <translatorcomment>Tooltip displayed in Desktop app tray icon when no user is logged in</translatorcomment>
         <translation>คุณยังไม่ได้เข้าสู่ระบบ</translation>
     </message>
     <message>
         <source>Transfer manager</source>
+        <translatorcomment>Entry option to open Transfer manager from tray icon menu in Windows</translatorcomment>
         <translation>จัดการถ่ายโอน</translation>
     </message>
     <message>
         <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
         <translatorcomment>Message shown to the user to inform that MEGAsync is not able to find a systray to place tray icon</translatorcomment>
         <translation>เราไม่พบถาดระบบที่จะวางไอคอนถาดแอปไว้ ลองเปิดแอปอีกครั้ง</translation>
-    </message>
-    <message>
-        <source>Error getting link:</source>
-        <translatorcomment>Notification message shown when an error occurs while getting a public link .</translatorcomment>
-        <translation>ผิดพลาดการรับลิงก์:</translation>
-    </message>
-    <message>
-        <source>File not found</source>
-        <translatorcomment>Notification message shown an error of file not found while getting a public link .</translatorcomment>
-        <translation>ไม่พบไฟล์</translation>
     </message>
     <message>
         <source>The link can&apos;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
@@ -2507,6 +2592,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Please consider updating your operating system.</source>
+        <translatorcomment>Message displayed in warning dialog when running in a deprecated OS</translatorcomment>
         <translation>กรุณาพิจารณาอัปเดตระบบปฏิบัติการของคุณ</translation>
     </message>
     <message>
@@ -2530,34 +2616,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>รหัสผ่านของคุณได้ถูกเปลี่ยนแล้ว</translation>
     </message>
     <message>
-        <source>Folder Upload</source>
-        <translatorcomment>Title of system notifications related to a folder upload</translatorcomment>
-        <translation>อัปโหลดโฟลเดอร์</translation>
-    </message>
-    <message>
-        <source>File Upload</source>
-        <translatorcomment>Title of system notifications related to a file upload</translatorcomment>
-        <translation>อัปโหลดไฟล์</translation>
-    </message>
-    <message>
-        <source>Folder Download</source>
-        <translatorcomment>Title of system notifications related to a folder download</translatorcomment>
-        <translation>โฟลเดอร์ดาวน์โหลด</translation>
-    </message>
-    <message>
-        <source>File Download</source>
-        <translatorcomment>Title of system notifications related to a file download</translatorcomment>
-        <translation>ไฟล์ดาวน์โหลด</translation>
-    </message>
-    <message>
         <source>Cloud drive</source>
         <translatorcomment>Label of context menu to reach Cloud drive section at webclient. It will open your webbrowser and redirects to your cloud drive.</translatorcomment>
         <translation>คลาวด์ไดรฟ์</translation>
-    </message>
-    <message>
-        <source>Error transferring folder: </source>
-        <translatorcomment>Label to indicate that has been an error during a folder transfer.</translatorcomment>
-        <translation>เกิดข้อผิดพลาดในการถ่ายโอนโฟลเดอร์:</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -2577,7 +2638,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message shown to admin business account when a payment has failed. </translatorcomment>
-        <translation>บัญชีธุรกิจของคุณถูกปิดใช้งานเนื่องจากการชำระเงินไม่สำเร็จ คุณจะไม่สามารถเข้าถึงข้อมูลได้จนกว่าคุณจะชำระเงินและเปิดใช้การสมัครใช้งานของคุณอีกครั้ง</translation>
+        <translation>เนื่องจากการชำระเงินไม่สำเร็จ บัญชีธุรกิจของคุณจึงถูกปิดใช้งาน คุณจะไม่สามารถเข้าถึงข้อมูลบัญชีของคุณได้จนกว่าคุณจะชำระเงินและเปิดใช้การสมัครใช้งานอีกครั้ง</translation>
     </message>
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
@@ -2607,7 +2668,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
         <translatorcomment>Informative message shown when a user is trying to upload data to a inshare that is in overquota state. %1 will be replaced with sharer account to inform the user.</translatorcomment>
-        <translation>การอัปโหลดของคุณไม่สามารถดำเนินการต่อได้เนื่องจากบัญชีของ %1 เต็มแล้ว</translation>
+        <translation>การอัปโหลดของคุณไม่สามารถดำเนินการต่อได้ เนื่องจากบัญชีของ %1 เต็มแล้ว</translation>
     </message>
     <message>
         <source>contact</source>
@@ -2655,11 +2716,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>ไม่สามารถเพิ่มการซิงค์นี้ได้: %1 สาเหตุ: %2</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been temporarily disabled</source>
-        <translatorcomment>Notification message launched when a sync is temporarily disabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime.</translatorcomment>
-        <translation>การซิงค์ “%1” ของคุณถูกปิดใช้งานชั่วคราว</translation>
-    </message>
-    <message>
         <source>Your sync &quot;%1&quot; has been disabled. Reason: %2</source>
         <translatorcomment>Notification message launched when a sync is disabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime and %2 with the reason of the error.</translatorcomment>
         <translation>การซิงค์ “%1” ของคุณถูกปิดใช้งาน สาเหตุ: %2</translation>
@@ -2675,44 +2731,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>แอปจะยังทำงานต่อไปได้ แต่การอัปเดตจะไม่สนับสนุนเวอร์ชันก่อน macOS Sierra อีกต่อไป</translation>
     </message>
     <message>
-        <source>Your syncs have been disabled</source>
-        <translatorcomment>Notification message launched when your syncs have been disabled.</translatorcomment>
-        <translation>การซิงค์ของคุณถูกปิดใช้งาน</translation>
-    </message>
-    <message>
         <source>Thank you for your collaboration</source>
         <translatorcomment>Informative message shown when a user makes a report to thank for his help.</translatorcomment>
         <translation>ขอบคุณสำหรับความร่วมมือของคุณ</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n file</source>
-        <translatorcomment>File count, where %n is the number of files. Used to build the &quot;Files and folders successfully uploaded/downloaded&quot; string.</translatorcomment>
-        <translation><numerusform>%n ไฟล์</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n folder</source>
-        <translatorcomment>Folder count, where %n is the number of folders. Used to build the &quot;Files and folders successfully uploaded/downloaded&quot; string.</translatorcomment>
-        <translation><numerusform>%n โฟลเดอร์</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n file was successfully uploaded</source>
-        <translatorcomment>System notification to inform the user that %1 files were successfully uploaded</translatorcomment>
-        <translation><numerusform>อัปโหลดสำเร็จ %n ไฟล์</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n file was successfully downloaded</source>
-        <translatorcomment>System notification to inform the user that %1 files were successfully downloaded</translatorcomment>
-        <translation><numerusform>ดาวน์โหลดสำเร็จ %n ไฟล์</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n folder was successfully uploaded</source>
-        <translatorcomment>System notification to inform the user that %n folders were successfully uploaded</translatorcomment>
-        <translation><numerusform>อัปโหลดสำเร็จ %n โฟลเดอร์</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n folder was successfully downloaded</source>
-        <translatorcomment>System notification to inform the user that %n folders were successfully downloaded</translatorcomment>
-        <translation><numerusform>ดาวน์โหลดสำเร็จ %n ไฟล์</numerusform></translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available. Click on this message to install it</source>
@@ -2723,16 +2744,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>A new version of MEGAsync is available</source>
         <translatorcomment>System notification to inform the user that there is a new version of MEGAsync available for update. macOS version cannot be installed making click so, a new string is provided</translatorcomment>
         <translation>มีเวอร์ชันใหม่พร้อมใช้งานแล้ว</translation>
-    </message>
-    <message>
-        <source>%1 and %2 were successfully uploaded</source>
-        <translatorcomment>System notification to inform the user that %1 files and %2 folders were successfully uploaded. The %1 is a sentence part for files and %2 for folders.</translatorcomment>
-        <translation>อัปโหลด %1 และ %2 เรียบร้อยแล้ว</translation>
-    </message>
-    <message>
-        <source>%1 and %2 were successfully downloaded</source>
-        <translatorcomment>System notification to inform the user that %1 files and %2 folders were successfully downloaded. The %1 is a sentence part for files and %2 for folders.</translatorcomment>
-        <translation>ดาวน์โหลด %1 และ %2 เรียบร้อยแล้ว</translation>
     </message>
     <message numerus="yes">
         <source>There is an active transfer. Exit the app?
@@ -2767,21 +2778,6 @@ Transfer will automatically resume when you re-open the app.</source>
         <translation>มีข้อผิดพลาดเกิดขึ้นขณะทำการเพิ่ม %1:</translation>
     </message>
     <message>
-        <source>Your syncs and backups have been disabled</source>
-        <translatorcomment>Warning message shown when  all the syncs and backups have been disabled</translatorcomment>
-        <translation>การซิงค์และการสำรองข้อมูลของคุณถูกปิดใช้งาน</translation>
-    </message>
-    <message>
-        <source>Your backups have been disabled</source>
-        <translatorcomment>Warning message shown when all the backups have been disabled</translatorcomment>
-        <translation>การสำรองข้อมูลของคุณถูกปิดใช้งาน</translation>
-    </message>
-    <message>
-        <source>Your backup &quot;%1&quot; has been temporarily disabled</source>
-        <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder displays backup name</translatorcomment>
-        <translation>การสำรองข้อมูล “%1” ของคุณถูกปิดใช้งานชั่วคราว</translation>
-    </message>
-    <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
         <translation>การสำรองข้อมูล “%1” ของคุณถูกปิดใช้งานแล้ว เนื่องจากไม่มีโฟลเดอร์บนเครื่อง</translation>
@@ -2794,12 +2790,12 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>การสำรองข้อมูล &quot;%1&quot; ของคุณถูกปิดใช้งานเนื่องจากโฟลเดอร์ MEGA อยู่ในถังขยะ</translation>
+        <translation>การสำรองข้อมูล &#8220;%1&#8221; ของคุณถูกปิดใช้งานเนื่องจากโฟลเดอร์ MEGA อยู่ในถังขยะ</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>การสำรองข้อมูล &quot;%1&quot; ของคุณถูกปิดใช้งาน โฟลเดอร์ MEGA (หรือบางส่วน) ไม่มีสิทธิ์เข้าถึงแบบเต็มที่</translation>
+        <translation>การสำรองข้อมูล “%1” ของคุณถูกปิดใช้งาน คุณไม่มีสิทธิ์เข้าถึงโฟลเดอร์ MEGA แบบเต็มที่ได้ (หรือเข้าถึงได้แค่บางส่วน)</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder has changed</source>
@@ -2813,7 +2809,7 @@ Transfer will automatically resume when you re-open the app.</source>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled. Reason: %2</source>
-        <translatorcomment>Notification message launched when a backup is disabled. Keep &amp;quot;%1&amp;quot; code because is filled with the name of the backup at runtime and %2 with the reason of the error.</translatorcomment>
+        <translatorcomment>Notification message launched when a backup is disabled. Keep &quot;%1&quot; code because is filled with the name of the backup at runtime and %2 with the reason of the error.</translatorcomment>
         <translation>การสำรองข้อมูล “%1” ของคุณถูกปิดใช้งาน สาเหตุ: %2</translation>
     </message>
     <message>
@@ -2835,6 +2831,71 @@ Transfer will automatically resume when you re-open the app.</source>
         <source>Failed to ugrade security. Error: %1</source>
         <translatorcomment>System notification error shown if an error occur while upgrading security for your account. %1 will be replaced with the error returned from the SDK.</translatorcomment>
         <translation>ไม่สามารถอัปเกรดความปลอดภัยได้ ข้อผิดพลาด: %1</translation>
+    </message>
+    <message>
+        <source>Some syncs and backups have been disabled. Go to settings to enable them again.</source>
+        <translatorcomment>Warning message shown when some backups and syncs are disabled. Tell the userto go to settings to solve the issue.</translatorcomment>
+        <translation>การซิงค์และการสำรองข้อมูลบางอย่างถูกปิดใช้งาน ไปที่การตั้งค่าเพื่อเปิดใช้งานอีกครั้ง</translation>
+    </message>
+    <message>
+        <source>One or more backups have been disabled. Go to settings to enable them again.</source>
+        <translatorcomment>Warning message shown when some backups are disabled. Tell the userto go to settings to solve the issue.</translatorcomment>
+        <translation>รายการสำรองข้อมูลบางอย่างถูกปิดใช้งาน ไปที่การตั้งค่าเพื่อเปิดใช้งานอีกครั้ง</translation>
+    </message>
+    <message>
+        <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
+        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again.</translatorcomment>
+        <translation>รายการซิงค์บางอย่างถูกปิดใช้งาน ไปที่การตั้งค่าเพื่อเปิดใช้งานอีกครั้ง</translation>
+    </message>
+    <message>
+        <source>Open settings</source>
+        <translatorcomment>Button label to open MEGAsync settings dialog.</translatorcomment>
+        <translation>เปิดการตั้งค่า</translation>
+    </message>
+    <message>
+        <source>Error getting link: File not found</source>
+        <translatorcomment>Notification message shown an error of file not found while getting a public link.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translatorcomment>This is the string used to refer to settings.</translatorcomment>
+        <translation>ตั้งค่า</translation>
+    </message>
+    <message>
+        <source>Your syncs and backups have been disabled: %1</source>
+        <translatorcomment>Warning message shown when all the syncs and backups have been disabled. The placeholder %1 shows the reason;</translatorcomment>
+        <translation>การซิงค์และการสำรองข้อมูลของคุณถูกปิดใช้งาน: %1</translation>
+    </message>
+    <message>
+        <source>Your backups have been disabled: %1</source>
+        <translatorcomment>Warning message shown when all the backups have been disabled. The placeholder %1 shows the reason;</translatorcomment>
+        <translation>การสำรองข้อมูลของคุณถูกปิดใช้งาน: %1</translation>
+    </message>
+    <message>
+        <source>Your syncs have been disabled: %1</source>
+        <translatorcomment>Warning message shown when  all the syncs have been disabled. The placeholder %1 shows the reason;</translatorcomment>
+        <translation>การซิงค์ของคุณถูกปิดใช้งาน: %1</translation>
+    </message>
+    <message>
+        <source>Error getting link: %1</source>
+        <translatorcomment>Notification message launched when an error occurs getting a public link for a file/folder. Placeholder %1 displays the reason.</translatorcomment>
+        <translation>เกิดข้อผิดพลาดขณะรับลิงก์: %1</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been temporarily disabled: %2</source>
+        <translatorcomment>Warning message shown when a sync is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
+        <translation>การซิงค์ “%1” ของคุณถูกปิดใช้งานชั่วคราว: %2</translation>
+    </message>
+    <message>
+        <source>Your backup &quot;%1&quot; has been temporarily disabled: %2</source>
+        <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
+        <translation>การสำรองข้อมูล “%1” ของคุณถูกปิดใช้งานชั่วคราว: %2</translation>
+    </message>
+    <message>
+        <source>Error transferring folder: %1</source>
+        <translatorcomment>Label to indicate that has been an error during a folder transfer.  Placeholder %1 displays the reason.</translatorcomment>
+        <translation>เกิดข้อผิดพลาดขณะถ่ายโอนโฟลเดอร์: %1</translation>
     </message>
 </context>
 <context>
@@ -3002,7 +3063,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
-        <translation>บัญชีถูกยุติการใช้งาน เนื่องจากการละเมิดเงื่อนไขการให้บริการของ MEGA เช่น การสวมสิทธิผู้อื่นในทางที่ผิด การแชร์และการนำเข้าข้อมูลอันเป็นเท็จ หรือการละเมิดระบบ</translation>
+        <translation>บัญชีถูกยุติการใช้งานเนื่องจากการละเมิดเงื่อนไขการให้บริการของ MEGA เช่น การสวมสิทธิผู้อื่นในทางที่ผิด การแชร์และการนำเข้าข้อมูลอันเป็นเท็จ หรือการละเมิดระบบ</translation>
     </message>
 </context>
 <context>
@@ -3119,7 +3180,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Foreign target storage quota reached</source>
         <translatorcomment>Label to show that foreign target account has exceeded its storage quota during a SDK operation.</translatorcomment>
-        <translation>บัญชีของเจ้าของโฟลเดอร์ที่ซิงค์ มีพื้นที่เก็บข้อมูลเกินโควต้าแล้ว</translation>
+        <translation>เจ้าของบัญชีโฟลเดอร์สำหรับซิงค์นี้ได้ใช้พื้นที่เก็บข้อมูลเกินโควต้าแล้ว</translation>
     </message>
     <message>
         <source>Remote path has changed</source>
@@ -3209,7 +3270,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>You can&apos;t run MEGA Desktop App from this location. Move it into the Applications folder then run it.</source>
         <translatorcomment>Error message shown when the user is trying to run MEGA Desktop App from a path different than Applications. Only affects to macOS.</translatorcomment>
-        <translation>คุณไม่สามารถเรียกใช้แอปเดสก์ท็อปจากตําแหน่งนี้ได้ ย้ายไปยังโฟลเดอร์ Applications แล้วเรียกใช้งานใหม่</translation>
+        <translation>คุณไม่สามารถเรียกใช้แอปเดสก์ท็อปจากตําแหน่งนี้ได้ ย้ายไปไว้ที่โฟลเดอร์ Applications แล้วเรียกใช้งานใหม่อีกครั้ง</translation>
     </message>
     <message>
         <source>Account expired (business or Pro Flexi)</source>
@@ -3451,72 +3512,39 @@ Enter a different name</source>
 <context>
     <name>NodeSelector</name>
     <message>
-        <source>Folder Selection</source>
-        <translatorcomment>Label to indicate the user the selection of folders for a synchronization (String short as possible)</translatorcomment>
-        <translation>เลือกโฟลเดอร์</translation>
-    </message>
-    <message>
-        <source>Select a MEGA folder:</source>
-        <translatorcomment>Label to indicate the user to select a MEGA folder for a synchronization (String short as possible). Keep capital letters.</translatorcomment>
-        <translation>เลือกโฟลเดอร์ MEGA:</translation>
-    </message>
-    <message>
         <source>Error</source>
         <translatorcomment>Label to indicate an Error</translatorcomment>
         <translation>ผิดพลาด</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translatorcomment>Label to indicate a Warning message.</translatorcomment>
-        <translation>คำเตือน</translation>
-    </message>
-    <message>
-        <source>Invalid folder for synchronization.
-Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
-        <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation>โฟลเดอร์สำหรับการซิงโครไนซ์ไม่ถูกต้อง กรุณาตรวจสอบว่าคุณไม่ได้ใช้อักขระเช่น ‘\’ ‘/’ หรือ ‘:’ ในชื่อโฟลเดอร์ของคุณ</translation>
-    </message>
-    <message>
-        <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
-        <translatorcomment>Error message shown when an user is trying upload files to a non compatible folder</translatorcomment>
-        <translation>คุณต้องมีสิทธิ์ในการอ่านและเขียนหรือสิทธิ์การเข้าถึงแบบเต็มที่ เพื่อให้สามารถอัปโหลดไปยังโฟลเดอร์ที่เลือกได้</translation>
-    </message>
-    <message>
-        <source>You need Full access right to be able to sync the selected folder.</source>
-        <translatorcomment>Error message shown when an user is trying sync a non compatible folder</translatorcomment>
-        <translation>คุณจะต้องมีสิทธิ์การเข้าถึงแบบเต็มที่เพื่อให้สามารถซิงค์โฟลเดอร์ที่เลือกได้</translation>
-    </message>
-    <message>
-        <source>Only files can be used for streaming.</source>
-        <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
-        <translation>ไฟล์เท่านั้นที่สามารถนำมาใช้กับการสตรีมมิ่ง</translation>
     </message>
     <message>
         <source>Select a MEGA folder</source>
         <translatorcomment>Node selector dialog title</translatorcomment>
         <translation>เลือกโฟลเดอร์ MEGA</translation>
     </message>
-    <message numerus="yes">
-        <source>You no longer have access to this item. Ask the owner to share again.</source>
-        <translatorcomment>Error message shown when the user is trying to download an file or folder from an incoming share and the owner stops sharing/removes all items</translatorcomment>
-        <translation><numerusform>คุณไม่สามารถเข้าถึงรายการเหล่านี้ได้อีกต่อไป แจ้งให้เจ้าของดำเนินการแชร์อีกครั้ง</numerusform></translation>
-    </message>
-    <message numerus="yes">
+    <message>
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
-        <translation><numerusform>รายการที่คุณเลือกถูกลบออกแล้ว หากต้องการเลือกใหม่ ให้ปิดหน้าต่างนี้แล้วลองอีกครั้ง</numerusform></translation>
+        <translation>รายการที่คุณเลือกถูกลบออกแล้ว หากต้องการเลือกใหม่ ให้ปิดหน้าต่างนี้แล้วลองอีกครั้ง</translation>
     </message>
-    <message numerus="yes">
-        <source>%1 item selected</source>
-        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
-                           First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation><numerusform>เลือกแล้ว %1 รายการ</numerusform></translation>
+    <message>
+        <source>Cloud Drive</source>
+        <translatorcomment>Button text to navigate to cloud drive section</translatorcomment>
+        <translation>คลาวด์ไดรฟ์</translation>
     </message>
-    <message numerus="yes">
-        <source>%1. %2 has been removed. To reselect, close this window and try again.</source>
-        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
-                           Second and last part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation><numerusform>%1 มี %2 รายการที่ถูกลบออก หากต้องการเลือกใหม่ ให้ปิดหน้าต่างนี้แล้วลองอีกครั้ง</numerusform></translation>
+    <message>
+        <source>Backups</source>
+        <translatorcomment>Button text to navigate to backups section</translatorcomment>
+        <translation>สำรองข้อมูล</translation>
+    </message>
+    <message>
+        <source>Incoming Shares</source>
+        <translatorcomment>Button text to navigate to incoming shares section</translatorcomment>
+        <translation>แชร์ขาเข้า</translation>
+    </message>
+    <message>
+        <source>Search</source>
+        <translatorcomment>Search button header</translatorcomment>
+        <translation>ค้นหา</translation>
     </message>
 </context>
 <context>
@@ -3608,11 +3636,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>โฟล์เดอร์ใหม่</translation>
     </message>
     <message>
-        <source>OK</source>
-        <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>ตกลง</translation>
-    </message>
-    <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
         <translation>ยกเลิก</translation>
@@ -3626,6 +3649,39 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Error:</source>
         <translatorcomment>MessageBox to inform about an error when trying to move or remove a node</translatorcomment>
         <translation>ข้อผิดพลาด:</translation>
+    </message>
+    <message>
+        <source>Cloud drive</source>
+        <translatorcomment>Button to filter search results from cloud drive</translatorcomment>
+        <translation>คลาวด์ไดรฟ์</translation>
+    </message>
+    <message>
+        <source>Backups</source>
+        <translatorcomment>Button to filter search results from backups</translatorcomment>
+        <translation>สำรองข้อมูล</translation>
+    </message>
+    <message>
+        <source>Incoming Shares</source>
+        <translatorcomment>Button to filter search results from incoming shares</translatorcomment>
+        <translation>แชร์ขาเข้า</translation>
+    </message>
+    <message>
+        <source>No results for:</source>
+        <translatorcomment>Label indicating that there are no results for the current search, searched text will be following this label.</translatorcomment>
+        <translation>ไม่พบรายการค้นหา:</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translatorcomment>Button text to accept and close the dialog</translatorcomment>
+        <translation>ตกลง</translation>
+    </message>
+</context>
+<context>
+    <name>NodeSelectorTreeViewWidgetSearch</name>
+    <message>
+        <source>Searching:</source>
+        <translatorcomment>Label indicating the current search, searched text will be following this label.</translatorcomment>
+        <translation>การค้นหา:</translation>
     </message>
 </context>
 <context>
@@ -3704,6 +3760,21 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Info notifications</source>
         <translatorcomment>Title of a checkbox for disconnectig secondary info notifications</translatorcomment>
         <translation>การแจ้งเตือนข้อมูล</translation>
+    </message>
+    <message>
+        <source>Uploads and downloads</source>
+        <translatorcomment>Notification category for completed transfers notifications</translatorcomment>
+        <translation>อัปโหลดและดาวน์โหลด</translation>
+    </message>
+    <message>
+        <source>Completed uploads and downloads</source>
+        <translatorcomment>Title of a checkbox for disconnectig completed transfer notifications</translatorcomment>
+        <translation>อัปโหลดและดาวน์โหลดเสร็จเรียบร้อย</translation>
+    </message>
+    <message>
+        <source>Uploads and downloads:</source>
+        <translatorcomment>Notification category for completed transfers notifications (macx)</translatorcomment>
+        <translation>อัปโหลดและดาวน์โหลด</translation>
     </message>
 </context>
 <context>
@@ -3942,6 +4013,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <name>PlanWidget</name>
     <message>
         <source>month</source>
+        <translatorcomment>Label displaying the period for which the pricing refers to</translatorcomment>
         <translation>เดือน</translation>
     </message>
     <message>
@@ -3958,16 +4030,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>%1 per user</source>
         <translatorcomment>Label to indicate the price per user of business plan. %1 will be replaced with specific price.</translatorcomment>
         <translation>%1 ต่อผู้ใช้</translation>
-    </message>
-    <message>
-        <source>storage</source>
-        <translatorcomment>Label to indicate the specific storage of a pro plan.</translatorcomment>
-        <translation>ที่เก็บข้อมูล</translation>
-    </message>
-    <message>
-        <source>transfer</source>
-        <translatorcomment>Label to indicate the specific transfer quota of a pro plan.</translatorcomment>
-        <translation>ถ่ายโอน</translation>
     </message>
     <message>
         <source>Great value for secure cloud storage, sharing and communication.</source>
@@ -4009,114 +4071,54 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translatorcomment>Label to inform about the minimum number of users for a business plan. %1 will be replaced with the minimum number of users.</translatorcomment>
         <translation><numerusform>ผู้ใช้ขั้นต่ำ %n ราย</numerusform></translation>
     </message>
+    <message>
+        <source>[A] storage</source>
+        <translatorcomment>Label to indicate the specific storage of a pro plan. [A] is a placeholder for the value of the storage, it must be kept in the translated strings.</translatorcomment>
+        <translation>พื้นที่เก็บข้อมูล [A]</translation>
+    </message>
+    <message>
+        <source>[A] transfer</source>
+        <translatorcomment>Label to indicate the specific transfer quota of a pro plan. [A] is a placeholder for the value of the transfer quota, it must be kept in the translated strings.</translatorcomment>
+        <translation>การถ่ายโอน [A]</translation>
+    </message>
 </context>
 <context>
-    <name>Platform</name>
-    <message>
-        <source>Preferences</source>
-        <translatorcomment>Label to indicate the Preferences option for the application (MacOS)</translatorcomment>
-        <translation>การกำหนดลักษณะ</translation>
-    </message>
-    <message>
-        <source>Quit</source>
-        <translatorcomment>Label displayed to let the user quit the application (MacOS). Max 20 characters. Keep capital letter.</translatorcomment>
-        <translation>จบการทำงาน</translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translatorcomment>Label to indicate the Settings option for the application (Windows and Linux)</translatorcomment>
-        <translation>ตั้งค่า</translation>
-    </message>
-    <message>
-        <source>Exit</source>
-        <translatorcomment>Label to indicate the Exit option for the application (Linux and Windows) (MAX 20 characters)</translatorcomment>
-        <translation>จบการทำงาน</translation>
-    </message>
+    <name>PlatformStrings</name>
     <message>
         <source>Show in folder</source>
         <translatorcomment>Label to indicate the &quot;Show in folder&quot; option to open local folder of a sync (Linux)</translatorcomment>
         <translation>แสดงในโฟลเดอร์</translation>
     </message>
     <message>
-        <source>Show in Explorer</source>
-        <translatorcomment>Label to indicate the &quot;Show in Explorer&quot; option to open local folder of a sync (Windows). Keep Explorer name as it is the app name of file explorer on Windows.</translatorcomment>
-        <translation>แสดงใน Explorer</translation>
+        <source>Exit</source>
+        <translatorcomment>Label displayed on actions exiting Desktop application when on Windows or Linux</translatorcomment>
+        <translation>จบการทำงาน</translation>
     </message>
     <message>
         <source>Show in Finder</source>
         <translatorcomment>Label to indicate the &quot;Show in Finder&quot; option to open local folder of a sync (macOS). Keep Finder name as it is the app name of file explorer on macOS.</translatorcomment>
         <translation>แสดงใน Finder</translation>
     </message>
-</context>
-<context>
-    <name>PlatformStrings</name>
     <message>
-        <source>Open settings</source>
-        <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
-        <translation>เปิดการตั้งค่า</translation>
+        <source>Quit</source>
+        <translatorcomment>Label displayed on actions exiting Desktop application when on Mac</translatorcomment>
+        <translation>จบการทำงาน</translation>
     </message>
     <message>
-        <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
-        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (Windows and Linux)</translatorcomment>
-        <translation>การซิงค์อย่างน้อยหนึ่งอย่างถูกปิดใช้งาน ไปที่การตั้งค่าเพื่อเปิดใช้งานอีกครั้ง</translation>
-    </message>
-    <message>
-        <source>Open preferences</source>
-        <translatorcomment>Button label to open MEGAsync preferences dialog (MacOS).</translatorcomment>
-        <translation>เปิดการกำหนดลักษณะ</translation>
-    </message>
-    <message>
-        <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
-        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (macOS)</translatorcomment>
-        <translation>รายการซิงค์บางอย่างถูกปิดใช้งาน ไปที่การกำหนดลักษณะเพื่อเปิดใช้งานอีกครั้ง</translation>
-    </message>
-    <message>
-        <source>Sync transfers cannot be cancelled individually.
-Please delete the folder sync from settings to cancel them.</source>
-        <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for windows and linux)</translatorcomment>
-        <translation>รายการซิงค์ที่กำลังถ่ายโอนอยู่ไม่สามารถยกเลิกได้ หากต้องการลบการซิงค์นี้ออก ให้ไปที่การตั้งค่าในแอปเดสก์ท็อปแล้วลบโฟลเดอร์ที่ซิงค์แทน</translation>
-    </message>
-    <message>
-        <source>Sync transfers cannot be cancelled individually.
-Please delete the folder sync from preferences to cancel them.</source>
-        <translatorcomment>Explains that the sync transfers cannot be cancelled individually. (for macOS)</translatorcomment>
-        <translation>รายการซิงค์ที่กำลังถ่ายโอนอยู่ไม่สามารถยกเลิกได้ หากต้องการลบการซิงค์นี้ออก ให้ไปที่การกำหนดลักษณะในแอปเดสก์ท็อปแล้วลบโฟลเดอร์ที่ซิงค์แทน</translation>
-    </message>
-    <message>
-        <source>One or more backups have been disabled. Go to settings to enable them again.</source>
-        <translatorcomment>Warning message shown when some backups are disabled. Tell the userto go to settings to solve the issue (win/linux)</translatorcomment>
-        <translation>รายการสำรองข้อมูลบางอย่างถูกปิดใช้งาน ไปที่การตั้งค่าเพื่อเปิดใช้งานอีกครั้ง</translation>
-    </message>
-    <message>
-        <source>Some syncs and backups have been disabled. Go to settings to enable them again.</source>
-        <translatorcomment>Warning message shown when some backups and syncs are disabled. Tell the userto go to settings to solve the issue (win/linux)</translatorcomment>
-        <translation>การซิงค์และการสำรองข้อมูลบางอย่างถูกปิดใช้งาน ไปที่การตั้งค่าเพื่อเปิดใช้งานอีกครั้ง</translation>
-    </message>
-    <message>
-        <source>One or more backups have been disabled. Go to preferences to enable them again.</source>
-        <translatorcomment>Warning message shown when some backups are disabled. Tell the userto go to settings to solve the issue (mac)</translatorcomment>
-        <translation>รายการสำรองข้อมูลบางอย่างถูกปิดใช้งาน ไปที่การกำหนดลักษณะเพื่อเปิดใช้งานอีกครั้ง</translation>
-    </message>
-    <message>
-        <source>Some syncs and backups have been disabled. Go to preferences to enable them again.</source>
-        <translatorcomment>Warning message shown when some backups and syncs are disabled. Tell the userto go to settings to solve the issue (mac)</translatorcomment>
-        <translation>การซิงค์และการสำรองข้อมูลบางอย่างถูกปิดใช้งาน ไปที่กำหนดลักษณะเพื่อเปิดใช้งานอีกครั้ง</translation>
+        <source>Show in Explorer</source>
+        <translatorcomment>Label to indicate the &quot;Show in Explorer&quot; option to open local folder of a sync (Windows). Keep Explorer name as it is the app name of file explorer on Windows.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Detected crashes on Windows, Linux, and masOS fixed.
-- Less device memory will be used by accounts with large amounts of data stored.
-- Application performance improved.
-- Translation issues fixed.
+        <source>- Security upgraded.
+- Detected crashes on Windows, Linux, and macOS fixed.
 </source>
-        <translatorcomment>Changelog for version v4.8.5</translatorcomment>
-        <translation>- แก้ไขแอปหยุดทำงานที่ตรวจ
-เจอบน Windows, Linux และ macOS
-- บัญชีที่มีข้อมูลจำนวนมากจะใช้หน่วยความจำบนอุปกรณ์ของคุณน้อยลง
-- ปรับปรุงประสิทธิภาพของแอปพลิเคชัน
-- แก้ไขข้อผิดพลาดในการแปลบางจุด</translation>
+        <translatorcomment>Changelog for v4.8.8</translatorcomment>
+        <translation>- อัปเดตความปลอดภัย
+- แก้ไขข้อผิดพลาดที่ตรวจพบบน Windows, Linux และ macOS</translation>
     </message>
 </context>
 <context>
@@ -4602,18 +4604,22 @@ Do you want to delete it anyway?</source>
     <name>QPlatformTheme</name>
     <message>
         <source>&amp;Yes</source>
+        <translatorcomment>Label for Yes button in message boxes</translatorcomment>
         <translation>&amp;ใช่</translation>
     </message>
     <message>
         <source>&amp;No</source>
+        <translatorcomment>Label for No button in message boxes</translatorcomment>
         <translation>&amp;ไม่</translation>
     </message>
     <message>
         <source>OK</source>
+        <translatorcomment>Label for Ok button in message boxes</translatorcomment>
         <translation>ตกลง</translation>
     </message>
     <message>
         <source>Cancel</source>
+        <translatorcomment>Label for Cancel button in message boxes</translatorcomment>
         <translation>ยกเลิก</translation>
     </message>
 </context>
@@ -4662,7 +4668,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. This action cannot be undone.</source>
         <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option.</translatorcomment>
-        <translation>โฟลเดอร์จะถูกลบออกจาก MEGA แต่ในคอมพิวเตอร์ของคุณจะไม่ถูกลบออก การดำเนินการนี้ไม่สามารถยกเลิกได้</translation>
+        <translation>โฟลเดอร์จะถูกลบออกจาก MEGA แต่จะไม่ถูกลบออกจากคอมพิวเตอร์ของคุณ การดำเนินการนี้ไม่สามารถยกเลิกได้</translation>
     </message>
     <message>
         <source>Confirm</source>
@@ -4739,6 +4745,14 @@ Do you want to delete it anyway?</source>
         <source>%n file</source>
         <translatorcomment>Part of the string used to display number of files in scanning step. %1 is the number of files found so far.</translatorcomment>
         <translation><numerusform>%n ไฟล์</numerusform></translation>
+    </message>
+</context>
+<context>
+    <name>SearchLineEdit</name>
+    <message>
+        <source>Search</source>
+        <translatorcomment>Placeholder for a search box</translatorcomment>
+        <translation>ค้นหา</translation>
     </message>
 </context>
 <context>
@@ -4863,7 +4877,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message displayed when a user is trying to download a file to a folder without write permissions.</translatorcomment>
-        <translation>คุณไม่มีสิทธิ์เขียนในโฟลเดอร์บนเครื่อง</translation>
+        <translation>คุณไม่มีสิทธิ์เขียนลงโฟลเดอร์บนเครื่อง</translation>
     </message>
     <message>
         <source>Export Master key</source>
@@ -5146,11 +5160,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>ประวัติการเข้าสู่ระบบ</translation>
     </message>
     <message>
-        <source>Preferences</source>
-        <translatorcomment>Dialog window title for Settings on macOS. Keep as short as possible.</translatorcomment>
-        <translation>การกำหนดลักษณะ</translation>
-    </message>
-    <message>
         <source>Language:</source>
         <translatorcomment>Form text label shown next to the language change drop down menu, on macOS. Keep as short as possible.</translatorcomment>
         <translation>ภาษา:</translation>
@@ -5223,7 +5232,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Enable Windows Explorer integration</source>
         <translatorcomment>Checkbox label displayed on Windows, allowing the user to enable / disable the Windows Explorer integration.</translatorcomment>
-        <translation>เปิดใช้งานการรวมกับ Windows Explorer</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>B</source>
@@ -5483,7 +5492,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your backup &quot;%1&quot; can&apos;t be enabled. Reason: %2</source>
         <translatorcomment>Error text when enabling a backup failed</translatorcomment>
-        <translation>ไม่สามารถเปิดใช้งานการสำรองข้อมูล &quot;%1&quot; ของคุณได้ สาเหตุ: %2</translation>
+        <translation>ไม่สามารถเปิดใช้งานการสำรองข้อมูล “%1” ของคุณได้ สาเหตุ: %2</translation>
     </message>
     <message>
         <source>Error disabling backup</source>
@@ -5498,7 +5507,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your backup &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
         <translatorcomment>Error text when disabling a backup failed</translatorcomment>
-        <translation>ไม่สามารถปิดใช้งานการสำรองข้อมูล &quot;%1&quot; ของคุณได้ สาเหตุ: %2</translation>
+        <translation>ไม่สามารถปิดใช้งานการสำรองข้อมูล “%1” ของคุณได้ สาเหตุ: %2</translation>
     </message>
     <message>
         <source>Go to backup centre</source>
@@ -5611,7 +5620,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>MEGA folder doesn&apos;t exist</source>
         <translatorcomment>Label displayed when an error occurs with a remote folder.</translatorcomment>
-        <translation>โฟลเดอร์ MEGA ไม่มีอยู่</translation>
+        <translation>ไม่มีโฟลเดอร์ MEGA</translation>
     </message>
     <message>
         <source>Finish</source>
@@ -5646,7 +5655,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>The entered passwords don&apos;t match</source>
         <translatorcomment>Label displayed when the user has filled different password.</translatorcomment>
-        <translation>รหัสผ่านที่กรอกไม่ตรงกัน</translation>
+        <translation>รหัสผ่านที่คุณกรอกไม่ตรงกัน</translation>
     </message>
     <message>
         <source>You have to accept our terms of service</source>
@@ -5716,6 +5725,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>MEGAsync</source>
+        <translatorcomment>Title of the dialog displayed when trying to cancel the wizard</translatorcomment>
         <translation>MEGA</translation>
     </message>
     <message>
@@ -5760,16 +5770,18 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
+        <translatorcomment>Error message displayed when the user is trying to log in without having confirmed his account</translatorcomment>
         <translation>กรุณาตรวจสอบอีเมลของคุณและคลิกที่ลิงก์เพื่อยืนยันการเปิดบัญชีของคุณ</translation>
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
+        <translatorcomment>Error message displayed when trying to login and too many login attemps have been made before</translatorcomment>
         <translation>คุณได้พยายามเข้าสู่ระบบหลายครั้งเกินไป [BR]กรุณารอจนกว่า %1 และลองใหม่อีกครั้ง</translation>
     </message>
     <message>
         <source>When you finish this assistant, you will be able to sync additional folders using the settings dialog</source>
         <translatorcomment>Label to inform the user about the possibility to add new synchronizations through settings dialog once the initial setup wizard is at final stage</translatorcomment>
-        <translation>เมื่อเสร็จสิ้นผู้ช่วยนี้ คุณจะสามารถซิงค์โฟลเดอร์เพิ่มเติมโดยใช้ไดอะล็อกบ็อกซ์การตั้งค่าได้</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>First name:</source>
@@ -5959,6 +5971,19 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
 </context>
 <context>
+    <name>StreamNodeSelector</name>
+    <message>
+        <source>Error</source>
+        <translatorcomment>Title of the dialog</translatorcomment>
+        <translation>ผิดพลาด</translation>
+    </message>
+    <message>
+        <source>Only files can be used for streaming.</source>
+        <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
+        <translation>คุณไม่สามารถสตรีมโฟลเดอร์ได้ กรุณาเลือกไฟล์ที่จะสตรีมแทน</translation>
+    </message>
+</context>
+<context>
     <name>StreamingFromMegaDialog</name>
     <message>
         <source>Stream from MEGA</source>
@@ -6046,11 +6071,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>มีข้อผิดพลาดในการลิงก์การสร้างสตรีมมิ่ง</translation>
     </message>
     <message>
-        <source>Decryption error</source>
-        <translatorcomment>Text shown when there is an error decrypting a public link for streaming</translatorcomment>
-        <translation>ข้อผิดพลาดในการถอดรหัสลับ</translation>
-    </message>
-    <message>
         <source>Error getting link information</source>
         <translatorcomment>Error message shown when a there is an error getting the information of a public link</translatorcomment>
         <translation>มีข้อผิดพลาดในการรับลิงก์ข้อมูลทั่วไป</translation>
@@ -6114,12 +6134,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You can&apos;t sync folders that are inside synced folders.</source>
         <translatorcomment>Warning message indicating that a folder can´t be synced as it is inside a synced folder.</translatorcomment>
-        <translation>คุณไม่สามารถซิงค์โฟลเดอร์ในขณะที่อยู่ในโฟลเดอร์ที่มีการซิงค์อยู่แล้ว</translation>
+        <translation>ไม่สามารถซิงค์โฟลเดอร์ได้เนื่องจากอยู่ภายในโฟลเดอร์ที่ซิงค์แล้ว</translation>
     </message>
     <message>
         <source>You can&apos;t sync folders that are inside backed up folders.</source>
         <translatorcomment>Warning message indicating that a folder can´t be synced as it is inside a backed up folder.</translatorcomment>
-        <translation>คุณไม่สามารถซิงค์โฟลเดอร์ในขณะที่อยู่ในโฟลเดอร์ที่มีการสำรองข้อมูลอยู่แล้ว</translation>
+        <translation>ไม่สามารถซิงค์โฟลเดอร์ได้เนื่องจากอยู่ภายในโฟลเดอร์สำรองข้อมูลแล้ว</translation>
     </message>
     <message>
         <source>You can&apos;t backup this folder as it contains synced folders.</source>
@@ -6129,22 +6149,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You can&apos;t sync folders that contain synced folders.</source>
         <translatorcomment>Warning message indicating that the selected folder for sync contains synced folders, hence it can not be synced.</translatorcomment>
-        <translation>คุณไม่สามารถซิงค์โฟลเดอร์ในขณะที่โฟลเดอร์มีการซิงค์อยู่แล้ว</translation>
+        <translation>คุณไม่สามารถซิงค์โฟลเดอร์ในขณะที่โฟลเดอร์นั้นมีการซิงค์อยู่แล้ว</translation>
     </message>
     <message>
         <source>You can&apos;t sync folders that contain backed up folders.</source>
         <translatorcomment>Warning message indicating that a folder can´t be synced as it contains backed up folders.</translatorcomment>
-        <translation>คุณไม่สามารถซิงค์โฟลเดอร์ในขณะที่โฟลเดอร์มีการสำรองข้อมูลอยู่แล้ว</translation>
+        <translation>คุณไม่สามารถซิงค์โฟลเดอร์ในขณะที่โฟลเดอร์นั้นมีการสำรองข้อมูลอยู่แล้ว</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Warning message indicating that the user doesn´t have write permissions on that folder</translatorcomment>
-        <translation>คุณไม่มีสิทธิ์เขียนโฟลเดอร์นี้บนเครื่อง</translation>
+        <translation>คุณไม่มีสิทธิ์เขียนลงโฟลเดอร์บนเครื่อง</translation>
     </message>
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
         <translatorcomment>Warning message indicating that megasync is not going to be able to download anything in the selected folder.</translatorcomment>
-        <translation>แอปจะไม่สามารถดาวน์โหลดอะไรได้ที่นี่</translation>
+        <translation>แอปจะไม่สามารถดาวน์โหลดอะไรลงที่นี่ได้</translation>
     </message>
     <message>
         <source>You can&apos;t backup this folder as it contains backed up folders.</source>
@@ -6256,20 +6276,29 @@ To continue, select a different folder.</source>
         <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by MEGA folder name in case the user clicks.</translatorcomment>
         <translation>เรียงตามชื่อโฟลเดอร์ MEGA</translation>
     </message>
+</context>
+<context>
+    <name>SyncNodeSelector</name>
     <message>
-        <source>Sync is enabled</source>
-        <translatorcomment>Checkbox tooltip in case the sync is enabled.</translatorcomment>
-        <translation>เปิดใช้งานการซิงค์แล้ว</translation>
+        <source>Error</source>
+        <translatorcomment>Title of the dialog</translatorcomment>
+        <translation>ผิดพลาด</translation>
     </message>
     <message>
-        <source>Sync is disabled</source>
-        <translatorcomment>Checkbox tooltip in case the sync is disabled.</translatorcomment>
-        <translation>ปิดใช้งานการซิงค์แล้ว</translation>
+        <source>You need Full access right to be able to sync the selected folder.</source>
+        <translatorcomment>Error message shown when an user is trying sync a non compatible folder</translatorcomment>
+        <translation>ในการซิงค์โฟลเดอร์นี้ คุณต้องมีสิทธิ์การเข้าถึงแบบเต็มที่</translation>
     </message>
     <message>
-        <source>Click menu for more Sync actions</source>
-        <translatorcomment>Menu column item tooltip.</translatorcomment>
-        <translation>คลิกที่เมนูเพื่อดำเนินการเพิ่มเติมเกี่ยวกับการซิงค์ข้อมูล</translation>
+        <source>Warning</source>
+        <translatorcomment>Title of the dialog</translatorcomment>
+        <translation>คำเตือน</translation>
+    </message>
+    <message>
+        <source>Invalid folder for synchronization.
+Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
+        <translation>ไม่สามารถซิงค์โฟลเดอร์ได้ กรุณาตรวจสอบว่าคุณไม่ได้ใช้เครื่องหมาย “\”, “/” หรือ “:” ในชื่อโฟลเดอร์</translation>
     </message>
 </context>
 <context>
@@ -6283,6 +6312,24 @@ To continue, select a different folder.</source>
         <source>Remove synced folder</source>
         <translatorcomment>Context menu option that removes the sync.</translatorcomment>
         <translation>ลบโฟลเดอร์ที่ซิงค์ออก</translation>
+    </message>
+</context>
+<context>
+    <name>SyncTableViewTooltips</name>
+    <message>
+        <source>Sync is enabled</source>
+        <translatorcomment>Checkbox tooltip that is displayed when it is checked.(sync enabled)</translatorcomment>
+        <translation>เปิดใช้งานการซิงค์แล้ว</translation>
+    </message>
+    <message>
+        <source>Sync is disabled</source>
+        <translatorcomment>Checkbox tooltip that is displayed when it is unchecked.(sync disabled)</translatorcomment>
+        <translation>ปิดใช้งานการซิงค์แล้ว</translation>
+    </message>
+    <message>
+        <source>Click menu for more Sync actions</source>
+        <translatorcomment>Menu column tooltip (three dots in the table)</translatorcomment>
+        <translation>คลิกที่เมนูจุดสามจุดเพื่อดำเนินการเพิ่มเติมเกี่ยวกับการซิงค์</translation>
     </message>
 </context>
 <context>
@@ -6418,10 +6465,12 @@ To continue, select a different folder.</source>
     </message>
     <message>
         <source>Upload</source>
+        <translatorcomment>Label of the button to start a new upload</translatorcomment>
         <translation>อัปโหลด</translation>
     </message>
     <message>
         <source>Download</source>
+        <translatorcomment>Label of the button to start a new download</translatorcomment>
         <translation>ดาวน์โหลด</translation>
     </message>
     <message>
@@ -6578,8 +6627,8 @@ To continue, select a different folder.</source>
         <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left for this IP address.
 To get more quota, upgrade to a Pro account or wait for [A] until more free quota becomes available on your IP address.</source>
         <translatorcomment>Message which shows that the user reachs the overquota. [A] is the time to wait until the quota is reset in hh:mm:ss</translatorcomment>
-        <translation>คุณไม่สามารถดาวน์โหลดต่อได้ เนื่องจากที่อยู่ IP นี้มีโควต้าการถ่ายโอนไม่เพียงพอ
-หากต้องการรับโควต้ามากขึ้น ให้อัปเกรดเป็นบัญชี Pro หรือรอ [A] จนกว่าที่อยู่ IP ของคุณจะมีโควต้าฟรีเพิ่มขึ้น</translation>
+        <translation>คุณไม่สามารถดาวน์โหลดต่อได้ เนื่องจากที่อยู่ IP นี้ไม่มีโควต้าการถ่ายโอนที่เพียงพอ
+หากอยากเพิ่มโควต้า ต้องอัปเกรดเป็นบัญชี Pro หรือรออีก [A] เพื่อให้ที่อยู่ IP ของคุณได้รับการจัดสรรโควต้าฟรีใหม่</translation>
     </message>
     <message>
         <source>More about transfer quota</source>
@@ -6601,6 +6650,119 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     </message>
 </context>
 <context>
+    <name>TransferNotificationBuilderBase</name>
+    <message>
+        <source>Uploaded 1 file to %1.</source>
+        <translatorcomment>Notification text that inform 1 file has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
+        <translation>อัปโหลดไฟล์ 1 รายการไปไว้ที่ %1 เรียบร้อยแล้ว</translation>
+    </message>
+    <message>
+        <source>Uploaded 1 folder to %1.</source>
+        <translatorcomment>Notification text that inform 1 folder has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
+        <translation>อัปโหลดโฟลเดอร์ 1 รายการไปไว้ที่ %1 เรียบร้อยแล้ว</translation>
+    </message>
+    <message>
+        <source>File uploaded</source>
+        <translatorcomment>Notification title when a file has been uploaded</translatorcomment>
+        <translation>อัปโหลดไฟล์เสร็จแล้ว</translation>
+    </message>
+    <message>
+        <source>Folder uploaded</source>
+        <translatorcomment>Notification title when a folder has been uploaded</translatorcomment>
+        <translation>อัปโหลดโฟลเดอร์เสร็จแล้ว</translation>
+    </message>
+    <message>
+        <source>Show in MEGA</source>
+        <translatorcomment>Notification button to see the file on the webclient</translatorcomment>
+        <translation>แสดงใน MEGA</translation>
+    </message>
+    <message>
+        <source>Get link</source>
+        <translatorcomment>Notification button to get the file link</translatorcomment>
+        <translation>รับลิงก์</translation>
+    </message>
+    <message>
+        <source>Downloaded 1 file to %1.</source>
+        <translatorcomment>Notification text that inform 1 file has been downloaded to a folder. The place holder is the target folder name.</translatorcomment>
+        <translation>ดาวน์โหลดไฟล์ 1 รายการไปไว้ที่ %1 เรียบร้อยแล้ว</translation>
+    </message>
+    <message>
+        <source>Downloaded 1 folder to %1.</source>
+        <translatorcomment>Notification text that inform 1 folder has been downloaded to a folder. The place holder is the target folder name.</translatorcomment>
+        <translation>ดาวน์โหลดโฟลเดอร์ 1 รายการไปไว้ที่ %1 เรียบร้อยแล้ว</translation>
+    </message>
+    <message>
+        <source>Show in folder</source>
+        <translatorcomment>Notification button to see the file on the local file explorer</translatorcomment>
+        <translation>แสดงในโฟลเดอร์</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translatorcomment>Notification button to open the file</translatorcomment>
+        <translation>เปิด</translation>
+    </message>
+    <message>
+        <source>File downloaded</source>
+        <translatorcomment>Notification title when a file has been downloaded</translatorcomment>
+        <translation>ดาวน์โหลดไฟล์เสร็จแล้ว</translation>
+    </message>
+    <message>
+        <source>Folder downloaded</source>
+        <translatorcomment>Notification title when a folder has been downloaded</translatorcomment>
+        <translation>ดาวน์โหลดโฟลเดอร์เสร็จแล้ว</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n upload successful</source>
+        <translatorcomment>Notification text that inform that an upload was successful. %1 is the number of uploads. This string goes always with the %n upload cancelled and/or %n upload failed strings.</translatorcomment>
+        <translation><numerusform>อัปโหลดเสร็จแล้ว %n รายการ</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>, %n upload cancelled</source>
+        <translatorcomment>Appended text that inform that an upload was cancelled. %1 is the number of cancelled uploads. This string goes always appended to the %n upload successful</translatorcomment>
+        <translation><numerusform>, ยกเลิกอัปโหลดแล้ว %n รายการ</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>, %n upload failed</source>
+        <translatorcomment>Appended text that inform that an upload has failed. %1 is the number of failed uploads. This string goes always appended to the %n upload successful</translatorcomment>
+        <translation><numerusform>, อัปโหลดไม่สำเร็จ %n รายการ</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Uploaded %n items to %1</source>
+        <translatorcomment>Notification text that inform n items (files or folders) has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
+        <translation><numerusform>อัปโหลด %n รายการไปไว้ที่ %1 เรียบร้อยแล้ว</numerusform></translation>
+    </message>
+    <message>
+        <source>Items uploaded</source>
+        <translatorcomment>Notification title when a more than one transfer (file or folders) have been uploaded</translatorcomment>
+        <translation>รายการที่อัปโหลดเสร็จแล้ว</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n download successful</source>
+        <translatorcomment>Notification text that inform that an download was successful. %1 is the number of downloads. This string goes always with the %n download cancelled and/or %n download failed strings.</translatorcomment>
+        <translation><numerusform>ดาวน์โหลดเสร็จแล้ว %n รายการ</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>, %n download cancelled</source>
+        <translatorcomment>Appended text that inform that an download was cancelled. %1 is the number of cancelled downloads. This string goes always appended to the %n download successful</translatorcomment>
+        <translation><numerusform>, ยกเลิกดาวน์โหลดแล้ว %n รายการ</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>, %n download failed</source>
+        <translatorcomment>Appended text that inform that an download has failed. %1 is the number of failed downloads. This string goes always appended to the %n download successful</translatorcomment>
+        <translation><numerusform>, ดาวน์โหลดไม่สำเร็จ %n รายการ</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Downloaded %n items to %1</source>
+        <translatorcomment>Notification text that inform n items (files or folders) has been downloaded to a folder. The place holder is the target folder name.</translatorcomment>
+        <translation><numerusform>ดาวน์โหลด %n รายการไปไว้ที่ %1 เรียบร้อยแล้ว</numerusform></translation>
+    </message>
+    <message>
+        <source>Items downloaded</source>
+        <translatorcomment>Notification title when a more than one transfer (file or folders) have been downloaded</translatorcomment>
+        <translation>รายการที่ดาวน์โหลดเสร็จแล้ว</translation>
+    </message>
+</context>
+<context>
     <name>TransferQuota</name>
     <message>
         <source>Limited available transfer quota.</source>
@@ -6618,7 +6780,18 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Dismiss</source>
         <translatorcomment>Option to close the dialog without taking any action</translatorcomment>
-        <translation>ละทิ้ง</translation>
+        <translation>ยกเลิก</translation>
+    </message>
+    <message>
+        <source>Sync transfers cannot be cancelled individually.
+Please delete the folder sync from settings to cancel them.</source>
+        <translatorcomment>Message displayed when the user is trying to cancel a sync transfer.</translatorcomment>
+        <translation>รายการซิงค์ที่กำลังถ่ายโอนอยู่ไม่สามารถยกเลิกได้ หากต้องการลบการซิงค์นี้ออก ให้ไปที่การตั้งค่าในแอปเดสก์ท็อปแล้วลบโฟลเดอร์ที่ซิงค์แทน</translation>
+    </message>
+    <message>
+        <source>Open settings</source>
+        <translatorcomment>Button label to open the Settings dialog</translatorcomment>
+        <translation>เปิดการตั้งค่า</translation>
     </message>
 </context>
 <context>
@@ -6956,6 +7129,19 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     </message>
 </context>
 <context>
+    <name>UploadNodeSelector</name>
+    <message>
+        <source>Error</source>
+        <translatorcomment>Title of the dialog</translatorcomment>
+        <translation>ผิดพลาด</translation>
+    </message>
+    <message>
+        <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
+        <translatorcomment>Error message shown when an user is trying upload files to a non compatible folder</translatorcomment>
+        <translation>หากต้องการอัปโหลดโฟลเดอร์นี้ คุณต้องมีสิทธิ์อ่านและเขียนหรือสิทธิ์เข้าถึงแบบเต็มที่</translation>
+    </message>
+</context>
+<context>
     <name>UploadToMegaDialog</name>
     <message>
         <source>Upload to MEGA</source>
@@ -7082,6 +7268,41 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
         <source>%n year ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n years ago</translatorcomment>
         <translation><numerusform>%n ปีที่แล้ว</numerusform></translation>
+    </message>
+    <message>
+        <source>[DAYS] [HOURS]</source>
+        <translatorcomment>String used to control formatting of time intervals. [DAYS] will be replaced by the days count and [HOURS] by the hours. This is used for example in the Time remaining column of Transfer Manager.</translatorcomment>
+        <translation>[DAYS] [HOURS]</translation>
+    </message>
+    <message>
+        <source>[HOURS] [MINUTES]</source>
+        <translatorcomment>String used to control formatting of time intervals. [HOURS] will be replaced by the hours count and [MINUTES] by the minutes. This is used for example in the Time remaining column of Transfer Manager.</translatorcomment>
+        <translation>[HOURS] [MINUTES]</translation>
+    </message>
+    <message>
+        <source>[MINUTES] [SECONDS]</source>
+        <translatorcomment>String used to control formatting of time intervals. [MINUTES] will be replaced by the minutes count and [SECONDS] by the seconds. This is used for example in the Time remaining column of Transfer Manager.</translatorcomment>
+        <translation>[MINUTES] [SECONDS]</translation>
+    </message>
+    <message>
+        <source>%1 [A]d[/A]</source>
+        <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [DAYS] [HOURS] string, replacing the [DAYS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the days. The space needs to be non-breaking.</translatorcomment>
+        <translation>%1 [A]ว[/A]</translation>
+    </message>
+    <message>
+        <source>%1 [A]h[/A]</source>
+        <translatorcomment>String controlling the formatting of the hour count for time intervals. It is used in [DAYS] [HOURS] and [HOURS] [MINUTES] strings, replacing the [HOURS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the hours. The space needs to be non-breaking.</translatorcomment>
+        <translation>%1 [A]ชม.[/A]</translation>
+    </message>
+    <message>
+        <source>%1 [A]m[/A]</source>
+        <translatorcomment>String controlling the formatting of the minute count for time intervals. It is used in [HOURS] [MINUTES] and [MINUTES] [SECONDS] strings, replacing the [MINUTES] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the minutes. The space needs to be non-breaking.</translatorcomment>
+        <translation>%1 [A]น.[/A]</translation>
+    </message>
+    <message>
+        <source>%1 [A]s[/A]</source>
+        <translatorcomment>String controlling the formatting of the seconds count for time intervals. It is used in the [MINUTES] [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the seconds. The space needs to be non-breaking.</translatorcomment>
+        <translation>%1 [A]วิ[/A]</translation>
     </message>
 </context>
 <context>
