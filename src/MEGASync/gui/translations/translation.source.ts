@@ -4205,12 +4205,10 @@ Enter a different name.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Security upgraded.
+        <source>- New search functionality for remote node selector.
 - Detected crashes on Windows, Linux, and macOS fixed.
 </source>
-        <translatorcomment>Changelog for v4.8.8</translatorcomment>
-        <translation>- Upgraded security
-- Fixed detected crashes on Windows, Linux, and macOS</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
