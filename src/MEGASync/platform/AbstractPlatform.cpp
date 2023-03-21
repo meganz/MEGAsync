@@ -88,6 +88,11 @@ void AbstractPlatform::fileSelector(QString title, QString defaultDir, bool mult
     {
         fileDialog->setFileMode(QFileDialog::ExistingFile);
     }
+    //Orphan native dialogs must be modal in Windows and Linux. On macOS this method has its own implementation.
+    if(!parent)
+    {
+        fileDialog->setModal(true);
+    }
     DialogOpener::showDialog<QFileDialog>(fileDialog, [fileDialog, func]()
     {
         QStringList files;
