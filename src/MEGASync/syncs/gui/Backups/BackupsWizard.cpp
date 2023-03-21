@@ -10,6 +10,7 @@
 #include "syncs/gui/Backups/BackupNameConflictDialog.h"
 #include "syncs/gui/SyncTooltipCreator.h"
 #include "Platform.h"
+#include <DialogOpener.h>
 
 #include "megaapi.h"
 
@@ -47,7 +48,7 @@ BackupsWizard::BackupsWizard(QWidget* parent) :
     mUserCancelled (false),
     mFoldersModel (new QStandardItemModel(this)),
     mFoldersProxyModel (new ProxyModel(this)),
-    mCurrentStep (STEP_1_INIT)
+    mCurrentStep (STEP_1)
 {
     // Setup UI
     setWindowFlags((windowFlags() | Qt::WindowCloseButtonHint));
@@ -73,7 +74,7 @@ BackupsWizard::BackupsWizard(QWidget* parent) :
     setupLists();
 
     // Go to Step 1
-    setupStep1();
+    nextStep(STEP_1);
 }
 
 BackupsWizard::~BackupsWizard()
@@ -86,24 +87,12 @@ void BackupsWizard::changeEvent(QEvent* event)
     if (event->type() == QEvent::LanguageChange)
     {
         mUi->retranslateUi(this);
-
-        // mUi->retranslateUi sets text to tr("Next"), so we have
-        // to change it if we are not in step 1
-        if (mCurrentStep > STEP_1)
+        //SETUP_BACKUPS only shows a GIF
+        if(mCurrentStep != Step::SETUP_BACKUPS)
         {
-            mUi->bNext->setText(tr("Setup"));
+            nextStep(mCurrentStep);
         }
-
-        // Same with error "Collapse"/"Show more"
-        if (mUi->line1->isVisible() && mUi->line2->isVisible())
-        {
-            mUi->bShowMore->setText(tr("Collapse"));
-        }
-
-        // If the backups root dir has not been created yet, localize the name
-        mUi->leBackupTo->setText(UserAttributes::MyBackupsHandle::getMyBackupsLocalizedPath()
-                                 + QLatin1Char('/')
-                                 + mDeviceNameRequest->getDeviceName());
+        setupHeaders();
     }
     QDialog::changeEvent(event);
 }
@@ -115,24 +104,14 @@ void BackupsWizard::nextStep(const Step &step)
 
     switch (step)
     {
-        case Step::STEP_1_INIT:
+        case Step::STEP_1:
         {
             setupStep1();
             break;
         }
-        case Step::STEP_1:
-        {
-            // Wait for user interaction
-            break;
-        }
-        case Step::STEP_2_INIT:
-        {
-            setupStep2();
-            break;
-        }
         case Step::STEP_2:
         {
-            // Wait for user interaction
+            setupStep2();
             break;
         }
         case Step::HANDLE_NAME_CONFLICTS:
@@ -243,7 +222,6 @@ void BackupsWizard::setupStep1()
         mUi->bMoreFolders->setText(tr("More folders"));
     }
 
-    nextStep(STEP_1);
     updateSize();
 }
 
@@ -264,7 +242,6 @@ void BackupsWizard::setupStep2()
     // Set folders number
     mUi->lFoldersNumber->setText(tr("%n folder", "", nbSelectedFolders));
 
-    nextStep(STEP_2);
     updateSize();
 }
 
@@ -281,8 +258,38 @@ void BackupsWizard::handleNameConflicts()
     if(!BackupNameConflictDialog::backupNamesValid(candidatePaths))
     {
         BackupNameConflictDialog* conflictDialog = new BackupNameConflictDialog(candidatePaths, this);
-        connect(conflictDialog, &BackupNameConflictDialog::accepted,
-                this, &BackupsWizard::onConflictResolved);
+        DialogOpener::showDialog<BackupNameConflictDialog>(conflictDialog, [this, conflictDialog](){
+            if(conflictDialog->result() == QDialog::Accepted)
+            {
+                const auto changes (conflictDialog->getChanges());
+                auto changeIt (changes.cbegin());
+                while (changeIt != changes.cend())
+                {
+                    int nbBackups (mFoldersModel->rowCount());
+                    int row (0);
+                    bool found (false);
+                    while (!found && row < nbBackups)
+                    {
+                        auto item (mFoldersModel->item(row));
+                        if (item && item->data(Qt::UserRole).toString() == changeIt.key())
+                        {
+                            item->setData(changeIt.value(), Qt::DisplayRole);
+                            found = true;
+                        }
+                        else
+                        {
+                            row++;
+                        }
+                    }
+                    changeIt++;
+                }
+                nextStep(FINALIZE);
+            }
+            else
+            {
+                nextStep(STEP_2);
+            }
+        });
     }
     else
     {
@@ -306,8 +313,11 @@ void BackupsWizard::setupBackups()
     for (int i = 0; i < mFoldersProxyModel->rowCount(); ++i)
     {
         QString path (mFoldersProxyModel->index(i, 0).data(Qt::UserRole).toString());
-        QString syncName (mFoldersProxyModel->index(i, 0).data(Qt::DisplayRole).toString());
-        mBackupsStatus.insert(path, {QUEUED, syncName});
+        if(!mBackupsStatus.contains(path))
+        {
+            QString syncName (mFoldersProxyModel->index(i, 0).data(Qt::DisplayRole).toString());
+            mBackupsStatus.insert(path, {QUEUED, syncName});
+        }
     }
     processNextBackupSetup();
 }
@@ -352,7 +362,7 @@ void BackupsWizard::setupComplete()
     else
     {
         // Error: go back to Step 1 :(
-        nextStep(STEP_1_INIT);
+        nextStep(STEP_1);
     }
 }
 
@@ -600,7 +610,7 @@ void BackupsWizard::on_bNext_clicked()
 {
     if (mCurrentStep == STEP_1)
     {
-        nextStep(STEP_2_INIT);
+        nextStep(STEP_2);
     }
     else
     {
@@ -692,7 +702,7 @@ void BackupsWizard::on_bMoreFolders_clicked()
 void BackupsWizard::on_bBack_clicked()
 {    
     // The "Back" button only appears at STEP_2. Go back to STEP_1_INIT.
-    nextStep(STEP_1_INIT);
+    nextStep(STEP_1);
 }
 
 void BackupsWizard::on_bViewInBackupCentre_clicked()
@@ -708,7 +718,7 @@ void BackupsWizard::on_bDismiss_clicked()
 
 void BackupsWizard::on_bTryAgain_clicked()
 {
-    nextStep(STEP_1_INIT);
+    nextStep(STEP_1);
 }
 
 void BackupsWizard::on_bCancelErr_clicked()
@@ -743,13 +753,11 @@ void BackupsWizard::onItemChanged(QStandardItem *item)
 
     switch (mCurrentStep)
     {
-        case STEP_1_INIT:
         case STEP_1:
         {
             enable = atLeastOneFolderChecked() && mDeviceNameRequest->isAttributeReady();
             break;
         }
-        case STEP_2_INIT:
         case STEP_2:
         {
             enable = true;
@@ -865,34 +873,6 @@ void BackupsWizard::onSyncAddRequestStatus(int errorCode, const QString& errorMs
     {
         processNextBackupSetup();
     }
-}
-
-void BackupsWizard::onConflictResolved()
-{
-    auto conflictDialog = qobject_cast<BackupNameConflictDialog*>(sender());
-    const auto changes (conflictDialog->getChanges());
-    auto changeIt (changes.cbegin());
-    while (changeIt != changes.cend())
-    {
-        int nbBackups (mFoldersModel->rowCount());
-        int row (0);
-        bool found (false);
-        while (!found && row < nbBackups)
-        {
-            auto item (mFoldersModel->item(row));
-            if (item && item->data(Qt::UserRole).toString() == changeIt.key())
-            {
-                item->setData(changeIt.value(), Qt::DisplayRole);
-                found = true;
-            }
-            else
-            {
-                row++;
-            }
-        }
-        changeIt++;
-    }
-    nextStep(FINALIZE);
 }
 
 // ProxyModel class ------------------------------------------------------

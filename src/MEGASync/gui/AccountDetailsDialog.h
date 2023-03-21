@@ -20,6 +20,9 @@ public:
     void refresh();
     void updateStorageElements();
 
+protected:
+    void changeEvent(QEvent *event) override;
+
 private:
     Ui::AccountDetailsDialog* mUi;
 };

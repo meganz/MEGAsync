@@ -255,3 +255,13 @@ void AccountDetailsDialog::updateStorageElements()
 
     refresh();
 }
+
+void AccountDetailsDialog::changeEvent(QEvent *event)
+{
+    if(event->type() == QEvent::LanguageChange)
+    {
+        mUi->retranslateUi(this);
+    }
+
+    QDialog::changeEvent(event);
+}

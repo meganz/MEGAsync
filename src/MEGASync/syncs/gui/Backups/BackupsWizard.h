@@ -40,9 +40,7 @@ class BackupsWizard : public QDialog
     private:
         enum Step
         {
-            STEP_1_INIT = 0,
-            STEP_1,
-            STEP_2_INIT,
+            STEP_1 = 0,
             STEP_2,
             HANDLE_NAME_CONFLICTS,
             FINALIZE,
@@ -113,7 +111,6 @@ class BackupsWizard : public QDialog
         void onDeviceNameSet(QString deviceName);
         void onMyBackupsFolderHandleSet(mega::MegaHandle h = mega::INVALID_HANDLE);
         void onSyncAddRequestStatus(int errorCode, const QString &errorMsg, const QString &name);
-        void onConflictResolved();
 };
 
 class ProxyModel : public QSortFilterProxyModel

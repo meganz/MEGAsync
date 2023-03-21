@@ -6,7 +6,7 @@
 #include "CommonMessages.h"
 #include "syncs/gui/SyncTooltipCreator.h"
 
-BackupRenameWidget::BackupRenameWidget(const QString& path, int number, QWidget *parent) :
+BackupRenameWidget::BackupRenameWidget(const QString& path, const QString &suggestedNewName, int number, QWidget *parent) :
     QFrame(parent),
     ui(new Ui::BackupRenameWidget),
     mPath(path)
@@ -16,6 +16,10 @@ BackupRenameWidget::BackupRenameWidget(const QString& path, int number, QWidget 
     ui->lError->hide();
     ui->lLocalFolder->setText(ui->lLocalFolder->text().arg(number));
     ui->lLocalFolderPath->setToolTip(SyncTooltipCreator::createForLocal(mPath));
+    if(!suggestedNewName.isEmpty())
+    {
+        ui->leNewName->setText(suggestedNewName);
+    }
     ui->leNewName->installEventFilter(this);
     ui->lLocalFolderPath->installEventFilter(this);
 }
@@ -55,7 +59,12 @@ bool BackupRenameWidget::isNewNameValid(QStringList& backupNames)
 
 QString BackupRenameWidget::getNewNameRaw()
 {
-    return ui->leNewName->text().isEmpty() ? SyncController::getSyncNameFromPath(mPath) : ui->leNewName->text();;
+    return ui->leNewName->text().isEmpty() ? SyncController::getSyncNameFromPath(mPath) : ui->leNewName->text();
+}
+
+QString BackupRenameWidget::getEnteredNewName()
+{
+    return ui->leNewName->text();
 }
 
 QString BackupRenameWidget::getPath()
