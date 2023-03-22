@@ -6419,6 +6419,7 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
                         if (infoDialog->getLoggedInMode() != blockState)
                         {
                             infoDialog->regenerateLayout(blockState);
+                            DialogOpener::closeAllDialogs();
                         }
                     }
                     else if (!whyamiblockedPeriodicPetition) //Do not force show on periodic whyamiblocked call
@@ -6751,6 +6752,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                          preferences->resetGlobalSettings();
                      }
 
+                     DialogOpener::closeAllDialogs();
                      start();
                      periodicTasks();
                  }
