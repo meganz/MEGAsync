@@ -19,8 +19,8 @@ Page {
         isFirstPage = stackView.currentItem == stackView.initialItem;
     }
 
-    property SyncsPage next
-    property SyncsPage previous
+    property var next
+    property var previous
     property Footer footerLayout: Footer {}
     property bool isStacked: false
     property bool isFirstPage: false

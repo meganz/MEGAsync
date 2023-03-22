@@ -11,7 +11,7 @@ ColumnLayout {
      * Signals
      */
 
-    signal optionChanged(type: int)
+    signal optionChanged(int type)
 
     /*
      * Object properties

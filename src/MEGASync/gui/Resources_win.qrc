@@ -1340,12 +1340,16 @@
         <file>images/Onboarding/login_folder.png</file>
         <file>images/Onboarding/login_folder@2x.png</file>
         <file>images/Onboarding/login_folder@3x.png</file>
-        <file>images/onboarding/login_folder.png</file>
-        <file>images/onboarding/login_folder@2x.png</file>
-        <file>images/onboarding/login_folder@3x.png</file>
-        <file>images/onboarding/onboard_step1.png</file>
-        <file>images/onboarding/onboard_step1@2x.png</file>
-        <file>images/onboarding/onboard_step1@3x.png</file>
-        <file>images/onboarding/arrow_right.svg</file>
+        <file>images/Onboarding/pc.svg</file>
+        <file>images/Onboarding/plus-circle.svg</file>
+        <file>images/Onboarding/shield.svg</file>
+        <file>images/Onboarding/sync.svg</file>
+        <file>images/Onboarding/arrow_right.svg</file>
+        <file>images/Onboarding/check-circle_medium-regular-outline.svg</file>
+        <file>images/Onboarding/check-circle_medium-regular-solid.svg</file>
+        <file>images/Onboarding/cloud.svg</file>
+        <file>images/Onboarding/fuse.svg</file>
+        <file>images/Onboarding/help-circle.svg</file>
+        <file>images/Onboarding/image-02.svg</file>
     </qresource>
 </RCC>
