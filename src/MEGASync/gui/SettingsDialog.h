@@ -191,8 +191,6 @@ protected:
     void closeEvent(QCloseEvent * event);
 #endif
 
-    void restartApp();
-
 private slots:
     void onShellNotificationsProcessed();
 
