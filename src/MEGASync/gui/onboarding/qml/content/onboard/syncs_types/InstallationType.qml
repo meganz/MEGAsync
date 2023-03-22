@@ -8,25 +8,29 @@ import Components 1.0 as Custom
 ColumnLayout {
 
     /*
-     * Functions
-     */
-    function clear() {
-        if(buttonGroup.checkState === Qt.PartiallyChecked) {
-            buttonGroup.checkState = Qt.Unchecked;
-        }
-    }
-
-    /*
      * Signals
      */
 
-    signal optionChanged(type: int, checked: bool)
+    signal optionChanged(type: int)
 
     /*
      * Object properties
      */
 
     width: parent.width
+
+    onVisibleChanged: {
+        if(visible) {
+            footerLayout.previousButton.visible = true;
+            if(!buttonGroup.checkState) {
+                footerLayout.nextButton.enabled = false;
+            } else {
+                footerLayout.nextButton.enabled = true;
+            }
+        } else {
+            footerLayout.nextButton.enabled = true;
+        }
+    }
 
     /*
      * Child objects
@@ -35,15 +39,18 @@ ColumnLayout {
     ButtonGroup {
         id: buttonGroup
 
+        property InstallationTypeButton lastSelected
+
         onCheckStateChanged: {
-            if(buttonGroup.checkedButton != null) {
-                optionChanged(buttonGroup.checkedButton.type, buttonGroup.checkState);
+            if(!checkState) {
+               checkedButton.checked = true;
             }
         }
 
         onCheckedButtonChanged: {
             if(buttonGroup.checkedButton != null) {
-                optionChanged(buttonGroup.checkedButton.type, buttonGroup.checkState);
+                footerLayout.nextButton.enabled = true;
+                optionChanged(buttonGroup.checkedButton.type);
             }
         }
     }

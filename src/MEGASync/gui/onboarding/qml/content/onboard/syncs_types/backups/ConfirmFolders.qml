@@ -8,16 +8,19 @@ import Onboard.Syncs_types 1.0
 ColumnLayout {
     id: mainLayout
 
-    /*
-     * Object properties
-     */
-
     width: parent.width
     spacing: 24
-
-    /*
-     * Child objects
-     */
+    onVisibleChanged: {
+        if(visible) {
+            footerLayout.nextButton.iconSource = "../../../images/Onboarding/cloud.svg";
+            footerLayout.nextButton.sourceSize = Qt.size(25, 25);
+            footerLayout.nextButton.text = qsTr("Backup");
+        } else {
+            footerLayout.nextButton.iconSource = "../../../images/Onboarding/arrow_right.svg";
+            footerLayout.nextButton.sourceSize = Qt.size(10, 10);
+            footerLayout.nextButton.text = qsTr("Next");
+        }
+    }
 
     Rectangle {
         Layout.preferredWidth: mainLayout.width
@@ -70,5 +73,7 @@ ColumnLayout {
                 }
             }
         }
-    }
-}
+
+    } // ColumnLayout
+
+} // ColumnLayout -> mainLayout

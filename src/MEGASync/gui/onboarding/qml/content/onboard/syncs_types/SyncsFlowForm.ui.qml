@@ -63,7 +63,7 @@ StackView {
                     Layout.alignment: Qt.AlignBottom | Qt.AlignRight
                     Layout.bottomMargin: 24
                     Layout.rightMargin: 32
-                    Layout.fillWidth: true
+                    Layout.preferredWidth: parent.width
                 }
             }
         }

@@ -16,7 +16,6 @@ Item {
         if(!configurationStack.currentItem.isStacked) {
             configurationStack.replace(configurationStack.currentItem.next,
                                        StackView.Immediate);
-            configurationStack.currentItem.updateFooter();
         } else {
             configurationStack.currentItem.nextPage();
         }
@@ -28,13 +27,6 @@ Item {
 
             configurationStack.replace(configurationStack.currentItem.previous,
                                        StackView.Immediate);
-
-            if(configurationStack.currentItem == installationTypePage) {
-                installationTypePage.content.clear();
-            }
-
-            configurationStack.currentItem.updateFooter();
-
         } else {
             configurationStack.currentItem.previousPage();
         }
@@ -71,7 +63,7 @@ Item {
      */
 
     property alias installationTypePage: installationTypePage
-    property var footerLayout: Footer {}
+    property Footer footerLayout
 
     /*
      * Signals
@@ -92,7 +84,6 @@ Item {
     StackView {
         id: configurationStack
 
-        property bool isOptionSelected: false
         property int lastTypeSelected: -1
 
         width: parent.width
@@ -103,7 +94,7 @@ Item {
 
             next: installationTypePage
             footerLayout: mainItem.footerLayout
-            footerState: Footer.ToStates.CancelNext
+            visible: false
         }
 
         InstallationTypePageForm {
@@ -111,7 +102,6 @@ Item {
 
             previous: computerNamePage
             footerLayout: mainItem.footerLayout
-            footerState: Footer.ToStates.CancelPreviousNextDisabled
             visible: false
         }
 
@@ -120,7 +110,6 @@ Item {
 
             previous: installationTypePage
             footerLayout: mainItem.footerLayout
-            footerState: Footer.ToStates.CancelPreviousNextDisabled
             isStacked: true
             visible: false
         }
@@ -128,29 +117,23 @@ Item {
         Connections {
             target: installationTypePage.content
 
-            onOptionChanged: (type, checked) => {
-                configurationStack.isOptionSelected = checked;
-                if(checked) {
-                    switch(type) {
-                        case InstallationTypeButton.Type.Sync:
-                            console.debug("TODO: Sync clicked");
-                            break;
-                        case InstallationTypeButton.Type.Backup:
-                            console.debug("Backup clicked");
-                            installationTypePage.next = backupPage;
-                            break;
-                        case InstallationTypeButton.Type.Fuse:
-                            console.debug("TODO: Fuse clicked");
-                            break;
-                        default:
-                            console.error("Undefined option clicked -> " + option);
-                            return;
-                    }
-                    configurationStack.lastTypeSelected = type;
-                    syncsFooter.show(Footer.ToStates.CancelPreviousNextEnabled);
-                } else {
-                    syncsFooter.show(Footer.ToStates.CancelPreviousNextDisabled);
+            onOptionChanged: (type) => {
+                switch(type) {
+                    case InstallationTypeButton.Type.Sync:
+                        console.debug("TODO: Sync clicked");
+                        break;
+                    case InstallationTypeButton.Type.Backup:
+                        console.debug("Backup clicked");
+                        installationTypePage.next = backupPage;
+                        break;
+                    case InstallationTypeButton.Type.Fuse:
+                        console.debug("TODO: Fuse clicked");
+                        break;
+                    default:
+                        console.error("Undefined option clicked -> " + option);
+                        return;
                 }
+                configurationStack.lastTypeSelected = type;
             }
         }
 

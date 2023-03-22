@@ -4,35 +4,24 @@ import QtQuick.Controls 2.0
 
 Page {
 
-    function updateFooter() {
-        footerLayout.show(footerState);
-    }
-
     function resetToInitialPage() {
         stackView.replace(stackView.initialItem, StackView.Immediate);
-        stackView.currentItem.updateFooter();
-
         isFirstPage = true;
     }
 
     function nextPage() {
         stackView.replace(stackView.currentItem.next, StackView.Immediate);
-        stackView.currentItem.updateFooter();
-
         isFirstPage = stackView.currentItem == stackView.initialItem;
     }
 
     function previousPage() {
         stackView.replace(stackView.currentItem.previous, StackView.Immediate);
-        stackView.currentItem.updateFooter();
-
         isFirstPage = stackView.currentItem == stackView.initialItem;
     }
 
     property SyncsPage next
     property SyncsPage previous
-    property var footerLayout: Footer {}
-    property int footerState
+    property Footer footerLayout: Footer {}
     property bool isStacked: false
     property bool isFirstPage: false
 

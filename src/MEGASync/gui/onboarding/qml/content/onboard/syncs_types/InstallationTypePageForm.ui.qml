@@ -6,10 +6,6 @@ SyncsPage {
 
     property alias content: content
 
-    /*
-     * Child objects
-     */
-
     ColumnLayout {
         spacing: 12
         width: 488

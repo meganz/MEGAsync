@@ -15,7 +15,6 @@ SyncsPage {
 
         next: confirmFolders
         footerLayout: mainItem.footerLayout
-        footerState: Footer.ToStates.CancelPreviousNextDisabled
     }
 
     ConfirmFoldersPageForm {
@@ -23,7 +22,6 @@ SyncsPage {
 
         previous: selectFolders
         footerLayout: mainItem.footerLayout
-        footerState: Footer.ToStates.CancelPreviousNextBackup
         visible: false
     }
 }

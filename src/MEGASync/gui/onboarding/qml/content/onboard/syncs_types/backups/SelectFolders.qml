@@ -8,10 +8,11 @@ import Onboard.Syncs_types 1.0
 ColumnLayout {
 
     width: parent.width
-
-    /*
-     * Child objects
-     */
+    onVisibleChanged: {
+        if(visible) {
+            footerLayout.nextButton.enabled = false;
+        }
+    }
 
     InfoAccount {
     }
@@ -54,7 +55,7 @@ ColumnLayout {
             cursorShape: Qt.PointingHandCursor
             onClicked: {
                 console.debug("TODO: Add folders");
-                footerLayout.show(Footer.ToStates.CancelPreviousNextEnabled);
+                footerLayout.nextButton.enabled = true;
             }
         }
 
