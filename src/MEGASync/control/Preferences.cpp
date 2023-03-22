@@ -20,6 +20,8 @@ const QString Preferences::VERSION_STRING = QString::fromAscii("4.9.3");
 QString Preferences::SDK_ID = QString::fromAscii("be0f91b");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
 "- New search functionality for remote node selector.\n"
+"- Improvements on system notifications.\n"
+"- New UI style enhancements.\n"
 "- Detected crashes on Windows, Linux, and macOS fixed.\n"));
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
