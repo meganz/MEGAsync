@@ -811,6 +811,7 @@ void SettingsDialog::reloadToolBarItemNames()
     bGeneral.get()->setText(tr("General"));
     bAccount.get()->setText(tr("Account"));
     bSyncs.get()->setText(tr("Sync"));
+    bBackup.get()->setText(tr("Backup"));
     bSecurity.get()->setText(tr("Security"));
     bFolders.get()->setText(tr("Folders"));
     bNetwork.get()->setText(tr("Network"));

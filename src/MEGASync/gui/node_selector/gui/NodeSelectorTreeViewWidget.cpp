@@ -10,7 +10,6 @@
 #include "NodeNameSetterDialog/RenameNodeDialog.h"
 #include <MegaNodeNames.h>
 
-const int NodeSelectorTreeViewWidget::LABEL_ELIDE_MARGIN = 100;
 const int NodeSelectorTreeViewWidget::LOADING_VIEW_THRESSHOLD = 500;
 
 
@@ -66,6 +65,7 @@ void NodeSelectorTreeViewWidget::changeEvent(QEvent *event)
         {
             ui->lFolderName->setText(getRootText());
         }
+        ui->retranslateUi(this);
     }
     QWidget::changeEvent(event);
 }
@@ -634,7 +634,7 @@ void NodeSelectorTreeViewWidget::setRootIndex(const QModelIndex &proxy_idx)
         QString nodeName = MegaNodeNames::getNodeName(node.get());
         QFontMetrics fm = ui->lFolderName->fontMetrics();
 
-        QString elidedText = fm.elidedText(nodeName, Qt::ElideMiddle, ui->tMegaFolders->width() - LABEL_ELIDE_MARGIN);
+        QString elidedText = fm.elidedText(nodeName, Qt::ElideMiddle, ui->lFolderName->width());
         ui->lFolderName->setText(elidedText);
 
         if(elidedText != nodeName)
