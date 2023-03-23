@@ -17,5 +17,6 @@
         <file>components/textFields/images/eye-off.svg</file>
         <file>components/texts/RichText.qml</file>
         <file>components/textFields/TwoFA.qml</file>
+		<file>components/textFields/TwoFADigit.qml</file>
     </qresource>
 </RCC>

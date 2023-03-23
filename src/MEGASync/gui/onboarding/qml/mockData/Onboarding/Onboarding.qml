@@ -11,6 +11,7 @@ Item {
 
     signal userPassFailed
     signal twoFARequired
+    signal loginFinished
 
     function onForgotPasswordClicked() {
         console.info("onForgotPasswordClicked()");
@@ -18,9 +19,15 @@ Item {
 
     function onLoginClicked(data) {
         console.info("onLoginClicked() -> " + JSON.stringify(data));
+        twoFARequired();
     }
 
     function onRegisterClicked(data) {
         console.info("onRegisterClicked() -> " + JSON.stringify(data));
+    }
+
+    function onTwoFACompleted(key) {
+        console.info("onTwoFACompleted() -> key: " + key);
+        loginFinished();
     }
 }
