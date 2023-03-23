@@ -59,7 +59,6 @@ private:
     void checkLinkValidAndSelected();
 
     void onLocalFolderSet(const QString& path);
-    void onMegaFolderSelectorFinished(QPointer<UploadNodeSelector> dialog);
 };
 
 #endif // IMPORTMEGALINKSDIALOG_H

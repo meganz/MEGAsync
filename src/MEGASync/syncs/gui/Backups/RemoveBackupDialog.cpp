@@ -13,8 +13,7 @@ RemoveBackupDialog::RemoveBackupDialog(std::shared_ptr<SyncSettings> backup, QWi
     mMegaApi(MegaSyncApp->getMegaApi()),
     mUi(new Ui::RemoveBackupDialog),
     mBackup(backup),
-    mTargetFolder(MegaSyncApp->getRootNode()->getHandle()),
-    mNodeSelector(nullptr)
+    mTargetFolder(MegaSyncApp->getRootNode()->getHandle())
 {
     mUi->setupUi(this);
     mUi->lTarget->setReadOnly(true);
@@ -62,16 +61,12 @@ void RemoveBackupDialog::OnMoveSelected()
 
 void RemoveBackupDialog::OnChangeButtonClicked()
 {
-    if (!mNodeSelector)
+    auto nodeSelector = new UploadNodeSelector(this);
+    DialogOpener::showDialog<NodeSelector>(nodeSelector, [this, nodeSelector]
     {
-        mNodeSelector = new UploadNodeSelector(this);
-    }
-
-    DialogOpener::showDialog(mNodeSelector, [this]
-    {
-        if (mNodeSelector && mNodeSelector->result() == QDialog::Accepted)
+        if (nodeSelector->result() == QDialog::Accepted)
         {
-            mTargetFolder = mNodeSelector->getSelectedNodeHandle();
+            mTargetFolder = nodeSelector->getSelectedNodeHandle();
             auto targetNode = std::unique_ptr<mega::MegaNode>(mMegaApi->getNodeByHandle(mTargetFolder));
             auto targetRoot = std::unique_ptr<mega::MegaNode>(mMegaApi->getRootNode(targetNode.get()));
 

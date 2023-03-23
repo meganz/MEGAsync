@@ -160,29 +160,26 @@ void ImportMegaLinksDialog::onLocalFolderSet(const QString& path)
 
 void ImportMegaLinksDialog::on_bMegaFolder_clicked()
 {
-    QPointer<UploadNodeSelector> nodeSelector = new UploadNodeSelector(this);
-    DialogOpener::showDialog(nodeSelector, this, &ImportMegaLinksDialog::onMegaFolderSelectorFinished);
-}
-
-void ImportMegaLinksDialog::onMegaFolderSelectorFinished(QPointer<UploadNodeSelector> nodeSelector)
-{
-    if (nodeSelector->result() == QDialog::Accepted)
-    {
-        MegaHandle selectedMegaFolderHandle = nodeSelector->getSelectedNodeHandle();
-        std::shared_ptr<MegaNode> selectedFolder(mMegaApi->getNodeByHandle(selectedMegaFolderHandle));
-        if (!selectedFolder)
+    UploadNodeSelector* nodeSelector = new UploadNodeSelector(this);
+    DialogOpener::showDialog<NodeSelector>(nodeSelector,[this, nodeSelector](){
+        if (nodeSelector->result() == QDialog::Accepted)
         {
-            return;
-        }
+            MegaHandle selectedMegaFolderHandle = nodeSelector->getSelectedNodeHandle();
+            std::shared_ptr<MegaNode> selectedFolder(mMegaApi->getNodeByHandle(selectedMegaFolderHandle));
+            if (!selectedFolder)
+            {
+                return;
+            }
 
-        std::unique_ptr<const char[]> fPath(mMegaApi->getNodePath(selectedFolder.get()));
-        if (!fPath)
-        {
-            return;
-        }
+            std::unique_ptr<const char[]> fPath(mMegaApi->getNodePath(selectedFolder.get()));
+            if (!fPath)
+            {
+                return;
+            }
 
-        ui->eMegaFolder->setText(QString::fromUtf8(fPath.get()));
-    }
+            ui->eMegaFolder->setText(QString::fromUtf8(fPath.get()));
+        }
+    });
 }
 
 void ImportMegaLinksDialog::onLinkInfoAvailable(int id)

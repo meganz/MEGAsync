@@ -1846,39 +1846,44 @@ void SettingsDialog::on_bExportMasterKey_clicked()
     }
 #endif
 
-    DialogBlocker blocker(this);
+    DialogBlocker* blocker = new DialogBlocker(this);
     QDir dir(defaultPath);
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Export Master key"),
+    QPointer<SettingsDialog> currentDialog = this;
+    QString fileName = QFileDialog::getSaveFileName(nullptr, tr("Export Master key"),
                                                     dir.filePath(tr("MEGA-RECOVERYKEY")),
                                                     QString::fromUtf8("Txt file (*.txt)"), nullptr,
                                                     QFileDialog::ShowDirsOnly
                                                     | QFileDialog::DontResolveSymlinks);
-    if (fileName.isEmpty())
+
+    if(currentDialog)
     {
-        return;
+        if (fileName.isEmpty())
+        {
+            return;
+        }
+
+        QFile file(fileName);
+        if (!file.open(QIODevice::WriteOnly | QFile::Truncate))
+        {
+            QMegaMessageBox::information(this, tr("Unable to write file"), file.errorString());
+            return;
+        }
+
+        QTextStream out(&file);
+        out << mMegaApi->exportMasterKey();
+
+        file.close();
+
+        mMegaApi->masterKeyExported();
+
+        QMegaMessageBox::information(this, tr("Warning"),
+                                     tr("Exporting the master key and keeping it in a secure location"
+                                        " enables you to set a new password without data loss.")
+                                     + QString::fromUtf8("\n")
+                                     + tr("Always keep physical control of your master key (e.g. on a"
+                                          " client device, external storage, or print)."),
+                                     QMessageBox::Ok);
     }
-
-    QFile file(fileName);
-    if (!file.open(QIODevice::WriteOnly | QFile::Truncate))
-    {
-        QMegaMessageBox::information(this, tr("Unable to write file"), file.errorString());
-        return;
-    }
-
-    QTextStream out(&file);
-    out << mMegaApi->exportMasterKey();
-
-    file.close();
-
-    mMegaApi->masterKeyExported();
-
-    QMegaMessageBox::information(this, tr("Warning"),
-                                 tr("Exporting the master key and keeping it in a secure location"
-                                    " enables you to set a new password without data loss.")
-                                 + QString::fromUtf8("\n")
-                                 + tr("Always keep physical control of your master key (e.g. on a"
-                                      " client device, external storage, or print)."),
-                                 QMessageBox::Ok);
 }
 
 void SettingsDialog::on_bChangePassword_clicked()
@@ -1949,13 +1954,13 @@ void SettingsDialog::on_bFolders_clicked()
 
 void SettingsDialog::on_bUploadFolder_clicked()
 {
-    QPointer<UploadNodeSelector> nodeSelector = new UploadNodeSelector(this);
+    UploadNodeSelector* nodeSelector = new UploadNodeSelector(this);
     std::shared_ptr<mega::MegaNode> defaultNode(mMegaApi->getNodeByPath(mUi->eUploadFolder->text().toStdString().c_str()));
     nodeSelector->setSelectedNodeHandle(defaultNode);
     nodeSelector->setDefaultUploadOption(mHasDefaultUploadOption);
     nodeSelector->showDefaultUploadOption();
 
-    DialogOpener::showDialog<UploadNodeSelector>(nodeSelector, [nodeSelector,this]()
+    DialogOpener::showDialog<NodeSelector>(nodeSelector, [nodeSelector,this]()
     {
         if (nodeSelector->result() == QDialog::Accepted)
         {
