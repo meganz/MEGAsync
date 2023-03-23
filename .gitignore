@@ -83,3 +83,6 @@ src/.qmake.stash
 *.stash
 *.Debug
 *.Release
+
+# qml
+*.qtds
