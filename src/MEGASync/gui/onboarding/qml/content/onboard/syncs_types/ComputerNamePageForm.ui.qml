@@ -4,6 +4,8 @@ import QtQuick.Controls 2.0
 
 SyncsPage {
 
+    objectName: "ComputerNamePageForm"
+
     ColumnLayout {
 
         spacing: 12

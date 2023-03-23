@@ -9,12 +9,14 @@ RowLayout {
 
     signal cancelButtonClicked
     signal nextButtonClicked
-    signal previousButtonClicked
+    signal previousButtonClicked(string page)
 
     property alias cancelButton: cancelButton
     property alias previousButton: previousButton
     property alias nextButton: nextButton
     property alias notNow: notNow
+
+    property string parentPage: ""
 
     Text {
         id: notNow
@@ -53,7 +55,7 @@ RowLayout {
 
             text: qsTr("Previous")
             onClicked: {
-                previousButtonClicked();
+                previousButtonClicked(parentPage);
             }
         }
 

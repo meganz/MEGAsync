@@ -4,7 +4,7 @@ import QtQuick.Controls 2.0
 
 SyncsPage {
 
-    property alias content: content
+    objectName: "InstallationTypePageForm"
 
     ColumnLayout {
         spacing: 12
@@ -24,6 +24,30 @@ SyncsPage {
             Layout.preferredWidth: parent.width
             Layout.leftMargin: 32
             Layout.topMargin: 24
+        }
+    }
+
+    Connections {
+        target: footerLayout
+
+        onNextButtonClicked: {
+            if(visible) {
+                switch(content.getTypeSelected()) {
+                    case InstallationTypeButton.Type.Sync:
+                        console.debug("TODO: Sync clicked");
+                        break;
+                    case InstallationTypeButton.Type.Backup:
+                        console.debug("Backup clicked");
+                        next = backupPage;
+                        break;
+                    case InstallationTypeButton.Type.Fuse:
+                        console.debug("TODO: Fuse clicked");
+                        break;
+                    default:
+                        console.error("Undefined option clicked -> " + option);
+                        return;
+                }
+            }
         }
     }
 

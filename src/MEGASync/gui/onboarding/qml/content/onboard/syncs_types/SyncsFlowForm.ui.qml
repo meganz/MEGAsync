@@ -72,9 +72,7 @@ StackView {
             target: syncsFooter
 
             onNextButtonClicked: {
-                if(syncsInfoStepPanel.next()) {
-                    contentStack.nextPage();
-                } else {
+                if(!syncsInfoStepPanel.next()) {
                     resumePage.clear();
                     syncsStack.replace(resumePage, StackView.Immediate);
                 }
@@ -82,7 +80,6 @@ StackView {
 
             onPreviousButtonClicked: {
                 syncsInfoStepPanel.previous();
-                contentStack.previousPage();
             }
         }
 
@@ -103,7 +100,7 @@ StackView {
             if(checked) {
                 syncsStack.replace(configurationLayout, StackView.Immediate);
                 syncsInfoStepPanel.changeToStep31();
-                contentStack.showPage(type);
+                contentStack.showSubstackPage(type);
             }
         }
     }

@@ -7,12 +7,13 @@ import Onboard.Syncs_types 1.0
 SyncsPage {
     id: mainItem
 
-    stackView.initialItem: selectFolders
-    isFirstPage: true
+    objectName: "Backups"
+    substackView.initialItem: selectFolders
 
     SelectFoldersPageForm {
         id: selectFolders
 
+        objectName: mainItem.objectName
         next: confirmFolders
         footerLayout: mainItem.footerLayout
     }

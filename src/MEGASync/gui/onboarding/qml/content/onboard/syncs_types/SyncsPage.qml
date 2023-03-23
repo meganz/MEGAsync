@@ -3,32 +3,40 @@ import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.0
 
 Page {
+    id: mainItem
 
-    function resetToInitialPage() {
-        stackView.replace(stackView.initialItem, StackView.Immediate);
-        isFirstPage = true;
-    }
-
-    function nextPage() {
-        stackView.replace(stackView.currentItem.next, StackView.Immediate);
-        isFirstPage = stackView.currentItem == stackView.initialItem;
-    }
-
-    function previousPage() {
-        stackView.replace(stackView.currentItem.previous, StackView.Immediate);
-        isFirstPage = stackView.currentItem == stackView.initialItem;
+    function resetSubstackToInitialPage() {
+        substackView.replace(substackView.initialItem, StackView.Immediate);
     }
 
     property var next
     property var previous
     property Footer footerLayout: Footer {}
-    property bool isStacked: false
-    property bool isFirstPage: false
+    property alias substackView: substackView
 
-    property alias stackView: stackView
-
-    StackView {
-        id: stackView
+    onVisibleChanged: {
+        if(visible) {
+            footerLayout.parentPage = mainItem.objectName;
+        }
     }
 
+    StackView {
+        id: substackView
+    }
+
+    Connections {
+        target: footerLayout
+
+        onNextButtonClicked: {
+            if(mainItem.visible && next !== undefined) {
+                mainItem.StackView.view.replace(next, StackView.Immediate);
+            }
+        }
+
+        onPreviousButtonClicked: (page) => {
+            if(previous !== undefined && previous.next !== undefined && previous.next.objectName === page) {
+                mainItem.StackView.view.replace(previous, StackView.Immediate);
+            }
+        }
+    }
 }

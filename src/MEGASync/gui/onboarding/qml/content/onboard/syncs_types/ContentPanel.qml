@@ -5,43 +5,16 @@ import QtQuick.Controls 2.0
 import Components 1.0 as Custom
 import Onboard.Syncs_types.Backups 1.0
 
-Item {
+SyncsPage {
     id: mainItem
 
-    /*
-     * Functions
-     */
-
-    function nextPage() {
-        if(!configurationStack.currentItem.isStacked) {
-            configurationStack.replace(configurationStack.currentItem.next,
-                                       StackView.Immediate);
-        } else {
-            configurationStack.currentItem.nextPage();
-        }
-    }
-
-    function previousPage() {
-        if(!configurationStack.currentItem.isStacked
-                || configurationStack.currentItem.isFirstPage) {
-
-            configurationStack.replace(configurationStack.currentItem.previous,
-                                       StackView.Immediate);
-        } else {
-            configurationStack.currentItem.previousPage();
-        }
-    }
-
-    function showPage(type) {
+    function showSubstackPage(type) {
         var item;
-
-        // Reset the corresponding sub-stack
         switch(type) {
             case InstallationTypeButton.Type.Sync:
                 console.debug("TODO: Add Sync page");
                 break;
             case InstallationTypeButton.Type.Backup:
-                backupPage.resetToInitialPage();
                 item = backupPage;
                 break;
             case InstallationTypeButton.Type.Fuse:
@@ -51,92 +24,36 @@ Item {
                 console.error("Undefined option clicked -> " + option);
                 return;
         }
-
-        // Only if the new type is different from the last one then the stack is replaced
-        if(configurationStack.lastTypeSelected !== type) {
-            configurationStack.replace(item, StackView.Immediate);
+        item.resetSubstackToInitialPage();
+        if(substackView.currentItem !== item) {
+            substackView.replace(item, StackView.Immediate);
         }
     }
 
-    /*
-     * Properties
-     */
+    objectName: "ContentPanel"
+    substackView.initialItem: computerNamePage
 
-    property alias installationTypePage: installationTypePage
-    property Footer footerLayout
+    ComputerNamePageForm {
+        id: computerNamePage
 
-    /*
-     * Signals
-     */
+        next: installationTypePage
+        footerLayout: mainItem.footerLayout
+        visible: false
+    }
 
-    signal optionSelected
+    InstallationTypePageForm {
+        id: installationTypePage
 
-    /*
-     * Object properties
-     */
+        previous: computerNamePage
+        footerLayout: mainItem.footerLayout
+        visible: false
+    }
 
-    width: parent.width
+    BackupPage {
+        id: backupPage
 
-    /*
-     * Child objects
-     */
-
-    StackView {
-        id: configurationStack
-
-        property int lastTypeSelected: -1
-
-        width: parent.width
-        initialItem: computerNamePage
-
-        ComputerNamePageForm {
-            id: computerNamePage
-
-            next: installationTypePage
-            footerLayout: mainItem.footerLayout
-            visible: false
-        }
-
-        InstallationTypePageForm {
-            id: installationTypePage
-
-            previous: computerNamePage
-            footerLayout: mainItem.footerLayout
-            visible: false
-        }
-
-        BackupPage {
-            id: backupPage
-
-            previous: installationTypePage
-            footerLayout: mainItem.footerLayout
-            isStacked: true
-            visible: false
-        }
-
-        Connections {
-            target: installationTypePage.content
-
-            onOptionChanged: (type) => {
-                switch(type) {
-                    case InstallationTypeButton.Type.Sync:
-                        console.debug("TODO: Sync clicked");
-                        break;
-                    case InstallationTypeButton.Type.Backup:
-                        console.debug("Backup clicked");
-                        installationTypePage.next = backupPage;
-                        break;
-                    case InstallationTypeButton.Type.Fuse:
-                        console.debug("TODO: Fuse clicked");
-                        break;
-                    default:
-                        console.error("Undefined option clicked -> " + option);
-                        return;
-                }
-                configurationStack.lastTypeSelected = type;
-            }
-        }
-
-    } //StackView -> configurationStack
-
-} // Item
+        previous: installationTypePage
+        footerLayout: mainItem.footerLayout
+        visible: false
+    }
+}

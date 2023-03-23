@@ -6,6 +6,8 @@ import Onboard.Syncs_types 1.0
 
 SyncsPage {
 
+    objectName: "ConfirmFoldersPageForm"
+
     ColumnLayout {
         spacing: 24
         width: 488

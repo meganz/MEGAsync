@@ -7,18 +7,13 @@ import Components 1.0 as Custom
 
 ColumnLayout {
 
-    /*
-     * Signals
-     */
+    property alias buttonGroup: buttonGroup
 
-    signal optionChanged(int type)
-
-    /*
-     * Object properties
-     */
+    function getTypeSelected() {
+        return buttonGroup.checkedButton.type;
+    }
 
     width: parent.width
-
     onVisibleChanged: {
         if(visible) {
             footerLayout.previousButton.visible = true;
@@ -32,14 +27,8 @@ ColumnLayout {
         }
     }
 
-    /*
-     * Child objects
-     */
-
     ButtonGroup {
         id: buttonGroup
-
-        property InstallationTypeButton lastSelected
 
         onCheckStateChanged: {
             if(!checkState) {
@@ -50,7 +39,6 @@ ColumnLayout {
         onCheckedButtonChanged: {
             if(buttonGroup.checkedButton != null) {
                 footerLayout.nextButton.enabled = true;
-                optionChanged(buttonGroup.checkedButton.type);
             }
         }
     }
