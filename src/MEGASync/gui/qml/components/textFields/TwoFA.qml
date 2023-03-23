@@ -4,9 +4,26 @@ import QtQuick.Layouts 1.12
 
 import Components 1.0 as Custom
 import Common 1.0
+import QmlClipboard 1.0
 
 ColumnLayout {
     id: root
+
+    function pastePin() {
+        const regex = /^[0-9]{6}$/;
+        var pin = QmlClipboard.text().slice(0, 6);
+        if (!regex.test(pin)) {
+            console.warn("Invalid 2FA pin format pasted");
+            return;
+        }
+
+        digit1.textField.text = pin.charAt(0);
+        digit2.textField.text = pin.charAt(1);
+        digit3.textField.text = pin.charAt(2);
+        digit4.textField.text = pin.charAt(3);
+        digit5.textField.text = pin.charAt(4);
+        digit6.textField.text = pin.charAt(5);
+    }
 
     property string key2fa: digit1.textField.text + digit2.textField.text + digit3.textField.text
                             + digit4.textField.text + digit5.textField.text + digit6.textField.text
@@ -76,6 +93,13 @@ ColumnLayout {
             id: text
             text: qsTr("Authentication failed")
             x: 10
+        }
+    }
+
+    Shortcut {
+        sequence: "Ctrl+V"
+        onActivated: {
+            pastePin();
         }
     }
 }

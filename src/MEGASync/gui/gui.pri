@@ -79,6 +79,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/node_selector/gui/NodeSelectorLoadingDelegate.cpp \
     $$PWD/node_selector/gui/SearchLineEdit.cpp \
     $$PWD/node_selector/gui/NodeSelectorSpecializations.cpp \
+    $$PWD/qml/QmlClipboard.cpp \
     $$PWD/qml/QmlDialog.cpp \
     $$PWD/qml/QmlDialogWrapper.cpp \
     $$PWD/onboarding/Onboarding.cpp
@@ -159,6 +160,7 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/node_selector/gui/NodeSelectorLoadingDelegate.h \
     $$PWD/node_selector/gui/SearchLineEdit.h \
     $$PWD/node_selector/gui/NodeSelectorSpecializations.h \
+    $$PWD/qml/QmlClipboard.h \
     $$PWD/qml/QmlDialog.h \
     $$PWD/qml/QmlDialogWrapper.h \
     $$PWD/onboarding/Onboarding.h

@@ -23,6 +23,7 @@
 #include "qml/QmlDialog.h"
 #include "onboarding/Onboarding.h"
 #include "qml/QmlDialogWrapper.h"
+#include "qml/QmlClipboard.h"
 
 #include <QQmlApplicationEngine>
 #include "DialogOpener.h"
@@ -467,6 +468,7 @@ void MegaApplication::initialize()
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/backups/BackupPage.qml")), "Onboard.Syncs_types.Backups", 1, 0, "BackupPage");
 
     qmlRegisterType<QmlDialog>("com.qmldialog", 1, 0, "QmlDialog");
+    qmlRegisterSingletonType<QmlClipboard>("QmlClipboard", 1, 0, "QmlClipboard", &QmlClipboard::qmlInstance);
 
     preferences = Preferences::instance();
     connect(preferences.get(), SIGNAL(stateChanged()), this, SLOT(changeState()));

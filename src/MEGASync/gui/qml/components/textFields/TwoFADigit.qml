@@ -32,4 +32,9 @@ Custom.TextField {
             previous.textField.focus = true;
         }
     }
+
+    onPastePressed: {
+        pastePin();
+    }
+
 }

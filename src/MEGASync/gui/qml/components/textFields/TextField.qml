@@ -25,6 +25,7 @@ Item {
      * Signals
      */
     signal backPressed()
+    signal pastePressed()
 
     /*
      * Components
@@ -104,6 +105,9 @@ Item {
                 if(event.key === Qt.Key_Backspace)
                 {
                     root.backPressed();
+                }
+                else if((event.key === Qt.Key_V) && (event.modifiers & Qt.ControlModifier)) {
+                    pastePressed();
                 }
             }
 
