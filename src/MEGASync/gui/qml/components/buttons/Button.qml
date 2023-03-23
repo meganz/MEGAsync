@@ -55,8 +55,8 @@ Qml.RoundButton {
     } // contentItem -> Text -> textItem
 
     background: Rectangle {
-        width: parent.width
-        height: parent.height
+        width: button.width
+        height: button.height
 
         Rectangle {
             id: rect
