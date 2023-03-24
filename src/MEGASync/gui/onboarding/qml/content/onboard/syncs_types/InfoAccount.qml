@@ -4,6 +4,8 @@ import QtQuick.Layouts 1.12
 
 import Common 1.0
 import Components 1.0 as Custom
+import Onboarding 1.0
+import AccountInfoData 1.0
 
 Rectangle {
 
@@ -32,11 +34,14 @@ Rectangle {
             spacing: 8
 
             Custom.SvgImage {
+                id: typeImage
+
                 source: "../../../../../images/Onboarding/shield.svg"
             }
 
             Text {
-                // TODO: change by real value
+                id: typeText
+
                 text: qsTr("Free")
                 Layout.alignment: Qt.AlignLeft
                 font.family: "Inter"
@@ -69,8 +74,9 @@ Rectangle {
             }
 
             Text {
-                // TODO: change by real value
-                text: "979.39 KB"
+                id: usedStorage
+
+                text: "0"
                 font.family: "Inter"
                 font.styleName: "normal"
                 font.weight: Font.DemiBold
@@ -78,8 +84,17 @@ Rectangle {
             }
 
             Text {
-                // TODO: change by real value
-                text: "/ 20 GB"
+                text: "/"
+                font.family: "Inter"
+                font.styleName: "normal"
+                font.weight: Font.ExtraLight
+                font.pixelSize: 12
+            }
+
+            Text {
+                id: totalStorage
+
+                text: "0"
                 font.family: "Inter"
                 font.styleName: "normal"
                 font.weight: Font.ExtraLight
@@ -89,5 +104,48 @@ Rectangle {
         } // RowLayout -> right
 
     } // RowLayout -> main
+
+    AccountInfoData {
+        id: accountInfo
+
+        onAccountDetailsChanged: {
+            switch(accountInfo.type)
+            {
+                case AccountInfoData.ACCOUNT_TYPE_FREE:
+                    typeImage.source = "../../../../../images/Small_Free.png";
+                    typeText.text = qsTr("Free");
+                    break;
+                case AccountInfoData.ACCOUNT_TYPE_PROI:
+                    typeImage.source = "../../../../../images/Small_Pro_I.png";
+                    typeText.text = qsTr("Pro I");
+                    break;
+                case AccountInfoData.ACCOUNT_TYPE_PROII:
+                    typeImage.source = "../../../../../images/Small_Pro_II.png";
+                    typeText.text = qsTr("Pro II");
+                    break;
+                case AccountInfoData.ACCOUNT_TYPE_PROIII:
+                    typeImage.source = "../../../../../images/Small_Pro_III.png";
+                    typeText.text = qsTr("Pro III");
+                    break;
+                case AccountInfoData.ACCOUNT_TYPE_LITE:
+                    typeImage.source = "../../../../../images/Small_Lite.png";
+                    typeText.text = qsTr("Pro Lite");
+                    break;
+                case AccountInfoData.ACCOUNT_TYPE_BUSINESS:
+                    typeImage.source = "../../../../../images/Small_Business.png";
+                    typeText.text = qsTr("Business");
+                    break;
+                case AccountInfoData.ACCOUNT_TYPE_PRO_FLEXI:
+                    typeImage.source = "../../../../../images/Small_Pro_Flexi.png";
+                    typeText.text = qsTr("Pro Flexi");
+                    break;
+                default:
+                    break;
+            }
+
+            totalStorage.text = accountInfo.totalStorage;
+            usedStorage.text = accountInfo.usedStorage;
+        }
+    }
 
 } // Rectangle

@@ -10,12 +10,10 @@ using namespace mega;
 Onboarding::Onboarding(QObject *parent)
     : QMLComponent(parent)
     , mMegaApi(MegaSyncApp->getMegaApi())
-    , mEmail(QString())
-    , mPassword(QString())
+    , mDelegateListener(new QTMegaRequestListener(mMegaApi, this))
     , mPreferences(Preferences::instance())
+    , mPassword(QString())
 {
-    mDelegateListener = new QTMegaRequestListener(mMegaApi, this);
-    mMegaApi->addRequestListener(mDelegateListener);
     qmlRegisterUncreatableType<Onboarding>("Onboarding", 1, 0, "OnboardEnum", QString::fromUtf8("Cannot create WarningLevel in QML"));
 
     qmlRegisterModule("Onboard", 1, 0);
@@ -36,19 +34,12 @@ Onboarding::Onboarding(QObject *parent)
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/syncs/FullSyncPage.qml")), "Onboard.Syncs_types.Syncs", 1, 0, "FullSyncPage");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/syncs/SelectiveSyncPage.qml")), "Onboard.Syncs_types.Syncs", 1, 0, "SelectiveSyncPage");
 
-
     qmlRegisterModule("Onboard.Syncs_types.Left_panel", 1, 0);
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/left_panel/StepPanel.qml")), "Onboard.Syncs_types.Left_panel", 1, 0, "StepPanel");
 
     qmlRegisterModule("Onboard.Syncs_types.Backups", 1, 0);
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/backups/BackupPage.qml")), "Onboard.Syncs_types.Backups", 1, 0, "BackupPage");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/backups/ConfirmFoldersPage.qml")), "Onboard.Syncs_types.Backups", 1, 0, "ConfirmFoldersPage");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/backups/SelectFoldersPage.qml")), "Onboard.Syncs_types.Backups", 1, 0, "SelectFoldersPage");
-}
-
-Onboarding::~Onboarding()
-{
-    delete mDelegateListener;
 }
 
 QUrl Onboarding::getQmlUrl()
@@ -61,18 +52,16 @@ QString Onboarding::contextName()
     return QString::fromUtf8("Onboarding");
 }
 
-void Onboarding::onRequestStart(MegaApi *, MegaRequest *request)
+void Onboarding::onRequestStart(MegaApi*, MegaRequest* request)
 {
-
 }
 
-void Onboarding::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *error)
+void Onboarding::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* error)
 {
     switch(request->getType())
     {
         case MegaRequest::TYPE_LOGIN:
         {
-        qDebug()<<error->getErrorCode()<<error->getErrorString();
             if (error->getErrorCode() == MegaError::API_EFAILED
                     || error->getErrorCode() == MegaError::API_EEXPIRED)
             {
@@ -82,7 +71,7 @@ void Onboarding::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *err
             else if(error->getErrorCode() == MegaError::API_EMFAREQUIRED)
             {
                 qDebug() << "Onboarding::onRequestFinish -> TYPE_LOGIN API_EMFAREQUIRED";
-                mEmail = QString::fromUtf8(request->getEmail());
+                mPreferences->setEmail(QString::fromUtf8(request->getEmail()));
                 mPassword = QString::fromUtf8(request->getPassword());
                 emit twoFARequired();
             }
@@ -100,7 +89,8 @@ void Onboarding::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *err
             }
             else
             {
-                qDebug() << "Onboarding::onRequestFinish -> TYPE_LOGIN Error code -> " << error->getErrorCode();
+                qDebug() << "Onboarding::onRequestFinish -> TYPE_LOGIN Error code -> "
+                         << error->getErrorCode() << " Error string -> " << error->getErrorString();
                 emit userPassFailed();
             }
             break;
@@ -135,7 +125,7 @@ void Onboarding::onLoginClicked(const QVariantMap& data)
 
     std::string email = data.value(QString::number(EMAIL)).toString().toStdString();
     std::string password = data.value(QString::number(PASSWORD)).toString().toStdString();
-    mMegaApi->login(email.c_str(), password.c_str());
+    mMegaApi->login(email.c_str(), password.c_str(), this->mDelegateListener.get());
 }
 
 void Onboarding::onRegisterClicked(const QVariantMap& data)
@@ -150,7 +140,8 @@ void Onboarding::onRegisterClicked(const QVariantMap& data)
     mMegaApi->createAccount(email.c_str(),
                             password.c_str(),
                             firstName.c_str(),
-                            lastName.c_str());
+                            lastName.c_str(),
+                            this->mDelegateListener.get());
 }
 
 void Onboarding::onForgotPasswordClicked()
@@ -161,10 +152,10 @@ void Onboarding::onForgotPasswordClicked()
 void Onboarding::onTwoFACompleted(const QString& pin)
 {
     qDebug() << "Onboarding::onTwoFACompleted -> pin = " << pin;
-    qDebug() << "Onboarding::onTwoFACompleted -> mEmail = " << mEmail;
+    qDebug() << "Onboarding::onTwoFACompleted -> mEmail = " << mPreferences->email();
     qDebug() << "Onboarding::onTwoFACompleted -> mPassword = " << mPassword;
 
-    mMegaApi->multiFactorAuthLogin(mEmail.toUtf8().constData(),
+    mMegaApi->multiFactorAuthLogin(mPreferences->email().toUtf8().constData(),
                                    mPassword.toUtf8().constData(),
                                    pin.toUtf8().constData());
 }

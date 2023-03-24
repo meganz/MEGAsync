@@ -1,6 +1,8 @@
 pragma Singleton
 import QtQuick 2.0
 
+import AccountInfoData 1.0
+
 Item {
     enum OnboardEnum {
         FIRST_NAME = 0,

@@ -20,10 +20,12 @@
 #include "UserAttributesRequests/MyBackupsHandle.h"
 #include "syncs/gui/SyncsMenu.h"
 #include "TextDecorator.h"
+
 #include "qml/QmlDialog.h"
-#include "onboarding/Onboarding.h"
 #include "qml/QmlDialogWrapper.h"
 #include "qml/QmlClipboard.h"
+#include "onboarding/Onboarding.h"
+#include "onboarding/AccountInfoData.h"
 
 #include <QQmlApplicationEngine>
 #include "DialogOpener.h"
@@ -436,6 +438,8 @@ void MegaApplication::initialize()
     //Register metatypes to use them in signals/slots
     qRegisterMetaType<QQueue<QString> >("QQueueQString");
     qRegisterMetaTypeStreamOperators<QQueue<QString> >("QQueueQString");
+
+    qmlRegisterType<AccountInfoData>("AccountInfoData", 1, 0, "AccountInfoData");
 
     qmlRegisterModule("Components", 1, 0);
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/Button.qml")), "Components", 1, 0, "Button");

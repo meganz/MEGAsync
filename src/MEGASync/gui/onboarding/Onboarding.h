@@ -4,8 +4,6 @@
 #include "qml/QmlDialogWrapper.h"
 #include "QTMegaRequestListener.h"
 #include "Preferences.h"
-#include <QDialog>
-
 
 class Onboarding : public QMLComponent, public mega::MegaRequestListener
 {
@@ -21,16 +19,22 @@ public:
     Q_ENUM(RegisterForm)
 
     explicit Onboarding(QObject *parent = 0);
-    ~Onboarding();
 
     QUrl getQmlUrl() override;
+
     QString contextName() override;
 
-    void onRequestStart(mega::MegaApi* api, mega::MegaRequest *request) override;
-    void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* error) override;
+    void onRequestStart(mega::MegaApi*,
+                        mega::MegaRequest *request) override;
+
+    void onRequestFinish(mega::MegaApi*,
+                         mega::MegaRequest *request,
+                         mega::MegaError* error) override;
 
     Q_INVOKABLE void onLoginClicked(const QVariantMap& data);
+
     Q_INVOKABLE void onRegisterClicked(const QVariantMap& data);
+
     Q_INVOKABLE void onTwoFACompleted(const QString& pin);
 
 signals:
@@ -45,11 +49,11 @@ public slots:
     QString getComputerName();
 
 private:
-    mega::QTMegaRequestListener *mDelegateListener;
-    mega::MegaApi *mMegaApi;
-    QString mEmail;
-    QString mPassword;
+    mega::MegaApi* mMegaApi;
+    std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
+
     std::shared_ptr<Preferences> mPreferences;
+    QString mPassword;
 
 };
 

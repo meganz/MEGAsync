@@ -408,7 +408,7 @@ public:
         GIGA_BYTE_UNIT = 3
     };
 
-    enum {
+    enum AccountType {
         ACCOUNT_TYPE_FREE = 0,
         ACCOUNT_TYPE_PROI = 1,
         ACCOUNT_TYPE_PROII = 2,
