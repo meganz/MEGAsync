@@ -17,7 +17,7 @@ const int Preferences::VERSION_CODE = 4903;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
 const QString Preferences::VERSION_STRING = QString::fromAscii("4.9.3");
-QString Preferences::SDK_ID = QString::fromAscii("be0f91b");
+QString Preferences::SDK_ID = QString::fromAscii("412e269");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
 "- New search functionality for remote node selector.\n"
 "- Improvements on system notifications.\n"
