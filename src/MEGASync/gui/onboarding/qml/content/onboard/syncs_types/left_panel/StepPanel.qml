@@ -312,7 +312,7 @@ Item {
                 anchors.fill: parent
                 cursorShape: Qt.PointingHandCursor
                 onClicked: {
-                    console.debug("TODO: Help clicked")
+                    Qt.openUrlExternally("https://help.mega.io/installs-apps/desktop-syncing");
                 }
             }
         }

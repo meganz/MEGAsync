@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.0
 
 import Components 1.0 as Custom
+import Onboarding 1.0
 
 RowLayout {
     id: mainLayout
@@ -33,7 +34,7 @@ RowLayout {
             anchors.fill: notNow
             cursorShape: Qt.PointingHandCursor
             onClicked: {
-                console.debug("TODO: Not now");
+                Onboarding.onNotNowClicked();
             }
         }
     }

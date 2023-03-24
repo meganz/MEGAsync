@@ -37,15 +37,19 @@ signals:
     void twoFARequired();
     void userPassFailed();
     void loginFinished();
+    void notNowFinished();
 
 public slots:
     void onForgotPasswordClicked();
+    void onNotNowClicked();
 
 private:
     mega::QTMegaRequestListener *mDelegateListener;
     mega::MegaApi *mMegaApi;
     QString mEmail;
     QString mPassword;
+    std::shared_ptr<Preferences> mPreferences;
+
 };
 
 #endif // ONBOARDING_H

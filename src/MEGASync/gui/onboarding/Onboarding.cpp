@@ -10,6 +10,7 @@ Onboarding::Onboarding(QObject *parent)
     , mMegaApi(MegaSyncApp->getMegaApi())
     , mEmail(QString())
     , mPassword(QString())
+    , mPreferences(Preferences::instance())
 {
     mDelegateListener = new QTMegaRequestListener(mMegaApi, this);
     mMegaApi->addRequestListener(mDelegateListener);
@@ -18,6 +19,7 @@ Onboarding::Onboarding(QObject *parent)
 
 Onboarding::~Onboarding()
 {
+    delete mDelegateListener;
 }
 
 QUrl Onboarding::getQmlUrl()
@@ -58,13 +60,12 @@ void Onboarding::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *err
             else if(error->getErrorCode() == MegaError::API_OK)
             {
                 qDebug() << "Onboarding::onRequestFinish -> TYPE_LOGIN API_OK";
-                auto preferences = Preferences::instance();
-                preferences->setAccountStateInGeneral(Preferences::STATE_LOGGED_OK);
+                mPreferences->setAccountStateInGeneral(Preferences::STATE_LOGGED_OK);
                 auto email = request->getEmail();
                 MegaSyncApp->fetchNodes(QString::fromUtf8(email ? email : ""));
-                if (!preferences->hasLoggedIn())
+                if (!mPreferences->hasLoggedIn())
                 {
-                    preferences->setHasLoggedIn(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000);
+                    mPreferences->setHasLoggedIn(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000);
                 }
                 emit loginFinished();
             }
@@ -138,4 +139,8 @@ void Onboarding::onTwoFACompleted(const QString& pin)
                                    pin.toUtf8().constData());
 }
 
-
+void Onboarding::onNotNowClicked() {
+    std::unique_ptr<char[]> email(mMegaApi->getMyEmail());
+    mPreferences->setEmailAndGeneralSettings(QString::fromUtf8(email.get()));
+    emit notNowFinished();
+}

@@ -12,6 +12,7 @@ Item {
     signal userPassFailed
     signal twoFARequired
     signal loginFinished
+    signal notNowFinished
 
     function onForgotPasswordClicked() {
         console.info("onForgotPasswordClicked()");
@@ -29,5 +30,10 @@ Item {
     function onTwoFACompleted(key) {
         console.info("onTwoFACompleted() -> key: " + key);
         loginFinished();
+    }
+
+    function onNotNowClicked() {
+        console.info("onNotNowClicked()");
+        notNowFinished();
     }
 }

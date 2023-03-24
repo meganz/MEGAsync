@@ -5987,9 +5987,17 @@ void MegaApplication::openInfoWizard()
     }
 
     QPointer<QmlDialogWrapper<Onboarding>> onboarding = new QmlDialogWrapper<Onboarding>();
-    DialogOpener::showDialog(onboarding, [onboarding]
+    DialogOpener::showDialog(onboarding, [onboarding, this]
     {
-        //qDebug()<<onboarding->wrapper()->test();
+        //QList<PreConfiguredSync> syncs = dialog->preconfiguredSyncs();
+
+        //if (infoDialog && infoDialog->isVisible())
+        //{
+        //    infoDialog->hide();
+        //}
+
+        loggedIn(true);
+        //startSyncs(syncs);
         qDebug()<<onboarding->result();
 
     });
@@ -7004,7 +7012,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             {
                 if (firstTime)
                 {
-                    showSetupWizard(SetupWizard::PAGE_MODE);
+                    //showSetupWizard(SetupWizard::PAGE_MODE);
                 }
                 else
                 {
