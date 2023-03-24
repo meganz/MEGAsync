@@ -36,4 +36,9 @@ Item {
         console.info("onNotNowClicked()");
         notNowFinished();
     }
+
+    function getComputerName() {
+        console.info("getComputerName()");
+        return "My PC name";
+    }
 }

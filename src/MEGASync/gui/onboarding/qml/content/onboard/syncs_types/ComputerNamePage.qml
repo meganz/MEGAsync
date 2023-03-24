@@ -1,3 +1,7 @@
+import Onboarding 1.0
+
 ComputerNamePageForm {
 
-} // RowLayout -> mainLayout
+    computerNameTextField.textField.text: Onboarding.getComputerName();
+
+}

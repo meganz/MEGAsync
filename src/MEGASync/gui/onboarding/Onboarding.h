@@ -42,6 +42,7 @@ signals:
 public slots:
     void onForgotPasswordClicked();
     void onNotNowClicked();
+    QString getComputerName();
 
 private:
     mega::QTMegaRequestListener *mDelegateListener;

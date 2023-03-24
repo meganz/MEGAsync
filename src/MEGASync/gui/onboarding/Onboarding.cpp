@@ -1,6 +1,8 @@
 #include "Preferences.h"
 #include "Onboarding.h"
 #include "MegaApplication.h"
+#include "UserAttributesRequests/DeviceName.h"
+
 #include <QQmlEngine>
 
 using namespace mega;
@@ -171,4 +173,9 @@ void Onboarding::onNotNowClicked() {
     std::unique_ptr<char[]> email(mMegaApi->getMyEmail());
     mPreferences->setEmailAndGeneralSettings(QString::fromUtf8(email.get()));
     emit notNowFinished();
+}
+
+QString Onboarding::getComputerName()
+{
+    return UserAttributes::DeviceName::requestDeviceName()->getDeviceName();
 }
