@@ -1702,15 +1702,12 @@ void TransfersModel::pauseResumeAllTransfers(bool state)
             blockModelSignals(false);
 
             setUiBlockedModeByCounter(tagsUpdated);
-            //emit pauseStateChanged(mAreAllPaused);
         });
     }
     else
     {
         auto tagsUpdated = performPauseResumeAllTransfers(activeTransfers, true);
         setUiBlockedModeByCounter(tagsUpdated);
-
-        //emit pauseStateChanged(mAreAllPaused);
     }
 }
 
@@ -1722,6 +1719,7 @@ int TransfersModel::performPauseResumeAllTransfers(int activeTransfers, bool use
 
     if (mAreAllPaused)
     {
+        //This needs to be done before retrying all the transfers one by one
         mMegaApi->pauseTransfers(mAreAllPaused);
 
         EventUpdater updater(activeTransfers, 200);
@@ -1758,6 +1756,7 @@ int TransfersModel::performPauseResumeAllTransfers(int activeTransfers, bool use
             }
         });
 
+        //This needs to be done after pausing all the transfers one by one
         mMegaApi->pauseTransfers(mAreAllPaused);
 
     }
@@ -1776,7 +1775,6 @@ void TransfersModel::pauseResumeTransferByTag(TransferTag tag, bool pauseState)
         {
             mMegaApi->pauseTransfers(pauseState);
             mAreAllPaused = false;
-            //emit pauseStateChangedByTransferResume();
         }
 
         if(pauseState)
@@ -1811,6 +1809,12 @@ void TransfersModel::globalPauseStateChanged(bool state)
 {
     mAreAllPaused = state;
     emit pauseStateChanged(state);
+}
+
+void TransfersModel::setGlobalPause(bool state)
+{
+    mAreAllPaused = state;
+    mMegaApi->pauseTransfers(state);
 }
 
 void TransfersModel::lockModelMutex(bool lock)

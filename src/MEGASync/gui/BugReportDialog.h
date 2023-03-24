@@ -44,7 +44,6 @@ private:
     int mTransferError;
     QString reportFileName;
     bool mHadGlobalPause;
-    bool mTransferNeedsResume;
 
     const static int mMaxDescriptionLength = 3000;
 

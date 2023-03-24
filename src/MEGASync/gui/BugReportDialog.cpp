@@ -18,8 +18,7 @@ BugReportDialog::BugReportDialog(QWidget *parent, MegaSyncLogger& logger) :
     ui(new Ui::BugReportDialog),
     mTransferFinished(false),
     mTransferError(MegaError::API_OK),
-    mHadGlobalPause(false),
-    mTransferNeedsResume(false)
+    mHadGlobalPause(false)
 {
     ui->setupUi(this);
 
@@ -87,15 +86,6 @@ void BugReportDialog::onTransferStart(MegaApi*, MegaTransfer* transfer)
 
 void BugReportDialog::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
 {
-    if(currentTransfer && mHadGlobalPause)
-    {
-        if(mTransferNeedsResume)
-        {
-            megaApi->pauseTransfers(false);
-            megaApi->pauseTransferByTag(currentTransfer, false);
-            mTransferNeedsResume = false;
-        }
-    }
     if (mSendProgress && transfer->getState() == MegaTransfer::STATE_ACTIVE)
     {
         transferredBytes = transfer->getTransferredBytes();
@@ -112,7 +102,7 @@ void BugReportDialog::onTransferFinish(MegaApi*, MegaTransfer*, MegaError* error
 {
     if(mHadGlobalPause)
     {
-        megaApi->pauseTransfers(true);
+        MegaSyncApp->getTransfersModel()->setGlobalPause(true);
     }
 
     disconnect(mSendProgress.data(), &QProgressDialog::canceled, this, &BugReportDialog::cancelSendReport);
@@ -153,17 +143,19 @@ void BugReportDialog::onRequestFinish(MegaApi*, MegaRequest* request, MegaError*
 
             if (e->getErrorCode() == MegaError::API_OK)
             {
-                QMessageBox msgBox;
-                HighDpiResize hDpiResizer(&msgBox);
-                msgBox.setWindowTitle(tr("Bug report"));
-                msgBox.setIcon(QMessageBox::Information);
-                msgBox.setText(tr("Bug report success!"));
-                msgBox.setTextFormat(Qt::RichText);
-                msgBox.setIconPixmap(QPixmap(Utilities::getDevicePixelRatio() < 2 ? QString::fromUtf8(":/images/bug_report_success.png")
+                QMessageBox* msgBox = new QMessageBox();
+                msgBox->setWindowTitle(tr("Bug report"));
+                msgBox->setIcon(QMessageBox::Information);
+                msgBox->setText(tr("Bug report success!"));
+                msgBox->setTextFormat(Qt::RichText);
+                msgBox->setIconPixmap(QPixmap(Utilities::getDevicePixelRatio() < 2 ? QString::fromUtf8(":/images/bug_report_success.png")
                                                                                   : QString::fromUtf8(":/images/bug_report_success@2x.png")));
-                msgBox.setInformativeText(tr("Your bug report has been submitted, a confirmation email will sent to you accordingly."));
-                msgBox.addButton(tr("Ok"), QMessageBox::AcceptRole);
-                msgBox.exec();
+                msgBox->setInformativeText(tr("Your bug report has been submitted, a confirmation email will sent to you accordingly."));
+                msgBox->addButton(tr("Ok"), QMessageBox::AcceptRole);
+
+                DialogOpener::showDialog<QMessageBox>(msgBox, [this](){
+                    close();
+                });
             }
             else
             {
@@ -175,7 +167,6 @@ void BugReportDialog::onRequestFinish(MegaApi*, MegaRequest* request, MegaError*
         default:
             break;
     }
-    accept();
 }
 
 void BugReportDialog::showErrorMessage()
@@ -257,7 +248,7 @@ void BugReportDialog::cancelCurrentReportUpload()
 
         if(mHadGlobalPause)
         {
-            megaApi->pauseTransfers(true);
+            MegaSyncApp->getTransfersModel()->setGlobalPause(true);
         }
     }
 }
@@ -293,10 +284,10 @@ void BugReportDialog::onReadyForReporting()
         {
             QFileInfo joinLogsFile{pathToLogFile};
             reportFileName = joinLogsFile.fileName();
-            mHadGlobalPause = Preferences::instance()->getGlobalPaused();
-            if(mHadGlobalPause)
+            if(Preferences::instance()->getGlobalPaused())
             {
-                mTransferNeedsResume = true;
+                mHadGlobalPause = true;
+                MegaSyncApp->getTransfersModel()->setGlobalPause(false);
             }
             megaApi->startUploadForSupport(QDir::toNativeSeparators(pathToLogFile).toUtf8().constData(), true, delegateTransferListener);
         }
@@ -320,7 +311,7 @@ void BugReportDialog::cancelSendReport()
         return;
     }
 
-    megaApi->pauseTransferByTag(currentTransfer, true);
+    MegaSyncApp->getTransfersModel()->pauseResumeTransferByTag(currentTransfer, true);
 
     QMessageBox* msgBox = new QMessageBox();
     msgBox->setIcon(QMessageBox::Warning);
@@ -354,7 +345,7 @@ void BugReportDialog::cancelSendReport()
             {
                 DialogOpener::showDialog(mSendProgress);
                 mSendProgress->setValue(lastpermil);
-                megaApi->pauseTransferByTag(currentTransfer, false);
+                MegaSyncApp->getTransfersModel()->pauseResumeTransferByTag(currentTransfer,false);
             }
         }});
 }
