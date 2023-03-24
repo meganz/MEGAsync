@@ -14,6 +14,7 @@ Item {
     property alias outRect: outRect
     property alias placeholderText: textField.placeholderText
     property alias font: textField.font
+    property alias text: textField.text
     property bool showInformativeText: true
     property bool error: false
     property string informativeTextIcon: ""

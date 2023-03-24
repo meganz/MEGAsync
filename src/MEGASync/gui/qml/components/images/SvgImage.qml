@@ -5,7 +5,7 @@ import QtQuick.Controls 2.12
 import Common 1.0
 
 Item {
-
+    id: root
     /*
      * Properties
      */
@@ -13,12 +13,14 @@ Item {
     property alias color: overlay.color
     property alias source: image.source
     property alias sourceSize: image.sourceSize
+    property alias imageWidth: image.width
 
     /*
      * Object properties
      */
 
     width: image.width
+    height: image.height
 
     /*
      * Components

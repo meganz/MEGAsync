@@ -4944,27 +4944,6 @@ void MegaApplication::showSetupWizard(int action)
     DialogOpener::showDialog(mSetupWizard, this, &MegaApplication::setupWizardFinished);
 }
 
-//void MegaApplication::userAction(int action)
-//{
-//    if (appfinished)
-//    {
-//        return;
-//    }
-
-//    if (!preferences->logged())
-//    {
-//        switch (action)
-//        {
-//            case InfoWizard::LOGIN_CLICKED:
-//                showInfoDialog();
-//                break;
-//            default:
-//                showSetupWizard(action);
-//                break;
-//        }
-//    }
-//}
-
 void MegaApplication::applyNotificationFilter(int opt)
 {
     if (notificationsProxyModel)
