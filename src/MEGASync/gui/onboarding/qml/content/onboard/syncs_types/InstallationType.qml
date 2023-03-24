@@ -7,40 +7,40 @@ import Components 1.0 as Custom
 
 ColumnLayout {
 
-    /*
-     * Properties
-     */
-
     property alias buttonGroup: buttonGroup
 
-    /*
-     * Enums
-     */
-
-    enum SelectedOption {
-        Sync = 0,
-        Backup = 1,
-        Fuse = 2
+    function getTypeSelected() {
+        return buttonGroup.checkedButton.type;
     }
 
-    /*
-     * Signals
-     */
-
-    signal optionSelected(option: int)
-
-    /*
-     * Object properties
-     */
-
     width: parent.width
-
-    /*
-     * Child objects
-     */
+    onVisibleChanged: {
+        if(visible) {
+            footerLayout.previousButton.visible = true;
+            if(!buttonGroup.checkState) {
+                footerLayout.nextButton.enabled = false;
+            } else {
+                footerLayout.nextButton.enabled = true;
+            }
+        } else {
+            footerLayout.nextButton.enabled = true;
+        }
+    }
 
     ButtonGroup {
         id: buttonGroup
+
+        onCheckStateChanged: {
+            if(!checkState) {
+               checkedButton.checked = true;
+            }
+        }
+
+        onCheckedButtonChanged: {
+            if(buttonGroup.checkedButton != null) {
+                footerLayout.nextButton.enabled = true;
+            }
+        }
     }
 
     ColumnLayout {
@@ -52,6 +52,7 @@ ColumnLayout {
             title: qsTr("Sync")
             description: qsTr("Sync your files between your computers with MEGA cloud, any change from one side will apply to another side.")
             imageSource: "../../../../../images/Onboarding/sync.svg"
+            type: InstallationTypeButton.Type.Sync
             ButtonGroup.group: buttonGroup
         }
 
@@ -61,6 +62,7 @@ ColumnLayout {
             title: qsTr("Backup")
             description: qsTr("Automatically update your files from your computers to MEGA cloud. Files in your computer won’t be affected by the cloud.")
             imageSource: "../../../../../images/Onboarding/cloud.svg"
+            type: InstallationTypeButton.Type.Backup
             ButtonGroup.group: buttonGroup
         }
 
@@ -70,6 +72,7 @@ ColumnLayout {
             title: qsTr("Fuse")
             description: qsTr("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.")
             imageSource: "../../../../../images/Onboarding/fuse.svg"
+            type: InstallationTypeButton.Type.Fuse
             ButtonGroup.group: buttonGroup
         }
     }

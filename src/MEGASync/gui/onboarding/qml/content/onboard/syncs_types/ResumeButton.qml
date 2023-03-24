@@ -1,5 +1,5 @@
 import QtQuick 2.12
-import QtQuick.Controls 2.15
+import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 
 import Common 1.0
@@ -11,6 +11,7 @@ Button {
     property string title: ""
     property string description: ""
     property string imageSource: ""
+    property int type: InstallationTypeButton.Type.Sync
 
     Layout.preferredWidth: 230
     Layout.preferredHeight: parent.height

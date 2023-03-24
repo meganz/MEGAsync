@@ -2,7 +2,9 @@ import QtQuick 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.0
 
-Component {
+SyncsPage {
+
+    objectName: "InstallationTypePageForm"
 
     ColumnLayout {
         spacing: 12
@@ -17,19 +19,36 @@ Component {
         }
 
         InstallationType {
-            id: installationTypeContent
+            id: content
 
             Layout.preferredWidth: parent.width
             Layout.leftMargin: 32
             Layout.topMargin: 24
         }
+    }
 
-        Connections {
-            target: installationTypeContent
+    Connections {
+        target: footerLayout
 
-            onOptionSelected: (option) => {
-                console.log("Selected option -> " + option);
+        onNextButtonClicked: {
+            if(visible) {
+                switch(content.getTypeSelected()) {
+                    case InstallationTypeButton.Type.Sync:
+                        console.debug("TODO: Sync clicked");
+                        break;
+                    case InstallationTypeButton.Type.Backup:
+                        console.debug("Backup clicked");
+                        next = backupPage;
+                        break;
+                    case InstallationTypeButton.Type.Fuse:
+                        console.debug("TODO: Fuse clicked");
+                        break;
+                    default:
+                        console.error("Undefined option clicked -> " + option);
+                        return;
+                }
             }
         }
     }
+
 }

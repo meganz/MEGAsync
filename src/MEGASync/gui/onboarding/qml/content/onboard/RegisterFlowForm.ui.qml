@@ -14,7 +14,7 @@ Rectangle {
         id: image
 
         fillMode: Image.Tile
-        source: "../../../../images/onboarding/login_folder.png"
+        source: "../../../../images/Onboarding/login_folder.png"
         anchors.left: root.left
         anchors.verticalCenter: root.verticalCenter
     }
@@ -34,4 +34,5 @@ Rectangle {
     LoginPage {
         id: loginPage
     }
+
 } // Rectangle -> root

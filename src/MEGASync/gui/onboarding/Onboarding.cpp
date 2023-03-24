@@ -10,6 +10,7 @@ Onboarding::Onboarding(QObject *parent)
     , mMegaApi(MegaSyncApp->getMegaApi())
     , mEmail(QString())
     , mPassword(QString())
+    , mPreferences(Preferences::instance())
 {
     mDelegateListener = new QTMegaRequestListener(mMegaApi, this);
     mMegaApi->addRequestListener(mDelegateListener);
@@ -18,6 +19,7 @@ Onboarding::Onboarding(QObject *parent)
 
 Onboarding::~Onboarding()
 {
+    delete mDelegateListener;
 }
 
 QUrl Onboarding::getQmlUrl()
@@ -50,20 +52,22 @@ void Onboarding::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *err
             }
             else if(error->getErrorCode() == MegaError::API_EMFAREQUIRED)
             {
-                //twoFA required
+                qDebug() << "Onboarding::onRequestFinish -> TYPE_LOGIN API_EMFAREQUIRED";
+                mEmail = QString::fromUtf8(request->getEmail());
+                mPassword = QString::fromUtf8(request->getPassword());
                 emit twoFARequired();
             }
             else if(error->getErrorCode() == MegaError::API_OK)
             {
-                auto preferences = Preferences::instance();
-                preferences->setAccountStateInGeneral(Preferences::STATE_LOGGED_OK);
+                qDebug() << "Onboarding::onRequestFinish -> TYPE_LOGIN API_OK";
+                mPreferences->setAccountStateInGeneral(Preferences::STATE_LOGGED_OK);
                 auto email = request->getEmail();
                 MegaSyncApp->fetchNodes(QString::fromUtf8(email ? email : ""));
-                if (!preferences->hasLoggedIn())
+                if (!mPreferences->hasLoggedIn())
                 {
-                    preferences->setHasLoggedIn(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000);
+                    mPreferences->setHasLoggedIn(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000);
                 }
-                qDebug() << "Onboarding::onRequestFinish -> TYPE_LOGIN API_OK";
+                emit loginFinished();
             }
             else
             {
@@ -80,6 +84,17 @@ void Onboarding::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *err
             } else {
                 qDebug() << "Onboarding::onRequestFinish -> TYPE_CREATE_ACCOUNT Error code -> " << error->getErrorCode();
             }
+            break;
+        }
+        case MegaRequest::TYPE_MULTI_FACTOR_AUTH_CHECK:
+        {
+            if(error->getErrorCode() == MegaError::API_OK)
+            {
+                qDebug() << "Onboarding::onRequestFinish -> TYPE_MULTI_FACTOR_AUTH_CHECK API_OK";
+            } else {
+                qDebug() << "Onboarding::onRequestFinish -> TYPE_MULTI_FACTOR_AUTH_CHECK Error code -> " << error->getErrorCode();
+            }
+            break;
         }
     }
 }
@@ -113,11 +128,19 @@ void Onboarding::onForgotPasswordClicked()
     Utilities::openUrl(QUrl(QString::fromUtf8("mega://#recovery")));
 }
 
-void Onboarding::onTwoFACompleted(const QString &pin)
+void Onboarding::onTwoFACompleted(const QString& pin)
 {
+    qDebug() << "Onboarding::onTwoFACompleted -> pin = " << pin;
+    qDebug() << "Onboarding::onTwoFACompleted -> mEmail = " << mEmail;
+    qDebug() << "Onboarding::onTwoFACompleted -> mPassword = " << mPassword;
+
     mMegaApi->multiFactorAuthLogin(mEmail.toUtf8().constData(),
                                    mPassword.toUtf8().constData(),
                                    pin.toUtf8().constData());
 }
 
-
+void Onboarding::onNotNowClicked() {
+    std::unique_ptr<char[]> email(mMegaApi->getMyEmail());
+    mPreferences->setEmailAndGeneralSettings(QString::fromUtf8(email.get()));
+    emit notNowFinished();
+}

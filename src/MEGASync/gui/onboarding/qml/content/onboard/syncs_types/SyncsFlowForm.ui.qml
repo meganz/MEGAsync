@@ -6,8 +6,8 @@ import Onboard.Syncs_types.Left_panel 1.0
 import Components 1.0 as Custom
 import Common 1.0
 
-RowLayout {
-    id: root
+StackView {
+    id: syncsStack
 
     /*
      * Object properties
@@ -15,54 +15,94 @@ RowLayout {
 
     height: 520
     width: 776
+    initialItem: configurationLayout
 
     /*
      * Child objects
      */
 
-    StepPanel {
-        id: syncsStepPanel
+    RowLayout {
+        id: configurationLayout
 
-        Layout.preferredHeight: root.height
-        Layout.preferredWidth: 224
-    }
+        /*
+         * Object properties
+         */
 
-    Rectangle {
-        color: "#FAFAFB"
-        Layout.preferredHeight: root.height
-        Layout.preferredWidth: root.width - syncsStepPanel.width
+        height: parent.height
+        width: parent.width
 
-        ColumnLayout {
-            height: parent.height
-            width: parent.width
+        /*
+         * Child objects
+         */
 
-            ContentPanel {
-                id: contentStack
-            }
+        StepPanel {
+            id: syncsInfoStepPanel
 
-            Footer {
-                id: syncsFooter
-
-                Layout.alignment: Qt.AlignBottom
-                Layout.bottomMargin: 24
-                Layout.leftMargin: 245
-            }
-
+            Layout.preferredHeight: configurationLayout.height
+            Layout.preferredWidth: 224
         }
 
+        Rectangle {
+            color: "#FAFAFB"
+            Layout.preferredHeight: configurationLayout.height
+            Layout.preferredWidth: configurationLayout.width - syncsInfoStepPanel.width
+
+            ColumnLayout {
+                height: parent.height
+                width: parent.width
+
+                ContentPanel {
+                    id: contentStack
+
+                    footerLayout: syncsFooter
+                }
+
+                Footer {
+                    id: syncsFooter
+
+                    Layout.alignment: Qt.AlignBottom | Qt.AlignRight
+                    Layout.bottomMargin: 24
+                    Layout.rightMargin: 32
+                    Layout.preferredWidth: parent.width
+                }
+            }
+        }
+
+        Connections {
+            target: syncsFooter
+
+            onNextButtonClicked: {
+                if(!syncsInfoStepPanel.next()) {
+                    resumePage.clear();
+                    syncsStack.replace(resumePage, StackView.Immediate);
+                }
+            }
+
+            onPreviousButtonClicked: {
+                syncsInfoStepPanel.previous();
+            }
+        }
+
+    } // RowLayout -> configurationLayout
+
+    ResumePage {
+        id: resumePage
+
+        height: parent.height
+        width: parent.width
+        visible: false
     }
 
     Connections {
-        target: syncsFooter
+        target: resumePage
 
-        onNextButtonClicked: {
-            syncsStepPanel.next();
-            contentStack.next();
-        }
-
-        onPreviousButtonClicked: {
-            syncsStepPanel.previous();
-            contentStack.previous();
+        onOptionChanged: (type, checked) => {
+            if(checked) {
+                syncsStack.replace(configurationLayout, StackView.Immediate);
+                syncsInfoStepPanel.changeToStep31();
+                contentStack.showSubstackPage(type);
+            }
         }
     }
-}
+
+} // StackView

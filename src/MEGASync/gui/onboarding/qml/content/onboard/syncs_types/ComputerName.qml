@@ -6,9 +6,11 @@ import Components 1.0 as Custom
 
 ColumnLayout {
 
-    /*
-     * Child objects
-     */
+    onVisibleChanged: {
+        if(visible) {
+            footerLayout.previousButton.visible = false;
+        }
+    }
 
     Image {
         source: "../../../../../images/Onboarding/pc.svg"

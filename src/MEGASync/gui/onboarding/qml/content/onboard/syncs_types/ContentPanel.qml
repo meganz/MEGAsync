@@ -6,72 +6,55 @@ import Components 1.0 as Custom
 import Onboard.Syncs_types.Backups 1.0
 import Onboard.Syncs_types.Syncs 1.0
 
-Item {
+SyncsPage {
+    id: mainItem
 
-    /*
-     * Functions
-     */
-
-    function next() {
-        if(configurationStack.currentItemStack === configurationStack.itemStack.length-1) {
-            console.error("ButtonContentPanel: configurationStack.currentItemStack out of bounds on next");
-            return;
+    function showSubstackPage(type) {
+        var item;
+        switch(type) {
+            case InstallationTypeButton.Type.Sync:
+                console.debug("TODO: Add Sync page");
+                break;
+            case InstallationTypeButton.Type.Backup:
+                item = backupPage;
+                break;
+            case InstallationTypeButton.Type.Fuse:
+                console.debug("TODO: Add Fuse page");
+                break;
+            default:
+                console.error("Undefined option clicked -> " + option);
+                return;
         }
-
-        configurationStack.replace(configurationStack.itemStack[++configurationStack.currentItemStack],
-                                   StackView.Immediate);
+        item.resetSubstackToInitialPage();
+        if(substackView.currentItem !== item) {
+            substackView.replace(item, StackView.Immediate);
+        }
     }
 
-    function previous() {
-        if(configurationStack.currentItemStack === 0) {
-            console.error("ButtonContentPanel: configurationStack.currentItemStack out of bounds on previous");
-            return;
-        }
+    objectName: "ContentPanel"
+    substackView.initialItem: computerNamePage
 
-        configurationStack.replace(configurationStack.itemStack[--configurationStack.currentItemStack],
-                                   StackView.Immediate);
+    ComputerNamePageForm {
+        id: computerNamePage
+
+        next: installationTypePage
+        footerLayout: mainItem.footerLayout
+        visible: false
     }
 
-    /*
-     * Object properties
-     */
+    InstallationTypePageForm {
+        id: installationTypePage
 
-    width: parent.width
+        previous: computerNamePage
+        footerLayout: mainItem.footerLayout
+        visible: false
+    }
 
-    /*
-     * Child objects
-     */
+    BackupPage {
+        id: backupPage
 
-    StackView {
-        id: configurationStack
-
-        property int currentItemStack: 0
-        property var itemStack: [
-            computerNamePage,
-            installationTypePage,
-            backupSelectFolders,
-            syncSelect
-        ]
-
-        width: parent.width
-        initialItem: computerNamePage
-
-        ComputerNamePageForm {
-            id: computerNamePage
-        }
-
-        InstallationTypePageForm {
-            id: installationTypePage
-        }
-
-        SelectFoldersPageForm {
-            id: backupSelectFolders
-        }
-
-        SyncTypePage{
-            id: syncSelect
-        }
-
-    } //StackView -> configurationStack
-
-} // Item
+        previous: installationTypePage
+        footerLayout: mainItem.footerLayout
+        visible: false
+    }
+}

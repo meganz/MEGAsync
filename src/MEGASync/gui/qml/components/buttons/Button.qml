@@ -9,13 +9,17 @@ Qml.RoundButton {
     /*
      * Properties
      */
+
     property bool primary: false
     property bool iconRight: false
     property string iconSource: ""
 
+    property alias sourceSize: icon.sourceSize
+
     /*
      * Component
      */
+
     bottomPadding: 12
     topPadding: 12
 
@@ -38,9 +42,8 @@ Qml.RoundButton {
     contentItem: Text {
         id: textItem
 
-        color: getTextColor()
+        color: primary ? Styles.textOnColor : Styles.buttonPrimary
         text: button.text
-        opacity: button.enabled ? 1.0 : 0.3
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
 
@@ -52,28 +55,26 @@ Qml.RoundButton {
     } // contentItem -> Text -> textItem
 
     background: Rectangle {
-        id: rect
+        width: button.width
+        height: button.height
 
-        border.width: 2
-        radius: 6
+        Rectangle {
+            id: rect
 
-        color: {
-            if(primary) {
-                Styles.lightTheme ? "#04101E" : "#F4F4F5";
-            } else {
-                "transparent";
-            }
-        }
-
-        border.color: {
-            Styles.lightTheme ? "#04101E" : "#F4F4F5";
+            width: parent.width
+            height: parent.height
+            border.width: 2
+            radius: 6
+            color: primary ? Styles.buttonPrimary : "transparent"
+            border.color: Styles.buttonPrimary
+            opacity: button.enabled ? 1.0 : 0.1
         }
 
         SvgImage {
             id: icon
 
             source: iconSource
-            color: getTextColor()
+            color: Styles.iconOnColor
             sourceSize.width: 10
             sourceSize.height: 10
 
@@ -93,6 +94,10 @@ Qml.RoundButton {
 
     } // Rectangle -> rect
 
+    /*
+     * Child components
+     */
+
     MouseArea {
         id: mouseArea
 
@@ -101,22 +106,4 @@ Qml.RoundButton {
         cursorShape: Qt.PointingHandCursor
     }
 
-    /*
-     * Functions
-     */
-    function getTextColor() {
-        if(primary) {
-            if(Styles.lightTheme) {
-                return "#FAFAFB";
-            } else {
-                return "#04101E";
-            }
-        } else {
-            if(Styles.lightTheme) {
-                return "#04101E";
-            } else {
-                return "#F4F4F5";
-            }
-        }
-    }
 }

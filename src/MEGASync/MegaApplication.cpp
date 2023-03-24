@@ -23,6 +23,7 @@
 #include "qml/QmlDialog.h"
 #include "onboarding/Onboarding.h"
 #include "qml/QmlDialogWrapper.h"
+#include "qml/QmlClipboard.h"
 
 #include <QQmlApplicationEngine>
 #include "DialogOpener.h"
@@ -452,7 +453,22 @@ void MegaApplication::initialize()
     qmlRegisterModule("Onboard", 1, 0);
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/OnboardingDialog.qml")), "Onboard", 1, 0, "OnboardingDialog");
 
+    qmlRegisterModule("Onboard.Syncs_types", 1, 0);
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/SyncsFlow.qml")), "Onboard.Syncs_types", 1, 0, "SyncsFlow");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/Header.qml")), "Onboard.Syncs_types", 1, 0, "Header");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/Footer.qml")), "Onboard.Syncs_types", 1, 0, "Footer");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/InfoAccount.qml")), "Onboard.Syncs_types", 1, 0, "InfoAccount");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/ResumePage.qml")), "Onboard.Syncs_types", 1, 0, "ResumePage");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/SyncsPage.qml")), "Onboard.Syncs_types", 1, 0, "SyncsPage");
+
+    qmlRegisterModule("Onboard.Syncs_types.Left_panel", 1, 0);
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/left_panel/StepPanel.qml")), "Onboard.Syncs_types.Left_panel", 1, 0, "StepPanel");
+
+    qmlRegisterModule("Onboard.Syncs_types.Backups", 1, 0);
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/backups/BackupPage.qml")), "Onboard.Syncs_types.Backups", 1, 0, "BackupPage");
+
     qmlRegisterType<QmlDialog>("com.qmldialog", 1, 0, "QmlDialog");
+    qmlRegisterSingletonType<QmlClipboard>("QmlClipboard", 1, 0, "QmlClipboard", &QmlClipboard::qmlInstance);
 
     preferences = Preferences::instance();
     connect(preferences.get(), SIGNAL(stateChanged()), this, SLOT(changeState()));
@@ -5971,9 +5987,17 @@ void MegaApplication::openInfoWizard()
     }
 
     QPointer<QmlDialogWrapper<Onboarding>> onboarding = new QmlDialogWrapper<Onboarding>();
-    DialogOpener::showDialog(onboarding, [onboarding]
+    DialogOpener::showDialog(onboarding, [onboarding, this]
     {
-        //qDebug()<<onboarding->wrapper()->test();
+        //QList<PreConfiguredSync> syncs = dialog->preconfiguredSyncs();
+
+        //if (infoDialog && infoDialog->isVisible())
+        //{
+        //    infoDialog->hide();
+        //}
+
+        loggedIn(true);
+        //startSyncs(syncs);
         qDebug()<<onboarding->result();
 
     });
@@ -6988,7 +7012,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             {
                 if (firstTime)
                 {
-                    showSetupWizard(SetupWizard::PAGE_MODE);
+                    //showSetupWizard(SetupWizard::PAGE_MODE);
                 }
                 else
                 {

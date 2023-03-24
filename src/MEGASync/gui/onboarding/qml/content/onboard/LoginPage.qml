@@ -20,21 +20,31 @@ LoginPageForm {
         Onboarding.onForgotPasswordClicked();
     }
 
+    Keys.onEnterPressed: {
+        loginButton.clicked();
+    }
+
+    Keys.onReturnPressed: {
+        loginButton.clicked();
+    }
+
     Component{
         id: registerPage
+
         RegisterPage {}
     }
 
-
     Component{
-        id:twoFactorAuthPage
-        TwoFAPage{}
+        id: twoFactorAuthPage
+
+        TwoFAPage {}
     }
 
     Connections{
         target: Onboarding
-        onTwoFARequired:{
-            registerStack.replace(twoFactorAuthPage)
+
+        onTwoFARequired: {
+            registerStack.replace(twoFactorAuthPage);
         }
     }
 }

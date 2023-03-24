@@ -15,13 +15,7 @@ Rectangle {
 
     id: loginForm
     color: Styles.backgroundColor
-    Connections {
-        target: Onboarding
-        onUserPassFailed: {
-            email.error = true
-            password.error = true
-        }
-    }
+
     ColumnLayout {
         spacing: 16
         anchors {
@@ -40,18 +34,21 @@ Rectangle {
 
         Custom.TextField {
             id: email
+
             Layout.fillWidth: true
             placeholderText: qsTr("Email")
         }
 
         Custom.PasswordTextField {
             id: password
+
             Layout.fillWidth: true
             placeholderText: qsTr("Password")
         }
 
         Text {
             id: forgotPassword
+
             Layout.alignment: Qt.AlignCenter
             text: qsTr("Forgot password?")
             color: Styles.textColor
@@ -77,21 +74,26 @@ Rectangle {
 
         Custom.Button {
             id: createAccountButton
+
             text: qsTr("Create account")
             Layout.alignment: Qt.AlignRight
         }
 
         Custom.Button {
             id: loginButton
+
             primary: true
             text: qsTr("Login")
             Layout.alignment: Qt.AlignRight
         }
     }
-}
 
-/*##^##
-Designer {
-    D{i:0;autoSize:true;height:480;width:640}
+    Connections {
+        target: Onboarding
+
+        onUserPassFailed: {
+            email.error = true
+            password.error = true
+        }
+    }
 }
-##^##*/

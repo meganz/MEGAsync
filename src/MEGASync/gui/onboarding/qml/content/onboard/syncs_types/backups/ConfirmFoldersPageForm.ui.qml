@@ -6,20 +6,22 @@ import Onboard.Syncs_types 1.0
 
 SyncsPage {
 
+    objectName: "ConfirmFoldersPageForm"
+
     ColumnLayout {
-        spacing: 34
+        spacing: 24
         width: 488
 
         Header {
-            title: qsTr("Select folders to back up")
-            description: qsTr("Selected folders from your computer to MEGA. Files will automatically back up when the desktop application is running.")
+            title: qsTr("Confirm folders to back up")
+            description: qsTr("Will be added to your cloud and available in your other devices.")
             Layout.fillWidth: false
             Layout.preferredWidth: parent.width
             Layout.topMargin: 32
             Layout.leftMargin: 32
         }
 
-        SelectFolders {
+        ConfirmFolders {
             Layout.fillWidth: false
             Layout.preferredWidth: parent.width
             Layout.leftMargin: 32

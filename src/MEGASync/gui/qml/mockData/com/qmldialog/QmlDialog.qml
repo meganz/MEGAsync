@@ -9,4 +9,12 @@ Window {
     function onLoginClicked(data) {
         console.info("onLoginClicked() -> " + JSON.stringify(data));
     }
+
+    function accept() {
+        console.log("QmlDialog accepted");
+    }
+
+    function reject() {
+        console.log("QmlDialog rejected");
+    }
 }

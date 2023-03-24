@@ -1,6 +1,6 @@
 import QtQuick 2.12
 import QtQuick.Layouts 1.12
-import QtQuick.Controls 2.0
+import QtQuick.Controls 2.12
 
 import Common 1.0
 import Components 1.0 as Custom
@@ -17,6 +17,12 @@ ColumnLayout {
 
     property string title: "Your Sync is set up!"
     property string description: "Lorem ipsum dolor a text that congratulates the user and suggests other options to choose below. Use two lines at most. In this case we offer syncs as an option again."
+
+    /*
+     * Signals
+     */
+
+    signal optionChanged(int type, bool checked)
 
     /*
      * Child objects
@@ -75,6 +81,7 @@ ColumnLayout {
                 description: qsTr("Sync your files between your computers with MEGA cloud, any change from one side will apply to another side.")
                 imageSource: "../../../../../images/Onboarding/sync.svg"
                 ButtonGroup.group: buttonGroup
+                type: InstallationTypeButton.Type.Sync
             }
 
             ResumeButton {
@@ -84,6 +91,7 @@ ColumnLayout {
                 description: qsTr("Automatically update your files from your computers to MEGA cloud. Files in your computer won’t be affected by the cloud.")
                 imageSource: "../../../../../images/Onboarding/cloud.svg"
                 ButtonGroup.group: buttonGroup
+                type: InstallationTypeButton.Type.Backup
             }
 
             ResumeButton {
@@ -93,6 +101,7 @@ ColumnLayout {
                 description: qsTr("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.")
                 imageSource: "../../../../../images/Onboarding/fuse.svg"
                 ButtonGroup.group: buttonGroup
+                type: InstallationTypeButton.Type.Fuse
             }
         }
 
