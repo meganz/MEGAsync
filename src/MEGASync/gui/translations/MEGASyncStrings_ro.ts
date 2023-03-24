@@ -4051,7 +4051,7 @@ Introdu un alt nume.</translation>
     <message>
         <source>With our end-to-end encryption, the way your team works has never been more secure and private.</source>
         <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of business plan.</translatorcomment>
-        <translation>Cu criptarea noastră capăt-la-capăt, modul în care echipa ta lucrează nu a fost niciodată mai sigur și mai privat.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Get started with secure file storage.</source>

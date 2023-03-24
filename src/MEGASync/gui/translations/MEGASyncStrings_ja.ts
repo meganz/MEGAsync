@@ -1375,7 +1375,7 @@
         <source>%1. %2 has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation><numerusform>%1項目が選択されました。%2項目が削除されました。再選択するには、このウィンドウを閉じて、もう一度やり直してください。</numerusform></translation>
+        <translation><numerusform>%1。%2項目が削除されました。再選択するには、このウィンドウを閉じて、もう一度やり直してください。</numerusform></translation>
     </message>
 </context>
 <context>
@@ -2103,7 +2103,7 @@
     <message>
         <source>Downloading may be interrupted as you have used 90% of your transfer quota on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew. </source>
         <translatorcomment>Message displayed in the InfoDialog when the transfer quota reaches warning stage</translatorcomment>
-        <translation>このアカウントの転送容量の90%を使用したため、ダウンロードが中断される可能性があります。ダウンロードを続けるには、新しいプランをご購入いただくか、MEGAの定期的なサブスクリプションをお持ちの場合は、プランが&#xa0;更新されるまで&#xa0;お待ちください。</translation>
+        <translation>このアカウントの転送容量の90%を使用したため、ダウンロードが中断される可能性があります。ダウンロードを続けるには、新しいプランをご購入いただくか、MEGAの定期的なサブスクリプションをお持ちの場合は、プランが更新されるまでお待ちください。</translation>
     </message>
 </context>
 <context>
@@ -4048,7 +4048,7 @@ Enter a different name</source>
     <message>
         <source>With our end-to-end encryption, the way your team works has never been more secure and private.</source>
         <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of business plan.</translatorcomment>
-        <translation>当社のエンドツーエンドの暗号化により、あなたのチームの作業がこれまで以上に安全かつプライベートになりました。</translation>
+        <translation>当社のゼロ知識暗号化により、あなたのチームの作業がこれまで以上に安全かつプライベートになりました。</translation>
     </message>
     <message>
         <source>Get started with secure file storage.</source>
@@ -7286,22 +7286,22 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>%1 [A]d[/A]</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [DAYS] [HOURS] string, replacing the [DAYS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the days. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1 [A]日と[/A]</translation>
+        <translation>%1&#xa0;[A]日と[/A]</translation>
     </message>
     <message>
         <source>%1 [A]h[/A]</source>
         <translatorcomment>String controlling the formatting of the hour count for time intervals. It is used in [DAYS] [HOURS] and [HOURS] [MINUTES] strings, replacing the [HOURS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the hours. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1 [A]時間[/A]</translation>
+        <translation>%1&#xa0;[A]時間[/A]</translation>
     </message>
     <message>
         <source>%1 [A]m[/A]</source>
         <translatorcomment>String controlling the formatting of the minute count for time intervals. It is used in [HOURS] [MINUTES] and [MINUTES] [SECONDS] strings, replacing the [MINUTES] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the minutes. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1 [A]分[/A]</translation>
+        <translation>%1&#xa0;[A]分[/A]</translation>
     </message>
     <message>
         <source>%1 [A]s[/A]</source>
         <translatorcomment>String controlling the formatting of the seconds count for time intervals. It is used in the [MINUTES] [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the seconds. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1 [A]秒[/A]</translation>
+        <translation>%1&#xa0;[A]秒[/A]</translation>
     </message>
 </context>
 <context>

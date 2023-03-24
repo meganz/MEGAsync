@@ -4052,7 +4052,7 @@ Voer een andere naam in.</translation>
     <message>
         <source>With our end-to-end encryption, the way your team works has never been more secure and private.</source>
         <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of business plan.</translatorcomment>
-        <translation>Met onze end-to-end codering is de manier waarop uw team werkt nog nooit zo veilig en privé geweest.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Get started with secure file storage.</source>
@@ -4110,7 +4110,7 @@ Voer een andere naam in.</translation>
     <message>
         <source>Show in Explorer</source>
         <translatorcomment>Label to indicate the &quot;Show in Explorer&quot; option to open local folder of a sync (Windows). Keep Explorer name as it is the app name of file explorer on Windows.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Weergeven in File Explorer</translation>
     </message>
 </context>
 <context>
@@ -5235,7 +5235,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Enable Windows Explorer integration</source>
         <translatorcomment>Checkbox label displayed on Windows, allowing the user to enable / disable the Windows Explorer integration.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Windows File Explorer integratie inschakelen</translation>
     </message>
     <message>
         <source>B</source>
@@ -7291,22 +7291,22 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>%1 [A]d[/A]</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [DAYS] [HOURS] string, replacing the [DAYS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the days. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1 [A]d[/A]</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>%1 [A]h[/A]</source>
         <translatorcomment>String controlling the formatting of the hour count for time intervals. It is used in [DAYS] [HOURS] and [HOURS] [MINUTES] strings, replacing the [HOURS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the hours. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1 [A]u[/A]</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>%1 [A]m[/A]</source>
         <translatorcomment>String controlling the formatting of the minute count for time intervals. It is used in [HOURS] [MINUTES] and [MINUTES] [SECONDS] strings, replacing the [MINUTES] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the minutes. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1 [A]m[/A]</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>%1 [A]s[/A]</source>
         <translatorcomment>String controlling the formatting of the seconds count for time intervals. It is used in the [MINUTES] [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the seconds. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1 [A]s[/A]</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

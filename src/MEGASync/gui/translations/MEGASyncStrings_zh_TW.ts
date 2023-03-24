@@ -488,7 +488,7 @@
     <message>
         <source>Click menu for more Backup actions</source>
         <translatorcomment>Menu column tooltip (three dots in the table)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>點擊三圓點圖示取得更多備份操作</translation>
     </message>
 </context>
 <context>
@@ -830,7 +830,7 @@
     <message>
         <source>Bug report success!</source>
         <translatorcomment>Confirmation message shown when a bug report is successfully uploaded.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>已報告您的問題。</translation>
     </message>
     <message>
         <source>Your bug report has been submitted, a confirmation email will sent to you accordingly.</source>
@@ -1289,7 +1289,7 @@
     <message>
         <source>Show in MEGA</source>
         <translatorcomment>Notification button to redirect the user to remote location. It will open webclient at specific location.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>在MEGA中顯示</translation>
     </message>
 </context>
 <context>
@@ -1360,24 +1360,24 @@
     <message numerus="yes">
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>您選擇的項目已被移除。要重新選擇，請關閉此視窗然後重試。</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>You no longer have access to this item. Ask the owner to share again.</source>
         <translatorcomment>Error message shown when the user is trying to download an file or folder from an incoming share and the owner stops sharing/removes all items</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>您無法再存取這些項目。請要求與您共享它們的人再共享一次給您。</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 item selected</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>已選擇%1個項目。</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1. %2 has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%1。%2個已被移除。要重新選擇，請關閉此視窗然後重試。</numerusform></translation>
     </message>
 </context>
 <context>
@@ -1385,7 +1385,7 @@
     <message>
         <source>Local Disk</source>
         <translatorcomment>Default drive name shown on the low space dialog when downloading files</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>本地磁碟</translation>
     </message>
 </context>
 <context>
@@ -2080,7 +2080,7 @@
     <message>
         <source>Your queued transfers exceed the current quota available for your IP address.</source>
         <translatorcomment>Informative label to indicate that your queued transfers exceed the current quota available for IP. Applies to free users.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>您的佇列傳輸超出您IP位址目前可用的流量配額。</translation>
     </message>
     <message>
         <source>Upgrade Account</source>
@@ -2090,22 +2090,22 @@
     <message>
         <source>I will wait</source>
         <translatorcomment>Button label to dismiss (hide) overquota dialogs. Shown for free users only if they do not want to upgrade account for extra transfer quota.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>我願意等待。</translation>
     </message>
     <message>
         <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew.</source>
         <translatorcomment>Informative label to indicate that your queued transfers may be interrupted because the current account does not have enough transfer quota.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>由於您的帳戶剩餘傳輸配額不足，因此您無法繼續下載。若要繼續下載，請購買新的會員方案，或者如果您在MEGA有定期訂閱，可以待方案續訂時再下載。</translation>
     </message>
     <message>
         <source>Buy new plan</source>
         <translatorcomment>Button label for button to buy a new plan when there is not enough transfer quota in current non-free plan</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>購買新的會員方案</translation>
     </message>
     <message>
         <source>Downloading may be interrupted as you have used 90% of your transfer quota on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew. </source>
         <translatorcomment>Message displayed in the InfoDialog when the transfer quota reaches warning stage</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>由於您已使用此帳戶90%的傳輸配額，下載可能會中斷。要繼續下載，請購買新的會員方案，或者如果您在MEGA有定期定閱，可以待方案續訂時再下載。</translation>
     </message>
 </context>
 <context>
@@ -2138,7 +2138,7 @@
     <message>
         <source>Deleted or moved file</source>
         <translatorcomment>Tooltip when the file completed was removed or deleted</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>檔案已刪除或移動</translation>
     </message>
 </context>
 <context>
@@ -2278,7 +2278,7 @@
     <message>
         <source>Low disk space</source>
         <translatorcomment>Dialog title</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>磁碟空間不足</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2293,17 +2293,17 @@
     <message>
         <source>There is not enough space on %1. You need an additional %2 to download these files.</source>
         <translatorcomment>Label explaining the problem, %1 is the download target disk name. %2 is the needed size to continue with the download (the size unit depends on the quantity) </translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1的儲存空間不足。您需要額外%2才能下載這些檔案。</translation>
     </message>
     <message>
         <source>Free space: %1</source>
         <translatorcomment>Label informing about the local disk free space</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>剩餘空間：%1</translation>
     </message>
     <message>
         <source>Total size: %1</source>
         <translatorcomment>Label informing about the total local disk space</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>全部空間：%1</translation>
     </message>
 </context>
 <context>
@@ -2835,17 +2835,17 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Some syncs and backups have been disabled. Go to settings to enable them again.</source>
         <translatorcomment>Warning message shown when some backups and syncs are disabled. Tell the userto go to settings to solve the issue.</translatorcomment>
-        <translation>某些同步和備份已被停用。請前往設定再次啟用它們。</translation>
+        <translation>某些同步和備份已停用。請前往設定再次啟用它們。</translation>
     </message>
     <message>
         <source>One or more backups have been disabled. Go to settings to enable them again.</source>
         <translatorcomment>Warning message shown when some backups are disabled. Tell the userto go to settings to solve the issue.</translatorcomment>
-        <translation>一個或多個備份已被停用。請前往設定再次啟用它們。</translation>
+        <translation>一個或多個備份已停用。請前往設定再次啟用它們。</translation>
     </message>
     <message>
         <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
         <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>一個或多個同步已停止。請前往設定再次啟用它們。</translation>
     </message>
     <message>
         <source>Open settings</source>
@@ -2865,37 +2865,37 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your syncs and backups have been disabled: %1</source>
         <translatorcomment>Warning message shown when all the syncs and backups have been disabled. The placeholder %1 shows the reason;</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>您的同步和備份已停止：%1</translation>
     </message>
     <message>
         <source>Your backups have been disabled: %1</source>
         <translatorcomment>Warning message shown when all the backups have been disabled. The placeholder %1 shows the reason;</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>您的備份已停止：%1</translation>
     </message>
     <message>
         <source>Your syncs have been disabled: %1</source>
         <translatorcomment>Warning message shown when  all the syncs have been disabled. The placeholder %1 shows the reason;</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>您的同步已停止：%1</translation>
     </message>
     <message>
         <source>Error getting link: %1</source>
         <translatorcomment>Notification message launched when an error occurs getting a public link for a file/folder. Placeholder %1 displays the reason.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>取得連結時錯誤：%1</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been temporarily disabled: %2</source>
         <translatorcomment>Warning message shown when a sync is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>您的同步「%1」已暫時停止：%2</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been temporarily disabled: %2</source>
         <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>您的備份「%1」已暫時停止：%2</translation>
     </message>
     <message>
         <source>Error transferring folder: %1</source>
         <translatorcomment>Label to indicate that has been an error during a folder transfer.  Placeholder %1 displays the reason.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>傳輸資料夾時錯誤：%1</translation>
     </message>
 </context>
 <context>
@@ -3670,12 +3670,12 @@ Enter a different name</source>
     <message>
         <source>No results for:</source>
         <translatorcomment>Label indicating that there are no results for the current search, searched text will be following this label.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>沒有搜尋結果：</translation>
     </message>
     <message>
         <source>Ok</source>
         <translatorcomment>Button text to accept and close the dialog</translatorcomment>
-        <translation>OK</translation>
+        <translation>好</translation>
     </message>
 </context>
 <context>
@@ -3683,7 +3683,7 @@ Enter a different name</source>
     <message>
         <source>Searching:</source>
         <translatorcomment>Label indicating the current search, searched text will be following this label.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>搜尋：</translation>
     </message>
 </context>
 <context>
@@ -3766,17 +3766,17 @@ Enter a different name</source>
     <message>
         <source>Uploads and downloads</source>
         <translatorcomment>Notification category for completed transfers notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>上傳和下載</translation>
     </message>
     <message>
         <source>Completed uploads and downloads</source>
         <translatorcomment>Title of a checkbox for disconnectig completed transfer notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>完成上傳和下載</translation>
     </message>
     <message>
         <source>Uploads and downloads:</source>
         <translatorcomment>Notification category for completed transfers notifications (macx)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>上傳和下載：</translation>
     </message>
 </context>
 <context>
@@ -4051,7 +4051,7 @@ Enter a different name</source>
     <message>
         <source>With our end-to-end encryption, the way your team works has never been more secure and private.</source>
         <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of business plan.</translatorcomment>
-        <translation>透過我們點對點加密技術，您的團隊協作將擁有前所未有的安全和隱私。</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Get started with secure file storage.</source>
@@ -4076,12 +4076,12 @@ Enter a different name</source>
     <message>
         <source>[A] storage</source>
         <translatorcomment>Label to indicate the specific storage of a pro plan. [A] is a placeholder for the value of the storage, it must be kept in the translated strings.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[A]儲存空間</translation>
     </message>
     <message>
         <source>[A] transfer</source>
         <translatorcomment>Label to indicate the specific transfer quota of a pro plan. [A] is a placeholder for the value of the transfer quota, it must be kept in the translated strings.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[A]傳輸配額</translation>
     </message>
 </context>
 <context>
@@ -4099,17 +4099,17 @@ Enter a different name</source>
     <message>
         <source>Show in Finder</source>
         <translatorcomment>Label to indicate the &quot;Show in Finder&quot; option to open local folder of a sync (macOS). Keep Finder name as it is the app name of file explorer on macOS.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>在Finder中顯示</translation>
     </message>
     <message>
         <source>Quit</source>
         <translatorcomment>Label displayed on actions exiting Desktop application when on Mac</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>退出</translation>
     </message>
     <message>
         <source>Show in Explorer</source>
         <translatorcomment>Label to indicate the &quot;Show in Explorer&quot; option to open local folder of a sync (Windows). Keep Explorer name as it is the app name of file explorer on Windows.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>在檔案總管中顯示</translation>
     </message>
 </context>
 <context>
@@ -5234,7 +5234,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Enable Windows Explorer integration</source>
         <translatorcomment>Checkbox label displayed on Windows, allowing the user to enable / disable the Windows Explorer integration.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>啟用整合Windows檔案總管</translation>
     </message>
     <message>
         <source>B</source>
@@ -5982,7 +5982,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Only files can be used for streaming.</source>
         <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>您無法串流傳輸資料夾。請選擇一個檔案進行串流傳輸。</translation>
     </message>
 </context>
 <context>
@@ -6289,7 +6289,7 @@ To continue, select a different folder.</source>
     <message>
         <source>You need Full access right to be able to sync the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying sync a non compatible folder</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>要同步此資料夾，您需要有它的完全存取權限。</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -6300,7 +6300,7 @@ To continue, select a different folder.</source>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>無法同步資料夾。請確認資料夾名稱中沒有使用「\」、「/」或「:」字元。</translation>
     </message>
 </context>
 <context>
@@ -6331,7 +6331,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Click menu for more Sync actions</source>
         <translatorcomment>Menu column tooltip (three dots in the table)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>點擊三圓點圖示取得更多同步操作</translation>
     </message>
 </context>
 <context>
@@ -6656,27 +6656,27 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Uploaded 1 file to %1.</source>
         <translatorcomment>Notification text that inform 1 file has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>已上傳1個檔案到%1。</translation>
     </message>
     <message>
         <source>Uploaded 1 folder to %1.</source>
         <translatorcomment>Notification text that inform 1 folder has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>已上傳1個資料夾到%1。</translation>
     </message>
     <message>
         <source>File uploaded</source>
         <translatorcomment>Notification title when a file has been uploaded</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>檔案已上傳</translation>
     </message>
     <message>
         <source>Folder uploaded</source>
         <translatorcomment>Notification title when a folder has been uploaded</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>資料夾已上傳</translation>
     </message>
     <message>
         <source>Show in MEGA</source>
         <translatorcomment>Notification button to see the file on the webclient</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>在MEGA中顯示</translation>
     </message>
     <message>
         <source>Get link</source>
@@ -6686,12 +6686,12 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Downloaded 1 file to %1.</source>
         <translatorcomment>Notification text that inform 1 file has been downloaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>已下載1個檔案到%1。</translation>
     </message>
     <message>
         <source>Downloaded 1 folder to %1.</source>
         <translatorcomment>Notification text that inform 1 folder has been downloaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>已下載1個資料夾到%1。</translation>
     </message>
     <message>
         <source>Show in folder</source>
@@ -6706,62 +6706,62 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>File downloaded</source>
         <translatorcomment>Notification title when a file has been downloaded</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>檔案已下載</translation>
     </message>
     <message>
         <source>Folder downloaded</source>
         <translatorcomment>Notification title when a folder has been downloaded</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>資料夾已下載</translation>
     </message>
     <message numerus="yes">
         <source>%n upload successful</source>
         <translatorcomment>Notification text that inform that an upload was successful. %1 is the number of uploads. This string goes always with the %n upload cancelled and/or %n upload failed strings.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%n個上傳成功</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>, %n upload cancelled</source>
         <translatorcomment>Appended text that inform that an upload was cancelled. %1 is the number of cancelled uploads. This string goes always appended to the %n upload successful</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>，%n個上傳取消</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>, %n upload failed</source>
         <translatorcomment>Appended text that inform that an upload has failed. %1 is the number of failed uploads. This string goes always appended to the %n upload successful</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>，%n個上傳失敗</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Uploaded %n items to %1</source>
         <translatorcomment>Notification text that inform n items (files or folders) has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>已上傳%n個項目到%1</numerusform></translation>
     </message>
     <message>
         <source>Items uploaded</source>
         <translatorcomment>Notification title when a more than one transfer (file or folders) have been uploaded</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>項目已上傳</translation>
     </message>
     <message numerus="yes">
         <source>%n download successful</source>
         <translatorcomment>Notification text that inform that an download was successful. %1 is the number of downloads. This string goes always with the %n download cancelled and/or %n download failed strings.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%n個下載成功</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>, %n download cancelled</source>
         <translatorcomment>Appended text that inform that an download was cancelled. %1 is the number of cancelled downloads. This string goes always appended to the %n download successful</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>，%n個下載取消</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>, %n download failed</source>
         <translatorcomment>Appended text that inform that an download has failed. %1 is the number of failed downloads. This string goes always appended to the %n download successful</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>，%n個下載失敗</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Downloaded %n items to %1</source>
         <translatorcomment>Notification text that inform n items (files or folders) has been downloaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>已下載%n個項目到%1</numerusform></translation>
     </message>
     <message>
         <source>Items downloaded</source>
         <translatorcomment>Notification title when a more than one transfer (file or folders) have been downloaded</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>項目已下載</translation>
     </message>
 </context>
 <context>
@@ -7140,7 +7140,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying upload files to a non compatible folder</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>要上傳此資料夾，您需要有它的讀取和寫入或是完全存取權限。</translation>
     </message>
 </context>
 <context>
@@ -7289,22 +7289,22 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>%1 [A]d[/A]</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [DAYS] [HOURS] string, replacing the [DAYS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the days. The space needs to be non-breaking.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1&#xa0;[A]天[/A]</translation>
     </message>
     <message>
         <source>%1 [A]h[/A]</source>
         <translatorcomment>String controlling the formatting of the hour count for time intervals. It is used in [DAYS] [HOURS] and [HOURS] [MINUTES] strings, replacing the [HOURS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the hours. The space needs to be non-breaking.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1&#xa0;[A]小時[/A]</translation>
     </message>
     <message>
         <source>%1 [A]m[/A]</source>
         <translatorcomment>String controlling the formatting of the minute count for time intervals. It is used in [HOURS] [MINUTES] and [MINUTES] [SECONDS] strings, replacing the [MINUTES] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the minutes. The space needs to be non-breaking.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1&#xa0;[A]分鐘[/A]</translation>
     </message>
     <message>
         <source>%1 [A]s[/A]</source>
         <translatorcomment>String controlling the formatting of the seconds count for time intervals. It is used in the [MINUTES] [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the seconds. The space needs to be non-breaking.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1&#xa0;[A]秒[/A]</translation>
     </message>
 </context>
 <context>

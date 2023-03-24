@@ -2105,7 +2105,7 @@
     <message>
         <source>Downloading may be interrupted as you have used 90% of your transfer quota on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew. </source>
         <translatorcomment>Message displayed in the InfoDialog when the transfer quota reaches warning stage</translatorcomment>
-        <translation>การดาวน์โหลดอาจถูกหยุดชั่วคราว เนื่องจากคุณใช้โควต้าการถ่ายโอนของบัญชีนี้ไปแล้ว 90% หากต้องการดาวน์โหลดต่อ ให้สมัครใช้งานแผนใหม่ หรือหากคุณมีการสมัครใช้งาน MEGA แบบต่ออายุอัตโนมัติอยู่แล้ว คุณสามารถรอจนกว่าจะเริ่มรอบการเรียกเก็บเงินถัดไป</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4049,7 +4049,7 @@ Enter a different name</source>
     <message>
         <source>With our end-to-end encryption, the way your team works has never been more secure and private.</source>
         <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of business plan.</translatorcomment>
-        <translation>ด้วยการเข้ารหัสลับแบบต้นทางถึงปลายทาง การทำงานในทีมของคุณจะปลอดภัยและเป็นส่วนตัวอย่างที่ไม่เคยมีมาก่อน</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Get started with secure file storage.</source>
@@ -4107,7 +4107,7 @@ Enter a different name</source>
     <message>
         <source>Show in Explorer</source>
         <translatorcomment>Label to indicate the &quot;Show in Explorer&quot; option to open local folder of a sync (Windows). Keep Explorer name as it is the app name of file explorer on Windows.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>แสดงใน File Explorer</translation>
     </message>
 </context>
 <context>
@@ -5232,7 +5232,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Enable Windows Explorer integration</source>
         <translatorcomment>Checkbox label displayed on Windows, allowing the user to enable / disable the Windows Explorer integration.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>เปิดใช้งานการผนวกรวมเข้ากับ Windows File Explorer</translation>
     </message>
     <message>
         <source>B</source>
@@ -7287,22 +7287,22 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>%1 [A]d[/A]</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [DAYS] [HOURS] string, replacing the [DAYS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the days. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1 [A]ว[/A]</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>%1 [A]h[/A]</source>
         <translatorcomment>String controlling the formatting of the hour count for time intervals. It is used in [DAYS] [HOURS] and [HOURS] [MINUTES] strings, replacing the [HOURS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the hours. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1 [A]ชม.[/A]</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>%1 [A]m[/A]</source>
         <translatorcomment>String controlling the formatting of the minute count for time intervals. It is used in [HOURS] [MINUTES] and [MINUTES] [SECONDS] strings, replacing the [MINUTES] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the minutes. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1 [A]น.[/A]</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>%1 [A]s[/A]</source>
         <translatorcomment>String controlling the formatting of the seconds count for time intervals. It is used in the [MINUTES] [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the seconds. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1 [A]วิ[/A]</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

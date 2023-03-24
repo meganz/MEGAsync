@@ -1259,7 +1259,7 @@ Dans certains cas, ils pourraient comprendre des détails sur vos données, tels
     <message numerus="yes">
         <source>[A] added %n item</source>
         <translatorcomment>Label to indicate that [A] has added %n items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and %n with the number of added items.</translatorcomment>
-        <translation><numerusform>[A] a ajouté %n élément</numerusform><numerusform>[A] a ajouté %n éléments</numerusform></translation>
+        <translation><numerusform>[A] a ajouté %n&#xa0;élément</numerusform><numerusform>[A] a ajouté %n&#xa0;éléments</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>You have %n day left to save your data</source>
@@ -1371,7 +1371,7 @@ Dans certains cas, ils pourraient comprendre des détails sur vos données, tels
         <source>%1 item selected</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation><numerusform>%1&#xa0;élément est sélectionné.</numerusform><numerusform>%1 éléments sont sélectionnés.</numerusform></translation>
+        <translation><numerusform>%1&#xa0;élément est sélectionné.</numerusform><numerusform>%1&#xa0;éléments sont sélectionnés.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1. %2 has been removed. To reselect, close this window and try again.</source>
@@ -1438,7 +1438,7 @@ Dans certains cas, ils pourraient comprendre des détails sur vos données, tels
     <message numerus="yes">
         <source>Apply to all %1 duplicates</source>
         <translatorcomment>Checkbox text to apply the action to all the following conflicts. %1 is the number of conflicts</translatorcomment>
-        <translation><numerusform>Appliquer à l’autre doublon</numerusform><numerusform>Appliquer à tous les %1 doublons</numerusform></translation>
+        <translation><numerusform>Appliquer à l’autre doublon</numerusform><numerusform>Appliquer à tous les %1&#xa0;doublons</numerusform></translation>
     </message>
     <message>
         <source>The file at this destination will be updated with a new version.</source>
@@ -1552,12 +1552,12 @@ Dans certains cas, ils pourraient comprendre des détails sur vos données, tels
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Context menu option label to indicate the user has selected %n number of files</translatorcomment>
-        <translation><numerusform>%n fichier</numerusform><numerusform>%n fichiers</numerusform></translation>
+        <translation><numerusform>%n&#xa0;fichier</numerusform><numerusform>%n&#xa0;fichiers</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Context menu option label to indicate the user has selected %n number of folders</translatorcomment>
-        <translation><numerusform>%n dossier</numerusform><numerusform>%n dossiers</numerusform></translation>
+        <translation><numerusform>%n&#xa0;dossier</numerusform><numerusform>%n&#xa0;dossiers</numerusform></translation>
     </message>
 </context>
 <context>
@@ -2105,7 +2105,7 @@ Dans certains cas, ils pourraient comprendre des détails sur vos données, tels
     <message>
         <source>Downloading may be interrupted as you have used 90% of your transfer quota on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew. </source>
         <translatorcomment>Message displayed in the InfoDialog when the transfer quota reaches warning stage</translatorcomment>
-        <translation>Le téléchargement pourrait être interrompu, car 90&#xa0;% du quota de transfert de ce compte a été utilisé. Pour le poursuivre, souscrivez un nouvel abonnement ou si vous avez un abonnement MEGA périodique, vous pouvez attendre que votre abonnement se renouvelle.</translation>
+        <translation>Downloading may be interrupted as you have used 90% of your transfer quota on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew.</translation>
     </message>
 </context>
 <context>
@@ -3794,7 +3794,7 @@ Saisissez un nom différent.</translation>
     <message numerus="yes">
         <source>[A] removed %n item</source>
         <translatorcomment>Label to indicate that [A] has removed %n items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and %n with the number of removed items.</translatorcomment>
-        <translation><numerusform>[A] a supprimé %n élément</numerusform><numerusform>[A] a supprimé %n éléments</numerusform></translation>
+        <translation><numerusform>[A] a supprimé %n&#xa0;élément</numerusform><numerusform>[A] a supprimé %n&#xa0;éléments</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4053,7 +4053,7 @@ Saisissez un nom différent.</translation>
     <message>
         <source>With our end-to-end encryption, the way your team works has never been more secure and private.</source>
         <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of business plan.</translatorcomment>
-        <translation>Grâce à notre chiffrement de bout en bout, la façon dont votre équipe travaille n’a jamais été aussi sûre ni vos données aussi protégées.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Get started with secure file storage.</source>
@@ -4073,7 +4073,7 @@ Saisissez un nom différent.</translation>
     <message numerus="yes">
         <source>minimum %n user</source>
         <translatorcomment>Label to inform about the minimum number of users for a business plan. %1 will be replaced with the minimum number of users.</translatorcomment>
-        <translation><numerusform>Minimum de %n utilisateur</numerusform><numerusform>Minimum de %n utilisateurs</numerusform></translation>
+        <translation><numerusform>Minimum de %n&#xa0;utilisateur</numerusform><numerusform>Minimum de %n&#xa0;utilisateurs</numerusform></translation>
     </message>
     <message>
         <source>[A] storage</source>
@@ -4111,7 +4111,7 @@ Saisissez un nom différent.</translation>
     <message>
         <source>Show in Explorer</source>
         <translatorcomment>Label to indicate the &quot;Show in Explorer&quot; option to open local folder of a sync (Windows). Keep Explorer name as it is the app name of file explorer on Windows.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Afficher dans l’Explorateur de fichiers</translation>
     </message>
 </context>
 <context>
@@ -5236,7 +5236,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Enable Windows Explorer integration</source>
         <translatorcomment>Checkbox label displayed on Windows, allowing the user to enable / disable the Windows Explorer integration.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Activer l’intégration à l’Explorateur de fichiers Windows</translation>
     </message>
     <message>
         <source>B</source>
@@ -5923,12 +5923,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Label to indicate file count. Keep %n code because it will be filled with the number of files at runtime.</translatorcomment>
-        <translation><numerusform>%n fichier</numerusform><numerusform>%n fichiers</numerusform></translation>
+        <translation><numerusform>%n&#xa0;fichier</numerusform><numerusform>%n&#xa0;fichiers</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Label to indicate folder count. Keep %n code because it will be filled with the number of folders at runtime.</translatorcomment>
-        <translation><numerusform>%n dossier</numerusform><numerusform>%n dossiers</numerusform></translation>
+        <translation><numerusform>%n&#xa0;dossier</numerusform><numerusform>%n&#xa0;dossiers</numerusform></translation>
     </message>
 </context>
 <context>
@@ -7246,12 +7246,12 @@ Please delete the folder sync from settings to cancel them.</source>
     <message numerus="yes">
         <source>%n second ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n seconds ago</translatorcomment>
-        <translation><numerusform>il y a %n seconde</numerusform><numerusform>il y a %n secondes</numerusform></translation>
+        <translation><numerusform>il y a %n&#xa0;seconde</numerusform><numerusform>il y a %n&#xa0;secondes</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n minute ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n minutes ago</translatorcomment>
-        <translation><numerusform>il y a %n minute</numerusform><numerusform>il y a %n minutes</numerusform></translation>
+        <translation><numerusform>il y a %n&#xa0;minute</numerusform><numerusform>il y a %n&#xa0;minutes</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n hour ago</source>
@@ -7261,17 +7261,17 @@ Please delete the folder sync from settings to cancel them.</source>
     <message numerus="yes">
         <source>%n day ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n days ago</translatorcomment>
-        <translation><numerusform>il y a %n jour</numerusform><numerusform>il y a %n jours</numerusform></translation>
+        <translation><numerusform>il y a %n&#xa0;jour</numerusform><numerusform>il y a %n&#xa0;jours</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n months ago</translatorcomment>
-        <translation><numerusform>il y a %n mois</numerusform><numerusform>il y a %n mois</numerusform></translation>
+        <translation><numerusform>il y a %n&#xa0;mois</numerusform><numerusform>il y a %n&#xa0;mois</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n year ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n years ago</translatorcomment>
-        <translation><numerusform>il y a %n ans</numerusform><numerusform>il y a %n années</numerusform></translation>
+        <translation><numerusform>il y a %n&#xa0;ans</numerusform><numerusform>il y a %n&#xa0;ans</numerusform></translation>
     </message>
     <message>
         <source>[DAYS] [HOURS]</source>
@@ -7291,22 +7291,22 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>%1 [A]d[/A]</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [DAYS] [HOURS] string, replacing the [DAYS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the days. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1 [A]&#xa0;j[/A]</translation>
+        <translation>%1&#xa0;[A]j[/A]</translation>
     </message>
     <message>
         <source>%1 [A]h[/A]</source>
         <translatorcomment>String controlling the formatting of the hour count for time intervals. It is used in [DAYS] [HOURS] and [HOURS] [MINUTES] strings, replacing the [HOURS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the hours. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1 [A]&#xa0;h[/A]</translation>
+        <translation>%1&#xa0;[A]h[/A]</translation>
     </message>
     <message>
         <source>%1 [A]m[/A]</source>
         <translatorcomment>String controlling the formatting of the minute count for time intervals. It is used in [HOURS] [MINUTES] and [MINUTES] [SECONDS] strings, replacing the [MINUTES] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the minutes. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1 [A]&#xa0;min[/A]</translation>
+        <translation>%1&#xa0;[A]min[/A]</translation>
     </message>
     <message>
         <source>%1 [A]s[/A]</source>
         <translatorcomment>String controlling the formatting of the seconds count for time intervals. It is used in the [MINUTES] [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the seconds. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1 [A]&#xa0;s[/A]</translation>
+        <translation>%1&#xa0;[A]s[/A]</translation>
     </message>
 </context>
 <context>

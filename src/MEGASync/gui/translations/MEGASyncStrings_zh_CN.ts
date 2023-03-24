@@ -1377,7 +1377,7 @@
         <source>%1. %2 has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation><numerusform>共%1个。%2个已被移除。要重新选择，请关闭此窗口，然后重试。</numerusform></translation>
+        <translation><numerusform>%1。%2个已被移除。要重新选择，请关闭此窗口，然后重试。</numerusform></translation>
     </message>
 </context>
 <context>
@@ -2105,7 +2105,7 @@
     <message>
         <source>Downloading may be interrupted as you have used 90% of your transfer quota on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew. </source>
         <translatorcomment>Message displayed in the InfoDialog when the transfer quota reaches warning stage</translatorcomment>
-        <translation>由于您已经使用了该账户90%的传输流量，下载可能会被中断。要继续下载，请购买新的会员方案，或者如果您与MEGA有定期订阅，可以等待会员方案&#xa0;续订。&#xa0;</translation>
+        <translation>由于您已经使用了该账户90%的传输流量，下载可能会被中断。要继续下载，请购买新的会员方案，或者如果您与MEGA有定期订阅，可以等待会员方案续订。</translation>
     </message>
 </context>
 <context>
@@ -4051,7 +4051,7 @@ Enter a different name</source>
     <message>
         <source>With our end-to-end encryption, the way your team works has never been more secure and private.</source>
         <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of business plan.</translatorcomment>
-        <translation>通过MEGA的端到端加密保护，您的团队协作从未如此安全和私密。</translation>
+        <translation>通过MEGA的零知识加密保护，您的团队协作从未如此安全和私密。</translation>
     </message>
     <message>
         <source>Get started with secure file storage.</source>

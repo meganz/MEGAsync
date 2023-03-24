@@ -4054,7 +4054,7 @@ Enter a different name</source>
     <message>
         <source>With our end-to-end encryption, the way your team works has never been more secure and private.</source>
         <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of business plan.</translatorcomment>
-        <translation>우리의 종단간 암호화 덕분에, 팀이 일하는 방식이 더 이상 안전하고 비밀스러울 수 없습니다.</translation>
+        <translation>우리의 영지식 암호화 덕분에, 팀이 일하는 방식이 더 이상 안전하고 비공개적일 수 없습니다.</translation>
     </message>
     <message>
         <source>Get started with secure file storage.</source>
@@ -4112,7 +4112,7 @@ Enter a different name</source>
     <message>
         <source>Show in Explorer</source>
         <translatorcomment>Label to indicate the &quot;Show in Explorer&quot; option to open local folder of a sync (Windows). Keep Explorer name as it is the app name of file explorer on Windows.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>파일 탐색기에서 보기</translation>
     </message>
 </context>
 <context>
@@ -5237,7 +5237,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Enable Windows Explorer integration</source>
         <translatorcomment>Checkbox label displayed on Windows, allowing the user to enable / disable the Windows Explorer integration.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Windows 파일 탐색기 통합 활성화</translation>
     </message>
     <message>
         <source>B</source>

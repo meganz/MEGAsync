@@ -4053,7 +4053,7 @@ Introduzca un nombre diferente.</translation>
     <message>
         <source>With our end-to-end encryption, the way your team works has never been more secure and private.</source>
         <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of business plan.</translatorcomment>
-        <translation>Con nuestro cifrado punto a punto, la forma en que trabaja tu equipo será más segura y privada que nunca.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Get started with secure file storage.</source>

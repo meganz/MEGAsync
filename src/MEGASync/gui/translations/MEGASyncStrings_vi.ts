@@ -478,12 +478,12 @@
     <message>
         <source>Backup is enabled</source>
         <translatorcomment>Checkbox tooltip that is displayed when it is checked.(Backup enabled)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Việc sao lưu đã được bật</translation>
     </message>
     <message>
         <source>Backup is disabled</source>
         <translatorcomment>Checkbox tooltip that is displayed when it is unchecked.(Backup disabled)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Việc sao lưu đã bị tắt</translation>
     </message>
     <message>
         <source>Click menu for more Backup actions</source>
@@ -916,12 +916,12 @@
     <message>
         <source>Terms of Service</source>
         <translatorcomment>Label for Terms of Service link.</translatorcomment>
-        <translation>ĐIều Khoản Dịch Vụ</translation>
+        <translation>Điều&#xa0;Khoản Dịch&#xa0;Vụ</translation>
     </message>
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation>Chính Sách Riêng Tư</translation>
+        <translation>Chính&#xa0;Sách Riêng&#xa0;Tư</translation>
     </message>
     <message>
         <source>New in this version:</source>
@@ -1204,7 +1204,7 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>Takedown Notice</source>
         <translatorcomment>Notification label related to takedown notice</translatorcomment>
-        <translation>Thông báo gỡ bỏ</translation>
+        <translation>Thông&#xa0;báo gỡ bỏ nội&#xa0;dung</translation>
     </message>
     <message>
         <source>Your account is almost full.</source>
@@ -1284,7 +1284,7 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>Reminder: You have a contact request</source>
         <translatorcomment>Label to indicate a reminder about a contact request.</translatorcomment>
-        <translation>Nhắc nhở: Bạn có một yêu cầu thêm liên lạc</translation>
+        <translation>Nhắc nhở: Bạn có một yêu&#xa0;cầu thêm liên&#xa0;lạc</translation>
     </message>
     <message>
         <source>Show in MEGA</source>
@@ -1955,7 +1955,7 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>Pause/Resume</source>
         <translatorcomment>Tooltip of button that let the user Pause/Resume transfers.</translatorcomment>
-        <translation>Dừng/Tiếp</translation>
+        <translation>Tạm&#xa0;dừng / Tiếp&#xa0;tục</translation>
     </message>
     <message>
         <source>Open Downloads</source>
@@ -2010,7 +2010,7 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>Something went wrong while trying to sync your folders.</source>
         <translatorcomment>Label to indicate that an error occurs while trying to resume the syncs</translatorcomment>
-        <translation>Có vấn đề nào đó đã xảy ra khi thực hiện đồng bộ một số thư mục.</translation>
+        <translation>Có vấn&#xa0;đề đã xảy ra khi cố thử đồng&#xa0;bộ các thư&#xa0;mục của bạn.</translation>
     </message>
     <message>
         <source>Open Settings</source>
@@ -2050,7 +2050,7 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>Something went wrong while trying to backup and sync your folders.</source>
         <translatorcomment>Warning message body shown on info dialog</translatorcomment>
-        <translation>Có vấn đề đã xảy ra khi cố thử sao lưu và đồng bộ các thư mục của bạn.</translation>
+        <translation>Có vấn&#xa0;đề đã xảy ra khi cố thử sao&#xa0;lưu và đồng&#xa0;bộ các thư&#xa0;mục của bạn.</translation>
     </message>
     <message>
         <source>One or more backups have been disabled</source>
@@ -2085,7 +2085,7 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>Upgrade Account</source>
         <translatorcomment>Button label to upgrade the current account.</translatorcomment>
-        <translation>Nâng cấp tàI khoản</translation>
+        <translation>Nâng&#xa0;cấp tài&#xa0;khoản</translation>
     </message>
     <message>
         <source>I will wait</source>
@@ -2468,12 +2468,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Phiên đồng bộ cho “%1” đã bị vô hiệu do thư mục bạn đã chọn không có tồn tại</translation>
+        <translation>Phiên đồng&#xa0;bộ cho “%1” đã bị vô&#xa0;hiệu do thư&#xa0;mục từ xa bạn đã chọn không&#xa0;có tồn&#xa0;tại</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Phiên đồng bộ cho “%1” đã bị vô hiệu vì thư mục chứa nó trong máy này không có tồn tại</translation>
+        <translation>Phiên đồng&#xa0;bộ cho “%1” đã bị vô&#xa0;hiệu vì thư&#xa0;mục cục&#xa0;bộ này không&#xa0;có tồn&#xa0;tại</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -2498,17 +2498,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Đồng bộ cho “%1” đã bị tắtvì thư mục đã bị chuyển vào Thùng Rác ở nơi khác</translation>
+        <translation>Phiên đồng&#xa0;bộ cho “%1” đã bị vô&#xa0;hiệu vì thư&#xa0;mục từ xa đã bị chuyển vào Thùng&#xa0;Rác ở máy khác</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the local folder has changed(moved/deleted/...). Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Phiên đồng bộ cho “%1” đã bị vô hiệu bởi vì thư mục cục bộ đã thay đổi hoặc bị xóa</translation>
+        <translation>Phiên đồng&#xa0;bộ cho “%1” đã bị vô&#xa0;hiệu bởi vì thư&#xa0;mục cục&#xa0;bộ đã thay đổi</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Phiên đồng&#xa0;bộ cho “%1” đã bị vô&#xa0;hiệu. Thư&#xa0;mục từ xa (một phần hoặc toàn&#xa0;bộ) không&#xa0;có truy&#xa0;cập toàn quyền</translation>
     </message>
     <message>
         <source>Over quota</source>
@@ -2518,7 +2518,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
         <translatorcomment>Notification message launched when an user is trying to sync a non valid VirtualBox shared folder . Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Phiên đồng bộ cho “%1” đã bị vô hiệu vì thao tác đồng bộ các thư mục được chia sẻ trên VirtualBox không được hỗ trợ do mâu thuẫn từ file system.</translation>
+        <translation>Phiên đồng&#xa0;bộ cho “%1” đã bị vô&#xa0;hiệu vì việc đồng&#xa0;bộ các thư&#xa0;mục chia&#xa0;sẻ trên máy VirtualBox không được hỗ&#xa0;trợ do mâu&#xa0;thuẫn trong hệ&#xa0;thống tệp.</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -2533,7 +2533,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log)</source>
         <translatorcomment>Notification message shown when the DEBUG mode is enabled.</translatorcomment>
-        <translation>Chế độ debug đã được bật. Một tệp tin nhật ký đang được tạo tại màn hình desktop của bạn (MEGAsync.log).</translation>
+        <translation>Chế&#xa0;độ debug đã được bật. Một tệp&#xa0;tin nhật&#xa0;ký mang tên “MEGAsync.log” đang được tạo trong máy&#xa0;tính của bạn</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The download has been cancelled</source>
@@ -2598,7 +2598,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Stream</source>
         <translatorcomment>Label and title of the dialog displayed when a user wants to stream a file/folder from MEGA. MAX 20 characters. Keep capital letters.</translatorcomment>
-        <translation>Stream</translation>
+        <translation>Truyền phát</translation>
     </message>
     <message>
         <source>MEGAsync will continue to work, however you might not receive new updates.</source>
@@ -2618,7 +2618,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud drive</source>
         <translatorcomment>Label of context menu to reach Cloud drive section at webclient. It will open your webbrowser and redirects to your cloud drive.</translatorcomment>
-        <translation>Ổ mây</translation>
+        <translation>Ổ&#xa0;Mây</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -2718,12 +2718,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. Reason: %2</source>
         <translatorcomment>Notification message launched when a sync is disabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime and %2 with the reason of the error.</translatorcomment>
-        <translation>Phiên đồng bộ cho “%1” đã bị vô hiệu. Lý do: %2</translation>
+        <translation>Phiên đồng&#xa0;bộ cho “%1” đã bị vô hiệu. Lý&#xa0;do: %2</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been enabled</source>
         <translatorcomment>Notificaton message shown when %1 sync has been enable. %1 will be replaced with sync name at runtime.</translatorcomment>
-        <translation>Phiên đồng bộ cho “%1” đã được hiệu lực</translation>
+        <translation>Phiên đồng&#xa0;bộ cho “%1” đã được bật</translation>
     </message>
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
@@ -2810,7 +2810,7 @@ Các phiên truyền tải sẽ được tự động tiếp tục khi bạn m�
     <message>
         <source>Your backup &quot;%1&quot; has been disabled. Reason: %2</source>
         <translatorcomment>Notification message launched when a backup is disabled. Keep &quot;%1&quot; code because is filled with the name of the backup at runtime and %2 with the reason of the error.</translatorcomment>
-        <translation>Việc sao lưu &#8220;%1&#8221; đã bị tắt. Lý do: %2</translation>
+        <translation>Việc sao lưu “%1” đã bị tắt. Lý&#xa0;do: %2</translation>
     </message>
     <message>
         <source>Security upgrade</source>
@@ -2860,7 +2860,7 @@ Các phiên truyền tải sẽ được tự động tiếp tục khi bạn m�
     <message>
         <source>Settings</source>
         <translatorcomment>This is the string used to refer to settings.</translatorcomment>
-        <translation>Thiết Đặt</translation>
+        <translation>Thiết đặt</translation>
     </message>
     <message>
         <source>Your syncs and backups have been disabled: %1</source>
@@ -2880,12 +2880,12 @@ Các phiên truyền tải sẽ được tự động tiếp tục khi bạn m�
     <message>
         <source>Error getting link: %1</source>
         <translatorcomment>Notification message launched when an error occurs getting a public link for a file/folder. Placeholder %1 displays the reason.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Lỗi phát&#xa0;sinh khi lấy đường liên&#xa0;kết: %1</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been temporarily disabled: %2</source>
         <translatorcomment>Warning message shown when a sync is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Phiên đồng&#xa0;bộ &#8220;%1&#8221; &#xa0;tại tạm&#xa0;thời bị tắt: %2</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been temporarily disabled: %2</source>
@@ -2895,7 +2895,7 @@ Các phiên truyền tải sẽ được tự động tiếp tục khi bạn m�
     <message>
         <source>Error transferring folder: %1</source>
         <translatorcomment>Label to indicate that has been an error during a folder transfer.  Placeholder %1 displays the reason.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Lỗi phát&#xa0;sinh khi truyền&#xa0;tải thư&#xa0;mục: %1</translation>
     </message>
 </context>
 <context>
@@ -2978,7 +2978,7 @@ Các phiên truyền tải sẽ được tự động tiếp tục khi bạn m�
     <message>
         <source>Bad session ID</source>
         <translatorcomment>Label to show that an error related with a bad session ID occurs during a SDK operation.</translatorcomment>
-        <translation>Bad session ID</translation>
+        <translation>Số ID phiên bị hỏng</translation>
     </message>
     <message>
         <source>Blocked</source>
@@ -3535,7 +3535,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Button text to navigate to incoming shares section</translatorcomment>
-        <translation>Mục chia sẻ nhận được</translation>
+        <translation>Mục chia&#xa0;sẻ nhận được</translation>
     </message>
     <message>
         <source>Search</source>
@@ -3659,7 +3659,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Button to filter search results from incoming shares</translatorcomment>
-        <translation>Mục chia sẻ nhận được</translation>
+        <translation>Mục chia&#xa0;sẻ nhận được</translation>
     </message>
     <message>
         <source>No results for:</source>
@@ -4045,7 +4045,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>With our end-to-end encryption, the way your team works has never been more secure and private.</source>
         <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of business plan.</translatorcomment>
-        <translation>Với mô hình bảo mật đầu-cuối, đội ngũ của bạn sẽ được trải nghiệm cách làm việc vô cùng an ninh và bảo mật chưa từng có.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Get started with secure file storage.</source>
@@ -4055,12 +4055,12 @@ Nhập một tên khác.</translation>
     <message>
         <source>Additional storage charged at %1 per %2TB.</source>
         <translatorcomment>Balloon tooltip to inform users that additional storate for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
-        <translation>Mức lưu trữ tăng cường sẽ tính với giá %1 mỗi %2&#xa0;TB.</translation>
+        <translation>Mức lưu&#xa0;trữ tăng&#xa0;cường sẽ tính với giá %1 mỗi %2&#xa0;TB.</translation>
     </message>
     <message>
         <source>Additional transfer quota charged at %1 per %2TB.</source>
         <translatorcomment>Balloon tooltip to inform users that additional transfer quota for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
-        <translation>Lượng băng thông tăng cường sẽ tính với giá %1 mỗi %2&#xa0;TB.</translation>
+        <translation>Lượng băng&#xa0;thông truyền&#xa0;tải tăng&#xa0;cường sẽ tính với giá %1 mỗi %2&#xa0;TB.</translation>
     </message>
     <message numerus="yes">
         <source>minimum %n user</source>
@@ -4103,7 +4103,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>Show in Explorer</source>
         <translatorcomment>Label to indicate the &quot;Show in Explorer&quot; option to open local folder of a sync (Windows). Keep Explorer name as it is the app name of file explorer on Windows.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Hiện trong File Explorer</translation>
     </message>
 </context>
 <context>
@@ -4229,7 +4229,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>&amp;Cancel</source>
         <translatorcomment>Label for cancel button. Keep capital letter.</translatorcomment>
-        <translation>Hủ&amp;y</translation>
+        <translation>&amp;Hủy</translation>
     </message>
 </context>
 <context>
@@ -4432,7 +4432,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>Alias</source>
         <translatorcomment>Label for shourcut in all other platforms in OS X Finder</translatorcomment>
-        <translation>Lối tắt</translation>
+        <translation>Biệt hiệu</translation>
     </message>
     <message>
         <source>Shortcut</source>
@@ -4477,7 +4477,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>&amp;New Folder</source>
         <translatorcomment>Contextual menu action for creating a new folder. The ampersand means that the key after can be used for triggers the action instead of using the mouse to click it. The shortcut key chosen cannot be the same as the one chosen on the next strings (&amp;Rename, &amp;Delete, Show &amp;hidden files).</translatorcomment>
-        <translation>Thư mục &amp;mới</translation>
+        <translation>&amp;Thư mục mới</translation>
     </message>
     <message>
         <source>Are you sure you want to delete &apos;%1&apos;?</source>
@@ -4987,7 +4987,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your sync &quot;%1&quot; can&apos;t be enabled. Reason: %2</source>
         <translatorcomment>Error message shown when an error occurs trying to enable a sync. %1 is name of sync and %2 is reason of error.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Việc đồng&#xa0;bộ “%1” không&#xa0;thể bật được. Lý&#xa0;do: %2</translation>
     </message>
     <message>
         <source>General</source>
@@ -5227,7 +5227,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Enable Windows Explorer integration</source>
         <translatorcomment>Checkbox label displayed on Windows, allowing the user to enable / disable the Windows Explorer integration.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Kích&#xa0;hoạt tích&#xa0;hợp với File Explorer của Windows</translation>
     </message>
     <message>
         <source>B</source>
@@ -5372,7 +5372,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your operating system doesn&apos;t allow its sleep setting to be overwritten.</source>
         <translatorcomment>Sleep/Active mode: Error messagebox text when the pc awake mode could not be activated after activating the feature using the checkbox.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Hệ điều&#xa0;hành của bạn không&#xa0;có cho phép thiết&#xa0;đặt của chế&#xa0;độ ngủ bị áp&#xa0;đặt thay&#xa0;đổi.</translation>
     </message>
     <message>
         <source>Backup</source>
@@ -5442,7 +5442,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your sync can&apos;t be removed. Reason: %1</source>
         <translatorcomment>Warning message title indicating that an error happened removing a sync. the reason is given at runtime in place of the placeholder</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Phiên đồng&#xa0;bộ không&#xa0;thể loại&#xa0;bỏ được. Lý&#xa0;do: %1</translation>
     </message>
     <message>
         <source>Error disabling sync</source>
@@ -5452,7 +5452,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your sync &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
         <translatorcomment>Warning message indicating that an error happened disabling a sync. First placeholder is the sync name and second placeholder is the error message sent by SDK (reason)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Phiên đồng&#xa0;bộ “%1” không&#xa0;thể tắt đi được. Lý&#xa0;do: %2</translation>
     </message>
     <message>
         <source>Error adding backup %1</source>
@@ -5467,7 +5467,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your backup can&apos;t be removed. Reason: %1</source>
         <translatorcomment>Warning message title indicating that an error happened removing a backup. the reason is given at runtime in place of the placeholder</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Việc sao lưu không&#xa0;thể dừng được. Lý&#xa0;do: %1</translation>
     </message>
     <message>
         <source>Error moving or removing remote backup folder</source>
@@ -5487,7 +5487,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your backup &quot;%1&quot; can&apos;t be enabled. Reason: %2</source>
         <translatorcomment>Error text when enabling a backup failed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Việc sao lưu “%1” không&#xa0;thể bật được. Lý&#xa0;do: %2</translation>
     </message>
     <message>
         <source>Error disabling backup</source>
@@ -5502,7 +5502,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your backup &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
         <translatorcomment>Error text when disabling a backup failed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Việc sao lưu “%1” không&#xa0;thể tắt đi được. Lý&#xa0;do: %2</translation>
     </message>
     <message>
         <source>Go to backup centre</source>
@@ -5555,7 +5555,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source> Sync your entire cloud drive</source>
         <translatorcomment>Label displayed to inform the user about the Full sync (Sync the entire cloud drive)</translatorcomment>
-        <translation>Đồng bộ mọi thứ từ Ổ Mây</translation>
+        <translation>Đồng&#xa0;bộ toàn&#xa0;bộ Ổ&#xa0;Mây của bạn</translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -5975,7 +5975,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Only files can be used for streaming.</source>
         <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Không&#xa0;thể truyền&#xa0;phát cả thư&#xa0;mục được. Chọn ra một tệp&#xa0;tin để phát.</translation>
     </message>
 </context>
 <context>
@@ -5993,7 +5993,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Text of the button to select a file from the Cloud Drive for streaming</translatorcomment>
-        <translation>Ổ mây</translation>
+        <translation>Ổ&#xa0;Mây</translation>
     </message>
     <message>
         <source>Public link</source>
@@ -6104,7 +6104,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You can&apos;t backup this folder as it&apos;s already synced.</source>
         <translatorcomment>Warning message indicating that a folder can´t be backed up as it is synced.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Bạn không&#xa0;thể sao lưu thư&#xa0;mục này vì nó đã được đồng&#xa0;bộ rồi.</translation>
     </message>
     <message>
         <source>Folder is already backed up. Select a different one.</source>
@@ -6114,42 +6114,42 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You can&apos;t sync this folder as it&apos;s already synced.</source>
         <translatorcomment>Warning message indicating that a folder can´t be synced again as it is already synced.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Bạn không&#xa0;thể đồng&#xa0;bộ thư&#xa0;mục này vì nó đã được đồng&#xa0;bộ rồi.</translation>
     </message>
     <message>
         <source>You can&apos;t sync this folder as it&apos;s already backed up.</source>
         <translatorcomment>Warning message indicating that a folder can´t be synced as it is backed up.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Bạn không&#xa0;thể đồng&#xa0;bộ thư&#xa0;mục này vì nó đã được sao lưu rồi.</translation>
     </message>
     <message>
         <source>You can&apos;t backup this folder as it&apos;s already inside a synced folder.</source>
         <translatorcomment>Warning message indicating that a folder can´t be backed up as it is inside a backed up folder.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Bạn không&#xa0;thể sao lưu thư&#xa0;mục này vì nó đang nằm bên trong một thư&#xa0;mục được đồng&#xa0;bộ.</translation>
     </message>
     <message>
         <source>You can&apos;t sync folders that are inside synced folders.</source>
         <translatorcomment>Warning message indicating that a folder can´t be synced as it is inside a synced folder.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Bạn không&#xa0;thể đồng&#xa0;bộ các thư&#xa0;mục đang nằm bên trong thư&#xa0;mục được đồng&#xa0;bộ.</translation>
     </message>
     <message>
         <source>You can&apos;t sync folders that are inside backed up folders.</source>
         <translatorcomment>Warning message indicating that a folder can´t be synced as it is inside a backed up folder.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Bạn không&#xa0;thể đồng&#xa0;bộ các thư&#xa0;mục đang nằm bên trong thư&#xa0;mục được sao&#xa0;lưu.</translation>
     </message>
     <message>
         <source>You can&apos;t backup this folder as it contains synced folders.</source>
         <translatorcomment>Warning message indicating that the selected folder for sync contains synced folders, ence it can not be synced.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Bạn không&#xa0;thể sao lưu thư&#xa0;mục này vì nó đang chứa các thư&#xa0;mục được đồng&#xa0;bộ.</translation>
     </message>
     <message>
         <source>You can&apos;t sync folders that contain synced folders.</source>
         <translatorcomment>Warning message indicating that the selected folder for sync contains synced folders, hence it can not be synced.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Bạn không&#xa0;thể đồng&#xa0;bộ các thư&#xa0;mục đang chứa các thư&#xa0;mục được đồng&#xa0;bộ.</translation>
     </message>
     <message>
         <source>You can&apos;t sync folders that contain backed up folders.</source>
         <translatorcomment>Warning message indicating that a folder can´t be synced as it contains backed up folders.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Bạn không&#xa0;thể đồng&#xa0;bộ các thư&#xa0;mục đang chứa các thư&#xa0;mục được sao&#xa0;lưu.</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
@@ -6164,12 +6164,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You can&apos;t backup this folder as it contains backed up folders.</source>
         <translatorcomment>Warning message indicating that the selected folder for backup contains backed up folders, ence it can not be backed up.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Bạn không&#xa0;thể sao lưu thư&#xa0;mục này vì nó đang chứa các thư&#xa0;mục được sao&#xa0;lưu.</translation>
     </message>
     <message>
         <source>You can&apos;t backup this folder as it&apos;s already inside a backed up folder.</source>
         <translatorcomment>Warning message indicating that a folder can´t be backed up as it is inside a backed up folder.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Bạn không&#xa0;thể sao lưu thư&#xa0;mục này vì nó đang nằm bên trong thư&#xa0;mục được sao&#xa0;lưu.</translation>
     </message>
     <message>
         <source>Unable to create backup as selected folder is not valid. Try again.</source>
@@ -6189,7 +6189,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Unable to create backup. For further information, contact [A]Support[/A].</source>
         <translatorcomment>Text instructing to try creating a backup again.They should contact support</translatorcomment>
-        <translation>KHông thể tạo bản sao lưu. Để có thêm thông tin, liên hệ [A]Trợ Giúp[/A].</translation>
+        <translation>Không&#xa0;thể tạo sao lưu. Để có thêm thông&#xa0;tin, liên&#xa0;hệ [A]Trợ&#xa0;Giúp[/A].</translation>
     </message>
     <message>
         <source>You can’t backup “%1” as it’s the root folder. The root folder is either; the top-level folder on your device or computer that holds all your folders and files or the folder where the system or program is installed. We don’t allow users to back up root folders as it may cause file conflicts or errors.
@@ -6287,7 +6287,7 @@ To continue, select a different folder.</source>
     <message>
         <source>Warning</source>
         <translatorcomment>Title of the dialog</translatorcomment>
-        <translation>Chú ý</translation>
+        <translation>Chú Ý</translation>
     </message>
     <message>
         <source>Invalid folder for synchronization.
@@ -6648,12 +6648,12 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Uploaded 1 file to %1.</source>
         <translatorcomment>Notification text that inform 1 file has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Đã tải&#xa0;lên 1&#xa0;tệp&#xa0;tin vào %1.</translation>
     </message>
     <message>
         <source>Uploaded 1 folder to %1.</source>
         <translatorcomment>Notification text that inform 1 folder has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Đã tải&#xa0;lên 1&#xa0;thư&#xa0;mục vào %1.</translation>
     </message>
     <message>
         <source>File uploaded</source>
@@ -6673,7 +6673,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Get link</source>
         <translatorcomment>Notification button to get the file link</translatorcomment>
-        <translation>Lấy đường liên kết</translation>
+        <translation>Lấy đường liên&#xa0;kết</translation>
     </message>
     <message>
         <source>Downloaded 1 file to %1.</source>
@@ -6823,7 +6823,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Avg. speed</source>
         <translatorcomment>speed table header column name for completed and failed transfers categories</translatorcomment>
-        <translation>Tốc độ t.bình</translation>
+        <translation>Tốc&#xa0;độ t.bình</translation>
     </message>
     <message>
         <source>Time</source>
@@ -6873,17 +6873,17 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Cancel all downloads</source>
         <translatorcomment>Tooltip for cancel button when the user is in the downloads category</translatorcomment>
-        <translation>Hủy tất cả các truyền tải trong mục Tải Xuống</translation>
+        <translation>Hủy tất&#xa0;cả các truyền&#xa0;tải trong mục Tải&#xa0;Xuống</translation>
     </message>
     <message>
         <source>Cancel all uploads</source>
         <translatorcomment>Tooltip for cancel button when the user is in the uploads category</translatorcomment>
-        <translation>Hủy tất cả các truyền tải trong mục Tải Lên</translation>
+        <translation>Hủy tất&#xa0;cả các truyền&#xa0;tải trong mục Tải&#xa0;Lên</translation>
     </message>
     <message>
         <source>Cancel all failed</source>
         <translatorcomment>Tooltip for cancel button when the user is in the failed category</translatorcomment>
-        <translation>Hủy tất cả các truyền tải trong mục Thất Bại</translation>
+        <translation>Hủy tất&#xa0;cả các truyền&#xa0;tải trong mục Thất&#xa0;Bại</translation>
     </message>
     <message>
         <source>Cancel all search results</source>
@@ -6893,27 +6893,27 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Cancel all audios</source>
         <translatorcomment>Tooltip for cancel button when the user is in the audios category</translatorcomment>
-        <translation>Hủy tất cả các truyền tải trong mục Âm Thanh</translation>
+        <translation>Hủy tất&#xa0;cả các truyền&#xa0;tải trong mục Âm&#xa0;Thanh</translation>
     </message>
     <message>
         <source>Cancel all videos</source>
         <translatorcomment>Tooltip for cancel button when the user is in the videos category</translatorcomment>
-        <translation>Hủy tất cả các truyền tải trong mục Videos</translation>
+        <translation>Hủy tất&#xa0;cả các truyền&#xa0;tải trong mục Videos</translation>
     </message>
     <message>
         <source>Cancel all archives</source>
         <translatorcomment>Tooltip for cancel button when the user is in the archives category</translatorcomment>
-        <translation>Hủy tất cả các truyền tải trong mục Nén</translation>
+        <translation>Hủy tất&#xa0;cả các truyền&#xa0;tải trong mục Nén</translation>
     </message>
     <message>
         <source>Cancel all documents</source>
         <translatorcomment>Tooltip for cancel button when the user is in the documents category</translatorcomment>
-        <translation>Hủy tất cả các truyền tải trong mục Tài Liệu</translation>
+        <translation>Hủy tất&#xa0;cả các truyền&#xa0;tải trong mục Tài&#xa0;Liệu</translation>
     </message>
     <message>
         <source>Cancel all images</source>
         <translatorcomment>Tooltip for cancel button when the user is in the images category</translatorcomment>
-        <translation>Hủy tất cả các truyền tải trong mục Hình Ảnh</translation>
+        <translation>Hủy tất&#xa0;cả các truyền&#xa0;tải trong mục Hình&#xa0;Ảnh</translation>
     </message>
     <message>
         <source>Cancel all transfers</source>
@@ -7281,22 +7281,22 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>%1 [A]d[/A]</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [DAYS] [HOURS] string, replacing the [DAYS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the days. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1 [A]ng̀[/A]</translation>
+        <translation>%1&#xa0;[A]ng̀[/A]</translation>
     </message>
     <message>
         <source>%1 [A]h[/A]</source>
         <translatorcomment>String controlling the formatting of the hour count for time intervals. It is used in [DAYS] [HOURS] and [HOURS] [MINUTES] strings, replacing the [HOURS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the hours. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1 [A]g̀[/A]</translation>
+        <translation>%1&#xa0;[A]g̀[/A]</translation>
     </message>
     <message>
         <source>%1 [A]m[/A]</source>
         <translatorcomment>String controlling the formatting of the minute count for time intervals. It is used in [HOURS] [MINUTES] and [MINUTES] [SECONDS] strings, replacing the [MINUTES] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the minutes. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1 [A]ṕ[/A]</translation>
+        <translation>%1&#xa0;[A]ṕ[/A]</translation>
     </message>
     <message>
         <source>%1 [A]s[/A]</source>
         <translatorcomment>String controlling the formatting of the seconds count for time intervals. It is used in the [MINUTES] [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the seconds. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1 [A]ĝ[/A]</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -488,7 +488,7 @@
     <message>
         <source>Click menu for more Backup actions</source>
         <translatorcomment>Menu column tooltip (three dots in the table)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Дополнительные действия с резервными копиями</translation>
     </message>
 </context>
 <context>
@@ -830,7 +830,7 @@
     <message>
         <source>Bug report success!</source>
         <translatorcomment>Confirmation message shown when a bug report is successfully uploaded.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ваша проблема отправлена.</translation>
     </message>
     <message>
         <source>Your bug report has been submitted, a confirmation email will sent to you accordingly.</source>
@@ -1289,7 +1289,7 @@
     <message>
         <source>Show in MEGA</source>
         <translatorcomment>Notification button to redirect the user to remote location. It will open webclient at specific location.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Показать в MEGA</translation>
     </message>
 </context>
 <context>
@@ -1360,24 +1360,24 @@
     <message numerus="yes">
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Выбранный элемент был удалён. Для повторного выбора закройте это окно и повторите попытку.</numerusform><numerusform>Выбранные элементы были удалены. Для повторного выбора закройте это окно и повторите попытку.</numerusform><numerusform>Выбранные элементы были удалены. Для повторного выбора закройте это окно и повторите попытку.</numerusform><numerusform>Выбранные элементы были удалены. Для повторного выбора закройте это окно и повторите попытку.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>You no longer have access to this item. Ask the owner to share again.</source>
         <translatorcomment>Error message shown when the user is trying to download an file or folder from an incoming share and the owner stops sharing/removes all items</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>У вас больше нет доступа к этому элементу. Попросите человека, который поделился им с вами, поделиться ещё раз.</numerusform><numerusform>У вас больше нет доступа к этим элементам. Попросите человека, который поделился ими с вами, поделиться ещё раз.</numerusform><numerusform>У вас больше нет доступа к этим элементам. Попросите человека, который поделился ими с вами, поделиться ещё раз.</numerusform><numerusform>У вас больше нет доступа к этим элементам. Попросите человека, который поделился ими с вами, поделиться ещё раз.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 item selected</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 элемент выбран</numerusform><numerusform>%1 элемента выбрано</numerusform><numerusform>%1 элементов выбрано</numerusform><numerusform>%1 элемента выбрано</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1. %2 has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1. %2 был удалён. Для повторного выбора закройте это окно и повторите попытку.</numerusform><numerusform>%1. %2 было удалено. Для повторного выбора закройте это окно и повторите попытку.</numerusform><numerusform>%1. %2 было удалено. Для повторного выбора закройте это окно и повторите попытку.</numerusform><numerusform>%1. %2 было удалено. Для повторного выбора закройте это окно и повторите попытку.</numerusform></translation>
     </message>
 </context>
 <context>
@@ -1385,7 +1385,7 @@
     <message>
         <source>Local Disk</source>
         <translatorcomment>Default drive name shown on the low space dialog when downloading files</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Локальный диск</translation>
     </message>
 </context>
 <context>
@@ -2080,7 +2080,7 @@
     <message>
         <source>Your queued transfers exceed the current quota available for your IP address.</source>
         <translatorcomment>Informative label to indicate that your queued transfers exceed the current quota available for IP. Applies to free users.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Передачи в очереди превышают текущий лимит, доступный вашему IP-адресу.</translation>
     </message>
     <message>
         <source>Upgrade Account</source>
@@ -2090,22 +2090,22 @@
     <message>
         <source>I will wait</source>
         <translatorcomment>Button label to dismiss (hide) overquota dialogs. Shown for free users only if they do not want to upgrade account for extra transfer quota.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Я подожду</translation>
     </message>
     <message>
         <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew.</source>
         <translatorcomment>Informative label to indicate that your queued transfers may be interrupted because the current account does not have enough transfer quota.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Вы не можете продолжить скачивание, так как у вашего аккаунта превышен лимит передачи данных. Чтобы продолжить, купите новый план или, если у вас есть повторяющаяся подписка на MEGA, вы можете дождаться её продления.</translation>
     </message>
     <message>
         <source>Buy new plan</source>
         <translatorcomment>Button label for button to buy a new plan when there is not enough transfer quota in current non-free plan</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Купить новый план</translation>
     </message>
     <message>
         <source>Downloading may be interrupted as you have used 90% of your transfer quota on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew. </source>
         <translatorcomment>Message displayed in the InfoDialog when the transfer quota reaches warning stage</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Скачивание может быть прервано, так как вы использовали 90&#xa0;% квоты на передачу данных для этого аккаунта. Чтобы продолжить, купите новый план или, если у вас есть повторяющаяся подписка на MEGA, вы можете дождаться её продления.</translation>
     </message>
 </context>
 <context>
@@ -2288,7 +2288,7 @@
     <message>
         <source>Try Again</source>
         <translatorcomment>Button text to retry downloading the files</translatorcomment>
-        <translation>Попробуйте ещё раз</translation>
+        <translation>Попробовать ещё раз</translation>
     </message>
     <message>
         <source>There is not enough space on %1. You need an additional %2 to download these files.</source>
@@ -2818,12 +2818,12 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Security upgrade</source>
         <translatorcomment>Title of security upgrade dialog</translatorcomment>
-        <translation>Обновление параметров безопасности</translation>
+        <translation>Повышение безопасности</translation>
     </message>
     <message>
         <source>Your account&apos;s security is now being upgraded. This will happen only once. If you have seen this message for this account before, press Cancel.</source>
         <translatorcomment>Error message shown to the user to inform about that the security of his account is going to be upgraded. </translatorcomment>
-        <translation>Параметры безопасности вашего аккаунта сейчас обновляются. Это произойдёт только один раз. Если вы видели это сообщение для этого аккаунта раньше, нажмите «Отмена».</translation>
+        <translation>Мы повышаем безопасность вашего аккаунта. Это произойдёт только один раз. Если вы видели это сообщение для этого аккаунта раньше, нажмите «Отмена».</translation>
     </message>
     <message numerus="yes">
         <source>You are currently sharing the following folder: %1</source>
@@ -4054,7 +4054,7 @@ Enter a different name</source>
     <message>
         <source>With our end-to-end encryption, the way your team works has never been more secure and private.</source>
         <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of business plan.</translatorcomment>
-        <translation>Благодаря нашему сквозному шифрованию работа вашей команды никогда не была более безопасной и конфиденциальной.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Get started with secure file storage.</source>
@@ -6679,7 +6679,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Show in MEGA</source>
         <translatorcomment>Notification button to see the file on the webclient</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Показать в MEGA</translation>
     </message>
     <message>
         <source>Get link</source>
@@ -7292,22 +7292,22 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>%1 [A]d[/A]</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [DAYS] [HOURS] string, replacing the [DAYS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the days. The space needs to be non-breaking.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1&#xa0;[A]д[/A]</translation>
     </message>
     <message>
         <source>%1 [A]h[/A]</source>
         <translatorcomment>String controlling the formatting of the hour count for time intervals. It is used in [DAYS] [HOURS] and [HOURS] [MINUTES] strings, replacing the [HOURS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the hours. The space needs to be non-breaking.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1&#xa0;[A]ч[/A]</translation>
     </message>
     <message>
         <source>%1 [A]m[/A]</source>
         <translatorcomment>String controlling the formatting of the minute count for time intervals. It is used in [HOURS] [MINUTES] and [MINUTES] [SECONDS] strings, replacing the [MINUTES] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the minutes. The space needs to be non-breaking.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1&#xa0;[A]м[/A]</translation>
     </message>
     <message>
         <source>%1 [A]s[/A]</source>
         <translatorcomment>String controlling the formatting of the seconds count for time intervals. It is used in the [MINUTES] [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the seconds. The space needs to be non-breaking.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1&#xa0;[A]с[/A]</translation>
     </message>
 </context>
 <context>
