@@ -476,6 +476,13 @@ void MegaApplication::initialize()
         toggleLogging();
     }
 
+    // TODO: This is legacy behavior and should be deleted when SRW is merged
+    if (preferences->mustDeleteSdkCacheAtStartup())
+    {
+        preferences->setDeleteSdkCacheAtStartup(false);
+        deleteSdkCache();
+    }
+
     QString basePath = QDir::toNativeSeparators(dataPath + QString::fromUtf8("/"));
     megaApi = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT);
     megaApi->disableGfxFeatures(mDisableGfx);
@@ -578,25 +585,8 @@ void MegaApplication::initialize()
     }
 
     if (preferences->isCrashed())
-    {
-        MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("Force reloading (isCrashed true)").toUtf8().constData());
+    {       
         preferences->setCrashed(false);
-        QDirIterator di(dataPath, QDir::Files | QDir::NoDotAndDotDot);
-        while (di.hasNext())
-        {
-            di.next();
-            const QFileInfo& fi = di.fileInfo();
-            if (!fi.fileName().contains(QString::fromUtf8("transfers_"))
-                && !fi.fileName().contains(QString::fromUtf8("syncconfigsv2_"))
-                && (fi.fileName().endsWith(QString::fromUtf8(".db"))
-                    || fi.fileName().endsWith(QString::fromUtf8(".db-wal"))
-                    || fi.fileName().endsWith(QString::fromUtf8(".db-shm"))))
-            {
-                MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("Deleting local cache: %1").arg(di.filePath()).toUtf8().constData());
-                QFile::remove(di.filePath());
-            }
-        }
-
         QStringList reports = CrashHandler::instance()->getPendingCrashReports();
         if (reports.size())
         {
@@ -1799,6 +1789,27 @@ void MegaApplication::rebootApplication(bool update)
     closeDialogs();
 
     QApplication::exit();
+}
+
+// TODO: This is legacy behavior and should be deleted when SRW is merged
+void MegaApplication::deleteSdkCache()
+{
+    MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("Force reloading").toUtf8().constData());
+    QDirIterator di(dataPath, QDir::Files | QDir::NoDotAndDotDot);
+    while (di.hasNext())
+    {
+        di.next();
+        const QFileInfo& fi = di.fileInfo();
+        if (!fi.fileName().contains(QString::fromUtf8("transfers_"))
+            && !fi.fileName().contains(QString::fromUtf8("syncconfigsv2_"))
+            && (fi.fileName().endsWith(QString::fromUtf8(".db"))
+                || fi.fileName().endsWith(QString::fromUtf8(".db-wal"))
+                || fi.fileName().endsWith(QString::fromUtf8(".db-shm"))))
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("Deleting local cache: %1").arg(di.filePath()).toUtf8().constData());
+            QFile::remove(di.filePath());
+        }
+    }
 }
 
 int* testCrashPtr = nullptr;
@@ -7185,6 +7196,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             preferences->setAccountStateInGeneral(Preferences::STATE_FETCHNODES_OK);
             preferences->setNeedsFetchNodesInGeneral(false);
 
+            // TODO: check with sdk team if this case is possible
             if (!mRootNode)
             {
                 QMegaMessageBox::warning(nullptr, tr("Error"), tr("Unable to get the filesystem.\n"
@@ -7192,8 +7204,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                                                        "please contact bug@mega.co.nz"), QMessageBox::Ok);
 
                 setupWizardFinished(QDialog::Rejected);
-                MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting isCrashed true: !mRootNode (fetch node callback)");
-                preferences->setCrashed(true);
                 rebootApplication(false);
                 break;
             }
@@ -7271,10 +7281,9 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         auto vault = getVaultNode();
         auto rubbish = getRubbishNode();
 
+        // TODO: investigate: is this case possible and what should we do? Restart the app?
         if (!root || !vault || !rubbish)
         {
-            preferences->setCrashed(true);
-            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting isCrashed true: !root || !inbox || !rubbish (account details callback)");
             break;
         }
 
@@ -7287,8 +7296,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
         if (!inShares)
         {
-            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting isCrashed true: !inShares (account details callback)");
-            preferences->setCrashed(true);
+            // TODO: investigate: is this case possible and what should we do? Restart the app?
             return;
         }
 
@@ -8037,11 +8045,11 @@ void MegaApplication::onReloadNeeded(MegaApi*)
         return;
     }
 
+    // TODO: investigate this. Could a restart of the app be enough?
+
     //Don't reload the filesystem here because it's unsafe
     //and the most probable cause for this callback is a false positive.
     //Simply set the crashed flag to force a filesystem reload in the next execution.
-    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting isCrashed true: onReloadNeeded");
-    preferences->setCrashed(true);
 }
 
 void MegaApplication::onGlobalSyncStateChangedTimeout()

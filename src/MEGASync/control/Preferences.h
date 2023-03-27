@@ -359,6 +359,9 @@ public:
     void unlink();
     void resetGlobalSettings();//Clear and remove any global setting. Not account specific ones.
 
+
+    bool mustDeleteSdkCacheAtStartup();
+    void setDeleteSdkCacheAtStartup(bool value);
     bool isCrashed();
     void setCrashed(bool value);
     bool getGlobalPaused();
@@ -668,6 +671,7 @@ protected:
     static const QString excludedSyncNamesKey;
     static const QString excludedSyncPathsKey;
     static const QString lastVersionKey;
+    static const QString deleteSdkCacheAtStartupKey;
     static const QString isCrashedKey;
     static const QString lastStatsRequestKey;
     static const QString wasPausedKey;

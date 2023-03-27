@@ -340,6 +340,7 @@ const QString Preferences::hasDefaultUploadFolderKey    = QString::fromAscii("ha
 const QString Preferences::hasDefaultDownloadFolderKey  = QString::fromAscii("hasDefaultDownloadFolder");
 const QString Preferences::hasDefaultImportFolderKey    = QString::fromAscii("hasDefaultImportFolder");
 const QString Preferences::localFingerprintKey      = QString::fromAscii("localFingerprint");
+const QString Preferences::deleteSdkCacheAtStartupKey = QString::fromAscii("deleteSdkCacheAtStartup");
 const QString Preferences::isCrashedKey             = QString::fromAscii("isCrashed");
 const QString Preferences::wasPausedKey             = QString::fromAscii("wasPaused");
 const QString Preferences::wasUploadsPausedKey      = QString::fromAscii("wasUploadsPaused");
@@ -2642,6 +2643,19 @@ void Preferences::resetGlobalSettings()
     mutex.unlock();
 
     emit stateChanged();
+}
+
+bool Preferences::mustDeleteSdkCacheAtStartup()
+{
+    mutex.lock();
+    bool value = getValue<bool>(deleteSdkCacheAtStartupKey, false);
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setDeleteSdkCacheAtStartup(bool value)
+{
+    setValueAndSyncConcurrent(deleteSdkCacheAtStartupKey, value);
 }
 
 bool Preferences::isCrashed()

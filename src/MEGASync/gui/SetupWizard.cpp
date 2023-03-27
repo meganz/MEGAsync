@@ -568,8 +568,6 @@ void SetupWizard::on_bNext_clicked()
                                                                       "Please, try again. If the problem persists "
                                                                       "please contact bug@mega.co.nz"));
                     done(QDialog::Rejected);
-                    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting isCrashed true: !rootNode (SetupWizard - next)");
-                preferences->setCrashed(true);
                     app->rebootApplication(false);
                 }
                 else
@@ -634,8 +632,6 @@ void SetupWizard::on_bCancel_clicked()
                                 "please contact bug@mega.co.nz"));
 
             done(QDialog::Rejected);
-            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting isCrashed true: !rootNode (SetupWizard - cancel)");
-            preferences->setCrashed(true);
             app->rebootApplication(false);
             return;
         }

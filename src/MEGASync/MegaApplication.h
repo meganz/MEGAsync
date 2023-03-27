@@ -275,6 +275,7 @@ public slots:
     void onUpdateNotFound(bool requested);
     void onUpdateError();
     void rebootApplication(bool update = true);
+    void deleteSdkCache();
     void tryExitApplication(bool force = false);
     void highLightMenuEntry(QAction* action);
     void pauseTransfers(bool pause);
@@ -362,6 +363,7 @@ protected:
     void manageBusinessStatus(int64_t event);
     void requestUserData(); //groups user attributes retrieving, getting PSA, ... to be retrieved after login in
     void populateUserAlerts(mega::MegaUserAlertList *list, bool copyRequired);
+
     std::vector<std::unique_ptr<mega::MegaEvent>> eventsPendingLoggedIn;
 
     bool eventFilter(QObject *obj, QEvent *e) override;
