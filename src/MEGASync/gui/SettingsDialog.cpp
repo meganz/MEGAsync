@@ -1857,6 +1857,8 @@ void SettingsDialog::on_bExportMasterKey_clicked()
 
     if(currentDialog)
     {
+        blocker->deleteLater();
+
         if (fileName.isEmpty())
         {
             return;

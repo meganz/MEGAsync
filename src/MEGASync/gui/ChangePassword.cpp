@@ -87,28 +87,24 @@ void ChangePassword::onRequestFinish(mega::MegaApi* api, mega::MegaRequest* req,
 
 void ChangePassword::show2FA(bool invalidCode)
 {
-    QPointer<ChangePassword> stillExists = this;
-    if(stillExists)
+    QPointer<Login2FA> verification = new Login2FA(this);
+    verification->invalidCode(invalidCode);
+    DialogOpener::showDialog<Login2FA>(verification, [verification, this]()
     {
-        QPointer<Login2FA> verification = new Login2FA(this);
-        verification->invalidCode(invalidCode);
-        DialogOpener::showDialog<Login2FA>(verification, [verification, this]()
+        if (verification->result() == QDialog::Accepted)//need to check if verificaiton is valid??
         {
-            if (verification->result() == QDialog::Accepted)
-            {
-                QString pin = verification->pinCode();
+            QString pin = verification->pinCode();
 
-                mMegaApi->multiFactorAuthChangePassword(nullptr,
-                                                        newPassword().toUtf8().constData(),
-                                                        pin.toUtf8().constData(),
-                                                        mDelegateListener);
-            }
-            else
-            {
-                mUi->bOk->setEnabled(true);
-            }
-        });
-    }
+            mMegaApi->multiFactorAuthChangePassword(nullptr,
+                                                    newPassword().toUtf8().constData(),
+                                                    pin.toUtf8().constData(),
+                                                    mDelegateListener);
+        }
+        else
+        {
+            mUi->bOk->setEnabled(true);
+        }
+    });
 }
 
 ChangePassword::~ChangePassword()
