@@ -871,17 +871,33 @@ void SettingsDialog::on_bClearCache_clicked()
         }
     }
 
-    auto result = QMessageBox::warning(this, tr("Clear local backup"), tr("Backups of the previous versions of your synced files in your computer"
-                                                                         " will be permanently deleted. Please, check your backup folders to see"
-                                                                         " if you need to rescue something before continuing:")
-                                      + QString::fromUtf8("<br/>") + syncs
-                                      + QString::fromUtf8("<br/><br/>")
-                                      + tr("Do you want to delete your local backup now?"),
-                                      QMessageBox::No | QMessageBox::Yes, QMessageBox::No
-                                      );
-
     QPointer<SettingsDialog> thisPointer(this);
-    if (thisPointer && result == QMessageBox::Yes)
+
+    QPointer<QMessageBox> warningDel = new QMessageBox(this);
+    warningDel->setIcon(QMessageBox::Warning);
+    warningDel->setWindowTitle(tr("Clear local backup"));
+    warningDel->setTextFormat(Qt::RichText);
+    warningDel->setTextInteractionFlags(Qt::NoTextInteraction | Qt::LinksAccessibleByMouse);
+
+    warningDel->setText(tr("Backups of the previous versions of your synced files in your computer"
+                           " will be permanently deleted. Please, check your backup folders to see"
+                           " if you need to rescue something before continuing:")
+                        + QString::fromUtf8("<br/>") + syncs
+                        + QString::fromUtf8("<br/><br/>")
+                        + tr("Do you want to delete your local backup now?"));
+    warningDel->setStandardButtons(QMessageBox::No | QMessageBox::Yes);
+    warningDel->setDefaultButton(QMessageBox::No);
+
+    int result = warningDel->exec();
+    if (!warningDel || (result != QMessageBox::Yes))
+    {
+        delete warningDel;
+        return;
+    }
+
+    delete warningDel;
+
+    if (thisPointer)
     {
         QtConcurrent::run(deleteCache);
         mCacheSize = 0;
@@ -899,34 +915,55 @@ void SettingsDialog::on_bClearRemoteCache_clicked()
     }
 
     std::unique_ptr<const char[]> base64Handle(syncDebris->getBase64Handle());
-    auto result = QMessageBox::warning(this, tr("Clear remote backup"), tr("Backups of the previous versions of your synced files in MEGA will be"
-                                                                          " permanently deleted. Please, check your [A] folder in the Rubbish Bin"
-                                                                          " of your MEGA account to see if you need to rescue something"
-                                                                          " before continuing.")
-                                                                       .replace(QString::fromUtf8("[A]"),
-                                                                                QString::fromUtf8("<a href=\"mega://#fm/%1\">SyncDebris</a>")
-                                                                                .arg(QString::fromUtf8(base64Handle.get())))
-                                                                       + QString::fromUtf8("<br/><br/>")
-                                                                       + tr("Do you want to delete your remote backup now?"),
-                                      QMessageBox::No | QMessageBox::Yes, QMessageBox::No
-                                      );
-    if (result == QMessageBox::Yes)
+
+    QPointer<SettingsDialog> thisPointer(this);
+
+    QPointer<QMessageBox> warningDel = new QMessageBox(QMessageBox::Warning,tr("Clear remote backup"),
+                                                       tr("Backups of the previous versions of your synced files in MEGA will be"
+                                                          " permanently deleted. Please, check your [A] folder in the Rubbish Bin"
+                                                          " of your MEGA account to see if you need to rescue something"
+                                                          " before continuing.")
+                                                       .replace(QString::fromUtf8("[A]"),
+                                                                QString::fromUtf8("<a href=\"mega://#fm/%1\">SyncDebris</a>")
+                                                                .arg(QString::fromUtf8(base64Handle.get())))
+                                                       + QString::fromUtf8("<br/><br/>")
+                                                       + tr("Do you want to delete your remote backup now?"),
+                                                       QMessageBox::Yes | QMessageBox::No,
+                                                       this
+                                                       );
+    warningDel->setAttribute(Qt::WA_DeleteOnClose);
+    warningDel->setTextFormat(Qt::RichText);
+    warningDel->setTextInteractionFlags(Qt::NoTextInteraction | Qt::LinksAccessibleByMouse);
+    warningDel->setDefaultButton(QMessageBox::No);
+
+    int result = warningDel->exec();
+    if (!thisPointer || (result != QMessageBox::Yes))
     {
-        QtConcurrent::run(deleteRemoteCache, mMegaApi);
-        mRemoteCacheSize = 0;
-        onCacheSizeAvailable();
+        return;
     }
+
+    QtConcurrent::run(deleteRemoteCache, mMegaApi);
+    mRemoteCacheSize = 0;
+    onCacheSizeAvailable();
 }
 
 void SettingsDialog::on_bClearFileVersions_clicked()
 {
-    QPointer<SettingsDialog> dialog = QPointer<SettingsDialog>(this);
-    if (QMegaMessageBox::warning(nullptr,
-                             QString::fromUtf8("MEGAsync"),
-                             tr("You are about to permanently remove all file versions."
-                                " Would you like to proceed?"),
-                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
-            != QMessageBox::Yes || !dialog)
+    QPointer<SettingsDialog> thisPointer = QPointer<SettingsDialog>(this);
+    QPointer<QMessageBox> warningDel = new QMessageBox(QMessageBox::Warning,QString::fromUtf8("MEGAsync"),
+                                                       tr("You are about to permanently remove all file versions."
+                                                          " Would you like to proceed?"),
+                                                       QMessageBox::Yes | QMessageBox::No,
+                                                       this
+                                                       );
+
+    warningDel->setAttribute(Qt::WA_DeleteOnClose);
+    warningDel->setTextFormat(Qt::RichText);
+    warningDel->setTextInteractionFlags(Qt::NoTextInteraction | Qt::LinksAccessibleByMouse);
+    warningDel->setDefaultButton(QMessageBox::No);
+
+    int result = warningDel->exec();
+    if (!thisPointer || (result != QMessageBox::Yes))
     {
         return;
     }

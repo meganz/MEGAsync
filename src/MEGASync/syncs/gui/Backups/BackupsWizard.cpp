@@ -621,17 +621,19 @@ void BackupsWizard::on_bNext_clicked()
 void BackupsWizard::on_bCancel_clicked()
 {
     int userWantsToCancel (QMessageBox::Yes);
+    QPointer<BackupsWizard> currentPointer(this);
 
     // If the user has made any modification, warn them before exiting.
     if (atLeastOneFolderChecked())
     {
         QString content (tr("Are you sure you want to cancel? All changes will be lost."));
-        userWantsToCancel = QMessageBox::warning(this, QString(), content,
-                                                 QMessageBox::Yes,
-                                                 QMessageBox::No);
+
+        QMessageBox* msgBox = new QMessageBox(QMessageBox::Warning, QString(), content, QMessageBox::Yes | QMessageBox::No, this);
+        msgBox->setAttribute(Qt::WA_DeleteOnClose);
+        userWantsToCancel = msgBox->exec();
     }
 
-    if (userWantsToCancel == QMessageBox::Yes)
+    if (currentPointer && userWantsToCancel == QMessageBox::Yes)
     {
         mUserCancelled = true;
         nextStep(EXIT);
