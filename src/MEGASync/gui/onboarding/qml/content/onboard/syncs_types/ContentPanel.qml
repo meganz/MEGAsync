@@ -13,6 +13,7 @@ SyncsPage {
         var item;
         switch(type) {
             case InstallationTypeButton.Type.Sync:
+                item = syncPage;
                 console.debug("TODO: Add Sync page");
                 break;
             case InstallationTypeButton.Type.Backup:
@@ -52,6 +53,15 @@ SyncsPage {
 
     BackupPage {
         id: backupPage
+
+        previous: installationTypePage
+        footerLayout: mainItem.footerLayout
+        visible: false
+    }
+
+    SyncType
+    {
+        id: syncPage
 
         previous: installationTypePage
         footerLayout: mainItem.footerLayout

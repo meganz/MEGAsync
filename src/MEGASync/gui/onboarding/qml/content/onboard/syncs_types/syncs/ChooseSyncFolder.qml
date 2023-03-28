@@ -1,6 +1,7 @@
 import QtQuick 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.12
+import QtQuick.Dialogs 1.3
 
 import Common 1.0
 import Components 1.0 as Custom
@@ -8,6 +9,8 @@ import Components 1.0 as Custom
 ColumnLayout {
     id: root
     property bool local: true
+    property url selectedUrl: selectedUrl
+    property double selectedNode: selectedNode
     /*
      * Signals
      */
@@ -34,6 +37,8 @@ ColumnLayout {
         spacing: 8
 
         Custom.IconTextField {
+            id: textField
+            Layout.alignment: Qt.AlignTop
             Layout.fillWidth: true
             text: "/MEGA"
             imageSource: local ? "../../../../../../images/onboarding/syncs/pc.svg"
@@ -42,7 +47,25 @@ ColumnLayout {
 
         Custom.Button {
             id: button
+            Layout.topMargin: textField.outRect.border.width
+            Layout.alignment: Qt.AlignTop
             text: qsTr("Choose")
+            onClicked:
+            {
+                fileDialog.open();
+            }
+        }
+    }
+    FileDialog {
+        id: fileDialog
+        title: "Please choose a folder"
+        folder: shortcuts.documents
+        selectFolder: true
+        onAccepted: {
+            console.log("You chose: " + fileDialog.fileUrl)
+            console.log(QDir.toNativeSeparators(fileDialog.fileUrl))
+            textField.text = fileDialog.fileUrl
+            selectedUrl = fileDialog.fileUrl
         }
     }
 }

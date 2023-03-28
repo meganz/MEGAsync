@@ -35,6 +35,7 @@ SyncsPage {
                 switch(content.getTypeSelected()) {
                     case InstallationTypeButton.Type.Sync:
                         console.debug("TODO: Sync clicked");
+                        next = syncPage;
                         break;
                     case InstallationTypeButton.Type.Backup:
                         console.debug("Backup clicked");
