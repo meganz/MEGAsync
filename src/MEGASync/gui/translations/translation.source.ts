@@ -661,7 +661,7 @@
     </message>
     <message>
         <source>Choose directory</source>
-		<translatorcomment>Folder selector window title text</translatorcomment>
+        <translatorcomment>Folder selector window title text</translatorcomment>
         <translation>Select folder</translation>
     </message>
 </context>
