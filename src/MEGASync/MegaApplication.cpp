@@ -26,6 +26,7 @@
 #include "qml/QmlClipboard.h"
 #include "onboarding/Onboarding.h"
 #include "onboarding/AccountInfoData.h"
+#include "onboarding/BackupFolderModel.h"
 
 #include <QQmlApplicationEngine>
 #include "DialogOpener.h"
@@ -440,6 +441,8 @@ void MegaApplication::initialize()
     qRegisterMetaTypeStreamOperators<QQueue<QString> >("QQueueQString");
 
     qmlRegisterType<AccountInfoData>("AccountInfoData", 1, 0, "AccountInfoData");
+
+    qmlRegisterType<BackupFolderModel>("BackupFolderModel", 1, 0, "BackupFolderModel");
 
     qmlRegisterModule("Components", 1, 0);
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/Button.qml")), "Components", 1, 0, "Button");

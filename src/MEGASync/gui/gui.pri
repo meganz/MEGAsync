@@ -83,7 +83,8 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/qml/QmlDialog.cpp \
     $$PWD/qml/QmlDialogWrapper.cpp \
     $$PWD/onboarding/Onboarding.cpp \
-    $$PWD/onboarding/AccountInfoData.cpp
+    $$PWD/onboarding/AccountInfoData.cpp \
+    $$PWD/onboarding/BackupFolderModel.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/AutoResizeStackedWidget.h \
@@ -164,7 +165,8 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/qml/QmlDialog.h \
     $$PWD/qml/QmlDialogWrapper.h \
     $$PWD/onboarding/Onboarding.h \
-    $$PWD/onboarding/AccountInfoData.h
+    $$PWD/onboarding/AccountInfoData.h \
+    $$PWD/onboarding/BackupFolderModel.h
 
 INCLUDEPATH += $$PWD
 

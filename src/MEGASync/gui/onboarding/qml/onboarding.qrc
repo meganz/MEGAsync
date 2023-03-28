@@ -10,7 +10,6 @@
         <file>content/onboard/RegisterPageForm.ui.qml</file>
         <file>content/onboard/syncs_types/backups/ConfirmFoldersPageForm.ui.qml</file>
         <file>content/onboard/syncs_types/backups/SelectFoldersPageForm.ui.qml</file>
-        <file>content/onboard/syncs_types/ComputerName.qml</file>
         <file>content/onboard/syncs_types/ComputerNamePageForm.ui.qml</file>
         <file>content/onboard/syncs_types/ContentPanel.qml</file>
         <file>content/onboard/syncs_types/Footer.qml</file>

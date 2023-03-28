@@ -9,6 +9,7 @@
         <file>components/buttons/Button.qml</file>
         <file>components/checkBoxes/CheckBox.qml</file>
         <file>components/checkBoxes/images/check.svg</file>
+	<file>components/checkBoxes/images/indeterminate.svg</file>
         <file>components/images/SvgImage.qml</file>
         <file>components/textFields/PasswordTextField.qml</file>
         <file>components/textFields/TextField.qml</file>

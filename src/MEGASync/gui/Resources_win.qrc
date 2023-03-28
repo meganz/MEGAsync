@@ -1357,5 +1357,6 @@
         <file>images/Onboarding/fuse.svg</file>
         <file>images/Onboarding/help-circle.svg</file>
         <file>images/Onboarding/image-02.svg</file>
+        <file>images/Onboarding/folder.svg</file>
     </qresource>
 </RCC>
