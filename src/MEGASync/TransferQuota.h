@@ -5,6 +5,8 @@
 #include <memory>
 #include "UpgradeDialog.h"
 #include "UpgradeOverStorage.h"
+#include "OverQuotaDialog.h"
+
 #include <QObject>
 
 // Events messages strings
@@ -36,13 +38,12 @@ public:
     bool isOverQuota();
     bool isQuotaWarning();
     bool isQuotaFull();
-    void refreshOverQuotaDialogDetails();
     void setOverQuotaDialogPricing(std::shared_ptr<mega::MegaPricing> pricing, std::shared_ptr<mega::MegaCurrency> currency);
-    void closeDialogs();
+    void closeDialog();
     void checkQuotaAndAlerts();
-    bool checkImportLinksAlertDismissed();
-    bool checkDownloadAlertDismissed();
-    bool checkStreamingAlertDismissed();
+    void checkImportLinksAlertDismissed(std::function<void(int)> func);
+    void checkDownloadAlertDismissed(std::function<void(int)> func);
+    void checkStreamingAlertDismissed(std::function<void (int)> func);
     QTime getTransferQuotaDeadline();
     void reset();
 
@@ -52,7 +53,7 @@ private:
     std::shared_ptr<mega::MegaCurrency> mCurrency;
     std::shared_ptr<Preferences> mPreferences;
     std::shared_ptr<DesktopNotifications> mOsNotifications;
-    UpgradeDialog* mUpgradeDialog;
+    QPointer<UpgradeDialog> mUpgradeDialog;
     QuotaState mQuotaState;
     std::chrono::system_clock::time_point mWaitTimeUntil;
     bool overQuotaAlertVisible;
@@ -66,9 +67,9 @@ private:
     void checkExecuteWarningOsNotification();
     void checkExecuteWarningUiMessage();
     void checkExecuteAlerts();
+    void checkAlertDismissed(OverQuotaDialogType type, std::function<void (int)> func);
 
 public slots:
-    void upgradeDialogFinished(int result);
     void onTransferOverquotaVisibilityChange(bool messageShown);
     void onAlmostTransferOverquotaVisibilityChange(bool messageShown);
 
@@ -79,6 +80,7 @@ signals:
     // emitted when checking OQ and the respective UI message
     // needs to be present (hasn't been discarded by the user for a while)
     void overQuotaMessageNeedsToBeShown();
+    void overQuotaDialogFinished(int result);
     void sendState(QuotaState state);
     void waitTimeIsOver();
 };

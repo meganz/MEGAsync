@@ -443,6 +443,32 @@ QString PlatformImplementation::getDeviceName()
     return deviceName;
 }
 
+void PlatformImplementation::fileSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func)
+{
+    if (defaultDir.isEmpty())
+    {
+        defaultDir = QLatin1String("/");
+    }
+    AbstractPlatform::fileSelector(title, defaultDir, multiSelection, parent, func);
+}
+
+void PlatformImplementation::folderSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func)
+{
+    if (defaultDir.isEmpty())
+    {
+        defaultDir = QLatin1String("/");
+    }
+    AbstractPlatform::folderSelector(title, defaultDir, multiSelection, parent, func);
+}
+void PlatformImplementation::fileAndFolderSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func)
+{
+    if (defaultDir.isEmpty())
+    {
+        defaultDir = QLatin1String("/");
+    }
+    AbstractPlatform::fileAndFolderSelector(title, defaultDir, multiSelection, parent, func);
+}
+
 QStringList PlatformImplementation::getListRunningProcesses()
 {
     QProcess p;

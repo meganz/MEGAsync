@@ -3,7 +3,7 @@
  <class>NodeSelector</class>
  <widget class="QDialog" name="NodeSelector">
   <property name="windowModality">
-   <enum>Qt::WindowModal</enum>
+   <enum>Qt::NonModal</enum>
   </property>
   <property name="geometry">
    <rect>
@@ -140,9 +140,6 @@ QGroupBox::title
 
 
 </string>
-  </property>
-  <property name="modal">
-   <bool>true</bool>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_15" stretch="0,1">
    <property name="spacing">

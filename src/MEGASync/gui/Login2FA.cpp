@@ -18,7 +18,6 @@ Login2FA::Login2FA(QWidget *parent) :
     ui(new Ui::Login2FA)
 {
     ui->setupUi(this);
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
     ui->lError->setText(ui->lError->text().toUpper());
     ui->lError->hide();

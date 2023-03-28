@@ -228,6 +228,8 @@ public:
     void pauseTransfers(const QModelIndexList& indexes, bool pauseState);
     void pauseResumeTransferByTag(TransferTag tag, bool pauseState);
     void pauseResumeTransferByIndex(const QModelIndex& index, bool pauseState);
+    void globalPauseStateChanged(bool state);
+    void setGlobalPause(bool state);
 
     void lockModelMutex(bool lock);
 

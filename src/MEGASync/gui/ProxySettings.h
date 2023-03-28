@@ -35,7 +35,7 @@ private:
     MegaApplication* mApp;
     std::shared_ptr<Preferences> mPreferences;
     ConnectivityChecker* mConnectivityChecker;
-    MegaProgressCustomDialog* mProgressDialog;
+    QPointer<MegaProgressCustomDialog> mProgressDialog;
 };
 
 #endif // PROXYSETTINGS_H

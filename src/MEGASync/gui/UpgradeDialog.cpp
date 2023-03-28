@@ -20,14 +20,10 @@ UpgradeDialog::UpgradeDialog(mega::MegaApi* megaApi, std::shared_ptr<mega::MegaP
       mCurrency (currency),
       mFinishTime (0ll)
 {
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-
     mUi->setupUi(this);
 
     updatePlans();
     configureAnimation();
-
-    mHighDpiResize.init(this);
 
     mTimer = new QTimer(this);
     mTimer->setSingleShot(false);

@@ -3,7 +3,7 @@
  <class>BindFolderDialog</class>
  <widget class="QDialog" name="BindFolderDialog">
   <property name="windowModality">
-   <enum>Qt::WindowModal</enum>
+   <enum>Qt::NonModal</enum>
   </property>
   <property name="geometry">
    <rect>

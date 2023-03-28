@@ -23,6 +23,8 @@ public:
 
     QMap<QString, QString> getChanges();
     static bool backupNamesValid(QStringList candidatePaths);
+
+protected:
     bool eventFilter(QObject* obj, QEvent* event) override;
 
 private slots:
@@ -34,7 +36,7 @@ private:
     QMap<QString, QString> mBackupNames;
 
     void createWidgets();
-    void addRenameWidget(const QString& path);
+    void addRenameWidget(const QString& path, const QString &suggestedNewName);
     bool checkBackupNames();
     void updateScrollHeight();
 };

@@ -8,10 +8,10 @@
 #include "../model/NodeSelectorProxyModel.h"
 #include "../model/NodeSelectorModel.h"
 #include "NodeNameSetterDialog/RenameNodeDialog.h"
+#include "DialogOpener.h"
 #include <MegaNodeNames.h>
 
 const int NodeSelectorTreeViewWidget::LOADING_VIEW_THRESSHOLD = 500;
-
 
 NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(SelectTypeSPtr mode, QWidget *parent) :
     QWidget(parent),
@@ -279,27 +279,29 @@ void NodeSelectorTreeViewWidget::onbNewFolderClicked()
             return;
     }
 
-    NewFolderDialog dialog(parentNode, this);
-
-    auto result = dialog.show();
-    auto newNode = dialog.getNewNode();
-    //IF the dialog return a node, there are two scenarios:
-    //1) The dialog has been accepted, a new folder has been created
-    //2) The dialog has been rejected because the folder already exists. If so, select the existing folder
-    if(newNode)
+    QPointer<NewFolderDialog> dialog(new NewFolderDialog(parentNode, this));
+    dialog->init();
+    DialogOpener::showDialog(dialog,  [this, dialog]()
     {
-        if(result == QDialog::Accepted)
+        auto newNode = dialog->getNewNode();
+        //IF the dialog return a node, there are two scenarios:
+        //1) The dialog has been accepted, a new folder has been created
+        //2) The dialog has been rejected because the folder already exists. If so, select the existing folder
+        if(newNode)
         {
-            QModelIndex idx = ui->tMegaFolders->rootIndex();
-            if(!idx.isValid())
+            if(dialog->result() == QDialog::Accepted)
             {
-                idx = mProxyModel->getIndexFromNode(MegaSyncApp->getRootNode());
+                QModelIndex idx = ui->tMegaFolders->rootIndex();
+                if(!idx.isValid())
+                {
+                    idx = mProxyModel->getIndexFromNode(MegaSyncApp->getRootNode());
+                }
+                mProxyModel->setExpandMapped(true);
+                mProxyModel->addNode(std::move(newNode), idx);
+                ui->bOk->setFocus();
             }
-            mProxyModel->setExpandMapped(true);
-            mProxyModel->addNode(std::move(newNode), idx);
-            ui->bOk->setFocus();
         }
-    }
+    });
 }
 
 void NodeSelectorTreeViewWidget::oncbAlwaysUploadToLocationChanged(bool value)
@@ -426,27 +428,24 @@ void NodeSelectorTreeViewWidget::onRenameClicked()
         return;
     }
 
-    QString newName;
-    bool result(QDialog::Rejected);
-
-    RenameRemoteNodeDialog dialog(std::move(node), nullptr);
-    result = dialog.show();
-    newName = dialog.getName();
-
-    if(result == QDialog::Accepted)
+    QPointer<RenameRemoteNodeDialog> dialog(new RenameRemoteNodeDialog(std::move(node), nullptr));
+    dialog->init();
+    DialogOpener::showDialog(dialog, [this, dialog]
     {
-        auto selectedIndex = getSelectedIndex();
-        if(selectedIndex.isValid())
+        if(dialog->result() == QDialog::Accepted)
         {
-
-            auto item = qvariant_cast<NodeSelectorModelItem*>(selectedIndex.data(toInt(NodeSelectorModelRoles::MODEL_ITEM_ROLE)));
-            if(item)
+            auto selectedIndex = getSelectedIndex();
+            if(selectedIndex.isValid())
             {
-                auto updatedNode = std::shared_ptr<MegaNode>(mMegaApi->getNodeByHandle(getSelectedNodeHandle()));
-                item->updateNode(updatedNode);
+                auto item = qvariant_cast<NodeSelectorModelItem*>(selectedIndex.data(toInt(NodeSelectorModelRoles::MODEL_ITEM_ROLE)));
+                if(item)
+                {
+                    auto updatedNode = std::shared_ptr<MegaNode>(mMegaApi->getNodeByHandle(getSelectedNodeHandle()));
+                    item->updateNode(updatedNode);
+                }
             }
         }
-    }
+     });
 }
 
 void NodeSelectorTreeViewWidget::onDeleteClicked()
