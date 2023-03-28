@@ -313,6 +313,15 @@ void NodeSelectorProxyModelSearch::setMode(NodeSelectorModelItemSearch::Types mo
     emit getMegaModel()->blockUi(false);
 }
 
+bool NodeSelectorProxyModelSearch::canBeDeleted() const
+{
+    if(mMode & NodeSelectorModelItemSearch::Type::BACKUP)
+    {
+        return false;
+    }
+    return NodeSelectorProxyModel::canBeDeleted();
+}
+
 bool NodeSelectorProxyModelSearch::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
 {
     QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
