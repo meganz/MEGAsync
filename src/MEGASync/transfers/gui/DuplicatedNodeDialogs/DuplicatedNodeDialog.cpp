@@ -7,8 +7,9 @@
 
 #include <QFileInfo>
 
-DuplicatedNodeDialog::DuplicatedNodeDialog(QWidget *parent) :
-    QDialog(parent),
+DuplicatedNodeDialog::DuplicatedNodeDialog(std::shared_ptr<mega::MegaNode> node) :
+    mNode(node),
+    QDialog(nullptr),
     ui(new Ui::DuplicatedNodeDialog)
 {
     ui->setupUi(this);
@@ -16,19 +17,21 @@ DuplicatedNodeDialog::DuplicatedNodeDialog(QWidget *parent) :
 #ifdef Q_OS_WINDOWS
     setWindowFlags(Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
 #endif
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint | Qt::WindowStaysOnTopHint);
+    setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
 
     connect(&mFolderCheck, &DuplicatedUploadBase::selectionDone, this, [this](){
-        done(QDialog::Accepted);
+        onConflictProcessed();
     });
     connect(&mFileCheck, &DuplicatedUploadBase::selectionDone, this, [this](){
-        done(QDialog::Accepted);
+        onConflictProcessed();
     });
 
     QIcon warningIcon(QString::fromLatin1(":/images/icon_warning.png"));
     ui->lIcon->setPixmap(warningIcon.pixmap(ui->lIcon->size()));
 
     ui->lDescription->installEventFilter(this);
+
+    qRegisterMetaType<QList<std::shared_ptr<DuplicatedNodeInfo>>>("QList<std::shared_ptr<DuplicatedNodeInfo>");
 }
 
 DuplicatedNodeDialog::~DuplicatedNodeDialog()
@@ -42,12 +45,12 @@ void DuplicatedNodeDialog::checkUpload(const QString &nodePath, std::shared_ptr<
     if(fileInfo.isFile())
     {
         auto conflict = mFileCheck.checkUpload(nodePath, parentNode);
-        conflict->hasConflict() ? mFileConflicts.append(conflict) : mUploads.append(conflict);
+        conflict->hasConflict() ? mFileConflicts.append(conflict) : mResolvedUploads.append(conflict);
     }
     else
     {
         auto conflict = mFolderCheck.checkUpload(nodePath, parentNode);
-        conflict->hasConflict() ? mFolderConflicts.append(conflict) : mUploads.append(conflict);
+        conflict->hasConflict() ? mFolderConflicts.append(conflict) : mResolvedUploads.append(conflict);
     }
 }
 
@@ -70,7 +73,7 @@ void DuplicatedNodeDialog::cleanUi()
 
 void DuplicatedNodeDialog::setConflictItems(int count)
 {
-    if(count > 0)
+    if(count > 1)
     {
         QString checkBoxText(tr("Apply to all %1 duplicates", "", count).arg(count));
         ui->cbApplyToAll->setText(checkBoxText);
@@ -86,78 +89,156 @@ void DuplicatedNodeDialog::setHeader(const QString& baseText, const QString& nod
 {
     mHeaderBaseName = baseText;
     mCurrentNodeName = nodeName;
+
+    updateHeader();
 }
 
-void DuplicatedNodeDialog::fillDialog(const QList<std::shared_ptr<DuplicatedNodeInfo> > &conflicts, DuplicatedUploadBase *checker)
+void DuplicatedNodeDialog::fillDialog()
 {
-    auto conflictNumber(conflicts.size()-1);
-    auto processesConflicts(0);
-
+    auto conflictNumber(mConflictsBeingProcessed.size());
     setConflictItems(conflictNumber);
+    processConflict(mConflictsBeingProcessed.first());
+}
 
-    EventUpdater guiUpdater(conflicts.size(),20);
+void DuplicatedNodeDialog::processConflict(std::shared_ptr<DuplicatedNodeInfo> conflict)
+{
+    mChecker->fillUi(this, conflict);
+    adjustSize();
+}
 
-    for(auto conflictIt = conflicts.begin(); conflictIt != conflicts.end(); ++conflictIt)
+void DuplicatedNodeDialog::onConflictProcessed()
+{
+    if(!mConflictsBeingProcessed.isEmpty())
     {
-        checker->fillUi(this, (*conflictIt));
-        adjustSize();
-        auto result = exec();
+        auto conflict = mConflictsBeingProcessed.takeFirst();
 
-        if(result == QDialog::Rejected)
+        if(conflict->getSolution() != NodeItemType::DONT_UPLOAD)
         {
-            break;
+            mResolvedUploads.append(conflict);
         }
 
         if(ui->cbApplyToAll->isChecked())
         {
-            for(auto it = conflictIt; it != conflicts.end(); ++it)
+            EventUpdater guiUpdater(mConflictsBeingProcessed.size(),20);
+            auto counter(0);
+
+            for(auto it = mConflictsBeingProcessed.begin(); it != mConflictsBeingProcessed.end(); ++it)
             {
-                (*it)->setSolution((*conflictIt)->getSolution());
+                (*it)->setSolution(conflict->getSolution());
                 if((*it)->getSolution() != NodeItemType::DONT_UPLOAD)
                 {
-                    mUploads.append((*it));
+                    mResolvedUploads.append((*it));
                 }
+
+                counter++;
+                guiUpdater.update(counter);
             }
 
-            break;
+            //All conflicts have been solved
+            mConflictsBeingProcessed.clear();
+        }
+
+        if(!mConflictsBeingProcessed.isEmpty())
+        {
+            cleanUi();
+            setConflictItems(mConflictsBeingProcessed.size());
+            processConflict(mConflictsBeingProcessed.first());
         }
         else
         {
-            if((*conflictIt)->getSolution() != NodeItemType::DONT_UPLOAD)
-            {
-                mUploads.append((*conflictIt));
-            }
+            //show the following category
+            startWithNewCategoryOfConflicts();
         }
-
-        conflictNumber--;
-
-        cleanUi();
-        setConflictItems(conflictNumber);
-
-        guiUpdater.update(processesConflicts);
-        processesConflicts++;
+    }
+    else
+    {
+        //show the following category
+        startWithNewCategoryOfConflicts();
     }
 }
 
-QList<std::shared_ptr<DuplicatedNodeInfo>> DuplicatedNodeDialog::show()
+void DuplicatedNodeDialog::processFolderConflicts()
 {
-    //Show folders conflicts
     if(!mFolderConflicts.isEmpty())
     {
         setDialogTitle(tr("Folder already exists"));
-        fillDialog(mFolderConflicts, &mFolderCheck);
-
-        cleanUi();
+        mConflictsBeingProcessed = mFolderConflicts;
+        mFolderConflicts.clear();
+        mChecker = &mFolderCheck;
+        fillDialog();
     }
+}
 
+void DuplicatedNodeDialog::processFileConflicts()
+{
     //show files conflicts
     if(!mFileConflicts.isEmpty())
     {
+        cleanUi();
         setDialogTitle(tr("File already exists"));
-        fillDialog(mFileConflicts, &mFileCheck);
+        mConflictsBeingProcessed = mFileConflicts;
+        mFileConflicts.clear();
+        mChecker = &mFileCheck;
+        fillDialog();
     }
+}
 
-    return mUploads;
+void DuplicatedNodeDialog::startWithNewCategoryOfConflicts()
+{
+    if(!mFolderConflicts.isEmpty())
+    {
+        processFolderConflicts();
+    }
+    else if(!mFileConflicts.isEmpty())
+    {
+        processFileConflicts();
+    }
+    else
+    {
+        done(QDialog::Accepted);
+    }
+}
+
+void DuplicatedNodeDialog::updateHeader()
+{
+    auto headerText(mHeaderBaseName);
+
+    QString placeholder(QLatin1String("[A]"));
+    auto textBoundingRect = ui->lDescription->fontMetrics().boundingRect(mHeaderBaseName).width();
+    auto NameBoundingRect = ui->lDescription->fontMetrics().boundingRect(placeholder).width();
+
+    //The node name goes in bold type, that´s why the font needs to be set to bold to get the correct fontMetrics
+    auto boldFont = ui->lDescription->font();
+    boldFont.setBold(true);
+    QFontMetrics boldMetrics(boldFont);
+    auto elidedName = boldMetrics.elidedText(mCurrentNodeName, Qt::ElideMiddle, (ui->lDescription->width() - (textBoundingRect - NameBoundingRect - 1)));
+    auto boldName = QString(QLatin1Literal("<b>%1</b>")).arg(elidedName);
+
+    headerText = headerText.replace(placeholder, boldName);
+
+    ui->lDescription->setText(headerText);
+
+    if (elidedName != mCurrentNodeName)
+    {
+        ui->lDescription->setToolTip(mCurrentNodeName);
+    }
+}
+
+const std::shared_ptr<mega::MegaNode>& DuplicatedNodeDialog::getNode() const
+{
+    return mNode;
+}
+
+const QList<std::shared_ptr<DuplicatedNodeInfo> > &DuplicatedNodeDialog::getResolvedConflicts()
+{
+    return mResolvedUploads;
+}
+
+void DuplicatedNodeDialog::show()
+{
+    //Show folders conflicts
+    startWithNewCategoryOfConflicts();
+    QDialog::show();
 }
 
 void DuplicatedNodeDialog::setDialogTitle(const QString &title)
@@ -169,27 +250,7 @@ bool DuplicatedNodeDialog::eventFilter(QObject* watched, QEvent* event)
 {
     if(watched == ui->lDescription && event->type() == QEvent::Resize)
     {
-        auto headerText(mHeaderBaseName);
-
-        QString placeholder(QLatin1String("[A]"));
-        auto textBoundingRect = ui->lDescription->fontMetrics().boundingRect(mHeaderBaseName).width();
-        auto NameBoundingRect = ui->lDescription->fontMetrics().boundingRect(placeholder).width();
-
-        //The node name goes in bold type, that´s why the font needs to be set to bold to get the correct fontMetrics
-        auto boldFont = ui->lDescription->font();
-        boldFont.setBold(true);
-        QFontMetrics boldMetrics(boldFont);
-        auto elidedName = boldMetrics.elidedText(mCurrentNodeName, Qt::ElideMiddle, (ui->lDescription->width() - (textBoundingRect - NameBoundingRect - 1)));
-        auto boldName = QString(QLatin1Literal("<b>%1</b>")).arg(elidedName);
-
-        headerText = headerText.replace(placeholder, boldName);
-
-        ui->lDescription->setText(headerText);
-
-        if (elidedName != mCurrentNodeName)
-        {
-            ui->lDescription->setToolTip(mCurrentNodeName);
-        }
+        updateHeader();
     }
 
     return QDialog::eventFilter(watched, event);

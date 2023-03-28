@@ -3,7 +3,7 @@
  <class>BackupsWizard</class>
  <widget class="QDialog" name="BackupsWizard">
   <property name="windowModality">
-   <enum>Qt::ApplicationModal</enum>
+   <enum>Qt::NonModal</enum>
   </property>
   <property name="geometry">
    <rect>
@@ -237,9 +237,6 @@ border-radius: 2px;
 margin: 4px;
 }
 </string>
-  </property>
-  <property name="modal">
-   <bool>true</bool>
   </property>
   <layout class="QVBoxLayout" name="BackupsWizardLayout">
    <property name="spacing">

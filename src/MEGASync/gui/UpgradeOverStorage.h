@@ -1,8 +1,6 @@
 #ifndef UPGRADEOVERSTORAGE_H
 #define UPGRADEOVERSTORAGE_H
 
-#include "HighDpiResize.h"
-
 #include <megaapi.h>
 
 #include <QDialog>
@@ -39,7 +37,6 @@ private:
 
     Ui::UpgradeOverStorage* mUi;
     std::unique_ptr<QMovie> mAnimation;
-    HighDpiResize mHighDpiResize;
     mega::MegaApi* mMegaApi;
     std::shared_ptr<mega::MegaPricing> mPricing;
     std::shared_ptr<mega::MegaCurrency> mCurrency;

@@ -1,8 +1,11 @@
 #include "AddExclusionDialog.h"
 #include "ui_AddExclusionDialog.h"
-#include "gui/MultiQFileDialog.h"
-#include <QPointer>
 #include "QMegaMessageBox.h"
+#include "Utilities.h"
+#include "DialogOpener.h"
+#include "Platform.h"
+
+#include <QPointer>
 
 AddExclusionDialog::AddExclusionDialog(QWidget *parent) :
     QDialog(parent),
@@ -10,8 +13,6 @@ AddExclusionDialog::AddExclusionDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->bOk->setDefault(true);
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-    highDpiResize.init(this);
 }
 
 AddExclusionDialog::~AddExclusionDialog()
@@ -48,41 +49,41 @@ void AddExclusionDialog::on_bOk_clicked()
 
 void AddExclusionDialog::on_bChoose_clicked()
 {
-    QPointer<AddExclusionDialog> currentDialog = this;
+    auto processResult = [this](QStringList selection){
+        if(!selection.isEmpty())
+        {
+            setTextToExclusionItem(selection.first());
+        }
+    };
+
 #ifdef __APPLE__
-    QPointer<MultiQFileDialog> dialog = new MultiQFileDialog(0,  tr("Select the file or folder you want to exclude"), QDir::home().path(), false);
-    dialog->setOptions(QFileDialog::DontResolveSymlinks);
-    int result = dialog->exec();
-    if (!dialog || result != QDialog::Accepted || dialog->selectedFiles().isEmpty())
-    {
-        delete dialog;
-        return;
-    }
-    QString fPath = dialog->selectedFiles().value(0);
-    delete dialog;
+    Platform::getInstance()->fileAndFolderSelector(tr("Select the file or folder you want to exclude"),QDir::home().path(), false, this, processResult);
 #else
-    QString fPath = QFileDialog::getExistingDirectory(0,  tr("Select the folder you want to exclude"), QDir::home().path());
+    Platform::getInstance()->folderSelector(tr("Select the folder you want to exclude"),QDir::home().path(), false, this, processResult);
 #endif
+}
 
-    if (!currentDialog || !fPath.size())
+void AddExclusionDialog::setTextToExclusionItem(const QString& path)
+{
+    QPointer<AddExclusionDialog> currentDialog = this;
+    if (!currentDialog || !path.size())
     {
         return;
     }
 
-    ui->eExclusionItem->setText(QDir::toNativeSeparators(fPath));
+    ui->eExclusionItem->setText(QDir::toNativeSeparators(path));
 }
 
 #ifndef __APPLE__
 void AddExclusionDialog::on_bChooseFile_clicked()
 {
-    QPointer<AddExclusionDialog> currentDialog = this;
-    QString fPath = QFileDialog::getOpenFileName(0,  tr("Select the file you want to exclude"), QDir::home().path());
-    if (!currentDialog || !fPath.size())
-    {
-        return;
-    }
-
-    ui->eExclusionItem->setText(QDir::toNativeSeparators(fPath));
+    Platform::getInstance()->fileSelector(tr("Select the file you want to exclude"),QDir::home().path(), false, this,
+                                          [this](QStringList selection){
+        if(!selection.isEmpty())
+        {
+            ui->eExclusionItem->setText(QDir::toNativeSeparators(selection.first()));
+        }
+    });
 }
 #endif
 

@@ -34,7 +34,6 @@ private:
     Ui::RemoveBackupDialog *mUi;
     std::shared_ptr<SyncSettings> mBackup;
     mega::MegaHandle mTargetFolder;
-    QPointer<UploadNodeSelector> mNodeSelector;
 };
 
 #endif // REMOVEBACKUPDIALOG_H

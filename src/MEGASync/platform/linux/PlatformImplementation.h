@@ -40,6 +40,10 @@ public:
     bool isUserActive() override;
     QString getDeviceName() override;
 
+    virtual void fileSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func) override;
+    virtual void folderSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func) override;
+    virtual void fileAndFolderSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func) override;
+
 private:
     QStringList getListRunningProcesses();
     static xcb_atom_t getAtom(xcb_connection_t * const connection, const char *name);

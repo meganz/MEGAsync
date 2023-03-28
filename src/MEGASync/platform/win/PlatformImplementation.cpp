@@ -1441,21 +1441,6 @@ bool PlatformImplementation::isUserActive()
     return true;
 }
 
-void PlatformImplementation::showBackgroundWindow(QDialog *window)
-{
-    Q_ASSERT(!window->parent());
-    //Recreate the minimized state in case the dialog is lost behind desktop windows
-    window->showMinimized();
-    window->showNormal();
-}
-
-void PlatformImplementation::execBackgroundWindow(QDialog *window)
-{
-    showBackgroundWindow(window);
-    window->activateWindow();
-    window->exec();
-}
-
 QString PlatformImplementation::getDeviceName()
 {
     // First, try to read maker and model

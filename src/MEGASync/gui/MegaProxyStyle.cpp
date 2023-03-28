@@ -1,5 +1,6 @@
 #include "MegaProxyStyle.h"
 #include "gui/MegaTransferView.h"
+#include "control/HTTPServer.h"
 
 #include <EventHelper.h>
 #include <QStyleOption>
@@ -7,6 +8,7 @@
 #include <QSpinBox>
 #include <QComboBox>
 #include <QOperatingSystemVersion>
+#include <QApplication>
 
 const int TOOLTIP_DELAY = 250;
 
@@ -30,7 +32,7 @@ void MegaProxyStyle::drawControl(QStyle::ControlElement element, const QStyleOpt
         }
 
         if(!headerView->property("HeaderIconCenter").isValid()
-                 || !headerView->property("HeaderIconCenter").toBool())
+                || !headerView->property("HeaderIconCenter").toBool())
         {
             break;
         }
@@ -43,18 +45,19 @@ void MegaProxyStyle::drawControl(QStyle::ControlElement element, const QStyleOpt
                 if (!header->icon.isNull()) {
                     int size = qRound(headerView->height() * 0.8);
                     QPixmap pixmap
-                        = header->icon.pixmap(QSize(size, size), (header->state & State_Enabled) ? QIcon::Normal : QIcon::Disabled);
+                            = header->icon.pixmap(QSize(size, size), (header->state & State_Enabled) ? QIcon::Normal : QIcon::Disabled);
 
                     QRect aligned = alignedRect(header->direction, QFlag(Qt::AlignCenter), pixmap.size() / pixmap.devicePixelRatio(), rect);
                     QRect inter = aligned.intersected(rect);
                     painter->drawPixmap(inter.x(), inter.y(), pixmap,
-                                  inter.x() - aligned.x(), inter.y() - aligned.y(),
-                                  qRound(aligned.width() * pixmap.devicePixelRatio() + 0.5),
-                                  qRound(pixmap.height() * pixmap.devicePixelRatio() + 0.5));
+                                        inter.x() - aligned.x(), inter.y() - aligned.y(),
+                                        qRound(aligned.width() * pixmap.devicePixelRatio() + 0.5),
+                                        qRound(pixmap.height() * pixmap.devicePixelRatio() + 0.5));
                     return;
+                }
             }
         }
-        }
+        break;
     }
     default:
         break;
@@ -201,6 +204,10 @@ void MegaProxyStyle::polish(QWidget *widget)
         {
             messageBox->setTextInteractionFlags(Qt::TextInteractionFlag::NoTextInteraction);
         }
+        else if(auto dialog = qobject_cast<QDialog*>(widget))
+        {
+            dialog->installEventFilter(this);
+        }
     }
 #endif
 
@@ -230,4 +237,26 @@ void MegaProxyStyle::unpolish(QApplication *app)
 bool MegaProxyStyle::event(QEvent *e)
 {
     return QProxyStyle::event(e);
+}
+
+bool MegaProxyStyle::eventFilter(QObject *obj, QEvent *e)
+{
+#ifdef Q_OS_MAC
+    if(e->type() == QEvent::Enter)
+    {
+        if (QOperatingSystemVersion::current() > QOperatingSystemVersion::MacOSBigSur) //It only fails from macOS Ventura
+        {
+            if(auto dialog = qobject_cast<QDialog*>(obj))
+            {
+                if(!dialog->isActiveWindow())
+                {
+                    qApp->setActiveWindow(dialog);
+                }
+
+                dialog->update();
+            }
+        }
+    }
+#endif
+    return QObject::eventFilter(obj, e);
 }

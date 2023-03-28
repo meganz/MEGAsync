@@ -11,22 +11,11 @@ MegaProgressCustomDialog::MegaProgressCustomDialog(QWidget *parent, int minimum,
 
     ui->progressBar->setMinimum(minimum);
     ui->progressBar->setMaximum(maximum);
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-    highDpiResize.init(this);
+    setWindowFlags(Qt::Window | Qt::WindowTitleHint);
 }
 
 MegaProgressCustomDialog::~MegaProgressCustomDialog() {
     delete ui;
-}
-
-void MegaProgressCustomDialog::reject()
-{
-
-}
-
-void MegaProgressCustomDialog::closeEvent(QCloseEvent * event)
-{
-    event->ignore();
 }
 
 void MegaProgressCustomDialog::changeEvent(QEvent *event)

@@ -22,6 +22,7 @@
 #include "syncs/gui/Backups/BackupsWizard.h"
 #include "QMegaMessageBox.h"
 #include "TextDecorator.h"
+#include "DialogOpener.h"
 
 #ifdef _WIN32    
 #include <chrono>
@@ -81,7 +82,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     mSyncing (false),
     mTransferring (false),
     mTransferManager(nullptr),
-    mBackupsWizard (nullptr),
     mAddBackupDialog (nullptr),
     mAddSyncDialog (nullptr),
     mPreferences (Preferences::instance()),
@@ -172,7 +172,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     gWidget = NULL;
     opacityEffect = NULL;
     animation = NULL;
-    accountDetailsDialog = NULL;
 
     actualAccountType = -1;
 
@@ -301,8 +300,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 InfoDialog::~InfoDialog()
 {
     removeEventFilter(this);
-    delete mBackupsWizard;
-    delete mAddBackupDialog;
     delete ui;
     delete gWidget;
     delete animation;
@@ -790,7 +787,6 @@ bool InfoDialog::checkFailedState()
         {
             mState = StatusInfo::TRANSFERS_STATES::STATE_FAILED;
             animateStates(false);
-
         }
 
         isFailed = true;
@@ -799,50 +795,30 @@ bool InfoDialog::checkFailedState()
     return isFailed;
 }
 
-void InfoDialog::addSync()
-{
-    const bool upgradingDissmised{app->showSyncOverquotaDialog()};
-    if(upgradingDissmised)
-    {
-        addSync(INVALID_HANDLE);
-        app->createAppMenus();
-    }
-}
-
 void InfoDialog::onAddSync(mega::MegaSync::SyncType type)
 {
-    const bool upgradingDissmised{app->showSyncOverquotaDialog()};
-    if(upgradingDissmised)
+    switch (type)
     {
-        switch (type)
+        case mega::MegaSync::TYPE_TWOWAY:
         {
-            case mega::MegaSync::TYPE_TWOWAY:
-            {
-                addSync(INVALID_HANDLE);
-                break;
-            }
-            case mega::MegaSync::TYPE_BACKUP:
-            {
-                addBackup();
-                break;
-            }
-            default:
-            {
-                break;
-            }
+            addSync(INVALID_HANDLE);
+            break;
         }
-        app->createAppMenus();
+        case mega::MegaSync::TYPE_BACKUP:
+        {
+            addBackup();
+            break;
+        }
+        default:
+        {
+            break;
+        }
     }
 }
 
 void InfoDialog::onAddBackup()
 {
-    const bool upgradingDissmised{app->showSyncOverquotaDialog()};
-    if(upgradingDissmised)
-    {
-        addBackup();
-        app->createAppMenus();
-    }
+    onAddSync(mega::MegaSync::TYPE_BACKUP);
 }
 
 void InfoDialog::updateDialogState()
@@ -1070,96 +1046,93 @@ void InfoDialog::openFolder(QString path)
 
 void InfoDialog::addSync(MegaHandle h)
 {
-    if (mAddSyncDialog)
+    auto overQuotaDialog = app->showSyncOverquotaDialog();
+    auto addSyncLambda = [overQuotaDialog, h, this]()
     {
-        if (h != mega::INVALID_HANDLE)
+        if(!overQuotaDialog || overQuotaDialog->result() == QDialog::Rejected)
         {
-            mAddSyncDialog->setMegaFolder(h);
+            mAddSyncDialog = new BindFolderDialog(app);
+
+            if (h != mega::INVALID_HANDLE)
+            {
+                mAddSyncDialog->setMegaFolder(h);
+            }
+
+            DialogOpener::showDialog(mAddSyncDialog, this, &InfoDialog::onAddSyncDialogFinished);
         }
+    };
 
-        mAddSyncDialog->activateWindow();
-        mAddSyncDialog->raise();
-        mAddSyncDialog->setFocus();
+    if(overQuotaDialog)
+    {
+        DialogOpener::showDialog(overQuotaDialog,addSyncLambda);
+    }
+    else
+    {
+        addSyncLambda();
+    }
+}
+
+void InfoDialog::onAddSyncDialogFinished(QPointer<BindFolderDialog> dialog)
+{
+    if (dialog->result() != QDialog::Accepted)
+    {
         return;
     }
 
-    mAddSyncDialog = new BindFolderDialog(app);
-    if (h != mega::INVALID_HANDLE)
-    {
-        mAddSyncDialog->setMegaFolder(h);
-    }
-    mAddSyncDialog->exec();
-    if (!mAddSyncDialog)
-    {
-        return;
-    }
+    QString localFolderPath = QDir::toNativeSeparators(QDir(dialog->getLocalFolder()).canonicalPath());
+    MegaHandle handle = dialog->getMegaFolder();
+    QString syncName = dialog->getSyncName();
 
-    if (mAddSyncDialog->result() != QDialog::Accepted)
-    {
-        delete mAddSyncDialog;
-        return;
-    }
-
-    QString localFolderPath = QDir::toNativeSeparators(QDir(mAddSyncDialog->getLocalFolder()).canonicalPath());
-    MegaHandle handle = mAddSyncDialog->getMegaFolder();
-    QString syncName = mAddSyncDialog->getSyncName();
-    delete mAddSyncDialog;
-
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromLatin1("Adding sync %1 from addSync: ").arg(localFolderPath).toUtf8().constData());
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Adding sync %1 from addSync: ").arg(localFolderPath).toUtf8().constData());
 
     setupSyncController();
     mSyncController->addSync(localFolderPath, handle, syncName, mega::MegaSync::TYPE_TWOWAY);
+
+    app->createAppMenus();
 }
 
 void InfoDialog::addBackup()
 {
-    // If no backups configured: show wizard, else show "add single backup" dialog
-    int nbBackups(SyncInfo::instance()->getNumSyncedFolders(mega::MegaSync::TYPE_BACKUP));
+    auto overQuotaDialog = app->showSyncOverquotaDialog();
 
-    if (nbBackups > 0)
+    auto addBackupLambda = [overQuotaDialog, this]()
     {
-        if (mAddBackupDialog)
+        if(!overQuotaDialog || overQuotaDialog->result() == QDialog::Rejected)
         {
-            mAddBackupDialog->activateWindow();
-            mAddBackupDialog->raise();
-            mAddBackupDialog->setFocus();
-        }
-        else
-        {
-            setupSyncController();
-
-            mAddBackupDialog = new AddBackupDialog();
-            mAddBackupDialog->setAttribute(Qt::WA_DeleteOnClose);
-            mAddBackupDialog->setWindowModality(Qt::ApplicationModal);
-
-            mAddBackupDialog->show();
-
-            connect(mAddBackupDialog.data(), &AddBackupDialog::accepted, this, [this]()
+            bool showWizardIfNoBackups(SyncInfo::instance()->getNumSyncedFolders(mega::MegaSync::TYPE_BACKUP) == 0);
+            if(showWizardIfNoBackups)
             {
-                if(mAddBackupDialog)
+                auto backupsWizard = new BackupsWizard();
+                DialogOpener::showDialog<BackupsWizard>(backupsWizard);
+            }
+            else
+            {
+                auto backupDialog = new AddBackupDialog();
+
+                setupSyncController();
+
+                DialogOpener::showDialog<AddBackupDialog>(backupDialog,[this, backupDialog]
                 {
-                    QString dirToBackup (mAddBackupDialog->getSelectedFolder());
-                    QString backupName (mAddBackupDialog->getBackupName());
-                    mSyncController->addBackup(dirToBackup, backupName);
-                }
-            });
+                    if(backupDialog && backupDialog->result() == QDialog::Accepted)
+                    {
+                        QString dirToBackup (backupDialog->getSelectedFolder());
+                        QString backupName (backupDialog->getBackupName());
+                        mSyncController->addBackup(dirToBackup, backupName);
+
+                        app->createAppMenus();
+                    }
+                });
+            }
         }
+    };
+
+    if(overQuotaDialog)
+    {
+        DialogOpener::showDialog(overQuotaDialog,addBackupLambda);
     }
     else
     {
-        if (mBackupsWizard)
-        {
-            mBackupsWizard->activateWindow();
-            mBackupsWizard->raise();
-            mBackupsWizard->setFocus();
-        }
-        else
-        {
-            mBackupsWizard = new BackupsWizard();
-            mBackupsWizard->setAttribute(Qt::WA_DeleteOnClose);
-            mBackupsWizard->setWindowModality(Qt::ApplicationModal);
-            mBackupsWizard->show();
-        }
+        addBackupLambda();
     }
 }
 
@@ -1387,23 +1360,9 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
 
 void InfoDialog::on_bStorageDetails_clicked()
 {
-    if (accountDetailsDialog)
-    {
-        accountDetailsDialog->raise();
-        return;
-    }
-
-    accountDetailsDialog = new AccountDetailsDialog(this);
+    QPointer<AccountDetailsDialog> accountDetailsDialog = new AccountDetailsDialog();
     app->updateUserStats(true, true, true, true, USERSTATS_STORAGECLICKED);
-    QPointer<AccountDetailsDialog> dialog = accountDetailsDialog;
-    dialog->exec();
-    if (!dialog)
-    {
-        return;
-    }
-
-    delete accountDetailsDialog;
-    accountDetailsDialog = NULL;
+    DialogOpener::showNonModalDialog(accountDetailsDialog);
 }
 
 void InfoDialog::regenerateLayout(int blockState, InfoDialog* olddialog)
