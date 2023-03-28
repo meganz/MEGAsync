@@ -6893,35 +6893,29 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     }
     case MegaRequest::TYPE_ACCOUNT_DETAILS:
     {
-        bool storage = (request->getNumDetails() & 0x01) != 0;
-        bool transfer = (request->getNumDetails() & 0x02) != 0;
-        bool pro = (request->getNumDetails() & 0x04) != 0;
+        // We need to be both logged AND have fetched the nodes to continue
+        // Do not continue if there was an error
+        if (mFetchingNodes || !preferences->logged() || e->getErrorCode() != MegaError::API_OK)
+        {
+            break;
+        }
+
+        auto flags = request->getNumDetails();
+        bool storage  = flags & 0x01;
+        bool transfer = flags & 0x02;
+        bool pro      = flags & 0x04;
 
         if (storage)  inflightUserStats[0] = false;
         if (transfer) inflightUserStats[1] = false;
         if (pro)      inflightUserStats[2] = false;
-
-        // We need to be both logged AND have fetched the nodes to continue
-        if (mFetchingNodes || !preferences->logged())
-        {
-            break;
-        }
-
-        if (e->getErrorCode() != MegaError::API_OK)
-        {
-            break;
-        }
-
-        auto root = getRootNode();
-        auto vault = getVaultNode();
-        auto rubbish = getRubbishNode();
 
         //Account details retrieved, update the preferences and the information dialog
         shared_ptr<MegaAccountDetails> details(request->getMegaAccountDetails());
 
         mThreadPool->push([=]()
         {//thread pool function
-        shared_ptr<MegaNodeList> inShares(megaApi->getInShares());
+
+        shared_ptr<MegaNodeList> inShares(storage ? megaApi->getInShares() : nullptr);
 
         Utilities::queueFunctionInAppThread([=]()
         {//queued function
@@ -6950,7 +6944,9 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         }
 
         if (storage)
-        {
+        {   // Update storage related details
+
+            // Total storage
             preferences->setTotalStorage(details->getStorageMax());
 
             if (storageState == MegaApi::STORAGE_STATE_RED && receivedStorageSum < preferences->totalStorage())
@@ -6964,41 +6960,46 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 preferences->setUsedStorage(receivedStorageSum);
             }
 
-            MegaHandle rootHandle = root->getHandle();
-            MegaHandle vaultHandle = vault->getHandle();
-            MegaHandle rubbishHandle = rubbish->getHandle();
+            // Cloud Drive
+            auto cloudDriveNode = getRootNode();
+            MegaHandle cloudDriveHandle = cloudDriveNode ? cloudDriveNode->getHandle() : INVALID_HANDLE;
+            preferences->setCloudDriveStorage(details->getStorageUsed(cloudDriveHandle));
+            preferences->setCloudDriveFiles(details->getNumFiles(cloudDriveHandle));
+            preferences->setCloudDriveFolders(details->getNumFolders(cloudDriveHandle));
 
-            // For versions, match the webclient by only counting the user's own nodes.  Versions in inshares are not cleared by 'clear versions'
-            // Also the no-parameter getVersionStorageUsed() double counts the versions in outshares.  Inshare storage count should include versions.
-            preferences->setVersionsStorage(details->getVersionStorageUsed(rootHandle)
-                                          + details->getVersionStorageUsed(vaultHandle)
-                                          + details->getVersionStorageUsed(rubbishHandle));
-
-            preferences->setCloudDriveStorage(details->getStorageUsed(rootHandle));
-            preferences->setCloudDriveFiles(details->getNumFiles(rootHandle));
-            preferences->setCloudDriveFolders(details->getNumFolders(rootHandle));
-
+            // Vault
+            auto vaultNode = getVaultNode();
+            MegaHandle vaultHandle = vaultNode ? vaultNode->getHandle() : INVALID_HANDLE;
             preferences->setVaultStorage(details->getStorageUsed(vaultHandle));
             preferences->setVaultFiles(details->getNumFiles(vaultHandle));
             preferences->setVaultFolders(details->getNumFolders(vaultHandle));
 
+            // Rubbish
+            auto rubbishNode = getRubbishNode();
+            MegaHandle rubbishHandle = rubbishNode ? rubbishNode->getHandle() : INVALID_HANDLE;
             preferences->setRubbishStorage(details->getStorageUsed(rubbishHandle));
             preferences->setRubbishFiles(details->getNumFiles(rubbishHandle));
             preferences->setRubbishFolders(details->getNumFolders(rubbishHandle));
 
+            // Versions
+            // For versions, match the webclient by only counting the user's own nodes.  Versions in inshares are not cleared by 'clear versions'
+            // Also the no-parameter getVersionStorageUsed() double counts the versions in outshares.  Inshare storage count should include versions.
+            preferences->setVersionsStorage(details->getVersionStorageUsed(cloudDriveHandle)
+                                          + details->getVersionStorageUsed(vaultHandle)
+                                          + details->getVersionStorageUsed(rubbishHandle));
+
+            // Inshares
             long long inShareSize = 0, inShareFiles = 0, inShareFolders = 0;
             for (int i = 0; i < inShares->size(); i++)
             {
                 MegaNode *node = inShares->get(i);
-                if (!node)
+                if (node)
                 {
-                    continue;
+                    MegaHandle handle = node->getHandle();
+                    inShareSize += details->getStorageUsed(handle);
+                    inShareFiles += details->getNumFiles(handle);
+                    inShareFolders += details->getNumFolders(handle);
                 }
-
-                MegaHandle handle = node->getHandle();
-                inShareSize += details->getStorageUsed(handle);
-                inShareFiles += details->getNumFiles(handle);
-                inShareFolders += details->getNumFolders(handle);
             }
             preferences->setInShareStorage(inShareSize);
             preferences->setInShareFiles(inShareFiles);
