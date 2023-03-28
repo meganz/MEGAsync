@@ -105,7 +105,8 @@ void NodeRequester::search(const QString &text, NodeSelectorModelItemSearch::Typ
         }
         else if(mSyncSetupMode)
         {
-            if(megaApi->getAccess(node) != mega::MegaShare::ACCESS_FULL)
+            int access = megaApi->getAccess(node);
+            if(access != mega::MegaShare::ACCESS_FULL && access != mega::MegaShare::ACCESS_OWNER)
             {
                 continue;
             }

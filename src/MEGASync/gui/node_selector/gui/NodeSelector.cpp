@@ -19,8 +19,6 @@ using namespace mega;
 
 const char* ITS_ON_NS = "itsOn";
 
-const int NodeSelector::LABEL_ELIDE_MARGIN = 100;
-
 NodeSelector::NodeSelector(QWidget *parent) :
     QDialog(parent),
     mMegaApi(MegaSyncApp->getMegaApi()),

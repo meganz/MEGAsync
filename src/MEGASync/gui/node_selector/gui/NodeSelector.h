@@ -41,7 +41,6 @@ public:
     };
     Q_ENUM(TabItem)
 
-    static const int LABEL_ELIDE_MARGIN;
     explicit NodeSelector(QWidget *parent = 0);
 
     ~NodeSelector();

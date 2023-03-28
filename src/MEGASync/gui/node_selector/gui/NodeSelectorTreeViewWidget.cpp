@@ -11,7 +11,7 @@
 #include <MegaNodeNames.h>
 
 const int NodeSelectorTreeViewWidget::LOADING_VIEW_THRESSHOLD = 500;
-
+const int NodeSelectorTreeViewWidget::LABEL_ELIDE_MARGIN = 240;
 
 NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(SelectTypeSPtr mode, QWidget *parent) :
     QWidget(parent),
@@ -634,7 +634,7 @@ void NodeSelectorTreeViewWidget::setRootIndex(const QModelIndex &proxy_idx)
         QString nodeName = MegaNodeNames::getNodeName(node.get());
         QFontMetrics fm = ui->lFolderName->fontMetrics();
 
-        QString elidedText = fm.elidedText(nodeName, Qt::ElideMiddle, ui->lFolderName->width());
+        QString elidedText = fm.elidedText(nodeName, Qt::ElideMiddle, ui->tMegaFolders->width() - LABEL_ELIDE_MARGIN);
         ui->lFolderName->setText(elidedText);
 
         if(elidedText != nodeName)
