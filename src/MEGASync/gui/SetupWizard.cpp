@@ -6,7 +6,6 @@
 #include "control/Utilities.h"
 #include "DialogOpener.h"
 #include "control/AppStatsEvents.h"
-#include "gui/MultiQFileDialog.h"
 #include "gui/Login2FA.h"
 #include "gui/GuiUtilities.h"
 #include "platform/Platform.h"
@@ -25,7 +24,6 @@ SetupWizard::SetupWizard(MegaApplication *app, QWidget *parent) :
     ui(new Ui::SetupWizard)
 {
     ui->setupUi(this);
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowModality(Qt::WindowModal);
 
     animationTimer = new QTimer(this);
@@ -463,6 +461,7 @@ void SetupWizard::on_bNext_clicked()
             ui->bMegaFolder->show();
             ui->eMegaFolder->show();
             ui->lMegaFolder->show();
+            //TODO: Review usage of lAdditionalSyncs when new onboarding wizard is completed
             ui->lAdditionalSyncs->setText(QString::fromUtf8(""));
             ui->lAdditionalSyncs->show();
         }
@@ -685,26 +684,13 @@ void SetupWizard::on_bLocalFolder_clicked()
 
     defaultPath = QDir::toNativeSeparators(defaultPath);
 
-#ifndef _WIN32
-    if (defaultPath.isEmpty())
-    {
-        defaultPath = QString::fromUtf8("/");
-    }
-
-    QPointer<MultiQFileDialog> dialog = new MultiQFileDialog(0,  tr("Select local folder"), defaultPath, false);
-    dialog->setOptions(QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
-    dialog->setFileMode(QFileDialog::DirectoryOnly);
-    DialogOpener::showDialog<MultiQFileDialog>(dialog, [dialog, this]()
-    {
-        if (dialog->result() == QDialog::Accepted && !dialog->selectedFiles().isEmpty())
+    Platform::getInstance()->folderSelector(tr("Select local folder"), defaultPath, false, this, [this](QStringList selection){
+        if(!selection.isEmpty())
         {
-            onLocalFolderSet(dialog->selectedFiles().value(0));
+            QString fPath = selection.first();
+            onLocalFolderSet(fPath);
         }
     });
-#else
-    QString path = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(0,  tr("Select local folder"), defaultPath));
-    onLocalFolderSet(path);
-#endif
 }
 
 void SetupWizard::onLocalFolderSet(const QString& path)
@@ -718,7 +704,7 @@ void SetupWizard::onLocalFolderSet(const QString& path)
 
 void SetupWizard::on_bMegaFolder_clicked()
 {
-    QPointer<NodeSelector> nodeSelector = new SyncNodeSelector(this);
+    SyncNodeSelector* nodeSelector = new SyncNodeSelector(this);
     std::shared_ptr<MegaNode> defaultNode(megaApi->getNodeByPath(ui->eMegaFolder->text().toUtf8().constData()));
     nodeSelector->setSelectedNodeHandle(defaultNode);
 #ifdef Q_OS_LINUX

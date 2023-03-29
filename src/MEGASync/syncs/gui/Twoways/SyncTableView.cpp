@@ -1,5 +1,7 @@
 #include "syncs/gui/Twoways/SyncTableView.h"
+
 #include "platform/Platform.h"
+#include "PlatformStrings.h"
 #include "MenuItemAction.h"
 
 #include <QHeaderView>
@@ -106,11 +108,11 @@ void SyncTableView::onCellClicked(const QModelIndex &index)
 void SyncTableView::showContextMenu(const QPoint &pos, const QModelIndex index)
 {
     QMenu *menu(new QMenu(this));
-    Platform::initMenu(menu);
+    Platform::getInstance()->initMenu(menu, "SyncContextMenu");
     menu->setAttribute(Qt::WA_DeleteOnClose);
 
     // Show in file explorer action
-    auto showLocalAction (new MenuItemAction(QCoreApplication::translate("Platform", Platform::fileExplorerString),
+    auto showLocalAction (new MenuItemAction(PlatformStrings::fileExplorer(),
                                              QIcon(QString::fromUtf8("://images/show_in_folder_ico.png"))));
     connect(showLocalAction, &MenuItemAction::triggered, this, [index]()
     {

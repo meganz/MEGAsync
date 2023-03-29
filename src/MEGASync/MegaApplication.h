@@ -45,7 +45,6 @@
 #include "notifications/DesktopNotifications.h"
 #include "ScanStageController.h"
 #include "TransferQuota.h"
-#include "DialogGeometryRetainer.h"
 #include "BlockingStageProgressController.h"
 
 class TransfersModel;
@@ -157,7 +156,6 @@ public:
     void stopUpdateTask();
     void applyProxySettings();
     void updateUserStats(bool storage, bool transfer, bool pro, bool force, int source);
-    void addRecentFile(QString fileName, long long fileHandle, QString localPath = QString(), QString nodeKey = QString());
     void checkForUpdates();
     // Actually show InfoDialog view, not tray menu.
     void showTrayMenu(QPoint *point = NULL);
@@ -172,7 +170,7 @@ public:
     int getNumUnviewedTransfers();
     void removeFinishedTransfer(int transferTag);
     void removeAllFinishedTransfers();
-    void showVerifyAccountInfo();
+    void showVerifyAccountInfo(std::function<void ()> func = nullptr);
 
     void removeFinishedBlockedTransfer(int transferTag);
     bool finishedTransfersWhileBlocked(int transferTag);
@@ -254,7 +252,6 @@ public slots:
     void uploadActionClickedFromWidget(QWidget *openFrom);
     void uploadActionClickedFromWindowAfterOverQuotaCheck(QWidget *openFrom);
     void loginActionClicked();
-    void copyFileLink(mega::MegaHandle fileHandle, QString nodeKey = QString());
     void downloadActionClicked();
     void downloadActionClickedFromWidget(QWidget *openFrom);
     void streamActionClicked();
@@ -292,7 +289,6 @@ public slots:
     void checkOverQuotaStates();
     void periodicTasks();
     void cleanAll();
-    void onDupplicateLink(QString link, QString name, mega::MegaHandle handle);
     void onInstallUpdateClicked();
     void onAboutClicked();
     void showInfoDialog();
@@ -300,7 +296,7 @@ public slots:
     void triggerInstallUpdate();
     void scanningAnimationStep();
     void setupWizardFinished(QPointer<SetupWizard> dialog);
-    void clearDownloadAndPendingLinks(QDialog *dialog);
+    void clearDownloadAndPendingLinks();
     //void infoWizardDialogFinished(QPointer<QmlDialogWrapper<Onboarding>> dialog);
     void runConnectivityCheck();
     void onConnectivityCheckSuccess();
@@ -367,7 +363,7 @@ protected:
     void processDownloadQueue(QString path);
     void disableSyncs();
     void restoreSyncs();
-    void createTransferManagerDialog();
+    void createTransferManagerDialog(TransfersWidget::TM_TAB tab);
     void calculateInfoDialogCoordinates(QDialog *dialog, int *posx, int *posy);
     void deleteMenu(QMenu *menu);
     void startHttpServer();
@@ -401,7 +397,6 @@ protected:
     QAction *windowsSettingsAction;
 #endif
 
-    QPointer<VerifyLockMessage> mVerifyEmail;
     QPointer<QMenu> infoDialogMenu;
     QPointer<QMenu> guestMenu;
     QMenu emptyMenu;
@@ -553,8 +548,7 @@ protected:
     QPointer<TransfersModel> mTransfersModel;
 
     ScanStageController scanStageController;
-    DialogGeometryRetainer<TransferManager> mTransferManagerGeometryRetainer;
-    std::shared_ptr<FolderTransferListener> folderTransferListener;
+    std::shared_ptr<FolderTransferListener> mFolderTransferListener;
 
     bool mDisableGfx;
 
@@ -613,6 +607,8 @@ private:
     bool dontAskForExitConfirmation(bool force);
     void exitApplication();
 
+    QString getDefaultUploadPath();
+
     struct NodeCount
     {
         int files;
@@ -663,6 +659,8 @@ private:
     }
 
     QQmlEngine* mEngine;
+
+    void processUpgradeSecurityEvent();
 
 private slots:
     void onFolderTransferUpdate(FolderTransferUpdateEvent event);

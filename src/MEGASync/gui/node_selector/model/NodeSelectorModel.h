@@ -31,8 +31,7 @@ enum class NodeSelectorModelRoles
 
 enum class NodeRowDelegateRoles
 {
-    ENABLED_ROLE = toInt(NodeSelectorModelRoles::last),  //ALWAYS use last enum value from previous enum class for new enums
-    INDENT_ROLE,
+    INDENT_ROLE = toInt(NodeSelectorModelRoles::last),  //ALWAYS use last enum value from previous enum class for new enums
     SMALL_ICON_ROLE,
     INIT_ROLE,
     last
@@ -86,10 +85,10 @@ public slots:
 
 signals:
      void nodesReady(NodeSelectorModelItem* parent);
-     void megaCloudDriveRootItemCreated(NodeSelectorModelItem* item);
-     void megaIncomingSharesRootItemsCreated(QList<NodeSelectorModelItem*> item);
-     void megaBackupRootItemsCreated(NodeSelectorModelItem* item);
-     void searchItemsCreated(QList<NodeSelectorModelItem*> item, NodeSelectorModelItemSearch::Types searchedTypes);
+     void megaCloudDriveRootItemCreated();
+     void megaIncomingSharesRootItemsCreated();
+     void megaBackupRootItemsCreated();
+     void searchItemsCreated(NodeSelectorModelItemSearch::Types searchedTypes);
      void nodeAdded(NodeSelectorModelItem* item);
 
 private:
@@ -170,6 +169,8 @@ public:
 
     virtual bool canBeDeleted() const;
 
+    Qt::ItemFlags flags(const QModelIndex &index) const override;
+
 signals:
     void levelsAdded(const QModelIndexList& parent, bool force = false);
     void requestChildNodes(NodeSelectorModelItem* parent, const QModelIndex& parentIndex);
@@ -202,7 +203,6 @@ private:
     virtual void createRootNodes() = 0;
     virtual int rootItemsCount() const = 0;
     virtual bool addToLoadingList(const std::shared_ptr<mega::MegaNode> node);
-    virtual void continueLoading(NodeSelectorModelItem* item);
     void createChildItems(std::shared_ptr<mega::MegaNodeList> childNodes, const QModelIndex& index, NodeSelectorModelItem* parent);
 
     QIcon getFolderIcon(NodeSelectorModelItem* item) const;

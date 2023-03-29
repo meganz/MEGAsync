@@ -1,48 +1,64 @@
-#include "MacXPlatform.h"
+#include "PlatformImplementation.h"
 #include <unistd.h>
 #include <pwd.h>
 
 using namespace std;
 
-MacXSystemServiceTask* MacXPlatform::systemServiceTask = NULL;
-QPointer<MacXExtServerService> MacXPlatform::extService;
-std::shared_ptr<AbstractShellNotifier> MacXPlatform::mShellNotifier = nullptr;
-
 static const QString kFinderSyncBundleId = QString::fromUtf8("mega.mac.MEGAShellExtFinder");
 static const QString kFinderSyncPath = QString::fromUtf8("/Applications/MEGAsync.app/Contents/PlugIns/MEGAShellExtFinder.appex/");
 
-void MacXPlatform::initialize(int /*argc*/, char *[] /*argv*/)
+void PlatformImplementation::initialize(int /*argc*/, char *[] /*argv*/)
 {
     setMacXActivationPolicy();
     mShellNotifier = std::make_shared<SignalShellNotifier>();
 }
 
-void MacXPlatform::prepareForSync()
+void PlatformImplementation::fileSelector(QString title, QString defaultDir, bool multiSelection, QWidget* parent, std::function<void (QStringList)> func)
 {
+    if (defaultDir.isEmpty())
+    {
+        defaultDir = QLatin1String("/");
+    }
 
+    selectorsImpl(title,defaultDir,multiSelection, true, false, parent, func);
 }
 
-QStringList MacXPlatform::multipleUpload(QString uploadTitle)
+void PlatformImplementation::folderSelector(QString title, QString defaultDir, bool multiSelection, QWidget* parent, std::function<void (QStringList)> func)
 {
-    return uploadMultipleFiles(uploadTitle);
+    if (defaultDir.isEmpty())
+    {
+        defaultDir = QLatin1String("/");
+    }
+
+    selectorsImpl(title,defaultDir, multiSelection, false, true, parent, func);
 }
 
-bool MacXPlatform::enableTrayIcon(QString /*executable*/)
+void PlatformImplementation::fileAndFolderSelector(QString title, QString defaultDir, bool multiSelection, QWidget* parent, std::function<void (QStringList)> func)
 {
-    return false;
+    if (defaultDir.isEmpty())
+    {
+        defaultDir = QLatin1String("/");
+    }
+
+    selectorsImpl(title,defaultDir, multiSelection, true, true, parent, func);
 }
 
-bool MacXPlatform::startOnStartup(bool value)
+void PlatformImplementation::raiseFileFolderSelectors()
+{
+    raiseFileSelectionPanels();
+}
+
+bool PlatformImplementation::startOnStartup(bool value)
 {
    return startAtLogin(value);
 }
 
-bool MacXPlatform::isStartOnStartupActive()
+bool PlatformImplementation::isStartOnStartupActive()
 {
     return isStartAtLoginActive();
 }
 
-void MacXPlatform::addFinderExtensionToSystem()
+void PlatformImplementation::addFileManagerExtensionToSystem()
 {
     QStringList scriptArgs;
     scriptArgs << QString::fromUtf8("-a")
@@ -51,7 +67,7 @@ void MacXPlatform::addFinderExtensionToSystem()
     QProcess::startDetached(QString::fromUtf8("pluginkit"), scriptArgs);
 }
 
-bool MacXPlatform::isFinderExtensionEnabled()
+bool PlatformImplementation::isFileManagerExtensionEnabled()
 {
     QStringList scriptArgs;
     scriptArgs << QString::fromUtf8("-m")
@@ -79,18 +95,9 @@ bool MacXPlatform::isFinderExtensionEnabled()
     return true;
 }
 
-void MacXPlatform::reinstallFinderExtension()
+void PlatformImplementation::reloadFileManagerExtension()
 {
-    QStringList scriptArgs;
-    scriptArgs << QString::fromUtf8("-r")
-               << kFinderSyncPath;
-
-    QProcess::startDetached(QString::fromUtf8("pluginkit"), scriptArgs);
-}
-
-void MacXPlatform::reloadFinderExtension()
-{
-    bool finderExtEnabled = isFinderExtensionEnabled();
+    bool finderExtEnabled = PlatformImplementation::isFileManagerExtensionEnabled();
     if (!finderExtEnabled) // No need to reload, extension is currenctly disabled and next time user enable it, it will launch updated version
     {
         return;
@@ -113,7 +120,7 @@ void MacXPlatform::reloadFinderExtension()
     QProcess::startDetached(QString::fromUtf8("bash"), scriptArgs);
 }
 
-void MacXPlatform::enableFinderExtension(bool value)
+void PlatformImplementation::enableFileManagerExtension(bool value)
 {
     QStringList scriptArgs;
     scriptArgs << QString::fromUtf8("-e")
@@ -124,7 +131,7 @@ void MacXPlatform::enableFinderExtension(bool value)
     QProcess::startDetached(QString::fromUtf8("pluginkit"), scriptArgs);
 }
 
-bool MacXPlatform::showInFolder(QString pathIn)
+bool PlatformImplementation::showInFolder(QString pathIn)
 {
 
     //Escape possible double quotes from osascript command to avoid syntax errors and stop parsing arguments
@@ -140,7 +147,7 @@ bool MacXPlatform::showInFolder(QString pathIn)
     return QProcess::startDetached(QString::fromAscii("osascript"), scriptArgs);
 }
 
-void MacXPlatform::startShellDispatcher(MegaApplication *receiver)
+void PlatformImplementation::startShellDispatcher(MegaApplication *receiver)
 {
     if (!systemServiceTask)
     {
@@ -153,21 +160,22 @@ void MacXPlatform::startShellDispatcher(MegaApplication *receiver)
     }
 }
 
-void MacXPlatform::stopShellDispatcher()
+void PlatformImplementation::stopShellDispatcher()
 {
     if (systemServiceTask)
     {
         delete systemServiceTask;
-        systemServiceTask = NULL;
+        systemServiceTask = nullptr;
     }
 
     if (extService)
     {
         delete extService;
+        extService = nullptr;
     }
 }
 
-void MacXPlatform::notifyItemChange(const QString& path, int newState)
+void PlatformImplementation::notifyItemChange(const QString& path, int newState)
 {
     if (!path.isEmpty())
     {
@@ -180,12 +188,12 @@ void MacXPlatform::notifyItemChange(const QString& path, int newState)
     }
 }
 
-void MacXPlatform::notifySyncFileChange(string* localPath, int newState)
+void PlatformImplementation::notifySyncFileChange(string* localPath, int newState)
 {
     notifyItemChange(QString::fromStdString(*localPath), newState);
 }
 
-void MacXPlatform::syncFolderAdded(QString syncPath, QString syncName, QString)
+void PlatformImplementation::syncFolderAdded(QString syncPath, QString syncName, QString /*syncID*/)
 {
     addPathToPlaces(syncPath,syncName);
     setFolderIcon(syncPath);
@@ -196,7 +204,7 @@ void MacXPlatform::syncFolderAdded(QString syncPath, QString syncName, QString)
     }
 }
 
-void MacXPlatform::syncFolderRemoved(QString syncPath, QString syncName, QString)
+void PlatformImplementation::syncFolderRemoved(QString syncPath, QString syncName, QString /*syncID*/)
 {
     removePathFromPlaces(syncPath);
     unSetFolderIcon(syncPath);
@@ -207,13 +215,13 @@ void MacXPlatform::syncFolderRemoved(QString syncPath, QString syncName, QString
     }
 }
 
-void MacXPlatform::notifyRestartSyncFolders()
+void PlatformImplementation::notifyRestartSyncFolders()
 {
     notifyAllSyncFoldersRemoved();
     notifyAllSyncFoldersAdded();
 }
 
-void MacXPlatform::notifyAllSyncFoldersAdded()
+void PlatformImplementation::notifyAllSyncFoldersAdded()
 {
     if (extService)
     {
@@ -221,7 +229,7 @@ void MacXPlatform::notifyAllSyncFoldersAdded()
     }
 }
 
-void MacXPlatform::notifyAllSyncFoldersRemoved()
+void PlatformImplementation::notifyAllSyncFoldersRemoved()
 {
     if (extService)
     {
@@ -229,62 +237,37 @@ void MacXPlatform::notifyAllSyncFoldersRemoved()
     }
 }
 
-QByteArray MacXPlatform::encrypt(QByteArray data, QByteArray key)
-{
-    return data;
-}
-
-QByteArray MacXPlatform::decrypt(QByteArray data, QByteArray key)
-{
-    return data;
-}
-
-QByteArray MacXPlatform::getLocalStorageKey()
-{
-    return QByteArray(128, 0);
-}
-
-QString MacXPlatform::getDefaultOpenApp(QString extension)
+QString PlatformImplementation::getDefaultOpenApp(QString extension)
 {
     return defaultOpenApp(extension);
 }
 
-void MacXPlatform::enableDialogBlur(QDialog *dialog)
-{
-
-}
-
-bool MacXPlatform::registerUpdateJob()
+bool PlatformImplementation::registerUpdateJob()
 {
     return registerUpdateDaemon();
 }
 
-void MacXPlatform::uninstall()
-{
-
-}
-
-bool MacXPlatform::shouldRunHttpServer()
+bool PlatformImplementation::shouldRunHttpServer()
 {
     return runHttpServer();
 }
 
-bool MacXPlatform::shouldRunHttpsServer()
+bool PlatformImplementation::shouldRunHttpsServer()
 {
     return runHttpsServer();
 }
 
-bool MacXPlatform::isUserActive()
+bool PlatformImplementation::isUserActive()
 {
     return userActive();
 }
 
-double MacXPlatform::getUpTime()
+double PlatformImplementation::getUpTime()
 {
     return uptime();
 }
 
-void MacXPlatform::disableSignalHandler()
+void PlatformImplementation::disableSignalHandler()
 {
     signal(SIGSEGV, SIG_DFL);
     signal(SIGBUS, SIG_DFL);
@@ -293,7 +276,7 @@ void MacXPlatform::disableSignalHandler()
     signal(SIGABRT, SIG_DFL);
 }
 
-QString MacXPlatform::getDeviceName()
+QString PlatformImplementation::getDeviceName()
 {
     // First, try to read maker and model
     QString deviceName;
@@ -315,51 +298,45 @@ QString MacXPlatform::getDeviceName()
     return deviceName;
 }
 
-void MacXPlatform::initMenu(QMenu* m)
+void PlatformImplementation::initMenu(QMenu* m, const char *objectName, const bool applyDefaultStyling)
 {
     if (m)
     {
-        m->setStyleSheet(QLatin1String("QMenu {"
-                                           "background: #ffffff;"
-                                           "padding-top: 5px;"
-                                           "padding-bottom: 5px;"
-                                           "border: 1px solid #B8B8B8;"
-                                           "border-radius: 5px;"
-                                       "}"
-                                       "QMenu::separator {"
-                                           "height: 1px;"
-                                           "margin: 0px 8px 0px 8px;"
-                                           "background-color: rgba(0, 0, 0, 0.1);"
-                                       "}"
-                                       // For vanilla QMenus (only in TransferManager and NodeSelectorTreeView (NodeSelector))
-                                       "QMenu::item {"
-                                           "font-size: 14px;"
-                                           "margin: 6px 16px 6px 16px;"
-                                           "color: #777777;"
-                                           "padding-right: 16px;"
-                                       "}"
-                                       "QMenu::item:selected {"
-                                           "color: #000000;"
-                                       "}"
-                                       // For menus with MenuItemActions
-                                       "QLabel {"
-                                           "font-family: Lato;"
-                                           "font-size: 14px;"
-                                           "padding: 0px;"
-                                       "}"
-                                       ));
-        m->setAttribute(Qt::WA_TranslucentBackground);
-        m->setWindowFlags(m->windowFlags() | Qt::FramelessWindowHint);
-        m->ensurePolished();
+        m->setObjectName(QString::fromUtf8(objectName));
+        if (applyDefaultStyling)
+        {
+            m->setStyleSheet(QLatin1String("QMenu {"
+                                               "background: #ffffff;"
+                                               "padding-top: 5px;"
+                                               "padding-bottom: 5px;"
+                                               "border: 1px solid #B8B8B8;"
+                                               "border-radius: 5px;"
+                                           "}"
+                                           "QMenu::separator {"
+                                               "height: 1px;"
+                                               "margin: 0px 8px 0px 8px;"
+                                               "background-color: rgba(0, 0, 0, 0.1);"
+                                           "}"
+                                           // For vanilla QMenus (only in TransferManager and NodeSelectorTreeView (NodeSelector))
+                                           "QMenu::item {"
+                                               "font-size: 14px;"
+                                               "margin: 6px 16px 6px 16px;"
+                                               "color: #777777;"
+                                               "padding-right: 16px;"
+                                           "}"
+                                           "QMenu::item:selected {"
+                                               "color: #000000;"
+                                           "}"
+                                           // For menus with MenuItemActions
+                                           "QLabel {"
+                                               "font-family: Lato;"
+                                               "font-size: 14px;"
+                                               "padding: 0px;"
+                                           "}"
+                                           ));
+            m->setAttribute(Qt::WA_TranslucentBackground);
+            m->setWindowFlags(m->windowFlags() | Qt::FramelessWindowHint);
+            m->ensurePolished();
+        }
     }
 }
-
-std::shared_ptr<AbstractShellNotifier> MacXPlatform::getShellNotifier()
-{
-    return mShellNotifier;
-}
-
-// Platform-specific strings
-const char* MacXPlatform::settingsString {QT_TRANSLATE_NOOP("Platform", "Preferences")};
-const char* MacXPlatform::exitString {QT_TRANSLATE_NOOP("Platform", "Quit")};
-const char* MacXPlatform::fileExplorerString {QT_TRANSLATE_NOOP("Platform","Show in Finder")};

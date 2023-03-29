@@ -2,11 +2,12 @@
 #include "ui_ImportMegaLinksDialog.h"
 #include "gui/ImportListWidgetItem.h"
 #include "gui/node_selector/gui/NodeSelector.h"
-#include "gui/MultiQFileDialog.h"
 #include "Utilities.h"
 #include "MegaApplication.h"
 #include "QMegaMessageBox.h"
 #include "DialogOpener.h"
+#include <MegaNodeNames.h>
+#include "Platform.h"
 
 #include <QDesktopServices>
 #include <QDir>
@@ -23,7 +24,6 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(std::shared_ptr<LinkProcessor> link
     mPreferences(Preferences::instance()),
     mLinkProcessor(linkProcessor)
 {
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     ui->setupUi(this);
 
     static const int MAX_ITEMS_DISPLAYED = 8;
@@ -127,27 +127,13 @@ void ImportMegaLinksDialog::on_bLocalFolder_clicked()
 
     defaultPath = QDir::toNativeSeparators(defaultPath);
 
-#ifndef _WIN32
-    if (defaultPath.isEmpty())
-    {
-        defaultPath = QString::fromUtf8("/");
-    }
-
-    QPointer<MultiQFileDialog> fileDialog = new MultiQFileDialog(0,  tr("Select local folder"), defaultPath, false);
-    fileDialog->setOptions(QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
-    fileDialog->setFileMode(QFileDialog::DirectoryOnly);
-    DialogOpener::showDialog<MultiQFileDialog>(fileDialog, [fileDialog, this]()
-    {
-        if (fileDialog->result() == QDialog::Accepted && !fileDialog->selectedFiles().isEmpty())
+    Platform::getInstance()->folderSelector(tr("Select local folder"),defaultPath,false,this,[this](QStringList selection){
+        if(!selection.isEmpty())
         {
-            QString path = fileDialog->selectedFiles().value(0);
-            onLocalFolderSet(path);
+            QString fPath = selection.first();
+            onLocalFolderSet(fPath);
         }
     });
-#else
-    QString path = QFileDialog::getExistingDirectory(0,  tr("Select local folder"), defaultPath);
-    onLocalFolderSet(path);
-#endif
 }
 
 void ImportMegaLinksDialog::onLocalFolderSet(const QString& path)
@@ -174,29 +160,26 @@ void ImportMegaLinksDialog::onLocalFolderSet(const QString& path)
 
 void ImportMegaLinksDialog::on_bMegaFolder_clicked()
 {
-    QPointer<NodeSelector> nodeSelector = new UploadNodeSelector(this);
-    DialogOpener::showDialog(nodeSelector, this, &ImportMegaLinksDialog::onMegaFolderSelectorFinished);
-}
-
-void ImportMegaLinksDialog::onMegaFolderSelectorFinished(QPointer<NodeSelector> nodeSelector)
-{
-    if (nodeSelector->result() == QDialog::Accepted)
-    {
-        MegaHandle selectedMegaFolderHandle = nodeSelector->getSelectedNodeHandle();
-        std::shared_ptr<MegaNode> selectedFolder(mMegaApi->getNodeByHandle(selectedMegaFolderHandle));
-        if (!selectedFolder)
+    UploadNodeSelector* nodeSelector = new UploadNodeSelector(this);
+    DialogOpener::showDialog<NodeSelector>(nodeSelector,[this, nodeSelector](){
+        if (nodeSelector->result() == QDialog::Accepted)
         {
-            return;
-        }
+            MegaHandle selectedMegaFolderHandle = nodeSelector->getSelectedNodeHandle();
+            std::shared_ptr<MegaNode> selectedFolder(mMegaApi->getNodeByHandle(selectedMegaFolderHandle));
+            if (!selectedFolder)
+            {
+                return;
+            }
 
-        std::unique_ptr<const char[]> fPath(mMegaApi->getNodePath(selectedFolder.get()));
-        if (!fPath)
-        {
-            return;
-        }
+            std::unique_ptr<const char[]> fPath(mMegaApi->getNodePath(selectedFolder.get()));
+            if (!fPath)
+            {
+                return;
+            }
 
-        ui->eMegaFolder->setText(QString::fromUtf8(fPath.get()));
-    }
+            ui->eMegaFolder->setText(QString::fromUtf8(fPath.get()));
+        }
+    });
 }
 
 void ImportMegaLinksDialog::onLinkInfoAvailable(int id)
@@ -207,14 +190,13 @@ void ImportMegaLinksDialog::onLinkInfoAvailable(int id)
     int e = mLinkProcessor->getError(id);
     if (node && (e == MegaError::API_OK))
     {
-        QString name = QString::fromUtf8(node->getName());
-        if (!name.compare(QLatin1String("NO_KEY")) || !name.compare(QLatin1String("CRYPTO_ERROR")))
+        if (!node->isNodeKeyDecrypted())
         {
-            item->setData(QCoreApplication::translate("MegaError", "Decryption error"), ImportListWidgetItem::WARNING, mMegaApi->getSize(node.get()), !(node->getType() == MegaNode::TYPE_FILE));
+            item->setData(MegaNodeNames::getNodeName(node.get()), ImportListWidgetItem::WARNING, mMegaApi->getSize(node.get()), !(node->getType() == MegaNode::TYPE_FILE));
         }
         else
         {
-            item->setData(name, ImportListWidgetItem::CORRECT, mMegaApi->getSize(node.get()), !(node->getType() == MegaNode::TYPE_FILE));
+            item->setData(QString::fromUtf8(node->getName()), ImportListWidgetItem::CORRECT, mMegaApi->getSize(node.get()), !(node->getType() == MegaNode::TYPE_FILE));
         }
     }
     else

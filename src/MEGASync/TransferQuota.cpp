@@ -195,7 +195,7 @@ void TransferQuota::checkExecuteWarningUiMessage()
 void TransferQuota::checkExecuteAlerts()
 {
     const MegaApplication* megaApp{static_cast<MegaApplication*>(qApp)};
-    const bool allowAlerts{megaApp->isInfoDialogVisible() || mUpgradeDialog || Platform::isUserActive()};
+    const bool allowAlerts{megaApp->isInfoDialogVisible() || mUpgradeDialog || Platform::getInstance()->isUserActive()};
     const bool userLogged{mPreferences && mPreferences->logged()};
     const bool bandwidthAlertsEnabled{!megaApp->finished() && userLogged && allowAlerts};
     if (bandwidthAlertsEnabled)

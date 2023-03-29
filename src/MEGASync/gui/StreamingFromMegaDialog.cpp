@@ -7,6 +7,7 @@
 #include "QMegaMessageBox.h"
 #include "platform/Platform.h"
 #include "control/Utilities.h"
+#include <MegaNodeNames.h>
 
 #include <QCloseEvent>
 #include <QInputDialog>
@@ -29,7 +30,6 @@ StreamingFromMegaDialog::StreamingFromMegaDialog(mega::MegaApi *megaApi, mega::M
     lastStreamSelection{LastStreamingSelection::NOT_SELECTED}
 {
     ui->setupUi(this);
-    setAttribute(Qt::WA_DeleteOnClose, true);
     Qt::WindowFlags flags =  Qt::Window | Qt::WindowSystemMenuHint
                                 | Qt::WindowMinimizeButtonHint
                                 | Qt::WindowCloseButtonHint;
@@ -73,6 +73,7 @@ void StreamingFromMegaDialog::closeEvent(QCloseEvent *event)
     if (!event->spontaneous() || !mSelectedMegaNode)
     {
         event->accept();
+        QDialog::closeEvent(event);
         return;
     }
 
@@ -85,15 +86,17 @@ void StreamingFromMegaDialog::closeEvent(QCloseEvent *event)
     {
         event->ignore();
     }
+
+    QDialog::closeEvent(event);
 }
 
 void StreamingFromMegaDialog::on_bFromCloud_clicked()
 {
-    QPointer<StreamNodeSelector> nodeSelector(new StreamNodeSelector(this));
+    StreamNodeSelector* nodeSelector = new StreamNodeSelector(this);
     nodeSelector->setWindowTitle(tr("Select items"));
     nodeSelector->setSelectedNodeHandle(mSelectedMegaNode);
 
-    DialogOpener::showDialog<StreamNodeSelector>(nodeSelector, [nodeSelector, this]()
+    DialogOpener::showDialog<NodeSelector>(nodeSelector, [nodeSelector, this]()
     {
         if (nodeSelector->result() == QDialog::Accepted)
         {
@@ -105,8 +108,7 @@ void StreamingFromMegaDialog::on_bFromCloud_clicked()
 
 void StreamingFromMegaDialog::on_bFromPublicLink_clicked()
 {
-    QPointer<QInputDialog> inputDialog(new QInputDialog(this));
-    inputDialog->setWindowFlags(inputDialog->windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    const QPointer<QInputDialog> inputDialog = new QInputDialog(this);
     inputDialog->setWindowTitle(tr("Open link"));
     inputDialog->setLabelText(tr("Enter a MEGA file link:"));
     inputDialog->resize(470, inputDialog->height());
@@ -147,17 +149,15 @@ void StreamingFromMegaDialog::onLinkInfoAvailable()
 
     if (mSelectedMegaNode)
     {
-        QString name = QString::fromUtf8(mSelectedMegaNode->getName());
-        if (!name.compare(QLatin1String("NO_KEY")) || !name.compare(QLatin1String("CRYPTO_ERROR")))
+        updateFileInfo(MegaNodeNames::getNodeName(mSelectedMegaNode.get()),
+                       mSelectedMegaNode->isNodeKeyDecrypted() ? LinkStatus::CORRECT : LinkStatus::WARNING);
+        if (!mSelectedMegaNode->isNodeKeyDecrypted())
         {
-            updateFileInfo(tr("Decryption error"), LinkStatus::WARNING);
             streamURL.clear();
         }
         else
         {
-            updateFileInfo(name, LinkStatus::CORRECT);
             generateStreamURL();
-
         }
     }
     else
@@ -208,7 +208,7 @@ void StreamingFromMegaDialog::on_bOpenDefault_clicked()
     }
 
     QFileInfo fi(streamURL);
-    QString app = Platform::getDefaultOpenApp(fi.suffix());
+    QString app = Platform::getInstance()->getDefaultOpenApp(fi.suffix());
     openStreamWithApp(app);
 }
 
@@ -341,7 +341,7 @@ void StreamingFromMegaDialog::updateFileInfoFromNode(MegaNode *node)
     }
     lastStreamSelection = LastStreamingSelection::FROM_LOCAL_NODE;
     mSelectedMegaNode = std::shared_ptr<MegaNode>(node);
-    updateFileInfo(QString::fromUtf8(mSelectedMegaNode->getName()), LinkStatus::CORRECT);
+    updateFileInfo(MegaNodeNames::getNodeName(node), LinkStatus::CORRECT);
     generateStreamURL();
     hideStreamingError();
 }
@@ -409,7 +409,7 @@ void StreamingFromMegaDialog::onTransferTemporaryError(mega::MegaApi*, mega::Meg
     const bool errorIsOverQuota{e->getErrorCode() == MegaError::API_EOVERQUOTA};
     if(transfer->isStreamingTransfer() && errorIsOverQuota)
     {
-        updateFileInfo(QString::fromUtf8(mSelectedMegaNode->getName()), LinkStatus::TRANSFER_OVER_QUOTA);
+        updateFileInfo(MegaNodeNames::getNodeName(mSelectedMegaNode.get()), LinkStatus::TRANSFER_OVER_QUOTA);
         showStreamingError();
 
         show();

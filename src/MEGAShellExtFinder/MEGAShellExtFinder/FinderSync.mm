@@ -266,7 +266,7 @@ void cleanItemsOfFolder(std::string dirPath)
 - (void)onSyncAdd:(NSString *)path withSyncName:(NSString*)syncName{
     
     NSLog(@"INFO - adding sync folder path:%@", path);
-    [_syncPaths addObject:[NSURL fileURLWithPath:path]];
+    [_syncPaths addObject:[NSURL fileURLWithPath:path isDirectory:true]];
     
     if (![_syncNames containsObject:syncName])
     {
@@ -278,7 +278,7 @@ void cleanItemsOfFolder(std::string dirPath)
 - (void)onSyncDel:(NSString *)path withSyncName:(NSString*)syncName{
     
     NSLog(@"INFO - removing sync folder path:%@", path);
-    [_syncPaths removeObject:[NSURL fileURLWithPath:path]];
+    [_syncPaths removeObject:[NSURL fileURLWithPath:path isDirectory:true]];
     [_syncNames removeObject:syncName];
     [FIFinderSyncController defaultController].directoryURLs = _syncPaths;
 }
@@ -333,7 +333,7 @@ void cleanItemsOfFolder(std::string dirPath)
         default:
             break;
     }
-    return @"default";
+    return @"";
 }
 
 - (void) cleanAll {

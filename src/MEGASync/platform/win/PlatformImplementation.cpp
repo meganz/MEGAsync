@@ -1,4 +1,4 @@
-#include "WindowsPlatform.h"
+#include "PlatformImplementation.h"
 
 #include <platform/win/WinAPIShell.h>
 #include <platform/win/RecursiveShellNotifier.h>
@@ -23,6 +23,8 @@
 #if QT_VERSION >= 0x050200
 #include <QtWin>
 #endif
+
+#include <QOperatingSystemVersion>
 
 #if _WIN32_WINNT < 0x0601
 // Windows headers don't define this for WinXP despite the documentation says that they should
@@ -69,21 +71,17 @@ SHSTDAPI SHGetSetFolderCustomSettings(_Inout_ LPSHFOLDERCUSTOMSETTINGS pfcs, _In
 #endif
 #endif
 
-WinShellDispatcherTask* WindowsPlatform::shellDispatcherTask = NULL;
-std::shared_ptr<AbstractShellNotifier> WindowsPlatform::mSyncFileNotifier = nullptr;
-std::shared_ptr<AbstractShellNotifier> WindowsPlatform::mGeneralNotifier = nullptr;
-
 using namespace std;
 using namespace mega;
 
 bool WindowsPlatform_exiting = false;
 
-void WindowsPlatform::initialize(int, char *[])
+void PlatformImplementation::initialize(int, char *[])
 {
     CoInitializeEx(NULL, COINIT_MULTITHREADED);
     auto baseNotifier = std::make_shared<WindowsApiShellNotifier>();
     mSyncFileNotifier = std::make_shared<ThreadedQueueShellNotifier>(baseNotifier);
-    mGeneralNotifier = std::make_shared<ThreadedQueueShellNotifier>(
+    mShellNotifier = std::make_shared<ThreadedQueueShellNotifier>(
                 std::make_shared<RecursiveShellNotifier>(baseNotifier)
                 );
 
@@ -91,7 +89,7 @@ void WindowsPlatform::initialize(int, char *[])
     QWindowsWindowFunctions::setWindowActivationBehavior(QWindowsWindowFunctions::AlwaysActivateWindow);
 }
 
-void WindowsPlatform::prepareForSync()
+void PlatformImplementation::prepareForSync()
 {
     (void)Preferences::instance();
 
@@ -159,7 +157,7 @@ void WindowsPlatform::prepareForSync()
     }
 }
 
-bool WindowsPlatform::enableTrayIcon(QString executable)
+bool PlatformImplementation::enableTrayIcon(QString executable)
 {
     HRESULT hr;
     ITrayNotify *m_ITrayNotify = nullptr;
@@ -204,27 +202,27 @@ bool WindowsPlatform::enableTrayIcon(QString executable)
     return true;
 }
 
-void WindowsPlatform::notifyItemChange(const QString& path, int newState)
+void PlatformImplementation::notifyItemChange(const QString& path, int)
 {
-    notifyItemChange(path, mGeneralNotifier.get());
+    notifyItemChange(path, mShellNotifier);
 }
 
-void WindowsPlatform::notifySyncFileChange(std::string *localPath, int)
-{
-    notifyItemChange(QString::fromStdString(*localPath), mSyncFileNotifier.get());
-}
-
-void WindowsPlatform::notifyItemChange(const QString& localPath, AbstractShellNotifier *notifier)
+void PlatformImplementation::notifySyncFileChange(std::string *localPath, int)
 {
     QString path = getPreparedPath(localPath);
-    if (!path.isEmpty())
+    notifyItemChange(path, mSyncFileNotifier);
+}
+
+void PlatformImplementation::notifyItemChange(const QString& localPath, std::shared_ptr<AbstractShellNotifier> notifier)
+{
+    if (!localPath.isEmpty())
     {
-        notifier->notify(path);
+        notifier->notify(localPath);
     }
 }
 
 //From http://msdn.microsoft.com/en-us/library/windows/desktop/bb776891.aspx
-HRESULT WindowsPlatform::CreateLink(LPCWSTR lpszPathObj, LPCWSTR lpszPathLink, LPCWSTR lpszDesc,
+HRESULT PlatformImplementation::CreateLink(LPCWSTR lpszPathObj, LPCWSTR lpszPathLink, LPCWSTR lpszDesc,
                                  LPCWSTR pszIconfile, int iIconindex)
 {
     HRESULT hres;
@@ -474,7 +472,7 @@ bool CheckLeftPaneIcon(wchar_t *path, bool remove)
     return false;
 }
 
-void WindowsPlatform::addSyncToLeftPane(QString syncPath, QString syncName, QString uuid)
+void PlatformImplementation::addSyncToLeftPane(QString syncPath, QString syncName, QString uuid)
 {
     typedef LONG MEGANTSTATUS;
     typedef struct _MEGAOSVERSIONINFOW {
@@ -584,7 +582,7 @@ void WindowsPlatform::addSyncToLeftPane(QString syncPath, QString syncName, QStr
                            samDesired);
 }
 
-void WindowsPlatform::removeSyncFromLeftPane(QString, QString, QString uuid)
+void PlatformImplementation::removeSyncFromLeftPane(QString, QString, QString uuid)
 {
     REGSAM samDesired = 0;
     int it = 1;
@@ -609,7 +607,7 @@ void WindowsPlatform::removeSyncFromLeftPane(QString, QString, QString uuid)
     DeleteRegValue(HKEY_CURRENT_USER, (LPTSTR)key.utf16(), (LPTSTR)uuid.utf16(), 0);
 }
 
-void WindowsPlatform::removeAllSyncsFromLeftPane()
+void PlatformImplementation::removeAllSyncsFromLeftPane()
 {
     bool deleted = true;
     while (deleted)
@@ -618,8 +616,9 @@ void WindowsPlatform::removeAllSyncsFromLeftPane()
     }
 }
 
-bool WindowsPlatform::makePubliclyReadable(LPTSTR fileName)
+bool PlatformImplementation::makePubliclyReadable(const QString& fileName)
 {
+    auto winFilename = (LPTSTR)fileName.utf16();
     bool result = false;
     PACL pOldDACL = NULL, pNewDACL = NULL;
     PSECURITY_DESCRIPTOR pSD = NULL;
@@ -632,12 +631,12 @@ bool WindowsPlatform::makePubliclyReadable(LPTSTR fileName)
     ea.grfInheritance = NO_INHERITANCE;
     ea.Trustee.TrusteeForm = TRUSTEE_IS_SID;
     ea.Trustee.TrusteeType = TRUSTEE_IS_WELL_KNOWN_GROUP;
-    if (fileName
-            && (GetNamedSecurityInfo(fileName, SE_FILE_OBJECT, DACL_SECURITY_INFORMATION, NULL, NULL, &pOldDACL, NULL, &pSD) == ERROR_SUCCESS)
+    if (winFilename
+            && (GetNamedSecurityInfo(winFilename, SE_FILE_OBJECT, DACL_SECURITY_INFORMATION, NULL, NULL, &pOldDACL, NULL, &pSD) == ERROR_SUCCESS)
             && (ea.Trustee.ptstrName = (LPWSTR)LocalAlloc(LMEM_FIXED, sidSize))
             && CreateWellKnownSid(WinBuiltinUsersSid, NULL, ea.Trustee.ptstrName, &sidSize)
             && (SetEntriesInAcl(1, &ea, pOldDACL, &pNewDACL) == ERROR_SUCCESS)
-            && (SetNamedSecurityInfo(fileName, SE_FILE_OBJECT, DACL_SECURITY_INFORMATION, NULL, NULL, pNewDACL, NULL) == ERROR_SUCCESS))
+            && (SetNamedSecurityInfo(winFilename, SE_FILE_OBJECT, DACL_SECURITY_INFORMATION, NULL, NULL, pNewDACL, NULL) == ERROR_SUCCESS))
     {
         result = true;
     }
@@ -657,7 +656,7 @@ bool WindowsPlatform::makePubliclyReadable(LPTSTR fileName)
     return result;
 }
 
-bool WindowsPlatform::startOnStartup(bool value)
+bool PlatformImplementation::startOnStartup(bool value)
 {
     WCHAR path[MAX_PATH];
     HRESULT res = SHGetFolderPathW(NULL, CSIDL_STARTUP, NULL, 0, path);
@@ -698,7 +697,7 @@ bool WindowsPlatform::startOnStartup(bool value)
     }
 }
 
-bool WindowsPlatform::isStartOnStartupActive()
+bool PlatformImplementation::isStartOnStartupActive()
 {
     WCHAR path[MAX_PATH];
     HRESULT res = SHGetFolderPathW(NULL, CSIDL_STARTUP, NULL, 0, path);
@@ -716,7 +715,7 @@ bool WindowsPlatform::isStartOnStartupActive()
     return false;
 }
 
-bool WindowsPlatform::showInFolder(QString pathIn)
+bool PlatformImplementation::showInFolder(QString pathIn)
 {
     if (!QFile(pathIn).exists())
     {
@@ -729,7 +728,7 @@ bool WindowsPlatform::showInFolder(QString pathIn)
     return QProcess::startDetached(QString::fromAscii("explorer ") + param);
 }
 
-void WindowsPlatform::startShellDispatcher(MegaApplication *receiver)
+void PlatformImplementation::startShellDispatcher(MegaApplication *receiver)
 {
     if (shellDispatcherTask)
     {
@@ -739,7 +738,7 @@ void WindowsPlatform::startShellDispatcher(MegaApplication *receiver)
     shellDispatcherTask->start();
 }
 
-void WindowsPlatform::stopShellDispatcher()
+void PlatformImplementation::stopShellDispatcher()
 {
     if (shellDispatcherTask)
     {
@@ -750,7 +749,7 @@ void WindowsPlatform::stopShellDispatcher()
     }
 }
 
-void WindowsPlatform::syncFolderAdded(QString syncPath, QString syncName, QString syncID)
+void PlatformImplementation::syncFolderAdded(QString syncPath, QString syncName, QString syncID)
 {
     if (syncPath.startsWith(QString::fromAscii("\\\\?\\")))
     {
@@ -773,12 +772,20 @@ void WindowsPlatform::syncFolderAdded(QString syncPath, QString syncName, QStrin
         addSyncToLeftPane(syncPath, syncName, syncID);
     }
 
-#pragma warning(push)
-#pragma warning(disable: 4996) // declared deprecated
-    DWORD dwVersion = GetVersion();
-#pragma warning(pop)
-    DWORD dwMajorVersion = (DWORD)(LOBYTE(LOWORD(dwVersion)));
-    int iconIndex = (dwMajorVersion<6) ? 2 : 3;
+    int iconIndex = 2; // Default to winXP.ico
+
+    auto winVersion = QOperatingSystemVersion::current();
+    auto win11 = QOperatingSystemVersion(QOperatingSystemVersion::Windows, 10, 0, 22000);
+    //FIXME: once QT version update check if QOperatingSystemVersion Windows11 exist
+    if (winVersion >= win11)
+    {
+        iconIndex = 4; // win11.ico
+    }
+    else if (winVersion >= QOperatingSystemVersion::Windows7)
+    {
+        iconIndex = 3; // win8.ico
+    }
+
 
     QString infoTip = QCoreApplication::translate("WindowsPlatform", "MEGA synced folder");
     SHFOLDERCUSTOMSETTINGS fcs = {0};
@@ -835,10 +842,9 @@ void WindowsPlatform::syncFolderAdded(QString syncPath, QString syncName, QStrin
     {
         SetFileAttributesW((LPCWSTR)debrisPath.utf16(), fad.dwFileAttributes | FILE_ATTRIBUTE_HIDDEN);
     }
-
 }
 
-void WindowsPlatform::syncFolderRemoved(QString syncPath, QString syncName, QString syncID)
+void PlatformImplementation::syncFolderRemoved(QString syncPath, QString syncName, QString syncID)
 {
     if (!syncPath.size())
     {
@@ -884,22 +890,22 @@ void WindowsPlatform::syncFolderRemoved(QString syncPath, QString syncName, QStr
     SHChangeNotify(SHCNE_UPDATEITEM, SHCNF_PATH | SHCNF_FLUSHNOWAIT, syncPath.utf16(), NULL);
 }
 
-void WindowsPlatform::notifyRestartSyncFolders()
+void PlatformImplementation::notifyRestartSyncFolders()
 {
 
 }
 
-void WindowsPlatform::notifyAllSyncFoldersAdded()
+void PlatformImplementation::notifyAllSyncFoldersAdded()
 {
 
 }
 
-void WindowsPlatform::notifyAllSyncFoldersRemoved()
+void PlatformImplementation::notifyAllSyncFoldersRemoved()
 {
 
 }
 
-QByteArray WindowsPlatform::encrypt(QByteArray data, QByteArray key)
+QByteArray PlatformImplementation::encrypt(QByteArray data, QByteArray key)
 {
     DATA_BLOB dataIn;
     DATA_BLOB dataOut;
@@ -922,7 +928,7 @@ QByteArray WindowsPlatform::encrypt(QByteArray data, QByteArray key)
     return result;
 }
 
-QByteArray WindowsPlatform::decrypt(QByteArray data, QByteArray key)
+QByteArray PlatformImplementation::decrypt(QByteArray data, QByteArray key)
 {
     DATA_BLOB dataIn;
     DATA_BLOB dataOut;
@@ -945,7 +951,7 @@ QByteArray WindowsPlatform::decrypt(QByteArray data, QByteArray key)
     return result;
 }
 
-QByteArray WindowsPlatform::getLocalStorageKey()
+QByteArray PlatformImplementation::getLocalStorageKey()
 {
     HANDLE hToken = NULL;
     if (!OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY, &hToken))
@@ -995,7 +1001,7 @@ QByteArray WindowsPlatform::getLocalStorageKey()
     return result;
 }
 
-QString WindowsPlatform::getDefaultOpenApp(QString extension)
+QString PlatformImplementation::getDefaultOpenApp(QString extension)
 {
     DWORD length = 0;
     ASSOCSTR type = ASSOCSTR_CONTENTTYPE;
@@ -1051,7 +1057,7 @@ QString WindowsPlatform::getDefaultOpenApp(QString extension)
     return QString();
 }
 
-void WindowsPlatform::enableDialogBlur(QDialog*)
+void PlatformImplementation::enableDialogBlur(QDialog*)
 {
     // this feature doesn't work well yet
     return;
@@ -1101,7 +1107,7 @@ void WindowsPlatform::enableDialogBlur(QDialog*)
 #endif
 }
 
-LPTSTR WindowsPlatform::getCurrentSid()
+LPTSTR PlatformImplementation::getCurrentSid()
 {
     HANDLE hTok = NULL;
     LPBYTE buf = NULL;
@@ -1124,7 +1130,7 @@ LPTSTR WindowsPlatform::getCurrentSid()
     return stringSID;
 }
 
-bool WindowsPlatform::registerUpdateJob()
+bool PlatformImplementation::registerUpdateJob()
 {
     ITaskService *pService = NULL;
     ITaskFolder *pRootFolder = NULL;
@@ -1299,7 +1305,7 @@ bool WindowsPlatform::registerUpdateJob()
     return success;
 }
 
-void WindowsPlatform::uninstall()
+void PlatformImplementation::uninstall()
 {
     removeAllSyncsFromLeftPane();
 
@@ -1352,7 +1358,7 @@ void WindowsPlatform::uninstall()
 
 // Check if it's needed to start the local HTTP server
 // for communications with the webclient
-bool WindowsPlatform::shouldRunHttpServer()
+bool PlatformImplementation::shouldRunHttpServer()
 {
     bool result = false;
     PROCESSENTRY32 entry = {0};
@@ -1386,7 +1392,7 @@ bool WindowsPlatform::shouldRunHttpServer()
 
 // Check if it's needed to start the local HTTPS server
 // for communications with the webclient
-bool WindowsPlatform::shouldRunHttpsServer()
+bool PlatformImplementation::shouldRunHttpsServer()
 {
     bool result = false;
     PROCESSENTRY32 entry = {0};
@@ -1419,7 +1425,7 @@ bool WindowsPlatform::shouldRunHttpsServer()
     return result;
 }
 
-bool WindowsPlatform::isUserActive()
+bool PlatformImplementation::isUserActive()
 {
     LASTINPUTINFO lii = {0};
     lii.cbSize = sizeof(LASTINPUTINFO);
@@ -1435,7 +1441,7 @@ bool WindowsPlatform::isUserActive()
     return true;
 }
 
-QString WindowsPlatform::getDeviceName()
+QString PlatformImplementation::getDeviceName()
 {
     // First, try to read maker and model
     QSettings settings (QLatin1Literal("HKEY_LOCAL_MACHINE\\HARDWARE\\DESCRIPTION\\System\\BIOS"),
@@ -1459,68 +1465,24 @@ QString WindowsPlatform::getDeviceName()
     return deviceName;
 }
 
-void WindowsPlatform::initMenu(QMenu* m)
+QString PlatformImplementation::getPreparedPath(std::string *localPath)
 {
-    if (m)
-    {
-        m->setStyleSheet(QLatin1String("QMenu {"
-                                           "background: #ffffff;"
-                                           "padding-top: 6px;"
-                                           "padding-bottom: 6px;"
-                                           "border: 1px solid #B8B8B8;"
-                                       "}"
-                                       "QMenu::separator {"
-                                           "height: 1px;"
-                                           "margin: 6px 10px 6px 10px;"
-                                           "background-color: rgba(0, 0, 0, 0.1);"
-                                       "}"
-                                       // For vanilla QMenus (only in TransferManager and NodeSelectorTreeView (NodeSelector))
-                                       "QMenu::item {"
-                                           "font-family: Lato;"
-                                           "font-size: 14px;"
-                                           "margin: 6px 16px 6px 16px;"
-                                           "color: #777777;"
-                                           "padding-right: 16px;"
-                                       "}"
-                                       "QMenu::item:selected {"
-                                           "color: #000000;"
-                                       "}"
-                                       // For menus with MenuItemActions
-                                       "QLabel {"
-                                           "font-family: Lato;"
-                                           "font-size: 14px;"
-                                           "padding: 0px;"
-                                       "}"
-                                       ));
-        m->ensurePolished();
-    }
-}
-
-std::shared_ptr<AbstractShellNotifier> WindowsPlatform::getShellNotifier()
-{
-    return mGeneralNotifier;
-}
-
-QString WindowsPlatform::getPreparedPath(const QString& localPath)
-{
-    QString preparedPath(localPath);
+    // The path we have here is, on Windows, an utf16-encoded string (using wchars) in a std::string buffer.
+    QString preparedPath = QString::fromWCharArray(reinterpret_cast<const wchar_t *>(localPath->data()),
+                                                   static_cast<int>(localPath->size() / (sizeof(wchar_t)
+                                                                                         / sizeof (char))));
     if (!preparedPath.isEmpty())
     {
-        if (preparedPath.startsWith(QString::fromUtf8("\\\\?\\")))
+        if (preparedPath.startsWith(QLatin1String("\\\\?\\")))
         {
             preparedPath = preparedPath.mid(4);
         }
 
-        if (preparedPath.size() < MAX_PATH)
+        if (preparedPath.size() >= MAX_PATH)
         {
-            return preparedPath;
+            preparedPath.clear();
         }
     }
 
-    return QString();
+    return preparedPath;
 }
-
-// Platform-specific strings
-const char* WindowsPlatform::settingsString {QT_TRANSLATE_NOOP("Platform", "Settings")};
-const char* WindowsPlatform::exitString {QT_TRANSLATE_NOOP("Platform", "Exit")};
-const char* WindowsPlatform::fileExplorerString {QT_TRANSLATE_NOOP("Platform", "Show in Explorer")};

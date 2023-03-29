@@ -555,7 +555,7 @@ QMenu* MegaTransferView::createContextMenu()
     auto contextMenu = new QMenu(this);
     contextMenu->setWindowFlags(contextMenu->windowFlags() | Qt::NoDropShadowWindowHint);
     contextMenu->setAttribute(Qt::WA_DeleteOnClose);
-    Platform::initMenu(contextMenu);
+    Platform::getInstance()->initMenu(contextMenu, "ContextMenu");
 
     QModelIndexList indexes = selectedIndexes();
     auto modelSize = model()->rowCount();

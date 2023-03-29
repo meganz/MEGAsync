@@ -24,6 +24,8 @@ public:
 
 protected:
     bool eventFilter(QObject* obj, QEvent* evnt) override;
+    void changeEvent(QEvent *event) override;
+
 
 signals:
     void search(const QString& text);

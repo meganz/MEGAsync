@@ -49,6 +49,7 @@ void ThreadedQueueShellNotifier::checkReportQueueSize()
 
 void ThreadedQueueShellNotifier::notify(const QString &localPath)
 {
+    logNotify("ThreadedShellNotifier", localPath);
     // make sure the thread was started
     if (!mThread.joinable())
     {

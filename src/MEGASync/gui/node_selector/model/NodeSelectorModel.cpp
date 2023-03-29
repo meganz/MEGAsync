@@ -17,7 +17,7 @@
 const char* INDEX_PROPERTY = "INDEX";
 
 NodeRequester::NodeRequester(NodeSelectorModel *model)
-    : QObject(model),
+    : QObject(nullptr),
       mModel(model),
       mCancelToken(mega::MegaCancelToken::createInstance())
 {}
@@ -89,7 +89,7 @@ void NodeRequester::search(const QString &text, NodeSelectorModelItemSearch::Typ
     mSearchCanceled = false;
     mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
 
-    auto nodeList = std::unique_ptr<mega::MegaNodeList>(megaApi->search(text.toUtf8(), mCancelToken.get()));
+    auto nodeList = std::unique_ptr<mega::MegaNodeList>(megaApi->search(text.toUtf8().constData(), mCancelToken.get()));
     QList<NodeSelectorModelItem*> items;
     NodeSelectorModelItemSearch::Types searchedTypes = NodeSelectorModelItemSearch::Type::NONE;
 
@@ -100,7 +100,7 @@ void NodeRequester::search(const QString &text, NodeSelectorModelItemSearch::Typ
         {
             break;
         }
-        if((node->isFile() && mShowFiles) || megaApi->isInRubbish(node))
+        if((node->isFile() && !mShowFiles) || megaApi->isInRubbish(node))
         {
             continue;
         }
@@ -113,7 +113,8 @@ void NodeRequester::search(const QString &text, NodeSelectorModelItemSearch::Typ
         }
         else if(!mShowReadOnlyFolders)
         {
-            if(megaApi->getAccess(node) == mega::MegaShare::ACCESS_READ)
+            if(megaApi->getAccess(node) == mega::MegaShare::ACCESS_READ
+               || !node->isNodeKeyDecrypted())
             {
                 continue;
             }
@@ -151,7 +152,7 @@ void NodeRequester::search(const QString &text, NodeSelectorModelItemSearch::Typ
     {
         QMutexLocker d(&mDataMutex);
         mRootItems.append(items);
-        emit searchItemsCreated(items, searchedTypes);
+        emit searchItemsCreated(searchedTypes);
     }
 }
 
@@ -163,7 +164,7 @@ void NodeRequester::createCloudDriveRootItem()
     {
         auto item = new NodeSelectorModelItemCloudDrive(std::move(root), mShowFiles);
         mRootItems.append(item);
-        emit megaCloudDriveRootItemCreated(item);
+        emit megaCloudDriveRootItemCreated();
     }
 }
 
@@ -187,7 +188,8 @@ void NodeRequester::createIncomingSharesRootItems(std::shared_ptr<mega::MegaNode
         }
         else if(!mShowReadOnlyFolders)
         {
-            if(megaApi->getAccess(nodeList->get(i)) == mega::MegaShare::ACCESS_READ)
+            if(megaApi->getAccess(nodeList->get(i)) == mega::MegaShare::ACCESS_READ
+               || !nodeList->get(i)->isNodeKeyDecrypted())
             {
                 continue;
             }
@@ -215,7 +217,7 @@ void NodeRequester::createIncomingSharesRootItems(std::shared_ptr<mega::MegaNode
     else
     {
         mRootItems.append(items);
-        emit megaIncomingSharesRootItemsCreated(items);
+        emit megaIncomingSharesRootItemsCreated();
     }
 }
 
@@ -235,13 +237,13 @@ void NodeRequester::createBackupRootItems(mega::MegaHandle backupsHandle)
                 //NodeSelectorModelItem* item = new NodeSelectorModelItem(std::move(backupsNode), mShowFiles);
                 //item->setAsVaultNode();
                 mRootItems.append(item);
-                emit megaBackupRootItemsCreated(item);
             }
         }
     }
-    else
+
+    if(!isAborted())
     {
-        emit megaBackupRootItemsCreated(nullptr);
+        emit megaBackupRootItemsCreated();
     }
 }
 
@@ -366,6 +368,9 @@ NodeSelectorModel::NodeSelectorModel(QObject *parent) :
     connect(this, &NodeSelectorModel::removeItem, mNodeRequesterWorker, &NodeRequester::removeItem);
     connect(this, &NodeSelectorModel::removeRootItem, mNodeRequesterWorker, &NodeRequester::removeRootItem);
 
+    connect(mNodeRequesterThread, &QThread::finished, mNodeRequesterThread, &QObject::deleteLater, Qt::DirectConnection);
+    connect(mNodeRequesterThread, &QThread::finished, mNodeRequesterWorker, &QObject::deleteLater, Qt::DirectConnection);
+
     connect(mNodeRequesterWorker, &NodeRequester::nodesReady, this, &NodeSelectorModel::onChildNodesReady, Qt::QueuedConnection);
     connect(mNodeRequesterWorker, &NodeRequester::nodeAdded, this, &NodeSelectorModel::onNodeAdded, Qt::QueuedConnection);
 
@@ -376,9 +381,8 @@ NodeSelectorModel::NodeSelectorModel(QObject *parent) :
 
 NodeSelectorModel::~NodeSelectorModel()
 {
-    connect(mNodeRequesterThread, &QThread::finished, mNodeRequesterThread, &QObject::deleteLater, Qt::DirectConnection);
-    connect(mNodeRequesterThread, &QThread::finished, mNodeRequesterWorker, &QObject::deleteLater, Qt::DirectConnection);
     mNodeRequesterThread->quit();
+    mNodeRequesterThread->wait();
 }
 
 int NodeSelectorModel::columnCount(const QModelIndex &) const
@@ -466,10 +470,6 @@ QVariant NodeSelectorModel::data(const QModelIndex &index, int role) const
             {
                 return QVariant::fromValue(item->getNode());
             }
-            case toInt(NodeRowDelegateRoles::ENABLED_ROLE):
-            {
-                return mSyncSetupMode ? item->isSyncable() : true;
-            }
             case toInt(NodeRowDelegateRoles::INDENT_ROLE):
             {
                 return item->isCloudDrive() || item->isVault() ? -10 : 0;
@@ -492,6 +492,25 @@ QVariant NodeSelectorModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
+Qt::ItemFlags NodeSelectorModel::flags(const QModelIndex &index) const
+{
+    auto flags = QAbstractItemModel::flags(index);
+
+    if (index.isValid())
+    {
+        NodeSelectorModelItem* item = static_cast<NodeSelectorModelItem*>(index.internalPointer());
+        if (item)
+        {
+            if((mSyncSetupMode && !item->isSyncable()) || (item->getNode() && !item->getNode()->isNodeKeyDecrypted()))
+            {
+                flags &= ~(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+            }
+        }
+    }
+
+    return flags;
+}
+
 QModelIndex NodeSelectorModel::index(int row, int column, const QModelIndex &parent) const
 {
     QModelIndex index;
@@ -504,7 +523,11 @@ QModelIndex NodeSelectorModel::index(int row, int column, const QModelIndex &par
             NodeSelectorModelItem* item(static_cast<NodeSelectorModelItem*>(parent.internalPointer()));
             if(item)
             {
-                index =  createIndex(row, column, item->getChild(row).data());
+                auto data = item->getChild(row).data();
+                if(data)
+                {
+                    index =  createIndex(row, column, data);
+                }
             }
             mNodeRequesterWorker->lockDataMutex(false);
         }
@@ -768,17 +791,12 @@ QVariant NodeSelectorModel::getText(const QModelIndex &index, NodeSelectorModelI
         {
             if(item->isVault() || item->isCloudDrive())
             {
-                return MegaNodeNames::getNodeName(item->getNode()->getName());
+                return MegaNodeNames::getRootNodeName(item->getNode().get());
             }
-
-            QString nodeName = QString::fromUtf8(item->getNode()->getName());
-
-            if(nodeName == QLatin1String("NO_KEY") || nodeName == QLatin1String("CRYPTO_ERROR"))
+            else
             {
-                nodeName = QCoreApplication::translate("MegaError", "Decryption error");
+                return MegaNodeNames::getNodeName(item->getNode().get());
             }
-
-            return QVariant(nodeName);
         }
         case COLUMN::DATE:
         {
@@ -918,11 +936,6 @@ QModelIndex NodeSelectorModel::getIndexFromNode(const std::shared_ptr<mega::Mega
     return QModelIndex();
 }
 
-void NodeSelectorModel::continueLoading(NodeSelectorModelItem *item)
-{
-    Q_UNUSED(item)
-}
-
 void NodeSelectorModel::rootItemsLoaded()
 {
     endResetModel();
@@ -942,6 +955,10 @@ void NodeSelectorModel::loadLevelFinished()
 
 bool NodeSelectorModel::canFetchMore(const QModelIndex &parent) const
 {
+    if(!parent.isValid())
+    {
+        return false;
+    }
     NodeSelectorModelItem* item = static_cast<NodeSelectorModelItem*>(parent.internalPointer());
     if(item)
     {
@@ -984,7 +1001,6 @@ void NodeSelectorModel::onChildNodesReady(NodeSelectorModelItem* parent)
     auto index = parent->property(INDEX_PROPERTY).value<QModelIndex>();
     mIndexesActionInfo.indexesToBeExpanded.append(index);
     continueWithNextItemToLoad(index);
-    continueLoading(parent);
 }
 
 bool NodeSelectorModel::continueWithNextItemToLoad(const QModelIndex& parentIndex)

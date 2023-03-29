@@ -1,8 +1,6 @@
 #ifndef LOWDISKSPACEDIALOG_H
 #define LOWDISKSPACEDIALOG_H
 
-#include "HighDpiResize.h"
-
 #include <QDialog>
 
 namespace Ui {

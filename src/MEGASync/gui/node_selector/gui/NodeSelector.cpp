@@ -26,8 +26,6 @@ NodeSelector::NodeSelector(QWidget *parent) :
     mMegaApi(MegaSyncApp->getMegaApi()),
     ui(new Ui::NodeSelector)
 {
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-
     ui->setupUi(this);
 
     connect(ui->bShowIncomingShares, &QPushButton::clicked, this, &NodeSelector::onbShowIncomingSharesClicked);
@@ -251,23 +249,21 @@ void NodeSelector::closeEvent(QCloseEvent* event)
         if(viewContainer)
         {
             viewContainer->abort();
-            processCloseEvent(viewContainer->getProxyModel(), event);
+            if(viewContainer->getProxyModel()->isModelProcessing())
+            {
+                connect(viewContainer->getProxyModel()->getMegaModel(), &NodeSelectorModel::blockUi, this, [this](bool blocked){
+                    if(!blocked)
+                    {
+                        close();
+                    }
+                });
+                event->ignore();
+                return;
+            }
         }
     }
-}
 
-void NodeSelector::processCloseEvent(NodeSelectorProxyModel *proxy, QCloseEvent *event)
-{
-    if(proxy->isModelProcessing())
-    {
-        connect(proxy->getMegaModel(), &NodeSelectorModel::blockUi, this, [this](bool blocked){
-            if(!blocked)
-            {
-                close();
-            }
-        });
-        event->ignore();
-    }
+    QDialog::closeEvent(event);
 }
 
 void NodeSelector::setToggledStyle(TabItem item)

@@ -54,7 +54,6 @@ signals:
     void onLinkInfoAvailable(int i);
     void onLinkInfoRequestFinish();
     void onLinkImportFinish();
-    void onDupplicateLink(QString link, QString name, mega::MegaHandle handle);
     void dupplicateDownload(QString localPath, QString name, mega::MegaHandle handle, QString nodeKey);
 
 public slots:

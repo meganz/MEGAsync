@@ -109,7 +109,6 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     mSyncTableEventFilter = std::unique_ptr<SyncTableViewTooltips>(new SyncTableViewTooltips());
     mBackupTableEventFilter = std::unique_ptr<BackupTableViewTooltips>(new BackupTableViewTooltips());
     mUi->setupUi(this);
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
     mUi->bOpenBackupFolder->setEnabled(false);
 
@@ -177,7 +176,7 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
 #endif
 
 #ifdef Q_OS_MACOS
-    this->setWindowTitle(tr("Preferences"));
+    this->setWindowTitle(tr("Settings"));
     mUi->cStartOnStartup->setText(tr("Launch at login"));
     mUi->lLocalDebris->setText(mUi->lLocalDebris->text().arg(QString::fromUtf8(MEGA_DEBRIS_FOLDER)));
 
@@ -368,7 +367,6 @@ void SettingsDialog::showGuestMode()
     mUi->pNetwork->show();
     QPointer<ProxySettings> proxySettingsDialog = new ProxySettings(mApp, this);
     proxySettingsDialog->setAttribute(Qt::WA_DeleteOnClose);
-    proxySettingsDialog->setWindowModality(Qt::WindowModal);
     DialogOpener::showDialog(proxySettingsDialog,
     [proxySettingsDialog, this]()
     {
@@ -516,7 +514,7 @@ void SettingsDialog::loadSettings()
 
     // if checked: make sure both sources are true
     mUi->cStartOnStartup->setChecked(mPreferences->startOnStartup()
-                                     && Platform::isStartOnStartupActive());
+                                     && Platform::getInstance()->isStartOnStartupActive());
 
     //Language
     mUi->cLanguage->clear();
@@ -804,6 +802,7 @@ void SettingsDialog::reloadToolBarItemNames()
     bGeneral.get()->setText(tr("General"));
     bAccount.get()->setText(tr("Account"));
     bSyncs.get()->setText(tr("Sync"));
+    bBackup.get()->setText(tr("Backup"));
     bSecurity.get()->setText(tr("Security"));
     bFolders.get()->setText(tr("Folders"));
     bNetwork.get()->setText(tr("Network"));
@@ -873,17 +872,33 @@ void SettingsDialog::on_bClearCache_clicked()
         }
     }
 
-    auto result = QMessageBox::warning(this, tr("Clear local backup"), tr("Backups of the previous versions of your synced files in your computer"
-                                                                         " will be permanently deleted. Please, check your backup folders to see"
-                                                                         " if you need to rescue something before continuing:")
-                                      + QString::fromUtf8("<br/>") + syncs
-                                      + QString::fromUtf8("<br/><br/>")
-                                      + tr("Do you want to delete your local backup now?"),
-                                      QMessageBox::No | QMessageBox::Yes, QMessageBox::No
-                                      );
-
     QPointer<SettingsDialog> thisPointer(this);
-    if (thisPointer && result == QMessageBox::Yes)
+
+    QPointer<QMessageBox> warningDel = new QMessageBox(this);
+    warningDel->setIcon(QMessageBox::Warning);
+    warningDel->setWindowTitle(tr("Clear local backup"));
+    warningDel->setTextFormat(Qt::RichText);
+    warningDel->setTextInteractionFlags(Qt::NoTextInteraction | Qt::LinksAccessibleByMouse);
+
+    warningDel->setText(tr("Backups of the previous versions of your synced files in your computer"
+                           " will be permanently deleted. Please, check your backup folders to see"
+                           " if you need to rescue something before continuing:")
+                        + QString::fromUtf8("<br/>") + syncs
+                        + QString::fromUtf8("<br/><br/>")
+                        + tr("Do you want to delete your local backup now?"));
+    warningDel->setStandardButtons(QMessageBox::No | QMessageBox::Yes);
+    warningDel->setDefaultButton(QMessageBox::No);
+
+    int result = warningDel->exec();
+    if (!warningDel || (result != QMessageBox::Yes))
+    {
+        delete warningDel;
+        return;
+    }
+
+    delete warningDel;
+
+    if (thisPointer)
     {
         QtConcurrent::run(deleteCache);
         mCacheSize = 0;
@@ -901,34 +916,55 @@ void SettingsDialog::on_bClearRemoteCache_clicked()
     }
 
     std::unique_ptr<const char[]> base64Handle(syncDebris->getBase64Handle());
-    auto result = QMessageBox::warning(this, tr("Clear remote backup"), tr("Backups of the previous versions of your synced files in MEGA will be"
-                                                                          " permanently deleted. Please, check your [A] folder in the Rubbish Bin"
-                                                                          " of your MEGA account to see if you need to rescue something"
-                                                                          " before continuing.")
-                                                                       .replace(QString::fromUtf8("[A]"),
-                                                                                QString::fromUtf8("<a href=\"mega://#fm/%1\">SyncDebris</a>")
-                                                                                .arg(QString::fromUtf8(base64Handle.get())))
-                                                                       + QString::fromUtf8("<br/><br/>")
-                                                                       + tr("Do you want to delete your remote backup now?"),
-                                      QMessageBox::No | QMessageBox::Yes, QMessageBox::No
-                                      );
-    if (result == QMessageBox::Yes)
+
+    QPointer<SettingsDialog> thisPointer(this);
+
+    QPointer<QMessageBox> warningDel = new QMessageBox(QMessageBox::Warning,tr("Clear remote backup"),
+                                                       tr("Backups of the previous versions of your synced files in MEGA will be"
+                                                          " permanently deleted. Please, check your [A] folder in the Rubbish Bin"
+                                                          " of your MEGA account to see if you need to rescue something"
+                                                          " before continuing.")
+                                                       .replace(QString::fromUtf8("[A]"),
+                                                                QString::fromUtf8("<a href=\"mega://#fm/%1\">SyncDebris</a>")
+                                                                .arg(QString::fromUtf8(base64Handle.get())))
+                                                       + QString::fromUtf8("<br/><br/>")
+                                                       + tr("Do you want to delete your remote backup now?"),
+                                                       QMessageBox::Yes | QMessageBox::No,
+                                                       this
+                                                       );
+    warningDel->setAttribute(Qt::WA_DeleteOnClose);
+    warningDel->setTextFormat(Qt::RichText);
+    warningDel->setTextInteractionFlags(Qt::NoTextInteraction | Qt::LinksAccessibleByMouse);
+    warningDel->setDefaultButton(QMessageBox::No);
+
+    int result = warningDel->exec();
+    if (!thisPointer || (result != QMessageBox::Yes))
     {
-        QtConcurrent::run(deleteRemoteCache, mMegaApi);
-        mRemoteCacheSize = 0;
-        onCacheSizeAvailable();
+        return;
     }
+
+    QtConcurrent::run(deleteRemoteCache, mMegaApi);
+    mRemoteCacheSize = 0;
+    onCacheSizeAvailable();
 }
 
 void SettingsDialog::on_bClearFileVersions_clicked()
 {
-    QPointer<SettingsDialog> dialog = QPointer<SettingsDialog>(this);
-    if (QMegaMessageBox::warning(nullptr,
-                             QString::fromUtf8("MEGAsync"),
-                             tr("You are about to permanently remove all file versions."
-                                " Would you like to proceed?"),
-                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
-            != QMessageBox::Yes || !dialog)
+    QPointer<SettingsDialog> thisPointer = QPointer<SettingsDialog>(this);
+    QPointer<QMessageBox> warningDel = new QMessageBox(QMessageBox::Warning,QString::fromUtf8("MEGAsync"),
+                                                       tr("You are about to permanently remove all file versions."
+                                                          " Would you like to proceed?"),
+                                                       QMessageBox::Yes | QMessageBox::No,
+                                                       this
+                                                       );
+
+    warningDel->setAttribute(Qt::WA_DeleteOnClose);
+    warningDel->setTextFormat(Qt::RichText);
+    warningDel->setTextInteractionFlags(Qt::NoTextInteraction | Qt::LinksAccessibleByMouse);
+    warningDel->setDefaultButton(QMessageBox::No);
+
+    int result = warningDel->exec();
+    if (!thisPointer || (result != QMessageBox::Yes))
     {
         return;
     }
@@ -984,7 +1020,7 @@ void SettingsDialog::on_cAutoUpdate_toggled(bool checked)
 void SettingsDialog::on_cStartOnStartup_toggled(bool checked)
 {
     if (mLoadingSettings) return;
-    if (!Platform::startOnStartup(checked))
+    if (!Platform::getInstance()->startOnStartup(checked))
     {
         // in case of failure - make sure configuration keeps the right value
         //LOG_debug << "Failed to " << (checked ? "enable" : "disable") << " MEGASync on startup.";
@@ -1067,7 +1103,7 @@ void SettingsDialog::on_cOverlayIcons_toggled(bool checked)
     mUi->cOverlayIcons->setEnabled(false);
     mPreferences->disableOverlayIcons(!checked);
 #ifdef Q_OS_MACOS
-    Platform::notifyRestartSyncFolders();
+    Platform::getInstance()->notifyRestartSyncFolders();
 #endif
     mApp->notifyChangeToAllFolders();
 }
@@ -1080,14 +1116,14 @@ void SettingsDialog::on_cFinderIcons_toggled(bool checked)
     {
         for (auto syncSetting : mModel->getAllSyncSettings())
         {
-            Platform::addSyncToLeftPane(syncSetting->getLocalFolder(),
+            Platform::getInstance()->addSyncToLeftPane(syncSetting->getLocalFolder(),
                                         syncSetting->name(),
                                         syncSetting->getSyncID());
         }
     }
     else
     {
-        Platform::removeAllSyncsFromLeftPane();
+        Platform::getInstance()->removeAllSyncsFromLeftPane();
     }
     mPreferences->disableLeftPaneIcons(!checked);
 }
@@ -1338,9 +1374,9 @@ void SettingsDialog::on_bMyAccount_clicked()
 
 void SettingsDialog::on_bStorageDetails_clicked()
 {
-//    auto accountDetailsDialog = new AccountDetailsDialog(this);
-//    mApp->updateUserStats(true, true, true, true, USERSTATS_STORAGECLICKED);
-//    DialogOpener::showDialog<AccountDetailsDialog>(accountDetailsDialog);
+    auto accountDetailsDialog = new AccountDetailsDialog();
+    mApp->updateUserStats(true, true, true, true, USERSTATS_STORAGECLICKED);
+    DialogOpener::showNonModalDialog<AccountDetailsDialog>(accountDetailsDialog);
 }
 
 void SettingsDialog::on_bLogout_clicked()
@@ -1533,10 +1569,9 @@ void SettingsDialog::on_bPermissions_clicked()
     int filePermissions = mMegaApi->getDefaultFilePermissions();
 
     QPointer<PermissionsDialog> dialog = new PermissionsDialog(this);
+    dialog->setFolderPermissions(folderPermissions);
+    dialog->setFilePermissions(filePermissions);
     DialogOpener::showDialog<PermissionsDialog>(dialog, [dialog, &folderPermissions, &filePermissions, this](){
-        dialog->setFolderPermissions(folderPermissions);
-        dialog->setFilePermissions(filePermissions);
-
         if (dialog->result() == QDialog::Accepted)
         {
             filePermissions = dialog->filePermissions();
@@ -1745,15 +1780,14 @@ void SettingsDialog::on_bBackup_clicked()
 
 void SettingsDialog::on_bAddBackup_clicked()
 {
-    AddBackupDialog *addBackup = new AddBackupDialog(this);
-    addBackup->setAttribute(Qt::WA_DeleteOnClose);
-    addBackup->setWindowModality(Qt::WindowModal);
-    addBackup->open();
-
-    connect(addBackup, &AddBackupDialog::accepted, this, [this, addBackup]()
+    QPointer<AddBackupDialog> addBackup = new AddBackupDialog(this);
+    DialogOpener::showDialog(addBackup,[this, addBackup]()
     {
-        syncsStateInformation(SyncStateInformation::SAVING_BACKUPS);
-        mBackupController.addBackup(addBackup->getSelectedFolder(), addBackup->getBackupName());
+        if(addBackup->result() == QDialog::Accepted)
+        {
+            mBackupController.addBackup(addBackup->getSelectedFolder(), addBackup->getBackupName());
+            syncsStateInformation(SyncStateInformation::SAVING_BACKUPS);
+        }
     });
 }
 
@@ -1773,14 +1807,15 @@ void SettingsDialog::on_bDeleteBackup_clicked()
 
 void SettingsDialog::removeBackup(std::shared_ptr<SyncSettings> backup)
 {
-    RemoveBackupDialog *dialog = new RemoveBackupDialog(backup, this);
-    dialog->setAttribute(Qt::WA_DeleteOnClose);
-    dialog->open();
+    QPointer<RemoveBackupDialog> dialog = new RemoveBackupDialog(backup, this);
 
-    connect(dialog, &RemoveBackupDialog::accepted, this, [this, dialog]()
+    DialogOpener::showDialog(dialog,[this, dialog]()
     {
-        syncsStateInformation(SyncStateInformation::SAVING_BACKUPS);
-        mBackupController.removeSync(dialog->backupToRemove(), dialog->targetFolder());
+        if(dialog->result() == QDialog::Accepted)
+        {
+            syncsStateInformation(SyncStateInformation::SAVING_BACKUPS);
+            mBackupController.removeSync(dialog->backupToRemove(), dialog->targetFolder());
+        }
     });
 }
 
@@ -1849,38 +1884,46 @@ void SettingsDialog::on_bExportMasterKey_clicked()
     }
 #endif
 
+    DialogBlocker* blocker = new DialogBlocker(this);
     QDir dir(defaultPath);
-    QString fileName = QFileDialog::getSaveFileName(0, tr("Export Master key"),
+    QPointer<SettingsDialog> currentDialog = this;
+    QString fileName = QFileDialog::getSaveFileName(nullptr, tr("Export Master key"),
                                                     dir.filePath(tr("MEGA-RECOVERYKEY")),
                                                     QString::fromUtf8("Txt file (*.txt)"), nullptr,
                                                     QFileDialog::ShowDirsOnly
                                                     | QFileDialog::DontResolveSymlinks);
-    if (fileName.isEmpty())
+
+    if(currentDialog)
     {
-        return;
+        blocker->deleteLater();
+
+        if (fileName.isEmpty())
+        {
+            return;
+        }
+
+        QFile file(fileName);
+        if (!file.open(QIODevice::WriteOnly | QFile::Truncate))
+        {
+            QMegaMessageBox::information(this, tr("Unable to write file"), file.errorString());
+            return;
+        }
+
+        QTextStream out(&file);
+        out << mMegaApi->exportMasterKey();
+
+        file.close();
+
+        mMegaApi->masterKeyExported();
+
+        QMegaMessageBox::information(this, tr("Warning"),
+                                     tr("Exporting the master key and keeping it in a secure location"
+                                        " enables you to set a new password without data loss.")
+                                     + QString::fromUtf8("\n")
+                                     + tr("Always keep physical control of your master key (e.g. on a"
+                                          " client device, external storage, or print)."),
+                                     QMessageBox::Ok);
     }
-
-    QFile file(fileName);
-    if (!file.open(QIODevice::WriteOnly | QFile::Truncate))
-    {
-        QMegaMessageBox::information(this, tr("Unable to write file"), file.errorString());
-        return;
-    }
-
-    QTextStream out(&file);
-    out << mMegaApi->exportMasterKey();
-
-    file.close();
-
-    mMegaApi->masterKeyExported();
-
-    QMegaMessageBox::information(this, tr("Warning"),
-                                 tr("Exporting the master key and keeping it in a secure location"
-                                    " enables you to set a new password without data loss.")
-                                 + QString::fromUtf8("\n")
-                                 + tr("Always keep physical control of your master key (e.g. on a"
-                                      " client device, external storage, or print)."),
-                                 QMessageBox::Ok);
 }
 
 void SettingsDialog::on_bChangePassword_clicked()
@@ -1951,13 +1994,9 @@ void SettingsDialog::on_bFolders_clicked()
 
 void SettingsDialog::on_bUploadFolder_clicked()
 {
-    QPointer<NodeSelector> nodeSelector = new UploadNodeSelector(this);
-    nodeSelector->setWindowModality(Qt::WindowModal);
-    std::shared_ptr<MegaNode> defaultNode(mMegaApi->getNodeByPath(mUi->eUploadFolder->text()
-                                                                  .toUtf8().constData()));
+    UploadNodeSelector* nodeSelector = new UploadNodeSelector(this);
+    std::shared_ptr<mega::MegaNode> defaultNode(mMegaApi->getNodeByPath(mUi->eUploadFolder->text().toStdString().c_str()));
     nodeSelector->setSelectedNodeHandle(defaultNode);
-
-
     nodeSelector->setDefaultUploadOption(mHasDefaultUploadOption);
     nodeSelector->showDefaultUploadOption();
 
@@ -2004,11 +2043,8 @@ void SettingsDialog::on_bDownloadFolder_clicked()
                 }
                 else
                 {
-                    if (!test.open())
-                    {
-                        QMegaMessageBox::critical(nullptr, tr("Error"), tr("You don't have write permissions"
-                                                                           " in this local folder."));
-                    }
+                    QMegaMessageBox::critical(nullptr, tr("Error"), tr("You don't have write permissions"
+                                                                       " in this local folder."));
                 }
             }
         }

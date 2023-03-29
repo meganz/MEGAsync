@@ -31,6 +31,9 @@ public slots:
 signals:
     void testSignal(int value);
 
+protected:
+    void changeEvent(QEvent *event) override;
+
 private:
 //    HighDpiResize mHighDpiResize;
 //    QQuickView* mUi;

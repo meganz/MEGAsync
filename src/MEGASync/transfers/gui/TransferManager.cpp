@@ -7,6 +7,7 @@
 #include "MegaTransferDelegate.h"
 #include "MegaTransferView.h"
 #include "OverQuotaDialog.h"
+#include "DialogOpener.h"
 
 #include <QMouseEvent>
 #include <QScrollBar>
@@ -36,7 +37,7 @@ const char* ITS_ON = "itsOn";
 const char* SEARCH_TEXT = "searchText";
 const char* SEARCH_BUTTON_SELECTED = "selected";
 
-TransferManager::TransferManager(MegaApi *megaApi) :
+TransferManager::TransferManager(TransfersWidget::TM_TAB tab, MegaApi *megaApi) :
     QDialog(nullptr),
     mUi(new Ui::TransferManager),
     mMegaApi(megaApi),
@@ -57,22 +58,11 @@ TransferManager::TransferManager(MegaApi *megaApi) :
     mUiDragBackDrop->setupUi(mDragBackDrop);
     mDragBackDrop->hide();
 
-#ifdef Q_OS_MACOS
-    mUi->leSearchField->setAttribute(Qt::WA_MacShowFocusRect,0);
-#else
-    Qt::WindowFlags flags =  Qt::Window;
-    this->setWindowFlags(flags);
-#endif
-
-    setAttribute(Qt::WA_DeleteOnClose, true);
     mUi->wTransfers->setupTransfers();
-
-    mUi->lTextSearch->installEventFilter(this);
-    mUi->leSearchField->installEventFilter(this);
 
     mModel = mUi->wTransfers->getModel();
 
-    Platform::enableDialogBlur(this);
+    Platform::getInstance()->enableDialogBlur(this);
 
     mUi->wSearch->hide();
     mUi->wMediaType->hide();
@@ -145,8 +135,8 @@ TransferManager::TransferManager(MegaApi *megaApi) :
 
         if(value > TransfersWidget::TYPES_TAB_BASE && value < TransfersWidget::TYPES_LAST)
         {
-            TransfersWidget::TM_TAB tab = static_cast<TransfersWidget::TM_TAB>(value);
-            mNumberLabelsGroup[tab]->parentWidget()->hide();
+            TransfersWidget::TM_TAB currentTab = static_cast<TransfersWidget::TM_TAB>(value);
+            mNumberLabelsGroup[currentTab]->parentWidget()->hide();
         }
     }
 
@@ -224,14 +214,13 @@ TransferManager::TransferManager(MegaApi *megaApi) :
     mUi->wUpSpeed->setSizePolicy(sizePolicy);
 
     // Connect to storage quota signals
-    connect(qobject_cast<MegaApplication*>(qApp), &MegaApplication::storageStateChanged,
+    connect(MegaSyncApp, &MegaApplication::storageStateChanged,
             this, &TransferManager::onStorageStateChanged,
             Qt::QueuedConnection);
 
     setAcceptDrops(true);
 
     // Init state
-
     auto storageState = MegaSyncApp->getAppliedStorageState();
     auto transferQuotaState = MegaSyncApp->getTransferQuotaState();
     onStorageStateChanged(storageState);
@@ -242,10 +231,7 @@ TransferManager::TransferManager(MegaApi *megaApi) :
     updateCurrentOverQuotaLink();
     onUpdatePauseState(mPreferences->getGlobalPaused());
 
-    on_tAllTransfers_clicked();
-
-    //Update stats
-    onTransfersDataUpdated();
+    toggleTab(tab);
 
     mTransferScanCancelUi = new TransferScanCancelUi(mUi->sTransfers, mTabNoItem[TransfersWidget::ALL_TRANSFERS_TAB]);
     connect(mTransferScanCancelUi, &TransferScanCancelUi::cancelTransfers,
@@ -256,6 +242,18 @@ TransferManager::TransferManager(MegaApi *megaApi) :
     mUi->wUlResults->installEventFilter(this);
     mUi->lTransfers->installEventFilter(this);
     mUi->wLeftPane->installEventFilter(this);
+
+    mUi->lTextSearch->installEventFilter(this);
+    mUi->leSearchField->installEventFilter(this);
+
+#ifdef Q_OS_MACOS
+    mUi->leSearchField->setAttribute(Qt::WA_MacShowFocusRect,0);
+#else
+    Qt::WindowFlags flags =  Qt::Window;
+    this->setWindowFlags(flags);
+#endif
+
+    setAttribute(Qt::WA_DeleteOnClose, true);
 }
 
 
@@ -729,15 +727,8 @@ void TransferManager::onTransfersDataUpdated()
     refreshFileTypesStats();
     refreshSearchStats();
     refreshStateStats();
-
-    if(label)
-    {
-        long long newNumber = label->text().toLongLong();
-        if(oldNumber != newNumber && (oldNumber == 0 || newNumber == 0))
-        {
-            refreshView();
-        }
-    }
+    checkActionAndMediaVisibility();
+    refreshView();
 }
 
 void TransferManager::onStorageStateChanged(int storageState)
@@ -759,7 +750,7 @@ void TransferManager::onStorageStateChanged(int storageState)
         default:
         {
             mUi->lStorageOverQuota->hide();
-            QuotaState tQuotaState (qobject_cast<MegaApplication*>(qApp)->getTransferQuotaState());
+            QuotaState tQuotaState (MegaSyncApp->getTransferQuotaState());
             mUi->tSeePlans->setVisible(tQuotaState == QuotaState::FULL);
 
             break;
@@ -1130,22 +1121,22 @@ void TransferManager::onFileTypeButtonClicked(TransfersWidget::TM_TAB tab, Utili
 
 void TransferManager::on_bOpenLinks_clicked()
 {
-    qobject_cast<MegaApplication*>(qApp)->importLinksFromWidget(this);
+    MegaSyncApp->importLinksFromWidget(this);
 }
 
 void TransferManager::on_tCogWheel_clicked()
 {
-    qobject_cast<MegaApplication*>(qApp)->openSettings();
+    MegaSyncApp->openSettings();
 }
 
 void TransferManager::on_bDownload_clicked()
 {
-    qobject_cast<MegaApplication*>(qApp)->downloadActionClickedFromWidget(this);
+    MegaSyncApp->downloadActionClickedFromWidget(this);
 }
 
 void TransferManager::on_bUpload_clicked()
 {
-    qobject_cast<MegaApplication*>(qApp)->uploadActionClickedFromWidget(this);
+    MegaSyncApp->uploadActionClickedFromWidget(this);
 }
 
 void TransferManager::on_leSearchField_returnPressed()
@@ -1191,30 +1182,33 @@ void TransferManager::toggleTab(TransfersWidget::TM_TAB newTab)
             pushButton->setChecked(true);
         }
 
+        auto previousTab = mUi->wTransfers->getCurrentTab();
+        mUi->wTransfers->setCurrentTab(newTab);
+
         //The rest of cases
-        if (mUi->wTransfers->getCurrentTab() == TransfersWidget::COMPLETED_TAB
-                || mUi->wTransfers->getCurrentTab() == TransfersWidget::FAILED_TAB
-                || (mUi->wTransfers->getCurrentTab() > TransfersWidget::TYPES_TAB_BASE && mUi->wTransfers->getCurrentTab() < TransfersWidget::TYPES_LAST))
+        if (previousTab == TransfersWidget::COMPLETED_TAB
+                || previousTab == TransfersWidget::FAILED_TAB
+                || (previousTab > TransfersWidget::TYPES_TAB_BASE && previousTab < TransfersWidget::TYPES_LAST))
         {
             long long transfers(0);
 
-            if(mUi->wTransfers->getCurrentTab() == TransfersWidget::COMPLETED_TAB)
+            if(previousTab == TransfersWidget::COMPLETED_TAB)
             {
                 transfers = mTransfersCount.completedDownloads() + mTransfersCount.completedUploads();
             }
-            else if(mUi->wTransfers->getCurrentTab() == TransfersWidget::FAILED_TAB)
+            else if(previousTab == TransfersWidget::FAILED_TAB)
             {
                 transfers = mTransfersCount.totalFailedTransfers();
             }
             else
             {
-                Utilities::FileType fileType = static_cast<Utilities::FileType>(mUi->wTransfers->getCurrentTab() - TransfersWidget::TYPES_TAB_BASE);
+                Utilities::FileType fileType = static_cast<Utilities::FileType>(previousTab - TransfersWidget::TYPES_TAB_BASE);
                 transfers = mModel->getNumberOfTransfersForFileType(fileType);
             }
 
             if(transfers == 0)
             {
-                auto countLabel(mNumberLabelsGroup[mUi->wTransfers->getCurrentTab()]);
+                auto countLabel(mNumberLabelsGroup[previousTab]);
                 if(countLabel->parentWidget()->isVisible())
                 {
                     countLabel->parentWidget()->hide();
@@ -1222,7 +1216,8 @@ void TransferManager::toggleTab(TransfersWidget::TM_TAB newTab)
             }
         }
 
-        mUi->wTransfers->setCurrentTab(newTab);
+        //In case the media group // actions buttons must be hidden
+        checkActionAndMediaVisibility();
 
         // Set current header widget: search or not
         if (newTab == TransfersWidget::SEARCH_TAB)
@@ -1257,7 +1252,6 @@ void TransferManager::refreshView()
             }
 
             updateTransferWidget(widgetToShow);
-            checkActionAndMediaVisibility();
         }
     }
 }
@@ -1397,6 +1391,10 @@ void TransferManager::closeEvent(QCloseEvent *event)
             close();
         });
         event->ignore();
+    }
+    else
+    {
+        QDialog::closeEvent(event);
     }
 }
 

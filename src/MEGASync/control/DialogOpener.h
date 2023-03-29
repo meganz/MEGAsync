@@ -3,16 +3,27 @@
 
 #include <HighDpiResize.h>
 
-#include <DialogGeometryRetainer.h>
-
-#ifdef _WIN32
-#include <ExternalDialogOpener.h>
-#endif
-
 #include <QDialog>
 #include <QPointer>
 #include <functional>
 #include <memory>
+#include <QMap>
+
+#ifdef Q_OS_WINDOWS
+class ExternalDialogOpener : public QWidget
+{
+public:
+    ExternalDialogOpener();
+    ~ExternalDialogOpener();
+};
+#endif
+
+class DialogBlocker : public QDialog
+{
+public:
+    DialogBlocker(QWidget* parent);
+    ~DialogBlocker();
+};
 
 class DialogOpener
 {
@@ -25,6 +36,9 @@ private:
 
         QString getDialogClass() const {return mDialogClass;}
         void setDialogClass(const QString &newDialogClass) {mDialogClass = newDialogClass;}
+
+        virtual void raise() = 0;
+        virtual void close() = 0;
 
     protected:
         QString mDialogClass;
@@ -40,6 +54,18 @@ private:
             mDialog = newDialog;
         }
 
+        void raise() override
+        {
+            mDialog->show();
+            mDialog->raise();
+            mDialog->activateWindow();
+        }
+
+        void close() override
+        {
+            mDialog->close();
+        }
+
         void clear()
         {
             mDialogClass.clear();
@@ -48,7 +74,7 @@ private:
 
         bool operator==(const DialogInfo &info)
         {
-            return info.mDialog == mDialog ? true : false;
+            return (info.mDialog == mDialog);
         }
 
 
@@ -56,18 +82,27 @@ private:
         QPointer<DialogType> mDialog;
     };
 
+    struct GeometryInfo
+    {
+        bool maximized;
+        QRect geometry;
+        bool isEmpty() const {return geometry.isEmpty();}
+    };
+
 public:
     template <class DialogType>
-    static std::shared_ptr<DialogInfo<DialogType>> findDialogByClass()
+    static std::shared_ptr<DialogInfo<DialogType>> findDialog()
     {
-        auto classType = QString::fromUtf8(typeid(DialogType).name());
+        auto classType = QString::fromUtf8(DialogType::staticMetaObject.className());
 
-        foreach(auto dialogInfo, mOpenedDialogs)
+        auto finder = [classType](const std::shared_ptr<DialogInfoBase>& dialogInfo) {
+            return (dialogInfo->getDialogClass() == classType);
+        };
+
+        auto itOccurence = std::find_if(mOpenedDialogs.begin(), mOpenedDialogs.end(), finder);
+        if (itOccurence != mOpenedDialogs.end())
         {
-            if(dialogInfo->getDialogClass() == classType)
-            {
-                return std::dynamic_pointer_cast<DialogInfo<DialogType>>(dialogInfo);
-            }
+            return std::dynamic_pointer_cast<DialogInfo<DialogType>>(*itOccurence);
         }
 
         return nullptr;
@@ -76,18 +111,13 @@ public:
     template <class DialogType>
     static void removeDialogByClass()
     {
-        auto classType = QString::fromUtf8(typeid(DialogType).name());
-
-        foreach(auto dialogInfo, mOpenedDialogs)
+        auto dialogInfo = findDialog<DialogType>();
+        if(dialogInfo)
         {
-            if(dialogInfo->getDialogClass() == classType)
+            auto dialogInfoByType = std::dynamic_pointer_cast<DialogInfo<DialogType>>(dialogInfo);
+            if(dialogInfoByType)
             {
-                auto dialogInfoByType = std::dynamic_pointer_cast<DialogInfo<DialogType>>(dialogInfo);
-                if(dialogInfoByType)
-                {
-                    removeDialog(dialogInfoByType->getDialog());
-                    break;
-                }
+                removeDialog(dialogInfoByType->getDialog());
             }
         }
     }
@@ -98,7 +128,10 @@ public:
         if(dialog)
         {
             dialog->connect(dialog.data(), &DialogType::finished, [func, dialog](){
-                func();
+                if(func)
+                {
+                    func();
+                }
                 removeDialog(dialog);
             });
             showDialogImpl(dialog);
@@ -111,7 +144,10 @@ public:
         if(dialog)
         {
             dialog->connect(dialog.data(), &DialogType::finished, [dialog, caller, func](){
-                (caller->*func)(dialog);
+                if(caller && func)
+                {
+                    (caller->*func)(dialog);
+                }
                 removeDialog(dialog);
             });
 
@@ -120,15 +156,43 @@ public:
     }
 
     template <class DialogType>
+    static void showNonModalDialog(QPointer<DialogType> dialog)
+    {
+        if(dialog)
+        {
+            if(dialog->parent())
+            {
+                auto dialogGeo = dialog->geometry();
+                auto parentDialogGeo = dialog->parentWidget()->geometry();
+                dialogGeo.moveCenter(parentDialogGeo.center());
+                dialog->setGeometry(dialogGeo);
+                dialog->setParent(nullptr);
+            }
+            removeWhenClose(dialog);
+            dialog->setModal(false);
+            showDialogImpl(dialog, false);
+        }
+    }
+
+    template <class DialogType>
+    static void showGeometryRetainerDialog(QPointer<DialogType> dialog)
+    {
+        if(dialog)
+        {
+            removeWhenClose(dialog);
+            showDialogImpl(dialog, false);
+            auto classType = QString::fromUtf8(DialogType::staticMetaObject.className());
+            mSavedGeometries.insert(classType, GeometryInfo());
+        }
+    }
+
+
+    template <class DialogType>
     static void showDialog(QPointer<DialogType> dialog)
     {
         if(dialog)
         {
-            dialog->connect(dialog.data(), &DialogType::finished, [dialog]()
-            {
-                removeDialog(dialog);
-            });
-
+            removeWhenClose(dialog);
             showDialogImpl(dialog);
         }
     }
@@ -138,20 +202,54 @@ public:
     {
         if(dialog)
         {
-     //       dialog->close();
+            auto classType = QString::fromUtf8(DialogType::staticMetaObject.className());
+            if(mSavedGeometries.contains(classType))
+            {
+                GeometryInfo info;
+                info.maximized = dialog->isMaximized();
+                info.geometry = dialog->geometry();
+                mSavedGeometries.insert(classType, info);
+            }
+
             dialog->deleteLater();
+        }
+    }
+
+    static void raiseAllDialogs()
+    {
+        foreach(auto dialogInfo, mOpenedDialogs)
+        {
+            dialogInfo->raise();
+        }
+    }
+
+    static void closeAllDialogs()
+    {
+        foreach(auto dialogInfo, mOpenedDialogs)
+        {
+            dialogInfo->close();
         }
     }
 
 private:
     static QList<std::shared_ptr<DialogInfoBase>> mOpenedDialogs;
+    static QMap<QString, GeometryInfo> mSavedGeometries;
 
     template <class DialogType>
-    static void showDialogImpl(QPointer<DialogType> dialog)
+    static void removeWhenClose(QPointer<DialogType> dialog)
+    {
+        dialog->connect(dialog.data(), &DialogType::finished, [dialog]()
+        {
+            removeDialog(dialog);
+        });
+    }
+
+    template <class DialogType>
+    static void showDialogImpl(QPointer<DialogType> dialog, bool changeWindowModality = true)
     {
         if(dialog)
         {
-            auto classType = QString::fromUtf8(typeid(DialogType).name());
+            auto classType = QString::fromUtf8(DialogType::staticMetaObject.className());
             auto siblingDialogInfo = findSiblingDialogInfo<DialogType>(classType);
 
             if(siblingDialogInfo)
@@ -160,7 +258,7 @@ private:
                 {
                     QRect siblingGeometry = siblingDialogInfo->getDialog()->geometry();
                     bool siblingIsMaximized = siblingDialogInfo->getDialog()->isMaximized();
-
+                    dialog->setWindowFlags(siblingDialogInfo->getDialog()->windowFlags());
                     removeDialog(siblingDialogInfo->getDialog());
                     siblingDialogInfo->setDialog(dialog);
                     siblingDialogInfo->setDialogClass(classType);
@@ -183,27 +281,45 @@ private:
                 info->setDialog(dialog);
                 info->setDialogClass(classType);
                 mOpenedDialogs.append(info);
+                dialog->setWindowFlags(dialog->windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
                 initDialog(dialog);
             }
 
-#ifdef _WIN32
+#ifdef Q_OS_WINDOWS
             ExternalDialogOpener externalOpener;
 #endif
 
-#ifdef __APPLE__
-            if(dialog->parentWidget() && dialog->windowModality() == Qt::NonModal)
+            if(changeWindowModality)
             {
-                dialog->setWindowModality(Qt::ApplicationModal);
+                if(dialog->parent())
+                {
+                    dialog->setWindowModality(Qt::WindowModal);
+                }
             }
-#else
-            if(dialog->windowModality() == Qt::NonModal)
-            {
-                dialog->setWindowModality(Qt::ApplicationModal);
-            }
-#endif
 
-            dialog->show();
+            auto geoInfo = mSavedGeometries.value(classType, GeometryInfo());
+            if(!geoInfo.isEmpty())
+            {
+                //First time this is used
+                if(geoInfo.maximized)
+                {
+                    auto dialogGeo = dialog->geometry();
+                    dialogGeo.moveCenter(geoInfo.geometry.center());
+                    dialog->move(dialogGeo.topLeft());
+                    dialog->showMaximized();
+                }
+                else
+                {
+                    dialog->setGeometry(geoInfo.geometry);
+                    dialog->show();
+                }
+            }
+            else
+            {
+                dialog->show();
+            }
+
             dialog->raise();
             dialog->activateWindow();
         }
@@ -221,23 +337,23 @@ private:
         });
 
         //This depends on QDialog -> Check if we can templatizate it in order to reuse it with QML
-        if(auto widgetdialog = dynamic_cast<QDialog*>(dialog.data()))
-        {
-           // auto dpiResize = new HighDpiResize(widgetdialog);
-        }
+        auto dpiResize = new HighDpiResize(dialog);
+        Q_UNUSED(dpiResize);
     }
 
     template <class DialogType>
-    static std::shared_ptr<DialogInfo<DialogType>> findDialogInfo(DialogType* dialog)
+    static std::shared_ptr<DialogInfo<DialogType>> findDialogInfo(QPointer<DialogType> dialog)
     {
-        foreach(auto dialogInfo, mOpenedDialogs)
-        {
+        auto finder = [dialog](const std::shared_ptr<DialogInfoBase> dialogInfo) {
             auto dialogInfoByType = std::dynamic_pointer_cast<DialogInfo<DialogType>>(dialogInfo);
 
-            if(dialogInfoByType && dialogInfoByType->getDialog() == dialog)
-            {
-                return dialogInfoByType;
-            }
+            return (dialogInfoByType && dialogInfoByType->getDialog() == dialog);
+        };
+
+        auto itOccurence = std::find_if(mOpenedDialogs.begin(), mOpenedDialogs.end(), finder);
+        if (itOccurence != mOpenedDialogs.end())
+        {
+            return std::dynamic_pointer_cast<DialogInfo<DialogType>>(*itOccurence);
         }
 
         return nullptr;
@@ -246,19 +362,21 @@ private:
     template <class DialogType>
     static std::shared_ptr<DialogInfo<DialogType>> findSiblingDialogInfo(const QString& classType)
     {
-        foreach(auto dialogInfo, mOpenedDialogs)
-        {
+        auto finder = [classType](const std::shared_ptr<DialogInfoBase> dialogInfo) {
             auto dialogInfoByType = std::dynamic_pointer_cast<DialogInfo<DialogType>>(dialogInfo);
 
             if(dialogInfoByType && !dialogInfoByType->getDialogClass().isEmpty())
             {
-                if(/*dialogInfo->getDialog() != dialog
-                        && dialogInfo->dialog->parent() == dialog->parent()
-                        && */dialogInfoByType->getDialogClass()  == classType)
-                {
-                    return dialogInfoByType;
-                }
+                return (dialogInfoByType->getDialogClass()  == classType);
             }
+
+            return false;
+        };
+
+        auto itOccurence = std::find_if(mOpenedDialogs.begin(), mOpenedDialogs.end(), finder);
+        if (itOccurence != mOpenedDialogs.end())
+        {
+            return std::dynamic_pointer_cast<DialogInfo<DialogType>>(*itOccurence);
         }
 
         return nullptr;

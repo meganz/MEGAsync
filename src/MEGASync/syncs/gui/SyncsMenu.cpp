@@ -62,7 +62,7 @@ SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type, QObject *parent) : QObject(p
     mMenuAction->setIcon(iconMenu);
     mMenuAction->setParent(this);
 
-    Platform::initMenu(mMenu.get());
+    Platform::getInstance()->initMenu(mMenu.get(), "SyncsMenu");
     mMenu->setToolTipsVisible(true);
 
     //Highlight menu entry on mouse over

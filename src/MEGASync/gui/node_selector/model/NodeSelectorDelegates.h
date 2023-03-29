@@ -47,6 +47,7 @@ public:
     explicit DateColumnDelegate(QObject *parent = nullptr);
     void paint(QPainter* painter, const QStyleOptionViewItem& option,
                const QModelIndex& index) const override;
+    bool helpEvent(QHelpEvent *event, QAbstractItemView *view, const QStyleOptionViewItem &option, const QModelIndex &index);
 
 private:
     void initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const override;

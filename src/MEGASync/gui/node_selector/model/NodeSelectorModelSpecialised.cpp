@@ -46,9 +46,8 @@ void NodeSelectorModelCloudDrive::firstLoad()
     addRootItems();
 }
 
-void NodeSelectorModelCloudDrive::onRootItemCreated(NodeSelectorModelItem *item)
+void NodeSelectorModelCloudDrive::onRootItemCreated()
 {
-    Q_UNUSED(item)
     rootItemsLoaded();
 
     //Add the item of the Cloud Drive
@@ -56,6 +55,10 @@ void NodeSelectorModelCloudDrive::onRootItemCreated(NodeSelectorModelItem *item)
     if(canFetchMore(rootIndex))
     {
         fetchItemChildren(rootIndex);
+    }
+    else
+    {
+        emit blockUi(false);
     }
 }
 
@@ -91,9 +94,8 @@ void NodeSelectorModelIncomingShares::onItemInfoUpdated(int role)
     }
 }
 
-void NodeSelectorModelIncomingShares::onRootItemsCreated(QList<NodeSelectorModelItem *> items)
+void NodeSelectorModelIncomingShares::onRootItemsCreated()
 {
-    Q_UNUSED(items)
     rootItemsLoaded();
 
     if(!mNodesToLoad.isEmpty())
@@ -139,6 +141,7 @@ void NodeSelectorModelIncomingShares::firstLoad()
 ///////////////////////////////////////////////////////////////////////////////////////////////
 NodeSelectorModelBackups::NodeSelectorModelBackups(QObject *parent)
     : NodeSelectorModel(parent)
+    , mBackupDevicesSize(0)
 {
 }
 
@@ -203,39 +206,46 @@ bool NodeSelectorModelBackups::addToLoadingList(const std::shared_ptr<MegaNode> 
     return node && node->getType() != mega::MegaNode::TYPE_VAULT;
 }
 
-void NodeSelectorModelBackups::continueLoading(NodeSelectorModelItem *item)
+void NodeSelectorModelBackups::loadLevelFinished()
 {
-    if(item->isVault())
+    if(mIndexesActionInfo.indexesToBeExpanded.size() == 1 && mIndexesActionInfo.indexesToBeExpanded.at(0) == index(0, 0))
     {
         QModelIndex rootIndex(index(0, 0));
         int rowcount = rowCount(rootIndex);
-       for(int i = 0 ; i < rowcount; i++)
-       {
-           auto idx = index(i, 0, rootIndex);
-           if(canFetchMore(idx))
-           {
-               fetchItemChildren(idx);
-           }
-       }
+        for(int i = 0 ; i < rowcount; i++)
+        {
+            auto idx = index(i, 0, rootIndex);
+            if(canFetchMore(idx))
+            {
+                mBackupDevicesSize++;
+                fetchItemChildren(idx);
+            }
+        }
+    }
+
+    if(mBackupDevicesSize > 0)
+    {
+        mBackupDevicesSize--;
+    }
+    if(mBackupDevicesSize == 0)
+    {
+        emit levelsAdded(mIndexesActionInfo.indexesToBeExpanded);
     }
 }
 
-void NodeSelectorModelBackups::onRootItemCreated(NodeSelectorModelItem *item)
+void NodeSelectorModelBackups::onRootItemCreated()
 {
     rootItemsLoaded();
 
-    if(!item)
+    QModelIndex rootIndex(index(0, 0));
+    //Add the item of the Backups Drive
+    if(canFetchMore(rootIndex))
     {
-        loadLevelFinished();
+        fetchItemChildren(rootIndex);
     }
     else
     {
-        //Add the item of the Backups Drive
-        auto rootIndex(index(0,0));
-        if(canFetchMore(rootIndex))
-        {
-            fetchItemChildren(rootIndex);
-        }
+        loadLevelFinished();
     }
 }
 
@@ -324,9 +334,8 @@ void NodeSelectorModelSearch::proxyInvalidateFinished()
     mNodeRequesterWorker->lockSearchMutex(false);
 }
 
-void NodeSelectorModelSearch::onRootItemsCreated(QList<NodeSelectorModelItem *> items, NodeSelectorModelItemSearch::Types searchedTypes)
+void NodeSelectorModelSearch::onRootItemsCreated(NodeSelectorModelItemSearch::Types searchedTypes)
 {
-    Q_UNUSED(items)
     if(mNodeRequesterWorker->trySearchLock())
     {
         mSearchedTypes = searchedTypes;

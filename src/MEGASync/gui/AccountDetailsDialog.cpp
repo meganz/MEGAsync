@@ -25,7 +25,7 @@ AccountDetailsDialog::AccountDetailsDialog(QObject *parent) :
    // connect(obj, SIGNAL(accepted()), this, SLOT(cppSlot()));
 
     // Setup UI
-    //setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    //mUi->setupUi(this);
 
     // Set progressbars precision
 //    mUi->pbCloudDrive->setMaximum(PRECISION);
@@ -278,13 +278,12 @@ void AccountDetailsDialog::updateStorageElements()
     refresh();
 }
 
-//void AccountDetailsDialog::cppSlot()
-//{
-//    qDebug()<<"ejecutando slot en cpp!";
-//}
-
-void AccountDetailsDialog::cppSlot1public()
+void AccountDetailsDialog::changeEvent(QEvent *event)
 {
-    qDebug()<<"slot 1 public from cpp";
-    emit testSignal(22);
+    if(event->type() == QEvent::LanguageChange)
+    {
+        //mUi->retranslateUi(this);
+    }
+
+    //QDialog::changeEvent(event);
 }

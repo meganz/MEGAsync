@@ -130,8 +130,10 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 megaApi->localLogout();
             }
         }
-
-        mWhyAmISeeingThisDialog->close();
+        if(mWhyAmISeeingThisDialog)
+        {
+            mWhyAmISeeingThisDialog->close();
+        }
         reset_UI_props();
         closing = false;
         page_login();

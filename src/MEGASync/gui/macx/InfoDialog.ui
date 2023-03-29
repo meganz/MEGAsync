@@ -1549,13 +1549,13 @@ font-size: 16px;
                          </property>
                          <layout class="QVBoxLayout" name="verticalLayout_2">
                           <property name="spacing">
-                           <number>18</number>
+                           <number>15</number>
                           </property>
                           <property name="leftMargin">
                            <number>20</number>
                           </property>
                           <property name="topMargin">
-                           <number>32</number>
+                           <number>28</number>
                           </property>
                           <property name="rightMargin">
                            <number>20</number>
@@ -2575,7 +2575,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
 }</string>
                                </property>
                                <property name="text">
-                                <string>Open Preferences</string>
+                                <string>Open Settings</string>
                                </property>
                               </widget>
                              </item>
@@ -2869,7 +2869,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
 }</string>
                                </property>
                                <property name="text">
-                                <string>Open Preferences</string>
+                                <string>Open Settings</string>
                                </property>
                               </widget>
                              </item>
@@ -3167,7 +3167,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
 }</string>
                                </property>
                                <property name="text">
-                                <string>Open Preferences</string>
+                                <string>Open Settings</string>
                                </property>
                               </widget>
                              </item>

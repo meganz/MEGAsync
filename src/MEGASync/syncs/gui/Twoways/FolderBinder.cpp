@@ -4,6 +4,7 @@
 #include "MegaApplication.h"
 #include "control/Utilities.h"
 #include "DialogOpener.h"
+#include "Platform.h"
 
 #include "QMegaMessageBox.h"
 
@@ -79,27 +80,14 @@ void FolderBinder::on_bLocalFolder_clicked()
     defaultPath = QDir::toNativeSeparators(defaultPath);
 
     MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Opening folder selector in: %1").arg(defaultPath).toUtf8().constData());
-#ifndef _WIN32
-    if (defaultPath.isEmpty())
-    {
-        defaultPath = QString::fromUtf8("/");
-    }
 
-    QPointer<MultiQFileDialog> fileDialog = new MultiQFileDialog(0,  tr("Select local folder"), defaultPath, false);
-    fileDialog->setOptions(QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
-    fileDialog->setFileMode(QFileDialog::DirectoryOnly);
-    DialogOpener::showDialog<MultiQFileDialog>(fileDialog, [fileDialog, this]()
-    {
-        if (fileDialog->result() == QDialog::Accepted && !fileDialog->selectedFiles().isEmpty())
+    Platform::getInstance()->folderSelector(tr("Select local folder"),defaultPath,false,this,[this](QStringList selection){
+        if(!selection.isEmpty())
         {
-            QString path = fileDialog->selectedFiles().value(0);
-            onLocalFolderSet(path);
+            QString fPath = selection.first();
+            onLocalFolderSet(fPath);
         }
     });
-#else
-    QString path = QFileDialog::getExistingDirectory(0,  tr("Select local folder"), defaultPath);
-    onLocalFolderSet(path);
-#endif
 }
 
 void FolderBinder::onLocalFolderSet(const QString& path)
@@ -114,11 +102,11 @@ void FolderBinder::onLocalFolderSet(const QString& path)
 
 void FolderBinder::on_bMegaFolder_clicked()
 {
-    QPointer<NodeSelector> nodeSelector = new SyncNodeSelector(this);
+    QPointer<SyncNodeSelector> nodeSelector = new SyncNodeSelector(this);
     std::shared_ptr<MegaNode> defaultNode(megaApi->getNodeByPath(ui->eMegaFolder->text().toUtf8().constData()));
     nodeSelector->setSelectedNodeHandle(defaultNode);
 
-    DialogOpener::showDialog<NodeSelector>(nodeSelector, [nodeSelector, this]()
+    DialogOpener::showDialog<SyncNodeSelector>(nodeSelector, [nodeSelector, this]()
     {
         if (nodeSelector->result() == QDialog::Accepted)
         {

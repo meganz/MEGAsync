@@ -22,18 +22,9 @@ class NodeSelectorProxyModel : public QSortFilterProxyModel
     Q_OBJECT
 
 public:
-    struct Filter{
-        bool showReadOnly = true;
-        bool showReadWriteFolders = true;
-        Filter() : showReadOnly(true),
-                    showReadWriteFolders(true){};
-    };
-
     explicit NodeSelectorProxyModel(QObject* parent = nullptr);
     ~NodeSelectorProxyModel();
 
-    void showReadOnlyFolders(bool value);
-    void showReadWriteFolders(bool value);
     void sort(int column, Qt::SortOrder order = Qt::AscendingOrder) override;
 
     mega::MegaHandle getHandle(const QModelIndex &index);
@@ -59,13 +50,11 @@ signals:
 
 private:
     QVector<QModelIndex> forEach(std::shared_ptr<mega::MegaNodeList> parentNodeList, QModelIndex parent = QModelIndex());
-    Filter mFilter;
     QCollator mCollator;
     int mSortColumn;
     Qt::SortOrder mOrder;
     QFutureWatcher<void> mFilterWatcher;
-    QEventLoop loop;
-    QModelIndexList itemsToMap;
+    QModelIndexList mItemsToMap;
     bool mExpandMapped;
     bool mForceInvalidate;
 

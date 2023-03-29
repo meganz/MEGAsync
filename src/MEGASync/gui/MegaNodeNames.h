@@ -2,6 +2,9 @@
 #define MEGANODENAMES_H
 
 #include <QObject>
+#include <QCoreApplication>
+
+#include <megaapi.h>
 
 class MegaNodeNames : public QObject
 {
@@ -27,9 +30,31 @@ public:
         return tr("Backups");
     }
 
-    static QString getNodeName(const char* name)
+    static QString getRootNodeName(mega::MegaNode* node)
     {
-        return tr(name);
+        if(node)
+        {
+            return tr(node->getName());
+        }
+
+        return QString();
+    }
+
+    static QString getNodeName(mega::MegaNode* node)
+    {
+        if(node)
+        {
+            if(node->isNodeKeyDecrypted())
+            {
+                return QString::fromUtf8(node->getName());
+            }
+            else
+            {
+                return QCoreApplication::translate("MegaError", "Decryption error");
+            }
+        }
+
+        return QString();
     }
 };
 

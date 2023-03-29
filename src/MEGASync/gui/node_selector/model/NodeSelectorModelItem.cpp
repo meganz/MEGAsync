@@ -15,7 +15,6 @@ NodeSelectorModelItem::NodeSelectorModelItem(std::unique_ptr<MegaNode> node, boo
     QObject(parentItem),
     mOwnerEmail(QString()),
     mStatus(Status::NONE),
-    mChildrenSet(false),
     mRequestingChildren(false),
     mShowFiles(showFiles),
     mMegaApi(MegaSyncApp->getMegaApi()),
@@ -191,24 +190,33 @@ QPixmap NodeSelectorModelItem::getOwnerIcon()
 QIcon NodeSelectorModelItem::getStatusIcons()
 {
     QIcon statusIcons; //first is selected state icon / second is normal state icon
-    switch(mStatus)
+
+    if (mNode && !mNode->isNodeKeyDecrypted())
     {
-    case Status::SYNC:
-    {
-        statusIcons.addFile(QLatin1String("://images/Item-sync-press.png"), QSize(), QIcon::Selected); //selected style icon
-        statusIcons.addFile(QLatin1String("://images/Item-sync-rest.png"), QSize(), QIcon::Normal); //normal style icon
-        break;
+        statusIcons.addFile(QLatin1String("://images/node_selector/alert-circle-hover.png"), QSize(), QIcon::Selected); //selected style icon
+        statusIcons.addFile(QLatin1String("://images/node_selector/alert-circle-default.png"), QSize(), QIcon::Normal); //normal style icon
     }
-    case Status::SYNC_PARENT:
+    else
     {
-        statusIcons.addFile(QLatin1String("://images/Item-sync-press.png"), QSize(), QIcon::Selected); //selected style icon
-        statusIcons.addFile(QLatin1String("://images/node_selector/icon-small-sync-disabled.png"), QSize(), QIcon::Normal); //normal style icon
-        break;
-    }
-    default:
-    {
-        break;
-    }
+        switch(mStatus)
+        {
+            case Status::SYNC:
+            {
+                statusIcons.addFile(QLatin1String("://images/Item-sync-press.png"), QSize(), QIcon::Selected); //selected style icon
+                statusIcons.addFile(QLatin1String("://images/Item-sync-rest.png"), QSize(), QIcon::Normal); //normal style icon
+                break;
+            }
+            case Status::SYNC_PARENT:
+            {
+                statusIcons.addFile(QLatin1String("://images/Item-sync-press.png"), QSize(), QIcon::Selected); //selected style icon
+                statusIcons.addFile(QLatin1String("://images/node_selector/icon-small-sync-disabled.png"), QSize(), QIcon::Normal); //normal style icon
+                break;
+            }
+            default:
+            {
+                break;
+            }
+        }
     }
 
     return statusIcons;
@@ -229,8 +237,7 @@ bool NodeSelectorModelItem::isSyncable()
 
 QPointer<NodeSelectorModelItem> NodeSelectorModelItem::addNode(std::shared_ptr<MegaNode>node)
 {
-    auto nodeCopy(node.get()->copy());
-    auto item = createModelItem(std::unique_ptr<MegaNode>(nodeCopy), mShowFiles, this);
+    auto item = createModelItem(std::unique_ptr<MegaNode>(node->copy()), mShowFiles, this);
     mChildItems.append(item);
     return item;
 }

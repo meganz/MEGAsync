@@ -35,8 +35,11 @@ void DownloadQueueController::startAvailableSpaceChecking()
         }
         else
         {
-            mFolderCountPendingSizeComputation++;
-            mMegaApi->getFolderInfo(node, mListener.get());
+            if(!node->isForeign())
+            {
+                mFolderCountPendingSizeComputation++;
+                mMegaApi->getFolderInfo(node, mListener.get());
+            }
         }
 
         return partialSum;
@@ -48,7 +51,7 @@ void DownloadQueueController::startAvailableSpaceChecking()
 
     if (mFolderCountPendingSizeComputation == 0)
     {
-        isDownloadPossible();
+        tryDownload();
     }
 }
 
@@ -92,17 +95,17 @@ void DownloadQueueController::onRequestFinish(MegaApi*, MegaRequest *request, Me
         --mFolderCountPendingSizeComputation;
         if (mFolderCountPendingSizeComputation <= 0)
         {
-            isDownloadPossible();
+            tryDownload();
         }
     }
 }
 
-void DownloadQueueController::isDownloadPossible()
+void DownloadQueueController::tryDownload()
 {
     bool downloadPossible(hasEnoughSpaceForDownloads());
     if (!downloadPossible)
     {
-        shouldRetryWhenNotEnoughSpace();
+        askUserForChoice();
     }
     else
     {
@@ -120,7 +123,7 @@ bool DownloadQueueController::hasEnoughSpaceForDownloads()
     return true;
 }
 
-void DownloadQueueController::shouldRetryWhenNotEnoughSpace()
+void DownloadQueueController::askUserForChoice()
 {
     QStorageInfo destinationDrive(mCurrentTargetPath);
     QString driveName = destinationDrive.name();
@@ -132,7 +135,7 @@ void DownloadQueueController::shouldRetryWhenNotEnoughSpace()
     LowDiskSpaceDialog* dialog = new LowDiskSpaceDialog(mTotalQueueDiskSize, destinationDrive.bytesAvailable(),
                               destinationDrive.bytesTotal(), driveName);
     DialogOpener::showDialog<LowDiskSpaceDialog>(dialog, [this, dialog](){
-        dialog->result() == QDialog::Accepted ? isDownloadPossible() : emit finishedAvailableSpaceCheck(false);
+        dialog->result() == QDialog::Accepted ? tryDownload() : emit finishedAvailableSpaceCheck(false);
     });
 }
 

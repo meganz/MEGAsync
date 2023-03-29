@@ -167,7 +167,7 @@ void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent *event)
         }
 
         QMenu customMenu;
-        Platform::initMenu(&customMenu);
+        Platform::getInstance()->initMenu(&customMenu, "CustomMenu");
         auto node = std::unique_ptr<MegaNode>(mMegaApi->getNodeByHandle(getSelectedNodeHandle()));
         auto parent = std::unique_ptr<MegaNode>(mMegaApi->getParentNode(node.get()));
         auto proxyModel = static_cast<NodeSelectorProxyModel*>(model());
@@ -180,7 +180,7 @@ void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent *event)
                 customMenu.addAction(tr("Get MEGA link"), this, SLOT(getMegaLink()));
             }
 
-            if (access >= MegaShare::ACCESS_FULL && proxyModel->canBeDeleted())
+            if (access >= MegaShare::ACCESS_FULL && proxyModel->canBeDeleted() && node->isNodeKeyDecrypted())
             {
                 customMenu.addAction(tr("Rename"), this, SLOT(renameNode()));
                 customMenu.addAction(tr("Delete"), this, SLOT(removeNode()));

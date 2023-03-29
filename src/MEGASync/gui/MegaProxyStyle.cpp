@@ -248,11 +248,12 @@ bool MegaProxyStyle::eventFilter(QObject *obj, QEvent *e)
         {
             if(auto dialog = qobject_cast<QDialog*>(obj))
             {
-                //if(dialog->property(HTTPServer::FROM_WEBSERVER).toBool())
+                if(!dialog->isActiveWindow())
                 {
                     qApp->setActiveWindow(dialog);
-                    dialog->repaint();
                 }
+
+                dialog->update();
             }
         }
     }

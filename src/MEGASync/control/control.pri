@@ -46,8 +46,3 @@ HEADERS  +=  $$PWD/HTTPServer.h \
     $$PWD/TextDecorator.h \
     $$PWD/qrcodegen.h \
     $$PWD/gzjoin.h
-
-win32 {
-    SOURCES +=	$$PWD/ExternalDialogOpener.cpp
-    HEADERS +=  $$PWD/ExternalDialogOpener.h
-}

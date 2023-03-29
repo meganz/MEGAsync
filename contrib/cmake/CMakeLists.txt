@@ -104,7 +104,7 @@ set(3RDPARTY_RUNTIME_PATH "PATH=%PATH%" "${Mega3rdPartyDir}/vcpkg/installed/${VC
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOUIC_SEARCH_PATHS "${MEGAsyncDir}/gui/${UiDir}"
-							   "${MEGAsyncDir}/gui/node_selector/gui/${UiDir}"
+                               "${MEGAsyncDir}/gui/node_selector/gui/${UiDir}"
                                "${MEGAsyncDir}/transfers/gui/${UiDir}"
                                "${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/${UiDir}"
                                "${MEGAsyncDir}/syncs/gui/Backups/${UiDir}"
@@ -280,6 +280,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/control/UserAttributesManager.h
     ${MEGAsyncDir}/control/TextDecorator.h
     ${MEGAsyncDir}/control/TransferBatch.h
+    ${MEGAsyncDir}/control/DialogOpener.h
 
     ${MEGAsyncDir}/gui/AlertItem.h
     ${MEGAsyncDir}/gui/AlertFilterType.h
@@ -337,7 +338,6 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/ScanningWidget.h
     ${MEGAsyncDir}/gui/BlurredShadowEffect.h
     ${MEGAsyncDir}/gui/ButtonIconManager.h
-    ${MEGAsyncDir}/gui/DialogGeometryRetainer.h
     ${MEGAsyncDir}/gui/NodeNameSetterDialog/NodeNameSetterDialog.h
     ${MEGAsyncDir}/gui/NodeNameSetterDialog/NewFolderDialog.h
     ${MEGAsyncDir}/gui/NodeNameSetterDialog/RenameNodeDialog.h
@@ -428,8 +428,8 @@ endif (NOT CMAKE_HOST_APPLE)
 
 if (CMAKE_HOST_WIN32)
     set (MOC_INPUT ${MOC_INPUT}
+        ${MEGAsyncDir}/platform/win/PlatformImplementation.h
         ${MEGAsyncDir}/platform/win/WinShellDispatcherTask.h
-        ${MEGAsyncDir}/control/ExternalDialogOpener.h
         )
 elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     set (MOC_INPUT ${MOC_INPUT}
@@ -437,7 +437,7 @@ elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
         ${MEGAsyncDir}/gui/PermissionsWidget.h
 
 
-        ${MEGAsyncDir}/platform/linux/LinuxPlatform.h
+        ${MEGAsyncDir}/platform/linux/PlatformImplementation.h
         ${MEGAsyncDir}/platform/linux/ExtServer.h
         ${MEGAsyncDir}/platform/linux/NotifyServer.h
         )
@@ -454,12 +454,12 @@ else()
         ${MEGAsyncDir}/gui/QMacSpinningProgressIndicator.h
         ${MEGAsyncDir}/gui/QSegmentedControl.h
 
-	    ${MEGAsyncDir}/notifications/macx/NotificationHandler.h
+        ${MEGAsyncDir}/platform/macx/PlatformImplementation.h
+        ${MEGAsyncDir}/notifications/macx/NotificationHandler.h
         ${MEGAsyncDir}/notifications/macx/NotificationDelegate.h
         ${MEGAsyncDir}/notifications/macx/NSUserNotificationHandler.h
         ${MEGAsyncDir}/notifications/macx/UNUserNotificationHandler.h
 
-        ${MEGAsyncDir}/platform/macx/MacXPlatform.h
         ${MEGAsyncDir}/platform/macx/MacXFunctions.h
         ${MEGAsyncDir}/platform/macx/MacXSystemServiceTask.h
         ${MEGAsyncDir}/platform/macx/MEGAService.h
@@ -577,7 +577,7 @@ set (SRCS
     ${MEGAsyncDir}/transfers/model/InfoDialogTransfersProxyModel.cpp
     ${MEGAsyncDir}/transfers/model/TransferMetaData.cpp
     
-	${MEGAsyncDir}/transfers/gui/TransfersStatusWidget.cpp
+    ${MEGAsyncDir}/transfers/gui/TransfersStatusWidget.cpp
     ${MEGAsyncDir}/transfers/gui/TransferItem.cpp
     ${MEGAsyncDir}/transfers/gui/InfoDialogTransfersWidget.cpp
     ${MEGAsyncDir}/transfers/gui/TransferManager.cpp
@@ -622,6 +622,7 @@ set (SRCS
     ${MEGAsyncDir}/control/TransferBatch.cpp
     ${MEGAsyncDir}/control/UserAttributesManager.cpp
     ${MEGAsyncDir}/control/TextDecorator.cpp
+    ${MEGAsyncDir}/control/DialogOpener.cpp
 
     ${MEGAsyncDir}/UserAttributesRequests/DeviceName.cpp
     ${MEGAsyncDir}/UserAttributesRequests/MyBackupsHandle.cpp
@@ -650,6 +651,8 @@ set (SRCS
     ${MEGAsyncDir}/syncs/control/SyncInfo.cpp
 
     ${MEGAsyncDir}/platform/ShellNotifier.cpp
+    ${MEGAsyncDir}/platform/AbstractPlatform.cpp
+    ${MEGAsyncDir}/platform/Platform.cpp
 
     ${MEGAsyncDir}/qtlockedfile/qtlockedfile.cpp
 )
@@ -666,8 +669,6 @@ if (CMAKE_HOST_WIN32)
 
         ${MEGAsyncDir}/qtlockedfile/qtlockedfile_win.cpp
 
-    	${MEGAsyncDir}/control/ExternalDialogOpener.cpp
-
         ${MEGAsyncDir}/google_breakpad/client/windows/handler/exception_handler.cc
         ${MEGAsyncDir}/google_breakpad/common/windows/string_utils.cc
         ${MEGAsyncDir}/google_breakpad/common/windows/guid_string.cc
@@ -675,7 +676,7 @@ if (CMAKE_HOST_WIN32)
 
         ${MEGAsyncDir}/platform/win/RecursiveShellNotifier.cpp
         ${MEGAsyncDir}/platform/win/ThreadedQueueShellNotifier.cpp
-        ${MEGAsyncDir}/platform/win/WindowsPlatform.cpp
+        ${MEGAsyncDir}/platform/win/PlatformImplementation.cpp
         ${MEGAsyncDir}/platform/win/WinShellDispatcherTask.cpp
         ${MEGAsyncDir}/platform/win/WinTrayReceiver.cpp
         ${MEGAsyncDir}/platform/win/wintoastlib.cpp
@@ -710,7 +711,7 @@ elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
         ${MEGAsyncDir}/google_breakpad/common/string_conversion.cc
         ${MEGAsyncDir}/google_breakpad/common/convert_UTF.c
 
-        ${MEGAsyncDir}/platform/linux/LinuxPlatform.cpp
+        ${MEGAsyncDir}/platform/linux/PlatformImplementation.cpp
         ${MEGAsyncDir}/platform/linux/ExtServer.cpp
         ${MEGAsyncDir}/platform/linux/NotifyServer.cpp
         ${MEGAsyncDir}/platform/linux/PlatformStrings.cpp
@@ -729,7 +730,7 @@ else()
         ${MEGAsyncDir}/gui/QMacSpinningProgressIndicator.mm
         ${MEGAsyncDir}/gui/QSegmentedControl.mm
 
-	    ${MEGAsyncDir}/notifications/macx/NotificationHandler.mm
+        ${MEGAsyncDir}/notifications/macx/NotificationHandler.mm
         ${MEGAsyncDir}/notifications/macx/UNUserNotificationHandler.mm 
         ${MEGAsyncDir}/notifications/macx/UNUserNotificationDelegate.mm 
         ${MEGAsyncDir}/notifications/macx/NSUserNotificationHandler.mm 
@@ -773,7 +774,7 @@ else()
         ${MEGAsyncDir}/platform/macx/Protocol.h
         ${MEGAsyncDir}/platform/macx/QCustomMacToolbar.h
 
-        ${MEGAsyncDir}/platform/macx/MacXPlatform.cpp
+        ${MEGAsyncDir}/platform/macx/PlatformImplementation.cpp
         ${MEGAsyncDir}/platform/macx/PlatformStrings.cpp
         ${MEGAsyncDir}/platform/macx/PowerOptions.mm
         ${MEGAsyncDir}/platform/macx/MacXFunctions.mm
@@ -1007,7 +1008,7 @@ target_link_libraries(MEGASync_unit_tests
 target_compile_features(MEGASync_unit_tests PRIVATE cxx_std_14)
 
 target_include_directories(MEGASync_unit_tests PRIVATE ${MEGAsyncDir}
-						                               ${MEGAsyncDir}/notifications
+                                                       ${MEGAsyncDir}/notifications
                                                        ${MEGAsyncDir}/transfers
                                                        ${MEGAsyncDir}/transfers/gui
                                                        ${MEGAsyncDir}/transfers/model

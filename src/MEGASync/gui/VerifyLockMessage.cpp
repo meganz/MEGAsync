@@ -17,7 +17,6 @@ VerifyLockMessage::VerifyLockMessage(int lockStatus, bool isMainDialogAvailable,
     m_haveMainDialog(isMainDialogAvailable)
 {
     m_ui->setupUi(this);
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
     m_ui->lEmailSent->setVisible(false);
 

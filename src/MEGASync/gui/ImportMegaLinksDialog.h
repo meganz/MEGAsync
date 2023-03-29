@@ -11,7 +11,7 @@ namespace Ui {
 class ImportMegaLinksDialog;
 }
 
-class NodeSelector;
+class UploadNodeSelector;
 
 class ImportMegaLinksDialog : public QDialog
 {
@@ -59,7 +59,6 @@ private:
     void checkLinkValidAndSelected();
 
     void onLocalFolderSet(const QString& path);
-    void onMegaFolderSelectorFinished(QPointer<NodeSelector> dialog);
 };
 
 #endif // IMPORTMEGALINKSDIALOG_H

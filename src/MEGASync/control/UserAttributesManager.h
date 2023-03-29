@@ -86,12 +86,12 @@ public:
         QString userEmail = QString::fromUtf8(user_email);
         QString mapKey = getKey(userEmail);
 
-        auto classType = typeid(AttributeClass).name();
+        auto classType = QString::fromUtf8(AttributeClass::staticMetaObject.className());
 
         auto userRequests = mRequests.values(mapKey);
         foreach(auto& request, userRequests)
         {
-            auto requestType = typeid(*request).name();
+            auto requestType = QString::fromUtf8(request->metaObject()->className());
             if(requestType == classType)
             {
                 foreach(auto paramType, request->getRequestInfo().mParamInfo.keys())

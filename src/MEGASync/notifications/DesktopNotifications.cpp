@@ -371,7 +371,14 @@ void DesktopNotifications::notifySharedUpdate(mega::MegaUserAlert *alert, const 
 {
     auto notification = new MegaNotification();
     const auto node = getMegaNode(alert);
-    QString sharedFolderName{QString::fromUtf8(node ? node->getName() : alert->getName())};
+
+    QString sharedFolderName;
+
+    if (node && node->isNodeKeyDecrypted())
+    {
+        sharedFolderName = QString::fromUtf8(node->getName());
+    }
+
     if(sharedFolderName.isEmpty())
     {
         switch (type) {
@@ -397,16 +404,19 @@ void DesktopNotifications::notifySharedUpdate(mega::MegaUserAlert *alert, const 
         notification->setData(QString::fromUtf8(node->getBase64Handle()));
         const auto megaApi = static_cast<MegaApplication*>(qApp)->getMegaApi();
         const auto fullAccess = megaApi->getAccess(node.get()) >= mega::MegaShare::ACCESS_FULL;
-        if(type == NEW_SHARE && fullAccess)
+        QStringList actions (tr("Show in MEGA"));
+        if(type == NEW_SHARE 
+            && fullAccess 
+            && node->isNodeKeyDecrypted())
         {
-            notification->setActions(QStringList() << tr("Show in MEGA") << tr("Sync"));
+            actions << tr("Sync");
             QObject::connect(notification, &MegaNotification::activated, this, &DesktopNotifications::replyNewShareReceived);
         }
         else
         {
-            notification->setActions(QStringList() << tr("Show in MEGA"));
             QObject::connect(notification, &MegaNotification::activated, this, &DesktopNotifications::viewShareOnWebClient);
         }
+        notification->setActions(actions);
     }
 
     notification->setImagePath(mFolderIconPath);
@@ -684,35 +694,33 @@ void DesktopNotifications::actionPressedOnDownloadFinishedTransferNotification(M
     {
         return;
     }
-    if(notification)
-    {
-        auto dataId = notification->getData().toULongLong();
-        auto data = TransferMetaDataContainer::getAppData<DownloadTransferMetaData>(dataId);
-        if(data)
-        {
 
-            switch(action)
+    auto dataId = notification->getData().toULongLong();
+    auto data = TransferMetaDataContainer::getAppData<DownloadTransferMetaData>(dataId);
+    if(data)
+    {
+
+        switch(action)
+        {
+        case MegaNotification::Action::firstButton:
+        {
+            if(data->isSingleTransfer() && !data->getLocalPaths().isEmpty())
             {
-            case MegaNotification::Action::firstButton:
-            {
-                if(data->isSingleTransfer() && !data->getLocalPaths().isEmpty())
-                {
-                    Platform::showInFolder(data->getLocalPaths().first());
-                }
-                else
-                {
-                    auto path = data->getData().toString();
-                    QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(path));
-                }
-                break;
+                Platform::getInstance()->showInFolder(data->getLocalPaths().first());
             }
-            case MegaNotification::Action::secondButton:
+            else
             {
                 auto path = data->getData().toString();
                 QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(path));
-                break;
             }
-            }
+            break;
+        }
+        case MegaNotification::Action::secondButton:
+        {
+            auto path = data->getData().toString();
+            QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(path));
+            break;
+        }
         }
     }
 }
@@ -724,7 +732,8 @@ void DesktopNotifications::actionPressedOnUploadFinishedTransferNotification(Meg
     {
         return;
     }
-    if(notification && notification->getData().isValid())
+    
+    if(notification->getData().isValid())
     {
         auto dataId = notification->getData().toULongLong();
         auto data = TransferMetaDataContainer::getAppData(dataId);
