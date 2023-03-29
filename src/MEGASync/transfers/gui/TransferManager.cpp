@@ -728,15 +728,7 @@ void TransferManager::onTransfersDataUpdated()
     refreshSearchStats();
     refreshStateStats();
     checkActionAndMediaVisibility();
-
-    if(label)
-    {
-        long long newNumber = label->text().toLongLong();
-        if(oldNumber != newNumber && (oldNumber == 0 || newNumber == 0))
-        {
-            refreshView();
-        }
-    }
+    refreshView();
 }
 
 void TransferManager::onStorageStateChanged(int storageState)
@@ -1221,11 +1213,11 @@ void TransferManager::toggleTab(TransfersWidget::TM_TAB newTab)
                 {
                     countLabel->parentWidget()->hide();
                 }
-
-                //In case the media group must be hidden
-                checkActionAndMediaVisibility();
             }
         }
+
+        //In case the media group // actions buttons must be hidden
+        checkActionAndMediaVisibility();
 
         // Set current header widget: search or not
         if (newTab == TransfersWidget::SEARCH_TAB)

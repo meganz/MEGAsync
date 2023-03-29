@@ -540,6 +540,12 @@ bool TransferManagerDelegateWidget::eventFilter(QObject *watched, QEvent *event)
     return TransferBaseDelegateWidget::eventFilter(watched, event);
 }
 
+void TransferManagerDelegateWidget::reset()
+{
+    mPauseResumeTransferDefaultIconName.clear();
+    TransferBaseDelegateWidget::reset();
+}
+
 void TransferManagerDelegateWidget::on_tPauseResumeTransfer_clicked()
 {
     emit pauseResumeTransfer();
