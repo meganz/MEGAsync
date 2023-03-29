@@ -297,6 +297,7 @@ void NodeSelectorTreeViewWidget::onbNewFolderClicked()
             }
             mProxyModel->setExpandMapped(true);
             mProxyModel->addNode(std::move(newNode), idx);
+            checkOkButton(QModelIndexList() << idx);
             ui->bOk->setFocus();
         }
     }
