@@ -4,7 +4,7 @@ import QtQuick.Controls 2.0
 
 import Components 1.0 as Custom
 import Onboard.Syncs_types.Backups 1.0
-import Onboard.Syncs_types.Syncs 1.0
+//import Onboard.Syncs_types.Syncs 1.0
 
 SyncsPage {
     id: mainItem

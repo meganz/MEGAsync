@@ -1362,9 +1362,15 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
 
 void InfoDialog::on_bStorageDetails_clicked()
 {
-    QPointer<AccountDetailsDialog> accountDetailsDialog = new AccountDetailsDialog();
+    /*
+    QPointer<QmlDialogWrapper<AccountDetailsDialog>> accountDetailsDialog = new QmlDialogWrapper<AccountDetailsDialog>();
     app->updateUserStats(true, true, true, true, USERSTATS_STORAGECLICKED);
-    DialogOpener::showNonModalDialog(accountDetailsDialog);
+    DialogOpener::showDialog(accountDetailsDialog, [accountDetailsDialog]
+    {
+        //qDebug()<<accountDetailsDialog->wrapper()->test();
+        qDebug()<<accountDetailsDialog->result();
+    });
+    */
 }
 
 void InfoDialog::regenerateLayout(int blockState, InfoDialog* olddialog)

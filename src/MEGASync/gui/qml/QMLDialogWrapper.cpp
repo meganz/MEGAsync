@@ -42,6 +42,16 @@ void QmlDialogWrapperBase::setWindowModality(Qt::WindowModality modality)
     QQmlProperty::write(mWindow, QString::fromUtf8("modality"), modality);
 }
 
+Qt::WindowFlags QmlDialogWrapperBase::windowFlags()
+{
+    return mWindow->flags();
+}
+
+void QmlDialogWrapperBase::setWindowFlags(Qt::WindowFlags flags)
+{
+    mWindow->setFlags(flags);
+}
+
 void QmlDialogWrapperBase::setWindowState(Qt::WindowState state)
 {
     switch(state)
@@ -61,6 +71,18 @@ void QmlDialogWrapperBase::setWindowState(Qt::WindowState state)
     case Qt::WindowState::WindowActive:
         mWindow->requestActivate();
     }
+}
+
+void QmlDialogWrapperBase::move(const QPoint &point)
+{
+    QRect rect = geometry();
+    rect.moveTopLeft(point);
+    mWindow->setGeometry(rect);
+}
+
+void QmlDialogWrapperBase::showMaximized()
+{
+    mWindow->showMaximized();
 }
 
 void QmlDialogWrapperBase::setGeometry(const QRect &geometry)

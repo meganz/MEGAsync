@@ -25,16 +25,16 @@ public:
     QUrl getQmlUrl() override;
     QString contextName() override;
     QString test();
-public slots:
-    void cppSlot1public();
+//public slots:
+//    void cppSlot1public();
 
 signals:
     void testSignal(int value);
 
-protected:
-    void changeEvent(QEvent *event) override;
+//protected:
+ //   void changeEvent(QEvent *event) override;
 
-private:
+//private:
 //    HighDpiResize mHighDpiResize;
 //    QQuickView* mUi;
 

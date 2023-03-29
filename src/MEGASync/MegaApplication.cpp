@@ -1304,7 +1304,7 @@ void MegaApplication::loggedIn(bool fromWizard)
         return;
     }
 
-    DialogOpener::removeDialogByClass<Onboarding>();
+    DialogOpener::removeDialogByClass<QmlDialogWrapper<Onboarding>>();
 
     //Send pending crash report log if neccessary
     if (!crashReportFilePath.isNull() && megaApi)
@@ -3544,10 +3544,10 @@ void MegaApplication::setupWizardFinished(QPointer<SetupWizard> dialog)
 
         if (result == QDialog::Rejected)
         {
-            auto onboarding = DialogOpener::findDialogByClass<QmlDialogWrapper<Onboarding>>();
-            if(onboarding)
+            auto onboarding = DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>();
+            if(!onboarding)
             {
-                //clearDownloadAndPendingLinks();//TODO ONBOARDING
+                //clearDownloadAndPendingLinks(); // TODO: ONBOARDING
             }
         }
         else

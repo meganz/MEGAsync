@@ -36,7 +36,11 @@ public:
 
     Qt::WindowModality windowModality();
     void setWindowModality(Qt::WindowModality modality);
+    Qt::WindowFlags windowFlags();
+    void setWindowFlags(Qt::WindowFlags flags);
     void setWindowState(Qt::WindowState state);
+    void move(const QPoint& point);
+    void showMaximized();
     void setGeometry(const QRect &geometry);
     QRect geometry();
     bool isMaximized();

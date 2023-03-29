@@ -35,7 +35,7 @@ AccountDetailsDialog::AccountDetailsDialog(QObject *parent) :
     // Set transfer quota progress bar color to blue
     //mUi->wCircularTransfer->setProgressBarGradient(QColor(96, 209, 254), QColor(88, 185, 243));
 
-    QTimer::singleShot(5000, this, &AccountDetailsDialog::cppSlot1public);
+    //QTimer::singleShot(5000, this, &AccountDetailsDialog::cppSlot1public);
 
     QIcon icon;
     icon.addFile(QString::fromUtf8(":/images/account_details/versions.png"));
@@ -278,12 +278,12 @@ void AccountDetailsDialog::updateStorageElements()
     refresh();
 }
 
-void AccountDetailsDialog::changeEvent(QEvent *event)
-{
-    if(event->type() == QEvent::LanguageChange)
-    {
+//void AccountDetailsDialog::changeEvent(QEvent *event)
+//{
+    //if(event->type() == QEvent::LanguageChange)
+    //{
         //mUi->retranslateUi(this);
-    }
+    //}
 
     //QDialog::changeEvent(event);
-}
+//}

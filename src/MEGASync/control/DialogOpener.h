@@ -337,8 +337,8 @@ private:
         });
 
         //This depends on QDialog -> Check if we can templatizate it in order to reuse it with QML
-        auto dpiResize = new HighDpiResize(dialog);
-        Q_UNUSED(dpiResize);
+        //auto dpiResize = new HighDpiResize(dialog);
+        //Q_UNUSED(dpiResize);
     }
 
     template <class DialogType>
