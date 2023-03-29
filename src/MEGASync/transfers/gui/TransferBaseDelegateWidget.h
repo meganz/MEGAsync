@@ -74,6 +74,11 @@ protected:
 
     int getNameAvailableSize(QWidget* nameContainer, QWidget* syncLabel, QSpacerItem* spacer);
 
+    virtual void reset();
+
+private slots:
+    void onTransferRemoved(const QModelIndex &parent, int first, int last);
+
 private:
     Preferences* mPreferences;
     QExplicitlySharedDataPointer<TransferData> mData;
