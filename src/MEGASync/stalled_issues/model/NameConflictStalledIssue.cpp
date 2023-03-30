@@ -109,16 +109,17 @@ NameConflictedStalledIssue::NameConflictData NameConflictedStalledIssue::getName
 
 bool NameConflictedStalledIssue::solveLocalConflictedName(const QString &name, int conflictIndex, ConflictedNameInfo::SolvedType type)
 {
+    auto result(false);
     if(mLocalConflictedNames.size() > conflictIndex)
     {
         auto& conflictName = mLocalConflictedNames[conflictIndex];
         conflictName.solved = type;
-    }
 
-    auto result = checkAndSolveConflictedNamesSolved(mLocalConflictedNames);
-    if(result)
-    {
-        checkAndSolveConflictedNamesSolved(mCloudConflictedNames);
+        result = checkAndSolveConflictedNamesSolved(mLocalConflictedNames, conflictName);
+        if(result)
+        {
+            checkAndSolveConflictedNamesSolved(mCloudConflictedNames, conflictName);
+        }
     }
 
     return result;
@@ -126,16 +127,17 @@ bool NameConflictedStalledIssue::solveLocalConflictedName(const QString &name, i
 
 bool NameConflictedStalledIssue::solveCloudConflictedName(const QString &name, int conflictIndex, NameConflictedStalledIssue::ConflictedNameInfo::SolvedType type)
 {
+    auto result(false);
     if(mCloudConflictedNames.size() > conflictIndex)
     {
         auto& conflictName = mCloudConflictedNames[conflictIndex];
         conflictName.solved = type;
-    }
 
-    auto result = checkAndSolveConflictedNamesSolved(mCloudConflictedNames);
-    if(result)
-    {
-        checkAndSolveConflictedNamesSolved(mLocalConflictedNames);
+        result = checkAndSolveConflictedNamesSolved(mCloudConflictedNames, conflictName);
+        if(result)
+        {
+            checkAndSolveConflictedNamesSolved(mLocalConflictedNames, conflictName);
+        }
     }
 
     return result;
@@ -143,17 +145,19 @@ bool NameConflictedStalledIssue::solveCloudConflictedName(const QString &name, i
 
 bool NameConflictedStalledIssue::solveLocalConflictedNameByRename(const QString &name, int conflictIndex, const QString &renameTo)
 {
+    auto result(false);
+
     if(mLocalConflictedNames.size() > conflictIndex)
     {
         auto& conflictName = mLocalConflictedNames[conflictIndex];
         conflictName.solved = NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::RENAME;;
         conflictName.renameTo = renameTo;
-    }
 
-    auto result = checkAndSolveConflictedNamesSolved(mLocalConflictedNames);
-    if(result)
-    {
-        checkAndSolveConflictedNamesSolved(mCloudConflictedNames);
+        result = checkAndSolveConflictedNamesSolved(mLocalConflictedNames, conflictName);
+        if(result)
+        {
+            checkAndSolveConflictedNamesSolved(mCloudConflictedNames, conflictName);
+        }
     }
 
     return result;
@@ -161,47 +165,53 @@ bool NameConflictedStalledIssue::solveLocalConflictedNameByRename(const QString 
 
 bool NameConflictedStalledIssue::solveCloudConflictedNameByRename(const QString &name, int conflictIndex, const QString &renameTo)
 {
+    auto result(false);
+
     if(mCloudConflictedNames.size() > conflictIndex)
     {
         auto& conflictName = mCloudConflictedNames[conflictIndex];
         conflictName.solved = NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::RENAME;;
         conflictName.renameTo = renameTo;
-    }
 
-    auto result = checkAndSolveConflictedNamesSolved(mCloudConflictedNames);
-    if(result)
-    {
-        checkAndSolveConflictedNamesSolved(mLocalConflictedNames);
+        result = checkAndSolveConflictedNamesSolved(mCloudConflictedNames, conflictName);
+        if(result)
+        {
+            checkAndSolveConflictedNamesSolved(mLocalConflictedNames, conflictName);
+        }
     }
 
     return result;
 }
 
-bool NameConflictedStalledIssue::checkAndSolveConflictedNamesSolved(QList<ConflictedNameInfo>& conflicts)
+bool NameConflictedStalledIssue::checkAndSolveConflictedNamesSolved(QList<ConflictedNameInfo>& conflicts, const ConflictedNameInfo& solvedConflict)
 {
-    bool result(false);
+    //bool result(true);
     auto unsolvedItems(0);
 
     for (auto it = conflicts.begin(); it != conflicts.end(); ++it)
     {
-        if(!(*it).isSolved())
+        if(!(*it).isSolved() && (*it).conflictedName == solvedConflict.conflictedName)
+        {
+            (*it).solved = NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::SOLVED_BY_OTHER_SIDE;
+        }
+        else if(!(*it).isSolved())
         {
             unsolvedItems++;
         }
     }
 
-    if(unsolvedItems == 1)
+    if(unsolvedItems < 2)
     {
         for (auto it = conflicts.begin(); it != conflicts.end(); ++it)
         {
             if(!(*it).isSolved())
             {
                 (*it).solved = NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::SOLVED_BY_OTHER_SIDE;
-                result = true;
+                unsolvedItems--;
             }
         }
     }
 
-    return result;
+    return unsolvedItems == 0;
 }
 

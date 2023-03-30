@@ -2,9 +2,8 @@
 #include "ui_SomeIssuesOccurredMessage.h"
 
 #include <StalledIssuesDialog.h>
+#include <DialogOpener.h>
 #include <Platform.h>
-
-QPointer<StalledIssuesDialog> SomeIssuesOccurredMessage::mStalledIssuesDialog = nullptr;
 
 SomeIssuesOccurredMessage::SomeIssuesOccurredMessage(QWidget *parent) :
     QWidget(parent),
@@ -20,10 +19,14 @@ SomeIssuesOccurredMessage::~SomeIssuesOccurredMessage()
 
 void SomeIssuesOccurredMessage::on_viewIssuesButton_clicked()
 {
-    if(!mStalledIssuesDialog)
+    auto stalledIssuesDialog = DialogOpener::findDialog<StalledIssuesDialog>();
+    if(stalledIssuesDialog)
     {
-        mStalledIssuesDialog = new StalledIssuesDialog();
+        DialogOpener::showGeometryRetainerDialog(stalledIssuesDialog->getDialog());
     }
-
-    mStalledIssuesGeometryRetainer.showDialog(mStalledIssuesDialog);
+    else
+    {
+        auto stalledIssuesDialog = new StalledIssuesDialog();
+        DialogOpener::showDialog<StalledIssuesDialog>(stalledIssuesDialog);
+    }
 }

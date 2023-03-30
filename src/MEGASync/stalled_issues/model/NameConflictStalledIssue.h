@@ -58,7 +58,7 @@ public:
     void updateIssue(const mega::MegaSyncStall *stallIssue) override;
 
 private:
-    bool checkAndSolveConflictedNamesSolved(QList<ConflictedNameInfo>& conflicts);
+    bool checkAndSolveConflictedNamesSolved(QList<ConflictedNameInfo>& conflicts, const ConflictedNameInfo &solvedConflict);
 
     using StalledIssue::getLocalData;
     using StalledIssue::getCloudData;

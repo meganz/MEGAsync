@@ -56,7 +56,15 @@ private:
 
         void raise() override
         {
-            mDialog->show();
+            if(mDialog->isMinimized())
+            {
+                mDialog->showNormal();
+            }
+            else
+            {
+                mDialog->show();
+            }
+
             mDialog->raise();
             mDialog->activateWindow();
         }

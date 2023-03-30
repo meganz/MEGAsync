@@ -7,6 +7,8 @@
 #include <StalledIssuesModel.h>
 #include "NodeNameSetterDialog/RenameNodeDialog.h"
 #include "QMegaMessageBox.h"
+#include "DialogOpener.h"
+#include "StalledIssuesDialog.h"
 
 #include <QDialogButtonBox>
 
@@ -171,67 +173,74 @@ void NameConflict::onActionClicked(int actionId)
 
         if(actionId == RENAME_ID)
         {
-            QPointer<NameConflict> currentWidget = QPointer<NameConflict>(this);
-
-            QString newName;
-            bool result(QDialog::Rejected);
+            auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
+            RenameNodeDialog* renameDialog(nullptr);
 
             if(mData.isCloud)
             {
-                RenameRemoteNodeDialog dialog(info.filePath(), nullptr);
-                result = dialog.show();
-                newName = dialog.getName();
+                renameDialog = new RenameRemoteNodeDialog(info.filePath(), dialog->getDialog());
             }
             else
             {
-                RenameLocalNodeDialog dialog(info.filePath(), nullptr);
-                result = dialog.show();
-                newName = dialog.getName();
+                renameDialog = new RenameLocalNodeDialog(info.filePath(), dialog->getDialog());
             }
 
-            if(result == QDialog::Accepted)
-            {
-                bool areAllSolved(false);
+            renameDialog->init();
 
-                if(mData.isCloud)
+            DialogOpener::showDialog<RenameNodeDialog>(renameDialog,
+                                                       [this, titleFileName, delegateWidget, chooseTitle, renameDialog](){
+
+                if(renameDialog->result() == QDialog::Accepted)
                 {
-                   areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveCloudConflictedNameByRename(titleFileName
-                                                                                           , newName, chooseTitle->getIndex(), delegateWidget->getCurrentIndex());
+                    auto newName = renameDialog->getName();
+
+                    bool areAllSolved(false);
+
+                    if(mData.isCloud)
+                    {
+                        areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveCloudConflictedNameByRename(titleFileName
+                                                                                                              , newName, chooseTitle->getIndex(), delegateWidget->getCurrentIndex());
+                    }
+                    else
+                    {
+                        areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveLocalConflictedNameByRename(titleFileName
+                                                                                                              , newName,chooseTitle->getIndex(), delegateWidget->getCurrentIndex());
+                    }
+
+                    // Prevent this one showing again (if they Refresh) until sync has made a full fresh pass
+                    MegaSyncApp->getMegaApi()->clearStalledPath(mData.data->original.get());
+
+                    if(areAllSolved)
+                    {
+                        emit allSolved();
+                    }
+
+                    chooseTitle->setDisabled(true);
+
+                    //Now, close the editor because the action has been finished
+                    if(delegateWidget)
+                    {
+                        emit refreshUi();
+                    }
                 }
-                else
-                {
-                    areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveLocalConflictedNameByRename(titleFileName
-                                                                                           , newName,chooseTitle->getIndex(), delegateWidget->getCurrentIndex());
-                }
-
-                // Prevent this one showing again (if they Refresh) until sync has made a full fresh pass
-                MegaSyncApp->getMegaApi()->clearStalledPath(mData.data->original.get());
-
-                if(areAllSolved)
-                {
-                    emit allSolved();
-                }
-
-                chooseTitle->setDisabled(true);
-            }
-
-            if(!currentWidget)
-            {
-                return;
-            }
+            });
         }
         else if(actionId == REMOVE_ID)
         {
             QPointer<NameConflict> currentWidget = QPointer<NameConflict>(this);
+            auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
 
-            if (QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"),
-                                     tr("Are you sure you want to remove the %1 %2 %3?")
-                                     .arg(mData.isCloud ? tr("remote") : tr("local"))
-                                     .arg(info.isFile() ? tr("file") : tr("folder"))
-                                     .arg(info.fileName()),
-                                     QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
-                    == QMessageBox::Yes
-                    && currentWidget)
+            auto warning = new QMessageBox(QMessageBox::Warning,QString::fromUtf8("MEGAsync"),
+                                           tr("Are you sure you want to remove the %1 %2 %3?")
+                                           .arg(mData.isCloud ? tr("remote") : tr("local"))
+                                           .arg(info.isFile() ? tr("file") : tr("folder"))
+                                           .arg(info.fileName()),
+                                           QMessageBox::Yes | QMessageBox::No, dialog->getDialog());
+            qDebug() << warning->styleSheet();
+            warning->setDefaultButton(QMessageBox::No);
+            auto result = warning->exec();
+
+            if (currentWidget && result == QMessageBox::Yes)
             {
                 bool areAllSolved(false);
 
@@ -253,13 +262,14 @@ void NameConflict::onActionClicked(int actionId)
                 {
                     emit allSolved();
                 }
+
+                //Now, close the editor because the action has been finished
+                if(delegateWidget)
+                {
+                    emit refreshUi();
+                }
             }
         }
 
-        //Now, close the editor because the action has been finished
-        if(delegateWidget)
-        {
-            emit refreshUi();
-        }
     }
 }
