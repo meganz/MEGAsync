@@ -161,8 +161,11 @@ const char *ExtServer::GetAnswerToRequest(const char *buf)
             }
 
             QString actionString = getActionName(stringId);
-            QString fullString = CommonMessages::createShellExtensionActionLabel(actionString, numFiles, numFolders);
-            strncpy(out, fullString.toUtf8().constData(), BUFSIZE);
+            if(actionString.compare(actionString, QString::fromLatin1(RESPONSE_DEFAULT)) != 0)
+            {
+                actionString = CommonMessages::createShellExtensionActionLabel(actionString, numFiles, numFolders);
+            }
+            strncpy(out, actionString.toUtf8().constData(), BUFSIZE);
             break;
         }
         case 'F':
@@ -198,6 +201,7 @@ const char *ExtServer::GetAnswerToRequest(const char *buf)
                 if (!scontent.empty())
                 {
                     state = MegaSyncApp->getMegaApi()->syncPathState(&scontent);
+                    mLastPath = scontent;
                 }
             }
 
@@ -249,15 +253,21 @@ const char *ExtServer::GetAnswerToRequest(const char *buf)
 
 QString ExtServer::getActionName(const int actionId)
 {
-    QString name;
+    QString name(QString::fromLatin1(RESPONSE_DEFAULT));
     switch (actionId)
     {
         case STRING_UPLOAD:
             name = QCoreApplication::translate("ShellExtension", "Upload to MEGA");
             break;
         case STRING_GETLINK:
-            name = QCoreApplication::translate("ShellExtension", "Get MEGA link");
+        {
+            std::unique_ptr<MegaNode> node(MegaSyncApp->getMegaApi()->getSyncedNode(&mLastPath));
+            if(node && MegaSyncApp->getMegaApi()->checkAccess(node.get(), MegaShare::ACCESS_OWNER).getErrorCode() == MegaError::API_OK)
+            {
+                name = QCoreApplication::translate("ShellExtension", "Get MEGA link");
+            }
             break;
+        }
         case STRING_SHARE:
             name = QCoreApplication::translate("ShellExtension", "Share with a MEGA user");
             break;

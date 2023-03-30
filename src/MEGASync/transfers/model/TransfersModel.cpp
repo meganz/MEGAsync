@@ -1142,7 +1142,7 @@ std::unique_ptr<MegaNode> TransfersModel::getNodeToOpenByRow(int row)
         auto transfer = mMegaApi->getTransferByTag(d->mTag);
         if(transfer)
         {
-            node.reset(transfer->getPublicMegaNode()->copy());
+            node.reset(transfer->getPublicMegaNode());
         }
     }
     else if(d->mNodeHandle)
