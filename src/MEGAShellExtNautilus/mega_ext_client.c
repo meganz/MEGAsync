@@ -157,6 +157,13 @@ gchar *mega_ext_client_get_string(MEGAExt *mega_ext, int stringID, int numFiles,
     out = mega_ext_client_send_request(mega_ext, OP_STRING, in);
     g_free(in);
 
+    //If the answer is 9 (default), no action must be added to the context menu
+    if(g_str_equal(out, "9"))
+    {
+        g_free(out);
+        out = NULL;
+    }
+
     return out;
 }
 
