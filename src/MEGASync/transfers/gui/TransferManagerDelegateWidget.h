@@ -27,6 +27,7 @@ public:
 protected:
     void mouseDoubleClickEvent(QMouseEvent *event) override;
     bool eventFilter(QObject* watched, QEvent* event) override;
+    void reset() override;
 
 signals:
     void cancelClearTransfer(bool isClear);
@@ -44,6 +45,7 @@ private:
     void setFileNameAndType() override;
     void setType() override;
     void setFileType(const QString& fileName);
+    void adjustFileName();
 
     bool setCancelClearTransferIcon(const QString &name);
     bool setPauseResumeTransferIcon(const QString &name);

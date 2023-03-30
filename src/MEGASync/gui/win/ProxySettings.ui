@@ -3,7 +3,7 @@
  <class>ProxySettings</class>
  <widget class="QDialog" name="ProxySettings">
   <property name="windowModality">
-   <enum>Qt::WindowModal</enum>
+   <enum>Qt::NonModal</enum>
   </property>
   <property name="geometry">
    <rect>
@@ -27,9 +27,6 @@
 {
 	margin-top: 3px;
 }</string>
-  </property>
-  <property name="modal">
-   <bool>true</bool>
   </property>
   <layout class="QVBoxLayout" name="ProxySettingsLayout">
    <property name="spacing">

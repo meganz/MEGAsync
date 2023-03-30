@@ -1,8 +1,6 @@
 #ifndef LOWDISKSPACEDIALOG_H
 #define LOWDISKSPACEDIALOG_H
 
-#include "HighDpiResize.h"
-
 #include <QDialog>
 
 namespace Ui {
@@ -24,7 +22,6 @@ private:
     void setupShadowEffect();
 
     Ui::LowDiskSpaceDialog *ui;
-    HighDpiResize mHighDpiResize;
 };
 
 #endif // LOWDISKSPACEDIALOG_H

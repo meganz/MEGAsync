@@ -1563,13 +1563,13 @@ font-size: 16px;
                          </property>
                          <layout class="QVBoxLayout" name="verticalLayout_2">
                           <property name="spacing">
-                           <number>18</number>
+                           <number>15</number>
                           </property>
                           <property name="leftMargin">
                            <number>20</number>
                           </property>
                           <property name="topMargin">
-                           <number>32</number>
+                           <number>28</number>
                           </property>
                           <property name="rightMargin">
                            <number>20</number>

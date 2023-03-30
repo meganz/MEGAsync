@@ -392,6 +392,83 @@ double Utilities::toDoubleInUnit(unsigned long long bytes, unsigned long long un
     return static_cast<int>(multipliedValue / static_cast<double>(unit)) / decimalMultiplier;
 }
 
+QString Utilities::getTimeFormat(const TimeInterval &interval)
+{
+    QString timeFormat;
+
+    if (interval.days)
+    {
+        timeFormat = QCoreApplication::translate("Utilities", "[DAYS] [HOURS]");
+        if (!interval.hours)
+        {
+            timeFormat.remove(QString::fromLatin1("[HOURS]"));
+        }
+    }
+    else if (interval.hours)
+    {
+        timeFormat = QCoreApplication::translate("Utilities", "[HOURS] [MINUTES]");
+        if (!interval.minutes)
+        {
+            timeFormat.remove(QString::fromLatin1("[MINUTES]"));
+        }
+    }
+    else
+    {
+        timeFormat = QCoreApplication::translate("Utilities", "[MINUTES] [SECONDS]");
+        if (!interval.minutes)
+        {
+            timeFormat.remove(QString::fromLatin1("[MINUTES]"));
+        }
+        if (!interval.useSecondPrecision)
+        {
+            timeFormat.remove(QString::fromLatin1("[SECONDS]"));
+        }
+    }
+
+    return timeFormat.trimmed();
+}
+
+QString Utilities::filledTimeString(const QString &timeFormat, const TimeInterval &interval, bool color)
+{
+    QString daysFormat = QCoreApplication::translate("Utilities", "%1 [A]d[/A]");
+    QString hoursFormat = QCoreApplication::translate("Utilities", "%1 [A]h[/A]");
+    QString minutesFormat = QCoreApplication::translate("Utilities", "%1 [A]m[/A]");
+    QString secondsFormat = QCoreApplication::translate("Utilities", "%1 [A]s[/A]");
+
+    QString timeString = timeFormat;
+
+    QString timeCountStr = daysFormat.arg(interval.days, 2, 10, QLatin1Char('0'));
+    timeString.replace(QString::fromLatin1("[DAYS]"), timeCountStr);
+
+    timeCountStr = hoursFormat.arg(interval.hours, 2, 10, QLatin1Char('0'));
+    timeString.replace(QString::fromLatin1("[HOURS]"), timeCountStr);
+
+    timeCountStr = minutesFormat.arg(interval.minutes, 2, 10, QLatin1Char('0'));
+    timeString.replace(QString::fromLatin1("[MINUTES]"), timeCountStr);
+
+    timeCountStr = secondsFormat.arg(interval.seconds, 2, 10, QLatin1Char('0'));
+    timeString.replace(QString::fromLatin1("[SECONDS]"), timeCountStr);
+
+    QString colorString = (color ? QLatin1String("color:#777777;") : QString());
+    QString styleStartTag = QString::fromUtf8("<span style=\"%1 text-decoration:none;\">").arg(colorString);
+    QString styleEndTag = QString::fromLatin1("</span>");
+
+    timeString.replace(QString::fromLatin1("[A]"),  styleStartTag);
+    timeString.replace(QString::fromLatin1("[/A]"), styleEndTag);
+
+    return cleanedTimeString(timeString);
+}
+
+QString Utilities::cleanedTimeString(const QString &timeString)
+{
+    QString cleanedStr = timeString;
+    if(!cleanedStr.isEmpty() && cleanedStr.at(0) == QLatin1Char('0'))
+    {
+        cleanedStr.replace(0, 1, QLatin1Char(' '));
+    }
+    return cleanedStr;
+}
+
 QIcon Utilities::getCachedPixmap(QString fileName)
 {
     return gIconCache.getDirect(fileName);
@@ -485,69 +562,10 @@ void Utilities::copyRecursively(QString srcPath, QString dstPath)
     }
 }
 
-void replaceLeadingZeroCharacterWithSpace(QString& string)
-{
-    if(!string.isEmpty() && string.at(0) == QLatin1Char('0'))
-    {
-        string.replace(0, 1, QLatin1Char(' '));
-    }
-}
-
 QString Utilities::getTimeString(long long secs, bool secondPrecision, bool color)
 {
-    int seconds = (int) secs % 60;
-    int minutes = (int) ((secs / 60) % 60);
-    int hours   = (int) (secs / (60 * 60)) % 24;
-    int days = (int)(secs / (60 * 60 * 24));
-    QString colorString (color ? QLatin1String("color:#777777;") : QString());
-
-
-    int items = 0;
-    QString time;
-
-    if (days)
-    {
-        items++;
-        time.append(QString::fromUtf8(" %1 ").arg(days, 2, 10, QLatin1Char('0')));
-        time.append(QString::fromUtf8("<span style=\"%1 text-decoration:none;\">d</span>").arg(colorString));
-    }
-
-    if (items || hours)
-    {
-        items++;
-        time.append(QString::fromUtf8(" %1 ").arg(hours, 2, 10, QLatin1Char('0')));
-        time.append(QString::fromUtf8("<span style=\"%1 text-decoration:none;\">h</span>").arg(colorString));
-    }
-
-    if (items == 2)
-    {
-        time = time.trimmed();
-        replaceLeadingZeroCharacterWithSpace(time);
-        return time;
-    }
-
-    if (items || minutes)
-    {
-        items++;
-        time.append(QString::fromUtf8(" %1 ").arg(minutes, 2, 10, QLatin1Char('0')));
-        time.append(QString::fromUtf8("<span style=\"%1 text-decoration:none;\">m</span>").arg(colorString));
-    }
-
-    if (items == 2)
-    {
-        time = time.trimmed();
-        replaceLeadingZeroCharacterWithSpace(time);
-        return time;
-    }
-
-    if (secondPrecision)
-    {
-        time.append(QString::fromUtf8(" %1 ").arg(seconds, 2, 10, QLatin1Char('0')));
-        time.append(QString::fromUtf8("<span style=\"%1 text-decoration:none;\">s</span>").arg(colorString));
-    }
-    time = time.trimmed();
-    replaceLeadingZeroCharacterWithSpace(time);
-    return time;
+    TimeInterval interval(secs, secondPrecision);
+    return filledTimeString(getTimeFormat(interval), interval, color);
 }
 
 struct Postfix
@@ -1261,4 +1279,19 @@ void MegaListenerFuncExecuter::onRequestFinish(MegaApi *api, MegaRequest *reques
             delete this;
         }
     }
+}
+
+WrappedNode::WrappedNode(TransferOrigin from, MegaNode *node)
+    : mTransfersFrom(from), mNode(node)
+{
+    qRegisterMetaType<QQueue<WrappedNode*>>("QQueue<WrappedNode*>");
+}
+
+TimeInterval::TimeInterval(long long secs, bool secondPrecision)
+    : useSecondPrecision(secondPrecision)
+{
+    days = static_cast<int>(secs / (60 * 60 * 24));
+    hours   = static_cast<int>(secs / (60 * 60)) % 24;
+    minutes = static_cast<int>((secs / 60) % 60);
+    seconds = static_cast<int>(secs % 60);
 }

@@ -3,6 +3,8 @@
 #include "MegaApplication.h"
 #include "node_selector/gui/NodeSelector.h"
 #include "MegaNodeNames.h"
+#include "Utilities.h"
+#include "DialogOpener.h"
 
 #include <QButtonGroup>
 
@@ -11,10 +13,8 @@ RemoveBackupDialog::RemoveBackupDialog(std::shared_ptr<SyncSettings> backup, QWi
     mMegaApi(MegaSyncApp->getMegaApi()),
     mUi(new Ui::RemoveBackupDialog),
     mBackup(backup),
-    mTargetFolder(MegaSyncApp->getRootNode()->getHandle()),
-    mNodeSelector(nullptr)
+    mTargetFolder(MegaSyncApp->getRootNode()->getHandle())
 {
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     mUi->setupUi(this);
     mUi->lTarget->setReadOnly(true);
     connect(mUi->bConfirm, &QPushButton::clicked, this, &QDialog::accept);
@@ -25,7 +25,7 @@ RemoveBackupDialog::RemoveBackupDialog(std::shared_ptr<SyncSettings> backup, QWi
 
     mUi->bConfirm->setEnabled(false);
     mUi->moveToContainer->setEnabled(false);
-    mUi->lTarget->setText(MegaNodeNames::getNodeName(MegaSyncApp->getRootNode()->getName())
+    mUi->lTarget->setText(MegaNodeNames::getRootNodeName(MegaSyncApp->getRootNode().get())
                           .append(QLatin1Char('/')));
     adjustSize();
 }
@@ -61,19 +61,17 @@ void RemoveBackupDialog::OnMoveSelected()
 
 void RemoveBackupDialog::OnChangeButtonClicked()
 {
-    if (!mNodeSelector)
+    auto nodeSelector = new UploadNodeSelector(this);
+    DialogOpener::showDialog<NodeSelector>(nodeSelector, [this, nodeSelector]
     {
-        mNodeSelector = new NodeSelector(NodeSelectorTreeViewWidget::UPLOAD_SELECT, this);
-    }
-    int result = mNodeSelector->exec();
-    if (!mNodeSelector || result != QDialog::Accepted)
-    {
-        return;
-    }
-    mTargetFolder = mNodeSelector->getSelectedNodeHandle();
-    auto targetNode = std::unique_ptr<mega::MegaNode>(mMegaApi->getNodeByHandle(mTargetFolder));
-    auto targetRoot = std::unique_ptr<mega::MegaNode>(mMegaApi->getRootNode(targetNode.get()));
+        if (nodeSelector->result() == QDialog::Accepted)
+        {
+            mTargetFolder = nodeSelector->getSelectedNodeHandle();
+            auto targetNode = std::unique_ptr<mega::MegaNode>(mMegaApi->getNodeByHandle(mTargetFolder));
+            auto targetRoot = std::unique_ptr<mega::MegaNode>(mMegaApi->getRootNode(targetNode.get()));
 
-    mUi->lTarget->setText(MegaNodeNames::getNodeName(targetRoot->getName())
-                          + QString::fromUtf8(mMegaApi->getNodePath(targetNode.get())));
+            mUi->lTarget->setText(MegaNodeNames::getRootNodeName(targetRoot.get())
+                                  + QString::fromUtf8(mMegaApi->getNodePath(targetNode.get())));
+        }
+    });
 }

@@ -15,10 +15,14 @@ NodeNameSetterDialog::NodeNameSetterDialog(QWidget *parent)
 {
 }
 
-int NodeNameSetterDialog::show()
+NodeNameSetterDialog::~NodeNameSetterDialog()
+{
+    delete mUi;
+}
+
+void NodeNameSetterDialog::init()
 {
     // Initialize the mNewFolder input Dialog
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     mUi->setupUi(this);
 
     title();
@@ -53,7 +57,6 @@ int NodeNameSetterDialog::show()
     mUi->errorLabel->hide();
     mUi->textLabel->show();
     mUi->lineEdit->setFocus();
-    return exec();
 }
 
 QString NodeNameSetterDialog::getName() const

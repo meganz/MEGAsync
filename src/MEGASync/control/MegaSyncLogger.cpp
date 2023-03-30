@@ -567,7 +567,6 @@ void MegaSyncLogger::log(const char*, int loglevel, const char*, const char *mes
 
 void LoggingThread::log(int loglevel, const char *message, const char **directMessages, size_t *directMessagesSizes, int numberMessages)
 {
-//return;
 // todo: do we need this xml logger?
 //#ifdef LOG_TO_LOGGER
 //    //if (mConnected)

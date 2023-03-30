@@ -24,6 +24,8 @@
 #include <QtWin>
 #endif
 
+#include <QOperatingSystemVersion>
+
 #if _WIN32_WINNT < 0x0601
 // Windows headers don't define this for WinXP despite the documentation says that they should
 // and it indeed works
@@ -202,20 +204,20 @@ bool PlatformImplementation::enableTrayIcon(QString executable)
 
 void PlatformImplementation::notifyItemChange(const QString& path, int)
 {
-    notifyItemChange(path, mShellNotifier.get());
+    notifyItemChange(path, mShellNotifier);
 }
 
 void PlatformImplementation::notifySyncFileChange(std::string *localPath, int)
 {
-    notifyItemChange(QString::fromStdString(*localPath), mSyncFileNotifier.get());
+    QString path = getPreparedPath(localPath);
+    notifyItemChange(path, mSyncFileNotifier);
 }
 
-void PlatformImplementation::notifyItemChange(const QString& localPath, AbstractShellNotifier *notifier)
+void PlatformImplementation::notifyItemChange(const QString& localPath, std::shared_ptr<AbstractShellNotifier> notifier)
 {
-    QString path = getPreparedPath(localPath);
-    if (!path.isEmpty())
+    if (!localPath.isEmpty())
     {
-        notifier->notify(path);
+        notifier->notify(localPath);
     }
 }
 
@@ -770,12 +772,20 @@ void PlatformImplementation::syncFolderAdded(QString syncPath, QString syncName,
         addSyncToLeftPane(syncPath, syncName, syncID);
     }
 
-#pragma warning(push)
-#pragma warning(disable: 4996) // declared deprecated
-    DWORD dwVersion = GetVersion();
-#pragma warning(pop)
-    DWORD dwMajorVersion = (DWORD)(LOBYTE(LOWORD(dwVersion)));
-    int iconIndex = (dwMajorVersion<6) ? 2 : 3;
+    int iconIndex = 2; // Default to winXP.ico
+
+    auto winVersion = QOperatingSystemVersion::current();
+    auto win11 = QOperatingSystemVersion(QOperatingSystemVersion::Windows, 10, 0, 22000);
+    //FIXME: once QT version update check if QOperatingSystemVersion Windows11 exist
+    if (winVersion >= win11)
+    {
+        iconIndex = 4; // win11.ico
+    }
+    else if (winVersion >= QOperatingSystemVersion::Windows7)
+    {
+        iconIndex = 3; // win8.ico
+    }
+
 
     QString infoTip = QCoreApplication::translate("WindowsPlatform", "MEGA synced folder");
     SHFOLDERCUSTOMSETTINGS fcs = {0};
@@ -832,7 +842,6 @@ void PlatformImplementation::syncFolderAdded(QString syncPath, QString syncName,
     {
         SetFileAttributesW((LPCWSTR)debrisPath.utf16(), fad.dwFileAttributes | FILE_ATTRIBUTE_HIDDEN);
     }
-
 }
 
 void PlatformImplementation::syncFolderRemoved(QString syncPath, QString syncName, QString syncID)
@@ -1432,21 +1441,6 @@ bool PlatformImplementation::isUserActive()
     return true;
 }
 
-void PlatformImplementation::showBackgroundWindow(QDialog *window)
-{
-    Q_ASSERT(!window->parent());
-    //Recreate the minimized state in case the dialog is lost behind desktop windows
-    window->showMinimized();
-    window->showNormal();
-}
-
-void PlatformImplementation::execBackgroundWindow(QDialog *window)
-{
-    showBackgroundWindow(window);
-    window->activateWindow();
-    window->exec();
-}
-
 QString PlatformImplementation::getDeviceName()
 {
     // First, try to read maker and model
@@ -1471,58 +1465,24 @@ QString PlatformImplementation::getDeviceName()
     return deviceName;
 }
 
-void PlatformImplementation::initMenu(QMenu* m)
+QString PlatformImplementation::getPreparedPath(std::string *localPath)
 {
-    if (m)
-    {
-        m->setStyleSheet(QLatin1String("QMenu {"
-                                           "background: #ffffff;"
-                                           "padding-top: 6px;"
-                                           "padding-bottom: 6px;"
-                                           "border: 1px solid #B8B8B8;"
-                                       "}"
-                                       "QMenu::separator {"
-                                           "height: 1px;"
-                                           "margin: 6px 10px 6px 10px;"
-                                           "background-color: rgba(0, 0, 0, 0.1);"
-                                       "}"
-                                       // For vanilla QMenus (only in TransferManager and NodeSelectorTreeView (NodeSelector))
-                                       "QMenu::item {"
-                                           "font-family: Lato;"
-                                           "font-size: 14px;"
-                                           "margin: 6px 16px 6px 16px;"
-                                           "color: #777777;"
-                                           "padding-right: 16px;"
-                                       "}"
-                                       "QMenu::item:selected {"
-                                           "color: #000000;"
-                                       "}"
-                                       // For menus with MenuItemActions
-                                       "QLabel {"
-                                           "font-family: Lato;"
-                                           "font-size: 14px;"
-                                           "padding: 0px;"
-                                       "}"
-                                       ));
-        m->ensurePolished();
-    }
-}
-
-QString PlatformImplementation::getPreparedPath(const QString& localPath)
-{
-    QString preparedPath(localPath);
+    // The path we have here is, on Windows, an utf16-encoded string (using wchars) in a std::string buffer.
+    QString preparedPath = QString::fromWCharArray(reinterpret_cast<const wchar_t *>(localPath->data()),
+                                                   static_cast<int>(localPath->size() / (sizeof(wchar_t)
+                                                                                         / sizeof (char))));
     if (!preparedPath.isEmpty())
     {
-        if (preparedPath.startsWith(QString::fromUtf8("\\\\?\\")))
+        if (preparedPath.startsWith(QLatin1String("\\\\?\\")))
         {
             preparedPath = preparedPath.mid(4);
         }
 
-        if (preparedPath.size() < MAX_PATH)
+        if (preparedPath.size() >= MAX_PATH)
         {
-            return preparedPath;
+            preparedPath.clear();
         }
     }
 
-    return QString();
+    return preparedPath;
 }

@@ -65,6 +65,8 @@ QMessageBox::StandardButton QMegaMessageBox::showNewMessageBox(QWidget *parent, 
      }
     }
     if (msgBox.exec() == -1)
-    return QMessageBox::Cancel;
+    {
+        return QMessageBox::Cancel;
+    }
     return msgBox.standardButton(msgBox.clickedButton());
 }

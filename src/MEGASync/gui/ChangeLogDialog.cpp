@@ -63,9 +63,7 @@ ChangeLogDialog::ChangeLogDialog(QString version, QString SDKversion, QString ch
     ui->labelArchitecture->setText(getArchitectureString());
     ui->lVersion->setText(version);
     ui->lSDKVersion->setText(QString::fromAscii(" (") + SDKversion + QString::fromAscii(")"));
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setChangeLogNotes(changeLog);
-    highDpiResize.init(this);
 }
 
 ChangeLogDialog::~ChangeLogDialog()

@@ -2586,7 +2586,7 @@ QToolButton
              <property name="bottomMargin">
               <number>5</number>
              </property>
-             <item alignment="Qt::AlignTop">
+             <item alignment="Qt::AlignLeft|Qt::AlignTop">
               <widget class="QLabel" name="lPaused">
                <property name="text">
                 <string>All paused</string>
@@ -2620,7 +2620,7 @@ QToolButton
                 <property name="bottomMargin">
                  <number>5</number>
                 </property>
-                <item>
+                <item alignment="Qt::AlignLeft">
                  <widget class="QLabel" name="lTransferOverQuota">
                   <property name="text">
                    <string>Transfer quota exceeded</string>
@@ -2664,7 +2664,7 @@ QToolButton
                </layout>
               </widget>
              </item>
-             <item alignment="Qt::AlignTop">
+             <item alignment="Qt::AlignLeft|Qt::AlignTop">
               <widget class="QLabel" name="lStorageOverQuota">
                <property name="text">
                 <string>Your MEGA account is full</string>

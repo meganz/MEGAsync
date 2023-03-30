@@ -19,7 +19,6 @@ AccountDetailsDialog::AccountDetailsDialog(QWidget *parent) :
 {
     // Setup UI
     mUi->setupUi(this);
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
     // Set progressbars precision
     mUi->pbCloudDrive->setMaximum(PRECISION);
@@ -34,9 +33,6 @@ AccountDetailsDialog::AccountDetailsDialog(QWidget *parent) :
     mUi->lVersionIcon->setPixmap(icon.pixmap(24, 24));
     // Get fresh data
     refresh();
-
-    // Init HiDPI
-    mHighDpiResize.init(this);
 
     // Disable available storage for business accounts
     if (MegaSyncApp->getMegaApi()->isBusinessAccount())
@@ -258,4 +254,14 @@ void AccountDetailsDialog::updateStorageElements()
     MegaSyncApp->dettachStorageObserver(*this);
 
     refresh();
+}
+
+void AccountDetailsDialog::changeEvent(QEvent *event)
+{
+    if(event->type() == QEvent::LanguageChange)
+    {
+        mUi->retranslateUi(this);
+    }
+
+    QDialog::changeEvent(event);
 }

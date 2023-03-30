@@ -86,14 +86,15 @@ public slots:
     void onHeaderItemClicked(int sortBy, Qt::SortOrder order);
     void on_tPauseResumeVisible_toggled(bool state);
     void on_tCancelClearVisible_clicked();
-    void onUiBlocked();
-    void onUiUnblocked();
+    void onUiBlockedRequested();
+    void onUiUnblockedRequested();
 
 protected:
     void changeEvent(QEvent *event) override;
     bool eventFilter(QObject *watched, QEvent *event) override;
 
 private slots:
+    void onUiLoadingViewVisibilityChanged(bool state);
     void onUiUnblockedAndFilter();
     void onModelChanged();
     void onModelAboutToBeChanged();
@@ -145,6 +146,7 @@ signals:
     void cancelClearVisibleRows();
     void changeToAllTransfersTab();
 
+    void loadingViewVisibilityChanged(bool);
     void disableTransferManager(bool);
 
 };

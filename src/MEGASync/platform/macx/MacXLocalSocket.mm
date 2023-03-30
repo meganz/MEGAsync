@@ -108,3 +108,8 @@ bool MacXLocalSocket::writeData(const char *data, qint64 len)
         return false;
     }
 }
+
+void MacXLocalSocket::appendDataToBuffer(QByteArray data)
+{
+    socketPrivate->appendToBuffer(data);
+}

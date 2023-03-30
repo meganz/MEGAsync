@@ -69,7 +69,7 @@ void BackupTableView::showContextMenu(const QPoint &pos, const QModelIndex index
     auto sync = index.data(Qt::UserRole).value<std::shared_ptr<SyncSettings>>();
 
     QMenu *menu(new QMenu(this));
-    Platform::getInstance()->initMenu(menu);
+    Platform::getInstance()->initMenu(menu, "BackupContextMenu");
     menu->setAttribute(Qt::WA_DeleteOnClose);
 
     // Show in system file explorer action

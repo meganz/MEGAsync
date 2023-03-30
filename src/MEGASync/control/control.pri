@@ -8,6 +8,7 @@ QT       += network
 CONFIG += object_parallel_to_source
 
 SOURCES += $$PWD/HTTPServer.cpp \
+    $$PWD/DialogOpener.cpp \
     $$PWD/DownloadQueueController.cpp \
     $$PWD/Preferences.cpp \
     $$PWD/LinkProcessor.cpp \
@@ -29,6 +30,7 @@ SOURCES += $$PWD/HTTPServer.cpp \
 
 HEADERS  +=  $$PWD/HTTPServer.h \
     $$PWD/AppStatsEvents.h \
+    $$PWD/DialogOpener.h \
     $$PWD/DownloadQueueController.h \
     $$PWD/Preferences.h \
     $$PWD/LinkProcessor.h \

@@ -395,11 +395,19 @@ bool InfoDialogTransferDelegateWidget::eventFilter(QObject *watched, QEvent *eve
             nameLabel->setText(nameLabel->fontMetrics()
                                              .elidedText(getData()->mFilename, Qt::ElideMiddle,
                                                          availableSize));
-            nameLabel->adjustSize();
+            nameLabel->updateGeometry();
+            nameLabel->parentWidget()->updateGeometry();
         }
     }
 
     return TransferBaseDelegateWidget::eventFilter(watched, event);
+}
+
+void InfoDialogTransferDelegateWidget::reset()
+{
+    mIsHover = false;
+    mTransferRemainingTime.reset();
+    TransferBaseDelegateWidget::reset();
 }
 
 void InfoDialogTransferDelegateWidget::on_lShowInFolder_clicked()

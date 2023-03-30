@@ -1,6 +1,7 @@
 #include "MacXExtServer.h"
 #include <assert.h>
 #include "CommonMessages.h"
+#include <QThread>
 
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
@@ -11,8 +12,11 @@ using namespace std;
 
 MacXExtServer::MacXExtServer(MegaApplication *app)
 {
+    qRegisterMetaType<QPointer<MacXLocalSocket>>();
+
     sockPath = QString::fromUtf8("T9RH74Y7L9.mega.mac.socket");
-    m_localServer = new MacXLocalServer();
+
+    m_localServer = new MacXLocalServer(this);
     if (!m_localServer->listen(sockPath))
     {
         MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Failed to initialize the shell dispatcher");
@@ -21,35 +25,23 @@ MacXExtServer::MacXExtServer(MegaApplication *app)
         return;
     }
 
-    connect(this, SIGNAL(sendToAll(QByteArray)), this, SLOT(doSendToAll(QByteArray)));
-    connect(this, SIGNAL(newUploadQueue(QQueue<QString>)), app, SLOT(shellUpload(QQueue<QString>)),Qt::QueuedConnection);
-    connect(this, SIGNAL(newExportQueue(QQueue<QString>)), app, SLOT(shellExport(QQueue<QString>)),Qt::QueuedConnection);
+    connect(m_localServer,  &MacXLocalServer::newConnection, this, &MacXExtServer::acceptConnection, Qt::QueuedConnection);
+
+    connect(this, &MacXExtServer::newUploadQueue, app, &MegaApplication::shellUpload,Qt::QueuedConnection);
+    connect(this, &MacXExtServer::newExportQueue, app, &MegaApplication::shellExport,Qt::QueuedConnection);
     connect(this, SIGNAL(viewOnMega(QByteArray, bool)), app, SLOT(shellViewOnMega(QByteArray, bool)),Qt::QueuedConnection);
-    connect(m_localServer, SIGNAL(newConnection()), this, SLOT(acceptConnection()));
 }
 
 MacXExtServer::~MacXExtServer()
 {
-    for (auto client : m_clients)
-    {
-        client->deleteLater();
-    }
-
-    m_clients.clear();
-    delete m_localServer;
 }
 
-void MacXExtServer::acceptConnection()
+void MacXExtServer::acceptConnection(QPointer<MacXLocalSocket> client)
 {
-    while (m_localServer->hasPendingConnections())
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Received connection from the shell ext");
+    if (client)
     {
-        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Received connection from the shell ext");
-        MacXLocalSocket *client = m_localServer->nextPendingConnection();
-        if (!client)
-        {
-            continue;
-        }
-
+        client->setParent(this);
         connect(client, &MacXLocalSocket::dataReady, this, &MacXExtServer::onClientData);
         m_clients.append(client);
 
@@ -58,29 +50,28 @@ void MacXExtServer::acceptConnection()
         for (auto syncSetting : model->getAllSyncSettings())
         {
             QString syncPath = QDir::toNativeSeparators(QDir(syncSetting->getLocalFolder()).canonicalPath());
-            if (!syncPath.size() || syncSetting->getRunState() != MegaSync::RUNSTATE_RUNNING)
+            if (syncPath.size() && syncSetting->getRunState() == MegaSync::RUNSTATE_RUNNING)
             {
-                continue;
+                QString message = QString::fromUtf8("A:") + syncPath
+                        + QChar::fromAscii(':') + syncSetting->name(true);
+                if(!client->writeData(message.toUtf8().constData(), message.length()))
+                {
+                    clientDisconnected(client);
+                }
             }
-
-            QString message = QString::fromUtf8("A:") + syncPath
-                    + QChar::fromAscii(':') + syncSetting->name(true);
-            if(!client->writeData(message.toUtf8().constData(), message.length()))
-            {
-                clientDisconnected(client);
-            }
-
-        }        
+        }
     }
 }
 
-void MacXExtServer::onClientData()
+void MacXExtServer::onClientData(QByteArray data)
 {
     MacXLocalSocket *client = qobject_cast<MacXLocalSocket *>(sender());
     if (!client)
     {
         return;
     }
+
+    client->appendDataToBuffer(data);
 
     if (m_clients.indexOf(client) == -1)
     {
@@ -325,7 +316,8 @@ void MacXExtServer::notifyItemChange(QString localPath, int newState)
 
     if (newState == MegaApi::STATE_PENDING
             || newState == MegaApi::STATE_SYNCED
-            || newState == MegaApi::STATE_SYNCING)
+            || newState == MegaApi::STATE_SYNCING
+            || newState == MegaApi::STATE_NONE)
     {
         command.append(":");
         command.append(QString::number(newState).toUtf8().constData());
@@ -338,13 +330,13 @@ void MacXExtServer::notifyItemChange(QString localPath, int newState)
         {
             command.append("1");
         }
-        emit sendToAll(QByteArray(command.data(), command.size()));
+        doSendToAll(QByteArray(command.data()));
     }
 }
 
 void MacXExtServer::notifySyncAdd(QString path, QString syncName)
 {
-    emit sendToAll((QString::fromUtf8("A:")
+    doSendToAll((QString::fromUtf8("A:")
                    + path
                    + QChar::fromAscii(':')
                    + syncName).toUtf8());
@@ -352,7 +344,7 @@ void MacXExtServer::notifySyncAdd(QString path, QString syncName)
 
 void MacXExtServer::notifySyncDel(QString path, QString syncName)
 {
-    emit sendToAll((QString::fromUtf8("D:")
+    doSendToAll((QString::fromUtf8("D:")
                    + path
                    + QChar::fromAscii(':')
                    + syncName).toUtf8());
@@ -384,6 +376,6 @@ void MacXExtServer::notifyAllClients(int op)
 
         QString message = command + syncPath + QChar::fromAscii(':') + syncSetting->name(true);
 
-        emit sendToAll(message.toUtf8());
+        doSendToAll(message.toUtf8());
     }
 }

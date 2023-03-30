@@ -39,7 +39,10 @@ public:
     bool shouldRunHttpsServer() override;
     bool isUserActive() override;
     QString getDeviceName() override;
-    void initMenu(QMenu* m) override;
+
+    virtual void fileSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func) override;
+    virtual void folderSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func) override;
+    virtual void fileAndFolderSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func) override;
 
 private:
     QStringList getListRunningProcesses();

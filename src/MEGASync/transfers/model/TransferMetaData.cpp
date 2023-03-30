@@ -283,7 +283,7 @@ void DownloadTransferMetaData::updateOnTransferFinish(mega::MegaTransfer* transf
 {
     // If there is only 1 transfer, set localPath to full path
     std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(transfer->getNodeHandle()));
-    if(node)
+    if(node && node->isNodeKeyDecrypted())
     {
         QString localPath(mLocalTargetPath);
         char *escapedName = MegaSyncApp->getMegaApi()->escapeFsIncompatible(node->getName(),

@@ -31,13 +31,16 @@ public:
     bool shouldRunHttpsServer() override;
     bool isUserActive() override;
     QString getDeviceName() override;
-    void initMenu(QMenu* m) override;
+    void initMenu(QMenu* m, const char* objectName, const bool applyDefaultStyling = true) override;
 
-    QStringList multipleUpload(QString uploadTitle) override;
+    virtual void fileSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func) override;
+    virtual void folderSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func) override;
+    virtual void fileAndFolderSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func) override;
+    void raiseFileFolderSelectors() override;
 
-    void addFileManagerExtensionToSystem();
-    void reloadFileManagerExtension();
-    void enableFileManagerExtension(bool value);
+    void addFileManagerExtensionToSystem() override;
+    void reloadFileManagerExtension() override;
+    void enableFileManagerExtension(bool value) override;
 
 private:
     void disableSignalHandler();

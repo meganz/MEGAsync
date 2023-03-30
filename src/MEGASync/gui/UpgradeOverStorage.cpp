@@ -14,13 +14,10 @@ UpgradeOverStorage::UpgradeOverStorage(MegaApi* megaApi, std::shared_ptr<mega::M
     mPricing (pricing),
     mCurrency (currency)
 {
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     mUi->setupUi(this);
 
     updatePlans();  
     configureAnimation();
-
-    mHighDpiResize.init(this);
 
     //Keep storage details hidden until we receive the account details
     mUi->lAccountUsed->hide();

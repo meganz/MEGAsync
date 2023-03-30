@@ -443,41 +443,30 @@ QString PlatformImplementation::getDeviceName()
     return deviceName;
 }
 
-void PlatformImplementation::initMenu(QMenu* m)
+void PlatformImplementation::fileSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func)
 {
-    if (m)
+    if (defaultDir.isEmpty())
     {
-        m->setStyleSheet(QLatin1String("QMenu {"
-                                       "background: #ffffff;"
-                                       "padding-top: 6px;"
-                                       "padding-bottom: 6px;"
-                                       "border: 1px solid #B8B8B8;"
-                                   "}"
-                                   "QMenu::separator {"
-                                       "height: 1px;"
-                                       "margin: 6px 10px 6px 10px;"
-                                       "background-color: rgba(0, 0, 0, 0.1);"
-                                   "}"
-                                   // For vanilla QMenus (only in TransferManager and NodeSelectorTreeView (NodeSelector))
-                                   "QMenu::item {"
-                                       "font-family: Lato;"
-                                       "font-size: 14px;"
-                                       "margin: 6px 16px 6px 16px;"
-                                       "color: #777777;"
-                                       "padding-right: 16px;"
-                                   "}"
-                                   "QMenu::item:selected {"
-                                       "color: #000000;"
-                                   "}"
-                                   // For menus with MenuItemActions
-                                   "QLabel {"
-                                       "font-family: Lato;"
-                                       "font-size: 14px;"
-                                       "padding: 0px;"
-                                   "}"
-                                   ));
-        m->ensurePolished();
+        defaultDir = QLatin1String("/");
     }
+    AbstractPlatform::fileSelector(title, defaultDir, multiSelection, parent, func);
+}
+
+void PlatformImplementation::folderSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func)
+{
+    if (defaultDir.isEmpty())
+    {
+        defaultDir = QLatin1String("/");
+    }
+    AbstractPlatform::folderSelector(title, defaultDir, multiSelection, parent, func);
+}
+void PlatformImplementation::fileAndFolderSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func)
+{
+    if (defaultDir.isEmpty())
+    {
+        defaultDir = QLatin1String("/");
+    }
+    AbstractPlatform::fileAndFolderSelector(title, defaultDir, multiSelection, parent, func);
 }
 
 QStringList PlatformImplementation::getListRunningProcesses()

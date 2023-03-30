@@ -64,8 +64,9 @@ void TransfersWidget::setupTransfers()
     connect(mProxyModel, &TransfersManagerSortFilterProxyModel::pauseResumeTransfer, this, &TransfersWidget::onPauseResumeTransfer);
     connect(mProxyModel, &TransfersManagerSortFilterProxyModel::transferCancelClear, this, &TransfersWidget::onCancelClearButtonPressedOnDelegate);
     connect(mProxyModel, &TransfersManagerSortFilterProxyModel::transferRetry, this, &TransfersWidget::onRetryButtonPressedOnDelegate);
-    connect(app->getTransfersModel(), &TransfersModel::blockUi, this, &TransfersWidget::onUiBlocked);
-    connect(app->getTransfersModel(), &TransfersModel::unblockUi, this, &TransfersWidget::onUiUnblocked);
+    connect(&mLoadingScene, &ViewLoadingScene<TransferManagerLoadingItem>::sceneVisibilityChange, this, &TransfersWidget::onUiLoadingViewVisibilityChanged);
+    connect(app->getTransfersModel(), &TransfersModel::blockUi, this, &TransfersWidget::onUiBlockedRequested);
+    connect(app->getTransfersModel(), &TransfersModel::unblockUi, this, &TransfersWidget::onUiUnblockedRequested);
     connect(app->getTransfersModel(), &TransfersModel::unblockUiAndFilter, this, &TransfersWidget::onUiUnblockedAndFilter);
     connect(app->getTransfersModel(), &TransfersModel::rowsAboutToBeMoved, this, &TransfersWidget::onRowsAboutToBeMoved);
 
@@ -417,35 +418,38 @@ void TransfersWidget::setScanningWidgetVisible(bool state)
     }
 }
 
-void TransfersWidget::onUiBlocked()
+void TransfersWidget::onUiBlockedRequested()
 {
-    ui->tvTransfers->blockSignals(true);
-    ui->tvTransfers->header()->blockSignals(true);
-
     mLoadingScene.toggleLoadingScene(true);
+}
+
+void TransfersWidget::onUiUnblockedRequested()
+{
+    mLoadingScene.toggleLoadingScene(false);
+}
+
+void TransfersWidget::onUiLoadingViewVisibilityChanged(bool state)
+{
+    ui->tvTransfers->blockSignals(state);
+    ui->tvTransfers->header()->blockSignals(state);
 
     if(!mScanningIsActive)
     {
-        emit disableTransferManager(true);
+        emit disableTransferManager(state);
     }
-}
 
-void TransfersWidget::onUiUnblocked()
-{
-    //Set the model to the tvTransfers when the proxy model finishes filtering the first time
-    if(!ui->tvTransfers->model())
+    emit loadingViewVisibilityChanged(state);
+
+    if(!state)
     {
-        ui->tvTransfers->setModel(mProxyModel);
+        //Set the model to the tvTransfers when the proxy model finishes filtering the first time
+        if(!ui->tvTransfers->model())
+        {
+            ui->tvTransfers->setModel(mProxyModel);
+        }
+
+        mModel->uiUnblocked();
     }
-
-    ui->tvTransfers->header()->blockSignals(false);
-    ui->tvTransfers->blockSignals(false);
-
-    mLoadingScene.toggleLoadingScene(false);
-
-    emit disableTransferManager(false);
-
-    mModel->uiUnblocked();
 }
 
 void TransfersWidget::onUiUnblockedAndFilter()
@@ -458,12 +462,12 @@ void TransfersWidget::onUiUnblockedAndFilter()
 
 void TransfersWidget::onModelAboutToBeChanged()
 {
-    onUiBlocked();
+    onUiBlockedRequested();
 }
 
 void TransfersWidget::onModelChanged()
 {
-    onUiUnblocked();
+    onUiUnblockedRequested();
     updateHeaders();
 
     selectAndScrollToMovedTransfer();

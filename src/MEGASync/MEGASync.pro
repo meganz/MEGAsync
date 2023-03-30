@@ -215,6 +215,7 @@ macx {
     QMAKE_CXXFLAGS += -DCRYPTOPP_DISABLE_ASM -D_DARWIN_C_SOURCE
     MAC_ICONS_RESOURCES.files += $$PWD/folder.icns
     MAC_ICONS_RESOURCES.files += $$PWD/folder_yosemite.icns
+    MAC_ICONS_RESOURCES.files += $$PWD/folder_bigsur.icns
     MAC_ICONS_RESOURCES.files += $$PWD/appicon32.tiff
     MAC_ICONS_RESOURCES.path = Contents/Resources
     QMAKE_BUNDLE_DATA += MAC_ICONS_RESOURCES

@@ -4,6 +4,7 @@
 #include "control/AppStatsEvents.h"
 #include "QMegaMessageBox.h"
 #include "UserAttributesRequests/MyBackupsHandle.h"
+#include <MegaNodeNames.h>
 
 #include <assert.h>
 
@@ -108,23 +109,11 @@ void SyncInfo::removeAllFolders()
 
 void SyncInfo::activateSync(std::shared_ptr<SyncSettings> syncSetting)
 {
-#ifndef NDEBUG
-    {
-        auto sl = syncSetting->getLocalFolder();
-#ifdef _WIN32
-        if (sl.startsWith(QString::fromAscii("\\\\?\\")))
-        {
-            sl = sl.mid(4);
-        }
-#endif
-        auto slc = QDir::toNativeSeparators(QFileInfo(sl).canonicalFilePath());
-    }
-#endif
-
     // set sync UID
     if (syncSetting->getSyncID().isEmpty())
     {
         syncSetting->setSyncID(QUuid::createUuid().toString().toUpper());
+        Platform::getInstance()->syncFolderAdded(syncSetting->getLocalFolder(), syncSetting->name(true), syncSetting->getSyncID());
     }
 
     //send event for the first sync/backup
@@ -152,6 +141,8 @@ void SyncInfo::activateSync(std::shared_ptr<SyncSettings> syncSetting)
         mIsFirstBackupDone = true;
         break;
     }
+    default:
+        break;
     }
 
     // TODO: extract the QMegaMessageBoxes from the model, use signal to send message
@@ -177,13 +168,14 @@ void SyncInfo::activateSync(std::shared_ptr<SyncSettings> syncSetting)
             tr("You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage."));
         preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_HGFS_WARNING, true);
     }
-
-    Platform::getInstance()->syncFolderAdded(syncSetting->getLocalFolder(), syncSetting->name(true), syncSetting->getSyncID());
 }
 
 void SyncInfo::deactivateSync(std::shared_ptr<SyncSettings> syncSetting)
 {
-    Platform::getInstance()->syncFolderRemoved(syncSetting->getLocalFolder(), syncSetting->name(true), syncSetting->getSyncID());
+    if(syncSetting->isActive())
+    {
+        Platform::getInstance()->syncFolderRemoved(syncSetting->getLocalFolder(), syncSetting->name(true), syncSetting->getSyncID());
+    }
     Platform::getInstance()->notifyItemChange(syncSetting->getLocalFolder(), MegaApi::STATE_NONE);
 }
 
@@ -550,16 +542,22 @@ void SyncInfo::saveUnattendedDisabledSyncs()
 
 void SyncInfo::addUnattendedDisabledSync(MegaHandle tag, mega::MegaSync::SyncType type)
 {
-    unattendedDisabledSyncs[type].insert(tag);
-    saveUnattendedDisabledSyncs();
-    emit syncDisabledListUpdated();
+    if(unattendedDisabledSyncs.contains(type))
+    {
+        unattendedDisabledSyncs[type].insert(tag);
+        saveUnattendedDisabledSyncs();
+        emit syncDisabledListUpdated();
+    }
 }
 
 void SyncInfo::removeUnattendedDisabledSync(MegaHandle tag, mega::MegaSync::SyncType type)
 {
-    unattendedDisabledSyncs[type].remove(tag);
-    saveUnattendedDisabledSyncs();
-    emit syncDisabledListUpdated();
+    if(unattendedDisabledSyncs.contains(type))
+    {
+        unattendedDisabledSyncs[type].remove(tag);
+        saveUnattendedDisabledSyncs();
+        emit syncDisabledListUpdated();
+    }
 }
 
 void SyncInfo::setUnattendedDisabledSyncs(const QSet<MegaHandle>& tags)

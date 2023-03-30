@@ -2822,20 +2822,20 @@ Les transferts reprendront automatiquement quand vous rouvrirez l’appli.</nume
         <translatorcomment>Title of security upgrade dialog</translatorcomment>
         <translation>Mise à niveau de sécurité</translation>
     </message>
+    <message>
+        <source>Your account&apos;s security is now being upgraded. This will happen only once. If you have seen this message for this account before, press Cancel.</source>
+        <translatorcomment>Error message shown to the user to inform about that the security of his account is going to be upgraded. </translatorcomment>
+        <translation>La sécurité de votre compte est en cours de mise à niveau. Cela n’arriva qu’une fois. Si vous avez vu ce message pour ce compte auparavant, cliquez sur Annuler.</translation>
+    </message>
     <message numerus="yes">
         <source>You are currently sharing the following folder: %1</source>
         <translatorcomment>Additional information shown within Security upgrade dialog if the user has outgoing shares. A list of the shares will be filled at %1 placeholder. Please check screenshot to see the full context of this string along with the other ones.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Vous partagez actuellement le dossier suivant&#xa0;: %1</numerusform><numerusform>Vous partagez actuellement les dossiers suivants&#xa0;: %1</numerusform></translation>
     </message>
     <message>
         <source>Failed to ugrade security. Error: %1</source>
         <translatorcomment>System notification error shown if an error occur while upgrading security for your account. %1 will be replaced with the error returned from the SDK.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Your account&apos;s security is now being upgraded. This will happen only once. If you have seen this message for this account before, press Cancel.</source>
-        <translatorcomment>Error message shown to the user to inform about that the security of his account is going to be upgraded. </translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Échec de mise à niveau de la sécurité. Erreur&#xa0;: %1</translation>
     </message>
 </context>
 <context>
