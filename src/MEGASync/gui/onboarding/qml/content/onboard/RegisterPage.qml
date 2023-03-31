@@ -2,10 +2,6 @@ import Onboarding 1.0
 
 RegisterPageForm {
 
-    cancelButton.onClicked: {
-        registerStack.replace(loginPage);
-    }
-
     registerButton.onClicked: {
 
 

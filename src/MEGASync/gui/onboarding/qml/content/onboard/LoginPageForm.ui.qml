@@ -13,6 +13,8 @@ Rectangle {
     property string email: email.textField.text
     property string password: password.textField.text
 
+    anchors.fill: parent
+
     id: loginForm
     color: Styles.backgroundColor
 
@@ -97,3 +99,9 @@ Rectangle {
         }
     }
 }
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+##^##*/

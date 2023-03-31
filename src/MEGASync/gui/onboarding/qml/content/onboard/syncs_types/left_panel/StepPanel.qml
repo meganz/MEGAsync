@@ -5,76 +5,299 @@ import QtQuick.Controls.Styles 1.2
 
 import Common 1.0
 
-Item {
-
+Rectangle {
     /*
-     * Enums
+     * Properties
      */
-
-    enum ToStates {
-        Step1_ComputerName = 0,
-        Current = 1,
-        Done = 2
-    }
-
-    /*
-     * Functions
-     */
-
-    function changeToStep31() {
-        stepsLayout.state = stepsLayout.stateStep31SelectFolders;
-    }
-
-    function next() {
-        var last = false;
-        if(stepsLayout.state === stepsLayout.stateStep1ComputerName) {
-            stepsLayout.state = stepsLayout.stateStep2InstallationType;
-        } else if(stepsLayout.state === stepsLayout.stateStep2InstallationType) {
-            stepsLayout.state = stepsLayout.stateStep31SelectFolders;
-        } else if(stepsLayout.state === stepsLayout.stateStep31SelectFolders) {
-            stepsLayout.state = stepsLayout.stateStep32Confirm;
-        } else {
-            last = true;
-        }
-
-        return !last;
-    }
-
-    function previous() {
-        if(stepsLayout.state === stepsLayout.stateStep2InstallationType) {
-            stepsLayout.state = stepsLayout.stateStep1ComputerName;
-        } else if(stepsLayout.state === stepsLayout.stateStep31SelectFolders) {
-            stepsLayout.state = stepsLayout.stateStep2InstallationType;
-        } else if(stepsLayout.state === stepsLayout.stateStep32Confirm) {
-            stepsLayout.state = stepsLayout.stateStep31SelectFolders;
-        }
-    }
-
+    readonly property string step1ComputerName: "STEP1_COMPUTER_NAME"
+    readonly property string step2InstallationType: "STEP2_INSTALLATION_TYPE"
+    readonly property string stepBackupsSelectFolders: "STEP_BACKUPS_SELECT_FOLDERS"
+    readonly property string stepBackupsConfirm: "STEP_BACKUPS_CONFIRM"
+    readonly property string stepSelectSyncType: "STEP_SELECT_SYNC_TYPE"
+    readonly property string stepSyncFolder: "STEP_SELECT_SYNC_FOLDER"
     /*
      * Object properties
      */
-
+    color: Styles.alternateBackgroundColor
     height: parent.height
 
     /*
      * Child objects
      */
 
+    state: step1ComputerName
+
+    states: [
+        State {
+            name: step1ComputerName
+            PropertyChanges {
+                target: step1_computerName;
+                toState: Step.ToStates.Current
+            }
+            PropertyChanges {
+                target: step2_line;
+                color: Styles.buttonSecondaryPressed
+            }
+            PropertyChanges {
+                target: step2_installationType;
+                toState: Step.ToStates.Disabled
+            }
+            PropertyChanges {
+                target: step3_1_line;
+                visible: false;
+            }
+            PropertyChanges {
+                target: step3_1_selectFolder;
+                visible: false;
+            }
+            PropertyChanges {
+                target: step3_2_line;
+                visible: false;
+            }
+            PropertyChanges {
+                target: step3_2_confirm;
+                visible: false;
+            }
+        },
+        State {
+            name: step2InstallationType
+            PropertyChanges {
+                target: step1_computerName;
+                toState: Step.ToStates.Done
+            }
+            PropertyChanges {
+                target: step2_line;
+                color: Styles.buttonPrimaryPressed
+            }
+            PropertyChanges {
+                target: step2_installationType;
+                toState: Step.ToStates.Current
+            }
+            PropertyChanges {
+                target: step3_line;
+                color: Styles.buttonSecondaryPressed
+            }
+            PropertyChanges {
+                target: step3_syncs;
+                toState: Step.ToStates.Disabled
+            }
+            PropertyChanges {
+                target: step3_1_line;
+                color: Styles.buttonSecondaryPressed
+            }
+            PropertyChanges {
+                target: step3_1_selectFolder;
+                toState: SubStep.ToStates.Disabled
+            }
+            PropertyChanges {
+                target: step3_1_line;
+                visible: false;
+            }
+            PropertyChanges {
+                target: step3_1_selectFolder;
+                visible: false;
+            }
+            PropertyChanges {
+                target: step3_2_line;
+                visible: false;
+            }
+            PropertyChanges {
+                target: step3_2_confirm;
+                visible: false;
+            }
+        },
+        State {
+            name: stepBackupsSelectFolders
+            PropertyChanges {
+                target: step1_computerName;
+                toState: Step.ToStates.DoneLight
+            }
+            PropertyChanges {
+                target: step2_line;
+                color: Styles.buttonPrimaryPressed
+            }
+            PropertyChanges {
+                target: step2_installationType;
+                toState: Step.ToStates.DoneLight
+            }
+            PropertyChanges {
+                target: step3_line;
+                color: Styles.buttonPrimaryPressed
+            }
+            PropertyChanges {
+                target: step3_syncs;
+                toState: Step.ToStates.Current
+                title: qsTr("Backup")
+            }
+            PropertyChanges {
+                target: step3_1_line;
+                color: Styles.buttonPrimaryPressed
+                visible: true
+            }
+            PropertyChanges {
+                target: step3_1_selectFolder;
+                toState: SubStep.ToStates.Current
+                visible: true
+                title: qsTr("Select folders")
+            }
+            PropertyChanges {
+                target: step3_2_line;
+                color: Styles.buttonSecondaryPressed
+                visible: true
+            }
+            PropertyChanges {
+                target: step3_2_confirm;
+                toState: SubStep.ToStates.Disabled
+                visible: true
+                title: qsTr("Confirm")
+            }
+        },
+        State {
+            name: stepBackupsConfirm
+            PropertyChanges {
+                target: step1_computerName;
+                toState: Step.ToStates.DoneLight
+            }
+            PropertyChanges {
+                target: step2_line;
+                color: Styles.buttonPrimaryPressed
+            }
+            PropertyChanges {
+                target: step2_installationType;
+                toState: Step.ToStates.DoneLight
+            }
+            PropertyChanges {
+                target: step3_line;
+                color: Styles.buttonPrimaryPressed
+            }
+            PropertyChanges {
+                target: step3_syncs;
+                toState: Step.ToStates.DoneConfirm
+                title: qsTr("Backup")
+            }
+            PropertyChanges {
+                target: step3_1_line;
+                color: Styles.buttonPrimaryPressed
+                visible: true;
+            }
+            PropertyChanges {
+                target: step3_1_selectFolder;
+                toState: SubStep.ToStates.Done
+                visible: true;
+                title: qsTr("Select folders")
+            }
+            PropertyChanges {
+                target: step3_2_line;
+                color: Styles.buttonPrimaryPressed
+                visible: true;
+            }
+            PropertyChanges {
+                target: step3_2_confirm;
+                toState: SubStep.ToStates.Current
+                visible: true;
+                title: qsTr("Confirm")
+            }
+        },
+        State {
+            name: stepSelectSyncType
+            PropertyChanges {
+                target: step1_computerName;
+                toState: Step.ToStates.DoneLight
+            }
+            PropertyChanges {
+                target: step2_line;
+                color: Styles.buttonPrimaryPressed
+            }
+            PropertyChanges {
+                target: step2_installationType;
+                toState: Step.ToStates.DoneLight
+            }
+            PropertyChanges {
+                target: step3_line;
+                color: Styles.buttonPrimaryPressed
+            }
+            PropertyChanges {
+                target: step3_syncs;
+                toState: Step.ToStates.Current
+                title: qsTr("Sync")
+            }
+            PropertyChanges {
+                target: step3_1_line;
+                color: Styles.buttonPrimaryPressed
+                visible: true;
+            }
+            PropertyChanges {
+                target: step3_1_selectFolder;
+                toState: SubStep.ToStates.Current
+                visible: true;
+                title: qsTr("Choose sync type")
+            }
+            PropertyChanges {
+                target: step3_2_line;
+                color: Styles.buttonSecondaryPressed
+                visible: true;
+            }
+            PropertyChanges {
+                target: step3_2_confirm;
+                toState: SubStep.ToStates.Disabled
+                visible: true;
+                title: qsTr("Select folders")
+            }
+        },
+        State {
+            name: stepSyncFolder
+            PropertyChanges {
+                target: step1_computerName;
+                toState: Step.ToStates.DoneLight
+            }
+            PropertyChanges {
+                target: step2_line;
+                color: Styles.buttonPrimaryPressed
+            }
+            PropertyChanges {
+                target: step2_installationType;
+                toState: Step.ToStates.DoneLight
+            }
+            PropertyChanges {
+                target: step3_line;
+                color: Styles.buttonPrimaryPressed
+            }
+            PropertyChanges {
+                target: step3_syncs;
+                toState: Step.ToStates.DoneConfirm
+                title: qsTr("Sync")
+            }
+            PropertyChanges {
+                target: step3_1_line;
+                color: Styles.buttonPrimaryPressed
+                visible: true;
+            }
+            PropertyChanges {
+                target: step3_1_selectFolder;
+                toState: SubStep.ToStates.Done
+                visible: true;
+                title: qsTr("Choose sync type")
+            }
+            PropertyChanges {
+                target: step3_2_line;
+                color: Styles.buttonPrimaryPressed
+                visible: true;
+            }
+            PropertyChanges {
+                target: step3_2_confirm;
+                toState: SubStep.ToStates.Current
+                visible: true;
+                title: qsTr("Select folders")
+            }
+        }
+    ] // states
+
     ColumnLayout {
-        width: parent.width
-        height: parent.height
+        anchors.fill: parent
         spacing: 0
 
         ColumnLayout {
             id: stepsLayout
-
-            /*
-             * Properties
-             */
-            readonly property string stateStep1ComputerName: "STEP1_COMPUTER_NAME"
-            readonly property string stateStep2InstallationType: "STEP2_INSTALLATION_TYPE"
-            readonly property string stateStep31SelectFolders: "STEP3_1_SELECT_FOLDERS"
-            readonly property string stateStep32Confirm: "STEP3_2_CONFIRM"
 
             /*
              * Object properties
@@ -83,135 +306,6 @@ Item {
             width: parent.width
             Layout.alignment: Qt.AlignTop
             spacing: 4
-
-            state: stateStep1ComputerName
-
-            states: [
-                State {
-                    name: stepsLayout.stateStep1ComputerName
-                    PropertyChanges {
-                        target: step1_computerName;
-                        toState: Step.ToStates.Current
-                    }
-                    PropertyChanges {
-                        target: step2_line;
-                        color: Styles.buttonSecondaryPressed
-                    }
-                    PropertyChanges {
-                        target: step2_installationType;
-                        toState: Step.ToStates.Disabled
-                    }
-                },
-                State {
-                    name: stepsLayout.stateStep2InstallationType
-                    PropertyChanges {
-                        target: step1_computerName;
-                        toState: Step.ToStates.Done
-                    }
-                    PropertyChanges {
-                        target: step2_line;
-                        color: Styles.buttonPrimaryPressed
-                    }
-                    PropertyChanges {
-                        target: step2_installationType;
-                        toState: Step.ToStates.Current
-                    }
-                    PropertyChanges {
-                        target: step3_line;
-                        color: Styles.buttonSecondaryPressed
-                    }
-                    PropertyChanges {
-                        target: step3_syncs;
-                        toState: Step.ToStates.Disabled
-                    }
-                    PropertyChanges {
-                        target: step3_1_line;
-                        color: Styles.buttonSecondaryPressed
-                    }
-                    PropertyChanges {
-                        target: step3_1_selectFolder;
-                        toState: SubStep.ToStates.Disabled
-                    }
-                },
-                State {
-                    name: stepsLayout.stateStep31SelectFolders
-                    PropertyChanges {
-                        target: step1_computerName;
-                        toState: Step.ToStates.DoneLight
-                    }
-                    PropertyChanges {
-                        target: step2_line;
-                        color: Styles.buttonPrimaryPressed
-                    }
-                    PropertyChanges {
-                        target: step2_installationType;
-                        toState: Step.ToStates.DoneLight
-                    }
-                    PropertyChanges {
-                        target: step3_line;
-                        color: Styles.buttonPrimaryPressed
-                    }
-                    PropertyChanges {
-                        target: step3_syncs;
-                        toState: Step.ToStates.Current
-                    }
-                    PropertyChanges {
-                        target: step3_1_line;
-                        color: Styles.buttonPrimaryPressed
-                    }
-                    PropertyChanges {
-                        target: step3_1_selectFolder;
-                        toState: SubStep.ToStates.Current
-                    }
-                    PropertyChanges {
-                        target: step3_2_line;
-                        color: Styles.buttonSecondaryPressed
-                    }
-                    PropertyChanges {
-                        target: step3_2_confirm;
-                        toState: SubStep.ToStates.Disabled
-                    }
-                },
-                State {
-                    name: stepsLayout.stateStep32Confirm
-                    PropertyChanges {
-                        target: step1_computerName;
-                        toState: Step.ToStates.DoneLight
-                    }
-                    PropertyChanges {
-                        target: step2_line;
-                        color: Styles.buttonPrimaryPressed
-                    }
-                    PropertyChanges {
-                        target: step2_installationType;
-                        toState: Step.ToStates.DoneLight
-                    }
-                    PropertyChanges {
-                        target: step3_line;
-                        color: Styles.buttonPrimaryPressed
-                    }
-                    PropertyChanges {
-                        target: step3_syncs;
-                        toState: Step.ToStates.DoneConfirm
-                    }
-                    PropertyChanges {
-                        target: step3_1_line;
-                        color: Styles.buttonPrimaryPressed
-                    }
-                    PropertyChanges {
-                        target: step3_1_selectFolder;
-                        toState: SubStep.ToStates.Done
-                    }
-                    PropertyChanges {
-                        target: step3_2_line;
-                        color: Styles.buttonPrimaryPressed
-                    }
-                    PropertyChanges {
-                        target: step3_2_confirm;
-                        toState: SubStep.ToStates.Current
-                    }
-                }
-            ] // states
 
             /*
              * Child objects

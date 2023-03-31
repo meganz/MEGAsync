@@ -3,106 +3,219 @@ import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 
 import Onboard.Syncs_types.Left_panel 1.0
+import Onboard.Syncs_types.Syncs 1.0
+import Onboard.Syncs_types.Backups 1.0
+
 import Components 1.0 as Custom
 import Common 1.0
 
-StackView {
+Item {
     id: syncsStack
+
+    property alias installationTypePage: installationTypePage
+    property alias computerNamePage: computerNamePage
+    property alias selectBackupFoldersPage: selectBackupFoldersPage
+    property alias confirmBackupFoldersPage: confirmBackupFoldersPage
+    property alias syncPage: syncPage
+    property alias selectiveSyncPage: selectiveSyncPage
+    property alias fullSyncPage: fullSyncPage
+    property alias finalPage: finalPage
+
+    readonly property string computerName: "computerName"
+    readonly property string syncType: "syncType"
+    readonly property string syncs: "syncs"
+    readonly property string confirmBackup: "confirmBackup"
+    readonly property string selectBackup: "selectBackup"
+    readonly property string selectiveSync: "selectiveSync"
+    readonly property string fullSync: "fullSync"
+    readonly property string finalState: "finalState"
+
 
     /*
      * Object properties
      */
+    anchors.fill: parent
 
-    height: 520
-    width: 776
-    initialItem: configurationLayout
 
     /*
-     * Child objects
-     */
-
-    RowLayout {
-        id: configurationLayout
-
-        /*
-         * Object properties
-         */
-
-        height: parent.height
-        width: parent.width
-
-        /*
          * Child objects
          */
+    states: [
+        State {
+            name: computerName
+            PropertyChanges {
+                target: computerNamePage
+                visible: true
+            }
+            PropertyChanges {
+                target: stepPanel
+                state: stepPanel.step1ComputerName
+            }
+        },
+        State {
+            name: syncType
+            PropertyChanges {
+                target: installationTypePage
+                visible: true
+            }
+            PropertyChanges {
+                target: stepPanel
+                state: stepPanel.step2InstallationType
+            }
+            PropertyChanges {
+                target: syncsPanel
+                visible: true
+            }
+        },
+        State {
+            name: syncs
+            PropertyChanges {
+                target: syncPage
+                visible: true
+            }
+            PropertyChanges {
+                target: stepPanel
+                state: stepPanel.stepSelectSyncType
+            }
+        },
+        State {
+            name: selectiveSync
+            PropertyChanges {
+                target: selectiveSyncPage
+                visible: true
+            }
+            PropertyChanges {
+                target: stepPanel
+                state: stepPanel.stepSyncFolder
+            }
+        },
+        State {
+            name: fullSync
+            PropertyChanges {
+                target: fullSyncPage
+                visible: true
+            }
+            PropertyChanges {
+                target: stepPanel
+                state: stepPanel.stepSyncFolder
+            }
+        },
+        State {
+            name: selectBackup
+            PropertyChanges {
+                target: selectBackupFoldersPage
+                visible: true
+            }
+            PropertyChanges {
+                target: stepPanel
+                state: stepPanel.stepBackupsSelectFolders
+            }
+        },
+        State {
+            name: confirmBackup
+            PropertyChanges {
+                target: confirmBackupFoldersPage
+                visible: true
+            }
+            PropertyChanges {
+                target: stepPanel
+                state: stepPanel.stepBackupsConfirm
+            }
+        },
+        State {
+            name: finalState
+            PropertyChanges {
+                target: finalPage
+                visible: true
+            }
+            PropertyChanges {
+                target: syncsPanel
+                visible: false
+            }
+        }
+    ]
 
+    Rectangle{
+        id: contentItem
+        anchors.fill: parent
+
+        ResumePage {
+            id: finalPage
+            visible: false
+        }
+        Rectangle {
+            id:syncsPanel
+            anchors.fill:parent
         StepPanel {
-            id: syncsInfoStepPanel
 
-            Layout.preferredHeight: configurationLayout.height
-            Layout.preferredWidth: 224
+            id: stepPanel
+            anchors {
+                left: parent.left
+                top: parent.top
+                bottom: parent.bottom
+            }
+            width: 224
         }
 
         Rectangle {
-            color: "#FAFAFB"
-            Layout.preferredHeight: configurationLayout.height
-            Layout.preferredWidth: configurationLayout.width - syncsInfoStepPanel.width
+            id: rightPanel
+            objectName: "CONTENT ITEM RECTANGLE"
+            anchors {
+                left: stepPanel.right
+                right: parent.right
+                top: parent.top
+                bottom: parent.bottom
+            }
+            ComputerNamePage {
+                id: computerNamePage
+                Layout.fillHeight: true
+                Layout.fillWidth: true
+                visible: true
+            }
 
-            ColumnLayout {
-                height: parent.height
-                width: parent.width
+            InstallationTypePage {
+                id: installationTypePage
 
-                ContentPanel {
-                    id: contentStack
+                visible: false
+            }
 
-                    footerLayout: syncsFooter
-                }
+            SyncTypePage {
+                id: syncPage
 
-                Footer {
-                    id: syncsFooter
+                visible: false
+            }
 
-                    Layout.alignment: Qt.AlignBottom | Qt.AlignRight
-                    Layout.bottomMargin: 24
-                    Layout.rightMargin: 32
-                    Layout.preferredWidth: parent.width
-                }
+            FullSyncPage {
+                id: fullSyncPage
+
+                visible: false
+            }
+
+            SelectiveSyncPage {
+                id: selectiveSyncPage
+
+                visible: false
+            }
+
+            SelectFoldersPage {
+                id: selectBackupFoldersPage
+
+                visible: false
+            }
+
+            ConfirmFoldersPage {
+                id: confirmBackupFoldersPage
+
+                visible: false
             }
         }
-
-        Connections {
-            target: syncsFooter
-
-            onNextButtonClicked: {
-                if(!syncsInfoStepPanel.next()) {
-                    resumePage.clear();
-                    syncsStack.replace(resumePage, StackView.Immediate);
-                }
-            }
-
-            onPreviousButtonClicked: {
-                syncsInfoStepPanel.previous();
-            }
-        }
-
-    } // RowLayout -> configurationLayout
-
-    ResumePage {
-        id: resumePage
-
-        height: parent.height
-        width: parent.width
-        visible: false
-    }
-
-    Connections {
-        target: resumePage
-
-        onOptionChanged: (type, checked) => {
-            if(checked) {
-                syncsStack.replace(configurationLayout, StackView.Immediate);
-                syncsInfoStepPanel.changeToStep31();
-                contentStack.showSubstackPage(type);
-            }
         }
     }
-
 } // StackView
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+##^##*/
+

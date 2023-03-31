@@ -24,7 +24,7 @@ Button {
     Layout.preferredHeight: 96
     checkable: true
     checked: false
-    autoExclusive : true
+    onClicked: console.info("Button clicked")
 
     background:
         Rectangle {
@@ -88,9 +88,9 @@ Button {
         anchors.fill: parent
         hoverEnabled: true
         cursorShape: Qt.PointingHandCursor
-        onClicked: {
-            btn.checked = !btn.checked;
-        }
+        onPressed: {
+             mouse.accepted = false;
+       }
     }
 
 } // Button

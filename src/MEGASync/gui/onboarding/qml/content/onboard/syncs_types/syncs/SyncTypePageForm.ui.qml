@@ -8,11 +8,11 @@ import Common 1.0
 SyncsPage {
 
     property alias buttonGroup: buttonGroup
-    anchors.left: parent.left
-    anchors.leftMargin: 32
 
     ColumnLayout {
         spacing: 34
+        anchors.left: parent.left
+        anchors.leftMargin: 32
 
         Header {
             title: qsTr("Choose sync type")
@@ -21,18 +21,6 @@ SyncsPage {
             Layout.preferredWidth: 488
             Layout.topMargin: 32
         }
-
-
-        /*
-        * Signals
-        */
-        signal optionSelected(int option)
-
-
-        /*
-         * Object properties
-         */
-        width: 488
 
 
         /*

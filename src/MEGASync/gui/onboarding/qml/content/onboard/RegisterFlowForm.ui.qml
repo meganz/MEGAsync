@@ -6,7 +6,15 @@ import Common 1.0
 
 Rectangle {
     id: root
+    property alias loginPage: loginPage
+    property alias registerPage: registerPage
+    property alias twoFAPage: twoFAPage
 
+    readonly property string login: "login"
+    readonly property string twoFA: "twoFA"
+    readonly property string register: "register"
+
+    anchors.fill: parent
     color: Styles.alternateBackgroundColor
     border.color: "#ffffff"
 
@@ -19,20 +27,55 @@ Rectangle {
         anchors.verticalCenter: root.verticalCenter
     }
 
-    StackView {
-        id: registerStack
+    states: [
+        State {
+            name: login
+            PropertyChanges {
+                target: loginPage
+                visible: true
+            }
+        },
+        State {
+            name: register
+            PropertyChanges {
+                target: registerPage
+                visible: true
+            }
+        },
+        State {
+            name: twoFA
+            PropertyChanges {
+                target: twoFAPage
+                visible: true
+            }
+        }
+    ]
 
-        initialItem: loginPage
+    Rectangle {
         anchors {
             left: image.right
             top: root.top
             bottom: root.bottom
             right: root.right
         }
+        LoginPage {
+            id: loginPage
+            visible: true
+        }
+        TwoFAPage {
+            id: twoFAPage
+            visible: false
+        }
+        RegisterPage {
+            id: registerPage
+            visible: false
+        }
     }
-
-    LoginPage {
-        id: loginPage
-    }
-
 } // Rectangle -> root
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+##^##*/
+

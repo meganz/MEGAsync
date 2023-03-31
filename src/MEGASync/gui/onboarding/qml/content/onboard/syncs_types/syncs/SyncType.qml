@@ -7,18 +7,18 @@ import Onboard.Syncs_types 1.0
 SyncsPage {
 
     objectName: "SyncTypes"
-    substackView.initialItem: selectSyncType
+    //substackView.initialItem: selectSyncType
 
     SyncTypePage{
         id: selectSyncType
-        footerLayout: mainItem.footerLayout
+       // footerLayout: mainItem.footerLayout
     }
 
     FullSyncPage
     {
         id: fullSync
         previous: selectSyncType
-        footerLayout: mainItem.footerLayout
+       // footerLayout: mainItem.footerLayout
         visible: false
     }
 
@@ -26,7 +26,7 @@ SyncsPage {
     {
         id: selectiveSync
         previous: selectSyncType
-        footerLayout: mainItem.footerLayout
+       // footerLayout: mainItem.footerLayout
         visible: false
     }
 }

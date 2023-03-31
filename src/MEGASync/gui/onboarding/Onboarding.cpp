@@ -81,6 +81,7 @@ void Onboarding::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *err
             if(error->getErrorCode() == MegaError::API_OK)
             {
                 qDebug() << "Onboarding::onRequestFinish -> TYPE_CREATE_ACCOUNT API_OK";
+                emit loginFinished(); // maybe we should change this signal
             } else {
                 qDebug() << "Onboarding::onRequestFinish -> TYPE_CREATE_ACCOUNT Error code -> " << error->getErrorCode();
             }

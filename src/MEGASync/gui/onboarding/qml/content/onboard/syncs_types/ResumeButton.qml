@@ -83,8 +83,8 @@ Button {
         anchors.fill: parent
         hoverEnabled: true
         cursorShape: Qt.PointingHandCursor
-        onClicked: {
-            btn.checked = !btn.checked;
+        onPressed: {
+            mouse.accepted = false;
         }
     }
 

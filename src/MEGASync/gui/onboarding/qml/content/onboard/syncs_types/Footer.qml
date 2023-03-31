@@ -6,6 +6,7 @@ import Components 1.0 as Custom
 import Onboarding 1.0
 
 RowLayout {
+
     id: mainLayout
 
     signal cancelButtonClicked

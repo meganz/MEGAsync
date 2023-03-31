@@ -1,2 +1,3 @@
 module Onboard.Syncs_types.Backups
-BackupPage 1.0 BackupPage.qml
+ConfirmFoldersPage 1.0 ConfirmFoldersPage.qml
+SelectFoldersPage 1.0 SelectFoldersPage.qml

@@ -6,24 +6,38 @@ import Components 1.0 as Custom
 SyncsPage {
 
     objectName: "ComputerNamePageForm"
-
     ColumnLayout {
-
+        anchors.leftMargin: 32
+        anchors.left: parent.left
         spacing: 12
-
         Header {
             title: qsTr("Set up MEGA")
             description: qsTr("You can assign the name for personal use or workgroup membership of this computer.")
             Layout.fillWidth: false
             Layout.preferredWidth: 488
             Layout.topMargin: 32
-            Layout.leftMargin: 32
         }
 
-        ComputerName {
-            Layout.fillWidth: false
-            Layout.preferredWidth: 488
-            Layout.leftMargin: 32
+        Image {
+            source: "../../../../../images/Onboarding/pc.svg"
+            Layout.topMargin: 12
+        }
+
+        Text {
+            text: qsTr("Computer name")
+            Layout.topMargin: 12
+            Layout.preferredHeight: 20
+            font.pixelSize: 14
+            font.weight: Font.DemiBold
+            font.family: "Inter"
+            font.styleName: "Medium"
+            lineHeight: 20
+        }
+
+        Custom.TextField {
+            Layout.fillWidth: true
+            Layout.preferredHeight: 48
+            placeholderText: qsTr("MacbookPro Username")
         }
     }
 }
