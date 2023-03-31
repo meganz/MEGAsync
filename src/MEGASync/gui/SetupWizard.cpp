@@ -4,11 +4,12 @@
 #include "MegaApplication.h"
 #include "QMegaMessageBox.h"
 #include "control/Utilities.h"
+#include "DialogOpener.h"
 #include "control/AppStatsEvents.h"
-#include "gui/MultiQFileDialog.h"
 #include "gui/Login2FA.h"
 #include "gui/GuiUtilities.h"
 #include "platform/Platform.h"
+#include "DialogOpener.h"
 
 #include <QKeyEvent>
 
@@ -23,7 +24,6 @@ SetupWizard::SetupWizard(MegaApplication *app, QWidget *parent) :
     ui(new Ui::SetupWizard)
 {
     ui->setupUi(this);
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowModality(Qt::WindowModal);
 
     animationTimer = new QTimer(this);
@@ -62,8 +62,6 @@ SetupWizard::SetupWizard(MegaApplication *app, QWidget *parent) :
     m_animation->setStartValue(QSize(ui->wErrorMessage->minimumWidth(), ui->wErrorMessage->minimumHeight()));
     m_animation->setEndValue(QSize(ui->wErrorMessage->maximumWidth(), ui->wErrorMessage->maximumHeight()));
     connect(m_animation, SIGNAL(finished()), this, SLOT(onErrorAnimationFinished()));
-
-    connect(static_cast<MegaApplication*>(qApp), SIGNAL(closeSetupWizard()), this, SLOT(close()));
 
     page_newaccount();
 
@@ -186,25 +184,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 }
                 else if (error->getErrorCode() == MegaError::API_EMFAREQUIRED)
                 {
-                    QPointer<SetupWizard> dialog = this;
-                    QPointer<Login2FA> verification = new Login2FA();
-                    int result = verification->exec();
-                    if (!dialog || !verification || result != QDialog::Accepted)
-                    {
-                        if (dialog)
-                        {
-                            megaApi->localLogout();
-                            page_login();
-                            loggingStarted = false;
-                        }
-                        delete verification;
-                        return;
-                    }
-
-                    QString pin = verification->pinCode();
-                    delete verification;
-
-                    megaApi->multiFactorAuthLogin(request->getEmail(), request->getPassword(), pin.toUtf8().constData());
+                    show2FA(request, false);
                     return;
                 }
                 else if (error->getErrorCode() == MegaError::API_EINCOMPLETE)
@@ -223,26 +203,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 }
                 else if (error->getErrorCode() == MegaError::API_EFAILED || error->getErrorCode() == MegaError::API_EEXPIRED)
                 {
-                    QPointer<SetupWizard> dialog = this;
-                    QPointer<Login2FA> verification = new Login2FA();
-                    verification->invalidCode(true);
-                    int result = verification->exec();
-                    if (!dialog || !verification || result != QDialog::Accepted)
-                    {
-                        if (dialog)
-                        {
-                            megaApi->localLogout();
-                            page_login();
-                            loggingStarted = false;
-                        }
-                        delete verification;
-                        return;
-                    }
-
-                    QString pin = verification->pinCode();
-                    delete verification;
-
-                    megaApi->multiFactorAuthLogin(request->getEmail(), request->getPassword(), pin.toUtf8().constData());
+                    show2FA(request, true);
                     return;
                 }
                 else if (error->getErrorCode() != MegaError::API_ESSL)
@@ -336,6 +297,26 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
             }
         }
     }
+}
+
+void SetupWizard::show2FA(MegaRequest *request, bool invalidCode)
+{
+    QPointer<Login2FA> verification(new Login2FA());
+    verification->invalidCode(invalidCode);
+    std::shared_ptr<MegaRequest> requestCopy(request->copy());
+    DialogOpener::showDialog<Login2FA>(verification, [requestCopy, verification,this](){
+        if (verification->result() != QDialog::Accepted)
+        {
+            megaApi->localLogout();
+            page_login();
+            loggingStarted = false;
+        }
+        else
+        {
+            QString pin = verification->pinCode();
+            megaApi->multiFactorAuthLogin(requestCopy->getEmail(), requestCopy->getPassword(), pin.toUtf8().constData());
+        }
+    });
 }
 
 void SetupWizard::onRequestUpdate(MegaApi *, MegaRequest *request)
@@ -653,18 +634,7 @@ void SetupWizard::on_bCancel_clicked()
             return;
         }
 
-        QPointer<QMessageBox> msg = new QMessageBox(this);
-        msg->setIcon(QMessageBox::Question);
-        msg->setWindowTitle(tr("MEGAsync"));
-        msg->setText(tr("Are you sure you want to cancel this wizard and undo all changes?"));
-        msg->addButton(QMessageBox::Yes);
-        msg->addButton(QMessageBox::No);
-        msg->setDefaultButton(QMessageBox::No);
-        int button = msg->exec();
-        if (msg)
-        {
-            delete msg;
-        }
+        auto button = QMegaMessageBox::question(this, tr("MEGAsync"), tr("Are you sure you want to cancel this wizard and undo all changes?"), QMessageBox::Yes|QMessageBox::No, QMessageBox::No);
 
         if (button == QMessageBox::Yes)
         {
@@ -714,28 +684,17 @@ void SetupWizard::on_bLocalFolder_clicked()
 
     defaultPath = QDir::toNativeSeparators(defaultPath);
 
-#ifndef _WIN32
-    if (defaultPath.isEmpty())
-    {
-        defaultPath = QString::fromUtf8("/");
-    }
+    Platform::getInstance()->folderSelector(tr("Select local folder"), defaultPath, false, this, [this](QStringList selection){
+        if(!selection.isEmpty())
+        {
+            QString fPath = selection.first();
+            onLocalFolderSet(fPath);
+        }
+    });
+}
 
-    QPointer<MultiQFileDialog> dialog = new MultiQFileDialog(0,  tr("Select local folder"), defaultPath, false);
-    dialog->setOptions(QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
-    dialog->setFileMode(QFileDialog::DirectoryOnly);
-    int result = dialog->exec();
-    if (!dialog || result != QDialog::Accepted || dialog->selectedFiles().isEmpty())
-    {
-        delete dialog;
-        return;
-    }
-    QString path = dialog->selectedFiles().value(0);
-    delete dialog;
-#else
-    QString path = QFileDialog::getExistingDirectory(0,  tr("Select local folder"), defaultPath);
-    path = QDir::toNativeSeparators(path);
-
-#endif
+void SetupWizard::onLocalFolderSet(const QString& path)
+{
     QDir dir(path);
     if (dir.mkpath(QString::fromLatin1(".")))
     {
@@ -745,39 +704,26 @@ void SetupWizard::on_bLocalFolder_clicked()
 
 void SetupWizard::on_bMegaFolder_clicked()
 {
-    QPointer<SyncNodeSelector> nodeSelector = new SyncNodeSelector(this);
+    SyncNodeSelector* nodeSelector = new SyncNodeSelector(this);
     std::shared_ptr<MegaNode> defaultNode(megaApi->getNodeByPath(ui->eMegaFolder->text().toUtf8().constData()));
     nodeSelector->setSelectedNodeHandle(defaultNode);
 #ifdef Q_OS_LINUX
     nodeSelector->setWindowFlags(nodeSelector->windowFlags() | (Qt::Tool));
 #endif
-    int result = nodeSelector->exec();
-    if (!nodeSelector || result != QDialog::Accepted)
-    {
-        delete nodeSelector;
-        return;
-    }
-
-    selectedMegaFolderHandle = nodeSelector->getSelectedNodeHandle();
-    MegaNode *node = megaApi->getNodeByHandle(selectedMegaFolderHandle);
-    if (!node)
-    {
-        delete nodeSelector;
-        return;
-    }
-
-    const char *nPath = megaApi->getNodePath(node);
-    if (!nPath)
-    {
-        delete nodeSelector;
-        delete node;
-        return;
-    }
-
-    ui->eMegaFolder->setText(QString::fromUtf8(nPath));
-    delete nodeSelector;
-    delete [] nPath;
-    delete node;
+    DialogOpener::showDialog<NodeSelector>(nodeSelector, [nodeSelector, this](){
+        if (nodeSelector->result() == QDialog::Accepted)
+        {
+            selectedMegaFolderHandle = nodeSelector->getSelectedNodeHandle();
+            std::shared_ptr<MegaNode> node(megaApi->getNodeByHandle(selectedMegaFolderHandle));
+            if (node)
+            {
+                std::unique_ptr<const char[]> nPath(megaApi->getNodePath(node.get()));
+                if (nPath)
+                {
+                    ui->eMegaFolder->setText(QString::fromUtf8(nPath.get()));
+                }
+            }}
+    });
 }
 
 void SetupWizard::initModeSelection()
@@ -924,18 +870,7 @@ void SetupWizard::closeEvent(QCloseEvent *event)
     }
 
     event->ignore();
-    QPointer<QMessageBox> msg = new QMessageBox(this);
-    msg->setIcon(QMessageBox::Question);
-    msg->setWindowTitle(tr("MEGAsync"));
-    msg->setText(tr("Are you sure you want to cancel this wizard and undo all changes?"));
-    msg->addButton(QMessageBox::Yes);
-    msg->addButton(QMessageBox::No);
-    msg->setDefaultButton(QMessageBox::No);
-    int button = msg->exec();
-    if (msg)
-    {
-        delete msg;
-    }
+    auto button = QMegaMessageBox::question(this, tr("MEGAsync"),tr("Are you sure you want to cancel this wizard and undo all changes?"),QMessageBox::Yes|QMessageBox::No, QMessageBox::No);
 
     if (button == QMessageBox::Yes)
     {

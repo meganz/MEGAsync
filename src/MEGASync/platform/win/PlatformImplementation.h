@@ -49,8 +49,6 @@ public:
     QString getDefaultOpenApp(QString extension) override;
     void enableDialogBlur(QDialog *dialog) override;
     bool registerUpdateJob() override;
-    void execBackgroundWindow(QDialog *window) override;
-    void showBackgroundWindow(QDialog* window) override;
     void uninstall() override;
     bool shouldRunHttpServer() override;
     bool shouldRunHttpsServer() override;

@@ -2826,7 +2826,7 @@ Transferurile se vor relua automat când redeschizi aplicația.</numerusform></t
     <message>
         <source>Your account&apos;s security is now being upgraded. This will happen only once. If you have seen this message for this account before, press Cancel.</source>
         <translatorcomment>Error message shown to the user to inform about that the security of his account is going to be upgraded. </translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Securitatea contului tău este în curs de actualizare. Acest lucru se va întâmpla doar o singură dată. Dacă ai mai văzut acest mesaj pentru acest cont, dă clic pe Anulează.</translation>
     </message>
     <message numerus="yes">
         <source>You are currently sharing the following folder: %1</source>

@@ -2824,7 +2824,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your account&apos;s security is now being upgraded. This will happen only once. If you have seen this message for this account before, press Cancel.</source>
         <translatorcomment>Error message shown to the user to inform about that the security of his account is going to be upgraded. </translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>您账户的安全性现已升级。这只会发生一次。如果以前你在此账户看到过这个消息，请点击取消。</translation>
     </message>
     <message numerus="yes">
         <source>You are currently sharing the following folder: %1</source>

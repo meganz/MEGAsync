@@ -35,6 +35,8 @@ protected:
     void changeEvent(QEvent * event);
 
 private:
+    void onLocalFolderSet(const QString& path);
+
     Ui::FolderBinder *ui;
     MegaApplication *app;
     mega::MegaApi *megaApi;

@@ -12,8 +12,6 @@ BandwidthSettings::BandwidthSettings(MegaApplication *app, QWidget *parent) :
 {
     mUi->setupUi(this);
 
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-
     mUi->eUploadLimit->setValidator(new QIntValidator(0, 1000000000, this));
     mUi->eDownloadLimit->setValidator(new QIntValidator(0, 1000000000, this));
 #ifdef Q_OS_MACOS

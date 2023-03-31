@@ -101,7 +101,7 @@ set(3RDPARTY_RUNTIME_PATH "PATH=%PATH%" "${Mega3rdPartyDir}/vcpkg/installed/${VC
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOUIC_SEARCH_PATHS "${MEGAsyncDir}/gui/${UiDir}"
-							   "${MEGAsyncDir}/gui/node_selector/gui/${UiDir}"
+                               "${MEGAsyncDir}/gui/node_selector/gui/${UiDir}"
                                "${MEGAsyncDir}/transfers/gui/${UiDir}"
                                "${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/${UiDir}"
                                "${MEGAsyncDir}/syncs/gui/Backups/${UiDir}"
@@ -276,6 +276,8 @@ set (MOC_INPUT
     ${MEGAsyncDir}/control/ThreadPool.h
     ${MEGAsyncDir}/control/UserAttributesManager.h
     ${MEGAsyncDir}/control/TextDecorator.h
+    ${MEGAsyncDir}/control/TransferBatch.h
+    ${MEGAsyncDir}/control/DialogOpener.h
 
     ${MEGAsyncDir}/gui/AlertItem.h
     ${MEGAsyncDir}/gui/AlertFilterType.h
@@ -333,7 +335,6 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/ScanningWidget.h
     ${MEGAsyncDir}/gui/BlurredShadowEffect.h
     ${MEGAsyncDir}/gui/ButtonIconManager.h
-    ${MEGAsyncDir}/gui/DialogGeometryRetainer.h
     ${MEGAsyncDir}/gui/NodeNameSetterDialog/NodeNameSetterDialog.h
     ${MEGAsyncDir}/gui/NodeNameSetterDialog/NewFolderDialog.h
     ${MEGAsyncDir}/gui/NodeNameSetterDialog/RenameNodeDialog.h
@@ -379,8 +380,6 @@ set (MOC_INPUT
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaListener.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaRequestListener.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaTransferListener.h
-
-    ${MEGAsyncDir}/control/TransferBatch.h
 
     ${MEGAsyncDir}/transfers/model/TransfersManagerSortFilterProxyModel.h
     ${MEGAsyncDir}/transfers/model/TransfersSortFilterProxyBaseModel.h
@@ -453,7 +452,7 @@ else()
         ${MEGAsyncDir}/gui/QSegmentedControl.h
 
         ${MEGAsyncDir}/platform/macx/PlatformImplementation.h
-	    ${MEGAsyncDir}/notifications/macx/NotificationHandler.h
+        ${MEGAsyncDir}/notifications/macx/NotificationHandler.h
         ${MEGAsyncDir}/notifications/macx/NotificationDelegate.h
         ${MEGAsyncDir}/notifications/macx/NSUserNotificationHandler.h
         ${MEGAsyncDir}/notifications/macx/UNUserNotificationHandler.h
@@ -574,7 +573,7 @@ set (SRCS
     ${MEGAsyncDir}/transfers/model/InfoDialogTransfersProxyModel.cpp
     ${MEGAsyncDir}/transfers/model/TransferMetaData.cpp
     
-	${MEGAsyncDir}/transfers/gui/TransfersStatusWidget.cpp
+    ${MEGAsyncDir}/transfers/gui/TransfersStatusWidget.cpp
     ${MEGAsyncDir}/transfers/gui/TransferItem.cpp
     ${MEGAsyncDir}/transfers/gui/InfoDialogTransfersWidget.cpp
     ${MEGAsyncDir}/transfers/gui/TransferManager.cpp
@@ -619,6 +618,7 @@ set (SRCS
     ${MEGAsyncDir}/control/TransferBatch.cpp
     ${MEGAsyncDir}/control/UserAttributesManager.cpp
     ${MEGAsyncDir}/control/TextDecorator.cpp
+    ${MEGAsyncDir}/control/DialogOpener.cpp
 
     ${MEGAsyncDir}/UserAttributesRequests/DeviceName.cpp
     ${MEGAsyncDir}/UserAttributesRequests/MyBackupsHandle.cpp
@@ -664,7 +664,6 @@ if (CMAKE_HOST_WIN32)
     set (SRCS ${SRCS}
 
         ${MEGAsyncDir}/qtlockedfile/qtlockedfile_win.cpp
-
 
         ${MEGAsyncDir}/google_breakpad/client/windows/handler/exception_handler.cc
         ${MEGAsyncDir}/google_breakpad/common/windows/string_utils.cc
@@ -727,7 +726,7 @@ else()
         ${MEGAsyncDir}/gui/QMacSpinningProgressIndicator.mm
         ${MEGAsyncDir}/gui/QSegmentedControl.mm
 
-	    ${MEGAsyncDir}/notifications/macx/NotificationHandler.mm
+        ${MEGAsyncDir}/notifications/macx/NotificationHandler.mm
         ${MEGAsyncDir}/notifications/macx/UNUserNotificationHandler.mm 
         ${MEGAsyncDir}/notifications/macx/UNUserNotificationDelegate.mm 
         ${MEGAsyncDir}/notifications/macx/NSUserNotificationHandler.mm 
@@ -1005,7 +1004,7 @@ target_link_libraries(MEGASync_unit_tests
 target_compile_features(MEGASync_unit_tests PRIVATE cxx_std_14)
 
 target_include_directories(MEGASync_unit_tests PRIVATE ${MEGAsyncDir}
-						                               ${MEGAsyncDir}/notifications
+                                                       ${MEGAsyncDir}/notifications
                                                        ${MEGAsyncDir}/transfers
                                                        ${MEGAsyncDir}/transfers/gui
                                                        ${MEGAsyncDir}/transfers/model

@@ -6,7 +6,6 @@
 #include "DownloadFromMegaDialog.h"
 #include "ChangePassword.h"
 #include "Preferences.h"
-#include "HighDpiResize.h"
 #include "control/Utilities.h"
 #include "syncs/model/SyncItemModel.h"
 #include "syncs/model/BackupItemModel.h"
@@ -209,6 +208,8 @@ private:
 
     void syncsStateInformation(SyncStateInformation state);
 
+    void addSyncFolderAfterOverQuotaCheck(mega::MegaHandle megaFolderHandle);
+
 #ifdef Q_OS_MACOS
     void reloadToolBarItemNames();
     void macOSretainSizeWhenHidden();
@@ -234,21 +235,18 @@ private:
     SyncController mBackupController;
     SyncInfo* mModel;
     mega::MegaApi* mMegaApi;
-    HighDpiResize mHighDpiResize;
     bool mProxyOnly;
     int mLoadingSettings;
     ThreadPool* mThreadPool;
     QStringList mLanguageCodes;
     QFutureWatcher<long long> mCacheSizeWatcher;
     QFutureWatcher<long long> mRemoteCacheSizeWatcher;
-    AccountDetailsDialog* mAccountDetailsDialog;
     long long mCacheSize;
     long long mRemoteCacheSize;
     int mDebugCounter; // Easter Egg
     QStringList mSyncNames;
     bool mHasDefaultUploadOption;
     bool mHasDefaultDownloadOption;
-    QPointer<ProxySettings> mProxySettingsDialog;
     std::unique_ptr<SyncTableViewTooltips> mSyncTableEventFilter;
     std::unique_ptr<BackupTableViewTooltips> mBackupTableEventFilter;
 };

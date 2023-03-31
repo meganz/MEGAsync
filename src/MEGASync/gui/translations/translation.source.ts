@@ -650,11 +650,6 @@
         <translation>Want to cancel? All changes will be lost.</translation>
     </message>
     <message>
-        <source>Choose directory</source>
-        <translatorcomment>Folder selector window title text</translatorcomment>
-        <translation>Select folder</translation>
-    </message>
-    <message>
         <source>Error: %1</source>
         <translatorcomment>Placeholder will show the error message, this is being shown in a tooltip</translatorcomment>
         <translation>Error: %1</translation>
@@ -663,6 +658,11 @@
         <source>View in backup centre</source>
         <translatorcomment>Text for a button allowing the user to view the newly created backup i nthe Backup center (in the webclient)</translatorcomment>
         <translation>View in Backup centre</translation>
+    </message>
+    <message>
+        <source>Choose directory</source>
+        <translatorcomment>Folder selector window title text</translatorcomment>
+        <translation>Select folder</translation>
     </message>
 </context>
 <context>

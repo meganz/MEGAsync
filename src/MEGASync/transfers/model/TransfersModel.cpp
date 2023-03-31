@@ -520,7 +520,6 @@ void TransferThread::resetCompletedUploads(QList<QExplicitlySharedDataPointer<Tr
         if(mTransfersCount.totalUploads > 0)
         {
             mTransfersCount.totalUploads--;
-            mTransfersCount.completedUploadBytes -= transfer->mTotalSize;
             mTransfersCount.totalUploadBytes -= transfer->mTotalSize;
             mTransfersCount.transfersByType[transfer->mFileType]--;
             mTransfersCount.transfersFinishedByType[transfer->mFileType]--;
@@ -528,7 +527,15 @@ void TransferThread::resetCompletedUploads(QList<QExplicitlySharedDataPointer<Tr
             if(transfer->isFailed() && !transfer->isSyncTransfer())
             {
                 mTransfersCount.failedUploads--;
-                transfer->removeFailedTransfer();
+            }
+
+            if(transfer->isFailed())
+            {
+                mTransfersCount.completedUploadBytes -= transfer->mTransferredBytes;
+            }
+            else
+            {
+                mTransfersCount.completedUploadBytes -= transfer->mTotalSize;
             }
         }
 
@@ -544,6 +551,15 @@ void TransferThread::resetCompletedUploads(QList<QExplicitlySharedDataPointer<Tr
             if(transfer->isFailed() && !transfer->isSyncTransfer())
             {
                 mLastTransfersCount.failedUploads--;
+            }
+
+            if(transfer->isFailed())
+            {
+                mLastTransfersCount.completedUploadBytes -= transfer->mTransferredBytes;
+            }
+            else
+            {
+                mLastTransfersCount.completedUploadBytes -= transfer->mTotalSize;
             }
         }
     }
@@ -566,7 +582,6 @@ void TransferThread::resetCompletedDownloads(QList<QExplicitlySharedDataPointer<
             if(transfer->isFailed() && !transfer->isSyncTransfer())
             {
                 mTransfersCount.failedDownloads--;
-                transfer->removeFailedTransfer();
             }
         }
 
@@ -1127,7 +1142,7 @@ std::unique_ptr<MegaNode> TransfersModel::getNodeToOpenByRow(int row)
         auto transfer = mMegaApi->getTransferByTag(d->mTag);
         if(transfer)
         {
-            node.reset(transfer->getPublicMegaNode()->copy());
+            node.reset(transfer->getPublicMegaNode());
         }
     }
     else if(d->mNodeHandle)
@@ -1436,10 +1451,9 @@ void TransfersModel::showSyncCancelledWarning()
                                                            QMessageBox::No | QMessageBox::Yes, mCancelledFrom);
         removeSync->setButtonText(QMessageBox::No, tr("Dismiss"));
         removeSync->setButtonText(QMessageBox::Yes, tr("Open settings"));
-
         removeSync->open();
 
-        connect(removeSync, &QMessageBox::finished, [this, removeSync](){
+        connect(removeSync.data(), &QMessageBox::finished, [this, removeSync](){
             if(removeSync->result() == QMessageBox::Yes)
             {
                 MegaSyncApp->openSettings(SettingsDialog::SYNCS_TAB);
@@ -1557,8 +1571,8 @@ void TransfersModel::clearFailedTransfers(const QModelIndexList &indexes)
     clearTransfers(uploadToClear, downloadToClear);
 }
 
-void TransfersModel::clearTransfers(const QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData> > uploads,
-                                    const QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData> > downloads)
+void TransfersModel::clearTransfers(const QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData> > &uploads,
+                                    const QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData> > &downloads)
 {
     if(!uploads.isEmpty() || !downloads.isEmpty())
     {
@@ -1580,9 +1594,6 @@ void TransfersModel::clearTransfers(const QMap<QModelIndex, QExplicitlySharedDat
         {
             performClearTransfers(uploads, downloads);
             updateTransfersCount();
-
-            //The clear transfer is the only action which does not receive a SDK request
-            emit transfersProcessChanged();
         }
     }
 }
@@ -1603,8 +1614,8 @@ void TransfersModel::onKeepPCAwake()
     options.keepAwake(hasActiveTransfers());
 }
 
-void TransfersModel::performClearTransfers(const QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData> > uploads,
-                                           const QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData> > downloads)
+void TransfersModel::performClearTransfers(const QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData>>& uploads,
+                                           const QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData>>& downloads)
 {
     QModelIndexList itemsToRemove;
 
@@ -1703,15 +1714,12 @@ void TransfersModel::pauseResumeAllTransfers(bool state)
             blockModelSignals(false);
 
             setUiBlockedModeByCounter(tagsUpdated);
-            emit pauseStateChanged(mAreAllPaused);
         });
     }
     else
     {
         auto tagsUpdated = performPauseResumeAllTransfers(activeTransfers, true);
         setUiBlockedModeByCounter(tagsUpdated);
-
-        emit pauseStateChanged(mAreAllPaused);
     }
 }
 
@@ -1723,6 +1731,7 @@ int TransfersModel::performPauseResumeAllTransfers(int activeTransfers, bool use
 
     if (mAreAllPaused)
     {
+        //This needs to be done before retrying all the transfers one by one
         mMegaApi->pauseTransfers(mAreAllPaused);
 
         EventUpdater updater(activeTransfers, 200);
@@ -1759,6 +1768,7 @@ int TransfersModel::performPauseResumeAllTransfers(int activeTransfers, bool use
             }
         });
 
+        //This needs to be done after pausing all the transfers one by one
         mMegaApi->pauseTransfers(mAreAllPaused);
 
     }
@@ -1777,7 +1787,6 @@ void TransfersModel::pauseResumeTransferByTag(TransferTag tag, bool pauseState)
         {
             mMegaApi->pauseTransfers(pauseState);
             mAreAllPaused = false;
-            emit pauseStateChangedByTransferResume();
         }
 
         if(pauseState)
@@ -1806,6 +1815,18 @@ void TransfersModel::pauseResumeTransferByIndex(const QModelIndex &index, bool p
                 qvariant_cast<TransferItem>(index.data(Qt::DisplayRole)));
 
     pauseResumeTransferByTag(transferItem.getTransferData()->mTag, pauseState);
+}
+
+void TransfersModel::globalPauseStateChanged(bool state)
+{
+    mAreAllPaused = state;
+    emit pauseStateChanged(state);
+}
+
+void TransfersModel::setGlobalPause(bool state)
+{
+    mAreAllPaused = state;
+    mMegaApi->pauseTransfers(state);
 }
 
 void TransfersModel::lockModelMutex(bool lock)

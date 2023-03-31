@@ -7,6 +7,7 @@
 #include "MegaTransferDelegate.h"
 #include "MegaTransferView.h"
 #include "OverQuotaDialog.h"
+#include "DialogOpener.h"
 
 #include <QMouseEvent>
 #include <QScrollBar>
@@ -213,7 +214,7 @@ TransferManager::TransferManager(TransfersWidget::TM_TAB tab, MegaApi *megaApi) 
     mUi->wUpSpeed->setSizePolicy(sizePolicy);
 
     // Connect to storage quota signals
-    connect(qobject_cast<MegaApplication*>(qApp), &MegaApplication::storageStateChanged,
+    connect(MegaSyncApp, &MegaApplication::storageStateChanged,
             this, &TransferManager::onStorageStateChanged,
             Qt::QueuedConnection);
 
@@ -727,15 +728,7 @@ void TransferManager::onTransfersDataUpdated()
     refreshSearchStats();
     refreshStateStats();
     checkActionAndMediaVisibility();
-
-    if(label)
-    {
-        long long newNumber = label->text().toLongLong();
-        if(oldNumber != newNumber && (oldNumber == 0 || newNumber == 0))
-        {
-            refreshView();
-        }
-    }
+    refreshView();
 }
 
 void TransferManager::onStorageStateChanged(int storageState)
@@ -757,7 +750,7 @@ void TransferManager::onStorageStateChanged(int storageState)
         default:
         {
             mUi->lStorageOverQuota->hide();
-            QuotaState tQuotaState (qobject_cast<MegaApplication*>(qApp)->getTransferQuotaState());
+            QuotaState tQuotaState (MegaSyncApp->getTransferQuotaState());
             mUi->tSeePlans->setVisible(tQuotaState == QuotaState::FULL);
 
             break;
@@ -1128,22 +1121,22 @@ void TransferManager::onFileTypeButtonClicked(TransfersWidget::TM_TAB tab, Utili
 
 void TransferManager::on_bOpenLinks_clicked()
 {
-    qobject_cast<MegaApplication*>(qApp)->importLinks();
+    MegaSyncApp->importLinksFromWidget(this);
 }
 
 void TransferManager::on_tCogWheel_clicked()
 {
-    qobject_cast<MegaApplication*>(qApp)->openSettings();
+    MegaSyncApp->openSettings();
 }
 
 void TransferManager::on_bDownload_clicked()
 {
-    qobject_cast<MegaApplication*>(qApp)->downloadActionClicked();
+    MegaSyncApp->downloadActionClickedFromWidget(this);
 }
 
 void TransferManager::on_bUpload_clicked()
 {
-    qobject_cast<MegaApplication*>(qApp)->uploadActionClickedFromWindow(this);
+    MegaSyncApp->uploadActionClickedFromWidget(this);
 }
 
 void TransferManager::on_leSearchField_returnPressed()
@@ -1220,11 +1213,11 @@ void TransferManager::toggleTab(TransfersWidget::TM_TAB newTab)
                 {
                     countLabel->parentWidget()->hide();
                 }
-
-                //In case the media group must be hidden
-                checkActionAndMediaVisibility();
             }
         }
+
+        //In case the media group // actions buttons must be hidden
+        checkActionAndMediaVisibility();
 
         // Set current header widget: search or not
         if (newTab == TransfersWidget::SEARCH_TAB)
@@ -1398,6 +1391,10 @@ void TransferManager::closeEvent(QCloseEvent *event)
             close();
         });
         event->ignore();
+    }
+    else
+    {
+        QDialog::closeEvent(event);
     }
 }
 

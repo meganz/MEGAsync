@@ -1,6 +1,7 @@
 #include "TransferBaseDelegateWidget.h"
 #include "QMegaMessageBox.h"
 #include <MegaTransferView.h>
+#include "MegaApplication.h"
 
 #include <QPointer>
 #include <QLayout>
@@ -9,7 +10,7 @@ TransferBaseDelegateWidget::TransferBaseDelegateWidget(QWidget *parent)
     : QWidget(parent),
       mPreviousState(TransferData::TransferState::TRANSFER_NONE)
 {
-
+    connect(MegaSyncApp->getTransfersModel(), &TransfersModel::rowsAboutToBeRemoved, this, &TransferBaseDelegateWidget::onTransferRemoved);
 }
 
 void TransferBaseDelegateWidget::updateUi(const QExplicitlySharedDataPointer<TransferData> transferData, int)
@@ -164,6 +165,33 @@ QString TransferBaseDelegateWidget::getState(TRANSFER_STATES state)
 int TransferBaseDelegateWidget::getNameAvailableSize(QWidget *nameContainer, QWidget *syncLabel, QSpacerItem *spacer)
 {
     return nameContainer->contentsRect().width() - syncLabel->contentsRect().width() - nameContainer->layout()->spacing()*2 - spacer->sizeHint().width();
+}
+
+void TransferBaseDelegateWidget::onTransferRemoved(const QModelIndex &parent, int first, int last)
+{
+    if(getData())
+    {
+        for(int row = first; row <= last; ++row)
+        {
+            QModelIndex index = MegaSyncApp->getTransfersModel()->index(row, 0, parent);
+
+            const auto d (qvariant_cast<TransferItem>(index.data()).getTransferData());
+
+            if(d && (d->mTag >= getData()->mTag))
+            {
+                reset();
+                //Found
+                break;
+            }
+        }
+    }
+}
+
+void TransferBaseDelegateWidget::reset()
+{
+    mPreviousState = TransferData::TransferState::TRANSFER_NONE;
+    mData = nullptr;
+    mLastActionTransferIconName.clear();
 }
 
 void TransferBaseDelegateWidget::changeEvent(QEvent* event)

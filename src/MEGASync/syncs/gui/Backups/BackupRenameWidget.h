@@ -12,11 +12,12 @@ class BackupRenameWidget : public QFrame
     Q_OBJECT
 
 public:
-    explicit BackupRenameWidget(const QString& path, int number, QWidget *parent = nullptr);
+    explicit BackupRenameWidget(const QString& path, const QString& suggestedNewName, int number, QWidget *parent = nullptr);
     ~BackupRenameWidget();
 
     bool isNewNameValid(QStringList &backupNames);
     QString getNewNameRaw();
+    QString getEnteredNewName();
 
     QString getPath();
 
