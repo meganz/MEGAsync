@@ -83,8 +83,8 @@ void NodeRequester::search(const QString &text, NodeSelectorModelItemSearch::Typ
         QMutexLocker a(&mSearchMutex);
         QMutexLocker d(&mDataMutex);
         qDeleteAll(mRootItems);
+        mRootItems.clear();
     }
-    mRootItems.clear();
     mSearchCanceled = false;
     mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
 
@@ -138,7 +138,7 @@ void NodeRequester::search(const QString &text, NodeSelectorModelItemSearch::Typ
         if(typesAllowed & type)
         {
             searchedTypes |= type;
-            auto nodeUptr = std::unique_ptr<mega::MegaNode>(nodeList->get(i)->copy());
+            auto nodeUptr = std::unique_ptr<mega::MegaNode>(node->copy());
             auto item = new NodeSelectorModelItemSearch(std::move(nodeUptr), type);
             items.append(item);
         }
