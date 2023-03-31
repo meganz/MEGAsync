@@ -8,6 +8,7 @@ import Components 1.0 as Custom
 Item {
     id: onboardingWindow
 
+    anchors.fill: parent
 
     /*
      * Properties
@@ -90,3 +91,9 @@ Item {
         } // ColumnLayout -> clayout
     } // Rectangle -> bottomRect
 } // Item -> onboardingWindow
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+##^##*/

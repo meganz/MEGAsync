@@ -5,7 +5,7 @@ import QtQuick.Controls 2.0
 import Onboard.Syncs_types 1.0
 import Components 1.0 as Custom
 
-Component {
+SyncsPage {
 
     ColumnLayout {
         spacing: 34
@@ -30,3 +30,9 @@ Component {
         ChooseSyncFolder {}
     }
 }
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+##^##*/

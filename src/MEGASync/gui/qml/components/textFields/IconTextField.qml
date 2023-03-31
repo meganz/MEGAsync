@@ -19,7 +19,7 @@ Custom.TextField {
 
         source: imageSource
         color: Styles.iconSecondary
-        height: control.height
+        height: control.outRect.height
         anchors{
             left: control.left
             leftMargin: 16

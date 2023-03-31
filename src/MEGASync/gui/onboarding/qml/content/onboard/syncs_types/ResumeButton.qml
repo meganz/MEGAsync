@@ -8,10 +8,16 @@ import Components 1.0 as Custom
 Button {
     id: btn
 
+
+    enum Type {
+        SelectiveSync = 0,
+        FullSync
+    }
+
     property string title: ""
     property string description: ""
     property string imageSource: ""
-    property int type: InstallationTypeButton.Type.Sync
+    property int type: Type.Selective
     property size imageSourceSize: imageSourceSize
 
     Layout.preferredWidth: 230
@@ -77,8 +83,8 @@ Button {
         anchors.fill: parent
         hoverEnabled: true
         cursorShape: Qt.PointingHandCursor
-        onClicked: {
-            btn.checked = !btn.checked;
+        onPressed: {
+            mouse.accepted = false;
         }
     }
 

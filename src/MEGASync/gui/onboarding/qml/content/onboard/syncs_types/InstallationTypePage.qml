@@ -1,4 +1,4 @@
-SyncTypePageForm {
+InstallationTypePageForm{
 
     buttonGroup.onCheckStateChanged: {
         if(buttonGroup.checkedButton != null) {
@@ -7,5 +7,3 @@ SyncTypePageForm {
     }
     footerButtons.nextButton.enabled: false
 }
-
-
