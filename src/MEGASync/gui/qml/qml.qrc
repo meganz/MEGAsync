@@ -17,5 +17,6 @@
         <file>components/texts/RichText.qml</file>
         <file>components/textFields/TwoFA.qml</file>
         <file>components/textFields/TwoFADigit.qml</file>
+        <file>components/textFields/IconTextField.qml</file>
     </qresource>
 </RCC>
