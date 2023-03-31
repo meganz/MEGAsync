@@ -520,7 +520,6 @@ void TransferThread::resetCompletedUploads(QList<QExplicitlySharedDataPointer<Tr
         if(mTransfersCount.totalUploads > 0)
         {
             mTransfersCount.totalUploads--;
-            mTransfersCount.completedUploadBytes -= transfer->mTotalSize;
             mTransfersCount.totalUploadBytes -= transfer->mTotalSize;
             mTransfersCount.transfersByType[transfer->mFileType]--;
             mTransfersCount.transfersFinishedByType[transfer->mFileType]--;
@@ -528,7 +527,15 @@ void TransferThread::resetCompletedUploads(QList<QExplicitlySharedDataPointer<Tr
             if(transfer->isFailed() && !transfer->isSyncTransfer())
             {
                 mTransfersCount.failedUploads--;
-                transfer->removeFailedTransfer();
+            }
+
+            if(transfer->isFailed())
+            {
+                mTransfersCount.completedUploadBytes -= transfer->mTransferredBytes;
+            }
+            else
+            {
+                mTransfersCount.completedUploadBytes -= transfer->mTotalSize;
             }
         }
 
@@ -544,6 +551,15 @@ void TransferThread::resetCompletedUploads(QList<QExplicitlySharedDataPointer<Tr
             if(transfer->isFailed() && !transfer->isSyncTransfer())
             {
                 mLastTransfersCount.failedUploads--;
+            }
+
+            if(transfer->isFailed())
+            {
+                mLastTransfersCount.completedUploadBytes -= transfer->mTransferredBytes;
+            }
+            else
+            {
+                mLastTransfersCount.completedUploadBytes -= transfer->mTotalSize;
             }
         }
     }
@@ -566,7 +582,6 @@ void TransferThread::resetCompletedDownloads(QList<QExplicitlySharedDataPointer<
             if(transfer->isFailed() && !transfer->isSyncTransfer())
             {
                 mTransfersCount.failedDownloads--;
-                transfer->removeFailedTransfer();
             }
         }
 
@@ -1127,7 +1142,7 @@ std::unique_ptr<MegaNode> TransfersModel::getNodeToOpenByRow(int row)
         auto transfer = mMegaApi->getTransferByTag(d->mTag);
         if(transfer)
         {
-            node.reset(transfer->getPublicMegaNode()->copy());
+            node.reset(transfer->getPublicMegaNode());
         }
     }
     else if(d->mNodeHandle)
@@ -1556,8 +1571,8 @@ void TransfersModel::clearFailedTransfers(const QModelIndexList &indexes)
     clearTransfers(uploadToClear, downloadToClear);
 }
 
-void TransfersModel::clearTransfers(const QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData> > uploads,
-                                    const QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData> > downloads)
+void TransfersModel::clearTransfers(const QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData> > &uploads,
+                                    const QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData> > &downloads)
 {
     if(!uploads.isEmpty() || !downloads.isEmpty())
     {
@@ -1579,9 +1594,6 @@ void TransfersModel::clearTransfers(const QMap<QModelIndex, QExplicitlySharedDat
         {
             performClearTransfers(uploads, downloads);
             updateTransfersCount();
-
-            //The clear transfer is the only action which does not receive a SDK request
-            emit transfersProcessChanged();
         }
     }
 }
@@ -1602,8 +1614,8 @@ void TransfersModel::onKeepPCAwake()
     options.keepAwake(hasActiveTransfers());
 }
 
-void TransfersModel::performClearTransfers(const QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData> > uploads,
-                                           const QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData> > downloads)
+void TransfersModel::performClearTransfers(const QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData>>& uploads,
+                                           const QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData>>& downloads)
 {
     QModelIndexList itemsToRemove;
 

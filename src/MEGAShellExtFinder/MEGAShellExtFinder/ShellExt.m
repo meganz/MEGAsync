@@ -74,7 +74,7 @@
         {
             return;
         }
-        [_delegate onItemChanged:[strings objectAtIndex:1]  withState:[[strings objectAtIndex:2] intValue] shouldShowBadges:[[strings objectAtIndex:3] intValue]];
+        [_delegate onItemChanged:[strings objectAtIndex:1]  withState:[[strings objectAtIndex:2] intValue] shouldShowBadges:[[strings objectAtIndex:3] intValue] isIncomingShare: [[strings objectAtIndex: 4] intValue]];
     }
     else if ([firstChar isEqualToString:@"A"]) //Format: <op-code>:<path-file>:<sync-name>
     {

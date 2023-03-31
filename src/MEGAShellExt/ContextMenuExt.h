@@ -66,7 +66,7 @@ public:
 protected:
     ~ContextMenuExt(void);
     bool isSynced(int type, int state);
-    bool isUnsynced(int type, int state);
+    bool isUnsynced(int state);
     void processFile(HDROP hDrop, int i);
 
 private:

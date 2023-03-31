@@ -403,6 +403,13 @@ bool InfoDialogTransferDelegateWidget::eventFilter(QObject *watched, QEvent *eve
     return TransferBaseDelegateWidget::eventFilter(watched, event);
 }
 
+void InfoDialogTransferDelegateWidget::reset()
+{
+    mIsHover = false;
+    mTransferRemainingTime.reset();
+    TransferBaseDelegateWidget::reset();
+}
+
 void InfoDialogTransferDelegateWidget::on_lShowInFolder_clicked()
 { 
     emit openTransferFolder();

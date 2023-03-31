@@ -215,10 +215,10 @@ public:
     void clearAllTransfers();
     void clearTransfers(const QModelIndexList& indexes);
     void clearFailedTransfers(const QModelIndexList& indexes);
-    void clearTransfers(const QMap<QModelIndex,QExplicitlySharedDataPointer<TransferData>> uploads,
-                        const QMap<QModelIndex,QExplicitlySharedDataPointer<TransferData>> downloads);
-    void performClearTransfers(const QMap<QModelIndex,QExplicitlySharedDataPointer<TransferData>> uploads,
-                        const QMap<QModelIndex,QExplicitlySharedDataPointer<TransferData>> downloads);
+    void clearTransfers(const QMap<QModelIndex,QExplicitlySharedDataPointer<TransferData>>& uploads,
+                        const QMap<QModelIndex,QExplicitlySharedDataPointer<TransferData>>& downloads);
+    void performClearTransfers(const QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData> > &uploads,
+                        const QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData> > &downloads);
     void classifyUploadOrDownloadCompletedTransfers(QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData> > &uploads,
                         QMap<QModelIndex, QExplicitlySharedDataPointer<TransferData> > &downloads,
                                            const QModelIndex &index);

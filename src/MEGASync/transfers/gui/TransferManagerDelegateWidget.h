@@ -26,6 +26,7 @@ public:
 protected:
     void mouseDoubleClickEvent(QMouseEvent *event) override;
     bool eventFilter(QObject* watched, QEvent* event) override;
+    void reset() override;
 
 signals:
     void cancelClearTransfer(bool isClear);

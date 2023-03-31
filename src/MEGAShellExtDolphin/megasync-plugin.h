@@ -22,7 +22,7 @@ private:
 public:
     MEGASyncPlugin(QObject* parent = 0, const QVariantList & args = QVariantList());
     virtual ~MEGASyncPlugin();
-    virtual QList<QAction*> actions(const KFileItemListProperties & fileItemInfos, QWidget * parentWidget);
+    virtual QList<QAction*> actions(const KFileItemListProperties & fileItemInfos, QWidget * parentWidget) override;
 
 private slots:
     void getLink();
