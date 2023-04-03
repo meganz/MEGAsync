@@ -42,7 +42,6 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(SelectTypeSPtr mode, QWid
     checkBackForwardButtons();
 
     mLoadingScene.setView(ui->tMegaFolders);
-   // mLoadingScene.setDelayTimeToShowInMs(500);
     connect(&mLoadingScene, &ViewLoadingSceneBase::sceneVisibilityChange, this, &NodeSelectorTreeViewWidget::onUiBlocked);
 
     foreach(auto& button, ui->searchButtonsWidget->findChildren<QAbstractButton*>())
