@@ -6,8 +6,7 @@ import Common 1.0
 import Components 1.0 as Custom
 
 Button {
-    id: btn
-
+    id: resumeButton
 
     enum Type {
         SelectiveSync = 0,
@@ -26,18 +25,20 @@ Button {
     checked: false
     autoExclusive : true
 
-    background: Rectangle {
-        id: box
+    background: buttonBackground
+
+    Rectangle {
+        id: buttonBackground
 
         border.width: 2
         radius: 8
         color: Styles.surface1
-        border.color: btn.checked ? Styles.borderStrongSelected : Styles.borderStrong
+        border.color: resumeButton.checked ? Styles.borderStrongSelected : Styles.borderStrong
 
         ColumnLayout {
 
             anchors{
-                fill: box
+                fill: buttonBackground
                 leftMargin: 16
                 topMargin: 24
                 bottomMargin: 24
@@ -47,7 +48,8 @@ Button {
 
             Custom.SvgImage {
                 id: icon
-                color: btn.checked ? Styles.iconAccent : Styles.iconSecondary
+
+                color: resumeButton.checked ? Styles.iconAccent : Styles.iconSecondary
                 source: imageSource
                 sourceSize: imageSourceSize
             }
@@ -77,17 +79,15 @@ Button {
                 lineHeight: 16
             }
         }
-    } // Rectangle
-
-    MouseArea {
-        anchors.fill: parent
-        hoverEnabled: true
-        cursorShape: Qt.PointingHandCursor
-        onPressed: {
-            mouse.accepted = false;
-        }
     }
 
-} // Button
+    MouseArea {
+        anchors.fill: resumeButton
+        hoverEnabled: true
+        cursorShape: Qt.PointingHandCursor
+        onPressed:  mouse.accepted = false;
+    }
+
+}
 
 

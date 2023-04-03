@@ -6,46 +6,35 @@ import Common 1.0
 import Components 1.0 as Custom
 
 Button {
+    id: syncButton
+
     property string title: ""
     property string description: ""
     property string imageSource: ""
 
-    id: btn
     Layout.preferredWidth: parent.width
     Layout.fillWidth: true
     Layout.preferredHeight: 96
-    checkable: true
-    checked: false
     autoExclusive : true
 
-    background:
-        Rectangle {
-        id: box
+    background: buttonBackground
 
-        /*
-         * Object properties
-         */
+    Rectangle {
+        id: buttonBackground
 
         border.width: 2
         radius: 8
         color: Styles.surface1
-        border.color: btn.checked ? Styles.borderStrongSelected : Styles.borderStrong
-
-        /*
-         * Child objects
-         */
+        border.color: syncButton.checked ? Styles.borderStrongSelected : Styles.borderStrong
 
         ColumnLayout {
             anchors.fill: parent
             spacing: 16
 
             Custom.SvgImage {
-                id: icon
-                color: btn.checked ? Styles.iconAccent : Styles.iconSecondary
+                color: syncButton.checked ? Styles.iconAccent : Styles.iconSecondary
                 Layout.leftMargin: 24
                 source: imageSource
-
-
 
                 Text {
                     text: title
@@ -73,17 +62,13 @@ Button {
                 }
             }
         }
-    } // Rectangle
-
-    MouseArea {
-        anchors.fill: parent
-        hoverEnabled: true
-        cursorShape: Qt.PointingHandCursor
-        onClicked: {
-            btn.checked = !btn.checked;
-        }
     }
 
-} // Button
+    MouseArea {
+        anchors.fill: syncButton
+        hoverEnabled: true
+        cursorShape: Qt.PointingHandCursor
+        onClicked: syncButton.checked
+    }
 
-
+}

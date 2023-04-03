@@ -8,21 +8,12 @@ import Onboarding 1.0
 import AccountInfoData 1.0
 
 Rectangle {
-
-    /*
-     * Object properties
-     */
-
     width: parent.width
     height: 48
     color: Styles.pageBackground
     border.color: Styles.borderStrong
     border.width: 2
     radius: 8
-
-    /*
-     * Child objects
-     */
 
     RowLayout {
         anchors.fill: parent
@@ -59,7 +50,7 @@ Rectangle {
                 }
             }
 
-        } // RowLayout -> left
+        }
 
         RowLayout {
             Layout.alignment: Qt.AlignRight
@@ -101,9 +92,9 @@ Rectangle {
                 font.pixelSize: 12
             }
 
-        } // RowLayout -> right
+        }
 
-    } // RowLayout -> main
+    }
 
     AccountInfoData {
         id: accountInfo
@@ -148,4 +139,4 @@ Rectangle {
         }
     }
 
-} // Rectangle
+}

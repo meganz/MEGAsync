@@ -1,11 +1,13 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
+
 import Components 1.0 as Custom
 import Common 1.0
 
 Rectangle {
     id: root
+
     property alias loginPage: loginPage
     property alias registerPage: registerPage
     property alias twoFAPage: twoFAPage
@@ -17,15 +19,6 @@ Rectangle {
     anchors.fill: parent
     color: Styles.alternateBackgroundColor
     border.color: "#ffffff"
-
-    Image {
-        id: image
-
-        fillMode: Image.Tile
-        source: "../../../../images/Onboarding/login_folder.png"
-        anchors.left: root.left
-        anchors.verticalCenter: root.verticalCenter
-    }
 
     states: [
         State {
@@ -51,6 +44,15 @@ Rectangle {
         }
     ]
 
+    Image {
+        id: image
+
+        fillMode: Image.Tile
+        source: "../../../../images/Onboarding/login_folder.png"
+        anchors.left: root.left
+        anchors.verticalCenter: root.verticalCenter
+    }
+
     Rectangle {
         anchors {
             left: image.right
@@ -58,24 +60,24 @@ Rectangle {
             bottom: root.bottom
             right: root.right
         }
+
         LoginPage {
             id: loginPage
+
             visible: true
         }
+
         TwoFAPage {
             id: twoFAPage
+
             visible: false
         }
+
         RegisterPage {
             id: registerPage
+
             visible: false
         }
     }
-} // Rectangle -> root
 
-/*##^##
-Designer {
-    D{i:0;autoSize:true;height:480;width:640}
 }
-##^##*/
-

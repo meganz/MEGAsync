@@ -5,7 +5,9 @@ SyncTypePageForm {
             footerButtons.nextButton.enabled = true;
         }
     }
+
     footerButtons.nextButton.enabled: false
+
 }
 
 

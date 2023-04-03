@@ -5,10 +5,6 @@ import Common 1.0
 
 Item {
 
-    /*
-     * Enums
-     */
-
     enum ToStates {
         Disabled = 0,
         Current = 1,
@@ -17,16 +13,8 @@ Item {
         DoneLight = 4
     }
 
-    /*
-     * Properties
-     */
-
     property string title: ""
     property int toState: Step.ToStates.Disabled
-
-    /*
-     * Object properties
-     */
 
     width: 126
     height: 24
@@ -35,16 +23,8 @@ Item {
         mainLayout.state = mainLayout.statesMap.get(toState);
     }
 
-    /*
-     * Child objects
-     */
-
     RowLayout {
         id: mainLayout
-
-        /*
-         * Properties
-         */
 
         readonly property string stateDisabled: "DISABLED"
         readonly property string stateCurrent: "CURRENT"
@@ -59,10 +39,6 @@ Item {
             [Step.ToStates.DoneConfirm, stateDoneConfirm],
             [Step.ToStates.DoneLight, stateDoneLight]
         ])
-
-        /*
-         * Object properties
-         */
 
         spacing: 8
         state: stateDisabled
@@ -186,6 +162,6 @@ Item {
             color: Styles.textPrimary
         }
 
-    } // RowLayout -> mainLayout
+    }
 
-} // Item
+}

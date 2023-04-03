@@ -8,17 +8,10 @@ import Components 1.0 as Custom
 Item {
     id: onboardingWindow
 
-    anchors.fill: parent
-
-    /*
-     * Properties
-     */
     property alias continueButton: continueButton
 
+    anchors.fill: parent
 
-    /*
-     * Components
-     */
     Image {
         source: "../../../../images/Onboarding/onboard_step1.png"
         anchors.bottom: bottomRect.top
@@ -88,12 +81,7 @@ Item {
                     radius: 8
                 }
             }
-        } // ColumnLayout -> clayout
-    } // Rectangle -> bottomRect
-} // Item -> onboardingWindow
+        }
+    }
 
-/*##^##
-Designer {
-    D{i:0;autoSize:true;height:480;width:640}
 }
-##^##*/

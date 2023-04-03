@@ -7,23 +7,12 @@ import Common 1.0
 import Components 1.0 as Custom
 
 ColumnLayout {
-    id: root
+
     property bool local: true
     property url selectedUrl: selectedUrl
     property double selectedNode: selectedNode
-    /*
-     * Signals
-     */
 
-    /*
-     * Object properties
-     */
     spacing: 8
-
-
-    /*
-     * Child objects
-     */
 
     Text {
         id: title
@@ -33,11 +22,13 @@ ColumnLayout {
         font.pixelSize: 14
         font.bold: true
     }
+
     RowLayout{
         spacing: 8
 
         Custom.IconTextField {
             id: textField
+
             Layout.alignment: Qt.AlignTop
             Layout.fillWidth: true
             text: "/MEGA"
@@ -47,6 +38,7 @@ ColumnLayout {
 
         Custom.Button {
             id: button
+
             Layout.topMargin: textField.outRect.border.width
             Layout.alignment: Qt.AlignTop
             text: qsTr("Choose")
@@ -56,8 +48,10 @@ ColumnLayout {
             }
         }
     }
+
     FileDialog {
         id: fileDialog
+
         title: "Please choose a folder"
         folder: shortcuts.documents
         selectFolder: true
@@ -69,10 +63,3 @@ ColumnLayout {
         }
     }
 }
-
-
-/*##^##
-Designer {
-    D{i:0;autoSize:true;height:480;width:640}
-}
-##^##*/

@@ -1,12 +1,9 @@
 import QtQuick 2.12
 import QtQuick.Layouts 1.12
+
 import Common 1.0
 
 Item {
-
-    /*
-     * Enums
-     */
 
     enum ToStates {
         Disabled = 0,
@@ -14,16 +11,8 @@ Item {
         Done = 2
     }
 
-    /*
-     * Properties
-     */
-
     property string title: ""
     property int toState: SubStep.ToStates.Disabled
-
-    /*
-     * Object properties
-     */
 
     width: 126
     height: 16
@@ -32,16 +21,9 @@ Item {
         mainLayout.state = mainLayout.statesMap.get(toState);
     }
 
-    /*
-     * Child objects
-     */
-
     RowLayout {
         id: mainLayout
 
-        /*
-         * Properties
-         */
         readonly property string stateDisabled: "DISABLED"
         readonly property string stateCurrent: "CURRENT"
         readonly property string stateDone: "DONE"
@@ -51,10 +33,6 @@ Item {
             [SubStep.ToStates.Current, stateCurrent],
             [SubStep.ToStates.Done, stateDone]
         ])
-
-        /*
-         * Object properties
-         */
 
         spacing: 16
         state: stateDisabled
@@ -87,10 +65,6 @@ Item {
             }
         ]
 
-        /*
-         * Child objects
-         */
-
         Rectangle {
             id: circleBorder
 
@@ -121,4 +95,5 @@ Item {
             color: Styles.textPrimary
         }
     }
+
 }

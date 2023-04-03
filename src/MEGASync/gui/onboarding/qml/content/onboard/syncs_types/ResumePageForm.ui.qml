@@ -7,10 +7,6 @@ import Components 1.0 as Custom
 
 Rectangle {
 
-
-    /*
- * Properties
- */
     property alias buttonGroup: buttonGroup
     property alias preferencesButton: preferencesButton
     property alias doneButton: doneButton
@@ -18,12 +14,9 @@ Rectangle {
     property string title: "Your Sync is set up!"
     property string description: "Lorem ipsum dolor a text that congratulates the user and suggests other options to choose below. Use two lines at most. In this case we offer syncs as an option again."
 
-
-    /*
- * Child objects
- */
     color: Styles.surface1
     anchors.fill: parent
+
     ColumnLayout {
 
         Text {
@@ -105,7 +98,7 @@ Rectangle {
                     checkable: false
                 }
             }
-        } // Rectangle
+        }
 
         RowLayout {
             spacing: 8
@@ -125,13 +118,8 @@ Rectangle {
                 text: qsTr("Done")
                 primary: true
             }
-        } // RowLayout
-    } // ColumnLayout
-} // Rectangle
+        }
 
-/*##^##
-Designer {
-    D{i:0;autoSize:true;height:480;width:640}
+    }
+
 }
-##^##*/
-

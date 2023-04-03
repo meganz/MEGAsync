@@ -22,10 +22,6 @@ SyncsPage {
             Layout.topMargin: 32
         }
 
-
-        /*
-         * Child objects
-         */
         Rectangle {
             Layout.preferredHeight: 208
             Layout.preferredWidth: parent.width
@@ -39,6 +35,7 @@ SyncsPage {
             RowLayout {
                 spacing: 8
                 anchors.fill: parent
+
                 ResumeButton {
                     id: fullSyncButton
 
@@ -61,12 +58,6 @@ SyncsPage {
                     imageSourceSize: Qt.size(200, 96)
                 }
             }
-        } // Rectangle
+        }
     }
 }
-
-/*##^##
-Designer {
-    D{i:0;autoSize:true;height:480;width:640}
-}
-##^##*/

@@ -9,8 +9,6 @@ import Onboard.Syncs_types 1.0
 import Onboard.Syncs_types.Syncs 1.0
 
 Cpp.QmlDialog {
-    id: mWindow
-
     objectName: "app1"
     title: "Set up MEGA"
     modality: Qt.NonModal

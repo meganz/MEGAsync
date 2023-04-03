@@ -1,2 +1,2 @@
-ConfirmFoldersPageForm{
+ConfirmFoldersPageForm {
 }

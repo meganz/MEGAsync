@@ -1,11 +1,14 @@
-import Components 1.0 as Custom
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
+
+import Components 1.0 as Custom
 import Common 1.0
 import Onboarding 1.0
 
 Rectangle {
+    id: loginForm
+
     property alias createAccountButton: createAccountButton
     property alias loginButton: loginButton
     property alias forgotPasswordHyperlinkArea: forgotPasswordHyperlinkArea
@@ -14,8 +17,6 @@ Rectangle {
     property string password: password.textField.text
 
     anchors.fill: parent
-
-    id: loginForm
     color: Styles.backgroundColor
 
     ColumnLayout {
@@ -58,6 +59,7 @@ Rectangle {
 
             MouseArea {
                 id: forgotPasswordHyperlinkArea
+
                 anchors.fill: parent
                 hoverEnabled: true
                 cursorShape: Qt.PointingHandCursor
@@ -99,9 +101,3 @@ Rectangle {
         }
     }
 }
-
-/*##^##
-Designer {
-    D{i:0;autoSize:true;height:480;width:640}
-}
-##^##*/

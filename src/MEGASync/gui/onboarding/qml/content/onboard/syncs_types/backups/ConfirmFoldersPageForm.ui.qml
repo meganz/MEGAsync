@@ -8,13 +8,12 @@ import Common 1.0
 
 SyncsPage {
 
-    objectName: "ConfirmFoldersPageForm"
-
     ColumnLayout {
         spacing: 24
         anchors.left: parent.left
         anchors.leftMargin: 32
         width: 488
+
         Header {
             title: qsTr("Confirm folders to back up")
             description: qsTr("Will be added to your cloud and available in your other devices.")
@@ -39,7 +38,6 @@ SyncsPage {
             }
 
             ColumnLayout {
-
                 spacing: 4
 
                 Text {
@@ -80,7 +78,8 @@ SyncsPage {
                         }
                     }
                 }
-            } // ColumnLayout
-        } // ColumnLayout -> mainLayout
+            }
+        }
     }
+
 }

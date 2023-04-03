@@ -7,6 +7,7 @@ import Onboard.Syncs_types 1.0
 
 OnboardingFlowForm {
     id: onboardingFlow
+
     state: welcome
 
     welcomePage.continueButton.onClicked: {

@@ -6,16 +6,8 @@ import Components 1.0 as Custom
 
 ColumnLayout {
 
-    /*
-     * Properties
-     */
-
     property string title: ""
     property string description: ""
-
-    /*
-     * Child objects
-     */
 
     Text {
         text: title
@@ -38,4 +30,4 @@ ColumnLayout {
         wrapMode: Text.WordWrap
     }
 
-} // RowLayout -> mainLayout
+}

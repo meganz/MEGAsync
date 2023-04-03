@@ -11,11 +11,6 @@ SyncsPage {
         spacing: 34
         anchors.left: parent.left
         anchors.leftMargin: 32
-
-
-        /*
-         * Object properties
-         */
         width: 488
 
         Header {
@@ -27,12 +22,7 @@ SyncsPage {
         }
 
         InfoAccount {}
+
         ChooseSyncFolder {}
     }
 }
-
-/*##^##
-Designer {
-    D{i:0;autoSize:true;height:480;width:640}
-}
-##^##*/

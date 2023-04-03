@@ -9,10 +9,6 @@ import Onboarding 1.0
 Rectangle {
     id: registerForm
 
-
-    /*
-     * Properties
-     */
     property alias registerButton: registerButton
     property alias cancelButton: cancelButton
 
@@ -24,9 +20,6 @@ Rectangle {
     readonly property string name: firstName.textField.text
     readonly property string last_name: lastName.textField.text
 
-     /*
-     * Component
-     */
     color: Styles.backgroundColor
 
     ColumnLayout {
@@ -115,7 +108,7 @@ Read more about [a]MEGA’s end-to-end encryption.[/a]")
             url: "http://www.stackoverflow.com/" //TODO: CHANGE LINK
             text: qsTr("I agree with MEGA [a]Terms of service.[/a]")
         }
-    } // ColumnLayout -> formLayout
+    }
 
     RowLayout {
         id: buttonLayout
@@ -148,12 +141,5 @@ Read more about [a]MEGA’s end-to-end encryption.[/a]")
             iconSource: "../../../../../images/onboarding/arrow_right.svg"
             text: qsTr("Next")
         }
-    } // RowLayout -> buttonLayout
+    }
 }
-
-/*##^##
-Designer {
-    D{i:0;autoSize:true;height:480;width:640}
-}
-##^##*/
-

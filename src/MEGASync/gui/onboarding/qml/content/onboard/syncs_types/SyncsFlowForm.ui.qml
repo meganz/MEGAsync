@@ -30,16 +30,8 @@ Item {
     readonly property string fullSync: "fullSync"
     readonly property string finalState: "finalState"
 
-
-    /*
-     * Object properties
-     */
     anchors.fill: parent
 
-
-    /*
-         * Child objects
-         */
     states: [
         State {
             name: computerName
@@ -135,87 +127,88 @@ Item {
         }
     ]
 
-    Rectangle{
+    Rectangle {
         id: contentItem
+
         anchors.fill: parent
 
         ResumePage {
             id: finalPage
+
             visible: false
         }
+
         Rectangle {
             id:syncsPanel
-            anchors.fill:parent
-        StepPanel {
 
-            id: stepPanel
-            anchors {
-                left: parent.left
-                top: parent.top
-                bottom: parent.bottom
-            }
-            width: 224
-        }
+            anchors.fill: parent
 
-        Rectangle {
-            id: rightPanel
-            objectName: "CONTENT ITEM RECTANGLE"
-            anchors {
-                left: stepPanel.right
-                right: parent.right
-                top: parent.top
-                bottom: parent.bottom
-            }
-            ComputerNamePage {
-                id: computerNamePage
-                Layout.fillHeight: true
-                Layout.fillWidth: true
-                visible: true
+            StepPanel {
+                id: stepPanel
+
+                width: 224
+                anchors {
+                    left: parent.left
+                    top: parent.top
+                    bottom: parent.bottom
+                }
             }
 
-            InstallationTypePage {
-                id: installationTypePage
+            Rectangle {
+                id: rightPanel
 
-                visible: false
+                anchors {
+                    left: stepPanel.right
+                    right: parent.right
+                    top: parent.top
+                    bottom: parent.bottom
+                }
+
+                ComputerNamePage {
+                    id: computerNamePage
+
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true
+                    visible: true
+                }
+
+                InstallationTypePage {
+                    id: installationTypePage
+
+                    visible: false
+                }
+
+                SyncTypePage {
+                    id: syncPage
+
+                    visible: false
+                }
+
+                FullSyncPage {
+                    id: fullSyncPage
+
+                    visible: false
+                }
+
+                SelectiveSyncPage {
+                    id: selectiveSyncPage
+
+                    visible: false
+                }
+
+                SelectFoldersPage {
+                    id: selectBackupFoldersPage
+
+                    visible: false
+                }
+
+                ConfirmFoldersPage {
+                    id: confirmBackupFoldersPage
+
+                    visible: false
+                }
             }
-
-            SyncTypePage {
-                id: syncPage
-
-                visible: false
-            }
-
-            FullSyncPage {
-                id: fullSyncPage
-
-                visible: false
-            }
-
-            SelectiveSyncPage {
-                id: selectiveSyncPage
-
-                visible: false
-            }
-
-            SelectFoldersPage {
-                id: selectBackupFoldersPage
-
-                visible: false
-            }
-
-            ConfirmFoldersPage {
-                id: confirmBackupFoldersPage
-
-                visible: false
-            }
-        }
         }
     }
-} // StackView
 
-/*##^##
-Designer {
-    D{i:0;autoSize:true;height:480;width:640}
 }
-##^##*/
-

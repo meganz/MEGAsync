@@ -5,7 +5,6 @@ import QtQuick.Controls 2.12
 SyncsPage {
 
     property alias buttonGroup: buttonGroup
-    objectName: "InstallationTypePageForm"
 
     ColumnLayout {
         spacing: 12
@@ -26,6 +25,7 @@ SyncsPage {
 
         ColumnLayout {
             spacing: 20
+
             InstallationTypeButton {
                 id: syncButton
 
@@ -57,4 +57,5 @@ SyncsPage {
             }
         }
     }
+
 }

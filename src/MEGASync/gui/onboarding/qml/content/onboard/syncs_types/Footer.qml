@@ -7,21 +7,12 @@ import Onboarding 1.0
 
 RowLayout {
 
-    id: mainLayout
-
-    signal cancelButtonClicked
-    signal nextButtonClicked
-    signal previousButtonClicked(string page)
-
-    property alias cancelButton: cancelButton
+    property alias notNowButton: notNowButton
     property alias previousButton: previousButton
     property alias nextButton: nextButton
-    property alias notNow: notNow
-
-    property string parentPage: ""
 
     Text {
-        id: notNow
+        id: notNowButton
 
         text: qsTr("Not now")
         font.pixelSize: 12
@@ -32,7 +23,7 @@ RowLayout {
         Layout.leftMargin: 31
 
         MouseArea {
-            anchors.fill: notNow
+            anchors.fill: notNowButton
             cursorShape: Qt.PointingHandCursor
             onClicked: {
                 Onboarding.onNotNowClicked();
@@ -48,7 +39,7 @@ RowLayout {
 
             text: qsTr("Cancel")
             onClicked: {
-                cancelButtonClicked();
+                console.log("TODO: Cancel button clicked");
             }
         }
 
@@ -56,9 +47,6 @@ RowLayout {
             id: previousButton
 
             text: qsTr("Previous")
-            onClicked: {
-                previousButtonClicked(parentPage);
-            }
         }
 
         Custom.Button {
@@ -68,9 +56,6 @@ RowLayout {
             primary: true
             iconRight: true
             iconSource: "../../../images/Onboarding/arrow_right.svg"
-            onClicked: {
-                nextButtonClicked();
-            }
         }
 
     }

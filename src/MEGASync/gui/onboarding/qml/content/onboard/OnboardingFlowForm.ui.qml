@@ -6,7 +6,7 @@ import Onboarding 1.0
 import Onboard.Syncs_types 1.0
 
 Item {
-    id: rootItem
+
     property alias welcomePage: welcomePage
     property alias registerFlow: registerFlow
     property alias syncsFlow: syncsFlow
@@ -50,23 +50,19 @@ Item {
 
     Welcome {
         id: welcomePage
+
         visible: true
     }
 
     RegisterFlow {
         id: registerFlow
+
         visible: false
     }
 
     SyncsFlow {
         id: syncsFlow
+
         visible: false
     }
 }
-
-/*##^##
-Designer {
-    D{i:0;autoSize:true;height:480;width:640}
-}
-##^##*/
-

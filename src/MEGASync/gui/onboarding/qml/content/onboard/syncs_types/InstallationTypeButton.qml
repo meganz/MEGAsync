@@ -6,7 +6,7 @@ import Common 1.0
 import Components 1.0 as Custom
 
 Button {
-    id: btn
+    id: installationTypeButton
 
     enum Type {
         Sync = 0,
@@ -26,63 +26,61 @@ Button {
     checked: false
     onClicked: console.info("Button clicked")
 
-    background:
-        Rectangle {
-            id: box
+    background: buttonBackground
 
-            /*
-             * Object properties
-             */
+    Rectangle {
+        id: buttonBackground
 
-            border.width: 2
-            radius: 8
-            color: Styles.surface1
-            border.color: btn.checked ? Styles.borderStrongSelected : Styles.borderStrong
+        border.width: 2
+        radius: 8
+        color: Styles.surface1
+        border.color: installationTypeButton.checked
+                      ? Styles.borderStrongSelected
+                      : Styles.borderStrong
 
-            /*
-             * Child objects
-             */
+        RowLayout {
+            anchors.fill: parent
+            spacing: 16
 
-            RowLayout {
-                anchors.fill: parent
-                spacing: 16
+            Custom.SvgImage {
+                id: icon
 
-                Custom.SvgImage {
-                    id: icon
-                    color: btn.checked ? Styles.iconAccent : Styles.iconSecondary
-                    Layout.leftMargin: 24
-                    source: imageSource
+                color: installationTypeButton.checked
+                       ? Styles.iconAccent
+                       : Styles.iconSecondary
+                Layout.leftMargin: 24
+                source: imageSource
+            }
+
+            ColumnLayout {
+
+                Text {
+                    text: title
+                    color: Styles.buttonPrimaryHover
+                    Layout.preferredHeight: 24
+                    font.pixelSize: 16
+                    font.weight: Font.Bold
+                    font.family: "Inter"
+                    font.styleName: "normal"
+                    lineHeight: 24
                 }
 
-                ColumnLayout {
-
-                    Text {
-                        text: title
-                        color: Styles.buttonPrimaryHover
-                        Layout.preferredHeight: 24
-                        font.pixelSize: 16
-                        font.weight: Font.Bold
-                        font.family: "Inter"
-                        font.styleName: "normal"
-                        lineHeight: 24
-                    }
-
-                    Text {
-                        text: description
-                        wrapMode: Text.WordWrap
-                        lineHeightMode: Text.FixedHeight
-                        Layout.preferredWidth: 324
-                        color: Styles.toastBackground
-                        Layout.preferredHeight: 32
-                        font.pixelSize: 10
-                        font.weight: Font.Light
-                        font.family: "Inter"
-                        font.styleName: "normal"
-                        lineHeight: 16
-                    }
+                Text {
+                    text: description
+                    wrapMode: Text.WordWrap
+                    lineHeightMode: Text.FixedHeight
+                    Layout.preferredWidth: 324
+                    color: Styles.toastBackground
+                    Layout.preferredHeight: 32
+                    font.pixelSize: 10
+                    font.weight: Font.Light
+                    font.family: "Inter"
+                    font.styleName: "normal"
+                    lineHeight: 16
                 }
             }
-        } // Rectangle
+        }
+    }
 
     MouseArea {
         anchors.fill: parent
@@ -93,6 +91,6 @@ Button {
        }
     }
 
-} // Button
+}
 
 

@@ -1,29 +1,20 @@
 import QtQuick 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.0
-import QtQuick.Controls.Styles 1.2
 
 import Common 1.0
 
 Rectangle {
-    /*
-     * Properties
-     */
+
     readonly property string step1ComputerName: "STEP1_COMPUTER_NAME"
     readonly property string step2InstallationType: "STEP2_INSTALLATION_TYPE"
     readonly property string stepBackupsSelectFolders: "STEP_BACKUPS_SELECT_FOLDERS"
     readonly property string stepBackupsConfirm: "STEP_BACKUPS_CONFIRM"
     readonly property string stepSelectSyncType: "STEP_SELECT_SYNC_TYPE"
     readonly property string stepSyncFolder: "STEP_SELECT_SYNC_FOLDER"
-    /*
-     * Object properties
-     */
+
     color: Styles.alternateBackgroundColor
     height: parent.height
-
-    /*
-     * Child objects
-     */
 
     state: step1ComputerName
 
@@ -290,7 +281,7 @@ Rectangle {
                 title: qsTr("Select folders")
             }
         }
-    ] // states
+    ]
 
     ColumnLayout {
         anchors.fill: parent
@@ -299,17 +290,10 @@ Rectangle {
         ColumnLayout {
             id: stepsLayout
 
-            /*
-             * Object properties
-             */
-
             width: parent.width
             Layout.alignment: Qt.AlignTop
             spacing: 4
 
-            /*
-             * Child objects
-             */
             Step {
                 id: step1_computerName
 
@@ -391,10 +375,9 @@ Rectangle {
                     title: qsTr("Confirm")
                     Layout.leftMargin: 40
                 }
+            }
 
-            } // ColumnLayout -> leftSubStepsLayout
-
-        } // ColumnLayout -> stepsLayout
+        }
 
         Image {
             source: "../../../../../../images/Onboarding/help-circle.svg"
@@ -411,6 +394,6 @@ Rectangle {
             }
         }
 
-    } // ColumnLayout
+    }
 
-} // Item
+}
