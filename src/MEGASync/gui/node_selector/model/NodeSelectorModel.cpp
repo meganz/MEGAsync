@@ -1097,7 +1097,7 @@ QIcon NodeSelectorModel::getFolderIcon(NodeSelectorModelItem *item) const
                 {
                     QIcon icon;
                     icon.addFile(QLatin1String("://images/icons/folder/small-folder-outgoing.png"), QSize(), QIcon::Normal);
-                    icon.addFile(QLatin1String("://images/icons/folder/small-folder-outgoing_disabled.png"), QSize(), QIcon::Disabled);
+                    icon.addFile(QLatin1String("://images/icons/folder/small-folder-outgoing-disabled.png"), QSize(), QIcon::Disabled);
                     return icon;
                 }
                 else if(node->getHandle() == MegaSyncApp->getRootNode()->getHandle())
