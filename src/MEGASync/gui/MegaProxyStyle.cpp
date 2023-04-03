@@ -7,6 +7,7 @@
 #include <QSpinBox>
 #include <QComboBox>
 #include <QOperatingSystemVersion>
+#include <QApplication>
 
 const int TOOLTIP_DELAY = 250;
 
@@ -202,6 +203,10 @@ void MegaProxyStyle::polish(QWidget *widget)
             messageBox->setTextInteractionFlags(Qt::TextInteractionFlag::NoTextInteraction);
         }
     }
+    else if(auto dialog = qobject_cast<QDialog*>(widget))
+    {
+        dialog->installEventFilter(this);
+    }
 #endif
 
     QProxyStyle::polish(widget);
@@ -230,4 +235,22 @@ void MegaProxyStyle::unpolish(QApplication *app)
 bool MegaProxyStyle::event(QEvent *e)
 {
     return QProxyStyle::event(e);
+}
+
+bool MegaProxyStyle::eventFilter(QObject *watched, QEvent *event)
+{
+#ifdef Q_OS_MAC
+    if(event->type() == QEvent::Enter)
+    {
+        if (QOperatingSystemVersion::current() > QOperatingSystemVersion::MacOSBigSur) //It only fails from macOS Ventura
+        {
+            if(auto dialog = qobject_cast<QDialog*>(watched))
+            {
+                qApp->setActiveWindow(dialog);
+                dialog->repaint();
+            }
+        }
+    }
+#endif
+    return QProxyStyle::eventFilter(watched, event);
 }
