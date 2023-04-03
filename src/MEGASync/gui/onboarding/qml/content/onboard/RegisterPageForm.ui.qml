@@ -102,7 +102,7 @@ Rectangle {
 
             Layout.fillWidth: true
             Layout.topMargin: 24
-            richText.url: "http://www.stackoverflow.com/" //TODO: CHANGE LINK
+            url: "http://www.stackoverflow.com/" //TODO: CHANGE LINK
             text: qsTr("I understand that if [b]I lose my password, I may lose my data[/b].
 Read more about [a]MEGA’s end-to-end encryption.[/a]")
         }
@@ -112,7 +112,7 @@ Read more about [a]MEGA’s end-to-end encryption.[/a]")
 
             Layout.fillWidth: true
             Layout.topMargin: 4
-            richText.url: "http://www.stackoverflow.com/" //TODO: CHANGE LINK
+            url: "http://www.stackoverflow.com/" //TODO: CHANGE LINK
             text: qsTr("I agree with MEGA [a]Terms of service.[/a]")
         }
     } // ColumnLayout -> formLayout

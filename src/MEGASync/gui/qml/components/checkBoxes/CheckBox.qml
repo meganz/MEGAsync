@@ -6,18 +6,32 @@ import Components 1.0
 Qml.CheckBox {
     id: checkBox
 
-    /*
-     * Properties
-     */
-    property alias richText: richText
+    property string url: ""
+    property bool indeterminate: false
+
+    spacing: richText.text !== "" ? 8 : 0
+    indicator: checkBoxOutRect
+    contentItem: richText
+    padding: 0
 
     /*
-     * Components
-     */
-    width: parent.width
-    spacing: 8
+    onCheckedChanged: {
+        if(indeterminate) {
+            indeterminate = false;
+            checked = false;
+        }
+    }
+    */
 
-    contentItem: RichText {
+    MouseArea {
+        id: mouseArea
+
+        anchors.fill: checkBox
+        onPressed: mouse.accepted = false
+        cursorShape: Qt.PointingHandCursor
+    }
+
+    RichText {
         id: richText
 
         text: checkBox.text
@@ -26,91 +40,77 @@ Qml.CheckBox {
         anchors.top: parent.top
         wrapMode: RichText.Wrap
         font.pixelSize: 12
+        url: checkBox.url
     }
 
-    indicator: Rectangle {
+    Rectangle {
         id: checkBoxOutRect
 
-        implicitWidth: 16
-        implicitHeight: 16
-        radius: 4
-        border.color: getFrameColor()
-        border.width: 2
-        color: "transparent"
-        anchors {
-            left: checkBox.left
-            top: checkBox.top
-            leftMargin: 5
-            topMargin: 3
+        function getBorderColor() {
+            var color;
+            if(checkBox.pressed) {
+                color = Styles.buttonPrimaryPressed;
+            } else if(checkBox.hovered) {
+                color = Styles.buttonPrimaryHover;
+            } else {
+                color = Styles.buttonPrimary;
+            }
+            return color;
         }
+
+        function getBackgroundColor() {
+            var color;
+            if(checkBox.pressed) {
+                if(checkBox.checked) {
+                    color = Styles.buttonPrimaryPressed;
+                } else {
+                    color = "transparent";
+                }
+            } else if(checkBox.hovered) {
+                color = Styles.buttonPrimaryHover;
+            } else {
+                color = Styles.buttonPrimary;
+            }
+            return color;
+        }
+
+        function getIconColor() {
+            var color;
+            if(checkBox.pressed && !checkBox.checked) {
+                color = Styles.buttonPrimaryPressed;
+            } else {
+                color = Styles.iconOnColor;
+            }
+            return color;
+        }
+
+        width: 16
+        height: 16
+        radius: 4
+        border.color: checkBoxOutRect.getBorderColor()
+        border.width: 2
 
         Rectangle {
             id: inside
 
-            visible: checkBox.checked || checkBox.down
-            color: getBackgroundColor()
+            visible: checkBox.checked || checkBox.down || checkBox.indeterminate
+            color: checkBoxOutRect.getBackgroundColor()
             radius: 1
-            anchors {
-                fill: checkBoxOutRect
-                margins: checkBoxOutRect.border.width
-            }
+            width: checkBoxOutRect.width - checkBoxOutRect.border.width
+            height: inside.width
+            anchors.centerIn: checkBoxOutRect
 
             SvgImage {
                 id: image
-                source: "images/check.svg"
-                color: getIconColor()
-                anchors.centerIn: parent
-                sourceSize: Qt.size(8, 8)
+
+                source: checkBox.indeterminate ? "images/indeterminate.svg" : "images/check.svg"
+                anchors.centerIn: inside
+                sourceSize: indeterminate ? Qt.size(8, 2) : Qt.size(8, 6.5)
+                color: checkBoxOutRect.getIconColor()
             }
 
         } // Rectangle -> inside
 
     } // Rectangle -> checkBoxOutRect
 
-    MouseArea {
-        id: mouseArea
-
-        anchors.fill: parent
-        onPressed:  mouse.accepted = false
-        cursorShape: Qt.PointingHandCursor
-    }
-
-    /*
-     * Functions
-     */
-    function getFrameColor() {
-        if(checkBox.down) {
-            return Styles.lightTheme ? "#535B65" : "#BDC0C4"; // Pressed
-        } else if(checkBox.hovered) {
-            return Styles.lightTheme ? "#39424E" : "#A3A6AD"; //hover
-        } else if(!checkBox.enabled) {
-            return Styles.lightTheme ? "#1A000000" : "#1AFFFFFF"; // disabled
-        } else {
-            return Styles.lightTheme ? "#04101E" : "#F4F4F5"; //normal
-        }
-    }
-
-    function getBackgroundColor() {
-        if(checkBox.down) {
-            if(checkBox.checked) {
-                return Styles.lightTheme ? "#535B65" : "#BDC0C4"; // Pressed
-            } else {
-                return Styles.alternateBackgroundColor
-            }
-        } else if(checkBox.hovered) {
-            return Styles.lightTheme ? "#39424E" : "#A3A6AD"; //hover
-        } else if(!checkBox.enabled) {
-            return Styles.lightTheme ? "#1A000000" : "#1AFFFFFF"; // disabled
-        } else {
-            return Styles.lightTheme ? "#04101E" : "#F4F4F5"; //normal
-        }
-    }
-
-    function getIconColor() {
-        if(checkBox.down && !checkBox.checked) {
-            return Styles.lightTheme ? "#535B65" : "#BDC0C4"; // Pressed
-        } else {
-            return Styles.lightTheme ? "#FAFAFA" : "#04101E"
-        }
-    }
 }
