@@ -16,7 +16,6 @@ Rectangle {
     property string email: email.textField.text
     property string password: password.textField.text
 
-    anchors.fill: parent
     color: Styles.backgroundColor
 
     ColumnLayout {

@@ -9,6 +9,7 @@ import Onboarding 1.0
 Rectangle {
     id: registerForm
 
+    property alias loginButton: loginButton
     property alias registerButton: registerButton
     property alias cancelButton: cancelButton
 

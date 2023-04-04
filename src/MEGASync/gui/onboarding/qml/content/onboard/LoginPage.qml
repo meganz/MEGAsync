@@ -16,6 +16,13 @@ LoginPageForm {
         loginButton.clicked();
     }
 
+    loginButton.onClicked: {
+        if(email.length !== 0 && password.length !== 0) {
+            Onboarding.onLoginClicked({[Onboarding.OnboardEnum.EMAIL]: email,
+                                       [Onboarding.OnboardEnum.PASSWORD]: password})
+        }
+    }
+
 }
 
 

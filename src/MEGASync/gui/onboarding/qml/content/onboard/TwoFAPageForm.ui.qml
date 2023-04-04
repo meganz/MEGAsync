@@ -12,7 +12,6 @@ Rectangle {
     property alias acceptButton: acceptButton
     property string key: twoFAField.key2fa
 
-    anchors.fill: parent
     color: Styles.backgroundColor
 
     ColumnLayout {
