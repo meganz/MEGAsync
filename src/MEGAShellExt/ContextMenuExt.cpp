@@ -322,7 +322,7 @@ void ContextMenuExt::requestGetLinks()
 {
     for (unsigned int i = 0; i < selectedFiles.size(); i++)
     {
-        if (isSynced(pathStates[i]))
+        if (isSynced(pathTypes[i], pathStates[i]))
         {
             MegaInterface::pasteLink((PCWSTR)selectedFiles[i].data());
         }
