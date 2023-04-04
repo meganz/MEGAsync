@@ -22,94 +22,86 @@ SelectFoldersPageForm {
     Component {
         id: tableHeader
 
-        RowLayout {
+        Rectangle {
+            id: tableHeaderBackground
 
             height: 36
-            width: parent.width
+            width: tableRectangle.width - 2 * tableRectangle.border.width
+            Layout.topMargin: tableRectangle.border.width
+            Layout.leftMargin: tableRectangle.border.width
+            color: Styles.surface2
+            radius: tableRectangle.radius
             z: 3
 
+            RowLayout {
+                anchors.verticalCenter: tableHeaderBackground.verticalCenter
+                spacing: 0
+
+                Custom.CheckBox {
+                    id: selectAll
+
+                    property bool fromModel: false
+
+                    implicitHeight: parent.height
+                    Layout.leftMargin: 22
+                    text: qsTr("[b]Select all[/b]");
+                    indeterminate: false
+
+                    onCheckedChanged: {
+                        if(selectAll.fromModel) {
+                            selectAll.indeterminate = false;
+                            selectAll.fromModel = false;
+                        } else {
+                            if(selectAll.checked && selectAll.indeterminate) {
+                                selectAll.checked = false;
+                            }
+                            selectAll.indeterminate = false;
+                            backupModel.setAllSelected(checked);
+                            footerButtons.nextButton.enabled = checked;
+                        }
+                        selectText.selectedRows = backupModel.getNumSelectedRows();
+                    }
+                }
+
+                Text {
+                    id: selectText
+
+                    property int selectedRows: 0
+
+                    text: "(" + selectedRows + ")"
+                    font.pixelSize: 12
+                    Layout.leftMargin: 4
+                }
+
+                Connections {
+                    target: backupModel
+
+                    onRowSelectedChanged: {
+                        selectAll.indeterminate = true;
+                        footerButtons.nextButton.enabled = true;
+                        selectText.selectedRows = backupModel.getNumSelectedRows();
+                    }
+
+                    onAllRowsSelected: (selected) => {
+                        selectAll.fromModel = true;
+                        selectAll.checked = selected;
+                        if(!selectAll.checked && selectAll.indeterminate) {
+                            selectAll.indeterminate = false;
+                        }
+                        footerButtons.nextButton.enabled = selected;
+                        selectText.selectedRows = backupModel.getNumSelectedRows();
+                    }
+                }
+
+            }
             Rectangle {
-                id: tableHeaderBackground
-
-                height: parent.height
-                width: tableRectangle.width - 2 * tableRectangle.border.width
-                Layout.topMargin: tableRectangle.border.width
-                Layout.leftMargin: tableRectangle.border.width
-                color: Styles.surface2
-                radius: tableRectangle.radius
-
-                RowLayout {
-                    anchors.verticalCenter: tableHeaderBackground.verticalCenter
-                    spacing: 0
-
-                    Custom.CheckBox {
-                        id: selectAll
-
-                        property bool fromModel: false
-
-                        implicitHeight: parent.height
-                        Layout.leftMargin: 22
-                        text: qsTr("[b]Select all[/b]");
-                        indeterminate: false
-
-                        onCheckedChanged: {
-                            if(selectAll.fromModel) {
-                                selectAll.indeterminate = false;
-                                selectAll.fromModel = false;
-                            } else {
-                                if(selectAll.checked && selectAll.indeterminate) {
-                                    selectAll.checked = false;
-                                }
-                                selectAll.indeterminate = false;
-                                backupModel.setAllSelected(checked);
-                                footerButtons.nextButton.enabled = checked;
-                            }
-                            selectText.selectedRows = backupModel.getNumSelectedRows();
-                        }
-                    }
-
-                    Text {
-                        id: selectText
-
-                        property int selectedRows: 0
-
-                        text: "(" + selectedRows + ")"
-                        font.pixelSize: 12
-                        Layout.leftMargin: 4
-                    }
-
-                    Connections {
-                        target: backupModel
-
-                        onRowSelectedChanged: {
-                            selectAll.indeterminate = true;
-                            footerButtons.nextButton.enabled = true;
-                            selectText.selectedRows = backupModel.getNumSelectedRows();
-                        }
-
-                        onAllRowsSelected: (selected) => {
-                            selectAll.fromModel = true;
-                            selectAll.checked = selected;
-                            if(!selectAll.checked && selectAll.indeterminate) {
-                                selectAll.indeterminate = false;
-                            }
-                            footerButtons.nextButton.enabled = selected;
-                            selectText.selectedRows = backupModel.getNumSelectedRows();
-                        }
-                    }
-
-                }
-
-                Rectangle {
-                    height: tableHeaderBackground.radius
-                    color: tableHeaderBackground.color
-                    anchors.bottom: tableHeaderBackground.bottom
-                    anchors.left: tableHeaderBackground.left
-                    anchors.right: tableHeaderBackground.right
-                }
+                height: tableHeaderBackground.radius
+                color: tableHeaderBackground.color
+                anchors.bottom: tableHeaderBackground.bottom
+                anchors.left: tableHeaderBackground.left
+                anchors.right: tableHeaderBackground.right
             }
         }
-
     }
 
     Component {
