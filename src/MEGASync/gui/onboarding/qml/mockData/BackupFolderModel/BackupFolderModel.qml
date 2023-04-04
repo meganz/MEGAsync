@@ -14,6 +14,16 @@ ListModel {
         }
     }
 
+    function getNumSelectedRows() {
+        var total = 0;
+        for (let i = 0; i < backupListModel.count; i++) {
+            if(backupListModel.get(i).selected) {
+                total++;
+            }
+        }
+        return total;
+    }
+
     signal rowSelectedChanged
     signal allRowsSelected(bool selected)
 

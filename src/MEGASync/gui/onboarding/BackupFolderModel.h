@@ -43,6 +43,8 @@ public slots:
 
     void setAllSelected(bool selected);
 
+    int getNumSelectedRows() const;
+
 signals:
 
     void rowSelectedChanged();

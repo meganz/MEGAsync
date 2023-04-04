@@ -163,6 +163,7 @@ void BackupFolderModel::insertFolder(const QString &folder)
     beginInsertRows(QModelIndex(), 0, 0);
     BackupFolder data(folder);
     mBackupFolderList.prepend(data);
+    checkSelectedAll(data.selected);
     endInsertRows();
 }
 
@@ -176,6 +177,11 @@ void BackupFolderModel::setAllSelected(bool selected)
     }
 
     mSelectedRowsTotal = (selected ? mBackupFolderList.size() : 0);
+}
+
+int BackupFolderModel::getNumSelectedRows() const
+{
+    return mSelectedRowsTotal;
 }
 
 

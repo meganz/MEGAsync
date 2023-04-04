@@ -62,31 +62,40 @@ SelectFoldersPageForm {
                                 }
                                 selectAll.indeterminate = false;
                                 backupModel.setAllSelected(checked);
+                                footerButtons.nextButton.enabled = checked;
                             }
-                        }
-
-                        Connections {
-                            target: backupModel
-
-                            onRowSelectedChanged: {
-                                selectAll.indeterminate = true;
-                                footerButtons.nextButton.enabled = true;
-                            }
-
-                            onAllRowsSelected: (selected) => {
-                                selectAll.fromModel = true;
-                                selectAll.checked = selected;
-                                footerButtons.nextButton.enabled = selected;
-                            }
+                            selectText.selectedRows = backupModel.getNumSelectedRows();
                         }
                     }
 
                     Text {
                         id: selectText
 
-                        text: "(3)"
+                        property int selectedRows: 0
+
+                        text: "(" + selectedRows + ")"
                         font.pixelSize: 12
                         Layout.leftMargin: 4
+                    }
+
+                    Connections {
+                        target: backupModel
+
+                        onRowSelectedChanged: {
+                            selectAll.indeterminate = true;
+                            footerButtons.nextButton.enabled = true;
+                            selectText.selectedRows = backupModel.getNumSelectedRows();
+                        }
+
+                        onAllRowsSelected: (selected) => {
+                            selectAll.fromModel = true;
+                            selectAll.checked = selected;
+                            if(!selectAll.checked && selectAll.indeterminate) {
+                                selectAll.indeterminate = false;
+                            }
+                            footerButtons.nextButton.enabled = selected;
+                            selectText.selectedRows = backupModel.getNumSelectedRows();
+                        }
                     }
 
                 }
