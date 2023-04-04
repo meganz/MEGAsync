@@ -10,8 +10,6 @@ Item {
 
     property alias continueButton: continueButton
 
-    anchors.fill: parent
-
     Image {
         source: "../../../../images/Onboarding/onboard_step1.png"
         anchors.bottom: bottomRect.top

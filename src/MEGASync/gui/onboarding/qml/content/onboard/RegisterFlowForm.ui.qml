@@ -16,7 +16,6 @@ Rectangle {
     readonly property string twoFA: "twoFA"
     readonly property string register: "register"
 
-    anchors.fill: parent
     color: Styles.alternateBackgroundColor
     border.color: "#ffffff"
 

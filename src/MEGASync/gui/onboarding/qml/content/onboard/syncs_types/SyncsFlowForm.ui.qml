@@ -35,8 +35,6 @@ Item {
     readonly property string fullSync: "fullSync"
     readonly property string finalState: "finalState"
 
-    anchors.fill: parent
-
     StackView {
         id: mainPanel
 
