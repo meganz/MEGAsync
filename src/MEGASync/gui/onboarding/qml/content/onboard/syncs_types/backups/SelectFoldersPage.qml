@@ -70,12 +70,14 @@ SelectFoldersPageForm {
 
                             onRowSelectedChanged: {
                                 selectAll.indeterminate = true;
+                                footerButtons.nextButton.enabled = true;
                             }
 
                             onAllRowsSelected: (selected) => {
-                                                   selectAll.fromModel = true;
-                                                   selectAll.checked = selected;
-                                               }
+                                selectAll.fromModel = true;
+                                selectAll.checked = selected;
+                                footerButtons.nextButton.enabled = selected;
+                            }
                         }
                     }
 

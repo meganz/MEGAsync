@@ -11,7 +11,7 @@ Custom.TextField {
     textField.validator: RegExpValidator { regExp: /^[0-9]{1}$/ }
     fieldHeight: 72
     width: 60
-    font.pixelSize: height - (fieldHeight / 2)
+    font.pixelSize: 35
 
     textField.onTextChanged: {
         if(textField.text.length !== 0 && next !== undefined) {

@@ -11,6 +11,8 @@ RowLayout {
     property alias previousButton: previousButton
     property alias nextButton: nextButton
 
+    width: parent.width
+
     Text {
         id: notNowButton
 
@@ -20,7 +22,8 @@ RowLayout {
         font.family: "Inter"
         font.styleName: "Medium"
         font.underline: true
-        Layout.leftMargin: 31
+        Layout.leftMargin: 32
+        Layout.bottomMargin: 24
 
         MouseArea {
             anchors.fill: notNowButton
@@ -33,6 +36,8 @@ RowLayout {
 
     RowLayout {
         Layout.alignment: Qt.AlignRight
+        Layout.rightMargin: 32
+        Layout.bottomMargin: 24
 
         Custom.Button {
             id: cancelButton

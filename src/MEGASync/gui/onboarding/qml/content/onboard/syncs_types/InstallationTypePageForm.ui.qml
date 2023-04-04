@@ -25,6 +25,7 @@ SyncsPage {
 
         ColumnLayout {
             spacing: 20
+            Layout.topMargin: 20
 
             InstallationTypeButton {
                 id: syncButton

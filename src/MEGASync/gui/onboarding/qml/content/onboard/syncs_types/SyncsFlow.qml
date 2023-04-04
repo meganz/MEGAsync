@@ -6,6 +6,10 @@ SyncsFlowForm {
 
     state: computerName
 
+    computerNamePage.footerButtons.previousButton.visible: false
+
+    computerNamePage.footerButtons.notNowButton.visible: false
+
     computerNamePage.footerButtons.nextButton.onClicked: {
         syncsFlow.state = syncType;
     }
@@ -68,6 +72,8 @@ SyncsFlowForm {
     selectBackupFoldersPage.footerButtons.previousButton.onClicked: {
         syncsFlow.state = syncType;
     }
+
+    selectBackupFoldersPage.footerButtons.nextButton.enabled: false
 
     selectBackupFoldersPage.footerButtons.nextButton.onClicked: {
         syncsFlow.state = confirmBackup;

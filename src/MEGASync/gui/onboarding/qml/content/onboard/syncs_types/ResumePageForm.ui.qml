@@ -15,9 +15,9 @@ Rectangle {
     property string description: "Lorem ipsum dolor a text that congratulates the user and suggests other options to choose below. Use two lines at most. In this case we offer syncs as an option again."
 
     color: Styles.surface1
-    anchors.fill: parent
 
     ColumnLayout {
+        anchors.fill: parent
 
         Text {
             text: title

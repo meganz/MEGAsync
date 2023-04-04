@@ -382,8 +382,8 @@ Rectangle {
         Image {
             source: "../../../../../../images/Onboarding/help-circle.svg"
             Layout.leftMargin: 32
-            Layout.topMargin: 173
-            Layout.alignment: Qt.AlignTop
+            Layout.bottomMargin: 25
+            Layout.alignment: Qt.AlignBottom
 
             MouseArea {
                 anchors.fill: parent

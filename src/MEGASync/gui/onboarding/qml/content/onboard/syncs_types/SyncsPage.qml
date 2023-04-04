@@ -17,8 +17,6 @@ Rectangle {
         anchors {
             bottom: parent.bottom
             right: parent.right
-            rightMargin: 20
-            bottomMargin: 20
         }
     }
 }
