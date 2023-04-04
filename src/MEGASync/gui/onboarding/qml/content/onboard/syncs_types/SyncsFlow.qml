@@ -1,8 +1,25 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
 
-SyncsFlowForm {
+import Onboard.Syncs_types.Left_panel 1.0
+import Onboard.Syncs_types.Syncs 1.0
+import Onboard.Syncs_types.Backups 1.0
+
+import Components 1.0 as Custom
+import Common 1.0
+
+StackView {
     id: syncsFlow
+
+    readonly property string computerName: "computerName"
+    readonly property string syncType: "syncType"
+    readonly property string syncs: "syncs"
+    readonly property string selectiveSync: "selectiveSync"
+    readonly property string fullSync: "fullSync"
+    readonly property string selectBackup: "selectBackup"
+    readonly property string confirmBackup: "confirmBackup"
+    readonly property string finalState: "finalState"
 
     state: computerName
 
@@ -30,7 +47,12 @@ SyncsFlowForm {
         State {
             name: syncs
             StateChangeScript {
-                script: rightPanel.replace(syncPage);
+                script: {
+                    rightPanel.replace(syncPage);
+                    if(syncsFlow.currentItem != syncsPanel) {
+                        syncsFlow.replace(syncsPanel);
+                    }
+                }
             }
             PropertyChanges {
                 target: stepPanel
@@ -60,7 +82,12 @@ SyncsFlowForm {
         State {
             name: selectBackup
             StateChangeScript {
-                script: rightPanel.replace(selectBackupFoldersPage);
+                script: {
+                    rightPanel.replace(selectBackupFoldersPage);
+                    if(syncsFlow.currentItem != syncsPanel) {
+                        syncsFlow.replace(syncsPanel);
+                    }
+                }
             }
             PropertyChanges {
                 target: stepPanel
@@ -80,106 +107,186 @@ SyncsFlowForm {
         State {
             name: finalState
             StateChangeScript {
-                script: mainPanel.replace(finalPage);
+                script: syncsFlow.replace(finalPage);
             }
         }
     ]
 
-    computerNamePage.footerButtons.previousButton.visible: false
+    ResumePage {
+        id: finalPage
 
-    computerNamePage.footerButtons.notNowButton.visible: false
-
-    computerNamePage.footerButtons.nextButton.onClicked: {
-        syncsFlow.state = syncType;
-    }
-
-    installationTypePage.footerButtons.previousButton.onClicked: {
-        syncsFlow.state = computerName;
-    }
-
-    installationTypePage.footerButtons.nextButton.onClicked: {
-        switch(installationTypePage.buttonGroup.checkedButton.type) {
-            case InstallationTypeButton.Type.Sync:
-                syncsFlow.state = syncs;
-                break;
-            case InstallationTypeButton.Type.Backup:
-                syncsFlow.state = selectBackup;
-                break;
-            case InstallationTypeButton.Type.Fuse:
-            default:
-                console.error("Button type does not exist -> "
-                              + installationTypePage.buttonGroup.checkedButton.type);
-                break;
+        buttonGroup.onClicked: {
+            switch(button.type) {
+                case InstallationTypeButton.Type.Sync:
+                    syncsFlow.state = syncs;
+                    break;
+                case InstallationTypeButton.Type.Backup:
+                    syncsFlow.state = selectBackup;
+                    break;
+                case InstallationTypeButton.Type.Fuse:
+                    break;
+                default:
+                    console.error("Button type does not exist -> " + button.type);
+                    break;
+            }
         }
+        visible: false
     }
 
-    syncPage.footerButtons.previousButton.onClicked: {
-        syncsFlow.state = syncType;
-    }
+    Rectangle {
+        id: syncsPanel
 
-    syncPage.footerButtons.nextButton.onClicked: {
-        switch(syncPage.buttonGroup.checkedButton.type) {
-            case ResumeButton.Type.FullSync:
-                syncsFlow.state = fullSync;
-                break;
-            case ResumeButton.Type.SelectiveSync:
-                syncsFlow.state = selectiveSync;
-                break;
-            default:
-                console.error("Button type does not exist -> "
-                              + syncPage.buttonGroup.checkedButton.type);
-                break;
+        width: syncsFlow.width
+        height: syncsFlow.height
+
+        StepPanel {
+            id: stepPanel
+
+            z: 2
+            width: 224
+            anchors {
+                left: parent.left
+                top: parent.top
+                bottom: parent.bottom
+            }
         }
-    }
 
-    selectiveSyncPage.footerButtons.previousButton.onClicked: {
-        syncsFlow.state = syncs;
-    }
+        StackView {
+            id: rightPanel
 
-    fullSyncPage.footerButtons.previousButton.onClicked: {
-        syncsFlow.state = syncs;
-    }
+            anchors {
+                left: stepPanel.right
+                right: parent.right
+                top: parent.top
+                bottom: parent.bottom
+            }
 
-    selectiveSyncPage.footerButtons.nextButton.onClicked: {
-        syncsFlow.state = finalState;
-    }
+            ComputerNamePage {
+                id: computerNamePage
 
-    fullSyncPage.footerButtons.nextButton.onClicked: {
-        syncsFlow.state = finalState;
-    }
+                Layout.fillHeight: true
+                Layout.fillWidth: true
+                footerButtons {
+                    previousButton.visible: false
+                    notNowButton.visible: false
+                    nextButton.onClicked: {
+                        syncsFlow.state = syncType;
+                    }
+                }
+                visible: false
+            }
 
-    selectBackupFoldersPage.footerButtons.previousButton.onClicked: {
-        syncsFlow.state = syncType;
-    }
+            InstallationTypePage {
+                id: installationTypePage
 
-    selectBackupFoldersPage.footerButtons.nextButton.enabled: false
+                footerButtons {
+                    previousButton.onClicked: {
+                        syncsFlow.state = computerName;
+                    }
 
-    selectBackupFoldersPage.footerButtons.nextButton.onClicked: {
-        syncsFlow.state = confirmBackup;
-    }
+                    nextButton.onClicked: {
+                        switch(installationTypePage.buttonGroup.checkedButton.type) {
+                            case InstallationTypeButton.Type.Sync:
+                                syncsFlow.state = syncs;
+                                break;
+                            case InstallationTypeButton.Type.Backup:
+                                syncsFlow.state = selectBackup;
+                                break;
+                            case InstallationTypeButton.Type.Fuse:
+                            default:
+                                console.error("Button type does not exist -> "
+                                              + installationTypePage.buttonGroup.checkedButton.type);
+                                break;
+                        }
+                    }
+                }
+                visible: false
+            }
 
-    confirmBackupFoldersPage.footerButtons.previousButton.onClicked: {
-        syncsFlow.state = selectBackup;
-    }
+            SyncTypePage {
+                id: syncPage
 
-    confirmBackupFoldersPage.footerButtons.nextButton.onClicked: {
-        syncsFlow.state = finalState;
-    }
+                footerButtons {
+                    previousButton.onClicked: {
+                        syncsFlow.state = syncType;
+                    }
 
-    finalPage.buttonGroup.onClicked: {
-        switch(button.type) {
-            case InstallationTypeButton.Type.Sync:
-                syncsFlow.state = syncs;
-                break;
-            case InstallationTypeButton.Type.Backup:
-                syncsFlow.state = selectBackup;
-                break;
-            case InstallationTypeButton.Type.Fuse:
-                break;
-            default:
-                console.error("Button type does not exist -> " + button.type);
-                break;
+                    nextButton.onClicked: {
+                        switch(syncPage.buttonGroup.checkedButton.type) {
+                            case ResumeButton.Type.FullSync:
+                                syncsFlow.state = fullSync;
+                                break;
+                            case ResumeButton.Type.SelectiveSync:
+                                syncsFlow.state = selectiveSync;
+                                break;
+                            default:
+                                console.error("Button type does not exist -> "
+                                              + syncPage.buttonGroup.checkedButton.type);
+                                break;
+                        }
+                    }
+                }
+                visible: false
+            }
+
+            FullSyncPage {
+                id: fullSyncPage
+
+                footerButtons{
+                    previousButton.onClicked: {
+                        syncsFlow.state = syncs;
+                    }
+                    nextButton.onClicked: {
+                        syncsFlow.state = finalState;
+                    }
+                }
+                visible: false
+            }
+
+            SelectiveSyncPage {
+                id: selectiveSyncPage
+
+                footerButtons{
+                    previousButton.onClicked: {
+                        syncsFlow.state = syncs;
+                    }
+                    nextButton.onClicked: {
+                        syncsFlow.state = finalState;
+                    }
+                }
+                visible: false
+            }
+
+            SelectFoldersPage {
+                id: selectBackupFoldersPage
+
+                footerButtons {
+                    previousButton.onClicked: {
+                        syncsFlow.state = syncType;
+                    }
+
+                    nextButton.enabled: false
+                    nextButton.onClicked: {
+                        syncsFlow.state = confirmBackup;
+                    }
+                }
+                visible: false
+            }
+
+            ConfirmFoldersPage {
+                id: confirmBackupFoldersPage
+
+                footerButtons {
+                    previousButton.onClicked: {
+                        syncsFlow.state = selectBackup;
+                    }
+
+                    nextButton.onClicked: {
+                        syncsFlow.state = finalState;
+                    }
+                }
+                visible: false
+            }
         }
-        mainPanel.replace(syncsPanel);
     }
 }

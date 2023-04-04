@@ -4,9 +4,7 @@
 <file>./content/onboard/LoginPageForm.ui.qml</file>
 <file>./content/onboard/OnboardingDialog.qml</file>
 <file>./content/onboard/OnboardingFlow.qml</file>
-<file>./content/onboard/OnboardingFlowForm.ui.qml</file>
 <file>./content/onboard/RegisterFlow.qml</file>
-<file>./content/onboard/RegisterFlowForm.ui.qml</file>
 <file>./content/onboard/RegisterPage.qml</file>
 <file>./content/onboard/RegisterPageForm.ui.qml</file>
 <file>./content/onboard/syncs_types/backups/ConfirmFoldersPage.qml</file>
@@ -36,7 +34,6 @@
 <file>./content/onboard/syncs_types/syncs/SyncTypePage.qml</file>
 <file>./content/onboard/syncs_types/syncs/SyncTypePageForm.ui.qml</file>
 <file>./content/onboard/syncs_types/SyncsFlow.qml</file>
-<file>./content/onboard/syncs_types/SyncsFlowForm.ui.qml</file>
 <file>./content/onboard/syncs_types/SyncsPage.qml</file>
 <file>./content/onboard/SyncSelectTypeButton.qml</file>
 <file>./content/onboard/TwoFAPage.qml</file>
