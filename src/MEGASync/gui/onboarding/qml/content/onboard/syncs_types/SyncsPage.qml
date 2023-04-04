@@ -8,7 +8,8 @@ Rectangle {
 
     property alias footerButtons: footerButtons
 
-    anchors.fill: parent
+    width: parent.width
+    height: parent.height
     color: Styles.backgroundColor
 
     Footer {

@@ -6,6 +6,85 @@ SyncsFlowForm {
 
     state: computerName
 
+    states: [
+        State {
+            name: computerName
+            StateChangeScript {
+                script: rightPanel.replace(computerNamePage);
+            }
+            PropertyChanges {
+                target: stepPanel
+                state: stepPanel.step1ComputerName
+            }
+        },
+        State {
+            name: syncType
+            StateChangeScript {
+                script: rightPanel.replace(installationTypePage);
+            }
+            PropertyChanges {
+                target: stepPanel
+                state: stepPanel.step2InstallationType
+            }
+        },
+        State {
+            name: syncs
+            StateChangeScript {
+                script: rightPanel.replace(syncPage);
+            }
+            PropertyChanges {
+                target: stepPanel
+                state: stepPanel.stepSelectSyncType
+            }
+        },
+        State {
+            name: selectiveSync
+            StateChangeScript {
+                script: rightPanel.replace(selectiveSyncPage);
+            }
+            PropertyChanges {
+                target: stepPanel
+                state: stepPanel.stepSyncFolder
+            }
+        },
+        State {
+            name: fullSync
+            StateChangeScript {
+                script: rightPanel.replace(fullSyncPage);
+            }
+            PropertyChanges {
+                target: stepPanel
+                state: stepPanel.stepSyncFolder
+            }
+        },
+        State {
+            name: selectBackup
+            StateChangeScript {
+                script: rightPanel.replace(selectBackupFoldersPage);
+            }
+            PropertyChanges {
+                target: stepPanel
+                state: stepPanel.stepBackupsSelectFolders
+            }
+        },
+        State {
+            name: confirmBackup
+            StateChangeScript {
+                script: rightPanel.replace(confirmBackupFoldersPage);
+            }
+            PropertyChanges {
+                target: stepPanel
+                state: stepPanel.stepBackupsConfirm
+            }
+        },
+        State {
+            name: finalState
+            StateChangeScript {
+                script: mainPanel.replace(finalPage);
+            }
+        }
+    ]
+
     computerNamePage.footerButtons.previousButton.visible: false
 
     computerNamePage.footerButtons.notNowButton.visible: false
@@ -98,8 +177,9 @@ SyncsFlowForm {
             case InstallationTypeButton.Type.Fuse:
                 break;
             default:
-                console.error("Button type does not exist -> "+ button.type);
+                console.error("Button type does not exist -> " + button.type);
                 break;
         }
+        mainPanel.replace(syncsPanel);
     }
 }

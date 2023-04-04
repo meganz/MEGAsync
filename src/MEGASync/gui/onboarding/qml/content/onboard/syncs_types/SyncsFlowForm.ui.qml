@@ -12,6 +12,12 @@ import Common 1.0
 Item {
     id: syncsStack
 
+    property alias stepPanel: stepPanel
+    property alias rightPanel: rightPanel
+    property alias mainPanel: mainPanel
+    property alias syncsPanel: syncsPanel
+    property alias finalPage: finalPage
+
     property alias installationTypePage: installationTypePage
     property alias computerNamePage: computerNamePage
     property alias selectBackupFoldersPage: selectBackupFoldersPage
@@ -19,7 +25,6 @@ Item {
     property alias syncPage: syncPage
     property alias selectiveSyncPage: selectiveSyncPage
     property alias fullSyncPage: fullSyncPage
-    property alias finalPage: finalPage
 
     readonly property string computerName: "computerName"
     readonly property string syncType: "syncType"
@@ -32,105 +37,11 @@ Item {
 
     anchors.fill: parent
 
-    states: [
-        State {
-            name: computerName
-            PropertyChanges {
-                target: computerNamePage
-                visible: true
-            }
-            PropertyChanges {
-                target: stepPanel
-                state: stepPanel.step1ComputerName
-            }
-        },
-        State {
-            name: syncType
-            PropertyChanges {
-                target: installationTypePage
-                visible: true
-            }
-            PropertyChanges {
-                target: stepPanel
-                state: stepPanel.step2InstallationType
-            }
-            PropertyChanges {
-                target: syncsPanel
-                visible: true
-            }
-        },
-        State {
-            name: syncs
-            PropertyChanges {
-                target: syncPage
-                visible: true
-            }
-            PropertyChanges {
-                target: stepPanel
-                state: stepPanel.stepSelectSyncType
-            }
-        },
-        State {
-            name: selectiveSync
-            PropertyChanges {
-                target: selectiveSyncPage
-                visible: true
-            }
-            PropertyChanges {
-                target: stepPanel
-                state: stepPanel.stepSyncFolder
-            }
-        },
-        State {
-            name: fullSync
-            PropertyChanges {
-                target: fullSyncPage
-                visible: true
-            }
-            PropertyChanges {
-                target: stepPanel
-                state: stepPanel.stepSyncFolder
-            }
-        },
-        State {
-            name: selectBackup
-            PropertyChanges {
-                target: selectBackupFoldersPage
-                visible: true
-            }
-            PropertyChanges {
-                target: stepPanel
-                state: stepPanel.stepBackupsSelectFolders
-            }
-        },
-        State {
-            name: confirmBackup
-            PropertyChanges {
-                target: confirmBackupFoldersPage
-                visible: true
-            }
-            PropertyChanges {
-                target: stepPanel
-                state: stepPanel.stepBackupsConfirm
-            }
-        },
-        State {
-            name: finalState
-            PropertyChanges {
-                target: finalPage
-                visible: true
-            }
-            PropertyChanges {
-                target: syncsPanel
-                visible: false
-            }
-        }
-    ]
-
-    Rectangle {
-        id: contentItem
+    StackView {
+        id: mainPanel
 
         anchors.fill: parent
+        initialItem: syncsPanel
 
         ResumePage {
             id: finalPage
@@ -139,13 +50,15 @@ Item {
         }
 
         Rectangle {
-            id:syncsPanel
+            id: syncsPanel
 
-            anchors.fill: parent
+            width: mainPanel.width
+            height: mainPanel.height
 
             StepPanel {
                 id: stepPanel
 
+                z: 2
                 width: 224
                 anchors {
                     left: parent.left
@@ -154,7 +67,7 @@ Item {
                 }
             }
 
-            Rectangle {
+            StackView {
                 id: rightPanel
 
                 anchors {
