@@ -51,10 +51,22 @@ border:none;
      </property>
      <item row="0" column="10">
       <widget class="SearchLineEdit" name="leSearch">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="minimumSize">
         <size>
-         <width>150</width>
+         <width>145</width>
          <height>34</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>145</width>
+         <height>16777215</height>
         </size>
        </property>
        <property name="styleSheet">

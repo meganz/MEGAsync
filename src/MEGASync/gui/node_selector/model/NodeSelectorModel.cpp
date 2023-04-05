@@ -84,8 +84,8 @@ void NodeRequester::search(const QString &text, NodeSelectorModelItemSearch::Typ
         QMutexLocker a(&mSearchMutex);
         QMutexLocker d(&mDataMutex);
         qDeleteAll(mRootItems);
+        mRootItems.clear();
     }
-    mRootItems.clear();
     mSearchCanceled = false;
     mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
 
@@ -106,7 +106,8 @@ void NodeRequester::search(const QString &text, NodeSelectorModelItemSearch::Typ
         }
         else if(mSyncSetupMode)
         {
-            if(megaApi->getAccess(node) != mega::MegaShare::ACCESS_FULL)
+            int access = megaApi->getAccess(node);
+            if(access != mega::MegaShare::ACCESS_FULL && access != mega::MegaShare::ACCESS_OWNER)
             {
                 continue;
             }
@@ -138,7 +139,7 @@ void NodeRequester::search(const QString &text, NodeSelectorModelItemSearch::Typ
         if(typesAllowed & type)
         {
             searchedTypes |= type;
-            auto nodeUptr = std::unique_ptr<mega::MegaNode>(nodeList->get(i)->copy());
+            auto nodeUptr = std::unique_ptr<mega::MegaNode>(node->copy());
             auto item = new NodeSelectorModelItemSearch(std::move(nodeUptr), type);
             items.append(item);
         }
@@ -1097,7 +1098,7 @@ QIcon NodeSelectorModel::getFolderIcon(NodeSelectorModelItem *item) const
                 {
                     QIcon icon;
                     icon.addFile(QLatin1String("://images/icons/folder/small-folder-outgoing.png"), QSize(), QIcon::Normal);
-                    icon.addFile(QLatin1String("://images/icons/folder/small-folder-outgoing_disabled.png"), QSize(), QIcon::Disabled);
+                    icon.addFile(QLatin1String("://images/icons/folder/small-folder-outgoing-disabled.png"), QSize(), QIcon::Disabled);
                     return icon;
                 }
                 else if(node->getHandle() == MegaSyncApp->getRootNode()->getHandle())
