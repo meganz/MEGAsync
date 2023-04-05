@@ -2,12 +2,14 @@
 #define BACKUPFOLDERMODEL_H
 
 #include <QAbstractListModel>
+#include <QSortFilterProxyModel>
 
 struct BackupFolder
 {
     QString folder;
     bool selected;
     QString size;
+    long long folderSize;
 
     BackupFolder();
 
@@ -24,10 +26,11 @@ public:
     enum BackupFolderRoles {
         FolderRole = Qt::UserRole + 1,
         SelectedRole,
-        SizeRole
+        SizeRole,
+        FolderSizeRole
     };
 
-    BackupFolderModel(QObject* parent = nullptr);
+    explicit BackupFolderModel(QObject* parent = nullptr);
 
     QHash<int,QByteArray> roleNames() const override;
 
@@ -43,23 +46,51 @@ public slots:
 
     void setAllSelected(bool selected);
 
+    // TODO: Change by property??
     int getNumSelectedRows() const;
+
+    QString getTotalSize() const;
 
 signals:
 
-    void rowSelectedChanged();
-
-    void allRowsSelected(bool selected);
+    void rowSelectedChanged(bool selectedRow, bool selectedAll);
 
 private:
 
     QList<BackupFolder> mBackupFolderList;
     QHash<int, QByteArray> mRoleNames;
     int mSelectedRowsTotal;
+    long long mTotalSize;
 
     void populateDefaultDirectoryList();
 
-    void checkSelectedAll(bool selected);
+    void checkSelectedAll(const BackupFolder& item);
+
+};
+
+class BackupFolderFilterProxyModel : public QSortFilterProxyModel
+{
+    Q_OBJECT
+
+    Q_PROPERTY(bool selectedFilterEnabled READ selectedFilterEnabled
+               WRITE setSelectedFilterEnabled NOTIFY selectedFilterEnabledChanged)
+
+public:
+    explicit BackupFolderFilterProxyModel(QObject* parent = nullptr);
+
+    bool selectedFilterEnabled() const;
+
+public slots:
+    void setSelectedFilterEnabled(bool enabled);
+
+signals:
+    void selectedFilterEnabledChanged();
+
+protected:
+    bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const;
+
+private:
+    bool mSelectedFilterEnabled;
 
 };
 

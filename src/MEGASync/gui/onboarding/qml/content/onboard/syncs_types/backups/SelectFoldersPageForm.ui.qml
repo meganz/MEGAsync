@@ -5,12 +5,23 @@ import QtQuick.Controls 2.0
 import Components 1.0 as Custom
 import Onboard.Syncs_types 1.0
 import Common 1.0
+import BackupFolderModel 1.0
+import BackupFolderFilterProxyModel 1.0
 
 SyncsPage {
 
-    property alias backupList: backupList
     property alias addFoldersMouseArea: addFoldersMouseArea
-    property alias tableRectangle: tableRectangle
+    property alias backupTable: backupTable
+
+    BackupFolderModel {
+        id: backupModel
+    }
+
+    BackupFolderFilterProxyModel {
+        id: backupProxyModel
+
+        sourceModel: backupModel
+    }
 
     ColumnLayout {
         spacing: 34
@@ -32,34 +43,11 @@ SyncsPage {
             InfoAccount {
             }
 
-            Rectangle {
-                id: tableRectangle
+            FoldersTable {
+                id: backupTable
 
-                Layout.preferredWidth: 488
-                Layout.preferredHeight: 186
-                Layout.topMargin: 8
-                radius: 8
-
-                Rectangle {
-                    id: borderRectangle
-
-                    width: tableRectangle.width
-                    height: tableRectangle.height
-                    color: "transparent"
-                    border.color: Styles.borderStrong
-                    border.width: 2
-                    radius: 8
-                    z: 5
-                }
-
-                ListView {
-                    id: backupList
-
-                    anchors.fill: parent
-                    headerPositioning: ListView.OverlayHeader
-                    focus: true
-                    clip: true
-                }
+                backupProxyModel: backupProxyModel
+                backupModel: backupModel
             }
 
             Rectangle {

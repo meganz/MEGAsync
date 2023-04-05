@@ -7,14 +7,15 @@ BackupFolder::BackupFolder()
     : folder(QString::fromUtf8(""))
     , selected(false)
     , size(QString::fromUtf8(""))
+    , folderSize(0)
 {
 }
 
 BackupFolder::BackupFolder(const QString& folder, bool selected)
     : folder(folder)
     , selected(selected)
+    , folderSize(0)
 {
-    long long folderSize = 0;
     Utilities::getFolderSize(folder, &folderSize);
     size = Utilities::getSizeString(folderSize);
 }
@@ -22,11 +23,13 @@ BackupFolder::BackupFolder(const QString& folder, bool selected)
 BackupFolderModel::BackupFolderModel(QObject* parent)
     : QAbstractListModel(parent)
     , mSelectedRowsTotal(0)
+    , mTotalSize(0)
 {
     mRoleNames = {
         { FolderRole, "folder" },
         { SelectedRole, "selected" },
         { SizeRole, "size" },
+        { FolderSizeRole, "folderSize" }
     };
 
     // Append mBackupFolderList with the default dirs
@@ -60,32 +63,21 @@ void BackupFolderModel::populateDefaultDirectoryList()
     }
 }
 
-void BackupFolderModel::checkSelectedAll(bool selected)
+void BackupFolderModel::checkSelectedAll(const BackupFolder& item)
 {
-    if(selected)
+    if(item.selected)
     {
         mSelectedRowsTotal++;
-        if(mSelectedRowsTotal == mBackupFolderList.size())
-        {
-            emit allRowsSelected(selected);
-        }
-        else
-        {
-            emit rowSelectedChanged();
-        }
+        mTotalSize += item.folderSize;
     }
     else
     {
         mSelectedRowsTotal--;
-        if(mSelectedRowsTotal == 0)
-        {
-            emit allRowsSelected(selected);
-        }
-        else
-        {
-            emit rowSelectedChanged();
-        }
+        mTotalSize -= item.folderSize;
     }
+
+    emit rowSelectedChanged(mSelectedRowsTotal > 0 && mSelectedRowsTotal < mBackupFolderList.size(),
+                            mSelectedRowsTotal == mBackupFolderList.size());
 }
 
 QHash<int, QByteArray> BackupFolderModel::roleNames() const
@@ -113,7 +105,7 @@ bool BackupFolderModel::setData(const QModelIndex& index, const QVariant& value,
                 break;
             case SelectedRole:
                 item.selected = value.toBool();
-                checkSelectedAll(item.selected);
+                checkSelectedAll(item);
                 break;
             case SizeRole:
                 item.size = value.toInt();
@@ -163,7 +155,7 @@ void BackupFolderModel::insertFolder(const QString &folder)
     beginInsertRows(QModelIndex(), 0, 0);
     BackupFolder data(folder);
     mBackupFolderList.prepend(data);
-    checkSelectedAll(data.selected);
+    checkSelectedAll(data);
     endInsertRows();
 }
 
@@ -184,4 +176,42 @@ int BackupFolderModel::getNumSelectedRows() const
     return mSelectedRowsTotal;
 }
 
+QString BackupFolderModel::getTotalSize() const
+{
+    return Utilities::getSizeString(mTotalSize);
+}
+
+BackupFolderFilterProxyModel::BackupFolderFilterProxyModel(QObject* parent)
+    : QSortFilterProxyModel(parent)
+    , mSelectedFilterEnabled(false)
+{
+    setDynamicSortFilter(true);
+}
+
+bool BackupFolderFilterProxyModel::selectedFilterEnabled() const
+{
+    return mSelectedFilterEnabled;
+}
+
+void BackupFolderFilterProxyModel::setSelectedFilterEnabled(bool enabled)
+{
+    if(mSelectedFilterEnabled == enabled) {
+        return;
+    }
+
+    mSelectedFilterEnabled = enabled;
+    emit selectedFilterEnabledChanged();
+
+    invalidateFilter();
+}
+
+bool BackupFolderFilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const
+{
+    if(!mSelectedFilterEnabled) {
+        return true;
+    }
+
+    const QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
+    return index.data(BackupFolderModel::BackupFolderRoles::SelectedRole).toBool();
+}
 

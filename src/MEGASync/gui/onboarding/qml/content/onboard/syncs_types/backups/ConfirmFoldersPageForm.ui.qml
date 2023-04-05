@@ -5,8 +5,13 @@ import QtQuick.Controls 2.0
 import Onboard.Syncs_types 1.0
 import Components 1.0 as Custom
 import Common 1.0
+import BackupFolderModel 1.0
 
 SyncsPage {
+
+    property alias mainLayout: mainLayout
+
+    property FoldersTable backupTable
 
     ColumnLayout {
         spacing: 24
@@ -28,13 +33,9 @@ SyncsPage {
             width: parent.width
             spacing: 24
 
-            Rectangle {
-                Layout.preferredWidth: mainLayout.width
-                Layout.preferredHeight: 176
-                color: Styles.pageBackground
-                border.color: Styles.borderStrong
-                border.width: 2
-                radius: 8
+            FoldersTable {
+                backupProxyModel: backupTable.backupProxyModel
+                backupModel: backupTable.backupModel
             }
 
             ColumnLayout {

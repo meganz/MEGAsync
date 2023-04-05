@@ -443,6 +443,7 @@ void MegaApplication::initialize()
     qmlRegisterType<AccountInfoData>("AccountInfoData", 1, 0, "AccountInfoData");
 
     qmlRegisterType<BackupFolderModel>("BackupFolderModel", 1, 0, "BackupFolderModel");
+    qmlRegisterType<BackupFolderFilterProxyModel>("BackupFolderFilterProxyModel", 1, 0, "BackupFolderFilterProxyModel");
 
     qmlRegisterModule("Components", 1, 0);
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/Button.qml")), "Components", 1, 0, "Button");

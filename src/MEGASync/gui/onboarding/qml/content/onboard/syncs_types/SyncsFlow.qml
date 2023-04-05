@@ -285,6 +285,7 @@ StackView {
                         syncsFlow.state = finalState;
                     }
                 }
+                backupTable: selectBackupFoldersPage.backupTable
                 visible: false
             }
         }

@@ -14,6 +14,10 @@ ListModel {
         }
     }
 
+    function getTotalSize() {
+        return "7.33 GB";
+    }
+
     function getNumSelectedRows() {
         var total = 0;
         for (let i = 0; i < backupListModel.count; i++) {
@@ -24,8 +28,7 @@ ListModel {
         return total;
     }
 
-    signal rowSelectedChanged
-    signal allRowsSelected(bool selected)
+    signal rowSelectedChanged(bool selectedRow, bool selectedAll)
 
     ListElement {
         folder: "C:/Users/mega/Documents"
@@ -39,7 +42,7 @@ ListModel {
     }
     ListElement {
         folder: "C:/Users/mega/Videos"
-        selected: true
+        selected: false
         size: "783.4 KB"
     }
     ListElement {
@@ -59,12 +62,12 @@ ListModel {
     }
     ListElement {
         folder: "C:/Users/mega/Videos4"
-        selected: true
+        selected: false
         size: "4 KB"
     }
     ListElement {
         folder: "C:/Users/mega/Videos5"
-        selected: true
+        selected: false
         size: "5 KB"
     }
 }

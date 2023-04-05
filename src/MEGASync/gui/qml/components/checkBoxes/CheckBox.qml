@@ -14,15 +14,6 @@ Qml.CheckBox {
     contentItem: richText
     padding: 0
 
-    /*
-    onCheckedChanged: {
-        if(indeterminate) {
-            indeterminate = false;
-            checked = false;
-        }
-    }
-    */
-
     MouseArea {
         id: mouseArea
 
