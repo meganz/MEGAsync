@@ -65,7 +65,12 @@ void RemoveBackupDialog::OnChangeButtonClicked()
     {
         mNodeSelector = new UploadNodeSelector(this);
     }
+    QPointer<RemoveBackupDialog> thisDialog(this);
     int result = mNodeSelector->exec();
+    if(!thisDialog)
+    {
+        return;
+    }
     if (!mNodeSelector || result != QDialog::Accepted)
     {
         return;

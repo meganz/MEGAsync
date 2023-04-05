@@ -69,6 +69,7 @@ class NodeSelectorProxyModelSearch : public NodeSelectorProxyModel
 public:
     explicit NodeSelectorProxyModelSearch(QObject* parent = nullptr);
     void setMode(NodeSelectorModelItemSearch::Types mode);
+    bool canBeDeleted() const override;
 
 protected:
     bool filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const override;

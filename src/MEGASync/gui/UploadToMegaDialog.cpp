@@ -137,8 +137,12 @@ void UploadToMegaDialog::showNodeSelector()
 
     std::shared_ptr<MegaNode> defaultNode(megaApi->getNodeByPath(ui->eFolderPath->property(NODE_PATH_PROPERTY).toString().toUtf8().constData()));
     nodeSelector->setSelectedNodeHandle(defaultNode);
-
+    QPointer<UploadToMegaDialog> thisDialog(this);
     int result = nodeSelector->exec();
+    if(!thisDialog)
+    {
+        return;
+    }
     if (nodeSelector && result == QDialog::Accepted)
     {
         MegaHandle selectedMegaFolderHandle = nodeSelector->getSelectedNodeHandle();
