@@ -1,5 +1,5 @@
 #!/usr/bin/make -f
-DPKGXZ := $(shell cat /etc/issue | grep "Ubuntu 22\|Kinetic Kudu\|Jammy Jellyfish\|Ubuntu 21.10" >/dev/null && echo "-- -Zxz" || echo "")
+DPKGXZ := $(shell cat /etc/issue | grep "Ubuntu 23\|Lunar Lobster\|Ubuntu 22\|Kinetic Kudu\|Jammy Jellyfish\|Ubuntu 21.10" >/dev/null && echo "-- -Zxz" || echo "")
 export QT_SELECT=qt5
 
 export DH_VERBOSE=1
