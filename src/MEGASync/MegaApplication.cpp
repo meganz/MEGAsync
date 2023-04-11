@@ -4244,7 +4244,8 @@ void MegaApplication::notifyChangeToAllFolders()
     for (auto localFolder : model->getLocalFolders(SyncInfo::AllHandledSyncTypes))
     {
         ++mProcessingShellNotifications;
-        Platform::getInstance()->notifyItemChange(localFolder, MegaApi::STATE_NONE);
+        std::string stdLocalFolder = localFolder.toStdString();
+        Platform::getInstance()->notifyItemChange(localFolder, megaApi->syncPathState(&stdLocalFolder));
     }
 }
 
