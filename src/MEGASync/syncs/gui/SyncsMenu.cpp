@@ -116,7 +116,7 @@ void SyncsMenu::refresh()
             {
                 activeFolders++;
                 MenuItemAction* action =
-                        new MenuItemAction(backupSetting->name(),
+                        new MenuItemAction(SyncController::getSyncNameFromPath(backupSetting->getLocalFolder(true)),
                                            QIcon(QLatin1String("://images/icons/folder/folder-mono_24.png")),
                                            true, itemIndent);
                 action->setToolTip(createSyncTooltipText(backupSetting));
