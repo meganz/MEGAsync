@@ -6,9 +6,6 @@ import Common 1.0
 
 Item {
     id: root
-    /*
-     * Properties
-     */
 
     property alias color: overlay.color
     property alias source: image.source
@@ -16,16 +13,8 @@ Item {
     property alias imageWidth: image.width
     property alias imageHeight: image.height
 
-    /*
-     * Object properties
-     */
-
     width: image.width
     height: image.height
-
-    /*
-     * Components
-     */
 
     Image {
         id: image

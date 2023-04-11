@@ -50,6 +50,7 @@ Button {
                        : Styles.iconSecondary
                 Layout.leftMargin: 24
                 source: imageSource
+                sourceSize: Qt.size(64, 64)
             }
 
             ColumnLayout {

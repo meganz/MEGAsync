@@ -281,6 +281,8 @@ StackView {
                         syncsFlow.state = selectBackup;
                     }
 
+                    nextButton.text: qsTr("Backup")
+                    nextButton.iconSource: "../../../images/Onboarding/cloud.svg"
                     nextButton.onClicked: {
                         syncsFlow.state = finalState;
                     }

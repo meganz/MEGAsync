@@ -59,7 +59,6 @@ RowLayout {
 
             text: qsTr("Next")
             primary: true
-            iconRight: true
             iconSource: "../../../images/Onboarding/arrow_right.svg"
         }
 

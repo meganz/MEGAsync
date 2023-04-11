@@ -139,7 +139,7 @@ Read more about [a]MEGA’s end-to-end encryption.[/a]")
 
             primary: true
             iconRight: true
-            iconSource: "../../../../../images/onboarding/arrow_right.svg"
+            iconSource: "../../../../../images/Onboarding/arrow_right.svg"
             text: qsTr("Next")
         }
     }

@@ -66,12 +66,13 @@ SyncsPage {
                         Custom.SvgImage {
                             Layout.leftMargin: 10
                             source: "../../../../../../images/Onboarding/cloud.svg"
-                            sourceSize: Qt.size(25, 25)
-                            color: Styles.iconAccent
+                            sourceSize: Qt.size(16, 16)
+                            color: Styles.iconSecondary
                         }
 
                         Text {
                             text: qsTr("/Backups")
+                            color: Styles.textPlaceholder
                             font.family: "Inter"
                             font.styleName: "normal"
                             font.weight: Font.Thin

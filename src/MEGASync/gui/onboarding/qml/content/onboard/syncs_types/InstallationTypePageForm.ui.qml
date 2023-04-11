@@ -42,7 +42,7 @@ SyncsPage {
 
                 title: qsTr("Backup")
                 description: qsTr("Automatically update your files from your computers to MEGA cloud. Files in your computer won’t be affected by the cloud.")
-                imageSource: "../../../../../images/Onboarding/cloud.svg"
+                imageSource: "../../../../../images/Onboarding/installation_type_backups.svg"
                 type: InstallationTypeButton.Type.Backup
                 ButtonGroup.group: buttonGroup
             }
