@@ -10,6 +10,7 @@ struct BackupFolder
     bool selected;
     QString size;
     long long folderSize;
+    bool selectable;
 
     BackupFolder();
 
@@ -27,7 +28,8 @@ public:
         FolderRole = Qt::UserRole + 1,
         SelectedRole,
         SizeRole,
-        FolderSizeRole
+        FolderSizeRole,
+        SelectableRole
     };
 
     explicit BackupFolderModel(QObject* parent = nullptr);
@@ -51,9 +53,13 @@ public slots:
 
     QString getTotalSize() const;
 
+    QString getTooltipText(int row) const;
+
 signals:
 
     void rowSelectedChanged(bool selectedRow, bool selectedAll);
+
+    void disableRow(int index);
 
 private:
 
@@ -65,6 +71,20 @@ private:
     void populateDefaultDirectoryList();
 
     void checkSelectedAll(const BackupFolder& item);
+
+    bool isValidBackupFolder(const QString& inputPath,
+                             bool displayWarning = false,
+                             bool fromCheckAction = false);
+
+    int calculateNumSelectedRows() const;
+
+    void changeOtherBackupFolders(const QString& folder, bool enable);
+
+    bool canBackupFolderEnabled(const QString& folder,
+                                const QString& selectedFolder) const;
+
+    bool isBackupFolderValid(const QString& folder,
+                             const QString& existingPath) const;
 
 };
 

@@ -1,5 +1,6 @@
 import QtQuick 2.12
 import QtQuick.Layouts 1.12
+import QtQuick.Controls 2.12
 
 import Common 1.0
 import Components 1.0 as Custom
@@ -68,8 +69,7 @@ Rectangle {
                     backupModel.setAllSelected(checked);
                 }
 
-                headerText.selectedRows = backupModel.getNumSelectedRows();
-                totalSizeText.text = backupModel.getTotalSize();
+                headerText.selectedRows = backupModel.getNumSelectedRows();                
                 footerButtons.nextButton.enabled = checked;
                 selectAll.fromModel = false;
             }
@@ -115,6 +115,12 @@ Rectangle {
                     font.pixelSize: 10
                     font.weight: Font.DemiBold
                     visible: backupProxyModel.selectedFilterEnabled
+
+                    onVisibleChanged: {
+                        if(visible) {
+                            totalSizeText.text = backupModel.getTotalSize();
+                        }
+                    }
                 }
 
                 Connections {
@@ -124,7 +130,6 @@ Rectangle {
                         if(selectedRow) {
                             selectAll.indeterminate = true;
                             headerText.selectedRows = backupModel.getNumSelectedRows();
-                            totalSizeText.text = backupModel.getTotalSize();
                             footerButtons.nextButton.enabled = true;
                         } else {
                             selectAll.fromModel = true;
@@ -169,12 +174,15 @@ Rectangle {
                         Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
 
                         Custom.CheckBox {
+                            id: rowCheckbox
+
                             Layout.leftMargin: 8
                             Layout.preferredWidth: 16
                             Layout.preferredHeight: 16
+                            enabled: selectable
                             checked: selected
-                            checkable: !backupProxyModel.selectedFilterEnabled
-                            hoverEnabled: !backupProxyModel.selectedFilterEnabled
+                            checkable: selectable && !backupProxyModel.selectedFilterEnabled
+                            hoverEnabled: selectable && !backupProxyModel.selectedFilterEnabled
                         }
 
                         Custom.SvgImage {
@@ -184,9 +192,7 @@ Rectangle {
 
                         Text {
                             Layout.leftMargin: 13
-                            text: {
-                                return folder.substring(folder.lastIndexOf('/') + 1);
-                            }
+                            text: folder.substring(folder.lastIndexOf('\\') + 1);
                             font.family: "Inter"
                             font.styleName: "normal"
                             font.weight: Font.Normal
@@ -206,13 +212,25 @@ Rectangle {
                 }
 
                 MouseArea {
+                    id: folderRowArea
+
                     anchors.fill: folderRowItem
-                    cursorShape: backupProxyModel.selectedFilterEnabled ? Qt.ArrowCursor : Qt.PointingHandCursor
+                    hoverEnabled: true
+                    cursorShape: !selectable || backupProxyModel.selectedFilterEnabled
+                                 ? Qt.ArrowCursor
+                                 : Qt.PointingHandCursor
                     onClicked: {
                         backupList.currentIndex = index;
                         selected = !selected;
                     }
                     enabled: !backupProxyModel.selectedFilterEnabled
+                }
+
+                ToolTip {
+                    visible: folderRowArea.containsMouse
+                    text: selectable ? folder : backupModel.getTooltipText(index)
+                    delay: 500
+                    timeout: 5000
                 }
             }
         }

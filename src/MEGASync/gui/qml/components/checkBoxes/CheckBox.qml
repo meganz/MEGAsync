@@ -80,6 +80,7 @@ Qml.CheckBox {
         radius: 4
         border.color: checkBoxOutRect.getBorderColor()
         border.width: 2
+        opacity: checkBox.enabled ? 1.0 : 0.1
 
         Rectangle {
             id: inside
