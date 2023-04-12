@@ -323,7 +323,7 @@
     <message>
         <source>Your payment for the [A] plan was unsuccessful</source>
         <translatorcomment>Label to indicate that the the payment for a [A] PRO plan has failed. Placeholder will be replaced by the PRO plan name</translatorcomment>
-        <translation>Ваша оплата плана [A] не удалась</translation>
+        <translation>Мы не получили ваш платёж за подписку [A].</translation>
     </message>
     <message>
         <source>Your publicly shared has been taken down</source>
@@ -2138,7 +2138,7 @@
     <message>
         <source>Deleted or moved file</source>
         <translatorcomment>Tooltip when the file completed was removed or deleted</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Файл удалён или перемещён</translation>
     </message>
 </context>
 <context>
@@ -2278,7 +2278,7 @@
     <message>
         <source>Low disk space</source>
         <translatorcomment>Dialog title</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Мало места на диске</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2293,17 +2293,17 @@
     <message>
         <source>There is not enough space on %1. You need an additional %2 to download these files.</source>
         <translatorcomment>Label explaining the problem, %1 is the download target disk name. %2 is the needed size to continue with the download (the size unit depends on the quantity) </translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Недостаточно места на %1. Нужно ещё %2 для скачивания этих файлов.</translation>
     </message>
     <message>
         <source>Free space: %1</source>
         <translatorcomment>Label informing about the local disk free space</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Свободно: %1</translation>
     </message>
     <message>
         <source>Total size: %1</source>
         <translatorcomment>Label informing about the total local disk space</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ёмкость: %1</translation>
     </message>
 </context>
 <context>
@@ -2848,7 +2848,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
         <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Одна или несколько синхронизаций отключены. Перейдите в «Hастройки», чтобы снова включить их.</translation>
     </message>
     <message>
         <source>Open settings</source>
@@ -2868,22 +2868,22 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your syncs and backups have been disabled: %1</source>
         <translatorcomment>Warning message shown when all the syncs and backups have been disabled. The placeholder %1 shows the reason;</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ваши синхронизации и резервные копии были отключены: %1</translation>
     </message>
     <message>
         <source>Your backups have been disabled: %1</source>
         <translatorcomment>Warning message shown when all the backups have been disabled. The placeholder %1 shows the reason;</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ваши резервные копии были отключены: %1</translation>
     </message>
     <message>
         <source>Your syncs have been disabled: %1</source>
         <translatorcomment>Warning message shown when  all the syncs have been disabled. The placeholder %1 shows the reason;</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ваши синхронизации были отключены: %1</translation>
     </message>
     <message>
         <source>Error getting link: %1</source>
         <translatorcomment>Notification message launched when an error occurs getting a public link for a file/folder. Placeholder %1 displays the reason.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка получения ссылки: %1</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been temporarily disabled: %2</source>
@@ -2898,7 +2898,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Error transferring folder: %1</source>
         <translatorcomment>Label to indicate that has been an error during a folder transfer.  Placeholder %1 displays the reason.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка передачи папки: %1</translation>
     </message>
 </context>
 <context>
@@ -3673,7 +3673,7 @@ Enter a different name</source>
     <message>
         <source>No results for:</source>
         <translatorcomment>Label indicating that there are no results for the current search, searched text will be following this label.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Нет результатов по:</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -3686,7 +3686,7 @@ Enter a different name</source>
     <message>
         <source>Searching:</source>
         <translatorcomment>Label indicating the current search, searched text will be following this label.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Поиск:</translation>
     </message>
 </context>
 <context>
@@ -3769,17 +3769,17 @@ Enter a different name</source>
     <message>
         <source>Uploads and downloads</source>
         <translatorcomment>Notification category for completed transfers notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Загрузки и скачивания</translation>
     </message>
     <message>
         <source>Completed uploads and downloads</source>
         <translatorcomment>Title of a checkbox for disconnectig completed transfer notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Завершённые загрузки и скачивания</translation>
     </message>
     <message>
         <source>Uploads and downloads:</source>
         <translatorcomment>Notification category for completed transfers notifications (macx)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Загрузки и скачивания:</translation>
     </message>
 </context>
 <context>
@@ -4054,7 +4054,7 @@ Enter a different name</source>
     <message>
         <source>With our end-to-end encryption, the way your team works has never been more secure and private.</source>
         <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of business plan.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Благодаря нашему шифрованию с нулевым разглашением работа вашей команды никогда не была более безопасной и конфиденциальной.</translation>
     </message>
     <message>
         <source>Get started with secure file storage.</source>
@@ -4079,12 +4079,12 @@ Enter a different name</source>
     <message>
         <source>[A] storage</source>
         <translatorcomment>Label to indicate the specific storage of a pro plan. [A] is a placeholder for the value of the storage, it must be kept in the translated strings.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[A] на диске</translation>
     </message>
     <message>
         <source>[A] transfer</source>
         <translatorcomment>Label to indicate the specific transfer quota of a pro plan. [A] is a placeholder for the value of the transfer quota, it must be kept in the translated strings.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[A] трафика</translation>
     </message>
 </context>
 <context>
@@ -4102,17 +4102,17 @@ Enter a different name</source>
     <message>
         <source>Show in Finder</source>
         <translatorcomment>Label to indicate the &quot;Show in Finder&quot; option to open local folder of a sync (macOS). Keep Finder name as it is the app name of file explorer on macOS.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Показать в Finder</translation>
     </message>
     <message>
         <source>Quit</source>
         <translatorcomment>Label displayed on actions exiting Desktop application when on Mac</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Выход</translation>
     </message>
     <message>
         <source>Show in Explorer</source>
         <translatorcomment>Label to indicate the &quot;Show in Explorer&quot; option to open local folder of a sync (Windows). Keep Explorer name as it is the app name of file explorer on Windows.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Показать в проводнике</translation>
     </message>
 </context>
 <context>
@@ -5237,7 +5237,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Enable Windows Explorer integration</source>
         <translatorcomment>Checkbox label displayed on Windows, allowing the user to enable / disable the Windows Explorer integration.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Включить интеграцию с проводником Windows</translation>
     </message>
     <message>
         <source>B</source>
@@ -5522,7 +5522,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Prevent the computer from going to sleep when transfers or syncs are in progress.</source>
         <translatorcomment>Sleep/Active mode: Feature description label for keeping the pc awake when there are active transfers</translatorcomment>
-        <translation>Не разрешает компьютеру переходить в спящий режим во время передачи или синхронизации.</translation>
+        <translation>Не разрешать компьютеру переходить в спящий режим во время передачи или синхронизации.</translation>
     </message>
 </context>
 <context>
@@ -5985,7 +5985,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Only files can be used for streaming.</source>
         <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Нельзя транслировать папки. Выберите файл для трансляции.</translation>
     </message>
 </context>
 <context>
@@ -6292,7 +6292,7 @@ To continue, select a different folder.</source>
     <message>
         <source>You need Full access right to be able to sync the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying sync a non compatible folder</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Чтобы синхронизировать эту папку, необходим полный доступ к ней.</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -6303,7 +6303,7 @@ To continue, select a different folder.</source>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Не удается синхронизировать папку. Убедитесь, что вы не используете «\», «/» или «:» в названиях папок.</translation>
     </message>
 </context>
 <context>
@@ -6334,7 +6334,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Click menu for more Sync actions</source>
         <translatorcomment>Menu column tooltip (three dots in the table)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Дополнительные действия с синхронизациями</translation>
     </message>
 </context>
 <context>
@@ -6659,22 +6659,22 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Uploaded 1 file to %1.</source>
         <translatorcomment>Notification text that inform 1 file has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>1 файл загружен в %1.</translation>
     </message>
     <message>
         <source>Uploaded 1 folder to %1.</source>
         <translatorcomment>Notification text that inform 1 folder has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>1 папка загружена в %1.</translation>
     </message>
     <message>
         <source>File uploaded</source>
         <translatorcomment>Notification title when a file has been uploaded</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Файл загружен</translation>
     </message>
     <message>
         <source>Folder uploaded</source>
         <translatorcomment>Notification title when a folder has been uploaded</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Папка загружена</translation>
     </message>
     <message>
         <source>Show in MEGA</source>
@@ -6689,12 +6689,12 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Downloaded 1 file to %1.</source>
         <translatorcomment>Notification text that inform 1 file has been downloaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>1 файл скачан в %1.</translation>
     </message>
     <message>
         <source>Downloaded 1 folder to %1.</source>
         <translatorcomment>Notification text that inform 1 folder has been downloaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>1 папка скачана в %1.</translation>
     </message>
     <message>
         <source>Show in folder</source>
@@ -6709,62 +6709,62 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>File downloaded</source>
         <translatorcomment>Notification title when a file has been downloaded</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Файл скачан</translation>
     </message>
     <message>
         <source>Folder downloaded</source>
         <translatorcomment>Notification title when a folder has been downloaded</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Папка скачана</translation>
     </message>
     <message numerus="yes">
         <source>%n upload successful</source>
         <translatorcomment>Notification text that inform that an upload was successful. %1 is the number of uploads. This string goes always with the %n upload cancelled and/or %n upload failed strings.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n загрузка завершена</numerusform><numerusform>%n загрузки завершены</numerusform><numerusform>%n загрузок завершено</numerusform><numerusform>%n загрузки завершено</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>, %n upload cancelled</source>
         <translatorcomment>Appended text that inform that an upload was cancelled. %1 is the number of cancelled uploads. This string goes always appended to the %n upload successful</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>, %n загрузка отменена</numerusform><numerusform>, %n загрузки отменены</numerusform><numerusform>, %n загрузок отменено</numerusform><numerusform>, %n загрузки отменено</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>, %n upload failed</source>
         <translatorcomment>Appended text that inform that an upload has failed. %1 is the number of failed uploads. This string goes always appended to the %n upload successful</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>, %n не удалось загрузить</numerusform><numerusform>, %n не удалось загрузить</numerusform><numerusform>, %n не удалось загрузить</numerusform><numerusform>, %n не удалось загрузить</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Uploaded %n items to %1</source>
         <translatorcomment>Notification text that inform n items (files or folders) has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n элемент загружен в %1</numerusform><numerusform>%n элемента загружены в %1</numerusform><numerusform>%n элементов загружено в %1</numerusform><numerusform>%n элемента загружено в %1</numerusform></translation>
     </message>
     <message>
         <source>Items uploaded</source>
         <translatorcomment>Notification title when a more than one transfer (file or folders) have been uploaded</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Элементы загружены</translation>
     </message>
     <message numerus="yes">
         <source>%n download successful</source>
         <translatorcomment>Notification text that inform that an download was successful. %1 is the number of downloads. This string goes always with the %n download cancelled and/or %n download failed strings.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n скачивание завершено</numerusform><numerusform>%n скачивания завершены</numerusform><numerusform>%n скачиваний завершено</numerusform><numerusform>%n скачивания завершено</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>, %n download cancelled</source>
         <translatorcomment>Appended text that inform that an download was cancelled. %1 is the number of cancelled downloads. This string goes always appended to the %n download successful</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>, %n скачивание отменено</numerusform><numerusform>, %n скачивания отменены</numerusform><numerusform>, %n скачиваний отменено</numerusform><numerusform>, %n скачивания отменено</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>, %n download failed</source>
         <translatorcomment>Appended text that inform that an download has failed. %1 is the number of failed downloads. This string goes always appended to the %n download successful</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>, %n не удалось скачать</numerusform><numerusform>, %n не удалось скачать</numerusform><numerusform>, %n не удалось скачать</numerusform><numerusform>, %n не удалось скачать</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Downloaded %n items to %1</source>
         <translatorcomment>Notification text that inform n items (files or folders) has been downloaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n элемент скачан в %1</numerusform><numerusform>%n элемента скачаны в %1</numerusform><numerusform>%n элементов скачано в %1</numerusform><numerusform>%n элемента скачано в %1</numerusform></translation>
     </message>
     <message>
         <source>Items downloaded</source>
         <translatorcomment>Notification title when a more than one transfer (file or folders) have been downloaded</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Элементы скачаны</translation>
     </message>
 </context>
 <context>
@@ -7143,7 +7143,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying upload files to a non compatible folder</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Чтобы загрузить эту папку, необходимы права на чтение и запись или полный доступ к ней.</translation>
     </message>
 </context>
 <context>

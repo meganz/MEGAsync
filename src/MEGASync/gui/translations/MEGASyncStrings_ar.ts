@@ -323,7 +323,7 @@
     <message>
         <source>Your payment for the [A] plan was unsuccessful</source>
         <translatorcomment>Label to indicate that the the payment for a [A] PRO plan has failed. Placeholder will be replaced by the PRO plan name</translatorcomment>
-        <translation>لم تنجح دفعتك للباقة [A]</translation>
+        <translation>لم نتسلم دفعتك مقابل باقة [A].</translation>
     </message>
     <message>
         <source>Your publicly shared has been taken down</source>
@@ -488,7 +488,7 @@
     <message>
         <source>Click menu for more Backup actions</source>
         <translatorcomment>Menu column tooltip (three dots in the table)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>انقر فوق قائمة النقاط-الثلاث لمزيد من إجراءات النسخ الاحتياطي</translation>
     </message>
 </context>
 <context>
@@ -2105,7 +2105,7 @@
     <message>
         <source>Downloading may be interrupted as you have used 90% of your transfer quota on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew. </source>
         <translatorcomment>Message displayed in the InfoDialog when the transfer quota reaches warning stage</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>قد يتم قطع التنزيل لأنك قمت باستخدام 90٪ من حجم التراسل المتاح الخاص بك على هذا الحساب. لمتابعة التنزيل قم بشراء باقة جديدة أو إذا كان لديك اشتراك متكرر مع ميغا MEGA يمكنك الانتظار حتى يتم تجديد باقتك.</translation>
     </message>
 </context>
 <context>
@@ -2138,7 +2138,7 @@
     <message>
         <source>Deleted or moved file</source>
         <translatorcomment>Tooltip when the file completed was removed or deleted</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ملف محذوف أو منقول</translation>
     </message>
 </context>
 <context>
@@ -2278,7 +2278,7 @@
     <message>
         <source>Low disk space</source>
         <translatorcomment>Dialog title</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>مساحة التخزين في القرص الصلب قليلة</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2293,17 +2293,17 @@
     <message>
         <source>There is not enough space on %1. You need an additional %2 to download these files.</source>
         <translatorcomment>Label explaining the problem, %1 is the download target disk name. %2 is the needed size to continue with the download (the size unit depends on the quantity) </translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>لا توجد مساحة كافية في %1. أنت بحاجة إلى %2 إضافية لتنزيل هذه الملفات.</translation>
     </message>
     <message>
         <source>Free space: %1</source>
         <translatorcomment>Label informing about the local disk free space</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>المساحة الفارغة: %1</translation>
     </message>
     <message>
         <source>Total size: %1</source>
         <translatorcomment>Label informing about the total local disk space</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>الحجم الإجمالي: %1</translation>
     </message>
 </context>
 <context>
@@ -2850,7 +2850,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
         <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم تعطيل مزامنة واحدة أو أكثر. انتقل إلى الإعدادات لإعادة تمكينها مرة أخرى.</translation>
     </message>
     <message>
         <source>Open settings</source>
@@ -2870,22 +2870,22 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your syncs and backups have been disabled: %1</source>
         <translatorcomment>Warning message shown when all the syncs and backups have been disabled. The placeholder %1 shows the reason;</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم تعطيل عمليات المزامنة والنسخ الاحتياطي: %1</translation>
     </message>
     <message>
         <source>Your backups have been disabled: %1</source>
         <translatorcomment>Warning message shown when all the backups have been disabled. The placeholder %1 shows the reason;</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم تعطيل النسخ الاحتياطي الخاص بك: %1</translation>
     </message>
     <message>
         <source>Your syncs have been disabled: %1</source>
         <translatorcomment>Warning message shown when  all the syncs have been disabled. The placeholder %1 shows the reason;</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم تعطيل عمليات المزامنة الخاصة بك: %1</translation>
     </message>
     <message>
         <source>Error getting link: %1</source>
         <translatorcomment>Notification message launched when an error occurs getting a public link for a file/folder. Placeholder %1 displays the reason.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>خطأ في الحصول على الرابط: %1</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been temporarily disabled: %2</source>
@@ -2900,7 +2900,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Error transferring folder: %1</source>
         <translatorcomment>Label to indicate that has been an error during a folder transfer.  Placeholder %1 displays the reason.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>خطأ في نقل المجلد: %1</translation>
     </message>
 </context>
 <context>
@@ -3385,7 +3385,8 @@ All your transfers in this category will be cancelled.</source>
         <source>Cancel transfers?
 Your incomplete sync transfers won&apos;t be cancelled.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>إلغاء عمليات تراسل المعطيات؟
+لن يتم إلغاء عمليات تراسل المعطيات المتزامنة غير المكتملة. سيتم إلغاء جميع عمليات تراسل المعطيات الأخرى.</translation>
     </message>
     <message>
         <source>Cancel transfers?
@@ -3449,7 +3450,8 @@ All the selected completed transfers in this category will be cleared.</source>
         <source>Cancel transfers?
 Your selected incomplete sync transfers won&apos;t be cancelled.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>إلغاء عمليات تراسل المعطيات؟
+لن يتم إلغاء عمليات تراسل المعطيات المحددة الغير المكتملة و المتزامنة . سيتم إلغاء جميع عمليات تراسل المعطيات المحددة الأخرى.</translation>
     </message>
     <message>
         <source>Clear transfer?</source>
@@ -3673,7 +3675,7 @@ Enter a different name</source>
     <message>
         <source>No results for:</source>
         <translatorcomment>Label indicating that there are no results for the current search, searched text will be following this label.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>لم يتم العثور على أية نتائج لـ:</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -3686,7 +3688,7 @@ Enter a different name</source>
     <message>
         <source>Searching:</source>
         <translatorcomment>Label indicating the current search, searched text will be following this label.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>جاري البحث</translation>
     </message>
 </context>
 <context>
@@ -3769,17 +3771,17 @@ Enter a different name</source>
     <message>
         <source>Uploads and downloads</source>
         <translatorcomment>Notification category for completed transfers notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>عمليات الترفيع والتنزيل</translation>
     </message>
     <message>
         <source>Completed uploads and downloads</source>
         <translatorcomment>Title of a checkbox for disconnectig completed transfer notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>عمليات الترفيع والتنزيل المكتملة</translation>
     </message>
     <message>
         <source>Uploads and downloads:</source>
         <translatorcomment>Notification category for completed transfers notifications (macx)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>عمليات الترفيع والتنزيل:</translation>
     </message>
 </context>
 <context>
@@ -3803,7 +3805,7 @@ Enter a different name</source>
     <message>
         <source>Storage full</source>
         <translatorcomment>Label to indicate the full storage for the current account is full.</translatorcomment>
-        <translation>المساحة ممتلئة</translation>
+        <translation>مساحة التخزين ممتلئة</translation>
     </message>
     <message>
         <source>You have exceeded the available storage space for your account. You can add syncs but they will remain disabled until there is enough space on your account.</source>
@@ -4054,7 +4056,7 @@ Enter a different name</source>
     <message>
         <source>With our end-to-end encryption, the way your team works has never been more secure and private.</source>
         <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of business plan.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>من خلال تشفير المعرفة الصفرية الخاص بنا، أصبحت الطريقة التي يعمل بها فريقك أكثر أمانًا وخصوصية من أي وقت مضى.</translation>
     </message>
     <message>
         <source>Get started with secure file storage.</source>
@@ -4079,12 +4081,12 @@ Enter a different name</source>
     <message>
         <source>[A] storage</source>
         <translatorcomment>Label to indicate the specific storage of a pro plan. [A] is a placeholder for the value of the storage, it must be kept in the translated strings.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[A] مساحة تخزين</translation>
     </message>
     <message>
         <source>[A] transfer</source>
         <translatorcomment>Label to indicate the specific transfer quota of a pro plan. [A] is a placeholder for the value of the transfer quota, it must be kept in the translated strings.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[A] تراسل معطيات</translation>
     </message>
 </context>
 <context>
@@ -4092,7 +4094,7 @@ Enter a different name</source>
     <message>
         <source>Show in folder</source>
         <translatorcomment>Label to indicate the &quot;Show in folder&quot; option to open local folder of a sync (Linux)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>عرض في المجلد</translation>
     </message>
     <message>
         <source>Exit</source>
@@ -4102,17 +4104,17 @@ Enter a different name</source>
     <message>
         <source>Show in Finder</source>
         <translatorcomment>Label to indicate the &quot;Show in Finder&quot; option to open local folder of a sync (macOS). Keep Finder name as it is the app name of file explorer on macOS.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>عرض في Finder</translation>
     </message>
     <message>
         <source>Quit</source>
         <translatorcomment>Label displayed on actions exiting Desktop application when on Mac</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>غادر</translation>
     </message>
     <message>
         <source>Show in Explorer</source>
         <translatorcomment>Label to indicate the &quot;Show in Explorer&quot; option to open local folder of a sync (Windows). Keep Explorer name as it is the app name of file explorer on Windows.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>عرض في مستكشف الملفات File Explorer</translation>
     </message>
 </context>
 <context>
@@ -4122,7 +4124,8 @@ Enter a different name</source>
 - Detected crashes on Windows, Linux, and macOS fixed.
 </source>
         <translatorcomment>Changelog for v4.8.8</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- ترقية الأمان
+- إصلاح الأعطال المكتشفة على أنظمة التشغيل ويندوز Windows و لينيكس Linux و ماك او اس macOS.</translation>
     </message>
 </context>
 <context>
@@ -5236,7 +5239,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Enable Windows Explorer integration</source>
         <translatorcomment>Checkbox label displayed on Windows, allowing the user to enable / disable the Windows Explorer integration.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تفعيل تكامل مستكشف ملفات ويندوز Windows </translation>
     </message>
     <message>
         <source>B</source>
@@ -5984,7 +5987,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Only files can be used for streaming.</source>
         <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكنك بث المجلدات. حدد ملفًا للبث.</translation>
     </message>
 </context>
 <context>
@@ -6291,7 +6294,7 @@ To continue, select a different folder.</source>
     <message>
         <source>You need Full access right to be able to sync the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying sync a non compatible folder</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>لمزامنة هذا المجلد، يجب أن يكون لديك إذن وصول كامل إليه.</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -6302,7 +6305,7 @@ To continue, select a different folder.</source>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن مزامنة المجلد. تأكد من عدم استخدام “\” أو “/” أو “:” في أسماء المجلدات.</translation>
     </message>
 </context>
 <context>
@@ -6333,7 +6336,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Click menu for more Sync actions</source>
         <translatorcomment>Menu column tooltip (three dots in the table)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>انقر على قائمة النقاط الثلاث لمزيد من إجراءات المزامنة</translation>
     </message>
 </context>
 <context>
@@ -6658,22 +6661,22 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Uploaded 1 file to %1.</source>
         <translatorcomment>Notification text that inform 1 file has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم ترفيع 1 ملف إلى %1.</translation>
     </message>
     <message>
         <source>Uploaded 1 folder to %1.</source>
         <translatorcomment>Notification text that inform 1 folder has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم ترفيع 1 مجلد إلى %1.</translation>
     </message>
     <message>
         <source>File uploaded</source>
         <translatorcomment>Notification title when a file has been uploaded</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم ترفيع الملف</translation>
     </message>
     <message>
         <source>Folder uploaded</source>
         <translatorcomment>Notification title when a folder has been uploaded</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم ترفيع المجلد</translation>
     </message>
     <message>
         <source>Show in MEGA</source>
@@ -6688,17 +6691,17 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Downloaded 1 file to %1.</source>
         <translatorcomment>Notification text that inform 1 file has been downloaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم تنزيل 1 ملف إلى %1.</translation>
     </message>
     <message>
         <source>Downloaded 1 folder to %1.</source>
         <translatorcomment>Notification text that inform 1 folder has been downloaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم تنزيل 1 مجلد إلى %1.</translation>
     </message>
     <message>
         <source>Show in folder</source>
         <translatorcomment>Notification button to see the file on the local file explorer</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>عرض في المجلد</translation>
     </message>
     <message>
         <source>Open</source>
@@ -6708,57 +6711,57 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>File downloaded</source>
         <translatorcomment>Notification title when a file has been downloaded</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم تنزيل الملف</translation>
     </message>
     <message>
         <source>Folder downloaded</source>
         <translatorcomment>Notification title when a folder has been downloaded</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم تنزيل المجلد</translation>
     </message>
     <message numerus="yes">
         <source>%n upload successful</source>
         <translatorcomment>Notification text that inform that an upload was successful. %1 is the number of uploads. This string goes always with the %n upload cancelled and/or %n upload failed strings.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n عملية ترفيع مكتملة</numerusform><numerusform>%n عملية ترفيع مكتملة</numerusform><numerusform>%n عملية ترفيع مكتملة</numerusform><numerusform>%n عمليات ترفيع مكتملة</numerusform><numerusform>%n عملية ترفيع مكتملة</numerusform><numerusform>%n عملية ترفيع مكتملة</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>, %n upload cancelled</source>
         <translatorcomment>Appended text that inform that an upload was cancelled. %1 is the number of cancelled uploads. This string goes always appended to the %n upload successful</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>، %n عملية ترفيع تم إلغاؤها</numerusform><numerusform>، %n عملية ترفيع تم إلغاؤها</numerusform><numerusform>، %n عملية ترفيع تم إلغاؤها</numerusform><numerusform>، %n عمليات ترفيع تم إلغاؤها</numerusform><numerusform>، %n عملية ترفيع تم إلغاؤها</numerusform><numerusform>، %n عملية ترفيع تم إلغاؤها</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>, %n upload failed</source>
         <translatorcomment>Appended text that inform that an upload has failed. %1 is the number of failed uploads. This string goes always appended to the %n upload successful</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>، %n عملية ترفيع فاشلة</numerusform><numerusform>، %n عملية ترفيع فاشلة</numerusform><numerusform>، %n عملية ترفيع فاشلة</numerusform><numerusform>، %n عمليات ترفيع فاشلة</numerusform><numerusform>، %n عملية ترفيع فاشلة</numerusform><numerusform>، %n عملية ترفيع فاشلة</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Uploaded %n items to %1</source>
         <translatorcomment>Notification text that inform n items (files or folders) has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>تم ترفيع %n عنصر إلى %1</numerusform><numerusform>تم ترفيع %n عنصر إلى %1</numerusform><numerusform>تم ترفيع %n عنصرين إلى %1</numerusform><numerusform>تم ترفيع %n عناصر إلى %1</numerusform><numerusform>تم ترفيع %n عنصراً إلى %1</numerusform><numerusform>تم ترفيع %n عنصر إلى %1</numerusform></translation>
     </message>
     <message>
         <source>Items uploaded</source>
         <translatorcomment>Notification title when a more than one transfer (file or folders) have been uploaded</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>العناصر التي تم ترفيعها</translation>
     </message>
     <message numerus="yes">
         <source>%n download successful</source>
         <translatorcomment>Notification text that inform that an download was successful. %1 is the number of downloads. This string goes always with the %n download cancelled and/or %n download failed strings.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n عملية تنزيل مكتملة</numerusform><numerusform>%n عملية تنزيل مكتملة</numerusform><numerusform>%n عملية تنزيل مكتملة</numerusform><numerusform>%n عمليات تنزيل مكتملة</numerusform><numerusform>%n عملية تنزيل مكتملة</numerusform><numerusform>%n عملية تنزيل مكتملة</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>, %n download cancelled</source>
         <translatorcomment>Appended text that inform that an download was cancelled. %1 is the number of cancelled downloads. This string goes always appended to the %n download successful</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>، %n عملية تنزيل  تم إلغاؤها</numerusform><numerusform>، %n عملية تنزيل تم إلغاؤها</numerusform><numerusform>، %n عملية تنزيل تم إلغاؤها</numerusform><numerusform>، %n عمليات تنزيل تم إلغاؤها</numerusform><numerusform>، %n عملية تنزيل تم إلغاؤها</numerusform><numerusform>، %n عملية تنزيل تم إلغاؤها</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>, %n download failed</source>
         <translatorcomment>Appended text that inform that an download has failed. %1 is the number of failed downloads. This string goes always appended to the %n download successful</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>، %n عملية تنزيل فاشلة</numerusform><numerusform>، %n عملية تنزيل فاشلة</numerusform><numerusform>، %n عملية تنزيل فاشلة</numerusform><numerusform>، %n عمليات تنزيل فاشلة</numerusform><numerusform>، %n عملية تنزيل فاشلة</numerusform><numerusform>، %n عملية تنزيل فاشلة</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Downloaded %n items to %1</source>
         <translatorcomment>Notification text that inform n items (files or folders) has been downloaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>تم تنزيل %n عنصر إلى %1</numerusform><numerusform>تم تنزيل %n عنصر إلى %1</numerusform><numerusform>تم تنزيل %n عنصرين إلى %1</numerusform><numerusform>تم تنزيل %n عناصر إلى %1</numerusform><numerusform>تم تنزيل %n عنصراً إلى %1</numerusform><numerusform>تم تنزيل %n عنصر إلى %1</numerusform></translation>
     </message>
     <message>
         <source>Items downloaded</source>
@@ -7291,22 +7294,22 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>%1 [A]d[/A]</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [DAYS] [HOURS] string, replacing the [DAYS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the days. The space needs to be non-breaking.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 [A]يوم[/A]</translation>
     </message>
     <message>
         <source>%1 [A]h[/A]</source>
         <translatorcomment>String controlling the formatting of the hour count for time intervals. It is used in [DAYS] [HOURS] and [HOURS] [MINUTES] strings, replacing the [HOURS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the hours. The space needs to be non-breaking.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 [A]ساعة[/A]</translation>
     </message>
     <message>
         <source>%1 [A]m[/A]</source>
         <translatorcomment>String controlling the formatting of the minute count for time intervals. It is used in [HOURS] [MINUTES] and [MINUTES] [SECONDS] strings, replacing the [MINUTES] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the minutes. The space needs to be non-breaking.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 [A]دقيقة[/A]</translation>
     </message>
     <message>
         <source>%1 [A]s[/A]</source>
         <translatorcomment>String controlling the formatting of the seconds count for time intervals. It is used in the [MINUTES] [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the seconds. The space needs to be non-breaking.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 [A]ثانية[/A]</translation>
     </message>
 </context>
 <context>

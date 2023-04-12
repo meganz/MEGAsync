@@ -323,7 +323,7 @@
     <message>
         <source>Your payment for the [A] plan was unsuccessful</source>
         <translatorcomment>Label to indicate that the the payment for a [A] PRO plan has failed. Placeholder will be replaced by the PRO plan name</translatorcomment>
-        <translation>Giao dịch cho tài khoản [A] của quý khách đã không thành công</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your publicly shared has been taken down</source>
@@ -2885,7 +2885,7 @@ Các phiên truyền tải sẽ được tự động tiếp tục khi bạn m�
     <message>
         <source>Your sync &quot;%1&quot; has been temporarily disabled: %2</source>
         <translatorcomment>Warning message shown when a sync is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation>Phiên đồng&#xa0;bộ &#8220;%1&#8221; &#xa0;tại tạm&#xa0;thời bị tắt: %2</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been temporarily disabled: %2</source>
@@ -3997,7 +3997,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>Write</source>
         <translatorcomment>Text next to a checkbox that allows to grant write permissions for new files and folder</translatorcomment>
-        <translation>Viết</translation>
+        <translation>Ghi</translation>
     </message>
     <message>
         <source>Execution</source>
@@ -4882,7 +4882,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Unable to write file</source>
         <translatorcomment>Title for message box displayed when an error occurs exporting the master key to a file.</translatorcomment>
-        <translation>Không thể viết tệp tin</translation>
+        <translation>Không thể ghi tệp&#xa0;tin</translation>
     </message>
     <message>
         <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
@@ -5017,7 +5017,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Enable overlay icons</source>
         <translatorcomment>Label for checkbox to enable / disable native file explorer icons for synchronized folders.</translatorcomment>
-        <translation>Hiện các biểu tượng nổi</translation>
+        <translation>Hiện các biểu&#xa0;tượng nổi</translation>
     </message>
     <message>
         <source>Check for Updates</source>
@@ -5107,7 +5107,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Change Password</source>
         <translatorcomment>Button label text allowing the user to change his account password. Keep as short as possible.</translatorcomment>
-        <translation>ĐổI mật khẩu</translation>
+        <translation>Đổi mật&#xa0;khẩu</translation>
     </message>
     <message>
         <source>Default Folders</source>
@@ -5137,7 +5137,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Change Settings…</source>
         <translatorcomment>Button label text for Bandwidth and Proxy settings in Network pane.</translatorcomment>
-        <translation>Thay đổI thiết đặt…</translation>
+        <translation>Thay đổi thiết&#xa0;đặt…</translation>
     </message>
     <message>
         <source>Proxies</source>
@@ -6708,7 +6708,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message numerus="yes">
         <source>%n upload successful</source>
         <translatorcomment>Notification text that inform that an upload was successful. %1 is the number of uploads. This string goes always with the %n upload cancelled and/or %n upload failed strings.</translatorcomment>
-        <translation><numerusform>%n phiên tải&#xa0;lên thành&#xa0;công</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source>, %n upload cancelled</source>
@@ -6733,7 +6733,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message numerus="yes">
         <source>%n download successful</source>
         <translatorcomment>Notification text that inform that an download was successful. %1 is the number of downloads. This string goes always with the %n download cancelled and/or %n download failed strings.</translatorcomment>
-        <translation><numerusform>%n phiên tải&#xa0;xuống thành&#xa0;công</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source>, %n download cancelled</source>

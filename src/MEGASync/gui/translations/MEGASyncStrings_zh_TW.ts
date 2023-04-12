@@ -323,7 +323,7 @@
     <message>
         <source>Your payment for the [A] plan was unsuccessful</source>
         <translatorcomment>Label to indicate that the the payment for a [A] PRO plan has failed. Placeholder will be replaced by the PRO plan name</translatorcomment>
-        <translation>您[A]方案的付款失敗</translation>
+        <translation>我們尚未收到您購買[A]方案的付款。</translation>
     </message>
     <message>
         <source>Your publicly shared has been taken down</source>
@@ -2885,12 +2885,12 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your sync &quot;%1&quot; has been temporarily disabled: %2</source>
         <translatorcomment>Warning message shown when a sync is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation>您的同步「%1」已暫時停止：%2</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been temporarily disabled: %2</source>
         <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation>您的備份「%1」已暫時停止：%2</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Error transferring folder: %1</source>
@@ -4051,7 +4051,7 @@ Enter a different name</source>
     <message>
         <source>With our end-to-end encryption, the way your team works has never been more secure and private.</source>
         <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of business plan.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>透過我們零知識加密保護，您的團隊協作從未如此安全和私密。</translation>
     </message>
     <message>
         <source>Get started with secure file storage.</source>
@@ -6716,7 +6716,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message numerus="yes">
         <source>%n upload successful</source>
         <translatorcomment>Notification text that inform that an upload was successful. %1 is the number of uploads. This string goes always with the %n upload cancelled and/or %n upload failed strings.</translatorcomment>
-        <translation><numerusform>%n個上傳成功</numerusform></translation>
+        <translation><numerusform>%n已上傳完成</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>, %n upload cancelled</source>
@@ -6741,7 +6741,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message numerus="yes">
         <source>%n download successful</source>
         <translatorcomment>Notification text that inform that an download was successful. %1 is the number of downloads. This string goes always with the %n download cancelled and/or %n download failed strings.</translatorcomment>
-        <translation><numerusform>%n個下載成功</numerusform></translation>
+        <translation><numerusform>%n已下載完成</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>, %n download cancelled</source>

@@ -323,7 +323,7 @@
     <message>
         <source>Your payment for the [A] plan was unsuccessful</source>
         <translatorcomment>Label to indicate that the the payment for a [A] PRO plan has failed. Placeholder will be replaced by the PRO plan name</translatorcomment>
-        <translation>Your payment for the [A] plan was unsuccessful</translation>
+        <translation>We didn&#8217;t receive your payment for the [A] plan.</translation>
     </message>
     <message>
         <source>Your publicly shared has been taken down</source>
@@ -2886,12 +2886,12 @@ Transfers will automatically resume when you re-open the app.</numerusform></tra
     <message>
         <source>Your sync &quot;%1&quot; has been temporarily disabled: %2</source>
         <translatorcomment>Warning message shown when a sync is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation>Your sync &#8220;%1&#8221; has been temporarily disabled: %2</translation>
+        <translation>Your sync “%1” has been temporarily disabled: %2</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been temporarily disabled: %2</source>
         <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation>Your backup &#8220;%1&#8221; has been temporarily disabled: %2</translation>
+        <translation>Your backup “%1” has been temporarily disabled: %2</translation>
     </message>
     <message>
         <source>Error transferring folder: %1</source>
@@ -3801,7 +3801,7 @@ Enter a different name.</translation>
     <message>
         <source>Storage full</source>
         <translatorcomment>Label to indicate the full storage for the current account is full.</translatorcomment>
-        <translation>Storage Full</translation>
+        <translation>Storage full</translation>
     </message>
     <message>
         <source>You have exceeded the available storage space for your account. You can add syncs but they will remain disabled until there is enough space on your account.</source>
@@ -6717,7 +6717,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message numerus="yes">
         <source>%n upload successful</source>
         <translatorcomment>Notification text that inform that an upload was successful. %1 is the number of uploads. This string goes always with the %n upload cancelled and/or %n upload failed strings.</translatorcomment>
-        <translation><numerusform>%n upload successful</numerusform><numerusform>%n uploads successful</numerusform></translation>
+        <translation><numerusform>%n upload complete</numerusform><numerusform>%n uploads complete</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>, %n upload cancelled</source>
@@ -6742,7 +6742,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message numerus="yes">
         <source>%n download successful</source>
         <translatorcomment>Notification text that inform that an download was successful. %1 is the number of downloads. This string goes always with the %n download cancelled and/or %n download failed strings.</translatorcomment>
-        <translation><numerusform>%n download successful</numerusform><numerusform>%n downloads successful</numerusform></translation>
+        <translation><numerusform>%n download complete</numerusform><numerusform>%n downloads complete</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>, %n download cancelled</source>

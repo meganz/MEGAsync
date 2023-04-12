@@ -323,7 +323,7 @@
     <message>
         <source>Your payment for the [A] plan was unsuccessful</source>
         <translatorcomment>Label to indicate that the the payment for a [A] PRO plan has failed. Placeholder will be replaced by the PRO plan name</translatorcomment>
-        <translation>[A] 요금제에 대한 결제가 실패되었습니다</translation>
+        <translation>[A] 요금제에 대한 결제를 받지 못 했습니다.</translation>
     </message>
     <message>
         <source>Your publicly shared has been taken down</source>
@@ -2886,12 +2886,12 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your sync &quot;%1&quot; has been temporarily disabled: %2</source>
         <translatorcomment>Warning message shown when a sync is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation>동기화 &#8220;%1&quot;이/가 일시적으로 비활성화 되었습니다: %2</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been temporarily disabled: %2</source>
         <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation>백업 &#8220;%1&quot;이/가 일시적으로 비활성화 되었습니다: %2</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Error transferring folder: %1</source>
@@ -6720,7 +6720,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message numerus="yes">
         <source>%n upload successful</source>
         <translatorcomment>Notification text that inform that an upload was successful. %1 is the number of uploads. This string goes always with the %n upload cancelled and/or %n upload failed strings.</translatorcomment>
-        <translation><numerusform>%n개의 업로드를 성공했습니다</numerusform></translation>
+        <translation><numerusform>%n개의 업로드 완료</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>, %n upload cancelled</source>
@@ -6745,7 +6745,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message numerus="yes">
         <source>%n download successful</source>
         <translatorcomment>Notification text that inform that an download was successful. %1 is the number of downloads. This string goes always with the %n download cancelled and/or %n download failed strings.</translatorcomment>
-        <translation><numerusform>%n개의 다운로드를 성공했습니다</numerusform></translation>
+        <translation><numerusform>%n개의 다운로드 완료</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>, %n download cancelled</source>

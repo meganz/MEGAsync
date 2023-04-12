@@ -323,7 +323,7 @@
     <message>
         <source>Your payment for the [A] plan was unsuccessful</source>
         <translatorcomment>Label to indicate that the the payment for a [A] PRO plan has failed. Placeholder will be replaced by the PRO plan name</translatorcomment>
-        <translation>Votre paiement a échoué pour l’abonnement [A]</translation>
+        <translation>Nous n’avons pas reçu votre paiement pour l’abonnement [A].</translation>
     </message>
     <message>
         <source>Your publicly shared has been taken down</source>
@@ -641,7 +641,7 @@
     <message>
         <source>View in backup centre</source>
         <translatorcomment>Text for a button allowing the user to view the newly created backup i nthe Backup center (in the webclient)</translatorcomment>
-        <translation>Afficher dans le Centre de sauvegarde</translation>
+        <translation>Visualiser dans le Centre de sauvegarde</translation>
     </message>
 </context>
 <context>
@@ -1109,7 +1109,7 @@ Dans certains cas, ils pourraient comprendre des détails sur vos données, tels
     <message>
         <source>View</source>
         <translatorcomment>Button label of system notification to view all unread notifications.</translatorcomment>
-        <translation>Afficher</translation>
+        <translation>Visualiser</translation>
     </message>
     <message>
         <source>New Contact Established</source>
@@ -2886,12 +2886,12 @@ Les transferts reprendront automatiquement quand vous rouvrirez l’appli.</nume
     <message>
         <source>Your sync &quot;%1&quot; has been temporarily disabled: %2</source>
         <translatorcomment>Warning message shown when a sync is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation>Votre synchronisation «&#xa0;%1&#xa0;» a été désactivée temporairement&#xa0;: %2</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been temporarily disabled: %2</source>
         <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation>Votre sauvegarde «&#xa0;%1&#xa0;» a été désactivée temporairement&#xa0;: %2</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Error transferring folder: %1</source>
@@ -4053,7 +4053,7 @@ Saisissez un nom différent.</translation>
     <message>
         <source>With our end-to-end encryption, the way your team works has never been more secure and private.</source>
         <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of business plan.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Grâce à notre chiffrement à divulgation nulle de connaissance, la façon dont votre équipe travaille n’a jamais été aussi sûre ni vos données aussi protégées.</translation>
     </message>
     <message>
         <source>Get started with secure file storage.</source>
@@ -6718,7 +6718,7 @@ Pour en obtenir davantage, passez à un compte Pro ou attendez [A] pour qu’un 
     <message numerus="yes">
         <source>%n upload successful</source>
         <translatorcomment>Notification text that inform that an upload was successful. %1 is the number of uploads. This string goes always with the %n upload cancelled and/or %n upload failed strings.</translatorcomment>
-        <translation><numerusform>%n&#xa0;élément a été téléversé</numerusform><numerusform>%n&#xa0;éléments ont été téléversés</numerusform></translation>
+        <translation><numerusform>%n&#xa0;téléversement est terminé</numerusform><numerusform>%n&#xa0;téléversements sont terminés</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>, %n upload cancelled</source>
@@ -6743,7 +6743,7 @@ Pour en obtenir davantage, passez à un compte Pro ou attendez [A] pour qu’un 
     <message numerus="yes">
         <source>%n download successful</source>
         <translatorcomment>Notification text that inform that an download was successful. %1 is the number of downloads. This string goes always with the %n download cancelled and/or %n download failed strings.</translatorcomment>
-        <translation><numerusform>%n&#xa0;élément a été téléchargé</numerusform><numerusform>%n&#xa0;éléments ont été téléchargés</numerusform></translation>
+        <translation><numerusform>%n&#xa0;téléchargement est terminé</numerusform><numerusform>%n&#xa0;téléchargements sont terminés</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>, %n download cancelled</source>

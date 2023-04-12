@@ -323,7 +323,7 @@
     <message>
         <source>Your payment for the [A] plan was unsuccessful</source>
         <translatorcomment>Label to indicate that the the payment for a [A] PRO plan has failed. Placeholder will be replaced by the PRO plan name</translatorcomment>
-        <translation>Pembayaran anda untuk paket [A] tidak berhasil</translation>
+        <translation>Kami tidak menerima pembayaran anda untuk paket [A].</translation>
     </message>
     <message>
         <source>Your publicly shared has been taken down</source>
@@ -478,17 +478,17 @@
     <message>
         <source>Backup is enabled</source>
         <translatorcomment>Checkbox tooltip that is displayed when it is checked.(Backup enabled)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Pencadangan diaktifkan</translation>
     </message>
     <message>
         <source>Backup is disabled</source>
         <translatorcomment>Checkbox tooltip that is displayed when it is unchecked.(Backup disabled)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Pencadangan dinonaktifkan</translation>
     </message>
     <message>
         <source>Click menu for more Backup actions</source>
         <translatorcomment>Menu column tooltip (three dots in the table)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Klik menu tiga titik untuk tindakan pencadangan lainnya</translation>
     </message>
 </context>
 <context>
@@ -830,7 +830,7 @@
     <message>
         <source>Bug report success!</source>
         <translatorcomment>Confirmation message shown when a bug report is successfully uploaded.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Masalah anda telah dilaporkan.</translation>
     </message>
     <message>
         <source>Your bug report has been submitted, a confirmation email will sent to you accordingly.</source>
@@ -1289,7 +1289,7 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
     <message>
         <source>Show in MEGA</source>
         <translatorcomment>Notification button to redirect the user to remote location. It will open webclient at specific location.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tampilkan di MEGA</translation>
     </message>
 </context>
 <context>
@@ -1360,12 +1360,12 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
     <message numerus="yes">
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Item yang anda pilih telah dihapus. Untuk memilih ulang, tutup jendela ini dan coba lagi.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>You no longer have access to this item. Ask the owner to share again.</source>
         <translatorcomment>Error message shown when the user is trying to download an file or folder from an incoming share and the owner stops sharing/removes all items</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Anda tidak lagi memiliki akses ke item ini. Mintalah orang yang membagikannya kepada anda untuk membagikannya lagi.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 item selected</source>
@@ -3800,7 +3800,7 @@ Masukkan nama yang berbeda.</translation>
     <message>
         <source>Storage full</source>
         <translatorcomment>Label to indicate the full storage for the current account is full.</translatorcomment>
-        <translation>Penyimpanan Penuh</translation>
+        <translation>Storage penuh</translation>
     </message>
     <message>
         <source>You have exceeded the available storage space for your account. You can add syncs but they will remain disabled until there is enough space on your account.</source>
@@ -6676,7 +6676,7 @@ Untuk mendapatkan lebih banyak kuota, upgrade ke akun Pro atau tunggu [A] hingga
     <message>
         <source>Show in MEGA</source>
         <translatorcomment>Notification button to see the file on the webclient</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tampilkan di MEGA</translation>
     </message>
     <message>
         <source>Get link</source>

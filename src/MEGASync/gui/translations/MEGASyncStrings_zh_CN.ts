@@ -323,7 +323,7 @@
     <message>
         <source>Your payment for the [A] plan was unsuccessful</source>
         <translatorcomment>Label to indicate that the the payment for a [A] PRO plan has failed. Placeholder will be replaced by the PRO plan name</translatorcomment>
-        <translation>您的[A]方案付款失败</translation>
+        <translation>我们尚未收到您购买[A]方案的付款。</translation>
     </message>
     <message>
         <source>Your publicly shared has been taken down</source>
@@ -6716,7 +6716,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message numerus="yes">
         <source>%n upload successful</source>
         <translatorcomment>Notification text that inform that an upload was successful. %1 is the number of uploads. This string goes always with the %n upload cancelled and/or %n upload failed strings.</translatorcomment>
-        <translation><numerusform>%n个上传成功</numerusform></translation>
+        <translation><numerusform>%n个上传完成</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>, %n upload cancelled</source>
@@ -6741,7 +6741,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message numerus="yes">
         <source>%n download successful</source>
         <translatorcomment>Notification text that inform that an download was successful. %1 is the number of downloads. This string goes always with the %n download cancelled and/or %n download failed strings.</translatorcomment>
-        <translation><numerusform>%n个下载成功</numerusform></translation>
+        <translation><numerusform>%n个下载完成</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>, %n download cancelled</source>

@@ -323,7 +323,7 @@
     <message>
         <source>Your payment for the [A] plan was unsuccessful</source>
         <translatorcomment>Label to indicate that the the payment for a [A] PRO plan has failed. Placeholder will be replaced by the PRO plan name</translatorcomment>
-        <translation>Il tuo pagamento per il piano [A] non è andato a buon fine</translation>
+        <translation>Non abbiamo ricevuto il tuo pagamento per il piano [A].</translation>
     </message>
     <message>
         <source>Your publicly shared has been taken down</source>
@@ -488,7 +488,7 @@
     <message>
         <source>Click menu for more Backup actions</source>
         <translatorcomment>Menu column tooltip (three dots in the table)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Clicca sui tre puntini per altre azioni di backup</translation>
     </message>
 </context>
 <context>
@@ -2104,7 +2104,7 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message>
         <source>Downloading may be interrupted as you have used 90% of your transfer quota on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew. </source>
         <translatorcomment>Message displayed in the InfoDialog when the transfer quota reaches warning stage</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>I download potrebbero essere interrotti dati che hai utilizzato il 90% della banda di trasferimento disponibile per questo account. Per continuare a scaricare, acquista un nuovo piano, o se già possiedi un abbonamento MEGA, puoi attendere che il tuo piano venga rinnovato.</translation>
     </message>
 </context>
 <context>
@@ -2885,12 +2885,12 @@ I trasferimenti riprenderanno automaticamente quando riaprirai l&apos;app.</nume
     <message>
         <source>Your sync &quot;%1&quot; has been temporarily disabled: %2</source>
         <translatorcomment>Warning message shown when a sync is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation>La tua sincronizzazione &#8220;%1&#8221; è stata temporaneamente disabilitata: %2</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been temporarily disabled: %2</source>
         <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation>Il tuo backup &#8220;%1&#8221; è stato temporaneamente disabilitato: %2</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Error transferring folder: %1</source>
@@ -4050,7 +4050,7 @@ Inserisci un nome differente.</translation>
     <message>
         <source>With our end-to-end encryption, the way your team works has never been more secure and private.</source>
         <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of business plan.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Con la nostra criptazione a conoscenza zero, il modo in cui il tuo team lavora non è mai stato più sicuro e privato.</translation>
     </message>
     <message>
         <source>Get started with secure file storage.</source>
@@ -4108,7 +4108,7 @@ Inserisci un nome differente.</translation>
     <message>
         <source>Show in Explorer</source>
         <translatorcomment>Label to indicate the &quot;Show in Explorer&quot; option to open local folder of a sync (Windows). Keep Explorer name as it is the app name of file explorer on Windows.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Mostra in Esplora file</translation>
     </message>
 </context>
 <context>
@@ -5233,7 +5233,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Enable Windows Explorer integration</source>
         <translatorcomment>Checkbox label displayed on Windows, allowing the user to enable / disable the Windows Explorer integration.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Attiva l&#8217;integrazione con Esplora file di Windows</translation>
     </message>
     <message>
         <source>B</source>
@@ -6330,7 +6330,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Click menu for more Sync actions</source>
         <translatorcomment>Menu column tooltip (three dots in the table)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Clicca sui tre puntini per altre azioni di sincronizzazione</translation>
     </message>
 </context>
 <context>
@@ -6715,7 +6715,7 @@ Per ottenere altra banda di trasferimento, effettua l&apos;upgrade ad un account
     <message numerus="yes">
         <source>%n upload successful</source>
         <translatorcomment>Notification text that inform that an upload was successful. %1 is the number of uploads. This string goes always with the %n upload cancelled and/or %n upload failed strings.</translatorcomment>
-        <translation><numerusform>%n caricamento con successo</numerusform><numerusform>%n caricamenti con successo</numerusform></translation>
+        <translation><numerusform>%n upload completato</numerusform><numerusform>%n upload completati</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>, %n upload cancelled</source>
@@ -6740,7 +6740,7 @@ Per ottenere altra banda di trasferimento, effettua l&apos;upgrade ad un account
     <message numerus="yes">
         <source>%n download successful</source>
         <translatorcomment>Notification text that inform that an download was successful. %1 is the number of downloads. This string goes always with the %n download cancelled and/or %n download failed strings.</translatorcomment>
-        <translation><numerusform>%n download con successo</numerusform><numerusform>%n download con successo</numerusform></translation>
+        <translation><numerusform>%n download completato</numerusform><numerusform>%n download completati</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>, %n download cancelled</source>

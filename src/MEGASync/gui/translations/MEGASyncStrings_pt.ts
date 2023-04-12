@@ -323,7 +323,7 @@
     <message>
         <source>Your payment for the [A] plan was unsuccessful</source>
         <translatorcomment>Label to indicate that the the payment for a [A] PRO plan has failed. Placeholder will be replaced by the PRO plan name</translatorcomment>
-        <translation>Não foi possível fazer o pagamento do plano [A]</translation>
+        <translation>Não recebemos o pagamento do plano [A]</translation>
     </message>
     <message>
         <source>Your publicly shared has been taken down</source>
@@ -6718,7 +6718,7 @@ Para obter mais cota, faça o upgrade a uma conta Pro ou espere [A] para que mai
     <message numerus="yes">
         <source>%n upload successful</source>
         <translatorcomment>Notification text that inform that an upload was successful. %1 is the number of uploads. This string goes always with the %n upload cancelled and/or %n upload failed strings.</translatorcomment>
-        <translation><numerusform>Foi feito %n upload</numerusform><numerusform>Foram feitos %n uploads</numerusform></translation>
+        <translation><numerusform>%n upload finalizado</numerusform><numerusform>%n uploads finalizados</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>, %n upload cancelled</source>
@@ -6743,7 +6743,7 @@ Para obter mais cota, faça o upgrade a uma conta Pro ou espere [A] para que mai
     <message numerus="yes">
         <source>%n download successful</source>
         <translatorcomment>Notification text that inform that an download was successful. %1 is the number of downloads. This string goes always with the %n download cancelled and/or %n download failed strings.</translatorcomment>
-        <translation><numerusform>Foi feito %n download</numerusform><numerusform>Foram feitos %n downloads</numerusform></translation>
+        <translation><numerusform>%n download finalizado</numerusform><numerusform>%n downloads finalizados</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>, %n download cancelled</source>

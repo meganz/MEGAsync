@@ -323,7 +323,7 @@
     <message>
         <source>Your payment for the [A] plan was unsuccessful</source>
         <translatorcomment>Label to indicate that the the payment for a [A] PRO plan has failed. Placeholder will be replaced by the PRO plan name</translatorcomment>
-        <translation>การชำระเงินสำหรับแผน [A] ของคุณไม่สำเร็จ</translation>
+        <translation>เราไม่ได้รับการชำระเงินสำหรับแผน [A] ของคุณ</translation>
     </message>
     <message>
         <source>Your publicly shared has been taken down</source>
@@ -2105,7 +2105,7 @@
     <message>
         <source>Downloading may be interrupted as you have used 90% of your transfer quota on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew. </source>
         <translatorcomment>Message displayed in the InfoDialog when the transfer quota reaches warning stage</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>การดาวน์โหลดอาจถูกหยุดชั่วคราว เนื่องจากคุณใช้โควต้าการถ่ายโอนของบัญชีนี้ไปแล้ว 90% หากต้องการดาวน์โหลดต่อ ให้สมัครใช้งานแผนใหม่ หรือหากคุณมีการสมัครใช้งาน MEGA แบบต่ออายุอัตโนมัติอยู่แล้ว คุณสามารถรอจนกว่าจะเริ่มรอบการเรียกเก็บเงินถัดไป</translation>
     </message>
 </context>
 <context>
@@ -4049,7 +4049,7 @@ Enter a different name</source>
     <message>
         <source>With our end-to-end encryption, the way your team works has never been more secure and private.</source>
         <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of business plan.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ด้วยการเข้ารหัสด้วยวิธีซีโร่-นอว์เลจ การทำงานในทีมของคุณจะปลอดภัยและเป็นส่วนตัวอย่างที่ไม่เคยมีมาก่อน</translation>
     </message>
     <message>
         <source>Get started with secure file storage.</source>
@@ -6714,7 +6714,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message numerus="yes">
         <source>%n upload successful</source>
         <translatorcomment>Notification text that inform that an upload was successful. %1 is the number of uploads. This string goes always with the %n upload cancelled and/or %n upload failed strings.</translatorcomment>
-        <translation><numerusform>อัปโหลดเสร็จแล้ว %n รายการ</numerusform></translation>
+        <translation><numerusform>อัปโหลด %n รายการเรียบร้อยแล้ว</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>, %n upload cancelled</source>
@@ -6739,7 +6739,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message numerus="yes">
         <source>%n download successful</source>
         <translatorcomment>Notification text that inform that an download was successful. %1 is the number of downloads. This string goes always with the %n download cancelled and/or %n download failed strings.</translatorcomment>
-        <translation><numerusform>ดาวน์โหลดเสร็จแล้ว %n รายการ</numerusform></translation>
+        <translation><numerusform>ดาวน์โหลด %n รายการเรียบร้อยแล้ว</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>, %n download cancelled</source>
@@ -7287,22 +7287,22 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>%1 [A]d[/A]</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [DAYS] [HOURS] string, replacing the [DAYS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the days. The space needs to be non-breaking.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1&#xa0;[A]ว[/A]</translation>
     </message>
     <message>
         <source>%1 [A]h[/A]</source>
         <translatorcomment>String controlling the formatting of the hour count for time intervals. It is used in [DAYS] [HOURS] and [HOURS] [MINUTES] strings, replacing the [HOURS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the hours. The space needs to be non-breaking.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1&#xa0;[A]ชม.[/A]</translation>
     </message>
     <message>
         <source>%1 [A]m[/A]</source>
         <translatorcomment>String controlling the formatting of the minute count for time intervals. It is used in [HOURS] [MINUTES] and [MINUTES] [SECONDS] strings, replacing the [MINUTES] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the minutes. The space needs to be non-breaking.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1&#xa0;[A]น.[/A]</translation>
     </message>
     <message>
         <source>%1 [A]s[/A]</source>
         <translatorcomment>String controlling the formatting of the seconds count for time intervals. It is used in the [MINUTES] [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the seconds. The space needs to be non-breaking.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1&#xa0;[A]วิ[/A]</translation>
     </message>
 </context>
 <context>

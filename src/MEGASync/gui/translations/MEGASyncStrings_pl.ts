@@ -323,7 +323,7 @@
     <message>
         <source>Your payment for the [A] plan was unsuccessful</source>
         <translatorcomment>Label to indicate that the the payment for a [A] PRO plan has failed. Placeholder will be replaced by the PRO plan name</translatorcomment>
-        <translation>Twoja płatność za abonament [A] nie powiodła się</translation>
+        <translation>Nie otrzymaliśmy twojej zapłaty za plan [A].</translation>
     </message>
     <message>
         <source>Your publicly shared has been taken down</source>
@@ -2888,12 +2888,12 @@ Transfery zostaną automatycznie wznowione po ponownym otwarciu aplikacji.</nume
     <message>
         <source>Your sync &quot;%1&quot; has been temporarily disabled: %2</source>
         <translatorcomment>Warning message shown when a sync is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation>Twoja synchronizacja &#8220;%1&#8221; została tymczasowo wyłączona: %2</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been temporarily disabled: %2</source>
         <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation>Twój backup &#8220;%1&#8221; został tymczasowo wyłączony: %2</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Error transferring folder: %1</source>
@@ -4054,7 +4054,7 @@ Wprowadź inną nazwę.</translation>
     <message>
         <source>With our end-to-end encryption, the way your team works has never been more secure and private.</source>
         <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of business plan.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Dzięki naszemu szyfrowaniu z zerową wiedzą sposób pracy Twojego zespołu nigdy nie był bardziej bezpieczny i prywatny.</translation>
     </message>
     <message>
         <source>Get started with secure file storage.</source>
@@ -6719,7 +6719,7 @@ Aby uzyskać więcej limitu, uaktualnij konto do wersji Pro lub poczekaj [A], a�
     <message numerus="yes">
         <source>%n upload successful</source>
         <translatorcomment>Notification text that inform that an upload was successful. %1 is the number of uploads. This string goes always with the %n upload cancelled and/or %n upload failed strings.</translatorcomment>
-        <translation><numerusform>%n wgrany pomyślnie</numerusform><numerusform>%n wgrane pomyślnie</numerusform><numerusform>%n wgrane pomyślnie</numerusform><numerusform>%n wgrane pomyślnie</numerusform></translation>
+        <translation><numerusform>%n wgrywanie ukończone</numerusform><numerusform>%n wgrywania ukończone</numerusform><numerusform>%n wgrywania ukończone</numerusform><numerusform>%n wgrywania ukończone</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>, %n upload cancelled</source>
@@ -6744,7 +6744,7 @@ Aby uzyskać więcej limitu, uaktualnij konto do wersji Pro lub poczekaj [A], a�
     <message numerus="yes">
         <source>%n download successful</source>
         <translatorcomment>Notification text that inform that an download was successful. %1 is the number of downloads. This string goes always with the %n download cancelled and/or %n download failed strings.</translatorcomment>
-        <translation><numerusform>%n pobranie powiodło się</numerusform><numerusform>%n pobrań powiodło się</numerusform><numerusform>%n pobrań powiodło się</numerusform><numerusform>%n pobrań powiodło się</numerusform></translation>
+        <translation><numerusform>%n pobieranie zakończone</numerusform><numerusform>%n pobierania zakończone</numerusform><numerusform>%n pobierania zakończone</numerusform><numerusform>%n pobierania zakończone</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>, %n download cancelled</source>
@@ -7307,7 +7307,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>%1 [A]s[/A]</source>
         <translatorcomment>String controlling the formatting of the seconds count for time intervals. It is used in the [MINUTES] [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the seconds. The space needs to be non-breaking.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1&#xa0;[A]s[/A]</translation>
     </message>
 </context>
 <context>

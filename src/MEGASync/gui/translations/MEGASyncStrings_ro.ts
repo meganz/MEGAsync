@@ -323,7 +323,7 @@
     <message>
         <source>Your payment for the [A] plan was unsuccessful</source>
         <translatorcomment>Label to indicate that the the payment for a [A] PRO plan has failed. Placeholder will be replaced by the PRO plan name</translatorcomment>
-        <translation>Plata pentru planul [A] nu a avut succes</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your publicly shared has been taken down</source>
@@ -478,17 +478,17 @@
     <message>
         <source>Backup is enabled</source>
         <translatorcomment>Checkbox tooltip that is displayed when it is checked.(Backup enabled)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Backupul este activat</translation>
     </message>
     <message>
         <source>Backup is disabled</source>
         <translatorcomment>Checkbox tooltip that is displayed when it is unchecked.(Backup disabled)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Backupul este dezactivat</translation>
     </message>
     <message>
         <source>Click menu for more Backup actions</source>
         <translatorcomment>Menu column tooltip (three dots in the table)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Clic pe trei puncte pentru mai multe acțiuni de backup</translation>
     </message>
 </context>
 <context>
@@ -830,7 +830,7 @@
     <message>
         <source>Bug report success!</source>
         <translatorcomment>Confirmation message shown when a bug report is successfully uploaded.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Problema ta a fost raportată.</translation>
     </message>
     <message>
         <source>Your bug report has been submitted, a confirmation email will sent to you accordingly.</source>
@@ -1289,7 +1289,7 @@
     <message>
         <source>Show in MEGA</source>
         <translatorcomment>Notification button to redirect the user to remote location. It will open webclient at specific location.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Afișează în MEGA</translation>
     </message>
 </context>
 <context>
@@ -1360,24 +1360,24 @@
     <message numerus="yes">
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Elementul pe care l-ai selectat a fost eliminat. Pentru a reselecta, închide această fereastră și încearcă din nou.</numerusform><numerusform>Elementele pe care le-ai selectat au fost eliminate. Pentru a reselecta, închide această fereastră și încearcă din nou.</numerusform><numerusform>Elementele pe care le-ai selectat au fost eliminate. Pentru a reselecta, închide această fereastră și încearcă din nou.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>You no longer have access to this item. Ask the owner to share again.</source>
         <translatorcomment>Error message shown when the user is trying to download an file or folder from an incoming share and the owner stops sharing/removes all items</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Nu mai ai acces la acest element. Cere-i persoanei care ți l-a partajat să ți-l partajeze din nou.</numerusform><numerusform>Nu mai ai acces la aceste elemente. Cere-i persoanei care ți le-a partajat să ți le partajeze din nou.</numerusform><numerusform>Nu mai ai acces la aceste elemente. Cere-i persoanei care ți le-a partajat să ți le partajeze din nou.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 item selected</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 element selectat.</numerusform><numerusform>%1 elemente selectate.</numerusform><numerusform>%1 de elemente selectate.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1. %2 has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1, %2 a fost eliminat. Pentru a reselecta, închide această fereastră și încearcă din nou.</numerusform><numerusform>%1, %2 au fost eliminate. Pentru a reselecta, închide această fereastră și încearcă din nou.</numerusform><numerusform>%1, %2 au fost eliminate. Pentru a reselecta, închide această fereastră și încearcă din nou.</numerusform></translation>
     </message>
 </context>
 <context>
@@ -1385,7 +1385,7 @@
     <message>
         <source>Local Disk</source>
         <translatorcomment>Default drive name shown on the low space dialog when downloading files</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Disc local</translation>
     </message>
 </context>
 <context>
@@ -1945,7 +1945,7 @@
     <message>
         <source>Open notification settings</source>
         <translatorcomment>Button label to redirect the user to notification settings for configuration</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Deschide setările de notificare</translation>
     </message>
     <message>
         <source>No notifications</source>
@@ -2080,7 +2080,7 @@
     <message>
         <source>Your queued transfers exceed the current quota available for your IP address.</source>
         <translatorcomment>Informative label to indicate that your queued transfers exceed the current quota available for IP. Applies to free users.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Transferurile din coadă depășesc cota de transfer actuală disponibilă pentru adresa ta IP.</translation>
     </message>
     <message>
         <source>Upgrade Account</source>
@@ -2090,22 +2090,22 @@
     <message>
         <source>I will wait</source>
         <translatorcomment>Button label to dismiss (hide) overquota dialogs. Shown for free users only if they do not want to upgrade account for extra transfer quota.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Voi aștepta</translation>
     </message>
     <message>
         <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew.</source>
         <translatorcomment>Informative label to indicate that your queued transfers may be interrupted because the current account does not have enough transfer quota.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Nu poți continua descărcarea deoarece nu mai ai suficientă cotă de transfer pe acest cont. Pentru a continua descărcarea, achiziționează un nou plan sau, dacă ai un abonament recurent cu MEGA, poți aștepta reînnoirea planului.</translation>
     </message>
     <message>
         <source>Buy new plan</source>
         <translatorcomment>Button label for button to buy a new plan when there is not enough transfer quota in current non-free plan</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Cumpără un plan nou</translation>
     </message>
     <message>
         <source>Downloading may be interrupted as you have used 90% of your transfer quota on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew. </source>
         <translatorcomment>Message displayed in the InfoDialog when the transfer quota reaches warning stage</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Descărcarea poate fi întreruptă deoarece ai folosit 90% din cota de transfer pe acest cont. Pentru a continua descărcarea, achiziționează un nou plan sau, dacă ai un abonament recurent cu MEGA, poți aștepta reînnoirea planului.</translation>
     </message>
 </context>
 <context>
@@ -2138,7 +2138,7 @@
     <message>
         <source>Deleted or moved file</source>
         <translatorcomment>Tooltip when the file completed was removed or deleted</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Fișier șters sau mutat</translation>
     </message>
 </context>
 <context>
@@ -2278,7 +2278,7 @@
     <message>
         <source>Low disk space</source>
         <translatorcomment>Dialog title</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Spațiu pe disc redus</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2293,17 +2293,17 @@
     <message>
         <source>There is not enough space on %1. You need an additional %2 to download these files.</source>
         <translatorcomment>Label explaining the problem, %1 is the download target disk name. %2 is the needed size to continue with the download (the size unit depends on the quantity) </translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Nu există suficient spațiu pe %1. Ai nevoie de încă %2 pentru a descărca aceste fișiere.</translation>
     </message>
     <message>
         <source>Free space: %1</source>
         <translatorcomment>Label informing about the local disk free space</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Spațiu liber: %1</translation>
     </message>
     <message>
         <source>Total size: %1</source>
         <translatorcomment>Label informing about the total local disk space</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Dimensiune totală: %1</translation>
     </message>
 </context>
 <context>
@@ -2837,22 +2837,22 @@ Transferurile se vor relua automat când redeschizi aplicația.</numerusform></t
     <message>
         <source>Some syncs and backups have been disabled. Go to settings to enable them again.</source>
         <translatorcomment>Warning message shown when some backups and syncs are disabled. Tell the userto go to settings to solve the issue.</translatorcomment>
-        <translation>Unele sincronizări și backupuri au fost dezactivate. Du-te la setări pentru a le activa din nou.</translation>
+        <translation>Unele sincronizări și backupuri au fost dezactivate. Mergi la Setări pentru a le activa din nou.</translation>
     </message>
     <message>
         <source>One or more backups have been disabled. Go to settings to enable them again.</source>
         <translatorcomment>Warning message shown when some backups are disabled. Tell the userto go to settings to solve the issue.</translatorcomment>
-        <translation>Unul sau mai multe backupuri au fost dezactivate. Du-te la setări pentru a le activa din nou.</translation>
+        <translation>Unul sau mai multe backupuri au fost dezactivate. Mergi la Setări pentru a le activa din nou.</translation>
     </message>
     <message>
         <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
         <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Una sau mai multe sincronizări au fost dezactivate. Mergi la Setări pentru a le activa din nou.</translation>
     </message>
     <message>
         <source>Open settings</source>
         <translatorcomment>Button label to open MEGAsync settings dialog.</translatorcomment>
-        <translation>Deschide setările</translation>
+        <translation>Deschide Setările</translation>
     </message>
     <message>
         <source>Error getting link: File not found</source>
@@ -2867,22 +2867,22 @@ Transferurile se vor relua automat când redeschizi aplicația.</numerusform></t
     <message>
         <source>Your syncs and backups have been disabled: %1</source>
         <translatorcomment>Warning message shown when all the syncs and backups have been disabled. The placeholder %1 shows the reason;</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Sincronizările și backupurile tale au fost dezactivate: %1</translation>
     </message>
     <message>
         <source>Your backups have been disabled: %1</source>
         <translatorcomment>Warning message shown when all the backups have been disabled. The placeholder %1 shows the reason;</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Backupurile tale au fost dezactivate: %1</translation>
     </message>
     <message>
         <source>Your syncs have been disabled: %1</source>
         <translatorcomment>Warning message shown when  all the syncs have been disabled. The placeholder %1 shows the reason;</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Backupurile tale au fost dezactivate: %1</translation>
     </message>
     <message>
         <source>Error getting link: %1</source>
         <translatorcomment>Notification message launched when an error occurs getting a public link for a file/folder. Placeholder %1 displays the reason.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Eroare la obținerea linkului: %1</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been temporarily disabled: %2</source>
@@ -2897,7 +2897,7 @@ Transferurile se vor relua automat când redeschizi aplicația.</numerusform></t
     <message>
         <source>Error transferring folder: %1</source>
         <translatorcomment>Label to indicate that has been an error during a folder transfer.  Placeholder %1 displays the reason.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Eroare la transferarea folderului: %1</translation>
     </message>
 </context>
 <context>
@@ -3335,7 +3335,7 @@ Transferurile se vor relua automat când redeschizi aplicația.</numerusform></t
     <message>
         <source>Error opening file</source>
         <translatorcomment>Text on an error messagebox because a local file could not be opened</translatorcomment>
-        <translation>Fișierul nu poate fi deschis. Verifică dacă fișierul de pe unitatea locală nu a fost șters sau mutat.</translation>
+        <translation>Fișierul nu poate fi deschis. Verifică dacă fișierul din unitatea locală nu a fost șters sau mutat.</translation>
     </message>
     <message numerus="yes">
         <source>Pause transfer</source>
@@ -3382,7 +3382,8 @@ Toate transferurile din această categorie vor fi anulate.</translation>
         <source>Cancel transfers?
 Your incomplete sync transfers won&apos;t be cancelled.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel all the transfers in a category other than all transfers category but there are sync transfers(they cannot be cancelled)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Anulezi transferurile?
+Transferurile de sincronizare nefinalizate nu vor fi anulate. Toate celelalte transferuri vor fi anulate.</translation>
     </message>
     <message>
         <source>Cancel transfers?
@@ -3446,7 +3447,8 @@ Toate transferurile finalizate selectate în această categorie vor fi șterse.<
         <source>Cancel transfers?
 Your selected incomplete sync transfers won&apos;t be cancelled.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Anulezi transferurile?
+Transferurile de sincronizare nefinalizate selectate nu vor fi anulate. Toate celelalte transferuri selectate vor fi anulate.</translation>
     </message>
     <message>
         <source>Clear transfer?</source>
@@ -3670,7 +3672,7 @@ Introdu un alt nume.</translation>
     <message>
         <source>No results for:</source>
         <translatorcomment>Label indicating that there are no results for the current search, searched text will be following this label.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Niciun rezultat pentru:</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -3683,7 +3685,7 @@ Introdu un alt nume.</translation>
     <message>
         <source>Searching:</source>
         <translatorcomment>Label indicating the current search, searched text will be following this label.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Căutare:</translation>
     </message>
 </context>
 <context>
@@ -3766,17 +3768,17 @@ Introdu un alt nume.</translation>
     <message>
         <source>Uploads and downloads</source>
         <translatorcomment>Notification category for completed transfers notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Încărcări și descărcări</translation>
     </message>
     <message>
         <source>Completed uploads and downloads</source>
         <translatorcomment>Title of a checkbox for disconnectig completed transfer notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Încărcări și descărcări finalizate</translation>
     </message>
     <message>
         <source>Uploads and downloads:</source>
         <translatorcomment>Notification category for completed transfers notifications (macx)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Încărcări și descărcări:</translation>
     </message>
 </context>
 <context>
@@ -4051,7 +4053,7 @@ Introdu un alt nume.</translation>
     <message>
         <source>With our end-to-end encryption, the way your team works has never been more secure and private.</source>
         <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of business plan.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Cu criptarea noastră tip zero cunoștințe, modul în care echipa ta lucrează nu a fost niciodată mai securizat și mai privat.</translation>
     </message>
     <message>
         <source>Get started with secure file storage.</source>
@@ -4076,12 +4078,12 @@ Introdu un alt nume.</translation>
     <message>
         <source>[A] storage</source>
         <translatorcomment>Label to indicate the specific storage of a pro plan. [A] is a placeholder for the value of the storage, it must be kept in the translated strings.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[A] spațiu de stocare</translation>
     </message>
     <message>
         <source>[A] transfer</source>
         <translatorcomment>Label to indicate the specific transfer quota of a pro plan. [A] is a placeholder for the value of the transfer quota, it must be kept in the translated strings.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[A] transferuri</translation>
     </message>
 </context>
 <context>
@@ -4099,17 +4101,17 @@ Introdu un alt nume.</translation>
     <message>
         <source>Show in Finder</source>
         <translatorcomment>Label to indicate the &quot;Show in Finder&quot; option to open local folder of a sync (macOS). Keep Finder name as it is the app name of file explorer on macOS.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Afișează în Finder</translation>
     </message>
     <message>
         <source>Quit</source>
         <translatorcomment>Label displayed on actions exiting Desktop application when on Mac</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ieși</translation>
     </message>
     <message>
         <source>Show in Explorer</source>
         <translatorcomment>Label to indicate the &quot;Show in Explorer&quot; option to open local folder of a sync (Windows). Keep Explorer name as it is the app name of file explorer on Windows.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Afișează în Explorer</translation>
     </message>
 </context>
 <context>
@@ -4119,7 +4121,8 @@ Introdu un alt nume.</translation>
 - Detected crashes on Windows, Linux, and macOS fixed.
 </source>
         <translatorcomment>Changelog for v4.8.8</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Securitate îmbunătățită
+- Au fost remediate defecțiunile detectate pe Windows, Linux și macOS</translation>
     </message>
 </context>
 <context>
@@ -5233,7 +5236,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Enable Windows Explorer integration</source>
         <translatorcomment>Checkbox label displayed on Windows, allowing the user to enable / disable the Windows Explorer integration.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Activează integrarea cu Explorerul din Windows</translation>
     </message>
     <message>
         <source>B</source>
@@ -5448,7 +5451,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your sync can&apos;t be removed. Reason: %1</source>
         <translatorcomment>Warning message title indicating that an error happened removing a sync. the reason is given at runtime in place of the placeholder</translatorcomment>
-        <translation>Sincronizarea nu poate fi eliminată. Motivul: %2</translation>
+        <translation>Sincronizarea nu poate fi eliminată. Motivul: %1</translation>
     </message>
     <message>
         <source>Error disabling sync</source>
@@ -5981,7 +5984,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Only files can be used for streaming.</source>
         <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Nu poți reda în flux foldere. Selectează un fișier pentru a reda în flux.</translation>
     </message>
 </context>
 <context>
@@ -6288,7 +6291,7 @@ Pentru a continua, selectează un alt folder.</translation>
     <message>
         <source>You need Full access right to be able to sync the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying sync a non compatible folder</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Pentru a sincroniza acest folder, trebuie să ai permisiunea de acces complet la el.</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -6299,7 +6302,7 @@ Pentru a continua, selectează un alt folder.</translation>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Nu se poate sincroniza folderul. Te rugăm să te asiguri că nu folosești „\”, „/” sau „:” în numele folderelor.</translation>
     </message>
 </context>
 <context>
@@ -6320,17 +6323,17 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Sync is enabled</source>
         <translatorcomment>Checkbox tooltip that is displayed when it is checked.(sync enabled)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Sincronizarea este activată</translation>
     </message>
     <message>
         <source>Sync is disabled</source>
         <translatorcomment>Checkbox tooltip that is displayed when it is unchecked.(sync disabled)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Sincronizarea este dezactivată</translation>
     </message>
     <message>
         <source>Click menu for more Sync actions</source>
         <translatorcomment>Menu column tooltip (three dots in the table)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Clic pe trei puncte pentru mai multe acțiuni de sincronizare</translation>
     </message>
 </context>
 <context>
@@ -6655,27 +6658,27 @@ Pentru a obține mai multă cotă, fă upgrade la un cont Pro sau așteaptă [A]
     <message>
         <source>Uploaded 1 file to %1.</source>
         <translatorcomment>Notification text that inform 1 file has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>1 fișier a fost încărcat în %1.</translation>
     </message>
     <message>
         <source>Uploaded 1 folder to %1.</source>
         <translatorcomment>Notification text that inform 1 folder has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>1 folder a fost încărcat în %1.</translation>
     </message>
     <message>
         <source>File uploaded</source>
         <translatorcomment>Notification title when a file has been uploaded</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Fișier încărcat</translation>
     </message>
     <message>
         <source>Folder uploaded</source>
         <translatorcomment>Notification title when a folder has been uploaded</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Folder încărcat</translation>
     </message>
     <message>
         <source>Show in MEGA</source>
         <translatorcomment>Notification button to see the file on the webclient</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Afișează în MEGA</translation>
     </message>
     <message>
         <source>Get link</source>
@@ -6685,12 +6688,12 @@ Pentru a obține mai multă cotă, fă upgrade la un cont Pro sau așteaptă [A]
     <message>
         <source>Downloaded 1 file to %1.</source>
         <translatorcomment>Notification text that inform 1 file has been downloaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>1 fișier a fost descărcat în %1.</translation>
     </message>
     <message>
         <source>Downloaded 1 folder to %1.</source>
         <translatorcomment>Notification text that inform 1 folder has been downloaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>1 folder a fost descărcat în %1.</translation>
     </message>
     <message>
         <source>Show in folder</source>
@@ -6705,12 +6708,12 @@ Pentru a obține mai multă cotă, fă upgrade la un cont Pro sau așteaptă [A]
     <message>
         <source>File downloaded</source>
         <translatorcomment>Notification title when a file has been downloaded</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Fișier descărcat</translation>
     </message>
     <message>
         <source>Folder downloaded</source>
         <translatorcomment>Notification title when a folder has been downloaded</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Folder descărcat</translation>
     </message>
     <message numerus="yes">
         <source>%n upload successful</source>
@@ -6720,22 +6723,22 @@ Pentru a obține mai multă cotă, fă upgrade la un cont Pro sau așteaptă [A]
     <message numerus="yes">
         <source>, %n upload cancelled</source>
         <translatorcomment>Appended text that inform that an upload was cancelled. %1 is the number of cancelled uploads. This string goes always appended to the %n upload successful</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>, %n încărcare anulată</numerusform><numerusform>, %n încărcări anulate</numerusform><numerusform>, %n de încărcări anulate</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>, %n upload failed</source>
         <translatorcomment>Appended text that inform that an upload has failed. %1 is the number of failed uploads. This string goes always appended to the %n upload successful</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>, %n încărcare eșuată</numerusform><numerusform>, %n încărcări eșuate</numerusform><numerusform>, %n de încărcări eșuate</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Uploaded %n items to %1</source>
         <translatorcomment>Notification text that inform n items (files or folders) has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n element a fost încărcat în %1</numerusform><numerusform>%n elemente au fost încărcate în %1</numerusform><numerusform>%n de elemente au fost încărcate în %1</numerusform></translation>
     </message>
     <message>
         <source>Items uploaded</source>
         <translatorcomment>Notification title when a more than one transfer (file or folders) have been uploaded</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Elemente încărcate</translation>
     </message>
     <message numerus="yes">
         <source>%n download successful</source>
@@ -6745,22 +6748,22 @@ Pentru a obține mai multă cotă, fă upgrade la un cont Pro sau așteaptă [A]
     <message numerus="yes">
         <source>, %n download cancelled</source>
         <translatorcomment>Appended text that inform that an download was cancelled. %1 is the number of cancelled downloads. This string goes always appended to the %n download successful</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>, %n descărcare anulată</numerusform><numerusform>, %n descărcări anulate</numerusform><numerusform>, %n de descărcări anulate</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>, %n download failed</source>
         <translatorcomment>Appended text that inform that an download has failed. %1 is the number of failed downloads. This string goes always appended to the %n download successful</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>, %n descărcare eșuată</numerusform><numerusform>, %n descărcări eșuate</numerusform><numerusform>, %n de descărcări eșuate</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Downloaded %n items to %1</source>
         <translatorcomment>Notification text that inform n items (files or folders) has been downloaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n element a fost descărcat în %1</numerusform><numerusform>%n elemente au fost descărcate în %1</numerusform><numerusform>%n de elemente au fost descărcate în %1</numerusform></translation>
     </message>
     <message>
         <source>Items downloaded</source>
         <translatorcomment>Notification title when a more than one transfer (file or folders) have been downloaded</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Elemente descărcate</translation>
     </message>
 </context>
 <context>
@@ -6792,7 +6795,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Open settings</source>
         <translatorcomment>Button label to open the Settings dialog</translatorcomment>
-        <translation>Deschide setările</translation>
+        <translation>Deschide Setările</translation>
     </message>
 </context>
 <context>
@@ -7139,7 +7142,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying upload files to a non compatible folder</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Pentru a sincroniza acest folder, trebuie să ai permisiuni de citire și scriere sau de acces complet la el.</translation>
     </message>
 </context>
 <context>
@@ -7288,22 +7291,22 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>%1 [A]d[/A]</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [DAYS] [HOURS] string, replacing the [DAYS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the days. The space needs to be non-breaking.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1&#xa0;[A]z[/A]</translation>
     </message>
     <message>
         <source>%1 [A]h[/A]</source>
         <translatorcomment>String controlling the formatting of the hour count for time intervals. It is used in [DAYS] [HOURS] and [HOURS] [MINUTES] strings, replacing the [HOURS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the hours. The space needs to be non-breaking.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1&#xa0;[A]h[/A]</translation>
     </message>
     <message>
         <source>%1 [A]m[/A]</source>
         <translatorcomment>String controlling the formatting of the minute count for time intervals. It is used in [HOURS] [MINUTES] and [MINUTES] [SECONDS] strings, replacing the [MINUTES] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the minutes. The space needs to be non-breaking.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1&#xa0;[A]m[/A]</translation>
     </message>
     <message>
         <source>%1 [A]s[/A]</source>
         <translatorcomment>String controlling the formatting of the seconds count for time intervals. It is used in the [MINUTES] [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the seconds. The space needs to be non-breaking.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1&#xa0;[A]s[/A]</translation>
     </message>
 </context>
 <context>

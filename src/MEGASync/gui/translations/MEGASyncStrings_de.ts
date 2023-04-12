@@ -323,7 +323,7 @@
     <message>
         <source>Your payment for the [A] plan was unsuccessful</source>
         <translatorcomment>Label to indicate that the the payment for a [A] PRO plan has failed. Placeholder will be replaced by the PRO plan name</translatorcomment>
-        <translation>Ihre Zahlung für das Abonnement [A] ist fehlgeschlagen</translation>
+        <translation>Wir haben Ihre Zahlung für Ihr [A]-Abonnement nicht erhalten.</translation>
     </message>
     <message>
         <source>Your publicly shared has been taken down</source>
@@ -2886,12 +2886,12 @@ Die Transfers werden automatisch fortgesetzt, wenn Sie die App erneut öffnen.</
     <message>
         <source>Your sync &quot;%1&quot; has been temporarily disabled: %2</source>
         <translatorcomment>Warning message shown when a sync is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation>Ihre Synchronisierung „%1“ wurde vorübergehend deaktiviert: %2</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been temporarily disabled: %2</source>
         <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation>Ihr Backup „%1“ wurde vorübergehend deaktiviert: %2</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Error transferring folder: %1</source>
@@ -4052,7 +4052,7 @@ Bitte geben Sie einen anderen Namen ein.</translation>
     <message>
         <source>With our end-to-end encryption, the way your team works has never been more secure and private.</source>
         <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of business plan.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Mit unserer Zero-Knowledge-Verschlüsselung können Ihre Teams sicherer denn je zusammenarbeiten.</translation>
     </message>
     <message>
         <source>Get started with secure file storage.</source>
@@ -6717,7 +6717,7 @@ Um mehr Transfervolumen zu erhalten, upgraden Sie zu einem Pro-Account oder wart
     <message numerus="yes">
         <source>%n upload successful</source>
         <translatorcomment>Notification text that inform that an upload was successful. %1 is the number of uploads. This string goes always with the %n upload cancelled and/or %n upload failed strings.</translatorcomment>
-        <translation><numerusform>%n Upload erfolgreich</numerusform><numerusform>%n Uploads erfolgreich</numerusform></translation>
+        <translation><numerusform>%n Upload abgeschlossen</numerusform><numerusform>%n Uploads abgeschlossen</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>, %n upload cancelled</source>
@@ -6742,7 +6742,7 @@ Um mehr Transfervolumen zu erhalten, upgraden Sie zu einem Pro-Account oder wart
     <message numerus="yes">
         <source>%n download successful</source>
         <translatorcomment>Notification text that inform that an download was successful. %1 is the number of downloads. This string goes always with the %n download cancelled and/or %n download failed strings.</translatorcomment>
-        <translation><numerusform>%n Download erfolgreich</numerusform><numerusform>%n Downloads erfolgreich</numerusform></translation>
+        <translation><numerusform>%n Download abgeschlossen</numerusform><numerusform>%n Downloads abgeschlossen</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>, %n download cancelled</source>
