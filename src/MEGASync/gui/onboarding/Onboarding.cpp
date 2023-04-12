@@ -160,6 +160,11 @@ void Onboarding::onTwoFACompleted(const QString& pin)
                                    pin.toUtf8().constData());
 }
 
+QString Onboarding::convertUrlToNativeFilePath(const QUrl &urlStylePath) const
+{
+    return QDir::toNativeSeparators(urlStylePath.toLocalFile());
+}
+
 void Onboarding::onNotNowClicked() {
     std::unique_ptr<char[]> email(mMegaApi->getMyEmail());
     mPreferences->setEmailAndGeneralSettings(QString::fromUtf8(email.get()));

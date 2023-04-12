@@ -74,6 +74,7 @@ Rectangle {
                     ButtonGroup.group: buttonGroup
                     type: InstallationTypeButton.Type.Sync
                     checkable: false
+                    imageSourceSize: Qt.size(64, 64)
                 }
 
                 ResumeButton {
@@ -85,17 +86,19 @@ Rectangle {
                     ButtonGroup.group: buttonGroup
                     type: InstallationTypeButton.Type.Backup
                     checkable: false
+                    imageSourceSize: Qt.size(64, 64)
                 }
 
                 ResumeButton {
                     id: fuseButton
 
                     title: qsTr("Fuse")
-                    description: qsTr("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.")
+                    description: qsTr("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et.")
                     imageSource: "../../../../../images/Onboarding/fuse.svg"
                     ButtonGroup.group: buttonGroup
                     type: InstallationTypeButton.Type.Fuse
                     checkable: false
+                    imageSourceSize: Qt.size(64, 64)
                 }
             }
         }
@@ -119,7 +122,12 @@ Rectangle {
                 primary: true
             }
         }
-
     }
-
 }
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+##^##*/
+

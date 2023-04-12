@@ -28,4 +28,7 @@ SyncsPage {
             local: false
         }
     }
+
+    footerButtons.nextButton.text: qsTr("Sync")
+    footerButtons.nextButton.iconSource: "../../../images/sync.svg"
 }

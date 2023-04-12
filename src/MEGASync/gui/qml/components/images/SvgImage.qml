@@ -14,6 +14,7 @@ Item {
     property alias source: image.source
     property alias sourceSize: image.sourceSize
     property alias imageWidth: image.width
+    property alias imageHeight: image.height
 
     /*
      * Object properties

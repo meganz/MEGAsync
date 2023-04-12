@@ -33,7 +33,7 @@ Button {
         border.width: 2
         radius: 8
         color: Styles.surface1
-        border.color: resumeButton.checked ? Styles.borderStrongSelected : Styles.borderStrong
+        border.color: resumeButton.checked || resumeButton.hovered ? Styles.borderStrongSelected : Styles.borderStrong
 
         ColumnLayout {
 
@@ -49,20 +49,22 @@ Button {
             Custom.SvgImage {
                 id: icon
 
-                color: resumeButton.checked ? Styles.iconAccent : Styles.iconSecondary
+                color: resumeButton.checked || resumeButton.hovered ? Styles.iconAccent : Styles.iconSecondary
                 source: imageSource
                 sourceSize: imageSourceSize
+                Layout.alignment: Qt.AlignTop | Qt.AlignLeft
             }
 
             Text {
                 text: title
                 color: Styles.buttonPrimaryHover
-                Layout.preferredHeight: 24
-                font.pixelSize: 16
+                Layout.preferredHeight: 20
+                font.pixelSize: 14
                 font.weight: Font.Bold
                 font.family: "Inter"
                 font.styleName: "normal"
-                lineHeight: 24
+                lineHeight: 20
+                Layout.leftMargin: 10
             }
 
             Text {
@@ -71,12 +73,12 @@ Button {
                 lineHeightMode: Text.FixedHeight
                 Layout.preferredWidth: 182
                 color: Styles.toastBackground
-                Layout.preferredHeight: 64
-                font.pixelSize: 12
+                font.pixelSize: 10
                 font.weight: Font.Light
                 font.family: "Inter"
                 font.styleName: "normal"
                 lineHeight: 16
+                Layout.leftMargin: 10
             }
         }
     }

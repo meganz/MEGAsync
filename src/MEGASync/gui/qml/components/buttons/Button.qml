@@ -75,8 +75,7 @@ Qml.RoundButton {
 
             source: iconSource
             color: Styles.iconOnColor
-            sourceSize.width: 10
-            sourceSize.height: 10
+            sourceSize: Qt.size(16 ,16)
 
             x: {
                 if(iconRight) {

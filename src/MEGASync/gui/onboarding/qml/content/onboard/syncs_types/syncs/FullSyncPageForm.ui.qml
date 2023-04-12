@@ -25,4 +25,7 @@ SyncsPage {
 
         ChooseSyncFolder {}
     }
+
+    footerButtons.nextButton.text: qsTr("Sync")
+    footerButtons.nextButton.iconSource: "../../../images/sync.svg"
 }

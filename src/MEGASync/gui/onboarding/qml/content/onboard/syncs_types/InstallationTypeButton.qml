@@ -34,7 +34,7 @@ Button {
         border.width: 2
         radius: 8
         color: Styles.surface1
-        border.color: installationTypeButton.checked
+        border.color: installationTypeButton.checked || installationTypeButton.hovered
                       ? Styles.borderStrongSelected
                       : Styles.borderStrong
 
@@ -45,7 +45,7 @@ Button {
             Custom.SvgImage {
                 id: icon
 
-                color: installationTypeButton.checked
+                color: installationTypeButton.checked || installationTypeButton.hovered
                        ? Styles.iconAccent
                        : Styles.iconSecondary
                 Layout.leftMargin: 24

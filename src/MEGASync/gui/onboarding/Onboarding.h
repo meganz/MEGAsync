@@ -32,10 +32,9 @@ public:
                          mega::MegaError* error) override;
 
     Q_INVOKABLE void onLoginClicked(const QVariantMap& data);
-
     Q_INVOKABLE void onRegisterClicked(const QVariantMap& data);
-
     Q_INVOKABLE void onTwoFACompleted(const QString& pin);
+    Q_INVOKABLE QString convertUrlToNativeFilePath(const QUrl& urlStylePath) const;
 
 signals:
     void twoFARequired();

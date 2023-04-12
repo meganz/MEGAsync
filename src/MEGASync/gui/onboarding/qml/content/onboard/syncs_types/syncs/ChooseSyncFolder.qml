@@ -56,9 +56,7 @@ ColumnLayout {
         folder: shortcuts.documents
         selectFolder: true
         onAccepted: {
-            console.log("You chose: " + fileDialog.fileUrl)
-            console.log(QDir.toNativeSeparators(fileDialog.fileUrl))
-            textField.text = fileDialog.fileUrl
+            textField.text = fileDialog.fileUrl.toString().slice(fileDialog.fileUrl.toString().lastIndexOf("/"));
             selectedUrl = fileDialog.fileUrl
         }
     }
