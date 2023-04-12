@@ -244,7 +244,7 @@ TransferBaseDelegateWidget::ActionHoverType InfoDialogTransferDelegateWidget::mo
         {
             if (getData()->mErrorCode < 0)
             {
-                if (!getData()->isSyncTransfer())
+                if (!getData()->isSyncTransfer() && !getData()->isPermanentFail())
                 {
                     bool in = isMouseHoverInAction(mUi->lActionTransfer, pos);
                     mUi->lActionTransfer->setToolTip(tr("Retry"));

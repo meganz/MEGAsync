@@ -219,6 +219,7 @@ void TransfersManagerSortFilterProxyModel::resetTransfersStateCounters()
     mPausedTransfers.clear();
     mCompletedTransfers.clear();
     mFailedTransfers.clear();
+    mPermanentFailedTransfers.clear();
 }
 
 TransferBaseDelegateWidget *TransfersManagerSortFilterProxyModel::createTransferManagerItem(QWidget*)
@@ -335,6 +336,10 @@ bool TransfersManagerSortFilterProxyModel::filterAcceptsRow(int sourceRow, const
         if(accept && d->isFailed())
         {
             mFailedTransfers.insert(d->mTag);
+            if(d->isPermanentFail())
+            {
+                mPermanentFailedTransfers.insert(d->mTag);
+            }
         }
         else
         {
@@ -475,6 +480,7 @@ void TransfersManagerSortFilterProxyModel::removeCompletedTransferFromCounter(Tr
 void TransfersManagerSortFilterProxyModel::removeFailedTransferFromCounter(TransferTag tag) const
 {
     mFailedTransfers.remove(tag);
+    mPermanentFailedTransfers.remove(tag);
 }
 
 void TransfersManagerSortFilterProxyModel::removeCompletingTransferFromCounter(TransferTag tag) const
@@ -589,6 +595,11 @@ bool TransfersManagerSortFilterProxyModel::isAnyActive() const
 bool TransfersManagerSortFilterProxyModel::isAnyFailed() const
 {
     return !mFailedTransfers.isEmpty();
+}
+
+bool TransfersManagerSortFilterProxyModel::areAllFailsPermanent() const
+{
+    return mFailedTransfers.size() == mPermanentFailedTransfers.size();
 }
 
 bool TransfersManagerSortFilterProxyModel::isEmpty() const
