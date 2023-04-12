@@ -19,10 +19,10 @@ const int Preferences::BUILD_ID = 0;
 const QString Preferences::VERSION_STRING = QString::fromAscii("4.9.3");
 QString Preferences::SDK_ID = QString::fromAscii("412e269");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
-"- New search functionality for remote node selector.\n"
-"- Improvements on system notifications.\n"
-"- New UI style enhancements.\n"
-"- Detected crashes on Windows, Linux, and macOS fixed.\n"));
+"- You can now search the stored data in your account.\n"
+"- We've improved system notifications.\n"
+"- We've enhanced the UI.\n"
+"- We've fixed the detected crashes on Windows, Linux, and macOS.\n"));
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");

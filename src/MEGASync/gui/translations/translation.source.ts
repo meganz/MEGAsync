@@ -323,7 +323,7 @@
     <message>
         <source>Your payment for the [A] plan was unsuccessful</source>
         <translatorcomment>Label to indicate that the the payment for a [A] PRO plan has failed. Placeholder will be replaced by the PRO plan name</translatorcomment>
-        <translation>Your payment for the [A] plan was unsuccessful</translation>
+        <translation>We didn’t receive your payment for the [A] plan.</translation>
     </message>
     <message>
         <source>Your publicly shared has been taken down</source>
@@ -3887,7 +3887,7 @@ Enter a different name.</translation>
     <message>
         <source>Storage full</source>
         <translatorcomment>Label to indicate the full storage for the current account is full.</translatorcomment>
-        <translation>Storage Full</translation>
+        <translation>Storage full</translation>
     </message>
     <message>
         <source>You have exceeded the available storage space for your account. You can add syncs but they will remain disabled until there is enough space on your account.</source>
@@ -4205,10 +4205,10 @@ Enter a different name.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- New search functionality for remote node selector.
-- Improvements on system notifications.
-- New UI style enhancements.
-- Detected crashes on Windows, Linux, and macOS fixed.
+        <source>- You can now search the stored data in your account.
+- We&apos;ve improved system notifications.
+- We&apos;ve enhanced the UI.
+- We&apos;ve fixed the detected crashes on Windows, Linux, and macOS.
 </source>
         <translation type="unfinished"></translation>
     </message>
@@ -6831,8 +6831,8 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
         <source>%n upload successful</source>
         <translatorcomment>Notification text that inform that an upload was successful. %1 is the number of uploads. This string goes always with the %n upload cancelled and/or %n upload failed strings.</translatorcomment>
         <translation>
-            <numerusform>%n upload successful</numerusform>
-            <numerusform>%n uploads successful</numerusform>
+            <numerusform>%n upload complete</numerusform>
+            <numerusform>%n uploads complete</numerusform>
         </translation>
     </message>
     <message numerus="yes">
@@ -6868,8 +6868,8 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
         <source>%n download successful</source>
         <translatorcomment>Notification text that inform that an download was successful. %1 is the number of downloads. This string goes always with the %n download cancelled and/or %n download failed strings.</translatorcomment>
         <translation>
-            <numerusform>%n download successful</numerusform>
-            <numerusform>%n downloads successful</numerusform>
+            <numerusform>%n download complete</numerusform>
+            <numerusform>%n downloads complete</numerusform>
         </translation>
     </message>
     <message numerus="yes">
