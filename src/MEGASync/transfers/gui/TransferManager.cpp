@@ -726,16 +726,7 @@ void TransferManager::onTransfersDataUpdated()
     refreshFileTypesStats();
     refreshSearchStats();
     refreshStateStats();
-    checkActionAndMediaVisibility();
-
-    if(label)
-    {
-        long long newNumber = label->text().toLongLong();
-        if(oldNumber != newNumber && (oldNumber == 0 || newNumber == 0))
-        {
-            refreshView();
-        }
-    }
+    refreshView();
 }
 
 void TransferManager::onStorageStateChanged(int storageState)
@@ -1221,8 +1212,6 @@ void TransferManager::toggleTab(TransfersWidget::TM_TAB newTab)
                     countLabel->parentWidget()->hide();
                 }
 
-                //In case the media group must be hidden
-                checkActionAndMediaVisibility();
             }
         }
 
@@ -1260,6 +1249,7 @@ void TransferManager::refreshView()
 
             updateTransferWidget(widgetToShow);
         }
+        checkActionAndMediaVisibility();
     }
 }
 
@@ -1269,15 +1259,16 @@ void TransferManager::checkActionAndMediaVisibility()
     auto allTransfers = mTransfersCount.pendingDownloads + mTransfersCount.pendingUploads;
     auto failedTransfers = mTransfersCount.totalFailedTransfers();
 
-    // Show "Clear All/Completed" if there are any completed transfers
-    // (only for completed tab and individual media tabs)
+    // Show "Retry all" if there are any completed transfers
+    // (only for failed tag)
     if (mUi->wTransfers->getCurrentTab() == TransfersWidget::FAILED_TAB && failedTransfers > 0)
     {
-        mUi->tActionButton->show();
+        auto proxy (mUi->wTransfers->getProxyModel());
+        mUi->tActionButton->setVisible(!proxy->areAllFailsPermanent());
     }
     else
     {
-        mUi->tActionButton->hide();
+        mUi->tActionButton->setVisible(false);
     }
 
     // Hide Media groupbox if no transfers (active or finished)

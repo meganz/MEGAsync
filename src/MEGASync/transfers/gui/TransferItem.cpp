@@ -373,6 +373,22 @@ bool TransferData::isFailed() const
     return mState & TRANSFER_FAILED;
 }
 
+bool TransferData::isPermanentFail() const
+{
+    auto hasFailed = isFailed();
+    if(hasFailed && !isUpload())
+    {
+        mega::MegaError error = mFailedTransfer->getLastError();
+        if(error.getErrorCode() == mega::MegaError::API_EARGS
+                || (error.getErrorCode() == mega::MegaError::API_ENOENT || error.getErrorCode() == mega::MegaError::API_EREAD))
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 bool TransferData::isCancelled() const
 {
     return mState & TRANSFER_CANCELLED;
