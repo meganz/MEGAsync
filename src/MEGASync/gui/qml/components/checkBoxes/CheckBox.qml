@@ -1,6 +1,9 @@
+// System
 import QtQuick 2.12
-import Common 1.0
 import QtQuick.Controls 2.12 as Qml
+
+// Local
+import Common 1.0
 import Components 1.0
 
 Qml.CheckBox {
@@ -101,8 +104,8 @@ Qml.CheckBox {
                 color: checkBoxOutRect.getIconColor()
             }
 
-        } // Rectangle -> inside
+        }
 
-    } // Rectangle -> checkBoxOutRect
+    }
 
 }

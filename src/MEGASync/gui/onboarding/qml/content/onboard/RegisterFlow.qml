@@ -1,9 +1,12 @@
+// System
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 
+// QML common
 import Components 1.0 as Custom
-import Common 1.0
+
+// C++
 import Onboarding 1.0
 
 Rectangle {
@@ -13,11 +16,8 @@ Rectangle {
     readonly property string twoFA: "twoFA"
     readonly property string register: "register"
 
-    color: Styles.alternateBackgroundColor
-    border.color: "#ffffff"
-
+    color: "transparent"
     state: login
-
     states: [
         State {
             name: login
@@ -39,34 +39,51 @@ Rectangle {
         }
     ]
 
-    Image {
-        id: image
+    Rectangle {
+        anchors.fill: registerFlow
+        layer.smooth: true
+        layer.enabled: true
+        opacity: 0.9
+    }
 
-        fillMode: Image.Tile
-        source: "../../../../images/Onboarding/login_folder.png"
+    Image {
+        id: leftImage
+
+        source: registerFlow.state === twoFA
+                ? "../../../../images/Onboarding/twofa.png"
+                : "../../../../images/Onboarding/login.png"
         anchors.left: registerFlow.left
         anchors.verticalCenter: registerFlow.verticalCenter
-        z: 2
     }
 
     StackView {
         id: stack
 
         anchors {
-            left: image.right
+            left: leftImage.right
             top: registerFlow.top
             bottom: registerFlow.bottom
             right: registerFlow.right
+        }
+        replaceEnter: Transition {
+            XAnimator {
+                from: (stack.mirrored ? -1 : 1) * leftImage.width
+                to: 0
+                duration: 400
+            }
+        }
+        replaceExit: Transition {
+            XAnimator {
+                from: 0
+                to: (stack.mirrored ? -1 : 1) * stack.width
+                duration: 400
+            }
         }
 
         LoginPage {
             id: loginPage
 
             visible: false
-
-            createAccountButton.onClicked: {
-                registerFlow.state = register;
-            }
         }
 
         TwoFAPage {
@@ -79,10 +96,6 @@ Rectangle {
             id: registerPage
 
             visible: false
-
-            loginButton.onClicked: {
-                registerFlow.state = login;
-            }
         }
     }
 

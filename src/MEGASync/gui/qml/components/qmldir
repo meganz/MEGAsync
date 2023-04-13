@@ -1,10 +1,13 @@
 module Components
 Button 1.0 buttons/Button.qml
+HelpButton 1.0 buttons/HelpButton.qml
 TextField 1.0 textFields/TextField.qml
 TwoFA 1.0 textFields/TwoFA.qml
 PasswordTextField 1.0 textFields/PasswordTextField.qml
+EmailTextField 1.0 textFields/EmailTextField.qml
 IconTextField 1.0 textFields/IconTextField.qml
 RichText 1.0 texts/RichText.qml
+HintText 1.0 texts/HintText.qml
 CheckBox 1.0 checkBoxes/CheckBox.qml
 SvgImage 1.0 images/SvgImage.qml
 QmlDialog 1.0 dialogs/QmlDialog.qml

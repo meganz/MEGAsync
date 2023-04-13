@@ -1,93 +1,96 @@
+// System
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 
+// QML common
 import Components 1.0 as Custom
 import Common 1.0
+
+// Local
+import Onboard 1.0
+
+// C++
 import Onboarding 1.0
 
 Rectangle {
-    id: loginForm
+    id: root
 
-    property alias createAccountButton: createAccountButton
+    property alias signUpButton: signUpButton
     property alias loginButton: loginButton
-    property alias forgotPasswordHyperlinkArea: forgotPasswordHyperlinkArea
 
-    property string email: email.textField.text
-    property string password: password.textField.text
+    property alias email: email
+    property alias password: password
 
     color: Styles.backgroundColor
 
     ColumnLayout {
-        spacing: 16
+        id: mainLayout
+
+        spacing: 24
         anchors {
-            verticalCenter: loginForm.verticalCenter
-            left: loginForm.left
-            right: loginForm.right
-            leftMargin: 40
-            rightMargin: 40
+            verticalCenter: root.verticalCenter
+            left: root.left
+            right: root.right
+            leftMargin: 48
+            rightMargin: 48
         }
 
         Custom.RichText {
-            Layout.alignment: Qt.AlignCenter
             font.pixelSize: 20
-            text: qsTr("Login into your [b]MEGA account[/b]")
+            text: OnboardingStrings.loginTitle
+            Layout.bottomMargin: textFieldsLayout.spacing
+            Layout.leftMargin: 4
         }
 
-        Custom.TextField {
-            id: email
+        ColumnLayout {
+            id: textFieldsLayout
 
-            Layout.fillWidth: true
-            placeholderText: qsTr("Email")
-        }
+            spacing: 12
+            Layout.preferredWidth: mainLayout.width
 
-        Custom.PasswordTextField {
-            id: password
+            Custom.EmailTextField {
+                id: email
 
-            Layout.fillWidth: true
-            placeholderText: qsTr("Password")
-        }
-
-        Text {
-            id: forgotPassword
-
-            Layout.alignment: Qt.AlignCenter
-            text: qsTr("Forgot password?")
-            color: Styles.textColor
-            font.pixelSize: 14
-
-            MouseArea {
-                id: forgotPasswordHyperlinkArea
-
-                anchors.fill: parent
-                hoverEnabled: true
-                cursorShape: Qt.PointingHandCursor
+                title: OnboardingStrings.email
+                Layout.preferredWidth: textFieldsLayout.width
             }
+
+            Custom.PasswordTextField {
+                id: password
+
+                title: OnboardingStrings.password
+                Layout.preferredWidth: textFieldsLayout.width
+            }
+        }
+
+        Custom.HelpButton {
+            text: OnboardingStrings.forgotPassword
+            url: Links.recovery
+            Layout.leftMargin: 4
         }
     }
 
     RowLayout {
         spacing: 8
         anchors {
-            right: loginForm.right
-            bottom: loginForm.bottom
-            rightMargin: 32
-            bottomMargin: 24
-        }
-
-        Custom.Button {
-            id: createAccountButton
-
-            text: qsTr("Create account")
-            Layout.alignment: Qt.AlignRight
+            right: root.right
+            bottom: root.bottom
+            rightMargin: 48
+            bottomMargin: 32
         }
 
         Custom.Button {
             id: loginButton
 
             primary: true
-            text: qsTr("Login")
-            Layout.alignment: Qt.AlignRight
+            text: OnboardingStrings.login
+        }
+
+        Custom.Button {
+            id: signUpButton
+
+            text: OnboardingStrings.signUp
         }
     }
 
@@ -95,8 +98,9 @@ Rectangle {
         target: Onboarding
 
         onUserPassFailed: {
-            email.error = true
-            password.error = true
+            email.descriptionType = Custom.TextField.DescriptionType.Error;
+            password.descriptionType = Custom.TextField.DescriptionType.Error;
+            password.descriptionText = OnboardingStrings.errorLogin;
         }
     }
 }

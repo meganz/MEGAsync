@@ -1,213 +1,178 @@
+// System
 import QtQuick 2.12
 import QtQuick.Controls 2.12 as Qml
-import Common 1.0
 import QtQuick.Layouts 1.12
+
+// Local
+import Common 1.0
 import Components 1.0 as Custom
 
-Item {
+ColumnLayout {
     id: root
 
-    /*
-     * Properties
-     */
-    property alias textField: textField
-    property alias outRect: outRect
-    property alias placeholderText: textField.placeholderText
-    property alias font: textField.font
-    property alias text: textField.text
-    property bool showInformativeText: true
-    property bool error: false
-    property string informativeTextIcon: ""
-    property string informativeText: ""
-    property color textColor: Styles.textColor
-    property int fieldHeight: 50
+    enum DescriptionType {
+        None = 0,
+        InfoWithoutIcon = 1,
+        Info = 2,
+        Error = 3
+    }
 
-    /*
-     * Signals
-     */
+    property alias hint: hint
+    property alias text: textField.text
+    property alias placeholderText: textField.placeholderText
+    property alias textField: textField
+    property alias leftIcon: leftIcon
+    property alias rightIcon: rightIcon
+    property alias rightIconMouseArea: rightIconMouseArea
+
+    property string title: ""
+
+    readonly property int textFieldRawHeight: textField.height - 2 * textField.focusBorderWidth
+
     signal backPressed()
     signal pastePressed()
 
-    /*
-     * Components
-     */
-    implicitHeight: outRect.height
+    spacing: title.lenght === 0 ? 0 : 4
 
-    function getExternalFocusedRectColor()
-    {
-        if(Styles.lightTheme)
-        {
-            return "#BDD9FF"
-        }
-        else
-        {
-            return "#2647D0"
+    Text {
+        text: title
+        color: Styles.textPrimary
+        visible: title.length !== 0
+        Layout.leftMargin: 4
+        Layout.preferredHeight: 16
+        font {
+            pixelSize: 12
+            weight: Font.Bold
+            family: "Inter"
+            styleName: "Medium"
         }
     }
 
-    Rectangle
-    {
-        id: outRect
+    Qml.TextField {
+        id: textField
 
-        border.width: 4
-        implicitHeight: fieldHeight
-        radius: 12
-        border.color: {
-            if(textField.focus)
-            {
-                getExternalFocusedRectColor()
+        function calculatePaddingWithIcon(iconPresent) {
+            var padding = iconMargin;
+            if(iconPresent) {
+                padding += iconWidth + iconTextSeparation;
+            } else {
+                padding += focusBorderWidth;
             }
-            else
-            {
-                Styles.backgroundColor
-            }
+            return padding;
         }
 
-        anchors {
-            top: root.top
-            right: root.right
-            left: root.left
+        readonly property int focusBorderRadius: 11
+        readonly property int focusBorderWidth: 3
+        readonly property int borderRadius: 8
+        readonly property int borderWidth: 1
+        readonly property int iconMargin: 13
+        readonly property int iconWidth: 16
+        readonly property size iconSize: Qt.size(iconWidth, iconWidth)
+        readonly property int iconTextSeparation: 6
+        readonly property int verticalPadding: 8
+
+        selectByMouse: true
+        selectionColor: Styles.supportInfo
+        Layout.preferredWidth: parent.width
+        height: 42
+        Layout.preferredHeight: height
+        leftPadding: calculatePaddingWithIcon(leftIcon.source != "")
+        rightPadding: calculatePaddingWithIcon(rightIcon.source != "")
+        topPadding: verticalPadding
+        bottomPadding: verticalPadding
+
+        font {
+            pixelSize: 14
+            weight: Font.Light
+            family: "Inter"
+            styleName: "Medium"
         }
 
-        Qml.TextField {
-            id: textField
+        background: Rectangle {
+            id: focusBorder
 
-            selectByMouse: true
-            Layout.fillHeight: true
-            Layout.fillWidth: true
-            Layout.margins: 4
-            color: Styles.lightTheme ? "#303233" : "#F3F4F4"
-            placeholderTextColor: Styles.lightTheme ? "#A9ABAD" : "#919397"
-            topPadding: 12
-            rightPadding: 14
-            bottomPadding: 12
-            leftPadding: 14
-            font.pixelSize: 14
-            selectionColor: getExternalFocusedRectColor()
-
-            anchors {
-                fill: outRect
-                margins:outRect.border.width
-            }
-
-            background: Rectangle {
-                id: inRect
-
-                implicitWidth: 200
-                implicitHeight: 36
-                color: Styles.alternateBackgroundColor
-                border.color: getBorderColor()
-                border.width: 2
-                radius: 8
-            }
-
-            Keys.onPressed:
-            {
-                if(event.key === Qt.Key_Backspace)
-                {
-                    root.backPressed();
-                }
-                else if((event.key === Qt.Key_V) && (event.modifiers & Qt.ControlModifier)) {
-                    pastePressed();
-                }
-            }
-
-        } // Qml.TextField -> textField
-
-    } // Rectangle -> outRect
-
-    Loader {
-        id: loader
-
-        sourceComponent: informativeTextIcon.length !== 0 ? textWithIcon : onlyText
-        height: parent.height
-        visible: showInformativeText
-
-        anchors {
-            top: outRect.bottom
-            left: root.left
-            leftMargin: textField.leftPadding
-            topMargin: 6
-            right: root.right
-            bottom: root.bottom
-        }
-
-        onVisibleChanged: {
-            root.implicitHeight = outRect.height + (item ? item.implicitHeight : 0)
-        }
-    } // Loader -> loader
-
-    Component {
-        id: textWithIcon
-
-        RowLayout {
-            Layout.leftMargin: textField.leftPadding
-            spacing: 8
+            color: "transparent"
+            border.color: textField.focus ? Styles.supportInfo : "transparent"
+            border.width: textField.focusBorderWidth
+            radius: textField.focusBorderRadius
 
             Custom.SvgImage {
-                id: textIcon
+                id: leftIcon
 
-                height: 8
-                width: 8
-                sourceSize: Qt.size(20, 20)
-                source: informativeTextIcon
-                color: getTextColor()
-                Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-                Layout.fillWidth: false
-                Layout.topMargin: 4
-                Layout.leftMargin: 6
+                visible: leftIcon.source != ""
+                sourceSize: textField.iconSize
+                color: Styles.iconSecondary
+                anchors.top: focusBorder.top
+                anchors.left: focusBorder.left
+                anchors.topMargin: textField.iconMargin
+                anchors.leftMargin: textField.iconMargin
+                z: 2
             }
 
-            Custom.RichText {
-                id: infoText
+            Rectangle {
 
-                wrapMode: Text.WordWrap
-                text: informativeText
-                Layout.fillWidth: true
-                Layout.alignment: Qt.AlignLeft
-                color: getTextColor()
-                Layout.leftMargin: 6
+                function getBorderColor() {
+                    var color = Styles.borderDisabled;
+                    if(hint.type === Custom.HintText.Type.Error) {
+                        color = Styles.textError;
+                    } else if(textField.focus) {
+                        color = Styles.borderStrongSelected;
+                    } else if(textField.text.length !== 0 && !textField.focus) {
+                        color = Styles.borderStrong;
+                    }
+                    return color;
+                }
+
+                width: textField.width - 2 * textField.focusBorderWidth
+                height: textField.height - 2 * textField.focusBorderWidth
+                color: Styles.pageBackground
+                border.color: getBorderColor()
+                border.width: textField.borderWidth
+                radius: textField.borderRadius
+                anchors.top: focusBorder.top
+                anchors.left: focusBorder.left
+                anchors.topMargin: textField.focusBorderWidth
+                anchors.leftMargin: textField.focusBorderWidth
+            }
+
+            Custom.SvgImage {
+                id: rightIcon
+
+                sourceSize: textField.iconSize
+                color: Styles.iconSecondary
+                anchors.top: focusBorder.top
+                anchors.right: focusBorder.right
+                anchors.topMargin: textField.iconMargin
+                anchors.rightMargin: textField.iconMargin
+                z: 2
+
+                MouseArea {
+                    id: rightIconMouseArea
+
+                    anchors.fill: parent
+                    cursorShape: Qt.PointingHandCursor
+                }
             }
         }
-    } // Component -> textWithIcon
 
-    Component {
-        id: onlyText
-
-        RowLayout {
-            Layout.leftMargin: textField.leftPadding
-
-            Custom.RichText {
-                id: infoText
-
-                wrapMode: Text.WordWrap
-                text: informativeText
-                Layout.leftMargin: 6
-                Layout.fillWidth: true
-                color: getBorderColor()
+        Keys.onPressed:
+        {
+            if(event.key === Qt.Key_Backspace)
+            {
+                root.backPressed();
             }
-        }
-    } // Component -> onlyText
-
-    /*
-     * Functions
-     */
-    function getBorderColor() {
-        if(error) {
-            return Styles.lightTheme ?  "#E31B57" : "#FD6F90";
-        } else if(textField.focus) {
-            return Styles.lightTheme ? "#04101E" : "#F4F4F5";
-        } else {
-            return Styles.lightTheme ?  "#D8D9DB" : "#616366";
+            else if((event.key === Qt.Key_V) && (event.modifiers & Qt.ControlModifier)) {
+                pastePressed();
+            }
         }
     }
 
-    function getTextColor() {
-        if(error) {
-            return Styles.lightTheme ?  "#E31B57" : "#FD6F90";
-        } else {
-            return Styles.textColor
-        }
+    Custom.HintText {
+        id: hint
+
+        Layout.fillWidth: true
+        Layout.leftMargin: 4
+        Layout.preferredHeight: hint.height
     }
 }
 

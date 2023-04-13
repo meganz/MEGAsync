@@ -1340,12 +1340,6 @@
         <file>images/retry.png</file>
         <file>images/retry@2x.png</file>
         <file>images/retry@3x.png</file>
-        <file>images/Onboarding/onboard_step1.png</file>
-        <file>images/Onboarding/onboard_step1@2x.png</file>
-        <file>images/Onboarding/onboard_step1@3x.png</file>
-        <file>images/Onboarding/login_folder.png</file>
-        <file>images/Onboarding/login_folder@2x.png</file>
-        <file>images/Onboarding/login_folder@3x.png</file>
         <file>images/Onboarding/pc.svg</file>
         <file>images/Onboarding/plus-circle.svg</file>
         <file>images/Onboarding/shield.svg</file>
@@ -1358,5 +1352,14 @@
         <file>images/Onboarding/help-circle.svg</file>
         <file>images/Onboarding/image-02.svg</file>
         <file>images/Onboarding/folder.svg</file>
+        <file>images/Onboarding/alert-triangle.svg</file>
+        <file>images/Onboarding/installation_type_backups.svg</file>
+        <file>images/Onboarding/lock.svg</file>
+        <file>images/Onboarding/login.png</file>
+        <file>images/Onboarding/twofa.png</file>
+        <file>images/Onboarding/syncs/full_sync.svg</file>
+        <file>images/Onboarding/syncs/mega.svg</file>
+        <file>images/Onboarding/syncs/pc.svg</file>
+        <file>images/Onboarding/syncs/selective_sync.svg</file>
     </qresource>
 </RCC>

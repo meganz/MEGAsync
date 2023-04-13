@@ -28,46 +28,58 @@ ListModel {
         return total;
     }
 
+    function getTooltipText(index) {
+        return "This is a text explanation, backup is not selectable..."
+    }
+
     signal rowSelectedChanged(bool selectedRow, bool selectedAll)
 
     ListElement {
         folder: "C:/Users/mega/Documents"
         selected: false
         size: "30 MB"
+        selectable: true
     }
     ListElement {
         folder: "C:/Users/mega/Images"
         selected: false
         size: "2.3 GB"
+        selectable: true
     }
     ListElement {
         folder: "C:/Users/mega/Videos"
         selected: false
         size: "783.4 KB"
+        selectable: true
     }
     ListElement {
         folder: "C:/Users/mega/Videos1"
         selected: false
         size: "1 KB"
+        selectable: true
     }
     ListElement {
         folder: "C:/Users/mega/Videos2"
         selected: false
         size: "2 KB"
+        selectable: true
     }
     ListElement {
         folder: "C:/Users/mega/Videos3"
         selected: false
         size: "3 KB"
+        selectable: true
     }
     ListElement {
         folder: "C:/Users/mega/Videos4"
         selected: false
         size: "4 KB"
+        selectable: true
     }
     ListElement {
         folder: "C:/Users/mega/Videos5"
         selected: false
         size: "5 KB"
+        selectable: true
     }
 }

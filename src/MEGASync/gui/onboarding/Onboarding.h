@@ -33,17 +33,17 @@ public:
 
     Q_INVOKABLE void onLoginClicked(const QVariantMap& data);
     Q_INVOKABLE void onRegisterClicked(const QVariantMap& data);
-    Q_INVOKABLE void onTwoFACompleted(const QString& pin);
+    Q_INVOKABLE void onTwoFARequested(const QString& pin);
     Q_INVOKABLE QString convertUrlToNativeFilePath(const QUrl& urlStylePath) const;
 
 signals:
     void twoFARequired();
     void userPassFailed();
+    void twoFAFailed();
     void loginFinished();
     void notNowFinished();
 
 public slots:
-    void onForgotPasswordClicked();
     void onNotNowClicked();
     QString getComputerName();
 

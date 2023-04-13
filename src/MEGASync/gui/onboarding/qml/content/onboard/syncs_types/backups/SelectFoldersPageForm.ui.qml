@@ -1,10 +1,17 @@
+// System
 import QtQuick 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.0
 
-import Components 1.0 as Custom
-import Onboard.Syncs_types 1.0
+// QML common
 import Common 1.0
+import Components 1.0 as Custom
+
+// Local
+import Onboard 1.0
+import Onboard.Syncs_types 1.0
+
+// C++
 import BackupFolderModel 1.0
 import BackupFolderFilterProxyModel 1.0
 
@@ -24,37 +31,44 @@ SyncsPage {
     }
 
     ColumnLayout {
-        spacing: 34
-        anchors.left: parent.left
-        anchors.leftMargin: 32
-        width: 488
+
+        anchors {
+            top: parent.top
+            left: parent.left
+            right: parent.right
+            margins: 32
+        }
+        spacing: 24
 
         Header {
-            title: qsTr("Select folders to back up")
-            description: qsTr("Selected folders from your computer to MEGA. Files will automatically back up when the desktop application is running.")
-            Layout.fillWidth: false
-            Layout.preferredWidth: parent.width
-            Layout.topMargin: 32
+            title: OnboardingStrings.selectBackupFoldersTitle
+            description: OnboardingStrings.selectBackupFoldersDescription
         }
 
         ColumnLayout {
-            width: parent.width
+
+            Layout.preferredWidth: parent.width
+            spacing: 12
 
             InfoAccount {
+                Layout.preferredWidth: parent.width
             }
 
             FoldersTable {
                 id: backupTable
 
+                Layout.preferredWidth: parent.width
+                Layout.preferredHeight: 186
                 backupProxyModel: backupProxyModel
                 backupModel: backupModel
             }
 
             Rectangle {
-                Layout.topMargin: 12
+                Layout.preferredWidth: parent.width
 
                 RowLayout {
                     id: addFolders
+
                     spacing: 9
 
                     Custom.SvgImage {
@@ -64,7 +78,7 @@ SyncsPage {
                     }
 
                     Text {
-                        text: qsTr("Add folders")
+                        text: OnboardingStrings.addFolders
                         font.family: "Inter"
                         font.styleName: "normal"
                         font.weight: Font.DemiBold

@@ -1,2 +1,12 @@
 module Onboard
+LoginPage 1.0 LoginPage.qml
+LoginPageForm 1.0 LoginPageForm.ui.qml
 OnboardingDialog 1.0 OnboardingDialog.qml
+OnboardingFlow 1.0 OnboardingFlow.qml
+singleton OnboardingStrings 1.0 OnboardingStrings.qml
+RegisterFlow 1.0 RegisterFlow.qml
+RegisterPage 1.0 RegisterPage.qml
+RegisterPageForm 1.0 RegisterPageForm.ui.qml
+SyncSelectTypeButton 1.0 SyncSelectTypeButton.qml
+TwoFAPage 1.0 TwoFAPage.qml
+TwoFAPageForm 1.0 TwoFAPageForm.ui.qml

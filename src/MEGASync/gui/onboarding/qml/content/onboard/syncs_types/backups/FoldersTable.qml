@@ -1,9 +1,16 @@
+// System
 import QtQuick 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.12
 
+// QML common
 import Common 1.0
 import Components 1.0 as Custom
+
+// Local
+import Onboard 1.0
+
+// C++
 import BackupFolderModel 1.0
 import BackupFolderFilterProxyModel 1.0
 
@@ -13,9 +20,7 @@ Rectangle {
     property BackupFolderFilterProxyModel backupProxyModel
     property BackupFolderModel backupModel
 
-    Layout.preferredWidth: 488
-    Layout.preferredHeight: 186
-    Layout.topMargin: 8
+    height: 186
     radius: 8
 
     Rectangle {
@@ -25,7 +30,7 @@ Rectangle {
         height: tableRectangle.height
         color: "transparent"
         border.color: Styles.borderStrong
-        border.width: 2
+        border.width: 1
         radius: 8
         z: 5
     }
@@ -86,7 +91,7 @@ Rectangle {
 
                     implicitHeight: parent.height
                     Layout.leftMargin: 22
-                    text: qsTr("[b]Select all[/b]");
+                    text: OnboardingStrings.selectAll
                     indeterminate: false
                     visible: !backupProxyModel.selectedFilterEnabled
 
@@ -100,7 +105,9 @@ Rectangle {
 
                     property int selectedRows: 0
 
-                    text: backupProxyModel.selectedFilterEnabled ? qsTr("Backup Folders") : "(" + selectedRows + ")"
+                    text: backupProxyModel.selectedFilterEnabled
+                          ? OnboardingStrings.backupFolders
+                          : "(" + selectedRows + ")"
                     font.pixelSize: 12
                     Layout.leftMargin: backupProxyModel.selectedFilterEnabled ? 22 : 4
                     Layout.fillWidth: true
@@ -160,7 +167,7 @@ Rectangle {
                 id: folderRowItem
 
                 Layout.preferredHeight: parent.height
-                Layout.preferredWidth: 456
+                Layout.preferredWidth: parent.width - 32
                 Layout.leftMargin: 16
                 radius: 8
 
@@ -188,6 +195,7 @@ Rectangle {
                         Custom.SvgImage {
                             Layout.leftMargin: 18
                             source: "../../../../../../images/Onboarding/folder.svg"
+                            opacity: selectable ? 1.0 : 0.3
                         }
 
                         Text {
@@ -197,6 +205,7 @@ Rectangle {
                             font.styleName: "normal"
                             font.weight: Font.Normal
                             font.pixelSize: 12
+                            color: selectable ? Styles.textPrimary : Styles.textDisabled
                         }
                     }
 
@@ -208,6 +217,7 @@ Rectangle {
                         font.styleName: "normal"
                         font.weight: Font.Normal
                         font.pixelSize: 10
+                        color: selectable ? Styles.textPrimary : Styles.textDisabled
                     }
                 }
 

@@ -1,26 +1,23 @@
+// System
 import QtQuick 2.12
 import QtQuick.Layouts 1.11
 import QtQuick.Controls 2.12
 
-import Onboarding 1.0
+// Local
 import Onboard.Syncs_types 1.0
+
+// C++
+import Onboarding 1.0
 
 StackView {
     id: onboardingFlow
 
-    readonly property string welcome: "welcome"
     readonly property string register: "register"
     readonly property string syncs: "syncs"
 
     state: register
 
     states: [
-        State {
-            name: welcome
-            StateChangeScript {
-                script: replace(welcomeComponent);
-            }
-        },
         State {
             name: register
             StateChangeScript {
@@ -34,19 +31,6 @@ StackView {
             }
         }
     ]
-
-    Component {
-        id: welcomeComponent
-
-        Welcome {
-            width: onboardingFlow.width
-            height: onboardingFlow.height
-
-            continueButton.onClicked: {
-                onboardingFlow.state = register;
-            }
-        }
-    }
 
     Component {
         id: registerComponent

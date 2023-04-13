@@ -15,23 +15,42 @@ Item {
     signal twoFARequired
     signal loginFinished
     signal notNowFinished
+    signal twoFAFailed
 
     function onForgotPasswordClicked() {
         console.info("onForgotPasswordClicked()");
+        return "https://mega.nz/recovery";
     }
 
     function onLoginClicked(data) {
         console.info("onLoginClicked() -> " + JSON.stringify(data));
-        twoFARequired();
+
+        // Comment/Uncomment the following lines to test different scenarios
+
+        // Login OK
+        loginFinished();
+
+        // Login failed
+        //userPassFailed();
+
+        // 2FA activated
+        //twoFARequired();
     }
 
     function onRegisterClicked(data) {
         console.info("onRegisterClicked() -> " + JSON.stringify(data));
     }
 
-    function onTwoFACompleted(key) {
-        console.info("onTwoFACompleted() -> key: " + key);
+    function onTwoFARequested(key) {
+        console.info("onTwoFARequested() -> key: " + key);
+
+        // Comment/Uncomment the following lines to test different scenarios
+
+        // Login OK
         loginFinished();
+
+        // Login failed
+        //twoFAFailed();
     }
 
     function onNotNowClicked() {

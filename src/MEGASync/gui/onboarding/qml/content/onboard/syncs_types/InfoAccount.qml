@@ -1,18 +1,25 @@
+// System
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 
+// QML common
 import Common 1.0
 import Components 1.0 as Custom
-import Onboarding 1.0
+
+// Local
 import AccountInfoData 1.0
+import Onboard 1.0
+
+// C++
+import Onboarding 1.0
 
 Rectangle {
     width: parent.width
     height: 48
     color: Styles.pageBackground
     border.color: Styles.borderStrong
-    border.width: 2
+    border.width: 1
     radius: 8
 
     RowLayout {
@@ -28,12 +35,13 @@ Rectangle {
                 id: typeImage
 
                 source: "../../../../../images/Onboarding/shield.svg"
+                sourceSize: Qt.size(16, 16)
             }
 
             Text {
                 id: typeText
 
-                text: qsTr("Free")
+                text: "Free"
                 Layout.alignment: Qt.AlignLeft
                 font.family: "Inter"
                 font.styleName: "normal"
@@ -45,7 +53,7 @@ Rectangle {
                     anchors.fill: parent
                     cursorShape: Qt.PointingHandCursor
                     onClicked: {
-                        console.debug("TODO: show plan info");
+                        Qt.openUrlExternally(Links.pricing);
                     }
                 }
             }
@@ -57,7 +65,7 @@ Rectangle {
             Layout.rightMargin: 24
 
             Text {
-                text: qsTr("Storage space")
+                text: OnboardingStrings.storageSpace
                 font.family: "Inter"
                 font.styleName: "normal"
                 font.weight: Font.DemiBold
@@ -104,31 +112,31 @@ Rectangle {
             {
                 case AccountInfoData.ACCOUNT_TYPE_FREE:
                     typeImage.source = "../../../../../images/Small_Free.png";
-                    typeText.text = qsTr("Free");
+                    typeText.text = OnboardingStrings.accountTypeFree;
                     break;
                 case AccountInfoData.ACCOUNT_TYPE_PROI:
                     typeImage.source = "../../../../../images/Small_Pro_I.png";
-                    typeText.text = qsTr("Pro I");
+                    typeText.text = OnboardingStrings.accountTypeProI;
                     break;
                 case AccountInfoData.ACCOUNT_TYPE_PROII:
                     typeImage.source = "../../../../../images/Small_Pro_II.png";
-                    typeText.text = qsTr("Pro II");
+                    typeText.text = OnboardingStrings.accountTypeProII;
                     break;
                 case AccountInfoData.ACCOUNT_TYPE_PROIII:
                     typeImage.source = "../../../../../images/Small_Pro_III.png";
-                    typeText.text = qsTr("Pro III");
+                    typeText.text = OnboardingStrings.accountTypeProIII;
                     break;
                 case AccountInfoData.ACCOUNT_TYPE_LITE:
                     typeImage.source = "../../../../../images/Small_Lite.png";
-                    typeText.text = qsTr("Pro Lite");
+                    typeText.text = OnboardingStrings.accountTypeLite;
                     break;
                 case AccountInfoData.ACCOUNT_TYPE_BUSINESS:
                     typeImage.source = "../../../../../images/Small_Business.png";
-                    typeText.text = qsTr("Business");
+                    typeText.text = OnboardingStrings.accountTypeBusiness;
                     break;
                 case AccountInfoData.ACCOUNT_TYPE_PRO_FLEXI:
                     typeImage.source = "../../../../../images/Small_Pro_Flexi.png";
-                    typeText.text = qsTr("Pro Flexi");
+                    typeText.text = OnboardingStrings.accountTypeProFlexi;
                     break;
                 default:
                     break;

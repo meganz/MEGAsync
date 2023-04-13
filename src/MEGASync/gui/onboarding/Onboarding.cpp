@@ -18,6 +18,7 @@ Onboarding::Onboarding(QObject *parent)
 
     qmlRegisterModule("Onboard", 1, 0);
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/OnboardingDialog.qml")), "Onboard", 1, 0, "OnboardingDialog");
+    qmlRegisterSingletonType(QUrl(QString::fromUtf8("qrc:/content/onboard/OnboardingStrings.qml")), "Onboard", 1, 0, "OnboardingStrings");
 
     qmlRegisterModule("Onboard.Syncs_types", 1, 0);
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/SyncsFlow.qml")), "Onboard.Syncs_types", 1, 0, "SyncsFlow");
@@ -62,20 +63,7 @@ void Onboarding::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* erro
     {
         case MegaRequest::TYPE_LOGIN:
         {
-            if (error->getErrorCode() == MegaError::API_EFAILED
-                    || error->getErrorCode() == MegaError::API_EEXPIRED)
-            {
-                //se oculta boton cancel?
-                qDebug() << "Onboarding::onRequestFinish -> TYPE_LOGIN Error code -> " << error->getErrorCode();
-            }
-            else if(error->getErrorCode() == MegaError::API_EMFAREQUIRED)
-            {
-                qDebug() << "Onboarding::onRequestFinish -> TYPE_LOGIN API_EMFAREQUIRED";
-                mPreferences->setEmail(QString::fromUtf8(request->getEmail()));
-                mPassword = QString::fromUtf8(request->getPassword());
-                emit twoFARequired();
-            }
-            else if(error->getErrorCode() == MegaError::API_OK)
+            if (error->getErrorCode() == MegaError::API_OK)
             {
                 qDebug() << "Onboarding::onRequestFinish -> TYPE_LOGIN API_OK";
                 mPreferences->setAccountStateInGeneral(Preferences::STATE_LOGGED_OK);
@@ -89,9 +77,25 @@ void Onboarding::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* erro
             }
             else
             {
-                qDebug() << "Onboarding::onRequestFinish -> TYPE_LOGIN Error code -> "
-                         << error->getErrorCode() << " Error string -> " << error->getErrorString();
-                emit userPassFailed();
+                mPreferences->setAccountStateInGeneral(Preferences::STATE_LOGGED_FAILED);
+                if (error->getErrorCode() == MegaError::API_EMFAREQUIRED)
+                {
+                    qDebug() << "Onboarding::onRequestFinish -> TYPE_LOGIN API_EMFAREQUIRED";
+                    mPreferences->setEmail(QString::fromUtf8(request->getEmail()));
+                    mPassword = QString::fromUtf8(request->getPassword());
+                    emit twoFARequired();
+                }
+                else if (error->getErrorCode() == MegaError::API_EFAILED)
+                {
+                    qDebug() << "Onboarding::onRequestFinish -> API_EFAILED";
+                    emit twoFAFailed();
+                }
+                else
+                {
+                    qDebug() << "Onboarding::onRequestFinish -> TYPE_LOGIN Error code -> "
+                             << error->getErrorCode() << " Error string -> " << error->getErrorString();
+                    emit userPassFailed();
+                }
             }
             break;
         }
@@ -103,16 +107,6 @@ void Onboarding::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* erro
                 emit loginFinished(); // maybe we should change this signal
             } else {
                 qDebug() << "Onboarding::onRequestFinish -> TYPE_CREATE_ACCOUNT Error code -> " << error->getErrorCode();
-            }
-            break;
-        }
-        case MegaRequest::TYPE_MULTI_FACTOR_AUTH_CHECK:
-        {
-            if(error->getErrorCode() == MegaError::API_OK)
-            {
-                qDebug() << "Onboarding::onRequestFinish -> TYPE_MULTI_FACTOR_AUTH_CHECK API_OK";
-            } else {
-                qDebug() << "Onboarding::onRequestFinish -> TYPE_MULTI_FACTOR_AUTH_CHECK Error code -> " << error->getErrorCode();
             }
             break;
         }
@@ -144,20 +138,16 @@ void Onboarding::onRegisterClicked(const QVariantMap& data)
                             this->mDelegateListener.get());
 }
 
-void Onboarding::onForgotPasswordClicked()
+void Onboarding::onTwoFARequested(const QString& pin)
 {
-    Utilities::openUrl(QUrl(QString::fromUtf8("mega://#recovery")));
-}
-
-void Onboarding::onTwoFACompleted(const QString& pin)
-{
-    qDebug() << "Onboarding::onTwoFACompleted -> pin = " << pin;
-    qDebug() << "Onboarding::onTwoFACompleted -> mEmail = " << mPreferences->email();
-    qDebug() << "Onboarding::onTwoFACompleted -> mPassword = " << mPassword;
+    qDebug() << "Onboarding::onTwoFARequested -> pin = " << pin;
+    qDebug() << "Onboarding::onTwoFARequested -> mEmail = " << mPreferences->email();
+    qDebug() << "Onboarding::onTwoFARequested -> mPassword = " << mPassword;
 
     mMegaApi->multiFactorAuthLogin(mPreferences->email().toUtf8().constData(),
                                    mPassword.toUtf8().constData(),
-                                   pin.toUtf8().constData());
+                                   pin.toUtf8().constData(),
+                                   this->mDelegateListener.get());
 }
 
 QString Onboarding::convertUrlToNativeFilePath(const QUrl &urlStylePath) const

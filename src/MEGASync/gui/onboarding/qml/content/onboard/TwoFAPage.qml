@@ -1,17 +1,25 @@
+// System
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 
+// C++
 import Onboarding 1.0
 
 TwoFAPageForm {
 
-    cancelButton.onClicked: {
-        registerStack.replace(registerPage)
+    signUpButton.onClicked: {
+        registerFlow.state = register;
     }
 
-    acceptButton.onClicked: {
-        if(key.length === 6) {
-            Onboarding.onTwoFACompleted(key);
+    loginButton.onClicked: {
+        Onboarding.onTwoFARequested(twoFAField.key);
+    }
+
+    Connections {
+        target: Onboarding
+
+        onTwoFAFailed: {
+            twoFAField.hasError = true;
         }
     }
 }

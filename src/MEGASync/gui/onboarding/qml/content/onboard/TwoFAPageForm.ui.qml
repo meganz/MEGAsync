@@ -1,71 +1,98 @@
+// System
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 
+// QML common
 import Components 1.0 as Custom
 import Common 1.0
 
-Rectangle {
-    id: loginForm
+// Local
+import Onboard 1.0
 
-    property alias cancelButton: cancelButton
-    property alias acceptButton: acceptButton
-    property string key: twoFAField.key2fa
+Rectangle {
+    id: root
+
+    property alias loginButton: loginButton
+    property alias signUpButton: signUpButton
+    property alias twoFAField: twoFAField
 
     color: Styles.backgroundColor
 
     ColumnLayout {
 
-        spacing: 16
+        spacing: 24
         anchors {
-            verticalCenter: loginForm.verticalCenter
-            left: loginForm.left
-            right: loginForm.right
-            leftMargin: 40
-            rightMargin: 40
+            verticalCenter: root.verticalCenter
+            left: root.left
+            right: root.right
+            leftMargin: 48
+            rightMargin: 48
         }
 
-        Custom.RichText {
-            Layout.alignment: Qt.AlignLeft
-            font.pixelSize: 20
-            text: qsTr("Continue with [b]two factor authentication[/b]")
-        }
+        ColumnLayout {
 
-        Text {
-            Layout.alignment: Qt.AlignLeft
-            text: qsTr("Enter the 6-digit Google Authenticator code for this account")
-            color: Styles.textColor
-            font.pixelSize: 14
+            Layout.leftMargin: 4
+            spacing: 12
+
+            Custom.RichText {
+                Layout.alignment: Qt.AlignLeft
+                text: OnboardingStrings.twoFATitle
+                font {
+                    pixelSize: 20
+                    weight: Font.Light
+                    family: "Inter"
+                    styleName: "Normal"
+                }
+            }
+
+            Text {
+                Layout.alignment: Qt.AlignLeft
+                text: OnboardingStrings.twoFASubtitle
+                color: Styles.textColor
+                font {
+                    pixelSize: 14
+                    weight: Font.Light
+                    family: "Inter"
+                    styleName: "Normal"
+                }
+            }
         }
 
         Custom.TwoFA {
             id: twoFAField
 
             Layout.preferredWidth: parent.width
+            Layout.fillHeight: true
+        }
+
+        Custom.HelpButton {
+            text: OnboardingStrings.twoFANeedHelp
+            url: Links.recovery
         }
     }
 
     RowLayout {
         spacing: 8
         anchors {
-            right: loginForm.right
-            bottom: loginForm.bottom
-            rightMargin: 32
+            right: root.right
+            bottom: root.bottom
+            rightMargin: 48
             bottomMargin: 24
         }
 
         Custom.Button {
-            id: cancelButton
+            id: loginButton
 
-            text: qsTr("Close")
+            primary: true
+            text: OnboardingStrings.login
             Layout.alignment: Qt.AlignRight
         }
 
         Custom.Button {
-            id: acceptButton
+            id: signUpButton
 
-            primary: true
-            text: qsTr("Accept")
+            text: OnboardingStrings.signUp
             Layout.alignment: Qt.AlignRight
         }
     }

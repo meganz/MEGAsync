@@ -1,113 +1,195 @@
+// System
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 
+// QML common
 import Components 1.0 as Custom
 import Common 1.0
+
+// Local
+import Onboard 1.0
+
+// C++
 import Onboarding 1.0
 
 Rectangle {
-    id: registerForm
+    id: root
+
+    property alias firstName: firstName
+    property alias lastName: lastName
+    property alias firstLastNameDescription: firstLastNameDescription
+    property alias email: email
+    property alias password: password
+    property alias confirmPassword: confirmPassword
 
     property alias loginButton: loginButton
-    property alias registerButton: registerButton
-    property alias cancelButton: cancelButton
+    property alias nextButton: nextButton
 
-    property bool passwordError: false
-
-    readonly property string password: password.textField.text
-    readonly property string re_password: repeatPassword.textField.text
-    readonly property string email: email.textField.text
-    readonly property string name: firstName.textField.text
-    readonly property string last_name: lastName.textField.text
+    property int contentMargin: 48
 
     color: Styles.backgroundColor
 
-    ColumnLayout {
-        id: formLayout
+    Custom.RichText {
+        id: title
 
-        spacing: 12
         anchors {
-            left: parent.left
-            right: parent.right
-            top: parent.top
-            topMargin: 24
-            leftMargin: 40
-            rightMargin: 40
+            left: root.left
+            top: root.top
+            leftMargin: contentMargin + 4
+            topMargin: contentMargin
         }
 
-        Custom.RichText {
-            Layout.alignment: Qt.AlignCenter | Qt.AlignTop
-            Layout.bottomMargin: 4
-            font.pixelSize: 20
-            text: qsTr("Create your [b]MEGA account[/b]")
+        font.pixelSize: 20
+        text: OnboardingStrings.signUpTitle
+        Layout.leftMargin: 4
+    }
+
+    ScrollView {
+        id: scrollView
+
+        anchors {
+            left: root.left
+            top: title.bottom
+            leftMargin: contentMargin
+            topMargin: contentMargin / 2
+            rightMargin: contentMargin
         }
 
-        RowLayout {
+        width: formLayout.width + 24
+        height: 380
+        clip : true
 
-            Custom.TextField {
-                id: firstName
+        ScrollBar.vertical: ScrollBar {
+            id: scrollbar
 
-                Layout.fillWidth: true
-                Layout.alignment: Qt.AlignTop
-                placeholderText: qsTr("First name")
+            anchors.right: scrollView.right
+            height: scrollView.height
+            width: 8
+            visible: formLayout.height > scrollView.height
+            contentItem: Rectangle {
+                radius: 10
+                color: Styles.iconPrimary
+                opacity: scrollbar.pressed ? 0.6 : 1.0
+            }
+            background: Rectangle {
+                radius: 10
+                color: "#000000"
+                opacity: 0.1
+            }
+        }
+
+        ColumnLayout {
+            id: formLayout
+
+            width: root.width - 2 * contentMargin + 2 * email.textField.focusBorderWidth
+            spacing: contentMargin / 2
+
+            ColumnLayout {
+                Layout.preferredWidth: formLayout.width
+                spacing: 12
+
+                ColumnLayout {
+                    spacing: 4
+
+                    RowLayout {
+                        id: nameLayout
+
+                        spacing: 8
+                        Layout.preferredWidth: formLayout.width
+
+                        Custom.TextField {
+                            id: firstName
+
+                            title: OnboardingStrings.firstName
+                            Layout.preferredWidth: (nameLayout.width - 8) / 2
+                        }
+
+                        Custom.TextField {
+                            id: lastName
+
+                            title: OnboardingStrings.lastName
+                            Layout.preferredWidth: (nameLayout.width - 8) / 2
+                        }
+                    }
+
+                    RowLayout {
+                        id: firstLastNameDescription
+
+                        width: formLayout.width
+                        visible: false
+                        spacing: 8
+                        Layout.leftMargin: 4
+
+                        Custom.SvgImage {
+                            source: "../../../../images/Onboarding/alert-triangle.svg"
+                            sourceSize: Qt.size(16, 16)
+                            color: Styles.textError
+                        }
+
+                        Text {
+                            Layout.fillWidth: true
+                            text: OnboardingStrings.errorFirstLastName
+                            color: Styles.textError
+                            wrapMode: Text.WordWrap
+                            font {
+                                pixelSize: 12
+                                weight: Font.Light
+                                family: "Inter"
+                                styleName: "Medium"
+                            }
+                        }
+                    }
+                }
+
+                Custom.EmailTextField {
+                    id: email
+
+                    title: OnboardingStrings.email
+                    Layout.preferredWidth: formLayout.width
+                }
+
+                Custom.PasswordTextField {
+                    id: password
+
+                    title: OnboardingStrings.password
+                    Layout.preferredWidth: formLayout.width
+                }
+
+                Custom.PasswordTextField {
+                    id: confirmPassword
+
+                    title: OnboardingStrings.confirmPassword
+                    Layout.preferredWidth: formLayout.width
+                }
+
             }
 
-            Custom.TextField {
-                id: lastName
+            ColumnLayout {
+                id: checksLayout
 
-                Layout.fillWidth: true
-                Layout.alignment: Qt.AlignTop
-                placeholderText: qsTr("Last name")
+                Layout.preferredWidth: formLayout.width - 2 * email.textField.focusBorderWidth
+                Layout.leftMargin: 4
+                spacing: 16
+
+                Custom.CheckBox {
+                    id: dataLossCheckBox
+
+                    Layout.preferredWidth: checksLayout.width
+                    url: Links.security
+                    text: OnboardingStrings.understandLossPassword
+                }
+
+                Custom.CheckBox {
+                    id: termsCheckBox
+
+                    Layout.preferredWidth: checksLayout.width
+                    Layout.bottomMargin: 5
+                    url: Links.terms
+                    text: OnboardingStrings.agreeTerms
+                }
             }
-        }
 
-        Custom.TextField {
-            id: email
-
-            Layout.fillWidth: true
-            Layout.alignment: Qt.AlignTop
-            placeholderText: qsTr("Email")
-        }
-
-        Custom.PasswordTextField {
-            id: password
-
-            Layout.fillWidth: true
-            Layout.alignment: Qt.AlignTop
-            placeholderText: qsTr("Password")
-            error: passwordError
-        }
-
-        Custom.PasswordTextField {
-            id: repeatPassword
-
-            Layout.fillWidth: true
-            Layout.alignment: Qt.AlignTop
-            placeholderText: qsTr("Repeat password")
-            error: passwordError
-            showInformativeText: passwordError
-            informativeText: qsTr("The password entered don’t match. Please try again.")
-            informativeTextIcon: "images/eye.svg"
-        }
-
-        Custom.CheckBox {
-            id: dataLossCheckBox
-
-            Layout.fillWidth: true
-            Layout.topMargin: 24
-            url: "http://www.stackoverflow.com/" //TODO: CHANGE LINK
-            text: qsTr("I understand that if [b]I lose my password, I may lose my data[/b].
-Read more about [a]MEGA’s end-to-end encryption.[/a]")
-        }
-
-        Custom.CheckBox {
-            id: termsCheckBox
-
-            Layout.fillWidth: true
-            Layout.topMargin: 4
-            url: "http://www.stackoverflow.com/" //TODO: CHANGE LINK
-            text: qsTr("I agree with MEGA [a]Terms of service.[/a]")
         }
     }
 
@@ -115,32 +197,28 @@ Read more about [a]MEGA’s end-to-end encryption.[/a]")
         id: buttonLayout
 
         spacing: 8
+
         anchors {
-            right: parent.right
-            bottom: parent.bottom
-            rightMargin: 32
-            bottomMargin: 24
+            right: root.right
+            bottom: root.bottom
+            bottomMargin: 32
+            rightMargin: contentMargin
         }
 
         Custom.Button {
-            id: cancelButton
+            id: nextButton
 
-            text: qsTr("Cancel")
+            enabled: dataLossCheckBox.checked && termsCheckBox.checked
+            primary: true
+            iconSource: "../../../images/Onboarding/arrow_right.svg"
+            text: OnboardingStrings.next
         }
 
         Custom.Button {
             id: loginButton
 
-            text: qsTr("Login")
-        }
-
-        Custom.Button {
-            id: registerButton
-
-            primary: true
-            iconRight: true
-            iconSource: "../../../../../images/Onboarding/arrow_right.svg"
-            text: qsTr("Next")
+            text: OnboardingStrings.login
         }
     }
+
 }

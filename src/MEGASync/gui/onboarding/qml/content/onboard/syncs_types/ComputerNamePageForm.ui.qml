@@ -1,48 +1,43 @@
+// System
 import QtQuick 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.0
 
+// QML common
 import Components 1.0 as Custom
+import Onboard 1.0
 
 SyncsPage {
 
     property alias computerNameTextField: computerNameTextField
 
     ColumnLayout {
-        anchors.leftMargin: 32
-        anchors.left: parent.left
+
+        anchors {
+            top: parent.top
+            left: parent.left
+            right: parent.right
+            margins: 32
+        }
         spacing: 12
 
         Header {
-            title: qsTr("Set up MEGA")
-            description: qsTr("You can assign the name for personal use or workgroup membership of this computer.")
-            Layout.fillWidth: false
-            Layout.preferredWidth: 488
-            Layout.topMargin: 32
+            title: OnboardingStrings.computerNameTitle
+            description: OnboardingStrings.computerNameDescription
         }
 
-        Image {
+        Custom.SvgImage {
             source: "../../../../../images/Onboarding/pc.svg"
-            Layout.topMargin: 12
-        }
-
-        Text {
-            text: qsTr("Computer name");
-            Layout.topMargin: 12
-            Layout.preferredHeight: 20
-            font.pixelSize: 14
-            font.weight: Font.DemiBold
-            font.family: "Inter"
-            font.styleName: "Medium"
-            lineHeight: 20
+            sourceSize: Qt.size(48, 48)
         }
 
         Custom.TextField {
             id: computerNameTextField
 
-            Layout.fillWidth: true
+            Layout.preferredWidth: parent.width
             Layout.preferredHeight: 48
             Layout.leftMargin: -4
+            title: OnboardingStrings.computerName
             enabled: false
         }
     }

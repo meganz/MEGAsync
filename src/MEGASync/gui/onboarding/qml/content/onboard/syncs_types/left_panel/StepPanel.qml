@@ -1,8 +1,11 @@
+// System
 import QtQuick 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.0
 
+// QML common
 import Common 1.0
+import Components 1.0 as Custom
 
 Rectangle {
 
@@ -379,21 +382,12 @@ Rectangle {
 
         }
 
-        Image {
-            source: "../../../../../../images/Onboarding/help-circle.svg"
-            Layout.leftMargin: 32
+        Custom.HelpButton {
+            Layout.leftMargin: 25
             Layout.bottomMargin: 25
             Layout.alignment: Qt.AlignBottom
-
-            MouseArea {
-                anchors.fill: parent
-                cursorShape: Qt.PointingHandCursor
-                onClicked: {
-                    Qt.openUrlExternally("https://help.mega.io/installs-apps/desktop-syncing");
-                }
-            }
+            url: "https://help.mega.io/installs-apps/desktop-syncing"
         }
-
     }
 
 }

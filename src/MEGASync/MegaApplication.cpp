@@ -447,18 +447,20 @@ void MegaApplication::initialize()
 
     qmlRegisterModule("Components", 1, 0);
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/Button.qml")), "Components", 1, 0, "Button");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/RoundButton.qml")), "Components", 1, 0, "RoundButton");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/RichText.qml")), "Components", 1, 0, "RichText");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/TextField.qml")), "Components", 1, 0, "TextField");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/HelpButton.qml")), "Components", 1, 0, "HelpButton");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/checkBoxes/CheckBox.qml")), "Components", 1, 0, "CheckBox");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/images/SvgImage.qml")), "Components", 1, 0, "SvgImage");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/EmailTextField.qml")), "Components", 1, 0, "EmailTextField");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/IconTextField.qml")), "Components", 1, 0, "IconTextField");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/PasswordTextField.qml")), "Components", 1, 0, "PasswordTextField");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/TextField.qml")), "Components", 1, 0, "TextField");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/TwoFA.qml")), "Components", 1, 0, "TwoFA");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/images/SvgImage.qml")), "Components", 1, 0, "SvgImage");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/checkBoxes/CheckBox.qml")), "Components", 1, 0, "CheckBox");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/Button.qml")), "Components", 1, 0, "Button");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/dialogs/QmlDialog.qml")), "Components", 1, 0, "QmlDialog");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/HintText.qml")), "Components", 1, 0, "HintText");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/RichText.qml")), "Components", 1, 0, "RichText");
 
     qmlRegisterModule("Common", 1, 0);
+    qmlRegisterSingletonType(QUrl(QString::fromUtf8("qrc:/common/Links.qml")), "Common", 1, 0, "Links");
+    qmlRegisterSingletonType(QUrl(QString::fromUtf8("qrc:/common/RegexExpressions.qml")), "Common", 1, 0, "RegexExpressions");
     qmlRegisterSingletonType(QUrl(QString::fromUtf8("qrc:/common/Styles.qml")), "Common", 1, 0, "Styles");
 
     qmlRegisterType<QmlDialog>("com.qmldialog", 1, 0, "QmlDialog");

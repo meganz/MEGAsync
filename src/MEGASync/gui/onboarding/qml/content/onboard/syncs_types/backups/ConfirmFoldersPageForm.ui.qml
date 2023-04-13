@@ -1,10 +1,17 @@
+// System
 import QtQuick 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.0
 
-import Onboard.Syncs_types 1.0
+// QML common
 import Components 1.0 as Custom
 import Common 1.0
+
+// Local
+import Onboard 1.0
+import Onboard.Syncs_types 1.0
+
+// C++
 import BackupFolderModel 1.0
 
 SyncsPage {
@@ -14,72 +21,41 @@ SyncsPage {
     property FoldersTable backupTable
 
     ColumnLayout {
+
+        anchors {
+            top: parent.top
+            left: parent.left
+            right: parent.right
+            margins: 32
+        }
         spacing: 24
-        anchors.left: parent.left
-        anchors.leftMargin: 32
-        width: 488
 
         Header {
-            title: qsTr("Confirm folders to back up")
-            description: qsTr("Will be added to your cloud and available in your other devices.")
-            Layout.fillWidth: false
-            Layout.preferredWidth: parent.width
-            Layout.topMargin: 32
+            title: OnboardingStrings.confirmBackupFoldersTitle
+            description: OnboardingStrings.confirmBackupFoldersDescription
         }
 
         ColumnLayout {
             id: mainLayout
 
-            width: parent.width
+            Layout.preferredWidth: parent.width
             spacing: 24
 
             FoldersTable {
+                Layout.preferredWidth: parent.width
+                Layout.preferredHeight: 176
                 backupProxyModel: backupTable.backupProxyModel
                 backupModel: backupTable.backupModel
             }
 
-            ColumnLayout {
-                spacing: 4
+            Custom.TextField {
+                id: folderField
 
-                Text {
-                    text: qsTr("Backup to:")
-                    font.pixelSize: 12
-                    font.weight: Font.DemiBold
-                    font.family: "Inter"
-                    font.styleName: "normal"
-                }
-
-                Rectangle {
-                    Layout.preferredWidth: mainLayout.width
-                    Layout.preferredHeight: 36
-                    color: Styles.pageBackground
-                    border.color: Styles.borderStrong
-                    border.width: 2
-                    radius: 8
-
-                    RowLayout {
-                        id: backupToInfo
-
-                        spacing: 6
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        Custom.SvgImage {
-                            Layout.leftMargin: 10
-                            source: "../../../../../../images/Onboarding/cloud.svg"
-                            sourceSize: Qt.size(16, 16)
-                            color: Styles.iconSecondary
-                        }
-
-                        Text {
-                            text: qsTr("/Backups")
-                            color: Styles.textPlaceholder
-                            font.family: "Inter"
-                            font.styleName: "normal"
-                            font.weight: Font.Thin
-                            font.pixelSize: 14
-                        }
-                    }
-                }
+                Layout.preferredWidth: parent.width
+                Layout.leftMargin: -folderField.textField.focusBorderWidth
+                title: OnboardingStrings.backupTo
+                text: "/Backups"
+                leftIcon.source: "../../../../../../images/Onboarding/cloud.svg"
             }
         }
     }

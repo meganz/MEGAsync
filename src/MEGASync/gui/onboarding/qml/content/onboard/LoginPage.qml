@@ -1,12 +1,16 @@
+// System
 import QtQuick 2.12
 
+// QML common
+import Components 1.0
+
+// Local
 import Onboarding 1.0
 
-LoginPageForm {
+// C++
+import Onboard 1.0
 
-    forgotPasswordHyperlinkArea.onClicked: {
-        Onboarding.onForgotPasswordClicked();
-    }
+LoginPageForm {
 
     Keys.onEnterPressed: {
         loginButton.clicked();
@@ -17,12 +21,35 @@ LoginPageForm {
     }
 
     loginButton.onClicked: {
-        if(email.length !== 0 && password.length !== 0) {
-            Onboarding.onLoginClicked({[Onboarding.OnboardEnum.EMAIL]: email,
-                                       [Onboarding.OnboardEnum.PASSWORD]: password})
+        var error = false;
+
+        if(!email.valid()) {
+            error = true;
+            email.hint.description = OnboardingStrings.errorValidEmail;
+            email.hint.type = HintText.Type.Error;
+        } else {
+            email.hint.type = HintText.Type.None;
         }
+
+        if(password.text.length === 0) {
+            error = true;
+            password.hint.type = HintText.Type.Error;
+            password.hint.description = OnboardingStrings.errorEmptyPassword;
+        } else {
+            password.hint.type = HintText.Type.None;
+        }
+
+        if(error) {
+            return;
+        }
+
+        Onboarding.onLoginClicked({ [Onboarding.OnboardEnum.EMAIL]: email.text,
+                                    [Onboarding.OnboardEnum.PASSWORD]: password.text })
     }
 
+    signUpButton.onClicked: {
+        registerFlow.state = register;
+    }
 }
 
 

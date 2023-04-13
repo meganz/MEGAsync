@@ -1,7 +1,10 @@
-import Components 1.0
+// System
 import QtQuick 2.12
 import QtQuick.Controls 2.12 as Qml
 import QtQuick.Layouts 1.12
+
+// Local
+import Components 1.0
 import Common 1.0
 
 Qml.RoundButton {
