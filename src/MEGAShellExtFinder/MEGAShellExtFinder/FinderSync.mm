@@ -301,6 +301,10 @@ void cleanItemsOfFolder(std::string dirPath)
         {
             [[FIFinderSyncController defaultController] setBadgeIdentifier:[self badgeIdentifierFromCode:state] forURL:[NSURL fileURLWithPath:urlPath]];
         }
+        else
+        {
+            [[FIFinderSyncController defaultController] setBadgeIdentifier:[self badgeIdentifierFromCode:FILE_NONE] forURL:[NSURL fileURLWithPath:urlPath]];
+        }
         
         return;
     }
