@@ -20,7 +20,7 @@ std::shared_ptr<AbstractShellNotifier> LinuxPlatform::mShellNotifier = nullptr;
 
 static QString autostart_dir = QDir::homePath() + QString::fromAscii("/.config/autostart/");
 
-QString LinuxPlatform::desktop_file = autostart_dir + QString::fromAscii("megasync.desktop");
+QString LinuxPlatform::desktop_file = autostart_dir + QString::fromAscii("nz.mega.MEGAsync.desktop");
 QString LinuxPlatform::set_icon = QString::fromUtf8("gvfs-set-attribute -t string \"%1\" metadata::custom-icon file://%2");
 QString LinuxPlatform::remove_icon = QString::fromUtf8("gvfs-set-attribute -t unset \"%1\" metadata::custom-icon");
 QString LinuxPlatform::custom_icon = QString::fromUtf8("/usr/share/icons/hicolor/256x256/apps/mega.png");
@@ -83,7 +83,7 @@ bool LinuxPlatform::startOnStartup(bool value)
                     return false;
                 }
             }
-            QString app_desktop = QString::fromAscii("/usr/share/applications/megasync.desktop");
+            QString app_desktop = QString::fromAscii("/usr/share/applications/nz.mega.MEGAsync.desktop");
             if (QFile(app_desktop).exists())
             {
                 return QFile::copy(app_desktop, desktop_file);

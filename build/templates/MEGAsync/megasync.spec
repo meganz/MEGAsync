@@ -585,7 +585,7 @@ killall -s SIGUSR2 megasync 2> /dev/null || true
 %files
 %defattr(-,root,root)
 %{_bindir}/%{name}
-%{_datadir}/applications/megasync.desktop
+%{_datadir}/applications/nz.mega.MEGAsync.desktop
 %{_datadir}/icons/hicolor/*/*/mega.png
 %{_datadir}/icons/hicolor/*/*/*
 %{_datadir}/icons/*/*/*/*

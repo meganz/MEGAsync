@@ -70,7 +70,7 @@ make
 %install
 make install DESTDIR=%{buildroot}%{_bindir}
 #mkdir -p %{buildroot}%{_datadir}/applications
-#%{__install} MEGAsync/platform/linux/data/megasync.desktop -D %{buildroot}%{_datadir}/applications
+#%{__install} MEGAsync/platform/linux/data/nz.mega.MEGAsync.desktop -D %{buildroot}%{_datadir}/applications
 
 %if 0%{?suse_version}
 %suse_update_desktop_file -n -i megasync Network System
@@ -78,7 +78,7 @@ make install DESTDIR=%{buildroot}%{_bindir}
 desktop-file-install \
     --add-category="Network" \
     --dir %{buildroot}%{_datadir}/applications \
-%{buildroot}%{_datadir}/applications/megasync.desktop
+%{buildroot}%{_datadir}/applications/nz.mega.MEGAsync.desktop
 %endif
 
 %post
@@ -232,7 +232,7 @@ killall megasync 2> /dev/null || true
 %files
 %defattr(-,root,root)
 %{_bindir}/%{name}
-%{_datadir}/applications/megasync.desktop
+%{_datadir}/applications/nz.mega.MEGAsync.desktop
 %{_datadir}/icons/hicolor/*/apps/mega.png
 %{_datadir}/icons/hicolor/*/*/mega.png
 

@@ -81,7 +81,7 @@ unix:!macx {
 
         # desktop
         desktop.path = $$DESKTOP_DESTDIR/share/applications
-        desktop.files = $$PWD/linux/data/megasync.desktop
+        desktop.files = $$PWD/linux/data/nz.mega.MEGAsync.desktop
         desktop.commands = update-desktop-database &> /dev/null || true
         INSTALLS += desktop
 
