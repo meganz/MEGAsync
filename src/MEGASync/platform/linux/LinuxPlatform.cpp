@@ -114,7 +114,8 @@ bool LinuxPlatform::isStartOnStartupActive()
 bool LinuxPlatform::isTilingWindowManager()
 {
     static const QSet<QString> tiling_wms = {
-        QString::fromUtf8("i3")
+        QString::fromUtf8("i3"),
+        QString::fromUtf8("xmonad")
     };
 
     return getValue("MEGASYNC_ASSUME_TILING_WM", false)
