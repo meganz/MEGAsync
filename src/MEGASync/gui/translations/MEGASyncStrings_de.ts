@@ -1441,9 +1441,9 @@
         <translation><numerusform>Auf ein weiteres Duplikat anwenden</numerusform><numerusform>Auf alle %1 Duplikate anwenden</numerusform></translation>
     </message>
     <message>
-        <source>The file at this destination will be updated with a new version.</source>
+        <source>The file at this destination will be updated if the new file is different.</source>
         <translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
-        <translation>Die Datei am Zielort wird mit einer neuen Version aktualisiert.</translation>
+        <translation>Die Datei am Zielort wird aktualisiert, wenn die neue Datei unterschiedlich ist.</translation>
     </message>
 </context>
 <context>
@@ -2576,11 +2576,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Es wurde keine Taskleiste für das App-Symbol gefunden. Versuchen Sie, die App erneut zu starten.</translation>
     </message>
     <message>
-        <source>The link can&apos;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
-        <translatorcomment>Notification error message shown while generating a public link of a file from an incoming shared folder or from the rubbish bin</translatorcomment>
-        <translation>Sie können keine Links auf Dateien erstellen, die sich in einer Ordnerfreigabe oder in Ihrem Papierkorb befinden.</translation>
-    </message>
-    <message>
         <source>Upload</source>
         <translatorcomment>Label for the menu item that opens the dialog to upload files to MEGA</translatorcomment>
         <translation>Hochladen</translation>
@@ -2854,11 +2849,6 @@ Die Transfers werden automatisch fortgesetzt, wenn Sie die App erneut öffnen.</
         <translation>Einstellungen öffnen</translation>
     </message>
     <message>
-        <source>Error getting link: File not found</source>
-        <translatorcomment>Notification message shown an error of file not found while getting a public link.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Settings</source>
         <translatorcomment>This is the string used to refer to settings.</translatorcomment>
         <translation>Einstellungen</translation>
@@ -2886,12 +2876,12 @@ Die Transfers werden automatisch fortgesetzt, wenn Sie die App erneut öffnen.</
     <message>
         <source>Your sync &quot;%1&quot; has been temporarily disabled: %2</source>
         <translatorcomment>Warning message shown when a sync is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ihr Sync „%1“ wurde vorübergehend deaktiviert: %2</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been temporarily disabled: %2</source>
         <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ihr Backup „%1“ wurde vorübergehend deaktiviert: %2</translation>
     </message>
     <message>
         <source>Error transferring folder: %1</source>
@@ -4116,12 +4106,16 @@ Bitte geben Sie einen anderen Namen ein.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Security upgraded.
-- Detected crashes on Windows, Linux, and macOS fixed.
+        <source>- You can now search the stored data in your account.
+- We've improved system notifications.
+- We've enhanced the UI.
+- We've fixed the detected crashes on Windows, Linux, and macOS.
 </source>
-        <translatorcomment>Changelog for v4.8.8</translatorcomment>
-        <translation>- Sicherheit erhöht
-- Erkannte Abstürze unter Windows, Linux und macOS behoben</translation>
+        <translation>- Sie können nun die in Ihrem Account gespeicherten Daten durchsuchen.
+- Wir haben die Systembenachrichtigungen verbessert.
+- Wir haben die Bedienoberfläche verbessert.
+- Wir haben erkannte Abstürze unter Windows, Linux und macOS behoben.
+</translation>
     </message>
 </context>
 <context>

@@ -1441,9 +1441,9 @@ Dans certains cas, ils pourraient comprendre des détails sur vos données, tels
         <translation><numerusform>Appliquer à l’autre doublon</numerusform><numerusform>Appliquer à tous les %1&#xa0;doublons</numerusform></translation>
     </message>
     <message>
-        <source>The file at this destination will be updated with a new version.</source>
+        <source>The file at this destination will be updated if the new file is different.</source>
         <translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
-        <translation>Le fichier dans cette destination sera remplacé par une nouvelle version.</translation>
+        <translation>Sur la destination, le fichier sera mis à jour si le nouveau fichier est différent.</translation>
     </message>
 </context>
 <context>
@@ -2293,7 +2293,7 @@ Dans certains cas, ils pourraient comprendre des détails sur vos données, tels
     <message>
         <source>There is not enough space on %1. You need an additional %2 to download these files.</source>
         <translatorcomment>Label explaining the problem, %1 is the download target disk name. %2 is the needed size to continue with the download (the size unit depends on the quantity) </translatorcomment>
-        <translation>Il n’y a pas suffisamment d’espace sur %1. Il vous manque %2 pour télécharger ces fichiers.</translation>
+        <translation>Il n’y a pas assez d’espace sur %1. Il vous faut %2 de plus pour télécharger ces fichiers.</translation>
     </message>
     <message>
         <source>Free space: %1</source>
@@ -2576,11 +2576,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Impossible de trouver une zone de notification pour y placer l’icône de l’appli. Essayez de relancer l’appli.</translation>
     </message>
     <message>
-        <source>The link can&apos;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
-        <translatorcomment>Notification error message shown while generating a public link of a file from an incoming shared folder or from the rubbish bin</translatorcomment>
-        <translation>Le lien ne peut pas être généré, car le fichier se trouve soit dans un dossier partagé entrant, soit dans votre Corbeille.</translation>
-    </message>
-    <message>
         <source>Upload</source>
         <translatorcomment>Label for the menu item that opens the dialog to upload files to MEGA</translatorcomment>
         <translation>Téléverser</translation>
@@ -2854,11 +2849,6 @@ Les transferts reprendront automatiquement quand vous rouvrirez l’appli.</nume
         <translation>Ouvrir Paramètres</translation>
     </message>
     <message>
-        <source>Error getting link: File not found</source>
-        <translatorcomment>Notification message shown an error of file not found while getting a public link.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Settings</source>
         <translatorcomment>This is the string used to refer to settings.</translatorcomment>
         <translation>Paramètres</translation>
@@ -2886,12 +2876,12 @@ Les transferts reprendront automatiquement quand vous rouvrirez l’appli.</nume
     <message>
         <source>Your sync &quot;%1&quot; has been temporarily disabled: %2</source>
         <translatorcomment>Warning message shown when a sync is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Votre synchronisation «&#xa0;%1&#xa0;» a été désactivée temporairement&#xa0;: %2</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been temporarily disabled: %2</source>
         <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Votre sauvegarde «&#xa0;%1&#xa0;» a été désactivée temporairement&#xa0;: %2</translation>
     </message>
     <message>
         <source>Error transferring folder: %1</source>
@@ -4117,12 +4107,15 @@ Saisissez un nom différent.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Security upgraded.
-- Detected crashes on Windows, Linux, and macOS fixed.
+        <source>- You can now search the stored data in your account.
+- We've improved system notifications.
+- We've enhanced the UI.
+- We've fixed the detected crashes on Windows, Linux, and macOS.
 </source>
-        <translatorcomment>Changelog for v4.8.8</translatorcomment>
-        <translation>– Mise à niveau de la sécurité
-– Correction de plantages détectés sous Windows, Linux et macOS</translation>
+        <translation>– Vous pouvez désormais effectuer une recherche dans les données stockées dans votre compte.
+– Nous avons amélioré les notifications du système.
+– Nous avons amélioré l’interface graphique.
+– Nous avons corrigé les plantages détectés sous Windows, Linux et macOS.</translation>
     </message>
 </context>
 <context>

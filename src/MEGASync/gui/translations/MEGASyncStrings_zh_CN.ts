@@ -1441,9 +1441,9 @@
         <translation><numerusform>应用到所有%1个重复项</numerusform></translation>
     </message>
     <message>
-        <source>The file at this destination will be updated with a new version.</source>
+        <source>The file at this destination will be updated if the new file is different.</source>
         <translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
-        <translation>此位置的文件将更新为新版本。</translation>
+        <translation>如果新文件与目标文件不同，目标文件将被更新。</translation>
     </message>
 </context>
 <context>
@@ -2576,11 +2576,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>我们无法找到系统托盘来放置应用程序图标。请尝试再次启动应用程序。</translation>
     </message>
     <message>
-        <source>The link can&apos;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
-        <translatorcomment>Notification error message shown while generating a public link of a file from an incoming shared folder or from the rubbish bin</translatorcomment>
-        <translation>由于文件位于传入的共享文件夹或您的回收站中，无法生成链接。</translation>
-    </message>
-    <message>
         <source>Upload</source>
         <translatorcomment>Label for the menu item that opens the dialog to upload files to MEGA</translatorcomment>
         <translation>上传</translation>
@@ -2851,11 +2846,6 @@ Transfer will automatically resume when you re-open the app.</source>
         <source>Open settings</source>
         <translatorcomment>Button label to open MEGAsync settings dialog.</translatorcomment>
         <translation>打开设置</translation>
-    </message>
-    <message>
-        <source>Error getting link: File not found</source>
-        <translatorcomment>Notification message shown an error of file not found while getting a public link.</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Settings</source>
@@ -4115,12 +4105,16 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Security upgraded.
-- Detected crashes on Windows, Linux, and macOS fixed.
+        <source>- You can now search the stored data in your account.
+- We've improved system notifications.
+- We've enhanced the UI.
+- We've fixed the detected crashes on Windows, Linux, and macOS.
 </source>
-        <translatorcomment>Changelog for v4.8.8</translatorcomment>
-        <translation>- 安全性升级
-- 修复了已知的在Windows, Linux, 和macOS上的崩溃问题</translation>
+        <translation>－现在您可以搜索您账户中存储的数据。
+－我们改进了系统通知。
+－我们加强了用户界面。
+－我们修复了在Windows、Linux和macOS上检测到的崩溃问题。
+</translation>
     </message>
 </context>
 <context>

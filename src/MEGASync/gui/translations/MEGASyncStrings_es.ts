@@ -1441,9 +1441,9 @@ En algunos casos podría contener detalles como nombres de archivo o carpeta.</t
         <translation><numerusform>Aplicar al duplicado</numerusform><numerusform>Aplicar a todos los %1 duplicados</numerusform></translation>
     </message>
     <message>
-        <source>The file at this destination will be updated with a new version.</source>
+        <source>The file at this destination will be updated if the new file is different.</source>
         <translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
-        <translation>El archivo en esta ubicación se subirá con una nueva versión.</translation>
+        <translation>El archivo en esta ubicación se actualizará si el nuevo archivo es diferente.</translation>
     </message>
 </context>
 <context>
@@ -2294,7 +2294,7 @@ En algunos casos podría contener detalles como nombres de archivo o carpeta.</t
     <message>
         <source>There is not enough space on %1. You need an additional %2 to download these files.</source>
         <translatorcomment>Label explaining the problem, %1 is the download target disk name. %2 is the needed size to continue with the download (the size unit depends on the quantity) </translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>No hay suficiente espacio en %1. Necesitas un %2 adicional para descargar estos archivos.</translation>
     </message>
     <message>
         <source>Free space: %1</source>
@@ -2577,11 +2577,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>No pudimos encontrar una bandeja del sistema para colocar el ícono de la aplicación. Intenta iniciar la aplicación de nuevo.</translation>
     </message>
     <message>
-        <source>The link can&apos;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
-        <translatorcomment>Notification error message shown while generating a public link of a file from an incoming shared folder or from the rubbish bin</translatorcomment>
-        <translation>El enlace no se puede generar porque el archivo está dentro de una carpeta compartida entrante o en la Papelera de tu cuenta de MEGA.</translation>
-    </message>
-    <message>
         <source>Upload</source>
         <translatorcomment>Label for the menu item that opens the dialog to upload files to MEGA</translatorcomment>
         <translation>Subir</translation>
@@ -2853,11 +2848,6 @@ Las transferencias se reanudarán automáticamente en cuanto vuelvas a abrir la 
         <source>Open settings</source>
         <translatorcomment>Button label to open MEGAsync settings dialog.</translatorcomment>
         <translation>Abrir Ajustes</translation>
-    </message>
-    <message>
-        <source>Error getting link: File not found</source>
-        <translatorcomment>Notification message shown an error of file not found while getting a public link.</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Settings</source>
@@ -4117,12 +4107,16 @@ Introduzca un nombre diferente.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Security upgraded.
-- Detected crashes on Windows, Linux, and macOS fixed.
+        <source>- You can now search the stored data in your account.
+- We've improved system notifications.
+- We've enhanced the UI.
+- We've fixed the detected crashes on Windows, Linux, and macOS.
 </source>
-        <translatorcomment>Changelog for v4.8.8</translatorcomment>
-        <translation>- Seguridad mejorada
-- Corrección de errores detectados en Windows, Linux y macOS</translation>
+        <translation>- Ahora puedes ver las carpetas y los archivos almacenados en tu cuenta.
+- Hemos mejorado las notificaciones del sistema.
+- Hemos mejorado la interfaz de usuario.
+- Hemos solucionado los crashes detectados en Windows, Linux y macOS.
+</translation>
     </message>
 </context>
 <context>

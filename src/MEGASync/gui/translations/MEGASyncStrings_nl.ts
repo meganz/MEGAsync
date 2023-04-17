@@ -323,7 +323,7 @@
     <message>
         <source>Your payment for the [A] plan was unsuccessful</source>
         <translatorcomment>Label to indicate that the the payment for a [A] PRO plan has failed. Placeholder will be replaced by the PRO plan name</translatorcomment>
-        <translation>We hebben uw betaling voor het [A] abonnement niet ontvangen.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your publicly shared has been taken down</source>
@@ -1441,9 +1441,9 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
         <translation><numerusform>Toepassen op de andere duplicaat</numerusform><numerusform>Toepassen op alle %1 duplicaten</numerusform></translation>
     </message>
     <message>
-        <source>The file at this destination will be updated with a new version.</source>
+        <source>The file at this destination will be updated if the new file is different.</source>
         <translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
-        <translation>Het bestand op deze lokatie wordt bijgewerkt met een nieuwe versie.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2293,7 +2293,7 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     <message>
         <source>There is not enough space on %1. You need an additional %2 to download these files.</source>
         <translatorcomment>Label explaining the problem, %1 is the download target disk name. %2 is the needed size to continue with the download (the size unit depends on the quantity) </translatorcomment>
-        <translation>Er is niet genoeg ruimte op %1. u heeft een extra %2 nodig om deze bestanden te downloaden.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Free space: %1</source>
@@ -2576,11 +2576,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>We konden geen systeemvak vinden om de applicatie-vakpictogram in te plaatsen. Probeer de applicatie opnieuw te starten.</translation>
     </message>
     <message>
-        <source>The link can&apos;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
-        <translatorcomment>Notification error message shown while generating a public link of a file from an incoming shared folder or from the rubbish bin</translatorcomment>
-        <translation>De link kan niet worden gegenereerd, omdat het bestand in een binnenkomend gedeelde folder zit of in uw Prullenbak.</translation>
-    </message>
-    <message>
         <source>Upload</source>
         <translatorcomment>Label for the menu item that opens the dialog to upload files to MEGA</translatorcomment>
         <translation>Uploaden</translation>
@@ -2781,7 +2776,7 @@ Overdrachten worden automatisch hervat wanneer u de applicatie heropend.</numeru
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Uw backup ”%1“ is uitgeschakeld omdat de lokale map niet bestaat.</translation>
+        <translation>Uw back-up ”%1“ is uitgeschakeld omdat de lokale map niet bestaat.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
@@ -2796,7 +2791,7 @@ Overdrachten worden automatisch hervat wanneer u de applicatie heropend.</numeru
     <message>
         <source>Your backup &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Uw backup “%1” was uitgeschakeld. U heeft geen volledige toegang tot de MEGA map (of een deel ervan).</translation>
+        <translation>Uw back-up “%1” was uitgeschakeld. U heeft geen volledige toegang tot de MEGA map (of een deel ervan).</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder has changed</source>
@@ -2852,11 +2847,6 @@ Overdrachten worden automatisch hervat wanneer u de applicatie heropend.</numeru
         <source>Open settings</source>
         <translatorcomment>Button label to open MEGAsync settings dialog.</translatorcomment>
         <translation>Instellingen Openen</translation>
-    </message>
-    <message>
-        <source>Error getting link: File not found</source>
-        <translatorcomment>Notification message shown an error of file not found while getting a public link.</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Settings</source>
@@ -4116,12 +4106,12 @@ Voer een andere naam in.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Security upgraded.
-- Detected crashes on Windows, Linux, and macOS fixed.
+        <source>- You can now search the stored data in your account.
+- We've improved system notifications.
+- We've enhanced the UI.
+- We've fixed the detected crashes on Windows, Linux, and macOS.
 </source>
-        <translatorcomment>Changelog for v4.8.8</translatorcomment>
-        <translation>- Verbeterde beveiliging
-- Gedetecteerde crashes op Windows, Linux en macOS gerepareerd</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5983,7 +5973,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Only files can be used for streaming.</source>
         <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
-        <translation>U kunt geen mappen streamen. Selecteer een bestand om te streamen.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

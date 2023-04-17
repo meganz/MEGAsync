@@ -323,7 +323,7 @@
     <message>
         <source>Your payment for the [A] plan was unsuccessful</source>
         <translatorcomment>Label to indicate that the the payment for a [A] PRO plan has failed. Placeholder will be replaced by the PRO plan name</translatorcomment>
-        <translation>เราไม่ได้รับการชำระเงินสำหรับแผน [A] ของคุณ</translation>
+        <translation>เรายังไม่ได้รับการชำระเงินสำหรับแผน [A] ของคุณ</translation>
     </message>
     <message>
         <source>Your publicly shared has been taken down</source>
@@ -1441,9 +1441,9 @@
         <translation><numerusform>นำไปใช้กับรายการที่ซ้ำกันทั้งหมด %1 รายการ</numerusform></translation>
     </message>
     <message>
-        <source>The file at this destination will be updated with a new version.</source>
+        <source>The file at this destination will be updated if the new file is different.</source>
         <translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
-        <translation>ไฟล์ที่ปลายทางนี้จะได้รับการอัปเดตเป็นเวอร์ชันใหม่</translation>
+        <translation>หากไฟล์ใหม่แตกต่างกัน ไฟล์ในตำแหน่งนี้จะได้รับการอัปเดต</translation>
     </message>
 </context>
 <context>
@@ -2293,7 +2293,7 @@
     <message>
         <source>There is not enough space on %1. You need an additional %2 to download these files.</source>
         <translatorcomment>Label explaining the problem, %1 is the download target disk name. %2 is the needed size to continue with the download (the size unit depends on the quantity) </translatorcomment>
-        <translation>มีพื้นที่ไม่เพียงพอบน %1 คุณต้องใช้พื้นที่เพิ่มเติมเพื่อดาวน์โหลดไฟล์ที่มีขนาด %2 ได้</translation>
+        <translation>พื้นที่ว่างใน %1 ไม่เพียงพอ คุณต้องมีพื้นที่เพิ่มเติมอีก %2 เพื่อดาวน์โหลดไฟล์เหล่านี้</translation>
     </message>
     <message>
         <source>Free space: %1</source>
@@ -2576,11 +2576,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>เราไม่พบถาดระบบที่จะวางไอคอนถาดแอปไว้ ลองเปิดแอปอีกครั้ง</translation>
     </message>
     <message>
-        <source>The link can&apos;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
-        <translatorcomment>Notification error message shown while generating a public link of a file from an incoming shared folder or from the rubbish bin</translatorcomment>
-        <translation>ไม่สามารถสร้างลิงก์ เนื่องจากไฟล์อยู่ในโฟลเดอร์ขาเข้าหรือถังขยะของคุณ</translation>
-    </message>
-    <message>
         <source>Upload</source>
         <translatorcomment>Label for the menu item that opens the dialog to upload files to MEGA</translatorcomment>
         <translation>อัปโหลด</translation>
@@ -2851,11 +2846,6 @@ Transfer will automatically resume when you re-open the app.</source>
         <source>Open settings</source>
         <translatorcomment>Button label to open MEGAsync settings dialog.</translatorcomment>
         <translation>เปิดการตั้งค่า</translation>
-    </message>
-    <message>
-        <source>Error getting link: File not found</source>
-        <translatorcomment>Notification message shown an error of file not found while getting a public link.</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Settings</source>
@@ -4113,12 +4103,15 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Security upgraded.
-- Detected crashes on Windows, Linux, and macOS fixed.
+        <source>- You can now search the stored data in your account.
+- We've improved system notifications.
+- We've enhanced the UI.
+- We've fixed the detected crashes on Windows, Linux, and macOS.
 </source>
-        <translatorcomment>Changelog for v4.8.8</translatorcomment>
-        <translation>- อัปเดตความปลอดภัย
-- แก้ไขข้อผิดพลาดที่ตรวจพบบน Windows, Linux และ macOS</translation>
+        <translation>- ตอนนี้คุณสามารถค้นหาข้อมูลที่เก็บไว้ในบัญชีของคุณได้แล้ว
+- เราได้ปรับปรุงการแจ้งเตือนระบบแล้ว
+- เราได้เพิ่มประสิทธิภาพของ UI แล้ว
+- เราได้แก้ไขข้อผิดพลาดที่ตรวจพบบน Windows, Linux และ macOS แล้ว</translation>
     </message>
 </context>
 <context>

@@ -1440,9 +1440,9 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
         <translation><numerusform>Applica all&#8217;altro duplicato</numerusform><numerusform>Applica a tutti i %1 duplicati</numerusform></translation>
     </message>
     <message>
-        <source>The file at this destination will be updated with a new version.</source>
+        <source>The file at this destination will be updated if the new file is different.</source>
         <translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
-        <translation>Il file in questa destinazione verrà aggiornato con una nuova versione.</translation>
+        <translation>Il file in questa destinazione verrà aggiornato se il nuovo file è differente.</translation>
     </message>
 </context>
 <context>
@@ -2575,11 +2575,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Impossibile trovare una barra di sistema dove posizionare l&apos;icona dell&apos;app. Prova a chiudere e riaprire l&apos;app.</translation>
     </message>
     <message>
-        <source>The link can&apos;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
-        <translatorcomment>Notification error message shown while generating a public link of a file from an incoming shared folder or from the rubbish bin</translatorcomment>
-        <translation>Il link non può essere generato in quanto il file si trova all&#8217;interno di una cartella condivisa che è posizionata nel tuo Cestino.</translation>
-    </message>
-    <message>
         <source>Upload</source>
         <translatorcomment>Label for the menu item that opens the dialog to upload files to MEGA</translatorcomment>
         <translation>Carica</translation>
@@ -2853,11 +2848,6 @@ I trasferimenti riprenderanno automaticamente quando riaprirai l&apos;app.</nume
         <translation>Apri le Impostazioni</translation>
     </message>
     <message>
-        <source>Error getting link: File not found</source>
-        <translatorcomment>Notification message shown an error of file not found while getting a public link.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Settings</source>
         <translatorcomment>This is the string used to refer to settings.</translatorcomment>
         <translation>Impostazioni</translation>
@@ -2885,12 +2875,12 @@ I trasferimenti riprenderanno automaticamente quando riaprirai l&apos;app.</nume
     <message>
         <source>Your sync &quot;%1&quot; has been temporarily disabled: %2</source>
         <translatorcomment>Warning message shown when a sync is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>La tua sincronizzazione “%1” è stata disabilitata temporaneamente: %2</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been temporarily disabled: %2</source>
         <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Il tuo backup “%1” è stato disabilitato temporaneamente: %2</translation>
     </message>
     <message>
         <source>Error transferring folder: %1</source>
@@ -4114,12 +4104,16 @@ Inserisci un nome differente.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Security upgraded.
-- Detected crashes on Windows, Linux, and macOS fixed.
+        <source>- You can now search the stored data in your account.
+- We've improved system notifications.
+- We've enhanced the UI.
+- We've fixed the detected crashes on Windows, Linux, and macOS.
 </source>
-        <translatorcomment>Changelog for v4.8.8</translatorcomment>
-        <translation>- Sicurezza aggiornata.
-- Sistemati alcuni crash su Windows, Linux, e macOS.</translation>
+        <translation>- Ora puoi cercare i dati archiviati nel tuo account.
+- Abbiamo migliorato le notifiche di sistema.
+- Abbiamo migliorato la UI.
+- Abbiamo sistemato alcuni crash su Windows, Linux, e macOS.
+</translation>
     </message>
 </context>
 <context>
@@ -5981,7 +5975,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Only files can be used for streaming.</source>
         <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
-        <translation>Non puoi effettuare lo streaming di cartelle. Seleziona un file di cui effettuare lo streaming.</translation>
+        <translation>Non puoi effettuare lo stream di intere cartelle. Seleziona un file da streammare.</translation>
     </message>
 </context>
 <context>

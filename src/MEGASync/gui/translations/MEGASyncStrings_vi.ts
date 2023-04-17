@@ -1441,9 +1441,9 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
         <translation><numerusform>Áp dụng cho tất cả %1 mục trùng lặp</numerusform></translation>
     </message>
     <message>
-        <source>The file at this destination will be updated with a new version.</source>
+        <source>The file at this destination will be updated if the new file is different.</source>
         <translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
-        <translation>Tệp tin có sẵn tại chỗ này sẽ được thay thế bằng phiên bản tệp tin mới.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2576,11 +2576,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The link can&apos;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
-        <translatorcomment>Notification error message shown while generating a public link of a file from an incoming shared folder or from the rubbish bin</translatorcomment>
-        <translation>Không tạo được đường dẫn liên kết vì tệp tin nằm trong Thùng Rác hoặc trong mục chia sẻ.</translation>
-    </message>
-    <message>
         <source>Upload</source>
         <translatorcomment>Label for the menu item that opens the dialog to upload files to MEGA</translatorcomment>
         <translation>Tải lên</translation>
@@ -2851,11 +2846,6 @@ Các phiên truyền tải sẽ được tự động tiếp tục khi bạn m�
         <source>Open settings</source>
         <translatorcomment>Button label to open MEGAsync settings dialog.</translatorcomment>
         <translation>Đi tới Thiết&#xa0;Đặt</translation>
-    </message>
-    <message>
-        <source>Error getting link: File not found</source>
-        <translatorcomment>Notification message shown an error of file not found while getting a public link.</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Settings</source>
@@ -4109,10 +4099,11 @@ Nhập một tên khác.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Security upgraded.
-- Detected crashes on Windows, Linux, and macOS fixed.
+        <source>- You can now search the stored data in your account.
+- We've improved system notifications.
+- We've enhanced the UI.
+- We've fixed the detected crashes on Windows, Linux, and macOS.
 </source>
-        <translatorcomment>Changelog for v4.8.8</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5975,7 +5966,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Only files can be used for streaming.</source>
         <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
-        <translation>Không&#xa0;thể truyền&#xa0;phát cả thư&#xa0;mục được. Chọn ra một tệp&#xa0;tin để phát.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

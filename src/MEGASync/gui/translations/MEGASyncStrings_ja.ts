@@ -1439,9 +1439,9 @@
         <translation><numerusform>%1個の重複すべてに適用する</numerusform></translation>
     </message>
     <message>
-        <source>The file at this destination will be updated with a new version.</source>
+        <source>The file at this destination will be updated if the new file is different.</source>
         <translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
-        <translation>この場所のファイルは、新しいファイルで更新されます。</translation>
+        <translation>新しいファイルが異なる場合、この場所のファイルが更新されます。</translation>
     </message>
 </context>
 <context>
@@ -2574,11 +2574,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>アプリトレイアイコンを配置するシステムトレイが見つかりませんでした。アプリをもう一度起動してみてください。</translation>
     </message>
     <message>
-        <source>The link can&apos;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
-        <translatorcomment>Notification error message shown while generating a public link of a file from an incoming shared folder or from the rubbish bin</translatorcomment>
-        <translation>ファイルが受信共有フォルダまたはあなたのごみ箱内にあるため、リンクを生成できません。</translation>
-    </message>
-    <message>
         <source>Upload</source>
         <translatorcomment>Label for the menu item that opens the dialog to upload files to MEGA</translatorcomment>
         <translation>アップロード</translation>
@@ -2851,11 +2846,6 @@ Transfer will automatically resume when you re-open the app.</source>
         <translation>設定を開く</translation>
     </message>
     <message>
-        <source>Error getting link: File not found</source>
-        <translatorcomment>Notification message shown an error of file not found while getting a public link.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Settings</source>
         <translatorcomment>This is the string used to refer to settings.</translatorcomment>
         <translation>設定</translation>
@@ -2883,12 +2873,12 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your sync &quot;%1&quot; has been temporarily disabled: %2</source>
         <translatorcomment>Warning message shown when a sync is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>同期「%1」は一時的に無効になっています：%2</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been temporarily disabled: %2</source>
         <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>バックアップ「%1」は一時的に無効になっています：%2</translation>
     </message>
     <message>
         <source>Error transferring folder: %1</source>
@@ -4112,12 +4102,15 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Security upgraded.
-- Detected crashes on Windows, Linux, and macOS fixed.
+        <source>- You can now search the stored data in your account.
+- We've improved system notifications.
+- We've enhanced the UI.
+- We've fixed the detected crashes on Windows, Linux, and macOS.
 </source>
-        <translatorcomment>Changelog for v4.8.8</translatorcomment>
-        <translation>－セキュリティをアップグレード
-－Windows、Linux、およびmacOSで検出されたクラッシュを修正</translation>
+        <translation>－アカウントに保存されているデータを検索できるようになりました。
+－システム通知を改善しました。
+－UIを強化しました。
+－Windows、Linux、およびmacOSで検出されたクラッシュを修正しました。</translation>
     </message>
 </context>
 <context>

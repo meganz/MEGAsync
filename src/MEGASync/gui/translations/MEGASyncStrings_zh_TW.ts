@@ -323,7 +323,7 @@
     <message>
         <source>Your payment for the [A] plan was unsuccessful</source>
         <translatorcomment>Label to indicate that the the payment for a [A] PRO plan has failed. Placeholder will be replaced by the PRO plan name</translatorcomment>
-        <translation>我們尚未收到您購買[A]方案的付款。</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your publicly shared has been taken down</source>
@@ -1441,9 +1441,9 @@
         <translation><numerusform>套用全部%1個重複項目</numerusform></translation>
     </message>
     <message>
-        <source>The file at this destination will be updated with a new version.</source>
+        <source>The file at this destination will be updated if the new file is different.</source>
         <translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
-        <translation>此目的地的檔案將更新為新的版本。</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2293,7 +2293,7 @@
     <message>
         <source>There is not enough space on %1. You need an additional %2 to download these files.</source>
         <translatorcomment>Label explaining the problem, %1 is the download target disk name. %2 is the needed size to continue with the download (the size unit depends on the quantity) </translatorcomment>
-        <translation>%1的儲存空間不足。您需要額外%2才能下載這些檔案。</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Free space: %1</source>
@@ -2576,11 +2576,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>我們無法找到系統狀態列來放置應用程式圖示。請嘗試再次啟動應用程式。</translation>
     </message>
     <message>
-        <source>The link can&apos;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
-        <translatorcomment>Notification error message shown while generating a public link of a file from an incoming shared folder or from the rubbish bin</translatorcomment>
-        <translation>由於檔案位於傳入的共享資料夾或您的垃圾筒中，因此無法生成連結。</translation>
-    </message>
-    <message>
         <source>Upload</source>
         <translatorcomment>Label for the menu item that opens the dialog to upload files to MEGA</translatorcomment>
         <translation>上傳</translation>
@@ -2851,11 +2846,6 @@ Transfer will automatically resume when you re-open the app.</source>
         <source>Open settings</source>
         <translatorcomment>Button label to open MEGAsync settings dialog.</translatorcomment>
         <translation>開啟設定</translation>
-    </message>
-    <message>
-        <source>Error getting link: File not found</source>
-        <translatorcomment>Notification message shown an error of file not found while getting a public link.</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Settings</source>
@@ -4115,12 +4105,12 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Security upgraded.
-- Detected crashes on Windows, Linux, and macOS fixed.
+        <source>- You can now search the stored data in your account.
+- We've improved system notifications.
+- We've enhanced the UI.
+- We've fixed the detected crashes on Windows, Linux, and macOS.
 </source>
-        <translatorcomment>Changelog for v4.8.8</translatorcomment>
-        <translation>- 升級安全性
-- 修復在Windows、Linux 和macOS上檢測到的當機問題</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5982,7 +5972,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Only files can be used for streaming.</source>
         <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
-        <translation>您無法串流傳輸資料夾。請選擇一個檔案進行串流傳輸。</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

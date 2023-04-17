@@ -323,7 +323,7 @@
     <message>
         <source>Your payment for the [A] plan was unsuccessful</source>
         <translatorcomment>Label to indicate that the the payment for a [A] PRO plan has failed. Placeholder will be replaced by the PRO plan name</translatorcomment>
-        <translation>Nie otrzymaliśmy twojej zapłaty za plan [A].</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your publicly shared has been taken down</source>
@@ -1441,9 +1441,9 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
         <translation><numerusform>Zastosuj do pozostałych duplikatów</numerusform><numerusform>Zastosuj do wszystkich %1 duplikatów</numerusform><numerusform>Zastosuj do wszystkich %1 duplikatów</numerusform><numerusform>Zastosuj do wszystkich %1 duplikatów</numerusform></translation>
     </message>
     <message>
-        <source>The file at this destination will be updated with a new version.</source>
+        <source>The file at this destination will be updated if the new file is different.</source>
         <translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
-        <translation>Plik w tym miejscu docelowym zostanie zaktualizowany o nową wersję.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2293,7 +2293,7 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
     <message>
         <source>There is not enough space on %1. You need an additional %2 to download these files.</source>
         <translatorcomment>Label explaining the problem, %1 is the download target disk name. %2 is the needed size to continue with the download (the size unit depends on the quantity) </translatorcomment>
-        <translation>Nie ma wystarczającej ilości miejsca na %1. Potrzebujesz dodatkowego %2, aby pobrać te pliki.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Free space: %1</source>
@@ -2576,11 +2576,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Nie mogliśmy znaleźć elementu systemowego, w którym można umieścić ikonę zasobnika aplikacji. Spróbuj ponownie uruchomić aplikację.</translation>
     </message>
     <message>
-        <source>The link can&apos;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
-        <translatorcomment>Notification error message shown while generating a public link of a file from an incoming shared folder or from the rubbish bin</translatorcomment>
-        <translation>Link nie może zostać stworzony ponieważ plik znajduje się w udostępnionym katalogu lub w Koszu.</translation>
-    </message>
-    <message>
         <source>Upload</source>
         <translatorcomment>Label for the menu item that opens the dialog to upload files to MEGA</translatorcomment>
         <translation>Wgrywane</translation>
@@ -2854,11 +2849,6 @@ Transfery zostaną automatycznie wznowione po ponownym otwarciu aplikacji.</nume
         <source>Open settings</source>
         <translatorcomment>Button label to open MEGAsync settings dialog.</translatorcomment>
         <translation>Otwórz ustawienia</translation>
-    </message>
-    <message>
-        <source>Error getting link: File not found</source>
-        <translatorcomment>Notification message shown an error of file not found while getting a public link.</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Settings</source>
@@ -4118,12 +4108,12 @@ Wprowadź inną nazwę.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Security upgraded.
-- Detected crashes on Windows, Linux, and macOS fixed.
+        <source>- You can now search the stored data in your account.
+- We've improved system notifications.
+- We've enhanced the UI.
+- We've fixed the detected crashes on Windows, Linux, and macOS.
 </source>
-        <translatorcomment>Changelog for v4.8.8</translatorcomment>
-        <translation>- Zaktualizowane zabezpieczenia.
-- Naprawiono wykryte błędy w systemach Windows, Linux i macOS</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5985,7 +5975,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Only files can be used for streaming.</source>
         <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
-        <translation>Nie można przesyłać strumieniowo katalogów. Wybierz plik do przesłania strumieniowego.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

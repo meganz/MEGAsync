@@ -1441,9 +1441,9 @@ Estes arquivos podem conter detalhes sobre os seus dados, como nomes de arquivos
         <translation><numerusform>Aplicar ao duplicado</numerusform><numerusform>Aplicar a todos os %1 duplicados</numerusform></translation>
     </message>
     <message>
-        <source>The file at this destination will be updated with a new version.</source>
+        <source>The file at this destination will be updated if the new file is different.</source>
         <translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
-        <translation>O arquivo neste destino será atualizado com uma nova versão.</translation>
+        <translation>O arquivo que já existe neste local será substituído pelo novo arquivo, caso seja diferente.</translation>
     </message>
 </context>
 <context>
@@ -2576,11 +2576,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Não foi possível encontrar uma bandeja do sistema para colocar o ícone do aplicativo. Tente iniciar o aplicativo novamente.</translation>
     </message>
     <message>
-        <source>The link can&apos;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
-        <translatorcomment>Notification error message shown while generating a public link of a file from an incoming shared folder or from the rubbish bin</translatorcomment>
-        <translation>O link não pode ser gerado porque o arquivo está dentro de uma pasta que foi compartilhada com você ou na sua Lixeira.</translation>
-    </message>
-    <message>
         <source>Upload</source>
         <translatorcomment>Label for the menu item that opens the dialog to upload files to MEGA</translatorcomment>
         <translation>Fazer upload</translation>
@@ -2852,11 +2847,6 @@ As transferências continuarão automaticamente quando você abrir o aplicativo 
         <source>Open settings</source>
         <translatorcomment>Button label to open MEGAsync settings dialog.</translatorcomment>
         <translation>Abrir Configurações</translation>
-    </message>
-    <message>
-        <source>Error getting link: File not found</source>
-        <translatorcomment>Notification message shown an error of file not found while getting a public link.</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Settings</source>
@@ -4117,12 +4107,16 @@ Digite um nome diferente.
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Security upgraded.
-- Detected crashes on Windows, Linux, and macOS fixed.
+        <source>- You can now search the stored data in your account.
+- We've improved system notifications.
+- We've enhanced the UI.
+- We've fixed the detected crashes on Windows, Linux, and macOS.
 </source>
-        <translatorcomment>Changelog for v4.8.8</translatorcomment>
-        <translation>- Aprimoramento na segurança
-- Correção de falhas detectadas no Windows, Linux e macOS</translation>
+        <translation>- Possibilidade de pesquisar os dados armazenados na sua conta.
+- Melhores notificações do sistema.
+- Aprimoramento da interface do usuário.
+- Correção de falhas detectadas em Windows, Linux e macOS.
+</translation>
     </message>
 </context>
 <context>

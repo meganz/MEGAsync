@@ -1491,7 +1491,7 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>The file at this destination will be updated if the new file is different.</source>
         <translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>The file at this destination will be updated if the new file is different.</translation>
     </message>
 </context>
 <context>
@@ -4210,7 +4210,11 @@ Enter a different name.</translation>
 - We&apos;ve enhanced the UI.
 - We&apos;ve fixed the detected crashes on Windows, Linux, and macOS.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>- You can now search the stored data in your account.
+- We&apos;ve improved system notifications.
+- We&apos;ve enhanced the UI.
+- We&apos;ve fixed the detected crashes on Windows, Linux, and macOS.
+</translation>
     </message>
 </context>
 <context>

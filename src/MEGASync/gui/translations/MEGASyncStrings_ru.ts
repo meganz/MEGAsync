@@ -1441,9 +1441,9 @@
         <translation><numerusform>Применить к одному дубликату</numerusform><numerusform>Применить ко всем %1 дубликатам</numerusform><numerusform>Применить ко всем %1 дубликатам</numerusform><numerusform>Применить ко всем %1 дубликатам</numerusform></translation>
     </message>
     <message>
-        <source>The file at this destination will be updated with a new version.</source>
+        <source>The file at this destination will be updated if the new file is different.</source>
         <translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
-        <translation>Файл в этом расположении будет обновлён новой версией.</translation>
+        <translation>Файл в этом расположении будет заменён новым файлом, если он отличается.</translation>
     </message>
 </context>
 <context>
@@ -2576,11 +2576,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Не удалось найти системный трей для добавления значка приложения. Попробуйте перезапустить приложение.</translation>
     </message>
     <message>
-        <source>The link can&apos;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
-        <translatorcomment>Notification error message shown while generating a public link of a file from an incoming shared folder or from the rubbish bin</translatorcomment>
-        <translation>Нельзя сгенерировать ссылку на файл, находящийся во входящей общей папке или Корзине.</translation>
-    </message>
-    <message>
         <source>Upload</source>
         <translatorcomment>Label for the menu item that opens the dialog to upload files to MEGA</translatorcomment>
         <translation>Загрузить</translation>
@@ -2856,11 +2851,6 @@ Transfer will automatically resume when you re-open the app.</source>
         <translation>Открыть «Hастройки»</translation>
     </message>
     <message>
-        <source>Error getting link: File not found</source>
-        <translatorcomment>Notification message shown an error of file not found while getting a public link.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Settings</source>
         <translatorcomment>This is the string used to refer to settings.</translatorcomment>
         <translation>Настройки</translation>
@@ -2888,12 +2878,12 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your sync &quot;%1&quot; has been temporarily disabled: %2</source>
         <translatorcomment>Warning message shown when a sync is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Синхронизация «%1» временно отключена: %2</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been temporarily disabled: %2</source>
         <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Резервное копирование «%1» временно отключено: %2</translation>
     </message>
     <message>
         <source>Error transferring folder: %1</source>
@@ -4118,12 +4108,16 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Security upgraded.
-- Detected crashes on Windows, Linux, and macOS fixed.
+        <source>- You can now search the stored data in your account.
+- We've improved system notifications.
+- We've enhanced the UI.
+- We've fixed the detected crashes on Windows, Linux, and macOS.
 </source>
-        <translatorcomment>Changelog for v4.8.8</translatorcomment>
-        <translation>- Улучшена безопасность
-- Исправлены обнаруженные сбои в Windows, Linux и macOS</translation>
+        <translation>- Теперь можно искать хранящиеся в аккаунте данные.
+- Улучшены системные уведомления.
+- Улучшен пользовательский интерфейс.
+- Исправлены обнаруженные сбои в Windows, Linux и macOS.
+</translation>
     </message>
 </context>
 <context>

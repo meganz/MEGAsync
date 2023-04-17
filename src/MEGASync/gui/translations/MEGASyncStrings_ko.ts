@@ -1441,9 +1441,9 @@
         <translation><numerusform>모든 %1개의 중복에 적용</numerusform></translation>
     </message>
     <message>
-        <source>The file at this destination will be updated with a new version.</source>
+        <source>The file at this destination will be updated if the new file is different.</source>
         <translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
-        <translation>대상 위치 파일이 새 버전으로 교체됩니다.</translation>
+        <translation>대상 위치의 파일이 새 파일과 다르다면 교체됩니다.</translation>
     </message>
 </context>
 <context>
@@ -2577,11 +2577,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>앱 트레이 아이콘을 배치할 시스템 트레이를 찾지 못 했습니다. 앱을 다시 실행해보세요.</translation>
     </message>
     <message>
-        <source>The link can&apos;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
-        <translatorcomment>Notification error message shown while generating a public link of a file from an incoming shared folder or from the rubbish bin</translatorcomment>
-        <translation>파일이 들어오는 공유 폴더 또는 휴지통에 있어서 링크를 생성할 수 없습니다.</translation>
-    </message>
-    <message>
         <source>Upload</source>
         <translatorcomment>Label for the menu item that opens the dialog to upload files to MEGA</translatorcomment>
         <translation>업로드</translation>
@@ -2854,11 +2849,6 @@ Transfer will automatically resume when you re-open the app.</source>
         <translation>설정 열기</translation>
     </message>
     <message>
-        <source>Error getting link: File not found</source>
-        <translatorcomment>Notification message shown an error of file not found while getting a public link.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Settings</source>
         <translatorcomment>This is the string used to refer to settings.</translatorcomment>
         <translation>설정</translation>
@@ -2886,12 +2876,12 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your sync &quot;%1&quot; has been temporarily disabled: %2</source>
         <translatorcomment>Warning message shown when a sync is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>동기화 “%1”이/가 일시적으로 비활성화 되었습니다: %2</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been temporarily disabled: %2</source>
         <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>백업 “%1”이/가 일시적으로 비활성화 되었습니다: %2</translation>
     </message>
     <message>
         <source>Error transferring folder: %1</source>
@@ -4118,12 +4108,16 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Security upgraded.
-- Detected crashes on Windows, Linux, and macOS fixed.
+        <source>- You can now search the stored data in your account.
+- We've improved system notifications.
+- We've enhanced the UI.
+- We've fixed the detected crashes on Windows, Linux, and macOS.
 </source>
-        <translatorcomment>Changelog for v4.8.8</translatorcomment>
-        <translation>- 보안 업그레이드
-- Windows, Linux, macOS에서 감지한 충돌 수정</translation>
+        <translation>- 계정에 보관된 데이터를 검색할 수 있습니다.
+- 시스템 알림을 향상하였습니다.
+- UI를 향상하였습니다.
+- Windows, Linux 그리고 macOS에서 탐지된 충돌을 수정하였습니다.
+</translation>
     </message>
 </context>
 <context>
@@ -4557,7 +4551,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>%1 bytes</source>
         <translatorcomment>File size measured in bytes</translatorcomment>
-        <translation>%1 바이트</translation>
+        <translation>%1바이트</translation>
     </message>
     <message>
         <source>Invalid filename</source>

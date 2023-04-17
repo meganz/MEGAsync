@@ -323,7 +323,7 @@
     <message>
         <source>Your payment for the [A] plan was unsuccessful</source>
         <translatorcomment>Label to indicate that the the payment for a [A] PRO plan has failed. Placeholder will be replaced by the PRO plan name</translatorcomment>
-        <translation>لم نتسلم دفعتك مقابل باقة [A].</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your publicly shared has been taken down</source>
@@ -1441,9 +1441,9 @@
         <translation><numerusform>طبق على %1 نسخ المكرر</numerusform><numerusform>طبق على النسخة المكررة الأخرى</numerusform><numerusform>طبق على %1 نسختين المكررتين</numerusform><numerusform>طبق على جميع %1 نسخ المكرر</numerusform><numerusform>طبق على جميع %1 نسخة المكررة</numerusform><numerusform>طبق على جميع %1 نسخة المكررة</numerusform></translation>
     </message>
     <message>
-        <source>The file at this destination will be updated with a new version.</source>
+        <source>The file at this destination will be updated if the new file is different.</source>
         <translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
-        <translation>سيتم تحديث الملف في هذه الوجهة بالنسخة الجديدة.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2293,7 +2293,7 @@
     <message>
         <source>There is not enough space on %1. You need an additional %2 to download these files.</source>
         <translatorcomment>Label explaining the problem, %1 is the download target disk name. %2 is the needed size to continue with the download (the size unit depends on the quantity) </translatorcomment>
-        <translation>لا توجد مساحة كافية في %1. أنت بحاجة إلى %2 إضافية لتنزيل هذه الملفات.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Free space: %1</source>
@@ -2576,11 +2576,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>لم نتمكن من العثور على شريط المهام لوضع رمز شريط مهام التطبيق فيه. حاول تشغيل التطبيق مرة أخرى.</translation>
     </message>
     <message>
-        <source>The link can&apos;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
-        <translatorcomment>Notification error message shown while generating a public link of a file from an incoming shared folder or from the rubbish bin</translatorcomment>
-        <translation>لا يمكن إنشاء الرابط لأن الملف موجود داخل مجلد مشارك وارد أو في سلة المحذوفات.</translation>
-    </message>
-    <message>
         <source>Upload</source>
         <translatorcomment>Label for the menu item that opens the dialog to upload files to MEGA</translatorcomment>
         <translation>ترفيع</translation>
@@ -2856,11 +2851,6 @@ Transfer will automatically resume when you re-open the app.</source>
         <source>Open settings</source>
         <translatorcomment>Button label to open MEGAsync settings dialog.</translatorcomment>
         <translation>افتح الإعدادات</translation>
-    </message>
-    <message>
-        <source>Error getting link: File not found</source>
-        <translatorcomment>Notification message shown an error of file not found while getting a public link.</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Settings</source>
@@ -4120,12 +4110,12 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Security upgraded.
-- Detected crashes on Windows, Linux, and macOS fixed.
+        <source>- You can now search the stored data in your account.
+- We've improved system notifications.
+- We've enhanced the UI.
+- We've fixed the detected crashes on Windows, Linux, and macOS.
 </source>
-        <translatorcomment>Changelog for v4.8.8</translatorcomment>
-        <translation>- ترقية الأمان
-- إصلاح الأعطال المكتشفة على أنظمة التشغيل ويندوز Windows و لينيكس Linux و ماك او اس macOS.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5987,7 +5977,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Only files can be used for streaming.</source>
         <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
-        <translation>لا يمكنك بث المجلدات. حدد ملفًا للبث.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
