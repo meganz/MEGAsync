@@ -9,6 +9,7 @@
 #include "../model/NodeSelectorModel.h"
 #include "NodeNameSetterDialog/RenameNodeDialog.h"
 #include <MegaNodeNames.h>
+#include "NodeNameSetterDialog/NewFolderDialog.h"
 
 const int NodeSelectorTreeViewWidget::LOADING_VIEW_THRESSHOLD = 500;
 const int NodeSelectorTreeViewWidget::LABEL_ELIDE_MARGIN = 240;
@@ -203,6 +204,7 @@ void NodeSelectorTreeViewWidget::onExpandReady()
         connect(ui->tMegaFolders, &NodeSelectorTreeView::renameNodeClicked, this, &NodeSelectorTreeViewWidget::onRenameClicked);
         connect(ui->tMegaFolders, &NodeSelectorTreeView::getMegaLinkClicked, this, &NodeSelectorTreeViewWidget::onGenMEGALinkClicked);
         connect(ui->tMegaFolders, &QTreeView::doubleClicked, this, &NodeSelectorTreeViewWidget::onItemDoubleClick);
+        connect(ui->tMegaFolders, &NodeSelectorTreeView::nodeSelected, this, &NodeSelectorTreeViewWidget::okBtnClicked);
         connect(ui->bForward, &QPushButton::clicked, this, &NodeSelectorTreeViewWidget::onGoForwardClicked);
         connect(ui->bBack, &QPushButton::clicked, this, &NodeSelectorTreeViewWidget::onGoBackClicked);
         connect(ui->tMegaFolders->header(), &QHeaderView::sectionResized, this, &NodeSelectorTreeViewWidget::onSectionResized);
@@ -289,6 +291,8 @@ void NodeSelectorTreeViewWidget::onbNewFolderClicked()
     {
         if(result == QDialog::Accepted)
         {
+            //Set the focus to the view to allow the user to press enter (or go back, in a future feature)
+            ui->tMegaFolders->setFocus();
             QModelIndex idx = ui->tMegaFolders->rootIndex();
             if(!idx.isValid())
             {
@@ -296,8 +300,6 @@ void NodeSelectorTreeViewWidget::onbNewFolderClicked()
             }
             mProxyModel->setExpandMapped(true);
             mProxyModel->addNode(std::move(newNode), idx);
-            checkOkButton(QModelIndexList() << idx);
-            ui->bOk->setFocus();
         }
     }
 }

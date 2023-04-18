@@ -1,7 +1,7 @@
 #include "ImportMegaLinksDialog.h"
 #include "ui_ImportMegaLinksDialog.h"
 #include "gui/ImportListWidgetItem.h"
-#include "gui/node_selector/gui/NodeSelector.h"
+#include "gui/node_selector/gui/NodeSelectorSpecializations.h"
 #include "gui/MultiQFileDialog.h"
 #include "Utilities.h"
 #include "MegaApplication.h"

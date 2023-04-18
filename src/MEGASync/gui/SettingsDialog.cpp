@@ -15,6 +15,7 @@
 #include "syncs/gui/Backups/AddBackupDialog.h"
 #include "syncs/gui/Backups/RemoveBackupDialog.h"
 #include "TextDecorator.h"
+#include "gui/node_selector/gui/NodeSelectorSpecializations.h"
 
 #include "mega/types.h"
 

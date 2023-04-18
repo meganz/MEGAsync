@@ -348,12 +348,17 @@ public:
 
     inline void hideLoadingScene() override
     {
+
         mLoadingViewSet = false;
         emit sceneVisibilityChange(false);
 
         mLoadingModel->setRowCount(0);
         mLoadingView->hide();
         mView->show();
+        if(mWasFocused)
+        {
+            mView->setFocus();
+        }
         mViewLayout->replaceWidget(mLoadingView, mView);
         mLoadingDelegate->setLoading(false);
     }
@@ -365,6 +370,7 @@ private:
 
         if(mView->isVisible())
         {
+            mWasFocused = mView->hasFocus();
             int delegateHeight(mLoadingDelegate->sizeHint(QStyleOptionViewItem(), QModelIndex()).height());
 
             mView->updateGeometry();
@@ -411,6 +417,7 @@ private:
     QLayout* mViewLayout;
     qint64 mStartTime;
     bool mLoadingViewSet;
+    bool mWasFocused;
 };
 
 #endif // VIEWLOADINGSCENE_H
