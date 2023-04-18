@@ -21,6 +21,7 @@
 #include "syncs/gui/SyncsMenu.h"
 #include "TextDecorator.h"
 #include "PowerOptions.h"
+#include "gui/node_selector/gui/NodeSelectorSpecializations.h"
 
 #include "mega/types.h"
 

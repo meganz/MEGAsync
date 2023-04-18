@@ -35,6 +35,7 @@ signals:
     void removeNodeClicked();
     void renameNodeClicked();
     void getMegaLinkClicked();
+    void nodeSelected();
 
 private slots:
     void removeNode();

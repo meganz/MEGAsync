@@ -2,6 +2,7 @@
 #include "ui_FolderBinder.h"
 
 #include "MegaApplication.h"
+#include "gui/node_selector/gui/NodeSelectorSpecializations.h"
 #include "QMegaMessageBox.h"
 #include "control/Utilities.h"
 

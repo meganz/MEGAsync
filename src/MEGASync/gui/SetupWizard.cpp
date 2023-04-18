@@ -9,6 +9,7 @@
 #include "gui/Login2FA.h"
 #include "gui/GuiUtilities.h"
 #include "platform/Platform.h"
+#include "node_selector/gui/NodeSelectorSpecializations.h"
 
 #include <QKeyEvent>
 

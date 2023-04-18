@@ -14,7 +14,6 @@
 #include <memory>
 
 #include "gui/TransferManager.h"
-#include "gui/node_selector/gui/NodeSelector.h"
 #include "gui/InfoDialog.h"
 #include "gui/UpgradeOverStorage.h"
 #include "gui/SetupWizard.h"
@@ -63,6 +62,7 @@ class NotificatorBase;
 class MEGASyncDelegateListener;
 class ShellNotifier;
 class TransferMetadata;
+class DownloadNodeSelector;
 
 enum GetUserStatsReason {
     USERSTATS_LOGGEDIN,
