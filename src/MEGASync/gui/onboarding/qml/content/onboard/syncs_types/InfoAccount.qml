@@ -34,7 +34,7 @@ Rectangle {
             Custom.SvgImage {
                 id: typeImage
 
-                source: "../../../../../images/Onboarding/shield.svg"
+                source: Images.shield
                 sourceSize: Qt.size(16, 16)
             }
 

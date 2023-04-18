@@ -7,6 +7,9 @@ import QtQuick.Controls 2.12
 import Common 1.0
 import Components 1.0 as Custom
 
+// C++
+import Onboard 1.0
+
 Rectangle {
 
     property alias buttonGroup: buttonGroup
@@ -34,7 +37,7 @@ Rectangle {
         }
 
         Custom.SvgImage {
-            source: "../../../../../images/Onboarding/image-02.svg"
+            source: Images.resume
             Layout.topMargin: 40
             Layout.alignment: Qt.AlignHCenter
         }
@@ -70,9 +73,9 @@ Rectangle {
                 ResumeButton {
                     id: syncButton
 
-                    title: qsTr("Sync")
-                    description: qsTr("Sync your files between your computers with MEGA cloud, any change from one side will apply to another side.")
-                    imageSource: "../../../../../images/Onboarding/sync.svg"
+                    title: OnboardingStrings.sync
+                    description: OnboardingStrings.syncButtonDescription
+                    imageSource: Images.sync
                     ButtonGroup.group: buttonGroup
                     type: InstallationTypeButton.Type.Sync
                     checkable: false
@@ -82,9 +85,9 @@ Rectangle {
                 ResumeButton {
                     id: backupsButton
 
-                    title: qsTr("Backup")
-                    description: qsTr("Automatically update your files from your computers to MEGA cloud. Files in your computer won’t be affected by the cloud.")
-                    imageSource: "../../../../../images/Onboarding/cloud.svg"
+                    title: OnboardingStrings.backup
+                    description: OnboardingStrings.backupButtonDescription
+                    imageSource: Images.cloud
                     ButtonGroup.group: buttonGroup
                     type: InstallationTypeButton.Type.Backup
                     checkable: false
@@ -94,9 +97,9 @@ Rectangle {
                 ResumeButton {
                     id: fuseButton
 
-                    title: qsTr("Fuse")
-                    description: qsTr("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et.")
-                    imageSource: "../../../../../images/Onboarding/fuse.svg"
+                    title: OnboardingStrings.fuse
+                    description: OnboardingStrings.fuseButtonDescription
+                    imageSource: Images.fuse
                     ButtonGroup.group: buttonGroup
                     type: InstallationTypeButton.Type.Fuse
                     checkable: false
@@ -114,22 +117,15 @@ Rectangle {
             Custom.Button {
                 id: preferencesButton
 
-                text: qsTr("Open in Preferences")
+                text: OnboardingStrings.openInPreferences
             }
 
             Custom.Button {
                 id: doneButton
 
-                text: qsTr("Done")
+                text: OnboardingStrings.done
                 primary: true
             }
         }
     }
 }
-
-/*##^##
-Designer {
-    D{i:0;autoSize:true;height:480;width:640}
-}
-##^##*/
-

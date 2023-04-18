@@ -19,7 +19,7 @@ Qml.Button {
         spacing: button.text.length === 0 ? 0 : 6
 
         SvgImage {
-            source: "../../../images/Onboarding/help-circle.svg"
+            source: Images.helpCircle
             color: button.text.length === 0 ? Styles.buttonPrimary : Styles.linkPrimary
             sourceSize: button.iconSize
         }

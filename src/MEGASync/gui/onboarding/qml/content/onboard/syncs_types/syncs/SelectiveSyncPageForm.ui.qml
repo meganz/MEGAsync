@@ -4,6 +4,9 @@ import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.0
 
 // QML common
+import Common 1.0
+
+// Local
 import Onboard.Syncs_types 1.0
 import Onboard 1.0
 
@@ -33,6 +36,6 @@ SyncsPage {
         }
     }
 
-    footerButtons.nextButton.text: qsTr("Sync")
-    footerButtons.nextButton.iconSource: "../../../images/sync.svg"
+    footerButtons.nextButton.text: OnboardingStrings.sync
+    footerButtons.nextButton.iconSource: Images.sync
 }

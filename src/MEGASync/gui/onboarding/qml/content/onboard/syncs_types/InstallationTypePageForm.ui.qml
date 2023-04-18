@@ -3,6 +3,9 @@ import QtQuick 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.12
 
+// QML common
+import Common 1.0
+
 // Local
 import Onboard 1.0
 
@@ -37,7 +40,7 @@ SyncsPage {
 
                 title: OnboardingStrings.sync
                 description: OnboardingStrings.syncButtonDescription
-                imageSource: "../../../../../images/Onboarding/sync.svg"
+                imageSource: Images.sync
                 type: InstallationTypeButton.Type.Sync
                 ButtonGroup.group: buttonGroup
             }
@@ -47,7 +50,7 @@ SyncsPage {
 
                 title: OnboardingStrings.backup
                 description: OnboardingStrings.backupButtonDescription
-                imageSource: "../../../../../images/Onboarding/installation_type_backups.svg"
+                imageSource: Images.installationTypeBackups
                 type: InstallationTypeButton.Type.Backup
                 ButtonGroup.group: buttonGroup
             }
@@ -57,7 +60,7 @@ SyncsPage {
 
                 title: OnboardingStrings.fuse
                 description: OnboardingStrings.fuseButtonDescription
-                imageSource: "../../../../../images/Onboarding/fuse.svg"
+                imageSource: Images.fuse
                 type: InstallationTypeButton.Type.Fuse
                 ButtonGroup.group: buttonGroup
             }

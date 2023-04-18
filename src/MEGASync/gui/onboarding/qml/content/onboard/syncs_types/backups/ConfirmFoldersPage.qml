@@ -1,6 +1,9 @@
 // System
 import QtQuick 2.12
 
+// QML common
+import Common 1.0
+
 // Local
 import Onboard 1.0
 
@@ -12,7 +15,7 @@ ConfirmFoldersPageForm {
         }
 
         nextButton.text: OnboardingStrings.backup
-        nextButton.iconSource: "../../../images/Onboarding/cloud.svg"
+        nextButton.iconSource: Images.cloud
         nextButton.onClicked: {
             syncsFlow.state = finalState;
         }

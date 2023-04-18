@@ -122,7 +122,7 @@ Rectangle {
                         Layout.leftMargin: 4
 
                         Custom.SvgImage {
-                            source: "../../../../images/Onboarding/alert-triangle.svg"
+                            source: Images.alertTriangle
                             sourceSize: Qt.size(16, 16)
                             color: Styles.textError
                         }
@@ -210,7 +210,7 @@ Rectangle {
 
             enabled: dataLossCheckBox.checked && termsCheckBox.checked
             primary: true
-            iconSource: "../../../images/Onboarding/arrow_right.svg"
+            iconSource: Images.arrowRight
             text: OnboardingStrings.next
         }
 

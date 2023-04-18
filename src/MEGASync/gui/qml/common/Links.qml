@@ -7,5 +7,6 @@ QtObject {
     readonly property url terms: "https://mega.io/terms"
     readonly property url recovery: "https://mega.nz/recovery"
     readonly property url pricing: "https://mega.io/es/pricing"
+    readonly property url desktopSyncApp: "https://help.mega.io/installs-apps/desktop-syncing"
 
 }

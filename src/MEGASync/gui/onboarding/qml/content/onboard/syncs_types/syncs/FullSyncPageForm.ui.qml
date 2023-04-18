@@ -32,6 +32,6 @@ SyncsPage {
         ChooseSyncFolder {}
     }
 
-    footerButtons.nextButton.text: qsTr("Sync")
-    footerButtons.nextButton.iconSource: "../../../images/sync.svg"
+    footerButtons.nextButton.text: OnboardingStrings.sync
+    footerButtons.nextButton.iconSource: Images.sync
 }

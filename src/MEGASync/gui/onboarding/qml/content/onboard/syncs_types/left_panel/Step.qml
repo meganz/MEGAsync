@@ -80,7 +80,7 @@ Item {
                 PropertyChanges {
                     target: checkImage
                     visible: true
-                    source: "../../../../../../images/Onboarding/check-circle_medium-regular-solid.svg"
+                    source: Images.checkCircleSolid
                 }
             },
             State {
@@ -110,7 +110,7 @@ Item {
                 PropertyChanges {
                     target: checkImage;
                     visible: true
-                    source: "../../../../../../images/Onboarding/check-circle_medium-regular-outline.svg"
+                    source: Images.checkCircleOutline
                 }
             }
         ]

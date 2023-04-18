@@ -8,33 +8,27 @@ ListModel {
     property bool selectedFilterEnabled: false
 
     ListElement {
-        folder: "C:/Users/mega/Documents"
-        selected: true
+        folder: "C:\\Users\\mega\\Desktop"
+        selected: false
         size: "30 MB"
         selectable: true
     }
     ListElement {
-        folder: "C:/Users/mega/Images"
-        selected: true
+        folder: "C:\\Users\\mega\\Documents"
+        selected: false
         size: "2.3 GB"
         selectable: true
     }
     ListElement {
-        folder: "C:/Users/mega/Videos"
-        selected: true
+        folder: "C:\\Users\\mega\\Music"
+        selected: false
         size: "783.4 KB"
         selectable: true
     }
     ListElement {
-        folder: "C:/Users/mega/Videos4"
-        selected: true
-        size: "4 KB"
-        selectable: true
-    }
-    ListElement {
-        folder: "C:/Users/mega/Videos5"
-        selected: true
-        size: "5 KB"
+        folder: "C:\\Users\\mega\\Images"
+        selected: false
+        size: "1 KB"
         selectable: true
     }
 }

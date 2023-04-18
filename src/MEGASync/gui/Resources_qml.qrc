@@ -1,0 +1,25 @@
+<RCC>
+    <qresource prefix="/">
+		<file>images/qml/arrow_right.svg</file>
+		<file>images/qml/help_circle.svg</file>
+		<file>images/qml/alert_triangle.svg</file>
+        <file>images/qml/onboarding/pc_mega.svg</file>
+		<file>images/qml/onboarding/plus_circle.svg</file>
+		<file>images/qml/onboarding/resume.svg</file>
+		<file>images/qml/onboarding/shield.svg</file>
+		<file>images/qml/onboarding/sync.svg</file>
+		<file>images/qml/onboarding/cloud.svg</file>
+		<file>images/qml/onboarding/fuse.svg</file>
+		<file>images/qml/onboarding/check_circle_outline.svg</file>
+        <file>images/qml/onboarding/check_circle_solid.svg</file>
+		<file>images/qml/onboarding/folder.svg</file>
+		<file>images/qml/onboarding/installation_type_backups.svg</file>
+		<file>images/qml/onboarding/lock.svg</file>
+        <file>images/qml/onboarding/full_sync.svg</file>
+        <file>images/qml/onboarding/mega.svg</file>
+        <file>images/qml/onboarding/pc.svg</file>
+        <file>images/qml/onboarding/selective_sync.svg</file>
+		<file>images/qml/onboarding/login.png</file>
+        <file>images/qml/onboarding/twofa.png</file>
+    </qresource>
+</RCC>

@@ -5,6 +5,9 @@ import QtQuick.Controls 2.0
 
 // QML common
 import Components 1.0 as Custom
+import Common 1.0
+
+// Local
 import Onboard 1.0
 
 SyncsPage {

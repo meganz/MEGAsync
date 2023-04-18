@@ -73,7 +73,7 @@ SyncsPage {
 
                     Custom.SvgImage {
                         Layout.leftMargin: 19
-                        source: "../../../../../../images/Onboarding/plus-circle.svg"
+                        source: Images.plusCircle
                         color: Styles.buttonPrimary
                     }
 

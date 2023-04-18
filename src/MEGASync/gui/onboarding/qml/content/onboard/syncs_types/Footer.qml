@@ -5,6 +5,12 @@ import QtQuick.Controls 2.0
 
 // QML common
 import Components 1.0 as Custom
+import Common 1.0
+
+// Local
+import Onboard 1.0
+
+// C++
 import Onboarding 1.0
 
 RowLayout {
@@ -18,7 +24,7 @@ RowLayout {
     Text {
         id: notNowButton
 
-        text: qsTr("Not now")
+        text: OnboardingStrings.notNow
         font.pixelSize: 12
         font.weight: Font.Light
         font.family: "Inter"
@@ -44,7 +50,7 @@ RowLayout {
         Custom.Button {
             id: cancelButton
 
-            text: qsTr("Cancel")
+            text: OnboardingStrings.cancel
             onClicked: {
                 console.log("TODO: Cancel button clicked");
             }
@@ -53,15 +59,15 @@ RowLayout {
         Custom.Button {
             id: previousButton
 
-            text: qsTr("Previous")
+            text: OnboardingStrings.previous
         }
 
         Custom.Button {
             id: nextButton
 
-            text: qsTr("Next")
+            text: OnboardingStrings.next
             primary: true
-            iconSource: "../../../images/Onboarding/arrow_right.svg"
+            iconSource: Images.arrowRight
         }
 
     }

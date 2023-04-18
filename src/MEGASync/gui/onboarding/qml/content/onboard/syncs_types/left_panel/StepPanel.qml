@@ -7,6 +7,9 @@ import QtQuick.Controls 2.0
 import Common 1.0
 import Components 1.0 as Custom
 
+// Local
+import Onboard 1.0
+
 Rectangle {
 
     readonly property string step1ComputerName: "STEP1_COMPUTER_NAME"
@@ -121,7 +124,7 @@ Rectangle {
             PropertyChanges {
                 target: step3_syncs;
                 toState: Step.ToStates.Current
-                title: qsTr("Backup")
+                title: OnboardingStrings.backup
             }
             PropertyChanges {
                 target: step3_1_line;
@@ -132,7 +135,7 @@ Rectangle {
                 target: step3_1_selectFolder;
                 toState: SubStep.ToStates.Current
                 visible: true
-                title: qsTr("Select folders")
+                title: OnboardingStrings.selectFolders
             }
             PropertyChanges {
                 target: step3_2_line;
@@ -143,7 +146,7 @@ Rectangle {
                 target: step3_2_confirm;
                 toState: SubStep.ToStates.Disabled
                 visible: true
-                title: qsTr("Confirm")
+                title: OnboardingStrings.confirm
             }
         },
         State {
@@ -167,7 +170,7 @@ Rectangle {
             PropertyChanges {
                 target: step3_syncs;
                 toState: Step.ToStates.DoneConfirm
-                title: qsTr("Backup")
+                title: OnboardingStrings.backup
             }
             PropertyChanges {
                 target: step3_1_line;
@@ -178,7 +181,7 @@ Rectangle {
                 target: step3_1_selectFolder;
                 toState: SubStep.ToStates.Done
                 visible: true;
-                title: qsTr("Select folders")
+                title: OnboardingStrings.selectFolders
             }
             PropertyChanges {
                 target: step3_2_line;
@@ -189,7 +192,7 @@ Rectangle {
                 target: step3_2_confirm;
                 toState: SubStep.ToStates.Current
                 visible: true;
-                title: qsTr("Confirm")
+                title: OnboardingStrings.confirm
             }
         },
         State {
@@ -213,7 +216,7 @@ Rectangle {
             PropertyChanges {
                 target: step3_syncs;
                 toState: Step.ToStates.Current
-                title: qsTr("Sync")
+                title: OnboardingStrings.sync
             }
             PropertyChanges {
                 target: step3_1_line;
@@ -224,7 +227,7 @@ Rectangle {
                 target: step3_1_selectFolder;
                 toState: SubStep.ToStates.Current
                 visible: true;
-                title: qsTr("Choose sync type")
+                title: OnboardingStrings.syncTitle
             }
             PropertyChanges {
                 target: step3_2_line;
@@ -235,7 +238,7 @@ Rectangle {
                 target: step3_2_confirm;
                 toState: SubStep.ToStates.Disabled
                 visible: true;
-                title: qsTr("Select folders")
+                title: OnboardingStrings.selectFolders
             }
         },
         State {
@@ -259,7 +262,7 @@ Rectangle {
             PropertyChanges {
                 target: step3_syncs;
                 toState: Step.ToStates.DoneConfirm
-                title: qsTr("Sync")
+                title: OnboardingStrings.sync
             }
             PropertyChanges {
                 target: step3_1_line;
@@ -270,7 +273,7 @@ Rectangle {
                 target: step3_1_selectFolder;
                 toState: SubStep.ToStates.Done
                 visible: true;
-                title: qsTr("Choose sync type")
+                title: OnboardingStrings.syncTitle
             }
             PropertyChanges {
                 target: step3_2_line;
@@ -281,7 +284,7 @@ Rectangle {
                 target: step3_2_confirm;
                 toState: SubStep.ToStates.Current
                 visible: true;
-                title: qsTr("Select folders")
+                title: OnboardingStrings.selectFolders
             }
         }
     ]
@@ -300,7 +303,7 @@ Rectangle {
             Step {
                 id: step1_computerName
 
-                title: qsTr("Computer name")
+                title: OnboardingStrings.computerName
                 Layout.leftMargin: 32
                 Layout.topMargin: 40
             }
@@ -318,7 +321,7 @@ Rectangle {
             Step {
                 id: step2_installationType
 
-                title: qsTr("Installation type")
+                title: OnboardingStrings.installationType
                 Layout.leftMargin: 32
             }
 
@@ -335,7 +338,7 @@ Rectangle {
             Step {
                 id: step3_syncs
 
-                title: qsTr("Synchronize")
+                title: OnboardingStrings.synchronize
                 Layout.leftMargin: 32
             }
 
@@ -358,7 +361,7 @@ Rectangle {
                 SubStep {
                     id: step3_1_selectFolder
 
-                    title: qsTr("Select Folders")
+                    title: OnboardingStrings.selectFolders
                     Layout.leftMargin: 40
                 }
 
@@ -375,7 +378,7 @@ Rectangle {
                 SubStep {
                     id: step3_2_confirm
 
-                    title: qsTr("Confirm")
+                    title: OnboardingStrings.confirm
                     Layout.leftMargin: 40
                 }
             }
@@ -386,7 +389,7 @@ Rectangle {
             Layout.leftMargin: 25
             Layout.bottomMargin: 25
             Layout.alignment: Qt.AlignBottom
-            url: "https://help.mega.io/installs-apps/desktop-syncing"
+            url: Links.desktopSyncApp
         }
     }
 

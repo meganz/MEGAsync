@@ -17,7 +17,7 @@ Project {
     }
 
     ImageFiles {
-        directory: "."
+        directory: "../../images/qml"
     }
 
     Files {

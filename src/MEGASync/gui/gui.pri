@@ -4,6 +4,7 @@ QML_IMPORT_PATH += $$PWD/qml \
     $$PWD/onboarding/qml
 
 RESOURCES += \
+    $$PWD/Resources_qml.qrc \
     $$PWD/onboarding/qml/onboarding.qrc \
     $$PWD/qml/qml.qrc
 

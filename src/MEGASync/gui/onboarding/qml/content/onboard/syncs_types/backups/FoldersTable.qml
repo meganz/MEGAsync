@@ -194,7 +194,7 @@ Rectangle {
 
                         Custom.SvgImage {
                             Layout.leftMargin: 18
-                            source: "../../../../../../images/Onboarding/folder.svg"
+                            source: Images.folder
                             opacity: selectable ? 1.0 : 0.3
                         }
 

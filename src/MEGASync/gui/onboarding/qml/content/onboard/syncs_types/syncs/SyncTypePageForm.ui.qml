@@ -49,7 +49,7 @@ SyncsPage {
                     title: OnboardingStrings.fullSyncTitle
                     type: ResumeButton.Type.FullSync
                     description: OnboardingStrings.fullSyncButtonDescription
-                    imageSource: "../../../../../images/Onboarding/syncs/full_sync.svg"
+                    imageSource: Images.fullSync
                     ButtonGroup.group: buttonGroup
                     imageSourceSize: Qt.size(200, 96)
                 }
@@ -60,7 +60,7 @@ SyncsPage {
                     title: OnboardingStrings.selectiveSyncTitle
                     type: ResumeButton.Type.SelectiveSync
                     description: OnboardingStrings.selectiveSyncButtonDescription
-                    imageSource: "../../../../../images/Onboarding/syncs/selective_sync.svg"
+                    imageSource: Images.selectiveSync
                     ButtonGroup.group: buttonGroup
                     imageSourceSize: Qt.size(200, 96)
                 }
