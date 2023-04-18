@@ -202,11 +202,12 @@ void MegaProxyStyle::polish(QWidget *widget)
         {
             messageBox->setTextInteractionFlags(Qt::TextInteractionFlag::NoTextInteraction);
         }
+        else if(auto dialog = qobject_cast<QDialog*>(widget))
+        {
+            dialog->installEventFilter(this);
+        }
     }
-    else if(auto dialog = qobject_cast<QDialog*>(widget))
-    {
-        dialog->installEventFilter(this);
-    }
+
 #endif
 
     QProxyStyle::polish(widget);
