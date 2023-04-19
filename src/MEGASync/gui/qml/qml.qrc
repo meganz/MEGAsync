@@ -24,5 +24,6 @@
         <file>components/textFields/images/eye-off.svg</file>
         <file>components/texts/HintText.qml</file>
 		<file>components/texts/RichText.qml</file>
+		<file>components/toolTips/ToolTip.qml</file>
     </qresource>
 </RCC>

@@ -236,8 +236,9 @@ Rectangle {
                     enabled: !backupProxyModel.selectedFilterEnabled
                 }
 
-                ToolTip {
+                Custom.ToolTip {
                     visible: folderRowArea.containsMouse
+                    leftIcon.source: Images.pc
                     text: selectable ? folder : backupModel.getTooltipText(index)
                     delay: 500
                     timeout: 5000

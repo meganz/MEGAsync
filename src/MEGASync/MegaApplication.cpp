@@ -460,6 +460,7 @@ void MegaApplication::initialize()
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/TwoFA.qml")), "Components", 1, 0, "TwoFA");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/HintText.qml")), "Components", 1, 0, "HintText");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/RichText.qml")), "Components", 1, 0, "RichText");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/toolTips/ToolTip.qml")), "Components", 1, 0, "ToolTip");
 
     qmlRegisterModule("Common", 1, 0);
     qmlRegisterSingletonType(QUrl(QString::fromUtf8("qrc:/common/Images.qml")), "Common", 1, 0, "Images");
