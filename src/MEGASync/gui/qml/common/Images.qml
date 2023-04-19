@@ -25,7 +25,11 @@ QtObject {
     readonly property url plusCircle: imagesOnboardingPath + "plus_circle.svg"
     readonly property url resume: imagesOnboardingPath + "resume.svg"
     readonly property url selectiveSync: imagesOnboardingPath + "selective_sync.svg"
-    readonly property url shield: imagesOnboardingPath + "shield.svg"
+    readonly property url shield_account_free: imagesOnboardingPath + "shield_account_free.svg"
+    readonly property url shield_account_lite: imagesOnboardingPath + "shield_account_lite.svg"
+    readonly property url shield_account_proI: imagesOnboardingPath + "shield_account_proI.svg"
+    readonly property url shield_account_proII: imagesOnboardingPath + "shield_account_proII.svg"
+    readonly property url shield_account_proIII: imagesOnboardingPath + "shield_account_proIII.svg"
     readonly property url sync: imagesOnboardingPath + "sync.svg"
     readonly property url twofa: imagesOnboardingPath + "twofa.png"
 

@@ -6,7 +6,6 @@
         <file>images/qml/onboarding/pc_mega.svg</file>
 		<file>images/qml/onboarding/plus_circle.svg</file>
 		<file>images/qml/onboarding/resume.svg</file>
-		<file>images/qml/onboarding/shield.svg</file>
 		<file>images/qml/onboarding/sync.svg</file>
 		<file>images/qml/onboarding/cloud.svg</file>
 		<file>images/qml/onboarding/fuse.svg</file>
@@ -19,6 +18,11 @@
         <file>images/qml/onboarding/mega.svg</file>
         <file>images/qml/onboarding/pc.svg</file>
         <file>images/qml/onboarding/selective_sync.svg</file>
+		<file>images/qml/onboarding/shield_account_free.svg</file>
+		<file>images/qml/onboarding/shield_account_lite.svg</file>
+		<file>images/qml/onboarding/shield_account_proI.svg</file>
+		<file>images/qml/onboarding/shield_account_proII.svg</file>
+		<file>images/qml/onboarding/shield_account_proIII.svg</file>
 		<file>images/qml/onboarding/login.png</file>
         <file>images/qml/onboarding/twofa.png</file>
     </qresource>

@@ -36,7 +36,9 @@ SyncsPage {
             description: OnboardingStrings.selectiveSyncDescription
         }
 
-        InfoAccount {}
+        InfoAccount {
+            Layout.preferredWidth: parent.width
+        }
 
         ChooseSyncFolder {
             id: localFolderChooser
