@@ -42,14 +42,18 @@ void ThreadedQueueShellNotifier::checkReportQueueSize()
         {
             // increased or decreased by factor 1.2 since last report
             lastReportedQueueSize = now;
-            ::mega::MegaApi::log(::mega::MegaApi::LOG_LEVEL_INFO, ("Queue to nofity shell size is now:" + std::to_string(now)).c_str());
+            ::mega::MegaApi::log(::mega::MegaApi::LOG_LEVEL_INFO, ("Queue to notify shell size is now:" + std::to_string(now)).c_str());
         }
     }
 }
 
 void ThreadedQueueShellNotifier::notify(const QString &localPath)
 {
-    logNotify("ThreadedShellNotifier", localPath);
+    // Don't actually log here under normal circumstances.
+    // Imagine a million-node sync, that'll kill performance and make the logs unusable
+    // Uncomment this for dev purposes only when needed for debugging
+    //logNotify("ThreadedShellNotifier", localPath);
+
     // make sure the thread was started
     if (!mThread.joinable())
     {

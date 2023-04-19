@@ -1620,7 +1620,7 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
     noUploadedStarted = true;
 
     auto checkUploadNameDialog = new DuplicatedNodeDialog(node);
-    
+
     auto counter(0);
     EventUpdater checkUpdater(uploadQueue.size());
     while (!uploadQueue.isEmpty())
@@ -1655,7 +1655,7 @@ void MegaApplication::onUploadsCheckedAndReady(QPointer<DuplicatedNodeDialog> ch
         {
             QString filePath = uploadInfo->getLocalPath();
             uploader->upload(filePath, uploadInfo->getNewName(), checkDialog->getNode(), data->getAppId(), batch);
-            
+
             //Do not update the last items, leave Qt to do it in its natural way
             //If you update them, the flag mProcessingUploadQueue will be false and the scanning widget
             //will be stuck forever
@@ -7856,7 +7856,7 @@ void MegaApplication::onSyncFileStateChanged(MegaApi *, MegaSync *, string *loca
         return;
     }
 
-    Platform::getInstance()->notifySyncFileChange(localPath, newState);
+    Platform::getInstance()->notifySyncFileChange(localPath, newState, false);
 }
 
 void MegaApplication::showSingleSyncDisabledNotification(std::shared_ptr<SyncSettings> syncSetting)

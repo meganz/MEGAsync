@@ -32,7 +32,7 @@ public:
     void prepareForSync() override;
     bool enableTrayIcon(QString executable) override;
     void notifyItemChange(const QString& localPath, int newState) override;
-    void notifySyncFileChange(std::string *localPath, int newState) override;
+    void notifySyncFileChange(std::string *localPath, int newState, bool stringIsPlatformEncoded) override;
     bool startOnStartup(bool value) override;
     bool isStartOnStartupActive() override;
     bool showInFolder(QString pathIn) override;
@@ -65,7 +65,7 @@ private:
     void removeSyncFromLeftPane(QString syncPath, QString syncName, QString uuid);
 
     void notifyItemChange(const QString& localPath, std::shared_ptr<AbstractShellNotifier> notifier);
-    QString getPreparedPath(std::string *localPath);
+    QString getPreparedPath(std::string *localPath, bool stringIsPlatformEncoded);  // on windows, that means UTF16 but in a std::string buffer
 
     WinShellDispatcherTask *shellDispatcherTask = nullptr;
     std::shared_ptr<AbstractShellNotifier> mSyncFileNotifier = nullptr;
