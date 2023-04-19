@@ -30,7 +30,7 @@ void ChooseLocalFolder::openFolderSelector()
     });
 }
 
-const QString &ChooseLocalFolder::getFolder()
+const QString ChooseLocalFolder::getFolder()
 {
     return mFolder;
 }
@@ -67,7 +67,7 @@ void ChooseRemoteFolder::openFolderSelector()
     });
 }
 
-const mega::MegaHandle &ChooseRemoteFolder::getHandle()
+const mega::MegaHandle ChooseRemoteFolder::getHandle()
 {
     return mFolderHandle;
 }

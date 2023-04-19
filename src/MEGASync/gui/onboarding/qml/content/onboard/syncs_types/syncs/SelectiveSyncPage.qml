@@ -1,3 +1,6 @@
+import QtQml 2.12
+import Onboarding 1.0
+
 SelectiveSyncPageForm {
 
     function getSyncData() {
@@ -13,7 +16,14 @@ SelectiveSyncPageForm {
         }
 
         nextButton.onClicked: {
-            console.log(getSyncData());
+            Onboarding.addSync(localFolderChooser.getSyncData(), remoteFolderChooser.getSyncData());
+        }
+    }
+
+    Connections {
+        target: Onboarding
+
+        onSyncSetupSucces: {
             syncsFlow.state = finalState;
         }
     }

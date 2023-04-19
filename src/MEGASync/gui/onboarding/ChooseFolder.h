@@ -17,7 +17,7 @@ signals:
 public:
     ChooseLocalFolder(QObject* parent = nullptr);
     Q_INVOKABLE void openFolderSelector();
-    Q_INVOKABLE const QString& getFolder();
+    Q_INVOKABLE const QString getFolder();
 
 private:
     QString mFolder;
@@ -36,7 +36,7 @@ signals:
 public:
     ChooseRemoteFolder(QObject* parent = nullptr);
     Q_INVOKABLE void openFolderSelector();
-    Q_INVOKABLE const mega::MegaHandle& getHandle();
+    Q_INVOKABLE const mega::MegaHandle getHandle();
 
 private:
     mega::MegaHandle mFolderHandle;

@@ -2,8 +2,8 @@
 #include "Onboarding.h"
 #include "MegaApplication.h"
 #include "UserAttributesRequests/DeviceName.h"
-#include "syncs/control/SyncController.h"
-
+#include "TextDecorator.h"
+#include "QMegaMessageBox.h"
 #include <QQmlEngine>
 
 using namespace mega;
@@ -68,8 +68,8 @@ void Onboarding::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* erro
             {
                 qDebug() << "Onboarding::onRequestFinish -> TYPE_LOGIN API_OK";
                 mPreferences->setAccountStateInGeneral(Preferences::STATE_LOGGED_OK);
-//                auto email = request->getEmail();
-//                MegaSyncApp->fetchNodes(QString::fromUtf8(email ? email : "")); //TODO: REVIEW IF THIS IS NECESSARY
+                auto email = request->getEmail();
+                MegaSyncApp->fetchNodes(QString::fromUtf8(email ? email : "")); //TODO: REVIEW IF THIS IS NECESSARY
                 if (!mPreferences->hasLoggedIn())
                 {
                     mPreferences->setHasLoggedIn(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000);
@@ -158,12 +158,74 @@ QString Onboarding::convertUrlToNativeFilePath(const QUrl &urlStylePath) const
 
 void Onboarding::addSync(const QString &localPath, const mega::MegaHandle &remoteHandle)
 {
-    mSyncController->addSync(localPath, remoteHandle);
+    connect(&mSyncController, &SyncController::syncAddStatus, this, [this](int errorCode, const QString errorMsg)
+    {
+        if (errorCode != MegaError::API_OK)
+        {
+            Text::Link link(Utilities::SUPPORT_URL);
+            Text::Decorator dec(&link);
+            QString msg = errorMsg;
+            dec.process(msg);
+            QMegaMessageBox::warning(nullptr, tr("Error adding sync"), msg, QMessageBox::Ok, QMessageBox::NoButton, QMap<QMessageBox::StandardButton, QString>(), Qt::RichText);
+        }
+        else
+        {
+            emit syncSetupSucces();
+        }
+    }, Qt::UniqueConnection);
+
+    QString warningMessage;
+    auto syncability (SyncController::isLocalFolderAllowedForSync(localPath, MegaSync::TYPE_TWOWAY, warningMessage));
+    if (syncability != SyncController::CANT_SYNC)
+    {
+        syncability = SyncController::areLocalFolderAccessRightsOk(localPath, MegaSync::TYPE_TWOWAY, warningMessage);
+    }
+
+    // If OK, check that we can sync the selected remote folder
+    std::shared_ptr<MegaNode> node (mMegaApi->getNodeByHandle(remoteHandle));
+
+    if (syncability != SyncController::CANT_SYNC)
+    {
+        syncability = std::max(SyncController::isRemoteFolderSyncable(node, warningMessage), syncability);
+    }
+
+    if (syncability == SyncController::CANT_SYNC)
+    {
+        // If can't sync because remote node does not exist, try to create it
+        if (!node)
+        {
+            auto rootNode = MegaSyncApp->getRootNode();
+            if (!rootNode)
+            {
+                QMegaMessageBox::warning(nullptr, tr("Error"), tr("Unable to get the filesystem.\n"
+                                                                  "Please, try again. If the problem persists "
+                                                                  "please contact bug@mega.co.nz"));
+                MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting isCrashed true: !rootNode (Onboarding)");
+                mPreferences->setCrashed(true);
+                MegaSyncApp->rebootApplication(false);
+            }
+        }
+        else
+        {
+            QMegaMessageBox::warning(nullptr, tr("Warning"), warningMessage, QMessageBox::Ok);
+        }
+    }
+    else if (syncability == SyncController::CAN_SYNC
+             || (syncability == SyncController::WARN_SYNC
+                 && QMegaMessageBox::warning(nullptr, tr("Warning"), warningMessage
+                                             + QLatin1Char('\n')
+                                             + tr("Do you want to continue?"),
+                                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
+                 == QMessageBox::Yes))
+    {
+        mSyncController.addSync(localPath, remoteHandle);
+    }
+    qDebug()<<localPath<<":"<<remoteHandle;
 }
 
 void Onboarding::addBackup(const QString &localPath)
 {
-    mSyncController->addBackup(localPath);
+    mSyncController.addBackup(localPath);
 }
 
 void Onboarding::onNotNowClicked() {

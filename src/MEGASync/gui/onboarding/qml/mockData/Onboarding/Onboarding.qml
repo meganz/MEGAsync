@@ -16,6 +16,8 @@ Item {
     signal loginFinished
     signal notNowFinished
     signal twoFAFailed
+    signal syncSetupSucces
+
 
     function onForgotPasswordClicked() {
         console.info("onForgotPasswordClicked()");
@@ -61,5 +63,21 @@ Item {
     function getComputerName() {
         console.info("getComputerName()");
         return "My PC name";
+    }
+
+    Timer {
+        id: addSyncTimer
+        interval: 2000;
+        running: false;
+        repeat: false;
+        onTriggered: {
+            syncSetupSucces();
+        }
+    }
+
+    function addSync(localPath : string, remoteHandle : int)
+    {
+        console.info("addSync()" + " localPath:" + localPath + " remoteHandle:" + remoteHandle)
+        addSyncTimer.start();
     }
 }

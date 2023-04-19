@@ -4,8 +4,7 @@
 #include "qml/QmlDialogWrapper.h"
 #include "QTMegaRequestListener.h"
 #include "Preferences.h"
-
-class SyncController;
+#include "syncs/control/SyncController.h"
 
 class Onboarding : public QMLComponent, public mega::MegaRequestListener
 {
@@ -46,6 +45,7 @@ signals:
     void twoFAFailed();
     void loginFinished();
     void notNowFinished();
+    void syncSetupSucces();
 
 public slots:
     void onNotNowClicked();
@@ -56,7 +56,7 @@ private:
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
 
     std::shared_ptr<Preferences> mPreferences;
-    std::unique_ptr<SyncController> mSyncController;
+    SyncController mSyncController;
     QString mPassword;
 
 };
