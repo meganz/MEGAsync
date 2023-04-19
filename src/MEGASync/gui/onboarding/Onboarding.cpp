@@ -68,8 +68,8 @@ void Onboarding::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* erro
             {
                 qDebug() << "Onboarding::onRequestFinish -> TYPE_LOGIN API_OK";
                 mPreferences->setAccountStateInGeneral(Preferences::STATE_LOGGED_OK);
-                auto email = request->getEmail();
-                MegaSyncApp->fetchNodes(QString::fromUtf8(email ? email : ""));
+//                auto email = request->getEmail();
+//                MegaSyncApp->fetchNodes(QString::fromUtf8(email ? email : "")); //TODO: REVIEW IF THIS IS NECESSARY
                 if (!mPreferences->hasLoggedIn())
                 {
                     mPreferences->setHasLoggedIn(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000);

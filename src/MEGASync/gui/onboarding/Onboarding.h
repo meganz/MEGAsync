@@ -56,7 +56,7 @@ private:
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
 
     std::shared_ptr<Preferences> mPreferences;
-    std::unique_ptr<SyncController> mController;
+    std::unique_ptr<SyncController> mSyncController;
     QString mPassword;
 
 };
