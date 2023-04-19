@@ -188,8 +188,6 @@ Rectangle {
                             Layout.preferredHeight: 16
                             enabled: selectable
                             checked: selected
-                            checkable: selectable && !backupProxyModel.selectedFilterEnabled
-                            hoverEnabled: selectable && !backupProxyModel.selectedFilterEnabled
                         }
 
                         Custom.SvgImage {
@@ -226,14 +224,11 @@ Rectangle {
 
                     anchors.fill: folderRowItem
                     hoverEnabled: true
-                    cursorShape: !selectable || backupProxyModel.selectedFilterEnabled
-                                 ? Qt.ArrowCursor
-                                 : Qt.PointingHandCursor
+                    cursorShape: !selectable ? Qt.ArrowCursor : Qt.PointingHandCursor
                     onClicked: {
                         backupList.currentIndex = index;
                         selected = !selected;
                     }
-                    enabled: !backupProxyModel.selectedFilterEnabled
                 }
 
                 Custom.ToolTip {

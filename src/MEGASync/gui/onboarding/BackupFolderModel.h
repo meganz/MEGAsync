@@ -8,6 +8,7 @@ struct BackupFolder
 {
     QString folder;
     bool selected;
+    bool confirmed;
     QString size;
     long long folderSize;
     bool selectable;
@@ -27,6 +28,7 @@ public:
     enum BackupFolderRoles {
         FolderRole = Qt::UserRole + 1,
         SelectedRole,
+        ConfirmedRole,
         SizeRole,
         FolderSizeRole,
         SelectableRole
@@ -54,6 +56,8 @@ public slots:
     QString getTotalSize() const;
 
     QString getTooltipText(int row) const;
+
+    void updateConfirmed();
 
 signals:
 

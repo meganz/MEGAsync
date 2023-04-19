@@ -8,6 +8,7 @@
 BackupFolder::BackupFolder()
     : folder(QString::fromUtf8(""))
     , selected(false)
+    , confirmed(false)
     , size(QString::fromUtf8(""))
     , folderSize(0)
     , selectable(true)
@@ -17,6 +18,7 @@ BackupFolder::BackupFolder()
 BackupFolder::BackupFolder(const QString& folder, bool selected)
     : folder(folder)
     , selected(selected)
+    , confirmed(false)
     , folderSize(0)
     , selectable(true)
 {
@@ -32,6 +34,7 @@ BackupFolderModel::BackupFolderModel(QObject* parent)
     mRoleNames = {
         { FolderRole, "folder" },
         { SelectedRole, "selected" },
+        { ConfirmedRole, "confirmed" },
         { SizeRole, "size" },
         { FolderSizeRole, "folderSize" },
         { SelectableRole, "selectable" }
@@ -125,6 +128,9 @@ bool BackupFolderModel::setData(const QModelIndex& index, const QVariant& value,
                 }
                 break;
             }
+            case ConfirmedRole:
+                item.confirmed = value.toBool();
+                break;
             case SizeRole:
                 item.size = value.toInt();
                 break;
@@ -159,6 +165,9 @@ QVariant BackupFolderModel::data(const QModelIndex &index, int role) const
                 break;
             case SelectedRole:
                 field = item.selected;
+                break;
+            case ConfirmedRole:
+                field = item.confirmed;
                 break;
             case SizeRole:
                 field = item.size;
@@ -390,6 +399,14 @@ QString BackupFolderModel::getTooltipText(int index) const
     return message;
 }
 
+void BackupFolderModel::updateConfirmed()
+{
+    for (int row = 0; row < rowCount(); row++)
+    {
+        mBackupFolderList[row].confirmed = mBackupFolderList[row].selected;
+    }
+}
+
 BackupFolderFilterProxyModel::BackupFolderFilterProxyModel(QObject* parent)
     : QSortFilterProxyModel(parent)
     , mSelectedFilterEnabled(false)
@@ -421,6 +438,6 @@ bool BackupFolderFilterProxyModel::filterAcceptsRow(int sourceRow, const QModelI
     }
 
     const QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
-    return index.data(BackupFolderModel::BackupFolderRoles::SelectedRole).toBool();
+    return index.data(BackupFolderModel::BackupFolderRoles::ConfirmedRole).toBool();
 }
 
