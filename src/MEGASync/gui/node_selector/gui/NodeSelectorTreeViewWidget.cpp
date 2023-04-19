@@ -12,7 +12,8 @@
 #include "NodeNameSetterDialog/NewFolderDialog.h"
 
 const int NodeSelectorTreeViewWidget::LOADING_VIEW_THRESSHOLD = 500;
-const int NodeSelectorTreeViewWidget::LABEL_ELIDE_MARGIN = 240;
+const int NodeSelectorTreeViewWidget::LABEL_ELIDE_MARGIN = 250;
+const char* NodeSelectorTreeViewWidget::FULL_NAME_PROPERTY = "full_name";
 
 NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(SelectTypeSPtr mode, QWidget *parent) :
     QWidget(parent),
@@ -99,6 +100,22 @@ void NodeSelectorTreeViewWidget::setSearchText(const QString &text)
     ui->leSearch->setText(text);
 }
 
+void NodeSelectorTreeViewWidget::setTitleText(const QString &nodeName)
+{
+    ui->lFolderName->setProperty(FULL_NAME_PROPERTY, nodeName);
+
+    QFontMetrics fm = ui->lFolderName->fontMetrics();
+
+    QString elidedText = fm.elidedText(nodeName, Qt::ElideMiddle, ui->tMegaFolders->width() - LABEL_ELIDE_MARGIN);
+    ui->lFolderName->setText(elidedText);
+
+    if(elidedText != nodeName)
+        ui->lFolderName->setToolTip(nodeName);
+    else
+        ui->lFolderName->setToolTip(QString());
+
+}
+
 void NodeSelectorTreeViewWidget::clearSearchText()
 {
     ui->leSearch->onClearClicked();
@@ -154,6 +171,8 @@ void NodeSelectorTreeViewWidget::resizeEvent(QResizeEvent *)
     {
         ui->tMegaFolders->setColumnWidth(NodeSelectorModel::COLUMN::NODE, qRound(ui->stackedWidget->width() * 0.50));
     }
+
+    setTitleText(ui->lFolderName->property(FULL_NAME_PROPERTY).toString());
 }
 
 void NodeSelectorTreeViewWidget::onSectionResized()
@@ -592,14 +611,13 @@ void NodeSelectorTreeViewWidget::setRootIndex(const QModelIndex &proxy_idx)
 
     if(!node_column_idx.isValid())
     {
-        ui->lFolderName->setText(getRootText());
+        setTitleText(getRootText());
 
         QModelIndexList selectedIndexes = ui->tMegaFolders->selectionModel()->selectedIndexes();
         foreach(auto& selection, selectedIndexes)
         {
             ui->tMegaFolders->selectionModel()->select(selection, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
         }
-        ui->lFolderName->setToolTip(QString());
         ui->lOwnerIcon->setPixmap(QPixmap());
         ui->avatarSpacer->spacerItem()->changeSize(0, 0);
         ui->lIcon->setPixmap(QPixmap());
@@ -633,16 +651,7 @@ void NodeSelectorTreeViewWidget::setRootIndex(const QModelIndex &proxy_idx)
     auto node = item->getNode();
     if(node)
     {
-        QString nodeName = MegaNodeNames::getNodeName(node.get());
-        QFontMetrics fm = ui->lFolderName->fontMetrics();
-
-        QString elidedText = fm.elidedText(nodeName, Qt::ElideMiddle, ui->tMegaFolders->width() - LABEL_ELIDE_MARGIN);
-        ui->lFolderName->setText(elidedText);
-
-        if(elidedText != nodeName)
-            ui->lFolderName->setToolTip(nodeName);
-        else
-            ui->lFolderName->setToolTip(QString());
+        setTitleText(MegaNodeNames::getNodeName(node.get()));
     }
 }
 
