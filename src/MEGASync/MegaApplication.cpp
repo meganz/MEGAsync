@@ -22,6 +22,7 @@
 #include "TextDecorator.h"
 #include "DialogOpener.h"
 #include "PowerOptions.h"
+#include "DateTimeFormatter.h"
 
 #include "mega/types.h"
 
@@ -2278,6 +2279,11 @@ void MegaApplication::repositionInfoDialog()
 #endif
 }
 
+QString MegaApplication::getFormattedDateByCurrentLanguage(const QDateTime &datetime, QLocale::FormatType format) const
+{
+    return DateTimeFormatter::create(currentLanguageCode, datetime, format);
+}
+
 void MegaApplication::raiseInfoDialog()
 {
     if (infoDialog)
@@ -4130,7 +4136,8 @@ void MegaApplication::notifyChangeToAllFolders()
     for (auto localFolder : model->getLocalFolders(SyncInfo::AllHandledSyncTypes))
     {
         ++mProcessingShellNotifications;
-        Platform::getInstance()->notifyItemChange(localFolder, MegaApi::STATE_NONE);
+        std::string stdLocalFolder = localFolder.toStdString();
+        Platform::getInstance()->notifyItemChange(localFolder, megaApi->syncPathState(&stdLocalFolder));
     }
 }
 

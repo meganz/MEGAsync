@@ -44,6 +44,7 @@ class NodeSelectorTreeViewWidget : public QWidget,  public mega::MegaRequestList
 public:
 
     static const int LOADING_VIEW_THRESSHOLD;
+    static const int LABEL_ELIDE_MARGIN;
 
     explicit NodeSelectorTreeViewWidget(SelectTypeSPtr mode, QWidget *parent = nullptr);
     ~NodeSelectorTreeViewWidget();

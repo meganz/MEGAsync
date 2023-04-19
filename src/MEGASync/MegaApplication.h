@@ -106,6 +106,8 @@ public:
     void updateTrayIcon();
     void repositionInfoDialog();
 
+    QString getFormattedDateByCurrentLanguage(const QDateTime& datetime, QLocale::FormatType format = QLocale::FormatType::LongFormat) const;
+
     void onEvent(mega::MegaApi *api, mega::MegaEvent *event) override;
     void onRequestStart(mega::MegaApi* api, mega::MegaRequest *request) override;
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;

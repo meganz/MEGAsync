@@ -56,9 +56,11 @@ private:
 
         void raise() override
         {
-            mDialog->show();
-            mDialog->raise();
-            mDialog->activateWindow();
+            if(!mDialog->isMinimized())
+            {
+                mDialog->raise();
+                mDialog->activateWindow();
+            }
         }
 
         void close() override
@@ -328,7 +330,7 @@ private:
     template <class DialogType>
     static void initDialog(QPointer<DialogType> dialog)
     {
-        dialog->connect(dialog, &QObject::destroyed, [dialog](){
+        dialog->connect(dialog.data(), &QObject::destroyed, [dialog](){
             auto info = findDialogInfo<DialogType>(dialog);
             if(info)
             {
