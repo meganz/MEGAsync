@@ -201,7 +201,7 @@ void TransferManagerDelegateWidget::updateTransferState()
             {
                 mPauseResumeTransferDefaultIconName.clear();
                 mUi->sStatus->setCurrentWidget(mUi->pFailed);
-                mUi->tItemRetry->setVisible(!getData()->isPermanentFail());
+                mUi->tItemRetry->setVisible(getData()->canBeRetried());
                 mUi->tItemRetry->setText(getState(TRANSFER_STATES::STATE_RETRY));
                 mUi->tItemRetry->setToolTip(getState(TRANSFER_STATES::STATE_RETRY));
                 mUi->wProgressBar->setVisible(false);
