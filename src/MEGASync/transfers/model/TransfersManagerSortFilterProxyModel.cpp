@@ -336,7 +336,7 @@ bool TransfersManagerSortFilterProxyModel::filterAcceptsRow(int sourceRow, const
         if(accept && d->isFailed())
         {
             mFailedTransfers.insert(d->mTag);
-            if(d->isPermanentFail())
+            if(!d->canBeRetried())
             {
                 mPermanentFailedTransfers.insert(d->mTag);
             }
