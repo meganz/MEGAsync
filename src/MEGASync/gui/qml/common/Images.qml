@@ -3,16 +3,21 @@ import QtQuick 2.12
 
 QtObject {
 
+    // Paths
+
     readonly property url imagesPath: Qt.resolvedUrl("../../images/qml/")
     readonly property url imagesOnboardingPath: Qt.resolvedUrl(imagesPath + "/onboarding/")
 
+    // Sorted alphabetically by dir
+
+    readonly property url helpCircle: imagesPath + "help_circle.svg"
     readonly property url alertTriangle: imagesPath + "alert_triangle.svg"
     readonly property url arrowRight: imagesPath + "arrow_right.svg"
-    readonly property url helpCircle: imagesPath + "help_circle.svg"
 
     readonly property url checkCircleOutline: imagesOnboardingPath + "check_circle_outline.svg"
     readonly property url checkCircleSolid: imagesOnboardingPath + "check_circle_solid.svg"
     readonly property url cloud: imagesOnboardingPath + "cloud.svg"
+    readonly property url database: imagesOnboardingPath + "database.svg"
     readonly property url folder: imagesOnboardingPath + "folder.svg"
     readonly property url fullSync: imagesOnboardingPath + "full_sync.svg"
     readonly property url fuse: imagesOnboardingPath + "fuse.svg"
