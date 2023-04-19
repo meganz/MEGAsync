@@ -22,6 +22,7 @@
 #include "TextDecorator.h"
 #include "DialogOpener.h"
 #include "PowerOptions.h"
+#include "DateTimeFormatter.h"
 
 #include "mega/types.h"
 
@@ -2276,6 +2277,11 @@ void MegaApplication::repositionInfoDialog()
     QPoint localCoordinates = infoDialog->mapFromGlobal(globalCoordinates);
     infoDialog->moveArrow(localCoordinates);
 #endif
+}
+
+QString MegaApplication::getFormattedDateByCurrentLanguage(const QDateTime &datetime, QLocale::FormatType format) const
+{
+    return DateTimeFormatter::create(currentLanguageCode, datetime, format);
 }
 
 void MegaApplication::raiseInfoDialog()
