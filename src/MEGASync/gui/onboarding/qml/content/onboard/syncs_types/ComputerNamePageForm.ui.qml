@@ -30,7 +30,7 @@ SyncsPage {
         }
 
         Custom.SvgImage {
-            source: "../../../../../images/Onboarding/pc.svg"
+            source: Images.pc
             sourceSize: Qt.size(48, 48)
         }
 

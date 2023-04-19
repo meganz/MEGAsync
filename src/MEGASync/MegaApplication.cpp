@@ -24,6 +24,7 @@
 #include "qml/QmlDialog.h"
 #include "qml/QmlDialogWrapper.h"
 #include "qml/QmlClipboard.h"
+#include "onboarding/ChooseFolder.h"
 #include "onboarding/Onboarding.h"
 #include "onboarding/AccountInfoData.h"
 #include "onboarding/BackupFolderModel.h"
@@ -441,6 +442,8 @@ void MegaApplication::initialize()
     qRegisterMetaTypeStreamOperators<QQueue<QString> >("QQueueQString");
 
     qmlRegisterType<AccountInfoData>("AccountInfoData", 1, 0, "AccountInfoData");
+    qmlRegisterType<ChooseLocalFolder>("ChooseLocalFolder", 1, 0, "ChooseLocalFolder");
+    qmlRegisterType<ChooseRemoteFolder>("ChooseRemoteFolder", 1, 0, "ChooseRemoteFolder");
 
     qmlRegisterType<BackupFolderModel>("BackupFolderModel", 1, 0, "BackupFolderModel");
     qmlRegisterType<BackupFolderFilterProxyModel>("BackupFolderFilterProxyModel", 1, 0, "BackupFolderFilterProxyModel");

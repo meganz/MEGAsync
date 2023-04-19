@@ -12,6 +12,15 @@ import Onboard 1.0
 
 SyncsPage {
 
+    property alias localFolderChooser: localFolderChooser
+    property alias remoteFolderChooser: remoteFolderChooser
+
+    footerButtons.nextButton {
+        enabled: localFolderChooser.isValid && remoteFolderChooser.isValid
+        text: OnboardingStrings.sync
+        iconSource: Images.sync
+    }
+
     ColumnLayout {
 
         anchors {
@@ -29,13 +38,14 @@ SyncsPage {
 
         InfoAccount {}
 
-        ChooseSyncFolder {}
+        ChooseSyncFolder {
+            id: localFolderChooser
+        }
 
         ChooseSyncFolder {
+            id: remoteFolderChooser
             local: false
         }
     }
 
-    footerButtons.nextButton.text: OnboardingStrings.sync
-    footerButtons.nextButton.iconSource: Images.sync
 }

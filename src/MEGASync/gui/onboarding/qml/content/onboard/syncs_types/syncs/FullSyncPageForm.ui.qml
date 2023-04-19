@@ -5,12 +5,19 @@ import QtQuick.Controls 2.0
 
 // QML common
 import Components 1.0 as Custom
+import Common 1.0
 
 // Local
 import Onboard 1.0
 import Onboard.Syncs_types 1.0
 
 SyncsPage {
+
+    footerButtons.nextButton {
+        enabled: localFolderSyncChooser.isValid
+        text: OnboardingStrings.sync
+        iconSource: Images.sync
+    }
 
     ColumnLayout {
 
@@ -29,9 +36,9 @@ SyncsPage {
 
         InfoAccount {}
 
-        ChooseSyncFolder {}
+        ChooseSyncFolder {
+            id: localFolderSyncChooser
+        }
     }
 
-    footerButtons.nextButton.text: OnboardingStrings.sync
-    footerButtons.nextButton.iconSource: Images.sync
 }

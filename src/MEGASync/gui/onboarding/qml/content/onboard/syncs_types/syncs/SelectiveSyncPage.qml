@@ -1,5 +1,11 @@
 SelectiveSyncPageForm {
 
+    function getSyncData() {
+        var localFolder = localFolderChooser.getSyncData();
+        var handle = remoteFolderChooser.getSyncData();
+        return { localFolder, handle };
+    }
+
     footerButtons {
 
         previousButton.onClicked: {
@@ -7,6 +13,7 @@ SelectiveSyncPageForm {
         }
 
         nextButton.onClicked: {
+            console.log(getSyncData());
             syncsFlow.state = finalState;
         }
     }

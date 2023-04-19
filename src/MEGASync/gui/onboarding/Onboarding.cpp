@@ -2,6 +2,7 @@
 #include "Onboarding.h"
 #include "MegaApplication.h"
 #include "UserAttributesRequests/DeviceName.h"
+#include "syncs/control/SyncController.h"
 
 #include <QQmlEngine>
 
@@ -153,6 +154,16 @@ void Onboarding::onTwoFARequested(const QString& pin)
 QString Onboarding::convertUrlToNativeFilePath(const QUrl &urlStylePath) const
 {
     return QDir::toNativeSeparators(urlStylePath.toLocalFile());
+}
+
+void Onboarding::addSync(const QString &localPath, const mega::MegaHandle &remoteHandle)
+{
+    mSyncController->addSync(localPath, remoteHandle);
+}
+
+void Onboarding::addBackup(const QString &localPath)
+{
+    mSyncController->addBackup(localPath);
 }
 
 void Onboarding::onNotNowClicked() {
