@@ -6136,7 +6136,7 @@ void MegaApplication::createInfoDialogMenus()
 
     if (updateAvailable)
     {
-        updateAction = new MenuItemAction(tr("Install update"), QIcon(QString::fromUtf8("://images/ico_about_MEGA.png")), true);
+        updateAction = new MenuItemAction(tr("Install update"), QIcon(QString::fromUtf8("://images/ico_about_MEGA.png")));
         updateAction->setEnabled(previousEnabledState);
         connect(updateAction, &QAction::triggered, this, &MegaApplication::onInstallUpdateClicked, Qt::QueuedConnection);
 
@@ -6144,7 +6144,7 @@ void MegaApplication::createInfoDialogMenus()
     }
     else
     {
-        aboutAction = new MenuItemAction(tr("About MEGAsync"), QIcon(QString::fromUtf8("://images/ico_about_MEGA.png")), true);
+        aboutAction = new MenuItemAction(tr("About MEGAsync"), QIcon(QString::fromUtf8("://images/ico_about_MEGA.png")));
         connect(aboutAction, &QAction::triggered, this, &MegaApplication::onAboutClicked, Qt::QueuedConnection);
 
         infoDialogMenu->addAction(aboutAction);
