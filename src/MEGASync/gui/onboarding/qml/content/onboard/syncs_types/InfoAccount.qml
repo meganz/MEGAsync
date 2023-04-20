@@ -34,14 +34,14 @@ Rectangle {
             Custom.SvgImage {
                 id: typeImage
 
-                source: Images.shield
+                source: Images.shield_account_free
                 sourceSize: Qt.size(16, 16)
             }
 
             Text {
                 id: typeText
 
-                text: "Free"
+                text: ""
                 Layout.alignment: Qt.AlignLeft
                 font.family: "Inter"
                 font.styleName: "normal"
@@ -111,23 +111,23 @@ Rectangle {
             switch(accountInfo.type)
             {
                 case AccountInfoData.ACCOUNT_TYPE_FREE:
-                    typeImage.source = "../../../../../images/Small_Free.png";
+                    typeImage.source = Images.shield_account_free;
                     typeText.text = OnboardingStrings.accountTypeFree;
                     break;
                 case AccountInfoData.ACCOUNT_TYPE_PROI:
-                    typeImage.source = "../../../../../images/Small_Pro_I.png";
+                    typeImage.source = Images.shield_account_proI;
                     typeText.text = OnboardingStrings.accountTypeProI;
                     break;
                 case AccountInfoData.ACCOUNT_TYPE_PROII:
-                    typeImage.source = "../../../../../images/Small_Pro_II.png";
+                    typeImage.source = Images.shield_account_proII;
                     typeText.text = OnboardingStrings.accountTypeProII;
                     break;
                 case AccountInfoData.ACCOUNT_TYPE_PROIII:
-                    typeImage.source = "../../../../../images/Small_Pro_III.png";
+                    typeImage.source = Images.shield_account_proIII;
                     typeText.text = OnboardingStrings.accountTypeProIII;
                     break;
                 case AccountInfoData.ACCOUNT_TYPE_LITE:
-                    typeImage.source = "../../../../../images/Small_Lite.png";
+                    typeImage.source = Images.shield_account_lite;
                     typeText.text = OnboardingStrings.accountTypeLite;
                     break;
                 case AccountInfoData.ACCOUNT_TYPE_BUSINESS:

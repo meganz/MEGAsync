@@ -1,6 +1,8 @@
 #ifndef BACKUPFOLDERMODEL_H
 #define BACKUPFOLDERMODEL_H
 
+#include "syncs/control/SyncController.h"
+
 #include <QAbstractListModel>
 #include <QSortFilterProxyModel>
 
@@ -8,9 +10,12 @@ struct BackupFolder
 {
     QString folder;
     bool selected;
+    bool confirmed;
     QString size;
     long long folderSize;
     bool selectable;
+    bool done;
+    int error;
 
     BackupFolder();
 
@@ -27,9 +32,12 @@ public:
     enum BackupFolderRoles {
         FolderRole = Qt::UserRole + 1,
         SelectedRole,
+        ConfirmedRole,
         SizeRole,
         FolderSizeRole,
-        SelectableRole
+        SelectableRole,
+        DoneRole,
+        ErrorRole
     };
 
     explicit BackupFolderModel(QObject* parent = nullptr);
@@ -55,6 +63,16 @@ public slots:
 
     QString getTooltipText(int row) const;
 
+    void updateConfirmed();
+
+    QStringList getConfirmedDirs() const;
+
+    QString getDisplayName(int index);
+
+    void clean();
+
+    void update(const QString& path, int errorCode);
+
 signals:
 
     void rowSelectedChanged(bool selectedRow, bool selectedAll);
@@ -67,6 +85,7 @@ private:
     QHash<int, QByteArray> mRoleNames;
     int mSelectedRowsTotal;
     long long mTotalSize;
+    SyncController mSyncController;
 
     void populateDefaultDirectoryList();
 

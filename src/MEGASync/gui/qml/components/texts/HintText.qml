@@ -34,19 +34,19 @@ Rectangle {
     onTypeChanged: {
         switch(type) {
             case HintText.Type.Error:
-                iconSource = "../../../images/Onboarding/alert-triangle.svg";
+                iconSource = Images.alertTriangle;
                 iconColor = Styles.textError;
                 titleColor = Styles.textError;
                 descriptionColor = Styles.textError;
                 break;
             case HintText.Type.Help:
-                iconSource = "../../../images/Onboarding/help-circle.svg"
+                iconSource = Images.helpCircle;
                 iconColor = Styles.textInfo;
                 titleColor = Styles.textInfo;
                 descriptionColor = Styles.textInfo;
                 break;
             case HintText.Type.AuthenticationError:
-                iconSource = "../../../images/Onboarding/lock.svg"
+                iconSource = Images.lock;
                 iconColor = Styles.textError;
                 titleColor = Styles.textError;
                 descriptionColor = Styles.textError;

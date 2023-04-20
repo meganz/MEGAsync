@@ -17,7 +17,7 @@ Item {
     signal notNowFinished
     signal twoFAFailed
     signal syncSetupSucces
-
+    signal backupsUpdated
 
     function onForgotPasswordClicked() {
         console.info("onForgotPasswordClicked()");
@@ -75,9 +75,12 @@ Item {
         }
     }
 
-    function addSync(localPath : string, remoteHandle : int)
-    {
+    function addSync(localPath : string, remoteHandle : int) {
         console.info("addSync()" + " localPath:" + localPath + " remoteHandle:" + remoteHandle)
         addSyncTimer.start();
+    }
+
+    function addBackups(backupDirs) {
+        console.info("addBackups() => " + JSON.stringify(backupDirs));
     }
 }

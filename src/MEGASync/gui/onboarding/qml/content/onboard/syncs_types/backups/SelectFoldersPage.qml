@@ -17,9 +17,12 @@ SelectFoldersPageForm {
             syncsFlow.state = syncType;
         }
 
-        nextButton.enabled: false
-        nextButton.onClicked: {
-            syncsFlow.state = confirmBackup;
+        nextButton {
+            enabled: false
+            onClicked: {
+                backupTable.backupModel.updateConfirmed();
+                syncsFlow.state = confirmBackup;
+            }
         }
     }
 

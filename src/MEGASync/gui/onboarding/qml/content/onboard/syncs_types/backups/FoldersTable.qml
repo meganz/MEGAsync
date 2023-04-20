@@ -188,19 +188,17 @@ Rectangle {
                             Layout.preferredHeight: 16
                             enabled: selectable
                             checked: selected
-                            checkable: selectable && !backupProxyModel.selectedFilterEnabled
-                            hoverEnabled: selectable && !backupProxyModel.selectedFilterEnabled
                         }
 
                         Custom.SvgImage {
                             Layout.leftMargin: 18
-                            source: Images.folder
+                            source: error ? Images.pc : Images.folder
                             opacity: selectable ? 1.0 : 0.3
                         }
 
                         Text {
                             Layout.leftMargin: 13
-                            text: folder.substring(folder.lastIndexOf('\\') + 1);
+                            text: backupModel.getDisplayName(index)
                             font.family: "Inter"
                             font.styleName: "normal"
                             font.weight: Font.Normal
@@ -226,18 +224,16 @@ Rectangle {
 
                     anchors.fill: folderRowItem
                     hoverEnabled: true
-                    cursorShape: !selectable || backupProxyModel.selectedFilterEnabled
-                                 ? Qt.ArrowCursor
-                                 : Qt.PointingHandCursor
+                    cursorShape: !selectable ? Qt.ArrowCursor : Qt.PointingHandCursor
                     onClicked: {
                         backupList.currentIndex = index;
                         selected = !selected;
                     }
-                    enabled: !backupProxyModel.selectedFilterEnabled
                 }
 
-                ToolTip {
+                Custom.ToolTip {
                     visible: folderRowArea.containsMouse
+                    leftIcon.source: Images.pc
                     text: selectable ? folder : backupModel.getTooltipText(index)
                     delay: 500
                     timeout: 5000

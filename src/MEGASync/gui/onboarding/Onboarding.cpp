@@ -13,7 +13,10 @@ Onboarding::Onboarding(QObject *parent)
     , mMegaApi(MegaSyncApp->getMegaApi())
     , mDelegateListener(new QTMegaRequestListener(mMegaApi, this))
     , mPreferences(Preferences::instance())
+    , mSyncController()
     , mPassword(QString())
+    , mNumBackupsRequested(0)
+    , mNumBackupsProcessed(0)
 {
     qmlRegisterUncreatableType<Onboarding>("Onboarding", 1, 0, "OnboardEnum", QString::fromUtf8("Cannot create WarningLevel in QML"));
 
@@ -42,6 +45,9 @@ Onboarding::Onboarding(QObject *parent)
     qmlRegisterModule("Onboard.Syncs_types.Backups", 1, 0);
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/backups/ConfirmFoldersPage.qml")), "Onboard.Syncs_types.Backups", 1, 0, "ConfirmFoldersPage");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/backups/SelectFoldersPage.qml")), "Onboard.Syncs_types.Backups", 1, 0, "SelectFoldersPage");
+
+    connect(&mSyncController, &SyncController::syncAddStatus,
+            this, &Onboarding::onSyncAddRequestStatus);
 }
 
 QUrl Onboarding::getQmlUrl()
@@ -69,6 +75,7 @@ void Onboarding::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* erro
                 qDebug() << "Onboarding::onRequestFinish -> TYPE_LOGIN API_OK";
                 mPreferences->setAccountStateInGeneral(Preferences::STATE_LOGGED_OK);
                 auto email = request->getEmail();
+                mPreferences->setEmailAndGeneralSettings(QString::fromUtf8(email));
                 MegaSyncApp->fetchNodes(QString::fromUtf8(email ? email : "")); //TODO: REVIEW IF THIS IS NECESSARY
                 if (!mPreferences->hasLoggedIn())
                 {
@@ -106,7 +113,9 @@ void Onboarding::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* erro
             {
                 qDebug() << "Onboarding::onRequestFinish -> TYPE_CREATE_ACCOUNT API_OK";
                 emit loginFinished(); // maybe we should change this signal
-            } else {
+            }
+            else
+            {
                 qDebug() << "Onboarding::onRequestFinish -> TYPE_CREATE_ACCOUNT Error code -> " << error->getErrorCode();
             }
             break;
@@ -158,6 +167,7 @@ QString Onboarding::convertUrlToNativeFilePath(const QUrl &urlStylePath) const
 
 void Onboarding::addSync(const QString &localPath, const mega::MegaHandle &remoteHandle)
 {
+<<<<<<< HEAD
     connect(&mSyncController, &SyncController::syncAddStatus, this, [this](int errorCode, const QString errorMsg)
     {
         if (errorCode != MegaError::API_OK)
@@ -221,11 +231,23 @@ void Onboarding::addSync(const QString &localPath, const mega::MegaHandle &remot
         mSyncController.addSync(localPath, remoteHandle);
     }
     qDebug()<<localPath<<":"<<remoteHandle;
+=======
+    mSyncController.addSync(localPath, remoteHandle);
+>>>>>>> task/qml_backups
 }
 
-void Onboarding::addBackup(const QString &localPath)
+void Onboarding::addBackups(const QStringList& localPathList)
 {
+<<<<<<< HEAD
     mSyncController.addBackup(localPath);
+=======
+    mNumBackupsRequested = localPathList.size();
+    mNumBackupsProcessed = 0;
+    for(const QString& localPath : localPathList)
+    {
+        mSyncController.addBackup(localPath, mSyncController.getSyncNameFromPath(localPath));
+    }
+>>>>>>> task/qml_backups
 }
 
 void Onboarding::onNotNowClicked() {
@@ -237,4 +259,13 @@ void Onboarding::onNotNowClicked() {
 QString Onboarding::getComputerName()
 {
     return UserAttributes::DeviceName::requestDeviceName()->getDeviceName();
+}
+
+void Onboarding::onSyncAddRequestStatus(int errorCode,
+                                        const QString &errorMsg,
+                                        const QString &name)
+{
+    qDebug() << "Onboarding::onSyncAddRequestStatus -> path = " << name
+             << " - errorCode = " << errorCode << " - errorMsg = " << errorMsg;
+    emit backupsUpdated(name, errorCode, mNumBackupsRequested == ++mNumBackupsProcessed);
 }
