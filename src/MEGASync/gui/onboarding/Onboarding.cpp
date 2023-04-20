@@ -167,7 +167,6 @@ QString Onboarding::convertUrlToNativeFilePath(const QUrl &urlStylePath) const
 
 void Onboarding::addSync(const QString &localPath, const mega::MegaHandle &remoteHandle)
 {
-<<<<<<< HEAD
     connect(&mSyncController, &SyncController::syncAddStatus, this, [this](int errorCode, const QString errorMsg)
     {
         if (errorCode != MegaError::API_OK)
@@ -231,23 +230,17 @@ void Onboarding::addSync(const QString &localPath, const mega::MegaHandle &remot
         mSyncController.addSync(localPath, remoteHandle);
     }
     qDebug()<<localPath<<":"<<remoteHandle;
-=======
-    mSyncController.addSync(localPath, remoteHandle);
->>>>>>> task/qml_backups
 }
 
 void Onboarding::addBackups(const QStringList& localPathList)
 {
-<<<<<<< HEAD
-    mSyncController.addBackup(localPath);
-=======
+
     mNumBackupsRequested = localPathList.size();
     mNumBackupsProcessed = 0;
     for(const QString& localPath : localPathList)
     {
         mSyncController.addBackup(localPath, mSyncController.getSyncNameFromPath(localPath));
     }
->>>>>>> task/qml_backups
 }
 
 void Onboarding::onNotNowClicked() {
