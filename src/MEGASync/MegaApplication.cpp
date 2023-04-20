@@ -7662,7 +7662,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
     {
         if(mBlockingBatch.isValid())
         {
-            mBlockingBatch.onTransferFinished(Utilities::getNodePath(transfer));
+            mBlockingBatch.onTransferFinished(Utilities::getNodePath(transfer), isQueueProcessingOngoing());
             updateIfBlockingStageFinished(mBlockingBatch, mBlockingBatch.hasCancelToken());
             updateFreedCancelToken(transfer);
         }
