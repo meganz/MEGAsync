@@ -16,4 +16,5 @@ Custom.TextField {
         regExp: RegexExpressions.email
     }
 
+    type: Custom.TextField.Type.Error
 }

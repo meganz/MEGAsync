@@ -11,44 +11,38 @@ import Onboarding 1.0
 RegisterPageForm {
 
     nextButton.onClicked: {
-        var error = false;
+        var error = firstName.text.length !== 0 && lastName.text.length !== 0;
+        firstLastNameDescription.visible = !error;
+        firstName.showType = !error;
+        lastName.showType = !error;
 
-        if(firstName.text.length === 0 || lastName.text.length === 0) {
+        var valid = email.valid();
+        if(!valid) {
             error = true;
-            firstLastNameDescription.visible = true;
-            firstName.hint.type = HintText.Type.Error;
-            lastName.hint.type = HintText.Type.Error;
-        } else {
-            firstLastNameDescription.visible = false;
-            firstName.hint.type = HintText.Type.None;
-            lastName.hint.type = HintText.Type.None;
+            email.hint.text = OnboardingStrings.errorValidEmail;
         }
+        email.showType = !valid;
+        email.hint.visible = !valid;
 
-        if(!email.valid()) {
+        valid = password.text.length !== 0;
+        if(!valid) {
             error = true;
-            email.hint.description = OnboardingStrings.errorValidEmail;
-            email.hint.type = HintText.Type.Error;
-        } else {
-            email.hint.type = HintText.Type.None;
         }
-
-        if(password.text.length === 0) {
-            error = true;
-            password.hint.type = HintText.Type.Error;
-        }
+        password.showType = !valid;
 
         if(confirmPassword.text.length === 0) {
             error = true;
-            confirmPassword.hint.description = OnboardingStrings.errorConfirmPassword;
-            confirmPassword.hint.type = HintText.Type.Error;
-        } else if(password.text.length !== 0 && password.text !== confirmPassword.text) {
+            confirmPassword.showType = true;
+            confirmPassword.hint.visible = true;
+            confirmPassword.hint.text = OnboardingStrings.errorConfirmPassword;
+        } else if(password.text !== confirmPassword.text) {
             error = true;
-            password.hint.type = HintText.Type.Error;
-            confirmPassword.hint.description = OnboardingStrings.errorPasswordsMatch;
-            confirmPassword.hint.type = HintText.Type.Error;
+            confirmPassword.showType = true;
+            confirmPassword.hint.visible = true;
+            confirmPassword.hint.text = OnboardingStrings.errorPasswordsMatch;
         } else {
-            password.hint.type = HintText.Type.None;
-            confirmPassword.hint.type = HintText.Type.None;
+            confirmPassword.showType = false;
+            confirmPassword.hint.visible = false;
         }
 
         if(error) {

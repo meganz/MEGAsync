@@ -103,6 +103,7 @@ Rectangle {
 
                             title: OnboardingStrings.firstName
                             Layout.preferredWidth: (nameLayout.width - 8) / 2
+                            type: Custom.TextField.Type.Error
                         }
 
                         Custom.TextField {
@@ -110,6 +111,7 @@ Rectangle {
 
                             title: OnboardingStrings.lastName
                             Layout.preferredWidth: (nameLayout.width - 8) / 2
+                            type: Custom.TextField.Type.Error
                         }
                     }
 

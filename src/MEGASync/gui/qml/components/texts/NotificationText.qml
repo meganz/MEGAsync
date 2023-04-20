@@ -12,29 +12,34 @@ Rectangle {
 
     enum Type {
         None = 0,
-        Error
+        Info,
+        AuthenticationError
     }
 
-    property int type: HintText.Type.None
+    property int type: NotificationText.Type.None
 
-    property alias iconSource: icon.source
-    property alias iconColor: icon.color
     property alias title: titleText.text
-    property alias titleColor: titleText.color
-    property alias text: hintText.text
-    property alias textColor: hintText.color
+    property alias text: notificationText.text
 
-    height: mainLayout.height
-    color: "transparent"
+    height: mainLayout.height + 24
+    radius: 8
     visible: false
 
     onTypeChanged: {
         switch(type) {
-            case HintText.Type.Error:
-                iconSource = Images.alertTriangle;
-                iconColor = Styles.textError;
-                titleColor = Styles.textError;
-                textColor = Styles.textError;
+            case NotificationText.Type.Info:
+                icon.source = Images.infoCircle;
+                icon.color = Styles.textInfo;
+                notificationText.color = Styles.textInfo;
+                titleText.color = Styles.textInfo;
+                root.color = Styles.notificationInfo;
+                break;
+            case NotificationText.Type.AuthenticationError:
+                icon.source = Images.lock;
+                icon.color = Styles.textError;
+                notificationText.color = Styles.textError;
+                titleText.color = Styles.textError;
+                root.color = Styles.notificationError
                 break;
             default:
                 break;
@@ -45,16 +50,18 @@ Rectangle {
         id: mainLayout
 
         width: root.width
-        spacing: 8
+
         anchors {
-            left: root.left
             top: root.top
+            left: root.left
+            right: root.right
+            margins: 12
         }
 
         Custom.SvgImage {
             id: icon
 
-            visible: iconSource != ""
+            visible: icon.source !== ""
             Layout.alignment: Qt.AlignTop
             sourceSize: Qt.size(16, 16)
         }
@@ -62,30 +69,28 @@ Rectangle {
         ColumnLayout {
             Layout.fillWidth: true
 
-            Custom.RichText {
+            Text {
                 id: titleText
 
-                visible: title.length !== 0
+                visible: titleText.text.length !== 0
                 Layout.fillWidth: true
                 wrapMode: Text.WordWrap
                 font {
                     bold: true
                     pixelSize: 12
-                    weight: Font.Light
                     family: "Inter"
                     styleName: "Medium"
                 }
             }
 
             Custom.RichText {
-                id: hintText
+                id: notificationText
 
-                visible: text.length !== 0
+                visible: notificationText.text.length !== 0
                 Layout.fillWidth: true
                 wrapMode: Text.WordWrap
                 font {
                     pixelSize: 12
-                    weight: Font.Light
                     family: "Inter"
                     styleName: "Medium"
                 }

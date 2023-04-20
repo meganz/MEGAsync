@@ -23,21 +23,21 @@ LoginPageForm {
     loginButton.onClicked: {
         var error = false;
 
-        if(!email.valid()) {
+        var valid = email.valid();
+        if(!valid) {
             error = true;
-            email.hint.description = OnboardingStrings.errorValidEmail;
-            email.hint.type = HintText.Type.Error;
-        } else {
-            email.hint.type = HintText.Type.None;
+            email.hint.text = OnboardingStrings.errorValidEmail;
         }
+        email.showType = !valid;
+        email.hint.visible = !valid;
 
-        if(password.text.length === 0) {
+        valid = (password.text.length !== 0);
+        if(!valid) {
             error = true;
-            password.hint.type = HintText.Type.Error;
-            password.hint.description = OnboardingStrings.errorEmptyPassword;
-        } else {
-            password.hint.type = HintText.Type.None;
+            password.hint.text = OnboardingStrings.errorEmptyPassword;
         }
+        password.showType = !valid;
+        password.hint.visible = !valid;
 
         if(error) {
             return;

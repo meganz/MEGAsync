@@ -42,70 +42,83 @@ ColumnLayout {
             return hasError ? TextField.DescriptionType.Error : TextField.DescriptionType.None;
         }
 
-        Layout.preferredWidth: root.width
         Layout.preferredHeight: 72
-        spacing: 4
+        spacing: 8
 
         TwoFADigit {
             id: digit1
 
             next: digit2
+            Layout.preferredWidth: 60
             Layout.preferredHeight: 72
-            hint.type: mainLayout.error()
+            type: Custom.TextField.Type.Error
+            hint.visible: hasError
         }
 
         TwoFADigit {
             id: digit2
 
+            Layout.preferredWidth: 60
             Layout.preferredHeight: 72
             next: digit3
             previous: digit1
-            hint.type: mainLayout.error()
+            type: Custom.TextField.Type.Error
+            hint.visible: hasError
         }
 
         TwoFADigit {
             id: digit3
 
+            Layout.preferredWidth: 60
             Layout.preferredHeight: 72
             next: digit4
             previous: digit2
-            hint.type: mainLayout.error()
+            type: Custom.TextField.Type.Error
+            hint.visible: hasError
         }
 
         TwoFADigit {
             id: digit4
 
+            Layout.preferredWidth: 60
             Layout.preferredHeight: 72
             next: digit5
             previous: digit3
-            hint.type: mainLayout.error()
+            type: Custom.TextField.Type.Error
+            hint.visible: hasError
         }
 
         TwoFADigit {
             id: digit5
 
+            Layout.preferredWidth: 60
             Layout.preferredHeight: 72
             next: digit6
             previous: digit4
-            hint.type: mainLayout.error()
+            type: Custom.TextField.Type.Error
+            hint.visible: hasError
         }
 
         TwoFADigit {
             id: digit6
 
+            Layout.preferredWidth: 60
             Layout.preferredHeight: 72
             previous: digit5
-            hint.type: mainLayout.error()
+            type: Custom.TextField.Type.Error
         }
     }
 
-    Custom.HintText {
-        id: hint
+    Custom.NotificationText {
+        id: norification
 
-        Layout.leftMargin: 4
+        visible: hasError
+        Layout.leftMargin: 3
         title: qsTr("Authentication failed")
-        description: qsTr("Please, try again.")
-        type: hasError ? Custom.HintText.Type.AuthenticationError : Custom.HintText.Type.None
+        text: qsTr("Please, try again.")
+        Layout.preferredWidth: root.width - 4
+        Layout.preferredHeight: norification.height
+        type: Custom.NotificationText.Type.AuthenticationError
     }
 
     Shortcut {

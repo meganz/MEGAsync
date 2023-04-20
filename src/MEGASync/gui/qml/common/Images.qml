@@ -10,9 +10,11 @@ QtObject {
 
     // Sorted alphabetically by dir
 
-    readonly property url helpCircle: imagesPath + "help_circle.svg"
     readonly property url alertTriangle: imagesPath + "alert_triangle.svg"
     readonly property url arrowRight: imagesPath + "arrow_right.svg"
+    readonly property url helpCircle: imagesPath + "help_circle.svg"
+    readonly property url infoCircle: imagesPath + "info_circle.svg"
+    readonly property url lock: imagesPath + "lock.svg"
 
     readonly property url checkCircleOutline: imagesOnboardingPath + "check_circle_outline.svg"
     readonly property url checkCircleSolid: imagesOnboardingPath + "check_circle_solid.svg"
@@ -22,7 +24,6 @@ QtObject {
     readonly property url fullSync: imagesOnboardingPath + "full_sync.svg"
     readonly property url fuse: imagesOnboardingPath + "fuse.svg"
     readonly property url installationTypeBackups: imagesOnboardingPath + "installation_type_backups.svg"
-    readonly property url lock: imagesOnboardingPath + "lock.svg"
     readonly property url login: imagesOnboardingPath + "login.png"
     readonly property url mega: imagesOnboardingPath + "mega.svg"
     readonly property url pc: imagesOnboardingPath + "pc.svg"

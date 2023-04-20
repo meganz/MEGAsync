@@ -10,4 +10,5 @@ EmailTextField 1.0 textFields/EmailTextField.qml
 IconTextField 1.0 textFields/IconTextField.qml
 RichText 1.0 texts/RichText.qml
 HintText 1.0 texts/HintText.qml
+NotificationText 1.0 texts/NotificationText.qml
 ToolTip 1.0 toolTips/ToolTip.qml

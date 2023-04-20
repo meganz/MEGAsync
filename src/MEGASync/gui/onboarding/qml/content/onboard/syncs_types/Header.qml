@@ -11,7 +11,7 @@ ColumnLayout {
     property string title: ""
     property string description: ""
 
-    Text {
+    Custom.RichText {
         text: title
         Layout.preferredHeight: 20
         font.family: "Inter"
@@ -21,7 +21,7 @@ ColumnLayout {
         lineHeight: 30
     }
 
-    Text {
+    Custom.RichText {
         text: description
         Layout.topMargin: 12
         Layout.fillWidth: true

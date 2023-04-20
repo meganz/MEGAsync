@@ -9,6 +9,7 @@ import Common 1.0
 
 // Local
 import Onboard 1.0
+import Onboard.Syncs_types 1.0
 
 Rectangle {
     id: root
@@ -30,38 +31,15 @@ Rectangle {
             rightMargin: 48
         }
 
-        ColumnLayout {
-
-            Layout.leftMargin: 4
-            spacing: 12
-
-            Custom.RichText {
-                Layout.alignment: Qt.AlignLeft
-                text: OnboardingStrings.twoFATitle
-                font {
-                    pixelSize: 20
-                    weight: Font.Light
-                    family: "Inter"
-                    styleName: "Normal"
-                }
-            }
-
-            Text {
-                Layout.alignment: Qt.AlignLeft
-                text: OnboardingStrings.twoFASubtitle
-                color: Styles.textColor
-                font {
-                    pixelSize: 14
-                    weight: Font.Light
-                    family: "Inter"
-                    styleName: "Normal"
-                }
-            }
+        Header {
+            title: OnboardingStrings.twoFATitle
+            description: OnboardingStrings.twoFASubtitle
         }
 
         Custom.TwoFA {
             id: twoFAField
 
+            Layout.leftMargin: -3
             Layout.preferredWidth: parent.width
             Layout.fillHeight: true
         }

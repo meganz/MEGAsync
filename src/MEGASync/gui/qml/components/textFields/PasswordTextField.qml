@@ -25,4 +25,6 @@ Custom.TextField {
         }
     }
 
+    type: Custom.TextField.Type.Error
+
 }

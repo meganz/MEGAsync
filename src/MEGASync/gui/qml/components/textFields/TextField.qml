@@ -10,11 +10,9 @@ import Components 1.0 as Custom
 ColumnLayout {
     id: root
 
-    enum DescriptionType {
+    enum Type {
         None = 0,
-        InfoWithoutIcon = 1,
-        Info = 2,
-        Error = 3
+        Error
     }
 
     property alias hint: hint
@@ -26,6 +24,8 @@ ColumnLayout {
     property alias rightIconMouseArea: rightIconMouseArea
 
     property string title: ""
+    property int type: TextField.Type.None
+    property bool showType: false
 
     readonly property int textFieldRawHeight: textField.height - 2 * textField.focusBorderWidth
 
@@ -113,7 +113,7 @@ ColumnLayout {
 
                 function getBorderColor() {
                     var color = Styles.borderDisabled;
-                    if(hint.type === Custom.HintText.Type.Error) {
+                    if(showType && root.type === TextField.Type.Error) {
                         color = Styles.textError;
                     } else if(textField.focus) {
                         color = Styles.borderStrongSelected;
@@ -157,11 +157,9 @@ ColumnLayout {
 
         Keys.onPressed:
         {
-            if(event.key === Qt.Key_Backspace)
-            {
+            if(event.key === Qt.Key_Backspace) {
                 root.backPressed();
-            }
-            else if((event.key === Qt.Key_V) && (event.modifiers & Qt.ControlModifier)) {
+            } else if((event.key === Qt.Key_V) && (event.modifiers & Qt.ControlModifier)) {
                 pastePressed();
             }
         }
@@ -173,6 +171,7 @@ ColumnLayout {
         Layout.fillWidth: true
         Layout.leftMargin: 4
         Layout.preferredHeight: hint.height
+        type: root.type
     }
 }
 
