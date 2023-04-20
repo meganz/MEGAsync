@@ -38,6 +38,21 @@ ListModel {
         }
     }
 
+    function getConfirmedDirs() {
+        var dirs = [];
+        for (let i = 0; i < backupListModel.count; i++) {
+            if(backupListModel.get(i).confirmed) {
+                dirs.push(backupListModel.get(i).folder);
+            }
+        }
+        return dirs;
+    }
+
+    function getDisplayName(index) {
+        var folder = backupListModel.get(index).folder;
+        return folder.substring(folder.lastIndexOf('\\') + 1);
+    }
+
     signal rowSelectedChanged(bool selectedRow, bool selectedAll)
 
     ListElement {
@@ -46,6 +61,8 @@ ListModel {
         size: "30 MB"
         selectable: true
         confirmed: false
+        done: false
+        error: 0
     }
     ListElement {
         folder: "C:\\Users\\mega\\Documents"
@@ -53,6 +70,8 @@ ListModel {
         size: "2.3 GB"
         selectable: true
         confirmed: false
+        done: false
+        error: 0
     }
     ListElement {
         folder: "C:\\Users\\mega\\Music"
@@ -60,6 +79,8 @@ ListModel {
         size: "783.4 KB"
         selectable: true
         confirmed: false
+        done: false
+        error: 0
     }
     ListElement {
         folder: "C:\\Users\\mega\\Images"
@@ -67,5 +88,7 @@ ListModel {
         size: "1 KB"
         selectable: true
         confirmed: false
+        done: false
+        error: 0
     }
 }

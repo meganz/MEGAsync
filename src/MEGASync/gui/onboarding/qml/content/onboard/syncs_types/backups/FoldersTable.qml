@@ -192,13 +192,13 @@ Rectangle {
 
                         Custom.SvgImage {
                             Layout.leftMargin: 18
-                            source: Images.folder
+                            source: error ? Images.pc : Images.folder
                             opacity: selectable ? 1.0 : 0.3
                         }
 
                         Text {
                             Layout.leftMargin: 13
-                            text: folder.substring(folder.lastIndexOf('\\') + 1);
+                            text: backupModel.getDisplayName(index)
                             font.family: "Inter"
                             font.styleName: "normal"
                             font.weight: Font.Normal

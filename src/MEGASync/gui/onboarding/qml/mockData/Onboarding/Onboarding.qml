@@ -16,6 +16,7 @@ Item {
     signal loginFinished
     signal notNowFinished
     signal twoFAFailed
+    signal backupsUpdated
 
     function onForgotPasswordClicked() {
         console.info("onForgotPasswordClicked()");
@@ -61,5 +62,9 @@ Item {
     function getComputerName() {
         console.info("getComputerName()");
         return "My PC name";
+    }
+
+    function addBackups(backupDirs) {
+        console.info("addBackups() => " + JSON.stringify(backupDirs));
     }
 }

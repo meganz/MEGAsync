@@ -1303,7 +1303,7 @@ void MegaApplication::loggedIn(bool fromWizard)
         return;
     }
 
-    DialogOpener::removeDialogByClass<QmlDialogWrapper<Onboarding>>();
+    //DialogOpener::removeDialogByClass<QmlDialogWrapper<Onboarding>>();
 
     //Send pending crash report log if neccessary
     if (!crashReportFilePath.isNull() && megaApi)
