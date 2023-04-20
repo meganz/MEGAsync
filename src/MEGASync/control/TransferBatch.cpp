@@ -118,12 +118,12 @@ void BlockingBatch::setAsUnblocked()
     clearBatch();
 }
 
-void BlockingBatch::onTransferFinished(const QString& nodePath)
+void BlockingBatch::onTransferFinished(const QString& nodePath, bool stillProcessing)
 {
     if (isValid())
     {
         mBatch->onScanCompleted(nodePath);
-        if (mBatch->isEmpty())
+        if (!stillProcessing && mBatch->isEmpty())
         {
             clearBatch();
         }
