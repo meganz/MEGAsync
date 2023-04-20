@@ -2158,7 +2158,7 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew.</source>
         <translatorcomment>Informative label to indicate that your queued transfers may be interrupted because the current account does not have enough transfer quota.</translatorcomment>
-        <translation>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew.</translation>
+        <translation>You can’t continue downloading as you don’t have enough transfer quota left on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew.</translation>
     </message>
     <message>
         <source>Buy new plan</source>
@@ -4211,9 +4211,9 @@ Enter a different name.</translation>
 - We&apos;ve fixed the detected crashes on Windows, Linux, and macOS.
 </source>
         <translation>- You can now search the stored data in your account.
-- We&apos;ve improved system notifications.
-- We&apos;ve enhanced the UI.
-- We&apos;ve fixed the detected crashes on Windows, Linux, and macOS.
+- We’ve improved system notifications.
+- We’ve enhanced the UI.
+- We’ve fixed the detected crashes on Windows, Linux, and macOS.
 </translation>
     </message>
 </context>

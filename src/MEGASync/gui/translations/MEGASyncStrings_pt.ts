@@ -2095,7 +2095,7 @@ Estes arquivos podem conter detalhes sobre os seus dados, como nomes de arquivos
     <message>
         <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew.</source>
         <translatorcomment>Informative label to indicate that your queued transfers may be interrupted because the current account does not have enough transfer quota.</translatorcomment>
-        <translation>Não é possível continuar fazendo download porque esta conta não tem cota de transferência suficiente. Para continuar fazendo download, adquira um novo plano ou, se você tiver uma assinatura recorrente do MEGA, espera a renovação do seu plano.</translation>
+        <translation>Não é possível continuar fazendo download porque esta conta não tem cota de transferência suficiente. Para continuar fazendo download, adquira um novo plano ou, se você tiver uma assinatura recorrente do MEGA, espere a renovação do seu plano.</translation>
     </message>
     <message>
         <source>Buy new plan</source>

@@ -2293,7 +2293,7 @@
     <message>
         <source>There is not enough space on %1. You need an additional %2 to download these files.</source>
         <translatorcomment>Label explaining the problem, %1 is the download target disk name. %2 is the needed size to continue with the download (the size unit depends on the quantity) </translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1的儲存空間不足。您需要額外%2才能下載這些檔案。</translation>
     </message>
     <message>
         <source>Free space: %1</source>
@@ -5972,7 +5972,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Only files can be used for streaming.</source>
         <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>您無法串流傳輸資料夾。請選擇一個檔案進行串流傳輸。</translation>
     </message>
 </context>
 <context>

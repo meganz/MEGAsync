@@ -6778,7 +6778,8 @@ Untuk mendapatkan lebih banyak kuota, upgrade ke akun Pro atau tunggu [A] hingga
         <source>Sync transfers cannot be cancelled individually.
 Please delete the folder sync from settings to cancel them.</source>
         <translatorcomment>Message displayed when the user is trying to cancel a sync transfer.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Transfer sinkronisasi tidak dapat dibatalkan satu per satu.
+Harap hapus sinkronisasi folder dari pengaturan untuk membatalkannya.</translation>
     </message>
     <message>
         <source>Open settings</source>

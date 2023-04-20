@@ -323,7 +323,7 @@
     <message>
         <source>Your payment for the [A] plan was unsuccessful</source>
         <translatorcomment>Label to indicate that the the payment for a [A] PRO plan has failed. Placeholder will be replaced by the PRO plan name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>We hebben uw betaling voor het [A] abonnement niet ontvangen.</translation>
     </message>
     <message>
         <source>Your publicly shared has been taken down</source>
@@ -1443,7 +1443,7 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     <message>
         <source>The file at this destination will be updated if the new file is different.</source>
         <translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Het bestand op deze bestemming wordt bijgewerkt als het nieuwe bestand anders is.</translation>
     </message>
 </context>
 <context>
@@ -2293,7 +2293,7 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     <message>
         <source>There is not enough space on %1. You need an additional %2 to download these files.</source>
         <translatorcomment>Label explaining the problem, %1 is the download target disk name. %2 is the needed size to continue with the download (the size unit depends on the quantity) </translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Er is niet genoeg ruimte op %1. U heeft een extra %2 nodig om deze bestanden te downloaden.</translation>
     </message>
     <message>
         <source>Free space: %1</source>
@@ -2876,12 +2876,12 @@ Overdrachten worden automatisch hervat wanneer u de applicatie heropend.</numeru
     <message>
         <source>Your sync &quot;%1&quot; has been temporarily disabled: %2</source>
         <translatorcomment>Warning message shown when a sync is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Uw synchronisatie “%1” was tijdelijk uitgeschakeld: %2</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been temporarily disabled: %2</source>
         <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Uw back-up “%1” is tijdelijk uitgeschakeld: %2</translation>
     </message>
     <message>
         <source>Error transferring folder: %1</source>
@@ -4111,7 +4111,11 @@ Voer een andere naam in.</translation>
 - We've enhanced the UI.
 - We've fixed the detected crashes on Windows, Linux, and macOS.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>- U kunt nu de opgeslagen gegevens in uw account doorzoeken.
+- We hebben systeemmeldingen verbeterd.
+- We hebben de gebruikersinterface verbeterd.
+- We hebben de gedetecteerde crashes op Windows, Linux en macOS verholpen.
+</translation>
     </message>
 </context>
 <context>
@@ -5973,7 +5977,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Only files can be used for streaming.</source>
         <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>U kunt geen mappen streamen. Selecteer een bestand om te streamen.</translation>
     </message>
 </context>
 <context>
@@ -7286,7 +7290,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>%1 [A]h[/A]</source>
         <translatorcomment>String controlling the formatting of the hour count for time intervals. It is used in [DAYS] [HOURS] and [HOURS] [MINUTES] strings, replacing the [HOURS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the hours. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1&#xa0;[A]h[/A]</translation>
+        <translation>%1&#xa0;[A]u[/A]</translation>
     </message>
     <message>
         <source>%1 [A]m[/A]</source>

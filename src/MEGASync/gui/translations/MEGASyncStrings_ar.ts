@@ -1443,7 +1443,7 @@
     <message>
         <source>The file at this destination will be updated if the new file is different.</source>
         <translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>سيتم تحديث الملف الموجود في هذه الوجهة إذا كان الملف الجديد مختلفًا.</translation>
     </message>
 </context>
 <context>
@@ -2293,7 +2293,7 @@
     <message>
         <source>There is not enough space on %1. You need an additional %2 to download these files.</source>
         <translatorcomment>Label explaining the problem, %1 is the download target disk name. %2 is the needed size to continue with the download (the size unit depends on the quantity) </translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>لا توجد مساحة كافية في %1. أنت بحاجة إلى %2 إضافية لتنزيل هذه الملفات.</translation>
     </message>
     <message>
         <source>Free space: %1</source>
@@ -2880,12 +2880,12 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your sync &quot;%1&quot; has been temporarily disabled: %2</source>
         <translatorcomment>Warning message shown when a sync is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم تعطيل مزامنتك ”%1“ مؤقتًا: %2</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been temporarily disabled: %2</source>
         <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم تعطيل نسخك الاحتياطي ”%1“ مؤقتًا: %2</translation>
     </message>
     <message>
         <source>Error transferring folder: %1</source>
@@ -4115,7 +4115,11 @@ Enter a different name</source>
 - We've enhanced the UI.
 - We've fixed the detected crashes on Windows, Linux, and macOS.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>- يمكنك الآن البحث في البيانات المخزنة في حسابك.
+- لقد قمنا بتحسين إشعارات النظام.
+- لقد قمنا بتحسين واجهة المستخدم.
+- لقد أصلحنا الأعطال المكتشفة على أنظمة التشغيل ويندوز Windows و لينكس Linux و ماك أو إس macOS.
+</translation>
     </message>
 </context>
 <context>
@@ -5977,7 +5981,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Only files can be used for streaming.</source>
         <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكنك بث المجلدات. حدد ملفًا للبث.</translation>
     </message>
 </context>
 <context>

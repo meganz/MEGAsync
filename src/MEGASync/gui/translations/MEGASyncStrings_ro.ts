@@ -323,7 +323,7 @@
     <message>
         <source>Your payment for the [A] plan was unsuccessful</source>
         <translatorcomment>Label to indicate that the the payment for a [A] PRO plan has failed. Placeholder will be replaced by the PRO plan name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Nu am primit plata ta pentru planul [A].</translation>
     </message>
     <message>
         <source>Your publicly shared has been taken down</source>
@@ -1443,7 +1443,7 @@
     <message>
         <source>The file at this destination will be updated if the new file is different.</source>
         <translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Fișierul de la această destinație va fi actualizat dacă noul fișier este diferit.</translation>
     </message>
 </context>
 <context>
@@ -2293,7 +2293,7 @@
     <message>
         <source>There is not enough space on %1. You need an additional %2 to download these files.</source>
         <translatorcomment>Label explaining the problem, %1 is the download target disk name. %2 is the needed size to continue with the download (the size unit depends on the quantity) </translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Nu există suficient spațiu pe %1. Ai nevoie de încă %2 pentru a descărca aceste fișiere.</translation>
     </message>
     <message>
         <source>Free space: %1</source>
@@ -2877,12 +2877,12 @@ Transferurile se vor relua automat când redeschizi aplicația.</numerusform></t
     <message>
         <source>Your sync &quot;%1&quot; has been temporarily disabled: %2</source>
         <translatorcomment>Warning message shown when a sync is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Sincronizarea „%1” ți-a fost dezactivată temporar: %2</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been temporarily disabled: %2</source>
         <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Backupul „%1” ți-a fost dezactivat temporar: %2</translation>
     </message>
     <message>
         <source>Error transferring folder: %1</source>
@@ -4112,7 +4112,11 @@ Introdu un alt nume.</translation>
 - We've enhanced the UI.
 - We've fixed the detected crashes on Windows, Linux, and macOS.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>- Acum poți căuta datele stocate în contul tău.
+- Am îmbunătățit notificările de sistem.
+- Am îmbunătățit interfața de utilizator.
+- Am remediat defecțiunile detectate pe Windows, Linux și macOS.
+</translation>
     </message>
 </context>
 <context>
@@ -5974,7 +5978,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Only files can be used for streaming.</source>
         <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Nu poți reda în flux foldere. Selectează un fișier pentru a reda în flux.</translation>
     </message>
 </context>
 <context>
@@ -6708,7 +6712,7 @@ Pentru a obține mai multă cotă, fă upgrade la un cont Pro sau așteaptă [A]
     <message numerus="yes">
         <source>%n upload successful</source>
         <translatorcomment>Notification text that inform that an upload was successful. %1 is the number of uploads. This string goes always with the %n upload cancelled and/or %n upload failed strings.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n încărcare finalizată</numerusform><numerusform>%n încărcări finalizate</numerusform><numerusform>%n de încărcări finalizate</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>, %n upload cancelled</source>
@@ -6733,7 +6737,7 @@ Pentru a obține mai multă cotă, fă upgrade la un cont Pro sau așteaptă [A]
     <message numerus="yes">
         <source>%n download successful</source>
         <translatorcomment>Notification text that inform that an download was successful. %1 is the number of downloads. This string goes always with the %n download cancelled and/or %n download failed strings.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n descărcare finalizată</numerusform><numerusform>%n descărcări finalizate</numerusform><numerusform>%n de descărcări finalizate</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>, %n download cancelled</source>

@@ -323,7 +323,7 @@
     <message>
         <source>Your payment for the [A] plan was unsuccessful</source>
         <translatorcomment>Label to indicate that the the payment for a [A] PRO plan has failed. Placeholder will be replaced by the PRO plan name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Nie otrzymaliśmy Twojej płatności za plan [A].</translation>
     </message>
     <message>
         <source>Your publicly shared has been taken down</source>
@@ -1443,7 +1443,7 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
     <message>
         <source>The file at this destination will be updated if the new file is different.</source>
         <translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Plik w tym miejscu docelowym zostanie zaktualizowany, jeśli nowy plik jest inny.</translation>
     </message>
 </context>
 <context>
@@ -2293,7 +2293,7 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
     <message>
         <source>There is not enough space on %1. You need an additional %2 to download these files.</source>
         <translatorcomment>Label explaining the problem, %1 is the download target disk name. %2 is the needed size to continue with the download (the size unit depends on the quantity) </translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Nie ma wystarczającej ilości miejsca na %1. Potrzebujesz dodatkowego %2, aby pobrać te pliki.</translation>
     </message>
     <message>
         <source>Free space: %1</source>
@@ -2878,12 +2878,12 @@ Transfery zostaną automatycznie wznowione po ponownym otwarciu aplikacji.</nume
     <message>
         <source>Your sync &quot;%1&quot; has been temporarily disabled: %2</source>
         <translatorcomment>Warning message shown when a sync is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Twoja synchronizacja &#8220;%1&#8221; została tymczasowo wyłączona: %2</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been temporarily disabled: %2</source>
         <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Twój backup &#8220;%1&#8221; został tymczasowo wyłączony: %2</translation>
     </message>
     <message>
         <source>Error transferring folder: %1</source>
@@ -4113,7 +4113,11 @@ Wprowadź inną nazwę.</translation>
 - We've enhanced the UI.
 - We've fixed the detected crashes on Windows, Linux, and macOS.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>- Możesz teraz przeszukiwać zapisane dane na swoim koncie.
+- Poprawiliśmy powiadomienia systemowe.
+- Udoskonaliliśmy interfejs użytkownika.
+- Naprawiliśmy wykryte awarie w systemach Windows, Linux i macOS.
+</translation>
     </message>
 </context>
 <context>
@@ -5975,7 +5979,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Only files can be used for streaming.</source>
         <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Nie można przesyłać strumieniowo katalogów. Wybierz plik do przesłania strumieniowego.</translation>
     </message>
 </context>
 <context>

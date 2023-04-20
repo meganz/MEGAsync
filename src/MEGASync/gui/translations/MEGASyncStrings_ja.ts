@@ -4110,7 +4110,8 @@ Enter a different name</source>
         <translation>－アカウントに保存されているデータを検索できるようになりました。
 －システム通知を改善しました。
 －UIを強化しました。
-－Windows、Linux、およびmacOSで検出されたクラッシュを修正しました。</translation>
+－Windows、Linux、およびmacOSで検出されたクラッシュを修正しました。
+</translation>
     </message>
 </context>
 <context>
