@@ -8,18 +8,24 @@
 
 struct BackupFolder
 {
+    // Front (with role)
+    QString display;
+    QString tooltip;
     QString folder;
-    bool selected;
-    bool confirmed;
     QString size;
-    long long folderSize;
+    bool selected;
     bool selectable;
+    bool confirmed;
     bool done;
     int error;
+
+    // Back (without role)
+    long long folderSize;
 
     BackupFolder();
 
     BackupFolder(const QString& folder,
+                 const QString& displayName,
                  bool selected = true);
 };
 
@@ -31,11 +37,10 @@ public:
 
     enum BackupFolderRoles {
         FolderRole = Qt::UserRole + 1,
-        SelectedRole,
-        ConfirmedRole,
         SizeRole,
-        FolderSizeRole,
+        SelectedRole,
         SelectableRole,
+        ConfirmedRole,
         DoneRole,
         ErrorRole
     };
@@ -61,13 +66,9 @@ public slots:
 
     QString getTotalSize() const;
 
-    QString getTooltipText(int row) const;
-
     void updateConfirmed();
 
     QStringList getConfirmedDirs() const;
-
-    QString getDisplayName(int index);
 
     void clean();
 
@@ -91,9 +92,12 @@ private:
 
     void checkSelectedAll(const BackupFolder& item);
 
-    bool isValidBackupFolder(const QString& inputPath,
-                             bool displayWarning = false,
-                             bool fromCheckAction = false);
+    bool isValidBackupFolder(const QString& inputPath);
+
+    bool isValidInsertion(const QString& inputPath);
+
+    bool folderContainsOther(const QString& folder,
+                             const QString& other) const;
 
     int calculateNumSelectedRows() const;
 
@@ -104,6 +108,9 @@ private:
 
     bool isBackupFolderValid(const QString& folder,
                              const QString& existingPath) const;
+
+    QString getToolTipErrorText(const QString& folder,
+                                const QString& existingPath) const;
 
 };
 

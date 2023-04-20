@@ -9,6 +9,7 @@ ListModel {
 
     ListElement {
         folder: "C:\\Users\\mega\\Desktop"
+        display: "Desktop"
         selected: false
         size: "30 MB"
         selectable: true
@@ -18,6 +19,7 @@ ListModel {
     }
     ListElement {
         folder: "C:\\Users\\mega\\Documents"
+        display: "Documents"
         selected: false
         size: "2.3 GB"
         selectable: true
@@ -27,6 +29,7 @@ ListModel {
     }
     ListElement {
         folder: "C:\\Users\\mega\\Music"
+        display: "Music"
         selected: false
         size: "783.4 KB"
         selectable: true
@@ -36,6 +39,7 @@ ListModel {
     }
     ListElement {
         folder: "C:\\Users\\mega\\Images"
+        display: "Images"
         selected: false
         size: "1 KB"
         selectable: true

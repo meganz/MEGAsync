@@ -26,6 +26,7 @@ StackView {
     readonly property string finalState: "finalState"
 
     state: computerName
+    initialItem: syncsPanel
 
     states: [
         State {
@@ -87,10 +88,10 @@ StackView {
             name: selectBackup
             StateChangeScript {
                 script: {
-                    rightPanel.replace(selectBackupFoldersPage);
                     if(syncsFlow.currentItem != syncsPanel) {
                         syncsFlow.replace(syncsPanel);
                     }
+                    rightPanel.replace(selectBackupFoldersPage);
                 }
             }
             PropertyChanges {
@@ -127,6 +128,7 @@ StackView {
 
         width: syncsFlow.width
         height: syncsFlow.height
+        visible: false
 
         StepPanel {
             id: stepPanel

@@ -198,7 +198,7 @@ Rectangle {
 
                         Text {
                             Layout.leftMargin: 13
-                            text: backupModel.getDisplayName(index)
+                            text: display
                             font.family: "Inter"
                             font.styleName: "normal"
                             font.weight: Font.Normal
@@ -234,7 +234,7 @@ Rectangle {
                 Custom.ToolTip {
                     visible: folderRowArea.containsMouse
                     leftIcon.source: Images.pc
-                    text: selectable ? folder : backupModel.getTooltipText(index)
+                    text: toolTip
                     delay: 500
                     timeout: 5000
                 }
