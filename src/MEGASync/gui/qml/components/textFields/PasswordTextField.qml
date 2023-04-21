@@ -9,7 +9,7 @@ Custom.TextField {
 
     textField.echoMode: TextInput.Password
     textField.onTextChanged: {
-        rightIcon.visible = textField.text.length != 0;
+        rightIcon.visible = text.length != 0;
     }
 
     rightIcon.visible: false

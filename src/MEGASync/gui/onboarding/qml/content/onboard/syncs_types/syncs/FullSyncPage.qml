@@ -1,3 +1,6 @@
+import QtQml 2.12
+import Onboarding 1.0
+
 FullSyncPageForm {
 
     footerButtons {
@@ -7,7 +10,15 @@ FullSyncPageForm {
         }
 
         nextButton.onClicked: {
-            syncsFlow.state = finalState;
+            Onboarding.addSync(localFolderChooser.getSyncData());
+        }
+    }
+
+    Connections {
+        target: Onboarding
+
+        onSyncSetupSucces: {
+            localFolderChooser.reset();
         }
     }
 

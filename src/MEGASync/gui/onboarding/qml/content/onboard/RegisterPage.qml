@@ -10,6 +10,46 @@ import Onboarding 1.0
 
 RegisterPageForm {
 
+    password.onTextChanged: {
+        var strength = Onboarding.getPasswordStrength(password.text)
+        console.log(strength);
+
+        switch(strength)
+        {
+        case Onboarding.PasswordStrength.PASSWORD_STRENGTH_VERYWEAK:
+        {
+            password.hint.title = OnboardingStrings.tooWeakPasswordTitle;
+            password.hint.text = OnboardingStrings.tooWeakPasswordText;
+            break;
+        }
+        case Onboarding.PasswordStrength.PASSWORD_STRENGTH_WEAK:
+        {
+            password.hint.title = OnboardingStrings.weakPasswordTitle;
+            password.hint.text = OnboardingStrings.weakPasswordText;
+            break;
+        }
+        case Onboarding.PasswordStrength.PASSWORD_STRENGTH_MEDIUM:
+        {
+            password.hint.title = OnboardingStrings.averagePasswordTitle;
+            password.hint.text = OnboardingStrings.averagePasswordText;
+            break;
+        }
+        case Onboarding.PasswordStrength.PASSWORD_STRENGTH_GOOD:
+        {
+            password.hint.title = OnboardingStrings.strongPasswordTitle;
+            password.hint.text = OnboardingStrings.strongPasswordText;
+            break;
+        }
+        case Onboarding.PasswordStrength.PASSWORD_STRENGTH_STRONG:
+        {
+            password.hint.title = OnboardingStrings.excelentPasswordTitle;
+            password.hint.text = OnboardingStrings.excelentPasswordText;
+            break;
+        }
+        }
+        password.hint.visible = true;
+    }
+
     nextButton.onClicked: {
         var error = firstName.text.length !== 0 && lastName.text.length !== 0;
         firstLastNameDescription.visible = !error;

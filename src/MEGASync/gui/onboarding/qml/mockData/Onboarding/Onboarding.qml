@@ -11,6 +11,14 @@ Item {
         PASSWORD = 3
     }
 
+    enum PasswordStrength{
+        PASSWORD_STRENGTH_VERYWEAK = 0,
+        PASSWORD_STRENGTH_WEAK = 1,
+        PASSWORD_STRENGTH_MEDIUM = 2,
+        PASSWORD_STRENGTH_GOOD = 3,
+        PASSWORD_STRENGTH_STRONG = 4
+    }
+
     signal userPassFailed
     signal twoFARequired
     signal loginFinished
@@ -63,6 +71,19 @@ Item {
     function getComputerName() {
         console.info("getComputerName()");
         return "My PC name";
+    }
+
+    function setDeviceName(deviceName)
+    {
+        console.info("setDeviceName(deviceName)" + deviceName)
+        return true;
+    }
+
+    function getPasswordStrength(password)
+    {
+        console.info("getPasswordStrength(password)" + password);
+        var strength = password.length - 1;
+        return strength > Onboarding.PasswordStrength.PASSWORD_STRENGTH_STRONG ? Onboarding.PasswordStrength.PASSWORD_STRENGTH_STRONG : strength;
     }
 
     Timer {

@@ -22,17 +22,19 @@ public:
 
     QString getDeviceName() const;
     QString getDefaultDeviceName();
+    bool setDeviceName(const QString& deviceName);
 
 signals:
     void attributeReady(const QString&);
 
 private:
     void processGetDeviceNameCallback(mega::MegaRequest *incoming_request, mega::MegaError *e);
-    void processSetDeviceNameCallback(mega::MegaError *e);
+    void processSetDeviceNameCallback(mega::MegaRequest *incoming_request, mega::MegaError *e);
+    void setDeviceNameAttribute(bool isRetry = false);
 
-    void setDeviceNameAttribute();
 
     QString mDeviceName;
+    QString mUserChoosenDeviceName;
     int  mNameSuffix;
 };
 }

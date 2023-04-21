@@ -168,8 +168,12 @@ QString Onboarding::convertUrlToNativeFilePath(const QUrl &urlStylePath) const
     return QDir::toNativeSeparators(urlStylePath.toLocalFile());
 }
 
-void Onboarding::addSync(const QString &localPath, const mega::MegaHandle &remoteHandle)
+void Onboarding::addSync(const QString &localPath, mega::MegaHandle remoteHandle)
 {
+    if(remoteHandle == mega::INVALID_HANDLE)
+    {
+        remoteHandle = MegaSyncApp->getRootNode()->getHandle();
+    }
 
     QString warningMessage;
     auto syncability (SyncController::isLocalFolderAllowedForSync(localPath, MegaSync::TYPE_TWOWAY, warningMessage));
@@ -236,6 +240,16 @@ void Onboarding::addBackups(const QStringList& localPathList)
     }
 }
 
+bool Onboarding::setDeviceName(const QString &deviceName)
+{
+    return UserAttributes::DeviceName::requestDeviceName()->setDeviceName(deviceName);
+}
+
+Onboarding::PasswordStrength Onboarding::getPasswordStrength(const QString &password)
+{
+    return mMegaApi->getPasswordStrength(password);
+}
+
 void Onboarding::onNotNowClicked() {
     std::unique_ptr<char[]> email(mMegaApi->getMyEmail());
     mPreferences->setEmailAndGeneralSettings(QString::fromUtf8(email.get()));
@@ -244,7 +258,9 @@ void Onboarding::onNotNowClicked() {
 
 QString Onboarding::getComputerName()
 {
-    return UserAttributes::DeviceName::requestDeviceName()->getDeviceName();
+    auto request = UserAttributes::DeviceName::requestDeviceName();
+    connect(request.get(), &UserAttributes::DeviceName::attributeReady, this, &Onboarding::deviceNameReady, Qt::UniqueConnection);
+    return request->getDeviceName();
 }
 
 void Onboarding::onSyncAddRequestStatus(int errorCode,

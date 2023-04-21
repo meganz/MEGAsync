@@ -13,8 +13,10 @@ import Onboard.Syncs_types 1.0
 
 SyncsPage {
 
+    property alias localFolderChooser: localFolderChooser
+
     footerButtons.nextButton {
-        enabled: localFolderSyncChooser.isValid
+        enabled: localFolderChooser.isValid
         text: OnboardingStrings.sync
         iconSource: Images.sync
     }
@@ -39,7 +41,7 @@ SyncsPage {
         }
 
         ChooseSyncFolder {
-            id: localFolderSyncChooser
+            id: localFolderChooser
         }
     }
 

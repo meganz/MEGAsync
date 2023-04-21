@@ -41,7 +41,6 @@ SyncsPage {
             Layout.preferredHeight: 48
             Layout.leftMargin: -4
             title: OnboardingStrings.computerName
-            enabled: false
         }
     }
 }
