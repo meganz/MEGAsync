@@ -432,7 +432,8 @@ void MegaApplication::initialize()
 
     preferences = Preferences::instance();
     connect(preferences.get(), SIGNAL(stateChanged()), this, SLOT(changeState()));
-    connect(preferences.get(), SIGNAL(updated(int)), this, SLOT(showUpdatedMessage(int)));
+    connect(preferences.get(), SIGNAL(updated(int)), this, SLOT(showUpdatedMessage(int)),
+            Qt::DirectConnection); // Use direct connection to make sure 'updated' and 'prevVersions' are set as needed
     preferences->initialize(dataPath);
 
     model = SyncInfo::instance();
@@ -465,7 +466,12 @@ void MegaApplication::initialize()
     }
 
     // TODO: This is legacy behavior and should be deleted when SRW is merged
-    if (preferences->mustDeleteSdkCacheAtStartup())
+    // We also handle here the case where the user changed the exclusions with a
+    // version not using the mustDeleteSdkCacheAtStartup flag, did not restart
+    // from the settings dialog to activate the new exclusions, and the app got (auto) updated.
+    if (preferences->mustDeleteSdkCacheAtStartup()
+        || (updated && prevVersion <= Preferences::LAST_VERSION_WITHOUT_deleteSdkCacheAtStartup_FLAG
+            && preferences->isCrashed()))
     {
         preferences->setDeleteSdkCacheAtStartup(false);
         MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "deleteSdkCacheAtStartup is true: force reload");

@@ -509,6 +509,8 @@ public:
     static const qint16 HTTP_PORT;
     static const qint16 HTTPS_PORT;
 
+    static const int LAST_VERSION_WITHOUT_deleteSdkCacheAtStartup_FLAG;
+
     static const QStringList HTTPS_ALLOWED_ORIGINS;
     static bool HTTPS_ORIGIN_CHECK_ENABLED;
     static const QString FINDER_EXT_BUNDLE_ID;
