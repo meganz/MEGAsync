@@ -468,6 +468,7 @@ void MegaApplication::initialize()
     if (preferences->mustDeleteSdkCacheAtStartup())
     {
         preferences->setDeleteSdkCacheAtStartup(false);
+        MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "deleteSdkCacheAtStartup is true: force reload");
         deleteSdkCache();
     }
 
@@ -1731,7 +1732,6 @@ void MegaApplication::rebootApplication(bool update)
 // TODO: This is legacy behavior and should be deleted when SRW is merged
 void MegaApplication::deleteSdkCache()
 {
-    MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("Force reloading").toUtf8().constData());
     QDirIterator di(dataPath, QDir::Files | QDir::NoDotAndDotDot);
     while (di.hasNext())
     {

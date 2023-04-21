@@ -1152,6 +1152,7 @@ void SettingsDialog::on_bFullCheck_clicked()
     {
         if (currentDialog)
         {
+            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting deleteSdkCacheAtStartup true: full re-scan requested");
             restartApp();
         }
     }
@@ -2106,6 +2107,8 @@ void SettingsDialog::on_cExcludeUpperThan_clicked()
     mUi->cbExcludeUpperUnit->setEnabled(enable);
     mUi->gExcludedFilesInfo->show();
     mUi->bRestart->show();
+
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting deleteSdkCacheAtStartup true: exclusions updated (upper than toggled)");
     mPreferences->setDeleteSdkCacheAtStartup(true);
 }
 
@@ -2118,6 +2121,8 @@ void SettingsDialog::on_cExcludeLowerThan_clicked()
     mUi->cbExcludeLowerUnit->setEnabled(enable);
     mUi->gExcludedFilesInfo->show();
     mUi->bRestart->show();
+
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting deleteSdkCacheAtStartup true: exclusions updated (lower than toggled)");
     mPreferences->setDeleteSdkCacheAtStartup(true);
 }
 
@@ -2127,6 +2132,8 @@ void SettingsDialog::on_eUpperThan_valueChanged(int i)
     mPreferences->setUpperSizeLimitValue(i);
     mUi->gExcludedFilesInfo->show();
     mUi->bRestart->show();
+
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting deleteSdkCacheAtStartup true: exclusions updated (upper than updated)");
     mPreferences->setDeleteSdkCacheAtStartup(true);
 }
 
@@ -2136,6 +2143,8 @@ void SettingsDialog::on_eLowerThan_valueChanged(int i)
     mPreferences->setLowerSizeLimitValue(i);
     mUi->gExcludedFilesInfo->show();
     mUi->bRestart->show();
+
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting deleteSdkCacheAtStartup true: exclusions updated (lower than updated)");
     mPreferences->setDeleteSdkCacheAtStartup(true);
 }
 
@@ -2145,6 +2154,8 @@ void SettingsDialog::on_cbExcludeUpperUnit_currentIndexChanged(int index)
     mPreferences->setUpperSizeLimitUnit(index);
     mUi->gExcludedFilesInfo->show();
     mUi->bRestart->show();
+
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting deleteSdkCacheAtStartup true: exclusions updated (upper unit updated)");
     mPreferences->setDeleteSdkCacheAtStartup(true);
 }
 
@@ -2154,6 +2165,8 @@ void SettingsDialog::on_cbExcludeLowerUnit_currentIndexChanged(int index)
     mPreferences->setLowerSizeLimitUnit(index);
     mUi->gExcludedFilesInfo->show();
     mUi->bRestart->show();
+
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting deleteSdkCacheAtStartup true: exclusions updated (lower unit updated)");
     mPreferences->setDeleteSdkCacheAtStartup(true);
 }
 
@@ -2178,6 +2191,8 @@ void SettingsDialog::saveExcludeSyncNames()
 
     mUi->gExcludedFilesInfo->show();
     mUi->bRestart->show();
+
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting deleteSdkCacheAtStartup true: exclusions updated (names)");
     mPreferences->setDeleteSdkCacheAtStartup(true);
 }
 
