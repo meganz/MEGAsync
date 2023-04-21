@@ -19,6 +19,12 @@ Item {
         return selectedUrl;
     }
 
+    function reset()
+    {
+        selectedUrl = "";
+        folderChanged("");
+    }
+
     FileDialog {
         id: fileDialog
 

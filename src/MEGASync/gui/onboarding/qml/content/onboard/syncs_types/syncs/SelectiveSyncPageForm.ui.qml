@@ -49,5 +49,4 @@ SyncsPage {
             local: false
         }
     }
-
 }

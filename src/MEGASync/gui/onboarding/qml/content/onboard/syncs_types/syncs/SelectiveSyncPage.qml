@@ -3,12 +3,6 @@ import Onboarding 1.0
 
 SelectiveSyncPageForm {
 
-    function getSyncData() {
-        var localFolder = localFolderChooser.getSyncData();
-        var handle = remoteFolderChooser.getSyncData();
-        return { localFolder, handle };
-    }
-
     footerButtons {
 
         previousButton.onClicked: {
@@ -25,6 +19,8 @@ SelectiveSyncPageForm {
 
         onSyncSetupSucces: {
             syncsFlow.state = finalState;
+            localFolderChooser.reset();
+            remoteFolderChooser.reset();
         }
     }
 

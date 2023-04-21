@@ -18,6 +18,8 @@ public:
     ChooseLocalFolder(QObject* parent = nullptr);
     Q_INVOKABLE void openFolderSelector();
     Q_INVOKABLE const QString getFolder();
+    Q_INVOKABLE void reset();
+    QString getDefaultPath();
 
 private:
     QString mFolder;
@@ -37,6 +39,7 @@ public:
     ChooseRemoteFolder(QObject* parent = nullptr);
     Q_INVOKABLE void openFolderSelector();
     Q_INVOKABLE const mega::MegaHandle getHandle();
+    Q_INVOKABLE void reset();
 
 private:
     mega::MegaHandle mFolderHandle;

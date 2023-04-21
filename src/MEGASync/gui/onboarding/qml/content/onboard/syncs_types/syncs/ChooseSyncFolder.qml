@@ -15,14 +15,26 @@ import Onboard 1.0
 
 RowLayout {
 
-    function getSyncData() {
-        return local ? localFolderChooser.getFolder() : remoteFolderChooser.getHandle();
-    }
-
     property bool local: true
     property url selectedUrl: selectedUrl
     property double selectedNode: selectedNode
     property bool isValid: false
+
+
+    function getSyncData() {
+        return local ? localFolderChooser.getFolder() : remoteFolderChooser.getHandle();
+    }
+
+    function folderSelectionChanged(folder)
+    {
+        isValid = folder.length;
+        folderField.text = isValid ? folder : "/MEGA";
+    }
+
+    function reset()
+    {
+        local ? localFolderChooser.reset() : remoteFolderChooser.reset();
+    }
 
     width: parent.width
     spacing: 8
@@ -51,16 +63,16 @@ RowLayout {
     ChooseLocalFolder {
         id: localFolderChooser
         onFolderChanged: {
-            isValid = true;
-            folderField.text = folder;
+            folderSelectionChanged(folder);
         }
     }
 
     ChooseRemoteFolder {
         id: remoteFolderChooser
         onFolderChanged: {
-            isValid = true;
-            folderField.text = folder;
+            folderSelectionChanged(folder);
         }
     }
+    
+    
 }

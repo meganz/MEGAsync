@@ -58,12 +58,14 @@ private:
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
     std::shared_ptr<Preferences> mPreferences;
     SyncController mSyncController;
+    SyncController mBackupController;
     QString mPassword;
     int mNumBackupsRequested;
     int mNumBackupsProcessed;
 
 private slots:
     void onSyncAddRequestStatus(int errorCode, const QString& errorMsg, const QString& name);
+    void onBackupAddRequestStatus(int errorCode, const QString& errorMsg, const QString& name);
 
 };
 

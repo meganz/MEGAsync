@@ -48,6 +48,9 @@ Onboarding::Onboarding(QObject *parent)
 
     connect(&mSyncController, &SyncController::syncAddStatus,
             this, &Onboarding::onSyncAddRequestStatus);
+
+    connect(&mBackupController, &SyncController::syncAddStatus,
+            this, &Onboarding::onBackupAddRequestStatus);
 }
 
 QUrl Onboarding::getQmlUrl()
@@ -167,27 +170,17 @@ QString Onboarding::convertUrlToNativeFilePath(const QUrl &urlStylePath) const
 
 void Onboarding::addSync(const QString &localPath, const mega::MegaHandle &remoteHandle)
 {
-    connect(&mSyncController, &SyncController::syncAddStatus, this, [this](int errorCode, const QString errorMsg)
-    {
-        if (errorCode != MegaError::API_OK)
-        {
-            Text::Link link(Utilities::SUPPORT_URL);
-            Text::Decorator dec(&link);
-            QString msg = errorMsg;
-            dec.process(msg);
-            QMegaMessageBox::warning(nullptr, tr("Error adding sync"), msg, QMessageBox::Ok, QMessageBox::NoButton, QMap<QMessageBox::StandardButton, QString>(), Qt::RichText);
-        }
-        else
-        {
-            emit syncSetupSucces();
-        }
-    }, Qt::UniqueConnection);
 
     QString warningMessage;
     auto syncability (SyncController::isLocalFolderAllowedForSync(localPath, MegaSync::TYPE_TWOWAY, warningMessage));
     if (syncability != SyncController::CANT_SYNC)
     {
         syncability = SyncController::areLocalFolderAccessRightsOk(localPath, MegaSync::TYPE_TWOWAY, warningMessage);
+    }
+
+    if (syncability != SyncController::CANT_SYNC)
+    {
+        syncability = SyncController::isLocalFolderSyncable(localPath, MegaSync::TYPE_TWOWAY, warningMessage);
     }
 
     // If OK, check that we can sync the selected remote folder
@@ -239,7 +232,7 @@ void Onboarding::addBackups(const QStringList& localPathList)
     mNumBackupsProcessed = 0;
     for(const QString& localPath : localPathList)
     {
-        mSyncController.addBackup(localPath, mSyncController.getSyncNameFromPath(localPath));
+        mBackupController.addBackup(localPath, mSyncController.getSyncNameFromPath(localPath));
     }
 }
 
@@ -255,6 +248,25 @@ QString Onboarding::getComputerName()
 }
 
 void Onboarding::onSyncAddRequestStatus(int errorCode,
+                                        const QString &errorMsg,
+                                        const QString &name)
+{
+    Q_UNUSED(name)
+    if (errorCode != MegaError::API_OK)
+    {
+        Text::Link link(Utilities::SUPPORT_URL);
+        Text::Decorator dec(&link);
+        QString msg = errorMsg;
+        dec.process(msg);
+        QMegaMessageBox::warning(nullptr, tr("Error adding sync"), msg, QMessageBox::Ok, QMessageBox::NoButton, QMap<QMessageBox::StandardButton, QString>(), Qt::RichText);
+    }
+    else
+    {
+        emit syncSetupSucces();
+    }
+}
+
+void Onboarding::onBackupAddRequestStatus(int errorCode,
                                         const QString &errorMsg,
                                         const QString &name)
 {

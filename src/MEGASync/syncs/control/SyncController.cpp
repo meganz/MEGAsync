@@ -63,7 +63,7 @@ void SyncController::addSync(const QString& localFolder, const MegaHandle& remot
                  .arg(getSyncTypeString(type), syncName, localFolder).toUtf8().constData());
 
     mApi->syncFolder(type, localFolder.toUtf8().constData(),
-                     syncName.isEmpty() ? nullptr : syncName.toUtf8().constData(),
+                     syncName.isEmpty() ? getSyncNameFromPath(localFolder).toUtf8().constData() : syncName.toUtf8().constData(),
                      remoteHandle, nullptr, mDelegateListener);
 }
 

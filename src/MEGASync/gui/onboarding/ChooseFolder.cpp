@@ -11,10 +11,8 @@
 ChooseLocalFolder::ChooseLocalFolder(QObject* parent)
     : QObject(parent)
     , mFolderName(QString())
+    , mFolder(getDefaultPath())
 {
-    const auto standardPaths (QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation));
-    QDir dir (QDir::cleanPath(standardPaths.first()));
-    mFolder = QDir::toNativeSeparators(dir.canonicalPath());
 }
 
 void ChooseLocalFolder::openFolderSelector()
@@ -23,8 +21,8 @@ void ChooseLocalFolder::openFolderSelector()
         if(!selection.isEmpty())
         {
             QString fPath = selection.first();
-            mFolder = fPath;
-            mFolderName = QDir::fromNativeSeparators(mFolder).split(QString::fromLatin1("/")).last().prepend(QString::fromLatin1("/"));
+            mFolder = (QDir::toNativeSeparators(QDir(fPath).canonicalPath()));
+            mFolderName = QDir::fromNativeSeparators(fPath).split(QString::fromLatin1("/")).last().prepend(QString::fromLatin1("/"));
             emit folderChanged(mFolderName);
         }
     });
@@ -33,6 +31,20 @@ void ChooseLocalFolder::openFolderSelector()
 const QString ChooseLocalFolder::getFolder()
 {
     return mFolder;
+}
+
+void ChooseLocalFolder::reset()
+{
+    mFolderName = QString();
+    mFolder = getDefaultPath();
+    emit folderChanged(mFolderName);
+}
+
+QString ChooseLocalFolder::getDefaultPath()
+{
+    const auto standardPaths (QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation));
+    QDir dir (QDir::cleanPath(standardPaths.first()));
+    return QDir::toNativeSeparators(dir.canonicalPath());
 }
 
 
@@ -70,4 +82,11 @@ void ChooseRemoteFolder::openFolderSelector()
 const mega::MegaHandle ChooseRemoteFolder::getHandle()
 {
     return mFolderHandle;
+}
+
+void ChooseRemoteFolder::reset()
+{
+    mFolderHandle = mega::INVALID_HANDLE;
+    mFolderName = QString();
+    emit folderChanged(QString());
 }
