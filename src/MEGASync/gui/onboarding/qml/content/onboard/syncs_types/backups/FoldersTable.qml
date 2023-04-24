@@ -187,12 +187,15 @@ Rectangle {
                             Layout.preferredWidth: 16
                             Layout.preferredHeight: 16
                             enabled: selectable
+                            checkable: selectable
                             checked: selected
                         }
 
                         Custom.SvgImage {
                             Layout.leftMargin: 18
-                            source: error ? Images.pc : Images.folder
+                            source: error ? Images.alertTriangle : Images.folder
+                            sourceSize: Qt.size(14, 14)
+                            color: error ? Styles.textWarning : color
                             opacity: selectable ? 1.0 : 0.3
                         }
 
@@ -226,8 +229,10 @@ Rectangle {
                     hoverEnabled: true
                     cursorShape: !selectable ? Qt.ArrowCursor : Qt.PointingHandCursor
                     onClicked: {
-                        backupList.currentIndex = index;
-                        selected = !selected;
+                        if(selectable) {
+                            backupList.currentIndex = index;
+                            selected = !selected;
+                        }
                     }
                 }
 

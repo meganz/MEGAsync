@@ -16,6 +16,7 @@ Rectangle {
     readonly property string step2InstallationType: "STEP2_INSTALLATION_TYPE"
     readonly property string stepBackupsSelectFolders: "STEP_BACKUPS_SELECT_FOLDERS"
     readonly property string stepBackupsConfirm: "STEP_BACKUPS_CONFIRM"
+    readonly property string stepBackupsRename: "STEP_BACKUPS_RENAME"
     readonly property string stepSelectSyncType: "STEP_SELECT_SYNC_TYPE"
     readonly property string stepSyncFolder: "STEP_SELECT_SYNC_FOLDER"
 
@@ -29,15 +30,15 @@ Rectangle {
             name: step1ComputerName
             PropertyChanges {
                 target: step1_computerName;
-                toState: Step.ToStates.Current
+                toState: Step.ToStates.Current;
             }
             PropertyChanges {
                 target: step2_line;
-                color: Styles.buttonSecondaryPressed
+                color: Styles.buttonSecondaryPressed;
             }
             PropertyChanges {
                 target: step2_installationType;
-                toState: Step.ToStates.Disabled
+                toState: Step.ToStates.Disabled;
             }
             PropertyChanges {
                 target: step3_1_line;
@@ -53,6 +54,14 @@ Rectangle {
             }
             PropertyChanges {
                 target: step3_2_confirm;
+                visible: false;
+            }
+            PropertyChanges {
+                target: step3_3_line;
+                visible: false;
+            }
+            PropertyChanges {
+                target: step3_3_rename;
                 visible: false;
             }
         },
@@ -102,6 +111,14 @@ Rectangle {
                 target: step3_2_confirm;
                 visible: false;
             }
+            PropertyChanges {
+                target: step3_3_line;
+                visible: false;
+            }
+            PropertyChanges {
+                target: step3_3_rename;
+                visible: false;
+            }
         },
         State {
             name: stepBackupsSelectFolders
@@ -147,6 +164,14 @@ Rectangle {
                 toState: SubStep.ToStates.Disabled
                 visible: true
                 title: OnboardingStrings.confirm
+            }
+            PropertyChanges {
+                target: step3_3_line;
+                visible: false;
+            }
+            PropertyChanges {
+                target: step3_3_rename;
+                visible: false;
             }
         },
         State {
@@ -194,6 +219,71 @@ Rectangle {
                 visible: true;
                 title: OnboardingStrings.confirm
             }
+            PropertyChanges {
+                target: step3_3_line;
+                visible: false;
+            }
+            PropertyChanges {
+                target: step3_3_rename;
+                visible: false;
+            }
+        },
+        State {
+            name: stepBackupsRename
+            PropertyChanges {
+                target: step1_computerName;
+                toState: Step.ToStates.DoneLight
+            }
+            PropertyChanges {
+                target: step2_line;
+                color: Styles.buttonPrimaryPressed
+            }
+            PropertyChanges {
+                target: step2_installationType;
+                toState: Step.ToStates.DoneLight
+            }
+            PropertyChanges {
+                target: step3_line;
+                color: Styles.buttonPrimaryPressed
+            }
+            PropertyChanges {
+                target: step3_syncs;
+                toState: Step.ToStates.DoneConfirm
+                title: OnboardingStrings.backup
+            }
+            PropertyChanges {
+                target: step3_1_line;
+                color: Styles.buttonPrimaryPressed
+                visible: true;
+            }
+            PropertyChanges {
+                target: step3_1_selectFolder;
+                toState: SubStep.ToStates.Done
+                visible: true;
+                title: OnboardingStrings.selectFolders
+            }
+            PropertyChanges {
+                target: step3_2_line;
+                color: Styles.buttonPrimaryPressed
+                visible: true;
+            }
+            PropertyChanges {
+                target: step3_2_confirm;
+                toState: SubStep.ToStates.Done
+                visible: true;
+                title: OnboardingStrings.confirm
+            }
+            PropertyChanges {
+                target: step3_3_line;
+                color: Styles.buttonPrimaryPressed
+                visible: true;
+            }
+            PropertyChanges {
+                target: step3_3_rename;
+                toState: SubStep.ToStates.Current
+                visible: true;
+                title: OnboardingStrings.rename
+            }
         },
         State {
             name: stepSelectSyncType
@@ -240,6 +330,14 @@ Rectangle {
                 visible: true;
                 title: OnboardingStrings.selectFolders
             }
+            PropertyChanges {
+                target: step3_3_line;
+                visible: false;
+            }
+            PropertyChanges {
+                target: step3_3_rename;
+                visible: false;
+            }
         },
         State {
             name: stepSyncFolder
@@ -285,6 +383,14 @@ Rectangle {
                 toState: SubStep.ToStates.Current
                 visible: true;
                 title: OnboardingStrings.selectFolders
+            }
+            PropertyChanges {
+                target: step3_3_line;
+                visible: false;
+            }
+            PropertyChanges {
+                target: step3_3_rename;
+                visible: false;
             }
         }
     ]
@@ -379,6 +485,23 @@ Rectangle {
                     id: step3_2_confirm
 
                     title: OnboardingStrings.confirm
+                    Layout.leftMargin: 40
+                }
+
+                Rectangle {
+                    id: step3_3_line
+
+                    color: Styles.buttonSecondaryPressed
+                    Layout.preferredWidth: 2
+                    Layout.preferredHeight: 12
+                    radius: 1
+                    Layout.leftMargin: 43
+                }
+
+                SubStep {
+                    id: step3_3_rename
+
+                    title: OnboardingStrings.rename
                     Layout.leftMargin: 40
                 }
             }

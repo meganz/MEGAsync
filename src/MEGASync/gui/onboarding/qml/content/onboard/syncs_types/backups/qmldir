@@ -1,3 +1,4 @@
 module Onboard.Syncs_types.Backups
 ConfirmFoldersPage 1.0 ConfirmFoldersPage.qml
 SelectFoldersPage 1.0 SelectFoldersPage.qml
+RenameBackupFolderPage 1.0 RenameBackupFolderPage.qml

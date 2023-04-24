@@ -1,8 +1,10 @@
+
 #include "BackupFolderModel.h"
 
 #include "MegaApi.h"
 #include "Utilities.h"
 #include "syncs/control/SyncController.h"
+#include "syncs/control/SyncInfo.h"
 
 BackupFolder::BackupFolder()
     : display(QString::fromUtf8(""))
@@ -15,6 +17,7 @@ BackupFolder::BackupFolder()
     , done(false)
     , error(0)
     , folderSize(0)
+    , syncable(true)
 {
 }
 
@@ -31,6 +34,7 @@ BackupFolder::BackupFolder(const QString& folder,
     , done(false)
     , error(0)
     , folderSize(0)
+    , syncable(true)
 {
     Utilities::getFolderSize(folder, &folderSize);
     size = Utilities::getSizeString(folderSize);
@@ -52,6 +56,8 @@ BackupFolderModel::BackupFolderModel(QObject* parent)
 
     // Append mBackupFolderList with the default dirs
     populateDefaultDirectoryList();
+
+    connect(SyncInfo::instance(), &SyncInfo::syncRemoved, this, &BackupFolderModel::onSyncRemoved);
 }
 
 void BackupFolderModel::populateDefaultDirectoryList()
@@ -71,7 +77,7 @@ void BackupFolderModel::populateDefaultDirectoryList()
         const auto standardPaths (QStandardPaths::standardLocations(type));
         QDir dir (QDir::cleanPath(standardPaths.first()));
         QString path (QDir::toNativeSeparators(dir.canonicalPath()));
-        if(dir.exists() && dir != QDir::home() && isValidBackupFolder(path))
+        if(dir.exists() && dir != QDir::home() && isLocalFolderSyncable(path))
         {
             mBackupFolderList.append(BackupFolder(path, mSyncController.getSyncNameFromPath(path), false));
         }
@@ -83,18 +89,25 @@ void BackupFolderModel::populateDefaultDirectoryList()
     }
 }
 
-void BackupFolderModel::checkSelectedAll(const BackupFolder& item)
+void BackupFolderModel::updateSelectedAndTotalSize()
 {
-    if(item.selected)
+    mSelectedRowsTotal = 0;
+    mTotalSize = 0;
+    QList<BackupFolder>::iterator item = mBackupFolderList.begin();
+    while (item != mBackupFolderList.end())
     {
-        mSelectedRowsTotal++;
-        mTotalSize += item.folderSize;
+        if(item->selected)
+        {
+            mSelectedRowsTotal++;
+            mTotalSize += item->folderSize;
+        }
+        item++;
     }
-    else
-    {
-        mSelectedRowsTotal--;
-        mTotalSize -= item.folderSize;
-    }
+}
+
+void BackupFolderModel::checkSelectedAll()
+{
+    updateSelectedAndTotalSize();
 
     emit rowSelectedChanged(mSelectedRowsTotal > 0 && mSelectedRowsTotal < mBackupFolderList.size(),
                             mSelectedRowsTotal == mBackupFolderList.size());
@@ -135,15 +148,11 @@ bool BackupFolderModel::setData(const QModelIndex& index, const QVariant& value,
             case SelectedRole:
             {
                 bool selected = value.toBool();
-                bool isCkecked = (selected && isValidBackupFolder(item.folder));
-                if(isCkecked || !selected) {
+                if(!selected || (selected && isLocalFolderSyncable(item.folder)))
+                {
                     item.selected = selected;
-                    if(isCkecked) {
-                        changeOtherBackupFolders(item.folder, false);
-                    } else if(!selected) {
-                        changeOtherBackupFolders(item.folder, true);
-                    }
-                    checkSelectedAll(item);
+                    reviewOthers(item.folder, !selected);
+                    checkSelectedAll();
                 }
                 break;
             }
@@ -217,50 +226,31 @@ QVariant BackupFolderModel::data(const QModelIndex &index, int role) const
     return field;
 }
 
-bool BackupFolderModel::isValidBackupFolder(const QString& inputPath)
+bool BackupFolderModel::isLocalFolderSyncable(const QString& inputPath)
 {
     QString message;
-    auto syncability = SyncController::isLocalFolderSyncable(inputPath, mega::MegaSync::TYPE_BACKUP, message);
-    if(syncability != SyncController::CANT_SYNC)
-    {
-        int row = 0;
-        while (syncability != SyncController::CANT_SYNC && row < rowCount())
-        {
-            QString existingPath(mBackupFolderList[row].folder);
-            if(mBackupFolderList[row].selected && isBackupFolderValid(inputPath, existingPath))
-            {
-                syncability = SyncController::CANT_SYNC;
-            }
-            row++;
-        }
-    }
-
-    return (syncability != SyncController::CANT_SYNC);
+    return (SyncController::isLocalFolderSyncable(inputPath, mega::MegaSync::TYPE_BACKUP, message) != SyncController::CANT_SYNC);
 }
 
-bool BackupFolderModel::isValidInsertion(const QString& inputPath)
+bool BackupFolderModel::selectIfExistsInsertion(const QString& inputPath)
 {
-    QString message;
-    auto syncability = SyncController::isLocalFolderSyncable(inputPath, mega::MegaSync::TYPE_BACKUP, message);
-    if(syncability != SyncController::CANT_SYNC)
+    bool exists = false;
+    int row = 0;
+
+    while (!exists && row < rowCount())
     {
-        int row = 0;
-        while (syncability != SyncController::CANT_SYNC && row < rowCount())
+        QString existingPath(mBackupFolderList[row].folder);
+        if ((exists = (inputPath == existingPath)))
         {
-            QString existingPath(mBackupFolderList[row].folder);
-            if (inputPath == existingPath)
+            if(!mBackupFolderList[row].selected)
             {
-                if(!mBackupFolderList[row].selected)
-                {
-                    setData(index(row, 0), QVariant(true), SelectedRole);
-                }
-                syncability = SyncController::CANT_SYNC;
+                setData(index(row, 0), QVariant(true), SelectedRole);
             }
-            row++;
         }
+        row++;
     }
 
-    return (syncability != SyncController::CANT_SYNC);
+    return exists;
 }
 
 QString BackupFolderModel::getToolTipErrorText(const QString& folder,
@@ -278,135 +268,137 @@ QString BackupFolderModel::getToolTipErrorText(const QString& folder,
     return message;
 }
 
+void BackupFolderModel::onSyncRemoved(std::shared_ptr<SyncSettings> syncSettings)
+{
+    QString localFolder (syncSettings->getLocalFolder());
+    QList<BackupFolder>::iterator item = mBackupFolderList.begin();
+    while (item != mBackupFolderList.end())
+    {
+        if(item->folder == localFolder)
+        {
+            const auto row = std::distance(mBackupFolderList.begin(), item);
+            QModelIndex modelIndex(index(row, 0));
+            item->syncable = true;
+            item->selectable = true; // TODO: change by real value
+            item->tooltip = item->folder;
+            emit dataChanged(modelIndex, modelIndex, { SelectableRole, Qt::ToolTipRole });
+        }
+        item++;
+    }
+}
+
 bool BackupFolderModel::folderContainsOther(const QString& folder,
                                             const QString& other) const
 {
     return folder.startsWith(other) && folder[other.size()] == QDir::separator();
 }
 
-void BackupFolderModel::changeOtherBackupFolders(const QString& folder,
-                                                 bool enable)
-{
-    QVector<int> roles = { SelectableRole, Qt::ToolTipRole };
-    if(!enable)
-    {
-        roles.append(SelectedRole);
-    }
-
-    QModelIndex modelIndex;
-    for (int row = 0; row < rowCount(); row++)
-    {
-        QString existingPath(mBackupFolderList[row].folder);
-        if ((folder != existingPath) && isBackupFolderValid(folder, existingPath))
-        {
-            modelIndex = index(row, 0);
-            if(enable)
-            {
-                if(canBackupFolderEnabled(existingPath, folder))
-                {
-                    mBackupFolderList[row].selectable = true;
-                    mBackupFolderList[row].tooltip = mBackupFolderList[row].folder;
-                    emit dataChanged(modelIndex, modelIndex, roles);
-                }
-            }
-            else
-            {
-                if(mBackupFolderList[row].selected)
-                {
-                    mSelectedRowsTotal--;
-                    mTotalSize -= mBackupFolderList[row].folderSize;
-                }
-                mBackupFolderList[row].selectable = false;
-                mBackupFolderList[row].selected = false;
-                mBackupFolderList[row].tooltip = getToolTipErrorText(existingPath, folder);
-                emit dataChanged(modelIndex, modelIndex, roles);
-            }
-        }
-    }
-}
-
-bool BackupFolderModel::isBackupFolderValid(const QString& folder,
+bool BackupFolderModel::isRelatedFolder(const QString& folder,
                                             const QString& existingPath) const
 {
     return folderContainsOther(folder, existingPath) || folderContainsOther(existingPath, folder);
 }
 
-bool BackupFolderModel::canBackupFolderEnabled(const QString& folder,
-                                               const QString& selectedFolder) const {
-    bool success = true;
+QModelIndex BackupFolderModel::getModelIndex(QList<BackupFolder>::iterator item)
+{
+    const auto row = std::distance(mBackupFolderList.begin(), item);
+    return QModelIndex(index(row, 0));
+}
+
+void BackupFolderModel::reviewOthers(const QString& folder,
+                                     bool selectable,
+                                     bool force)
+{
+    QList<BackupFolder>::iterator item = mBackupFolderList.begin();
+    while (item != mBackupFolderList.end())
+    {
+        QString existingPath(item->folder);
+        if ((folder != existingPath) && isRelatedFolder(folder, existingPath) && isLocalFolderSyncable(existingPath))
+        {
+            if(!item->selectable && selectable && (!existAnotherBackupFolderRelated(existingPath, folder) || force))
+            {
+                item->selectable = true;
+                item->tooltip = item->folder;
+                emit dataChanged(getModelIndex(item), getModelIndex(item), { SelectableRole, Qt::ToolTipRole });
+            }
+            else if(item->selectable && !selectable)
+            {
+                item->selectable = false;
+                item->selected = false;
+                item->tooltip = getToolTipErrorText(existingPath, folder);
+                emit dataChanged(getModelIndex(item), getModelIndex(item), { SelectableRole, Qt::ToolTipRole, SelectedRole });
+                reviewOthers(existingPath, true, true);
+            }
+        }
+        item++;
+    }
+}
+
+bool BackupFolderModel::existAnotherBackupFolderRelated(const QString& folder,
+                                                        const QString& selectedFolder) const {
+    bool exists = false;
     int row = 0;
-    while(success && row < rowCount())
+    while(!exists && row < rowCount())
     {
         QString existingPath(mBackupFolderList[row].folder);
         if (folder != existingPath && selectedFolder != existingPath)
         {
-            success = !isBackupFolderValid(folder, existingPath)
-                      || (isBackupFolderValid(folder, existingPath) && !mBackupFolderList[row].selected);
+            exists = isRelatedFolder(folder, existingPath) && mBackupFolderList[row].selected;
         }
         row++;
     }
-    return success;
-}
-
-int BackupFolderModel::calculateNumSelectedRows() const
-{
-    int selectedCount = 0;
-    for (int row = 0; row < rowCount(); row++)
-    {
-        if(mBackupFolderList[row].selected)
-        {
-            selectedCount++;
-        }
-    }
-    return selectedCount;
+    return exists;
 }
 
 void BackupFolderModel::insertFolder(const QString &folder)
 {
     QString inputPath(QDir::toNativeSeparators(QDir(folder).absolutePath()));
-    if(!isValidInsertion(inputPath))
+    if(selectIfExistsInsertion(inputPath))
     {
+        // If the folder exists in the table then select the item and return
         return;
     }
 
-    beginInsertRows(QModelIndex(), 0, 0);
-    BackupFolder data(inputPath, mSyncController.getSyncNameFromPath(inputPath));
-    mBackupFolderList.prepend(data);
-    endInsertRows();
-    changeOtherBackupFolders(inputPath, false);
-    checkSelectedAll(data);
+    QString message;
+    auto syncability = SyncController::isLocalFolderSyncable(inputPath, mega::MegaSync::TYPE_BACKUP, message);
+    if(syncability == SyncController::CANT_SYNC)
+    {
+        // This element can not be selected
+        BackupFolder data(inputPath, mSyncController.getSyncNameFromPath(inputPath), false);
+        data.syncable = false;
+        data.selectable = false;
+        data.tooltip = message;
+
+        beginInsertRows(QModelIndex(), 0, 0);
+        mBackupFolderList.prepend(data);
+        endInsertRows();
+    }
+    else
+    {
+        BackupFolder data(inputPath, mSyncController.getSyncNameFromPath(inputPath));
+        beginInsertRows(QModelIndex(), 0, 0);
+        mBackupFolderList.prepend(data);
+        endInsertRows();
+        reviewOthers(inputPath, false);
+        checkSelectedAll();
+    }
 }
 
 void BackupFolderModel::setAllSelected(bool selected)
 {
-    QModelIndex modelIndex;
-
-    for (int row = 0; row < rowCount(); row++)
+    QList<BackupFolder>::iterator item = mBackupFolderList.end()-1;
+    while (item != mBackupFolderList.begin()-1)
     {
-        modelIndex = index(row, 0);
-        if(selected)
+        if(!selected || (selected && isLocalFolderSyncable(item->folder)))
         {
-            if(mBackupFolderList[row].selectable && !mBackupFolderList[row].selected)
-            {
-                mBackupFolderList[row].selected = true;
-                emit dataChanged(modelIndex, modelIndex, { SelectedRole } );
-                changeOtherBackupFolders(mBackupFolderList[row].folder, false);
-                mTotalSize += mBackupFolderList[row].folderSize;
-            }
+            item->selected = selected;
+            reviewOthers(item->folder, !selected);
+            emit dataChanged(getModelIndex(item), getModelIndex(item), { SelectedRole } );
         }
-        else
-        {
-            if(mBackupFolderList[row].selected)
-            {
-                mTotalSize -= mBackupFolderList[row].folderSize;
-            }
-            mBackupFolderList[row].selected = false;
-            mBackupFolderList[row].selectable = true;
-            emit dataChanged(modelIndex, modelIndex, { SelectedRole, SelectableRole } );
-        }
+        item--;
     }
 
-    mSelectedRowsTotal = (selected ? calculateNumSelectedRows() : 0);
+    updateSelectedAndTotalSize();
 }
 
 int BackupFolderModel::getNumSelectedRows() const
@@ -440,6 +432,44 @@ QStringList BackupFolderModel::getConfirmedDirs() const
     return dirs;
 }
 
+void BackupFolderModel::updateBackupFolder(QList<BackupFolder>::iterator item,
+                                           bool selectable,
+                                           const QString& message)
+{
+    bool toSelectable = !item->selectable && selectable;
+    bool toUnselectable = item->selectable && !selectable;
+    if(!toSelectable && !toUnselectable)
+    {
+        return;
+    }
+
+    if(toSelectable)
+    {
+        item->tooltip = item->folder;
+    }
+    else
+    {
+        item->tooltip = message;
+    }
+    item->selectable = selectable;
+
+    const auto row = std::distance(mBackupFolderList.begin(), item);
+    QModelIndex modelIndex(index(row, 0));
+    emit dataChanged(modelIndex, modelIndex, { SelectableRole, Qt::ToolTipRole } );
+}
+
+void BackupFolderModel::reviewAllBackupFolders()
+{
+    QList<BackupFolder>::iterator item = mBackupFolderList.begin();
+    while (item != mBackupFolderList.end())
+    {
+        QString message;
+        auto syncability = SyncController::isLocalFolderSyncable(item->folder, mega::MegaSync::TYPE_BACKUP, message);
+        updateBackupFolder(item, syncability != SyncController::CANT_SYNC, message);
+        item++;
+    }
+}
+
 void BackupFolderModel::clean()
 {
     QStringList removedFolders;
@@ -457,12 +487,8 @@ void BackupFolderModel::clean()
         item++;
     }
 
-    std::for_each(removedFolders.begin(), removedFolders.end(), [this](const QString& folder) {
-        changeOtherBackupFolders(folder, true);
-    });
-    setAllSelected(false);
-    emit rowSelectedChanged(mSelectedRowsTotal > 0 && mSelectedRowsTotal < mBackupFolderList.size(),
-                            mSelectedRowsTotal == mBackupFolderList.size());
+    reviewAllBackupFolders();
+    checkSelectedAll();
 }
 
 void BackupFolderModel::update(const QString& path, int errorCode)

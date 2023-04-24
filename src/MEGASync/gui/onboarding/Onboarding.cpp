@@ -19,8 +19,6 @@ Onboarding::Onboarding(QObject *parent)
     , mLastName(QString())
     , mFirstName(QString())
     , mEmail(QString())
-    , mNumBackupsRequested(0)
-    , mNumBackupsProcessed(0)
 {
     mMegaApi->addGlobalListener(mGlobalListener.get());
     qmlRegisterUncreatableType<Onboarding>("Onboarding", 1, 0, "RegisterForm", QString::fromUtf8("Cannot create WarningLevel in QML"));
@@ -51,6 +49,7 @@ Onboarding::Onboarding(QObject *parent)
     qmlRegisterModule("Onboard.Syncs_types.Backups", 1, 0);
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/backups/ConfirmFoldersPage.qml")), "Onboard.Syncs_types.Backups", 1, 0, "ConfirmFoldersPage");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/backups/SelectFoldersPage.qml")), "Onboard.Syncs_types.Backups", 1, 0, "SelectFoldersPage");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/backups/RenameBackupFolderPage.qml")), "Onboard.Syncs_types.Backups", 1, 0, "RenameBackupFolderPage");
 
     connect(&mSyncController, &SyncController::syncAddStatus,
             this, &Onboarding::onSyncAddRequestStatus);
@@ -252,8 +251,7 @@ void Onboarding::addSync(const QString &localPath, mega::MegaHandle remoteHandle
 
 void Onboarding::addBackups(const QStringList& localPathList)
 {
-    mNumBackupsRequested = localPathList.size();
-    mNumBackupsProcessed = 0;
+    mBackupsToDoList = localPathList;
     for(const QString& localPath : localPathList)
     {
         mBackupController.addBackup(localPath, mSyncController.getSyncNameFromPath(localPath));
@@ -281,7 +279,23 @@ QString Onboarding::getEmail()
     return mEmail;
 }
 
-void Onboarding::onNotNowClicked() {
+void Onboarding::createNextBackup(const QString& name)
+{
+    if(mBackupsToDoList.size() <= 0)
+    {
+        return;
+    }
+
+    QString backupName(name);
+    if(name.isEmpty())
+    {
+        backupName = mBackupController.getSyncNameFromPath(mBackupsToDoList.first());
+    }
+    mBackupController.addBackup(mBackupsToDoList.first(), backupName);
+}
+
+void Onboarding::onNotNowClicked()
+{
     std::unique_ptr<char[]> email(mMegaApi->getMyEmail());
     mPreferences->setEmailAndGeneralSettings(QString::fromUtf8(email.get()));
     emit notNowFinished();
@@ -314,10 +328,24 @@ void Onboarding::onSyncAddRequestStatus(int errorCode,
 }
 
 void Onboarding::onBackupAddRequestStatus(int errorCode,
-                                          const QString &errorMsg,
-                                          const QString &name)
+                                          const QString& errorMsg,
+                                          const QString& name)
 {
     qDebug() << "Onboarding::onSyncAddRequestStatus -> path = " << name
              << " - errorCode = " << errorCode << " - errorMsg = " << errorMsg;
-    emit backupsUpdated(name, errorCode, mNumBackupsRequested == ++mNumBackupsProcessed);
+
+    if(errorCode == 0)
+    {
+        mBackupsToDoList.removeFirst();
+        if(mBackupsToDoList.size() > 0)
+        {
+            createNextBackup();
+        }
+    }
+    else
+    {
+        // Wait until the rename conflict has been resolved
+        emit backupConflict(mSyncController.getSyncNameFromPath(name));
+    }
+    emit backupsUpdated(name, errorCode, mBackupsToDoList.size() == 0);
 }

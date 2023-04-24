@@ -23,6 +23,7 @@ StackView {
     readonly property string fullSync: "fullSync"
     readonly property string selectBackup: "selectBackup"
     readonly property string confirmBackup: "confirmBackup"
+    readonly property string renameBackupFolder: "renameBackupFolder"
     readonly property string finalState: "finalState"
 
     state: computerName
@@ -110,6 +111,16 @@ StackView {
             }
         },
         State {
+            name: renameBackupFolder
+            StateChangeScript {
+                script: rightPanel.replace(renameBackupFoldersPage);
+            }
+            PropertyChanges {
+                target: stepPanel
+                state: stepPanel.stepBackupsRename
+            }
+        },
+        State {
             name: finalState
             StateChangeScript {
                 script: syncsFlow.replace(finalPage);
@@ -194,6 +205,12 @@ StackView {
                 id: confirmBackupFoldersPage
 
                 backupTable: selectBackupFoldersPage.backupTable
+                visible: false
+            }
+
+            RenameBackupFolderPage {
+                id: renameBackupFoldersPage
+
                 visible: false
             }
         }

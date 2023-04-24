@@ -22,6 +22,7 @@ QtObject {
     readonly property url checkCircleSolid: imagesOnboardingPath + "check_circle_solid.svg"
     readonly property url cloud: imagesOnboardingPath + "cloud.svg"
     readonly property url database: imagesOnboardingPath + "database.svg"
+    readonly property url edit: imagesOnboardingPath + "edit.svg"
     readonly property url folder: imagesOnboardingPath + "folder.svg"
     readonly property url fullSync: imagesOnboardingPath + "full_sync.svg"
     readonly property url fuse: imagesOnboardingPath + "fuse.svg"

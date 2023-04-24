@@ -115,7 +115,7 @@ ColumnLayout {
         visible: hasError
         Layout.leftMargin: 3
         title: qsTr("Authentication failed")
-        text: qsTr("Please, try again.")
+        notificationText.text: qsTr("Please, try again.")
         Layout.preferredWidth: root.width - 4
         Layout.preferredHeight: norification.height
         type: Custom.NotificationText.Type.AuthenticationError

@@ -21,6 +21,7 @@ struct BackupFolder
 
     // Back (without role)
     long long folderSize;
+    bool syncable;
 
     BackupFolder();
 
@@ -35,7 +36,8 @@ class BackupFolderModel : public QAbstractListModel
 
 public:
 
-    enum BackupFolderRoles {
+    enum BackupFolderRoles
+    {
         FolderRole = Qt::UserRole + 1,
         SizeRole,
         SelectedRole,
@@ -90,27 +92,41 @@ private:
 
     void populateDefaultDirectoryList();
 
-    void checkSelectedAll(const BackupFolder& item);
+    void checkSelectedAll();
 
-    bool isValidBackupFolder(const QString& inputPath);
+    bool isLocalFolderSyncable(const QString& inputPath);
 
-    bool isValidInsertion(const QString& inputPath);
+    bool selectIfExistsInsertion(const QString& inputPath);
 
     bool folderContainsOther(const QString& folder,
                              const QString& other) const;
 
-    int calculateNumSelectedRows() const;
+    void reviewOthers(const QString& folder,
+                      bool enable,
+                      bool force = false);
 
-    void changeOtherBackupFolders(const QString& folder, bool enable);
+    bool existAnotherBackupFolderRelated(const QString& folder,
+                                         const QString& selectedFolder) const;
 
-    bool canBackupFolderEnabled(const QString& folder,
-                                const QString& selectedFolder) const;
-
-    bool isBackupFolderValid(const QString& folder,
+    bool isRelatedFolder(const QString& folder,
                              const QString& existingPath) const;
 
     QString getToolTipErrorText(const QString& folder,
                                 const QString& existingPath) const;
+
+    void updateBackupFolder(QList<BackupFolder>::iterator item,
+                            bool selectable,
+                            const QString& message);
+
+    void reviewAllBackupFolders();
+
+    QModelIndex getModelIndex(QList<BackupFolder>::iterator item);
+
+    void updateSelectedAndTotalSize();
+
+private slots:
+
+    void onSyncRemoved(std::shared_ptr<SyncSettings> syncSettings);
 
 };
 

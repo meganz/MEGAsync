@@ -14,7 +14,8 @@ class Onboarding : public QMLComponent, public mega::MegaRequestListener, public
     Q_PROPERTY(QString email MEMBER mEmail READ getEmail NOTIFY emailChanged)
 
 public:
-    enum RegisterForm {
+    enum RegisterForm
+    {
         FIRST_NAME = 0,
         LAST_NAME = 1,
         EMAIL = 2,
@@ -56,6 +57,7 @@ public:
     Q_INVOKABLE PasswordStrength getPasswordStrength(const QString& password);
     Q_INVOKABLE void changeRegistrationEmail(const QString& email);
     Q_INVOKABLE QString getEmail();
+    Q_INVOKABLE void createNextBackup(const QString& renameFolder = QString::fromUtf8(""));
 
 signals:
     void twoFARequired();
@@ -70,6 +72,7 @@ signals:
     void accountConfirmed();
     void emailChanged(const QString& email);
     void changeRegistrationEmailFinished(bool apiOk);
+    void backupConflict(const QString& folder);
 
 public slots:
     void onNotNowClicked();
@@ -86,8 +89,7 @@ private:
     QString mEmail;
     QString mFirstName;
     QString mLastName;
-    int mNumBackupsRequested;
-    int mNumBackupsProcessed;
+    QStringList mBackupsToDoList;
 
 private slots:
     void onSyncAddRequestStatus(int errorCode, const QString& errorMsg, const QString& name);

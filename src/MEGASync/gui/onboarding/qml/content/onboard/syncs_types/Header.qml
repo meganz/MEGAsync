@@ -8,11 +8,12 @@ import Components 1.0 as Custom
 
 ColumnLayout {
 
-    property string title: ""
-    property string description: ""
+    property alias title: title.text
+    property alias description: description.text
 
     Custom.RichText {
-        text: title
+        id: title
+
         Layout.preferredHeight: 20
         font.family: "Inter"
         font.styleName: "normal"
@@ -22,7 +23,8 @@ ColumnLayout {
     }
 
     Custom.RichText {
-        text: description
+        id: description
+
         Layout.topMargin: 12
         Layout.fillWidth: true
         font.family: "Inter"

@@ -20,7 +20,6 @@ LoginPageForm {
     }
 
     loginButton.onClicked: {
-
         var error = false;
 
         var valid = email.valid();
@@ -57,9 +56,10 @@ LoginPageForm {
 
         onUserPassFailed: {
             enabled = true;
-            email.descriptionType = Custom.TextField.DescriptionType.Error
-            password.descriptionType = Custom.TextField.DescriptionType.Error
-            password.descriptionText = OnboardingStrings.errorLogin
+            email.showType = true;
+            password.showType = true;
+            password.hint.text = OnboardingStrings.errorLogin;
+            password.hint.visible = true;
         }
 
         onLoginFinished: {

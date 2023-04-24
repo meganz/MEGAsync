@@ -55,6 +55,11 @@ QtObject {
     readonly property var openInPreferences: qsTr("Open in Preferences")
     readonly property var password: qsTr("Password")
     readonly property var previous: qsTr("Previous")
+    readonly property var rename: qsTr("Rename")
+    readonly property var renameBackupFolder: qsTr("Rename backup folder")
+    readonly property var renameBackupFolderDescription: qsTr("A folder named [b]\"<folder name>\"[/b] already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.")
+    readonly property var renameBackupFolderTitle: qsTr("Rename folder")
+    readonly property var renameBackupFolderHint: qsTr("If you don’t want to rename the new folder, stop the backup in the [a]Backup centre[/a] for the existing folder. Then set up the backup for the new folder again.");
     readonly property var selectAll: qsTr("[b]Select all[/b]");
     readonly property var selectBackupFoldersTitle: qsTr("Select folders to back up")
     readonly property var selectBackupFoldersDescription: qsTr("Selected folders from your computer to MEGA. Files will automatically back up when the desktop application is running.")

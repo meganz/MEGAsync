@@ -19,7 +19,7 @@ Rectangle {
     property int type: NotificationText.Type.None
 
     property alias title: titleText.text
-    property alias text: notificationText.text
+    property alias notificationText: notificationText
 
     height: mainLayout.height + 24
     radius: 8

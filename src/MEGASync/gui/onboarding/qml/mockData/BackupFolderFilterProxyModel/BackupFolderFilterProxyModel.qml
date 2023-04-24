@@ -10,6 +10,7 @@ ListModel {
     ListElement {
         folder: "C:\\Users\\mega\\Desktop"
         display: "Desktop"
+        toolTip: "C:\\Users\\mega\\Desktop"
         selected: false
         size: "30 MB"
         selectable: true
@@ -20,6 +21,7 @@ ListModel {
     ListElement {
         folder: "C:\\Users\\mega\\Documents"
         display: "Documents"
+        toolTip: "C:\\Users\\mega\\Documents"
         selected: false
         size: "2.3 GB"
         selectable: true
@@ -30,9 +32,10 @@ ListModel {
     ListElement {
         folder: "C:\\Users\\mega\\Music"
         display: "Music"
+        toolTip: "You can't backup this folder as it contains backed up folders."
         selected: false
         size: "783.4 KB"
-        selectable: true
+        selectable: false
         confirmed: false
         done: false
         error: 0
@@ -40,6 +43,7 @@ ListModel {
     ListElement {
         folder: "C:\\Users\\mega\\Images"
         display: "Images"
+        toolTip: "C:\\Users\\mega\\Images"
         selected: false
         size: "1 KB"
         selectable: true

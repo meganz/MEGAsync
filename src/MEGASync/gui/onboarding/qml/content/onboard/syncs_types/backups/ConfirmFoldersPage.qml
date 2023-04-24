@@ -17,7 +17,7 @@ ConfirmFoldersPageForm {
     footerButtons {
 
         previousButton.onClicked: {
-            syncsFlow.state = selectBackup;
+            syncsFlow.state = syncsFlow.selectBackup;
         }
 
         nextButton {
@@ -43,12 +43,9 @@ ConfirmFoldersPageForm {
         onBackupsUpdated: (path, errorCode, finished) => {
             backupTable.backupModel.update(path, errorCode);
 
-            success = success & (errorCode === 0);
-            //if(finished && success) {
-                syncsFlow.state = finalState;
-            //} else {
-            //    syncsFlow.state = renameBackupFolder;
-            //}
+            if(finished) {
+                syncsFlow.state = syncsFlow.finalState;
+            }
         }
     }
 

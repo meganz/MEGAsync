@@ -94,13 +94,4 @@ Rectangle {
         }
     }
 
-    Connections {
-        target: Onboarding
-
-        onUserPassFailed: {
-            email.descriptionType = Custom.TextField.DescriptionType.Error;
-            password.descriptionType = Custom.TextField.DescriptionType.Error;
-            password.descriptionText = OnboardingStrings.errorLogin;
-        }
-    }
 }
