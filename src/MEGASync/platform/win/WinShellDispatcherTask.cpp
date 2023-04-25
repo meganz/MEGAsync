@@ -375,8 +375,16 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
                     actionString = QCoreApplication::translate("ShellExtension", "Upload to MEGA");
                     break;
                 case STRING_GETLINK:
-                    actionString = QCoreApplication::translate("ShellExtension", "Get MEGA link");
+                {
+                    //Only for non incoming share syncs
+                    string tmpPath((const char*)lastPath.utf16(), lastPath.size()*sizeof(wchar_t));
+                    std::unique_ptr<MegaNode> node(MegaSyncApp->getMegaApi()->getSyncedNode(&tmpPath));
+                    if(node && MegaSyncApp->getMegaApi()->checkAccess(node.get(), MegaShare::ACCESS_OWNER).getErrorCode() == MegaError::API_OK)
+                    {
+                        actionString = QCoreApplication::translate("ShellExtension", "Get MEGA link");
+                    }
                     break;
+                }
                 case STRING_SHARE:
                     actionString = QCoreApplication::translate("ShellExtension", "Share with a MEGA user");
                     break;
@@ -394,7 +402,11 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
                     break;
             }
 
-            wcscpy_s( pipe->chReply, BUFSIZE, (const wchar_t *)actionString.utf16());
+            if(!actionString.isEmpty())
+            {
+                wcscpy_s(pipe->chReply, BUFSIZE, (const wchar_t *)actionString.utf16());
+            }
+
             break;
         }
         case L'F':
@@ -489,18 +501,18 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
             switch(state)
             {
                 case MegaApi::STATE_SYNCED:
-                    wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_SYNCED );
+                    wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_SYNCED);
                     break;
                 case MegaApi::STATE_SYNCING:
-                     wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_SYNCING );
-                     break;
+                    wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_SYNCING );
+                    break;
                 case MegaApi::STATE_PENDING:
-                     wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_PENDING );
-                     break;
+                    wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_PENDING );
+                    break;
                 case MegaApi::STATE_NONE:
                 case MegaApi::STATE_IGNORED:
                 default:
-                     wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_DEFAULT );
+                    wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_DEFAULT );
             }
             break;
         }

@@ -28,9 +28,6 @@
 	margin-top: 1px;
 }</string>
   </property>
-  <property name="modal">
-   <bool>true</bool>
-  </property>
   <layout class="QVBoxLayout" name="ProxySettingsLayout">
    <property name="spacing">
     <number>20</number>

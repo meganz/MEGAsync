@@ -56,7 +56,8 @@ LPWSTR MegaInterface::getString(StringID stringID, int numFiles, int numFolders)
 
     LPWSTR chReadBuf = new WCHAR[128];
     int cbRead = sendRequest(MegaInterface::OP_STRING, request, chReadBuf, 128*sizeof(WCHAR));
-    if (cbRead > sizeof(WCHAR))
+    //L"9" is the default value, so no string has been set
+    if (cbRead > sizeof(WCHAR) && wcscmp(chReadBuf,L"9") != 0)
     {
         return chReadBuf;
     }

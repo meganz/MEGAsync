@@ -3,7 +3,6 @@
 
 #include "Utilities.h"
 #include "control/Preferences.h"
-#include "HighDpiResize.h"
 
 #include <QDialog>
 
@@ -21,9 +20,11 @@ public:
     void refresh();
     void updateStorageElements();
 
+protected:
+    void changeEvent(QEvent *event) override;
+
 private:
     Ui::AccountDetailsDialog* mUi;
-    HighDpiResize mHighDpiResize;
 };
 
 #endif // ACCOUNTDETAILSDIALOG_H

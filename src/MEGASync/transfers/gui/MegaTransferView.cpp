@@ -565,6 +565,7 @@ QMenu* MegaTransferView::createContextMenu()
 
     TransferData::TransferStates overallState;
     TransferData::TransferTypes overallType;
+    bool containsIncomingShares(false);
     long long int movableTransfers(0);
 
     //TODO use these containers to open links, open folder...etc
@@ -585,6 +586,13 @@ QMenu* MegaTransferView::createContextMenu()
         }
 
         auto d (qvariant_cast<TransferItem>(index.data()).getTransferData());
+
+        std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(d->mNodeHandle));
+
+        if(node && MegaSyncApp->getMegaApi()->checkAccess(node.get(), mega::MegaShare::ACCESS_OWNER).getErrorCode() != mega::MegaError::API_OK)
+        {
+            containsIncomingShares = true;
+        }
 
         if(d->isCompleted() || d->mType & TransferData::TRANSFER_DOWNLOAD)
         {
@@ -667,7 +675,7 @@ QMenu* MegaTransferView::createContextMenu()
 
     EnableActions actionFlag(EnableAction::NONE);
 
-    auto checkActionByType = [overallType, &actionFlag]()
+    auto checkUnfinishedActionByType = [overallType, &actionFlag]()
     {
         if((overallType & TransferData::TRANSFER_UPLOAD) && !(overallType & (TransferData::TRANSFER_DOWNLOAD | TransferData::TRANSFER_LTCPDOWNLOAD)))
         {
@@ -689,7 +697,7 @@ QMenu* MegaTransferView::createContextMenu()
     else if(overallState == TransferData::TRANSFER_FAILED)
     {
         actionFlag |= EnableAction::CLEAR;
-        checkActionByType();
+        checkUnfinishedActionByType();
     }
     else if(overallState & TransferData::TRANSFER_PAUSED || overallState & TransferData::TRANSFER_ACTIVE)
     {
@@ -720,7 +728,7 @@ QMenu* MegaTransferView::createContextMenu()
             actionFlag |= EnableAction::CANCEL;
         }
 
-        checkActionByType();
+        checkUnfinishedActionByType();
     }
 
     bool addSeparator(false);
@@ -783,10 +791,14 @@ QMenu* MegaTransferView::createContextMenu()
             contextMenu->addAction(openInMEGAAction);
         }
 
-        auto getLinkAction = new MenuItemAction(tr("Get link"), QIcon(QLatin1String(":/images/transfer_manager/context_menu/get_link_ico.png")), contextMenu);
-        connect(getLinkAction, &QAction::triggered, this, &MegaTransferView::getLinkClicked);
+        if(!containsIncomingShares)
+        {
+            auto getLinkAction = new MenuItemAction(tr("Get link"), QIcon(QLatin1String(":/images/transfer_manager/context_menu/get_link_ico.png")), contextMenu);
+            connect(getLinkAction, &QAction::triggered, this, &MegaTransferView::getLinkClicked);
 
-        contextMenu->addAction(getLinkAction);
+            contextMenu->addAction(getLinkAction);
+        }
+
         addSeparator = true;
     }
 

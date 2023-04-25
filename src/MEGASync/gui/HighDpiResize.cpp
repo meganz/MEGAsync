@@ -4,6 +4,7 @@
 #include <assert.h>
 
 HighDpiResize::HighDpiResize(QDialog *d)
+    : QObject(d)
 {
     init(d);
 }

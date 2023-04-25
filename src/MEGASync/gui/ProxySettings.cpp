@@ -1,9 +1,10 @@
 ﻿#include "ProxySettings.h"
 #include "ui_ProxySettings.h"
 
-#include <QNetworkProxy>
-
 #include "megaapi.h"
+#include "DialogOpener.h"
+
+#include <QNetworkProxy>
 #include "QMegaMessageBox.h"
 
 using namespace mega;
@@ -14,14 +15,11 @@ ProxySettings::ProxySettings(MegaApplication *app, QWidget *parent) :
     mApp(app),
     mPreferences(Preferences::instance()),
     mConnectivityChecker(new ConnectivityChecker(Preferences::PROXY_TEST_URL)),
-    mProgressDialog(new MegaProgressCustomDialog(this))
+    mProgressDialog(nullptr)
 {
     mUi->setupUi(this);
 
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-
     mUi->eProxyPort->setValidator(new QIntValidator(0, std::numeric_limits<uint16_t>::max(), this));
-    mProgressDialog->setWindowModality(Qt::WindowModal);
 
     initialize();
 
@@ -41,7 +39,6 @@ ProxySettings::ProxySettings(MegaApplication *app, QWidget *parent) :
 ProxySettings::~ProxySettings()
 {
     delete mConnectivityChecker;
-    delete mProgressDialog;
     delete mUi;
 }
 
@@ -85,8 +82,10 @@ void ProxySettings::setManualMode(bool enabled)
 void ProxySettings::onProxyTestError()
 {
     MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Proxy test failed");
-    if (mProgressDialog->isVisible())
-        mProgressDialog->hide();
+    if(mProgressDialog)
+    {
+        mProgressDialog->close();
+    }
     QMegaMessageBox::critical(this, tr("Error"),
                               tr("Your proxy settings are invalid or the proxy doesn't respond"));
 }
@@ -117,8 +116,10 @@ void ProxySettings::onProxyTestSuccess()
     mPreferences->setProxyUsername(mUi->eProxyUsername->text());
     mPreferences->setProxyPassword(mUi->eProxyPassword->text());
 
-    if (mProgressDialog->isVisible())
-        mProgressDialog->hide();
+    if(mProgressDialog)
+    {
+        mProgressDialog->close();
+    }
 
     accept();
 }
@@ -176,7 +177,9 @@ void ProxySettings::on_bUpdate_clicked()
         delete proxySettings;
     }
 #endif
-    mProgressDialog->show();
+
+    mProgressDialog = new MegaProgressCustomDialog(this);
+    DialogOpener::showDialog(mProgressDialog);
 
     mConnectivityChecker->setProxy(proxy);
     mConnectivityChecker->setTestString(Preferences::PROXY_TEST_SUBSTRING);

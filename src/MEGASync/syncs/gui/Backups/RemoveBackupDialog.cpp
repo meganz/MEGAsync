@@ -1,8 +1,10 @@
 #include "RemoveBackupDialog.h"
 #include "ui_RemoveBackupDialog.h"
 #include "MegaApplication.h"
-#include "gui/node_selector/gui/NodeSelectorSpecializations.h"
+#include "node_selector/gui/NodeSelector.h"
 #include "MegaNodeNames.h"
+#include "Utilities.h"
+#include "DialogOpener.h"
 
 #include <QButtonGroup>
 
@@ -11,10 +13,8 @@ RemoveBackupDialog::RemoveBackupDialog(std::shared_ptr<SyncSettings> backup, QWi
     mMegaApi(MegaSyncApp->getMegaApi()),
     mUi(new Ui::RemoveBackupDialog),
     mBackup(backup),
-    mTargetFolder(MegaSyncApp->getRootNode()->getHandle()),
-    mNodeSelector(nullptr)
+    mTargetFolder(MegaSyncApp->getRootNode()->getHandle())
 {
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     mUi->setupUi(this);
     mUi->lTarget->setReadOnly(true);
     connect(mUi->bConfirm, &QPushButton::clicked, this, &QDialog::accept);
@@ -61,24 +61,17 @@ void RemoveBackupDialog::OnMoveSelected()
 
 void RemoveBackupDialog::OnChangeButtonClicked()
 {
-    if (!mNodeSelector)
+    auto nodeSelector = new UploadNodeSelector(this);
+    DialogOpener::showDialog<NodeSelector>(nodeSelector, [this, nodeSelector]
     {
-        mNodeSelector = new UploadNodeSelector(this);
-    }
-    QPointer<RemoveBackupDialog> thisDialog(this);
-    int result = mNodeSelector->exec();
-    if(!thisDialog)
-    {
-        return;
-    }
-    if (!mNodeSelector || result != QDialog::Accepted)
-    {
-        return;
-    }
-    mTargetFolder = mNodeSelector->getSelectedNodeHandle();
-    auto targetNode = std::unique_ptr<mega::MegaNode>(mMegaApi->getNodeByHandle(mTargetFolder));
-    auto targetRoot = std::unique_ptr<mega::MegaNode>(mMegaApi->getRootNode(targetNode.get()));
+        if (nodeSelector->result() == QDialog::Accepted)
+        {
+            mTargetFolder = nodeSelector->getSelectedNodeHandle();
+            auto targetNode = std::unique_ptr<mega::MegaNode>(mMegaApi->getNodeByHandle(mTargetFolder));
+            auto targetRoot = std::unique_ptr<mega::MegaNode>(mMegaApi->getRootNode(targetNode.get()));
 
-    mUi->lTarget->setText(MegaNodeNames::getRootNodeName(targetRoot.get())
-                          + QString::fromUtf8(mMegaApi->getNodePath(targetNode.get())));
+            mUi->lTarget->setText(MegaNodeNames::getRootNodeName(targetRoot.get())
+                                  + QString::fromUtf8(mMegaApi->getNodePath(targetNode.get())));
+        }
+    });
 }

@@ -54,9 +54,6 @@ margin-right: 32px;
 margin-bottom: 8px;
 }</string>
   </property>
-  <property name="modal">
-   <bool>true</bool>
-  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="sizeConstraint">
     <enum>QLayout::SetFixedSize</enum>

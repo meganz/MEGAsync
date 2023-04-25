@@ -10,8 +10,6 @@ MultiQFileDialog::MultiQFileDialog(QWidget *parent, const QString &caption, cons
       mMultiSelect(multiSelect),
       mEnableOkButton(false)
 {
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-
     setOption(QFileDialog::DontUseNativeDialog, false);
 
     if (multiSelect)
@@ -82,7 +80,6 @@ MultiQFileDialog::MultiQFileDialog(QWidget *parent, const QString &caption, cons
        (*it)->installEventFilter(this);
     }
     installEventFilter(this);
-    mHighDpiResize.init(this);
 }
 
 bool MultiQFileDialog::eventFilter(QObject *obj, QEvent *e)

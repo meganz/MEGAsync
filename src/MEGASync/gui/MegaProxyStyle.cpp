@@ -1,5 +1,6 @@
 #include "MegaProxyStyle.h"
 #include "gui/MegaTransferView.h"
+#include "control/HTTPServer.h"
 
 #include <EventHelper.h>
 #include <QStyleOption>
@@ -31,7 +32,7 @@ void MegaProxyStyle::drawControl(QStyle::ControlElement element, const QStyleOpt
         }
 
         if(!headerView->property("HeaderIconCenter").isValid()
-                 || !headerView->property("HeaderIconCenter").toBool())
+                || !headerView->property("HeaderIconCenter").toBool())
         {
             break;
         }
@@ -44,18 +45,19 @@ void MegaProxyStyle::drawControl(QStyle::ControlElement element, const QStyleOpt
                 if (!header->icon.isNull()) {
                     int size = qRound(headerView->height() * 0.8);
                     QPixmap pixmap
-                        = header->icon.pixmap(QSize(size, size), (header->state & State_Enabled) ? QIcon::Normal : QIcon::Disabled);
+                            = header->icon.pixmap(QSize(size, size), (header->state & State_Enabled) ? QIcon::Normal : QIcon::Disabled);
 
                     QRect aligned = alignedRect(header->direction, QFlag(Qt::AlignCenter), pixmap.size() / pixmap.devicePixelRatio(), rect);
                     QRect inter = aligned.intersected(rect);
                     painter->drawPixmap(inter.x(), inter.y(), pixmap,
-                                  inter.x() - aligned.x(), inter.y() - aligned.y(),
-                                  qRound(aligned.width() * pixmap.devicePixelRatio() + 0.5),
-                                  qRound(pixmap.height() * pixmap.devicePixelRatio() + 0.5));
+                                        inter.x() - aligned.x(), inter.y() - aligned.y(),
+                                        qRound(aligned.width() * pixmap.devicePixelRatio() + 0.5),
+                                        qRound(pixmap.height() * pixmap.devicePixelRatio() + 0.5));
                     return;
+                }
             }
         }
-        }
+        break;
     }
     default:
         break;

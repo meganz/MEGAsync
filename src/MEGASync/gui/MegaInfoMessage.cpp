@@ -7,7 +7,6 @@ MegaInfoMessage::MegaInfoMessage(const QString &windowTitle, const QString &titl
     m_firstParagraph(firstParagraph), m_secondParagraph(secondParagraph)
 {
     ui->setupUi(this);
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
     setTexts();
 

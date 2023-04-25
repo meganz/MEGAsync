@@ -7,6 +7,7 @@
 #include "Preferences.h"
 #include "MegaApplication.h"
 #include "QMegaMessageBox.h"
+#include "DateTimeFormatter.h"
 
 #include <QMouseEvent>
 #include <QPainterPath>
@@ -254,7 +255,11 @@ void TransferManagerDelegateWidget::updateTransferState()
                 mUi->sStatus->setCurrentWidget(mUi->pActive);
             }
             speedString = Utilities::getSizeString(getData()->mSpeed) + QLatin1Literal("/s");
-            timeString = getData()->getFormattedFinishedTime();
+            QDateTime time = QDateTime::currentDateTime();
+            auto seconds = getData()->getSecondsSinceFinished();
+            time = time.addSecs(seconds);
+            timeString = MegaSyncApp->getFormattedDateByCurrentLanguage(time, QLocale::FormatType::ShortFormat);
+
             timeTooltip = getData()->getFullFormattedFinishedTime();
             break;
         }
@@ -538,6 +543,12 @@ bool TransferManagerDelegateWidget::eventFilter(QObject *watched, QEvent *event)
     }
 
     return TransferBaseDelegateWidget::eventFilter(watched, event);
+}
+
+void TransferManagerDelegateWidget::reset()
+{
+    mPauseResumeTransferDefaultIconName.clear();
+    TransferBaseDelegateWidget::reset();
 }
 
 void TransferManagerDelegateWidget::on_tPauseResumeTransfer_clicked()

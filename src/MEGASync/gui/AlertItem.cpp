@@ -9,6 +9,8 @@
 #include <QFutureWatcher>
 #include <QFuture>
 
+#include "DateTimeFormatter.h"
+
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
 #endif
@@ -446,32 +448,13 @@ void AlertItem::setAlertTimeStamp(int64_t ts)
 {
     if (ts != -1)
     {
-        QString dateTimeFormat;
         const QDateTime dateTime{QDateTime::fromMSecsSinceEpoch(ts * 1000)};
-        const bool sameYear(dateTime.date().year() == QDateTime::currentDateTime().date().year());
-        const bool sameWeek{QDateTime::currentDateTime().date().weekNumber() == dateTime.date().weekNumber()};
-
-        if(sameWeek && sameYear)
-        {
-            dateTimeFormat.append(QStringLiteral("dddd, "));
-        }
-        dateTimeFormat.append(QStringLiteral("d MMMM "));
-
-        if(!sameYear)
-        {
-            dateTimeFormat.append(QStringLiteral("yyyy "));
-        }
-
-        const QString language{static_cast<MegaApplication*>(qApp)->getCurrentLanguageCode()};
-        dateTimeFormat.append(QLocale(language).timeFormat(QLocale::ShortFormat));
-        const QString dateTimeTranslated{QLocale(language).toString(dateTime, dateTimeFormat)};
-        ui->lTimeStamp->setText(dateTimeTranslated);
+        ui->lTimeStamp->setText(MegaSyncApp->getFormattedDateByCurrentLanguage(dateTime));
     }
     else
     {
         ui->lTimeStamp->setText(QString::fromUtf8(""));
     }
-
 }
 
 QString AlertItem::getHeadingString()
@@ -516,3 +499,4 @@ QString AlertItem::getUserFullName(MegaUserAlert *alert)
     }
     return QString::fromUtf8(alert->getEmail());
 }
+
