@@ -26,13 +26,13 @@ bool TransferMetaDataItemId::operator==(const TransferMetaDataItemId& item) cons
 
 bool TransferMetaDataItemId::operator<(const TransferMetaDataItemId &item) const
 {
-    if(handle != mega::INVALID_HANDLE && item.handle != mega::INVALID_HANDLE)
-    {
-        return handle > item.handle;
-    }
-    else if(tag > 0 && item.tag > 0)
+    if(tag > 0 && item.tag > 0)
     {
         return tag < item.tag;
+    }
+    else if(handle != mega::INVALID_HANDLE && item.handle != mega::INVALID_HANDLE)
+    {
+        return handle > item.handle;
     }
 
     return false;
@@ -600,6 +600,17 @@ void TransferMetaData::retryFailingFile(int tag, mega::MegaHandle nodeHandle)
     }
 }
 
+void TransferMetaData::retryAllPressed()
+{
+    mFiles.failedTransfers.clear();
+    mFiles.nonExistFailedTransfers.clear();
+
+    if(mNotification)
+    {
+        mNotification->deleteLater();
+    }
+}
+
 DownloadTransferMetaData::DownloadTransferMetaData(unsigned long long appId, const QString &path)
     : TransferMetaData(mega::MegaTransfer::TYPE_DOWNLOAD, appId),
       mLocalTargetPath(QDir::toNativeSeparators(path))
@@ -912,7 +923,7 @@ bool TransferMetaDataContainer::start(mega::MegaTransfer *transfer)
 void TransferMetaDataContainer::retryTransfer(mega::MegaTransfer *transfer, unsigned long long appDataId)
 {
     if(appDataId > 0)
-    {
+        {
         auto data = TransferMetaDataContainer::getAppData(appDataId);
         if(data)
         {

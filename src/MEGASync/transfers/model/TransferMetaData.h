@@ -337,6 +337,7 @@ protected:
 private:
     void retryFailingFile(int tag, mega::MegaHandle nodeHandle);
     void retryFileFromFolderFailingItem(int fileTag, int folderTag, int nodeHandle);
+    void retryAllPressed();
 
     void addInitialPendingTransfer();
     void decreaseInitialPendingTransfers(mega::MegaTransfer* transfer);
@@ -410,7 +411,16 @@ public:
     static bool start(mega::MegaTransfer* transfer);
     static void finish(unsigned long long appId, mega::MegaTransfer* transfer, mega::MegaError* e);
     static bool finishFromFolderTransfer(mega::MegaTransfer* transfer, mega::MegaError* e);
+
     static void retryTransfer(mega::MegaTransfer* transfer, unsigned long long appDataId);
+    static void retryAllPressed()
+    {
+        QMutexLocker lock(&mMutex);
+        foreach(auto& appdata, transferAppData)
+        {
+            appdata->retryAllPressed();
+        }
+    }
 
     template <typename TYPE = TransferMetaData>
     static std::shared_ptr<TYPE> getAppData(mega::MegaTransfer* transfer)
