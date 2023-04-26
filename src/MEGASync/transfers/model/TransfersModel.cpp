@@ -1436,7 +1436,7 @@ void TransfersModel::retryTransferByIndex(const QModelIndex& index)
                 qvariant_cast<TransferItem>(index.data(Qt::DisplayRole)));
     auto d (transferItem.getTransferData());
 
-    if(d && d->mFailedTransfer)
+    if(d && d->mFailedTransfer && d->canBeRetried())
     {
         QMultiMap<unsigned long long, std::shared_ptr<mega::MegaTransfer>> transfersToRetry;
         auto copiedTransfer = std::shared_ptr<mega::MegaTransfer>(d->mFailedTransfer->copy());
@@ -1489,6 +1489,7 @@ void TransfersModel::retryTransfers(QModelIndexList indexes, unsigned long long 
 
     QMultiMap<unsigned long long, std::shared_ptr<mega::MegaTransfer>> uploadTransfersToRetry;
     QMultiMap<unsigned long long, std::shared_ptr<mega::MegaTransfer>> downloadTransfersToRetry;
+    QModelIndexList canBeRetriedIndexes;
 
     mModelMutex.lock();
 
@@ -1501,14 +1502,16 @@ void TransfersModel::retryTransfers(QModelIndexList indexes, unsigned long long 
                     qvariant_cast<TransferItem>(index.data(Qt::DisplayRole)));
         auto d (transferItem.getTransferData());
 
-        if(d && d->isFailed())
+        if(d && d->isFailed() && d->canBeRetried())
         {
+            canBeRetriedIndexes.append(index);
+
             auto copiedTransfer = std::shared_ptr<mega::MegaTransfer>(d->mFailedTransfer->copy());
 
             if(d->isUpload())
             {
-                unsigned long long appDataId(newAppDataIdUpload);
 
+                unsigned long long appDataId(newAppDataIdUpload);
                 if(appDataId == 0)
                 {
                     auto appData = TransferMetaDataContainer::getAppData(copiedTransfer.get());
@@ -1564,7 +1567,7 @@ void TransfersModel::retryTransfers(QModelIndexList indexes, unsigned long long 
         retryTransfers(downloadTransfersToRetry);
     }
 
-    clearFailedTransfers(indexes);
+    clearFailedTransfers(canBeRetriedIndexes);
 }
 
 void TransfersModel::retryTransfersByAppDataId(const std::shared_ptr<TransferMetaData>& data)
