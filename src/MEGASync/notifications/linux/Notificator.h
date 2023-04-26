@@ -16,8 +16,6 @@ class MegaNotification : public MegaNotificationBase
     Q_OBJECT
 
 public:
-    static const QString& defaultImage;
-
     MegaNotification();
     ~MegaNotification() = default;
 

@@ -351,6 +351,8 @@ public:
     static void openInMega(mega::MegaHandle handle);
     static void openBackupCenter();
 
+    static QString getCommonPath(const QString& path1, const QString& path2, bool cloudPaths);
+
 private:
     Utilities() {}
     static QHash<QString, QString> extensionIcons;
