@@ -1,6 +1,7 @@
 #!/usr/bin/make -f
 
 MEGA_BUILD_ID := $(shell cat MEGA_BUILD_ID || echo "1")
+DPKGXZ := $(shell cat /etc/issue | grep "Ubuntu 23\|Lunar Lobster\|Ubuntu 22\|Jammy Jellyfish\|Ubuntu 21.10" >/dev/null && echo "-- -Zxz" || echo "")
 
 build: build-stamp
 build-stamp:
@@ -50,7 +51,7 @@ binary-arch: build install
 	dh_shlibdeps
 	dh_gencontrol
 	dh_md5sums
-	dh_builddeb
+	dh_builddeb $(DPKGXZ)
 
 binary: binary-indep binary-arch
 .PHONY: build clean binary-indep binary-arch binary install

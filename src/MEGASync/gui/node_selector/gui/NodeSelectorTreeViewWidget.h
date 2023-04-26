@@ -44,6 +44,8 @@ class NodeSelectorTreeViewWidget : public QWidget,  public mega::MegaRequestList
 public:
 
     static const int LOADING_VIEW_THRESSHOLD;
+    static const int LABEL_ELIDE_MARGIN;
+    static const char* FULL_NAME_PROPERTY;
 
     explicit NodeSelectorTreeViewWidget(SelectTypeSPtr mode, QWidget *parent = nullptr);
     ~NodeSelectorTreeViewWidget();
@@ -56,6 +58,7 @@ public:
     bool getDefaultUploadOption();
     void showDefaultUploadOption(bool show);
     void setSearchText(const QString& text);
+    void setTitleText(const QString& nodeName);
     void clearSearchText();
     void abort();
     NodeSelectorProxyModel* getProxyModel();

@@ -140,27 +140,33 @@ QList<QAction*> MEGASyncPlugin::actions(const KFileItemListProperties & fileItem
     if (unsyncedFiles || unsyncedFolders)
     {
         QString actionText = getString(STRING_UPLOAD, unsyncedFiles, unsyncedFolders);
-        QAction *act = new KAction(actionText.trimmed(), this);
-        menuAction->addAction(act);
-        connect(act, SIGNAL(triggered()), this, SLOT(uploadFiles()));
+        if(!actionText.isEmpty())
+        {
+            QAction *act = new KAction(actionText, this);
+            menuAction->addAction(act);
+            connect(act, SIGNAL(triggered()), this, SLOT(uploadFiles()));
+        }
     }
 
     // if there any synced files / folders selected
     if (syncedFiles || syncedFolders)
     {
         QString actionText = getString(STRING_GETLINK, syncedFiles, syncedFolders);
-        QAction *act = new KAction(actionText.trimmed(), this);
-        menuAction->addAction(act);
+        if(!actionText.isEmpty())
+        {
+            QAction *act = new KAction(actionText, this);
+            menuAction->addAction(act);
 
-        // set menu icon //TODO: state refers to the last file. Does it make any sense??
-        if (state == FILE_SYNCED)
-            act->setIcon(KIcon("mega-synced"));
-        else if (state == FILE_PENDING)
-            act->setIcon(KIcon("mega-pending"));
-        else if (state == FILE_SYNCING)
-            act->setIcon(KIcon("mega-syncing"));
+            // set menu icon //TODO: state refers to the last file. Does it make any sense??
+            if (state == FILE_SYNCED)
+                act->setIcon(KIcon("mega-synced"));
+            else if (state == FILE_PENDING)
+                act->setIcon(KIcon("mega-pending"));
+            else if (state == FILE_SYNCING)
+                act->setIcon(KIcon("mega-syncing"));
 
-        connect(act, SIGNAL(triggered()), this, SLOT(getLinks()));
+            connect(act, SIGNAL(triggered()), this, SLOT(getLinks()));
+        }
     }
 
 
@@ -169,18 +175,24 @@ QList<QAction*> MEGASyncPlugin::actions(const KFileItemListProperties & fileItem
         if (syncedFolders)
         {
             QString actionText = getString(STRING_VIEW_ON_MEGA, 0, 0);
-            QAction *act = new KAction(actionText.trimmed(), this);
+            if(!actionText.isEmpty())
+            {
+                QAction *act = new KAction(actionText, this);
 
-            menuAction->addAction(act);
-            connect(act, SIGNAL(triggered()), this, SLOT(viewOnMega()));
+                menuAction->addAction(act);
+                connect(act, SIGNAL(triggered()), this, SLOT(viewOnMega()));
+            }
         }
         else
         {
             QString actionText = getString(STRING_VIEW_VERSIONS, 0, 0);
-            QAction *act = new KAction(actionText.trimmed(), this);
+            if(!actionText.isEmpty())
+            {
+                QAction *act = new KAction(actionText, this);
 
-            menuAction->addAction(act);
-            connect(act, SIGNAL(triggered()), this, SLOT(viewPreviousVersions()));
+                menuAction->addAction(act);
+                connect(act, SIGNAL(triggered()), this, SLOT(viewPreviousVersions()));
+            }
         }
     }
 
@@ -261,6 +273,11 @@ QString MEGASyncPlugin::getString(int type, int numFiles,int numFolders)
     queryString.sprintf("%d:%d:%d", type, numFiles, numFolders);
 
     res = sendRequest(OP_STRING, queryString);
+    if(res.compare("9") == 0)
+    {
+        res.clear();
+    }
+
     return res;
 }
 
@@ -289,8 +306,7 @@ QString MEGASyncPlugin::sendRequest(char type, QString command)
         return QString();
     }
 
-    QString reply;
-    reply.append(sock.readAll());
+    QString reply (sock.readAll().trimmed());
 
     return reply;
 }

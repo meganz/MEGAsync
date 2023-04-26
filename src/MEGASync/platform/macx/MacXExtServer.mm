@@ -2,6 +2,7 @@
 #include <assert.h>
 #include "CommonMessages.h"
 #include <QThread>
+#include <megaapi.h>
 
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
@@ -114,6 +115,7 @@ void MacXExtServer::clientDisconnected(QPointer<MacXLocalSocket> client)
 #define RESPONSE_PENDING    "2"
 #define RESPONSE_SYNCING    "3"
 #define RESPONSE_IGNORED    "4"
+
 bool MacXExtServer::GetAnswerToRequest(const char *buf, QByteArray *response)
 {
     if (!buf || !response)
@@ -231,15 +233,8 @@ bool MacXExtServer::GetAnswerToRequest(const char *buf, QByteArray *response)
                     return false;
             }
 
-            response->append(":");
-            if (Preferences::instance()->overlayIconsDisabled()) // Respond to extension to not show badges
-            {
-                response->append("0");
-            }
-            else // Respond to extension to show badges
-            {
-                response->append("1");
-            }
+            addOverlayIconsDisabledToCommand(response);
+            addIsIncomingShareToCommand(&tmpPath, response);
 
             return true;
         }
@@ -321,15 +316,11 @@ void MacXExtServer::notifyItemChange(QString localPath, int newState)
     {
         command.append(":");
         command.append(QString::number(newState).toUtf8().constData());
-        command.append(":");
-        if (Preferences::instance()->overlayIconsDisabled()) // Respond to extension to not show badges
-        {
-            command.append("0");
-        }
-        else // Respond to extension to show badges
-        {
-            command.append("1");
-        }
+        addOverlayIconsDisabledToCommand(&command);
+
+        std::string pathString(localPath.toStdString());
+        addIsIncomingShareToCommand(&pathString, &command);
+
         doSendToAll(QByteArray(command.data()));
     }
 }

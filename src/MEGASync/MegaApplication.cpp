@@ -23,6 +23,7 @@
 #include "TextDecorator.h"
 #include "DialogOpener.h"
 #include "PowerOptions.h"
+#include "DateTimeFormatter.h"
 
 #include "mega/types.h"
 
@@ -434,7 +435,8 @@ void MegaApplication::initialize()
 
     preferences = Preferences::instance();
     connect(preferences.get(), SIGNAL(stateChanged()), this, SLOT(changeState()));
-    connect(preferences.get(), SIGNAL(updated(int)), this, SLOT(showUpdatedMessage(int)));
+    connect(preferences.get(), SIGNAL(updated(int)), this, SLOT(showUpdatedMessage(int)),
+            Qt::DirectConnection); // Use direct connection to make sure 'updated' and 'prevVersions' are set as needed
     preferences->initialize(dataPath);
 
     model = SyncInfo::instance();
@@ -464,6 +466,19 @@ void MegaApplication::initialize()
             && modifiers.testFlag(Qt::ShiftModifier))
     {
         toggleLogging();
+    }
+
+    // TODO: This is legacy behavior and should be deleted when SRW is merged
+    // We also handle here the case where the user changed the exclusions with a
+    // version not using the mustDeleteSdkCacheAtStartup flag, did not restart
+    // from the settings dialog to activate the new exclusions, and the app got (auto) updated.
+    if (preferences->mustDeleteSdkCacheAtStartup()
+        || (prevVersion <= Preferences::LAST_VERSION_WITHOUT_deleteSdkCacheAtStartup_FLAG
+            && preferences->isCrashed()))
+    {
+        preferences->setDeleteSdkCacheAtStartup(false);
+        MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "deleteSdkCacheAtStartup is true: force reload");
+        deleteSdkCache();
     }
 
     QString basePath = QDir::toNativeSeparators(dataPath + QString::fromUtf8("/"));
@@ -568,25 +583,8 @@ void MegaApplication::initialize()
     }
 
     if (preferences->isCrashed())
-    {
-        MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("Force reloading (isCrashed true)").toUtf8().constData());
+    {       
         preferences->setCrashed(false);
-        QDirIterator di(dataPath, QDir::Files | QDir::NoDotAndDotDot);
-        while (di.hasNext())
-        {
-            di.next();
-            const QFileInfo& fi = di.fileInfo();
-            if (!fi.fileName().contains(QString::fromUtf8("transfers_"))
-                && !fi.fileName().contains(QString::fromUtf8("syncconfigsv2_"))
-                && (fi.fileName().endsWith(QString::fromUtf8(".db"))
-                    || fi.fileName().endsWith(QString::fromUtf8(".db-wal"))
-                    || fi.fileName().endsWith(QString::fromUtf8(".db-shm"))))
-            {
-                MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("Deleting local cache: %1").arg(di.filePath()).toUtf8().constData());
-                QFile::remove(di.filePath());
-            }
-        }
-
         QStringList reports = CrashHandler::instance()->getPendingCrashReports();
         if (reports.size())
         {
@@ -1632,7 +1630,17 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
         counter++;
     }
 
-    DialogOpener::showDialog<DuplicatedNodeDialog>(checkUploadNameDialog, this, &MegaApplication::onUploadsCheckedAndReady);
+    if(!checkUploadNameDialog->isEmpty())
+    {
+        DialogOpener::showDialog<DuplicatedNodeDialog>(checkUploadNameDialog, this, &MegaApplication::onUploadsCheckedAndReady);
+    }
+    else
+    {
+        checkUploadNameDialog->accept();
+        onUploadsCheckedAndReady(checkUploadNameDialog);
+        checkUploadNameDialog->close();
+        checkUploadNameDialog->deleteLater();
+    }
 }
 
 void MegaApplication::onUploadsCheckedAndReady(QPointer<DuplicatedNodeDialog> checkDialog)
@@ -1651,6 +1659,7 @@ void MegaApplication::onUploadsCheckedAndReady(QPointer<DuplicatedNodeDialog> ch
         mProcessingUploadQueue = true;
 
         auto counter = 0;
+        data->setInitialPendingTransfers(uploads.size());
         foreach(auto uploadInfo, uploads)
         {
             QString filePath = uploadInfo->getLocalPath();
@@ -1743,6 +1752,26 @@ void MegaApplication::rebootApplication(bool update)
 
     trayIcon->hide();
     QApplication::exit();
+}
+
+// TODO: This is legacy behavior and should be deleted when SRW is merged
+void MegaApplication::deleteSdkCache()
+{
+    QDirIterator di(dataPath, QDir::Files | QDir::NoDotAndDotDot);
+    while (di.hasNext())
+    {
+        di.next();
+        const QFileInfo& fi = di.fileInfo();
+        if (!fi.fileName().contains(QString::fromUtf8("transfers_"))
+            && !fi.fileName().contains(QString::fromUtf8("syncconfigsv2_"))
+            && (fi.fileName().endsWith(QString::fromUtf8(".db"))
+                || fi.fileName().endsWith(QString::fromUtf8(".db-wal"))
+                || fi.fileName().endsWith(QString::fromUtf8(".db-shm"))))
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("Deleting local cache: %1").arg(di.filePath()).toUtf8().constData());
+            QFile::remove(di.filePath());
+        }
+    }
 }
 
 int* testCrashPtr = nullptr;
@@ -2286,6 +2315,11 @@ void MegaApplication::repositionInfoDialog()
     QPoint localCoordinates = infoDialog->mapFromGlobal(globalCoordinates);
     infoDialog->moveArrow(localCoordinates);
 #endif
+}
+
+QString MegaApplication::getFormattedDateByCurrentLanguage(const QDateTime &datetime, QLocale::FormatType format) const
+{
+    return DateTimeFormatter::create(currentLanguageCode, datetime, format);
 }
 
 void MegaApplication::raiseInfoDialog()
@@ -4150,7 +4184,8 @@ void MegaApplication::notifyChangeToAllFolders()
     for (auto localFolder : model->getLocalFolders(SyncInfo::AllHandledSyncTypes))
     {
         ++mProcessingShellNotifications;
-        Platform::getInstance()->notifyItemChange(localFolder, MegaApi::STATE_NONE);
+        std::string stdLocalFolder = localFolder.toStdString();
+        Platform::getInstance()->notifyItemChange(localFolder, megaApi->syncPathState(&stdLocalFolder));
     }
 }
 
@@ -6851,6 +6886,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             preferences->setAccountStateInGeneral(Preferences::STATE_FETCHNODES_OK);
             preferences->setNeedsFetchNodesInGeneral(false);
 
+            // TODO: check with sdk team if this case is possible
             if (!mRootNode)
             {
                 QMegaMessageBox::warning(nullptr, tr("Error"), tr("Unable to get the filesystem.\n"
@@ -6863,8 +6899,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                     setupWizard->close();
                 }
 
-                MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting isCrashed true: !mRootNode (fetch node callback)");
-                preferences->setCrashed(true);
                 rebootApplication(false);
                 break;
             }
@@ -6946,10 +6980,9 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         auto vault = getVaultNode();
         auto rubbish = getRubbishNode();
 
+        // TODO: investigate: is this case possible and what should we do? Restart the app?
         if (!root || !vault || !rubbish)
         {
-            preferences->setCrashed(true);
-            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting isCrashed true: !root || !inbox || !rubbish (account details callback)");
             break;
         }
 
@@ -6962,8 +6995,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
         if (!inShares)
         {
-            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting isCrashed true: !inShares (account details callback)");
-            preferences->setCrashed(true);
+            // TODO: investigate: is this case possible and what should we do? Restart the app?
             return;
         }
 
@@ -7337,7 +7369,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
     {
         if(mBlockingBatch.isValid())
         {
-            mBlockingBatch.onTransferFinished(Utilities::getNodePath(transfer));
+            mBlockingBatch.onTransferFinished(Utilities::getNodePath(transfer), isQueueProcessingOngoing());
             updateIfBlockingStageFinished(mBlockingBatch, mBlockingBatch.hasCancelToken());
             updateFreedCancelToken(transfer);
         }
@@ -7713,11 +7745,11 @@ void MegaApplication::onReloadNeeded(MegaApi*)
         return;
     }
 
+    // TODO: investigate this. Could a restart of the app be enough?
+
     //Don't reload the filesystem here because it's unsafe
     //and the most probable cause for this callback is a false positive.
     //Simply set the crashed flag to force a filesystem reload in the next execution.
-    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting isCrashed true: onReloadNeeded");
-    preferences->setCrashed(true);
 }
 
 void MegaApplication::onGlobalSyncStateChangedTimeout()

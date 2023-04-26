@@ -14,7 +14,6 @@
 #include <memory>
 
 #include "gui/TransferManager.h"
-#include "gui/node_selector/gui/NodeSelector.h"
 #include "gui/InfoDialog.h"
 #include "gui/UpgradeOverStorage.h"
 #include "gui/SetupWizard.h"
@@ -106,6 +105,8 @@ public:
     void changeLanguage(QString languageCode);
     void updateTrayIcon();
     void repositionInfoDialog();
+
+    QString getFormattedDateByCurrentLanguage(const QDateTime& datetime, QLocale::FormatType format = QLocale::FormatType::LongFormat) const;
 
     void onEvent(mega::MegaApi *api, mega::MegaEvent *event) override;
     void onRequestStart(mega::MegaApi* api, mega::MegaRequest *request) override;
@@ -282,6 +283,7 @@ public slots:
     void onUpdateNotFound(bool requested);
     void onUpdateError();
     void rebootApplication(bool update = true);
+    void deleteSdkCache();
     void tryExitApplication(bool force = false);
     void highLightMenuEntry(QAction* action);
     void pauseTransfers(bool pause);
@@ -372,6 +374,7 @@ protected:
     void manageBusinessStatus(int64_t event);
     void requestUserData(); //groups user attributes retrieving, getting PSA, ... to be retrieved after login in
     void populateUserAlerts(mega::MegaUserAlertList *list, bool copyRequired);
+
     std::vector<std::unique_ptr<mega::MegaEvent>> eventsPendingLoggedIn;
 
     bool eventFilter(QObject *obj, QEvent *e) override;

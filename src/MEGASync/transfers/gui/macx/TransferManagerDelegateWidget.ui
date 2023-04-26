@@ -1081,13 +1081,13 @@ QProgressBar::chunk
          </property>
          <property name="minimumSize">
           <size>
-           <width>120</width>
+           <width>150</width>
            <height>63</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>120</width>
+           <width>150</width>
            <height>63</height>
           </size>
          </property>

@@ -382,15 +382,18 @@ static GList *mega_ext_get_file_items(NemoMenuProvider *provider, G_GNUC_UNUSED 
         NemoMenuItem *item;
 
         out = mega_ext_client_get_string(mega_ext, STRING_UPLOAD, unsyncedFiles, unsyncedFolders);
-        item = nemo_menu_item_new("MEGAExtension::upload_to_mega", out, "Upload files to you MEGA account", "mega");
-        g_free(mega_ext->string_upload);
-        mega_ext->string_upload = g_strdup(out);
-        g_free(out);
+        if(out)
+        {
+            item = nemo_menu_item_new("MEGAExtension::upload_to_mega", out, "Upload files to you MEGA account", "mega");
+            g_free(mega_ext->string_upload);
+            mega_ext->string_upload = g_strdup(out);
+            g_free(out);
 
-        g_signal_connect(item, "activate", G_CALLBACK(mega_ext_on_upload_selected), provider);
-        g_object_set_data_full((GObject*)item, "MEGAExtension::files", nemo_file_info_list_copy(files), (GDestroyNotify)nemo_file_info_list_free);
-        nemo_menu_append_item(subMenu, item);
-        g_object_unref(item);
+            g_signal_connect(item, "activate", G_CALLBACK(mega_ext_on_upload_selected), provider);
+            g_object_set_data_full((GObject*)item, "MEGAExtension::files", nemo_file_info_list_copy(files), (GDestroyNotify)nemo_file_info_list_free);
+            nemo_menu_append_item(subMenu, item);
+            g_object_unref(item);
+        }
      }
 
     // if there any synced files / folders selected
@@ -399,43 +402,52 @@ static GList *mega_ext_get_file_items(NemoMenuProvider *provider, G_GNUC_UNUSED 
         NemoMenuItem *item;
 
         out = mega_ext_client_get_string(mega_ext, STRING_GETLINK, syncedFiles, syncedFolders);
-        item = nemo_menu_item_new("MEGAExtension::get_mega_link", out, "Get MEGA link", "mega");
-        g_free(mega_ext->string_getlink);
-        mega_ext->string_getlink = g_strdup(out);
-        g_free(out);
+        if(out)
+        {
+            item = nemo_menu_item_new("MEGAExtension::get_mega_link", out, "Get MEGA link", "mega");
+            g_free(mega_ext->string_getlink);
+            mega_ext->string_getlink = g_strdup(out);
+            g_free(out);
 
-        g_signal_connect(item, "activate", G_CALLBACK(mega_ext_on_get_link_selected), provider);
-        g_object_set_data_full((GObject*)item, "MEGAExtension::files", nemo_file_info_list_copy(files), (GDestroyNotify)nemo_file_info_list_free);
-        nemo_menu_append_item(subMenu, item);
-        g_object_unref(item);
+            g_signal_connect(item, "activate", G_CALLBACK(mega_ext_on_get_link_selected), provider);
+            g_object_set_data_full((GObject*)item, "MEGAExtension::files", nemo_file_info_list_copy(files), (GDestroyNotify)nemo_file_info_list_free);
+            nemo_menu_append_item(subMenu, item);
+            g_object_unref(item);
+        }
 
         if ( ((syncedFiles + syncedFolders) == 1 ) && ( (unsyncedFiles+unsyncedFolders) == 0  ) )
         {
             if (syncedFolders)
             {
                 out = mega_ext_client_get_string(mega_ext, STRING_VIEW_ON_MEGA, 0, 0);
-                item = nemo_menu_item_new("MEGAExtension::view_on_mega", out, "View on MEGA", "mega");
-                g_free(mega_ext->string_viewonmega);
-                mega_ext->string_viewonmega = g_strdup(out);
-                g_free(out);
+                if(out)
+                {
+                    item = nemo_menu_item_new("MEGAExtension::view_on_mega", out, "View on MEGA", "mega");
+                    g_free(mega_ext->string_viewonmega);
+                    mega_ext->string_viewonmega = g_strdup(out);
+                    g_free(out);
 
-                g_signal_connect(item, "activate", G_CALLBACK(mega_ext_on_view_on_mega_selected), provider);
-                g_object_set_data_full((GObject*)item, "MEGAExtension::files", nemo_file_info_list_copy(files), (GDestroyNotify)nemo_file_info_list_free);
-                nemo_menu_append_item(subMenu, item);
-                g_object_unref(item);
+                    g_signal_connect(item, "activate", G_CALLBACK(mega_ext_on_view_on_mega_selected), provider);
+                    g_object_set_data_full((GObject*)item, "MEGAExtension::files", nemo_file_info_list_copy(files), (GDestroyNotify)nemo_file_info_list_free);
+                    nemo_menu_append_item(subMenu, item);
+                    g_object_unref(item);
+                }
             }
             else
             {
                 out = mega_ext_client_get_string(mega_ext, STRING_VIEW_VERSIONS, 0, 0);
-                item = nemo_menu_item_new("MEGAExtension::view_previous_versions", out, "View previous versions", "mega");
-                g_free(mega_ext->string_viewprevious);
-                mega_ext->string_viewprevious = g_strdup(out);
-                g_free(out);
+                if(out)
+                {
+                    item = nemo_menu_item_new("MEGAExtension::view_previous_versions", out, "View previous versions", "mega");
+                    g_free(mega_ext->string_viewprevious);
+                    mega_ext->string_viewprevious = g_strdup(out);
+                    g_free(out);
 
-                g_signal_connect(item, "activate", G_CALLBACK(mega_ext_on_open_previous_selected), provider);
-                g_object_set_data_full((GObject*)item, "MEGAExtension::files", nemo_file_info_list_copy(files), (GDestroyNotify)nemo_file_info_list_free);
-                nemo_menu_append_item(subMenu, item);
-                g_object_unref(item);
+                    g_signal_connect(item, "activate", G_CALLBACK(mega_ext_on_open_previous_selected), provider);
+                    g_object_set_data_full((GObject*)item, "MEGAExtension::files", nemo_file_info_list_copy(files), (GDestroyNotify)nemo_file_info_list_free);
+                    nemo_menu_append_item(subMenu, item);
+                    g_object_unref(item);
+                }
             }
         }
     }

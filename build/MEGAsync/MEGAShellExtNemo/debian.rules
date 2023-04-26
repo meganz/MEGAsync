@@ -6,6 +6,7 @@ common-configure-impl::;
 	if [ 0$(vnemo) -gt 31403 ]; then for i in data/emblems/64x64/*smaller.png; do mv $$i $$(echo $$i | sed "s#-smaller##g"); done; echo "NEWER NEMO REQUIRES SMALLER OVERLAY ICONS"; else rm data/emblems/64x64/*smaller.png; echo "OLDER NEMO DOES NOT REQUIRE SMALLER OVERLAY ICONS"; fi
 
 MEGA_BUILD_ID := $(shell cat MEGA_BUILD_ID || echo "1")
+DPKGXZ := $(shell cat /etc/issue | grep "Ubuntu 23\|Lunar Lobster\|Ubuntu 22\|Jammy Jellyfish\|Ubuntu 21.10" >/dev/null && echo "-- -Zxz" || echo "")
 
 build: build-stamp
 build-stamp:
@@ -59,7 +60,7 @@ binary-arch: build install
 	dh_shlibdeps
 	dh_gencontrol
 	dh_md5sums
-	dh_builddeb
+	dh_builddeb $(DPKGXZ)
 
 binary: binary-indep binary-arch
 .PHONY: build clean binary-indep binary-arch binary install

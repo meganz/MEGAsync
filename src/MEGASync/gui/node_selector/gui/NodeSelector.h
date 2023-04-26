@@ -3,7 +3,7 @@
 
 #include "ButtonIconManager.h"
 #include "NodeNameSetterDialog/NewFolderDialog.h"
-#include "NodeSelectorTreeViewWidget.h"
+#include "gui/node_selector/gui/NodeSelectorTreeViewWidget.h"
 
 #include <QDialog>
 #include <QItemSelection>
@@ -41,7 +41,6 @@ public:
     };
     Q_ENUM(TabItem)
 
-    static const int LABEL_ELIDE_MARGIN;
     explicit NodeSelector(QWidget *parent = 0);
 
     ~NodeSelector();

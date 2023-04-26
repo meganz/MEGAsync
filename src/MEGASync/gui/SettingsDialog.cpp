@@ -1171,6 +1171,19 @@ void SettingsDialog::on_bUpdate_clicked()
 void SettingsDialog::on_bFullCheck_clicked()
 {
     mMegaApi->rescanSync(INVALID_HANDLE, true);
+    /*QPointer<SettingsDialog> currentDialog = this;
+    if (QMegaMessageBox::warning(nullptr, tr("Full scan"),
+                                 tr("MEGAsync will perform a full scan of your synced folders"
+                                    " when it starts.\n\nDo you want to restart MEGAsync now?"),
+                                 QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
+            == QMessageBox::Yes)
+    {
+        if (currentDialog)
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting deleteSdkCacheAtStartup true: full re-scan requested");
+            restartApp();
+        }
+    }*/
 }
 
 void SettingsDialog::on_bSendBug_clicked()
@@ -2260,6 +2273,7 @@ void SettingsDialog::on_bDownloadFolder_clicked()
 
 void SettingsDialog::restartApp()
 {
+    mPreferences->setDeleteSdkCacheAtStartup(true);
     // Restart MEGAsync
 #if defined(Q_OS_MACX)
     mApp->rebootApplication(false);

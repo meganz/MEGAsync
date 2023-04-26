@@ -533,7 +533,7 @@ void PlatformImplementation::addSyncToLeftPane(QString syncPath, QString syncNam
                                REG_DWORD, L"System.IsPinnedToNameSpaceTree", (const BYTE *)&value, sizeof(DWORD),
                                samDesired);
 
-        value = 0x0;
+        value = 0x42;
         SetRegistryKeyAndValue(HKEY_CURRENT_USER, (LPTSTR)key.utf16(),
                                REG_DWORD, L"SortOrderIndex", (const BYTE *)&value, sizeof(DWORD),
                                samDesired);

@@ -359,13 +359,13 @@ TransferWidgetHeaderItem  QLabel
             </property>
             <property name="minimumSize">
              <size>
-              <width>120</width>
+              <width>150</width>
               <height>28</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>120</width>
+              <width>150</width>
               <height>28</height>
              </size>
             </property>

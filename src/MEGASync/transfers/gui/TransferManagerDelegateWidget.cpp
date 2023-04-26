@@ -7,6 +7,7 @@
 #include "Preferences.h"
 #include "MegaApplication.h"
 #include "QMegaMessageBox.h"
+#include "DateTimeFormatter.h"
 
 #include <QMouseEvent>
 #include <QPainterPath>
@@ -201,7 +202,7 @@ void TransferManagerDelegateWidget::updateTransferState()
             {
                 mPauseResumeTransferDefaultIconName.clear();
                 mUi->sStatus->setCurrentWidget(mUi->pFailed);
-                mUi->tItemRetry->setVisible(!getData()->mTemporaryError);
+                mUi->tItemRetry->setVisible(getData()->canBeRetried());
                 mUi->tItemRetry->setText(getState(TRANSFER_STATES::STATE_RETRY));
                 mUi->tItemRetry->setToolTip(getState(TRANSFER_STATES::STATE_RETRY));
                 mUi->wProgressBar->setVisible(false);
@@ -254,7 +255,11 @@ void TransferManagerDelegateWidget::updateTransferState()
                 mUi->sStatus->setCurrentWidget(mUi->pActive);
             }
             speedString = Utilities::getSizeString(getData()->mSpeed) + QLatin1Literal("/s");
-            timeString = getData()->getFormattedFinishedTime();
+            QDateTime time = QDateTime::currentDateTime();
+            auto seconds = getData()->getSecondsSinceFinished();
+            time = time.addSecs(seconds);
+            timeString = MegaSyncApp->getFormattedDateByCurrentLanguage(time, QLocale::FormatType::ShortFormat);
+
             timeTooltip = getData()->getFullFormattedFinishedTime();
             break;
         }

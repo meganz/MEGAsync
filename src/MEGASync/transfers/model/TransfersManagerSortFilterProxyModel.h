@@ -51,6 +51,7 @@ public:
         bool isAnyCompleted() const;
         bool isAnyActive() const;
         bool isAnyFailed() const;
+        bool areAllFailsPermanent() const;
 
         bool isEmpty() const;
         int  transfersCount() const;
@@ -98,6 +99,7 @@ protected:
         mutable QSet<int> mCompletedTransfers;
         mutable QSet<int> mCompletingTransfers;
         mutable QSet<int> mFailedTransfers;
+        mutable QSet<int> mPermanentFailedTransfers;
 
 private slots:
         void onRowsAboutToBeRemoved(const QModelIndex& parent, int first, int last);
