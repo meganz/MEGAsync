@@ -197,20 +197,29 @@ void NodeSelector::onbShowCloudDriveClicked()
 
 void NodeSelector::onbShowIncomingSharesClicked()
 {
-    ui->stackedWidget->setCurrentIndex(SHARES);
-    setToggledStyle(SHARES);
+    if(ui->bShowIncomingShares->isVisible())
+    {
+        ui->stackedWidget->setCurrentIndex(SHARES);
+        setToggledStyle(SHARES);
+    }
 }
 
 void NodeSelector::onbShowBackupsFolderClicked()
 {
-    ui->stackedWidget->setCurrentIndex(BACKUPS);
-    setToggledStyle(BACKUPS);
+    if(ui->bShowBackups->isVisible())
+    {
+        ui->stackedWidget->setCurrentIndex(BACKUPS);
+        setToggledStyle(BACKUPS);
+    }
 }
 
 void NodeSelector::onbShowSearchClicked()
 {
-    ui->stackedWidget->setCurrentWidget(mSearchWidget);
-    setToggledStyle(SEARCH);
+    if(ui->bSearch->isVisible())
+    {
+        ui->stackedWidget->setCurrentWidget(mSearchWidget);
+        setToggledStyle(SEARCH);
+    }
 }
 
 void NodeSelector::shortCutConnects(int ignoreThis)

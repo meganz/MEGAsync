@@ -3,7 +3,7 @@
 
 #include "ButtonIconManager.h"
 #include "NodeNameSetterDialog/NewFolderDialog.h"
-#include "NodeSelectorTreeViewWidget.h"
+#include "gui/node_selector/gui/NodeSelectorTreeViewWidget.h"
 
 #include <QDialog>
 #include <QItemSelection>

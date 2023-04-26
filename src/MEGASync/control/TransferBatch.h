@@ -52,7 +52,7 @@ public:
 
     void setAsUnblocked();
 
-    void onTransferFinished(const QString& nodePath);
+    void onTransferFinished(const QString& nodePath, bool stillProcessing);
 
     bool hasCancelToken();
     bool isValid() const ;

@@ -395,6 +395,32 @@ bool TransferData::isPermanentFail() const
     return false;
 }
 
+bool TransferData::canBeRetried() const
+{
+    auto result(true);
+
+    if(!isFailed())
+    {
+        return result;
+    }
+
+    if(isSyncTransfer())
+    {
+        result = false;
+    }
+    else if(!isUpload())
+    {
+        mega::MegaError error = mFailedTransfer->getLastError();
+        if(error.getErrorCode() == mega::MegaError::API_EARGS
+                || (error.getErrorCode() == mega::MegaError::API_ENOENT || error.getErrorCode() == mega::MegaError::API_EREAD))
+        {
+            result = false;
+        }
+    }
+
+    return result;
+}
+
 bool TransferData::isCancelled() const
 {
     return mState & TRANSFER_CANCELLED;

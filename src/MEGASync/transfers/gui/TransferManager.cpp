@@ -1262,7 +1262,7 @@ void TransferManager::checkActionAndMediaVisibility()
 
     // Show "Retry all" if there are any completed transfers
     // (only for failed tag)
-    if (mUi->wTransfers->getCurrentTab() == TransfersWidget::FAILED_TAB)
+    if (mUi->wTransfers->getCurrentTab() == TransfersWidget::FAILED_TAB && failedTransfers > 0)
     {
         auto proxy (mUi->wTransfers->getProxyModel());
         mUi->tActionButton->setVisible(!proxy->areAllFailsPermanent());

@@ -254,7 +254,14 @@ void DesktopNotifications::processAlert(mega::MegaUserAlert* alert)
         {
             const QString message{tr("New shared folder from [A]")
                         .replace(QString::fromUtf8("[A]"), fullName)};
-            notifySharedUpdate(alert, message, NEW_SHARE);
+
+            //Temporary fix. Found a race condition that causes that all nodes are not key decrypted when the SDK event arrives.
+            //Delaying the notification 2 seconds fixes the problem, for the moment.
+            std::shared_ptr<mega::MegaUserAlert> alertCopy(alert->copy());
+            QTimer::singleShot(2000, this, [this, alertCopy, message]()
+            {
+                notifySharedUpdate(alertCopy.get(), message, NEW_SHARE);
+            });
         }
         break;
     }
@@ -405,9 +412,9 @@ void DesktopNotifications::notifySharedUpdate(mega::MegaUserAlert *alert, const 
         const auto megaApi = static_cast<MegaApplication*>(qApp)->getMegaApi();
         const auto fullAccess = megaApi->getAccess(node.get()) >= mega::MegaShare::ACCESS_FULL;
         QStringList actions (tr("Show in MEGA"));
-        if(type == NEW_SHARE 
-            && fullAccess 
-            && node->isNodeKeyDecrypted())
+        if(type == NEW_SHARE
+                && fullAccess
+                && node->isNodeKeyDecrypted())
         {
             actions << tr("Sync");
             QObject::connect(notification, &MegaNotification::activated, this, &DesktopNotifications::replyNewShareReceived);

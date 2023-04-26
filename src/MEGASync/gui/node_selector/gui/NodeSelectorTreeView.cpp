@@ -139,15 +139,40 @@ void NodeSelectorTreeView::keyPressEvent(QKeyEvent *event)
 
     QModelIndexList selectedRows = selectionModel()->selectedRows();
 
-    static QModelIndex rootIndex = proxyModel()->getIndexFromNode(MegaSyncApp->getRootNode());
+    static QModelIndex cdRootIndex = proxyModel()->getIndexFromNode(MegaSyncApp->getRootNode());
     static QList<int> bannedFromRootKeyList = QList<int>() << Qt::Key_Left << Qt::Key_Right
                                                      << Qt::Key_Plus << Qt::Key_Minus;
 
-    if(!bannedFromRootKeyList.contains(event->key()) || !selectedRows.contains(rootIndex))
+    if(!bannedFromRootKeyList.contains(event->key()) || !selectedRows.contains(cdRootIndex))
     {
         if(event->key() == Qt::Key_F2)
         {
             renameNode();
+        }
+        else if(event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return)
+        {
+            if(!selectedRows.isEmpty())
+            {
+                if(selectedRows.first() == rootIndex() || selectedRows.size() > 1)
+                {
+                    emit nodeSelected();
+                }
+                else
+                {
+                    auto node = std::unique_ptr<MegaNode>(mMegaApi->getNodeByHandle(getSelectedNodeHandle()));
+                    if(node)
+                    {
+                        if(node->isFolder())
+                        {
+                            doubleClicked(selectedRows.first());
+                        }
+                        else
+                        {
+                            emit nodeSelected();
+                        }
+                    }
+                }
+            }
         }
 
         QTreeView::keyPressEvent(event);
