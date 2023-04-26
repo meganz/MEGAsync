@@ -7,6 +7,7 @@ QtObject {
 
     readonly property url imagesPath: Qt.resolvedUrl("../../images/qml/")
     readonly property url imagesOnboardingPath: Qt.resolvedUrl(imagesPath + "/onboarding/")
+    readonly property url imagesPasswordPath: Qt.resolvedUrl(imagesPath + "/password/")
 
     // Sorted alphabetically by dir
 
@@ -30,6 +31,7 @@ QtObject {
     readonly property url pcMega: imagesOnboardingPath + "pc_mega.svg"
     readonly property url plusCircle: imagesOnboardingPath + "plus_circle.svg"
     readonly property url resume: imagesOnboardingPath + "resume.svg"
+    readonly property url mail: imagesOnboardingPath + "mail.svg"
     readonly property url selectiveSync: imagesOnboardingPath + "selective_sync.svg"
     readonly property url shield_account_free: imagesOnboardingPath + "shield_account_free.svg"
     readonly property url shield_account_lite: imagesOnboardingPath + "shield_account_lite.svg"
@@ -38,5 +40,10 @@ QtObject {
     readonly property url shield_account_proIII: imagesOnboardingPath + "shield_account_proIII.svg"
     readonly property url sync: imagesOnboardingPath + "sync.svg"
     readonly property url twofa: imagesOnboardingPath + "twofa.png"
+    readonly property url passwordVeryWeak: imagesPasswordPath + "very_weak.svg"
+    readonly property url passwordWeak: imagesPasswordPath + "weak.svg"
+    readonly property url passwordAverage: imagesPasswordPath + "average.svg"
+    readonly property url passwordGood: imagesPasswordPath + "good.svg"
+    readonly property url passwordStrong: imagesPasswordPath + "strong.svg"
 
 }

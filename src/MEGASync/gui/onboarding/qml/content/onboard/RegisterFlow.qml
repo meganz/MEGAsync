@@ -1,4 +1,5 @@
 // System
+import QtQml 2.12
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
@@ -16,6 +17,8 @@ Rectangle {
     readonly property string login: "login"
     readonly property string twoFA: "twoFA"
     readonly property string register: "register"
+    readonly property string confirmEmail: "confirmEmail"
+    readonly property string changeConfirmEmail: "changeConfirmEmail"
 
     color: "transparent"
     state: login
@@ -36,6 +39,18 @@ Rectangle {
             name: register
             StateChangeScript {
                 script: stack.replace(registerPage);
+            }
+        },
+        State {
+            name: confirmEmail
+            StateChangeScript {
+                script: stack.replace(confirmEmailPage);
+            }
+        },
+        State {
+            name: changeConfirmEmail
+            StateChangeScript {
+                script: stack.replace(changeConfirmEmailPage);
             }
         }
     ]
@@ -93,6 +108,18 @@ Rectangle {
 
         RegisterPage {
             id: registerPage
+
+            visible: false
+        }
+
+        ConfirmEmailPage {
+            id: confirmEmailPage
+
+            visible: false
+        }
+
+        ChangeEmailPage {
+            id: changeConfirmEmailPage
 
             visible: false
         }

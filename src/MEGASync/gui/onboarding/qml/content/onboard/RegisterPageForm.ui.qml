@@ -22,13 +22,13 @@ Rectangle {
     property alias email: email
     property alias password: password
     property alias confirmPassword: confirmPassword
+    property alias termsCheckBox: termsCheckBox
+    property alias dataLossCheckBox: dataLossCheckBox
 
     property alias loginButton: loginButton
     property alias nextButton: nextButton
 
     property int contentMargin: 48
-
-    color: Styles.backgroundColor
 
     Custom.RichText {
         id: title
@@ -58,7 +58,7 @@ Rectangle {
 
         width: formLayout.width + 24
         height: 380
-        clip : true
+        clip: true
 
         ScrollBar.vertical: ScrollBar {
             id: scrollbar
@@ -154,6 +154,7 @@ Rectangle {
                 Custom.PasswordTextField {
                     id: password
 
+                    showHint: true
                     title: OnboardingStrings.password
                     Layout.preferredWidth: formLayout.width
                 }
@@ -164,7 +165,6 @@ Rectangle {
                     title: OnboardingStrings.confirmPassword
                     Layout.preferredWidth: formLayout.width
                 }
-
             }
 
             ColumnLayout {
@@ -191,7 +191,6 @@ Rectangle {
                     text: OnboardingStrings.agreeTerms
                 }
             }
-
         }
     }
 
@@ -222,5 +221,11 @@ Rectangle {
             text: OnboardingStrings.login
         }
     }
-
 }
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+##^##*/
+

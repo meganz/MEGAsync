@@ -49,12 +49,4 @@ StackView {
             height: onboardingFlow.height
         }
     }
-
-    Connections{
-        target: Onboarding
-
-        onLoginFinished: {
-            onboardingFlow.state = syncs;
-        }
-    }
 }

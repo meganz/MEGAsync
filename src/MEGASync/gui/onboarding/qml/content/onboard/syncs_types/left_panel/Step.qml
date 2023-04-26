@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.12
 
 // QML common
 import Common 1.0
+import Components 1.0 as Custom
 
 Item {
 
@@ -119,7 +120,7 @@ Item {
             Layout.preferredWidth: 24
             Layout.preferredHeight: 24
 
-            Image {
+            Custom.Image {
                 id: checkImage
 
                 visible: false

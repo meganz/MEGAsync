@@ -24,7 +24,10 @@ Rectangle {
     property alias text: hintText.text
     property alias textColor: hintText.color
 
-    height: mainLayout.height
+    height: (titleText.visible ? titleText.height : 0)
+            + (hintText.visible? hintText.height : 0)
+            + ((titleText.visible && hintText.visible) ? mainLayout.spacing : 0)
+
     color: "transparent"
     visible: false
 
@@ -57,6 +60,8 @@ Rectangle {
             visible: iconSource != ""
             Layout.alignment: Qt.AlignTop
             sourceSize: Qt.size(16, 16)
+            Layout.preferredWidth: sourceSize.width
+            Layout.preferredHeight: sourceSize.height
         }
 
         ColumnLayout {
@@ -80,6 +85,7 @@ Rectangle {
             Custom.RichText {
                 id: hintText
 
+                color: Styles.textSecondary
                 visible: text.length !== 0
                 Layout.fillWidth: true
                 wrapMode: Text.WordWrap

@@ -36,7 +36,7 @@ ColumnLayout {
 
     Text {
         text: title
-        color: Styles.textPrimary
+        color: enabled ? Styles.textPrimary : Styles.textDisabled
         visible: title.length !== 0
         Layout.leftMargin: 4
         Layout.preferredHeight: 16
@@ -80,6 +80,8 @@ ColumnLayout {
         rightPadding: calculatePaddingWithIcon(rightIcon.source != "")
         topPadding: verticalPadding
         bottomPadding: verticalPadding
+        placeholderTextColor: Styles.textPlaceholder
+        color: enabled ? Styles.textPrimary : Styles.textDisabled
 
         font {
             pixelSize: 14

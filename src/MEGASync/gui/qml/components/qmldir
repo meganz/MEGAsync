@@ -12,3 +12,5 @@ RichText 1.0 texts/RichText.qml
 HintText 1.0 texts/HintText.qml
 NotificationText 1.0 texts/NotificationText.qml
 ToolTip 1.0 toolTips/ToolTip.qml
+Image 1.0 images/Image.qml
+

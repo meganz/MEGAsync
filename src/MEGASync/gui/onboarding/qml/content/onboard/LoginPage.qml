@@ -2,7 +2,7 @@
 import QtQuick 2.12
 
 // QML common
-import Components 1.0
+import Components 1.0 as Custom
 
 // Local
 import Onboarding 1.0
@@ -11,7 +11,6 @@ import Onboarding 1.0
 import Onboard 1.0
 
 LoginPageForm {
-
     Keys.onEnterPressed: {
         loginButton.clicked();
     }
@@ -21,6 +20,7 @@ LoginPageForm {
     }
 
     loginButton.onClicked: {
+
         var error = false;
 
         var valid = email.valid();
@@ -43,12 +43,29 @@ LoginPageForm {
             return;
         }
 
-        Onboarding.onLoginClicked({ [Onboarding.OnboardEnum.EMAIL]: email.text,
-                                    [Onboarding.OnboardEnum.PASSWORD]: password.text })
+        enabled = false;
+        Onboarding.onLoginClicked({ [Onboarding.RegisterForm.EMAIL]: email.text,
+                                    [Onboarding.RegisterForm.PASSWORD]: password.text })
     }
 
     signUpButton.onClicked: {
         registerFlow.state = register;
+    }
+
+    Connections {
+        target: Onboarding
+
+        onUserPassFailed: {
+            enabled = true;
+            email.descriptionType = Custom.TextField.DescriptionType.Error
+            password.descriptionType = Custom.TextField.DescriptionType.Error
+            password.descriptionText = OnboardingStrings.errorLogin
+        }
+
+        onLoginFinished: {
+            enabled = true;
+            onboardingFlow.state = syncs;
+        }
     }
 }
 

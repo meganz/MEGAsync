@@ -12,13 +12,19 @@ Onboarding::Onboarding(QObject *parent)
     : QMLComponent(parent)
     , mMegaApi(MegaSyncApp->getMegaApi())
     , mDelegateListener(new QTMegaRequestListener(mMegaApi, this))
+    , mGlobalListener(new QTMegaGlobalListener(mMegaApi, this))
     , mPreferences(Preferences::instance())
     , mSyncController()
     , mPassword(QString())
+    , mLastName(QString())
+    , mFirstName(QString())
+    , mEmail(QString())
     , mNumBackupsRequested(0)
     , mNumBackupsProcessed(0)
 {
-    qmlRegisterUncreatableType<Onboarding>("Onboarding", 1, 0, "OnboardEnum", QString::fromUtf8("Cannot create WarningLevel in QML"));
+    mMegaApi->addGlobalListener(mGlobalListener.get());
+    qmlRegisterUncreatableType<Onboarding>("Onboarding", 1, 0, "RegisterForm", QString::fromUtf8("Cannot create WarningLevel in QML"));
+    qmlRegisterUncreatableType<Onboarding>("Onboarding", 1, 0, "PasswordStrength", QString::fromUtf8("Cannot create WarningLevel in QML"));
 
     qmlRegisterModule("Onboard", 1, 0);
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/OnboardingDialog.qml")), "Onboard", 1, 0, "OnboardingDialog");
@@ -71,58 +77,78 @@ void Onboarding::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* erro
 {
     switch(request->getType())
     {
-        case MegaRequest::TYPE_LOGIN:
+    case MegaRequest::TYPE_LOGIN:
+    {
+        if (error->getErrorCode() == MegaError::API_OK)
         {
-            if (error->getErrorCode() == MegaError::API_OK)
+            qDebug() << "Onboarding::onRequestFinish -> TYPE_LOGIN API_OK";
+            mPreferences->setAccountStateInGeneral(Preferences::STATE_LOGGED_OK);
+            auto email = request->getEmail();
+            mEmail = QString::fromUtf8(email);
+            emit emailChanged(mEmail);
+            mPreferences->setEmailAndGeneralSettings(mEmail);
+            MegaSyncApp->fetchNodes(QString::fromUtf8(email ? email : "")); //TODO: REVIEW IF THIS IS NECESSARY
+            if (!mPreferences->hasLoggedIn())
             {
-                qDebug() << "Onboarding::onRequestFinish -> TYPE_LOGIN API_OK";
-                mPreferences->setAccountStateInGeneral(Preferences::STATE_LOGGED_OK);
-                auto email = request->getEmail();
-                mPreferences->setEmailAndGeneralSettings(QString::fromUtf8(email));
-                MegaSyncApp->fetchNodes(QString::fromUtf8(email ? email : "")); //TODO: REVIEW IF THIS IS NECESSARY
-                if (!mPreferences->hasLoggedIn())
-                {
-                    mPreferences->setHasLoggedIn(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000);
-                }
-                emit loginFinished();
+                mPreferences->setHasLoggedIn(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000);
+            }
+            emit loginFinished();
+        }
+        else
+        {
+            mPreferences->setAccountStateInGeneral(Preferences::STATE_LOGGED_FAILED);
+            if (error->getErrorCode() == MegaError::API_EMFAREQUIRED)
+            {
+                qDebug() << "Onboarding::onRequestFinish -> TYPE_LOGIN API_EMFAREQUIRED";
+                mPreferences->setEmail(QString::fromUtf8(request->getEmail())); //TODO: REVIEW IF THIS IS NECESSARY
+                mPassword = QString::fromUtf8(request->getPassword());
+                emit twoFARequired();
+            }
+            else if (error->getErrorCode() == MegaError::API_EFAILED)
+            {
+                qDebug() << "Onboarding::onRequestFinish -> API_EFAILED";
+                emit twoFAFailed();
             }
             else
             {
-                mPreferences->setAccountStateInGeneral(Preferences::STATE_LOGGED_FAILED);
-                if (error->getErrorCode() == MegaError::API_EMFAREQUIRED)
-                {
-                    qDebug() << "Onboarding::onRequestFinish -> TYPE_LOGIN API_EMFAREQUIRED";
-                    mPreferences->setEmail(QString::fromUtf8(request->getEmail()));
-                    mPassword = QString::fromUtf8(request->getPassword());
-                    emit twoFARequired();
-                }
-                else if (error->getErrorCode() == MegaError::API_EFAILED)
-                {
-                    qDebug() << "Onboarding::onRequestFinish -> API_EFAILED";
-                    emit twoFAFailed();
-                }
-                else
-                {
-                    qDebug() << "Onboarding::onRequestFinish -> TYPE_LOGIN Error code -> "
-                             << error->getErrorCode() << " Error string -> " << error->getErrorString();
-                    emit userPassFailed();
-                }
+                qDebug() << "Onboarding::onRequestFinish -> TYPE_LOGIN Error code -> "
+                         << error->getErrorCode() << " Error string -> " << error->getErrorString();
+                emit userPassFailed();
             }
-            break;
         }
-        case MegaRequest::TYPE_CREATE_ACCOUNT:
+        break;
+    }
+    case MegaRequest::TYPE_CREATE_ACCOUNT:
+    {
+        if(error->getErrorCode() == MegaError::API_OK)
         {
-            if(error->getErrorCode() == MegaError::API_OK)
-            {
-                qDebug() << "Onboarding::onRequestFinish -> TYPE_CREATE_ACCOUNT API_OK";
-                emit loginFinished(); // maybe we should change this signal
-            }
-            else
-            {
-                qDebug() << "Onboarding::onRequestFinish -> TYPE_CREATE_ACCOUNT Error code -> " << error->getErrorCode();
-            }
-            break;
+            mEmail = QString::fromUtf8(request->getEmail());
+            mPassword = QString::fromUtf8(request->getPassword());
+            mFirstName = QString::fromUtf8(request->getName());
+            mLastName = QString::fromUtf8(request->getText());
+            emit emailChanged(mEmail);
         }
+        emit registerFinished(error->getErrorCode() == MegaError::API_OK); //only fail is email already exist
+        qDebug() << QString::fromUtf8("Onboarding::onRequestFinish -> TYPE_CREATE_ACCOUNT Error code: %1").arg(error->getErrorCode());
+        break;
+    }
+    case MegaRequest::TYPE_SEND_SIGNUP_LINK:
+    {
+        if(error->getErrorCode() == MegaError::API_OK)
+        {
+            mEmail = QString::fromUtf8(request->getEmail());
+            emit emailChanged(mEmail);
+        }
+        emit changeRegistrationEmailFinished(error->getErrorCode() == MegaError::API_OK);
+    }
+    }
+}
+
+void Onboarding::onEvent(mega::MegaApi *, mega::MegaEvent *event)
+{
+    if(event->getType() == MegaEvent::EVENT_ACCOUNT_CONFIRMATION)
+    {
+        emit accountConfirmed();
     }
 }
 
@@ -138,25 +164,20 @@ void Onboarding::onLoginClicked(const QVariantMap& data)
 void Onboarding::onRegisterClicked(const QVariantMap& data)
 {
     qDebug() << "Onboarding::onRegisterClicked" << data;
+    QString firstName = data.value(QString::number(FIRST_NAME)).toString();
+    QString lastName = data.value(QString::number(LAST_NAME)).toString();
+    QString email = data.value(QString::number(EMAIL)).toString();
+    QString password = data.value(QString::number(PASSWORD)).toString();
 
-    std::string firstName = data.value(QString::number(FIRST_NAME)).toString().toStdString();
-    std::string lastName = data.value(QString::number(LAST_NAME)).toString().toStdString();
-    std::string email = data.value(QString::number(EMAIL)).toString().toStdString();
-    std::string password = data.value(QString::number(PASSWORD)).toString().toStdString();
-
-    mMegaApi->createAccount(email.c_str(),
-                            password.c_str(),
-                            firstName.c_str(),
-                            lastName.c_str(),
+    mMegaApi->createAccount(email.toUtf8().constData(),
+                            password.toUtf8().constData(),
+                            firstName.toUtf8().constData(),
+                            lastName.toUtf8().constData(),
                             this->mDelegateListener.get());
 }
 
 void Onboarding::onTwoFARequested(const QString& pin)
 {
-    qDebug() << "Onboarding::onTwoFARequested -> pin = " << pin;
-    qDebug() << "Onboarding::onTwoFARequested -> mEmail = " << mPreferences->email();
-    qDebug() << "Onboarding::onTwoFARequested -> mPassword = " << mPassword;
-
     mMegaApi->multiFactorAuthLogin(mPreferences->email().toUtf8().constData(),
                                    mPassword.toUtf8().constData(),
                                    pin.toUtf8().constData(),
@@ -231,7 +252,6 @@ void Onboarding::addSync(const QString &localPath, mega::MegaHandle remoteHandle
 
 void Onboarding::addBackups(const QStringList& localPathList)
 {
-
     mNumBackupsRequested = localPathList.size();
     mNumBackupsProcessed = 0;
     for(const QString& localPath : localPathList)
@@ -247,7 +267,18 @@ bool Onboarding::setDeviceName(const QString &deviceName)
 
 Onboarding::PasswordStrength Onboarding::getPasswordStrength(const QString &password)
 {
-    return mMegaApi->getPasswordStrength(password);
+    return static_cast<Onboarding::PasswordStrength>(mMegaApi->getPasswordStrength(password.toUtf8().constData()));
+}
+
+void Onboarding::changeRegistrationEmail(const QString &email)
+{
+    QString fullName = mFirstName + QString::fromUtf8(" ") + mLastName;
+    mMegaApi->sendSignupLink(email.toUtf8().constData(), fullName.toUtf8().constData(), mPassword.toUtf8().constData(), mDelegateListener.get());
+}
+
+QString Onboarding::getEmail()
+{
+    return mEmail;
 }
 
 void Onboarding::onNotNowClicked() {
@@ -283,8 +314,8 @@ void Onboarding::onSyncAddRequestStatus(int errorCode,
 }
 
 void Onboarding::onBackupAddRequestStatus(int errorCode,
-                                        const QString &errorMsg,
-                                        const QString &name)
+                                          const QString &errorMsg,
+                                          const QString &name)
 {
     qDebug() << "Onboarding::onSyncAddRequestStatus -> path = " << name
              << " - errorCode = " << errorCode << " - errorMsg = " << errorMsg;

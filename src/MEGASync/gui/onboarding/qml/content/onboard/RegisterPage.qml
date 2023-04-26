@@ -1,3 +1,5 @@
+import QtQml 2.12
+
 // QML common
 import Components 1.0
 import Common 1.0
@@ -9,52 +11,15 @@ import Onboard 1.0
 import Onboarding 1.0
 
 RegisterPageForm {
-
-    password.onTextChanged: {
-        var strength = Onboarding.getPasswordStrength(password.text)
-        console.log(strength);
-
-        switch(strength)
-        {
-        case Onboarding.PasswordStrength.PASSWORD_STRENGTH_VERYWEAK:
-        {
-            password.hint.title = OnboardingStrings.tooWeakPasswordTitle;
-            password.hint.text = OnboardingStrings.tooWeakPasswordText;
-            break;
-        }
-        case Onboarding.PasswordStrength.PASSWORD_STRENGTH_WEAK:
-        {
-            password.hint.title = OnboardingStrings.weakPasswordTitle;
-            password.hint.text = OnboardingStrings.weakPasswordText;
-            break;
-        }
-        case Onboarding.PasswordStrength.PASSWORD_STRENGTH_MEDIUM:
-        {
-            password.hint.title = OnboardingStrings.averagePasswordTitle;
-            password.hint.text = OnboardingStrings.averagePasswordText;
-            break;
-        }
-        case Onboarding.PasswordStrength.PASSWORD_STRENGTH_GOOD:
-        {
-            password.hint.title = OnboardingStrings.strongPasswordTitle;
-            password.hint.text = OnboardingStrings.strongPasswordText;
-            break;
-        }
-        case Onboarding.PasswordStrength.PASSWORD_STRENGTH_STRONG:
-        {
-            password.hint.title = OnboardingStrings.excelentPasswordTitle;
-            password.hint.text = OnboardingStrings.excelentPasswordText;
-            break;
-        }
-        }
-        password.hint.visible = true;
-    }
+    id: registerPage
 
     nextButton.onClicked: {
-        var error = firstName.text.length !== 0 && lastName.text.length !== 0;
-        firstLastNameDescription.visible = !error;
-        firstName.showType = !error;
-        lastName.showType = !error;
+        var error = firstName.text.length === 0 && lastName.text.length === 0;
+        firstLastNameDescription.visible = error;
+        firstName.showType = error;
+        lastName.showType = error;
+
+        console.log(error)
 
         var valid = email.valid();
         if(!valid) {
@@ -89,11 +54,13 @@ RegisterPageForm {
             return;
         }
 
+        registerPage.enabled = false;
+
         var formData = {
-            [Onboarding.PASSWORD]: password.text,
-            [Onboarding.EMAIL]: email.text,
-            [Onboarding.FIRST_NAME]: firstName.text,
-            [Onboarding.LAST_NAME]: lastName.text
+            [Onboarding.RegisterForm.PASSWORD]: password.text,
+            [Onboarding.RegisterForm.EMAIL]: email.text,
+            [Onboarding.RegisterForm.FIRST_NAME]: firstName.text,
+            [Onboarding.RegisterForm.LAST_NAME]: lastName.text
         }
 
         Onboarding.onRegisterClicked(formData);
@@ -101,5 +68,31 @@ RegisterPageForm {
 
     loginButton.onClicked: {
         registerFlow.state = login;
+    }
+
+    Connections {
+        target: Onboarding
+
+        onRegisterFinished: {
+            registerPage.enabled = true;
+
+            if(apiOk)
+            {
+                password.text = "";
+                confirmPassword.text = "";
+                firstName.text = "";
+                lastName.text = "";
+                email.text = "";
+                termsCheckBox.checked = false;
+                dataLossCheckBox.checked = false;
+                registerFlow.state = confirmEmail; //SET HERE CONFIRM ACCOUNT BY EMAIL PAGE??
+            }
+            else
+            {
+                email.showType = true;
+                email.hint.text = OnboardingStrings.errorEmailAlreadyExist;
+                email.hint.visible = true;
+            }
+        }
     }
 }

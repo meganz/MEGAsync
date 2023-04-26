@@ -2,35 +2,50 @@ pragma Singleton
 import QtQuick 2.0
 
 import AccountInfoData 1.0
+import Components 1.0
 
 Item {
-    enum OnboardEnum {
+    enum RegisterForm {
         FIRST_NAME = 0,
         LAST_NAME = 1,
         EMAIL = 2,
         PASSWORD = 3
     }
 
-    enum PasswordStrength{
-        PASSWORD_STRENGTH_VERYWEAK = 0,
-        PASSWORD_STRENGTH_WEAK = 1,
-        PASSWORD_STRENGTH_MEDIUM = 2,
-        PASSWORD_STRENGTH_GOOD = 3,
-        PASSWORD_STRENGTH_STRONG = 4
-    }
+    property string email: "test.email@mega.co.nz"
 
     signal userPassFailed
     signal twoFARequired
     signal loginFinished
+    signal registerFinished(bool apiOk)
     signal notNowFinished
     signal twoFAFailed
     signal syncSetupSucces
     signal backupsUpdated
+    signal accountConfirmed
+    signal changeRegistrationEmailFinished
+    signal deviceNameReady
 
     function onForgotPasswordClicked() {
         console.info("onForgotPasswordClicked()");
         return "https://mega.nz/recovery";
     }
+
+    function getEmail()
+    {
+        return email;
+    }
+
+    Timer {
+        id: loginTimer
+        interval: 2000;
+        running: false;
+        repeat: false;
+        onTriggered: {
+            loginFinished();
+        }
+    }
+
 
     function onLoginClicked(data) {
         console.info("onLoginClicked() -> " + JSON.stringify(data));
@@ -38,7 +53,7 @@ Item {
         // Comment/Uncomment the following lines to test different scenarios
 
         // Login OK
-        loginFinished();
+        loginTimer.start();
 
         // Login failed
         //userPassFailed();
@@ -47,7 +62,29 @@ Item {
         //twoFARequired();
     }
 
+    Timer {
+        id: registerTimer
+        interval: 2000;
+        running: false;
+        repeat: false;
+        onTriggered: {
+            registerFinished(true);
+           // accountConfirmTimer.start();
+        }
+    }
+
+    Timer {
+        id: accountConfirmTimer
+        interval: 2000;
+        running: false;
+        repeat: false;
+        onTriggered: {
+            accountConfirmed();
+        }
+    }
+
     function onRegisterClicked(data) {
+        registerTimer.start();
         console.info("onRegisterClicked() -> " + JSON.stringify(data));
     }
 
@@ -61,6 +98,20 @@ Item {
 
         // Login failed
         //twoFAFailed();
+    }
+
+    Timer {
+        id: changeEmailTimer
+        interval: 2000;
+        running: false;
+        repeat: false;
+        onTriggered: {
+            changeRegistrationEmailFinished(true);
+        }
+    }
+    function changeRegistrationEmail(newEmail){
+        console.info("changeRegistrationEmail(newEmail):" + newEmail);
+        changeEmailTimer.start();
     }
 
     function onNotNowClicked() {
@@ -83,7 +134,7 @@ Item {
     {
         console.info("getPasswordStrength(password)" + password);
         var strength = password.length - 1;
-        return strength > Onboarding.PasswordStrength.PASSWORD_STRENGTH_STRONG ? Onboarding.PasswordStrength.PASSWORD_STRENGTH_STRONG : strength;
+        return strength > PasswordTextField.PasswordStrength.PASSWORD_STRENGTH_STRONG ? PasswordTextField.PasswordStrength.PASSWORD_STRENGTH_STRONG : strength;
     }
 
     Timer {
@@ -104,4 +155,14 @@ Item {
     function addBackups(backupDirs) {
         console.info("addBackups() => " + JSON.stringify(backupDirs));
     }
+
+    Component.onCompleted: {
+        console.info("onboard constructed");
+    }
 }
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+##^##*/

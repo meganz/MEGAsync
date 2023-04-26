@@ -4,12 +4,14 @@
 #include "syncs/control/SyncController.h"
 #include "qml/QmlDialogWrapper.h"
 #include "QTMegaRequestListener.h"
+#include "QTMegaGlobalListener.h"
 #include "Preferences.h"
 #include "syncs/control/SyncController.h"
 
-class Onboarding : public QMLComponent, public mega::MegaRequestListener
+class Onboarding : public QMLComponent, public mega::MegaRequestListener, public mega::MegaGlobalListener
 {
     Q_OBJECT
+    Q_PROPERTY(QString email MEMBER mEmail READ getEmail NOTIFY emailChanged)
 
 public:
     enum RegisterForm {
@@ -42,6 +44,8 @@ public:
                          mega::MegaRequest *request,
                          mega::MegaError* error) override;
 
+    void onEvent(mega::MegaApi*, mega::MegaEvent* event) override;
+
     Q_INVOKABLE void onLoginClicked(const QVariantMap& data);
     Q_INVOKABLE void onRegisterClicked(const QVariantMap& data);
     Q_INVOKABLE void onTwoFARequested(const QString& pin);
@@ -50,16 +54,22 @@ public:
     Q_INVOKABLE void addBackups(const QStringList& localPathList);
     Q_INVOKABLE bool setDeviceName(const QString& deviceName);
     Q_INVOKABLE PasswordStrength getPasswordStrength(const QString& password);
+    Q_INVOKABLE void changeRegistrationEmail(const QString& email);
+    Q_INVOKABLE QString getEmail();
 
 signals:
     void twoFARequired();
     void userPassFailed();
     void twoFAFailed();
     void loginFinished();
+    void registerFinished(bool apiOk);
     void notNowFinished();
     void syncSetupSucces();
     void backupsUpdated(const QString& path, int errorCode, bool finished);
     void deviceNameReady(const QString& deviceName);
+    void accountConfirmed();
+    void emailChanged(const QString& email);
+    void changeRegistrationEmailFinished(bool apiOk);
 
 public slots:
     void onNotNowClicked();
@@ -68,10 +78,14 @@ public slots:
 private:
     mega::MegaApi* mMegaApi;
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
+    std::unique_ptr<mega::QTMegaGlobalListener> mGlobalListener;
     std::shared_ptr<Preferences> mPreferences;
     SyncController mSyncController;
     SyncController mBackupController;
     QString mPassword;
+    QString mEmail;
+    QString mFirstName;
+    QString mLastName;
     int mNumBackupsRequested;
     int mNumBackupsProcessed;
 
