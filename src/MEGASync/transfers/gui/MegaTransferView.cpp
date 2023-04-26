@@ -519,6 +519,8 @@ int MegaTransferView::getVerticalScrollBarWidth() const
 
 void MegaTransferView::onRetryVisibleTransfers()
 {
+    TransferMetaDataContainer::retryAllPressed();
+
     QModelIndexList indexes = getTransfers(true, TransferData::TRANSFER_FAILED);
 
     auto sourceModel = MegaSyncApp->getTransfersModel();
