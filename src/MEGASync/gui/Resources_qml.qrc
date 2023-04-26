@@ -6,6 +6,7 @@
 		<file>images/qml/help_circle.svg</file>
 		<file>images/qml/info_circle.svg</file>
 		<file>images/qml/lock.svg</file>
+		<file>images/qml/onboarding/building.svg</file>
 		<file>images/qml/onboarding/check_circle_outline.svg</file>
 		<file>images/qml/onboarding/check_circle_solid.svg</file>
 		<file>images/qml/onboarding/cloud.svg</file>
@@ -13,6 +14,7 @@
 		<file>images/qml/onboarding/folder.svg</file>
 		<file>images/qml/onboarding/full_sync.svg</file>
 		<file>images/qml/onboarding/fuse.svg</file>
+		<file>images/qml/onboarding/infinity.svg</file>
 		<file>images/qml/onboarding/installation_type_backups.svg</file>
 		<file>images/qml/onboarding/login.png</file>
 		<file>images/qml/onboarding/mega.svg</file>

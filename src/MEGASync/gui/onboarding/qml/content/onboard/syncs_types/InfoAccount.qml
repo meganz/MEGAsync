@@ -131,11 +131,11 @@ Rectangle {
                     typeText.text = OnboardingStrings.accountTypeLite;
                     break;
                 case AccountInfoData.ACCOUNT_TYPE_BUSINESS:
-                    typeImage.source = "../../../../../images/Small_Business.png";
+                    typeImage.source = Images.building;
                     typeText.text = OnboardingStrings.accountTypeBusiness;
                     break;
                 case AccountInfoData.ACCOUNT_TYPE_PRO_FLEXI:
-                    typeImage.source = "../../../../../images/Small_Pro_Flexi.png";
+                    typeImage.source = Images.infinity;
                     typeText.text = OnboardingStrings.accountTypeProFlexi;
                     break;
                 default:
