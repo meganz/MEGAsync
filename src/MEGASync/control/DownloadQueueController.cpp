@@ -35,11 +35,8 @@ void DownloadQueueController::startAvailableSpaceChecking()
         }
         else
         {
-            if(!node->isForeign())
-            {
-                mFolderCountPendingSizeComputation++;
-                mMegaApi->getFolderInfo(node, mListener.get());
-            }
+            mFolderCountPendingSizeComputation++;
+            mMegaApi->getFolderInfo(node, mListener.get());
         }
 
         return partialSum;
@@ -87,11 +84,14 @@ WrappedNode *DownloadQueueController::dequeueDownloadQueue()
 
 void DownloadQueueController::onRequestFinish(MegaApi*, MegaRequest *request, MegaError *e)
 {
-    if (request->getType() == mega::MegaRequest::TYPE_FOLDER_INFO
-            && e->getErrorCode() == mega::MegaError::API_OK)
+    if (request->getType() == mega::MegaRequest::TYPE_FOLDER_INFO)
     {
-        auto folderInfo = request->getMegaFolderInfo();
-        mTotalQueueDiskSize += folderInfo->getCurrentSize();
+        if(e->getErrorCode() == mega::MegaError::API_OK)
+        {
+            auto folderInfo = request->getMegaFolderInfo();
+            mTotalQueueDiskSize += folderInfo->getCurrentSize();
+        }
+
         --mFolderCountPendingSizeComputation;
         if (mFolderCountPendingSizeComputation <= 0)
         {

@@ -65,6 +65,7 @@ void TransferData::update(mega::MegaTransfer* transfer)
         mTag = transfer->getTag();
 
         mPath = QString::fromUtf8(transfer->getPath());
+        mFolderTransferTag = transfer->getFolderTransferTag();
 
         mFilename = QString::fromUtf8(transfer->getFileName());
         mType = static_cast<TransferData::TransferType>(1 << transfer->getType());
@@ -78,7 +79,7 @@ void TransferData::update(mega::MegaTransfer* transfer)
         //Update priority before setState as the setState changes the priority
         mPriority = transfer->getPriority();
 
-        setState(static_cast<TransferData::TransferState>(1 << transfer->getState()));
+        setState(convertState(transfer->getState()));
         mNotificationNumber = transfer->getNotificationNumber();
         mErrorCode = MegaError::API_OK;
         mErrorValue = 0LL;
@@ -187,6 +188,11 @@ bool TransferData::ignoreUpdate(const TransferState& state)
 void TransferData::resetIgnoreUpdateUntilSameState()
 {
     mIgnorePauseQueueState = false;
+}
+
+TransferData::TransferState TransferData::convertState(int state)
+{
+    return static_cast<TransferData::TransferState>(1 << state);
 }
 
 void TransferData::setState(const TransferState &state)
@@ -370,7 +376,23 @@ bool TransferData::isCompleting() const
 
 bool TransferData::isFailed() const
 {
-    return mState & TRANSFER_FAILED;
+    return mState & TRANSFER_FAILED && mFailedTransfer;
+}
+
+bool TransferData::isPermanentFail() const
+{
+    auto hasFailed = isFailed();
+    if(hasFailed && !isUpload())
+    {
+        mega::MegaError error = mFailedTransfer->getLastError();
+        if(error.getErrorCode() == mega::MegaError::API_EARGS
+                || error.getErrorCode() == mega::MegaError::API_ENOENT || error.getErrorCode() == mega::MegaError::API_EREAD)
+        {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 bool TransferData::isCancelled() const

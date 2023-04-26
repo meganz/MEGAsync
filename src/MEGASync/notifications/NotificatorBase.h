@@ -21,6 +21,8 @@ class MegaNotificationBase : public QObject
     Q_OBJECT
 
 public:
+    static const QString& defaultImage;
+
     enum class CloseReason {
         Unknown = 0,
         UserAction,
