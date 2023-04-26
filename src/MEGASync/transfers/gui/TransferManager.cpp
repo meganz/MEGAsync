@@ -727,7 +727,6 @@ void TransferManager::onTransfersDataUpdated()
     refreshFileTypesStats();
     refreshSearchStats();
     refreshStateStats();
-    checkActionAndMediaVisibility();
     refreshView();
 }
 
@@ -1216,9 +1215,6 @@ void TransferManager::toggleTab(TransfersWidget::TM_TAB newTab)
             }
         }
 
-        //In case the media group // actions buttons must be hidden
-        checkActionAndMediaVisibility();
-
         // Set current header widget: search or not
         if (newTab == TransfersWidget::SEARCH_TAB)
         {
@@ -1253,6 +1249,7 @@ void TransferManager::refreshView()
 
             updateTransferWidget(widgetToShow);
         }
+
         checkActionAndMediaVisibility();
     }
 }

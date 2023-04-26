@@ -1180,6 +1180,53 @@ void Utilities::openBackupCenter()
     openUrl(QUrl(Utilities::BACKUP_CENTER_URL));
 }
 
+QString Utilities::getCommonPath(const QString &path1, const QString &path2, bool cloudPaths)
+{
+    QString ret;
+    QString firstPath;
+    QString secondPath;
+
+    if(path1 < path2)
+    {
+        firstPath = path1;
+        secondPath = path2;
+    }
+    else
+    {
+        firstPath = path2;
+        secondPath = path1;
+    }
+
+    QString separator = cloudPaths ? QLatin1String("/") : QString(QDir::separator());
+    if(cloudPaths)
+    {
+        firstPath.append(separator);
+        secondPath.append(separator);
+    }
+
+    int index = 1;
+    while (firstPath.mid(0, index) == secondPath.mid(0, index))
+    {
+        ret = firstPath.mid(0, index);
+        index++;
+    }
+
+    if(!ret.endsWith(separator))
+    {
+        auto splittedPath = ret.split(separator);
+        if(!splittedPath.isEmpty())
+        {
+            ret.remove(ret.lastIndexOf(separator) + 1,splittedPath.last().length());
+        }
+    }
+    else if(cloudPaths)
+    {
+        ret = ret.remove(ret.length() - 1, 1);
+    }
+
+    return ret;
+}
+
 long long Utilities::getSystemsAvailableMemory()
 {
     long long availMemory = 0;

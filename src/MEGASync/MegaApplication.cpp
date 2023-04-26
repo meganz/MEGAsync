@@ -1623,7 +1623,17 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
         counter++;
     }
 
-    DialogOpener::showDialog<DuplicatedNodeDialog>(checkUploadNameDialog, this, &MegaApplication::onUploadsCheckedAndReady);
+    if(!checkUploadNameDialog->isEmpty())
+    {
+        DialogOpener::showDialog<DuplicatedNodeDialog>(checkUploadNameDialog, this, &MegaApplication::onUploadsCheckedAndReady);
+    }
+    else
+    {
+        checkUploadNameDialog->accept();
+        onUploadsCheckedAndReady(checkUploadNameDialog);
+        checkUploadNameDialog->close();
+        checkUploadNameDialog->deleteLater();
+    }
 }
 
 void MegaApplication::onUploadsCheckedAndReady(QPointer<DuplicatedNodeDialog> checkDialog)
@@ -1642,6 +1652,7 @@ void MegaApplication::onUploadsCheckedAndReady(QPointer<DuplicatedNodeDialog> ch
         mProcessingUploadQueue = true;
 
         auto counter = 0;
+        data->setInitialPendingTransfers(uploads.size());
         foreach(auto uploadInfo, uploads)
         {
             QString filePath = uploadInfo->getLocalPath();
