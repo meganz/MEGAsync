@@ -188,7 +188,7 @@ void PlatformImplementation::notifyItemChange(const QString& path, int newState)
     }
 }
 
-void PlatformImplementation::notifySyncFileChange(string* localPath, int newState)
+void PlatformImplementation::notifySyncFileChange(string* localPath, int newState, bool)
 {
     notifyItemChange(QString::fromStdString(*localPath), newState);
 }

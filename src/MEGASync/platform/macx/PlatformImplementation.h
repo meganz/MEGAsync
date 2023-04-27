@@ -14,7 +14,7 @@ public:
 
     void initialize(int argc, char *argv[]) override;
     void notifyItemChange(const QString& localPath, int newState) override;
-    void notifySyncFileChange(std::string *localPath, int newState, bool stringIsPlatformEncoded) override;
+    void notifySyncFileChange(std::string *localPath, int newState, bool) override;
     bool startOnStartup(bool value) override;
     bool isStartOnStartupActive() override;
     bool showInFolder(QString pathIn) override;
