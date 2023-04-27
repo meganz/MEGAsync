@@ -454,7 +454,7 @@ void NodeSelectorTreeViewWidget::onRenameClicked()
         return;
     }
 
-    QPointer<RenameRemoteNodeDialog> dialog(new RenameRemoteNodeDialog(std::move(node), nullptr));
+    QPointer<RenameRemoteNodeDialog> dialog(new RenameRemoteNodeDialog(std::move(node), this));
     dialog->init();
     DialogOpener::showDialog(dialog, [this, dialog]
     {
