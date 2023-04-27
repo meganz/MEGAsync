@@ -583,7 +583,7 @@ void MegaApplication::initialize()
     }
 
     if (preferences->isCrashed())
-    {       
+    {
         preferences->setCrashed(false);
         QStringList reports = CrashHandler::instance()->getPendingCrashReports();
         if (reports.size())
@@ -1379,11 +1379,17 @@ if (!preferences->lastExecutionTime())
         bool haveSyncs (false);
         bool haveBackups (false);
 
-        // Check if we have syncs and backups
-        if (model)
+        unique_ptr<MegaSyncList> syncList(megaApi->getSyncs());
+        for (int i = 0; i < syncList->size(); ++i)
         {
-            haveSyncs = model->hasUnattendedDisabledSyncs(MegaSync::TYPE_TWOWAY);
-            haveBackups = model->hasUnattendedDisabledSyncs(MegaSync::TYPE_BACKUP);
+            if (syncList->get(i)->getType() == MegaSync::TYPE_BACKUP)
+            {
+                haveSyncs = true;
+            }
+            else
+            {
+                haveBackups = true;
+            }
         }
 
         // Set text according to situation
@@ -3632,6 +3638,19 @@ void MegaApplication::unlink(bool keepLogs)
     mFetchingNodes = false;
     mQueringWhyAmIBlocked = false;
     whyamiblockedPeriodicPetition = false;
+
+    // Any running sync/backup will be disabled by logout, so warn user if they log in again
+    unique_ptr<MegaSyncList> syncList(megaApi->getSyncs());
+    for (int i = 0; i < syncList->size(); ++i)
+    {
+        if (syncList->get(i)->getRunState() != MegaSync::RUNSTATE_SUSPENDED &&
+            syncList->get(i)->getRunState() != MegaSync::RUNSTATE_DISABLED)
+        {
+            preferences->setNotifyDisabledSyncsOnLogin(true);
+            break;
+        }
+    }
+
     megaApi->logout(true, nullptr);
     megaApiFolders->setAccountAuth(nullptr);
     DialogOpener::closeAllDialogs();
@@ -6776,7 +6795,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             unlink();
         }
 
-        //Check for any sync disabled by logout to warn user on next login with user&password
+        // note, model is not necessarily up to date here
         const auto syncSettings (model->getAllSyncSettings());
         auto isErrorLoggedOut = [](std::shared_ptr<SyncSettings> s) {return s->getError() == MegaSync::LOGGED_OUT;};
         if (std::any_of(syncSettings.cbegin(), syncSettings.cend(), isErrorLoggedOut))
