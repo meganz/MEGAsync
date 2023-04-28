@@ -1,7 +1,7 @@
 import QtQml 2.12
 
 // QML common
-import Components 1.0
+import Components 1.0 as Custom
 import Common 1.0
 
 // Local
@@ -15,39 +15,47 @@ RegisterPageForm {
 
     nextButton.onClicked: {
         var error = firstName.text.length === 0 && lastName.text.length === 0;
-        firstLastNameDescription.visible = error;
+        firstLastNameHint.visible = error;
         firstName.showType = error;
         lastName.showType = error;
-
-        console.log(error)
 
         var valid = email.valid();
         if(!valid) {
             error = true;
-            email.hint.text = OnboardingStrings.errorValidEmail;
+            email.hintText = OnboardingStrings.errorValidEmail;
         }
         email.showType = !valid;
-        email.hint.visible = !valid;
+        email.hintVisible = !valid;
 
         valid = password.text.length !== 0;
         if(!valid) {
             error = true;
+            password.hintType = Custom.HintText.Type.Error;
+            password.type = Custom.TextField.Type.Error;
+            password.showType = true;
         }
         password.showType = !valid;
 
         if(confirmPassword.text.length === 0) {
             error = true;
             confirmPassword.showType = true;
-            confirmPassword.hint.visible = true;
-            confirmPassword.hint.text = OnboardingStrings.errorConfirmPassword;
+            confirmPassword.hintVisible = true;
+            confirmPassword.hintText = OnboardingStrings.errorConfirmPassword;
+            confirmPassword.type = Custom.TextField.Type.Error;
+            confirmPassword.hintType = Custom.HintText.Type.Error;
         } else if(password.text !== confirmPassword.text) {
             error = true;
             confirmPassword.showType = true;
-            confirmPassword.hint.visible = true;
-            confirmPassword.hint.text = OnboardingStrings.errorPasswordsMatch;
+            confirmPassword.hintVisible = true;
+            confirmPassword.type = Custom.TextField.Type.Error;
+            confirmPassword.hintText = OnboardingStrings.errorPasswordsMatch;
+            confirmPassword.hintType = Custom.HintText.Type.Error;
+            password.hintVisible = false;
+            password.type = Custom.TextField.Type.Error;
+            password.showType = true;
         } else {
             confirmPassword.showType = false;
-            confirmPassword.hint.visible = false;
+            confirmPassword.hintVisible = false;
         }
 
         if(error) {
@@ -73,11 +81,10 @@ RegisterPageForm {
     Connections {
         target: Onboarding
 
-        onRegisterFinished: {
+        onRegisterFinished: (apiOK) => {
             registerPage.enabled = true;
 
-            if(apiOk)
-            {
+            if(apiOk) {
                 password.text = "";
                 confirmPassword.text = "";
                 firstName.text = "";
@@ -86,12 +93,10 @@ RegisterPageForm {
                 termsCheckBox.checked = false;
                 dataLossCheckBox.checked = false;
                 registerFlow.state = confirmEmail; //SET HERE CONFIRM ACCOUNT BY EMAIL PAGE??
-            }
-            else
-            {
+            } else {
                 email.showType = true;
-                email.hint.text = OnboardingStrings.errorEmailAlreadyExist;
-                email.hint.visible = true;
+                email.hintText = OnboardingStrings.errorEmailAlreadyExist;
+                email.hintVisible = true;
             }
         }
     }

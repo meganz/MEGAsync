@@ -11,6 +11,10 @@ import Onboarding 1.0
 import Onboard 1.0
 
 LoginPageForm {
+    id: root
+
+    property bool loginAttempt: false
+
     Keys.onEnterPressed: {
         loginButton.clicked();
     }
@@ -25,26 +29,27 @@ LoginPageForm {
         var valid = email.valid();
         if(!valid) {
             error = true;
-            email.hint.text = OnboardingStrings.errorValidEmail;
+            email.hintText = OnboardingStrings.errorValidEmail;
         }
         email.showType = !valid;
-        email.hint.visible = !valid;
+        email.hintVisible = !valid;
 
         valid = (password.text.length !== 0);
         if(!valid) {
             error = true;
-            password.hint.text = OnboardingStrings.errorEmptyPassword;
+            password.hintText = OnboardingStrings.errorEmptyPassword;
         }
         password.showType = !valid;
-        password.hint.visible = !valid;
+        password.hintVisible = !valid;
 
         if(error) {
             return;
         }
 
-        enabled = false;
+        root.enabled = false;
         Onboarding.onLoginClicked({ [Onboarding.RegisterForm.EMAIL]: email.text,
                                     [Onboarding.RegisterForm.PASSWORD]: password.text })
+        loginAttempt = true;
     }
 
     signUpButton.onClicked: {
@@ -55,16 +60,26 @@ LoginPageForm {
         target: Onboarding
 
         onUserPassFailed: {
-            enabled = true;
+            root.enabled = true;
             email.showType = true;
             password.showType = true;
-            password.hint.text = OnboardingStrings.errorLogin;
-            password.hint.visible = true;
+            password.hintText = OnboardingStrings.errorLogin;
+            password.hintVisible = true;
         }
 
         onLoginFinished: {
-            enabled = true;
+            root.enabled = true;
             onboardingFlow.state = syncs;
+        }
+    }
+
+    Connections {
+        target: password
+
+        onTextChanged: {
+            if(loginAttempt && !email.hintVisible && email.showType) {
+                email.showType = false;
+            }
         }
     }
 }

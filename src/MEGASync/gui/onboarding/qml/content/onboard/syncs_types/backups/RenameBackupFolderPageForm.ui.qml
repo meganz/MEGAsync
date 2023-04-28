@@ -42,7 +42,7 @@ SyncsPage {
             Layout.preferredHeight: 48
             Layout.leftMargin: -4
             title: OnboardingStrings.renameBackupFolder
-            leftIcon.source: Images.database
+            leftIconSource: Images.database
         }
 
         Custom.NotificationText {

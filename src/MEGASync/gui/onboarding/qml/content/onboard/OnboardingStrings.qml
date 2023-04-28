@@ -86,16 +86,5 @@ QtObject {
     readonly property var twoFASubtitle: qsTr("Enter the 6-digit Google Authenticator code for this account")
     readonly property var twoFATitle: qsTr("Continue with [b]two factor authentication[/b]")
     readonly property var understandLossPassword: qsTr("I understand that if [b]I lose my password, I may lose my data[/b]. Read more about [a]MEGA’s end-to-end encryption.[/a]")
-    readonly property var tooWeakPasswordTitle: qsTr("Too weak")
-    readonly property var tooWeakPasswordText: qsTr("Your password needs to be at least 8 characters long.")
-    readonly property var weakPasswordTitle: qsTr("Weak")
-    readonly property var weakPasswordText: qsTr("Your password is easily guessed. Try making your password longer. Combine uppercase and lowercase letters. Add special characters. Do not use names or dictionary words.")
-    readonly property var averagePasswordTitle: qsTr("Average")
-    readonly property var averagePasswordText: qsTr("Your password is good enough to proceed, but it is recommended to strengthen it further.")
-    readonly property var strongPasswordTitle: qsTr("Strong")
-    readonly property var strongPasswordText: qsTr("This password will withstand most typical brute-force attacks. Please ensure that you will remember it.")
-    readonly property var excelentPasswordTitle: qsTr("Excellent")
-    readonly property var excelentPasswordText: qsTr("This password will withstand most sophisticated brute-force attacks. Please ensure that you will remember it.")
-
 
 }

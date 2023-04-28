@@ -5,6 +5,7 @@ import AccountInfoData 1.0
 import Components 1.0
 
 Item {
+
     enum RegisterForm {
         FIRST_NAME = 0,
         LAST_NAME = 1,
@@ -31,8 +32,7 @@ Item {
         return "https://mega.nz/recovery";
     }
 
-    function getEmail()
-    {
+    function getEmail() {
         return email;
     }
 
@@ -45,7 +45,6 @@ Item {
             loginFinished();
         }
     }
-
 
     function onLoginClicked(data) {
         console.info("onLoginClicked() -> " + JSON.stringify(data));
@@ -109,7 +108,8 @@ Item {
             changeRegistrationEmailFinished(true);
         }
     }
-    function changeRegistrationEmail(newEmail){
+
+    function changeRegistrationEmail(newEmail) {
         console.info("changeRegistrationEmail(newEmail):" + newEmail);
         changeEmailTimer.start();
     }
@@ -124,17 +124,15 @@ Item {
         return "My PC name";
     }
 
-    function setDeviceName(deviceName)
-    {
+    function setDeviceName(deviceName) {
         console.info("setDeviceName(deviceName)" + deviceName)
         return true;
     }
 
-    function getPasswordStrength(password)
-    {
+    function getPasswordStrength(password) {
         console.info("getPasswordStrength(password)" + password);
         var strength = password.length - 1;
-        return strength > PasswordTextField.PasswordStrength.PASSWORD_STRENGTH_STRONG ? PasswordTextField.PasswordStrength.PASSWORD_STRENGTH_STRONG : strength;
+        return strength > PasswordTextField.PasswordStrength.PasswordStrengthStrong ? PasswordTextField.PasswordStrength.PasswordStrengthStrong : strength;
     }
 
     Timer {
@@ -173,9 +171,3 @@ Item {
         console.info("onboard constructed");
     }
 }
-
-/*##^##
-Designer {
-    D{i:0;autoSize:true;height:480;width:640}
-}
-##^##*/

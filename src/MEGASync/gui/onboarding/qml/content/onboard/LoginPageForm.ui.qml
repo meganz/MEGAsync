@@ -16,6 +16,10 @@ import Onboarding 1.0
 Rectangle {
     id: root
 
+    readonly property int contentMargin: 48
+    readonly property int bottomMargin: 32
+    readonly property int buttonSpacing: 8
+
     property alias signUpButton: signUpButton
     property alias loginButton: loginButton
 
@@ -24,61 +28,57 @@ Rectangle {
 
     color: Styles.backgroundColor
 
-    ColumnLayout {
-        id: mainLayout
-
-        spacing: 24
-        anchors {
-            verticalCenter: root.verticalCenter
-            left: root.left
-            right: root.right
-            leftMargin: 48
-            rightMargin: 48
-        }
+    Column {
+        anchors.verticalCenter: root.verticalCenter
+        anchors.left: root.left
+        anchors.right: root.right
+        anchors.leftMargin: contentMargin
+        anchors.rightMargin: contentMargin
+        spacing: contentMargin / 2
 
         Custom.RichText {
+            id: pageTitle
+
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.leftMargin: email.textField.focusBorderWidth
+            anchors.rightMargin: email.textField.focusBorderWidth
             font.pixelSize: 20
             text: OnboardingStrings.loginTitle
-            Layout.bottomMargin: textFieldsLayout.spacing
-            Layout.leftMargin: 4
         }
 
-        ColumnLayout {
-            id: textFieldsLayout
+        Custom.EmailTextField {
+            id: email
 
-            spacing: 12
-            Layout.preferredWidth: mainLayout.width
+            anchors.left: parent.left
+            anchors.right: parent.right
+            title: OnboardingStrings.email
+        }
 
-            Custom.EmailTextField {
-                id: email
+        Custom.PasswordTextField {
+            id: password
 
-                title: OnboardingStrings.email
-                Layout.preferredWidth: textFieldsLayout.width
-            }
-
-            Custom.PasswordTextField {
-                id: password
-
-                title: OnboardingStrings.password
-                Layout.preferredWidth: textFieldsLayout.width
-            }
+            anchors.left: parent.left
+            anchors.right: parent.right
+            title: OnboardingStrings.password
         }
 
         Custom.HelpButton {
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.leftMargin: email.textField.focusBorderWidth
+            anchors.rightMargin: email.textField.focusBorderWidth
             text: OnboardingStrings.forgotPassword
             url: Links.recovery
-            Layout.leftMargin: 4
         }
     }
 
-    RowLayout {
-        spacing: 8
-        anchors {
-            right: root.right
-            bottom: root.bottom
-            rightMargin: 48
-            bottomMargin: 32
-        }
+    Row {
+        anchors.right: root.right
+        anchors.bottom: root.bottom
+        anchors.rightMargin: contentMargin
+        anchors.bottomMargin: bottomMargin
+        spacing: buttonSpacing
 
         Custom.Button {
             id: loginButton

@@ -55,7 +55,7 @@ SyncsPage {
                 Layout.leftMargin: -folderField.textField.focusBorderWidth
                 title: OnboardingStrings.backupTo
                 text: "/Backups"
-                leftIcon.source: Images.database
+                leftIconSource: Images.database
             }
         }
     }

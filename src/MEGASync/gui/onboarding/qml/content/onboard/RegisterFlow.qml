@@ -97,6 +97,8 @@ Rectangle {
         LoginPage {
             id: loginPage
 
+            width: stack.width
+            height: stack.height
             visible: false
         }
 

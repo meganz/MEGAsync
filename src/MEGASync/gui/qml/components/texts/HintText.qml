@@ -12,7 +12,12 @@ Rectangle {
 
     enum Type {
         None = 0,
-        Error
+        Error,
+        PasswordStrengthVeryWeak,
+        PasswordStrengthWeak,
+        PasswordStrengthMedium,
+        PasswordStrengthGood,
+        PasswordStrengthStrong
     }
 
     property int type: HintText.Type.None
@@ -25,18 +30,46 @@ Rectangle {
 
     height: visible ? titleLoader.height + textLoader.height : 0
     color: "transparent"
+    visible: false
 
     onTypeChanged: {
+        var aa = type;
         switch(type) {
-            case HintText.Type.None:
-                titleColor = Styles.textPrimary;
-                textColor = Styles.textSecondary;
-                break;
             case HintText.Type.Error:
                 iconSource = Images.alertTriangle;
                 iconColor = Styles.textError;
                 titleColor = Styles.textError;
                 textColor = Styles.textError;
+                break;
+            case HintText.Type.PasswordStrengthVeryWeak:
+                iconSource = Images.passwordVeryWeak;
+                iconColor = Styles.indicatorPink;
+                titleColor = Styles.textError;
+                textColor = Styles.textSecondary;
+                break;
+            case HintText.Type.PasswordStrengthWeak:
+                iconSource = Images.passwordWeak;
+                iconColor = Styles.supportError;
+                titleColor = Styles.textError;
+                textColor = Styles.textSecondary;
+                break;
+            case HintText.Type.PasswordStrengthMedium:
+                iconSource = Images.passwordAverage;
+                iconColor = Styles.supportWarning;
+                titleColor = Styles.supportWarning;
+                textColor = Styles.textSecondary;
+                break;
+            case HintText.Type.PasswordStrengthGood:
+                iconSource = Images.passwordGood;
+                iconColor = Styles.supportSuccess;
+                titleColor = Styles.textSuccess;
+                textColor = Styles.textSecondary;
+                break;
+            case HintText.Type.PasswordStrengthStrong:
+                iconSource = Images.passwordStrong;
+                iconColor = Styles.supportSuccess;
+                titleColor = Styles.supportSuccess;
+                textColor = Styles.textSecondary;
                 break;
             default:
                 break;

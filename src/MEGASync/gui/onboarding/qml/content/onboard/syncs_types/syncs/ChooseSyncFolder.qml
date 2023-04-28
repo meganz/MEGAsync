@@ -46,7 +46,7 @@ RowLayout {
         Layout.leftMargin: -folderField.textField.focusBorderWidth
         title: local ? OnboardingStrings.selectLocalFolder : OnboardingStrings.selectMEGAFolder
         text: "/MEGA"
-        leftIcon.source: local ? Images.pc : Images.mega
+        leftIconSource: local ? Images.pc : Images.mega
     }
 
     Custom.Button {

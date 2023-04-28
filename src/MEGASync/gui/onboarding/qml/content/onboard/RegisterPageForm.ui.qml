@@ -16,9 +16,16 @@ import Onboarding 1.0
 Rectangle {
     id: root
 
+    readonly property int contentMargin: 48
+    readonly property int bottomMargin: 32
+    readonly property int buttonSpacing: 8
+    readonly property int scrollbarWidth: 8
+    readonly property int rightFormMargin: 13 + scrollbarWidth
+    readonly property int scrollViewHeight: 374
+
     property alias firstName: firstName
     property alias lastName: lastName
-    property alias firstLastNameDescription: firstLastNameDescription
+    property alias firstLastNameHint: firstLastNameHint
     property alias email: email
     property alias password: password
     property alias confirmPassword: confirmPassword
@@ -28,183 +35,176 @@ Rectangle {
     property alias loginButton: loginButton
     property alias nextButton: nextButton
 
-    property int contentMargin: 48
+    color: Styles.backgroundColor
 
-    Custom.RichText {
-        id: title
+    Column {
+        anchors.left: root.left
+        anchors.right: root.right
+        anchors.top: root.top
+        anchors.leftMargin: contentMargin
+        anchors.rightMargin: contentMargin / 2
+        anchors.topMargin: contentMargin
+        spacing: contentMargin / 2
 
-        anchors {
-            left: root.left
-            top: root.top
-            leftMargin: contentMargin + 4
-            topMargin: contentMargin
+        Custom.RichText {
+            id: title
+
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.leftMargin: email.textField.focusBorderWidth
+            anchors.rightMargin: email.textField.focusBorderWidth
+            font.pixelSize: 20
+            text: OnboardingStrings.signUpTitle
         }
 
-        font.pixelSize: 20
-        text: OnboardingStrings.signUpTitle
-        Layout.leftMargin: 4
-    }
+        ScrollView {
+            id: scrollView
 
-    ScrollView {
-        id: scrollView
+            anchors.left: parent.left
+            anchors.right: parent.right
+            height: root.scrollViewHeight
+            clip: true
 
-        anchors {
-            left: root.left
-            top: title.bottom
-            leftMargin: contentMargin
-            topMargin: contentMargin / 2
-            rightMargin: contentMargin
-        }
+            ScrollBar.vertical: ScrollBar {
+                id: scrollbar
 
-        width: formLayout.width + 24
-        height: 380
-        clip: true
-
-        ScrollBar.vertical: ScrollBar {
-            id: scrollbar
-
-            anchors.right: scrollView.right
-            height: scrollView.height
-            width: 8
-            visible: formLayout.height > scrollView.height
-            contentItem: Rectangle {
-                radius: 10
-                color: Styles.iconPrimary
-                opacity: scrollbar.pressed ? 0.6 : 1.0
+                anchors.right: scrollView.right
+                height: scrollView.height
+                width: root.scrollbarWidth
+                visible: formColumn.height > scrollView.height
+                contentItem: Rectangle {
+                    radius: 10
+                    color: Styles.iconPrimary
+                    opacity: scrollbar.pressed ? 0.6 : 1.0
+                }
+                background: Rectangle {
+                    radius: 10
+                    color: "#000000"
+                    opacity: 0.1
+                }
             }
-            background: Rectangle {
-                radius: 10
-                color: "#000000"
-                opacity: 0.1
-            }
-        }
 
-        ColumnLayout {
-            id: formLayout
+            Column {
+                id: formColumn
 
-            width: root.width - 2 * contentMargin + 2 * email.textField.focusBorderWidth
-            spacing: contentMargin / 2
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.top: parent.top
+                spacing: contentMargin / 2
 
-            ColumnLayout {
-                Layout.preferredWidth: formLayout.width
-                spacing: 12
+                Column {
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    spacing: 12
 
-                ColumnLayout {
-                    spacing: 4
+                    Column {
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        spacing: 4
 
-                    RowLayout {
-                        id: nameLayout
+                        Row {
+                            id: nameLayout
 
-                        spacing: 8
-                        Layout.preferredWidth: formLayout.width
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+                            anchors.rightMargin: root.rightFormMargin
+                            spacing: 8
 
-                        Custom.TextField {
-                            id: firstName
+                            Custom.TextField {
+                                id: firstName
 
-                            title: OnboardingStrings.firstName
-                            Layout.preferredWidth: (nameLayout.width - 8) / 2
-                            type: Custom.TextField.Type.Error
-                        }
+                                width: nameLayout.width / 2 - nameLayout.spacing / 2
+                                title: OnboardingStrings.firstName
+                                type: Custom.TextField.Type.Error
+                            }
 
-                        Custom.TextField {
-                            id: lastName
+                            Custom.TextField {
+                                id: lastName
 
-                            title: OnboardingStrings.lastName
-                            Layout.preferredWidth: (nameLayout.width - 8) / 2
-                            type: Custom.TextField.Type.Error
-                        }
-                    }
-
-                    RowLayout {
-                        id: firstLastNameDescription
-
-                        width: formLayout.width
-                        visible: false
-                        spacing: 8
-                        Layout.leftMargin: 4
-
-                        Custom.SvgImage {
-                            source: Images.alertTriangle
-                            sourceSize: Qt.size(16, 16)
-                            color: Styles.textError
-                        }
-
-                        Text {
-                            Layout.fillWidth: true
-                            text: OnboardingStrings.errorFirstLastName
-                            color: Styles.textError
-                            wrapMode: Text.WordWrap
-                            font {
-                                pixelSize: 12
-                                weight: Font.Light
-                                family: "Inter"
-                                styleName: "Medium"
+                                width: nameLayout.width / 2 - nameLayout.spacing / 2
+                                title: OnboardingStrings.lastName
+                                type: Custom.TextField.Type.Error
                             }
                         }
+
+                        Custom.HintText {
+                            id: firstLastNameHint
+
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+                            anchors.leftMargin: email.textField.focusBorderWidth
+                            anchors.rightMargin: email.textField.focusBorderWidth
+                            type: Custom.HintText.Type.Error
+                            text: OnboardingStrings.errorFirstLastName
+                        }
+                    }
+
+                    Custom.EmailTextField {
+                        id: email
+
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        anchors.rightMargin: root.rightFormMargin
+                        title: OnboardingStrings.email
+                    }
+
+                    Custom.PasswordTextField {
+                        id: password
+
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        anchors.rightMargin: root.rightFormMargin
+                        showHint: true
+                        title: OnboardingStrings.password
+                    }
+
+                    Custom.PasswordTextField {
+                        id: confirmPassword
+
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        anchors.rightMargin: root.rightFormMargin
+                        title: OnboardingStrings.confirmPassword
                     }
                 }
 
-                Custom.EmailTextField {
-                    id: email
+                Column {
+                    id: checksLayout
 
-                    title: OnboardingStrings.email
-                    Layout.preferredWidth: formLayout.width
-                }
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    spacing: 16
 
-                Custom.PasswordTextField {
-                    id: password
+                    Custom.CheckBox {
+                        id: dataLossCheckBox
 
-                    showHint: true
-                    title: OnboardingStrings.password
-                    Layout.preferredWidth: formLayout.width
-                }
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        anchors.rightMargin: root.rightFormMargin
+                        url: Links.security
+                        text: OnboardingStrings.understandLossPassword
+                    }
 
-                Custom.PasswordTextField {
-                    id: confirmPassword
+                    Custom.CheckBox {
+                        id: termsCheckBox
 
-                    title: OnboardingStrings.confirmPassword
-                    Layout.preferredWidth: formLayout.width
-                }
-            }
-
-            ColumnLayout {
-                id: checksLayout
-
-                Layout.preferredWidth: formLayout.width - 2 * email.textField.focusBorderWidth
-                Layout.leftMargin: 4
-                spacing: 16
-
-                Custom.CheckBox {
-                    id: dataLossCheckBox
-
-                    Layout.preferredWidth: checksLayout.width
-                    url: Links.security
-                    text: OnboardingStrings.understandLossPassword
-                }
-
-                Custom.CheckBox {
-                    id: termsCheckBox
-
-                    Layout.preferredWidth: checksLayout.width
-                    Layout.bottomMargin: 5
-                    url: Links.terms
-                    text: OnboardingStrings.agreeTerms
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        anchors.rightMargin: root.rightFormMargin
+                        url: Links.terms
+                        text: OnboardingStrings.agreeTerms
+                    }
                 }
             }
         }
     }
 
-    RowLayout {
-        id: buttonLayout
-
-        spacing: 8
-
-        anchors {
-            right: root.right
-            bottom: root.bottom
-            bottomMargin: 32
-            rightMargin: contentMargin
-        }
+    Row {
+        anchors.right: root.right
+        anchors.bottom: root.bottom
+        anchors.rightMargin: contentMargin
+        anchors.bottomMargin: bottomMargin
+        spacing: buttonSpacing
 
         Custom.Button {
             id: nextButton
@@ -222,10 +222,3 @@ Rectangle {
         }
     }
 }
-
-/*##^##
-Designer {
-    D{i:0;autoSize:true;height:480;width:640}
-}
-##^##*/
-

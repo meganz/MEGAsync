@@ -39,6 +39,7 @@ Rectangle {
     property alias rightIconMouseArea: rightIconMouseArea
 
     // Hint properties
+    property int hintType: Custom.HintText.Type.None
     property bool hintVisible: false
     property url hintIconSource: ""
     property color hintIconColor
@@ -83,6 +84,10 @@ Rectangle {
         }
 
         hintLoader.sourceComponent = hintComponent;
+    }
+
+    onHintIconSourceChanged: {
+        console.log("textfield - " + hintIconSource);
     }
 
     Loader {
@@ -218,6 +223,7 @@ Rectangle {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.top: textField.bottom
+        anchors.topMargin: 2
         anchors.leftMargin: textField.focusBorderWidth
         anchors.rightMargin: textField.focusBorderWidth
     }
@@ -245,14 +251,14 @@ Rectangle {
         Custom.HintText {
             id: hint
 
-            iconSource: hintIconSource
-            iconColor: hintIconColor
-            title: hintTitle
-            titleColor: hintTitleColor
-            text: hintText
-            textColor: hintTextColor
-            visible: hintVisible
-            type: root.type
+            iconSource: root.hintIconSource
+            iconColor: root.hintIconColor
+            title: root.hintTitle
+            titleColor: root.hintTitleColor
+            text: root.hintText
+            textColor: root.hintTextColor
+            visible: root.hintVisible
+            type: root.hintType
         }
     }
 
