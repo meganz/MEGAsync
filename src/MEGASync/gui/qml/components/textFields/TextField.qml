@@ -7,7 +7,7 @@ import QtQuick.Layouts 1.12
 import Common 1.0
 import Components 1.0 as Custom
 
-ColumnLayout {
+Rectangle {
     id: root
 
     enum Type {
@@ -15,37 +15,84 @@ ColumnLayout {
         Error
     }
 
-    property alias hint: hint
-    property alias text: textField.text
-    property alias placeholderText: textField.placeholderText
-    property alias textField: textField
-    property alias leftIcon: leftIcon
-    property alias rightIcon: rightIcon
-    property alias rightIconMouseArea: rightIconMouseArea
-
-    property string title: ""
+    // Component properties
     property int type: TextField.Type.None
     property bool showType: false
 
-    readonly property int textFieldRawHeight: textField.height - 2 * textField.focusBorderWidth
+    // Title properties
+    property string title: ""
+
+    // Left icon textField properties
+    property bool leftIconVisible: false
+    property url leftIconSource: ""
+    property color leftIconColor: Styles.iconSecondary
+
+    // TextField properties
+    property alias textField: textField
+    property alias text: textField.text
+    property alias placeholderText: textField.placeholderText
+
+    // Right icon textField properties
+    property bool rightIconVisible: false
+    property url rightIconSource: ""
+    property color rightIconColor: Styles.iconSecondary
+    property alias rightIconMouseArea: rightIconMouseArea
+
+    // Hint properties
+    property bool hintVisible: false
+    property url hintIconSource: ""
+    property color hintIconColor
+    property string hintTitle: ""
+    property color hintTitleColor
+    property string hintText: ""
+    property color hintTextColor
 
     signal backPressed()
     signal pastePressed()
 
-    spacing: title.lenght === 0 ? 0 : 4
+    height: textField.height + titleLoader.height + hintLoader.height
+    color: "transparent"
 
-    Text {
-        text: title
-        color: enabled ? Styles.textPrimary : Styles.textDisabled
-        visible: title.length !== 0
-        Layout.leftMargin: 4
-        Layout.preferredHeight: 16
-        font {
-            pixelSize: 12
-            weight: Font.Bold
-            family: "Inter"
-            styleName: "Medium"
+    onTitleChanged: {
+        if(title.length === 0) {
+            return;
         }
+
+        titleLoader.sourceComponent = titleComponent;
+    }
+
+    onLeftIconSourceChanged: {
+        if(leftIconSource === "") {
+            return;
+        }
+
+        leftIconLoader.sourceComponent = leftIconComponent;
+    }
+
+    onRightIconSourceChanged: {
+        if(rightIconSource === "") {
+            return;
+        }
+
+        rightIconLoader.sourceComponent = rightIconComponent;
+    }
+
+    onHintVisibleChanged: {
+        if(!hintVisible) {
+            return;
+        }
+
+        hintLoader.sourceComponent = hintComponent;
+    }
+
+    Loader {
+        id: titleLoader
+
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.top: parent.top
+        anchors.leftMargin: textField.focusBorderWidth
+        anchors.rightMargin: textField.focusBorderWidth
     }
 
     Qml.TextField {
@@ -65,19 +112,23 @@ ColumnLayout {
         readonly property int focusBorderWidth: 3
         readonly property int borderRadius: 8
         readonly property int borderWidth: 1
+        readonly property int textFieldRawWidth: textField.width - 2 * textField.focusBorderWidth
         readonly property int iconMargin: 13
         readonly property int iconWidth: 16
         readonly property size iconSize: Qt.size(iconWidth, iconWidth)
         readonly property int iconTextSeparation: 6
         readonly property int verticalPadding: 8
 
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.top: titleLoader.bottom
+        anchors.topMargin: 4
+
         selectByMouse: true
         selectionColor: Styles.supportInfo
-        Layout.preferredWidth: parent.width
         height: 42
-        Layout.preferredHeight: height
-        leftPadding: calculatePaddingWithIcon(leftIcon.source != "")
-        rightPadding: calculatePaddingWithIcon(rightIcon.source != "")
+        leftPadding: calculatePaddingWithIcon(leftIconSource != "")
+        rightPadding: calculatePaddingWithIcon(rightIconSource != "")
         topPadding: verticalPadding
         bottomPadding: verticalPadding
         placeholderTextColor: Styles.textPlaceholder
@@ -98,12 +149,9 @@ ColumnLayout {
             border.width: textField.focusBorderWidth
             radius: textField.focusBorderRadius
 
-            Custom.SvgImage {
-                id: leftIcon
+            Loader {
+                id: leftIconLoader
 
-                visible: leftIcon.source != ""
-                sourceSize: textField.iconSize
-                color: Styles.iconSecondary
                 anchors.top: focusBorder.top
                 anchors.left: focusBorder.left
                 anchors.topMargin: textField.iconMargin
@@ -125,23 +173,21 @@ ColumnLayout {
                     return color;
                 }
 
+                anchors.top: focusBorder.top
+                anchors.left: focusBorder.left
+                anchors.topMargin: textField.focusBorderWidth
+                anchors.leftMargin: textField.focusBorderWidth
                 width: textField.width - 2 * textField.focusBorderWidth
                 height: textField.height - 2 * textField.focusBorderWidth
                 color: Styles.pageBackground
                 border.color: getBorderColor()
                 border.width: textField.borderWidth
                 radius: textField.borderRadius
-                anchors.top: focusBorder.top
-                anchors.left: focusBorder.left
-                anchors.topMargin: textField.focusBorderWidth
-                anchors.leftMargin: textField.focusBorderWidth
             }
 
-            Custom.SvgImage {
-                id: rightIcon
+            Loader {
+                id: rightIconLoader
 
-                sourceSize: textField.iconSize
-                color: Styles.iconSecondary
                 anchors.top: focusBorder.top
                 anchors.right: focusBorder.right
                 anchors.topMargin: textField.iconMargin
@@ -157,8 +203,7 @@ ColumnLayout {
             }
         }
 
-        Keys.onPressed:
-        {
+        Keys.onPressed: {
             if(event.key === Qt.Key_Backspace) {
                 root.backPressed();
             } else if((event.key === Qt.Key_V) && (event.modifiers & Qt.ControlModifier)) {
@@ -167,13 +212,72 @@ ColumnLayout {
         }
     }
 
-    Custom.HintText {
-        id: hint
+    Loader {
+        id: hintLoader
 
-        Layout.fillWidth: true
-        Layout.leftMargin: 4
-        Layout.preferredHeight: hint.height
-        type: root.type
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.top: textField.bottom
+        anchors.leftMargin: textField.focusBorderWidth
+        anchors.rightMargin: textField.focusBorderWidth
+    }
+
+    Component {
+        id: titleComponent
+
+        Text {
+            id: titleText
+
+            text: title
+            color: root.enabled ? Styles.textPrimary : Styles.textDisabled
+            font {
+                pixelSize: 12
+                weight: Font.Bold
+                family: "Inter"
+                styleName: "Medium"
+            }
+        }
+    }
+
+    Component {
+        id: hintComponent
+
+        Custom.HintText {
+            id: hint
+
+            iconSource: hintIconSource
+            iconColor: hintIconColor
+            title: hintTitle
+            titleColor: hintTitleColor
+            text: hintText
+            textColor: hintTextColor
+            visible: hintVisible
+            type: root.type
+        }
+    }
+
+    Component {
+        id: leftIconComponent
+
+        Custom.SvgImage {
+            visible: leftIconVisible
+            source: leftIconSource
+            color: leftIconColor
+            sourceSize: textField.iconSize
+            z: 2
+        }
+    }
+
+    Component {
+        id: rightIconComponent
+
+        Custom.SvgImage {
+            visible: rightIconVisible
+            source: rightIconSource
+            color: rightIconColor
+            sourceSize: textField.iconSize
+            z: 2
+        }
     }
 }
 

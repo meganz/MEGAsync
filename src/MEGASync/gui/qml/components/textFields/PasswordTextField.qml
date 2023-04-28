@@ -5,13 +5,12 @@ import QtQuick 2.12
 import Components 1.0 as Custom
 import Common 1.0
 import Onboarding 1.0
-import Onboard 1.0
 
 Custom.TextField {
 
     property bool showHint: false
 
-    enum PasswordStrength{
+    enum PasswordStrength {
         PASSWORD_STRENGTH_VERYWEAK = 0,
         PASSWORD_STRENGTH_WEAK = 1,
         PASSWORD_STRENGTH_MEDIUM = 2,
@@ -19,75 +18,74 @@ Custom.TextField {
         PASSWORD_STRENGTH_STRONG = 4
     }
 
+    type: Custom.TextField.Type.Error
+
     textField.echoMode: TextInput.Password
     textField.onTextChanged: {
-        rightIcon.visible = text.length;
-        hint.visible = text.length && showHint;
+        rightIconVisible = (text.length > 0);
+        hintVisible = text.length && showHint;
+        showType = false;
 
-        if(!showHint || !text.length)
+        if(!showHint || !(text.length > 0)) {
             return;
+        }
 
-        var strength = Onboarding.getPasswordStrength(text)
-        switch(strength)
-        {
-        case PasswordTextField.PasswordStrength.PASSWORD_STRENGTH_VERYWEAK:
-        {
-            hint.title = OnboardingStrings.tooWeakPasswordTitle;
-            hint.text = OnboardingStrings.tooWeakPasswordText;
-            hint.titleColor = Styles.textError
-            hint.iconColor = Styles.indicatorPink
-            hint.iconSource = Images.passwordVeryWeak
-            break;
-        }
-        case PasswordTextField.PasswordStrength.PASSWORD_STRENGTH_WEAK:
-        {
-            hint.title = OnboardingStrings.weakPasswordTitle;
-            hint.text = OnboardingStrings.weakPasswordText;
-            hint.titleColor = Styles.textError
-            hint.iconColor = Styles.supportError
-            hint.iconSource = Images.passwordWeak
-            break;
-        }
-        case PasswordTextField.PasswordStrength.PASSWORD_STRENGTH_MEDIUM:
-        {
-            hint.title = OnboardingStrings.averagePasswordTitle;
-            hint.text = OnboardingStrings.averagePasswordText;
-            hint.titleColor = Styles.supportWarning
-            hint.iconColor = Styles.supportWarning
-            hint.iconSource = Images.passwordAverage
-            break;
-        }
-        case PasswordTextField.PasswordStrength.PASSWORD_STRENGTH_GOOD:
-        {
-            hint.title = OnboardingStrings.strongPasswordTitle;
-            hint.text = OnboardingStrings.strongPasswordText;
-            hint.titleColor = Styles.textSuccess
-            hint.iconColor = Styles.supportSuccess
-            hint.iconSource = Images.passwordGood
-            break;
-        }
-        case PasswordTextField.PasswordStrength.PASSWORD_STRENGTH_STRONG:
-        {
-            hint.title = OnboardingStrings.excelentPasswordTitle;
-            hint.text = OnboardingStrings.excelentPasswordText;
-            hint.titleColor = Styles.supportSuccess
-            hint.iconColor = Styles.supportSuccess
-            hint.iconSource = Images.passwordStrong
-            break;
-        }
+        var strength = Onboarding.getPasswordStrength(text);
+        type = Custom.TextField.None;
+        switch(strength) {
+            case PasswordTextField.PasswordStrength.PASSWORD_STRENGTH_VERYWEAK: {
+                hintTitle = qsTr("Too weak");
+                hintText = qsTr("Your password needs to be at least 8 characters long.");
+                hintTitleColor = Styles.textError;
+                hintIconColor = Styles.indicatorPink;
+                hintIconSource = Images.passwordVeryWeak;
+                break;
+            }
+            case PasswordTextField.PasswordStrength.PASSWORD_STRENGTH_WEAK: {
+                hintTitle = qsTr("Weak");
+                hintText = qsTr("Your password is easily guessed. Try making your password longer. Combine uppercase and lowercase letters. Add special characters. Do not use names or dictionary words.");
+                hintTitleColor = Styles.textError;
+                hintIconColor = Styles.supportError;
+                hintIconSource = Images.passwordWeak;
+                break;
+            }
+            case PasswordTextField.PasswordStrength.PASSWORD_STRENGTH_MEDIUM: {
+                hintTitle = qsTr("Average");
+                hintText = qsTr("Your password is good enough to proceed, but it is recommended to strengthen it further.");
+                hintTitleColor = Styles.supportWarning;
+                hintIconColor = Styles.supportWarning;
+                hintIconSource = Images.passwordAverage;
+                break;
+            }
+            case PasswordTextField.PasswordStrength.PASSWORD_STRENGTH_GOOD: {
+                hintTitle = qsTr("Strong");
+                hintText = qsTr("This password will withstand most typical brute-force attacks. Please ensure that you will remember it.");
+                hintTitleColor = Styles.textSuccess;
+                hintIconColor = Styles.supportSuccess;
+                hintIconSource = Images.passwordGood;
+                break;
+            }
+            case PasswordTextField.PasswordStrength.PASSWORD_STRENGTH_STRONG: {
+                hintTitle = qsTr("Excellent");
+                hintText = qsTr("This password will withstand most sophisticated brute-force attacks. Please ensure that you will remember it.");
+                hintTitleColor = Styles.supportSuccess;
+                hintIconColor = Styles.supportSuccess;
+                hintIconSource = Images.passwordStrong;
+                break;
+            }
         }
     }
 
-    rightIcon.visible: false
-    rightIcon.source: "images/eye.svg"
+    rightIconVisible: false
+    rightIconSource: "images/eye.svg"
     rightIconMouseArea.onClicked: {
         textField.focus = true;
         if(textField.echoMode === TextInput.Password) {
             textField.echoMode = TextInput.Normal;
-            rightIcon.source = "images/eye-off.svg";
+            rightIconSource = "images/eye-off.svg";
         } else if(textField.echoMode === TextInput.Normal) {
             textField.echoMode = TextInput.Password;
-            rightIcon.source = "images/eye.svg";
+            rightIconSource = "images/eye.svg";
         }
     }
 }
