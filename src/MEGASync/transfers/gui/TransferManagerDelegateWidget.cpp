@@ -255,10 +255,8 @@ void TransferManagerDelegateWidget::updateTransferState()
                 mUi->sStatus->setCurrentWidget(mUi->pActive);
             }
             speedString = Utilities::getSizeString(getData()->mSpeed) + QLatin1Literal("/s");
-            QDateTime time = QDateTime::currentDateTime();
-            auto seconds = getData()->getSecondsSinceFinished();
-            time = time.addSecs(seconds);
-            timeString = MegaSyncApp->getFormattedDateByCurrentLanguage(time, QLocale::FormatType::ShortFormat);
+            auto dateTime = getData()->getFinishedDateTime();
+            timeString = MegaSyncApp->getFormattedDateByCurrentLanguage(dateTime, QLocale::FormatType::ShortFormat);
 
             timeTooltip = getData()->getFullFormattedFinishedTime();
             break;
