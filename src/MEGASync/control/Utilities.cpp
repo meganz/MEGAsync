@@ -84,7 +84,8 @@ void Utilities::initializeExtensions()
                             extensionIcons[QString::fromAscii("tga")]  = QString::fromAscii("image.png");
 
     extensionIcons[QString::fromAscii("ai")] = extensionIcons[QString::fromAscii("ait")] = QString::fromAscii("illustrator.png");
-    extensionIcons[QString::fromAscii("jpg")] = extensionIcons[QString::fromAscii("jpeg")] = extensionIcons[QString::fromAscii("heic")] = QString::fromAscii("image.png");
+    extensionIcons[QString::fromAscii("jpg")] = extensionIcons[QString::fromAscii("jpeg")] = extensionIcons[QString::fromAscii("heic")] =
+                            extensionIcons[QString::fromAscii("webp")] = QString::fromAscii("image.png");
     extensionIcons[QString::fromAscii("indd")] = QString::fromAscii("indesign.png");
 
     extensionIcons[QString::fromAscii("jar")] = extensionIcons[QString::fromAscii("java")]  = extensionIcons[QString::fromAscii("class")]  = QString::fromAscii("web_data.png");

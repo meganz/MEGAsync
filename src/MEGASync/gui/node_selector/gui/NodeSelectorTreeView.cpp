@@ -9,7 +9,7 @@
 #include <QMenu>
 
 NodeSelectorTreeView::NodeSelectorTreeView(QWidget* parent) :
-    QTreeView(parent),
+    LoadingSceneView<NodeSelectorLoadingDelegate, QTreeView>(parent),
     mMegaApi(MegaSyncApp->getMegaApi())
 {
     installEventFilter(this);
@@ -54,11 +54,6 @@ void NodeSelectorTreeView::setModel(QAbstractItemModel *model)
 #if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
     connect(selectionModel(), &QItemSelectionModel::currentRowChanged, this, &NodeSelectorTreeView::onCurrentRowChanged);
 #endif
-}
-
-bool NodeSelectorTreeView::viewportEvent(QEvent *event)
-{
-    return signalsBlocked() ? true : QTreeView::viewportEvent(event);
 }
 
 void NodeSelectorTreeView::drawBranches(QPainter *painter, const QRect &rect, const QModelIndex &index) const

@@ -259,12 +259,17 @@ int64_t TransferData::getSecondsSinceFinished() const
     return ((QDateTime::currentMSecsSinceEpoch()/ 100) - (preferences->getMsDiffTimeWithSDK() + mFinishedTime))/10;
 }
 
-QString TransferData::getFormattedFinishedTime() const
+QDateTime TransferData::getFinishedDateTime() const
 {
     auto preferences = Preferences::instance();
     qint64 secs = (preferences->getMsDiffTimeWithSDK() + mFinishedTime)/10;
+    return QDateTime::fromTime_t(static_cast<uint>(secs)).toLocalTime();
+}
 
-    return QDateTime::fromTime_t(static_cast<uint>(secs)).toLocalTime().toString(QString::fromLatin1("hh:mm"));
+QString TransferData::getFormattedFinishedTime() const
+{
+    auto dateTime = getFinishedDateTime();
+    return dateTime.toString(QString::fromLatin1("hh:mm"));
 }
 
 QString TransferData::getFullFormattedFinishedTime() const

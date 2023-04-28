@@ -136,6 +136,7 @@ public:
     bool isCancelled() const;
     int64_t getRawFinishedTime() const;
     int64_t getSecondsSinceFinished() const;
+    QDateTime getFinishedDateTime() const;
     QString getFormattedFinishedTime() const;
     QString getFullFormattedFinishedTime() const;
 

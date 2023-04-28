@@ -2,6 +2,8 @@
 #define NODESELECTORTREEVIEW_H
 
 #include "megaapi.h"
+#include "ViewLoadingScene.h"
+#include "NodeSelectorLoadingDelegate.h"
 
 #include <QTreeView>
 #include <QHeaderView>
@@ -10,7 +12,7 @@ class NodeSelectorProxyModel;
 
 
 using namespace  mega;
-class NodeSelectorTreeView : public QTreeView
+class NodeSelectorTreeView : public LoadingSceneView<NodeSelectorLoadingDelegate, QTreeView>
 {
     Q_OBJECT
 
@@ -29,7 +31,6 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;
     void contextMenuEvent(QContextMenuEvent *event) override;
-    bool viewportEvent(QEvent *event) override;
 
 signals:
     void removeNodeClicked();
@@ -54,7 +55,6 @@ private:
     NodeSelectorProxyModel* proxyModel() const;
 
     MegaApi* mMegaApi;
-
 };
 
 class NodeSelectorTreeViewHeaderView : public QHeaderView

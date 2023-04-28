@@ -114,7 +114,6 @@ private:
     TransfersModel *mModel;
     TransfersManagerSortFilterProxyModel *mProxyModel;
     MegaTransferDelegate *tDelegate;
-    ViewLoadingScene<TransferManagerLoadingItem> mLoadingScene;
     MegaDelegateHoverManager mDelegateHoverManager;
     bool mClearMode;
     MegaApplication *app;
