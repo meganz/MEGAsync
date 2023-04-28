@@ -1384,11 +1384,11 @@ if (!preferences->lastExecutionTime())
         {
             if (syncList->get(i)->getType() == MegaSync::TYPE_BACKUP)
             {
-                haveSyncs = true;
+                haveBackups = true;
             }
             else
             {
-                haveBackups = true;
+                haveSyncs = true;
             }
         }
 
