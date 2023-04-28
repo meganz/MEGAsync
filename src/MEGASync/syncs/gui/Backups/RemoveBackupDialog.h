@@ -2,7 +2,6 @@
 #define REMOVEBACKUPDIALOG_H
 
 #include "syncs/control/SyncSettings.h"
-#include "node_selector/gui/NodeSelector.h"
 
 #include <QDialog>
 #include <QPointer>
@@ -11,6 +10,7 @@ namespace Ui {
 class RemoveBackupDialog;
 }
 
+class UploadNodeSelector;
 class RemoveBackupDialog : public QDialog
 {
     Q_OBJECT
@@ -34,7 +34,7 @@ private:
     Ui::RemoveBackupDialog *mUi;
     std::shared_ptr<SyncSettings> mBackup;
     mega::MegaHandle mTargetFolder;
-    QPointer<NodeSelector> mNodeSelector;
+    QPointer<UploadNodeSelector> mNodeSelector;
 };
 
 #endif // REMOVEBACKUPDIALOG_H

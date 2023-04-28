@@ -15,18 +15,20 @@ class ButtonIconManager : public QObject
 
     static const char*   BUTTON_FULL_TEXT;
     static const char*   BUTTON_ELIDE_TEXT;
+    static const char*   NOT_CHANGE_TEXT_COLOR;
+    static const char*   ICON_SPACING;
 
     struct IconInfo
     {
         QString extension;
         QString iconName;
         QString iconPath;
-
         bool isEmpty(){return iconName.isEmpty();}
     };
 
 public:
     static const char*   DISABLE_UNCHECK_ON_CLICK;
+    static const char*   CHANGE_LATER;
 
     struct Settings
     {
@@ -41,12 +43,12 @@ public:
         selected_suffix(QString::fromLatin1("_selected")),
         hover_selected_suffix(QString::fromLatin1("_hover_selected")),
         default_suffix(QString::fromLatin1("_default")),
-        opacityGap(0.5){}
+        opacityGap(0.3){}
     };
 
     explicit ButtonIconManager(QObject * parent = nullptr);
     void addButton(QAbstractButton* button);
-    void setSettings(const Settings& settings);
+    void setSettings(const Settings& settings){mSettings = settings;};
 
 protected:
     virtual bool eventFilter(QObject * watched, QEvent * event) override;
@@ -56,6 +58,8 @@ private:
     void changeButtonTextColor(QAbstractButton* button, double alpha);
     IconInfo splitIconPath(const QString& iconPath);
     bool cleanIconName(IconInfo& info, const QString& separator);
+    void addIconSpacing(QAbstractButton* button);
+    void updateButtonFullName(QAbstractButton* button);
 
     void setDefaultIcon(QAbstractButton* button);
     void setHoverIcon(QAbstractButton* button);

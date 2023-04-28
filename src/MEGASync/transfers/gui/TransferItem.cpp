@@ -261,6 +261,19 @@ QString TransferData::getFormattedFinishedTime() const
     return QDateTime::fromTime_t(static_cast<uint>(secs)).toLocalTime().toString(QString::fromLatin1("hh:mm"));
 }
 
+QString TransferData::getFullFormattedFinishedTime() const
+{
+    auto preferences = Preferences::instance();
+    qint64 secs = (preferences->getMsDiffTimeWithSDK() + mFinishedTime)/10;
+
+    auto format = QLocale::system().dateTimeFormat(QLocale::LongFormat);
+    format.remove(QLatin1Char(','));
+    format.remove(QLatin1String("dddd"));
+    format = format.trimmed();
+
+    return QDateTime::fromTime_t(static_cast<uint>(secs)).toLocalTime().toString(format);
+}
+
 QString TransferData::path() const
 {
     QString localPath = mPath;
@@ -358,6 +371,32 @@ bool TransferData::isCompleting() const
 bool TransferData::isFailed() const
 {
     return mState & TRANSFER_FAILED;
+}
+
+bool TransferData::canBeRetried() const
+{
+    auto result(true);
+
+    if(!isFailed())
+    {
+        return result;
+    }
+
+    if(isSyncTransfer())
+    {
+        result = false;
+    }
+    else if(!isUpload())
+    {
+        mega::MegaError error = mFailedTransfer->getLastError();
+        if(error.getErrorCode() == mega::MegaError::API_EARGS
+                || (error.getErrorCode() == mega::MegaError::API_ENOENT || error.getErrorCode() == mega::MegaError::API_EREAD))
+        {
+            result = false;
+        }
+    }
+
+    return result;
 }
 
 bool TransferData::isCancelled() const

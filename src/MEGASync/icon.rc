@@ -1,8 +1,8 @@
 #include <windows.h>
  
 VS_VERSION_INFO     VERSIONINFO
-FILEVERSION         4, 9, 1, 0
-PRODUCTVERSION      4, 9, 1, 0
+FILEVERSION         4, 9, 3, 0
+PRODUCTVERSION      4, 9, 3, 0
 FILEFLAGSMASK       0x3fL
 FILEFLAGS           0
 FILEOS              VOS_NT_WINDOWS32
@@ -23,7 +23,7 @@ BEGIN
             VALUE   "LegalCopyright",   "Mega Limited 2023\0"
             VALUE   "OriginalFilename", "MEGAsync.exe\0"
             VALUE   "ProductName",      "MEGAsync\0"
-            VALUE   "ProductVersion",   "4.9.1.0\0"
+            VALUE   "ProductVersion",   "4.9.3.0\0"
         END
     END
 END
@@ -32,4 +32,5 @@ IDI_ICON1 ICON DISCARDABLE "app_ico.ico"
 IDI_ICON2 ICON DISCARDABLE "web_ico.ico"
 IDI_ICON3 ICON DISCARDABLE "winXP.ico"
 IDI_ICON4 ICON DISCARDABLE "win8.ico"
+IDI_ICON5 ICON DISCARDABLE "win11.ico"
 

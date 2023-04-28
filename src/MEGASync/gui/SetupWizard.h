@@ -8,7 +8,6 @@
 #include <QDesktopServices>
 #include <QPropertyAnimation>
 
-#include "node_selector/gui/NodeSelector.h"
 #include "Preferences.h"
 #include "megaapi.h"
 #include "QTMegaRequestListener.h"

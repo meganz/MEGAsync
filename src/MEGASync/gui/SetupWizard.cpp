@@ -9,6 +9,7 @@
 #include "gui/Login2FA.h"
 #include "gui/GuiUtilities.h"
 #include "platform/Platform.h"
+#include "node_selector/gui/NodeSelectorSpecializations.h"
 
 #include <QKeyEvent>
 
@@ -480,6 +481,7 @@ void SetupWizard::on_bNext_clicked()
             ui->bMegaFolder->show();
             ui->eMegaFolder->show();
             ui->lMegaFolder->show();
+            //TODO: Review usage of lAdditionalSyncs when new onboarding wizard is completed
             ui->lAdditionalSyncs->setText(QString::fromUtf8(""));
             ui->lAdditionalSyncs->show();
         }
@@ -744,7 +746,7 @@ void SetupWizard::on_bLocalFolder_clicked()
 
 void SetupWizard::on_bMegaFolder_clicked()
 {
-    QPointer<NodeSelector> nodeSelector = new NodeSelector(NodeSelectorTreeViewWidget::SYNC_SELECT, this);
+    QPointer<SyncNodeSelector> nodeSelector = new SyncNodeSelector(this);
     std::shared_ptr<MegaNode> defaultNode(megaApi->getNodeByPath(ui->eMegaFolder->text().toUtf8().constData()));
     nodeSelector->setSelectedNodeHandle(defaultNode);
 #ifdef Q_OS_LINUX

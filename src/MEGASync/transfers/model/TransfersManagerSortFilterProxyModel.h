@@ -8,6 +8,7 @@
 #include <QReadWriteLock>
 #include <QFutureWatcher>
 #include <QMutex>
+#include <QPointer>
 
 class TransferBaseDelegateWidget;
 class TransfersModel;
@@ -50,11 +51,14 @@ public:
         bool isAnyCompleted() const;
         bool isAnyActive() const;
         bool isAnyFailed() const;
+        bool areAllFailsPermanent() const;
 
         bool isEmpty() const;
         int  transfersCount() const;
 
         bool isModelProcessing() const;
+
+        bool isDragging() const;
 
 signals:
         void modelAboutToBeChanged();
@@ -95,6 +99,7 @@ protected:
         mutable QSet<int> mCompletedTransfers;
         mutable QSet<int> mCompletingTransfers;
         mutable QSet<int> mFailedTransfers;
+        mutable QSet<int> mPermanentFailedTransfers;
 
 private slots:
         void onRowsAboutToBeRemoved(const QModelIndex& parent, int first, int last);
@@ -104,6 +109,7 @@ private:
         ThreadPool* mThreadPool;
         QFutureWatcher<void> mFilterWatcher;
         QString mFilterText;
+        mutable QPointer<QMimeData> mInternalMoveMimeData;
 
         void removeActiveTransferFromCounter(TransferTag tag) const;
         void removePausedTransferFromCounter(TransferTag tag) const;

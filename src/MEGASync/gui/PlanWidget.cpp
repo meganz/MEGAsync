@@ -169,10 +169,10 @@ void PlanWidget::updatePlanInfo()
     }
 
     //Set limits
-    mUi->lStorageInfo->setText(
-                formatRichString(Utilities::getSizeString(mDetails.gbStorage * NB_B_IN_1GB), STORAGE));
-    mUi->lBandWidthInfo->setText(
-                formatRichString(Utilities::getSizeString(mDetails.gbTransfer * NB_B_IN_1GB), BANDWIDTH));
+    mUi->lStorageInfo->setText(tr("[A] storage").replace(QString::fromLatin1("[A]"),
+                                                         Utilities::getSizeString(mDetails.gbStorage * NB_B_IN_1GB)));
+    mUi->lBandWidthInfo->setText(tr("[A] transfer").replace(QString::fromLatin1("[A]"),
+                                                            Utilities::getSizeString(mDetails.gbTransfer * NB_B_IN_1GB)));
 
     style()->unpolish(this);
     style()->polish(this);
@@ -267,12 +267,6 @@ bool PlanWidget::eventFilter(QObject* obj, QEvent* event)
 
     // standard event processing
     return QObject::eventFilter(obj, event);
-}
-
-QString PlanWidget::formatRichString(QString str, int type)
-{
-    return QString::fromUtf8("%1 %2")
-            .arg(str, type == STORAGE ? tr("storage") : tr("transfer"));
 }
 
 QString PlanWidget::getTooltipMsg(HelpButton hoverOver)

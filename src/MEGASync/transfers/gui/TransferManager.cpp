@@ -36,10 +36,6 @@ const char* ITS_ON = "itsOn";
 const char* SEARCH_TEXT = "searchText";
 const char* SEARCH_BUTTON_SELECTED = "selected";
 
-const QString TransferManager::TRANSFER_QUOTA_WARNING = QString::fromUtf8(QT_TR_NOOP("You can't continue downloading as you don't have enough transfer quota left for this IP address."
-                                                                                 "\nTo get more quota, upgrade to a Pro account or wait for [A] until more free quota becomes available on your IP address."));
-const QString TransferManager::TRANSFER_QUOTA_MORE_ABOUT = QLatin1String(QT_TR_NOOP("More about transfer quota"));
-
 TransferManager::TransferManager(TransfersWidget::TM_TAB tab, MegaApi *megaApi) :
     QDialog(nullptr),
     mUi(new Ui::TransferManager),
@@ -65,7 +61,7 @@ TransferManager::TransferManager(TransfersWidget::TM_TAB tab, MegaApi *megaApi) 
 
     mModel = mUi->wTransfers->getModel();
 
-    Platform::enableDialogBlur(this);
+    Platform::getInstance()->enableDialogBlur(this);
 
     mUi->wSearch->hide();
     mUi->wMediaType->hide();
@@ -138,8 +134,8 @@ TransferManager::TransferManager(TransfersWidget::TM_TAB tab, MegaApi *megaApi) 
 
         if(value > TransfersWidget::TYPES_TAB_BASE && value < TransfersWidget::TYPES_LAST)
         {
-            TransfersWidget::TM_TAB tab = static_cast<TransfersWidget::TM_TAB>(value);
-            mNumberLabelsGroup[tab]->parentWidget()->hide();
+            TransfersWidget::TM_TAB currentTab = static_cast<TransfersWidget::TM_TAB>(value);
+            mNumberLabelsGroup[currentTab]->parentWidget()->hide();
         }
     }
 
@@ -184,7 +180,14 @@ TransferManager::TransferManager(TransfersWidget::TM_TAB tab, MegaApi *megaApi) 
                 this, &TransferManager::on_tAllTransfers_clicked);
 
     connect(mUi->wTransfers,
-            &TransfersWidget::disableTransferManager,[this](bool state){
+            &TransfersWidget::loadingViewVisibilityChanged,[this](bool state)
+    {
+        refreshView();
+    });
+
+    connect(mUi->wTransfers,
+            &TransfersWidget::disableTransferManager,[this](bool state)
+    {
         setDisabled(state);
 
         if(!state && mSearchFieldReturnPressed)
@@ -192,8 +195,6 @@ TransferManager::TransferManager(TransfersWidget::TM_TAB tab, MegaApi *megaApi) 
             mUi->leSearchField->setFocus();
             mSearchFieldReturnPressed = false;
         }
-
-        refreshView();
     });
 
     mScanningTimer.setInterval(60);
@@ -225,9 +226,8 @@ TransferManager::TransferManager(TransfersWidget::TM_TAB tab, MegaApi *megaApi) 
     onTransferQuotaStateChanged(transferQuotaState);
     mTransferQuotaTimer.setInterval(1000);
     connect(&mTransferQuotaTimer, &QTimer::timeout, this, &TransferManager::onTransferQuotaExceededUpdate);
-    QString moreAboutLink(QLatin1String("<a href=\"https://help.mega.io/plans-storage/space-storage/transfer-quota\"><font color=#333333>%1</font></a>"));
-    mUi->lTransferOverQuotaMoreAbout->setText(moreAboutLink.arg(TRANSFER_QUOTA_MORE_ABOUT));
 
+    updateCurrentOverQuotaLink();
     onUpdatePauseState(mPreferences->getGlobalPaused());
 
     toggleTab(tab);
@@ -274,6 +274,7 @@ void TransferManager::pauseModel(bool value)
 
 void TransferManager::enterBlockingState()
 {
+    //First of all, show the transfers widget in case the no items page is visible, as the loading view will be visible
     mUi->wTransfers->setScanningWidgetVisible(true);
     enableUserActions(false);
     mTransferScanCancelUi->show();
@@ -288,11 +289,10 @@ void TransferManager::leaveBlockingState(bool fromCancellation)
     mUi->wTransfers->setScanningWidgetVisible(false);
     mTransferScanCancelUi->hide(fromCancellation);
     refreshStateStats();
+    refreshView();
 
     mScanningTimer.stop();
     mScanningAnimationIndex = 1;
-
-    refreshView();
 }
 
 void TransferManager::disableCancelling()
@@ -363,6 +363,12 @@ void TransferManager::updateCurrentCategoryTitle()
         default:
              mUi->lCurrentContent->setText(tr(ALL_TRANSFERS_TITLE));
     }
+}
+
+void TransferManager::updateCurrentOverQuotaLink()
+{
+    QString moreAboutLink(QLatin1String("<a href=\"https://help.mega.io/plans-storage/space-storage/transfer-quota\"><font color=#333333>%1</font></a>"));
+    mUi->lTransferOverQuotaMoreAbout->setText(moreAboutLink.arg(tr("More about transfer quota")));
 }
 
 void TransferManager::filterByTab(TransfersWidget::TM_TAB tab)
@@ -680,7 +686,7 @@ void TransferManager::refreshFileTypesStats()
         if(value > TransfersWidget::TYPES_TAB_BASE && value < TransfersWidget::TYPES_LAST)
         {
             Utilities::FileType fileType = static_cast<Utilities::FileType>(value - TransfersWidget::TYPES_TAB_BASE);
-            long long number (mModel->getNumberOfTransfersForFileType(fileType));
+            unsigned long long number (mModel->getNumberOfTransfersForFileType(fileType));
 
             QString countLabelText(number > 0 ? QString::number(number) : QString());
 
@@ -707,6 +713,13 @@ void TransferManager::refreshFileTypesStats()
 void TransferManager::onTransfersDataUpdated()
 {
     mTransfersCount = mModel->getTransfersCount();
+
+    long long oldNumber(0);
+    QLabel* label (mNumberLabelsGroup[mUi->wTransfers->getCurrentTab()]);
+    if(label)
+    {
+        oldNumber = label->text().toLongLong();
+    }
 
     // Refresh stats
     refreshTypeStats();
@@ -831,7 +844,8 @@ void TransferManager::showTransferQuotaBanner(bool state)
 
 void TransferManager::onTransferQuotaExceededUpdate()
 {
-    QString bannerText(TRANSFER_QUOTA_WARNING);
+    QString bannerText = tr("You can't continue downloading as you don't have enough transfer quota left for this IP address."
+                             "\nTo get more quota, upgrade to a Pro account or wait for [A] until more free quota becomes available on your IP address.");
     auto text = bannerText.replace(QString(QLatin1String("[A]")), MegaSyncApp->getTransferQuota()->getTransferQuotaDeadline().toString(QLatin1String("hh:mm:ss")));
     mUi->lTransferOverQuotaInfo->setText(text);
 }
@@ -1166,38 +1180,40 @@ void TransferManager::toggleTab(TransfersWidget::TM_TAB newTab)
             pushButton->setChecked(true);
         }
 
+        auto previousTab = mUi->wTransfers->getCurrentTab();
+        mUi->wTransfers->setCurrentTab(newTab);
+
         //The rest of cases
-        if (mUi->wTransfers->getCurrentTab() == TransfersWidget::COMPLETED_TAB
-                || mUi->wTransfers->getCurrentTab() == TransfersWidget::FAILED_TAB
-                || (mUi->wTransfers->getCurrentTab() > TransfersWidget::TYPES_TAB_BASE && mUi->wTransfers->getCurrentTab() < TransfersWidget::TYPES_LAST))
+        if (previousTab == TransfersWidget::COMPLETED_TAB
+                || previousTab == TransfersWidget::FAILED_TAB
+                || (previousTab > TransfersWidget::TYPES_TAB_BASE && previousTab < TransfersWidget::TYPES_LAST))
         {
             long long transfers(0);
 
-            if(mUi->wTransfers->getCurrentTab() == TransfersWidget::COMPLETED_TAB)
+            if(previousTab == TransfersWidget::COMPLETED_TAB)
             {
                 transfers = mTransfersCount.completedDownloads() + mTransfersCount.completedUploads();
             }
-            else if(mUi->wTransfers->getCurrentTab() == TransfersWidget::FAILED_TAB)
+            else if(previousTab == TransfersWidget::FAILED_TAB)
             {
                 transfers = mTransfersCount.totalFailedTransfers();
             }
             else
             {
-                Utilities::FileType fileType = static_cast<Utilities::FileType>(mUi->wTransfers->getCurrentTab() - TransfersWidget::TYPES_TAB_BASE);
+                Utilities::FileType fileType = static_cast<Utilities::FileType>(previousTab - TransfersWidget::TYPES_TAB_BASE);
                 transfers = mModel->getNumberOfTransfersForFileType(fileType);
             }
 
             if(transfers == 0)
             {
-                auto countLabel(mNumberLabelsGroup[mUi->wTransfers->getCurrentTab()]);
+                auto countLabel(mNumberLabelsGroup[previousTab]);
                 if(countLabel->parentWidget()->isVisible())
                 {
                     countLabel->parentWidget()->hide();
                 }
+
             }
         }
-
-        mUi->wTransfers->setCurrentTab(newTab);
 
         // Set current header widget: search or not
         if (newTab == TransfersWidget::SEARCH_TAB)
@@ -1212,8 +1228,6 @@ void TransferManager::toggleTab(TransfersWidget::TM_TAB newTab)
             updateCurrentCategoryTitle();
             mUi->wTransfers->textFilterChanged(QString());
         }
-
-        refreshView();
     }
 }
 
@@ -1234,8 +1248,8 @@ void TransferManager::refreshView()
             }
 
             updateTransferWidget(widgetToShow);
-            checkActionAndMediaVisibility();
         }
+        checkActionAndMediaVisibility();
     }
 }
 
@@ -1245,15 +1259,16 @@ void TransferManager::checkActionAndMediaVisibility()
     auto allTransfers = mTransfersCount.pendingDownloads + mTransfersCount.pendingUploads;
     auto failedTransfers = mTransfersCount.totalFailedTransfers();
 
-    // Show "Clear All/Completed" if there are any completed transfers
-    // (only for completed tab and individual media tabs)
+    // Show "Retry all" if there are any completed transfers
+    // (only for failed tag)
     if (mUi->wTransfers->getCurrentTab() == TransfersWidget::FAILED_TAB && failedTransfers > 0)
     {
-        mUi->tActionButton->show();
+        auto proxy (mUi->wTransfers->getProxyModel());
+        mUi->tActionButton->setVisible(!proxy->areAllFailsPermanent());
     }
     else
     {
-        mUi->tActionButton->hide();
+        mUi->tActionButton->setVisible(false);
     }
 
     // Hide Media groupbox if no transfers (active or finished)
@@ -1384,6 +1399,7 @@ void TransferManager::changeEvent(QEvent *event)
         mUi->retranslateUi(this);
         updateCurrentCategoryTitle();
         updateCurrentSearchText();
+        updateCurrentOverQuotaLink();
         onUpdatePauseState(mUi->wTransfers->getProxyModel()->getPausedTransfers());
     }
     QDialog::changeEvent(event);

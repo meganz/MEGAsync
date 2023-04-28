@@ -11,11 +11,11 @@
 #include "UserAttributesRequests/FullName.h"
 #include "UserAttributesRequests/MyBackupsHandle.h"
 #include "PowerOptions.h"
-#include "syncs/gui/SyncTooltipCreator.h"
 #include "syncs/gui/Backups/BackupsWizard.h"
 #include "syncs/gui/Backups/AddBackupDialog.h"
 #include "syncs/gui/Backups/RemoveBackupDialog.h"
 #include "TextDecorator.h"
+#include "gui/node_selector/gui/NodeSelectorSpecializations.h"
 
 #include "mega/types.h"
 
@@ -31,6 +31,7 @@
 #include <QMenu>
 
 #include <assert.h>
+#include <memory>
 
 #ifdef Q_OS_MACOS
     #include "gui/CocoaHelpButton.h"
@@ -55,7 +56,7 @@ constexpr auto SETTING_ANIMATION_BACKUP_TAB_HEIGHT{534};
 constexpr auto SETTING_ANIMATION_SECURITY_TAB_HEIGHT{372};
 constexpr auto SETTING_ANIMATION_FOLDERS_TAB_HEIGHT{513};
 constexpr auto SETTING_ANIMATION_NETWORK_TAB_HEIGHT{205};
-constexpr auto SETTING_ANIMATION_NOTIFICATIONS_TAB_HEIGHT{372};
+constexpr auto SETTING_ANIMATION_NOTIFICATIONS_TAB_HEIGHT{422};
 #endif
 
 const QString SYNCS_TAB_MENU_LABEL_QSS = QString::fromUtf8("QLabel{ border-image: url(%1); }");
@@ -106,6 +107,8 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     mRemoteCacheSize (-1),
     mDebugCounter (0)
 {
+    mSyncTableEventFilter = std::unique_ptr<SyncTableViewTooltips>(new SyncTableViewTooltips());
+    mBackupTableEventFilter = std::unique_ptr<BackupTableViewTooltips>(new BackupTableViewTooltips());
     mUi->setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
@@ -175,7 +178,7 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
 #endif
 
 #ifdef Q_OS_MACOS
-    this->setWindowTitle(tr("Preferences"));
+    this->setWindowTitle(tr("Settings"));
     mUi->cStartOnStartup->setText(tr("Launch at login"));
     mUi->lLocalDebris->setText(mUi->lLocalDebris->text().arg(QString::fromUtf8(MEGA_DEBRIS_FOLDER)));
 
@@ -231,6 +234,9 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     connect(mApp, &MegaApplication::shellNotificationsProcessed,
             this, &SettingsDialog::onShellNotificationsProcessed);
     mUi->cOverlayIcons->setEnabled(!mApp->isShellNotificationProcessingOngoing());
+
+    mUi->syncTableView->installEventFilter(mSyncTableEventFilter.get());
+    mUi->backupTableView->installEventFilter(mBackupTableEventFilter.get());
 }
 
 SettingsDialog::~SettingsDialog()
@@ -513,7 +519,7 @@ void SettingsDialog::loadSettings()
 
     // if checked: make sure both sources are true
     mUi->cStartOnStartup->setChecked(mPreferences->startOnStartup()
-                                     && Platform::isStartOnStartupActive());
+                                     && Platform::getInstance()->isStartOnStartupActive());
 
     //Language
     mUi->cLanguage->clear();
@@ -806,6 +812,7 @@ void SettingsDialog::reloadToolBarItemNames()
     bGeneral.get()->setText(tr("General"));
     bAccount.get()->setText(tr("Account"));
     bSyncs.get()->setText(tr("Sync"));
+    bBackup.get()->setText(tr("Backup"));
     bSecurity.get()->setText(tr("Security"));
     bFolders.get()->setText(tr("Folders"));
     bNetwork.get()->setText(tr("Network"));
@@ -1010,7 +1017,7 @@ void SettingsDialog::on_cAutoUpdate_toggled(bool checked)
 void SettingsDialog::on_cStartOnStartup_toggled(bool checked)
 {
     if (mLoadingSettings) return;
-    if (!Platform::startOnStartup(checked))
+    if (!Platform::getInstance()->startOnStartup(checked))
     {
         // in case of failure - make sure configuration keeps the right value
         //LOG_debug << "Failed to " << (checked ? "enable" : "disable") << " MEGASync on startup.";
@@ -1093,7 +1100,7 @@ void SettingsDialog::on_cOverlayIcons_toggled(bool checked)
     mUi->cOverlayIcons->setEnabled(false);
     mPreferences->disableOverlayIcons(!checked);
 #ifdef Q_OS_MACOS
-    Platform::notifyRestartSyncFolders();
+    Platform::getInstance()->notifyRestartSyncFolders();
 #endif
     mApp->notifyChangeToAllFolders();
 }
@@ -1106,14 +1113,14 @@ void SettingsDialog::on_cFinderIcons_toggled(bool checked)
     {
         for (auto syncSetting : mModel->getAllSyncSettings())
         {
-            Platform::addSyncToLeftPane(syncSetting->getLocalFolder(),
+            Platform::getInstance()->addSyncToLeftPane(syncSetting->getLocalFolder(),
                                         syncSetting->name(),
                                         syncSetting->getSyncID());
         }
     }
     else
     {
-        Platform::removeAllSyncsFromLeftPane();
+        Platform::getInstance()->removeAllSyncsFromLeftPane();
     }
     mPreferences->disableLeftPaneIcons(!checked);
 }
@@ -1495,6 +1502,7 @@ void SettingsDialog::loadSyncSettings()
     SyncItemSortModel *sortModel = new SyncItemSortModel(mUi->syncTableView);
     sortModel->setSourceModel(model);
     mUi->syncTableView->setModel(sortModel);
+    mSyncTableEventFilter->setSourceModel(model);
 }
 
 void SettingsDialog::addSyncFolder(MegaHandle megaFolderHandle)
@@ -1544,6 +1552,8 @@ void SettingsDialog::on_bSyncs_clicked()
     mUi->pSyncs->hide();
     animateSettingPage(SETTING_ANIMATION_SYNCS_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
 #endif
+
+    SyncInfo::instance()->dismissUnattendedDisabledSyncs(MegaSync::TYPE_TWOWAY);
 }
 
 
@@ -1747,6 +1757,7 @@ void SettingsDialog::loadBackupSettings()
     SyncItemSortModel *sortModel = new SyncItemSortModel(mUi->syncTableView);
     sortModel->setSourceModel(model);
     mUi->backupTableView->setModel(sortModel);
+    mBackupTableEventFilter->setSourceModel(model);
 }
 
 void SettingsDialog::on_bBackup_clicked()
@@ -1764,6 +1775,8 @@ void SettingsDialog::on_bBackup_clicked()
     mUi->pBackup->hide();
     animateSettingPage(SETTING_ANIMATION_BACKUP_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
 #endif
+
+    SyncInfo::instance()->dismissUnattendedDisabledSyncs(MegaSync::TYPE_BACKUP);
 }
 
 void SettingsDialog::on_bAddBackup_clicked()
@@ -1983,7 +1996,7 @@ void SettingsDialog::on_bFolders_clicked()
 
 void SettingsDialog::on_bUploadFolder_clicked()
 {
-    QPointer<NodeSelector> nodeSelector = new NodeSelector(NodeSelectorTreeViewWidget::UPLOAD_SELECT, this);
+    QPointer<UploadNodeSelector> nodeSelector = new UploadNodeSelector(this);
     std::shared_ptr<mega::MegaNode> defaultNode(mMegaApi->getNodeByPath(mUi->eUploadFolder->text().toStdString().c_str()));
     nodeSelector->setSelectedNodeHandle(defaultNode);
 
@@ -2356,3 +2369,4 @@ void SettingsDialog::updateCacheSchedulerDaysLabel()
 {
     mUi->lCacheSchedulerSuffix->setText(tr("day", "", mPreferences->cleanerDaysLimitValue()));
 }
+

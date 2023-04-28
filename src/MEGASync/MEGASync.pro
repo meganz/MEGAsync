@@ -117,6 +117,7 @@ include(gui/gui.pri)
 include(mega/bindings/qt/sdk.pri)
 include(control/control.pri)
 include(transfers/transfers.pri)
+include(notifications/notifications.pri)
 include(syncs/syncs.pri)
 include(platform/platform.pri)
 include(google_breakpad/google_breakpad.pri)
@@ -140,8 +141,6 @@ DEFINES += QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII
 }
 
 SOURCES += $$PWD/MegaApplication.cpp \
-    $$PWD/DesktopNotifications.cpp \
-    $$PWD/RemovedSharesNotificator.cpp \
     $$PWD/TransferQuota.cpp \
     $$PWD/UserAlertTimedClustering.cpp \
     $$PWD/ScaleFactorManager.cpp \
@@ -158,8 +157,6 @@ SOURCES += $$PWD/MegaApplication.cpp \
     $$PWD/UserAttributesRequests/MyChatFilesFolder.cpp
 
 HEADERS += $$PWD/MegaApplication.h \
-    $$PWD/DesktopNotifications.h \
-    $$PWD/RemovedSharesNotificator.h \
     $$PWD/TransferQuota.h \
     $$PWD/UserAlertTimedClustering.h \
     $$PWD/ScaleFactorManager.h \
@@ -217,6 +214,7 @@ macx {
     QMAKE_CXXFLAGS += -DCRYPTOPP_DISABLE_ASM -D_DARWIN_C_SOURCE
     MAC_ICONS_RESOURCES.files += $$PWD/folder.icns
     MAC_ICONS_RESOURCES.files += $$PWD/folder_yosemite.icns
+    MAC_ICONS_RESOURCES.files += $$PWD/folder_bigsur.icns
     MAC_ICONS_RESOURCES.files += $$PWD/appicon32.tiff
     MAC_ICONS_RESOURCES.path = Contents/Resources
     QMAKE_BUNDLE_DATA += MAC_ICONS_RESOURCES

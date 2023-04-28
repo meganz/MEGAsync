@@ -1,6 +1,8 @@
 #include "ServerSide.h"
 #include "MacXLocalSocketPrivate.h"
 
+#include <QThread>
+
 @implementation ServerSide
 - (instancetype)initWithLocalServer:(MacXLocalServerPrivate*)lServer
 {
@@ -15,9 +17,9 @@
     {
         [endPoint setProtocolForProxy:@protocol(CommunicationProtocol)];
         MacXLocalSocketPrivate *clientSocketPrivate = new MacXLocalSocketPrivate(endPoint);
-        MacXLocalSocket *client = new MacXLocalSocket(clientSocketPrivate);
-        _serverSocketPrivate->localServer->appendPendingConnection(client);
-        emit _serverSocketPrivate->localServer->newConnection();
+        QPointer<MacXLocalSocket> client = new MacXLocalSocket(clientSocketPrivate);
+        client->moveToThread(_serverSocketPrivate->localServer->thread());
+        emit _serverSocketPrivate->localServer->newConnection(client);
         [endPoint registerObject:clientSocketPrivate->client];
     }
 }

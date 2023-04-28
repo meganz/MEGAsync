@@ -62,7 +62,7 @@ SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type, QObject *parent) : QObject(p
     mMenuAction->setIcon(iconMenu);
     mMenuAction->setParent(this);
 
-    Platform::initMenu(mMenu.get());
+    Platform::getInstance()->initMenu(mMenu.get(), "SyncsMenu");
     mMenu->setToolTipsVisible(true);
 
     //Highlight menu entry on mouse over
@@ -116,7 +116,7 @@ void SyncsMenu::refresh()
             {
                 activeFolders++;
                 MenuItemAction* action =
-                        new MenuItemAction(backupSetting->name(),
+                        new MenuItemAction(SyncController::getSyncNameFromPath(backupSetting->getLocalFolder(true)),
                                            QIcon(QLatin1String("://images/icons/folder/folder-mono_24.png")),
                                            true, itemIndent);
                 action->setToolTip(createSyncTooltipText(backupSetting));

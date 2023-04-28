@@ -35,12 +35,17 @@ signals:
     void removeNodeClicked();
     void renameNodeClicked();
     void getMegaLinkClicked();
+    void nodeSelected();
 
 private slots:
     void removeNode();
     void renameNode();
     void getMegaLink();
     void onNavigateReady(const QModelIndex& index);
+
+#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
+    void onCurrentRowChanged(const QModelIndex &current, const QModelIndex &previous);
+#endif
 
 private:
     bool mousePressorReleaseEvent(QMouseEvent* event);
@@ -52,15 +57,14 @@ private:
 
 };
 
-class NodSelectorTreeViewHeaderView : public QHeaderView
+class NodeSelectorTreeViewHeaderView : public QHeaderView
 {
     Q_OBJECT
 public:
-    explicit NodSelectorTreeViewHeaderView(Qt::Orientation orientation, QWidget* parent = nullptr);
+    explicit NodeSelectorTreeViewHeaderView(Qt::Orientation orientation, QWidget* parent = nullptr);
 
 protected:
     void paintSection(QPainter *painter, const QRect &rect, int logicalIndex) const override;
-
 };
 
 #endif // NODESELECTORTREEVIEW_H

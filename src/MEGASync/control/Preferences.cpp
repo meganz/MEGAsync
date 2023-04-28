@@ -12,15 +12,17 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/4.9.1.0";
-const int Preferences::VERSION_CODE = 4901;
-const int Preferences::BUILD_ID = 1;
+const char Preferences::USER_AGENT[] = "MEGAsync/4.9.3.0";
+const int Preferences::VERSION_CODE = 4903;
+const int Preferences::BUILD_ID = 2;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("4.9.1");
-QString Preferences::SDK_ID = QString::fromAscii("4aea5a1");
+const QString Preferences::VERSION_STRING = QString::fromAscii("4.9.3");
+QString Preferences::SDK_ID = QString::fromAscii("247ea1a");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
-"- Security upgraded.\n"
-"- Detected crashes on Windows, Linux, and macOS fixed.\n"));
+"- You can now search the stored data in your account.\n"
+"- We've improved system notifications.\n"
+"- We've enhanced the UI.\n"
+"- We've fixed the detected crashes on Windows, Linux, and macOS.\n"));
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
@@ -644,7 +646,7 @@ unsigned long long Preferences::transferIdentifier()
 {
     mutex.lock();
     assert(logged());
-    long long value = getValue<long long>(transferIdentifierKey, defaultTransferIdentifier);
+    auto value = getValue<unsigned long long>(transferIdentifierKey, defaultTransferIdentifier);
     value++;
     mSettings->setValue(transferIdentifierKey, value);
     setCachedValue(transferIdentifierKey, value);

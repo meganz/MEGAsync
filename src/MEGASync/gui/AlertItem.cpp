@@ -1,9 +1,11 @@
 #include "AlertItem.h"
 #include "ui_AlertItem.h"
 #include "CommonMessages.h"
-#include <QDateTime>
 #include "MegaApplication.h"
 #include "UserAttributesRequests/FullName.h"
+#include <MegaNodeNames.h>
+
+#include <QDateTime>
 #include <QFutureWatcher>
 #include <QFuture>
 
@@ -247,12 +249,7 @@ void AlertItem::setAlertHeading(MegaUserAlert *alert)
         {
             ui->sIconWidget->setCurrentWidget(ui->pSharedFolder);
             ui->sIconWidget->show();
-
-            if (mAlertNode)
-            {
-                mNotificationHeading = mAlertNode->isNodeKeyDecrypted() ? QString::fromUtf8(mAlertNode->getName())
-                                                                        : QCoreApplication::translate("MegaError", "Decryption error");
-            }
+            mNotificationHeading = MegaNodeNames::getNodeName(mAlertNode.get());
 
             if (mNotificationHeading.isEmpty())
             {
@@ -303,7 +300,7 @@ void AlertItem::setAlertContent(MegaUserAlert *alert)
                         .replace(QString::fromUtf8("[A]"), formatRichString(getUserFullName(alert)));
                 break;
             case MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REMINDER:
-                notificationContent = tr("Reminder") + QString::fromUtf8(": ") + tr("You have a contact request");
+                notificationContent = tr("Reminder: You have a contact request");
                 break;
             case MegaUserAlert::TYPE_CONTACTCHANGE_DELETEDYOU:
                 notificationContent = tr("[A] deleted you as a contact")
@@ -394,12 +391,12 @@ void AlertItem::setAlertContent(MegaUserAlert *alert)
                     if (mAlertNode->getType() == MegaNode::TYPE_FILE)
                     {
                         notificationContent = tr("Your publicly shared file ([A]) has been taken down")
-                                .replace(QString::fromUtf8("[A]"), formatRichString(QString::fromUtf8(mAlertNode->getName())));
+                                .replace(QString::fromUtf8("[A]"), formatRichString(MegaNodeNames::getNodeName(mAlertNode.get())));
                     }
                     else if (mAlertNode->getType() == MegaNode::TYPE_FOLDER)
                     {
                         notificationContent = tr("Your publicly shared folder ([A]) has been taken down")
-                                .replace(QString::fromUtf8("[A]"), formatRichString(QString::fromUtf8(mAlertNode->getName())));
+                                .replace(QString::fromUtf8("[A]"), formatRichString(MegaNodeNames::getNodeName(mAlertNode.get())));
                     }
                     else
                     {
@@ -419,12 +416,12 @@ void AlertItem::setAlertContent(MegaUserAlert *alert)
                     if (mAlertNode->getType() == MegaNode::TYPE_FILE)
                     {
                         notificationContent = tr("Your publicly shared file ([A]) has been reinstated")
-                                .replace(QString::fromUtf8("[A]"), formatRichString(QString::fromUtf8(mAlertNode->getName())));
+                                .replace(QString::fromUtf8("[A]"), formatRichString(MegaNodeNames::getNodeName(mAlertNode.get())));
                     }
                     else if (mAlertNode->getType() == MegaNode::TYPE_FOLDER)
                     {
                         notificationContent = tr("Your publicly shared folder ([A]) has been reinstated")
-                                .replace(QString::fromUtf8("[A]"), formatRichString(QString::fromUtf8(mAlertNode->getName())));
+                                .replace(QString::fromUtf8("[A]"), formatRichString(MegaNodeNames::getNodeName(mAlertNode.get())));
                     }
                     else
                     {

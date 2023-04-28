@@ -33,6 +33,11 @@ NodeSelectorProxyModel *NodeSelectorTreeView::proxyModel() const
 MegaHandle NodeSelectorTreeView::getSelectedNodeHandle()
 {
     MegaHandle ret = INVALID_HANDLE;
+    if(!selectionModel())
+    {
+        return ret;
+    }
+
     if(selectionModel()->selectedRows().size() == 1)
     {
         if(auto node = proxyModel()->getNode(selectionModel()->selectedRows().first()))
@@ -45,21 +50,28 @@ void NodeSelectorTreeView::setModel(QAbstractItemModel *model)
 {
     QTreeView::setModel(model);
     connect(proxyModel(), &NodeSelectorProxyModel::navigateReady, this, &NodeSelectorTreeView::onNavigateReady);
+
+#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
+    connect(selectionModel(), &QItemSelectionModel::currentRowChanged, this, &NodeSelectorTreeView::onCurrentRowChanged);
+#endif
 }
 
 bool NodeSelectorTreeView::viewportEvent(QEvent *event)
 {
-     return signalsBlocked() ? true : QTreeView::viewportEvent(event);
+    return signalsBlocked() ? true : QTreeView::viewportEvent(event);
 }
 
 void NodeSelectorTreeView::drawBranches(QPainter *painter, const QRect &rect, const QModelIndex &index) const
 {
-    QModelIndex idx = getIndexFromSourceModel(index);
-    NodeSelectorModelItem *item = static_cast<NodeSelectorModelItem*>(idx.internalPointer());
+    auto item = qvariant_cast<NodeSelectorModelItem*>(index.data(toInt(NodeSelectorModelRoles::MODEL_ITEM_ROLE)));
     if(item && (item->isCloudDrive() || item->isVault()))
     {
         QStyleOptionViewItem opt = viewOptions();
         opt.rect = rect;
+        if(!selectionModel())
+        {
+            return;
+        }
         if(selectionModel()->isSelected(index))
         {
             opt.state |= QStyle::State_Selected;
@@ -120,17 +132,47 @@ void NodeSelectorTreeView::mouseDoubleClickEvent(QMouseEvent *event)
 
 void NodeSelectorTreeView::keyPressEvent(QKeyEvent *event)
 {
+    if(!selectionModel())
+    {
+        return;
+    }
+
     QModelIndexList selectedRows = selectionModel()->selectedRows();
 
-    static QModelIndex rootIndex = proxyModel()->getIndexFromNode(MegaSyncApp->getRootNode());
+    static QModelIndex cdRootIndex = proxyModel()->getIndexFromNode(MegaSyncApp->getRootNode());
     static QList<int> bannedFromRootKeyList = QList<int>() << Qt::Key_Left << Qt::Key_Right
                                                      << Qt::Key_Plus << Qt::Key_Minus;
 
-    if(!bannedFromRootKeyList.contains(event->key()) || !selectedRows.contains(rootIndex))
+    if(!bannedFromRootKeyList.contains(event->key()) || !selectedRows.contains(cdRootIndex))
     {
         if(event->key() == Qt::Key_F2)
         {
             renameNode();
+        }
+        else if(event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return)
+        {
+            if(!selectedRows.isEmpty())
+            {
+                if(selectedRows.first() == rootIndex() || selectedRows.size() > 1)
+                {
+                    emit nodeSelected();
+                }
+                else
+                {
+                    auto node = std::unique_ptr<MegaNode>(mMegaApi->getNodeByHandle(getSelectedNodeHandle()));
+                    if(node)
+                    {
+                        if(node->isFolder())
+                        {
+                            doubleClicked(selectedRows.first());
+                        }
+                        else
+                        {
+                            emit nodeSelected();
+                        }
+                    }
+                }
+            }
         }
 
         QTreeView::keyPressEvent(event);
@@ -139,8 +181,10 @@ void NodeSelectorTreeView::keyPressEvent(QKeyEvent *event)
 
 void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent *event)
 {
-        if(selectionModel()->selectedRows().size() > 1)
+        if(!selectionModel() || selectionModel()->selectedRows().size() > 1)
+        {
             return;
+        }
 
         if(!indexAt(event->pos()).isValid())
         {
@@ -148,7 +192,7 @@ void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent *event)
         }
 
         QMenu customMenu;
-        Platform::initMenu(&customMenu);
+        Platform::getInstance()->initMenu(&customMenu, "CustomMenu");
         auto node = std::unique_ptr<MegaNode>(mMegaApi->getNodeByHandle(getSelectedNodeHandle()));
         auto parent = std::unique_ptr<MegaNode>(mMegaApi->getParentNode(node.get()));
         auto proxyModel = static_cast<NodeSelectorProxyModel*>(model());
@@ -161,7 +205,7 @@ void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent *event)
                 customMenu.addAction(tr("Get MEGA link"), this, SLOT(getMegaLink()));
             }
 
-            if (access >= MegaShare::ACCESS_FULL && proxyModel->canBeDeleted())
+            if (access >= MegaShare::ACCESS_FULL && proxyModel->canBeDeleted() && node->isNodeKeyDecrypted())
             {
                 customMenu.addAction(tr("Rename"), this, SLOT(renameNode()));
                 customMenu.addAction(tr("Delete"), this, SLOT(removeNode()));
@@ -200,34 +244,54 @@ void NodeSelectorTreeView::onNavigateReady(const QModelIndex &index)
     }
 }
 
+#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
+void NodeSelectorTreeView::onCurrentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
+    Q_UNUSED(previous)
+        Qt::KeyboardModifiers modifiers = QGuiApplication::keyboardModifiers();
+        if(modifiers & Qt::ControlModifier || modifiers & Qt::ShiftModifier || state() == QAbstractItemView::DragSelectingState)
+        {
+            return;
+        }
+
+        QItemSelectionModel::SelectionFlags flags = QItemSelectionModel::ClearAndSelect|QItemSelectionModel::Rows;
+        selectionModel()->select(current, flags);
+}
+#endif
+
+
 bool NodeSelectorTreeView::mousePressorReleaseEvent(QMouseEvent *event)
 {
     QPoint pos = event->pos();
-    QModelIndex index = getIndexFromSourceModel(indexAt(pos));
-    NodeSelectorModelItem *item = static_cast<NodeSelectorModelItem*>(index.internalPointer());
+    QModelIndex index = indexAt(pos);
+    if(!index.isValid())
+    {
+        return false;
+    }
+
+    auto item = qvariant_cast<NodeSelectorModelItem*>(index.data(toInt(NodeSelectorModelRoles::MODEL_ITEM_ROLE)));
     if(item && item->isCloudDrive())
     {   //this line avoid to cloud drive being collapsed and at same time it allows to select it.
        return handleStandardMouseEvent(event);
     }
     else
     {
-        QModelIndex clickedIndex = indexAt(event->pos());
-        if(clickedIndex.isValid() && !clickedIndex.data(toInt(NodeRowDelegateRoles::INIT_ROLE)).toBool())
+        if(!index.data(toInt(NodeRowDelegateRoles::INIT_ROLE)).toBool())
         {
             int position = columnViewportPosition(0);
-            QModelIndex idx = clickedIndex.parent();
+            QModelIndex idx = index.parent();
             while(rootIndex() != idx)
             {
                 position += indentation();
                 idx = idx.parent();
             }
-            QRect rect(position, event->pos().y(), indentation(), rowHeight(clickedIndex));
+            QRect rect(position, event->pos().y(), indentation(), rowHeight(index));
 
             if(rect.contains(event->pos()))
             {
-                if(!isExpanded(clickedIndex))
+                if(!isExpanded(index))
                 {
-                    auto sourceIndexToExpand = proxyModel()->mapToSource(clickedIndex);
+                    auto sourceIndexToExpand = proxyModel()->mapToSource(index);
                     if(proxyModel()->sourceModel()->canFetchMore(sourceIndexToExpand))
                     {
                         proxyModel()->setExpandMapped(true);
@@ -256,7 +320,7 @@ bool NodeSelectorTreeView::handleStandardMouseEvent(QMouseEvent* event)
     return false;
 }
 
-NodSelectorTreeViewHeaderView::NodSelectorTreeViewHeaderView(Qt::Orientation orientation, QWidget *parent) :
+NodeSelectorTreeViewHeaderView::NodeSelectorTreeViewHeaderView(Qt::Orientation orientation, QWidget *parent) :
     QHeaderView(orientation, parent)
 {
     setDefaultAlignment(Qt::AlignLeft);
@@ -264,16 +328,22 @@ NodSelectorTreeViewHeaderView::NodSelectorTreeViewHeaderView(Qt::Orientation ori
     setDefaultSectionSize(35);
 }
 
-void NodSelectorTreeViewHeaderView::paintSection(QPainter *painter, const QRect &rect, int logicalIndex) const
+void NodeSelectorTreeViewHeaderView::paintSection(QPainter *painter, const QRect &rect, int logicalIndex) const
 {
-    QRect vrect = rect; 
-
-#ifdef _WIN32
-    if(logicalIndex == NodeSelectorModel::USER)
-        vrect.moveTo(vrect.x() - 2,vrect.y());
-#endif
-
-    QHeaderView::paintSection(painter, vrect, logicalIndex);
+    painter->save();
+    QHeaderView::paintSection(painter, rect, logicalIndex);
+    painter->restore();
+    if(logicalIndex == NodeSelectorModel::USER || logicalIndex == NodeSelectorModel::STATUS)
+    {  
+        QRect iconRect(QPoint(rect.topLeft()), QSize(18, 18));
+        iconRect.moveCenter(rect.center());
+        QIcon icon = model()->headerData(logicalIndex, Qt::Orientation::Horizontal, toInt(HeaderRoles::ICON_ROLE)).value<QIcon>();
+        if(!icon.isNull())
+        {
+            painter->setRenderHint(QPainter::Antialiasing, true);
+            painter->setRenderHint(QPainter::SmoothPixmapTransform, true);
+            icon.paint(painter, iconRect, Qt::AlignVCenter | Qt::AlignHCenter);
+        }
+    }
 }
-
 

@@ -28,8 +28,9 @@ TransferManagerDelegateWidget::TransferManagerDelegateWidget(QWidget *parent) :
 
     mUi->wTransferName->installEventFilter(this);
 
-    mUi->lItemPaused->installEventFilter(this);
     mUi->lItemPausedQueued_1->installEventFilter(this);
+    mUi->lItemFailed->installEventFilter(this);
+    mUi->lItemPaused->installEventFilter(this);
     mUi->lRetryMsg->installEventFilter(this);
     mUi->lItemFailed->installEventFilter(this);
     mUi->tItemRetry->installEventFilter(this);
@@ -52,6 +53,7 @@ void TransferManagerDelegateWidget::updateTransferState()
     bool showTPauseResume(true);
     bool showTCancelClear(true);
     QString timeString;
+    QString timeTooltip;
     QString statusString;
 
     auto state = getData()->getState();
@@ -199,7 +201,7 @@ void TransferManagerDelegateWidget::updateTransferState()
             {
                 mPauseResumeTransferDefaultIconName.clear();
                 mUi->sStatus->setCurrentWidget(mUi->pFailed);
-                mUi->tItemRetry->setVisible(!getData()->mTemporaryError);
+                mUi->tItemRetry->setVisible(getData()->canBeRetried());
                 mUi->tItemRetry->setText(getState(TRANSFER_STATES::STATE_RETRY));
                 mUi->tItemRetry->setToolTip(getState(TRANSFER_STATES::STATE_RETRY));
                 mUi->wProgressBar->setVisible(false);
@@ -210,6 +212,7 @@ void TransferManagerDelegateWidget::updateTransferState()
             }
 
             timeString = getData()->getFormattedFinishedTime();
+            timeTooltip = getData()->getFullFormattedFinishedTime();
             speedString = QString::fromUtf8("…");
 
             break;
@@ -252,6 +255,7 @@ void TransferManagerDelegateWidget::updateTransferState()
             }
             speedString = Utilities::getSizeString(getData()->mSpeed) + QLatin1Literal("/s");
             timeString = getData()->getFormattedFinishedTime();
+            timeTooltip = getData()->getFullFormattedFinishedTime();
             break;
         }
         default:
@@ -309,8 +313,10 @@ void TransferManagerDelegateWidget::updateTransferState()
 
     // Speed
     mUi->bItemSpeed->setText(speedString);
-    // Remaining time
+
+    // Remaining or finished time
     mUi->lItemTime->setText(timeString);
+    mUi->lItemTime->setToolTip(timeTooltip);
 
 
     mUi->lSyncIcon->setVisible(getData()->isSyncTransfer());
@@ -332,7 +338,7 @@ void TransferManagerDelegateWidget::setFileNameAndType()
 
     // File name
     mUi->lTransferName->setToolTip(getData()->mFilename);
-    mUi->lTransferName->setText(getData()->mFilename);
+    adjustFileName();
 }
 
 void TransferManagerDelegateWidget::setType()
@@ -351,6 +357,14 @@ void TransferManagerDelegateWidget::setType()
     }
 
     mUi->bItemSpeed->setIcon(icon);
+}
+
+void TransferManagerDelegateWidget::adjustFileName()
+{
+    mUi->lTransferName->setText(mUi->lTransferName->fontMetrics()
+                                .elidedText(getData()->mFilename, Qt::ElideMiddle,
+                                           getNameAvailableSize(mUi->wTransferName, mUi->lSyncIcon, mUi->nameSpacer)));
+    mUi->lTransferName->adjustSize();
 }
 
 TransferBaseDelegateWidget::ActionHoverType TransferManagerDelegateWidget::mouseHoverTransfer(bool isHover, const QPoint &pos)
@@ -495,10 +509,23 @@ bool TransferManagerDelegateWidget::eventFilter(QObject *watched, QEvent *event)
     {
         if(watched == mUi->wTransferName)
         {
-            mUi->lTransferName->setText(mUi->lTransferName->fontMetrics()
-                                        .elidedText(getData()->mFilename, Qt::ElideMiddle,
-                                                   getNameAvailableSize(mUi->wTransferName, mUi->lSyncIcon, mUi->nameSpacer)));
-            mUi->lTransferName->adjustSize();
+           adjustFileName();
+        }
+
+        else if(watched == mUi->lItemPausedQueued_1)
+        {
+            mUi->lItemPausedQueued_1->setText(mUi->lItemPausedQueued_1->fontMetrics().elidedText(mUi->lItemPausedQueued_1->text(), Qt::ElideMiddle,mUi->lItemPausedQueued_1->width()
+                                          ));
+
+            mUi->lItemPausedQueued_2->setText(mUi->lItemPausedQueued_2->fontMetrics().elidedText(mUi->lItemPausedQueued_2->text(), Qt::ElideMiddle,mUi->lItemPausedQueued_2->width()
+                                          ));
+            mUi->lItemPausedQueued_1->parentWidget()->adjustSize();
+        }
+        else if(watched == mUi->lItemFailed)
+        {
+            mUi->lItemFailed->setText(mUi->lItemFailed->fontMetrics().elidedText(mUi->lItemFailed->text(), Qt::ElideMiddle,mUi->lItemPausedQueued_1->width()
+                                          ));
+            mUi->lItemFailed->parentWidget()->adjustSize();
         }
         else if(auto label = dynamic_cast<QWidget*>(watched))
         {
