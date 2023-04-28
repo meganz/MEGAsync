@@ -137,7 +137,7 @@ QMap<QMessageBox::StandardButton, QString> MegaTransferView::getClearDialogButto
 
 //Mega transfer view
 MegaTransferView::MegaTransferView(QWidget* parent) :
-    QTreeView(parent),
+    LoadingSceneView<TransferManagerLoadingItem, QTreeView>(parent),
     mDisableLink(false),
     mKeyNavigation(false),
     mParentTransferWidget(nullptr)

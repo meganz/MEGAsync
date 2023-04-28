@@ -29,9 +29,9 @@ NodeSelector::NodeSelector(QWidget *parent) :
     connect(ui->bShowIncomingShares, &QPushButton::clicked, this, &NodeSelector::onbShowIncomingSharesClicked);
     connect(ui->bShowCloudDrive, &QPushButton::clicked, this, &NodeSelector::onbShowCloudDriveClicked);
     connect(ui->bShowBackups, &QPushButton::clicked, this, &NodeSelector::onbShowBackupsFolderClicked);
-    connect(ui->bSearch, &QPushButton::clicked, this, &NodeSelector::onbShowSearchClicked);
+    connect(ui->bSearchNS, &QPushButton::clicked, this, &NodeSelector::onbShowSearchClicked);
 
-    foreach(auto& button, ui->wLeftPane->findChildren<QAbstractButton*>())
+    foreach(auto& button, ui->wLeftPaneNS->findChildren<QAbstractButton*>())
     {
         mButtonIconManager.addButton(button);
     }
@@ -44,12 +44,12 @@ NodeSelector::NodeSelector(QWidget *parent) :
     mShadowTab->setColor(shadowColor);
     mShadowTab->setEnabled(true);
 
-    mTabFramesToggleGroup[SEARCH] = ui->fSearchString;
+    mTabFramesToggleGroup[SEARCH] = ui->fSearchStringNS;
     mTabFramesToggleGroup[BACKUPS] = ui->fBackups;
     mTabFramesToggleGroup[SHARES] = ui->fIncomingShares;
     mTabFramesToggleGroup[CLOUD_DRIVE] = ui->fCloudDrive;
-    ui->wSearch->hide();
-    ui->bSearch->hide();
+    ui->wSearchNS->hide();
+    ui->bSearchNS->hide();
     setAllFramesItsOnProperty();
 
     updateNodeSelectorTabs();
@@ -78,14 +78,14 @@ void NodeSelector::updateNodeSelectorTabs()
 
 void NodeSelector::onSearch(const QString &text)
 {
-    ui->bSearch->setText(text);
-    ui->wSearch->setVisible(true);
-    ui->bSearch->setVisible(true);
+    ui->bSearchNS->setText(text);
+    ui->wSearchNS->setVisible(true);
+    ui->bSearchNS->setVisible(true);
 
     mSearchWidget->search(text);
     mSearchWidget->setSearchText(text);
     onbShowSearchClicked();
-    ui->bSearch->setChecked(true);
+    ui->bSearchNS->setChecked(true);
 
     auto senderViewWidget = dynamic_cast<NodeSelectorTreeViewWidget*>(sender());
     if(senderViewWidget != mSearchWidget)
@@ -159,11 +159,11 @@ void NodeSelector::onbOkClicked()
     isSelectionCorrect() ? accept() : reject();
 }
 
-void NodeSelector::on_tClearSearchResult_clicked()
+void NodeSelector::on_tClearSearchResultNS_clicked()
 {
-    ui->wSearch->hide();
-    ui->bSearch->hide();
-    ui->bSearch->setText(QString());
+    ui->wSearchNS->hide();
+    ui->bSearchNS->hide();
+    ui->bSearchNS->setText(QString());
     mSearchWidget->stopSearch();
     if(ui->stackedWidget->currentWidget() == mSearchWidget)
     {
@@ -215,7 +215,7 @@ void NodeSelector::onbShowBackupsFolderClicked()
 
 void NodeSelector::onbShowSearchClicked()
 {
-    if(ui->bSearch->isVisible())
+    if(ui->bSearchNS->isVisible())
     {
         ui->stackedWidget->setCurrentWidget(mSearchWidget);
         setToggledStyle(SEARCH);
@@ -287,7 +287,7 @@ void NodeSelector::setToggledStyle(TabItem item)
     mTabFramesToggleGroup[item]->setGraphicsEffect(mShadowTab);
 
     // Reload QSS because it is glitchy
-    ui->wLeftPane->setStyleSheet(ui->wLeftPane->styleSheet());
+    ui->wLeftPaneNS->setStyleSheet(ui->wLeftPaneNS->styleSheet());
 }
 
 int NodeSelector::getNodeAccess(std::shared_ptr<MegaNode> node)
