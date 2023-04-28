@@ -2,6 +2,7 @@
 #define MEGATRANSFERVIEW_H
 
 #include "TransfersWidget.h"
+#include "ViewLoadingScene.h"
 
 #include <QGraphicsEffect>
 #include <QTreeView>
@@ -10,7 +11,7 @@
 #include <QFutureWatcher>
 #include <QMessageBox>
 
-class MegaTransferView : public QTreeView
+class MegaTransferView : public LoadingSceneView<TransferManagerLoadingItem, QTreeView>
 {
     Q_OBJECT
 

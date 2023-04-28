@@ -45,7 +45,7 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="MegaTransferView" name="tView">
+    <widget class="InfoDialogTransfersView" name="tView">
      <property name="minimumSize">
       <size>
        <width>400</width>
@@ -76,9 +76,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>MegaTransferView</class>
+   <class>InfoDialogTransfersView</class>
    <extends>QTreeView</extends>
-   <header>MegaTransferView.h</header>
+   <header>InfoDialogTransfersWidget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

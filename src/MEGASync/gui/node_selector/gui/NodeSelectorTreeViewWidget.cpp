@@ -44,8 +44,7 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(SelectTypeSPtr mode, QWid
     connect(ui->leSearch, &SearchLineEdit::search, this, &NodeSelectorTreeViewWidget::onSearch);
     checkBackForwardButtons();
 
-    mLoadingScene.setView(ui->tMegaFolders);
-    connect(&mLoadingScene, &ViewLoadingSceneBase::sceneVisibilityChange, this, &NodeSelectorTreeViewWidget::onUiBlocked);
+    connect(&ui->tMegaFolders->loadingView(), &ViewLoadingSceneBase::sceneVisibilityChange, this, &NodeSelectorTreeViewWidget::onUiBlocked);
 
     foreach(auto& button, ui->searchButtonsWidget->findChildren<QAbstractButton*>())
     {
@@ -374,9 +373,7 @@ std::unique_ptr<NodeSelectorProxyModel> NodeSelectorTreeViewWidget::createProxyM
 
 void NodeSelectorTreeViewWidget::setLoadingSceneVisible(bool blockUi)
 {
-    ui->tMegaFolders->blockSignals(blockUi);
-    ui->tMegaFolders->header()->blockSignals(blockUi);
-    mLoadingScene.toggleLoadingScene(blockUi);
+    ui->tMegaFolders->loadingView().toggleLoadingScene(blockUi);
 
     if(!blockUi)
     {

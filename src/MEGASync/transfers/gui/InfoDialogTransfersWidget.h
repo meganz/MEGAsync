@@ -17,6 +17,14 @@ class MegaDelegateHoverManager;
 class MegaApplication;
 class InfoDialogTransfersProxyModel;
 
+class InfoDialogTransfersView : public LoadingSceneView<InfoDialogTransferLoadingItem, QTreeView>
+{
+public:
+    InfoDialogTransfersView(QWidget* parent)
+        : LoadingSceneView<InfoDialogTransferLoadingItem, QTreeView>(parent)
+    {}
+};
+
 class InfoDialogTransfersWidget : public QWidget
 {
     Q_OBJECT
@@ -37,7 +45,6 @@ private:
     Ui::InfoDialogTransfersWidget *mUi;
     InfoDialogTransfersProxyModel *mProxyModel;
     MegaDelegateHoverManager mViewHoverManager;
-    ViewLoadingScene<InfoDialogTransferLoadingItem> mLoadingScene;
 
 private:
     void configureTransferView();
