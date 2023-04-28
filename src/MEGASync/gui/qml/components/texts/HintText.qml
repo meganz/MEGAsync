@@ -16,23 +16,22 @@ Rectangle {
     }
 
     property int type: HintText.Type.None
+    property url iconSource: ""
+    property color iconColor
+    property string title: ""
+    property color titleColor
+    property string text: ""
+    property color textColor
 
-    property alias iconSource: icon.source
-    property alias iconColor: icon.color
-    property alias title: titleText.text
-    property alias titleColor: titleText.color
-    property alias text: hintText.text
-    property alias textColor: hintText.color
-
-    height: (titleText.visible ? titleText.height : 0)
-            + (hintText.visible? hintText.height : 0)
-            + ((titleText.visible && hintText.visible) ? mainLayout.spacing : 0)
-
+    height: visible ? titleLoader.height + textLoader.height : 0
     color: "transparent"
-    visible: false
 
     onTypeChanged: {
         switch(type) {
+            case HintText.Type.None:
+                titleColor = Styles.textPrimary;
+                textColor = Styles.textSecondary;
+                break;
             case HintText.Type.Error:
                 iconSource = Images.alertTriangle;
                 iconColor = Styles.textError;
@@ -44,61 +43,104 @@ Rectangle {
         }
     }
 
-    RowLayout {
-        id: mainLayout
-
-        width: root.width
-        spacing: 8
-        anchors {
-            left: root.left
-            top: root.top
+    onIconSourceChanged: {
+        if(iconSource === "") {
+            return;
         }
+
+        iconLoader.sourceComponent = iconComponent;
+    }
+
+    onTitleChanged: {
+        if(title.length === 0) {
+            return;
+        }
+
+        titleLoader.sourceComponent = titleComponent;
+    }
+
+    onTextChanged: {
+        if(text.length === 0) {
+            return;
+        }
+
+        textLoader.sourceComponent = textComponent;
+    }
+
+    Loader {
+        id: iconLoader
+    }
+
+    Column {
+        anchors.left: iconLoader.right
+        anchors.right: parent.right
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
+        anchors.leftMargin: 8
+
+        spacing: 4
+
+        Loader {
+            id: titleLoader
+
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.leftMargin: 0
+            anchors.rightMargin: 0
+        }
+
+        Loader {
+            id: textLoader
+
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.rightMargin: 0
+            anchors.leftMargin: 0
+        }
+    }
+
+    Component {
+        id: iconComponent
 
         Custom.SvgImage {
-            id: icon
-
-            visible: iconSource != ""
-            Layout.alignment: Qt.AlignTop
+            source: iconSource
+            color: iconColor
             sourceSize: Qt.size(16, 16)
-            Layout.preferredWidth: sourceSize.width
-            Layout.preferredHeight: sourceSize.height
         }
+    }
 
-        ColumnLayout {
-            Layout.fillWidth: true
+    Component {
+        id: titleComponent
 
-            Custom.RichText {
-                id: titleText
-
-                visible: title.length !== 0
-                Layout.fillWidth: true
-                wrapMode: Text.WordWrap
-                font {
-                    bold: true
-                    pixelSize: 12
-                    weight: Font.Light
-                    family: "Inter"
-                    styleName: "Medium"
-                }
-            }
-
-            Custom.RichText {
-                id: hintText
-
-                color: Styles.textSecondary
-                visible: text.length !== 0
-                Layout.fillWidth: true
-                wrapMode: Text.WordWrap
-                font {
-                    pixelSize: 12
-                    weight: Font.Light
-                    family: "Inter"
-                    styleName: "Medium"
-                }
+        Text {
+            text: title
+            color: titleColor
+            wrapMode: Text.WordWrap
+            font {
+                bold: true
+                pixelSize: 12
+                weight: Font.Light
+                family: "Inter"
+                styleName: "Medium"
             }
         }
     }
 
+    Component {
+        id: textComponent
+
+        Text {
+            text: root.text
+            color: textColor
+            wrapMode: Text.WordWrap
+            font {
+                pixelSize: 12
+                weight: Font.Light
+                family: "Inter"
+                styleName: "Medium"
+            }
+        }
+    }
 }
 
 
