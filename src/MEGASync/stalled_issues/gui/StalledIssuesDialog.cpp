@@ -51,8 +51,7 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
 
     mDelegate = new StalledIssueDelegate(mProxyModel, ui->stalledIssuesTree);
     ui->stalledIssuesTree->setItemDelegate(mDelegate);
-    mLoadingScene.setView(ui->stalledIssuesTree);
-    connect(&mLoadingScene, &ViewLoadingSceneBase::sceneVisibilityChange, this, &StalledIssuesDialog::onLoadingSceneChanged);
+    connect(&ui->stalledIssuesTree->loadingView(), &ViewLoadingSceneBase::sceneVisibilityChange, this, &StalledIssuesDialog::onLoadingSceneChanged);
 
     on_updateButton_clicked();
 }
@@ -96,21 +95,17 @@ void StalledIssuesDialog::toggleTab(StalledIssueFilterCriterion filterCriterion)
 
 void StalledIssuesDialog::onUiBlocked()
 {
-    if(!mLoadingScene.isLoadingViewSet())
+    if(!ui->stalledIssuesTree->loadingView().isLoadingViewSet())
     {
-        ui->stalledIssuesTree->blockSignals(true);
-        ui->stalledIssuesTree->header()->blockSignals(true);
-        mLoadingScene.toggleLoadingScene(true);
+        ui->stalledIssuesTree->loadingView().toggleLoadingScene(true);
     }
 }
 
 void StalledIssuesDialog::onUiUnblocked()
 {
-    if(mLoadingScene.isLoadingViewSet())
+    if(ui->stalledIssuesTree->loadingView().isLoadingViewSet())
     {
-        ui->stalledIssuesTree->blockSignals(false);
-        ui->stalledIssuesTree->header()->blockSignals(false);
-        mLoadingScene.toggleLoadingScene(false);
+        ui->stalledIssuesTree->loadingView().toggleLoadingScene(false);
     }
 }
 

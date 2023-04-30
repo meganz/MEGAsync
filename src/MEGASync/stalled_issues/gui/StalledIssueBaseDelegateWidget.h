@@ -25,6 +25,11 @@ public:
     QModelIndex getCurrentIndex() const;
     const StalledIssueVariant &getData() const;
 
+    virtual void reset();
+    QSize sizeHint() const override;
+
+    bool isHeader() const;
+
 signals:
     void editorKeepStateChanged(bool state);
 
@@ -35,7 +40,7 @@ protected:
 private:
     virtual void refreshUi() = 0;
 
-    StalledIssueVariant mData;
+    mutable StalledIssueVariant mData;
     QPersistentModelIndex mCurrentIndex;
 };
 

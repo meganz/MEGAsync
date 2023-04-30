@@ -4,7 +4,7 @@
 #include <QScrollBar>
 
 StalledIssuesView::StalledIssuesView(QWidget *parent)
-    :  QTreeView(parent)
+    :  LoadingSceneView<StalledIssueLoadingItem, QTreeView>(parent)
 {
     verticalScrollBar()->setSingleStep(1);
 }

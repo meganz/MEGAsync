@@ -47,7 +47,7 @@ TransfersWidget::TransfersWidget(QWidget* parent) :
 
 TransfersWidget::~TransfersWidget()
 {
-    mLoadingScene.toggleLoadingScene(false);
+    ui->tvTransfers->loadingView().toggleLoadingScene(false);
     delete ui;
     if (tDelegate) delete tDelegate;
     if (mProxyModel) delete mProxyModel;

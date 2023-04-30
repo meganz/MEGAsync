@@ -50,7 +50,7 @@ public:
     bool solveLocalConflictedName(const QString& name, int conflictIndex, ConflictedNameInfo::SolvedType type);
     bool solveCloudConflictedName(const QString& name, int conflictIndex, ConflictedNameInfo::SolvedType type);
 
-    bool solveCloudConflictedNameByRename(const QString& name, int conflictIndex, const QString& renameTo);
+    bool solveCloudConflictedNameByRename(int conflictIndex, const QString& renameTo);
     bool solveLocalConflictedNameByRename(const QString& name, int conflictIndex, const QString& renameTo);
 
     static QStringList convertConflictedNames(bool cloud, const mega::MegaSyncStall *stall);
@@ -58,7 +58,7 @@ public:
     void updateIssue(const mega::MegaSyncStall *stallIssue) override;
 
 private:
-    bool checkAndSolveConflictedNamesSolved(QList<ConflictedNameInfo>& conflicts, const ConflictedNameInfo &solvedConflict);
+    bool checkAndSolveConflictedNamesSolved(QList<ConflictedNameInfo>& conflicts);
 
     using StalledIssue::getLocalData;
     using StalledIssue::getCloudData;

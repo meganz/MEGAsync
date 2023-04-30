@@ -9,6 +9,7 @@
 #include "QMegaMessageBox.h"
 #include "DialogOpener.h"
 #include "StalledIssuesDialog.h"
+#include "MegaNodeNames.h"
 
 #include <QDialogButtonBox>
 
@@ -230,13 +231,27 @@ void NameConflict::onActionClicked(int actionId)
             QPointer<NameConflict> currentWidget = QPointer<NameConflict>(this);
             auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
 
+            auto isFile(false);
+            QString fileName;
+
+            if(mData.isCloud)
+            {
+                std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(mData.data->getFilePath().toStdString().c_str()));
+                isFile = node->isFile();
+                fileName = MegaNodeNames::getNodeName(node.get());
+            }
+            else
+            {
+                isFile = info.isFile();
+                fileName = info.fileName();
+            }
+
             auto warning = new QMessageBox(QMessageBox::Warning,QString::fromUtf8("MEGAsync"),
                                            tr("Are you sure you want to remove the %1 %2 %3?")
                                            .arg(mData.isCloud ? tr("remote") : tr("local"))
-                                           .arg(info.isFile() ? tr("file") : tr("folder"))
-                                           .arg(info.fileName()),
+                                           .arg(isFile ? tr("file") : tr("folder"))
+                                           .arg(fileName),
                                            QMessageBox::Yes | QMessageBox::No, dialog->getDialog());
-            qDebug() << warning->styleSheet();
             warning->setDefaultButton(QMessageBox::No);
             auto result = warning->exec();
 

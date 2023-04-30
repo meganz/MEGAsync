@@ -47,7 +47,6 @@ private:
     Ui::StalledIssuesDialog *ui;
     MegaDelegateHoverManager mViewHoverManager;
     StalledIssueFilterCriterion mCurrentTab;
-    ViewLoadingScene<StalledIssueLoadingItem> mLoadingScene;
     StalledIssuesProxyModel* mProxyModel;
     StalledIssueDelegate* mDelegate;
 };

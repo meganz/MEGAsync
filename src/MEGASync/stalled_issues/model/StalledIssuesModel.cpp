@@ -86,10 +86,10 @@ StalledIssuesModel::~StalledIssuesModel()
 
 void StalledIssuesModel::onProcessStalledIssues(StalledIssuesReceiver::StalledIssuesReceived issuesReceived)
 {
+    reset();
+
     mThreadPool->push([this, issuesReceived]()
     {
-        reset();
-
         mModelMutex.lock();
         blockSignals(true);
 
@@ -438,7 +438,7 @@ bool StalledIssuesModel::solveCloudConflictedNameByRename(const QString &name, c
 
     if(auto nameConflict = std::dynamic_pointer_cast<NameConflictedStalledIssue>(mStalledIssues.at(potentialIndex.row())->getData()))
     {
-        return nameConflict->solveCloudConflictedNameByRename(name, conflictIndex, renameTo);
+        return nameConflict->solveCloudConflictedNameByRename(conflictIndex, renameTo);
     }
 
     return false;

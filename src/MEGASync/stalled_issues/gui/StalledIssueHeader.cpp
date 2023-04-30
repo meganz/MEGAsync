@@ -1,6 +1,7 @@
 #include "StalledIssueHeader.h"
 
 #include <stalled_issues/model/StalledIssuesModel.h>
+#include <stalled_issues/gui/stalled_issues_cases/StalledIssuesCaseHeaders.h>
 
 #include <MegaApplication.h>
 #include <Preferences.h>
@@ -15,6 +16,8 @@ const int StalledIssueHeader::BODY_INDENT = StalledIssueHeader::ARROW_INDENT + S
 const int StalledIssueHeader::GROUPBOX_INDENT = BODY_INDENT - 9;// Following the InVision mockups
 const int StalledIssueHeader::GROUPBOX_CONTENTS_INDENT = 9;// Following the InVision mockups
 const int StalledIssueHeader::HEIGHT = 60;
+
+const char* FILENAME_PROPERTY = "FILENAME_PROPERTY";
 
 StalledIssueHeader::StalledIssueHeader(QWidget *parent) :
     StalledIssueBaseDelegateWidget(parent),
@@ -62,6 +65,15 @@ void StalledIssueHeader::issueIgnored()
     }
 }
 
+void StalledIssueHeader::clearLabels()
+{
+    ui->leftTitleText->clear();
+    ui->rightTitleText->clear();
+    ui->fileNameTitle->clear();
+
+    ui->errorTitleTextContainer->removeEventFilter(this);
+}
+
 void StalledIssueHeader::showAction(const QString &actionButtonText)
 {
     ui->actionButton->setVisible(true);
@@ -91,8 +103,15 @@ void StalledIssueHeader::setLeftTitleText(const QString &text)
 
 void StalledIssueHeader::addFileName(bool preferCloud)
 {
-    ui->fileNameTitle->setText(getData().consultData()->getFileName(preferCloud));
-    ui->fileNameTitle->installEventFilter(this);
+    auto fileName = getData().consultData()->getFileName(preferCloud);
+    addFileName(fileName);
+}
+
+void StalledIssueHeader::addFileName(const QString& filename)
+{
+    ui->fileNameTitle->setText(filename);
+    ui->fileNameTitle->setProperty(FILENAME_PROPERTY, filename);
+    ui->errorTitleTextContainer->installEventFilter(this);
 }
 
 void StalledIssueHeader::setRightTitleText(const QString &text)
@@ -103,6 +122,17 @@ void StalledIssueHeader::setRightTitleText(const QString &text)
 void StalledIssueHeader::setTitleDescriptionText(const QString &text)
 {
     ui->errorDescriptionText->setText(text);
+}
+
+void StalledIssueHeader::setData(StalledIssueHeaderCase *data)
+{
+    mHeaderCase = data;
+}
+
+void StalledIssueHeader::reset()
+{
+    StalledIssueBaseDelegateWidget::reset();
+    mHeaderCase->deleteLater();
 }
 
 QString StalledIssueHeader::fileName()
@@ -130,10 +160,17 @@ void StalledIssueHeader::on_ignoreFileButton_clicked()
 
 bool StalledIssueHeader::eventFilter(QObject *watched, QEvent *event)
 {
-    if(watched == ui->fileNameTitle && event->type() == QEvent::Resize)
+    if(watched == ui->errorTitleTextContainer && event->type() == QEvent::Resize)
     {
-        auto elidedText = ui->fileNameTitle->fontMetrics().elidedText(getData().consultData()->getFileName(false),Qt::ElideMiddle, ui->fileNameTitle->width());
-        ui->fileNameTitle->setText(elidedText);
+        if(!ui->fileNameTitle->text().isEmpty())
+        {
+            auto filename = ui->fileNameTitle->property(FILENAME_PROPERTY).toString();
+
+            auto blankSpaces = ui->errorTitleTextContainer->layout()->spacing() * 2 + ui->errorTitleTextContainer->contentsMargins().right() + ui->errorTitleTextContainer->contentsMargins().left();
+            auto availableWidth = ui->errorTitleTextContainer->width() - ui->rightTitleText->width() - ui->leftTitleText->width() - ui->fileTypeIcon->width() - blankSpaces;
+            auto elidedText = ui->fileNameTitle->fontMetrics().elidedText(filename,Qt::ElideMiddle, availableWidth);
+            ui->fileNameTitle->setText(elidedText);
+        }
     }
 
     return StalledIssueBaseDelegateWidget::eventFilter(watched, event);
@@ -146,6 +183,8 @@ void StalledIssueHeader::refreshUi()
 
     QIcon fileTypeIcon;
     QFileInfo fileInfo;
+
+    clearLabels();
 
     //Get full path -> it can be taken from the cloud data or the local data.
     if(getData().consultData()->consultLocalData())
@@ -178,6 +217,10 @@ void StalledIssueHeader::refreshUi()
         ui->ignoreFileButton->hide();
     }
 
-    emit refreshCaseUi(this);
+    if(mHeaderCase)
+    {
+        mHeaderCase->refreshCaseUi(this);
+    }
+
     update();
 }

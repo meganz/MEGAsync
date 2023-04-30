@@ -8,8 +8,11 @@
 #include <QWidget>
 #include <QStyleOptionViewItem>
 #include <QFutureWatcher>
+#include <QPointer>
 
 #include "ui_StalledIssueHeader.h"
+
+class StalledIssueHeaderCase;
 
 class StalledIssueHeader : public StalledIssueBaseDelegateWidget
 {
@@ -36,12 +39,13 @@ public:
 
     void setLeftTitleText(const QString& text);
     void addFileName(bool preferCloud = false);
+    void addFileName(const QString& filename);
     void setRightTitleText(const QString& text);
 
     void setTitleDescriptionText(const QString& text);
 
-signals:
-    void refreshCaseUi(StalledIssueHeader* header);
+    void setData(StalledIssueHeaderCase* data);
+    void reset();
 
 protected:
     bool eventFilter(QObject *watched, QEvent *event) override;
@@ -55,9 +59,12 @@ protected slots:
 private:
     void showIgnoreFile();
     void issueIgnored();
+    void clearLabels();
+
+    void refreshUi() override;
 
     Ui::StalledIssueHeader *ui;
-    void refreshUi() override;
+    QPointer<StalledIssueHeaderCase> mHeaderCase;
 };
 
 #endif // STALLEDISSUEHEADER_H

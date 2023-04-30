@@ -9,17 +9,10 @@ class StalledIssueHeaderCase : public QObject
     Q_OBJECT
 
 public:
-    StalledIssueHeaderCase(StalledIssueHeader* header);
+    StalledIssueHeaderCase(StalledIssueHeader *header);
     ~StalledIssueHeaderCase() = default;
 
-    QPointer<StalledIssueHeader> getStalledIssueHeader();
-    void reset();
-
-protected:
-    QPointer<StalledIssueHeader> mStalledIssueHeader;
-
-protected slots:
-    virtual void onRefreshCaseUi() = 0;
+    virtual void refreshCaseUi(StalledIssueHeader* header) = 0;
 };
 
 //DefaultHeader failed
@@ -31,7 +24,7 @@ public:
     DefaultHeader(StalledIssueHeader* header);
 
 protected slots:
-    void onRefreshCaseUi() override;
+    void refreshCaseUi(StalledIssueHeader* header) override;
 };
 
 //Create folder failed
@@ -43,7 +36,7 @@ public:
     FileIssueHeader(StalledIssueHeader* header);
 
 protected slots:
-    void onRefreshCaseUi() override;
+    void refreshCaseUi(StalledIssueHeader* header) override;
 };
 
 //Move or rename failed
@@ -55,7 +48,7 @@ public:
     MoveOrRenameCannotOccurHeader(StalledIssueHeader* header);
 
 protected slots:
-    void onRefreshCaseUi() override;
+    void refreshCaseUi(StalledIssueHeader* header) override;
 };
 
 //Delete or Move Waiting onScanning
@@ -67,7 +60,7 @@ public:
     DeleteOrMoveWaitingOnScanningHeader(StalledIssueHeader* header);
 
 protected slots:
-    void onRefreshCaseUi() override;
+    void refreshCaseUi(StalledIssueHeader* header) override;
 };
 
 //Delete waiting on moves
@@ -79,7 +72,7 @@ public:
     DeleteWaitingOnMovesHeader(StalledIssueHeader* header);
 
 protected slots:
-    void onRefreshCaseUi() override;
+    void refreshCaseUi(StalledIssueHeader* header) override;
 };
 
 //Upsync needs target folder
@@ -91,7 +84,7 @@ public:
     UploadIssueHeader(StalledIssueHeader* header);
 
 protected slots:
-    void onRefreshCaseUi() override;
+    void refreshCaseUi(StalledIssueHeader* header) override;
 };
 
 //Downsync needs target folder
@@ -103,7 +96,7 @@ public:
     DownloadIssueHeader(StalledIssueHeader* header);
 
 protected slots:
-    void onRefreshCaseUi() override;
+    void refreshCaseUi(StalledIssueHeader* header) override;
 };
 
 //Create folder failed
@@ -115,7 +108,7 @@ public:
     CannotCreateFolderHeader(StalledIssueHeader* header);
 
 protected slots:
-    void onRefreshCaseUi() override;
+    void refreshCaseUi(StalledIssueHeader* header) override;
 };
 
 //Create folder failed
@@ -127,7 +120,7 @@ public:
     CannotPerformDeletionHeader(StalledIssueHeader* header);
 
 protected slots:
-    void onRefreshCaseUi() override;
+    void refreshCaseUi(StalledIssueHeader* header) override;
 };
 
 //SyncItemExceedsSupoortedTreeDepth
@@ -139,7 +132,7 @@ public:
     SyncItemExceedsSupoortedTreeDepthHeader(StalledIssueHeader* header);
 
 protected slots:
-    void onRefreshCaseUi() override;
+    void refreshCaseUi(StalledIssueHeader* header) override;
 };
 
 
@@ -152,7 +145,7 @@ public:
     FolderMatchedAgainstFileHeader(StalledIssueHeader* header);
 
 protected slots:
-    void onRefreshCaseUi() override;
+    void refreshCaseUi(StalledIssueHeader* header) override;
 };
 
 class LocalAndRemotePreviouslyUnsyncedDifferHeader : public StalledIssueHeaderCase
@@ -163,7 +156,7 @@ public:
     LocalAndRemotePreviouslyUnsyncedDifferHeader(StalledIssueHeader* header);
 
 protected slots:
-    void onRefreshCaseUi() override;
+    void refreshCaseUi(StalledIssueHeader* header) override;
 };
 
 //Local and remote previously synced differ
@@ -175,7 +168,7 @@ public:
     LocalAndRemoteChangedSinceLastSyncedStateHeader(StalledIssueHeader* header);
 
 protected slots:
-    void onRefreshCaseUi() override;
+    void refreshCaseUi(StalledIssueHeader* header) override;
 };
 
 //Local and remote previously synced differ
@@ -187,7 +180,7 @@ public:
     NameConflictsHeader(StalledIssueHeader* header);
 
 protected slots:
-    void onRefreshCaseUi() override;
+    void refreshCaseUi(StalledIssueHeader* header) override;
 };
 
 #endif // STALLEDISSUESCASEHEADERS_H

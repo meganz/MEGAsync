@@ -21,9 +21,9 @@ StalledIssueChooseWidget::StalledIssueChooseWidget(QWidget *parent) :
     ui->path->hideLocalOrRemoteTitle();
     auto layoutMargins = ui->fileNameContainer->contentsMargins();
     layoutMargins.setLeft(StalledIssueHeader::GROUPBOX_CONTENTS_INDENT);
-    ui->fileNameContainer->setContentsMargins(layoutMargins);
 
-    ui->fileNameText->installEventFilter(this);
+    ui->fileNameContainer->setContentsMargins(layoutMargins);
+    ui->fileNameContainer->installEventFilter(this);
 
     ui->chooseTitle->addActionButton(QIcon(), tr("Choose"), BUTTON_ID, true);
     connect(ui->chooseTitle, &StalledIssueActionTitle::actionClicked, this, &StalledIssueChooseWidget::onActionClicked); }
@@ -89,12 +89,10 @@ void StalledIssueChooseWidget::setData(StalledIssueDataPtr data)
                 icon.addFile(QString::fromUtf8(":/images/StalledIssues/remove_default.png"));
                 ui->chooseTitle->addMessage(PlatformStrings::movedFileToBin(), icon.pixmap(16,16));
             }
-
-            discardItem = !data->isSolved();
         }
     }
 
-    setSolved(discardItem);
+    setSolved(data->isSolved());
 
     update();
 
@@ -108,9 +106,11 @@ const StalledIssueDataPtr &StalledIssueChooseWidget::data()
 
 bool StalledIssueChooseWidget::eventFilter(QObject *watched, QEvent *event)
 {
-    if(mData && watched == ui->fileNameText && event->type() == QEvent::Resize)
+    if(mData && watched == ui->fileNameContainer && event->type() == QEvent::Resize)
     {
-        auto elidedText = ui->fileNameText->fontMetrics().elidedText(mData->getFileName(),Qt::ElideMiddle, ui->fileNameText->width());
+        auto blankSpaces = ui->fileNameContainer->layout()->spacing() * 4 + ui->fileNameContainer->contentsMargins().right() + ui->fileNameContainer->contentsMargins().left();
+        auto availableWidth = ui->fileNameContainer->width() - ui->fileSize->width() - ui->fileTypeIcon->width() - blankSpaces;
+        auto elidedText = ui->fileNameText->fontMetrics().elidedText(mData->getFileName(),Qt::ElideMiddle, availableWidth);
         ui->fileNameText->setText(elidedText);
     }
 

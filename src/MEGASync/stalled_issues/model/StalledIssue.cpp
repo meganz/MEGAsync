@@ -280,6 +280,11 @@ void StalledIssue::fillIssue(const mega::MegaSyncStall *stall)
     }
 }
 
+const std::shared_ptr<mega::MegaSyncStall> &StalledIssue::getOriginalStall() const
+{
+    return originalStall;
+}
+
 uint8_t StalledIssue::hasFiles() const
 {
     return mFiles;
@@ -288,6 +293,30 @@ uint8_t StalledIssue::hasFiles() const
 uint8_t StalledIssue::hasFolders() const
 {
     return mFolders;
+}
+
+const QSize &StalledIssue::getDelegateSize(SizeType type) const
+{
+    switch(type)
+    {
+        case SizeType::Header:
+            return mHeaderDelegateSize;
+        case SizeType::Body:
+            return mBodyDelegateSize;
+    }
+}
+
+void StalledIssue::setDelegateSize(const QSize &newDelegateSize, SizeType type)
+{
+    switch(type)
+    {
+        case SizeType::Header:
+            mHeaderDelegateSize = newDelegateSize;
+            break;
+        case SizeType::Body:
+            mBodyDelegateSize = newDelegateSize;
+            break;
+    }
 }
 
 bool StalledIssue::isSolved() const

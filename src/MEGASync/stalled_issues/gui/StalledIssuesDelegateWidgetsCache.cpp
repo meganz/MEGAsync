@@ -41,14 +41,7 @@ int StalledIssuesDelegateWidgetsCache::getMaxCacheRow(int row) const
 StalledIssueHeader *StalledIssuesDelegateWidgetsCache::getStalledIssueHeaderWidget(const QModelIndex &index, QWidget *parent, const StalledIssueVariant &issue) const
 {
     auto row = getMaxCacheRow(index.row());
-    auto& headerCase = mStalledIssueHeaderWidgets[row];
-    StalledIssueHeader* header(nullptr);
-
-    if(headerCase)
-    {
-        header = headerCase->getStalledIssueHeader();
-        headerCase->deleteLater();
-    }
+    auto& header = mStalledIssueHeaderWidgets[row];
 
     if(!header)
     {
@@ -56,7 +49,7 @@ StalledIssueHeader *StalledIssuesDelegateWidgetsCache::getStalledIssueHeaderWidg
         header->hide();
     }
 
-    headerCase = createHeaderWidget( header, issue);
+    createHeaderCaseWidget(header, issue);
     header->updateUi(index, issue);
 
     return header;
@@ -94,7 +87,7 @@ StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::getStalledIss
 StalledIssueHeader *StalledIssuesDelegateWidgetsCache::getNonCacheStalledIssueHeaderWidget(const QModelIndex& index, QWidget* parent, const StalledIssueVariant &issue) const
 {
     auto header = new StalledIssueHeader(parent);
-    createHeaderWidget(header, issue);
+    createHeaderCaseWidget(header, issue);
     header->updateUi(index, issue);
     return header;
 }
@@ -114,12 +107,12 @@ StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::createBodyWid
         case mega::MegaSyncStall::SyncStallReason::LocalAndRemotePreviouslyUnsyncedDiffer_userMustChoose:
         case mega::MegaSyncStall::SyncStallReason::LocalAndRemoteChangedSinceLastSyncedState_userMustChoose:
         {
-            item = new LocalAndRemoteDifferentWidget(issue.consultData()->originalStall, parent);
+            item = new LocalAndRemoteDifferentWidget(issue.consultData()->getOriginalStall(), parent);
             break;
         }
         case mega::MegaSyncStall::SyncStallReason::NamesWouldClashWhenSynced:
         {
-            item = new LocalAndRemoteNameConflicts(issue.consultData()->originalStall, parent);
+            item = new LocalAndRemoteNameConflicts(issue.consultData()->getOriginalStall(), parent);
             break;
         }
         case mega::MegaSyncStall::SyncStallReason::FileIssue:
@@ -172,7 +165,7 @@ bool StalledIssuesDelegateWidgetsCache::adaptativeHeight(mega::MegaSyncStall::Sy
     }
 }
 
-StalledIssueHeaderCase* StalledIssuesDelegateWidgetsCache::createHeaderWidget(StalledIssueHeader* header, const StalledIssueVariant &issue) const
+StalledIssueHeaderCase* StalledIssuesDelegateWidgetsCache::createHeaderCaseWidget(StalledIssueHeader* header, const StalledIssueVariant &issue) const
 {
     QPointer<StalledIssueHeaderCase> headerCase(nullptr);
 

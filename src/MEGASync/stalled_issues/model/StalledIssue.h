@@ -6,6 +6,8 @@
 #include <QSharedData>
 #include <QObject>
 #include <QFileInfo>
+#include <QSize>
+#include <QDebug>
 
 #include <memory>
 
@@ -107,7 +109,16 @@ public:
     uint8_t hasFiles() const;
     uint8_t hasFolders() const;
 
-    std::shared_ptr<mega::MegaSyncStall> originalStall;
+    enum SizeType
+    {
+        Header = 0,
+        Body
+    };
+
+    const QSize &getDelegateSize(SizeType type) const;
+    void setDelegateSize(const QSize &newDelegateSize, SizeType type);
+
+    const std::shared_ptr<mega::MegaSyncStall> &getOriginalStall() const;
 
 protected:
     bool initCloudIssue(const mega::MegaSyncStall *stallIssue);
@@ -122,11 +133,14 @@ protected:
 
     virtual void fillIssue(const mega::MegaSyncStall *stall);
 
+    std::shared_ptr<mega::MegaSyncStall> originalStall;
     mega::MegaSyncStall::SyncStallReason mReason = mega::MegaSyncStall::SyncStallReason::NoReason;
     bool mIsSolved = false;
     uint8_t mFiles = 0;
     uint8_t mFolders = 0;
     QStringList mIgnoredPaths;
+    QSize mHeaderDelegateSize;
+    QSize mBodyDelegateSize;
 };
 
 Q_DECLARE_METATYPE(StalledIssue)
@@ -150,12 +164,26 @@ public:
         mData->updateIssue(stallIssue);
     }
 
+    void reset()
+    {
+        mData.reset();
+    }
+
     bool operator==(const StalledIssueVariant &issue)
     {
         return issue.mData == this->mData;
     }
 
     StalledIssueVariant& operator=(const StalledIssueVariant& other) = default;
+
+    const QSize &getDelegateSize(StalledIssue::SizeType type) const
+    {
+        return mData->getDelegateSize(type);
+    }
+    void setDelegateSize(const QSize &newDelegateSize, StalledIssue::SizeType type)
+    {
+        mData->setDelegateSize(newDelegateSize, type);
+    }
 
 private:
     friend class StalledIssuesModel;

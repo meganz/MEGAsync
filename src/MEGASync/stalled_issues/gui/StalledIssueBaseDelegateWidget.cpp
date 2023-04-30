@@ -36,3 +36,28 @@ const StalledIssueVariant& StalledIssueBaseDelegateWidget::getData() const
 {
     return mData;
 }
+
+void StalledIssueBaseDelegateWidget::reset()
+{
+    mData.reset();
+    mCurrentIndex = QModelIndex();
+}
+
+QSize StalledIssueBaseDelegateWidget::sizeHint() const
+{
+    StalledIssue::SizeType sizeType = isHeader() ? StalledIssue::Header : StalledIssue::Body;
+    if(mData.getDelegateSize(sizeType).isValid())
+    {
+        return mData.getDelegateSize(sizeType);
+    }
+
+    auto size = QWidget::sizeHint();
+    mData.setDelegateSize(size, sizeType);
+
+    return size;
+}
+
+bool StalledIssueBaseDelegateWidget::isHeader() const
+{
+    return mCurrentIndex.isValid() && mCurrentIndex.parent().isValid();
+}
