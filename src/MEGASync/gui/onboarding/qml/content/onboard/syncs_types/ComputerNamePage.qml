@@ -5,15 +5,16 @@ import Onboarding 1.0
 
 ComputerNamePageForm {
 
-    property bool changingDeviceName: false;
+    property bool changingDeviceName: false
 
     footerButtons {
         previousButton.visible: false
+
         notNowButton.visible: false
+
         nextButton.onClicked: {
             changingDeviceName = Onboarding.setDeviceName(computerNameTextField.text);
-            if(!changingDeviceName)
-            {
+            if(!changingDeviceName) {
                 syncsFlow.state = syncType;
                 return;
             }
@@ -21,18 +22,18 @@ ComputerNamePageForm {
         }
     }
 
-    computerNameTextField.textField{
-        enabled: false;
-        text: Onboarding.getComputerName();
+    computerNameTextField.textField {
+        enabled: false
+        text: Onboarding.getComputerName()
     }
 
-    Connections{
+    Connections {
         target: Onboarding
-        onDeviceNameReady:{
+
+        onDeviceNameReady: {
             computerNameTextField.text = deviceName;
             computerNameTextField.textField.enabled = true;
-            if(changingDeviceName)
-            {
+            if(changingDeviceName) {
                 syncsFlow.state = syncType;
             }
         }

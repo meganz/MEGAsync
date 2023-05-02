@@ -67,6 +67,7 @@ Rectangle {
             return;
         }
 
+        leftIconVisible = true;
         leftIconLoader.sourceComponent = leftIconComponent;
     }
 
@@ -75,6 +76,7 @@ Rectangle {
             return;
         }
 
+        rightIconVisible = true;
         rightIconLoader.sourceComponent = rightIconComponent;
     }
 
@@ -84,10 +86,6 @@ Rectangle {
         }
 
         hintLoader.sourceComponent = hintComponent;
-    }
-
-    onHintIconSourceChanged: {
-        console.log("textfield - " + hintIconSource);
     }
 
     Loader {

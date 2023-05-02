@@ -32,6 +32,7 @@ SyncsPage {
         spacing: 32
 
         Header {
+            Layout.preferredWidth: parent.width
             title: OnboardingStrings.fullSyncTitle
             description: OnboardingStrings.fullSyncDescription
         }
@@ -42,6 +43,8 @@ SyncsPage {
 
         ChooseSyncFolder {
             id: localFolderChooser
+
+            Layout.preferredWidth: parent.width
         }
     }
 

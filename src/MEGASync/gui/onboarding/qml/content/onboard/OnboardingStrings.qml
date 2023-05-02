@@ -3,7 +3,9 @@ import QtQuick 2.12
 
 QtObject {
 
-    // Sorted alphabetically
+    // !!!!!!!!!!!!!!!!!!!!!!!!!
+    //   Sorted alphabetically
+    // !!!!!!!!!!!!!!!!!!!!!!!!!
 
     readonly property var accountTypeFree: qsTr("Free")
     readonly property var accountTypeProI: qsTr("Pro I")
@@ -19,14 +21,18 @@ QtObject {
     readonly property var backupFolders: qsTr("Backup Folders")
     readonly property var backupTo: qsTr("Backup to:")
     readonly property var cancel: qsTr("Cancel")
-    readonly property var resend: qsTr("Resend")
-    readonly property var choose: qsTr("Choose")
+    readonly property var change: qsTr("Change")
+    readonly property var changeEmailBodyText: qsTr("Please enter your new email address. Lorem ipsum dolor explaining that the old email will be substituted.")
+    readonly property var changeEmailTitle: qsTr("User another email")
     readonly property var computerName: qsTr("Computer name")
     readonly property var computerNameDescription: qsTr("You can assign the name for personal use or workgroup membership of this computer.")
     readonly property var computerNameTitle: qsTr("Set up MEGA")
     readonly property var confirm: qsTr("Confirm")
     readonly property var confirmBackupFoldersDescription: qsTr("Will be added to your cloud and available in your other devices.")
     readonly property var confirmBackupFoldersTitle: qsTr("Confirm folders to back up")
+    readonly property var confirmEmailTitle: qsTr("Welcome to [b]MEGA[/b]")
+    readonly property var confirmEmailBodyText: qsTr("We created an account for you. Please validate your email address in order to get started.")
+    readonly property var confirmEmailChangeText: qsTr("If you have misspelled your email address, please [a]click here[/a] to change it.")
     readonly property var confirmPassword: qsTr("Confirm password")
     readonly property var done: qsTr("Done")
     readonly property var email: qsTr("Email")
@@ -60,6 +66,7 @@ QtObject {
     readonly property var renameBackupFolderDescription: qsTr("A folder named [b]\"<folder name>\"[/b] already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.")
     readonly property var renameBackupFolderTitle: qsTr("Rename folder")
     readonly property var renameBackupFolderHint: qsTr("If you don’t want to rename the new folder, stop the backup in the [a]Backup centre[/a] for the existing folder. Then set up the backup for the new folder again.");
+    readonly property var resend: qsTr("Resend")
     readonly property var selectAll: qsTr("[b]Select all[/b]");
     readonly property var selectBackupFoldersTitle: qsTr("Select folders to back up")
     readonly property var selectBackupFoldersDescription: qsTr("Selected folders from your computer to MEGA. Files will automatically back up when the desktop application is running.")
@@ -71,11 +78,6 @@ QtObject {
     readonly property var selectiveSyncTitle: qsTr("Selective Sync")
     readonly property var signUp: qsTr("Sign up")
     readonly property var signUpTitle: qsTr("Create your [b]MEGA account[/b]")
-    readonly property var confirmEmailTitle: qsTr("Welcome to [b]MEGA[/b]")
-    readonly property var confirmEmailBodyText: qsTr("We created an account for you. Please validate your email address in order to get started.")
-    readonly property var confirmEmailChangeText: qsTr("If you have misspelled your email address, please [a]click here[/a] to change it.")
-    readonly property var changeEmailTitle: qsTr("User another email")
-    readonly property var changeEmailBodyText: qsTr("Please enter your new email address. Lorem ipsum dolor explaining that the old email will be substituted.")
     readonly property var storageSpace: qsTr("Storage space")
     readonly property var synchronize: qsTr("Synchronize")
     readonly property var syncButtonDescription: qsTr("Sync your files between your computers with MEGA cloud, any change from one side will apply to another side.")
