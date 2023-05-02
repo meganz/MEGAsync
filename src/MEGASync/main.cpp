@@ -248,7 +248,6 @@ int main(int argc, char *argv[])
             megaApi->sendEvent(AppStatsEvents::EVENT_INSTALL_STATS, base64stats.constData());
             Sleep(5000);
         }
-
 #endif
         Platform::destroy();
         return 0;
@@ -549,6 +548,7 @@ int main(int argc, char *argv[])
     if (alreadyStarted)
     {
         MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "MEGAsync is already started");
+        Platform::destroy();
         return 0;
     }
     Platform::getInstance()->initialize(argc, argv);
