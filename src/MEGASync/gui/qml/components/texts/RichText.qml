@@ -7,7 +7,9 @@ import Common 1.0
 Text {
     id: control
 
-    property url url: ""
+    readonly property url defaultUrl: "default"
+
+    property url url: defaultUrl
     property color urlColor: Styles.linkPrimary
 
     color: enabled ? Styles.textPrimary : Styles.textDisabled
@@ -24,7 +26,7 @@ Text {
     }
 
     onLinkActivated: {
-        if(url != "") {
+        if(url != defaultUrl) {
             Qt.openUrlExternally(url);
         }
     }

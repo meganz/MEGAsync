@@ -10,8 +10,8 @@ Rectangle {
 
     property alias footerButtons: footerButtons
 
-    width: parent.width
-    height: parent.height
+    readonly property int contentMargin: 32
+
     color: Styles.backgroundColor
 
     Footer {

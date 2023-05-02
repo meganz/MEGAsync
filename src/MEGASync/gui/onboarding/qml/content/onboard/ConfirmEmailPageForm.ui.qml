@@ -15,12 +15,14 @@ import Onboarding 1.0
 
 Rectangle {
     id: root
+
     property alias email: email.text
     property alias changeEmailLinkText: changeEmailLinkText
     readonly property int contentMargin: 48
 
     ColumnLayout {
         id: layout
+
         anchors {
             top: parent.top
             left: parent.left
@@ -49,6 +51,7 @@ Rectangle {
 
         RowLayout {
             spacing: 9
+
             Custom.SvgImage {
                 source: Images.mail
                 sourceSize: Qt.size(24, 24)
@@ -68,14 +71,6 @@ Rectangle {
             font.pixelSize: 14
             text: OnboardingStrings.confirmEmailChangeText
             wrapMode: Text.WordWrap
-            //  url: "test"
         }
     }
 }
-
-/*##^##
-Designer {
-    D{i:0;autoSize:true;height:480;width:640}
-}
-##^##*/
-

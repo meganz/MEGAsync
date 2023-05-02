@@ -1,29 +1,27 @@
 import QtQuick 2.0
 import QtQuick.Dialogs 1.3
 
-
 Item {
     id: root
-
-    property string textForTextField: "";
-    property url selectedUrl: ""
-    signal folderChanged(string folder);
 
     function openFolderSelector() {
         console.info("onOpenFilePicker()");
         fileDialog.open();
     }
 
-    function getFolder()
-    {
+    function getFolder() {
         return selectedUrl;
     }
 
-    function reset()
-    {
+    function reset() {
         selectedUrl = "";
         folderChanged("");
     }
+
+    property string textForTextField: "";
+    property url selectedUrl: ""
+
+    signal folderChanged(string folder);
 
     FileDialog {
         id: fileDialog

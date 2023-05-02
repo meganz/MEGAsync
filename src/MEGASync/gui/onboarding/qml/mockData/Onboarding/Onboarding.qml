@@ -23,6 +23,7 @@ Item {
     signal twoFAFailed
     signal syncSetupSucces
     signal backupsUpdated
+    signal backupConflict
     signal accountConfirmed
     signal changeRegistrationEmailFinished
     signal deviceNameReady
@@ -126,7 +127,7 @@ Item {
 
     function setDeviceName(deviceName) {
         console.info("setDeviceName(deviceName)" + deviceName)
-        return true;
+        return false;
     }
 
     function getPasswordStrength(password) {

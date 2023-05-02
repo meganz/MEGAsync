@@ -24,6 +24,7 @@ Rectangle {
 
     ColumnLayout {
         id: layout
+
         anchors {
             top: parent.top
             left: parent.left
@@ -73,6 +74,7 @@ Rectangle {
 
             text: OnboardingStrings.cancel
         }
+
         Custom.Button {
             id: resendButton
 
@@ -82,10 +84,3 @@ Rectangle {
         }
     }
 }
-
-/*##^##
-Designer {
-    D{i:0;autoSize:true;height:480;width:640}
-}
-##^##*/
-
