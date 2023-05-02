@@ -35,7 +35,7 @@ Rectangle {
     property alias loginButton: loginButton
     property alias nextButton: nextButton
 
-    color: Styles.backgroundColor
+    color: Styles.pageBackground
 
     Column {
         anchors.left: root.left

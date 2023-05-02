@@ -20,7 +20,7 @@ Rectangle {
     readonly property string stepSelectSyncType: "STEP_SELECT_SYNC_TYPE"
     readonly property string stepSyncFolder: "STEP_SELECT_SYNC_FOLDER"
 
-    color: Styles.alternateBackgroundColor
+    color: Styles.pageBackground
     height: parent.height
 
     state: step1ComputerName

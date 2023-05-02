@@ -148,7 +148,7 @@ Rectangle {
             id: focusBorder
 
             color: "transparent"
-            border.color: textField.focus ? Styles.supportInfo : "transparent"
+            border.color: textField.focus ? Styles.focus : "transparent"
             border.width: textField.focusBorderWidth
             radius: textField.focusBorderRadius
 

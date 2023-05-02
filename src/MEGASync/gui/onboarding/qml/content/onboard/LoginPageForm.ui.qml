@@ -26,7 +26,7 @@ Rectangle {
     property alias email: email
     property alias password: password
 
-    color: Styles.backgroundColor
+    color: Styles.pageBackground
 
     Column {
         anchors.verticalCenter: root.verticalCenter

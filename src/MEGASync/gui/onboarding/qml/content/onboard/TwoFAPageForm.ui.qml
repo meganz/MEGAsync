@@ -18,7 +18,7 @@ Rectangle {
     property alias signUpButton: signUpButton
     property alias twoFAField: twoFAField
 
-    color: Styles.backgroundColor
+    color: Styles.pageBackground
 
     ColumnLayout {
 

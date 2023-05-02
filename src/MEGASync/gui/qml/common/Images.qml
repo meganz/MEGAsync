@@ -3,13 +3,17 @@ import QtQuick 2.12
 
 QtObject {
 
-    // Paths
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //   Paths - Sorted alphabetically
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     readonly property url imagesPath: Qt.resolvedUrl("../../images/qml/")
     readonly property url imagesOnboardingPath: Qt.resolvedUrl(imagesPath + "/onboarding/")
     readonly property url imagesPasswordPath: Qt.resolvedUrl(imagesPath + "/password/")
 
-    // Sorted alphabetically by dir
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //   Image paths - Sorted alphabetically by dir
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     readonly property url alertTriangle: imagesPath + "alert_triangle.svg"
     readonly property url arrowRight: imagesPath + "arrow_right.svg"
