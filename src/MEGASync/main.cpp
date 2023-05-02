@@ -190,6 +190,8 @@ int main(int argc, char *argv[])
     QCoreApplication::setApplicationName(QString::fromUtf8("MEGAsync")); //Do not change app name, keep MEGAsync because Linux rely on that for app paths.
     QCoreApplication::setApplicationVersion(QString::number(Preferences::VERSION_CODE));
 
+    Platform::create();
+
     if ((argc == 2) && !strcmp("/uninstall", argv[1]))
     {
         auto preferences = Preferences::instance();
@@ -246,7 +248,9 @@ int main(int argc, char *argv[])
             megaApi->sendEvent(AppStatsEvents::EVENT_INSTALL_STATS, base64stats.constData());
             Sleep(5000);
         }
+
 #endif
+        Platform::destroy();
         return 0;
     }
 
@@ -400,8 +404,6 @@ int main(int argc, char *argv[])
     }
 #endif
 
-
-    Platform::create();
     MegaApplication app(argc, argv);
 #if defined(Q_OS_LINUX)
     theapp = &app;
