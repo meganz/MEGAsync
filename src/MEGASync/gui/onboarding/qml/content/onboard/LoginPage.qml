@@ -14,6 +14,7 @@ LoginPageForm {
     id: root
 
     property bool loginAttempt: false
+    property bool twoFARequired: false
 
     Keys.onEnterPressed: {
         loginButton.clicked();
@@ -46,14 +47,41 @@ LoginPageForm {
             return;
         }
 
-        root.enabled = false;
+        loginButton.busyIndicatorVisible = true;
+        state = logInStatus;
+        loginButton.animationDuration = 2000;
+        loginButton.progressValue = 0.8;
         Onboarding.onLoginClicked({ [Onboarding.RegisterForm.EMAIL]: email.text,
                                     [Onboarding.RegisterForm.PASSWORD]: password.text })
         loginAttempt = true;
     }
 
+    loginButton.onAnimationFinished: {
+        if(completed)
+        {
+            loginButton.busyIndicatorVisible = false;
+            state = normalStatus;
+            if(twoFARequired)
+            {
+                registerFlow.state = twoFA;
+            }
+            else
+            {
+                onboardingFlow.state = syncs;
+                loginButton.progressValue = 0;
+            }
+
+        }
+    }
+
     signUpButton.onClicked: {
         registerFlow.state = register;
+    }
+
+    password.onTextChanged: {
+        if(loginAttempt && !email.hintVisible && email.showType) {
+            email.showType = false;
+        }
     }
 
     Connections {
@@ -65,24 +93,34 @@ LoginPageForm {
             password.showType = true;
             password.hintText = OnboardingStrings.errorLogin;
             password.hintVisible = true;
+            loginButton.progressValue = 0
+            loginButton.busyIndicatorVisible = false;
+            state = normalStatus;
+        }
+
+        onFetchingNodesProgress: {
+            console.log("LOGIN PAGE progress:"+progress)
+            loginButton.progressValue = progress;
         }
 
         onLoginFinished: {
-            root.enabled = true;
-            onboardingFlow.state = syncs;
+            loginButton.progressValue = 0; //start fetching nodes
+            loginButton.animationDuration = 1000;
+            state = fetchNodesStatus;
         }
-    }
 
-    Connections {
-        target: password
-
-        onTextChanged: {
-            if(loginAttempt && !email.hintVisible && email.showType) {
-                email.showType = false;
-            }
+        onTwoFARequired: {
+            twoFARequired = true;
+            loginButton.progressValue = 1;
         }
     }
 }
 
 
 
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+##^##*/

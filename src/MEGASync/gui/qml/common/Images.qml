@@ -16,6 +16,7 @@ QtObject {
     readonly property url helpCircle: imagesPath + "help_circle.svg"
     readonly property url infoCircle: imagesPath + "info_circle.svg"
     readonly property url lock: imagesPath + "lock.svg"
+    readonly property url loader: imagesPath + "loader.svg"
 
     readonly property url building: imagesOnboardingPath + "building.svg"
     readonly property url checkCircleOutline: imagesOnboardingPath + "check_circle_outline.svg"

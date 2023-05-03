@@ -18,7 +18,7 @@ Item {
     signal userPassFailed
     signal twoFARequired
     signal loginFinished
-    signal registerFinished(bool apiOk)
+    signal registerFinished(bool success)
     signal notNowFinished
     signal twoFAFailed
     signal syncSetupSucces
@@ -27,6 +27,7 @@ Item {
     signal accountConfirmed
     signal changeRegistrationEmailFinished
     signal deviceNameReady
+    signal fetchingNodesProgress(double progress)
 
     function onForgotPasswordClicked() {
         console.info("onForgotPasswordClicked()");
@@ -44,6 +45,25 @@ Item {
         repeat: false;
         onTriggered: {
             loginFinished();
+            fetchNodesTimer.start();
+        }
+    }
+
+    Timer {
+        id: fetchNodesTimer
+        interval: 2000;
+        running: false;
+        repeat: false;
+        triggeredOnStart: true
+        onTriggered: {
+            if(running)
+            {
+                fetchingNodesProgress(0.5);
+            }
+            else
+            {
+                fetchingNodesProgress(1);
+            }
         }
     }
 
@@ -166,9 +186,5 @@ Item {
 
         // Rename folder
         //backupsUpdated("C:\\Users\\mega\\Documents", -14, true);
-    }
-
-    Component.onCompleted: {
-        console.info("onboard constructed");
     }
 }

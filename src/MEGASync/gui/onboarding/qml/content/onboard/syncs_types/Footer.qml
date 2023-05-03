@@ -56,17 +56,16 @@ RowLayout {
             }
         }
 
-        Custom.Button {
+        Custom.OutlineButton {
             id: previousButton
 
             text: OnboardingStrings.previous
         }
 
-        Custom.Button {
+        Custom.PrimaryButton {
             id: nextButton
 
             text: OnboardingStrings.next
-            primary: true
             iconSource: Images.arrowRight
         }
 

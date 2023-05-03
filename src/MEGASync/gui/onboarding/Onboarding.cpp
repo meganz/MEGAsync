@@ -21,6 +21,8 @@ Onboarding::Onboarding(QObject *parent)
     , mEmail(QString())
 {
     mMegaApi->addGlobalListener(mGlobalListener.get());
+    mMegaApi->addRequestListener(mDelegateListener.get());
+
     qmlRegisterUncreatableType<Onboarding>("Onboarding", 1, 0, "RegisterForm", QString::fromUtf8("Cannot create WarningLevel in QML"));
     qmlRegisterUncreatableType<Onboarding>("Onboarding", 1, 0, "PasswordStrength", QString::fromUtf8("Cannot create WarningLevel in QML"));
 
@@ -86,7 +88,7 @@ void Onboarding::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* erro
             mEmail = QString::fromUtf8(email);
             emit emailChanged(mEmail);
             mPreferences->setEmailAndGeneralSettings(mEmail);
-            MegaSyncApp->fetchNodes(QString::fromUtf8(email ? email : "")); //TODO: REVIEW IF THIS IS NECESSARY
+           // MegaSyncApp->fetchNodes(QString::fromUtf8(email ? email : "")); //TODO: REVIEW IF THIS IS NECESSARY
             if (!mPreferences->hasLoggedIn())
             {
                 mPreferences->setHasLoggedIn(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000);
@@ -99,7 +101,8 @@ void Onboarding::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* erro
             if (error->getErrorCode() == MegaError::API_EMFAREQUIRED)
             {
                 qDebug() << "Onboarding::onRequestFinish -> TYPE_LOGIN API_EMFAREQUIRED";
-                mPreferences->setEmail(QString::fromUtf8(request->getEmail())); //TODO: REVIEW IF THIS IS NECESSARY
+               // mPreferences->setEmail(QString::fromUtf8(request->getEmail())); //TODO: REVIEW IF THIS IS NECESSARY
+                mEmail = QString::fromUtf8(request->getEmail());
                 mPassword = QString::fromUtf8(request->getPassword());
                 emit twoFARequired();
             }
@@ -143,6 +146,24 @@ void Onboarding::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* erro
     }
 }
 
+void Onboarding::onRequestUpdate(mega::MegaApi *, mega::MegaRequest *request)
+{
+    if (request->getType() == MegaRequest::TYPE_FETCH_NODES)
+    {
+        if (request->getTotalBytes() > 0)
+        {
+            double total = static_cast<double>(request->getTotalBytes());
+            double part = static_cast<double>(request->getTransferredBytes());
+            emit fetchingNodesProgress(part/total);
+        }
+        else
+        {
+            emit fetchingNodesProgress(1);
+        }
+
+    }
+}
+
 void Onboarding::onEvent(mega::MegaApi *, mega::MegaEvent *event)
 {
     if(event->getType() == MegaEvent::EVENT_ACCOUNT_CONFIRMATION)
@@ -177,7 +198,7 @@ void Onboarding::onRegisterClicked(const QVariantMap& data)
 
 void Onboarding::onTwoFARequested(const QString& pin)
 {
-    mMegaApi->multiFactorAuthLogin(mPreferences->email().toUtf8().constData(),
+    mMegaApi->multiFactorAuthLogin(mEmail.toUtf8().constData(),
                                    mPassword.toUtf8().constData(),
                                    pin.toUtf8().constData(),
                                    this->mDelegateListener.get());

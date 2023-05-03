@@ -28,8 +28,8 @@
         <file>content/onboard/syncs_types/backups/ConfirmFoldersPage.qml</file>
         <file>content/onboard/syncs_types/backups/ConfirmFoldersPageForm.ui.qml</file>
         <file>content/onboard/syncs_types/backups/FoldersTable.qml</file>
-	<file>content/onboard/syncs_types/backups/RenameBackupFolderPage.qml</file>
-	<file>content/onboard/syncs_types/backups/RenameBackupFolderPageForm.ui.qml</file>
+        <file>content/onboard/syncs_types/backups/RenameBackupFolderPage.qml</file>
+        <file>content/onboard/syncs_types/backups/RenameBackupFolderPageForm.ui.qml</file>
         <file>content/onboard/syncs_types/backups/SelectFoldersPage.qml</file>
         <file>content/onboard/syncs_types/backups/SelectFoldersPageForm.ui.qml</file>
         <file>content/onboard/syncs_types/left_panel/Step.qml</file>
@@ -46,5 +46,6 @@
         <file>content/onboard/ConfirmEmailPageForm.ui.qml</file>
         <file>content/onboard/ChangeEmailPage.qml</file>
         <file>content/onboard/ChangeEmailPageForm.ui.qml</file>
+        <file>content/onboard/StackViewPage.qml</file>
     </qresource>
 </RCC>

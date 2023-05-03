@@ -68,17 +68,16 @@ Rectangle {
         }
         spacing: 8
 
-        Custom.Button {
+        Custom.OutlineButton {
             id: cancelButton
 
             text: OnboardingStrings.cancel
         }
-        Custom.Button {
+        Custom.PrimaryButton {
             id: resendButton
 
             text: OnboardingStrings.resend
             iconSource: Images.mail
-            primary: true
         }
     }
 }

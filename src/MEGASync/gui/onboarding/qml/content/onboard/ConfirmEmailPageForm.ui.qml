@@ -68,7 +68,7 @@ Rectangle {
             font.pixelSize: 14
             text: OnboardingStrings.confirmEmailChangeText
             wrapMode: Text.WordWrap
-            //  url: "test"
+            manageMouse: true
         }
     }
 }

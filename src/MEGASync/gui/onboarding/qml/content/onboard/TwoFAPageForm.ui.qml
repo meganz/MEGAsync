@@ -11,14 +11,15 @@ import Common 1.0
 import Onboard 1.0
 import Onboard.Syncs_types 1.0
 
-Rectangle {
+StackViewPage {
     id: root
 
     property alias loginButton: loginButton
     property alias signUpButton: signUpButton
     property alias twoFAField: twoFAField
 
-    color: Styles.backgroundColor
+    readonly property int contentMargin: 48
+    readonly property int bottomMargin: 32
 
     ColumnLayout {
 
@@ -55,23 +56,34 @@ Rectangle {
         anchors {
             right: root.right
             bottom: root.bottom
-            rightMargin: 48
-            bottomMargin: 24
+            left: root.left
+            leftMargin: contentMargin
+            rightMargin: contentMargin
+            bottomMargin: bottomMargin
         }
 
-        Custom.Button {
-            id: loginButton
-
-            primary: true
-            text: OnboardingStrings.login
-            Layout.alignment: Qt.AlignRight
-        }
-
-        Custom.Button {
+        Custom.OutlineButton {
             id: signUpButton
 
             text: OnboardingStrings.signUp
+            Layout.alignment: Qt.AlignLeft
+        }
+
+        Custom.PrimaryButton {
+            id: loginButton
+
+            text: OnboardingStrings.login
             Layout.alignment: Qt.AlignRight
+            busyIndicatorImage: Images.loader
+            iconSource: Images.arrowRight
+            progressBar: true
         }
     }
 }
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+##^##*/
+

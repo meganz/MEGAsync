@@ -45,6 +45,8 @@ public:
                          mega::MegaRequest *request,
                          mega::MegaError* error) override;
 
+    void onRequestUpdate(mega::MegaApi*, mega::MegaRequest* request) override;
+
     void onEvent(mega::MegaApi*, mega::MegaEvent* event) override;
 
     Q_INVOKABLE void onLoginClicked(const QVariantMap& data);
@@ -73,6 +75,7 @@ signals:
     void emailChanged(const QString& email);
     void changeRegistrationEmailFinished(bool apiOk);
     void backupConflict(const QString& folder);
+    void fetchingNodesProgress(double progress);
 
 public slots:
     void onNotNowClicked();

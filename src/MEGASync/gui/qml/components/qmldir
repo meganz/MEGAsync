@@ -1,5 +1,8 @@
 module Components
 Button 1.0 buttons/Button.qml
+PrimaryButton 1.0 buttons/PrimaryButton.qml
+SecondaryButton 1.0 buttons/SecondaryButton.qml
+OutlineButton 1.0 buttons/OutlineButton.qml
 HelpButton 1.0 buttons/HelpButton.qml
 CheckBox 1.0 checkBoxes/CheckBox.qml
 SvgImage 1.0 images/SvgImage.qml
@@ -13,4 +16,4 @@ HintText 1.0 texts/HintText.qml
 NotificationText 1.0 texts/NotificationText.qml
 ToolTip 1.0 toolTips/ToolTip.qml
 Image 1.0 images/Image.qml
-
+BusyIndicator 1.0 busyIndicator/BusyIndicator.qml
