@@ -1,5 +1,4 @@
-// Copyright (c) 2007, Google Inc.
-// All rights reserved.
+// Copyright 2007 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -41,7 +40,7 @@
 // Example Usage :
 //
 //  kern_return_t result;
-//  OnDemandServer *server = OnDemandServer::Create("/tmp/myserver",
+//  OnDemandServer* server = OnDemandServer::Create("/tmp/myserver",
 //                                                  "com.MyCompany.MyServiceName",
 //                                                  true,
 //                                                  &result);
@@ -88,8 +87,8 @@ class OnDemandServer {
   }
 
   // Creates the bootstrap server and service
-  kern_return_t Initialize(const char *server_command,
-                           const char *service_name,
+  kern_return_t Initialize(const char* server_command,
+                           const char* service_name,
                            bool unregister_on_cleanup);
 
   // Returns an OnDemandServer object if successful, or NULL if there's
@@ -110,10 +109,10 @@ class OnDemandServer {
   //    out_result : if non-NULL, returns the result
   //      this value will be KERN_SUCCESS if Create() returns non-NULL
   //
-  static OnDemandServer *Create(const char *server_command,
-                                const char *service_name,
+  static OnDemandServer* Create(const char *server_command,
+                                const char* service_name,
                                 bool unregister_on_cleanup,
-                                kern_return_t *out_result);
+                                kern_return_t* out_result);
 
   // Cleans up and if LaunchOnDemand() has not yet been called then
   // the bootstrap service will be unregistered.
@@ -127,7 +126,7 @@ class OnDemandServer {
   // This is the port we need to send a mach message to after calling
   // LaunchOnDemand().  Sending a message causing an immediate launch
   // of the server
-  mach_port_t GetServicePort() { return service_port_; };
+  mach_port_t GetServicePort() { return service_port_; }
 
  private:
   // Disallow copy constructor

@@ -65,6 +65,10 @@
  * I've modified it to be compatible with 64-bit images.
 */
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>  // Must come first
+#endif
+
 #include "breakpad_nlist_64.h"
 
 #include <CoreFoundation/CoreFoundation.h>
@@ -131,7 +135,7 @@ struct MachBits<nlist64> {
 
 template<typename nlist_type>
 int
-__breakpad_fdnlist(int fd, nlist_type *list, const char **symbolNames,
+__breakpad_fdnlist(int fd, nlist_type* list, const char** symbolNames,
                    cpu_type_t cpu_type);
 
 /*
@@ -139,9 +143,9 @@ __breakpad_fdnlist(int fd, nlist_type *list, const char **symbolNames,
  */
 
 template <typename nlist_type>
-int breakpad_nlist_common(const char *name,
-                          nlist_type *list,
-                          const char **symbolNames,
+int breakpad_nlist_common(const char* name,
+                          nlist_type* list,
+                          const char** symbolNames,
                           cpu_type_t cpu_type) {
   int fd = open(name, O_RDONLY, 0);
   if (fd < 0)
@@ -151,16 +155,16 @@ int breakpad_nlist_common(const char *name,
   return n;
 }
 
-int breakpad_nlist(const char *name,
-                   struct nlist *list,
-                   const char **symbolNames,
+int breakpad_nlist(const char* name,
+                   struct nlist* list,
+                   const char** symbolNames,
                    cpu_type_t cpu_type) {
   return breakpad_nlist_common(name, list, symbolNames, cpu_type);
 }
 
-int breakpad_nlist(const char *name,
-                   struct nlist_64 *list,
-                   const char **symbolNames,
+int breakpad_nlist(const char* name,
+                   struct nlist_64* list,
+                   const char** symbolNames,
                    cpu_type_t cpu_type) {
   return breakpad_nlist_common(name, list, symbolNames, cpu_type);
 }
@@ -168,7 +172,7 @@ int breakpad_nlist(const char *name,
 /* Note: __fdnlist() is called from kvm_nlist in libkvm's kvm.c */
 
 template<typename nlist_type>
-int __breakpad_fdnlist(int fd, nlist_type *list, const char **symbolNames,
+int __breakpad_fdnlist(int fd, nlist_type* list, const char** symbolNames,
                        cpu_type_t cpu_type) {
   typedef typename MachBits<nlist_type>::mach_header_type mach_header_type;
   typedef typename MachBits<nlist_type>::word_type word_type;
@@ -189,9 +193,9 @@ int __breakpad_fdnlist(int fd, nlist_type *list, const char **symbolNames,
   }
 
   struct exec buf;
-  if (read(fd, (char *)&buf, sizeof(buf)) != sizeof(buf) ||
-      (N_BADMAG(buf) && *((uint32_t *)&buf) != magic &&
-        CFSwapInt32BigToHost(*((uint32_t *)&buf)) != FAT_MAGIC &&
+  if (read(fd, (char*)&buf, sizeof(buf)) != sizeof(buf) ||
+      (N_BADMAG(buf) && *((uint32_t*)&buf) != magic &&
+        CFSwapInt32BigToHost(*((uint32_t*)&buf)) != FAT_MAGIC &&
        /* The following is the big-endian ppc64 check */
        (*((uint32_t*)&buf)) != FAT_MAGIC)) {
     return -1;
@@ -199,26 +203,15 @@ int __breakpad_fdnlist(int fd, nlist_type *list, const char **symbolNames,
 
   /* Deal with fat file if necessary */
   unsigned arch_offset = 0;
-  if (CFSwapInt32BigToHost(*((uint32_t *)&buf)) == FAT_MAGIC ||
+  if (CFSwapInt32BigToHost(*((uint32_t*)&buf)) == FAT_MAGIC ||
       /* The following is the big-endian ppc64 check */
-      *((unsigned int *)&buf) == FAT_MAGIC) {
-    /* Get host info */
-    host_t host = mach_host_self();
-    unsigned hic = HOST_BASIC_INFO_COUNT;
-    struct host_basic_info hbi;
-    kern_return_t kr;
-    if ((kr = host_info(host, HOST_BASIC_INFO,
-                        (host_info_t)(&hbi), &hic)) != KERN_SUCCESS) {
-      return -1;
-    }
-    mach_port_deallocate(mach_task_self(), host);
-
+      *((unsigned int*)&buf) == FAT_MAGIC) {
     /* Read in the fat header */
     struct fat_header fh;
     if (lseek(fd, 0, SEEK_SET) == -1) {
       return -1;
     }
-    if (read(fd, (char *)&fh, sizeof(fh)) != sizeof(fh)) {
+    if (read(fd, (char*)&fh, sizeof(fh)) != sizeof(fh)) {
       return -1;
     }
 
@@ -226,12 +219,12 @@ int __breakpad_fdnlist(int fd, nlist_type *list, const char **symbolNames,
     fh.nfat_arch = CFSwapInt32BigToHost(fh.nfat_arch);
 
     /* Read in the fat archs */
-    struct fat_arch *fat_archs =
-        (struct fat_arch *)malloc(fh.nfat_arch * sizeof(struct fat_arch));
+    struct fat_arch* fat_archs =
+        (struct fat_arch*)malloc(fh.nfat_arch * sizeof(struct fat_arch));
     if (fat_archs == NULL) {
       return -1;
     }
-    if (read(fd, (char *)fat_archs,
+    if (read(fd, (char*)fat_archs,
              sizeof(struct fat_arch) * fh.nfat_arch) !=
         (ssize_t)(sizeof(struct fat_arch) * fh.nfat_arch)) {
       free(fat_archs);
@@ -255,7 +248,7 @@ int __breakpad_fdnlist(int fd, nlist_type *list, const char **symbolNames,
         CFSwapInt32BigToHost(fat_archs[i].align);
     }
 
-    struct fat_arch *fap = NULL;
+    struct fat_arch* fap = NULL;
     for (unsigned i = 0; i < fh.nfat_arch; i++) {
       if (fat_archs[i].cputype == cpu_type) {
         fap = &fat_archs[i];
@@ -274,56 +267,53 @@ int __breakpad_fdnlist(int fd, nlist_type *list, const char **symbolNames,
     if (lseek(fd, arch_offset, SEEK_SET) == -1) {
       return -1;
     }
-    if (read(fd, (char *)&buf, sizeof(buf)) != sizeof(buf)) {
+    if (read(fd, (char*)&buf, sizeof(buf)) != sizeof(buf)) {
       return -1;
     }
   }
 
   off_t sa;  /* symbol address */
   off_t ss;  /* start of strings */
-  register register_t n;
-  if (*((unsigned int *)&buf) == magic) {
+  register_t n;
+  if (*((unsigned int*)&buf) == magic) {
     if (lseek(fd, arch_offset, SEEK_SET) == -1) {
       return -1;
     }
     mach_header_type mh;
-    if (read(fd, (char *)&mh, sizeof(mh)) != sizeof(mh)) {
+    if (read(fd, (char*)&mh, sizeof(mh)) != sizeof(mh)) {
       return -1;
     }
 
-    struct load_command *load_commands =
-        (struct load_command *)malloc(mh.sizeofcmds);
+    struct load_command* load_commands =
+        (struct load_command*)malloc(mh.sizeofcmds);
     if (load_commands == NULL) {
       return -1;
     }
-    if (read(fd, (char *)load_commands, mh.sizeofcmds) !=
+    if (read(fd, (char*)load_commands, mh.sizeofcmds) !=
         (ssize_t)mh.sizeofcmds) {
       free(load_commands);
       return -1;
     }
-    struct symtab_command *stp = NULL;
-    struct load_command *lcp = load_commands;
+    struct symtab_command* stp = NULL;
+    struct load_command* lcp = load_commands;
     // iterate through all load commands, looking for
     // LC_SYMTAB load command
     for (uint32_t i = 0; i < mh.ncmds; i++) {
       if (lcp->cmdsize % sizeof(word_type) != 0 ||
           lcp->cmdsize <= 0 ||
-          (char *)lcp + lcp->cmdsize >
-          (char *)load_commands + mh.sizeofcmds) {
+          (char*)lcp + lcp->cmdsize > (char*)load_commands + mh.sizeofcmds) {
         free(load_commands);
         return -1;
       }
       if (lcp->cmd == LC_SYMTAB) {
-        if (lcp->cmdsize !=
-            sizeof(struct symtab_command)) {
+        if (lcp->cmdsize != sizeof(struct symtab_command)) {
           free(load_commands);
           return -1;
         }
-        stp = (struct symtab_command *)lcp;
+        stp = (struct symtab_command*)lcp;
         break;
       }
-      lcp = (struct load_command *)
-        ((char *)lcp + lcp->cmdsize);
+      lcp = (struct load_command*)((char*)lcp + lcp->cmdsize);
     }
     if (stp == NULL) {
       free(load_commands);
@@ -354,11 +344,11 @@ int __breakpad_fdnlist(int fd, nlist_type *list, const char **symbolNames,
   // and look for a match
   while (n) {
     nlist_type space[BUFSIZ/sizeof (nlist_type)];
-    register register_t m = sizeof (space);
+    register_t m = sizeof (space);
 
     if (n < m)
       m = n;
-    if (read(fd, (char *)space, m) != m)
+    if (read(fd, (char*)space, m) != m)
       break;
     n -= m;
     off_t savpos = lseek(fd, 0, SEEK_CUR);
@@ -379,13 +369,13 @@ int __breakpad_fdnlist(int fd, nlist_type *list, const char **symbolNames,
       if (read(fd, nambuf, maxlen+1) == -1) {
         return -1;
       }
-      const char *s2 = nambuf;
-      for (nlist_type *p = list; 
+      const char* s2 = nambuf;
+      for (nlist_type* p = list; 
            symbolNames[p-list] && symbolNames[p-list][0];
            p++) {
         // get the symbol name the user has passed in that 
         // corresponds to the nlist entry that we're looking at
-        const char *s1 = symbolNames[p - list];
+        const char* s1 = symbolNames[p - list];
         while (*s1) {
           if (*s1++ != *s2++)
             goto cont;

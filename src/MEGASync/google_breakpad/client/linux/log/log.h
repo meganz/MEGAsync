@@ -1,5 +1,4 @@
-// Copyright (c) 2012, Google Inc.
-// All rights reserved.
+// Copyright 2012 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -35,6 +34,20 @@
 namespace logger {
 
 int write(const char* buf, size_t nbytes);
+
+// In the case of Android the log can be written to the default system log
+// (default behavior of write() above, or to the crash log (see
+// writeToCrashLog() below).
+#if defined(__ANDROID__)
+
+// The logger must be initialized in a non-compromised context.
+void initializeCrashLogWriter();
+
+// Once initialized, writeToCrashLog is safe to use in a compromised context,
+// even if the initialization failed, in which case this will silently fall
+// back on write().
+int writeToCrashLog(const char* buf);
+#endif
 
 }  // namespace logger
 

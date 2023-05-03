@@ -1,5 +1,4 @@
-// Copyright (c) 2011 Google Inc.
-// All rights reserved.
+// Copyright 2011 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -31,6 +30,10 @@
 
 // synth_elf_unittest.cc:
 // Unittests for google_breakpad::synth_elf::ELF
+
+#ifdef HAVE_CONFIG_H
+#include <config.h>  // Must come first
+#endif
 
 #include <elf.h>
 
@@ -193,7 +196,7 @@ class BasicElf : public Test {};
 
 typedef Types<ElfClass32, ElfClass64> ElfClasses;
 
-TYPED_TEST_CASE(BasicElf, ElfClasses);
+TYPED_TEST_SUITE(BasicElf, ElfClasses);
 
 TYPED_TEST(BasicElf, EmptyLE) {
   typedef typename TypeParam::Ehdr Ehdr;
@@ -381,9 +384,9 @@ TEST_F(ElfNotesTest, Empty) {
 
 TEST_F(ElfNotesTest, Notes) {
   Notes notes(kLittleEndian);
-  notes.AddNote(1, "Linux", reinterpret_cast<const uint8_t *>("\x42\x02\0\0"),
+  notes.AddNote(1, "Linux", reinterpret_cast<const uint8_t*>("\x42\x02\0\0"),
                 4);
-  notes.AddNote(2, "a", reinterpret_cast<const uint8_t *>("foobar"),
+  notes.AddNote(2, "a", reinterpret_cast<const uint8_t*>("foobar"),
                 sizeof("foobar") - 1);
 
   const uint8_t kExpectedNotesContents[] = {

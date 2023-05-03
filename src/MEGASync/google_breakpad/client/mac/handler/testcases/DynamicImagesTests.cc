@@ -1,5 +1,4 @@
-// Copyright (c) 2008, Google Inc.
-// All rights reserved
+// Copyright 2008 Google LLC
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
 // met:
@@ -10,7 +9,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -31,8 +30,12 @@
 //  minidump_test
 //
 //  Created by Neal Sidhwaney on 4/17/08.
-//  Copyright 2008 Google Inc. All rights reserved.
+//  Copyright 2008 Google LLC
 //
+
+#ifdef HAVE_CONFIG_H
+#include <config.h>  // Must come first
+#endif
 
 #include "client/mac/handler/testcases/DynamicImagesTests.h"
 #include "client/mac/handler/dynamic_images.h"
@@ -42,7 +45,7 @@ DynamicImagesTests test2(TEST_INVOCATION(DynamicImagesTests,
 DynamicImagesTests test3(TEST_INVOCATION(DynamicImagesTests,
                                          ReadLibrariesFromLocalTaskTest));
 
-DynamicImagesTests::DynamicImagesTests(TestInvocation *invocation)
+DynamicImagesTests::DynamicImagesTests(TestInvocation* invocation)
     : TestCase(invocation) {
 }
 
@@ -54,7 +57,7 @@ void DynamicImagesTests::ReadTaskMemoryTest() {
 
   // pick test2 as a symbol we know to be valid to read
   // anything will work, really
-  void *addr = reinterpret_cast<void*>(&test2);
+  void* addr = reinterpret_cast<void*>(&test2);
   std::vector<uint8_t> buf(getpagesize());
 
   fprintf(stderr, "reading 0x%p\n", addr);
@@ -71,7 +74,7 @@ void DynamicImagesTests::ReadTaskMemoryTest() {
 void DynamicImagesTests::ReadLibrariesFromLocalTaskTest() {
 
   mach_port_t me = mach_task_self();
-  google_breakpad::DynamicImages *d = new google_breakpad::DynamicImages(me);
+  google_breakpad::DynamicImages* d = new google_breakpad::DynamicImages(me);
 
   fprintf(stderr,"Local task image count: %d\n", d->GetImageCount());
 

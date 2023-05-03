@@ -1,5 +1,4 @@
-// Copyright (c) 2010, Google Inc.
-// All rights reserved.
+// Copyright 2010 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -29,8 +28,13 @@
 
 // Original author: Jim Blandy <jimb@mozilla.com> <jimb@red-bean.com>
 
-// dwarf2reader_cfi_unittest.cc: Unit tests for dwarf2reader::CallFrameInfo
+// dwarf2reader_cfi_unittest.cc: Unit tests for google_breakpad::CallFrameInfo
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>  // Must come first
+#endif
+
+#include <stdint.h>
 #include <stdlib.h>
 
 #include <string>
@@ -71,11 +75,11 @@ using google_breakpad::test_assembler::kBigEndian;
 using google_breakpad::test_assembler::kLittleEndian;
 using google_breakpad::test_assembler::Section;
 
-using dwarf2reader::DwarfPointerEncoding;
-using dwarf2reader::ENDIANNESS_BIG;
-using dwarf2reader::ENDIANNESS_LITTLE;
-using dwarf2reader::ByteReader;
-using dwarf2reader::CallFrameInfo;
+using google_breakpad::DwarfPointerEncoding;
+using google_breakpad::ENDIANNESS_BIG;
+using google_breakpad::ENDIANNESS_LITTLE;
+using google_breakpad::ByteReader;
+using google_breakpad::CallFrameInfo;
 
 using std::vector;
 using testing::InSequence;
@@ -86,7 +90,7 @@ using testing::_;
 
 #ifdef WRITE_ELF
 void WriteELFFrameSection(const char *filename, const char *section_name,
-                          const CFISection &section);
+                          const CFISection& section);
 #define PERHAPS_WRITE_DEBUG_FRAME_FILE(name, section)                   \
     WriteELFFrameSection("cfitest-" name, ".debug_frame", section);
 #define PERHAPS_WRITE_EH_FRAME_FILE(name, section)                      \
@@ -98,41 +102,46 @@ void WriteELFFrameSection(const char *filename, const char *section_name,
 
 class MockCallFrameInfoHandler: public CallFrameInfo::Handler {
  public:
-  MOCK_METHOD6(Entry, bool(size_t offset, uint64 address, uint64 length,
-                           uint8 version, const string &augmentation,
+  MOCK_METHOD6(Entry, bool(size_t offset, uint64_t address, uint64_t length,
+                           uint8_t version, const string& augmentation,
                            unsigned return_address));
-  MOCK_METHOD2(UndefinedRule, bool(uint64 address, int reg));
-  MOCK_METHOD2(SameValueRule, bool(uint64 address, int reg));
-  MOCK_METHOD4(OffsetRule, bool(uint64 address, int reg, int base_register,
+  MOCK_METHOD2(UndefinedRule, bool(uint64_t address, int reg));
+  MOCK_METHOD2(SameValueRule, bool(uint64_t address, int reg));
+  MOCK_METHOD4(OffsetRule, bool(uint64_t address, int reg, int base_register,
                                 long offset));
-  MOCK_METHOD4(ValOffsetRule, bool(uint64 address, int reg, int base_register,
+  MOCK_METHOD4(ValOffsetRule, bool(uint64_t address, int reg, int base_register,
                                    long offset));
-  MOCK_METHOD3(RegisterRule, bool(uint64 address, int reg, int base_register));
-  MOCK_METHOD3(ExpressionRule, bool(uint64 address, int reg,
-                                    const string &expression));
-  MOCK_METHOD3(ValExpressionRule, bool(uint64 address, int reg,
-                                       const string &expression));
+  MOCK_METHOD3(RegisterRule, bool(uint64_t address, int reg, int base_register));
+  MOCK_METHOD3(ExpressionRule, bool(uint64_t address, int reg,
+                                    const string& expression));
+  MOCK_METHOD3(ValExpressionRule, bool(uint64_t address, int reg,
+                                       const string& expression));
   MOCK_METHOD0(End, bool());
-  MOCK_METHOD2(PersonalityRoutine, bool(uint64 address, bool indirect));
-  MOCK_METHOD2(LanguageSpecificDataArea, bool(uint64 address, bool indirect));
+  MOCK_METHOD0(Architecture, string());
+  MOCK_METHOD2(PersonalityRoutine, bool(uint64_t address, bool indirect));
+  MOCK_METHOD2(LanguageSpecificDataArea, bool(uint64_t address, bool indirect));
   MOCK_METHOD0(SignalHandler, bool());
 };
 
 class MockCallFrameErrorReporter: public CallFrameInfo::Reporter {
  public:
   MockCallFrameErrorReporter() : Reporter("mock filename", "mock section") { }
-  MOCK_METHOD2(Incomplete, void(uint64, CallFrameInfo::EntryKind));
-  MOCK_METHOD1(EarlyEHTerminator, void(uint64));
-  MOCK_METHOD2(CIEPointerOutOfRange, void(uint64, uint64));
-  MOCK_METHOD2(BadCIEId, void(uint64, uint64));
-  MOCK_METHOD2(UnrecognizedVersion, void(uint64, int version));
-  MOCK_METHOD2(UnrecognizedAugmentation, void(uint64, const string &));
-  MOCK_METHOD2(InvalidPointerEncoding, void(uint64, uint8));
-  MOCK_METHOD2(UnusablePointerEncoding, void(uint64, uint8));
-  MOCK_METHOD2(RestoreInCIE, void(uint64, uint64));
-  MOCK_METHOD3(BadInstruction, void(uint64, CallFrameInfo::EntryKind, uint64));
-  MOCK_METHOD3(NoCFARule, void(uint64, CallFrameInfo::EntryKind, uint64));
-  MOCK_METHOD3(EmptyStateStack, void(uint64, CallFrameInfo::EntryKind, uint64));
+  MOCK_METHOD2(Incomplete, void(uint64_t, CallFrameInfo::EntryKind));
+  MOCK_METHOD1(EarlyEHTerminator, void(uint64_t));
+  MOCK_METHOD2(CIEPointerOutOfRange, void(uint64_t, uint64_t));
+  MOCK_METHOD2(BadCIEId, void(uint64_t, uint64_t));
+  MOCK_METHOD2(UnexpectedAddressSize, void(uint64_t, uint8_t));
+  MOCK_METHOD2(UnexpectedSegmentSize, void(uint64_t, uint8_t));
+  MOCK_METHOD2(UnrecognizedVersion, void(uint64_t, int version));
+  MOCK_METHOD2(UnrecognizedAugmentation, void(uint64_t, const string&));
+  MOCK_METHOD2(InvalidPointerEncoding, void(uint64_t, uint8_t));
+  MOCK_METHOD2(UnusablePointerEncoding, void(uint64_t, uint8_t));
+  MOCK_METHOD2(RestoreInCIE, void(uint64_t, uint64_t));
+  MOCK_METHOD3(BadInstruction, void(uint64_t, CallFrameInfo::EntryKind,
+                                    uint64_t));
+  MOCK_METHOD3(NoCFARule, void(uint64_t, CallFrameInfo::EntryKind, uint64_t));
+  MOCK_METHOD3(EmptyStateStack, void(uint64_t, CallFrameInfo::EntryKind,
+                                     uint64_t));
 };
 
 struct CFIFixture {
@@ -186,7 +195,7 @@ class CFI: public CFIFixture, public Test { };
 TEST_F(CFI, EmptyRegion) {
   EXPECT_CALL(handler, Entry(_, _, _, _, _, _)).Times(0);
   EXPECT_CALL(handler, End()).Times(0);
-  static const char data[1] = { 42 };
+  static const uint8_t data[] = { 42 };
 
   ByteReader byte_reader(ENDIANNESS_BIG);
   CallFrameInfo parser(data, 0, &byte_reader, &handler, &reporter);
@@ -213,7 +222,8 @@ TEST_F(CFI, IncompleteLength32) {
 
   ByteReader byte_reader(ENDIANNESS_BIG);
   byte_reader.SetAddressSize(8);
-  CallFrameInfo parser(contents.data(), contents.size() - 2,
+  CallFrameInfo parser(reinterpret_cast<const uint8_t*>(contents.data()),
+                       contents.size() - 2,
                        &byte_reader, &handler, &reporter);
   EXPECT_FALSE(parser.Start());
 }
@@ -238,7 +248,8 @@ TEST_F(CFI, IncompleteLength64) {
 
   ByteReader byte_reader(ENDIANNESS_LITTLE);
   byte_reader.SetAddressSize(4);
-  CallFrameInfo parser(contents.data(), contents.size() - 4,
+  CallFrameInfo parser(reinterpret_cast<const uint8_t*>(contents.data()),
+                       contents.size() - 4,
                        &byte_reader, &handler, &reporter);
   EXPECT_FALSE(parser.Start());
 }
@@ -262,7 +273,8 @@ TEST_F(CFI, IncompleteId32) {
 
   ByteReader byte_reader(ENDIANNESS_BIG);
   byte_reader.SetAddressSize(8);
-  CallFrameInfo parser(contents.data(), contents.size(),
+  CallFrameInfo parser(reinterpret_cast<const uint8_t*>(contents.data()),
+                       contents.size(),
                        &byte_reader, &handler, &reporter);
   EXPECT_FALSE(parser.Start());
 }
@@ -288,7 +300,8 @@ TEST_F(CFI, BadId32) {
 
   ByteReader byte_reader(ENDIANNESS_BIG);
   byte_reader.SetAddressSize(8);
-  CallFrameInfo parser(contents.data(), contents.size(),
+  CallFrameInfo parser(reinterpret_cast<const uint8_t*>(contents.data()),
+                       contents.size(),
                        &byte_reader, &handler, &reporter);
   EXPECT_FALSE(parser.Start());
 }
@@ -297,7 +310,7 @@ TEST_F(CFI, BadId32) {
 TEST_F(CFI, SingleCIE) {
   CFISection section(kLittleEndian, 4);
   section.CIEHeader(0xffe799a8, 0x3398dcdd, 0x6e9683de, 3, "");
-  section.Append(10, dwarf2reader::DW_CFA_nop);
+  section.Append(10, google_breakpad::DW_CFA_nop);
   section.FinishEntry();
 
   PERHAPS_WRITE_DEBUG_FRAME_FILE("SingleCIE", section);
@@ -309,7 +322,8 @@ TEST_F(CFI, SingleCIE) {
   EXPECT_TRUE(section.GetContents(&contents));
   ByteReader byte_reader(ENDIANNESS_LITTLE);
   byte_reader.SetAddressSize(4);
-  CallFrameInfo parser(contents.data(), contents.size(),
+  CallFrameInfo parser(reinterpret_cast<const uint8_t*>(contents.data()),
+                       contents.size(),
                        &byte_reader, &handler, &reporter);
   EXPECT_TRUE(parser.Start());
 }
@@ -339,7 +353,8 @@ TEST_F(CFI, OneFDE) {
   EXPECT_TRUE(section.GetContents(&contents));
   ByteReader byte_reader(ENDIANNESS_BIG);
   byte_reader.SetAddressSize(4);
-  CallFrameInfo parser(contents.data(), contents.size(),
+  CallFrameInfo parser(reinterpret_cast<const uint8_t*>(contents.data()),
+                       contents.size(),
                        &byte_reader, &handler, &reporter);
   EXPECT_TRUE(parser.Start());
 }
@@ -382,7 +397,8 @@ TEST_F(CFI, TwoFDEsOneCIE) {
   EXPECT_TRUE(section.GetContents(&contents));
   ByteReader byte_reader(ENDIANNESS_BIG);
   byte_reader.SetAddressSize(4);
-  CallFrameInfo parser(contents.data(), contents.size(),
+  CallFrameInfo parser(reinterpret_cast<const uint8_t*>(contents.data()),
+                       contents.size(),
                        &byte_reader, &handler, &reporter);
   EXPECT_TRUE(parser.Start());
 }
@@ -431,7 +447,8 @@ TEST_F(CFI, TwoFDEsTwoCIEs) {
   EXPECT_TRUE(section.GetContents(&contents));
   ByteReader byte_reader(ENDIANNESS_LITTLE);
   byte_reader.SetAddressSize(8);
-  CallFrameInfo parser(contents.data(), contents.size(),
+  CallFrameInfo parser(reinterpret_cast<const uint8_t*>(contents.data()),
+                       contents.size(),
                        &byte_reader, &handler, &reporter);
   EXPECT_TRUE(parser.Start());
 }
@@ -475,7 +492,8 @@ TEST_F(CFI, BadVersion) {
   EXPECT_TRUE(section.GetContents(&contents));
   ByteReader byte_reader(ENDIANNESS_BIG);
   byte_reader.SetAddressSize(4);
-  CallFrameInfo parser(contents.data(), contents.size(),
+  CallFrameInfo parser(reinterpret_cast<const uint8_t*>(contents.data()),
+                       contents.size(),
                        &byte_reader, &handler, &reporter);
   EXPECT_FALSE(parser.Start());
 }
@@ -519,7 +537,8 @@ TEST_F(CFI, BadAugmentation) {
   EXPECT_TRUE(section.GetContents(&contents));
   ByteReader byte_reader(ENDIANNESS_BIG);
   byte_reader.SetAddressSize(4);
-  CallFrameInfo parser(contents.data(), contents.size(),
+  CallFrameInfo parser(reinterpret_cast<const uint8_t*>(contents.data()),
+                       contents.size(),
                        &byte_reader, &handler, &reporter);
   EXPECT_FALSE(parser.Start());
 }
@@ -553,7 +572,8 @@ TEST_F(CFI, CIEVersion1ReturnColumn) {
   EXPECT_TRUE(section.GetContents(&contents));
   ByteReader byte_reader(ENDIANNESS_BIG);
   byte_reader.SetAddressSize(4);
-  CallFrameInfo parser(contents.data(), contents.size(),
+  CallFrameInfo parser(reinterpret_cast<const uint8_t*>(contents.data()),
+                       contents.size(),
                        &byte_reader, &handler, &reporter);
   EXPECT_TRUE(parser.Start());
 }
@@ -587,9 +607,122 @@ TEST_F(CFI, CIEVersion3ReturnColumn) {
   EXPECT_TRUE(section.GetContents(&contents));
   ByteReader byte_reader(ENDIANNESS_BIG);
   byte_reader.SetAddressSize(4);
-  CallFrameInfo parser(contents.data(), contents.size(),
+  CallFrameInfo parser(reinterpret_cast<const uint8_t*>(contents.data()),
+                       contents.size(),
                        &byte_reader, &handler, &reporter);
   EXPECT_TRUE(parser.Start());
+}
+
+TEST_F(CFI, CIEVersion4AdditionalFields) {
+  CFISection section(kBigEndian, 8);
+  Label cie;
+  section
+      .Mark(&cie)
+      // CIE version 4 with expected address (64bit) and segment size.
+      .CIEHeader(0x0ab4758d, 0xc010fdf7, 0x89, 4, "", true, 8, 0)
+      .FinishEntry()
+      // FDE, citing that CIE.
+      .FDEHeader(cie, 0x86763f2b, 0x2a66dc23)
+      .FinishEntry();
+
+  PERHAPS_WRITE_DEBUG_FRAME_FILE("CIEVersion3ReturnColumn", section);
+
+  {
+    InSequence s;
+    EXPECT_CALL(handler, Entry(_, 0x86763f2b, 0x2a66dc23, 4, "", 0x89))
+        .WillOnce(Return(true));
+    EXPECT_CALL(handler, End()).WillOnce(Return(true));
+  }
+
+  string contents;
+  EXPECT_TRUE(section.GetContents(&contents));
+  ByteReader byte_reader(ENDIANNESS_BIG);
+  CallFrameInfo parser(reinterpret_cast<const uint8_t*>(contents.data()),
+                       contents.size(),
+                       &byte_reader, &handler, &reporter);
+  EXPECT_TRUE(parser.Start());
+}
+
+TEST_F(CFI, CIEVersion4AdditionalFields32BitAddress) {
+  CFISection section(kBigEndian, 4);
+  Label cie;
+  section
+      .Mark(&cie)
+      // CIE version 4 with expected address (32bit) and segment size.
+      .CIEHeader(0x0ab4758d, 0xc010fdf7, 0x89, 4, "", true, 4, 0)
+      .FinishEntry()
+      // FDE, citing that CIE.
+      .FDEHeader(cie, 0x86763f2b, 0x2a66dc23)
+      .FinishEntry();
+
+  PERHAPS_WRITE_DEBUG_FRAME_FILE("CIEVersion3ReturnColumn", section);
+
+  {
+    InSequence s;
+    EXPECT_CALL(handler, Entry(_, 0x86763f2b, 0x2a66dc23, 4, "", 0x89))
+        .WillOnce(Return(true));
+    EXPECT_CALL(handler, End()).WillOnce(Return(true));
+  }
+
+  string contents;
+  EXPECT_TRUE(section.GetContents(&contents));
+  ByteReader byte_reader(ENDIANNESS_BIG);
+  CallFrameInfo parser(reinterpret_cast<const uint8_t*>(contents.data()),
+                       contents.size(),
+                       &byte_reader, &handler, &reporter);
+  EXPECT_TRUE(parser.Start());
+}
+
+TEST_F(CFI, CIEVersion4AdditionalFieldsUnexpectedAddressSize) {
+  CFISection section(kBigEndian, 4);
+  Label cie;
+
+  section
+      .Mark(&cie)
+      // Unexpected address size.
+      .CIEHeader(0x4be22f75, 0x2492236e, 0x6b6efb87, 4, "", true, 3, 0)
+      .FinishEntry()
+      // FDE, citing that CIE.
+      .FDEHeader(cie, 0x86763f2b, 0x2a66dc23)
+      .FinishEntry();
+
+  PERHAPS_WRITE_DEBUG_FRAME_FILE("AdditionalFieldsUnexpectedAddress", section);
+
+  EXPECT_CALL(reporter, UnexpectedAddressSize(_, 3))
+    .WillOnce(Return());
+
+  string contents;
+  EXPECT_TRUE(section.GetContents(&contents));
+  ByteReader byte_reader(ENDIANNESS_BIG);
+  CallFrameInfo parser(reinterpret_cast<const uint8_t*>(contents.data()),
+                       contents.size(),
+                       &byte_reader, &handler, &reporter);
+  EXPECT_FALSE(parser.Start());
+}
+
+TEST_F(CFI, CIEVersion4AdditionalFieldsUnexpectedSegmentSize) {
+  CFISection section(kBigEndian, 8);
+  Label cie;
+
+  section
+      .Mark(&cie)
+      .CIEHeader(0xf8bc4399, 0x8cf09931, 0xf2f519b2, 4, "", true, 8, 7)
+      .FinishEntry()
+      .FDEHeader(cie, 0x7bf0fda0, 0xcbcd28d8)
+      .FinishEntry();
+
+  PERHAPS_WRITE_DEBUG_FRAME_FILE("AdditionalFieldsUnexpectedSegment", section);
+
+  EXPECT_CALL(reporter, UnexpectedSegmentSize(_, 7))
+    .WillOnce(Return());
+
+  string contents;
+  EXPECT_TRUE(section.GetContents(&contents));
+  ByteReader byte_reader(ENDIANNESS_BIG);
+  CallFrameInfo parser(reinterpret_cast<const uint8_t*>(contents.data()),
+                       contents.size(),
+                       &byte_reader, &handler, &reporter);
+  EXPECT_FALSE(parser.Start());
 }
 
 struct CFIInsnFixture: public CFIFixture {
@@ -634,7 +767,7 @@ struct CFIInsnFixture: public CFIFixture {
         .Mark(&cie_label)
         .CIEHeader(code_factor, data_factor, return_register, version,
                    "")
-        .D8(dwarf2reader::DW_CFA_def_cfa)
+        .D8(google_breakpad::DW_CFA_def_cfa)
         .ULEB128(cfa_base_register)
         .ULEB128(cfa_offset)
         .FinishEntry();
@@ -659,7 +792,7 @@ struct CFIInsnFixture: public CFIFixture {
   void ParseSection(CFISection *section, bool succeeds = true) {
     string contents;
     EXPECT_TRUE(section->GetContents(&contents));
-    dwarf2reader::Endianness endianness;
+    google_breakpad::Endianness endianness;
     if (section->endianness() == kBigEndian)
       endianness = ENDIANNESS_BIG;
     else {
@@ -668,7 +801,8 @@ struct CFIInsnFixture: public CFIFixture {
     }
     ByteReader byte_reader(endianness);
     byte_reader.SetAddressSize(section->AddressSize());
-    CallFrameInfo parser(contents.data(), contents.size(),
+    CallFrameInfo parser(reinterpret_cast<const uint8_t*>(contents.data()),
+                         contents.size(),
                          &byte_reader, &handler, &reporter);
     if (succeeds)
       EXPECT_TRUE(parser.Start());
@@ -678,13 +812,13 @@ struct CFIInsnFixture: public CFIFixture {
 
   Label cie_label;
   Sequence s;
-  uint64 code_factor;
+  uint64_t code_factor;
   int data_factor;
   unsigned return_register;
   unsigned version;
   unsigned cfa_base_register;
   int cfa_offset;
-  uint64 fde_start, fde_size;
+  uint64_t fde_start, fde_size;
 };
 
 class CFIInsn: public CFIInsnFixture, public Test { };
@@ -693,10 +827,10 @@ TEST_F(CFIInsn, DW_CFA_set_loc) {
   CFISection section(kBigEndian, 4);
   StockCIEAndFDE(&section);
   section
-      .D8(dwarf2reader::DW_CFA_set_loc).D32(0xb1ee3e7a)
+      .D8(google_breakpad::DW_CFA_set_loc).D32(0xb1ee3e7a)
       // Use DW_CFA_def_cfa to force a handler call that we can use to
       // check the effect of the DW_CFA_set_loc.
-      .D8(dwarf2reader::DW_CFA_def_cfa).ULEB128(0x4defb431).ULEB128(0x6d17b0ee)
+      .D8(google_breakpad::DW_CFA_def_cfa).ULEB128(0x4defb431).ULEB128(0x6d17b0ee)
       .FinishEntry();
 
   PERHAPS_WRITE_DEBUG_FRAME_FILE("DW_CFA_set_loc", section);
@@ -714,10 +848,10 @@ TEST_F(CFIInsn, DW_CFA_advance_loc) {
   CFISection section(kBigEndian, 8);
   StockCIEAndFDE(&section);
   section
-      .D8(dwarf2reader::DW_CFA_advance_loc | 0x2a)
+      .D8(google_breakpad::DW_CFA_advance_loc | 0x2a)
       // Use DW_CFA_def_cfa to force a handler call that we can use to
       // check the effect of the DW_CFA_advance_loc.
-      .D8(dwarf2reader::DW_CFA_def_cfa).ULEB128(0x5bbb3715).ULEB128(0x0186c7bf)
+      .D8(google_breakpad::DW_CFA_def_cfa).ULEB128(0x5bbb3715).ULEB128(0x0186c7bf)
       .FinishEntry();
 
   PERHAPS_WRITE_DEBUG_FRAME_FILE("DW_CFA_advance_loc", section);
@@ -736,8 +870,8 @@ TEST_F(CFIInsn, DW_CFA_advance_loc1) {
   CFISection section(kLittleEndian, 8);
   StockCIEAndFDE(&section);
   section
-      .D8(dwarf2reader::DW_CFA_advance_loc1).D8(0xd8)
-      .D8(dwarf2reader::DW_CFA_def_cfa).ULEB128(0x69d5696a).ULEB128(0x1eb7fc93)
+      .D8(google_breakpad::DW_CFA_advance_loc1).D8(0xd8)
+      .D8(google_breakpad::DW_CFA_def_cfa).ULEB128(0x69d5696a).ULEB128(0x1eb7fc93)
       .FinishEntry();
 
   PERHAPS_WRITE_DEBUG_FRAME_FILE("DW_CFA_advance_loc1", section);
@@ -756,8 +890,8 @@ TEST_F(CFIInsn, DW_CFA_advance_loc2) {
   CFISection section(kLittleEndian, 4);
   StockCIEAndFDE(&section);
   section
-      .D8(dwarf2reader::DW_CFA_advance_loc2).D16(0x3adb)
-      .D8(dwarf2reader::DW_CFA_def_cfa).ULEB128(0x3a368bed).ULEB128(0x3194ee37)
+      .D8(google_breakpad::DW_CFA_advance_loc2).D16(0x3adb)
+      .D8(google_breakpad::DW_CFA_def_cfa).ULEB128(0x3a368bed).ULEB128(0x3194ee37)
       .FinishEntry();
 
   PERHAPS_WRITE_DEBUG_FRAME_FILE("DW_CFA_advance_loc2", section);
@@ -776,8 +910,8 @@ TEST_F(CFIInsn, DW_CFA_advance_loc4) {
   CFISection section(kBigEndian, 8);
   StockCIEAndFDE(&section);
   section
-      .D8(dwarf2reader::DW_CFA_advance_loc4).D32(0x15813c88)
-      .D8(dwarf2reader::DW_CFA_def_cfa).ULEB128(0x135270c5).ULEB128(0x24bad7cb)
+      .D8(google_breakpad::DW_CFA_advance_loc4).D32(0x15813c88)
+      .D8(google_breakpad::DW_CFA_def_cfa).ULEB128(0x135270c5).ULEB128(0x24bad7cb)
       .FinishEntry();
 
   PERHAPS_WRITE_DEBUG_FRAME_FILE("DW_CFA_advance_loc4", section);
@@ -797,8 +931,8 @@ TEST_F(CFIInsn, DW_CFA_MIPS_advance_loc8) {
   CFISection section(kBigEndian, 8);
   StockCIEAndFDE(&section);
   section
-      .D8(dwarf2reader::DW_CFA_MIPS_advance_loc8).D64(0x3c4f3945b92c14ULL)
-      .D8(dwarf2reader::DW_CFA_def_cfa).ULEB128(0xe17ed602).ULEB128(0x3d162e7f)
+      .D8(google_breakpad::DW_CFA_MIPS_advance_loc8).D64(0x3c4f3945b92c14ULL)
+      .D8(google_breakpad::DW_CFA_def_cfa).ULEB128(0xe17ed602).ULEB128(0x3d162e7f)
       .FinishEntry();
 
   PERHAPS_WRITE_DEBUG_FRAME_FILE("DW_CFA_advance_loc8", section);
@@ -817,7 +951,7 @@ TEST_F(CFIInsn, DW_CFA_def_cfa) {
   CFISection section(kLittleEndian, 4);
   StockCIEAndFDE(&section);
   section
-      .D8(dwarf2reader::DW_CFA_def_cfa).ULEB128(0x4e363a85).ULEB128(0x815f9aa7)
+      .D8(google_breakpad::DW_CFA_def_cfa).ULEB128(0x4e363a85).ULEB128(0x815f9aa7)
       .FinishEntry();
 
   PERHAPS_WRITE_DEBUG_FRAME_FILE("DW_CFA_def_cfa", section);
@@ -834,8 +968,8 @@ TEST_F(CFIInsn, DW_CFA_def_cfa_sf) {
   CFISection section(kBigEndian, 4);
   StockCIEAndFDE(&section);
   section
-      .D8(dwarf2reader::DW_CFA_def_cfa_sf).ULEB128(0x8ccb32b7).LEB128(0x9ea)
-      .D8(dwarf2reader::DW_CFA_def_cfa_sf).ULEB128(0x9b40f5da).LEB128(-0x40a2)
+      .D8(google_breakpad::DW_CFA_def_cfa_sf).ULEB128(0x8ccb32b7).LEB128(0x9ea)
+      .D8(google_breakpad::DW_CFA_def_cfa_sf).ULEB128(0x9b40f5da).LEB128(-0x40a2)
       .FinishEntry();
 
   EXPECT_CALL(handler,
@@ -855,7 +989,7 @@ TEST_F(CFIInsn, DW_CFA_def_cfa_register) {
   CFISection section(kLittleEndian, 8);
   StockCIEAndFDE(&section);
   section
-      .D8(dwarf2reader::DW_CFA_def_cfa_register).ULEB128(0x3e7e9363)
+      .D8(google_breakpad::DW_CFA_def_cfa_register).ULEB128(0x3e7e9363)
       .FinishEntry();
 
   EXPECT_CALL(handler,
@@ -872,8 +1006,8 @@ TEST_F(CFIInsn, DW_CFA_def_cfa_registerBadRule) {
   CFISection section(kBigEndian, 4);
   StockCIEAndFDE(&section);
   section
-      .D8(dwarf2reader::DW_CFA_def_cfa_expression).Block("needle in a haystack")
-      .D8(dwarf2reader::DW_CFA_def_cfa_register).ULEB128(0xf1b49e49)
+      .D8(google_breakpad::DW_CFA_def_cfa_expression).Block("needle in a haystack")
+      .D8(google_breakpad::DW_CFA_def_cfa_register).ULEB128(0xf1b49e49)
       .FinishEntry();
 
   EXPECT_CALL(handler,
@@ -889,7 +1023,7 @@ TEST_F(CFIInsn, DW_CFA_def_cfa_offset) {
   CFISection section(kBigEndian, 4);
   StockCIEAndFDE(&section);
   section
-      .D8(dwarf2reader::DW_CFA_def_cfa_offset).ULEB128(0x1e8e3b9b)
+      .D8(google_breakpad::DW_CFA_def_cfa_offset).ULEB128(0x1e8e3b9b)
       .FinishEntry();
 
   EXPECT_CALL(handler,
@@ -905,8 +1039,8 @@ TEST_F(CFIInsn, DW_CFA_def_cfa_offset_sf) {
   CFISection section(kLittleEndian, 4);
   StockCIEAndFDE(&section);
   section
-      .D8(dwarf2reader::DW_CFA_def_cfa_offset_sf).LEB128(0x970)
-      .D8(dwarf2reader::DW_CFA_def_cfa_offset_sf).LEB128(-0x2cd)
+      .D8(google_breakpad::DW_CFA_def_cfa_offset_sf).LEB128(0x970)
+      .D8(google_breakpad::DW_CFA_def_cfa_offset_sf).LEB128(-0x2cd)
       .FinishEntry();
 
   EXPECT_CALL(handler,
@@ -928,8 +1062,8 @@ TEST_F(CFIInsn, DW_CFA_def_cfa_offsetBadRule) {
   CFISection section(kBigEndian, 4);
   StockCIEAndFDE(&section);
   section
-      .D8(dwarf2reader::DW_CFA_def_cfa_expression).Block("six ways to Sunday")
-      .D8(dwarf2reader::DW_CFA_def_cfa_offset).ULEB128(0x1e8e3b9b)
+      .D8(google_breakpad::DW_CFA_def_cfa_expression).Block("six ways to Sunday")
+      .D8(google_breakpad::DW_CFA_def_cfa_offset).ULEB128(0x1e8e3b9b)
       .FinishEntry();
 
   EXPECT_CALL(handler,
@@ -944,7 +1078,7 @@ TEST_F(CFIInsn, DW_CFA_def_cfa_expression) {
   CFISection section(kLittleEndian, 8);
   StockCIEAndFDE(&section);
   section
-      .D8(dwarf2reader::DW_CFA_def_cfa_expression).Block("eating crow")
+      .D8(google_breakpad::DW_CFA_def_cfa_expression).Block("eating crow")
       .FinishEntry();
 
   EXPECT_CALL(handler, ValExpressionRule(fde_start, kCFARegister,
@@ -959,7 +1093,7 @@ TEST_F(CFIInsn, DW_CFA_undefined) {
   CFISection section(kLittleEndian, 4);
   StockCIEAndFDE(&section);
   section
-      .D8(dwarf2reader::DW_CFA_undefined).ULEB128(0x300ce45d)
+      .D8(google_breakpad::DW_CFA_undefined).ULEB128(0x300ce45d)
       .FinishEntry();
 
   EXPECT_CALL(handler, UndefinedRule(fde_start, 0x300ce45d))
@@ -973,7 +1107,7 @@ TEST_F(CFIInsn, DW_CFA_same_value) {
   CFISection section(kLittleEndian, 4);
   StockCIEAndFDE(&section);
   section
-      .D8(dwarf2reader::DW_CFA_same_value).ULEB128(0x3865a760)
+      .D8(google_breakpad::DW_CFA_same_value).ULEB128(0x3865a760)
       .FinishEntry();
 
   EXPECT_CALL(handler, SameValueRule(fde_start, 0x3865a760))
@@ -987,7 +1121,7 @@ TEST_F(CFIInsn, DW_CFA_offset) {
   CFISection section(kBigEndian, 4);
   StockCIEAndFDE(&section);
   section
-      .D8(dwarf2reader::DW_CFA_offset | 0x2c).ULEB128(0x9f6)
+      .D8(google_breakpad::DW_CFA_offset | 0x2c).ULEB128(0x9f6)
       .FinishEntry();
 
   EXPECT_CALL(handler,
@@ -1002,7 +1136,7 @@ TEST_F(CFIInsn, DW_CFA_offset_extended) {
   CFISection section(kBigEndian, 4);
   StockCIEAndFDE(&section);
   section
-      .D8(dwarf2reader::DW_CFA_offset_extended).ULEB128(0x402b).ULEB128(0xb48)
+      .D8(google_breakpad::DW_CFA_offset_extended).ULEB128(0x402b).ULEB128(0xb48)
       .FinishEntry();
 
   EXPECT_CALL(handler,
@@ -1017,9 +1151,9 @@ TEST_F(CFIInsn, DW_CFA_offset_extended_sf) {
   CFISection section(kBigEndian, 8);
   StockCIEAndFDE(&section);
   section
-      .D8(dwarf2reader::DW_CFA_offset_extended_sf)
+      .D8(google_breakpad::DW_CFA_offset_extended_sf)
           .ULEB128(0x997c23ee).LEB128(0x2d00)
-      .D8(dwarf2reader::DW_CFA_offset_extended_sf)
+      .D8(google_breakpad::DW_CFA_offset_extended_sf)
           .ULEB128(0x9519eb82).LEB128(-0xa77)
       .FinishEntry();
 
@@ -1040,7 +1174,7 @@ TEST_F(CFIInsn, DW_CFA_val_offset) {
   CFISection section(kBigEndian, 4);
   StockCIEAndFDE(&section);
   section
-      .D8(dwarf2reader::DW_CFA_val_offset).ULEB128(0x623562fe).ULEB128(0x673)
+      .D8(google_breakpad::DW_CFA_val_offset).ULEB128(0x623562fe).ULEB128(0x673)
       .FinishEntry();
 
   EXPECT_CALL(handler,
@@ -1056,8 +1190,8 @@ TEST_F(CFIInsn, DW_CFA_val_offset_sf) {
   CFISection section(kBigEndian, 4);
   StockCIEAndFDE(&section);
   section
-      .D8(dwarf2reader::DW_CFA_val_offset_sf).ULEB128(0x6f4f).LEB128(0xaab)
-      .D8(dwarf2reader::DW_CFA_val_offset_sf).ULEB128(0x2483).LEB128(-0x8a2)
+      .D8(google_breakpad::DW_CFA_val_offset_sf).ULEB128(0x6f4f).LEB128(0xaab)
+      .D8(google_breakpad::DW_CFA_val_offset_sf).ULEB128(0x2483).LEB128(-0x8a2)
       .FinishEntry();
 
   EXPECT_CALL(handler,
@@ -1077,7 +1211,7 @@ TEST_F(CFIInsn, DW_CFA_register) {
   CFISection section(kLittleEndian, 8);
   StockCIEAndFDE(&section);
   section
-      .D8(dwarf2reader::DW_CFA_register).ULEB128(0x278d18f9).ULEB128(0x1a684414)
+      .D8(google_breakpad::DW_CFA_register).ULEB128(0x278d18f9).ULEB128(0x1a684414)
       .FinishEntry();
 
   EXPECT_CALL(handler, RegisterRule(fde_start, 0x278d18f9, 0x1a684414))
@@ -1091,7 +1225,7 @@ TEST_F(CFIInsn, DW_CFA_expression) {
   CFISection section(kBigEndian, 8);
   StockCIEAndFDE(&section);
   section
-      .D8(dwarf2reader::DW_CFA_expression).ULEB128(0xa1619fb2)
+      .D8(google_breakpad::DW_CFA_expression).ULEB128(0xa1619fb2)
       .Block("plus ça change, plus c'est la même chose")
       .FinishEntry();
 
@@ -1108,7 +1242,7 @@ TEST_F(CFIInsn, DW_CFA_val_expression) {
   CFISection section(kBigEndian, 4);
   StockCIEAndFDE(&section);
   section
-      .D8(dwarf2reader::DW_CFA_val_expression).ULEB128(0xc5e4a9e3)
+      .D8(google_breakpad::DW_CFA_val_expression).ULEB128(0xc5e4a9e3)
       .Block("he who has the gold makes the rules")
       .FinishEntry();
 
@@ -1135,18 +1269,18 @@ TEST_F(CFIInsn, DW_CFA_restore) {
       .CIEHeader(code_factor, data_factor, return_register, version,
                  "")
       // Provide a CFA rule, because register rules require them.
-      .D8(dwarf2reader::DW_CFA_def_cfa).ULEB128(0x6ca1d50e).ULEB128(0x372e38e8)
+      .D8(google_breakpad::DW_CFA_def_cfa).ULEB128(0x6ca1d50e).ULEB128(0x372e38e8)
       // Provide an offset(N) rule for register 0x3c.
-      .D8(dwarf2reader::DW_CFA_offset | 0x3c).ULEB128(0xb348)
+      .D8(google_breakpad::DW_CFA_offset | 0x3c).ULEB128(0xb348)
       .FinishEntry()
       // In the FDE...
       .FDEHeader(cie, fde_start, fde_size)
       // At a second address, provide a new offset(N) rule for register 0x3c.
-      .D8(dwarf2reader::DW_CFA_advance_loc | 0x13)
-      .D8(dwarf2reader::DW_CFA_offset | 0x3c).ULEB128(0x9a50)
+      .D8(google_breakpad::DW_CFA_advance_loc | 0x13)
+      .D8(google_breakpad::DW_CFA_offset | 0x3c).ULEB128(0x9a50)
       // At a third address, restore the original rule for register 0x3c.
-      .D8(dwarf2reader::DW_CFA_advance_loc | 0x01)
-      .D8(dwarf2reader::DW_CFA_restore | 0x3c)
+      .D8(google_breakpad::DW_CFA_advance_loc | 0x01)
+      .D8(google_breakpad::DW_CFA_restore | 0x3c)
       .FinishEntry();
 
   {
@@ -1191,16 +1325,16 @@ TEST_F(CFIInsn, DW_CFA_restoreNoRule) {
       .Mark(&cie)
       .CIEHeader(code_factor, data_factor, return_register, version, "")
       // Provide a CFA rule, because register rules require them.
-      .D8(dwarf2reader::DW_CFA_def_cfa).ULEB128(0x470aa334).ULEB128(0x099ef127)
+      .D8(google_breakpad::DW_CFA_def_cfa).ULEB128(0x470aa334).ULEB128(0x099ef127)
       .FinishEntry()
       // In the FDE...
       .FDEHeader(cie, fde_start, fde_size)
       // At a second address, provide an offset(N) rule for register 0x2c.
-      .D8(dwarf2reader::DW_CFA_advance_loc | 0x7)
-      .D8(dwarf2reader::DW_CFA_offset | 0x2c).ULEB128(0x1f47)
+      .D8(google_breakpad::DW_CFA_advance_loc | 0x7)
+      .D8(google_breakpad::DW_CFA_offset | 0x2c).ULEB128(0x1f47)
       // At a third address, restore the (missing) CIE rule for register 0x2c.
-      .D8(dwarf2reader::DW_CFA_advance_loc | 0xb)
-      .D8(dwarf2reader::DW_CFA_restore | 0x2c)
+      .D8(google_breakpad::DW_CFA_advance_loc | 0xb)
+      .D8(google_breakpad::DW_CFA_restore | 0x2c)
       .FinishEntry();
 
   {
@@ -1241,20 +1375,20 @@ TEST_F(CFIInsn, DW_CFA_restore_extended) {
       .CIEHeader(code_factor, data_factor, return_register, version,
                  "", true /* dwarf64 */ )
       // Provide a CFA rule, because register rules require them.
-      .D8(dwarf2reader::DW_CFA_def_cfa).ULEB128(0x56fa0edd).ULEB128(0x097f78a5)
+      .D8(google_breakpad::DW_CFA_def_cfa).ULEB128(0x56fa0edd).ULEB128(0x097f78a5)
       // Provide an offset(N) rule for register 0x0f9b8a1c.
-      .D8(dwarf2reader::DW_CFA_offset_extended)
+      .D8(google_breakpad::DW_CFA_offset_extended)
           .ULEB128(0x0f9b8a1c).ULEB128(0xc979)
       .FinishEntry()
       // In the FDE...
       .FDEHeader(cie, fde_start, fde_size)
       // At a second address, provide a new offset(N) rule for reg 0x0f9b8a1c.
-      .D8(dwarf2reader::DW_CFA_advance_loc | 0x3)
-      .D8(dwarf2reader::DW_CFA_offset_extended)
+      .D8(google_breakpad::DW_CFA_advance_loc | 0x3)
+      .D8(google_breakpad::DW_CFA_offset_extended)
           .ULEB128(0x0f9b8a1c).ULEB128(0x3b7b)
       // At a third address, restore the original rule for register 0x0f9b8a1c.
-      .D8(dwarf2reader::DW_CFA_advance_loc | 0x04)
-      .D8(dwarf2reader::DW_CFA_restore_extended).ULEB128(0x0f9b8a1c)
+      .D8(google_breakpad::DW_CFA_advance_loc | 0x04)
+      .D8(google_breakpad::DW_CFA_restore_extended).ULEB128(0x0f9b8a1c)
       .FinishEntry();
 
   {
@@ -1303,24 +1437,24 @@ TEST_F(CFIInsn, DW_CFA_remember_and_restore_state) {
   // 5                offset(N)       no rule         new "same value" rule
   section
       // Create the "incoming" state, which we will save and later restore.
-      .D8(dwarf2reader::DW_CFA_offset | 2).ULEB128(0x9806)
-      .D8(dwarf2reader::DW_CFA_offset | 3).ULEB128(0x995d)
-      .D8(dwarf2reader::DW_CFA_offset | 4).ULEB128(0x7055)
-      .D8(dwarf2reader::DW_CFA_remember_state)
+      .D8(google_breakpad::DW_CFA_offset | 2).ULEB128(0x9806)
+      .D8(google_breakpad::DW_CFA_offset | 3).ULEB128(0x995d)
+      .D8(google_breakpad::DW_CFA_offset | 4).ULEB128(0x7055)
+      .D8(google_breakpad::DW_CFA_remember_state)
       // Advance to a new instruction; an implementation could legitimately
       // ignore all but the final rule for a given register at a given address.
-      .D8(dwarf2reader::DW_CFA_advance_loc | 1)
+      .D8(google_breakpad::DW_CFA_advance_loc | 1)
       // Create the "outgoing" state, which we will discard.
-      .D8(dwarf2reader::DW_CFA_offset | 1).ULEB128(0xea1a)
-      .D8(dwarf2reader::DW_CFA_register).ULEB128(2).ULEB128(0x1d2a3767)
-      .D8(dwarf2reader::DW_CFA_offset | 3).ULEB128(0xdd29)
-      .D8(dwarf2reader::DW_CFA_offset | 5).ULEB128(0xf1ce)
+      .D8(google_breakpad::DW_CFA_offset | 1).ULEB128(0xea1a)
+      .D8(google_breakpad::DW_CFA_register).ULEB128(2).ULEB128(0x1d2a3767)
+      .D8(google_breakpad::DW_CFA_offset | 3).ULEB128(0xdd29)
+      .D8(google_breakpad::DW_CFA_offset | 5).ULEB128(0xf1ce)
       // At a third address, restore the incoming state.
-      .D8(dwarf2reader::DW_CFA_advance_loc | 1)
-      .D8(dwarf2reader::DW_CFA_restore_state)
+      .D8(google_breakpad::DW_CFA_advance_loc | 1)
+      .D8(google_breakpad::DW_CFA_restore_state)
       .FinishEntry();
 
-  uint64 addr = fde_start;
+  uint64_t addr = fde_start;
 
   // Expect the incoming rules to be reported.
   EXPECT_CALL(handler, OffsetRule(addr, 2, kCFARegister, 0x9806 * data_factor))
@@ -1366,11 +1500,11 @@ TEST_F(CFIInsn, DW_CFA_remember_and_restore_stateCFA) {
   StockCIEAndFDE(&section);
 
   section
-      .D8(dwarf2reader::DW_CFA_remember_state)
-      .D8(dwarf2reader::DW_CFA_advance_loc | 1)
-      .D8(dwarf2reader::DW_CFA_def_cfa_offset).ULEB128(0x90481102)
-      .D8(dwarf2reader::DW_CFA_advance_loc | 1)
-      .D8(dwarf2reader::DW_CFA_restore_state)
+      .D8(google_breakpad::DW_CFA_remember_state)
+      .D8(google_breakpad::DW_CFA_advance_loc | 1)
+      .D8(google_breakpad::DW_CFA_def_cfa_offset).ULEB128(0x90481102)
+      .D8(google_breakpad::DW_CFA_advance_loc | 1)
+      .D8(google_breakpad::DW_CFA_restore_state)
       .FinishEntry();
 
   EXPECT_CALL(handler, ValOffsetRule(fde_start + code_factor, kCFARegister,
@@ -1389,9 +1523,9 @@ TEST_F(CFIInsn, DW_CFA_nop) {
   CFISection section(kLittleEndian, 4);
   StockCIEAndFDE(&section);
   section
-      .D8(dwarf2reader::DW_CFA_nop)
-      .D8(dwarf2reader::DW_CFA_def_cfa).ULEB128(0x3fb8d4f1).ULEB128(0x078dc67b)
-      .D8(dwarf2reader::DW_CFA_nop)
+      .D8(google_breakpad::DW_CFA_nop)
+      .D8(google_breakpad::DW_CFA_def_cfa).ULEB128(0x3fb8d4f1).ULEB128(0x078dc67b)
+      .D8(google_breakpad::DW_CFA_nop)
       .FinishEntry();
 
   EXPECT_CALL(handler,
@@ -1406,8 +1540,10 @@ TEST_F(CFIInsn, DW_CFA_GNU_window_save) {
   CFISection section(kBigEndian, 4);
   StockCIEAndFDE(&section);
   section
-      .D8(dwarf2reader::DW_CFA_GNU_window_save)
+      .D8(google_breakpad::DW_CFA_GNU_window_save)
       .FinishEntry();
+
+  EXPECT_CALL(handler, Architecture()).WillRepeatedly(Return("sparc"));
 
   // Don't include all the rules in any particular sequence.
 
@@ -1431,9 +1567,9 @@ TEST_F(CFIInsn, DW_CFA_GNU_args_size) {
   CFISection section(kLittleEndian, 8);
   StockCIEAndFDE(&section);
   section
-      .D8(dwarf2reader::DW_CFA_GNU_args_size).ULEB128(0xeddfa520)
+      .D8(google_breakpad::DW_CFA_GNU_args_size).ULEB128(0xeddfa520)
       // Verify that we see this, meaning we parsed the above properly.
-      .D8(dwarf2reader::DW_CFA_offset | 0x23).ULEB128(0x269)
+      .D8(google_breakpad::DW_CFA_offset | 0x23).ULEB128(0x269)
       .FinishEntry();
 
   EXPECT_CALL(handler,
@@ -1448,7 +1584,7 @@ TEST_F(CFIInsn, DW_CFA_GNU_negative_offset_extended) {
   CFISection section(kLittleEndian, 4);
   StockCIEAndFDE(&section);
   section
-      .D8(dwarf2reader::DW_CFA_GNU_negative_offset_extended)
+      .D8(google_breakpad::DW_CFA_GNU_negative_offset_extended)
       .ULEB128(0x430cc87a).ULEB128(0x613)
       .FinishEntry();
 
@@ -1469,19 +1605,19 @@ TEST_F(CFIInsn, SkipFDE) {
       // CIE, used by all FDEs.
       .Mark(&cie)
       .CIEHeader(0x010269f2, 0x9177, 0xedca5849, 2, "")
-      .D8(dwarf2reader::DW_CFA_def_cfa).ULEB128(0x42ed390b).ULEB128(0x98f43aad)
+      .D8(google_breakpad::DW_CFA_def_cfa).ULEB128(0x42ed390b).ULEB128(0x98f43aad)
       .FinishEntry()
       // First FDE.
       .FDEHeader(cie, 0xa870ebdd, 0x60f6aa4)
-      .D8(dwarf2reader::DW_CFA_register).ULEB128(0x3a860351).ULEB128(0x6c9a6bcf)
+      .D8(google_breakpad::DW_CFA_register).ULEB128(0x3a860351).ULEB128(0x6c9a6bcf)
       .FinishEntry()
       // Second FDE.
       .FDEHeader(cie, 0xc534f7c0, 0xf6552e9, true /* dwarf64 */)
-      .D8(dwarf2reader::DW_CFA_register).ULEB128(0x1b62c234).ULEB128(0x26586b18)
+      .D8(google_breakpad::DW_CFA_register).ULEB128(0x1b62c234).ULEB128(0x26586b18)
       .FinishEntry()
       // Third FDE.
       .FDEHeader(cie, 0xf681cfc8, 0x7e4594e)
-      .D8(dwarf2reader::DW_CFA_register).ULEB128(0x26c53934).ULEB128(0x18eeb8a4)
+      .D8(google_breakpad::DW_CFA_register).ULEB128(0x26c53934).ULEB128(0x18eeb8a4)
       .FinishEntry();
 
   {
@@ -1522,8 +1658,8 @@ TEST_F(CFIInsn, QuitMidentry) {
   CFISection section(kLittleEndian, 8);
   StockCIEAndFDE(&section);
   section
-      .D8(dwarf2reader::DW_CFA_register).ULEB128(0xe0cf850d).ULEB128(0x15aab431)
-      .D8(dwarf2reader::DW_CFA_expression).ULEB128(0x46750aa5).Block("meat")
+      .D8(google_breakpad::DW_CFA_register).ULEB128(0xe0cf850d).ULEB128(0x15aab431)
+      .D8(google_breakpad::DW_CFA_expression).ULEB128(0x46750aa5).Block("meat")
       .FinishEntry();
 
   EXPECT_CALL(handler, RegisterRule(fde_start, 0xe0cf850d, 0x15aab431))
@@ -1540,10 +1676,10 @@ TEST_F(CFIRestore, RestoreUndefinedRuleUnchanged) {
   CFISection section(kLittleEndian, 4);
   StockCIEAndFDE(&section);
   section
-      .D8(dwarf2reader::DW_CFA_undefined).ULEB128(0x0bac878e)
-      .D8(dwarf2reader::DW_CFA_remember_state)
-      .D8(dwarf2reader::DW_CFA_advance_loc | 1)
-      .D8(dwarf2reader::DW_CFA_restore_state)
+      .D8(google_breakpad::DW_CFA_undefined).ULEB128(0x0bac878e)
+      .D8(google_breakpad::DW_CFA_remember_state)
+      .D8(google_breakpad::DW_CFA_advance_loc | 1)
+      .D8(google_breakpad::DW_CFA_restore_state)
       .FinishEntry();
 
   EXPECT_CALL(handler, UndefinedRule(fde_start, 0x0bac878e))
@@ -1557,12 +1693,12 @@ TEST_F(CFIRestore, RestoreUndefinedRuleChanged) {
   CFISection section(kLittleEndian, 4);
   StockCIEAndFDE(&section);
   section
-      .D8(dwarf2reader::DW_CFA_undefined).ULEB128(0x7dedff5f)
-      .D8(dwarf2reader::DW_CFA_remember_state)
-      .D8(dwarf2reader::DW_CFA_advance_loc | 1)
-      .D8(dwarf2reader::DW_CFA_same_value).ULEB128(0x7dedff5f)
-      .D8(dwarf2reader::DW_CFA_advance_loc | 1)
-      .D8(dwarf2reader::DW_CFA_restore_state)
+      .D8(google_breakpad::DW_CFA_undefined).ULEB128(0x7dedff5f)
+      .D8(google_breakpad::DW_CFA_remember_state)
+      .D8(google_breakpad::DW_CFA_advance_loc | 1)
+      .D8(google_breakpad::DW_CFA_same_value).ULEB128(0x7dedff5f)
+      .D8(google_breakpad::DW_CFA_advance_loc | 1)
+      .D8(google_breakpad::DW_CFA_restore_state)
       .FinishEntry();
 
   EXPECT_CALL(handler, UndefinedRule(fde_start, 0x7dedff5f))
@@ -1580,10 +1716,10 @@ TEST_F(CFIRestore, RestoreSameValueRuleUnchanged) {
   CFISection section(kLittleEndian, 4);
   StockCIEAndFDE(&section);
   section
-      .D8(dwarf2reader::DW_CFA_same_value).ULEB128(0xadbc9b3a)
-      .D8(dwarf2reader::DW_CFA_remember_state)
-      .D8(dwarf2reader::DW_CFA_advance_loc | 1)
-      .D8(dwarf2reader::DW_CFA_restore_state)
+      .D8(google_breakpad::DW_CFA_same_value).ULEB128(0xadbc9b3a)
+      .D8(google_breakpad::DW_CFA_remember_state)
+      .D8(google_breakpad::DW_CFA_advance_loc | 1)
+      .D8(google_breakpad::DW_CFA_restore_state)
       .FinishEntry();
 
   EXPECT_CALL(handler, SameValueRule(fde_start, 0xadbc9b3a))
@@ -1597,12 +1733,12 @@ TEST_F(CFIRestore, RestoreSameValueRuleChanged) {
   CFISection section(kLittleEndian, 4);
   StockCIEAndFDE(&section);
   section
-      .D8(dwarf2reader::DW_CFA_same_value).ULEB128(0x3d90dcb5)
-      .D8(dwarf2reader::DW_CFA_remember_state)
-      .D8(dwarf2reader::DW_CFA_advance_loc | 1)
-      .D8(dwarf2reader::DW_CFA_undefined).ULEB128(0x3d90dcb5)
-      .D8(dwarf2reader::DW_CFA_advance_loc | 1)
-      .D8(dwarf2reader::DW_CFA_restore_state)
+      .D8(google_breakpad::DW_CFA_same_value).ULEB128(0x3d90dcb5)
+      .D8(google_breakpad::DW_CFA_remember_state)
+      .D8(google_breakpad::DW_CFA_advance_loc | 1)
+      .D8(google_breakpad::DW_CFA_undefined).ULEB128(0x3d90dcb5)
+      .D8(google_breakpad::DW_CFA_advance_loc | 1)
+      .D8(google_breakpad::DW_CFA_restore_state)
       .FinishEntry();
 
   EXPECT_CALL(handler, SameValueRule(fde_start, 0x3d90dcb5))
@@ -1620,10 +1756,10 @@ TEST_F(CFIRestore, RestoreOffsetRuleUnchanged) {
   CFISection section(kLittleEndian, 4);
   StockCIEAndFDE(&section);
   section
-      .D8(dwarf2reader::DW_CFA_offset | 0x14).ULEB128(0xb6f)
-      .D8(dwarf2reader::DW_CFA_remember_state)
-      .D8(dwarf2reader::DW_CFA_advance_loc | 1)
-      .D8(dwarf2reader::DW_CFA_restore_state)
+      .D8(google_breakpad::DW_CFA_offset | 0x14).ULEB128(0xb6f)
+      .D8(google_breakpad::DW_CFA_remember_state)
+      .D8(google_breakpad::DW_CFA_advance_loc | 1)
+      .D8(google_breakpad::DW_CFA_restore_state)
       .FinishEntry();
 
   EXPECT_CALL(handler, OffsetRule(fde_start, 0x14,
@@ -1638,12 +1774,12 @@ TEST_F(CFIRestore, RestoreOffsetRuleChanged) {
   CFISection section(kLittleEndian, 4);
   StockCIEAndFDE(&section);
   section
-      .D8(dwarf2reader::DW_CFA_offset | 0x21).ULEB128(0xeb7)
-      .D8(dwarf2reader::DW_CFA_remember_state)
-      .D8(dwarf2reader::DW_CFA_advance_loc | 1)
-      .D8(dwarf2reader::DW_CFA_undefined).ULEB128(0x21)
-      .D8(dwarf2reader::DW_CFA_advance_loc | 1)
-      .D8(dwarf2reader::DW_CFA_restore_state)
+      .D8(google_breakpad::DW_CFA_offset | 0x21).ULEB128(0xeb7)
+      .D8(google_breakpad::DW_CFA_remember_state)
+      .D8(google_breakpad::DW_CFA_advance_loc | 1)
+      .D8(google_breakpad::DW_CFA_undefined).ULEB128(0x21)
+      .D8(google_breakpad::DW_CFA_advance_loc | 1)
+      .D8(google_breakpad::DW_CFA_restore_state)
       .FinishEntry();
 
   EXPECT_CALL(handler, OffsetRule(fde_start, 0x21,
@@ -1663,12 +1799,12 @@ TEST_F(CFIRestore, RestoreOffsetRuleChangedOffset) {
   CFISection section(kLittleEndian, 4);
   StockCIEAndFDE(&section);
   section
-      .D8(dwarf2reader::DW_CFA_offset | 0x21).ULEB128(0x134)
-      .D8(dwarf2reader::DW_CFA_remember_state)
-      .D8(dwarf2reader::DW_CFA_advance_loc | 1)
-      .D8(dwarf2reader::DW_CFA_offset | 0x21).ULEB128(0xf4f)
-      .D8(dwarf2reader::DW_CFA_advance_loc | 1)
-      .D8(dwarf2reader::DW_CFA_restore_state)
+      .D8(google_breakpad::DW_CFA_offset | 0x21).ULEB128(0x134)
+      .D8(google_breakpad::DW_CFA_remember_state)
+      .D8(google_breakpad::DW_CFA_advance_loc | 1)
+      .D8(google_breakpad::DW_CFA_offset | 0x21).ULEB128(0xf4f)
+      .D8(google_breakpad::DW_CFA_advance_loc | 1)
+      .D8(google_breakpad::DW_CFA_restore_state)
       .FinishEntry();
 
   EXPECT_CALL(handler, OffsetRule(fde_start, 0x21,
@@ -1689,10 +1825,10 @@ TEST_F(CFIRestore, RestoreValOffsetRuleUnchanged) {
   CFISection section(kLittleEndian, 4);
   StockCIEAndFDE(&section);
   section
-      .D8(dwarf2reader::DW_CFA_val_offset).ULEB128(0x829caee6).ULEB128(0xe4c)
-      .D8(dwarf2reader::DW_CFA_remember_state)
-      .D8(dwarf2reader::DW_CFA_advance_loc | 1)
-      .D8(dwarf2reader::DW_CFA_restore_state)
+      .D8(google_breakpad::DW_CFA_val_offset).ULEB128(0x829caee6).ULEB128(0xe4c)
+      .D8(google_breakpad::DW_CFA_remember_state)
+      .D8(google_breakpad::DW_CFA_advance_loc | 1)
+      .D8(google_breakpad::DW_CFA_restore_state)
       .FinishEntry();
 
   EXPECT_CALL(handler, ValOffsetRule(fde_start, 0x829caee6,
@@ -1707,12 +1843,12 @@ TEST_F(CFIRestore, RestoreValOffsetRuleChanged) {
   CFISection section(kLittleEndian, 4);
   StockCIEAndFDE(&section);
   section
-      .D8(dwarf2reader::DW_CFA_val_offset).ULEB128(0xf17c36d6).ULEB128(0xeb7)
-      .D8(dwarf2reader::DW_CFA_remember_state)
-      .D8(dwarf2reader::DW_CFA_advance_loc | 1)
-      .D8(dwarf2reader::DW_CFA_undefined).ULEB128(0xf17c36d6)
-      .D8(dwarf2reader::DW_CFA_advance_loc | 1)
-      .D8(dwarf2reader::DW_CFA_restore_state)
+      .D8(google_breakpad::DW_CFA_val_offset).ULEB128(0xf17c36d6).ULEB128(0xeb7)
+      .D8(google_breakpad::DW_CFA_remember_state)
+      .D8(google_breakpad::DW_CFA_advance_loc | 1)
+      .D8(google_breakpad::DW_CFA_undefined).ULEB128(0xf17c36d6)
+      .D8(google_breakpad::DW_CFA_advance_loc | 1)
+      .D8(google_breakpad::DW_CFA_restore_state)
       .FinishEntry();
 
   EXPECT_CALL(handler, ValOffsetRule(fde_start, 0xf17c36d6,
@@ -1732,12 +1868,12 @@ TEST_F(CFIRestore, RestoreValOffsetRuleChangedValOffset) {
   CFISection section(kLittleEndian, 4);
   StockCIEAndFDE(&section);
   section
-      .D8(dwarf2reader::DW_CFA_val_offset).ULEB128(0x2cf0ab1b).ULEB128(0x562)
-      .D8(dwarf2reader::DW_CFA_remember_state)
-      .D8(dwarf2reader::DW_CFA_advance_loc | 1)
-      .D8(dwarf2reader::DW_CFA_val_offset).ULEB128(0x2cf0ab1b).ULEB128(0xe88)
-      .D8(dwarf2reader::DW_CFA_advance_loc | 1)
-      .D8(dwarf2reader::DW_CFA_restore_state)
+      .D8(google_breakpad::DW_CFA_val_offset).ULEB128(0x2cf0ab1b).ULEB128(0x562)
+      .D8(google_breakpad::DW_CFA_remember_state)
+      .D8(google_breakpad::DW_CFA_advance_loc | 1)
+      .D8(google_breakpad::DW_CFA_val_offset).ULEB128(0x2cf0ab1b).ULEB128(0xe88)
+      .D8(google_breakpad::DW_CFA_advance_loc | 1)
+      .D8(google_breakpad::DW_CFA_restore_state)
       .FinishEntry();
 
   EXPECT_CALL(handler, ValOffsetRule(fde_start, 0x2cf0ab1b,
@@ -1758,10 +1894,10 @@ TEST_F(CFIRestore, RestoreRegisterRuleUnchanged) {
   CFISection section(kLittleEndian, 4);
   StockCIEAndFDE(&section);
   section
-      .D8(dwarf2reader::DW_CFA_register).ULEB128(0x77514acc).ULEB128(0x464de4ce)
-      .D8(dwarf2reader::DW_CFA_remember_state)
-      .D8(dwarf2reader::DW_CFA_advance_loc | 1)
-      .D8(dwarf2reader::DW_CFA_restore_state)
+      .D8(google_breakpad::DW_CFA_register).ULEB128(0x77514acc).ULEB128(0x464de4ce)
+      .D8(google_breakpad::DW_CFA_remember_state)
+      .D8(google_breakpad::DW_CFA_advance_loc | 1)
+      .D8(google_breakpad::DW_CFA_restore_state)
       .FinishEntry();
 
   EXPECT_CALL(handler, RegisterRule(fde_start, 0x77514acc, 0x464de4ce))
@@ -1775,12 +1911,12 @@ TEST_F(CFIRestore, RestoreRegisterRuleChanged) {
   CFISection section(kLittleEndian, 4);
   StockCIEAndFDE(&section);
   section
-      .D8(dwarf2reader::DW_CFA_register).ULEB128(0xe39acce5).ULEB128(0x095f1559)
-      .D8(dwarf2reader::DW_CFA_remember_state)
-      .D8(dwarf2reader::DW_CFA_advance_loc | 1)
-      .D8(dwarf2reader::DW_CFA_undefined).ULEB128(0xe39acce5)
-      .D8(dwarf2reader::DW_CFA_advance_loc | 1)
-      .D8(dwarf2reader::DW_CFA_restore_state)
+      .D8(google_breakpad::DW_CFA_register).ULEB128(0xe39acce5).ULEB128(0x095f1559)
+      .D8(google_breakpad::DW_CFA_remember_state)
+      .D8(google_breakpad::DW_CFA_advance_loc | 1)
+      .D8(google_breakpad::DW_CFA_undefined).ULEB128(0xe39acce5)
+      .D8(google_breakpad::DW_CFA_advance_loc | 1)
+      .D8(google_breakpad::DW_CFA_restore_state)
       .FinishEntry();
 
   EXPECT_CALL(handler, RegisterRule(fde_start, 0xe39acce5, 0x095f1559))
@@ -1799,12 +1935,12 @@ TEST_F(CFIRestore, RestoreRegisterRuleChangedRegister) {
   CFISection section(kLittleEndian, 4);
   StockCIEAndFDE(&section);
   section
-      .D8(dwarf2reader::DW_CFA_register).ULEB128(0xd40e21b1).ULEB128(0x16607d6a)
-      .D8(dwarf2reader::DW_CFA_remember_state)
-      .D8(dwarf2reader::DW_CFA_advance_loc | 1)
-      .D8(dwarf2reader::DW_CFA_register).ULEB128(0xd40e21b1).ULEB128(0xbabb4742)
-      .D8(dwarf2reader::DW_CFA_advance_loc | 1)
-      .D8(dwarf2reader::DW_CFA_restore_state)
+      .D8(google_breakpad::DW_CFA_register).ULEB128(0xd40e21b1).ULEB128(0x16607d6a)
+      .D8(google_breakpad::DW_CFA_remember_state)
+      .D8(google_breakpad::DW_CFA_advance_loc | 1)
+      .D8(google_breakpad::DW_CFA_register).ULEB128(0xd40e21b1).ULEB128(0xbabb4742)
+      .D8(google_breakpad::DW_CFA_advance_loc | 1)
+      .D8(google_breakpad::DW_CFA_restore_state)
       .FinishEntry();
 
   EXPECT_CALL(handler, RegisterRule(fde_start, 0xd40e21b1, 0x16607d6a))
@@ -1824,10 +1960,10 @@ TEST_F(CFIRestore, RestoreExpressionRuleUnchanged) {
   CFISection section(kLittleEndian, 4);
   StockCIEAndFDE(&section);
   section
-      .D8(dwarf2reader::DW_CFA_expression).ULEB128(0x666ae152).Block("dwarf")
-      .D8(dwarf2reader::DW_CFA_remember_state)
-      .D8(dwarf2reader::DW_CFA_advance_loc | 1)
-      .D8(dwarf2reader::DW_CFA_restore_state)
+      .D8(google_breakpad::DW_CFA_expression).ULEB128(0x666ae152).Block("dwarf")
+      .D8(google_breakpad::DW_CFA_remember_state)
+      .D8(google_breakpad::DW_CFA_advance_loc | 1)
+      .D8(google_breakpad::DW_CFA_restore_state)
       .FinishEntry();
 
   EXPECT_CALL(handler, ExpressionRule(fde_start, 0x666ae152, "dwarf"))
@@ -1841,12 +1977,12 @@ TEST_F(CFIRestore, RestoreExpressionRuleChanged) {
   CFISection section(kLittleEndian, 4);
   StockCIEAndFDE(&section);
   section
-      .D8(dwarf2reader::DW_CFA_expression).ULEB128(0xb5ca5c46).Block("elf")
-      .D8(dwarf2reader::DW_CFA_remember_state)
-      .D8(dwarf2reader::DW_CFA_advance_loc | 1)
-      .D8(dwarf2reader::DW_CFA_undefined).ULEB128(0xb5ca5c46)
-      .D8(dwarf2reader::DW_CFA_advance_loc | 1)
-      .D8(dwarf2reader::DW_CFA_restore_state)
+      .D8(google_breakpad::DW_CFA_expression).ULEB128(0xb5ca5c46).Block("elf")
+      .D8(google_breakpad::DW_CFA_remember_state)
+      .D8(google_breakpad::DW_CFA_advance_loc | 1)
+      .D8(google_breakpad::DW_CFA_undefined).ULEB128(0xb5ca5c46)
+      .D8(google_breakpad::DW_CFA_advance_loc | 1)
+      .D8(google_breakpad::DW_CFA_restore_state)
       .FinishEntry();
 
   EXPECT_CALL(handler, ExpressionRule(fde_start, 0xb5ca5c46, "elf"))
@@ -1865,12 +2001,12 @@ TEST_F(CFIRestore, RestoreExpressionRuleChangedExpression) {
   CFISection section(kLittleEndian, 4);
   StockCIEAndFDE(&section);
   section
-      .D8(dwarf2reader::DW_CFA_expression).ULEB128(0x500f5739).Block("smurf")
-      .D8(dwarf2reader::DW_CFA_remember_state)
-      .D8(dwarf2reader::DW_CFA_advance_loc | 1)
-      .D8(dwarf2reader::DW_CFA_expression).ULEB128(0x500f5739).Block("orc")
-      .D8(dwarf2reader::DW_CFA_advance_loc | 1)
-      .D8(dwarf2reader::DW_CFA_restore_state)
+      .D8(google_breakpad::DW_CFA_expression).ULEB128(0x500f5739).Block("smurf")
+      .D8(google_breakpad::DW_CFA_remember_state)
+      .D8(google_breakpad::DW_CFA_advance_loc | 1)
+      .D8(google_breakpad::DW_CFA_expression).ULEB128(0x500f5739).Block("orc")
+      .D8(google_breakpad::DW_CFA_advance_loc | 1)
+      .D8(google_breakpad::DW_CFA_restore_state)
       .FinishEntry();
 
   EXPECT_CALL(handler, ExpressionRule(fde_start, 0x500f5739, "smurf"))
@@ -1891,11 +2027,11 @@ TEST_F(CFIRestore, RestoreValExpressionRuleUnchanged) {
   CFISection section(kLittleEndian, 4);
   StockCIEAndFDE(&section);
   section
-      .D8(dwarf2reader::DW_CFA_val_expression).ULEB128(0x666ae152)
+      .D8(google_breakpad::DW_CFA_val_expression).ULEB128(0x666ae152)
       .Block("hideous")
-      .D8(dwarf2reader::DW_CFA_remember_state)
-      .D8(dwarf2reader::DW_CFA_advance_loc | 1)
-      .D8(dwarf2reader::DW_CFA_restore_state)
+      .D8(google_breakpad::DW_CFA_remember_state)
+      .D8(google_breakpad::DW_CFA_advance_loc | 1)
+      .D8(google_breakpad::DW_CFA_restore_state)
       .FinishEntry();
 
   EXPECT_CALL(handler, ValExpressionRule(fde_start, 0x666ae152, "hideous"))
@@ -1909,13 +2045,13 @@ TEST_F(CFIRestore, RestoreValExpressionRuleChanged) {
   CFISection section(kLittleEndian, 4);
   StockCIEAndFDE(&section);
   section
-      .D8(dwarf2reader::DW_CFA_val_expression).ULEB128(0xb5ca5c46)
+      .D8(google_breakpad::DW_CFA_val_expression).ULEB128(0xb5ca5c46)
       .Block("revolting")
-      .D8(dwarf2reader::DW_CFA_remember_state)
-      .D8(dwarf2reader::DW_CFA_advance_loc | 1)
-      .D8(dwarf2reader::DW_CFA_undefined).ULEB128(0xb5ca5c46)
-      .D8(dwarf2reader::DW_CFA_advance_loc | 1)
-      .D8(dwarf2reader::DW_CFA_restore_state)
+      .D8(google_breakpad::DW_CFA_remember_state)
+      .D8(google_breakpad::DW_CFA_advance_loc | 1)
+      .D8(google_breakpad::DW_CFA_undefined).ULEB128(0xb5ca5c46)
+      .D8(google_breakpad::DW_CFA_advance_loc | 1)
+      .D8(google_breakpad::DW_CFA_restore_state)
       .FinishEntry();
 
   PERHAPS_WRITE_DEBUG_FRAME_FILE("RestoreValExpressionRuleChanged", section);
@@ -1936,14 +2072,14 @@ TEST_F(CFIRestore, RestoreValExpressionRuleChangedValExpression) {
   CFISection section(kLittleEndian, 4);
   StockCIEAndFDE(&section);
   section
-      .D8(dwarf2reader::DW_CFA_val_expression).ULEB128(0x500f5739)
+      .D8(google_breakpad::DW_CFA_val_expression).ULEB128(0x500f5739)
       .Block("repulsive")
-      .D8(dwarf2reader::DW_CFA_remember_state)
-      .D8(dwarf2reader::DW_CFA_advance_loc | 1)
-      .D8(dwarf2reader::DW_CFA_val_expression).ULEB128(0x500f5739)
+      .D8(google_breakpad::DW_CFA_remember_state)
+      .D8(google_breakpad::DW_CFA_advance_loc | 1)
+      .D8(google_breakpad::DW_CFA_val_expression).ULEB128(0x500f5739)
       .Block("nauseous")
-      .D8(dwarf2reader::DW_CFA_advance_loc | 1)
-      .D8(dwarf2reader::DW_CFA_restore_state)
+      .D8(google_breakpad::DW_CFA_advance_loc | 1)
+      .D8(google_breakpad::DW_CFA_restore_state)
       .FinishEntry();
 
   PERHAPS_WRITE_DEBUG_FRAME_FILE("RestoreValExpressionRuleChangedValExpression",
@@ -1980,7 +2116,7 @@ struct EHFrameFixture: public CFIInsnFixture {
     EXPECT_TRUE(section->ContainsEHFrame());
     string contents;
     EXPECT_TRUE(section->GetContents(&contents));
-    dwarf2reader::Endianness endianness;
+    google_breakpad::Endianness endianness;
     if (section->endianness() == kBigEndian)
       endianness = ENDIANNESS_BIG;
     else {
@@ -1989,10 +2125,12 @@ struct EHFrameFixture: public CFIInsnFixture {
     }
     ByteReader byte_reader(endianness);
     byte_reader.SetAddressSize(section->AddressSize());
-    byte_reader.SetCFIDataBase(encoded_pointer_bases.cfi, contents.data());
+    byte_reader.SetCFIDataBase(encoded_pointer_bases.cfi,
+                               reinterpret_cast<const uint8_t*>(contents.data()));
     byte_reader.SetTextBase(encoded_pointer_bases.text);
     byte_reader.SetDataBase(encoded_pointer_bases.data);
-    CallFrameInfo parser(contents.data(), contents.size(),
+    CallFrameInfo parser(reinterpret_cast<const uint8_t*>(contents.data()),
+                         contents.size(),
                          &byte_reader, &handler, &reporter, true);
     if (succeeds)
       EXPECT_TRUE(parser.Start());
@@ -2010,11 +2148,11 @@ TEST_F(EHFrame, Terminator) {
   section
       .Mark(&cie)
       .CIEHeader(9968, 2466, 67, 1, "")
-      .D8(dwarf2reader::DW_CFA_def_cfa).ULEB128(3772).ULEB128(1372)
+      .D8(google_breakpad::DW_CFA_def_cfa).ULEB128(3772).ULEB128(1372)
       .FinishEntry()
       .FDEHeader(cie, 0x848037a1, 0x7b30475e)
-      .D8(dwarf2reader::DW_CFA_set_loc).D32(0x17713850)
-      .D8(dwarf2reader::DW_CFA_undefined).ULEB128(5721)
+      .D8(google_breakpad::DW_CFA_set_loc).D32(0x17713850)
+      .D8(google_breakpad::DW_CFA_undefined).ULEB128(5721)
       .FinishEntry()
       .D32(0)                           // Terminate the sequence.
       // This FDE should be ignored.
@@ -2040,12 +2178,12 @@ TEST_F(EHFrame, Terminator) {
 // The parser should recognize the Linux Standards Base 'z' augmentations.
 TEST_F(EHFrame, SimpleFDE) {
   DwarfPointerEncoding lsda_encoding =
-      DwarfPointerEncoding(dwarf2reader::DW_EH_PE_indirect
-                           | dwarf2reader::DW_EH_PE_datarel
-                           | dwarf2reader::DW_EH_PE_sdata2);
+      DwarfPointerEncoding(google_breakpad::DW_EH_PE_indirect
+                           | google_breakpad::DW_EH_PE_datarel
+                           | google_breakpad::DW_EH_PE_sdata2);
   DwarfPointerEncoding fde_encoding =
-      DwarfPointerEncoding(dwarf2reader::DW_EH_PE_textrel
-                           | dwarf2reader::DW_EH_PE_udata2);
+      DwarfPointerEncoding(google_breakpad::DW_EH_PE_textrel
+                           | google_breakpad::DW_EH_PE_udata2);
   
   section.SetPointerEncoding(fde_encoding);
   section.SetEncodedPointerBases(encoded_pointer_bases);
@@ -2055,17 +2193,17 @@ TEST_F(EHFrame, SimpleFDE) {
       .CIEHeader(4873, 7012, 100, 1, "zSLPR")
       .ULEB128(7)                                // Augmentation data length
       .D8(lsda_encoding)                         // LSDA pointer format
-      .D8(dwarf2reader::DW_EH_PE_pcrel)          // personality pointer format
-      .EncodedPointer(0x97baa00, dwarf2reader::DW_EH_PE_pcrel) // and value 
+      .D8(google_breakpad::DW_EH_PE_pcrel)          // personality pointer format
+      .EncodedPointer(0x97baa00, google_breakpad::DW_EH_PE_pcrel) // and value 
       .D8(fde_encoding)                          // FDE pointer format
-      .D8(dwarf2reader::DW_CFA_def_cfa).ULEB128(6706).ULEB128(31)
+      .D8(google_breakpad::DW_CFA_def_cfa).ULEB128(6706).ULEB128(31)
       .FinishEntry()
       .FDEHeader(cie, 0x540f6b56, 0xf686)
       .ULEB128(2)                                // Augmentation data length
       .EncodedPointer(0xe3eab475, lsda_encoding) // LSDA pointer, signed
-      .D8(dwarf2reader::DW_CFA_set_loc)
+      .D8(google_breakpad::DW_CFA_set_loc)
       .EncodedPointer(0x540fa4ce, fde_encoding)
-      .D8(dwarf2reader::DW_CFA_undefined).ULEB128(0x675e)
+      .D8(google_breakpad::DW_CFA_undefined).ULEB128(0x675e)
       .FinishEntry()
       .D32(0);                                   // terminator
 
@@ -2096,12 +2234,12 @@ TEST_F(EHFrame, EmptyZ) {
       .Mark(&cie)
       .CIEHeader(5955, 5805, 228, 1, "z")
       .ULEB128(0)                                // Augmentation data length
-      .D8(dwarf2reader::DW_CFA_def_cfa).ULEB128(3629).ULEB128(247)
+      .D8(google_breakpad::DW_CFA_def_cfa).ULEB128(3629).ULEB128(247)
       .FinishEntry()
       .FDEHeader(cie, 0xda007738, 0xfb55c641)
       .ULEB128(0)                                // Augmentation data length
-      .D8(dwarf2reader::DW_CFA_advance_loc1).D8(11)
-      .D8(dwarf2reader::DW_CFA_undefined).ULEB128(3769)
+      .D8(google_breakpad::DW_CFA_advance_loc1).D8(11)
+      .D8(google_breakpad::DW_CFA_undefined).ULEB128(3769)
       .FinishEntry();
 
   PERHAPS_WRITE_EH_FRAME_FILE("EHFrame.EmptyZ", section);
@@ -2125,12 +2263,12 @@ TEST_F(EHFrame, BadZ) {
       .Mark(&cie)
       .CIEHeader(6937, 1045, 142, 1, "zQ")
       .ULEB128(0)                                // Augmentation data length
-      .D8(dwarf2reader::DW_CFA_def_cfa).ULEB128(9006).ULEB128(7725)
+      .D8(google_breakpad::DW_CFA_def_cfa).ULEB128(9006).ULEB128(7725)
       .FinishEntry()
       .FDEHeader(cie, 0x1293efa8, 0x236f53f2)
       .ULEB128(0)                                // Augmentation data length
-      .D8(dwarf2reader::DW_CFA_advance_loc | 12)
-      .D8(dwarf2reader::DW_CFA_register).ULEB128(5667).ULEB128(3462)
+      .D8(google_breakpad::DW_CFA_advance_loc | 12)
+      .D8(google_breakpad::DW_CFA_register).ULEB128(5667).ULEB128(3462)
       .FinishEntry();
 
   PERHAPS_WRITE_EH_FRAME_FILE("EHFrame.BadZ", section);
@@ -2144,8 +2282,8 @@ TEST_F(EHFrame, BadZ) {
 TEST_F(EHFrame, zL) {
   Label cie;
   DwarfPointerEncoding lsda_encoding =
-      DwarfPointerEncoding(dwarf2reader::DW_EH_PE_funcrel
-                           | dwarf2reader::DW_EH_PE_udata2);
+      DwarfPointerEncoding(google_breakpad::DW_EH_PE_funcrel
+                           | google_breakpad::DW_EH_PE_udata2);
   section
       .Mark(&cie)
       .CIEHeader(9285, 9959, 54, 1, "zL")
@@ -2174,8 +2312,8 @@ TEST_F(EHFrame, zL) {
 TEST_F(EHFrame, zP) {
   Label cie;
   DwarfPointerEncoding personality_encoding =
-      DwarfPointerEncoding(dwarf2reader::DW_EH_PE_datarel
-                           | dwarf2reader::DW_EH_PE_udata2);
+      DwarfPointerEncoding(google_breakpad::DW_EH_PE_datarel
+                           | google_breakpad::DW_EH_PE_udata2);
   section
       .Mark(&cie)
       .CIEHeader(1097, 6313, 17, 1, "zP")
@@ -2203,8 +2341,8 @@ TEST_F(EHFrame, zP) {
 TEST_F(EHFrame, zR) {
   Label cie;
   DwarfPointerEncoding pointer_encoding =
-      DwarfPointerEncoding(dwarf2reader::DW_EH_PE_textrel
-                           | dwarf2reader::DW_EH_PE_sdata2);
+      DwarfPointerEncoding(google_breakpad::DW_EH_PE_textrel
+                           | google_breakpad::DW_EH_PE_sdata2);
   section.SetPointerEncoding(pointer_encoding);
   section
       .Mark(&cie)
@@ -2336,7 +2474,7 @@ struct ELFSectionHeader {
   uint64_t entry_size;
 };
 
-void AppendSectionHeader(CFISection *table, const ELFSectionHeader &header) {
+void AppendSectionHeader(CFISection* table, const ELFSectionHeader& header) {
   (*table)
       .D32(header.name)                   // name, index in string tbl
       .D32(header.type)                   // type
@@ -2351,7 +2489,7 @@ void AppendSectionHeader(CFISection *table, const ELFSectionHeader &header) {
 }
 
 void WriteELFFrameSection(const char *filename, const char *cfi_name,
-                          const CFISection &cfi) {
+                          const CFISection& cfi) {
   int elf_class = cfi.AddressSize() == 4 ? ELFCLASS32 : ELFCLASS64;
   int elf_data = (cfi.endianness() == kBigEndian
                   ? ELFDATA2MSB : ELFDATA2LSB);

@@ -1,5 +1,4 @@
-// Copyright (c) 2009, Google Inc.
-// All rights reserved.
+// Copyright 2009 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -33,16 +32,20 @@
 // This file was renamed from linux_dumper_unittest.cc and modified due
 // to LinuxDumper being splitted into two classes.
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>  // Must come first
+#endif
+
 #include <errno.h>
 #include <fcntl.h>
 #include <limits.h>
+#include <poll.h>
 #include <unistd.h>
 #include <signal.h>
 #include <stdint.h>
 #include <string.h>
 #include <sys/mman.h>
 #include <sys/prctl.h>
-#include <sys/poll.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 
@@ -55,7 +58,7 @@
 #include "common/linux/file_id.h"
 #include "common/linux/ignore_ret.h"
 #include "common/linux/safe_readlink.h"
-#include "common/memory.h"
+#include "common/memory_allocator.h"
 #include "common/using_std_string.h"
 
 #ifndef PR_SET_PTRACER
@@ -63,9 +66,69 @@
 #endif
 
 using namespace google_breakpad;
+using google_breakpad::elf::FileID;
+using google_breakpad::elf::kDefaultBuildIdSize;
 
 namespace {
 
+pid_t SetupChildProcess(int number_of_threads) {
+  char kNumberOfThreadsArgument[2];
+  sprintf(kNumberOfThreadsArgument, "%d", number_of_threads);
+
+  int fds[2];
+  EXPECT_NE(-1, pipe(fds));
+
+  pid_t child_pid = fork();
+  if (child_pid == 0) {
+    // In child process.
+    close(fds[0]);
+
+    string helper_path(GetHelperBinary());
+    if (helper_path.empty()) {
+      fprintf(stderr, "Couldn't find helper binary\n");
+      _exit(1);
+    }
+
+    // Pass the pipe fd and the number of threads as arguments.
+    char pipe_fd_string[8];
+    sprintf(pipe_fd_string, "%d", fds[1]);
+    execl(helper_path.c_str(),
+          "linux_dumper_unittest_helper",
+          pipe_fd_string,
+          kNumberOfThreadsArgument,
+          NULL);
+    // Kill if we get here.
+    printf("Errno from exec: %d", errno);
+    std::string err_str = "Exec of  " + helper_path + " failed";
+    perror(err_str.c_str());
+    _exit(1);
+  }
+  close(fds[1]);
+
+  // Wait for all child threads to indicate that they have started
+  for (int threads = 0; threads < number_of_threads; threads++) {
+    struct pollfd pfd;
+    memset(&pfd, 0, sizeof(pfd));
+    pfd.fd = fds[0];
+    pfd.events = POLLIN | POLLERR;
+
+    const int r = HANDLE_EINTR(poll(&pfd, 1, 1000));
+    EXPECT_EQ(1, r);
+    EXPECT_TRUE(pfd.revents & POLLIN);
+    uint8_t junk;
+    EXPECT_EQ(read(fds[0], &junk, sizeof(junk)),
+              static_cast<ssize_t>(sizeof(junk)));
+  }
+  close(fds[0]);
+
+  // There is a race here because we may stop a child thread before
+  // it is actually running the busy loop. Empirically this sleep
+  // is sufficient to avoid the race.
+  usleep(100000);
+  return child_pid;
+}
+
+typedef wasteful_vector<uint8_t> id_vector;
 typedef testing::Test LinuxPtraceDumperTest;
 
 /* Fixture for running tests in a child process. */
@@ -86,8 +149,8 @@ class LinuxPtraceDumperChildTest : public testing::Test {
     if (child_pid_ == 0) {
       // child process
       RealTestBody();
-      exit(HasFatalFailure() ? kFatalFailure :
-           (HasNonfatalFailure() ? kNonFatalFailure : 0));
+      _exit(HasFatalFailure() ? kFatalFailure :
+            (HasNonfatalFailure() ? kNonFatalFailure : 0));
     }
 
     ASSERT_TRUE(child_pid_ > 0);
@@ -105,11 +168,17 @@ class LinuxPtraceDumperChildTest : public testing::Test {
    * This is achieved by defining a TestBody macro further below.
    */
   virtual void RealTestBody() = 0;
+
+  id_vector make_vector() {
+    return id_vector(&allocator, kDefaultBuildIdSize);
+  }
+
  private:
   static const int kFatalFailure = 1;
   static const int kNonFatalFailure = 2;
 
   pid_t child_pid_;
+  PageAllocator allocator;
 };
 
 }  // namespace
@@ -186,7 +255,7 @@ void LinuxPtraceDumperMappingsTest::SetUp() {
   helper_path_ = GetHelperBinary();
   if (helper_path_.empty()) {
     FAIL() << "Couldn't find helper binary";
-    exit(1);
+    _exit(1);
   }
 
   // mmap two segments out of the helper binary, one
@@ -273,7 +342,7 @@ TEST_F(LinuxPtraceDumperChildTest, MappingsIncludeLinuxGate) {
   ASSERT_TRUE(dumper.Init());
 
   void* linux_gate_loc =
-    reinterpret_cast<void *>(dumper.auxv()[AT_SYSINFO_EHDR]);
+    reinterpret_cast<void*>(dumper.auxv()[AT_SYSINFO_EHDR]);
   ASSERT_TRUE(linux_gate_loc);
   bool found_linux_gate = false;
 
@@ -310,14 +379,15 @@ TEST_F(LinuxPtraceDumperChildTest, LinuxGateMappingID) {
 
   // Need to suspend the child so ptrace actually works.
   ASSERT_TRUE(dumper.ThreadsSuspend());
-  uint8_t identifier[sizeof(MDGUID)];
+  id_vector identifier(make_vector());
   ASSERT_TRUE(dumper.ElfFileIdentifierForMapping(*mappings[index],
                                                  true,
                                                  index,
                                                  identifier));
-  uint8_t empty_identifier[sizeof(MDGUID)];
-  memset(empty_identifier, 0, sizeof(empty_identifier));
-  EXPECT_NE(0, memcmp(empty_identifier, identifier, sizeof(identifier)));
+
+  id_vector empty_identifier(make_vector());
+  empty_identifier.resize(kDefaultBuildIdSize, 0);
+  EXPECT_NE(empty_identifier, identifier);
   EXPECT_TRUE(dumper.ThreadsResume());
 }
 #endif
@@ -343,86 +413,41 @@ TEST_F(LinuxPtraceDumperChildTest, FileIDsMatch) {
   }
   ASSERT_TRUE(found_exe);
 
-  uint8_t identifier1[sizeof(MDGUID)];
-  uint8_t identifier2[sizeof(MDGUID)];
+  id_vector identifier1(make_vector());
+  id_vector identifier2(make_vector());
   EXPECT_TRUE(dumper.ElfFileIdentifierForMapping(*mappings[i], true, i,
                                                  identifier1));
   FileID fileid(exe_name);
   EXPECT_TRUE(fileid.ElfFileIdentifier(identifier2));
-  char identifier_string1[37];
-  char identifier_string2[37];
-  FileID::ConvertIdentifierToString(identifier1, identifier_string1,
-                                    37);
-  FileID::ConvertIdentifierToString(identifier2, identifier_string2,
-                                    37);
-  EXPECT_STREQ(identifier_string1, identifier_string2);
+
+  string identifier_string1 =
+      FileID::ConvertIdentifierToUUIDString(identifier1);
+  string identifier_string2 =
+      FileID::ConvertIdentifierToUUIDString(identifier2);
+  EXPECT_EQ(identifier_string1, identifier_string2);
 }
 
 /* Get back to normal behavior of TEST*() macros wrt TestBody. */
 #undef TestBody
 
 TEST(LinuxPtraceDumperTest, VerifyStackReadWithMultipleThreads) {
-  static const int kNumberOfThreadsInHelperProgram = 5;
-  char kNumberOfThreadsArgument[2];
-  sprintf(kNumberOfThreadsArgument, "%d", kNumberOfThreadsInHelperProgram);
+  static const size_t kNumberOfThreadsInHelperProgram = 5;
 
-  int fds[2];
-  ASSERT_NE(-1, pipe(fds));
-
-  pid_t child_pid = fork();
-  if (child_pid == 0) {
-    // In child process.
-    close(fds[0]);
-
-    string helper_path(GetHelperBinary());
-    if (helper_path.empty()) {
-      FAIL() << "Couldn't find helper binary";
-      exit(1);
-    }
-
-    // Pass the pipe fd and the number of threads as arguments.
-    char pipe_fd_string[8];
-    sprintf(pipe_fd_string, "%d", fds[1]);
-    execl(helper_path.c_str(),
-          "linux_dumper_unittest_helper",
-          pipe_fd_string,
-          kNumberOfThreadsArgument,
-          NULL);
-    // Kill if we get here.
-    printf("Errno from exec: %d", errno);
-    FAIL() << "Exec of " << helper_path << " failed: " << strerror(errno);
-    exit(0);
-  }
-  close(fds[1]);
-
-  // Wait for all child threads to indicate that they have started
-  for (int threads = 0; threads < kNumberOfThreadsInHelperProgram; threads++) {
-    struct pollfd pfd;
-    memset(&pfd, 0, sizeof(pfd));
-    pfd.fd = fds[0];
-    pfd.events = POLLIN | POLLERR;
-
-    const int r = HANDLE_EINTR(poll(&pfd, 1, 1000));
-    ASSERT_EQ(1, r);
-    ASSERT_TRUE(pfd.revents & POLLIN);
-    uint8_t junk;
-    ASSERT_EQ(read(fds[0], &junk, sizeof(junk)),
-              static_cast<ssize_t>(sizeof(junk)));
-  }
-  close(fds[0]);
-
-  // There is a race here because we may stop a child thread before
-  // it is actually running the busy loop. Empirically this sleep
-  // is sufficient to avoid the race.
-  usleep(100000);
+  pid_t child_pid = SetupChildProcess(kNumberOfThreadsInHelperProgram);
+  ASSERT_NE(child_pid, -1);
 
   // Children are ready now.
   LinuxPtraceDumper dumper(child_pid);
   ASSERT_TRUE(dumper.Init());
-  EXPECT_EQ((size_t)kNumberOfThreadsInHelperProgram, dumper.threads().size());
+#if defined(THREAD_SANITIZER)
+  EXPECT_GE(dumper.threads().size(), (size_t)kNumberOfThreadsInHelperProgram);
+#else
+  EXPECT_EQ(dumper.threads().size(), (size_t)kNumberOfThreadsInHelperProgram);
+#endif
   EXPECT_TRUE(dumper.ThreadsSuspend());
 
   ThreadInfo one_thread;
+  size_t matching_threads = 0;
   for (size_t i = 0; i < dumper.threads().size(); ++i) {
     EXPECT_TRUE(dumper.GetThreadInfoByIndex(i, &one_thread));
     const void* stack;
@@ -433,13 +458,18 @@ TEST(LinuxPtraceDumperTest, VerifyStackReadWithMultipleThreads) {
     // specific register. Check that we can recover its value.
 #if defined(__ARM_EABI__)
     pid_t* process_tid_location = (pid_t*)(one_thread.regs.uregs[3]);
+#elif defined(__aarch64__)
+    pid_t* process_tid_location = (pid_t*)(one_thread.regs.regs[3]);
 #elif defined(__i386)
     pid_t* process_tid_location = (pid_t*)(one_thread.regs.ecx);
 #elif defined(__x86_64)
     pid_t* process_tid_location = (pid_t*)(one_thread.regs.rcx);
 #elif defined(__mips__)
     pid_t* process_tid_location =
-        reinterpret_cast<pid_t*>(one_thread.regs.regs[1]);
+        reinterpret_cast<pid_t*>(one_thread.mcontext.gregs[1]);
+#elif defined(__riscv)
+    pid_t* process_tid_location =
+        reinterpret_cast<pid_t*>(one_thread.mcontext.__gregs[4]);
 #else
 #error This test has not been ported to this platform.
 #endif
@@ -448,12 +478,111 @@ TEST(LinuxPtraceDumperTest, VerifyStackReadWithMultipleThreads) {
                            dumper.threads()[i],
                            process_tid_location,
                            4);
-    EXPECT_EQ(dumper.threads()[i], one_thread_id);
+    matching_threads += (dumper.threads()[i] == one_thread_id) ? 1 : 0;
   }
+  EXPECT_EQ(matching_threads, kNumberOfThreadsInHelperProgram);
   EXPECT_TRUE(dumper.ThreadsResume());
   kill(child_pid, SIGKILL);
 
   // Reap child
+  int status;
+  ASSERT_NE(-1, HANDLE_EINTR(waitpid(child_pid, &status, 0)));
+  ASSERT_TRUE(WIFSIGNALED(status));
+  ASSERT_EQ(SIGKILL, WTERMSIG(status));
+}
+
+TEST_F(LinuxPtraceDumperTest, SanitizeStackCopy) {
+  static const size_t kNumberOfThreadsInHelperProgram = 1;
+
+  pid_t child_pid = SetupChildProcess(kNumberOfThreadsInHelperProgram);
+  ASSERT_NE(child_pid, -1);
+
+  LinuxPtraceDumper dumper(child_pid);
+  ASSERT_TRUE(dumper.Init());
+  EXPECT_TRUE(dumper.ThreadsSuspend());
+
+  ThreadInfo thread_info;
+  EXPECT_TRUE(dumper.GetThreadInfoByIndex(0, &thread_info));
+
+  const uintptr_t defaced =
+#if defined(__LP64__)
+      0x0defaced0defaced;
+#else
+      0x0defaced;
+#endif
+
+  uintptr_t simulated_stack[2];
+
+  // Pointers into the stack shouldn't be sanitized.
+  memset(simulated_stack, 0xff, sizeof(simulated_stack));
+  simulated_stack[1] = thread_info.stack_pointer;
+  dumper.SanitizeStackCopy(reinterpret_cast<uint8_t*>(&simulated_stack),
+                           sizeof(simulated_stack), thread_info.stack_pointer,
+                           sizeof(uintptr_t));
+  ASSERT_NE(simulated_stack[1], defaced);
+
+  // Memory prior to the stack pointer should be cleared.
+  ASSERT_EQ(simulated_stack[0], 0u);
+
+  // Small integers should not be sanitized.
+  for (int i = -4096; i <= 4096; ++i) {
+    memset(simulated_stack, 0, sizeof(simulated_stack));
+    simulated_stack[0] = static_cast<uintptr_t>(i);
+    dumper.SanitizeStackCopy(reinterpret_cast<uint8_t*>(&simulated_stack),
+                             sizeof(simulated_stack), thread_info.stack_pointer,
+                             0u);
+    ASSERT_NE(simulated_stack[0], defaced);
+  }
+
+  // The instruction pointer definitely should point into an executable mapping.
+  const MappingInfo* mapping_info = dumper.FindMappingNoBias(
+      reinterpret_cast<uintptr_t>(thread_info.GetInstructionPointer()));
+  ASSERT_NE(mapping_info, nullptr);
+  ASSERT_TRUE(mapping_info->exec);
+
+  // Pointers to code shouldn't be sanitized.
+  memset(simulated_stack, 0, sizeof(simulated_stack));
+  simulated_stack[1] = thread_info.GetInstructionPointer();
+  dumper.SanitizeStackCopy(reinterpret_cast<uint8_t*>(&simulated_stack),
+                           sizeof(simulated_stack), thread_info.stack_pointer,
+                           0u);
+  ASSERT_NE(simulated_stack[0], defaced);
+
+  // String fragments should be sanitized.
+  memcpy(simulated_stack, "abcdefghijklmnop", sizeof(simulated_stack));
+  dumper.SanitizeStackCopy(reinterpret_cast<uint8_t*>(&simulated_stack),
+                           sizeof(simulated_stack), thread_info.stack_pointer,
+                           0u);
+  ASSERT_EQ(simulated_stack[0], defaced);
+  ASSERT_EQ(simulated_stack[1], defaced);
+
+  // Heap pointers should be sanititzed.
+#if defined(__ARM_EABI__)
+  uintptr_t heap_addr = thread_info.regs.uregs[3];
+#elif defined(__aarch64__)
+  uintptr_t heap_addr = thread_info.regs.regs[3];
+#elif defined(__i386)
+  uintptr_t heap_addr = thread_info.regs.ecx;
+#elif defined(__x86_64)
+  uintptr_t heap_addr = thread_info.regs.rcx;
+#elif defined(__mips__)
+  uintptr_t heap_addr = thread_info.mcontext.gregs[1];
+#elif defined(__riscv)
+  uintptr_t heap_addr = thread_info.mcontext.__gregs[4];
+#else
+#error This test has not been ported to this platform.
+#endif
+  memset(simulated_stack, 0, sizeof(simulated_stack));
+  simulated_stack[0] = heap_addr;
+  dumper.SanitizeStackCopy(reinterpret_cast<uint8_t*>(&simulated_stack),
+                           sizeof(simulated_stack), thread_info.stack_pointer,
+                           0u);
+  ASSERT_EQ(simulated_stack[0], defaced);
+
+  EXPECT_TRUE(dumper.ThreadsResume());
+  kill(child_pid, SIGKILL);
+
+  // Reap child.
   int status;
   ASSERT_NE(-1, HANDLE_EINTR(waitpid(child_pid, &status, 0)));
   ASSERT_TRUE(WIFSIGNALED(status));

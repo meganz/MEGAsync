@@ -1,5 +1,4 @@
-// Copyright (c) 2006, Google Inc.
-// All rights reserved.
+// Copyright 2006 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -27,14 +26,26 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>  // Must come first
+#endif
+
+#include "common/linux/eintr_wrapper.h"
 #include "common/linux/guid_creator.h"
 
 #include <assert.h>
+#include <fcntl.h>
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <sys/stat.h>
 #include <time.h>
 #include <unistd.h>
+
+#if defined(HAVE_SYS_RANDOM_H)
+#include <sys/random.h>
+#endif
 
 //
 // GUIDGenerator
@@ -57,42 +68,105 @@ class GUIDGenerator {
     bytes[0] = n & 0xff;
     bytes[1] = (n >> 8) & 0xff;
     bytes[2] = (n >> 16) & 0xff;
-    bytes[3] = static_cast<uint8_t>((n >> 24) & 0xff);
+    bytes[3] = (n >> 24) & 0xff;
   }
 
   static bool CreateGUID(GUID *guid) {
-    InitOnce();
-    guid->data1 = RandomAsUint32();
-    guid->data2 = RandomAsUint16();
-    guid->data3 = RandomAsUint16();
-    UInt32ToBytes(&guid->data4[0], RandomAsUint32());
-    UInt32ToBytes(&guid->data4[4], RandomAsUint32());
+#if defined(HAVE_ARC4RANDOM) // Android, BSD, ...
+    CreateGuidFromArc4Random(guid);
+#else // Linux
+    bool success = false;
+
+#if defined(HAVE_SYS_RANDOM_H) && defined(HAVE_GETRANDOM)
+    success = CreateGUIDFromGetrandom(guid);
+#endif // HAVE_SYS_RANDOM_H && HAVE_GETRANDOM
+    if (!success) {
+      success = CreateGUIDFromDevUrandom(guid);
+    }
+
+    if (!success) {
+      CreateGUIDFromRand(guid);
+      success = true;
+    }
+#endif
+
+    // Put in the version according to RFC 4122.
+    guid->data3 &= 0x0fff;
+    guid->data3 |= 0x4000;
+
+    // Put in the variant according to RFC 4122.
+    guid->data4[0] &= 0x3f;
+    guid->data4[0] |= 0x80;
+
     return true;
   }
 
  private:
+#ifdef HAVE_ARC4RANDOM
+  static void CreateGuidFromArc4Random(GUID *guid) {
+    char *buf = reinterpret_cast<char*>(guid);
+
+    for (size_t i = 0; i < sizeof(GUID); i += sizeof(uint32_t)) {
+      uint32_t random_data = arc4random();
+
+      memcpy(buf + i, &random_data, sizeof(uint32_t));
+    }
+  }
+#else
   static void InitOnce() {
     pthread_once(&once_control, &InitOnceImpl);
   }
 
   static void InitOnceImpl() {
-    srandom(static_cast<unsigned int>(time(NULL)));
-  }
-
-  static inline uint16_t RandomAsUint16()
-  {
-      return static_cast<uint16_t>(random());
-  }
-
-  static inline uint32_t RandomAsUint32()
-  {
-      return static_cast<uint32_t>(random());
+    // time(NULL) is a very poor seed, so lacking anything better mix an
+    // address into it. We drop the four rightmost bits as they're likely to
+    // be 0 on almost all architectures.
+    srand(time(NULL) | ((uintptr_t)&once_control >> 4));
   }
 
   static pthread_once_t once_control;
+
+#if defined(HAVE_SYS_RANDOM_H) && defined(HAVE_GETRANDOM)
+  static bool CreateGUIDFromGetrandom(GUID *guid) {
+    char *buf = reinterpret_cast<char*>(guid);
+    int read_bytes = getrandom(buf, sizeof(GUID), GRND_NONBLOCK);
+
+    return (read_bytes == static_cast<int>(sizeof(GUID)));
+  }
+#endif // HAVE_SYS_RANDOM_H && HAVE_GETRANDOM
+
+  // Populate the GUID using random bytes read from /dev/urandom, returns false
+  // if the GUID wasn't fully populated with random data.
+  static bool CreateGUIDFromDevUrandom(GUID *guid) {
+    char *buf = reinterpret_cast<char*>(guid);
+    int fd = open("/dev/urandom", O_RDONLY | O_CLOEXEC);
+
+    if (fd == -1) {
+      return false;
+    }
+
+    ssize_t read_bytes = HANDLE_EINTR(read(fd, buf, sizeof(GUID)));
+    close(fd);
+
+    return (read_bytes == static_cast<ssize_t>(sizeof(GUID)));
+  }
+
+  // Populate the GUID using a stream of random bytes obtained from rand().
+  static void CreateGUIDFromRand(GUID *guid) {
+    char *buf = reinterpret_cast<char*>(guid);
+
+    InitOnce();
+
+    for (size_t i = 0; i < sizeof(GUID); i++) {
+      buf[i] = rand();
+    }
+  }
+#endif
 };
 
+#ifndef HAVE_ARC4RANDOM
 pthread_once_t GUIDGenerator::once_control = PTHREAD_ONCE_INIT;
+#endif
 
 bool CreateGUID(GUID *guid) {
   return GUIDGenerator::CreateGUID(guid);

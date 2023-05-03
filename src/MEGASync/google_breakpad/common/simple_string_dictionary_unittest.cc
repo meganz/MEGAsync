@@ -1,5 +1,4 @@
-// Copyright (c) 2008, Google Inc.
-// All rights reserved.
+// Copyright 2008 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -26,6 +25,10 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+#ifdef HAVE_CONFIG_H
+#include <config.h>  // Must come first
+#endif
 
 #include "breakpad_googletest_includes.h"
 #include "common/simple_string_dictionary.h"
@@ -286,6 +289,37 @@ TEST(NonAllocatingMapTest, OutOfSpace) {
   map.SetKeyValue("c", "3");
   EXPECT_EQ(2u, map.GetCount());
   EXPECT_FALSE(map.GetValueForKey("c"));
+}
+
+TEST(NonAllocatingMapTest, ByIndex) {
+  NonAllocatingMap<10, 10, 3> map;
+
+  size_t index1 = map.SetKeyValue("test", "one");
+  EXPECT_TRUE(index1 >= 0 && index1 <= map.num_entries);
+
+  size_t index2 = map.SetKeyValue("moo", "foo");
+  EXPECT_TRUE(index2 >= 0 && index2 <= map.num_entries);
+  EXPECT_NE(index1, index2);
+
+  size_t index3 = map.SetKeyValue("blob", "kebab");
+  EXPECT_TRUE(index3 >= 0 && index3 <= map.num_entries);
+  EXPECT_NE(index2, index3);
+
+  size_t index4 = map.SetKeyValue("nogo", "full");
+  EXPECT_TRUE(index4 == map.num_entries);
+
+  EXPECT_STREQ("one", map.GetValueForKey("test"));
+  EXPECT_STREQ("foo", map.GetValueForKey("moo"));
+  EXPECT_STREQ("kebab", map.GetValueForKey("blob"));
+
+  map.SetValueAtIndex(index2, "booo");
+  EXPECT_STREQ("booo", map.GetValueForKey("moo"));
+
+  EXPECT_TRUE(map.RemoveAtIndex(index1));
+  EXPECT_FALSE(map.GetValueForKey("test"));
+
+  EXPECT_FALSE(map.RemoveAtIndex(map.num_entries));
+  EXPECT_FALSE(map.RemoveAtIndex(9999));
 }
 
 #ifndef NDEBUG

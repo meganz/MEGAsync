@@ -1,5 +1,4 @@
-// Copyright (c) 2010, Google Inc.
-// All rights reserved.
+// Copyright 2010 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -32,6 +31,10 @@
 // test_assembler.cc: Implementation of google_breakpad::TestAssembler.
 // See test_assembler.h for details.
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>  // Must come first
+#endif
+
 #include "common/test_assembler.h"
 
 #include <assert.h>
@@ -46,7 +49,7 @@ using std::back_insert_iterator;
 
 Label::Label() : value_(new Binding()) { }
 Label::Label(uint64_t value) : value_(new Binding(value)) { }
-Label::Label(const Label &label) {
+Label::Label(const Label& label) {
   value_ = label.value_;
   value_->Acquire();
 }
@@ -54,12 +57,12 @@ Label::~Label() {
   if (value_->Release()) delete value_;
 }
 
-Label &Label::operator=(uint64_t value) {
+Label& Label::operator=(uint64_t value) {
   value_->Set(NULL, value);
   return *this;
 }
 
-Label &Label::operator=(const Label &label) {
+Label& Label::operator=(const Label& label) {
   value_->Set(label.value_, 0);
   return *this;
 }
@@ -89,7 +92,7 @@ Label Label::operator-(uint64_t subtrahend) const {
 #define ALWAYS_EVALUATE_AND_ASSERT(x) assert(x)
 #endif
 
-uint64_t Label::operator-(const Label &label) const {
+uint64_t Label::operator-(const Label& label) const {
   uint64_t offset;
   ALWAYS_EVALUATE_AND_ASSERT(IsKnownOffsetFrom(label, &offset));
   return offset;
@@ -101,8 +104,8 @@ uint64_t Label::Value() const {
   return v;
 };
 
-bool Label::IsKnownConstant(uint64_t *value_p) const {
-  Binding *base;
+bool Label::IsKnownConstant(uint64_t* value_p) const {
+  Binding* base;
   uint64_t addend;
   value_->Get(&base, &addend);
   if (base != NULL) return false;
@@ -110,9 +113,9 @@ bool Label::IsKnownConstant(uint64_t *value_p) const {
   return true;
 }
 
-bool Label::IsKnownOffsetFrom(const Label &label, uint64_t *offset_p) const
+bool Label::IsKnownOffsetFrom(const Label& label, uint64_t* offset_p) const
 {
-  Binding *label_base, *this_base;
+  Binding* label_base, *this_base;
   uint64_t label_addend, this_addend;
   label.value_->Get(&label_base, &label_addend);
   value_->Get(&this_base, &this_addend);
@@ -135,7 +138,7 @@ Label::Binding::~Binding() {
     delete base_;
 }
 
-void Label::Binding::Set(Binding *binding, uint64_t addend) {
+void Label::Binding::Set(Binding* binding, uint64_t addend) {
   if (!base_ && !binding) {
     // We're equating two constants. This could be okay.
     assert(addend_ == addend);
@@ -183,13 +186,13 @@ void Label::Binding::Set(Binding *binding, uint64_t addend) {
   }
 }
 
-void Label::Binding::Get(Binding **base, uint64_t *addend) {
+void Label::Binding::Get(Binding** base, uint64_t* addend) {
   if (base_ && base_ != this) {
     // Recurse to find the end of our reference chain (the root of our
     // tree), and then rewrite every binding along the chain to refer
     // to it directly, adjusting addends appropriately. (This is why
     // this member function isn't this-const.)
-    Binding *final_base;
+    Binding* final_base;
     uint64_t final_addend;
     base_->Get(&final_base, &final_addend);
     if (final_base) final_base->Acquire();
@@ -218,14 +221,14 @@ static inline void InsertEndian(test_assembler::Endianness endianness,
   }
 }
 
-Section &Section::Append(Endianness endianness, size_t size, uint64_t number) {
+Section& Section::Append(Endianness endianness, size_t size, uint64_t number) {
   InsertEndian(endianness, size, number,
                back_insert_iterator<string>(contents_));
   return *this;
 }
 
-Section &Section::Append(Endianness endianness, size_t size,
-                         const Label &label) {
+Section& Section::Append(Endianness endianness, size_t size,
+                         const Label& label) {
   // If this label's value is known, there's no reason to waste an
   // entry in references_ on it.
   uint64_t value;
@@ -246,14 +249,14 @@ Section &Section::Append(Endianness endianness, size_t size,
 #define ENDIANNESS(e) ENDIANNESS_ ## e
 
 #define DEFINE_SHORT_APPEND_NUMBER_ENDIAN(e, bits)                      \
-  Section &Section::e ## bits(uint ## bits ## _t v) {                  \
+  Section& Section::e ## bits(uint ## bits ## _t v) {                   \
     InsertEndian(ENDIANNESS(e), bits / 8, v,                            \
                  back_insert_iterator<string>(contents_));              \
     return *this;                                                       \
   }
 
 #define DEFINE_SHORT_APPEND_LABEL_ENDIAN(e, bits)                       \
-  Section &Section::e ## bits(const Label &v) {                         \
+  Section& Section::e ## bits(const Label& v) {                         \
     return Append(ENDIANNESS(e), bits / 8, v);                          \
   }
 
@@ -272,13 +275,13 @@ DEFINE_SHORT_APPEND_ENDIAN(B, 32);
 DEFINE_SHORT_APPEND_ENDIAN(B, 64);
 
 #define DEFINE_SHORT_APPEND_NUMBER_DEFAULT(bits)                        \
-  Section &Section::D ## bits(uint ## bits ## _t v) {                  \
+  Section& Section::D ## bits(uint ## bits ## _t v) {                   \
     InsertEndian(endianness_, bits / 8, v,                              \
                  back_insert_iterator<string>(contents_));              \
     return *this;                                                       \
   }
 #define DEFINE_SHORT_APPEND_LABEL_DEFAULT(bits)                         \
-  Section &Section::D ## bits(const Label &v) {                         \
+  Section& Section::D ## bits(const Label& v) {                         \
     return Append(endianness_, bits / 8, v);                            \
   }
 #define DEFINE_SHORT_APPEND_DEFAULT(bits)                               \
@@ -290,7 +293,7 @@ DEFINE_SHORT_APPEND_DEFAULT(16);
 DEFINE_SHORT_APPEND_DEFAULT(32);
 DEFINE_SHORT_APPEND_DEFAULT(64);
 
-Section &Section::Append(const Section &section) {
+Section& Section::Append(const Section& section) {
   size_t base = contents_.size();
   contents_.append(section.contents_);
   for (vector<Reference>::const_iterator it = section.references_.begin();
@@ -300,7 +303,7 @@ Section &Section::Append(const Section &section) {
   return *this;
 }
 
-Section &Section::LEB128(long long value) {
+Section& Section::LEB128(long long value) {
   while (value < -0x40 || 0x3f < value) {
     contents_ += (value & 0x7f) | 0x80;
     if (value < 0)
@@ -312,7 +315,7 @@ Section &Section::LEB128(long long value) {
   return *this;
 }
 
-Section &Section::ULEB128(uint64_t value) {
+Section& Section::ULEB128(uint64_t value) {
   while (value > 0x7f) {
     contents_ += (value & 0x7f) | 0x80;
     value = (value >> 7);
@@ -321,7 +324,7 @@ Section &Section::ULEB128(uint64_t value) {
   return *this;
 }
 
-Section &Section::Align(size_t alignment, uint8_t pad_byte) {
+Section& Section::Align(size_t alignment, uint8_t pad_byte) {
   // ALIGNMENT must be a power of two.
   assert(((alignment - 1) & alignment) == 0);
   size_t new_size = (contents_.size() + alignment - 1) & ~(alignment - 1);
@@ -335,11 +338,11 @@ void Section::Clear() {
   references_.clear();
 }
 
-bool Section::GetContents(string *contents) {
+bool Section::GetContents(string* contents) {
   // For each label reference, find the label's value, and patch it into
   // the section's contents.
   for (size_t i = 0; i < references_.size(); i++) {
-    Reference &r = references_[i];
+    Reference& r = references_[i];
     uint64_t value;
     if (!r.label.IsKnownConstant(&value)) {
       fprintf(stderr, "Undefined label #%zu at offset 0x%zx\n", i, r.offset);

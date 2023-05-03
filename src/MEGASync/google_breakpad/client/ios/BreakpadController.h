@@ -1,5 +1,4 @@
-// Copyright (c) 2012, Google Inc.
-// All rights reserved.
+// Copyright 2012 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -62,6 +61,13 @@
   // The interval to wait between two uploads. Value is 0 if no upload must be
   // done.
   int uploadIntervalInSeconds_;
+
+  // The dictionary that contains additional server parameters to send when
+  // uploading crash reports.
+  NSDictionary* uploadTimeParameters_;
+
+  // The callback to call on report upload completion.
+  BreakpadUploadCompletionCallback uploadCompleteCallback_;
 }
 
 // Singleton.
@@ -84,9 +90,16 @@
 // will prevent uploads.
 - (void)setUploadInterval:(int)intervalInSeconds;
 
-// Specify a parameter that will be uploaded to the crash server. See
-// |BreakpadAddUploadParameter|.
+// Set additional server parameters to send when uploading crash reports.
+- (void)setParametersToAddAtUploadTime:(NSDictionary*)uploadTimeParameters;
+
+// Specify an upload parameter that will be added to the crash report when a
+// crash report is generated. See |BreakpadAddUploadParameter|.
 - (void)addUploadParameter:(NSString*)value forKey:(NSString*)key;
+
+// Sets the callback to be called after uploading a crash report to the server.
+// Only the latest callback registered will be called.
+- (void)setUploadCallback:(BreakpadUploadCompletionCallback)callback;
 
 // Remove a previously-added parameter from the upload parameter set. See
 // |BreakpadRemoveUploadParameter|.
@@ -105,6 +118,9 @@
 // Unregisters the crash handlers.
 - (void)stop;
 
+// Returns whether or not the controller is started.
+- (BOOL)isStarted;
+
 // Enables or disables uploading of crash reports, but does not stop the
 // BreakpadController.
 - (void)setUploadingEnabled:(BOOL)enabled;
@@ -114,6 +130,23 @@
 
 // Get the number of crash reports waiting to upload.
 - (void)getCrashReportCount:(void(^)(int))callback;
+
+// Get the next report to upload.
+// - If upload is disabled, callback will be called with (nil, -1).
+// - If a delay is to be waited before sending, callback will be called with
+//   (nil, n), with n (> 0) being the number of seconds to wait.
+// - if no delay is needed, callback will be called with (0, configuration),
+//   configuration being next report to upload, or nil if none is pending.
+- (void)getNextReportConfigurationOrSendDelay:
+    (void(^)(NSDictionary*, int))callback;
+
+// Get the date of the most recent crash report.
+- (void)getDateOfMostRecentCrashReport:(void(^)(NSDate *))callback;
+
+// Sends synchronously the report specified by |configuration|. This method is
+// NOT thread safe and must be called from the breakpad thread.
+- (void)threadUnsafeSendReportWithConfiguration:(NSDictionary*)configuration
+                                withBreakpadRef:(BreakpadRef)ref;
 
 @end
 

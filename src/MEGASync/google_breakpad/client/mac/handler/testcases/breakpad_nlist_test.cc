@@ -1,5 +1,4 @@
-// Copyright (c) 2008, Google Inc.
-// All rights reserved
+// Copyright 2008 Google LLC
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
 // met:
@@ -10,7 +9,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -31,8 +30,12 @@
 //  minidump_test
 //
 //  Created by Neal Sidhwaney on 4/13/08.
-//  Copyright 2008 Google Inc. All rights reserved.
+//  Copyright 2008 Google LLC
 //
+
+#ifdef HAVE_CONFIG_H
+#include <config.h>  // Must come first
+#endif
 
 #include "client/mac/handler/testcases/breakpad_nlist_test.h"
 #include <mach-o/nlist.h>
@@ -40,7 +43,7 @@
 
 BreakpadNlistTest test1(TEST_INVOCATION(BreakpadNlistTest, CompareToNM));
 
-BreakpadNlistTest::BreakpadNlistTest(TestInvocation *invocation)
+BreakpadNlistTest::BreakpadNlistTest(TestInvocation* invocation)
     : TestCase(invocation) {
 }
 
@@ -55,7 +58,7 @@ void BreakpadNlistTest::CompareToNM() {
   system("/usr/bin/nm -arch ppc64 /usr/lib/dyld > /tmp/dyld-namelist.txt");
 #endif
 
-  FILE *fd = fopen("/tmp/dyld-namelist.txt", "rt");
+  FILE* fd = fopen("/tmp/dyld-namelist.txt", "rt");
 
   char oneNMAddr[30];
   char symbolType;
@@ -63,10 +66,10 @@ void BreakpadNlistTest::CompareToNM() {
   while (!feof(fd)) {
     fscanf(fd, "%s %c %s", oneNMAddr, &symbolType, symbolName);
     breakpad_nlist symbolList[2];
-    breakpad_nlist &list = symbolList[0];
+    breakpad_nlist& list = symbolList[0];
 
     memset(symbolList, 0, sizeof(breakpad_nlist)*2);
-    const char *symbolNames[2];
+    const char* symbolNames[2];
     symbolNames[0] = (const char*)symbolName;
     symbolNames[1] = "\0";
     breakpad_nlist_64("/usr/lib/dyld", &list, symbolNames);
@@ -79,12 +82,12 @@ void BreakpadNlistTest::CompareToNM() {
   fclose(fd);
 }
 
-bool BreakpadNlistTest::IsSymbolMoreThanOnceInDyld(const char *symbolName) {
+bool BreakpadNlistTest::IsSymbolMoreThanOnceInDyld(const char* symbolName) {
   // These are the symbols that occur more than once when nm dumps
   // the symbol table of /usr/lib/dyld.  Our nlist program returns
   // the first address because it's doing a search so we need to exclude
   // these from causing the test to fail
-  const char *multipleSymbols[] = {
+  const char* multipleSymbols[] = {
     "__Z41__static_initialization_and_destruction_0ii",
     "___tcf_0",
     "___tcf_1",

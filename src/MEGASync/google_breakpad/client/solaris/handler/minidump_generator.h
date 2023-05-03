@@ -1,5 +1,4 @@
-// Copyright (c) 2007, Google Inc.
-// All rights reserved.
+// Copyright 2007 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -48,10 +47,10 @@ namespace google_breakpad {
 //
 class MinidumpGenerator {
   // Callback run for writing lwp information in the process.
-  friend bool LwpInformationCallback(lwpstatus_t *lsp, void *context);
+  friend bool LwpInformationCallback(lwpstatus_t* lsp, void* context);
 
   // Callback run for writing module information in the process.
-  friend bool ModuleInfoCallback(const ModuleInfo &module_info, void *context);
+  friend bool ModuleInfoCallback(const ModuleInfo& module_info, void* context);
 
  public:
   MinidumpGenerator();
@@ -59,10 +58,10 @@ class MinidumpGenerator {
   ~MinidumpGenerator();
 
   // Write minidump.
-  bool WriteMinidumpToFile(const char *file_pathname,
+  bool WriteMinidumpToFile(const char* file_pathname,
                            int signo,
                            uintptr_t sighandler_ebp,
-                           ucontext_t **sig_ctx) const;
+                           ucontext_t** sig_ctx) const;
 };
 
 }  // namespace google_breakpad

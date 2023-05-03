@@ -1,5 +1,4 @@
-// Copyright (c) 2012, Google Inc.
-// All rights reserved.
+// Copyright 2012 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -27,87 +26,135 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>  // Must come first
+#endif
+
 #include "common/mac/arch_utilities.h"
 
+#include <mach/machine.h>
 #include <mach-o/arch.h>
+#include <mach-o/fat.h>
 #include <stdio.h>
 #include <string.h>
 
-#ifndef CPU_TYPE_ARM
-#define CPU_TYPE_ARM (static_cast<cpu_type_t>(12))
-#endif  // CPU_TYPE_ARM
-
-#ifndef CPU_SUBTYPE_ARM_V7
-#define CPU_SUBTYPE_ARM_V7 (static_cast<cpu_subtype_t>(9))
-#endif  // CPU_SUBTYPE_ARM_V7
-
-#ifndef CPU_SUBTYPE_ARM_V7S
-#define CPU_SUBTYPE_ARM_V7S (static_cast<cpu_subtype_t>(11))
-#endif  // CPU_SUBTYPE_ARM_V7S
-
-#ifndef CPU_TYPE_ARM64
-#define CPU_TYPE_ARM64 (static_cast<cpu_type_t>(16777228))
-#endif  // CPU_TYPE_ARM64
-
-#ifndef CPU_SUBTYPE_ARM64_ALL
-#define CPU_SUBTYPE_ARM64_ALL (static_cast<cpu_type_t>(0))
-#endif  // CPU_SUBTYPE_ARM64_ALL
+#ifdef __APPLE__
+#include <mach-o/utils.h>
+#endif
 
 namespace {
 
-const NXArchInfo* ArchInfo_arm64() {
-  NXArchInfo* arm64 = new NXArchInfo;
-  *arm64 = *NXGetArchInfoFromCpuType(CPU_TYPE_ARM,
-                                     CPU_SUBTYPE_ARM_V7);
-  arm64->name = "arm64";
-  arm64->cputype = CPU_TYPE_ARM64;
-  arm64->cpusubtype = CPU_SUBTYPE_ARM64_ALL;
-  arm64->description = "arm 64";
-  return arm64;
-}
+enum Architecture {
+  kArch_i386 = 0,
+  kArch_x86_64,
+  kArch_x86_64h,
+  kArch_arm,
+  kArch_arm64,
+  kArch_arm64e,
+  kArch_ppc,
+  // This must be last.
+  kNumArchitectures
+};
 
-const NXArchInfo* ArchInfo_armv7s() {
-  NXArchInfo* armv7s = new NXArchInfo;
-  *armv7s = *NXGetArchInfoFromCpuType(CPU_TYPE_ARM,
-                                      CPU_SUBTYPE_ARM_V7);
-  armv7s->name = "armv7s";
-  armv7s->cpusubtype = CPU_SUBTYPE_ARM_V7S;
-  armv7s->description = "arm v7s";
-  return armv7s;
-}
+struct NamedArchInfo {
+  const char* name;
+  ArchInfo info;
+};
+
+// enum Architecture above and kKnownArchitectures below
+// must be kept in sync.
+constexpr NamedArchInfo kKnownArchitectures[] = {
+    {"i386", {CPU_TYPE_I386, CPU_SUBTYPE_I386_ALL}},
+    {"x86_64", {CPU_TYPE_X86_64, CPU_SUBTYPE_X86_64_ALL}},
+    {"x86_64h", {CPU_TYPE_X86_64, CPU_SUBTYPE_X86_64_H}},
+    {"arm", {CPU_TYPE_ARM, CPU_SUBTYPE_ARM_ALL}},
+    {"arm64", {CPU_TYPE_ARM64, CPU_SUBTYPE_ARM64_ALL}},
+    {"arm64e", {CPU_TYPE_ARM64, CPU_SUBTYPE_ARM64E}},
+    {"ppc", {CPU_TYPE_POWERPC, CPU_SUBTYPE_POWERPC_ALL}}};
 
 }  // namespace
 
-namespace google_breakpad {
-
-const NXArchInfo* BreakpadGetArchInfoFromName(const char* arch_name) {
-  // TODO: Remove this when the OS knows about arm64.
-  if (!strcmp("arm64", arch_name))
-    return BreakpadGetArchInfoFromCpuType(CPU_TYPE_ARM64,
-                                          CPU_SUBTYPE_ARM64_ALL);
-
-  // TODO: Remove this when the OS knows about armv7s.
-  if (!strcmp("armv7s", arch_name))
-    return BreakpadGetArchInfoFromCpuType(CPU_TYPE_ARM, CPU_SUBTYPE_ARM_V7S);
-
-  return NXGetArchInfoFromName(arch_name);
+ArchInfo GetLocalArchInfo(void) {
+  Architecture arch;
+#if defined(__i386__)
+  arch = kArch_i386;
+#elif defined(__x86_64__)
+  arch = kArch_x86_64;
+#elif defined(__arm64__) || defined(__aarch64__)
+  arch = kArch_arm64;
+#elif defined(__arm__)
+  arch = kArch_arm;
+#elif defined(__powerpc__)
+  arch = kArch_ppc;
+#else
+  #error "Unsupported CPU architecture"
+#endif
+  return kKnownArchitectures[arch].info;
 }
 
-const NXArchInfo* BreakpadGetArchInfoFromCpuType(cpu_type_t cpu_type,
-                                                 cpu_subtype_t cpu_subtype) {
-  // TODO: Remove this when the OS knows about arm64.
-  if (cpu_type == CPU_TYPE_ARM64 && cpu_subtype == CPU_SUBTYPE_ARM64_ALL) {
-    static const NXArchInfo* arm64 = ArchInfo_arm64();
-    return arm64;
-  }
+#ifdef __APPLE__
 
-  // TODO: Remove this when the OS knows about armv7s.
-  if (cpu_type == CPU_TYPE_ARM && cpu_subtype == CPU_SUBTYPE_ARM_V7S) {
-    static const NXArchInfo* armv7s = ArchInfo_armv7s();
-    return armv7s;
+std::optional<ArchInfo> GetArchInfoFromName(const char* arch_name) {
+  if (__builtin_available(macOS 13.0, iOS 16.0, *)) {
+    cpu_type_t type;
+    cpu_subtype_t subtype;
+    if (macho_cpu_type_for_arch_name(arch_name, &type, &subtype)) {
+      return ArchInfo{type, subtype};
+    }
+  } else {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    const NXArchInfo* info = NXGetArchInfoFromName(arch_name);
+#pragma clang diagnostic pop
+    if (info) {
+      return ArchInfo{info->cputype, info->cpusubtype};
+    }
   }
-
-  return NXGetArchInfoFromCpuType(cpu_type, cpu_subtype);
+  return std::nullopt;
 }
 
-}  // namespace google_breakpad
+const char* GetNameFromCPUType(cpu_type_t cpu_type, cpu_subtype_t cpu_subtype) {
+  if (__builtin_available(macOS 13.0, iOS 16.0, *)) {
+    const char* name = macho_arch_name_for_cpu_type(cpu_type, cpu_subtype);
+    if (name) {
+      return name;
+    }
+  } else {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    const NXArchInfo* info = NXGetArchInfoFromCpuType(cpu_type, cpu_subtype);
+#pragma clang diagnostic pop
+    if (info) {
+      return info->name;
+    }
+  }
+
+  return kUnknownArchName;
+}
+
+#else
+
+std::optional<ArchInfo> GetArchInfoFromName(const char* arch_name) {
+  for (int arch = 0; arch < kNumArchitectures; ++arch) {
+    if (!strcmp(arch_name, kKnownArchitectures[arch].name)) {
+      return kKnownArchitectures[arch].info;
+    }
+  }
+  return std::nullopt;
+}
+
+const char* GetNameFromCPUType(cpu_type_t cpu_type, cpu_subtype_t cpu_subtype) {
+  const char* candidate = kUnknownArchName;
+  for (int arch = 0; arch < kNumArchitectures; ++arch) {
+    if (kKnownArchitectures[arch].info.cputype == cpu_type) {
+      if (kKnownArchitectures[arch].info.cpusubtype == cpu_subtype) {
+        return kKnownArchitectures[arch].name;
+      }
+      if (!strcmp(candidate, kUnknownArchName)) {
+        candidate = kKnownArchitectures[arch].name;
+      }
+    }
+  }
+  return candidate;
+}
+#endif  // __APPLE__

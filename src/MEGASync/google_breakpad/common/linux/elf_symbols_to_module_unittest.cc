@@ -1,5 +1,4 @@
-// Copyright (c) 2011 Google Inc.
-// All rights reserved.
+// Copyright 2011 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -31,6 +30,10 @@
 
 // elf_symbols_to_module_unittest.cc:
 // Unittests for google_breakpad::ELFSymbolsToModule
+
+#ifdef HAVE_CONFIG_H
+#include <config.h>  // Must come first
+#endif
 
 #include <elf.h>
 
@@ -86,7 +89,7 @@ public:
   // 4 or 8 (bytes)
   size_t value_size;
 
-  vector<Module::Extern *> externs;
+  vector<Module::Extern*> externs;
 };
 
 class ELFSymbolsToModuleTest32 : public ELFSymbolsToModuleTestFixture,
@@ -248,9 +251,9 @@ TEST_P(ELFSymbolsToModuleTest32, SkipStuff) {
 }
 
 // Run all the 32-bit tests with both endianness
-INSTANTIATE_TEST_CASE_P(Endian,
-                        ELFSymbolsToModuleTest32,
-                        ::testing::Values(kLittleEndian, kBigEndian));
+INSTANTIATE_TEST_SUITE_P(Endian,
+                         ELFSymbolsToModuleTest32,
+                         ::testing::Values(kLittleEndian, kBigEndian));
 
 // Similar tests, but with 64-bit values. Ostensibly this could be
 // shoehorned into the parameterization by using ::testing::Combine,
@@ -365,6 +368,6 @@ TEST_P(ELFSymbolsToModuleTest64, SkipStuff) {
 }
 
 // Run all the 64-bit tests with both endianness
-INSTANTIATE_TEST_CASE_P(Endian,
-                        ELFSymbolsToModuleTest64,
-                        ::testing::Values(kLittleEndian, kBigEndian));
+INSTANTIATE_TEST_SUITE_P(Endian,
+                         ELFSymbolsToModuleTest64,
+                         ::testing::Values(kLittleEndian, kBigEndian));

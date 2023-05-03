@@ -1,5 +1,4 @@
-// Copyright (c) 2011, Google Inc.
-// All rights reserved.
+// Copyright 2011 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -29,6 +28,10 @@
 
 // memory_mapped_file_unittest.cc:
 // Unit tests for google_breakpad::MemoryMappedFile.
+
+#ifdef HAVE_CONFIG_H
+#include <config.h>  // Must come first
+#endif
 
 #include <fcntl.h>
 #include <string.h>
@@ -71,12 +74,12 @@ TEST_F(MemoryMappedFileTest, UnmapWithoutMap) {
 
 TEST_F(MemoryMappedFileTest, MapNonexistentFile) {
   {
-    MemoryMappedFile mapped_file("nonexistent-file");
+    MemoryMappedFile mapped_file("nonexistent-file", 0);
     ExpectNoMappedData(mapped_file);
   }
   {
     MemoryMappedFile mapped_file;
-    EXPECT_FALSE(mapped_file.Map("nonexistent-file"));
+    EXPECT_FALSE(mapped_file.Map("nonexistent-file", 0));
     ExpectNoMappedData(mapped_file);
   }
 }
@@ -87,12 +90,12 @@ TEST_F(MemoryMappedFileTest, MapEmptyFile) {
   ASSERT_TRUE(WriteFile(test_file.c_str(), NULL, 0));
 
   {
-    MemoryMappedFile mapped_file(test_file.c_str());
+    MemoryMappedFile mapped_file(test_file.c_str(), 0);
     ExpectNoMappedData(mapped_file);
   }
   {
     MemoryMappedFile mapped_file;
-    EXPECT_TRUE(mapped_file.Map(test_file.c_str()));
+    EXPECT_TRUE(mapped_file.Map(test_file.c_str(), 0));
     ExpectNoMappedData(mapped_file);
   }
 }
@@ -109,7 +112,7 @@ TEST_F(MemoryMappedFileTest, MapNonEmptyFile) {
   ASSERT_TRUE(WriteFile(test_file.c_str(), data, data_size));
 
   {
-    MemoryMappedFile mapped_file(test_file.c_str());
+    MemoryMappedFile mapped_file(test_file.c_str(), 0);
     EXPECT_FALSE(mapped_file.content().IsEmpty());
     EXPECT_TRUE(mapped_file.data() != NULL);
     EXPECT_EQ(data_size, mapped_file.size());
@@ -117,7 +120,7 @@ TEST_F(MemoryMappedFileTest, MapNonEmptyFile) {
   }
   {
     MemoryMappedFile mapped_file;
-    EXPECT_TRUE(mapped_file.Map(test_file.c_str()));
+    EXPECT_TRUE(mapped_file.Map(test_file.c_str(), 0));
     EXPECT_FALSE(mapped_file.content().IsEmpty());
     EXPECT_TRUE(mapped_file.data() != NULL);
     EXPECT_EQ(data_size, mapped_file.size());
@@ -145,13 +148,13 @@ TEST_F(MemoryMappedFileTest, RemapAfterMap) {
   ASSERT_TRUE(WriteFile(test_file2.c_str(), data2, data2_size));
 
   {
-    MemoryMappedFile mapped_file(test_file1.c_str());
+    MemoryMappedFile mapped_file(test_file1.c_str(), 0);
     EXPECT_FALSE(mapped_file.content().IsEmpty());
     EXPECT_TRUE(mapped_file.data() != NULL);
     EXPECT_EQ(data1_size, mapped_file.size());
     EXPECT_EQ(0, memcmp(data1, mapped_file.data(), data1_size));
 
-    mapped_file.Map(test_file2.c_str());
+    mapped_file.Map(test_file2.c_str(), 0);
     EXPECT_FALSE(mapped_file.content().IsEmpty());
     EXPECT_TRUE(mapped_file.data() != NULL);
     EXPECT_EQ(data2_size, mapped_file.size());
@@ -159,16 +162,50 @@ TEST_F(MemoryMappedFileTest, RemapAfterMap) {
   }
   {
     MemoryMappedFile mapped_file;
-    EXPECT_TRUE(mapped_file.Map(test_file1.c_str()));
+    EXPECT_TRUE(mapped_file.Map(test_file1.c_str(), 0));
     EXPECT_FALSE(mapped_file.content().IsEmpty());
     EXPECT_TRUE(mapped_file.data() != NULL);
     EXPECT_EQ(data1_size, mapped_file.size());
     EXPECT_EQ(0, memcmp(data1, mapped_file.data(), data1_size));
 
-    mapped_file.Map(test_file2.c_str());
+    mapped_file.Map(test_file2.c_str(), 0);
     EXPECT_FALSE(mapped_file.content().IsEmpty());
     EXPECT_TRUE(mapped_file.data() != NULL);
     EXPECT_EQ(data2_size, mapped_file.size());
     EXPECT_EQ(0, memcmp(data2, mapped_file.data(), data2_size));
+  }
+}
+
+TEST_F(MemoryMappedFileTest, MapWithOffset) {
+  // Put more data in the test file this time. Offsets can only be
+  // done on page boundaries, so we need a two page file to test this.
+  const int page_size = 4096;
+  char data1[2 * page_size];
+  size_t data1_size = sizeof(data1);
+  for (size_t i = 0; i < data1_size; ++i) {
+    data1[i] = i & 0x7f;
+  }
+
+  AutoTempDir temp_dir;
+  string test_file1 = temp_dir.path() + "/test_file1";
+  ASSERT_TRUE(WriteFile(test_file1.c_str(), data1, data1_size));
+  {
+    MemoryMappedFile mapped_file(test_file1.c_str(), page_size);
+    EXPECT_FALSE(mapped_file.content().IsEmpty());
+    EXPECT_TRUE(mapped_file.data() != NULL);
+    EXPECT_EQ(data1_size - page_size, mapped_file.size());
+    EXPECT_EQ(
+        0,
+        memcmp(data1 + page_size, mapped_file.data(), data1_size - page_size));
+  }
+  {
+    MemoryMappedFile mapped_file;
+    mapped_file.Map(test_file1.c_str(), page_size);
+    EXPECT_FALSE(mapped_file.content().IsEmpty());
+    EXPECT_TRUE(mapped_file.data() != NULL);
+    EXPECT_EQ(data1_size - page_size, mapped_file.size());
+    EXPECT_EQ(
+        0,
+        memcmp(data1 + page_size, mapped_file.data(), data1_size - page_size));
   }
 }

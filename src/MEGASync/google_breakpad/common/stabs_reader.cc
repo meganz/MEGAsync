@@ -1,4 +1,4 @@
-// Copyright (c) 2010 Google Inc. All Rights Reserved.
+// Copyright 2010 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -10,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -31,6 +31,10 @@
 // This file implements the google_breakpad::StabsReader class.
 // See stabs_reader.h.
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>  // Must come first
+#endif
+
 #include "common/stabs_reader.h"
 
 #include <assert.h>
@@ -45,7 +49,7 @@ using std::vector;
 
 namespace google_breakpad {
 
-StabsReader::EntryIterator::EntryIterator(const ByteBuffer *buffer,
+StabsReader::EntryIterator::EntryIterator(const ByteBuffer* buffer,
                                           bool big_endian, size_t value_size)
     : value_size_(value_size), cursor_(buffer, big_endian) {
   // Actually, we could handle weird sizes just fine, but they're
@@ -65,10 +69,10 @@ void StabsReader::EntryIterator::Fetch() {
   entry_.at_end = !cursor_;
 }
 
-StabsReader::StabsReader(const uint8_t *stab,    size_t stab_size,
-                         const uint8_t *stabstr, size_t stabstr_size,
+StabsReader::StabsReader(const uint8_t* stab,    size_t stab_size,
+                         const uint8_t* stabstr, size_t stabstr_size,
                          bool big_endian, size_t value_size, bool unitized,
-                         StabsHandler *handler)
+                         StabsHandler* handler)
     : entries_(stab, stab_size),
       strings_(stabstr, stabstr_size),
       iterator_(&entries_, big_endian, value_size),
@@ -78,7 +82,7 @@ StabsReader::StabsReader(const uint8_t *stab,    size_t stab_size,
       next_cu_string_offset_(0),
       current_source_file_(NULL) { }
 
-const char *StabsReader::SymbolString() {
+const char* StabsReader::SymbolString() {
   ptrdiff_t offset = string_offset_ + iterator_->name_offset;
   if (offset < 0 || (size_t) offset >= strings_.Size()) {
     handler_->Warning("symbol %d: name offset outside the string section\n",
@@ -87,7 +91,7 @@ const char *StabsReader::SymbolString() {
     // taken from the string section.
     offset = 0;
   }
-  return reinterpret_cast<const char *>(strings_.start + offset);
+  return reinterpret_cast<const char*>(strings_.start + offset);
 }
 
 bool StabsReader::Process() {
@@ -134,9 +138,9 @@ bool StabsReader::ProcessCompilationUnit() {
   // There may be an N_SO entry whose name ends with a slash,
   // indicating the directory in which the compilation occurred.
   // The build directory defaults to NULL.
-  const char *build_directory = NULL;
+  const char* build_directory = NULL;
   {
-    const char *name = SymbolString();
+    const char* name = SymbolString();
     if (name[0] && name[strlen(name) - 1] == '/') {
       build_directory = name;
       ++iterator_;
@@ -148,7 +152,7 @@ bool StabsReader::ProcessCompilationUnit() {
   {
     if (iterator_->at_end || iterator_->type != N_SO)
       return true;
-    const char *name = SymbolString();
+    const char* name = SymbolString();
     if (name[0] == '\0') {
       // This seems to be a stray end-of-compilation-unit marker;
       // consume it, but don't report the end, since we didn't see a
@@ -203,7 +207,7 @@ bool StabsReader::ProcessCompilationUnit() {
   uint64_t ending_address = 0;
   if (!iterator_->at_end) {
     assert(iterator_->type == N_SO);
-    const char *name = SymbolString();
+    const char* name = SymbolString();
     if (name[0] == '\0') {
       ending_address = iterator_->value;
       ++iterator_;
@@ -225,8 +229,8 @@ bool StabsReader::ProcessFunction() {
   // The STABS string for an N_FUN entry is the name of the function,
   // followed by a colon, followed by type information for the
   // function.  We want to pass the name alone to StartFunction.
-  const char *stab_string = SymbolString();
-  const char *name_end = strchr(stab_string, ':');
+  const char* stab_string = SymbolString();
+  const char* name_end = strchr(stab_string, ':');
   if (! name_end)
     name_end = stab_string + strlen(stab_string);
   string name(stab_string, name_end - stab_string);
@@ -270,7 +274,7 @@ bool StabsReader::ProcessFunction() {
   if (!iterator_->at_end) {
     assert(iterator_->type == N_SO || iterator_->type == N_FUN);
     if (iterator_->type == N_FUN) {
-      const char *symbol_name = SymbolString();
+      const char* symbol_name = SymbolString();
       if (symbol_name[0] == '\0') {
         // An N_FUN entry with no name is a terminator for this function;
         // its value is the function's size.

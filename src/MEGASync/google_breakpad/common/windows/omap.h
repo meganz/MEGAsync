@@ -1,4 +1,4 @@
-// Copyright 2013 Google Inc. All rights reserved.
+// Copyright 2013 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -10,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -32,8 +32,8 @@
 // transforming addresses prior to querying symbols (the way it is typically
 // done by Windows-native tools, including the DIA).
 
-#ifndef COMMON_WINDOWS_OMAP_H__
-#define COMMON_WINDOWS_OMAP_H__
+#ifndef COMMON_WINDOWS_OMAP_H_
+#define COMMON_WINDOWS_OMAP_H_
 
 #include "common/windows/omap_internal.h"
 
@@ -69,4 +69,4 @@ void MapAddressRange(const ImageMap& image_map,
 
 }  // namespace google_breakpad
 
-#endif  // COMMON_WINDOWS_OMAP_H__
+#endif  // COMMON_WINDOWS_OMAP_H_

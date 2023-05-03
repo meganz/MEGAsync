@@ -1,5 +1,4 @@
-// Copyright (c) 2012, Google Inc.
-// All rights reserved.
+// Copyright 2012 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -36,7 +35,11 @@
 
 #else
 
+#include <asm/ptrace.h>
 #include <sys/cdefs.h>
+#if defined (__mips__)
+#include <sys/types.h>
+#endif
 #include <sys/user.h>
 #include <unistd.h>
 
@@ -44,7 +47,7 @@
 extern "C" {
 #endif  // __cplusplus
 
-#ifdef __x86_64__
+#if defined(__x86_64__) || defined(__aarch64__)
 typedef unsigned long long elf_greg_t;
 #else
 typedef unsigned long  elf_greg_t;
@@ -52,6 +55,10 @@ typedef unsigned long  elf_greg_t;
 
 #ifdef __arm__
 #define ELF_NGREG (sizeof(struct user_regs) / sizeof(elf_greg_t))
+#elif defined(__aarch64__)
+#define ELF_NGREG (sizeof(struct user_pt_regs) / sizeof(elf_greg_t))
+#elif defined(__mips__)
+#define ELF_NGREG 45
 #else
 #define ELF_NGREG (sizeof(struct user_regs_struct) / sizeof(elf_greg_t))
 #endif
@@ -92,6 +99,9 @@ struct elf_prpsinfo {
 #ifdef __x86_64__
   unsigned int   pr_uid;
   unsigned int   pr_gid;
+#elif defined(__mips__)
+  __kernel_uid_t pr_uid;
+  __kernel_gid_t pr_gid;
 #else
   unsigned short pr_uid;
   unsigned short pr_gid;

@@ -1,5 +1,4 @@
-// Copyright (c) 2006, Google Inc.
-// All rights reserved.
+// Copyright 2006 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -45,8 +44,8 @@ namespace MacFileUtilities {
 
 class MachoID {
  public:
-  MachoID(const char *path);
-  MachoID(const char *path, void *memory, size_t size);
+  MachoID(const char* path);
+  MachoID(void* memory, size_t size);
   ~MachoID();
 
   // For the given |cpu_type| and |cpu_subtype|, return a UUID from the LC_UUID
@@ -55,19 +54,6 @@ class MachoID {
   bool UUIDCommand(cpu_type_t cpu_type,
                    cpu_subtype_t cpu_subtype,
                    unsigned char identifier[16]);
-
-  // For the given |cpu_type| and |cpu_subtype|, return a UUID from the
-  // LC_ID_DYLIB command.
-  // Return false if there isn't a LC_ID_DYLIB command.
-  bool IDCommand(cpu_type_t cpu_type,
-                 cpu_subtype_t cpu_subtype,
-                 unsigned char identifier[16]);
-
-  // For the given |cpu_type| and |cpu_subtype|, return the Adler32 CRC for the
-  // mach-o data segment(s).
-  // Return 0 on error (e.g., if the file is not a mach-o file)
-  uint32_t Adler32(cpu_type_t cpu_type,
-                   cpu_subtype_t cpu_subtype);
 
   // For the given |cpu_type|, and |cpu_subtype| return the MD5 for the mach-o
   // data segment(s).
@@ -78,46 +64,35 @@ class MachoID {
 
  private:
   // Signature of class member function to be called with data read from file
-  typedef void (MachoID::*UpdateFunction)(unsigned char *bytes, size_t size);
-
-  // Update the CRC value by examining |size| |bytes| and applying the algorithm
-  // to each byte.
-  void UpdateCRC(unsigned char *bytes, size_t size);
+  typedef void (MachoID::*UpdateFunction)(unsigned char* bytes, size_t size);
 
   // Update the MD5 value by examining |size| |bytes| and applying the algorithm
   // to each byte.
-  void UpdateMD5(unsigned char *bytes, size_t size);
+  void UpdateMD5(unsigned char* bytes, size_t size);
 
   // Bottleneck for update routines
-  void Update(MachoWalker *walker, off_t offset, size_t size);
+  void Update(MachoWalker* walker, off_t offset, size_t size);
 
   // Factory for the MachoWalker
   bool WalkHeader(cpu_type_t cpu_type, cpu_subtype_t cpu_subtype,
-                  MachoWalker::LoadCommandCallback callback, void *context);
+                  MachoWalker::LoadCommandCallback callback, void* context);
 
   // The callback from the MachoWalker for CRC and MD5
-  static bool WalkerCB(MachoWalker *walker, load_command *cmd, off_t offset,
-                       bool swap, void *context);
+  static bool WalkerCB(MachoWalker* walker, load_command* cmd, off_t offset,
+                       bool swap, void* context);
 
   // The callback from the MachoWalker for LC_UUID
-  static bool UUIDWalkerCB(MachoWalker *walker, load_command *cmd, off_t offset,
-                           bool swap, void *context);
-
-  // The callback from the MachoWalker for LC_ID_DYLIB
-  static bool IDWalkerCB(MachoWalker *walker, load_command *cmd, off_t offset,
-                         bool swap, void *context);
+  static bool UUIDWalkerCB(MachoWalker* walker, load_command* cmd, off_t offset,
+                           bool swap, void* context);
 
   // File path
   char path_[PATH_MAX];
 
   // Memory region to read from
-  void *memory_;
+  void* memory_;
 
   // Size of the memory region
   size_t memory_size_;
-
-  // The current crc value
-  uint32_t crc_;
 
   // The MD5 context
   google_breakpad::MD5Context md5_context_;

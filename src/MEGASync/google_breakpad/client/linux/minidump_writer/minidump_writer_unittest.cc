@@ -1,5 +1,4 @@
-// Copyright (c) 2011 Google Inc.
-// All rights reserved.
+// Copyright 2011 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -27,8 +26,12 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>  // Must come first
+#endif
+
 #include <fcntl.h>
-#include <sys/poll.h>
+#include <poll.h>
 #include <sys/stat.h>
 #include <sys/syscall.h>
 #include <sys/types.h>
@@ -42,6 +45,7 @@
 #include "client/linux/minidump_writer/linux_dumper.h"
 #include "client/linux/minidump_writer/minidump_writer.h"
 #include "client/linux/minidump_writer/minidump_writer_unittest_utils.h"
+#include "common/linux/breakpad_getcontext.h"
 #include "common/linux/eintr_wrapper.h"
 #include "common/linux/file_id.h"
 #include "common/linux/ignore_ret.h"
@@ -53,10 +57,8 @@
 #include "google_breakpad/processor/minidump.h"
 
 using namespace google_breakpad;
-
-// Length of a formatted GUID string =
-// sizeof(MDGUID) * 2 + 4 (for dashes) + 1 (null terminator)
-const int kGUIDStringSize = 37;
+using google_breakpad::elf::FileID;
+using google_breakpad::elf::kDefaultBuildIdSize;
 
 namespace {
 
@@ -74,7 +76,7 @@ TEST(MinidumpWriterTest, SetupWithPath) {
     char b;
     IGNORE_RET(HANDLE_EINTR(read(fds[0], &b, sizeof(b))));
     close(fds[0]);
-    syscall(__NR_exit);
+    syscall(__NR_exit_group);
   }
   close(fds[0]);
 
@@ -91,6 +93,7 @@ TEST(MinidumpWriterTest, SetupWithPath) {
   ASSERT_GT(st.st_size, 0);
 
   close(fds[1]);
+  IGNORE_EINTR(waitpid(child, nullptr, 0));
 }
 
 TEST(MinidumpWriterTest, SetupWithFD) {
@@ -103,7 +106,7 @@ TEST(MinidumpWriterTest, SetupWithFD) {
     char b;
     HANDLE_EINTR(read(fds[0], &b, sizeof(b)));
     close(fds[0]);
-    syscall(__NR_exit);
+    syscall(__NR_exit_group);
   }
   close(fds[0]);
 
@@ -121,6 +124,7 @@ TEST(MinidumpWriterTest, SetupWithFD) {
   ASSERT_GT(st.st_size, 0);
 
   close(fds[1]);
+  IGNORE_EINTR(waitpid(child, nullptr, 0));
 }
 
 // Test that mapping info can be specified when writing a minidump,
@@ -137,19 +141,7 @@ TEST(MinidumpWriterTest, MappingInfo) {
     0x00, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77,
     0x88, 0x99, 0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF
   };
-  char module_identifier_buffer[kGUIDStringSize];
-  FileID::ConvertIdentifierToString(kModuleGUID,
-                                    module_identifier_buffer,
-                                    sizeof(module_identifier_buffer));
-  string module_identifier(module_identifier_buffer);
-  // Strip out dashes
-  size_t pos;
-  while ((pos = module_identifier.find('-')) != string::npos) {
-    module_identifier.erase(pos, 1);
-  }
-  // And append a zero, because module IDs include an "age" field
-  // which is always zero on Linux.
-  module_identifier += "0";
+  const string module_identifier = "33221100554477668899AABBCCDDEEFF0";
 
   // Get some memory.
   char* memory =
@@ -168,7 +160,7 @@ TEST(MinidumpWriterTest, MappingInfo) {
     char b;
     IGNORE_RET(HANDLE_EINTR(read(fds[0], &b, sizeof(b))));
     close(fds[0]);
-    syscall(__NR_exit);
+    syscall(__NR_exit_group);
   }
   close(fds[0]);
 
@@ -185,6 +177,7 @@ TEST(MinidumpWriterTest, MappingInfo) {
   info.start_addr = kMemoryAddress;
   info.size = memory_size;
   info.offset = 0;
+  info.exec = false;
   strcpy(info.name, kMemoryName);
 
   MappingList mappings;
@@ -194,7 +187,7 @@ TEST(MinidumpWriterTest, MappingInfo) {
   memcpy(mapping.second, kModuleGUID, sizeof(MDGUID));
   mappings.push_back(mapping);
   ASSERT_TRUE(WriteMinidump(templ.c_str(), child, &context, sizeof(context),
-                            mappings, memory_list));
+                            mappings, memory_list, false, 0, false));
 
   // Read the minidump. Load the module list, and ensure that
   // the mmap'ed |memory| is listed with the given module name
@@ -228,6 +221,203 @@ TEST(MinidumpWriterTest, MappingInfo) {
   EXPECT_TRUE(minidump.SeekToStreamType(MD_LINUX_DSO_DEBUG, &len));
 
   close(fds[1]);
+  IGNORE_EINTR(waitpid(child, nullptr, 0));
+}
+
+// Test that minidumping is skipped while writing minidumps if principal mapping
+// is not referenced.
+TEST(MinidumpWriterTest, MinidumpSkippedIfRequested) {
+  int fds[2];
+  ASSERT_NE(-1, pipe(fds));
+
+  const pid_t child = fork();
+  if (child == 0) {
+    close(fds[1]);
+    char b;
+    IGNORE_RET(HANDLE_EINTR(read(fds[0], &b, sizeof(b))));
+    close(fds[0]);
+    syscall(__NR_exit_group);
+  }
+  close(fds[0]);
+
+  ExceptionHandler::CrashContext context;
+  memset(&context, 0, sizeof(context));
+  ASSERT_EQ(0, getcontext(&context.context));
+  context.tid = child;
+
+  AutoTempDir temp_dir;
+  string templ = temp_dir.path() + kMDWriterUnitTestFileName;
+
+  // pass an invalid principal mapping address, which will force
+  // WriteMinidump to not write a minidump.
+  ASSERT_FALSE(WriteMinidump(templ.c_str(), child, &context, sizeof(context),
+                            true, static_cast<uintptr_t>(0x0102030405060708ull),
+                            false));
+  close(fds[1]);
+  IGNORE_EINTR(waitpid(child, nullptr, 0));
+}
+
+// Test that minidumping is skipped while writing minidumps if principal mapping
+// is not referenced.
+TEST(MinidumpWriterTest, MinidumpStacksSkippedIfRequested) {
+  int fds[2];
+  ASSERT_NE(-1, pipe(fds));
+
+  const pid_t child = fork();
+  if (child == 0) {
+    close(fds[1]);
+
+    // Create a thread that does not return, and only references libc (not the
+    // current executable). This thread should not be captured in the minidump.
+    pthread_t thread;
+    pthread_attr_t thread_attributes;
+    pthread_attr_init(&thread_attributes);
+    pthread_attr_setdetachstate(&thread_attributes, PTHREAD_CREATE_DETACHED);
+    sigset_t sigset;
+    sigemptyset(&sigset);
+    pthread_create(&thread, &thread_attributes,
+                   reinterpret_cast<void* (*)(void*)>(&sigsuspend), &sigset);
+
+    char b;
+    IGNORE_RET(HANDLE_EINTR(read(fds[0], &b, sizeof(b))));
+    close(fds[0]);
+    syscall(__NR_exit_group);
+  }
+  close(fds[0]);
+
+  ExceptionHandler::CrashContext context;
+  memset(&context, 0, sizeof(context));
+  ASSERT_EQ(0, getcontext(&context.context));
+  context.tid = child;
+
+  AutoTempDir temp_dir;
+  string templ = temp_dir.path() + kMDWriterUnitTestFileName;
+
+  // Pass an invalid principal mapping address, which will force
+  // WriteMinidump to not dump any thread stacks.
+  ASSERT_TRUE(WriteMinidump(
+      templ.c_str(), child, &context, sizeof(context), true,
+      reinterpret_cast<uintptr_t>(google_breakpad::WriteFile), false));
+
+  // Read the minidump. And ensure that thread memory was dumped only for the
+  // main thread.
+  Minidump minidump(templ);
+  ASSERT_TRUE(minidump.Read());
+
+  MinidumpThreadList* threads = minidump.GetThreadList();
+  int threads_with_stacks = 0;
+  for (unsigned int i = 0; i < threads->thread_count(); ++i) {
+    MinidumpThread* thread = threads->GetThreadAtIndex(i);
+    if (thread->GetMemory()) {
+      ++threads_with_stacks;
+    }
+  }
+#if defined(THREAD_SANITIZER) || defined(ADDRESS_SANITIZER)
+  ASSERT_GE(threads_with_stacks, 1);
+#else
+  ASSERT_EQ(threads_with_stacks, 1);
+#endif
+  close(fds[1]);
+  IGNORE_EINTR(waitpid(child, nullptr, 0));
+}
+
+// Test that stacks can be sanitized while writing minidumps.
+TEST(MinidumpWriterTest, StacksAreSanitizedIfRequested) {
+  int fds[2];
+  ASSERT_NE(-1, pipe(fds));
+
+  const pid_t child = fork();
+  if (child == 0) {
+    close(fds[1]);
+    char b;
+    IGNORE_RET(HANDLE_EINTR(read(fds[0], &b, sizeof(b))));
+    close(fds[0]);
+    syscall(__NR_exit_group);
+  }
+  close(fds[0]);
+
+  ExceptionHandler::CrashContext context;
+  memset(&context, 0, sizeof(context));
+  ASSERT_EQ(0, getcontext(&context.context));
+  context.tid = child;
+
+  AutoTempDir temp_dir;
+  string templ = temp_dir.path() + kMDWriterUnitTestFileName;
+  // pass an invalid principal mapping address, which will force
+  // WriteMinidump to not dump any thread stacks.
+  ASSERT_TRUE(WriteMinidump(templ.c_str(), child, &context, sizeof(context),
+                            false, 0, true));
+
+  // Read the minidump. And ensure that thread memory contains a defaced value.
+  Minidump minidump(templ);
+  ASSERT_TRUE(minidump.Read());
+
+  const uintptr_t defaced =
+#if defined(__LP64__)
+      0x0defaced0defaced;
+#else
+      0x0defaced;
+#endif
+  MinidumpThreadList* threads = minidump.GetThreadList();
+  for (unsigned int i = 0; i < threads->thread_count(); ++i) {
+    MinidumpThread* thread = threads->GetThreadAtIndex(i);
+    MinidumpMemoryRegion* mem = thread->GetMemory();
+    ASSERT_TRUE(mem != nullptr);
+    uint32_t sz = mem->GetSize();
+    const uint8_t* data = mem->GetMemory();
+    ASSERT_TRUE(memmem(data, sz, &defaced, sizeof(defaced)) != nullptr);
+  }
+  close(fds[1]);
+  IGNORE_EINTR(waitpid(child, nullptr, 0));
+}
+
+// Test that a binary with a longer-than-usual build id note
+// makes its way all the way through to the minidump unscathed.
+// The linux_client_unittest is linked with an explicit --build-id
+// in Makefile.am.
+TEST(MinidumpWriterTest, BuildIDLong) {
+  int fds[2];
+  ASSERT_NE(-1, pipe(fds));
+
+  const pid_t child = fork();
+  if (child == 0) {
+    close(fds[1]);
+    char b;
+    IGNORE_RET(HANDLE_EINTR(read(fds[0], &b, sizeof(b))));
+    close(fds[0]);
+    syscall(__NR_exit_group);
+  }
+  close(fds[0]);
+
+  ExceptionHandler::CrashContext context;
+  memset(&context, 0, sizeof(context));
+  ASSERT_EQ(0, getcontext(&context.context));
+  context.tid = child;
+
+  AutoTempDir temp_dir;
+  const string dump_path = temp_dir.path() + kMDWriterUnitTestFileName;
+
+  EXPECT_TRUE(WriteMinidump(dump_path.c_str(),
+                            child, &context, sizeof(context)));
+  close(fds[1]);
+
+  // Read the minidump. Load the module list, and ensure that
+  // the main module has the correct debug id and code id.
+  Minidump minidump(dump_path);
+  ASSERT_TRUE(minidump.Read());
+
+  MinidumpModuleList* module_list = minidump.GetModuleList();
+  ASSERT_TRUE(module_list);
+  const MinidumpModule* module = module_list->GetMainModule();
+  ASSERT_TRUE(module);
+  const string module_identifier = "030201000504070608090A0B0C0D0E0F0";
+  // This is passed explicitly to the linker in Makefile.am
+  const string build_id =
+      "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f";
+  EXPECT_EQ(module_identifier, module->debug_identifier());
+  EXPECT_EQ(build_id, module->code_identifier());
+
+  IGNORE_EINTR(waitpid(child, nullptr, 0));
 }
 
 // Test that mapping info can be specified, and that it overrides
@@ -245,19 +435,7 @@ TEST(MinidumpWriterTest, MappingInfoContained) {
     0x00, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77,
     0x88, 0x99, 0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF
   };
-  char module_identifier_buffer[kGUIDStringSize];
-  FileID::ConvertIdentifierToString(kModuleGUID,
-                                    module_identifier_buffer,
-                                    sizeof(module_identifier_buffer));
-  string module_identifier(module_identifier_buffer);
-  // Strip out dashes
-  size_t pos;
-  while ((pos = module_identifier.find('-')) != string::npos) {
-    module_identifier.erase(pos, 1);
-  }
-  // And append a zero, because module IDs include an "age" field
-  // which is always zero on Linux.
-  module_identifier += "0";
+  const string module_identifier = "33221100554477668899AABBCCDDEEFF0";
 
   // mmap a file
   AutoTempDir temp_dir;
@@ -288,7 +466,7 @@ TEST(MinidumpWriterTest, MappingInfoContained) {
     char b;
     IGNORE_RET(HANDLE_EINTR(read(fds[0], &b, sizeof(b))));
     close(fds[0]);
-    syscall(__NR_exit);
+    syscall(__NR_exit_group);
   }
   close(fds[0]);
 
@@ -304,6 +482,7 @@ TEST(MinidumpWriterTest, MappingInfoContained) {
   info.start_addr = kMemoryAddress - memory_size;
   info.size = memory_size * 3;
   info.offset = 0;
+  info.exec = false;
   strcpy(info.name, kMemoryName);
 
   MappingList mappings;
@@ -333,6 +512,7 @@ TEST(MinidumpWriterTest, MappingInfoContained) {
   EXPECT_EQ(module_identifier, module->debug_identifier());
 
   close(fds[1]);
+  IGNORE_EINTR(waitpid(child, nullptr, 0));
 }
 
 TEST(MinidumpWriterTest, DeletedBinary) {
@@ -346,7 +526,7 @@ TEST(MinidumpWriterTest, DeletedBinary) {
   // Copy binary to a temp file.
   AutoTempDir temp_dir;
   string binpath = temp_dir.path() + "/linux-dumper-unittest-helper";
-  ASSERT_TRUE(CopyFile(helper_path.c_str(), binpath.c_str()))
+  ASSERT_TRUE(CopyFile(helper_path, binpath))
       << "Failed to copy " << helper_path << " to " << binpath;
   ASSERT_EQ(0, chmod(binpath.c_str(), 0755));
 
@@ -410,12 +590,10 @@ TEST(MinidumpWriterTest, DeletedBinary) {
   EXPECT_STREQ(binpath.c_str(), module->code_file().c_str());
   // Check that the file ID is correct.
   FileID fileid(helper_path.c_str());
-  uint8_t identifier[sizeof(MDGUID)];
+  PageAllocator allocator;
+  wasteful_vector<uint8_t> identifier(&allocator, kDefaultBuildIdSize);
   EXPECT_TRUE(fileid.ElfFileIdentifier(identifier));
-  char identifier_string[kGUIDStringSize];
-  FileID::ConvertIdentifierToString(identifier,
-                                    identifier_string,
-                                    kGUIDStringSize);
+  string identifier_string = FileID::ConvertIdentifierToUUIDString(identifier);
   string module_identifier(identifier_string);
   // Strip out dashes
   size_t pos;
@@ -426,6 +604,8 @@ TEST(MinidumpWriterTest, DeletedBinary) {
   // which is always zero on Linux.
   module_identifier += "0";
   EXPECT_EQ(module_identifier, module->debug_identifier());
+
+  IGNORE_EINTR(waitpid(child_pid, nullptr, 0));
 }
 
 // Test that an additional memory region can be added to the minidump.
@@ -453,7 +633,7 @@ TEST(MinidumpWriterTest, AdditionalMemory) {
     char b;
     HANDLE_EINTR(read(fds[0], &b, sizeof(b)));
     close(fds[0]);
-    syscall(__NR_exit);
+    syscall(__NR_exit_group);
   }
   close(fds[0]);
 
@@ -498,6 +678,7 @@ TEST(MinidumpWriterTest, AdditionalMemory) {
 
   delete[] memory;
   close(fds[1]);
+  IGNORE_EINTR(waitpid(child, nullptr, 0));
 }
 
 // Test that an invalid thread stack pointer still results in a minidump.
@@ -511,7 +692,7 @@ TEST(MinidumpWriterTest, InvalidStackPointer) {
     char b;
     HANDLE_EINTR(read(fds[0], &b, sizeof(b)));
     close(fds[0]);
-    syscall(__NR_exit);
+    syscall(__NR_exit_group);
   }
   close(fds[0]);
 
@@ -525,26 +706,22 @@ TEST(MinidumpWriterTest, InvalidStackPointer) {
 
   // Fake the child's stack pointer for its crashing thread.  NOTE: This must
   // be an invalid memory address for the child process (stack or otherwise).
-#if defined(__i386)
   // Try 1MB below the current stack.
   uintptr_t invalid_stack_pointer =
       reinterpret_cast<uintptr_t>(&context) - 1024*1024;
+#if defined(__i386)
   context.context.uc_mcontext.gregs[REG_ESP] = invalid_stack_pointer;
 #elif defined(__x86_64)
-  // Try 1MB below the current stack.
-  uintptr_t invalid_stack_pointer =
-      reinterpret_cast<uintptr_t>(&context) - 1024*1024;
   context.context.uc_mcontext.gregs[REG_RSP] = invalid_stack_pointer;
 #elif defined(__ARM_EABI__)
-  // Try 1MB below the current stack.
-  uintptr_t invalid_stack_pointer =
-      reinterpret_cast<uintptr_t>(&context) - 1024*1024;
   context.context.uc_mcontext.arm_sp = invalid_stack_pointer;
+#elif defined(__aarch64__)
+  context.context.uc_mcontext.sp = invalid_stack_pointer;
 #elif defined(__mips__)
-  // Try 1MB below the current stack.
-  uintptr_t invalid_stack_pointer =
-      reinterpret_cast<uintptr_t>(&context) - 1024 * 1024;
-  context.context.uc_mcontext.gregs[MD_CONTEXT_MIPS_REG_SP] = 
+  context.context.uc_mcontext.gregs[MD_CONTEXT_MIPS_REG_SP] =
+      invalid_stack_pointer;
+#elif defined(__riscv)
+  context.context.uc_mcontext.__gregs[MD_CONTEXT_RISCV_REG_SP] =
       invalid_stack_pointer;
 #else
 # error "This code has not been ported to your platform yet."
@@ -584,6 +761,7 @@ TEST(MinidumpWriterTest, InvalidStackPointer) {
 #endif
 
   close(fds[1]);
+  IGNORE_EINTR(waitpid(child, nullptr, 0));
 }
 
 // Test that limiting the size of the minidump works.
@@ -629,7 +807,7 @@ TEST(MinidumpWriterTest, MinidumpSizeLimit) {
     ASSERT_EQ(1, r);
     ASSERT_TRUE(pfd.revents & POLLIN);
     uint8_t junk;
-    ASSERT_EQ(read(fds[0], &junk, sizeof(junk)), 
+    ASSERT_EQ(read(fds[0], &junk, sizeof(junk)),
               static_cast<ssize_t>(sizeof(junk)));
   }
   close(fds[0]);
@@ -758,6 +936,7 @@ TEST(MinidumpWriterTest, MinidumpSizeLimit) {
 
   // Kill the helper program.
   kill(child_pid, SIGKILL);
+  IGNORE_EINTR(waitpid(child_pid, nullptr, 0));
 }
 
 }  // namespace

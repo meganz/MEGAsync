@@ -1,5 +1,4 @@
-// Copyright (c) 2011, Google Inc.
-// All rights reserved.
+// Copyright 2011 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -29,6 +28,10 @@
 
 // file_utils.cc: Implement utility functions for file manipulation.
 // See file_utils.h for details.
+
+#ifdef HAVE_CONFIG_H
+#include <config.h>  // Must come first
+#endif
 
 #include <fcntl.h>
 #include <stdio.h>
@@ -94,6 +97,10 @@ bool CopyFile(const char* from_path, const char* to_path) {
   }
 
   return result;
+}
+
+bool CopyFile(const std::string& from_path, const std::string& to_path) {
+  return CopyFile(from_path.c_str(), to_path.c_str());
 }
 
 bool ReadFile(const char* path, void* buffer, ssize_t* buffer_size) {

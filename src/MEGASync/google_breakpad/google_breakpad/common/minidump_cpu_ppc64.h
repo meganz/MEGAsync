@@ -1,5 +1,4 @@
-/* Copyright (c) 2008, Google Inc.
- * All rights reserved.
+/* Copyright 2008 Google LLC
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
  * copyright notice, this list of conditions and the following disclaimer
  * in the documentation and/or other materials provided with the
  * distribution.
- *     * Neither the name of Google Inc. nor the names of its
+ *     * Neither the name of Google LLC nor the names of its
  * contributors may be used to endorse or promote products derived from
  * this software without specific prior written permission.
  *
@@ -111,6 +110,11 @@ typedef struct {
   MDFloatingSaveAreaPPC float_save;
   MDVectorSaveAreaPPC   vector_save;
 } MDRawContextPPC64;  /* Based on ppc_thread_state */
+
+/* Indices into gpr for registers with a dedicated or conventional purpose. */
+enum MDPPC64RegisterNumbers {
+  MD_CONTEXT_PPC64_REG_SP = 1
+};
 
 /* For (MDRawContextPPC).context_flags.  These values indicate the type of
  * context stored in the structure.  MD_CONTEXT_PPC is Breakpad-defined.  Its

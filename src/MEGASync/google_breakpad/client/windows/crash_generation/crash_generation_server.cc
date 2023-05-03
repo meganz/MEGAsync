@@ -1,5 +1,4 @@
-// Copyright (c) 2008, Google Inc.
-// All rights reserved.
+// Copyright 2008 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -26,6 +25,10 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+#ifdef HAVE_CONFIG_H
+#include <config.h>  // Must come first
+#endif
 
 #include "client/windows/crash_generation/crash_generation_server.h"
 #include <windows.h>
@@ -85,7 +88,7 @@ static bool IsClientRequestValid(const ProtocolMessage& msg) {
           msg.assert_info != NULL);
 }
 
-#ifdef _DEBUG
+#ifndef NDEBUG
 static bool CheckForIOIncomplete(bool success) {
   // We should never get an I/O incomplete since we should not execute this
   // unless the operation has finished and the overlapped event is signaled. If
@@ -121,17 +124,13 @@ CrashGenerationServer::CrashGenerationServer(
       upload_request_callback_(upload_request_callback),
       upload_context_(upload_context),
       generate_dumps_(generate_dumps),
-      dump_generator_(NULL),
+      pre_fetch_custom_info_(true),
+      dump_path_(dump_path ? *dump_path : L""),
       server_state_(IPC_SERVER_STATE_UNINITIALIZED),
       shutting_down_(false),
       overlapped_(),
-      client_info_(NULL),
-      pre_fetch_custom_info_(true) {
+      client_info_(NULL) {
   InitializeCriticalSection(&sync_);
-
-  if (dump_path) {
-    dump_generator_.reset(new MinidumpGenerator(*dump_path));
-  }
 }
 
 // This should never be called from the OnPipeConnected callback.
@@ -917,15 +916,31 @@ bool CrashGenerationServer::GenerateDump(const ClientInfo& client,
     return false;
   }
 
-  return dump_generator_->WriteMinidump(client.process_handle(),
-                                        client.pid(),
-                                        client_thread_id,
-                                        GetCurrentThreadId(),
-                                        client_ex_info,
-                                        client.assert_info(),
-                                        client.dump_type(),
-                                        true,
-                                        dump_path);
+  MinidumpGenerator dump_generator(dump_path_,
+                                   client.process_handle(),
+                                   client.pid(),
+                                   client_thread_id,
+                                   GetCurrentThreadId(),
+                                   client_ex_info,
+                                   client.assert_info(),
+                                   client.dump_type(),
+                                   true);
+
+  if (!dump_generator.GenerateDumpFile(dump_path)) {
+    return false;
+  }
+
+  // If the client requests a full memory dump, we will write a normal mini
+  // dump and a full memory dump. Both dump files use the same uuid as file
+  // name prefix.
+  if (client.dump_type() & MiniDumpWithFullMemory) {
+    std::wstring full_dump_path;
+    if (!dump_generator.GenerateFullDumpFile(&full_dump_path)) {
+      return false;
+    }
+  }
+
+  return dump_generator.WriteMinidump();
 }
 
 }  // namespace google_breakpad

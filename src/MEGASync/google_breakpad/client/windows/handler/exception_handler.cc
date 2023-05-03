@@ -1,5 +1,4 @@
-// Copyright (c) 2006, Google Inc.
-// All rights reserved.
+// Copyright 2006 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -27,10 +26,11 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include "MegaApplication.h"
-#include <ObjBase.h>
-#include <Psapi.h>
-#include <Strsafe.h>
+#ifdef HAVE_CONFIG_H
+#include <config.h>  // Must come first
+#endif
+
+#include <objbase.h>
 
 #include <algorithm>
 #include <cassert>
@@ -44,17 +44,16 @@
 
 namespace google_breakpad {
 
-static const int kWaitForHandlerThreadMs = 60000;
-static const int kExceptionHandlerThreadInitialStackSize = 64 * 1024;
-
-// As documented on MSDN, on failure SuspendThread returns (DWORD) -1
-static const DWORD kFailedToSuspendThread = static_cast<DWORD>(-1);
-
 // This is passed as the context to the MinidumpWriteDump callback.
 typedef struct {
   AppMemoryList::const_iterator iter;
   AppMemoryList::const_iterator end;
 } MinidumpCallbackContext;
+
+// This define is new to Windows 10.
+#ifndef DBG_PRINTEXCEPTION_WIDE_C
+#define DBG_PRINTEXCEPTION_WIDE_C ((DWORD)0x4001000A)
+#endif
 
 vector<ExceptionHandler*>* ExceptionHandler::handler_stack_ = NULL;
 LONG ExceptionHandler::handler_stack_index_ = 0;
@@ -122,7 +121,7 @@ ExceptionHandler::ExceptionHandler(
              NULL);                    // custom_info - not used
 }
 
-ExceptionHandler::ExceptionHandler(const wstring &dump_path,
+ExceptionHandler::ExceptionHandler(const wstring& dump_path,
                                    FilterCallback filter,
                                    MinidumpCallback callback,
                                    void* callback_context,
@@ -177,6 +176,7 @@ void ExceptionHandler::Initialize(
   assertion_ = NULL;
   handler_return_value_ = false;
   handle_debug_exceptions_ = false;
+  consume_invalid_handle_exceptions_ = false;
 
   // Attempt to use out-of-process if user has specified a pipe or a
   // crash generation client.
@@ -219,6 +219,7 @@ void ExceptionHandler::Initialize(
     // Don't attempt to create the thread if we could not create the semaphores.
     if (handler_finish_semaphore_ != NULL && handler_start_semaphore_ != NULL) {
       DWORD thread_id;
+      const int kExceptionHandlerThreadInitialStackSize = 64 * 1024;
       handler_thread_ = CreateThread(NULL,         // lpThreadAttributes
                                      kExceptionHandlerThreadInitialStackSize,
                                      ExceptionHandlerThreadMain,
@@ -228,22 +229,7 @@ void ExceptionHandler::Initialize(
       assert(handler_thread_ != NULL);
     }
 
-    WCHAR systemPath[MAX_PATH];
-    UINT len = GetSystemDirectory(systemPath, MAX_PATH);
-    if (len + 20 >= MAX_PATH)
-    {
-        dbghelp_module_ = LoadLibrary(L"dbghelp.dll");
-        rpcrt4_module_ = LoadLibrary(L"rpcrt4.dll");
-    }
-    else
-    {
-        StringCchPrintfW(systemPath + len, MAX_PATH - len, L"\\dbghelp.dll");
-        dbghelp_module_ = LoadLibrary(systemPath);
-
-        StringCchPrintfW(systemPath + len, MAX_PATH - len, L"\\rpcrt4.dll");
-        rpcrt4_module_ = LoadLibrary(systemPath);
-    }
-
+    dbghelp_module_ = LoadLibrary(L"dbghelp.dll");
     if (dbghelp_module_) {
       minidump_write_dump_ = reinterpret_cast<MiniDumpWriteDump_type>(
           GetProcAddress(dbghelp_module_, "MiniDumpWriteDump"));
@@ -252,6 +238,7 @@ void ExceptionHandler::Initialize(
     // Load this library dynamically to not affect existing projects.  Most
     // projects don't link against this directly, it's usually dynamically
     // loaded by dependent code.
+    rpcrt4_module_ = LoadLibrary(L"rpcrt4.dll");
     if (rpcrt4_module_) {
       uuid_create_ = reinterpret_cast<UuidCreate_type>(
           GetProcAddress(rpcrt4_module_, "UuidCreate"));
@@ -369,6 +356,7 @@ ExceptionHandler::~ExceptionHandler() {
     // inside DllMain.
     is_shutdown_ = true;
     ReleaseSemaphore(handler_start_semaphore_, 1, NULL);
+    const int kWaitForHandlerThreadMs = 60000;
     WaitForSingleObject(handler_thread_, kWaitForHandlerThreadMs);
 #else
     TerminateThread(handler_thread_, 1);
@@ -398,12 +386,12 @@ bool ExceptionHandler::RequestUpload(DWORD crash_id) {
 
 // static
 DWORD ExceptionHandler::ExceptionHandlerThreadMain(void* lpParameter) {
-  ExceptionHandler* self = reinterpret_cast<ExceptionHandler *>(lpParameter);
+  ExceptionHandler* self = reinterpret_cast<ExceptionHandler*>(lpParameter);
   assert(self);
   assert(self->handler_start_semaphore_ != NULL);
   assert(self->handler_finish_semaphore_ != NULL);
 
-  while (true) {
+  for (;;) {
     if (WaitForSingleObject(self->handler_start_semaphore_, INFINITE) ==
         WAIT_OBJECT_0) {
       // Perform the requested action.
@@ -496,7 +484,14 @@ LONG ExceptionHandler::HandleException(EXCEPTION_POINTERS* exinfo) {
   DWORD code = exinfo->ExceptionRecord->ExceptionCode;
   LONG action;
   bool is_debug_exception = (code == EXCEPTION_BREAKPOINT) ||
-                            (code == EXCEPTION_SINGLE_STEP);
+                            (code == EXCEPTION_SINGLE_STEP) ||
+                            (code == DBG_PRINTEXCEPTION_C) ||
+                            (code == DBG_PRINTEXCEPTION_WIDE_C);
+
+  if (code == EXCEPTION_INVALID_HANDLE &&
+      current_handler->consume_invalid_handle_exceptions_) {
+    return EXCEPTION_CONTINUE_EXECUTION;
+  }
 
   bool success = false;
 
@@ -773,11 +768,12 @@ bool ExceptionHandler::WriteMinidumpForException(EXCEPTION_POINTERS* exinfo) {
 }
 
 // static
-bool ExceptionHandler::WriteMinidump(const wstring &dump_path,
+bool ExceptionHandler::WriteMinidump(const wstring& dump_path,
                                      MinidumpCallback callback,
-                                     void* callback_context) {
+                                     void* callback_context,
+                                     MINIDUMP_TYPE dump_type) {
   ExceptionHandler handler(dump_path, NULL, callback, callback_context,
-                           HANDLER_NONE);
+                           HANDLER_NONE, dump_type, (HANDLE)NULL, NULL);
   return handler.WriteMinidump();
 }
 
@@ -786,10 +782,13 @@ bool ExceptionHandler::WriteMinidumpForChild(HANDLE child,
                                              DWORD child_blamed_thread,
                                              const wstring& dump_path,
                                              MinidumpCallback callback,
-                                             void* callback_context) {
+                                             void* callback_context,
+                                             MINIDUMP_TYPE dump_type) {
   EXCEPTION_RECORD ex;
   CONTEXT ctx;
   EXCEPTION_POINTERS exinfo = { NULL, NULL };
+  // As documented on MSDN, on failure SuspendThread returns (DWORD) -1
+  const DWORD kFailedToSuspendThread = static_cast<DWORD>(-1);
   DWORD last_suspend_count = kFailedToSuspendThread;
   HANDLE child_thread_handle = OpenThread(THREAD_GET_CONTEXT |
                                           THREAD_QUERY_INFORMATION |
@@ -817,7 +816,7 @@ bool ExceptionHandler::WriteMinidumpForChild(HANDLE child,
   }
 
   ExceptionHandler handler(dump_path, NULL, callback, callback_context,
-                           HANDLER_NONE);
+                           HANDLER_NONE, dump_type, (HANDLE)NULL, NULL);
   bool success = handler.WriteMinidumpWithExceptionForProcess(
       child_blamed_thread,
       exinfo.ExceptionRecord ? &exinfo : NULL,
@@ -913,47 +912,6 @@ BOOL CALLBACK ExceptionHandler::MinidumpWriteDumpCallback(
   return FALSE;
 }
 
-void TranslateOffset(DWORD64 absoluteoffset, DWORD64 *offset, string *modulename)
-{
-    HMODULE hMods[256];
-    MODULEINFO moduleInfo = {0};
-    DWORD cbNeeded;
-    WCHAR ModuleName[MAX_PATH];
-    int i;
-
-    *offset = 0;
-    modulename->clear();
-    if (EnumProcessModules(GetCurrentProcess(), hMods, sizeof(hMods), &cbNeeded))
-    {
-        for ( i = 0; !*offset && i < (cbNeeded / sizeof(HMODULE)); i++)
-        {
-            if (GetModuleInformation(GetCurrentProcess(), hMods[i], &moduleInfo, sizeof(moduleInfo)))
-            {
-                *offset = (DWORD64)absoluteoffset - (DWORD64)moduleInfo.lpBaseOfDll;
-                if ((*offset >= 0) && (*offset < (DWORD64)moduleInfo.SizeOfImage))
-                {
-                    int s;
-                    if ((s = GetModuleFileNameW(hMods[i], ModuleName, MAX_PATH)) && s != MAX_PATH)
-                    {
-                        mega::MegaApi::utf16ToUtf8(ModuleName, s, modulename);
-                        size_t index = modulename->find_last_of("\\");
-                        if (index <= string::npos && index < (modulename->size() - 1))
-                        {
-                            *modulename = modulename->substr(index + 1, modulename->size() - (index + 1));
-                        }
-                        return;
-                    }
-                }
-                else
-                {
-                    *offset = 0;
-                }
-            }
-        }
-    }
-}
-
-
 bool ExceptionHandler::WriteMinidumpWithExceptionForProcess(
     DWORD requesting_thread_id,
     EXCEPTION_POINTERS* exinfo,
@@ -961,168 +919,6 @@ bool ExceptionHandler::WriteMinidumpWithExceptionForProcess(
     HANDLE process,
     bool write_requester_stream) {
   bool success = false;
-
-#ifndef CREATE_COMPATIBLE_MINIDUMPS
-  if (!exinfo)
-  {
-      return false;
-  }
-
-  HANDLE dump_file = CreateFile(next_minidump_path_c_,
-                                GENERIC_WRITE,
-                                0,  // no sharing
-                                NULL,
-                                CREATE_NEW,  // fail if exists
-                                FILE_ATTRIBUTE_NORMAL,
-                                NULL);
-  if (dump_file == INVALID_HANDLE_VALUE) return false;
-
-  std::ostringstream oss;
-  oss << "MEGAprivate ERROR DUMP\n";
-  int frame_number=0;
-
-  oss << "Application: " << QApplication::applicationName().toUtf8().constData() << (sizeof(char*) == 4 ? " [32 bit]" : "") << (sizeof(char*) == 8 ? " [64 bit]" : "") << "\n";
-  oss << "Version code: " << QString::number(Preferences::VERSION_CODE).toUtf8().constData() <<
-         "." << QString::number(Preferences::BUILD_ID).toUtf8().constData() << "\n";
-  oss << "Timestamp: " << QDateTime::currentMSecsSinceEpoch() << "\n";
-  HMODULE module = GetModuleHandle(NULL);
-  char moduleName[256];
-  int nameSize = GetModuleFileNameA(module, moduleName, sizeof(moduleName));
-  if (nameSize)
-  {
-    int nameIndex = nameSize-1;
-    while (nameIndex && (moduleName[nameIndex]!='\\'))
-    {
-        nameIndex--;
-    }
-
-    if (nameIndex + 1 < nameSize)
-    {
-        nameIndex++;
-    }
-    oss << "Module name: " << &(moduleName[nameIndex]) << "\n";
-  }
-
-  typedef LONG MEGANTSTATUS;
-  typedef struct _MEGAOSVERSIONINFOW {
-      DWORD dwOSVersionInfoSize;
-      DWORD dwMajorVersion;
-      DWORD dwMinorVersion;
-      DWORD dwBuildNumber;
-      DWORD dwPlatformId;
-      WCHAR  szCSDVersion[ 128 ];     // Maintenance string for PSS usage
-  } MEGARTL_OSVERSIONINFOW, *PMEGARTL_OSVERSIONINFOW;
-
-  typedef MEGANTSTATUS (WINAPI* RtlGetVersionPtr)(PMEGARTL_OSVERSIONINFOW);
-  MEGARTL_OSVERSIONINFOW version = { 0 };
-  HMODULE hMod = GetModuleHandleW(L"ntdll.dll");
-  if (hMod)
-  {
-      RtlGetVersionPtr RtlGetVersion = (RtlGetVersionPtr)GetProcAddress(hMod, "RtlGetVersion");
-      if (RtlGetVersion)
-      {
-          RtlGetVersion(&version);
-      }
-  }
-
-  oss << "Operating system: Windows "
-      << version.dwMajorVersion << "."
-      << version.dwMinorVersion << "."
-      << version.dwBuildNumber << "\n";
-
-  oss << "Error info:\n";
-
-  DWORD64 offset;
-  string modulename;
-  TranslateOffset((DWORD64)exinfo->ExceptionRecord->ExceptionAddress, &offset, &modulename);
-  oss << "Unhandled exception 0x" << std::uppercase << std::hex << exinfo->ExceptionRecord->ExceptionCode
-      << " at 0x" << std::hex << offset << "(" << modulename << ")\n";
-
-  if(dbghelp_module_)
-  {
-      StackWalk64_type StackWalk64_ = reinterpret_cast<StackWalk64_type>(
-      GetProcAddress(dbghelp_module_, "StackWalk64"));
-
-      PGET_MODULE_BASE_ROUTINE64 SymGetModuleBase64_ = reinterpret_cast<PGET_MODULE_BASE_ROUTINE64>(
-      GetProcAddress(dbghelp_module_, "SymGetModuleBase64"));
-
-      PFUNCTION_TABLE_ACCESS_ROUTINE64 SymFunctionTableAccess64_ = reinterpret_cast<PFUNCTION_TABLE_ACCESS_ROUTINE64>(
-      GetProcAddress(dbghelp_module_, "SymFunctionTableAccess64"));
-
-      typedef BOOL(WINAPI *SymInitialize_type)(
-          HANDLE hProcess,
-          PCSTR  UserSearchPath,
-          BOOL   fInvadeProcess);
-      SymInitialize_type SymInitialize_ = reinterpret_cast<SymInitialize_type>(
-      GetProcAddress(dbghelp_module_, "SymInitialize"));
-
-      if (StackWalk64_ && SymFunctionTableAccess64_ && SymGetModuleBase64_ && SymInitialize_)
-      {
-          HANDLE hThread = GetCurrentThread();
-          DWORD machineType;
-          CONTEXT *c = exinfo->ContextRecord;
-          STACKFRAME64 s;
-          s.AddrPC.Mode = s.AddrStack.Mode = s.AddrFrame.Mode = s.AddrBStore.Mode = AddrModeFlat;
-
-          #ifdef _M_IX86
-              machineType   = IMAGE_FILE_MACHINE_I386;
-              s.AddrPC.Offset    = c->Eip;
-              s.AddrFrame.Offset = c->Ebp;
-              s.AddrStack.Offset = c->Esp;
-          #elif _M_X64
-              machineType   = IMAGE_FILE_MACHINE_AMD64;
-              s.AddrPC.Offset    = c->Rip;
-              s.AddrFrame.Offset = c->Rsp;
-              s.AddrStack.Offset = c->Rsp;
-          #elif _M_IA64
-              machineType   = IMAGE_FILE_MACHINE_IA64;
-              s.AddrPC.Offset    = c->StIIP;
-              s.AddrFrame.Offset = c->IntSp;
-              s.AddrBStore.Offset= c->RsBSP;
-              s.AddrStack.Offset = c->IntSp;
-          #else
-              #error "Unsupported platform"
-          #endif
-
-          // Without this, stack will contain garbage frames for x64 (and often even for x86)
-          SymInitialize_(process, nullptr, TRUE);
-
-          oss << "Stacktrace:\n";
-          do {
-              if (!StackWalk64_(machineType, process, hThread, &s,
-                                exinfo->ContextRecord, NULL,
-                                SymFunctionTableAccess64_,
-                                SymGetModuleBase64_, NULL))
-              {
-                  oss << "Error getting stacktrace\n";
-                  break;
-              }
-
-              TranslateOffset((DWORD64)s.AddrPC.Offset, &offset, &modulename);
-              if (offset)
-              {
-                oss << "#" << frame_number << " 0x" << std::uppercase << std::hex << offset << " (" << modulename << ")\n";
-              }
-              else
-              {
-                oss << "#" << frame_number << " ----------\n";
-              }
-              ++frame_number;
-          } while (s.AddrReturn.Offset != 0);
-      }
-  }
-
-  DWORD dwBytesWritten = 0;
-  bool bErrorFlag = WriteFile(
-          dump_file,           // open file handle
-          oss.str().c_str(),      // start of data to write
-          oss.str().size(),  // number of bytes to write
-          &dwBytesWritten, // number of bytes that were written
-          NULL);            // no overlapped structure
-  CloseHandle(dump_file);
-  return bErrorFlag;
-#endif
-
   if (minidump_write_dump_) {
     HANDLE dump_file = CreateFile(next_minidump_path_c_,
                                   GENERIC_WRITE,
@@ -1183,7 +979,9 @@ bool ExceptionHandler::WriteMinidumpWithExceptionForProcess(
 #if defined(_M_IX86)
           exinfo->ContextRecord->Eip;
 #elif defined(_M_AMD64)
-        exinfo->ContextRecord->Rip;
+          exinfo->ContextRecord->Rip;
+#elif defined(_M_ARM64)
+          exinfo->ContextRecord->Pc;
 #else
 #error Unsupported platform
 #endif

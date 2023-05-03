@@ -1,5 +1,4 @@
-// Copyright (c) 2011, Google Inc.
-// All rights reserved.
+// Copyright 2011 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -30,9 +29,14 @@
 // crash_generator.cc: Implement google_breakpad::CrashGenerator.
 // See crash_generator.h for details.
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>  // Must come first
+#endif
+
 #include "common/linux/tests/crash_generator.h"
 
 #include <pthread.h>
+#include <sched.h>
 #include <signal.h>
 #include <stdio.h>
 #include <sys/mman.h>
@@ -65,19 +69,30 @@ const char* const kProcFilesToCopy[] = {
 const size_t kNumProcFilesToCopy =
     sizeof(kProcFilesToCopy) / sizeof(kProcFilesToCopy[0]);
 
+int gettid() {
+  // Glibc does not provide a wrapper for this.
+  return syscall(__NR_gettid);
+}
+
+int tkill(pid_t tid, int sig) {
+  // Glibc does not provide a wrapper for this.
+  return syscall(__NR_tkill, tid, sig);
+}
+
 // Core file size limit set to 1 MB, which is big enough for test purposes.
 const rlim_t kCoreSizeLimit = 1024 * 1024;
 
-void *thread_function(void *data) {
+void* thread_function(void* data) {
   ThreadData* thread_data = reinterpret_cast<ThreadData*>(data);
-  volatile pid_t thread_id = syscall(__NR_gettid);
+  volatile pid_t thread_id = gettid();
   *(thread_data->thread_id_ptr) = thread_id;
   int result = pthread_barrier_wait(thread_data->barrier);
   if (result != 0 && result != PTHREAD_BARRIER_SERIAL_THREAD) {
+    perror("Failed to wait for sync barrier");
     exit(1);
   }
   while (true) {
-    pthread_yield();
+    sched_yield();
   }
 }
 
@@ -157,17 +172,37 @@ bool CrashGenerator::SetCoreFileSizeLimit(rlim_t limit) const {
   return true;
 }
 
+bool CrashGenerator::HasResourceLimitsAmenableToCrashCollection() const {
+  struct rlimit limits;
+  if (getrlimit(RLIMIT_CORE, &limits) == -1) {
+    perror("CrashGenerator: Failed to get core file size limit");
+    return false;
+  }
+  return limits.rlim_max >= kCoreSizeLimit;
+}
+
 bool CrashGenerator::CreateChildCrash(
     unsigned num_threads, unsigned crash_thread, int crash_signal,
     pid_t* child_pid) {
-  if (num_threads == 0 || crash_thread >= num_threads)
+  if (num_threads == 0 || crash_thread >= num_threads) {
+    fprintf(stderr, "CrashGenerator: Invalid thread counts; num_threads=%u"
+                    " crash_thread=%u\n", num_threads, crash_thread);
     return false;
+  }
 
-  if (!MapSharedMemory(num_threads * sizeof(pid_t)))
+  if (!MapSharedMemory(num_threads * sizeof(pid_t))) {
+    perror("CrashGenerator: Unable to map shared memory");
     return false;
+  }
 
   pid_t pid = fork();
   if (pid == 0) {
+    // Custom signal handlers, which may have been installed by a test launcher,
+    // are undesirable in this child.
+    if (signal(crash_signal, SIG_DFL) == SIG_ERR) {
+      perror("CrashGenerator: signal");
+      exit(1);
+    }
     if (chdir(temp_dir_.path().c_str()) == -1) {
       perror("CrashGenerator: Failed to change directory");
       exit(1);
@@ -183,9 +218,35 @@ bool CrashGenerator::CreateChildCrash(
         fprintf(stderr, "CrashGenerator: Failed to copy proc files\n");
         exit(1);
       }
-      if (kill(*GetThreadIdPointer(crash_thread), crash_signal) == -1) {
-        perror("CrashGenerator: Failed to kill thread by signal");
+      // On Android the signal sometimes doesn't seem to get sent even though
+      // tkill returns '0'.  Retry a couple of times if the signal doesn't get
+      // through on the first go:
+      // https://bugs.chromium.org/p/google-breakpad/issues/detail?id=579
+#if defined(__ANDROID__)
+      const int kRetries = 60;
+      const unsigned int kSleepTimeInSeconds = 1;
+#else
+      const int kRetries = 1;
+      const unsigned int kSleepTimeInSeconds = 600;
+#endif
+      for (int i = 0; i < kRetries; i++) {
+        if (tkill(*GetThreadIdPointer(crash_thread), crash_signal) == -1) {
+          perror("CrashGenerator: Failed to kill thread by signal");
+        } else {
+          // At this point, we've queued the signal for delivery, but there's no
+          // guarantee when it'll be delivered.  We don't want the main thread to
+          // race and exit before the thread we signaled is processed.  So sleep
+          // long enough that we won't flake even under fairly high load.
+          // TODO: See if we can't be a bit more deterministic.  There doesn't
+          // seem to be an API to check on signal delivery status, so we can't
+          // really poll and wait for the kernel to declare the signal has been
+          // delivered.  If it has, and things worked, we'd be killed, so the
+          // sleep length doesn't really matter.
+          sleep(kSleepTimeInSeconds);
+        }
       }
+    } else {
+      perror("CrashGenerator: Failed to set core limit");
     }
     exit(1);
   } else if (pid == -1) {
@@ -200,8 +261,8 @@ bool CrashGenerator::CreateChildCrash(
   }
   if (!WIFSIGNALED(status) || WTERMSIG(status) != crash_signal) {
     fprintf(stderr, "CrashGenerator: Child process not killed by the expected signal\n"
-                    "  exit status=0x%x signaled=%s sig=%d expected=%d\n",
-                    status, WIFSIGNALED(status) ? "true" : "false",
+                    "  exit status=0x%x pid=%u signaled=%s sig=%d expected=%d\n",
+                    status, pid, WIFSIGNALED(status) ? "true" : "false",
                     WTERMSIG(status), crash_signal);
     return false;
   }

@@ -1,5 +1,4 @@
-// Copyright (c) 2008, Google Inc.
-// All rights reserved.
+// Copyright 2008 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -268,8 +267,8 @@ class CrashGenerationServer {
   // Wether to populate custom information up-front.
   bool pre_fetch_custom_info_;
 
-  // Instance of a mini dump generator.
-  scoped_ptr<MinidumpGenerator> dump_generator_;
+  // The dump path for the server.
+  const std::wstring dump_path_;
 
   // State of the server in performing the IPC with the client.
   // Note that since we restrict the pipe to one instance, we

@@ -1,5 +1,4 @@
-// Copyright (c) 2012, Google Inc.
-// All rights reserved.
+// Copyright 2012 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -38,7 +37,7 @@ extern "C" {
 #endif  // __cplusplus
 
 // The Android <elf.h> provides BSD-based definitions for the ElfXX_Nhdr
-// types 
+// types
 // always source-compatible with the GLibc/kernel ones. To overcome this
 // issue without modifying a lot of code in Breakpad, use an ugly macro
 // renaming trick with #include_next
@@ -108,12 +107,6 @@ typedef struct {
   } d_un;
 } Elf64_Dyn;
 
-
-// __WORDSIZE is GLibc-specific and used by Google Breakpad on Linux.
-// All Android platforms are 32-bit for now.
-#ifndef __WORDSIZE
-#define __WORDSIZE 32
-#endif
 
 // The Android headers don't always define this constant.
 #ifndef EM_X86_64

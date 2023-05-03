@@ -1,7 +1,6 @@
 // -*- mode: C++ -*-
 
-// Copyright (c) 2010 Google Inc.
-// All rights reserved.
+// Copyright 2010 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -13,7 +12,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -34,7 +33,10 @@
 #ifndef GOOGLE_BREAKPAD_PROCESSOR_SOURCE_LINE_RESOLVER_INTERFACE_H__
 #define GOOGLE_BREAKPAD_PROCESSOR_SOURCE_LINE_RESOLVER_INTERFACE_H__
 
+#include <deque>
+#include <memory>
 #include <string>
+#include <vector>
 
 #include "common/using_std_string.h"
 #include "google_breakpad/common/breakpad_types.h"
@@ -58,11 +60,11 @@ class SourceLineResolverInterface {
   // and debug_identifier members populated.
   //
   // map_file should contain line/address mappings for this module.
-  virtual bool LoadModule(const CodeModule *module,
-                          const string &map_file) = 0;
+  virtual bool LoadModule(const CodeModule* module,
+                          const string& map_file) = 0;
   // Same as above, but takes the contents of a pre-read map buffer
-  virtual bool LoadModuleUsingMapBuffer(const CodeModule *module,
-                                        const string &map_buffer) = 0;
+  virtual bool LoadModuleUsingMapBuffer(const CodeModule* module,
+                                        const string& map_buffer) = 0;
 
   // Add an interface to load symbol using C-String data instead of string.
   // This is useful in the optimization design for avoiding unnecessary copying
@@ -70,8 +72,8 @@ class SourceLineResolverInterface {
   // LoadModuleUsingMemoryBuffer() does NOT take ownership of memory_buffer.
   // LoadModuleUsingMemoryBuffer() null terminates the passed in buffer, if
   // the last character is not a null terminator.
-  virtual bool LoadModuleUsingMemoryBuffer(const CodeModule *module,
-                                           char *memory_buffer,
+  virtual bool LoadModuleUsingMemoryBuffer(const CodeModule* module,
+                                           char* memory_buffer,
                                            size_t memory_buffer_size) = 0;
 
   // Return true if the memory buffer should be deleted immediately after
@@ -81,31 +83,35 @@ class SourceLineResolverInterface {
 
   // Request that the specified module be unloaded from this resolver.
   // A resolver may choose to ignore such a request.
-  virtual void UnloadModule(const CodeModule *module) = 0;
+  virtual void UnloadModule(const CodeModule* module) = 0;
 
   // Returns true if the module has been loaded.
-  virtual bool HasModule(const CodeModule *module) = 0;
+  virtual bool HasModule(const CodeModule* module) = 0;
 
   // Returns true if the module has been loaded and it is corrupt.
-  virtual bool IsModuleCorrupt(const CodeModule *module) = 0;
+  virtual bool IsModuleCorrupt(const CodeModule* module) = 0;
 
   // Fills in the function_base, function_name, source_file_name,
   // and source_line fields of the StackFrame.  The instruction and
-  // module_name fields must already be filled in.
-  virtual void FillSourceLineInfo(StackFrame *frame) = 0;
+  // module_name fields must already be filled in. If inlined_frames is not
+  // nullptr, it will try to construct inlined frames by adding them into
+  // inlined_frames in an order from outermost frame to inner most frame.
+  virtual void FillSourceLineInfo(
+      StackFrame* frame,
+      std::deque<std::unique_ptr<StackFrame>>* inlined_frames) = 0;
 
   // If Windows stack walking information is available covering
   // FRAME's instruction address, return a WindowsFrameInfo structure
   // describing it. If the information is not available, returns NULL.
   // A NULL return value does not indicate an error. The caller takes
   // ownership of any returned WindowsFrameInfo object.
-  virtual WindowsFrameInfo *FindWindowsFrameInfo(const StackFrame *frame) = 0;
+  virtual WindowsFrameInfo* FindWindowsFrameInfo(const StackFrame* frame) = 0;
 
   // If CFI stack walking information is available covering ADDRESS,
   // return a CFIFrameInfo structure describing it. If the information
   // is not available, return NULL. The caller takes ownership of any
   // returned CFIFrameInfo object.
-  virtual CFIFrameInfo *FindCFIFrameInfo(const StackFrame *frame) = 0;
+  virtual CFIFrameInfo* FindCFIFrameInfo(const StackFrame* frame) = 0;
 
  protected:
   // SourceLineResolverInterface cannot be instantiated except by subclasses

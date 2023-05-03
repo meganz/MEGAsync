@@ -1,5 +1,4 @@
-// Copyright (c) 2010, Google Inc.
-// All rights reserved.
+// Copyright 2010 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -29,6 +28,10 @@
 
 // exception_handler_test.cc: Unit tests for google_breakpad::ExceptionHandler
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>  // Must come first
+#endif
+
 #include <pthread.h>
 #include <sys/mman.h>
 #include <sys/stat.h>
@@ -36,6 +39,7 @@
 
 #include "breakpad_googletest_includes.h"
 #include "client/mac/handler/exception_handler.h"
+#include "common/linux/ignore_ret.h"
 #include "common/mac/MachIPC.h"
 #include "common/tests/auto_tempdir.h"
 #include "google_breakpad/processor/minidump.h"
@@ -70,7 +74,7 @@ class ExceptionHandlerTest : public Test {
 };
 
 static void Crasher() {
-  int *a = (int*)0x42;
+  int* a = (int*)0x42;
 
   fprintf(stdout, "Going to crash...\n");
   fprintf(stdout, "A = %d", *a);
@@ -85,15 +89,15 @@ static void SoonToCrash(void(*crasher)()) {
   crasher();
 }
 
-static bool MDCallback(const char *dump_dir, const char *file_name,
-                       void *context, bool success) {
+static bool MDCallback(const char* dump_dir, const char* file_name,
+                       void* context, bool success) {
   string path(dump_dir);
   path.append("/");
   path.append(file_name);
   path.append(".dmp");
 
   int fd = *reinterpret_cast<int*>(context);
-  (void)write(fd, path.c_str(), path.length() + 1);
+  IGNORE_RET(write(fd, path.c_str(), path.length() + 1));
   close(fd);
   exit(0);
   // not reached
@@ -178,9 +182,9 @@ TEST_F(ExceptionHandlerTest, InProcessAbort) {
   InProcessCrash(true);
 }
 
-static bool DumpNameMDCallback(const char *dump_dir, const char *file_name,
-                               void *context, bool success) {
-  ExceptionHandlerTest *self = reinterpret_cast<ExceptionHandlerTest*>(context);
+static bool DumpNameMDCallback(const char* dump_dir, const char* file_name,
+                               void* context, bool success) {
+  ExceptionHandlerTest* self = reinterpret_cast<ExceptionHandlerTest*>(context);
   if (dump_dir && file_name) {
     self->lastDumpName = dump_dir;
     self->lastDumpName += "/";
@@ -293,7 +297,7 @@ TEST_F(ExceptionHandlerTest, DumpChildProcess) {
 
   // Unblock child process
   uint8_t data = 1;
-  (void)write(fds[1], &data, 1);
+  IGNORE_RET(write(fds[1], &data, 1));
 
   // Child process should have exited with a zero status.
   int ret;
@@ -610,7 +614,9 @@ TEST_F(ExceptionHandlerTest, InstructionPointerMemoryNullPointer) {
     ExceptionHandler eh(tempDir.path(), NULL, MDCallback, &fds[1], true, NULL);
     // Try calling a NULL pointer.
     typedef void (*void_function)(void);
-    void_function memory_function =
+    // Volatile markings are needed to keep Clang from generating invalid
+    // opcodes.  See http://crbug.com/498354 for details.
+    volatile void_function memory_function =
       reinterpret_cast<void_function>(NULL);
     memory_function();
     // not reached
@@ -649,7 +655,7 @@ TEST_F(ExceptionHandlerTest, InstructionPointerMemoryNullPointer) {
   ASSERT_EQ((unsigned int)1, memory_list->region_count());
 }
 
-static void *Junk(void *) {
+static void* Junk(void*) {
   sleep(1000000);
   return NULL;
 }

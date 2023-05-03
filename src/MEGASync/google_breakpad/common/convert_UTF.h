@@ -1,23 +1,39 @@
 /*
- * Copyright 2001-2004 Unicode, Inc.
+ * Copyright © 1991-2015 Unicode, Inc. All rights reserved.
+ * Distributed under the Terms of Use in 
+ * http://www.unicode.org/copyright.html.
  *
- * Disclaimer
+ * Permission is hereby granted, free of charge, to any person obtaining
+ * a copy of the Unicode data files and any associated documentation
+ * (the "Data Files") or Unicode software and any associated documentation
+ * (the "Software") to deal in the Data Files or Software
+ * without restriction, including without limitation the rights to use,
+ * copy, modify, merge, publish, distribute, and/or sell copies of
+ * the Data Files or Software, and to permit persons to whom the Data Files
+ * or Software are furnished to do so, provided that
+ * (a) this copyright and permission notice appear with all copies 
+ * of the Data Files or Software,
+ * (b) this copyright and permission notice appear in associated 
+ * documentation, and
+ * (c) there is clear notice in each modified Data File or in the Software
+ * as well as in the documentation associated with the Data File(s) or
+ * Software that the data or software has been modified.
  *
- * This source code is provided as is by Unicode, Inc. No claims are
- * made as to fitness for any particular purpose. No warranties of any
- * kind are expressed or implied. The recipient agrees to determine
- * applicability of information provided. If this file has been
- * purchased on magnetic or optical media from Unicode, Inc., the
- * sole remedy for any claim will be exchange of defective media
- * within 90 days of receipt.
+ * THE DATA FILES AND SOFTWARE ARE PROVIDED "AS IS", WITHOUT WARRANTY OF
+ * ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT OF THIRD PARTY RIGHTS.
+ * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR HOLDERS INCLUDED IN THIS
+ * NOTICE BE LIABLE FOR ANY CLAIM, OR ANY SPECIAL INDIRECT OR CONSEQUENTIAL
+ * DAMAGES, OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE,
+ * DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER
+ * TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+ * PERFORMANCE OF THE DATA FILES OR SOFTWARE.
  *
- * Limitations on Rights to Redistribute This Code
- *
- * Unicode, Inc. hereby grants the right to freely use the information
- * supplied in this file in the creation of products supporting the
- * Unicode Standard, and to make copies of this file in any form
- * for internal or external distribution as long as this notice
- * remains attached.
+ * Except as contained in this notice, the name of a copyright holder
+ * shall not be used in advertising or otherwise to promote the sale,
+ * use or other dealings in these Data Files or Software without prior
+ * written authorization of the copyright holder.
  */
 
 #ifndef COMMON_CONVERT_UTF_H_
@@ -90,6 +106,8 @@ All should be unsigned values to avoid sign extension during
 bit mask & shift operations.
 ------------------------------------------------------------------------ */
 
+namespace google_breakpad {
+
 typedef unsigned long	UTF32;	/* at least 32 bits */
 typedef unsigned short	UTF16;	/* at least 16 bits */
 typedef unsigned char	UTF8;	/* typically 8 bits */
@@ -114,11 +132,6 @@ typedef enum {
 	lenientConversion
 } ConversionFlags;
 
-/* This is for C++ and does no harm in C */
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 ConversionResult ConvertUTF8toUTF16 (const UTF8** sourceStart, const UTF8* sourceEnd,
                                      UTF16** targetStart, UTF16* targetEnd, ConversionFlags flags);
 
@@ -139,9 +152,7 @@ ConversionResult ConvertUTF32toUTF16 (const UTF32** sourceStart, const UTF32* so
 
 Boolean isLegalUTF8Sequence(const UTF8 *source, const UTF8 *sourceEnd);
 
-#ifdef __cplusplus
-}
-#endif
+}  // namespace google_breakpad
 
 /* --------------------------------------------------------------------- */
 

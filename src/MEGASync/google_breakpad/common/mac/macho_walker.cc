@@ -1,5 +1,4 @@
-// Copyright (c) 2006, Google Inc.
-// All rights reserved.
+// Copyright 2006 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -33,25 +32,27 @@
 //
 // Author: Dan Waylonis
 
-extern "C" {  // necessary for Leopard
-  #include <assert.h>
-  #include <fcntl.h>
-  #include <mach-o/arch.h>
-  #include <mach-o/loader.h>
-  #include <mach-o/swap.h>
-  #include <string.h>
-  #include <unistd.h>
-}
+#ifdef HAVE_CONFIG_H
+#include <config.h>  // Must come first
+#endif
 
+#include <assert.h>
+#include <fcntl.h>
+#include <mach-o/fat.h>
+#include <mach-o/loader.h>
+#include <string.h>
+#include <unistd.h>
+
+#include "common/mac/arch_utilities.h"
 #include "common/mac/byteswap.h"
-#include "common/mac/macho_walker.h"
 #include "common/mac/macho_utilities.h"
+#include "common/mac/macho_walker.h"
 
 namespace MacFileUtilities {
 
-MachoWalker::MachoWalker(const char *path, LoadCommandCallback callback,
-                         void *context)
-    : file_(0),
+MachoWalker::MachoWalker(const char* path, LoadCommandCallback callback,
+                         void* context)
+    : file_(-1),
       memory_(NULL),
       memory_size_(0),
       callback_(callback),
@@ -62,9 +63,9 @@ MachoWalker::MachoWalker(const char *path, LoadCommandCallback callback,
   file_ = open(path, O_RDONLY);
 }
 
-MachoWalker::MachoWalker(void *memory, size_t size,
-                         LoadCommandCallback callback, void *context)
-    : file_(0),
+MachoWalker::MachoWalker(void* memory, size_t size,
+                         LoadCommandCallback callback, void* context)
+    : file_(-1),
       memory_(memory),
       memory_size_(size),
       callback_(callback),
@@ -84,9 +85,8 @@ bool MachoWalker::WalkHeader(cpu_type_t cpu_type, cpu_subtype_t cpu_subtype) {
   cpu_subtype_t valid_cpu_subtype = cpu_subtype;
   // if |cpu_type| is 0, use the native cpu type.
   if (cpu_type == 0) {
-    const NXArchInfo *arch = NXGetLocalArchInfo();
-    assert(arch);
-    valid_cpu_type = arch->cputype;
+    ArchInfo arch = GetLocalArchInfo();
+    valid_cpu_type = arch.cputype;
     valid_cpu_subtype = CPU_SUBTYPE_MULTIPLE;
   }
   off_t offset;
@@ -100,7 +100,7 @@ bool MachoWalker::WalkHeader(cpu_type_t cpu_type, cpu_subtype_t cpu_subtype) {
   return false;
 }
 
-bool MachoWalker::ReadBytes(void *buffer, size_t size, off_t offset) {
+bool MachoWalker::ReadBytes(void* buffer, size_t size, off_t offset) {
   if (memory_) {
     if (offset < 0)
       return false;
@@ -111,14 +111,14 @@ bool MachoWalker::ReadBytes(void *buffer, size_t size, off_t offset) {
       size = memory_size_ - static_cast<size_t>(offset);
       result = false;
     }
-    memcpy(buffer, static_cast<char *>(memory_) + offset, size);
+    memcpy(buffer, static_cast<char*>(memory_) + offset, size);
     return result;
   } else {
     return pread(file_, buffer, size, offset) == (ssize_t)size;
   }
 }
 
-bool MachoWalker::CurrentHeader(struct mach_header_64 *header, off_t *offset) {
+bool MachoWalker::CurrentHeader(struct mach_header_64* header, off_t* offset) {
   if (current_header_) {
     memcpy(header, current_header_, sizeof(mach_header_64));
     *offset = current_header_offset_;
@@ -130,7 +130,7 @@ bool MachoWalker::CurrentHeader(struct mach_header_64 *header, off_t *offset) {
 
 bool MachoWalker::FindHeader(cpu_type_t cpu_type,
                              cpu_subtype_t cpu_subtype,
-                             off_t &offset) {
+                             off_t& offset) {
   // Read the magic bytes that's common amongst all mach-o files
   uint32_t magic;
   if (!ReadBytes(&magic, sizeof(magic), 0))
@@ -156,7 +156,7 @@ bool MachoWalker::FindHeader(cpu_type_t cpu_type,
       return false;
 
     if (magic == MH_CIGAM || magic == MH_CIGAM_64)
-      swap_mach_header(&header, NXHostByteOrder());
+      breakpad_swap_mach_header(&header);
 
     if (cpu_type != header.cputype ||
         (cpu_subtype != CPU_SUBTYPE_MULTIPLE &&
@@ -174,7 +174,7 @@ bool MachoWalker::FindHeader(cpu_type_t cpu_type,
       return false;
 
     if (NXHostByteOrder() != NX_BigEndian)
-      swap_fat_header(&fat, NXHostByteOrder());
+      breakpad_swap_fat_header(&fat);
 
     offset += sizeof(fat);
 
@@ -185,7 +185,7 @@ bool MachoWalker::FindHeader(cpu_type_t cpu_type,
         return false;
 
       if (NXHostByteOrder() != NX_BigEndian)
-        swap_fat_arch(&arch, 1, NXHostByteOrder());
+        breakpad_swap_fat_arch(&arch, 1);
 
       if (arch.cputype == cpu_type &&
           (cpu_subtype == CPU_SUBTYPE_MULTIPLE ||
@@ -208,12 +208,12 @@ bool MachoWalker::WalkHeaderAtOffset(off_t offset) {
 
   bool swap = (header.magic == MH_CIGAM);
   if (swap)
-    swap_mach_header(&header, NXHostByteOrder());
+    breakpad_swap_mach_header(&header);
 
   // Copy the data into the mach_header_64 structure.  Since the 32-bit and
   // 64-bit only differ in the last field (reserved), this is safe to do.
   struct mach_header_64 header64;
-  memcpy((void *)&header64, (const void *)&header, sizeof(header));
+  memcpy((void*)&header64, (const void*)&header, sizeof(header));
   header64.reserved = 0;
 
   current_header_ = &header64;
@@ -234,7 +234,7 @@ bool MachoWalker::WalkHeader64AtOffset(off_t offset) {
 
   bool swap = (header.magic == MH_CIGAM_64);
   if (swap)
-    breakpad_swap_mach_header_64(&header, NXHostByteOrder());
+    breakpad_swap_mach_header_64(&header);
 
   current_header_ = &header;
   current_header_size_ = sizeof(header);
@@ -255,7 +255,7 @@ bool MachoWalker::WalkHeaderCore(off_t offset, uint32_t number_of_commands,
       return false;
 
     if (swap)
-      swap_load_command(&cmd, NXHostByteOrder());
+      breakpad_swap_load_command(&cmd);
 
     // Call the user callback
     if (callback_ && !callback_(this, &cmd, offset, swap, callback_context_))

@@ -1,5 +1,4 @@
-// Copyright (c) 2010 Google Inc.
-// All rights reserved.
+// Copyright 2010 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -31,33 +30,39 @@
 
 // module_unittest.cc: Unit tests for google_breakpad::Module.
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>  // Must come first
+#endif
+
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include <algorithm>
+#include <memory>
 #include <sstream>
 #include <string>
+#include <utility>
 
 #include "breakpad_googletest_includes.h"
 #include "common/module.h"
 #include "common/using_std_string.h"
 
 using google_breakpad::Module;
+using google_breakpad::StringView;
 using std::stringstream;
 using std::vector;
 using testing::ContainerEq;
 
-static Module::Function *generate_duplicate_function(const string &name) {
-  const Module::Address DUP_ADDRESS = 0xd35402aac7a7ad5cLL;
-  const Module::Address DUP_SIZE = 0x200b26e605f99071LL;
-  const Module::Address DUP_PARAMETER_SIZE = 0xf14ac4fed48c4a99LL;
+static Module::Function* generate_duplicate_function(StringView name) {
+  const Module::Address DUP_ADDRESS = 0xd35402aac7a7ad5cULL;
+  const Module::Address DUP_SIZE = 0x200b26e605f99071ULL;
+  const Module::Address DUP_PARAMETER_SIZE = 0xf14ac4fed48c4a99ULL;
 
-  Module::Function *function = new(Module::Function);
-  function->name = name;
-  function->address = DUP_ADDRESS;
-  function->size = DUP_SIZE;
+  Module::Function* function = new Module::Function(name, DUP_ADDRESS);
+  Module::Range range(DUP_ADDRESS, DUP_SIZE);
+  function->ranges.push_back(range);
   function->parameter_size = DUP_PARAMETER_SIZE;
   return function;
 }
@@ -66,8 +71,9 @@ static Module::Function *generate_duplicate_function(const string &name) {
 #define MODULE_OS "os-name"
 #define MODULE_ARCH "architecture"
 #define MODULE_ID "id-string"
+#define MODULE_CODE_ID "code-id-string"
 
-TEST(Write, Header) {
+TEST(Module, WriteHeader) {
   stringstream s;
   Module m(MODULE_NAME, MODULE_OS, MODULE_ARCH, MODULE_ID);
   m.Write(s, ALL_SYMBOL_DATA);
@@ -76,17 +82,27 @@ TEST(Write, Header) {
                contents.c_str());
 }
 
-TEST(Write, OneLineFunc) {
+TEST(Module, WriteHeaderCodeId) {
+  stringstream s;
+  Module m(MODULE_NAME, MODULE_OS, MODULE_ARCH, MODULE_ID, MODULE_CODE_ID);
+  m.Write(s, ALL_SYMBOL_DATA);
+  string contents = s.str();
+  EXPECT_STREQ("MODULE os-name architecture id-string name with spaces\n"
+               "INFO CODE_ID code-id-string\n",
+               contents.c_str());
+}
+
+TEST(Module, WriteOneLineFunc) {
   stringstream s;
   Module m(MODULE_NAME, MODULE_OS, MODULE_ARCH, MODULE_ID);
 
-  Module::File *file = m.FindFile("file_name.cc");
-  Module::Function *function = new(Module::Function);
-  function->name = "function_name";
-  function->address = 0xe165bf8023b9d9abLL;
-  function->size = 0x1e4bb0eb1cbf5b09LL;
-  function->parameter_size = 0x772beee89114358aLL;
-  Module::Line line = { 0xe165bf8023b9d9abLL, 0x1e4bb0eb1cbf5b09LL,
+  Module::File* file = m.FindFile("file_name.cc");
+  Module::Function* function = new Module::Function(
+      "function_name", 0xe165bf8023b9d9abULL);
+  Module::Range range(0xe165bf8023b9d9abULL, 0x1e4bb0eb1cbf5b09ULL);
+  function->ranges.push_back(range);
+  function->parameter_size = 0x772beee89114358aULL;
+  Module::Line line = { 0xe165bf8023b9d9abULL, 0x1e4bb0eb1cbf5b09ULL,
                         file, 67519080 };
   function->lines.push_back(line);
   m.AddFunction(function);
@@ -101,25 +117,25 @@ TEST(Write, OneLineFunc) {
                contents.c_str());
 }
 
-TEST(Write, RelativeLoadAddress) {
+TEST(Module, WriteRelativeLoadAddress) {
   stringstream s;
   Module m(MODULE_NAME, MODULE_OS, MODULE_ARCH, MODULE_ID);
 
   // Some source files.  We will expect to see them in lexicographic order.
-  Module::File *file1 = m.FindFile("filename-b.cc");
-  Module::File *file2 = m.FindFile("filename-a.cc");
+  Module::File* file1 = m.FindFile("filename-b.cc");
+  Module::File* file2 = m.FindFile("filename-a.cc");
 
   // A function.
-  Module::Function *function = new(Module::Function);
-  function->name = "A_FLIBBERTIJIBBET::a_will_o_the_wisp(a clown)";
-  function->address = 0xbec774ea5dd935f3LL;
-  function->size = 0x2922088f98d3f6fcLL;
-  function->parameter_size = 0xe5e9aa008bd5f0d0LL;
+  Module::Function* function = new Module::Function(
+      "A_FLIBBERTIJIBBET::a_will_o_the_wisp(a clown)", 0xbec774ea5dd935f3ULL);
+  Module::Range range(0xbec774ea5dd935f3ULL, 0x2922088f98d3f6fcULL);
+  function->ranges.push_back(range);
+  function->parameter_size = 0xe5e9aa008bd5f0d0ULL;
 
   // Some source lines.  The module should not sort these.
-  Module::Line line1 = { 0xbec774ea5dd935f3LL, 0x1c2be6d6c5af2611LL,
+  Module::Line line1 = { 0xbec774ea5dd935f3ULL, 0x1c2be6d6c5af2611ULL,
                          file1, 41676901 };
-  Module::Line line2 = { 0xdaf35bc123885c04LL, 0xcf621b8d324d0ebLL,
+  Module::Line line2 = { 0xdaf35bc123885c04ULL, 0xcf621b8d324d0ebULL,
                          file2, 67519080 };
   function->lines.push_back(line2);
   function->lines.push_back(line1);
@@ -127,7 +143,7 @@ TEST(Write, RelativeLoadAddress) {
   m.AddFunction(function);
 
   // Some stack information.
-  Module::StackFrameEntry *entry = new Module::StackFrameEntry();
+  auto entry = std::make_unique<Module::StackFrameEntry>();
   entry->address = 0x30f9e5c83323973dULL;
   entry->size = 0x49fc9ca7c7c13dc2ULL;
   entry->initial_rules[".cfa"] = "he was a handsome man";
@@ -135,11 +151,11 @@ TEST(Write, RelativeLoadAddress) {
   entry->rule_changes[0x30f9e5c83323973eULL]["how"] =
     "do you like your blueeyed boy";
   entry->rule_changes[0x30f9e5c83323973eULL]["Mister"] = "Death";
-  m.AddStackFrameEntry(entry);
+  m.AddStackFrameEntry(std::move(entry));
 
   // Set the load address.  Doing this after adding all the data to
   // the module must work fine.
-  m.SetLoadAddress(0x2ab698b0b6407073LL);
+  m.SetLoadAddress(0x2ab698b0b6407073ULL);
 
   m.Write(s, ALL_SYMBOL_DATA);
   string contents = s.str();
@@ -159,33 +175,34 @@ TEST(Write, RelativeLoadAddress) {
                contents.c_str());
 }
 
-TEST(Write, OmitUnusedFiles) {
+TEST(Module, WriteOmitUnusedFiles) {
   Module m(MODULE_NAME, MODULE_OS, MODULE_ARCH, MODULE_ID);
 
   // Create some source files.
-  Module::File *file1 = m.FindFile("filename1");
+  Module::File* file1 = m.FindFile("filename1");
   m.FindFile("filename2");  // not used by any line
-  Module::File *file3 = m.FindFile("filename3");
+  Module::File* file3 = m.FindFile("filename3");
 
   // Create a function.
-  Module::Function *function = new(Module::Function);
-  function->name = "function_name";
-  function->address = 0x9b926d464f0b9384LL;
-  function->size = 0x4f524a4ba795e6a6LL;
-  function->parameter_size = 0xbbe8133a6641c9b7LL;
+  Module::Function* function = new Module::Function(
+      "function_name", 0x9b926d464f0b9384ULL);
+  Module::Range range(0x9b926d464f0b9384ULL, 0x4f524a4ba795e6a6ULL);
+  function->ranges.push_back(range);
+  function->parameter_size = 0xbbe8133a6641c9b7ULL;
 
   // Source files that refer to some files, but not others.
-  Module::Line line1 = { 0x595fa44ebacc1086LL, 0x1e1e0191b066c5b3LL,
+  Module::Line line1 = { 0xab415089485e1a20ULL, 0x126e3124979291f2ULL,
                          file1, 137850127 };
-  Module::Line line2 = { 0x401ce8c8a12d25e3LL, 0x895751c41b8d2ce2LL,
+  Module::Line line2 = { 0xb2675b5c3c2ed33fULL, 0x1df77f5551dbd68cULL,
                          file3, 28113549 };
   function->lines.push_back(line1);
   function->lines.push_back(line2);
   m.AddFunction(function);
 
-  m.AssignSourceIds();
+  std::set<Module::InlineOrigin*, Module::InlineOriginCompare> inline_origins;
+  m.AssignSourceIds(inline_origins);
 
-  vector<Module::File *> vec;
+  vector<Module::File*> vec;
   m.GetFiles(&vec);
   EXPECT_EQ((size_t) 3, vec.size());
   EXPECT_STREQ("filename1", vec[0]->name.c_str());
@@ -204,34 +221,34 @@ TEST(Write, OmitUnusedFiles) {
                "FILE 1 filename3\n"
                "FUNC 9b926d464f0b9384 4f524a4ba795e6a6 bbe8133a6641c9b7"
                " function_name\n"
-               "595fa44ebacc1086 1e1e0191b066c5b3 137850127 0\n"
-               "401ce8c8a12d25e3 895751c41b8d2ce2 28113549 1\n",
+               "ab415089485e1a20 126e3124979291f2 137850127 0\n"
+               "b2675b5c3c2ed33f 1df77f5551dbd68c 28113549 1\n",
                contents.c_str());
 }
 
-TEST(Write, NoCFI) {
+TEST(Module, WriteNoCFI) {
   stringstream s;
   Module m(MODULE_NAME, MODULE_OS, MODULE_ARCH, MODULE_ID);
 
   // Some source files.  We will expect to see them in lexicographic order.
-  Module::File *file1 = m.FindFile("filename.cc");
+  Module::File* file1 = m.FindFile("filename.cc");
 
   // A function.
-  Module::Function *function = new(Module::Function);
-  function->name = "A_FLIBBERTIJIBBET::a_will_o_the_wisp(a clown)";
-  function->address = 0xbec774ea5dd935f3LL;
-  function->size = 0x2922088f98d3f6fcLL;
-  function->parameter_size = 0xe5e9aa008bd5f0d0LL;
+  Module::Function* function = new Module::Function(
+      "A_FLIBBERTIJIBBET::a_will_o_the_wisp(a clown)", 0xbec774ea5dd935f3ULL);
+  Module::Range range(0xbec774ea5dd935f3ULL, 0x2922088f98d3f6fcULL);
+  function->ranges.push_back(range);
+  function->parameter_size = 0xe5e9aa008bd5f0d0ULL;
 
   // Some source lines.  The module should not sort these.
-  Module::Line line1 = { 0xbec774ea5dd935f3LL, 0x1c2be6d6c5af2611LL,
+  Module::Line line1 = { 0xbec774ea5dd935f3ULL, 0x1c2be6d6c5af2611ULL,
                          file1, 41676901 };
   function->lines.push_back(line1);
 
   m.AddFunction(function);
 
   // Some stack information.
-  Module::StackFrameEntry *entry = new Module::StackFrameEntry();
+  auto entry = std::make_unique<Module::StackFrameEntry>();
   entry->address = 0x30f9e5c83323973dULL;
   entry->size = 0x49fc9ca7c7c13dc2ULL;
   entry->initial_rules[".cfa"] = "he was a handsome man";
@@ -239,13 +256,13 @@ TEST(Write, NoCFI) {
   entry->rule_changes[0x30f9e5c83323973eULL]["how"] =
     "do you like your blueeyed boy";
   entry->rule_changes[0x30f9e5c83323973eULL]["Mister"] = "Death";
-  m.AddStackFrameEntry(entry);
+  m.AddStackFrameEntry(std::move(entry));
 
   // Set the load address.  Doing this after adding all the data to
   // the module must work fine.
-  m.SetLoadAddress(0x2ab698b0b6407073LL);
+  m.SetLoadAddress(0x2ab698b0b6407073ULL);
 
-  m.Write(s, NO_CFI);
+  m.Write(s, SYMBOLS_AND_FILES | INLINES);
   string contents = s.str();
   EXPECT_STREQ("MODULE os-name architecture id-string name with spaces\n"
                "FILE 0 filename.cc\n"
@@ -255,29 +272,30 @@ TEST(Write, NoCFI) {
                contents.c_str());
 }
 
-TEST(Construct, AddFunctions) {
+TEST(Module, ConstructAddFunction) {
   stringstream s;
   Module m(MODULE_NAME, MODULE_OS, MODULE_ARCH, MODULE_ID);
 
   // Two functions.
-  Module::Function *function1 = new(Module::Function);
-  function1->name = "_without_form";
-  function1->address = 0xd35024aa7ca7da5cLL;
-  function1->size = 0x200b26e605f99071LL;
-  function1->parameter_size = 0xf14ac4fed48c4a99LL;
+  Module::Function* function1 = new Module::Function(
+      "_without_form", 0xd35024aa7ca7da5cULL);
+  Module::Range r1(0xd35024aa7ca7da5cULL, 0x200b26e605f99071ULL);
+  function1->ranges.push_back(r1);
+  function1->parameter_size = 0xf14ac4fed48c4a99ULL;
 
-  Module::Function *function2 = new(Module::Function);
-  function2->name = "_and_void";
-  function2->address = 0x2987743d0b35b13fLL;
-  function2->size = 0xb369db048deb3010LL;
-  function2->parameter_size = 0x938e556cb5a79988LL;
+  Module::Function* function2 = new Module::Function(
+      "_and_void", 0x2987743d0b35b13fULL);
+  Module::Range r2(0x2987743d0b35b13fULL, 0xb369db048deb3010ULL);
+  function2->ranges.push_back(r2);
+  function2->parameter_size = 0x938e556cb5a79988ULL;
 
   // Put them in a vector.
-  vector<Module::Function *> vec;
+  vector<Module::Function*> vec;
   vec.push_back(function1);
   vec.push_back(function2);
 
-  m.AddFunctions(vec.begin(), vec.end());
+  for (Module::Function* func: vec)
+    m.AddFunction(func);
 
   m.Write(s, ALL_SYMBOL_DATA);
   string contents = s.str();
@@ -296,27 +314,79 @@ TEST(Construct, AddFunctions) {
   EXPECT_EQ((size_t) 2, vec.size());
 }
 
-TEST(Construct, AddFrames) {
+TEST(Module, WriteOutOfRangeAddresses) {
+  stringstream s;
+  Module m(MODULE_NAME, MODULE_OS, MODULE_ARCH, MODULE_ID);
+
+  // Specify an allowed address range, representing a PT_LOAD segment in a
+  // module.
+  vector<Module::Range> address_ranges = {
+    Module::Range(0x2000ULL, 0x1000ULL),
+  };
+  m.SetAddressRanges(address_ranges);
+
+  // Add three stack frames (one lower, one in, and one higher than the allowed
+  // address range).  Only the middle frame should be captured.
+  auto entry1 = std::make_unique<Module::StackFrameEntry>();
+  entry1->address = 0x1000ULL;
+  entry1->size = 0x100ULL;
+  m.AddStackFrameEntry(std::move(entry1));
+  auto entry2 = std::make_unique<Module::StackFrameEntry>();
+  entry2->address = 0x2000ULL;
+  entry2->size = 0x100ULL;
+  m.AddStackFrameEntry(std::move(entry2));
+  auto entry3 = std::make_unique<Module::StackFrameEntry>();
+  entry3->address = 0x3000ULL;
+  entry3->size = 0x100ULL;
+  m.AddStackFrameEntry(std::move(entry3));
+
+  // Add a function outside the allowed range.
+  Module::File* file = m.FindFile("file_name.cc");
+  Module::Function* function = new Module::Function(
+      "function_name", 0x4000ULL);
+  Module::Range range(0x4000ULL, 0x1000ULL);
+  function->ranges.push_back(range);
+  function->parameter_size = 0x100ULL;
+  Module::Line line = { 0x4000ULL, 0x100ULL, file, 67519080 };
+  function->lines.push_back(line);
+  m.AddFunction(function);
+
+  // Add an extern outside the allowed range.
+  auto extern1 = std::make_unique<Module::Extern>(0x5000ULL);
+  extern1->name = "_xyz";
+  m.AddExtern(std::move(extern1));
+
+  m.Write(s, ALL_SYMBOL_DATA);
+
+  EXPECT_STREQ("MODULE os-name architecture id-string name with spaces\n"
+               "STACK CFI INIT 2000 100 \n",
+               s.str().c_str());
+
+  // Cleanup - Prevent Memory Leak errors.
+  delete (function);
+}
+
+TEST(Module, ConstructAddFrames) {
   stringstream s;
   Module m(MODULE_NAME, MODULE_OS, MODULE_ARCH, MODULE_ID);
 
   // First STACK CFI entry, with no initial rules or deltas.
-  Module::StackFrameEntry *entry1 = new Module::StackFrameEntry();
+  auto entry1 = std::make_unique<Module::StackFrameEntry>();
   entry1->address = 0xddb5f41285aa7757ULL;
   entry1->size = 0x1486493370dc5073ULL;
-  m.AddStackFrameEntry(entry1);
+  m.AddStackFrameEntry(std::move(entry1));
 
   // Second STACK CFI entry, with initial rules but no deltas.
-  Module::StackFrameEntry *entry2 = new Module::StackFrameEntry();
+  auto entry2 = std::make_unique<Module::StackFrameEntry>();
   entry2->address = 0x8064f3af5e067e38ULL;
   entry2->size = 0x0de2a5ee55509407ULL;
   entry2->initial_rules[".cfa"] = "I think that I shall never see";
   entry2->initial_rules["stromboli"] = "a poem lovely as a tree";
   entry2->initial_rules["cannoli"] = "a tree whose hungry mouth is prest";
-  m.AddStackFrameEntry(entry2);
+  m.AddStackFrameEntry(std::move(entry2));
 
   // Third STACK CFI entry, with initial rules and deltas.
-  Module::StackFrameEntry *entry3 = new Module::StackFrameEntry();
+  auto entry3 = std::make_unique<Module::StackFrameEntry>();
   entry3->address = 0x5e8d0db0a7075c6cULL;
   entry3->size = 0x1c7edb12a7aea229ULL;
   entry3->initial_rules[".cfa"] = "Whose woods are these";
@@ -328,7 +398,7 @@ TEST(Construct, AddFrames) {
     "his house is in";
   entry3->rule_changes[0x36682fad3763ffffULL][".cfa"] =
     "I think I know";
-  m.AddStackFrameEntry(entry3);
+  m.AddStackFrameEntry(std::move(entry3));
 
   // Check that Write writes STACK CFI records properly.
   m.Write(s, ALL_SYMBOL_DATA);
@@ -350,7 +420,7 @@ TEST(Construct, AddFrames) {
                contents.c_str());
 
   // Check that GetStackFrameEntries works.
-  vector<Module::StackFrameEntry *> entries;
+  vector<Module::StackFrameEntry*> entries;
   m.GetStackFrameEntries(&entries);
   ASSERT_EQ(3U, entries.size());
   // Check first entry.
@@ -383,12 +453,12 @@ TEST(Construct, AddFrames) {
   EXPECT_THAT(entries[2]->rule_changes, ContainerEq(entry3_changes));
 }
 
-TEST(Construct, UniqueFiles) {
+TEST(Module, ConstructUniqueFiles) {
   Module m(MODULE_NAME, MODULE_OS, MODULE_ARCH, MODULE_ID);
-  Module::File *file1 = m.FindFile("foo");
-  Module::File *file2 = m.FindFile(string("bar"));
-  Module::File *file3 = m.FindFile(string("foo"));
-  Module::File *file4 = m.FindFile("bar");
+  Module::File* file1 = m.FindFile("foo");
+  Module::File* file2 = m.FindFile(string("bar"));
+  Module::File* file3 = m.FindFile(string("foo"));
+  Module::File* file4 = m.FindFile("bar");
   EXPECT_NE(file1, file2);
   EXPECT_EQ(file1, file3);
   EXPECT_EQ(file2, file4);
@@ -396,16 +466,19 @@ TEST(Construct, UniqueFiles) {
   EXPECT_TRUE(m.FindExistingFile("baz") == NULL);
 }
 
-TEST(Construct, DuplicateFunctions) {
+TEST(Module, ConstructDuplicateFunctions) {
   stringstream s;
   Module m(MODULE_NAME, MODULE_OS, MODULE_ARCH, MODULE_ID);
 
   // Two functions.
-  Module::Function *function1 = generate_duplicate_function("_without_form");
-  Module::Function *function2 = generate_duplicate_function("_without_form");
+  Module::Function* function1 = generate_duplicate_function("_without_form");
+  Module::Function* function2 = generate_duplicate_function("_without_form");
 
   m.AddFunction(function1);
-  m.AddFunction(function2);
+  // If this succeeds, we'll have a double-free with the `delete` below. Avoid
+  // that.
+  ASSERT_FALSE(m.AddFunction(function2));
+  delete function2;
 
   m.Write(s, ALL_SYMBOL_DATA);
   string contents = s.str();
@@ -415,13 +488,13 @@ TEST(Construct, DuplicateFunctions) {
                contents.c_str());
 }
 
-TEST(Construct, FunctionsWithSameAddress) {
+TEST(Module, ConstructFunctionsWithSameAddress) {
   stringstream s;
   Module m(MODULE_NAME, MODULE_OS, MODULE_ARCH, MODULE_ID);
 
   // Two functions.
-  Module::Function *function1 = generate_duplicate_function("_without_form");
-  Module::Function *function2 = generate_duplicate_function("_and_void");
+  Module::Function* function1 = generate_duplicate_function("_without_form");
+  Module::Function* function2 = generate_duplicate_function("_and_void");
 
   m.AddFunction(function1);
   m.AddFunction(function2);
@@ -436,22 +509,48 @@ TEST(Construct, FunctionsWithSameAddress) {
                contents.c_str());
 }
 
+// If multiple fields are enabled, only one function is included per address.
+// The entry will be tagged with `m` to show that there are multiple symbols
+// at that address.
+// TODO(lgrey): Remove the non-multiple versions of these tests and remove the
+// suffixes from the suffxed ones when removing `enable_multiple_field_`.
+TEST(Module, ConstructFunctionsWithSameAddressMultiple) {
+  stringstream s;
+  Module m(MODULE_NAME, MODULE_OS, MODULE_ARCH, MODULE_ID, "", true);
+
+  // Two functions.
+  Module::Function* function1 = generate_duplicate_function("_without_form");
+  Module::Function* function2 = generate_duplicate_function("_and_void");
+
+  m.AddFunction(function1);
+  // If this succeeds, we'll have a double-free with the `delete` below. Avoid
+  // that.
+  ASSERT_FALSE(m.AddFunction(function2));
+  delete function2;
+
+  m.Write(s, ALL_SYMBOL_DATA);
+  string contents = s.str();
+  EXPECT_STREQ(
+      "MODULE os-name architecture id-string name with spaces\n"
+      "FUNC m d35402aac7a7ad5c 200b26e605f99071 f14ac4fed48c4a99"
+      " _without_form\n",
+      contents.c_str());
+}
+
 // Externs should be written out as PUBLIC records, sorted by
 // address.
-TEST(Construct, Externs) {
+TEST(Module, ConstructExterns) {
   stringstream s;
   Module m(MODULE_NAME, MODULE_OS, MODULE_ARCH, MODULE_ID);
 
   // Two externs.
-  Module::Extern *extern1 = new(Module::Extern);
-  extern1->address = 0xffff;
+  auto extern1 = std::make_unique<Module::Extern>(0xffff);
   extern1->name = "_abc";
-  Module::Extern *extern2 = new(Module::Extern);
-  extern2->address = 0xaaaa;
+  auto extern2 = std::make_unique<Module::Extern>(0xaaaa);
   extern2->name = "_xyz";
 
-  m.AddExtern(extern1);
-  m.AddExtern(extern2);
+  m.AddExtern(std::move(extern1));
+  m.AddExtern(std::move(extern2));
 
   m.Write(s, ALL_SYMBOL_DATA);
   string contents = s.str();
@@ -465,20 +564,18 @@ TEST(Construct, Externs) {
 
 // Externs with the same address should only keep the first entry
 // added.
-TEST(Construct, DuplicateExterns) {
+TEST(Module, ConstructDuplicateExterns) {
   stringstream s;
   Module m(MODULE_NAME, MODULE_OS, MODULE_ARCH, MODULE_ID);
 
   // Two externs.
-  Module::Extern *extern1 = new(Module::Extern);
-  extern1->address = 0xffff;
+  auto extern1 = std::make_unique<Module::Extern>(0xffff);
   extern1->name = "_xyz";
-  Module::Extern *extern2 = new(Module::Extern);
-  extern2->address = 0xffff;
+  auto extern2 = std::make_unique<Module::Extern>(0xffff);
   extern2->name = "_abc";
 
-  m.AddExtern(extern1);
-  m.AddExtern(extern2);
+  m.AddExtern(std::move(extern1));
+  m.AddExtern(std::move(extern2));
 
   m.Write(s, ALL_SYMBOL_DATA);
   string contents = s.str();
@@ -486,5 +583,160 @@ TEST(Construct, DuplicateExterns) {
   EXPECT_STREQ("MODULE " MODULE_OS " " MODULE_ARCH " "
                MODULE_ID " " MODULE_NAME "\n"
                "PUBLIC ffff 0 _xyz\n",
+               contents.c_str());
+}
+// Externs with the same address  have the `m` tag if the multiple field are
+// enabled.
+TEST(Module, ConstructDuplicateExternsMultiple) {
+  stringstream s;
+  Module m(MODULE_NAME, MODULE_OS, MODULE_ARCH, MODULE_ID, "", true);
+
+  // Two externs.
+  auto extern1 = std::make_unique<Module::Extern>(0xffff);
+  extern1->name = "_xyz";
+  auto extern2 = std::make_unique<Module::Extern>(0xffff);
+  extern2->name = "_abc";
+
+  m.AddExtern(std::move(extern1));
+  m.AddExtern(std::move(extern2));
+
+  m.Write(s, ALL_SYMBOL_DATA);
+  string contents = s.str();
+
+  EXPECT_STREQ("MODULE " MODULE_OS " " MODULE_ARCH " " MODULE_ID " " MODULE_NAME
+               "\n"
+               "PUBLIC m ffff 0 _xyz\n",
+               contents.c_str());
+}
+
+// If there exists an extern and a function at the same address, only write
+// out the FUNC entry.
+TEST(Module, ConstructFunctionsAndExternsWithSameAddress) {
+  stringstream s;
+  Module m(MODULE_NAME, MODULE_OS, MODULE_ARCH, MODULE_ID);
+
+  // Two externs.
+  auto extern1 = std::make_unique<Module::Extern>(0xabc0);
+  extern1->name = "abc";
+  auto extern2 = std::make_unique<Module::Extern>(0xfff0);
+  extern2->name = "xyz";
+
+  m.AddExtern(std::move(extern1));
+  m.AddExtern(std::move(extern2));
+
+  Module::Function* function = new Module::Function("_xyz", 0xfff0);
+  Module::Range range(0xfff0, 0x10);
+  function->ranges.push_back(range);
+  function->parameter_size = 0;
+  m.AddFunction(function);
+
+  m.Write(s, ALL_SYMBOL_DATA);
+  string contents = s.str();
+
+  EXPECT_STREQ("MODULE " MODULE_OS " " MODULE_ARCH " "
+               MODULE_ID " " MODULE_NAME "\n"
+               "FUNC fff0 10 0 _xyz\n"
+               "PUBLIC abc0 0 abc\n",
+               contents.c_str());
+}
+
+// If there exists an extern and a function at the same address, only write
+// out the FUNC entry.
+TEST(Module, ConstructFunctionsAndExternsWithSameAddressPreferExternName) {
+  stringstream s;
+  Module m(MODULE_NAME, MODULE_OS, MODULE_ARCH, MODULE_ID, "", false, true);
+
+  // Two externs.
+  auto extern1 = std::make_unique<Module::Extern>(0xabc0);
+  extern1->name = "extern1";
+  auto extern2 = std::make_unique<Module::Extern>(0xfff0);
+  extern2->name = "extern2";
+
+  m.AddExtern(std::move(extern1));
+  m.AddExtern(std::move(extern2));
+
+  Module::Function* function = new Module::Function("function2", 0xfff0);
+  Module::Range range(0xfff0, 0x10);
+  function->ranges.push_back(range);
+  function->parameter_size = 0;
+  m.AddFunction(function);
+
+  m.Write(s, ALL_SYMBOL_DATA);
+  string contents = s.str();
+
+  EXPECT_STREQ("MODULE " MODULE_OS " " MODULE_ARCH " " MODULE_ID " " MODULE_NAME
+               "\n"
+               "FUNC fff0 10 0 extern2\n"
+               "PUBLIC abc0 0 extern1\n",
+               contents.c_str());
+}
+
+// If there exists an extern and a function at the same address, only write
+// out the FUNC entry, and mark it with `m` if the multiple field is enabled.
+TEST(Module, ConstructFunctionsAndExternsWithSameAddressMultiple) {
+  stringstream s;
+  Module m(MODULE_NAME, MODULE_OS, MODULE_ARCH, MODULE_ID, "", true);
+
+  // Two externs.
+  auto extern1 = std::make_unique<Module::Extern>(0xabc0);
+  extern1->name = "abc";
+  auto extern2 = std::make_unique<Module::Extern>(0xfff0);
+  extern2->name = "xyz";
+
+  m.AddExtern(std::move(extern1));
+  m.AddExtern(std::move(extern2));
+
+  Module::Function* function = new Module::Function("_xyz", 0xfff0);
+  Module::Range range(0xfff0, 0x10);
+  function->ranges.push_back(range);
+  function->parameter_size = 0;
+  m.AddFunction(function);
+
+  m.Write(s, ALL_SYMBOL_DATA);
+  string contents = s.str();
+
+  EXPECT_STREQ("MODULE " MODULE_OS " " MODULE_ARCH " " MODULE_ID " " MODULE_NAME
+               "\n"
+               "FUNC m fff0 10 0 _xyz\n"
+               "PUBLIC abc0 0 abc\n",
+               contents.c_str());
+}
+
+// If there exists an extern and a function at the same address, only write
+// out the FUNC entry. For ARM THUMB, the extern that comes from the ELF
+// symbol section has bit 0 set.
+TEST(Module, ConstructFunctionsAndThumbExternsWithSameAddress) {
+  stringstream s;
+  Module m(MODULE_NAME, MODULE_OS, "arm", MODULE_ID);
+
+  // Two THUMB externs.
+  auto thumb_extern1 = std::make_unique<Module::Extern>(0xabc1);
+  thumb_extern1->name = "thumb_abc";
+  auto thumb_extern2 = std::make_unique<Module::Extern>(0xfff1);
+  thumb_extern2->name = "thumb_xyz";
+
+  auto arm_extern1 = std::make_unique<Module::Extern>(0xcc00);
+  arm_extern1->name = "arm_func";
+
+  m.AddExtern(std::move(thumb_extern1));
+  m.AddExtern(std::move(thumb_extern2));
+  m.AddExtern(std::move(arm_extern1));
+
+  // The corresponding function from the DWARF debug data have the actual
+  // address.
+  Module::Function* function = new Module::Function("_thumb_xyz", 0xfff0);
+  Module::Range range(0xfff0, 0x10);
+  function->ranges.push_back(range);
+  function->parameter_size = 0;
+  m.AddFunction(function);
+
+  m.Write(s, ALL_SYMBOL_DATA);
+  string contents = s.str();
+
+  EXPECT_STREQ("MODULE " MODULE_OS " arm "
+               MODULE_ID " " MODULE_NAME "\n"
+               "FUNC fff0 10 0 _thumb_xyz\n"
+               "PUBLIC abc1 0 thumb_abc\n"
+               "PUBLIC cc00 0 arm_func\n",
                contents.c_str());
 }

@@ -1,5 +1,4 @@
-// Copyright (c) 2007, Google Inc.
-// All rights reserved.
+// Copyright 2007 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -28,6 +27,10 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 // Author: Alfred Peng
+
+#ifdef HAVE_CONFIG_H
+#include <config.h>  // Must come first
+#endif
 
 #include <dirent.h>
 #include <elf.h>
@@ -69,10 +72,10 @@ struct AddressValidatingContext {
 };
 
 // Convert from string to int.
-static bool LocalAtoi(char *s, int *r) {
+static bool LocalAtoi(char* s, int* r) {
   assert(s != NULL);
   assert(r != NULL);
-  char *endptr = NULL;
+  char* endptr = NULL;
   int ret = strtol(s, &endptr, 10);
   if (endptr == s)
     return false;
@@ -82,10 +85,10 @@ static bool LocalAtoi(char *s, int *r) {
 
 // Callback invoked for each mapped module.
 // It uses the module's adderss range to validate the address.
-static bool AddressNotInModuleCallback(const ModuleInfo &module_info,
-                                       void *context) {
-  AddressValidatingContext *addr =
-    reinterpret_cast<AddressValidatingContext *>(context);
+static bool AddressNotInModuleCallback(const ModuleInfo& module_info,
+                                       void* context) {
+  AddressValidatingContext* addr =
+    reinterpret_cast<AddressValidatingContext*>(context);
   if (addr->is_mapped = ((module_info.start_addr > 0) &&
                          (addr->address >= module_info.start_addr) &&
                          (addr->address <= module_info.start_addr +
@@ -97,16 +100,16 @@ static bool AddressNotInModuleCallback(const ModuleInfo &module_info,
 }
 
 static int IterateLwpAll(int pid,
-                         CallbackParam<LwpidCallback> *callback_param) {
+                         CallbackParam<LwpidCallback>* callback_param) {
   char lwp_path[40];
-  DIR *dir;
+  DIR* dir;
   int count = 0;
 
   snprintf(lwp_path, sizeof (lwp_path), "/proc/%d/lwp", (int)pid);
   if ((dir = opendir(lwp_path)) == NULL)
     return -1;
 
-  struct dirent *entry = NULL;
+  struct dirent* entry = NULL;
   while ((entry = readdir(dir)) != NULL) {
     if ((strcmp(entry->d_name, ".") != 0) &&
         (strcmp(entry->d_name, "..") != 0)) {
@@ -128,22 +131,22 @@ static int IterateLwpAll(int pid,
 }
 
 #if defined(__i386) && !defined(NO_FRAME_POINTER)
-void *GetNextFrame(void **last_ebp) {
-  void *sp = *last_ebp;
+void* GetNextFrame(void** last_ebp) {
+  void* sp = *last_ebp;
   if ((unsigned long)sp == (unsigned long)last_ebp)
     return NULL;
-  if ((unsigned long)sp & (sizeof(void *) - 1))
+  if ((unsigned long)sp & (sizeof(void*) - 1))
     return NULL;
   if ((unsigned long)sp - (unsigned long)last_ebp > 100000)
     return NULL;
   return sp;
 }
 #elif defined(__sparc)
-void *GetNextFrame(void *last_ebp) {
-  return reinterpret_cast<struct frame *>(last_ebp)->fr_savfp;
+void* GetNextFrame(void* last_ebp) {
+  return reinterpret_cast<struct frame*>(last_ebp)->fr_savfp;
 }
 #else
-void *GetNextFrame(void **last_ebp) {
+void* GetNextFrame(void** last_ebp) {
   return reinterpret_cast<void*>(last_ebp);
 }
 #endif
@@ -159,12 +162,12 @@ class AutoCloser {
 
 // Control the execution of the lwp.
 // Suspend/Resume lwp based on the value of context.
-static bool ControlLwp(int lwpid, void *context) {
+static bool ControlLwp(int lwpid, void* context) {
   // The current thread is the one to handle the crash. Ignore it.
   if (lwpid != pthread_self()) {
     int ctlfd;
     char procname[PATH_MAX];
-    bool suspend = *(bool *)context;
+    bool suspend = *(bool*)context;
 
     // Open the /proc/$pid/lwp/$lwpid/lwpctl files
     snprintf(procname, sizeof (procname), "/proc/self/lwp/%d/lwpctl", lwpid);
@@ -193,7 +196,7 @@ static bool ControlLwp(int lwpid, void *context) {
  * prheader_t at the start (/proc/$pid/lstatus or /proc/$pid/lpsinfo).
  * Return true on success.
  */
-static bool read_lfile(int pid, const char *lname, prheader_t *lhp) {
+static bool read_lfile(int pid, const char* lname, prheader_t* lhp) {
   char lpath[PATH_MAX];
   struct stat statb;
   int fd;
@@ -242,14 +245,14 @@ int SolarisLwp::GetLwpCount() const {
 }
 
 int SolarisLwp::Lwp_iter_all(int pid,
-                             CallbackParam<LwpCallback> *callback_param) const {
-  lwpstatus_t *Lsp;
-  lwpstatus_t *sp;
+                             CallbackParam<LwpCallback>* callback_param) const {
+  lwpstatus_t* Lsp;
+  lwpstatus_t* sp;
   prheader_t lphp[HEADER_MAX];
   prheader_t lhp[HEADER_MAX];
-  prheader_t *Lphp = lphp;
-  prheader_t *Lhp = lhp;
-  lwpsinfo_t *Lpsp;
+  prheader_t* Lphp = lphp;
+  prheader_t* Lhp = lhp;
+  lwpsinfo_t* Lpsp;
   long nstat;
   long ninfo;
   int rv = 0;
@@ -264,13 +267,13 @@ int SolarisLwp::Lwp_iter_all(int pid,
     return -1;
   }
 
-  Lsp = (lwpstatus_t *)(uintptr_t)(Lhp + 1);
-  Lpsp = (lwpsinfo_t *)(uintptr_t)(Lphp + 1);
+  Lsp = (lwpstatus_t*)(uintptr_t)(Lhp + 1);
+  Lpsp = (lwpsinfo_t*)(uintptr_t)(Lphp + 1);
 
   for (ninfo = Lphp->pr_nent; ninfo != 0; --ninfo) {
     if (Lpsp->pr_sname != 'Z') {
       sp = Lsp;
-      Lsp = (lwpstatus_t *)((uintptr_t)Lsp + Lhp->pr_entsize);
+      Lsp = (lwpstatus_t*)((uintptr_t)Lsp + Lhp->pr_entsize);
     } else {
       sp = NULL;
     }
@@ -278,7 +281,7 @@ int SolarisLwp::Lwp_iter_all(int pid,
         !(callback_param->call_back)(sp, callback_param->context))
       break;
     ++rv;
-    Lpsp = (lwpsinfo_t *)((uintptr_t)Lpsp + Lphp->pr_entsize);
+    Lpsp = (lwpsinfo_t*)((uintptr_t)Lpsp + Lphp->pr_entsize);
   }
 
   return rv;
@@ -298,12 +301,12 @@ int SolarisLwp::GetModuleCount() const {
 }
 
 int SolarisLwp::ListModules(
-    CallbackParam<ModuleCallback> *callback_param) const {
-  const char *maps_path = "/proc/self/map";
+    CallbackParam<ModuleCallback>* callback_param) const {
+  const char* maps_path = "/proc/self/map";
   struct stat status;
   int fd = 0, num;
   prmap_t map_array[MAP_MAX];
-  prmap_t *maps = map_array;
+  prmap_t* maps = map_array;
   size_t size;
 
   if ((fd = open(maps_path, O_RDONLY)) == -1) {
@@ -326,12 +329,12 @@ int SolarisLwp::ListModules(
     return -1;
   }
 
-  if (read(fd, (void *)maps, size) < 0) {
+  if (read(fd, (void*)maps, size) < 0) {
     print_message2(2, "failed to read %d\n", fd);
     return -1;
   }
 
-  prmap_t *_maps;
+  prmap_t* _maps;
   int _num;
   int module_count = 0;
   
@@ -345,7 +348,7 @@ int SolarisLwp::ListModules(
    */
   for (_num = 0, _maps = maps; _num < num; ++_num, ++_maps) {
     ModuleInfo module;
-    char *name = _maps->pr_mapname;
+    char* name = _maps->pr_mapname;
 
     memset(&module, 0, sizeof (module));
     module.start_addr = _maps->pr_vaddr;
@@ -403,7 +406,7 @@ bool SolarisLwp::IsAddressMapped(uintptr_t address) const {
 // The Solaris stack looks like this:
 // http://src.opensolaris.org/source/xref/onnv/onnv-gate/usr/src/lib/libproc/common/Pstack.c#81
 bool SolarisLwp::FindSigContext(uintptr_t sighandler_ebp,
-                                ucontext_t **sig_ctx) {
+                                ucontext_t** sig_ctx) {
   uintptr_t previous_ebp;
   uintptr_t sig_ebp;
   const int MAX_STACK_DEPTH = 50;
@@ -416,7 +419,7 @@ bool SolarisLwp::FindSigContext(uintptr_t sighandler_ebp,
     *sig_ctx = reinterpret_cast<ucontext_t*>(sighandler_ebp + sizeof (struct frame));
     uintptr_t sig_esp = (*sig_ctx)->uc_mcontext.gregs[REG_O6];
     if (sig_esp < previous_ebp && sig_esp > sighandler_ebp)
-      sig_ebp = (uintptr_t)(((struct frame *)sig_esp)->fr_savfp);
+      sig_ebp = (uintptr_t)(((struct frame*)sig_esp)->fr_savfp);
 
 #elif TARGET_CPU_X86
     previous_ebp = reinterpret_cast<uintptr_t>(GetNextFrame(

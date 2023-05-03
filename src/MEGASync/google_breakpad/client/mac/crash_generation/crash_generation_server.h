@@ -1,5 +1,4 @@
-// Copyright (c) 2010 Google Inc.
-// All rights reserved.
+// Copyright 2010 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -59,14 +58,14 @@ class CrashGenerationServer {
   // WARNING: callbacks may be invoked on a different thread
   // than that which creates the CrashGenerationServer.  They must
   // be thread safe.
-  typedef void (*OnClientDumpRequestCallback)(void *context,
-                                              const ClientInfo &client_info,
-                                              const std::string &file_path);
+  typedef void (*OnClientDumpRequestCallback)(void* context,
+                                              const ClientInfo& client_info,
+                                              const std::string& file_path);
 
-  typedef void (*OnClientExitingCallback)(void *context,
-                                          const ClientInfo &client_info);
+  typedef void (*OnClientExitingCallback)(void* context,
+                                          const ClientInfo& client_info);
   // If a FilterCallback returns false, the dump will not be written.
-  typedef bool (*FilterCallback)(void *context);
+  typedef bool (*FilterCallback)(void* context);
 
   // Create an instance with the given parameters.
   //
@@ -83,15 +82,15 @@ class CrashGenerationServer {
   //     passed for this parameter.
   // dump_path: Path for generating dumps; required only if true is
   //     passed for generateDumps parameter; NULL can be passed otherwise.
-  CrashGenerationServer(const char *mach_port_name,
+  CrashGenerationServer(const char* mach_port_name,
                         FilterCallback filter,
-                        void *filter_context,
+                        void* filter_context,
                         OnClientDumpRequestCallback dump_callback,
-                        void *dump_context,
+                        void* dump_context,
                         OnClientExitingCallback exit_callback,
-                        void *exit_context,
+                        void* exit_context,
                         bool generate_dumps,
-                        const std::string &dump_path);
+                        const std::string& dump_path);
 
   ~CrashGenerationServer();
 
@@ -105,24 +104,24 @@ class CrashGenerationServer {
 
  private:
   // Return a unique filename at which a minidump can be written.
-  bool MakeMinidumpFilename(std::string &outFilename);
+  bool MakeMinidumpFilename(std::string& outFilename);
 
   // Loop reading client messages and responding to them until
   // a quit message is received.
-  static void *WaitForMessages(void *server);
+  static void* WaitForMessages(void* server);
 
   // Wait for a single client message and respond to it. Returns false
   // if a quit message was received or if an error occurred.
   bool WaitForOneMessage();
 
   FilterCallback filter_;
-  void *filter_context_;
+  void* filter_context_;
 
   OnClientDumpRequestCallback dump_callback_;
-  void *dump_context_;
+  void* dump_context_;
 
   OnClientExitingCallback exit_callback_;
-  void *exit_context_;
+  void* exit_context_;
 
   bool generate_dumps_;
 

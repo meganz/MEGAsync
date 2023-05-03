@@ -1,7 +1,7 @@
 //
 //  GTMLogger.m
 //
-//  Copyright 2007-2008 Google Inc.
+//  Copyright 2007-2008 Google LLC
 //
 //  Licensed under the Apache License, Version 2.0 (the "License"); you may not
 //  use this file except in compliance with the License.  You may obtain a copy
@@ -17,7 +17,6 @@
 //
 
 #import "GTMLogger.h"
-#import "GTMGarbageCollection.h"
 #import <fcntl.h>
 #import <unistd.h>
 #import <stdlib.h>
@@ -506,7 +505,7 @@ static BOOL IsVerboseLoggingEnabled(void) {
 // In DEBUG builds, log everything. If we're not in a debug build we'll assume
 // that we're in a Release build.
 - (BOOL)filterAllowsMessage:(NSString *)msg level:(GTMLoggerLevel)level {
-#if DEBUG
+#if defined(DEBUG) && DEBUG
   return YES;
 #endif
 

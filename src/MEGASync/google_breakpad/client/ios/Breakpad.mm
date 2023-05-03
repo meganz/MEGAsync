@@ -1,5 +1,4 @@
-// Copyright (c) 2011, Google Inc.
-// All rights reserved.
+// Copyright 2011 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -31,20 +30,29 @@
 
 #import "client/ios/Breakpad.h"
 
+#include <assert.h>
 #import <Foundation/Foundation.h>
 #include <pthread.h>
 #include <sys/stat.h>
 #include <sys/sysctl.h>
+#include <TargetConditionals.h>
+
+#include <string>
 
 #import "client/ios/handler/ios_exception_minidump_generator.h"
 #import "client/mac/crash_generation/ConfigFile.h"
-#import "client/mac/handler/exception_handler.h"
 #import "client/mac/handler/minidump_generator.h"
-#import "client/mac/sender/uploader.h"
 #import "client/mac/handler/protected_memory_allocator.h"
-#import "common/simple_string_dictionary.h"
+#import "client/mac/sender/uploader.h"
+#import "common/long_string_dictionary.h"
 
-#ifndef __EXCEPTIONS
+#if !TARGET_OS_TV && !TARGET_OS_WATCH
+#import "client/mac/handler/exception_handler.h"
+#else
+#import "client/ios/exception_handler_no_mach.h"
+#endif  // !TARGET_OS_TV && !TARGET_OS_WATCH
+
+#if !defined(__EXCEPTIONS) || (__clang__ && !__has_feature(cxx_exceptions))
 // This file uses C++ try/catch (but shouldn't). Duplicate the macros from
 // <c++/4.2.1/exception_defines.h> allowing this file to work properly with
 // exceptions disabled even when other C++ libraries are used. #undef the try
@@ -58,7 +66,7 @@
 
 using google_breakpad::ConfigFile;
 using google_breakpad::EnsureDirectoryPathExists;
-using google_breakpad::SimpleStringDictionary;
+using google_breakpad::LongStringDictionary;
 
 //=============================================================================
 // We want any memory allocations which are used by breakpad during the
@@ -75,9 +83,9 @@ using google_breakpad::SimpleStringDictionary;
 // allocation of C++ objects.  Note that we don't use operator delete()
 // but instead call the objects destructor directly:  object->~ClassName();
 //
-ProtectedMemoryAllocator *gMasterAllocator = NULL;
-ProtectedMemoryAllocator *gKeyValueAllocator = NULL;
-ProtectedMemoryAllocator *gBreakpadAllocator = NULL;
+ProtectedMemoryAllocator* gMasterAllocator = NULL;
+ProtectedMemoryAllocator* gKeyValueAllocator = NULL;
+ProtectedMemoryAllocator* gBreakpadAllocator = NULL;
 
 // Mutex for thread-safe access to the key/value dictionary used by breakpad.
 // It's a global instead of an instance variable of Breakpad
@@ -91,48 +99,44 @@ pthread_mutex_t gDictionaryMutex;
 // ProtectedMemoryLocker will unprotect this block after taking the lock.
 // Its destructor will first re-protect the memory then release the lock.
 class ProtectedMemoryLocker {
-public:
-  // allocator may be NULL, in which case no Protect() or Unprotect() calls
-  // will be made, but a lock will still be taken
-  ProtectedMemoryLocker(pthread_mutex_t *mutex,
-                        ProtectedMemoryAllocator *allocator)
-  : mutex_(mutex), allocator_(allocator) {
+ public:
+  ProtectedMemoryLocker(pthread_mutex_t* mutex,
+                        ProtectedMemoryAllocator* allocator)
+      : mutex_(mutex),
+        allocator_(allocator) {
     // Lock the mutex
-    assert(pthread_mutex_lock(mutex_) == 0);
+    __attribute__((unused)) int rv = pthread_mutex_lock(mutex_);
+    assert(rv == 0);
 
     // Unprotect the memory
-    if (allocator_ ) {
-      allocator_->Unprotect();
-    }
+    allocator_->Unprotect();
   }
 
   ~ProtectedMemoryLocker() {
     // First protect the memory
-    if (allocator_) {
-      allocator_->Protect();
-    }
+    allocator_->Protect();
 
     // Then unlock the mutex
-    assert(pthread_mutex_unlock(mutex_) == 0);
-  };
+    __attribute__((unused)) int rv = pthread_mutex_unlock(mutex_);
+    assert(rv == 0);
+  }
 
-private:
-  //  Keep anybody from ever creating one of these things not on the stack.
-  ProtectedMemoryLocker() { }
+ private:
+  ProtectedMemoryLocker();
   ProtectedMemoryLocker(const ProtectedMemoryLocker&);
-  ProtectedMemoryLocker & operator=(ProtectedMemoryLocker&);
+  ProtectedMemoryLocker& operator=(const ProtectedMemoryLocker&);
 
-  pthread_mutex_t           *mutex_;
-  ProtectedMemoryAllocator  *allocator_;
+  pthread_mutex_t* mutex_;
+  ProtectedMemoryAllocator* allocator_;
 };
 
 //=============================================================================
 class Breakpad {
  public:
   // factory method
-  static Breakpad *Create(NSDictionary *parameters) {
+  static Breakpad* Create(NSDictionary* parameters) {
     // Allocate from our special allocation pool
-    Breakpad *breakpad =
+    Breakpad* breakpad =
       new (gBreakpadAllocator->Allocate(sizeof(Breakpad)))
         Breakpad();
 
@@ -150,53 +154,62 @@ class Breakpad {
 
   ~Breakpad();
 
-  void SetKeyValue(NSString *key, NSString *value);
-  NSString *KeyValue(NSString *key);
-  void RemoveKeyValue(NSString *key);
-  NSArray *CrashReportsToUpload();
-  NSString *NextCrashReportToUpload();
-  void UploadNextReport();
-  void UploadData(NSData *data, NSString *name,
-                  NSDictionary *server_parameters);
-  NSDictionary *GenerateReport(NSDictionary *server_parameters);
+  void SetKeyValue(NSString* key, NSString* value);
+  NSString* KeyValue(NSString* key);
+  void RemoveKeyValue(NSString* key);
+  NSArray* CrashReportsToUpload();
+  NSString* NextCrashReportToUpload();
+  NSDictionary* NextCrashReportConfiguration();
+  NSDictionary* FixedUpCrashReportConfiguration(NSDictionary* configuration);
+  NSDate* DateOfMostRecentCrashReport();
+  void UploadNextReport(NSDictionary* server_parameters);
+  void UploadReportWithConfiguration(NSDictionary* configuration,
+                                     NSDictionary* server_parameters,
+                                     BreakpadUploadCompletionCallback callback);
+  void UploadData(NSData* data, NSString* name,
+                  NSDictionary* server_parameters);
+  void HandleNetworkResponse(NSDictionary* configuration,
+                             NSData* data,
+                             NSError* error);
+  NSDictionary* GenerateReport(NSDictionary* server_parameters);
 
  private:
   Breakpad()
     : handler_(NULL),
       config_params_(NULL) {}
 
-  bool Initialize(NSDictionary *parameters);
+  bool Initialize(NSDictionary* parameters);
 
-  bool ExtractParameters(NSDictionary *parameters);
+  bool ExtractParameters(NSDictionary* parameters);
 
   // Dispatches to HandleMinidump()
-  static bool HandleMinidumpCallback(const char *dump_dir,
-                                     const char *minidump_id,
-                                     void *context, bool succeeded);
+  static bool HandleMinidumpCallback(const char* dump_dir,
+                                     const char* minidump_id,
+                                     void* context, bool succeeded);
 
-  bool HandleMinidump(const char *dump_dir,
-                      const char *minidump_id);
+  bool HandleMinidump(const char* dump_dir,
+                      const char* minidump_id);
 
   // NSException handler
-  static void UncaughtExceptionHandler(NSException *exception);
+  static void UncaughtExceptionHandler(NSException* exception);
 
   // Handle an uncaught NSException.
-  void HandleUncaughtException(NSException *exception);
+  void HandleUncaughtException(NSException* exception);
 
   // Since ExceptionHandler (w/o namespace) is defined as typedef in OSX's
   // MachineExceptions.h, we have to explicitly name the handler.
-  google_breakpad::ExceptionHandler *handler_; // The actual handler (STRONG)
+  google_breakpad::ExceptionHandler* handler_; // The actual handler (STRONG)
 
-  SimpleStringDictionary  *config_params_; // Create parameters (STRONG)
+  LongStringDictionary* config_params_; // Create parameters (STRONG)
 
   ConfigFile config_file_;
 
   // A static reference to the current Breakpad instance. Used for handling
   // NSException.
-  static Breakpad *current_breakpad_;
+  static Breakpad* current_breakpad_;
 };
 
-Breakpad *Breakpad::current_breakpad_ = NULL;
+Breakpad* Breakpad::current_breakpad_ = NULL;
 
 #pragma mark -
 #pragma mark Helper functions
@@ -207,14 +220,14 @@ Breakpad *Breakpad::current_breakpad_ = NULL;
 //=============================================================================
 static BOOL IsDebuggerActive() {
   BOOL result = NO;
-  NSUserDefaults *stdDefaults = [NSUserDefaults standardUserDefaults];
+  NSUserDefaults* stdDefaults = [NSUserDefaults standardUserDefaults];
 
   // We check both defaults and the environment variable here
 
   BOOL ignoreDebugger = [stdDefaults boolForKey:@IGNORE_DEBUGGER];
 
   if (!ignoreDebugger) {
-    char *ignoreDebuggerStr = getenv(IGNORE_DEBUGGER);
+    char* ignoreDebuggerStr = getenv(IGNORE_DEBUGGER);
     ignoreDebugger =
         (ignoreDebuggerStr ? strtol(ignoreDebuggerStr, NULL, 10) : 0) != 0;
   }
@@ -226,7 +239,7 @@ static BOOL IsDebuggerActive() {
     size_t actualSize;
 
     if (sysctl(mib, mibSize, NULL, &actualSize, NULL, 0) == 0) {
-      struct kinfo_proc *info = (struct kinfo_proc *)malloc(actualSize);
+      struct kinfo_proc* info = (struct kinfo_proc*)malloc(actualSize);
 
       if (info) {
         // This comes from looking at the Darwin xnu Kernel
@@ -242,10 +255,10 @@ static BOOL IsDebuggerActive() {
 }
 
 //=============================================================================
-bool Breakpad::HandleMinidumpCallback(const char *dump_dir,
-                                      const char *minidump_id,
-                                      void *context, bool succeeded) {
-  Breakpad *breakpad = (Breakpad *)context;
+bool Breakpad::HandleMinidumpCallback(const char* dump_dir,
+                                      const char* minidump_id,
+                                      void* context, bool succeeded) {
+  Breakpad* breakpad = (Breakpad*)context;
 
   // If our context is damaged or something, just return false to indicate that
   // the handler should continue without us.
@@ -256,10 +269,11 @@ bool Breakpad::HandleMinidumpCallback(const char *dump_dir,
 }
 
 //=============================================================================
-void Breakpad::UncaughtExceptionHandler(NSException *exception) {
+void Breakpad::UncaughtExceptionHandler(NSException* exception) {
   NSSetUncaughtExceptionHandler(NULL);
   if (current_breakpad_) {
     current_breakpad_->HandleUncaughtException(exception);
+    BreakpadRelease(current_breakpad_);
   }
 }
 
@@ -267,7 +281,7 @@ void Breakpad::UncaughtExceptionHandler(NSException *exception) {
 #pragma mark -
 
 //=============================================================================
-bool Breakpad::Initialize(NSDictionary *parameters) {
+bool Breakpad::Initialize(NSDictionary* parameters) {
   // Initialize
   current_breakpad_ = this;
   config_params_ = NULL;
@@ -302,7 +316,7 @@ Breakpad::~Breakpad() {
   // since they were allocated by ProtectedMemoryAllocator objects.
   //
   if (config_params_) {
-    config_params_->~SimpleStringDictionary();
+    config_params_->~LongStringDictionary();
   }
 
   if (handler_)
@@ -310,21 +324,21 @@ Breakpad::~Breakpad() {
 }
 
 //=============================================================================
-bool Breakpad::ExtractParameters(NSDictionary *parameters) {
-  NSString *serverType = [parameters objectForKey:@BREAKPAD_SERVER_TYPE];
-  NSString *display = [parameters objectForKey:@BREAKPAD_PRODUCT_DISPLAY];
-  NSString *product = [parameters objectForKey:@BREAKPAD_PRODUCT];
-  NSString *version = [parameters objectForKey:@BREAKPAD_VERSION];
-  NSString *urlStr = [parameters objectForKey:@BREAKPAD_URL];
-  NSString *vendor =
+bool Breakpad::ExtractParameters(NSDictionary* parameters) {
+  NSString* serverType = [parameters objectForKey:@BREAKPAD_SERVER_TYPE];
+  NSString* display = [parameters objectForKey:@BREAKPAD_PRODUCT_DISPLAY];
+  NSString* product = [parameters objectForKey:@BREAKPAD_PRODUCT];
+  NSString* version = [parameters objectForKey:@BREAKPAD_VERSION];
+  NSString* urlStr = [parameters objectForKey:@BREAKPAD_URL];
+  NSString* vendor =
       [parameters objectForKey:@BREAKPAD_VENDOR];
   // We check both parameters and the environment variable here.
-  char *envVarDumpSubdirectory = getenv(BREAKPAD_DUMP_DIRECTORY);
-  NSString *dumpSubdirectory = envVarDumpSubdirectory ?
+  char* envVarDumpSubdirectory = getenv(BREAKPAD_DUMP_DIRECTORY);
+  NSString* dumpSubdirectory = envVarDumpSubdirectory ?
       [NSString stringWithUTF8String:envVarDumpSubdirectory] :
           [parameters objectForKey:@BREAKPAD_DUMP_DIRECTORY];
 
-  NSDictionary *serverParameters =
+  NSDictionary* serverParameters =
       [parameters objectForKey:@BREAKPAD_SERVER_PARAMETER_DICT];
 
   if (!product)
@@ -337,7 +351,7 @@ bool Breakpad::ExtractParameters(NSDictionary *parameters) {
     }
   }
 
-  if (!version)
+  if (!version.length)  // Default nil or empty string to CFBundleVersion
     version = [parameters objectForKey:@"CFBundleVersion"];
 
   if (!vendor) {
@@ -345,7 +359,7 @@ bool Breakpad::ExtractParameters(NSDictionary *parameters) {
   }
 
   if (!dumpSubdirectory) {
-    NSString *cachePath =
+    NSString* cachePath =
         [NSSearchPathForDirectoriesInDomains(NSCachesDirectory,
                                              NSUserDomainMask,
                                              YES)
@@ -370,10 +384,10 @@ bool Breakpad::ExtractParameters(NSDictionary *parameters) {
   }
 
   config_params_ =
-      new (gKeyValueAllocator->Allocate(sizeof(SimpleStringDictionary)) )
-        SimpleStringDictionary();
+      new (gKeyValueAllocator->Allocate(sizeof(LongStringDictionary)))
+          LongStringDictionary();
 
-  SimpleStringDictionary &dictionary = *config_params_;
+  LongStringDictionary& dictionary = *config_params_;
 
   dictionary.SetKeyValue(BREAKPAD_SERVER_TYPE,     [serverType UTF8String]);
   dictionary.SetKeyValue(BREAKPAD_PRODUCT_DISPLAY, [display UTF8String]);
@@ -392,8 +406,8 @@ bool Breakpad::ExtractParameters(NSDictionary *parameters) {
 
   if (serverParameters) {
     // For each key-value pair, call BreakpadAddUploadParameter()
-    NSEnumerator *keyEnumerator = [serverParameters keyEnumerator];
-    NSString *aParameter;
+    NSEnumerator* keyEnumerator = [serverParameters keyEnumerator];
+    NSString* aParameter;
     while ((aParameter = [keyEnumerator nextObject])) {
       BreakpadAddUploadParameter(this, aParameter,
 				 [serverParameters objectForKey:aParameter]);
@@ -403,7 +417,7 @@ bool Breakpad::ExtractParameters(NSDictionary *parameters) {
 }
 
 //=============================================================================
-void Breakpad::SetKeyValue(NSString *key, NSString *value) {
+void Breakpad::SetKeyValue(NSString* key, NSString* value) {
   // We allow nil values. This is the same as removing the keyvalue.
   if (!config_params_ || !key)
     return;
@@ -412,69 +426,139 @@ void Breakpad::SetKeyValue(NSString *key, NSString *value) {
 }
 
 //=============================================================================
-NSString *Breakpad::KeyValue(NSString *key) {
+NSString* Breakpad::KeyValue(NSString* key) {
   if (!config_params_ || !key)
     return nil;
 
-  const char *value = config_params_->GetValueForKey([key UTF8String]);
-  return value ? [NSString stringWithUTF8String:value] : nil;
+  const std::string value = config_params_->GetValueForKey([key UTF8String]);
+  return value.empty() ? nil : [NSString stringWithUTF8String:value.c_str()];
 }
 
 //=============================================================================
-void Breakpad::RemoveKeyValue(NSString *key) {
+void Breakpad::RemoveKeyValue(NSString* key) {
   if (!config_params_ || !key) return;
 
   config_params_->RemoveKey([key UTF8String]);
 }
 
 //=============================================================================
-NSArray *Breakpad::CrashReportsToUpload() {
-  NSString *directory = KeyValue(@BREAKPAD_DUMP_DIRECTORY);
+NSArray* Breakpad::CrashReportsToUpload() {
+  NSString* directory = KeyValue(@BREAKPAD_DUMP_DIRECTORY);
   if (!directory)
     return nil;
-  NSArray *dirContents = [[NSFileManager defaultManager]
+  NSArray* dirContents = [[NSFileManager defaultManager]
       contentsOfDirectoryAtPath:directory error:nil];
-  NSArray *configs = [dirContents filteredArrayUsingPredicate:[NSPredicate
+  NSArray* configs = [dirContents filteredArrayUsingPredicate:[NSPredicate
       predicateWithFormat:@"self BEGINSWITH 'Config-'"]];
   return configs;
 }
 
 //=============================================================================
-NSString *Breakpad::NextCrashReportToUpload() {
-  NSString *directory = KeyValue(@BREAKPAD_DUMP_DIRECTORY);
+NSString* Breakpad::NextCrashReportToUpload() {
+  NSString* directory = KeyValue(@BREAKPAD_DUMP_DIRECTORY);
   if (!directory)
     return nil;
-  NSString *config = [CrashReportsToUpload() lastObject];
+  NSString* config = [CrashReportsToUpload() lastObject];
   if (!config)
     return nil;
   return [NSString stringWithFormat:@"%@/%@", directory, config];
 }
 
 //=============================================================================
-void Breakpad::UploadNextReport() {
-  NSString *configFile = NextCrashReportToUpload();
-  if (configFile) {
-    Uploader *uploader = [[[Uploader alloc]
-        initWithConfigFile:[configFile UTF8String]] autorelease];
-    if (uploader)
-      [uploader report];
+NSDictionary* Breakpad::NextCrashReportConfiguration() {
+  NSDictionary* configuration = [Uploader readConfigurationDataFromFile:NextCrashReportToUpload()];
+  return FixedUpCrashReportConfiguration(configuration);
+}
+
+//=============================================================================
+NSDictionary* Breakpad::FixedUpCrashReportConfiguration(NSDictionary* configuration) {
+  NSMutableDictionary* fixedConfiguration = [[configuration mutableCopy] autorelease];
+  // kReporterMinidumpDirectoryKey can become stale because the app's data container path includes
+  // an UUID that is not guaranteed to stay the same over time.
+  [fixedConfiguration setObject:KeyValue(@BREAKPAD_DUMP_DIRECTORY)
+                    forKey:@kReporterMinidumpDirectoryKey];
+  return fixedConfiguration;
+}
+
+//=============================================================================
+NSDate* Breakpad::DateOfMostRecentCrashReport() {
+  NSString* directory = KeyValue(@BREAKPAD_DUMP_DIRECTORY);
+  if (!directory) {
+    return nil;
+  }
+  NSFileManager* fileManager = [NSFileManager defaultManager];
+  NSArray* dirContents = [fileManager contentsOfDirectoryAtPath:directory error:nil];
+  NSArray* dumps = [dirContents filteredArrayUsingPredicate:[NSPredicate
+      predicateWithFormat:@"self ENDSWITH '.dmp'"]];
+  NSDate* mostRecentCrashReportDate = nil;
+  for (NSString* dump in dumps) {
+    NSString* filePath = [directory stringByAppendingPathComponent:dump];
+    NSDate* crashReportDate =
+        [[fileManager attributesOfItemAtPath:filePath error:nil] fileCreationDate];
+    if (!mostRecentCrashReportDate) {
+      mostRecentCrashReportDate = crashReportDate;
+    } else if (crashReportDate) {
+      mostRecentCrashReportDate = [mostRecentCrashReportDate laterDate:crashReportDate];
+    }
+  }
+  return mostRecentCrashReportDate;
+}
+
+//=============================================================================
+void Breakpad::HandleNetworkResponse(NSDictionary* configuration,
+                                     NSData* data,
+                                     NSError* error) {
+  Uploader* uploader = [[[Uploader alloc]
+      initWithConfig:configuration] autorelease];
+  [uploader handleNetworkResponse:data withError:error];
+}
+
+//=============================================================================
+void Breakpad::UploadReportWithConfiguration(
+    NSDictionary* configuration,
+    NSDictionary* server_parameters,
+    BreakpadUploadCompletionCallback callback) {
+  Uploader* uploader = [[[Uploader alloc]
+      initWithConfig:configuration] autorelease];
+  if (!uploader)
+    return;
+  for (NSString* key in server_parameters) {
+    [uploader addServerParameter:[server_parameters objectForKey:key]
+                          forKey:key];
+  }
+  if (callback) {
+    [uploader setUploadCompletionBlock:^(NSString* report_id, NSError* error) {
+      dispatch_async(dispatch_get_main_queue(), ^{
+        callback(report_id, error);
+      });
+    }];
+  }
+  [uploader report];
+}
+
+//=============================================================================
+void Breakpad::UploadNextReport(NSDictionary* server_parameters) {
+  NSDictionary* configuration = NextCrashReportConfiguration();
+  if (configuration) {
+    return UploadReportWithConfiguration(configuration, server_parameters,
+                                         nullptr);
   }
 }
 
 //=============================================================================
-void Breakpad::UploadData(NSData *data, NSString *name,
-                          NSDictionary *server_parameters) {
-  NSMutableDictionary *config = [NSMutableDictionary dictionary];
+void Breakpad::UploadData(NSData* data, NSString* name,
+                          NSDictionary* server_parameters) {
+  NSMutableDictionary* config = [NSMutableDictionary dictionary];
 
-  SimpleStringDictionary::Iterator it(*config_params_);
-  while (const SimpleStringDictionary::Entry *next = it.Next()) {
+  LongStringDictionary::Iterator it(*config_params_);
+  while (const LongStringDictionary::Entry* next = it.Next()) {
     [config setValue:[NSString stringWithUTF8String:next->value]
               forKey:[NSString stringWithUTF8String:next->key]];
   }
 
-  Uploader *uploader =
+  Uploader* uploader =
       [[[Uploader alloc] initWithConfig:config] autorelease];
-  for (NSString *key in server_parameters) {
+  for (NSString* key in server_parameters) {
     [uploader addServerParameter:[server_parameters objectForKey:key]
                           forKey:key];
   }
@@ -482,11 +566,11 @@ void Breakpad::UploadData(NSData *data, NSString *name,
 }
 
 //=============================================================================
-NSDictionary *Breakpad::GenerateReport(NSDictionary *server_parameters) {
-  NSString *dumpDirAsNSString = KeyValue(@BREAKPAD_DUMP_DIRECTORY);
+NSDictionary* Breakpad::GenerateReport(NSDictionary* server_parameters) {
+  NSString* dumpDirAsNSString = KeyValue(@BREAKPAD_DUMP_DIRECTORY);
   if (!dumpDirAsNSString)
     return nil;
-  const char *dumpDir = [dumpDirAsNSString UTF8String];
+  const char* dumpDir = [dumpDirAsNSString UTF8String];
 
   google_breakpad::MinidumpGenerator generator(mach_task_self(),
                                                MACH_PORT_NULL);
@@ -496,8 +580,8 @@ NSDictionary *Breakpad::GenerateReport(NSDictionary *server_parameters) {
   if (!success)
     return nil;
 
-  SimpleStringDictionary params = *config_params_;
-  for (NSString *key in server_parameters) {
+  LongStringDictionary params = *config_params_;
+  for (NSString* key in server_parameters) {
     params.SetKeyValue([key UTF8String],
                        [[server_parameters objectForKey:key] UTF8String]);
   }
@@ -505,8 +589,8 @@ NSDictionary *Breakpad::GenerateReport(NSDictionary *server_parameters) {
   config_file.WriteFile(dumpDir, &params, dumpDir, dumpId.c_str());
 
   // Handle results.
-  NSMutableDictionary *result = [NSMutableDictionary dictionary];
-  NSString *dumpFullPath = [NSString stringWithUTF8String:dumpFilename.c_str()];
+  NSMutableDictionary* result = [NSMutableDictionary dictionary];
+  NSString* dumpFullPath = [NSString stringWithUTF8String:dumpFilename.c_str()];
   [result setValue:dumpFullPath
             forKey:@BREAKPAD_OUTPUT_DUMP_FILE];
   [result setValue:[NSString stringWithUTF8String:config_file.GetFilePath()]
@@ -515,8 +599,8 @@ NSDictionary *Breakpad::GenerateReport(NSDictionary *server_parameters) {
 }
 
 //=============================================================================
-bool Breakpad::HandleMinidump(const char *dump_dir,
-                              const char *minidump_id) {
+bool Breakpad::HandleMinidump(const char* dump_dir,
+                              const char* minidump_id) {
   config_file_.WriteFile(dump_dir,
                          config_params_,
                          dump_dir,
@@ -528,10 +612,10 @@ bool Breakpad::HandleMinidump(const char *dump_dir,
 }
 
 //=============================================================================
-void Breakpad::HandleUncaughtException(NSException *exception) {
+void Breakpad::HandleUncaughtException(NSException* exception) {
   // Generate the minidump.
   google_breakpad::IosExceptionMinidumpGenerator generator(exception);
-  const char *minidump_path =
+  const std::string minidump_path =
       config_params_->GetValueForKey(BREAKPAD_DUMP_DIRECTORY);
   std::string minidump_id;
   std::string minidump_filename = generator.UniqueNameInDirectory(minidump_path,
@@ -544,7 +628,7 @@ void Breakpad::HandleUncaughtException(NSException *exception) {
   // 2- If the application crash while trying to handle this exception, a usual
   //    report will be generated. This report must not contain these special
   //    keys.
-  SimpleStringDictionary params = *config_params_;
+  LongStringDictionary params = *config_params_;
   params.SetKeyValue(BREAKPAD_SERVER_PARAMETER_PREFIX "type", "exception");
   params.SetKeyValue(BREAKPAD_SERVER_PARAMETER_PREFIX "exceptionName",
                      [[exception name] UTF8String]);
@@ -553,9 +637,9 @@ void Breakpad::HandleUncaughtException(NSException *exception) {
 
   // And finally write the config file.
   ConfigFile config_file;
-  config_file.WriteFile(minidump_path,
+  config_file.WriteFile(minidump_path.c_str(),
                         &params,
-                        minidump_path,
+                        minidump_path.c_str(),
                         minidump_id.c_str());
 }
 
@@ -565,7 +649,7 @@ void Breakpad::HandleUncaughtException(NSException *exception) {
 #pragma mark Public API
 
 //=============================================================================
-BreakpadRef BreakpadCreate(NSDictionary *parameters) {
+BreakpadRef BreakpadCreate(NSDictionary* parameters) {
   try {
     // This is confusing.  Our two main allocators for breakpad memory are:
     //    - gKeyValueAllocator for the key/value memory
@@ -583,9 +667,9 @@ BreakpadRef BreakpadCreate(NSDictionary *parameters) {
 
     gKeyValueAllocator =
         new (gMasterAllocator->Allocate(sizeof(ProtectedMemoryAllocator)))
-            ProtectedMemoryAllocator(sizeof(SimpleStringDictionary));
+            ProtectedMemoryAllocator(sizeof(LongStringDictionary));
 
-    // Create a mutex for use in accessing the SimpleStringDictionary
+    // Create a mutex for use in accessing the LongStringDictionary
     int mutexResult = pthread_mutex_init(&gDictionaryMutex, NULL);
     if (mutexResult == 0) {
 
@@ -605,8 +689,8 @@ BreakpadRef BreakpadCreate(NSDictionary *parameters) {
               ProtectedMemoryAllocator(breakpad_pool_size);
 
       // Stack-based autorelease pool for Breakpad::Create() obj-c code.
-      NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-      Breakpad *breakpad = Breakpad::Create(parameters);
+      NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+      Breakpad* breakpad = Breakpad::Create(parameters);
 
       if (breakpad) {
         // Make read-only to protect against memory smashers
@@ -646,7 +730,7 @@ BreakpadRef BreakpadCreate(NSDictionary *parameters) {
 //=============================================================================
 void BreakpadRelease(BreakpadRef ref) {
   try {
-    Breakpad *breakpad = (Breakpad *)ref;
+    Breakpad* breakpad = (Breakpad*)ref;
 
     if (gMasterAllocator) {
       gMasterAllocator->Unprotect();
@@ -679,10 +763,10 @@ void BreakpadRelease(BreakpadRef ref) {
 }
 
 //=============================================================================
-void BreakpadSetKeyValue(BreakpadRef ref, NSString *key, NSString *value) {
+void BreakpadSetKeyValue(BreakpadRef ref, NSString* key, NSString* value) {
   try {
     // Not called at exception time
-    Breakpad *breakpad = (Breakpad *)ref;
+    Breakpad* breakpad = (Breakpad*)ref;
 
     if (breakpad && key && gKeyValueAllocator) {
       ProtectedMemoryLocker locker(&gDictionaryMutex, gKeyValueAllocator);
@@ -695,20 +779,20 @@ void BreakpadSetKeyValue(BreakpadRef ref, NSString *key, NSString *value) {
 }
 
 void BreakpadAddUploadParameter(BreakpadRef ref,
-                                NSString *key,
-                                NSString *value) {
+                                NSString* key,
+                                NSString* value) {
   // The only difference, internally, between an upload parameter and
   // a key value one that is set with BreakpadSetKeyValue is that we
   // prepend the keyname with a special prefix.  This informs the
   // crash sender that the parameter should be sent along with the
   // POST of the crash dump upload.
   try {
-    Breakpad *breakpad = (Breakpad *)ref;
+    Breakpad* breakpad = (Breakpad*)ref;
 
     if (breakpad && key && gKeyValueAllocator) {
       ProtectedMemoryLocker locker(&gDictionaryMutex, gKeyValueAllocator);
 
-      NSString *prefixedKey = [@BREAKPAD_SERVER_PARAMETER_PREFIX
+      NSString* prefixedKey = [@BREAKPAD_SERVER_PARAMETER_PREFIX
 				stringByAppendingString:key];
       breakpad->SetKeyValue(prefixedKey, value);
     }
@@ -718,15 +802,15 @@ void BreakpadAddUploadParameter(BreakpadRef ref,
 }
 
 void BreakpadRemoveUploadParameter(BreakpadRef ref,
-                                   NSString *key) {
+                                   NSString* key) {
   try {
     // Not called at exception time
-    Breakpad *breakpad = (Breakpad *)ref;
+    Breakpad* breakpad = (Breakpad*)ref;
 
     if (breakpad && key && gKeyValueAllocator) {
       ProtectedMemoryLocker locker(&gDictionaryMutex, gKeyValueAllocator);
 
-      NSString *prefixedKey = [NSString stringWithFormat:@"%@%@",
+      NSString* prefixedKey = [NSString stringWithFormat:@"%@%@",
                                         @BREAKPAD_SERVER_PARAMETER_PREFIX, key];
       breakpad->RemoveKeyValue(prefixedKey);
     }
@@ -735,12 +819,12 @@ void BreakpadRemoveUploadParameter(BreakpadRef ref,
   }
 }
 //=============================================================================
-NSString *BreakpadKeyValue(BreakpadRef ref, NSString *key) {
-  NSString *value = nil;
+NSString* BreakpadKeyValue(BreakpadRef ref, NSString* key) {
+  NSString* value = nil;
 
   try {
     // Not called at exception time
-    Breakpad *breakpad = (Breakpad *)ref;
+    Breakpad* breakpad = (Breakpad*)ref;
 
     if (!breakpad || !key || !gKeyValueAllocator)
       return nil;
@@ -756,10 +840,10 @@ NSString *BreakpadKeyValue(BreakpadRef ref, NSString *key) {
 }
 
 //=============================================================================
-void BreakpadRemoveKeyValue(BreakpadRef ref, NSString *key) {
+void BreakpadRemoveKeyValue(BreakpadRef ref, NSString* key) {
   try {
     // Not called at exception time
-    Breakpad *breakpad = (Breakpad *)ref;
+    Breakpad* breakpad = (Breakpad*)ref;
 
     if (breakpad && key && gKeyValueAllocator) {
       ProtectedMemoryLocker locker(&gDictionaryMutex, gKeyValueAllocator);
@@ -775,10 +859,10 @@ void BreakpadRemoveKeyValue(BreakpadRef ref, NSString *key) {
 int BreakpadGetCrashReportCount(BreakpadRef ref) {
   try {
     // Not called at exception time
-    Breakpad *breakpad = (Breakpad *)ref;
+    Breakpad* breakpad = (Breakpad*)ref;
 
     if (breakpad) {
-       return [breakpad->CrashReportsToUpload() count];
+       return static_cast<int>([breakpad->CrashReportsToUpload() count]);
     }
   } catch(...) {    // don't let exceptions leave this C API
     fprintf(stderr, "BreakpadGetCrashReportCount() : error\n");
@@ -788,24 +872,92 @@ int BreakpadGetCrashReportCount(BreakpadRef ref) {
 
 //=============================================================================
 void BreakpadUploadNextReport(BreakpadRef ref) {
-  try {
-    // Not called at exception time
-    Breakpad *breakpad = (Breakpad *)ref;
+  BreakpadUploadNextReportWithParameters(ref, nil, nullptr);
+}
 
-    if (breakpad) {
-       breakpad->UploadNextReport();
-    }
+//=============================================================================
+NSDictionary* BreakpadGetNextReportConfiguration(BreakpadRef ref) {
+  try {
+    Breakpad* breakpad = (Breakpad*)ref;
+    if (breakpad)
+      return breakpad->NextCrashReportConfiguration();
   } catch(...) {    // don't let exceptions leave this C API
-    fprintf(stderr, "BreakpadUploadNextReport() : error\n");
+    fprintf(stderr, "BreakpadGetNextReportConfiguration() : error\n");
+  }
+  return nil;
+}
+
+//=============================================================================
+NSDate* BreakpadGetDateOfMostRecentCrashReport(BreakpadRef ref) {
+  try {
+    Breakpad* breakpad = (Breakpad*)ref;
+    if (breakpad) {
+      return breakpad->DateOfMostRecentCrashReport();
+    }
+  } catch (...) {    // don't let exceptions leave this C API
+    fprintf(stderr, "BreakpadGetDateOfMostRecentCrashReport() : error\n");
+  }
+  return nil;
+}
+
+//=============================================================================
+void BreakpadUploadReportWithParametersAndConfiguration(
+    BreakpadRef ref,
+    NSDictionary* server_parameters,
+    NSDictionary* configuration,
+    BreakpadUploadCompletionCallback callback) {
+  try {
+    Breakpad* breakpad = (Breakpad*)ref;
+    if (!breakpad || !configuration)
+      return;
+    breakpad->UploadReportWithConfiguration(configuration, server_parameters,
+                                            callback);
+  } catch(...) {    // don't let exceptions leave this C API
+    fprintf(stderr,
+        "BreakpadUploadReportWithParametersAndConfiguration() : error\n");
   }
 }
 
 //=============================================================================
-void BreakpadUploadData(BreakpadRef ref, NSData *data, NSString *name,
-                        NSDictionary *server_parameters) {
+void BreakpadUploadNextReportWithParameters(
+    BreakpadRef ref,
+    NSDictionary* server_parameters,
+    BreakpadUploadCompletionCallback callback) {
+  try {
+    Breakpad* breakpad = (Breakpad*)ref;
+    if (!breakpad)
+      return;
+    NSDictionary* configuration = breakpad->NextCrashReportConfiguration();
+    if (!configuration)
+      return;
+    return BreakpadUploadReportWithParametersAndConfiguration(
+        ref, server_parameters, configuration, callback);
+  } catch(...) {    // don't let exceptions leave this C API
+    fprintf(stderr, "BreakpadUploadNextReportWithParameters() : error\n");
+  }
+}
+
+void BreakpadHandleNetworkResponse(BreakpadRef ref,
+                                   NSDictionary* configuration,
+                                   NSData* data,
+                                   NSError* error) {
   try {
     // Not called at exception time
-    Breakpad *breakpad = (Breakpad *)ref;
+    Breakpad* breakpad = (Breakpad*)ref;
+    if (breakpad && configuration)
+      breakpad->HandleNetworkResponse(configuration,data, error);
+
+  } catch(...) {    // don't let exceptions leave this C API
+    fprintf(stderr, "BreakpadHandleNetworkResponse() : error\n");
+  }
+}
+
+//=============================================================================
+void BreakpadUploadData(BreakpadRef ref, NSData* data, NSString* name,
+                        NSDictionary* server_parameters) {
+  try {
+    // Not called at exception time
+    Breakpad* breakpad = (Breakpad*)ref;
 
     if (breakpad) {
       breakpad->UploadData(data, name, server_parameters);
@@ -816,11 +968,11 @@ void BreakpadUploadData(BreakpadRef ref, NSData *data, NSString *name,
 }
 
 //=============================================================================
-NSDictionary *BreakpadGenerateReport(BreakpadRef ref,
-                                     NSDictionary *server_parameters) {
+NSDictionary* BreakpadGenerateReport(BreakpadRef ref,
+                                     NSDictionary* server_parameters) {
   try {
     // Not called at exception time
-    Breakpad *breakpad = (Breakpad *)ref;
+    Breakpad* breakpad = (Breakpad*)ref;
 
     if (breakpad) {
       return breakpad->GenerateReport(server_parameters);

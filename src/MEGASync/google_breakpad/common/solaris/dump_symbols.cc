@@ -1,5 +1,4 @@
-// Copyright (c) 2010 Google Inc.
-// All rights reserved.
+// Copyright 2010 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -28,6 +27,10 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 // Author: Alfred Peng
+
+#ifdef HAVE_CONFIG_H
+#include <config.h>  // Must come first
+#endif
 
 #include <demangle.h>
 #include <fcntl.h>
@@ -97,7 +100,7 @@ struct LineInfo {
 // Information of a function.
 struct FuncInfo {
   // Name of the function.
-  const char *name;
+  const char* name;
   // Offset from the base of the loading address.
   GElf_Off rva_to_base;
   // Virtual address of the function.
@@ -115,7 +118,7 @@ struct FuncInfo {
 // Information of a source file.
 struct SourceFileInfo {
   // Name of the source file.
-  const char *name;
+  const char* name;
   // Starting address of the source file.
   GElf_Addr addr;
   // Id of the source file.
@@ -125,12 +128,12 @@ struct SourceFileInfo {
 };
 
 struct CompareString {
-  bool operator()(const char *s1, const char *s2) const {
+  bool operator()(const char* s1, const char* s2) const {
     return strcmp(s1, s2) < 0;
   }
 };
 
-typedef std::map<const char *, struct SymbolEntry *, CompareString> SymbolMap;
+typedef std::map<const char*, struct SymbolEntry*, CompareString> SymbolMap;
 
 // Information of a symbol table.
 // This is the root of all types of symbol.
@@ -141,16 +144,16 @@ struct SymbolInfo {
 };
 
 // Stab section name.
-const char *kStabName = ".stab";
+const char* kStabName = ".stab";
 
 // Stab str section name.
-const char *kStabStrName = ".stabstr";
+const char* kStabStrName = ".stabstr";
 
 // Symtab section name.
-const char *kSymtabName = ".symtab";
+const char* kSymtabName = ".symtab";
 
 // Strtab section name.
-const char *kStrtabName = ".strtab";
+const char* kStrtabName = ".strtab";
 
 // Default buffer lenght for demangle.
 const int demangleLen = 20000;
@@ -160,11 +163,11 @@ uint64_t stringOffset = 0;
 
 // Update the offset to the start of the string index of the next
 // object module for every N_ENDM stabs.
-inline void RecalculateOffset(struct slist* cur_list, char *stabstr) {
+inline void RecalculateOffset(struct slist* cur_list, char* stabstr) {
   while ((--cur_list)->n_strx == 0) ;
   stringOffset += cur_list->n_strx;
 
-  char *temp = stabstr + stringOffset;
+  char* temp = stabstr + stringOffset;
   while (*temp != '\0') {
     ++stringOffset;
     ++temp;
@@ -174,10 +177,10 @@ inline void RecalculateOffset(struct slist* cur_list, char *stabstr) {
 }
 
 // Demangle using demangle library on Solaris.
-std::string Demangle(const char *mangled) {
+std::string Demangle(const char* mangled) {
   int status = 0;
   std::string str(mangled);
-  char *demangled = (char *)malloc(demangleLen);
+  char* demangled = (char*)malloc(demangleLen);
 
   if (!demangled) {
     fprintf(stderr, "no enough memory.\n");
@@ -197,7 +200,7 @@ out:
   return str; 
 }
 
-bool WriteFormat(int fd, const char *fmt, ...) {
+bool WriteFormat(int fd, const char* fmt, ...) {
   va_list list;
   char buffer[4096];
   ssize_t expected, written;
@@ -209,27 +212,27 @@ bool WriteFormat(int fd, const char *fmt, ...) {
   return expected == written;
 }
 
-bool IsValidElf(const GElf_Ehdr *elf_header) {
+bool IsValidElf(const GElf_Ehdr* elf_header) {
   return memcmp(elf_header, ELFMAG, SELFMAG) == 0;
 }
 
-static bool FindSectionByName(Elf *elf, const char *name,
+static bool FindSectionByName(Elf* elf, const char* name,
                               int shstrndx,
-                              GElf_Shdr *shdr) {
+                              GElf_Shdr* shdr) {
   assert(name != NULL);
 
   if (strlen(name) == 0)
     return false;
 
-  Elf_Scn *scn = NULL;
+  Elf_Scn* scn = NULL;
 
   while ((scn = elf_nextscn(elf, scn)) != NULL) {
-    if (gelf_getshdr(scn, shdr) == (GElf_Shdr *)0) {
+    if (gelf_getshdr(scn, shdr) == (GElf_Shdr*)0) {
       fprintf(stderr, "failed to read section header: %s\n", elf_errmsg(0));
       return false;
     }
 
-    const char *section_name = elf_strptr(elf, shstrndx, shdr->sh_name);
+    const char* section_name = elf_strptr(elf, shstrndx, shdr->sh_name);
     if (!section_name) {
       fprintf(stderr, "Section name error: %s\n", elf_errmsg(-1));
       continue;
@@ -245,10 +248,10 @@ static bool FindSectionByName(Elf *elf, const char *name,
 // The parameter size is used for FPO-optimized code, and
 // this is all tied up with the debugging data for Windows x86.
 // Set it to 0 on Solaris.
-int LoadStackParamSize(struct slist *list,
-                       struct slist *list_end,
-                       struct FuncInfo *func_info) {
-  struct slist *cur_list = list;
+int LoadStackParamSize(struct slist* list,
+                       struct slist* list_end,
+                       struct FuncInfo* func_info) {
+  struct slist* cur_list = list;
   int step = 1;
   while (cur_list < list_end && cur_list->n_type == N_PSYM) {
     ++cur_list;
@@ -259,10 +262,10 @@ int LoadStackParamSize(struct slist *list,
   return step;
 }
 
-int LoadLineInfo(struct slist *list,
-                 struct slist *list_end,
-                 struct FuncInfo *func_info) {
-  struct slist *cur_list = list;
+int LoadLineInfo(struct slist* list,
+                 struct slist* list_end,
+                 struct FuncInfo* func_info) {
+  struct slist* cur_list = list;
   do {
     // Skip non line information.
     while (cur_list < list_end && cur_list->n_type != N_SLINE) {
@@ -288,12 +291,12 @@ int LoadLineInfo(struct slist *list,
   return cur_list - list;
 }
 
-int LoadFuncSymbols(struct slist *list,
-                    struct slist *list_end,
-                    char *stabstr,
+int LoadFuncSymbols(struct slist* list,
+                    struct slist* list_end,
+                    char* stabstr,
                     GElf_Word base,
-                    struct SourceFileInfo *source_file_info) {
-  struct slist *cur_list = list;
+                    struct SourceFileInfo* source_file_info) {
+  struct slist* cur_list = list;
   assert(cur_list->n_type == N_SO);
   ++cur_list;
 
@@ -342,17 +345,17 @@ int LoadFuncSymbols(struct slist *list,
 }
 
 // Compute size and rva information based on symbols loaded from stab section.
-bool ComputeSizeAndRVA(struct SymbolInfo *symbols) {
-  std::vector<struct SourceFileInfo> *sorted_files =
+bool ComputeSizeAndRVA(struct SymbolInfo* symbols) {
+  std::vector<struct SourceFileInfo>* sorted_files =
     &(symbols->source_file_info);
-  SymbolMap *symbol_entries = &(symbols->symbol_entries);
+  SymbolMap* symbol_entries = &(symbols->symbol_entries);
   for (size_t i = 0; i < sorted_files->size(); ++i) {
-    struct SourceFileInfo &source_file = (*sorted_files)[i];
-    std::vector<struct FuncInfo> *sorted_functions = &(source_file.func_info);
+    struct SourceFileInfo& source_file = (*sorted_files)[i];
+    std::vector<struct FuncInfo>* sorted_functions = &(source_file.func_info);
     int func_size = sorted_functions->size();
 
     for (size_t j = 0; j < func_size; ++j) {
-      struct FuncInfo &func_info = (*sorted_functions)[j];
+      struct FuncInfo& func_info = (*sorted_functions)[j];
       int line_count = func_info.line_info.size();
 
       // Discard the ending part of the name.
@@ -373,13 +376,13 @@ bool ComputeSizeAndRVA(struct SymbolInfo *symbols) {
 
       // Compute function and line size.
       for (size_t k = 0; k < line_count; ++k) {
-        struct LineInfo &line_info = func_info.line_info[k];
+        struct LineInfo& line_info = func_info.line_info[k];
 
         line_info.rva_to_base = line_info.rva_to_func + func_info.rva_to_base;
         if (k == line_count - 1) {
           line_info.size = func_info.size - line_info.rva_to_func;
         } else {
-          struct LineInfo &next_line = func_info.line_info[k + 1];
+          struct LineInfo& next_line = func_info.line_info[k + 1];
           line_info.size = next_line.rva_to_func - line_info.rva_to_func;
         }
       }  // for each line.
@@ -392,24 +395,23 @@ bool ComputeSizeAndRVA(struct SymbolInfo *symbols) {
   return true;
 }
 
-bool LoadAllSymbols(const GElf_Shdr *stab_section,
-                    const GElf_Shdr *stabstr_section,
+bool LoadAllSymbols(const GElf_Shdr* stab_section,
+                    const GElf_Shdr* stabstr_section,
                     GElf_Word base,
-                    struct SymbolInfo *symbols) {
+                    struct SymbolInfo* symbols) {
   if (stab_section == NULL || stabstr_section == NULL)
     return false;
 
-  char *stabstr = 
-    reinterpret_cast<char *>(stabstr_section->sh_offset + base);
-  struct slist *lists =
-    reinterpret_cast<struct slist *>(stab_section->sh_offset + base);
+  char* stabstr = reinterpret_cast<char*>(stabstr_section->sh_offset + base);
+  struct slist* lists =
+    reinterpret_cast<struct slist*>(stab_section->sh_offset + base);
   int nstab = stab_section->sh_size / sizeof(struct slist);
   int source_id = 0;
 
   // First pass, load all symbols from the object file.
   for (int i = 0; i < nstab; ) {
     int step = 1;
-    struct slist *cur_list = lists + i;
+    struct slist* cur_list = lists + i;
     if (cur_list->n_type == N_SO) {
       // FUNC <address> <size> <param_stack_size> <function>
       struct SourceFileInfo source_file_info;
@@ -431,12 +433,12 @@ bool LoadAllSymbols(const GElf_Shdr *stab_section,
   return ComputeSizeAndRVA(symbols);
 }
 
-bool LoadSymbols(Elf *elf, GElf_Ehdr *elf_header, struct SymbolInfo *symbols,
-                 void *obj_base) {
+bool LoadSymbols(Elf* elf, GElf_Ehdr* elf_header, struct SymbolInfo* symbols,
+                 void* obj_base) {
   GElf_Word base = reinterpret_cast<GElf_Word>(obj_base);
 
-  const GElf_Shdr *sections =
-    reinterpret_cast<GElf_Shdr *>(elf_header->e_shoff + base);
+  const GElf_Shdr* sections =
+    reinterpret_cast<GElf_Shdr*>(elf_header->e_shoff + base);
   GElf_Shdr stab_section;
   if (!FindSectionByName(elf, kStabName, elf_header->e_shstrndx,
                          &stab_section)) {
@@ -462,11 +464,11 @@ bool LoadSymbols(Elf *elf, GElf_Ehdr *elf_header, struct SymbolInfo *symbols,
     return false;
   }
 
-  Elf_Sym *symbol = (Elf_Sym *)((char *)base + symtab_section.sh_offset);
+  Elf_Sym* symbol = (Elf_Sym*)((char*)base + symtab_section.sh_offset);
   for (int i = 0; i < symtab_section.sh_size/symtab_section.sh_entsize; ++i) {
-    struct SymbolEntry *symbol_entry =
-        (struct SymbolEntry *)malloc(sizeof(struct SymbolEntry));
-    const char *name = reinterpret_cast<char *>(
+    struct SymbolEntry* symbol_entry =
+        (struct SymbolEntry*)malloc(sizeof(struct SymbolEntry));
+    const char* name = reinterpret_cast<char*>(
         strtab_section.sh_offset + (GElf_Word)base + symbol->st_name);
     symbol_entry->offset = symbol->st_value;
     symbol_entry->size = symbol->st_size;
@@ -479,8 +481,8 @@ bool LoadSymbols(Elf *elf, GElf_Ehdr *elf_header, struct SymbolInfo *symbols,
   return LoadAllSymbols(&stab_section, &stabstr_section, base, symbols);
 }
 
-bool WriteModuleInfo(int fd, GElf_Half arch, const std::string &obj_file) {
-  const char *arch_name = NULL;
+bool WriteModuleInfo(int fd, GElf_Half arch, const std::string& obj_file) {
+  const char* arch_name = NULL;
   if (arch == EM_386)
     arch_name = "x86";
   else if (arch == EM_X86_64)
@@ -493,7 +495,7 @@ bool WriteModuleInfo(int fd, GElf_Half arch, const std::string &obj_file) {
   }
 
   unsigned char identifier[16];
-  google_breakpad::FileID file_id(obj_file.c_str());
+  google_breakpad::elf::FileID file_id(obj_file.c_str());
   if (file_id.ElfFileIdentifier(identifier)) {
     char identifier_str[40];
     file_id.ConvertIdentifierToString(identifier,
@@ -508,10 +510,10 @@ bool WriteModuleInfo(int fd, GElf_Half arch, const std::string &obj_file) {
   return false;
 }
 
-bool WriteSourceFileInfo(int fd, const struct SymbolInfo &symbols) {
+bool WriteSourceFileInfo(int fd, const struct SymbolInfo& symbols) {
   for (size_t i = 0; i < symbols.source_file_info.size(); ++i) {
     if (symbols.source_file_info[i].source_id != -1) {
-      const char *name = symbols.source_file_info[i].name;
+      const char* name = symbols.source_file_info[i].name;
       if (!WriteFormat(fd, "FILE %d %s\n",
                        symbols.source_file_info[i].source_id, name))
         return false;
@@ -521,7 +523,7 @@ bool WriteSourceFileInfo(int fd, const struct SymbolInfo &symbols) {
 }
 
 bool WriteOneFunction(int fd, int source_id,
-                      const struct FuncInfo &func_info){
+                      const struct FuncInfo& func_info){
   // Discard the ending part of the name.
   std::string func_name(func_info.name);
   std::string::size_type last_colon = func_name.find_last_of(':');
@@ -539,7 +541,7 @@ bool WriteOneFunction(int fd, int source_id,
                   func_info.stack_param_size,
                   func_name.c_str())) {
     for (size_t i = 0; i < func_info.line_info.size(); ++i) {
-      const struct LineInfo &line_info = func_info.line_info[i];
+      const struct LineInfo& line_info = func_info.line_info[i];
       if (line_info.line_num == 0)
         return true;
       if (!WriteFormat(fd, "%llx %x %d %d\n",
@@ -554,11 +556,11 @@ bool WriteOneFunction(int fd, int source_id,
   return false;
 }
 
-bool WriteFunctionInfo(int fd, const struct SymbolInfo &symbols) {
+bool WriteFunctionInfo(int fd, const struct SymbolInfo& symbols) {
   for (size_t i = 0; i < symbols.source_file_info.size(); ++i) {
-    const struct SourceFileInfo &file_info = symbols.source_file_info[i];
+    const struct SourceFileInfo& file_info = symbols.source_file_info[i];
     for (size_t j = 0; j < file_info.func_info.size(); ++j) {
-      const struct FuncInfo &func_info = file_info.func_info[j];
+      const struct FuncInfo& func_info = file_info.func_info[j];
       if (!WriteOneFunction(fd, file_info.source_id, func_info))
         return false;
     }
@@ -566,7 +568,7 @@ bool WriteFunctionInfo(int fd, const struct SymbolInfo &symbols) {
   return true;
 }
 
-bool DumpStabSymbols(int fd, const struct SymbolInfo &symbols) {
+bool DumpStabSymbols(int fd, const struct SymbolInfo& symbols) {
   return WriteSourceFileInfo(fd, symbols) &&
     WriteFunctionInfo(fd, symbols);
 }
@@ -604,13 +606,13 @@ class FDWrapper {
 //
 class MmapWrapper {
  public:
-  MmapWrapper(void *mapped_address, size_t mapped_size) :
+  MmapWrapper(void* mapped_address, size_t mapped_size) :
     base_(mapped_address), size_(mapped_size) {
   }
   ~MmapWrapper() {
     if (base_ != NULL) {
       assert(size_ > 0);
-      munmap((char *)base_, size_);
+      munmap((char*)base_, size_);
     }
   }
   void release() {
@@ -619,7 +621,7 @@ class MmapWrapper {
   }
 
  private:
-  void *base_;
+  void* base_;
   size_t size_;
 };
 
@@ -629,14 +631,14 @@ namespace google_breakpad {
 
 class AutoElfEnder {
  public:
-  AutoElfEnder(Elf *elf) : elf_(elf) {}
+  AutoElfEnder(Elf* elf) : elf_(elf) {}
   ~AutoElfEnder() { if (elf_) elf_end(elf_); }
  private:
-  Elf *elf_;
+  Elf* elf_;
 };
 
 
-bool DumpSymbols::WriteSymbolFile(const std::string &obj_file, int sym_fd) {
+bool DumpSymbols::WriteSymbolFile(const std::string& obj_file, int sym_fd) {
   if (elf_version(EV_CURRENT) == EV_NONE) {
     fprintf(stderr, "elf_version() failed: %s\n", elf_errmsg(0));
     return false;
@@ -649,16 +651,16 @@ bool DumpSymbols::WriteSymbolFile(const std::string &obj_file, int sym_fd) {
   struct stat st;
   if (fstat(obj_fd, &st) != 0 && st.st_size <= 0)
     return false;
-  void *obj_base = mmap(NULL, st.st_size,
+  void* obj_base = mmap(NULL, st.st_size,
                         PROT_READ, MAP_PRIVATE, obj_fd, 0);
   if (obj_base == MAP_FAILED)
     return false;
   MmapWrapper map_wrapper(obj_base, st.st_size);
   GElf_Ehdr elf_header;
-  Elf *elf = elf_begin(obj_fd, ELF_C_READ, NULL);
+  Elf* elf = elf_begin(obj_fd, ELF_C_READ, NULL);
   AutoElfEnder elfEnder(elf);
 
-  if (gelf_getehdr(elf, &elf_header) == (GElf_Ehdr *)NULL) {
+  if (gelf_getehdr(elf, &elf_header) == (GElf_Ehdr*)NULL) {
     fprintf(stderr, "failed to read elf header: %s\n", elf_errmsg(-1));
     return false;
   }

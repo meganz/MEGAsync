@@ -1,5 +1,4 @@
-// Copyright (c) 2009, Google Inc.
-// All rights reserved.
+// Copyright 2009 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -27,13 +26,17 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>  // Must come first
+#endif
+
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/types.h>
 
 #include "client/linux/minidump_writer/line_reader.h"
 #include "breakpad_googletest_includes.h"
-#include "common/linux/tests/auto_testfile.h"
+#include "common/linux/scoped_tmpfile.h"
 
 using namespace google_breakpad;
 
@@ -41,35 +44,24 @@ namespace {
 
 typedef testing::Test LineReaderTest;
 
-class ScopedTestFile : public AutoTestFile {
-public:
-  explicit ScopedTestFile(const char* text)
-    : AutoTestFile("line_reader", text) {
-  }
-
-  ScopedTestFile(const char* text, size_t text_len)
-    : AutoTestFile("line_reader", text, text_len) {
-  }
-};
-
 }
 
 TEST(LineReaderTest, EmptyFile) {
-  ScopedTestFile file("");
-  ASSERT_TRUE(file.IsOk());
+  ScopedTmpFile file;
+  ASSERT_TRUE(file.InitString(""));
   LineReader reader(file.GetFd());
 
-  const char *line;
+  const char* line;
   unsigned len;
   ASSERT_FALSE(reader.GetNextLine(&line, &len));
 }
 
 TEST(LineReaderTest, OneLineTerminated) {
-  ScopedTestFile file("a\n");
-  ASSERT_TRUE(file.IsOk());
+  ScopedTmpFile file;
+  ASSERT_TRUE(file.InitString("a\n"));
   LineReader reader(file.GetFd());
 
-  const char *line;
+  const char* line;
   unsigned int len;
   ASSERT_TRUE(reader.GetNextLine(&line, &len));
   ASSERT_EQ((unsigned int)1, len);
@@ -81,11 +73,11 @@ TEST(LineReaderTest, OneLineTerminated) {
 }
 
 TEST(LineReaderTest, OneLine) {
-  ScopedTestFile file("a");
-  ASSERT_TRUE(file.IsOk());
+  ScopedTmpFile file;
+  ASSERT_TRUE(file.InitString("a"));
   LineReader reader(file.GetFd());
 
-  const char *line;
+  const char* line;
   unsigned len;
   ASSERT_TRUE(reader.GetNextLine(&line, &len));
   ASSERT_EQ((unsigned)1, len);
@@ -97,11 +89,11 @@ TEST(LineReaderTest, OneLine) {
 }
 
 TEST(LineReaderTest, TwoLinesTerminated) {
-  ScopedTestFile file("a\nb\n");
-  ASSERT_TRUE(file.IsOk());
+  ScopedTmpFile file;
+  ASSERT_TRUE(file.InitString("a\nb\n"));
   LineReader reader(file.GetFd());
 
-  const char *line;
+  const char* line;
   unsigned len;
   ASSERT_TRUE(reader.GetNextLine(&line, &len));
   ASSERT_EQ((unsigned)1, len);
@@ -119,11 +111,11 @@ TEST(LineReaderTest, TwoLinesTerminated) {
 }
 
 TEST(LineReaderTest, TwoLines) {
-  ScopedTestFile file("a\nb");
-  ASSERT_TRUE(file.IsOk());
+  ScopedTmpFile file;
+  ASSERT_TRUE(file.InitString("a\nb"));
   LineReader reader(file.GetFd());
 
-  const char *line;
+  const char* line;
   unsigned len;
   ASSERT_TRUE(reader.GetNextLine(&line, &len));
   ASSERT_EQ((unsigned)1, len);
@@ -143,11 +135,11 @@ TEST(LineReaderTest, TwoLines) {
 TEST(LineReaderTest, MaxLength) {
   char l[LineReader::kMaxLineLen-1];
   memset(l, 'a', sizeof(l));
-  ScopedTestFile file(l, sizeof(l));
-  ASSERT_TRUE(file.IsOk());
+  ScopedTmpFile file;
+  ASSERT_TRUE(file.InitData(l, sizeof(l)));
   LineReader reader(file.GetFd());
 
-  const char *line;
+  const char* line;
   unsigned len;
   ASSERT_TRUE(reader.GetNextLine(&line, &len));
   ASSERT_EQ(sizeof(l), len);
@@ -159,11 +151,11 @@ TEST(LineReaderTest, TooLong) {
   // Note: this writes kMaxLineLen 'a' chars in the test file.
   char l[LineReader::kMaxLineLen];
   memset(l, 'a', sizeof(l));
-  ScopedTestFile file(l, sizeof(l));
-  ASSERT_TRUE(file.IsOk());
+  ScopedTmpFile file;
+  ASSERT_TRUE(file.InitData(l, sizeof(l)));
   LineReader reader(file.GetFd());
 
-  const char *line;
+  const char* line;
   unsigned len;
   ASSERT_FALSE(reader.GetNextLine(&line, &len));
 }

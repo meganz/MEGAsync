@@ -1,5 +1,4 @@
-// Copyright (c) 2011, Google Inc.
-// All rights reserved.
+// Copyright 2011 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -42,6 +41,13 @@ extern NSString *const kGoogleServerType;
 extern NSString *const kSocorroServerType;
 extern NSString *const kDefaultServerType;
 
+// Optional user-defined function that will be called after a network upload
+// of a crash report.
+// |report_id| will be the id returned by the server, or "ERR" if an error
+// occurred.
+// |error| will contain the error, or nil if no error occured.
+typedef void (^UploadCompletionBlock)(NSString *reportId, NSError *error);
+
 @interface Uploader : NSObject {
  @private
   NSMutableDictionary *parameters_;        // Key value pairs of data (STRONG)
@@ -61,11 +67,21 @@ extern NSString *const kDefaultServerType;
                                            // that are uploaded to the
                                            // crash server with the
                                            // minidump.
+  UploadCompletionBlock uploadCompletion_;  // A block called on network upload
+                                            // completion. Parameters are:
+                                            // The report ID returned by the
+                                            // server,
+                                            // the NSError triggered during
+                                            // upload.
 }
 
 - (id)initWithConfigFile:(const char *)configFile;
 
 - (id)initWithConfig:(NSDictionary *)config;
+
+// Reads the file |configFile| and returns the corresponding NSDictionary.
+// |configFile| will be deleted after reading.
++ (NSDictionary *)readConfigurationDataFromFile:(NSString *)configFile;
 
 - (NSMutableDictionary *)parameters;
 
@@ -77,5 +93,13 @@ extern NSString *const kDefaultServerType;
 // This method adds a key/value pair to the dictionary that
 // will be uploaded to the crash server.
 - (void)addServerParameter:(id)value forKey:(NSString *)key;
+
+// This method process the HTTP response and renames the minidump file with the
+// new ID.
+- (void)handleNetworkResponse:(NSData *)data withError:(NSError *)error;
+
+// Sets the callback to be called after uploading a crash report to the server.
+// Only the latest callback registered will be called.
+- (void)setUploadCompletionBlock:(UploadCompletionBlock)uploadCompletion;
 
 @end

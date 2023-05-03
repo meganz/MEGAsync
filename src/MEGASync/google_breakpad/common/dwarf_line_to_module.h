@@ -1,7 +1,6 @@
 // -*- mode: c++ -*-
 
-// Copyright (c) 2010 Google Inc.
-// All rights reserved.
+// Copyright 2010 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -13,7 +12,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -50,7 +49,7 @@ namespace google_breakpad {
 // instances from parsed DWARF line number data.  
 //
 // An instance of this class can be provided as a handler to a
-// dwarf2reader::LineInfo DWARF line number information parser. The
+// LineInfo DWARF line number information parser. The
 // handler accepts source location information from the parser and
 // uses it to produce a vector of google_breakpad::Module::Line
 // objects, referring to google_breakpad::Module::File objects added
@@ -111,7 +110,7 @@ namespace google_breakpad {
 //   at address zero.)
 //
 // - If a line starts immediately after an omitted line, omit it too.
-class DwarfLineToModule: public dwarf2reader::LineInfoHandler {
+class DwarfLineToModule: public LineInfoHandler {
  public:
   // As the DWARF line info parser passes us line records, add source
   // files to MODULE, and add all lines to the end of LINES. LINES
@@ -120,29 +119,32 @@ class DwarfLineToModule: public dwarf2reader::LineInfoHandler {
   // end of the address space, we clip it. It's up to our client to
   // sort out which lines belong to which functions; we don't add them
   // to any particular function in MODULE ourselves.
-  DwarfLineToModule(Module *module, const string& compilation_dir,
-                    vector<Module::Line> *lines)
+  DwarfLineToModule(Module* module,
+                    const string& compilation_dir,
+                    vector<Module::Line>* lines,
+                    std::map<uint32_t, Module::File*>* files)
       : module_(module),
         compilation_dir_(compilation_dir),
         lines_(lines),
+        files_(files),
         highest_file_number_(-1),
         omitted_line_end_(0),
         warned_bad_file_number_(false),
         warned_bad_directory_number_(false) { }
-  
+
   ~DwarfLineToModule() { }
 
-  void DefineDir(const string &name, uint32 dir_num);
-  void DefineFile(const string &name, int32 file_num,
-                  uint32 dir_num, uint64 mod_time,
-                  uint64 length);
-  void AddLine(uint64 address, uint64 length,
-               uint32 file_num, uint32 line_num, uint32 column_num);
+  void DefineDir(const string& name, uint32_t dir_num);
+  void DefineFile(const string& name, int32_t file_num,
+                  uint32_t dir_num, uint64_t mod_time,
+                  uint64_t length);
+  void AddLine(uint64_t address, uint64_t length,
+               uint32_t file_num, uint32_t line_num, uint32_t column_num);
 
  private:
 
-  typedef std::map<uint32, string> DirectoryTable;
-  typedef std::map<uint32, Module::File *> FileTable;
+  typedef std::map<uint32_t, string> DirectoryTable;
+  typedef std::map<uint32_t, Module::File*> FileTable;
 
   // The module we're contributing debugging info to. Owned by our
   // client.
@@ -161,22 +163,22 @@ class DwarfLineToModule: public dwarf2reader::LineInfoHandler {
   // to the appropriate function from module_ until we've read the
   // function info as well. Instead, we accumulate lines here, and let
   // whoever constructed this sort it all out.
-  vector<Module::Line> *lines_;
+  vector<Module::Line>* lines_;
 
   // A table mapping directory numbers to paths.
   DirectoryTable directories_;
 
   // A table mapping file numbers to Module::File pointers.
-  FileTable files_;
+  FileTable* files_;
 
   // The highest file number we've seen so far, or -1 if we've seen
   // none.  Used for dynamically defined file numbers.
-  int32 highest_file_number_;
-  
+  int32_t highest_file_number_;
+
   // This is the ending address of the last line we omitted, or zero if we
   // didn't omit the previous line. It is zero before we have received any
   // AddLine calls.
-  uint64 omitted_line_end_;
+  uint64_t omitted_line_end_;
 
   // True if we've warned about:
   bool warned_bad_file_number_; // bad file numbers

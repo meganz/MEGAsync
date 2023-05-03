@@ -1,5 +1,4 @@
-// Copyright (c) 2010, Google Inc.
-// All rights reserved.
+// Copyright 2010 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -27,14 +26,17 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>  // Must come first
+#endif
+
 #include <windows.h>
 #include <objbase.h>
 #include <dbghelp.h>
 
+#include "breakpad_googletest_includes.h"
 #include "client/windows/crash_generation/minidump_generator.h"
 #include "client/windows/unittests/dump_analysis.h"  // NOLINT
-
-#include "gtest/gtest.h"
 
 namespace {
 
@@ -94,7 +96,7 @@ class MinidumpTest: public testing::Test {
         STATUS_ACCESS_VIOLATION,  // ExceptionCode
         0,  // ExceptionFlags
         NULL,  // ExceptionRecord;
-        reinterpret_cast<void*>(0xCAFEBABE),  // ExceptionAddress;
+        reinterpret_cast<void*>(static_cast<uintptr_t>(0xCAFEBABE)),  // ExceptionAddress;
         2,  // NumberParameters;
         { EXCEPTION_WRITE_FAULT, reinterpret_cast<ULONG_PTR>(this) }
     };
@@ -104,19 +106,19 @@ class MinidumpTest: public testing::Test {
       &ctx_record,
     };
 
-    MinidumpGenerator generator(dump_path_);
-
+    MinidumpGenerator generator(dump_path_,
+                                ::GetCurrentProcess(),
+                                ::GetCurrentProcessId(),
+                                ::GetCurrentThreadId(),
+                                ::GetCurrentThreadId(),
+                                &ex_ptrs,
+                                NULL,
+                                static_cast<MINIDUMP_TYPE>(flags),
+                                TRUE);
+    generator.GenerateDumpFile(&dump_file_);
+    generator.GenerateFullDumpFile(&full_dump_file_);
     // And write a dump
-    bool result = generator.WriteMinidump(::GetCurrentProcess(),
-                                          ::GetCurrentProcessId(),
-                                          ::GetCurrentThreadId(),
-                                          ::GetCurrentThreadId(),
-                                          &ex_ptrs,
-                                          NULL,
-                                          static_cast<MINIDUMP_TYPE>(flags),
-                                          TRUE,
-                                          &dump_file_,
-                                          &full_dump_file_);
+    bool result = generator.WriteMinidump();
     return result == TRUE;
   }
 

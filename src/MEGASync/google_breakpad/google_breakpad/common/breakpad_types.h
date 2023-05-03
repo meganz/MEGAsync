@@ -1,5 +1,4 @@
-/* Copyright (c) 2006, Google Inc.
- * All rights reserved.
+/* Copyright 2006 Google LLC
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
  * copyright notice, this list of conditions and the following disclaimer
  * in the documentation and/or other materials provided with the
  * distribution.
- *     * Neither the name of Google Inc. nor the names of its
+ *     * Neither the name of Google LLC nor the names of its
  * contributors may be used to endorse or promote products derived from
  * this software without specific prior written permission.
  *
@@ -40,34 +39,16 @@
 #ifndef GOOGLE_BREAKPAD_COMMON_BREAKPAD_TYPES_H__
 #define GOOGLE_BREAKPAD_COMMON_BREAKPAD_TYPES_H__
 
-#ifndef _WIN32
+#if (defined(_INTTYPES_H) || defined(_INTTYPES_H_)) && \
+    !defined(__STDC_FORMAT_MACROS)
+#error "inttypes.h has already been included before this header file, but "
+#error "without __STDC_FORMAT_MACROS defined."
+#endif
 
 #ifndef __STDC_FORMAT_MACROS
 #define __STDC_FORMAT_MACROS
 #endif  /* __STDC_FORMAT_MACROS */
 #include <inttypes.h>
-
-#else  /* !_WIN32 */
-
-#if _MSC_VER >= 1600
-#include <stdint.h>
-#elif defined(BREAKPAD_CUSTOM_STDINT_H)
-/* Visual C++ Pre-2010 did not ship a stdint.h, so allow
- * consumers of this library to provide their own because
- * there are often subtle type incompatibilities.
- */
-#include BREAKPAD_CUSTOM_STDINT_H
-#else
-#include <WTypes.h>
-
-typedef unsigned __int8  uint8_t;
-typedef unsigned __int16 uint16_t;
-typedef __int32 int32_t;
-typedef unsigned __int32 uint32_t;
-typedef unsigned __int64 uint64_t;
-#endif
-
-#endif  /* !_WIN32 */
 
 typedef struct {
   uint64_t high;

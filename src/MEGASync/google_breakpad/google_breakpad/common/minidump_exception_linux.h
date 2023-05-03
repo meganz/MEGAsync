@@ -1,5 +1,4 @@
-/* Copyright (c) 2006, Google Inc.
- * All rights reserved.
+/* Copyright 2006 Google LLC
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
  * copyright notice, this list of conditions and the following disclaimer
  * in the documentation and/or other materials provided with the
  * distribution.
- *     * Neither the name of Google Inc. nor the names of its
+ *     * Neither the name of Google LLC nor the names of its
  * contributors may be used to endorse or promote products derived from
  * this software without specific prior written permission.
  *
@@ -83,5 +82,43 @@ typedef enum {
   MD_EXCEPTION_CODE_LIN_DUMP_REQUESTED = 0xFFFFFFFF /* No exception,
                                                        dump requested. */
 } MDExceptionCodeLinux;
+
+/* For (MDException).exception_flags.  These values come from
+ * asm-generic/siginfo.h.
+ */
+typedef enum {
+  /* SIGILL */
+  MD_EXCEPTION_FLAG_LIN_ILL_ILLOPC = 1,
+  MD_EXCEPTION_FLAG_LIN_ILL_ILLOPN = 2,
+  MD_EXCEPTION_FLAG_LIN_ILL_ILLADR = 3,
+  MD_EXCEPTION_FLAG_LIN_ILL_ILLTRP = 4,
+  MD_EXCEPTION_FLAG_LIN_ILL_PRVOPC = 5,
+  MD_EXCEPTION_FLAG_LIN_ILL_PRVREG = 6,
+  MD_EXCEPTION_FLAG_LIN_ILL_COPROC = 7,
+  MD_EXCEPTION_FLAG_LIN_ILL_BADSTK = 8,
+
+  /* SIGFPE */
+  MD_EXCEPTION_FLAG_LIN_FPE_INTDIV = 1,
+  MD_EXCEPTION_FLAG_LIN_FPE_INTOVF = 2,
+  MD_EXCEPTION_FLAG_LIN_FPE_FLTDIV = 3,
+  MD_EXCEPTION_FLAG_LIN_FPE_FLTOVF = 4,
+  MD_EXCEPTION_FLAG_LIN_FPE_FLTUND = 5,
+  MD_EXCEPTION_FLAG_LIN_FPE_FLTRES = 6,
+  MD_EXCEPTION_FLAG_LIN_FPE_FLTINV = 7,
+  MD_EXCEPTION_FLAG_LIN_FPE_FLTSUB = 8,
+
+  /* SIGSEGV */
+  MD_EXCEPTION_FLAG_LIN_SEGV_MAPERR = 1,
+  MD_EXCEPTION_FLAG_LIN_SEGV_ACCERR = 2,
+  MD_EXCEPTION_FLAG_LIN_SEGV_BNDERR = 3,
+  MD_EXCEPTION_FLAG_LIN_SEGV_PKUERR = 4,
+
+  /* SIGBUS */
+  MD_EXCEPTION_FLAG_LIN_BUS_ADRALN = 1,
+  MD_EXCEPTION_FLAG_LIN_BUS_ADRERR = 2,
+  MD_EXCEPTION_FLAG_LIN_BUS_OBJERR = 3,
+  MD_EXCEPTION_FLAG_LIN_BUS_MCEERR_AR = 4,
+  MD_EXCEPTION_FLAG_LIN_BUS_MCEERR_AO = 5,
+} MDExceptionFlagLinux;
 
 #endif  /* GOOGLE_BREAKPAD_COMMON_MINIDUMP_EXCEPTION_LINUX_H__ */
