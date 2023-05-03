@@ -88,7 +88,7 @@ void Notificator::notifySystray(MegaNotificationBase *notification)
         return;
     }
 
-    connect(notification, SIGNAL(failed()), this, SLOT(onModernNotificationFailed()), Qt::QueuedConnection);
+    connect(notification, &MegaNotificationBase::failed, this, &Notificator::onModernNotificationFailed);
 
     WinToastTemplate templ(WinToastTemplate::ImageAndText02);
     templ.setTextField((LPCWSTR)notification->getTitle().utf16(), WinToastTemplate::FirstLine);
