@@ -323,7 +323,7 @@
     <message>
         <source>Your payment for the [A] plan was unsuccessful</source>
         <translatorcomment>Label to indicate that the the payment for a [A] PRO plan has failed. Placeholder will be replaced by the PRO plan name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>لم نستلم دفعتك مقابل باقة [A].</translation>
     </message>
     <message>
         <source>Your publicly shared has been taken down</source>
