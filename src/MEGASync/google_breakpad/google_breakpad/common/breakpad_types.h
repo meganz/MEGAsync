@@ -41,8 +41,8 @@
 
 #if (defined(_INTTYPES_H) || defined(_INTTYPES_H_)) && \
     !defined(__STDC_FORMAT_MACROS)
-#error "inttypes.h has already been included before this header file, but "
-#error "without __STDC_FORMAT_MACROS defined."
+//#error "inttypes.h has already been included before this header file, but "
+//#error "without __STDC_FORMAT_MACROS defined."
 #endif
 
 #ifndef __STDC_FORMAT_MACROS
