@@ -62,7 +62,9 @@ RegisterPageForm {
             return;
         }
 
-        registerPage.enabled = false;
+        nextButton.busyIndicatorVisible = true;
+        nextButton.progressValue = 0.2;
+        state = signUpStatus;
 
         var formData = {
             [Onboarding.RegisterForm.PASSWORD]: password.text,
@@ -74,6 +76,22 @@ RegisterPageForm {
         Onboarding.onRegisterClicked(formData);
     }
 
+    nextButton.onAnimationFinished: {
+        if(completed){
+
+            password.text = "";
+            confirmPassword.text = "";
+            firstName.text = "";
+            lastName.text = "";
+            email.text = "";
+            termsCheckBox.checked = false;
+            dataLossCheckBox.checked = false;
+            state = normalStatus;
+            nextButton.busyIndicatorVisible = false;
+            registerFlow.state = confirmEmail;
+        }
+    }
+
     loginButton.onClicked: {
         registerFlow.state = login;
     }
@@ -82,22 +100,16 @@ RegisterPageForm {
         target: Onboarding
 
         onRegisterFinished: (success) => {
-            registerPage.enabled = true;
-
-            if(success) {
-                password.text = "";
-                confirmPassword.text = "";
-                firstName.text = "";
-                lastName.text = "";
-                email.text = "";
-                termsCheckBox.checked = false;
-                dataLossCheckBox.checked = false;
-                registerFlow.state = confirmEmail;
-            } else {
-                email.showType = true;
-                email.hintText = OnboardingStrings.errorEmailAlreadyExist;
-                email.hintVisible = true;
-            }
-        }
+                                if(success) {
+                                    nextButton.progressValue = 1;
+                                } else {
+                                    nextButton.progressValue = 0;
+                                    email.showType = true;
+                                    email.hintText = OnboardingStrings.errorEmailAlreadyExist;
+                                    email.hintVisible = true;
+                                    state = normalStatus;
+                                    nextButton.busyIndicatorVisible = false;
+                                }
+                            }
     }
 }

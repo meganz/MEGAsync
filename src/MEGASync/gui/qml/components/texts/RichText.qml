@@ -11,7 +11,16 @@ Text {
 
     property url url: defaultUrl
     property color urlColor: Styles.linkPrimary
+    property bool manageMouse: false
+    property bool hovered: false
 
+    onManageMouseChanged:
+    {
+        if(manageMouse)
+        {
+            loader.sourceComponent = mouseArea
+        }
+    }
     color: enabled ? Styles.textPrimary : Styles.textDisabled
     textFormat: Text.RichText
     font.pixelSize: 14
@@ -28,6 +37,25 @@ Text {
     onLinkActivated: {
         if(url != defaultUrl) {
             Qt.openUrlExternally(url);
+        }
+    }
+
+    onLinkHovered:
+    {
+        hovered = link.length
+    }
+
+    Loader{
+        id: loader
+        anchors.fill: parent
+    }
+
+    Component {
+        id: mouseArea
+        MouseArea {
+            anchors.fill: parent
+            cursorShape: hovered ? Qt.PointingHandCursor : Qt.ArrowCursor
+            onPressed: mouse.accepted = false
         }
     }
 }

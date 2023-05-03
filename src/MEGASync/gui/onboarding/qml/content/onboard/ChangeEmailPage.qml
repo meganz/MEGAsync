@@ -5,7 +5,6 @@ import Onboarding 1.0
 import Onboard 1.0
 
 ChangeEmailPageForm {
-    id: changeEmailPage
 
     cancelButton.onClicked: {
         registerFlow.state = confirmEmail

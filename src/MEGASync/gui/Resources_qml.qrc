@@ -1,5 +1,4 @@
 <RCC>
-	<!-- Sorted alphabetically by dir -->
     <qresource prefix="/">
 		<file>images/qml/alert_triangle.svg</file>
 		<file>images/qml/arrow_right.svg</file>
@@ -30,5 +29,6 @@
 		<file>images/qml/onboarding/shield_account_proIII.svg</file>
 		<file>images/qml/onboarding/sync.svg</file>
 		<file>images/qml/onboarding/twofa.png</file>
+        <file>images/qml/loader.svg</file>
     </qresource>
 </RCC>

@@ -13,12 +13,11 @@ import Onboard 1.0
 // C++
 import Onboarding 1.0
 
-Rectangle {
+StackViewPage {
     id: root
 
     readonly property int contentMargin: 48
     readonly property int bottomMargin: 32
-    readonly property int buttonSpacing: 8
 
     property alias signUpButton: signUpButton
     property alias loginButton: loginButton
@@ -71,25 +70,31 @@ Rectangle {
         }
     }
 
-    Row {
-        anchors.right: root.right
-        anchors.bottom: root.bottom
-        anchors.rightMargin: contentMargin
-        anchors.bottomMargin: bottomMargin
-        spacing: buttonSpacing
-
-        Custom.Button {
-            id: loginButton
-
-            primary: true
-            text: OnboardingStrings.login
+    RowLayout {
+        anchors {
+            right: root.right
+            bottom: root.bottom
+            left: root.left
+            leftMargin: contentMargin
+            rightMargin: contentMargin
+            bottomMargin: bottomMargin
         }
 
-        Custom.Button {
+        Custom.OutlineButton {
             id: signUpButton
 
             text: OnboardingStrings.signUp
+            Layout.alignment: Qt.AlignLeft
+        }
+
+        Custom.PrimaryButton {
+            id: loginButton
+
+            text: OnboardingStrings.login
+            busyIndicatorImage: Images.loader
+            iconSource: Images.arrowRight
+            Layout.alignment: Qt.AlignRight
+            progressBar: true
         }
     }
-
 }

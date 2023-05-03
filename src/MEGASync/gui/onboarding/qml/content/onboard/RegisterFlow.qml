@@ -107,44 +107,56 @@ Rectangle {
             }
         }
 
-        LoginPage {
+        Component{
             id: loginPage
+        LoginPage {
 
             width: stack.width
             height: stack.height
             visible: false
         }
+        }
 
-        TwoFAPage {
+        Component{
+
             id: twoFAPage
+        TwoFAPage {
 
             visible: false
         }
+        }
 
-        RegisterPage {
+        Component{
+
             id: registerPage
+        RegisterPage {
 
             visible: false
         }
+        }
 
-        ConfirmEmailPage {
+        Component{
+
             id: confirmEmailPage
+        ConfirmEmailPage {
 
             visible: false
         }
+        }
 
-        ChangeEmailPage {
+        Component{
+
             id: changeConfirmEmailPage
+        ChangeEmailPage {
 
             visible: false
         }
-    }
-
-    Connections {
-        target: Onboarding
-
-        onTwoFARequired: {
-            registerFlow.state = twoFA;
         }
     }
 }
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+##^##*/

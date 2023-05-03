@@ -82,6 +82,7 @@ Rectangle {
             text: OnboardingStrings.confirmEmailChangeText
             wrapMode: Text.WordWrap
             color: Styles.textPrimary
+            manageMouse: true
         }
     }
 }

@@ -115,17 +115,16 @@ Rectangle {
             Layout.bottomMargin: 24
             Layout.alignment: Qt.AlignBottom | Qt.AlignRight
 
-            Custom.Button {
+            Custom.OutlineButton {
                 id: preferencesButton
 
                 text: OnboardingStrings.openInPreferences
             }
 
-            Custom.Button {
+            Custom.PrimaryButton {
                 id: doneButton
 
                 text: OnboardingStrings.done
-                primary: true
             }
         }
     }

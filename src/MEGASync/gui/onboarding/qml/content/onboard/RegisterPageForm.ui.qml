@@ -13,7 +13,7 @@ import Onboard 1.0
 // C++
 import Onboarding 1.0
 
-Rectangle {
+StackViewPage {
     id: root
 
     readonly property int contentMargin: 48
@@ -218,19 +218,27 @@ Rectangle {
         anchors.bottomMargin: bottomMargin
         spacing: buttonSpacing
 
-        Custom.Button {
+        Custom.PrimaryButton {
             id: nextButton
 
             enabled: dataLossCheckBox.checked && termsCheckBox.checked
-            primary: true
             iconSource: Images.arrowRight
             text: OnboardingStrings.next
+            busyIndicatorImage: Images.loader
+            progressBar: true
         }
 
-        Custom.Button {
+        Custom.OutlineButton {
             id: loginButton
 
             text: OnboardingStrings.login
         }
     }
 }
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+##^##*/
+

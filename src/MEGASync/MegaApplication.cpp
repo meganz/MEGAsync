@@ -451,6 +451,9 @@ void MegaApplication::initialize()
     qmlRegisterModule("Components", 1, 0);
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/Button.qml")), "Components", 1, 0, "Button");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/HelpButton.qml")), "Components", 1, 0, "HelpButton");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/OutlineButton.qml")), "Components", 1, 0, "OutlineButton");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/PrimaryButton.qml")), "Components", 1, 0, "PrimaryButton");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/SecondaryButton.qml")), "Components", 1, 0, "SecondaryButton");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/checkBoxes/CheckBox.qml")), "Components", 1, 0, "CheckBox");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/images/SvgImage.qml")), "Components", 1, 0, "SvgImage");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/images/Image.qml")), "Components", 1, 0, "Image");
@@ -463,6 +466,7 @@ void MegaApplication::initialize()
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/NotificationText.qml")), "Components", 1, 0, "NotificationText");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/RichText.qml")), "Components", 1, 0, "RichText");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/toolTips/ToolTip.qml")), "Components", 1, 0, "ToolTip");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/busyIndicator/BusyIndicator.qml")), "Components", 1, 0, "BusyIndicator");
 
     qmlRegisterModule("Common", 1, 0);
     qmlRegisterSingletonType(QUrl(QString::fromUtf8("qrc:/common/Images.qml")), "Common", 1, 0, "Images");
