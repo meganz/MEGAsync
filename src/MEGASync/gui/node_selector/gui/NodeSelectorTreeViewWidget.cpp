@@ -321,7 +321,6 @@ void NodeSelectorTreeViewWidget::onbNewFolderClicked()
                 }
                 mProxyModel->setExpandMapped(true);
                 mProxyModel->addNode(std::move(newNode), idx);
-                ui->bOk->setFocus();
             }
             mProxyModel->setExpandMapped(true);
             mProxyModel->addNode(std::move(newNode), idx);
