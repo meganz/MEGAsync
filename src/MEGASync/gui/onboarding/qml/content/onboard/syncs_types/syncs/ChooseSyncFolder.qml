@@ -52,6 +52,7 @@ Rectangle {
         text: "/MEGA"
         leftIconSource: local ? Images.pc : Images.mega
         leftIconColor: Styles.iconSecondary
+        textField.readOnly: true
     }
 
     Custom.Button {

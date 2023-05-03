@@ -22,6 +22,8 @@ Rectangle {
 
     readonly property int contentMargin: 48
 
+    color: Styles.pageBackground
+
     ColumnLayout {
         id: layout
 
@@ -42,6 +44,7 @@ Rectangle {
             font.pixelSize: 20
             text: OnboardingStrings.changeEmailTitle
             wrapMode: Text.WordWrap
+            color: Styles.textPrimary
         }
 
         Text {
@@ -49,13 +52,15 @@ Rectangle {
             font.pixelSize: 14
             wrapMode: Text.WordWrap
             Layout.preferredWidth: layout.width
+            color: Styles.textPrimary
         }
 
         Custom.EmailTextField {
             id: emailTextField
 
             title: OnboardingStrings.email
-            Layout.preferredWidth: layout.width
+            Layout.preferredWidth: layout.width + 2 * focusWidth
+            Layout.leftMargin: -focusWidth
         }
     }
 

@@ -56,6 +56,7 @@ SyncsPage {
                 title: OnboardingStrings.backupTo
                 text: "/Backups"
                 leftIconSource: Images.database
+                textField.readOnly: true
             }
         }
     }

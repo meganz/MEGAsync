@@ -18,7 +18,10 @@ Rectangle {
 
     property alias email: email.text
     property alias changeEmailLinkText: changeEmailLinkText
+
     readonly property int contentMargin: 48
+
+    color: Styles.pageBackground
 
     ColumnLayout {
         id: layout
@@ -40,6 +43,7 @@ Rectangle {
             font.pixelSize: 20
             text: OnboardingStrings.confirmEmailTitle
             wrapMode: Text.WordWrap
+            color: Styles.textPrimary
         }
 
         Text {
@@ -47,6 +51,7 @@ Rectangle {
             font.pixelSize: 14
             wrapMode: Text.WordWrap
             Layout.preferredWidth: layout.width
+            color: Styles.textPrimary
         }
 
         RowLayout {
@@ -56,21 +61,27 @@ Rectangle {
                 source: Images.mail
                 sourceSize: Qt.size(24, 24)
                 Layout.alignment: Qt.AlignVCenter
+                color: Styles.textPrimary
             }
 
             Text {
                 id: email
+
                 Layout.alignment: Qt.AlignVCenter
                 font.pixelSize: 14
+                color: Styles.textPrimary
+                font.bold: true
             }
         }
 
         Custom.RichText {
             id: changeEmailLinkText
+
             Layout.preferredWidth: layout.width
             font.pixelSize: 14
             text: OnboardingStrings.confirmEmailChangeText
             wrapMode: Text.WordWrap
+            color: Styles.textPrimary
         }
     }
 }

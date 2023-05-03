@@ -19,8 +19,13 @@ Item {
     property string title: ""
     property int toState: Step.ToStates.Disabled
 
-    width: 126
-    height: 24
+    readonly property int diameter: 22
+    readonly property int borderWidth: 8
+    readonly property int contentWidth: 18
+    readonly property size doneImageSize: Qt.size(10, 7.5)
+
+    width: mainLayout.width
+    height: diameter
 
     onToStateChanged: {
         mainLayout.state = mainLayout.statesMap.get(toState);
@@ -43,7 +48,7 @@ Item {
             [Step.ToStates.DoneLight, stateDoneLight]
         ])
 
-        spacing: 8
+        spacing: borderWidth
         state: stateDisabled
         states: [
             State {
@@ -51,9 +56,9 @@ Item {
                 PropertyChanges { target: circleBorder; color: Styles.buttonSecondaryPressed }
                 PropertyChanges {
                     target: circleContent
-                    width: 20
-                    height: 20
-                    radius: 20
+                    width: contentWidth
+                    height: contentWidth
+                    radius: contentWidth
                 }
                 PropertyChanges { target: circleInside; visible: true }
                 PropertyChanges { target: stepTitle; color: Styles.buttonSecondaryPressed }
@@ -64,24 +69,24 @@ Item {
                 PropertyChanges { target: circleBorder; color: Styles.buttonPrimaryPressed }
                 PropertyChanges {
                     target: circleContent
-                    width: 8
-                    height: 8
-                    radius: 8
+                    width: borderWidth
+                    height: borderWidth
+                    radius: borderWidth
                 }
                 PropertyChanges { target: circleInside; visible: false }
                 PropertyChanges { target: stepTitle; color: Styles.textPrimary }
-                PropertyChanges { target: checkImage; visible: true }
+                PropertyChanges { target: checkImage; visible: false }
             },
             State {
                 name: mainLayout.stateDone
-                PropertyChanges { target: circleBorder; visible: false }
+                PropertyChanges { target: circleBorder; color: Styles.buttonPrimaryPressed }
                 PropertyChanges { target: circleContent; visible: false }
                 PropertyChanges { target: circleInside; visible: false }
                 PropertyChanges { target: stepTitle; color: Styles.textSecondary }
                 PropertyChanges {
                     target: checkImage
                     visible: true
-                    source: Images.checkCircleSolid
+                    color: Styles.pageBackground
                 }
             },
             State {
@@ -89,71 +94,74 @@ Item {
                 PropertyChanges { target: circleBorder; color: Styles.buttonPrimaryPressed }
                 PropertyChanges {
                     target: circleContent
-                    visible: true
-                    color: "#FFFFFF"
-                    width: 18
-                    height: 18
+                    width: contentWidth
+                    height: contentWidth
+                    radius: contentWidth
+                    visible: true;
+                    color: Styles.pageBackground
                 }
-                PropertyChanges {
-                    target: circleInside
-                    visible: true
-                    color: Styles.buttonPrimaryPressed
-                }
-                PropertyChanges { target: stepTitle; color: Styles.textPrimary }
+                PropertyChanges { target: circleInside; visible: true; color: Styles.buttonPrimaryPressed }
+                PropertyChanges { target: stepTitle; color: Styles.textSecondary }
                 PropertyChanges { target: checkImage; visible: false }
             },
             State {
                 name: mainLayout.stateDoneLight
-                PropertyChanges { target: circleBorder; visible: false }
-                PropertyChanges { target: circleContent; visible: false }
-                PropertyChanges { target: circleInside; visible: false }
-                PropertyChanges { target: stepTitle; color: Styles.textPrimary }
+                PropertyChanges { target: circleBorder; color: Styles.buttonPrimaryPressed; }
                 PropertyChanges {
-                    target: checkImage;
+                    target: circleContent
+                    width: contentWidth
+                    height: contentWidth
+                    radius: contentWidth
+                    visible: true;
+                    color: Styles.pageBackground
+                }
+                PropertyChanges { target: circleInside; visible: false }
+                PropertyChanges { target: stepTitle; color: Styles.textSecondary }
+                PropertyChanges {
+                    target: checkImage
                     visible: true
-                    source: Images.checkCircleOutline
+                    color: Styles.buttonPrimaryPressed
                 }
             }
         ]
 
         Rectangle {
-            Layout.preferredWidth: 24
-            Layout.preferredHeight: 24
+            id: circleBorder
 
-            Custom.Image {
+            color: Styles.buttonSecondaryPressed
+            Layout.preferredWidth: diameter
+            Layout.preferredHeight: diameter
+            radius: diameter
+
+            Rectangle {
+                id: circleContent
+
+                color: Styles.pageBackground
+                width: borderWidth
+                height: borderWidth
+                radius: borderWidth
+                anchors.centerIn: parent
+
+                Rectangle {
+                    id: circleInside
+
+                    color: Styles.buttonSecondaryPressed
+                    visible: false
+                    width: borderWidth
+                    height: borderWidth
+                    radius: borderWidth
+                    anchors.centerIn: parent
+                }
+            }
+
+            Custom.SvgImage {
                 id: checkImage
 
                 visible: false
-            }
-
-            Rectangle {
-                id: circleBorder
-
-                color: Styles.buttonSecondaryPressed
-                width: 22
-                height: 22
-                radius: 22
-
-                Rectangle {
-                    id: circleContent
-
-                    color: Styles.pageBackground
-                    width: 8
-                    height: 8
-                    radius: 8
-                    anchors.centerIn: parent
-
-                    Rectangle {
-                        id: circleInside
-
-                        color: Styles.buttonSecondaryPressed
-                        visible: false
-                        width: 8
-                        height: 8
-                        radius: 8
-                        anchors.centerIn: parent
-                    }
-                }
+                anchors.centerIn: parent
+                sourceSize: doneImageSize
+                source: Images.check
+                color: Styles.pageBackground
             }
         }
 

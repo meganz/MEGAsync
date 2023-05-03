@@ -30,8 +30,9 @@ SyncsPage {
         }
 
         Custom.SvgImage {
-            source: Images.pc
+            source: Images.pcMega
             sourceSize: Qt.size(48, 48)
+            color: Styles.textPrimary
         }
 
         Custom.TextField {

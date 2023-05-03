@@ -7,8 +7,7 @@
 		<file>images/qml/info_circle.svg</file>
 		<file>images/qml/lock.svg</file>
 		<file>images/qml/onboarding/building.svg</file>
-		<file>images/qml/onboarding/check_circle_outline.svg</file>
-		<file>images/qml/onboarding/check_circle_solid.svg</file>
+		<file>images/qml/onboarding/check.svg</file>
 		<file>images/qml/onboarding/cloud.svg</file>
 		<file>images/qml/onboarding/database.svg</file>
 		<file>images/qml/onboarding/edit.svg</file>

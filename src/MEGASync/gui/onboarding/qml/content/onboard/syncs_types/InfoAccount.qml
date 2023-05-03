@@ -48,6 +48,7 @@ Rectangle {
                 font.weight: Font.DemiBold
                 font.pixelSize: 14
                 font.underline: true
+                color: Styles.textPrimary
 
                 MouseArea {
                     anchors.fill: parent
@@ -70,6 +71,7 @@ Rectangle {
                 font.styleName: "normal"
                 font.weight: Font.DemiBold
                 font.pixelSize: 12
+                color: Styles.textPrimary
             }
 
             Text {
@@ -80,6 +82,7 @@ Rectangle {
                 font.styleName: "normal"
                 font.weight: Font.DemiBold
                 font.pixelSize: 12
+                color: Styles.textPrimary
             }
 
             Text {
@@ -88,6 +91,7 @@ Rectangle {
                 font.styleName: "normal"
                 font.weight: Font.ExtraLight
                 font.pixelSize: 12
+                color: Styles.textSecondary
             }
 
             Text {
@@ -98,6 +102,7 @@ Rectangle {
                 font.styleName: "normal"
                 font.weight: Font.ExtraLight
                 font.pixelSize: 12
+                color: Styles.textSecondary
             }
 
         }

@@ -16,8 +16,11 @@ Item {
     property string title: ""
     property int toState: SubStep.ToStates.Disabled
 
-    width: 126
-    height: 16
+    readonly property int diameter: 4
+    readonly property int borderWidth: 8
+
+    width: mainLayout.width
+    height: mainLayout.height
 
     onToStateChanged: {
         mainLayout.state = mainLayout.statesMap.get(toState);
@@ -36,7 +39,7 @@ Item {
             [SubStep.ToStates.Done, stateDone]
         ])
 
-        spacing: 16
+        spacing: 14
         state: stateDisabled
         states: [
             State {
@@ -71,18 +74,18 @@ Item {
             id: circleBorder
 
             color: Styles.buttonPrimaryPressed
-            Layout.preferredWidth: 8
-            Layout.preferredHeight: 8
+            Layout.preferredWidth: borderWidth
+            Layout.preferredHeight: borderWidth
             Layout.alignment: Qt.AlignVCenter
-            radius: 8
+            radius: borderWidth
 
             Rectangle {
                 id: circleContent
 
                 color: Styles.pageBackground
-                width: 4
-                height: 4
-                radius: 4
+                width: diameter
+                height: diameter
+                radius: diameter
                 anchors.centerIn: parent
             }
         }

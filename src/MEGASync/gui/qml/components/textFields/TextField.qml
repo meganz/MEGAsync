@@ -19,6 +19,8 @@ Rectangle {
     property int type: TextField.Type.None
     property bool showType: false
 
+    readonly property int focusWidth: textField.focusBorderWidth + textField.borderWidth
+
     // Title properties
     property string title: ""
 
@@ -236,7 +238,7 @@ Rectangle {
             color: root.enabled ? Styles.textPrimary : Styles.textDisabled
             font {
                 pixelSize: 12
-                weight: Font.Bold
+                weight: Font.DemiBold
                 family: "Inter"
                 styleName: "Medium"
             }
