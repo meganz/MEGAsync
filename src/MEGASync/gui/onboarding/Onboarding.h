@@ -64,7 +64,7 @@ signals:
     void userPassFailed();
     void twoFAFailed();
     void loginFinished();
-    void registerFinished(bool apiOk);
+    void registerFinished(bool success);
     void notNowFinished();
     void syncSetupSucces();
     void backupsUpdated(const QString& path, int errorCode, bool finished);

@@ -14,7 +14,7 @@ RegisterPageForm {
     id: registerPage
 
     nextButton.onClicked: {
-        var error = firstName.text.length === 0 && lastName.text.length === 0;
+        var error = firstName.text.length === 0 || lastName.text.length === 0;
         firstLastNameHint.visible = error;
         firstName.showType = error;
         lastName.showType = error;
@@ -81,10 +81,10 @@ RegisterPageForm {
     Connections {
         target: Onboarding
 
-        onRegisterFinished: (apiOK) => {
+        onRegisterFinished: (success) => {
             registerPage.enabled = true;
 
-            if(apiOk) {
+            if(success) {
                 password.text = "";
                 confirmPassword.text = "";
                 firstName.text = "";
@@ -92,7 +92,7 @@ RegisterPageForm {
                 email.text = "";
                 termsCheckBox.checked = false;
                 dataLossCheckBox.checked = false;
-                registerFlow.state = confirmEmail; //SET HERE CONFIRM ACCOUNT BY EMAIL PAGE??
+                registerFlow.state = confirmEmail;
             } else {
                 email.showType = true;
                 email.hintText = OnboardingStrings.errorEmailAlreadyExist;

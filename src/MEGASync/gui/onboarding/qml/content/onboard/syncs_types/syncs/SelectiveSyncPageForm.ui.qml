@@ -27,9 +27,9 @@ SyncsPage {
             top: parent.top
             left: parent.left
             right: parent.right
-            margins: 32
+            margins: contentMargin
         }
-        spacing: 32
+        spacing: contentMargin
 
         Header {
             Layout.preferredWidth: parent.width
@@ -45,12 +45,14 @@ SyncsPage {
             id: localFolderChooser
 
             Layout.preferredWidth: parent.width
+            Layout.leftMargin: -4
         }
 
         ChooseSyncFolder {
             id: remoteFolderChooser
 
             Layout.preferredWidth: parent.width
+            Layout.leftMargin: -4
             local: false
         }
     }

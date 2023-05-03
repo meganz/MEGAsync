@@ -68,21 +68,12 @@ Qml.CheckBox {
             return color;
         }
 
-        function getIconColor() {
-            var color;
-            if(checkBox.pressed && !checkBox.checked) {
-                color = Styles.buttonPrimaryPressed;
-            } else {
-                color = Styles.iconOnColor;
-            }
-            return color;
-        }
-
         width: 16
         height: 16
         radius: 4
         border.color: checkBoxOutRect.getBorderColor()
         border.width: 2
+        color: "transparent"
         opacity: checkBox.enabled ? 1.0 : 0.1
 
         Rectangle {
@@ -98,10 +89,11 @@ Qml.CheckBox {
             SvgImage {
                 id: image
 
+                visible: checkBox.checked
                 source: checkBox.indeterminate ? "images/indeterminate.svg" : "images/check.svg"
                 anchors.centerIn: inside
                 sourceSize: indeterminate ? Qt.size(8, 2) : Qt.size(8, 6.5)
-                color: checkBoxOutRect.getIconColor()
+                color: Styles.iconInverseAccent
             }
 
         }

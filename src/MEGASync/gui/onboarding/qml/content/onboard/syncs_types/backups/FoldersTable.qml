@@ -23,6 +23,8 @@ Rectangle {
     height: 186
     radius: 8
 
+    color: Styles.pageBackground
+
     Rectangle {
         id: borderRectangle
 
@@ -54,7 +56,7 @@ Rectangle {
             id: tableHeaderBackground
 
             height: 36
-            width: tableRectangle.width - 2 * tableRectangle.border.width
+            width: tableRectangle.width - tableRectangle.border.width
             Layout.topMargin: tableRectangle.border.width
             Layout.leftMargin: tableRectangle.border.width
             color: Styles.surface2
@@ -111,6 +113,7 @@ Rectangle {
                     font.pixelSize: 12
                     Layout.leftMargin: backupProxyModel.selectedFilterEnabled ? 22 : 4
                     Layout.fillWidth: true
+                    color: Styles.textPrimary
                 }
 
                 Text {

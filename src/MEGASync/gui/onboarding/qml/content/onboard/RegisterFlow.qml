@@ -59,6 +59,7 @@ Rectangle {
         anchors.fill: registerFlow
         layer.smooth: true
         layer.enabled: true
+        color: Styles.surface1
         opacity: 0.9
     }
 
@@ -68,6 +69,18 @@ Rectangle {
         source: registerFlow.state === twoFA ? Images.twofa : Images.login
         anchors.left: registerFlow.left
         anchors.verticalCenter: registerFlow.verticalCenter
+
+        NumberAnimation on opacity {
+            id: imageAimation
+
+            from: 0
+            to: 1
+            duration: 1000
+        }
+
+        onSourceChanged: {
+            imageAimation.start();
+        }
     }
 
     StackView {
@@ -127,7 +140,7 @@ Rectangle {
         }
     }
 
-    Connections{
+    Connections {
         target: Onboarding
 
         onTwoFARequired: {

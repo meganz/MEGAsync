@@ -84,6 +84,7 @@ SyncsPage {
                         font.weight: Font.DemiBold
                         font.pixelSize: 12
                         font.underline: true
+                        color: Styles.buttonPrimary
                     }
                 }
 

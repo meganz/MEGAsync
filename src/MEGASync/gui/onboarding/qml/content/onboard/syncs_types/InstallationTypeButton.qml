@@ -26,7 +26,6 @@ Button {
     Layout.preferredHeight: 96
     checkable: true
     checked: false
-    onClicked: console.info("Button clicked")
 
     background: buttonBackground
 
@@ -59,7 +58,7 @@ Button {
 
                 Text {
                     text: title
-                    color: Styles.buttonPrimaryHover
+                    color: Styles.buttonPrimary
                     Layout.preferredHeight: 24
                     font.pixelSize: 16
                     font.weight: Font.Bold
@@ -73,7 +72,7 @@ Button {
                     wrapMode: Text.WordWrap
                     lineHeightMode: Text.FixedHeight
                     Layout.preferredWidth: 324
-                    color: Styles.toastBackground
+                    color: Styles.textSecondary
                     Layout.preferredHeight: 32
                     font.pixelSize: 10
                     font.weight: Font.Light

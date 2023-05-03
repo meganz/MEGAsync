@@ -32,6 +32,7 @@ RowLayout {
         font.underline: true
         Layout.leftMargin: 32
         Layout.bottomMargin: 24
+        color: Styles.buttonPrimary
 
         MouseArea {
             anchors.fill: notNowButton

@@ -20,7 +20,17 @@ Rectangle {
     readonly property string stepSelectSyncType: "STEP_SELECT_SYNC_TYPE"
     readonly property string stepSyncFolder: "STEP_SELECT_SYNC_FOLDER"
 
-    color: Styles.alternateBackgroundColor
+    readonly property int lineLeftMargin: 42
+    readonly property int stepLeftMargin: 32
+    readonly property int subStepLeftMargin: 39
+    readonly property int layoutTopMargin: 40
+    readonly property int lineWidth: 2
+    readonly property int lineMainStepHeight: 56
+    readonly property int lineSubStepHeight: 12
+    readonly property int lineRadius: 1
+    readonly property int helpButtonMargin: 25
+
+    color: Styles.pageBackground
     height: parent.height
 
     state: step1ComputerName
@@ -410,110 +420,111 @@ Rectangle {
                 id: step1_computerName
 
                 title: OnboardingStrings.computerName
-                Layout.leftMargin: 32
-                Layout.topMargin: 40
+                Layout.leftMargin: stepLeftMargin
+                Layout.topMargin: layoutTopMargin
             }
 
             Rectangle {
                 id: step2_line
 
                 color: Styles.buttonSecondaryPressed
-                width: 2
-                height: 56
-                radius: 1
-                Layout.leftMargin: 43
+                Layout.preferredWidth: lineWidth
+                Layout.preferredHeight: lineMainStepHeight
+                radius: lineRadius
+                Layout.leftMargin: lineLeftMargin
             }
 
             Step {
                 id: step2_installationType
 
                 title: OnboardingStrings.installationType
-                Layout.leftMargin: 32
+                Layout.leftMargin: stepLeftMargin
             }
 
             Rectangle {
                 id: step3_line
 
                 color: Styles.buttonSecondaryPressed
-                width: 2
-                height: 56
-                radius: 1
-                Layout.leftMargin: 43
+                Layout.preferredWidth: lineWidth
+                Layout.preferredHeight: lineMainStepHeight
+                radius: lineRadius
+                Layout.leftMargin: lineLeftMargin
             }
 
             Step {
                 id: step3_syncs
 
                 title: OnboardingStrings.synchronize
-                Layout.leftMargin: 32
+                Layout.leftMargin: stepLeftMargin
             }
 
             ColumnLayout {
                 id: leftSubStepsLayout
 
-                Layout.preferredWidth: 224
+                Layout.preferredWidth: parent.width
                 spacing: 0
 
                 Rectangle {
                     id: step3_1_line
 
                     color: Styles.buttonSecondaryPressed
-                    Layout.preferredWidth: 2
-                    Layout.preferredHeight: 12
-                    radius: 1
-                    Layout.leftMargin: 43
+                    Layout.preferredWidth: lineWidth
+                    Layout.preferredHeight: lineSubStepHeight
+                    radius: lineRadius
+                    Layout.leftMargin: lineLeftMargin
                 }
 
                 SubStep {
                     id: step3_1_selectFolder
 
                     title: OnboardingStrings.selectFolders
-                    Layout.leftMargin: 40
+                    Layout.leftMargin: subStepLeftMargin
                 }
 
                 Rectangle {
                     id: step3_2_line
 
                     color: Styles.buttonSecondaryPressed
-                    Layout.preferredWidth: 2
-                    Layout.preferredHeight: 12
-                    radius: 1
-                    Layout.leftMargin: 43
+                    Layout.preferredWidth: lineWidth
+                    Layout.preferredHeight: lineSubStepHeight
+                    radius: lineRadius
+                    Layout.leftMargin: lineLeftMargin
                 }
 
                 SubStep {
                     id: step3_2_confirm
 
                     title: OnboardingStrings.confirm
-                    Layout.leftMargin: 40
+                    Layout.leftMargin: subStepLeftMargin
                 }
 
                 Rectangle {
                     id: step3_3_line
 
                     color: Styles.buttonSecondaryPressed
-                    Layout.preferredWidth: 2
-                    Layout.preferredHeight: 12
-                    radius: 1
-                    Layout.leftMargin: 43
+                    Layout.preferredWidth: lineWidth
+                    Layout.preferredHeight: lineSubStepHeight
+                    radius: lineRadius
+                    Layout.leftMargin: lineLeftMargin
                 }
 
                 SubStep {
                     id: step3_3_rename
 
                     title: OnboardingStrings.rename
-                    Layout.leftMargin: 40
+                    Layout.leftMargin: subStepLeftMargin
                 }
             }
 
         }
+    }
 
-        Custom.HelpButton {
-            Layout.leftMargin: 25
-            Layout.bottomMargin: 25
-            Layout.alignment: Qt.AlignBottom
-            url: Links.desktopSyncApp
-        }
+    Custom.HelpButton {
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
+        anchors.leftMargin: helpButtonMargin
+        anchors.bottomMargin: helpButtonMargin
+        url: Links.desktopSyncApp
     }
 
 }

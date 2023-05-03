@@ -26,7 +26,7 @@ Rectangle {
     property alias email: email
     property alias password: password
 
-    color: Styles.backgroundColor
+    color: Styles.pageBackground
 
     Column {
         anchors.verticalCenter: root.verticalCenter
@@ -41,8 +41,6 @@ Rectangle {
 
             anchors.left: parent.left
             anchors.right: parent.right
-            anchors.leftMargin: email.textField.focusBorderWidth
-            anchors.rightMargin: email.textField.focusBorderWidth
             font.pixelSize: 20
             text: OnboardingStrings.loginTitle
         }
@@ -50,24 +48,24 @@ Rectangle {
         Custom.EmailTextField {
             id: email
 
+            width: parent.width + 2 * focusWidth
             anchors.left: parent.left
-            anchors.right: parent.right
+            anchors.leftMargin: -focusWidth
             title: OnboardingStrings.email
         }
 
         Custom.PasswordTextField {
             id: password
 
+            width: parent.width + 2 * focusWidth
             anchors.left: parent.left
-            anchors.right: parent.right
+            anchors.leftMargin: -focusWidth
             title: OnboardingStrings.password
         }
 
         Custom.HelpButton {
             anchors.left: parent.left
             anchors.right: parent.right
-            anchors.leftMargin: email.textField.focusBorderWidth
-            anchors.rightMargin: email.textField.focusBorderWidth
             text: OnboardingStrings.forgotPassword
             url: Links.recovery
         }

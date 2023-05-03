@@ -39,6 +39,7 @@ Item {
 
     Timer {
         id: loginTimer
+
         interval: 2000;
         running: false;
         repeat: false;
@@ -64,6 +65,7 @@ Item {
 
     Timer {
         id: registerTimer
+
         interval: 2000;
         running: false;
         repeat: false;
@@ -75,6 +77,7 @@ Item {
 
     Timer {
         id: accountConfirmTimer
+
         interval: 2000;
         running: false;
         repeat: false;
@@ -102,6 +105,7 @@ Item {
 
     Timer {
         id: changeEmailTimer
+
         interval: 2000;
         running: false;
         repeat: false;
@@ -138,6 +142,7 @@ Item {
 
     Timer {
         id: addSyncTimer
+
         interval: 2000;
         running: false;
         repeat: false;

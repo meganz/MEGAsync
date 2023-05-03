@@ -12,7 +12,7 @@ Rectangle {
 
     readonly property int contentMargin: 32
 
-    color: Styles.backgroundColor
+    color: Styles.surface1
 
     Footer {
         id: footerButtons

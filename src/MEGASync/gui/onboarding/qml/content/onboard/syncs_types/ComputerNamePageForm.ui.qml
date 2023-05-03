@@ -20,7 +20,7 @@ SyncsPage {
             top: parent.top
             left: parent.left
             right: parent.right
-            margins: 32
+            margins: contentMargin
         }
         spacing: 12
 
@@ -30,8 +30,9 @@ SyncsPage {
         }
 
         Custom.SvgImage {
-            source: Images.pc
+            source: Images.pcMega
             sourceSize: Qt.size(48, 48)
+            color: Styles.textPrimary
         }
 
         Custom.TextField {

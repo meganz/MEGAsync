@@ -61,6 +61,7 @@ Rectangle {
             Layout.alignment: Qt.AlignHCenter
             Layout.preferredHeight: 208
             Layout.preferredWidth: 712
+            color: "transparent"
 
             ButtonGroup {
                 id: buttonGroup

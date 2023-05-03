@@ -23,7 +23,7 @@ SyncsPage {
             top: parent.top
             left: parent.left
             right: parent.right
-            margins: 32
+            margins: contentMargin
         }
         spacing: 24
 

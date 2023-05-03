@@ -27,7 +27,7 @@ SyncsPage {
             top: parent.top
             left: parent.left
             right: parent.right
-            margins: 32
+            margins: contentMargin
         }
         spacing: 32
 
@@ -45,6 +45,7 @@ SyncsPage {
             id: localFolderChooser
 
             Layout.preferredWidth: parent.width
+            Layout.leftMargin: -4
         }
     }
 

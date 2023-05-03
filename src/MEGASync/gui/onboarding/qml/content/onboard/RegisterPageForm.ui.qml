@@ -22,6 +22,8 @@ Rectangle {
     readonly property int scrollbarWidth: 8
     readonly property int rightFormMargin: 13 + scrollbarWidth
     readonly property int scrollViewHeight: 374
+    readonly property int checkboxSpacing: 16
+    readonly property int checkboxBottomHeight: 1
 
     property alias firstName: firstName
     property alias lastName: lastName
@@ -35,7 +37,7 @@ Rectangle {
     property alias loginButton: loginButton
     property alias nextButton: nextButton
 
-    color: Styles.backgroundColor
+    color: Styles.pageBackground
 
     Column {
         anchors.left: root.left
@@ -64,6 +66,7 @@ Rectangle {
             anchors.right: parent.right
             height: root.scrollViewHeight
             clip: true
+            wheelEnabled: formColumn.height > scrollView.height + checkboxSpacing + checkboxBottomHeight
 
             ScrollBar.vertical: ScrollBar {
                 id: scrollbar
@@ -71,15 +74,17 @@ Rectangle {
                 anchors.right: scrollView.right
                 height: scrollView.height
                 width: root.scrollbarWidth
-                visible: formColumn.height > scrollView.height
+                visible: scrollView.wheelEnabled
+
                 contentItem: Rectangle {
                     radius: 10
                     color: Styles.iconPrimary
                     opacity: scrollbar.pressed ? 0.6 : 1.0
                 }
+
                 background: Rectangle {
                     radius: 10
-                    color: "#000000"
+                    color: Styles.iconPrimary
                     opacity: 0.1
                 }
             }
@@ -95,7 +100,7 @@ Rectangle {
                 Column {
                     anchors.left: parent.left
                     anchors.right: parent.right
-                    spacing: 12
+                    spacing: 20
 
                     Column {
                         anchors.left: parent.left
@@ -173,7 +178,7 @@ Rectangle {
 
                     anchors.left: parent.left
                     anchors.right: parent.right
-                    spacing: 16
+                    spacing: checkboxSpacing
 
                     Custom.CheckBox {
                         id: dataLossCheckBox
@@ -193,6 +198,13 @@ Rectangle {
                         anchors.rightMargin: root.rightFormMargin
                         url: Links.terms
                         text: OnboardingStrings.agreeTerms
+                    }
+
+                    Rectangle {
+                        height: checkboxBottomHeight
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        color: "transparent"
                     }
                 }
             }
