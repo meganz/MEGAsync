@@ -123,7 +123,7 @@ protected:
     QString mProgramName;
     Mode mMode;
     QSystemTrayIcon *mTrayIcon;
-    MegaNotificationBase* mCurrentNotification;
+    QPointer<MegaNotificationBase> mCurrentNotification;
 
     virtual void notifySystray(Class cls, const QString &title, const QString &text, int millisTimeout, bool forceQt = false);
     virtual void notifySystray(MegaNotificationBase *notification);
