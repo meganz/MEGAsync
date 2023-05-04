@@ -30,6 +30,7 @@
 		<file>images/qml/onboarding/shield_account_proIII.svg</file>
 		<file>images/qml/onboarding/sync.svg</file>
 		<file>images/qml/onboarding/twofa.png</file>
+		<file>images/qml/onboarding/mail.svg</file>
         <file>images/qml/password/average.svg</file>
 		<file>images/qml/password/good.svg</file>
 		<file>images/qml/password/strong.svg</file>

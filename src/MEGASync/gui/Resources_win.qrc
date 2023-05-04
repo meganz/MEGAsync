@@ -1343,11 +1343,5 @@
         <file>images/icons/folder/small-folder-outgoing-disabled.png</file>
         <file>images/icons/folder/small-folder-outgoing-disabled@2x.png</file>
         <file>images/icons/folder/small-folder-outgoing-disabled@3x.png</file>
-        <file>images/qml/password/average.svg</file>
-        <file>images/qml/password/good.svg</file>
-        <file>images/qml/password/strong.svg</file>
-        <file>images/qml/password/very_weak.svg</file>
-        <file>images/qml/password/weak.svg</file>
-        <file>images/qml/onboarding/mail.svg</file>
     </qresource>
 </RCC>
