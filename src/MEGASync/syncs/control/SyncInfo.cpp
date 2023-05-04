@@ -60,10 +60,13 @@ void SyncInfo::removeSyncedFolderByBackupId(MegaHandle backupId)
         return;
     }
 
-    if (cs->isActive())
+    if(cs->isActive())
     {
         deactivateSync(cs);
     }
+
+    Platform::getInstance()->syncFolderRemoved(cs->getLocalFolder(), cs->name(true), cs->getSyncID());
+
     assert(preferences->logged());
 
     preferences->removeSyncSetting(cs);
@@ -171,10 +174,6 @@ void SyncInfo::activateSync(std::shared_ptr<SyncSettings> syncSetting)
 
 void SyncInfo::deactivateSync(std::shared_ptr<SyncSettings> syncSetting)
 {
-    if(syncSetting->isActive())
-    {
-        Platform::getInstance()->syncFolderRemoved(syncSetting->getLocalFolder(), syncSetting->name(true), syncSetting->getSyncID());
-    }
     Platform::getInstance()->notifyItemChange(syncSetting->getLocalFolder(), MegaApi::STATE_NONE);
 }
 

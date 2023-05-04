@@ -36,7 +36,7 @@ using namespace mega;
 
 // https://wiki.ubuntu.com/NotificationDevelopmentGuidelines recommends at least 128
 const int FREEDESKTOP_NOTIFICATION_ICON_SIZE = 128;
-const QString& MegaNotification::defaultImage = QString::fromUtf8("://images/app_128.png");
+const QString& MegaNotificationBase::defaultImage = QString::fromUtf8("://images/app_128.png");
 
 
 Notificator::Notificator(const QString &programName, QSystemTrayIcon *trayicon, QObject *parent) :

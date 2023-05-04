@@ -65,6 +65,7 @@ void TransferData::update(mega::MegaTransfer* transfer)
         mTag = transfer->getTag();
 
         mPath = QString::fromUtf8(transfer->getPath());
+        mFolderTransferTag = transfer->getFolderTransferTag();
 
         mFilename = QString::fromUtf8(transfer->getFileName());
         mType = static_cast<TransferData::TransferType>(1 << transfer->getType());
@@ -78,7 +79,7 @@ void TransferData::update(mega::MegaTransfer* transfer)
         //Update priority before setState as the setState changes the priority
         mPriority = transfer->getPriority();
 
-        setState(static_cast<TransferData::TransferState>(1 << transfer->getState()));
+        setState(convertState(transfer->getState()));
         mNotificationNumber = transfer->getNotificationNumber();
         mErrorCode = MegaError::API_OK;
         mErrorValue = 0LL;
@@ -189,6 +190,11 @@ void TransferData::resetIgnoreUpdateUntilSameState()
     mIgnorePauseQueueState = false;
 }
 
+TransferData::TransferState TransferData::convertState(int state)
+{
+    return static_cast<TransferData::TransferState>(1 << state);
+}
+
 void TransferData::setState(const TransferState &state)
 {
     if(mState != state)
@@ -253,12 +259,17 @@ int64_t TransferData::getSecondsSinceFinished() const
     return ((QDateTime::currentMSecsSinceEpoch()/ 100) - (preferences->getMsDiffTimeWithSDK() + mFinishedTime))/10;
 }
 
-QString TransferData::getFormattedFinishedTime() const
+QDateTime TransferData::getFinishedDateTime() const
 {
     auto preferences = Preferences::instance();
     qint64 secs = (preferences->getMsDiffTimeWithSDK() + mFinishedTime)/10;
+    return QDateTime::fromTime_t(static_cast<uint>(secs)).toLocalTime();
+}
 
-    return QDateTime::fromTime_t(static_cast<uint>(secs)).toLocalTime().toString(QString::fromLatin1("hh:mm"));
+QString TransferData::getFormattedFinishedTime() const
+{
+    auto dateTime = getFinishedDateTime();
+    return dateTime.toString(QString::fromLatin1("hh:mm"));
 }
 
 QString TransferData::getFullFormattedFinishedTime() const
@@ -370,7 +381,49 @@ bool TransferData::isCompleting() const
 
 bool TransferData::isFailed() const
 {
-    return mState & TRANSFER_FAILED;
+    return mState & TRANSFER_FAILED && mFailedTransfer;
+}
+
+bool TransferData::isPermanentFail() const
+{
+    auto hasFailed = isFailed();
+    if(hasFailed && !isUpload())
+    {
+        mega::MegaError error = mFailedTransfer->getLastError();
+        if(error.getErrorCode() == mega::MegaError::API_EARGS
+                || error.getErrorCode() == mega::MegaError::API_ENOENT || error.getErrorCode() == mega::MegaError::API_EREAD)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool TransferData::canBeRetried() const
+{
+    auto result(true);
+
+    if(!isFailed())
+    {
+        return result;
+    }
+
+    if(isSyncTransfer())
+    {
+        result = false;
+    }
+    else if(!isUpload())
+    {
+        mega::MegaError error = mFailedTransfer->getLastError();
+        if(error.getErrorCode() == mega::MegaError::API_EARGS
+                || (error.getErrorCode() == mega::MegaError::API_ENOENT || error.getErrorCode() == mega::MegaError::API_EREAD))
+        {
+            result = false;
+        }
+    }
+
+    return result;
 }
 
 bool TransferData::isCancelled() const

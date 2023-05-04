@@ -61,9 +61,10 @@ void SyncController::addSync(const QString& localFolder, const MegaHandle& remot
 {
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Adding sync (%1) \"%2\" for path \"%3\"")
                  .arg(getSyncTypeString(type), syncName, localFolder).toUtf8().constData());
-
+    QString syncCleanName = syncName;
+    syncCleanName.remove(Utilities::FORBIDDEN_CHARS_RX);
     mApi->syncFolder(type, localFolder.toUtf8().constData(),
-                     syncName.isEmpty() ? getSyncNameFromPath(localFolder).toUtf8().constData() : syncName.toUtf8().constData(),
+                     syncCleanName.isEmpty() ? getSyncNameFromPath(localFolder).toUtf8().constData() : syncCleanName.toUtf8().constData(),
                      remoteHandle, nullptr, mDelegateListener);
 }
 
@@ -529,16 +530,6 @@ QString SyncController::getSyncTypeString(const mega::MegaSync::SyncType& syncTy
             typeString = QLatin1String("Backup");
             break;
         }
-//        case MegaSync::SyncType::TYPE_UP:
-//        {
-//            typeString = QLatin1String("One-way: up");
-//            break;
-//        }
-//        case MegaSync::SyncType::TYPE_DOWN:
-//        {
-//            typeString = QLatin1String("One-way: down");
-//            break;
-//        }
         case MegaSync::SyncType::TYPE_UNKNOWN:
         default:
         {

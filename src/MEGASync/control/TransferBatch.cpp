@@ -32,7 +32,7 @@ void TransferBatch::add(const QString &nodePath, const QString& nodeName)
         nodePathWithNativeSeparators = nodePathWithNativeSeparators + QString::fromUtf8(escapedChar.get());
     }
 
-    mPendingNodes.push_back(nodePathWithNativeSeparators);
+    mPendingNodes.push_back(nodePathWithNativeSeparators.normalized(QString::NormalizationForm_C));
 }
 
 void TransferBatch::cancel()
@@ -46,7 +46,7 @@ void TransferBatch::onScanCompleted(const QString& nodePath)
     std::unique_ptr<char[]>  escapedChar(MegaSyncApp->getMegaApi()->unescapeFsIncompatible(nodePathCopy.c_str()));
     QString convertedNodePath = QDir::toNativeSeparators(QString::fromUtf8(escapedChar.get()));
 
-    auto it = std::find(mPendingNodes.begin(), mPendingNodes.end(), convertedNodePath);
+    auto it = std::find(mPendingNodes.begin(), mPendingNodes.end(), convertedNodePath.normalized(QString::NormalizationForm_C));
     if (it != mPendingNodes.end())
     {
         mPendingNodes.erase(it);
@@ -118,12 +118,12 @@ void BlockingBatch::setAsUnblocked()
     clearBatch();
 }
 
-void BlockingBatch::onTransferFinished(const QString& nodePath)
+void BlockingBatch::onTransferFinished(const QString& nodePath, bool stillProcessing)
 {
     if (isValid())
     {
         mBatch->onScanCompleted(nodePath);
-        if (mBatch->isEmpty())
+        if (!stillProcessing && mBatch->isEmpty())
         {
             clearBatch();
         }

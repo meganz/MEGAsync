@@ -234,6 +234,11 @@ const QList<std::shared_ptr<DuplicatedNodeInfo> > &DuplicatedNodeDialog::getReso
     return mResolvedUploads;
 }
 
+bool DuplicatedNodeDialog::isEmpty() const
+{
+    return mFileConflicts.isEmpty() && mFolderConflicts.isEmpty();
+}
+
 void DuplicatedNodeDialog::show()
 {
     //Show folders conflicts

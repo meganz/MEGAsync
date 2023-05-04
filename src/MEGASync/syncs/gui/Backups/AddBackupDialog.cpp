@@ -4,6 +4,7 @@
 #include "UserAttributesRequests/MyBackupsHandle.h"
 #include "Utilities.h"
 #include "Platform.h"
+#include "DialogOpener.h"
 
 #include "QMegaMessageBox.h"
 
@@ -100,8 +101,7 @@ void AddBackupDialog::checkNameConflict()
     if(!BackupNameConflictDialog::backupNamesValid(pathList))
     {
         BackupNameConflictDialog* conflictDialog = new BackupNameConflictDialog(pathList, this);
-        connect(conflictDialog, &BackupNameConflictDialog::accepted,
-                this, &AddBackupDialog::onConflictSolved);
+        DialogOpener::showDialog<BackupNameConflictDialog>(conflictDialog, this, &AddBackupDialog::onConflictSolved);
     }
     else
     {
@@ -109,13 +109,15 @@ void AddBackupDialog::checkNameConflict()
     }
 }
 
-void AddBackupDialog::onConflictSolved()
+void AddBackupDialog::onConflictSolved(QPointer<BackupNameConflictDialog> dialog)
 {
-    auto conflictDialog = qobject_cast<BackupNameConflictDialog*>(sender());
-    QMap<QString, QString> changes = conflictDialog->getChanges();
-    for(auto it = changes.cbegin(); it!=changes.cend(); ++it)
+    if(dialog->result() == QDialog::Accepted)
     {
-        mBackupName = it.value();
+        QMap<QString, QString> changes = dialog->getChanges();
+        for(auto it = changes.cbegin(); it!=changes.cend(); ++it)
+        {
+            mBackupName = it.value();
+        }
+        accept();
     }
-    accept();
 }

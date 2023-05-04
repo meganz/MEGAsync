@@ -31,7 +31,7 @@ private slots:
     void on_changeButton_clicked();
     void onDeviceNameSet(const QString& devName);
     void checkNameConflict();
-    void onConflictSolved();
+    void onConflictSolved(QPointer<BackupNameConflictDialog> dialog);
 
 private:
     Ui::AddBackupDialog *mUi;

@@ -254,7 +254,14 @@ void DesktopNotifications::processAlert(mega::MegaUserAlert* alert)
         {
             const QString message{tr("New shared folder from [A]")
                         .replace(QString::fromUtf8("[A]"), fullName)};
-            notifySharedUpdate(alert, message, NEW_SHARE);
+
+            //Temporary fix. Found a race condition that causes that all nodes are not key decrypted when the SDK event arrives.
+            //Delaying the notification 2 seconds fixes the problem, for the moment.
+            std::shared_ptr<mega::MegaUserAlert> alertCopy(alert->copy());
+            QTimer::singleShot(2000, this, [this, alertCopy, message]()
+            {
+                notifySharedUpdate(alertCopy.get(), message, NEW_SHARE);
+            });
         }
         break;
     }
@@ -405,9 +412,9 @@ void DesktopNotifications::notifySharedUpdate(mega::MegaUserAlert *alert, const 
         const auto megaApi = static_cast<MegaApplication*>(qApp)->getMegaApi();
         const auto fullAccess = megaApi->getAccess(node.get()) >= mega::MegaShare::ACCESS_FULL;
         QStringList actions (tr("Show in MEGA"));
-        if(type == NEW_SHARE 
-            && fullAccess 
-            && node->isNodeKeyDecrypted())
+        if(type == NEW_SHARE
+                && fullAccess
+                && node->isNodeKeyDecrypted())
         {
             actions << tr("Sync");
             QObject::connect(notification, &MegaNotification::activated, this, &DesktopNotifications::replyNewShareReceived);
@@ -695,32 +702,58 @@ void DesktopNotifications::actionPressedOnDownloadFinishedTransferNotification(M
         return;
     }
 
-    auto dataId = notification->getData().toULongLong();
-    auto data = TransferMetaDataContainer::getAppData<DownloadTransferMetaData>(dataId);
-    if(data)
+    if(notification->getData().isValid())
     {
+        auto dataId = notification->getData().toULongLong();
+        auto data = TransferMetaDataContainer::getAppData<DownloadTransferMetaData>(dataId);
+        if(data)
+        {
+            switch(action)
+            {
+                case MegaNotification::Action::firstButton:
+                {
+                    if(data->allHaveFailed())
+                    {
+                        data->unlinkNotification();
+                        MegaSyncApp->getTransfersModel()->retryTransfersByAppDataId(data);
+                    }
+                    else
+                    {
+                        auto localPaths = data->getLocalPaths();
+                        if(!localPaths.isEmpty())
+                        {
+                            Platform::getInstance()->showInFolder(localPaths.first());
+                        }
+                        else
+                        {
+                            QtConcurrent::run(QDesktopServices::openUrl,
+                                              QUrl::fromLocalFile(data->getLocalTargetPath()));
+                        }
+                    }
+                    break;
+                }
+                case MegaNotification::Action::secondButton:
+                {
+                    if(data->isSingleTransfer())
+                    {
+                        auto localPaths = data->getLocalPaths();
+                        if(!localPaths.isEmpty())
+                        {
+                            QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(localPaths.first()));
+                        }
+                    }
+                    else
+                    {
+                        if(data->someHaveFailed())
+                        {
+                            data->unlinkNotification();
+                            MegaSyncApp->getTransfersModel()->retryTransfersByAppDataId(data);
+                        }
+                    }
 
-        switch(action)
-        {
-        case MegaNotification::Action::firstButton:
-        {
-            if(data->isSingleTransfer() && !data->getLocalPaths().isEmpty())
-            {
-                Platform::getInstance()->showInFolder(data->getLocalPaths().first());
+                    break;
+                }
             }
-            else
-            {
-                auto path = data->getData().toString();
-                QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(path));
-            }
-            break;
-        }
-        case MegaNotification::Action::secondButton:
-        {
-            auto path = data->getData().toString();
-            QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(path));
-            break;
-        }
         }
     }
 }
@@ -743,15 +776,34 @@ void DesktopNotifications::actionPressedOnUploadFinishedTransferNotification(Meg
             {
             case MegaNotification::Action::firstButton:
             {
-                auto node = UploadTransferMetaData::getDestinationNodeByData(data);
-                viewShareOnWebClientByHandle(QString::fromUtf8(node->getBase64Handle()));
+                if(data->allHaveFailed())
+                {
+                    data->unlinkNotification();
+                    MegaSyncApp->getTransfersModel()->retryTransfersByAppDataId(data);
+                }
+                else
+                {
+                    auto node = UploadTransferMetaData::getDestinationNodeByData(data);
+                    if(node)
+                    {
+                        viewShareOnWebClientByHandle(QString::fromUtf8(node->getBase64Handle()));
+                    }
+                }
 
                 break;
             }
             case MegaNotification::Action::secondButton:
             {
-                auto nodes = UploadTransferMetaData::getNodesByData(data);
-                getRemoteNodeLink(nodes);
+                if(data->someHaveFailed())
+                {
+                    data->unlinkNotification();
+                    MegaSyncApp->getTransfersModel()->retryTransfersByAppDataId(data);
+                }
+                else if(data->isSingleTransfer())
+                {
+                    QList<std::shared_ptr<mega::MegaNode>> nodes = UploadTransferMetaData::getNodesByData(data);
+                    getRemoteNodeLink(nodes);
+                }
                 break;
             }
             }

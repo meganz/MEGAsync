@@ -51,6 +51,7 @@ public:
         bool isAnyCompleted() const;
         bool isAnyActive() const;
         bool isAnyFailed() const;
+        bool areAllFailsPermanent() const;
 
         bool isEmpty() const;
         int  transfersCount() const;
@@ -78,7 +79,7 @@ protected:
         bool lessThan(const QModelIndex& left, const QModelIndex& right) const override;
         QMimeData* mimeData(const QModelIndexList &indexes) const override;
         bool dropMimeData(const QMimeData* data, Qt::DropAction action, int destRow,
-                                          int column, const QModelIndex& parent);
+                                          int column, const QModelIndex& parent) override;
 
 protected:
         TransferData::TransferStates mTransferStates;
@@ -98,6 +99,7 @@ protected:
         mutable QSet<int> mCompletedTransfers;
         mutable QSet<int> mCompletingTransfers;
         mutable QSet<int> mFailedTransfers;
+        mutable QSet<int> mPermanentFailedTransfers;
 
 private slots:
         void onRowsAboutToBeRemoved(const QModelIndex& parent, int first, int last);

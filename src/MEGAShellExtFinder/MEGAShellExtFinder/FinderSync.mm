@@ -8,12 +8,12 @@
 #include <map>
 #include <iostream>
 
-static std::map<std::string , FileState> pathStatus;
+static std::map<std::string , NodeInfo> pathStatus;
 
 // dirPath is the path of a folder, with a trailing '/'
 void cleanItemsOfFolder(std::string dirPath)
 {
-    std::map<std::string, FileState>::iterator it = pathStatus.lower_bound(dirPath);
+    std::map<std::string, NodeInfo>::iterator it = pathStatus.lower_bound(dirPath);
     while (it != pathStatus.end())
     {
         const std::string &tempPath = it->first;
@@ -99,15 +99,19 @@ void cleanItemsOfFolder(std::string dirPath)
 - (void)requestBadgeIdentifierForURL:(NSURL *)url {
     
     //NSLog(@"requestBadgeIdentifierForURL:%@", url.filePathURL);
+    NodeInfo info;
+    info.state = FileState::FILE_NONE;
+    info.isIncomingShare = false;
     NSString *path = [[NSString alloc] initWithString:[url path]];
     if ([self isDirectory:url])
     {
         NSString* folderPath = [path stringByAppendingString:@"/"];
-        pathStatus.emplace(folderPath.precomposedStringWithCanonicalMapping.UTF8String, FileState::FILE_NONE);
+        
+        pathStatus.emplace(folderPath.precomposedStringWithCanonicalMapping.UTF8String, info);
     }
     else
     {
-        pathStatus.emplace(path.precomposedStringWithCanonicalMapping.UTF8String, FileState::FILE_NONE);
+        pathStatus.emplace(path.precomposedStringWithCanonicalMapping.UTF8String, info);
     }
     
     [_ext sendRequest:path type:@"P"];
@@ -152,6 +156,8 @@ void cleanItemsOfFolder(std::string dirPath)
         selectedItemURLs = [NSArray arrayWithObjects:[[FIFinderSyncController defaultController] targetedURL], nil];
     }
     
+    int numOfIncomingShares = 0;
+    
     for (NSURL *url in selectedItemURLs)
     {
         NSMutableString *path = [[NSMutableString alloc] initWithString:[url path]];
@@ -161,16 +167,24 @@ void cleanItemsOfFolder(std::string dirPath)
             [path appendString:@"/"];
         }
         
-        std::map<std::string, FileState>::iterator it = pathStatus.find(path.precomposedStringWithCanonicalMapping.UTF8String);
-        if (it != pathStatus.end() && it->second == FileState::FILE_SYNCED)
+        std::map<std::string, NodeInfo>::iterator it = pathStatus.find(path.precomposedStringWithCanonicalMapping.UTF8String);
+        if (it != pathStatus.end())
         {
-            if (urlIsDirectory)
+            if(it->second.state == FileState::FILE_SYNCED)
             {
-                numFolders++;
+                if (urlIsDirectory)
+                {
+                    numFolders++;
+                }
+                else
+                {
+                    numFiles++;
+                }
             }
-            else
+            
+            if(it->second.isIncomingShare)
             {
-                numFiles++;
+                numOfIncomingShares++;
             }
         }
     }
@@ -189,12 +203,15 @@ void cleanItemsOfFolder(std::string dirPath)
     }
     
     NSImage *icon = [NSImage imageNamed:@"context-ico.icns"];
-    NSMenuItem *getLinkItem = [[NSMenuItem alloc] initWithTitle:[self createContextStringWithFiles:numFiles folders:numFolders] action:nil keyEquivalent:@""];
-    [menu setAutoenablesItems:NO];
-    [getLinkItem setEnabled:YES];
-    [getLinkItem setImage:(whichMenu == FIMenuKindContextualMenuForItems) ? icon : nil];
-    [getLinkItem setAction:@selector(getMEGAlinks:)];
-    [menu addItem:getLinkItem];
+    if(numOfIncomingShares == 0)
+    {
+        NSMenuItem *getLinkItem = [[NSMenuItem alloc] initWithTitle:[self createContextStringWithFiles:numFiles folders:numFolders] action:nil keyEquivalent:@""];
+        [menu setAutoenablesItems:NO];
+        [getLinkItem setEnabled:YES];
+        [getLinkItem setImage:(whichMenu == FIMenuKindContextualMenuForItems) ? icon : nil];
+        [getLinkItem setAction:@selector(getMEGAlinks:)];
+        [menu addItem:getLinkItem];
+    }
     
     if (selectedItemURLs.count == 1)
     {
@@ -283,7 +300,7 @@ void cleanItemsOfFolder(std::string dirPath)
     [FIFinderSyncController defaultController].directoryURLs = _syncPaths;
 }
 
-- (void)onItemChanged:(NSString *)urlPath withState:(int)state shouldShowBadges:(int)badge{
+- (void)onItemChanged:(NSString *)urlPath withState:(int)state shouldShowBadges:(int)badge isIncomingShare:(int)share{
     
     //NSLog(@"state: %i for path: %@ showBadge: %i", state, urlPath, badge);
     
@@ -293,13 +310,18 @@ void cleanItemsOfFolder(std::string dirPath)
     }
     
     std::string path = urlPath.precomposedStringWithCanonicalMapping.UTF8String;
-    std::map<std::string, FileState>::iterator it = pathStatus.find(path);
+    std::map<std::string, NodeInfo>::iterator it = pathStatus.find(path);
     if (it != pathStatus.end())
     {
-        it->second = (FileState)state;
+        it->second.state = (FileState)state;
+        it->second.isIncomingShare = (bool)share;
         if (badge)
         {
             [[FIFinderSyncController defaultController] setBadgeIdentifier:[self badgeIdentifierFromCode:state] forURL:[NSURL fileURLWithPath:urlPath]];
+        }
+        else
+        {
+            [[FIFinderSyncController defaultController] setBadgeIdentifier:[self badgeIdentifierFromCode:FILE_NONE] forURL:[NSURL fileURLWithPath:urlPath]];
         }
         
         return;
@@ -308,7 +330,10 @@ void cleanItemsOfFolder(std::string dirPath)
     NSString *basePath = [urlPath stringByDeletingLastPathComponent];
     if ([_directories containsObject:basePath])
     {
-        pathStatus.emplace(path, (FileState)state);
+        NodeInfo info;
+        info.state = (FileState)state;
+        info.isIncomingShare = (bool)share;
+        pathStatus.emplace(path, info);
         if (badge)
         {
             [[FIFinderSyncController defaultController] setBadgeIdentifier:[self badgeIdentifierFromCode:state] forURL:[NSURL fileURLWithPath:urlPath]];

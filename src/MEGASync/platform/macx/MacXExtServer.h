@@ -48,6 +48,35 @@ private:
    QList<QPointer<MacXLocalSocket>> m_clients;
    bool GetAnswerToRequest(const char *buf, QByteArray *response);
    void clientDisconnected(QPointer<MacXLocalSocket> client);
+   template <class COMMAND>
+   void addIsIncomingShareToCommand(std::string* path, COMMAND* command)
+   {
+       command->append(":");
+       std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getSyncedNode(path));
+       if(!node || MegaSyncApp->getMegaApi()->checkAccess(node.get(), mega::MegaShare::ACCESS_OWNER).getErrorCode() == mega::MegaError::API_OK)
+       {
+           command->append("0");
+       }
+       else
+       {
+           command->append("1");
+       }
+   }
+
+   template <class COMMAND>
+   void addOverlayIconsDisabledToCommand(COMMAND* command)
+   {
+       command->append(":");
+       if (Preferences::instance()->overlayIconsDisabled()) // Respond to extension to not show badges
+       {
+           command->append("0");
+       }
+       else // Respond to extension to show badges
+       {
+           command->append("1");
+       }
+   }
+
 
 signals:
    void newUploadQueue(QQueue<QString> uploadQueue);

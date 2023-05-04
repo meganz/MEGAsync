@@ -10,8 +10,11 @@
 #include "NodeNameSetterDialog/RenameNodeDialog.h"
 #include "DialogOpener.h"
 #include <MegaNodeNames.h>
+#include "NodeNameSetterDialog/NewFolderDialog.h"
 
 const int NodeSelectorTreeViewWidget::LOADING_VIEW_THRESSHOLD = 500;
+const int NodeSelectorTreeViewWidget::LABEL_ELIDE_MARGIN = 250;
+const char* NodeSelectorTreeViewWidget::FULL_NAME_PROPERTY = "full_name";
 
 NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(SelectTypeSPtr mode, QWidget *parent) :
     QWidget(parent),
@@ -41,9 +44,7 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(SelectTypeSPtr mode, QWid
     connect(ui->leSearch, &SearchLineEdit::search, this, &NodeSelectorTreeViewWidget::onSearch);
     checkBackForwardButtons();
 
-    mLoadingScene.setView(ui->tMegaFolders);
-    mLoadingScene.setDelayTimeToShowInMs(100);
-    connect(&mLoadingScene, &ViewLoadingSceneBase::sceneVisibilityChange, this, &NodeSelectorTreeViewWidget::onUiBlocked);
+    connect(&ui->tMegaFolders->loadingView(), &ViewLoadingSceneBase::sceneVisibilityChange, this, &NodeSelectorTreeViewWidget::onUiBlocked);
 
     foreach(auto& button, ui->searchButtonsWidget->findChildren<QAbstractButton*>())
     {
@@ -97,6 +98,22 @@ void NodeSelectorTreeViewWidget::showDefaultUploadOption(bool show)
 void NodeSelectorTreeViewWidget::setSearchText(const QString &text)
 {
     ui->leSearch->setText(text);
+}
+
+void NodeSelectorTreeViewWidget::setTitleText(const QString &nodeName)
+{
+    ui->lFolderName->setProperty(FULL_NAME_PROPERTY, nodeName);
+
+    QFontMetrics fm = ui->lFolderName->fontMetrics();
+
+    QString elidedText = fm.elidedText(nodeName, Qt::ElideMiddle, ui->tMegaFolders->width() - LABEL_ELIDE_MARGIN);
+    ui->lFolderName->setText(elidedText);
+
+    if(elidedText != nodeName)
+        ui->lFolderName->setToolTip(nodeName);
+    else
+        ui->lFolderName->setToolTip(QString());
+
 }
 
 void NodeSelectorTreeViewWidget::clearSearchText()
@@ -154,6 +171,8 @@ void NodeSelectorTreeViewWidget::resizeEvent(QResizeEvent *)
     {
         ui->tMegaFolders->setColumnWidth(NodeSelectorModel::COLUMN::NODE, qRound(ui->stackedWidget->width() * 0.50));
     }
+
+    setTitleText(ui->lFolderName->property(FULL_NAME_PROPERTY).toString());
 }
 
 void NodeSelectorTreeViewWidget::onSectionResized()
@@ -204,6 +223,7 @@ void NodeSelectorTreeViewWidget::onExpandReady()
         connect(ui->tMegaFolders, &NodeSelectorTreeView::renameNodeClicked, this, &NodeSelectorTreeViewWidget::onRenameClicked);
         connect(ui->tMegaFolders, &NodeSelectorTreeView::getMegaLinkClicked, this, &NodeSelectorTreeViewWidget::onGenMEGALinkClicked);
         connect(ui->tMegaFolders, &QTreeView::doubleClicked, this, &NodeSelectorTreeViewWidget::onItemDoubleClick);
+        connect(ui->tMegaFolders, &NodeSelectorTreeView::nodeSelected, this, &NodeSelectorTreeViewWidget::okBtnClicked);
         connect(ui->bForward, &QPushButton::clicked, this, &NodeSelectorTreeViewWidget::onGoForwardClicked);
         connect(ui->bBack, &QPushButton::clicked, this, &NodeSelectorTreeViewWidget::onGoBackClicked);
         connect(ui->tMegaFolders->header(), &QHeaderView::sectionResized, this, &NodeSelectorTreeViewWidget::onSectionResized);
@@ -289,7 +309,17 @@ void NodeSelectorTreeViewWidget::onbNewFolderClicked()
         //2) The dialog has been rejected because the folder already exists. If so, select the existing folder
         if(newNode)
         {
-            if(dialog->result() == QDialog::Accepted)
+#ifdef Q_OS_LINUX
+            //It seems that the NodeSelector is not activated when the NewFolderDialog is closed,
+            //so the ui->tMegaFolders is not correctly focused
+            qApp->setActiveWindow(parentWidget()->parentWidget());
+#endif
+
+            //Set the focus to the view to allow the user to press enter (or go back, in a future feature)
+            ui->tMegaFolders->setFocus();
+
+            QModelIndex idx = ui->tMegaFolders->rootIndex();
+            if(!idx.isValid())
             {
                 QModelIndex idx = ui->tMegaFolders->rootIndex();
                 if(!idx.isValid())
@@ -298,8 +328,9 @@ void NodeSelectorTreeViewWidget::onbNewFolderClicked()
                 }
                 mProxyModel->setExpandMapped(true);
                 mProxyModel->addNode(std::move(newNode), idx);
-                ui->bOk->setFocus();
             }
+            mProxyModel->setExpandMapped(true);
+            mProxyModel->addNode(std::move(newNode), idx);
         }
     });
 }
@@ -348,9 +379,7 @@ std::unique_ptr<NodeSelectorProxyModel> NodeSelectorTreeViewWidget::createProxyM
 
 void NodeSelectorTreeViewWidget::setLoadingSceneVisible(bool blockUi)
 {
-    ui->tMegaFolders->blockSignals(blockUi);
-    ui->tMegaFolders->header()->blockSignals(blockUi);
-    mLoadingScene.toggleLoadingScene(blockUi);
+    ui->tMegaFolders->loadingView().toggleLoadingScene(blockUi);
 
     if(!blockUi)
     {
@@ -428,7 +457,7 @@ void NodeSelectorTreeViewWidget::onRenameClicked()
         return;
     }
 
-    QPointer<RenameRemoteNodeDialog> dialog(new RenameRemoteNodeDialog(std::move(node), nullptr));
+    QPointer<RenameRemoteNodeDialog> dialog(new RenameRemoteNodeDialog(std::move(node), this));
     dialog->init();
     DialogOpener::showDialog(dialog, [this, dialog]
     {
@@ -589,14 +618,13 @@ void NodeSelectorTreeViewWidget::setRootIndex(const QModelIndex &proxy_idx)
 
     if(!node_column_idx.isValid())
     {
-        ui->lFolderName->setText(getRootText());
+        setTitleText(getRootText());
 
         QModelIndexList selectedIndexes = ui->tMegaFolders->selectionModel()->selectedIndexes();
         foreach(auto& selection, selectedIndexes)
         {
             ui->tMegaFolders->selectionModel()->select(selection, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
         }
-        ui->lFolderName->setToolTip(QString());
         ui->lOwnerIcon->setPixmap(QPixmap());
         ui->avatarSpacer->spacerItem()->changeSize(0, 0);
         ui->lIcon->setPixmap(QPixmap());
@@ -630,16 +658,7 @@ void NodeSelectorTreeViewWidget::setRootIndex(const QModelIndex &proxy_idx)
     auto node = item->getNode();
     if(node)
     {
-        QString nodeName = MegaNodeNames::getNodeName(node.get());
-        QFontMetrics fm = ui->lFolderName->fontMetrics();
-
-        QString elidedText = fm.elidedText(nodeName, Qt::ElideMiddle, ui->lFolderName->width());
-        ui->lFolderName->setText(elidedText);
-
-        if(elidedText != nodeName)
-            ui->lFolderName->setToolTip(nodeName);
-        else
-            ui->lFolderName->setToolTip(QString());
+        setTitleText(MegaNodeNames::getNodeName(node.get()));
     }
 }
 

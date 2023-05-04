@@ -209,6 +209,7 @@ void MegaProxyStyle::polish(QWidget *widget)
             dialog->installEventFilter(this);
         }
     }
+
 #endif
 
     QProxyStyle::polish(widget);
@@ -239,24 +240,20 @@ bool MegaProxyStyle::event(QEvent *e)
     return QProxyStyle::event(e);
 }
 
-bool MegaProxyStyle::eventFilter(QObject *obj, QEvent *e)
+bool MegaProxyStyle::eventFilter(QObject *watched, QEvent *event)
 {
 #ifdef Q_OS_MAC
-    if(e->type() == QEvent::Enter)
+    if(event->type() == QEvent::Enter)
     {
         if (QOperatingSystemVersion::current() > QOperatingSystemVersion::MacOSBigSur) //It only fails from macOS Ventura
         {
-            if(auto dialog = qobject_cast<QDialog*>(obj))
+            if(auto dialog = qobject_cast<QDialog*>(watched))
             {
-                if(!dialog->isActiveWindow())
-                {
-                    qApp->setActiveWindow(dialog);
-                }
-
-                dialog->update();
+                qApp->setActiveWindow(dialog);
+                dialog->repaint();
             }
         }
     }
 #endif
-    return QObject::eventFilter(obj, e);
+    return QProxyStyle::eventFilter(watched, event);
 }
