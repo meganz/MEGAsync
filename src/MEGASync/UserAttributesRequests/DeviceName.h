@@ -25,7 +25,7 @@ public:
     bool setDeviceName(const QString& deviceName);
 
 signals:
-    void attributeReady(const QString&);
+    void attributeReady(const QString& deviceName);
 
 private:
     void processGetDeviceNameCallback(mega::MegaRequest *incoming_request, mega::MegaError *e);

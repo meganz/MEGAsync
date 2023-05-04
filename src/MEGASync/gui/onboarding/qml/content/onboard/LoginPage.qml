@@ -61,16 +61,7 @@ LoginPageForm {
         {
             loginButton.busyIndicatorVisible = false;
             state = normalStatus;
-            if(twoFARequired)
-            {
-                registerFlow.state = twoFA;
-            }
-            else
-            {
-                onboardingFlow.state = syncs;
-                loginButton.progressValue = 0;
-            }
-
+            onboardingFlow.state = syncs;
         }
     }
 
@@ -103,13 +94,12 @@ LoginPageForm {
         }
 
         onLoginFinished: {
-            loginButton.animationDuration = 1000;
             state = fetchNodesStatus;
         }
 
         onTwoFARequired: {
-            twoFARequired = true;
-            loginButton.progressValue = 1;
+            loginButton.busyIndicatorVisible = false;
+            registerFlow.state = twoFA;
         }
     }
 }

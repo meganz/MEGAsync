@@ -70,10 +70,6 @@ QString Onboarding::contextName()
     return QString::fromUtf8("Onboarding");
 }
 
-void Onboarding::onRequestStart(MegaApi*, MegaRequest* request)
-{
-}
-
 void Onboarding::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* error)
 {
     switch(request->getType())
@@ -82,13 +78,15 @@ void Onboarding::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* erro
     {
         if (error->getErrorCode() == MegaError::API_OK)
         {
+            if(mPreferences->logged())
+            {
+                return;
+            }
             qDebug() << "Onboarding::onRequestFinish -> TYPE_LOGIN API_OK";
             mPreferences->setAccountStateInGeneral(Preferences::STATE_LOGGED_OK);
-            auto email = request->getEmail();
-            mEmail = QString::fromUtf8(email);
+            mEmail = QString::fromUtf8(request->getEmail());
             emit emailChanged(mEmail);
             mPreferences->setEmailAndGeneralSettings(mEmail);
-           // MegaSyncApp->fetchNodes(QString::fromUtf8(email ? email : "")); //TODO: REVIEW IF THIS IS NECESSARY
             if (!mPreferences->hasLoggedIn())
             {
                 mPreferences->setHasLoggedIn(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000);
@@ -101,7 +99,6 @@ void Onboarding::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* erro
             if (error->getErrorCode() == MegaError::API_EMFAREQUIRED)
             {
                 qDebug() << "Onboarding::onRequestFinish -> TYPE_LOGIN API_EMFAREQUIRED";
-               // mPreferences->setEmail(QString::fromUtf8(request->getEmail())); //TODO: REVIEW IF THIS IS NECESSARY
                 mEmail = QString::fromUtf8(request->getEmail());
                 mPassword = QString::fromUtf8(request->getPassword());
                 emit twoFARequired();
@@ -143,6 +140,33 @@ void Onboarding::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* erro
         }
         emit changeRegistrationEmailFinished(error->getErrorCode() == MegaError::API_OK);
     }
+    case MegaRequest::TYPE_FETCH_NODES:
+    {
+        if (error->getErrorCode() == MegaError::API_OK)
+        {
+            emit fetchingNodesProgress(1);
+        }
+//        if (error->getErrorCode() != MegaError::API_OK)
+//        {
+//            loggingStarted = false;
+
+//            if (error->getErrorCode() != MegaError::API_EBLOCKED) //TODO: review this case API_EBLOCKED
+//            {
+//                page_login();
+//            }
+//            break;
+//        }
+
+//        if (loggingStarted)
+//        {
+//            if (!megaApi->isFilesystemAvailable())
+//            {
+//                page_login();
+//                return;
+//            }
+//        }
+        break;
+    }
     }
 }
 
@@ -154,13 +178,13 @@ void Onboarding::onRequestUpdate(mega::MegaApi *, mega::MegaRequest *request)
         {
             double total = static_cast<double>(request->getTotalBytes());
             double part = static_cast<double>(request->getTransferredBytes());
-            emit fetchingNodesProgress(part/total);
+            double progress = part/total;
+            if(progress > 0.6)
+            {
+                progress = 0.6;
+            }
+            emit fetchingNodesProgress(progress);
         }
-        else
-        {
-            emit fetchingNodesProgress(1);
-        }
-
     }
 }
 
@@ -324,11 +348,14 @@ void Onboarding::exitLoggedIn()
     emit exitLoggedInFinished();
 }
 
-QString Onboarding::getComputerName()
+void Onboarding::getComputerName()
 {
     auto request = UserAttributes::DeviceName::requestDeviceName();
     connect(request.get(), &UserAttributes::DeviceName::attributeReady, this, &Onboarding::deviceNameReady, Qt::UniqueConnection);
-    return request->getDeviceName();
+    if(request->isAttributeReady())
+    {
+        emit deviceNameReady(request->getDeviceName());
+    }
 }
 
 void Onboarding::openPreferences(bool sync) const

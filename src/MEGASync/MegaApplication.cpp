@@ -2087,6 +2087,7 @@ void MegaApplication::periodicTasks()
     {
         return;
     }
+    return;
 
     if (!cleaningSchedulerExecution || ((QDateTime::currentMSecsSinceEpoch() - cleaningSchedulerExecution) > Preferences::MIN_UPDATE_CLEANING_INTERVAL_MS))
     {
@@ -2331,7 +2332,6 @@ void MegaApplication::raiseInfoDialog()
     if(preferences && !preferences->logged())
     {
         openInfoWizard();
-        return;
     }
 
     if (infoDialog)
@@ -5889,7 +5889,7 @@ void MegaApplication::openInfoWizard()
         //}
        if(preferences && preferences->logged())
        {
-           loggedIn(true);
+            loggedIn(true);
        }
         //startSyncs(syncs);
         qDebug()<<onboarding->result();

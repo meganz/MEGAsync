@@ -29,6 +29,8 @@ GuestWidget::GuestWidget(MegaApi *megaApi, QWidget *parent)
 {
     ui->setupUi(this);
 
+
+
 #ifdef _WIN32
     if(getenv("QT_SCREEN_SCALE_FACTORS") || getenv("QT_SCALE_FACTOR"))
     {
@@ -67,6 +69,12 @@ GuestWidget::GuestWidget(MegaApi *megaApi, QWidget *parent)
 
     connect(static_cast<MegaApplication *>(qApp), SIGNAL(fetchNodesAfterBlock()), this, SLOT(fetchNodesAfterBlockCallbak()));
     connect(static_cast<MegaApplication *>(qApp), SIGNAL(setupWizardCreated()), this, SLOT(connectToSetupWizard()));
+
+    ui->lEmail->setVisible(false);
+    ui->lPassword->setVisible(false);
+    ui->bForgotPassword->setVisible(false);
+    ui->bLogin->setVisible(false);
+    ui->bCreateAccount->setVisible(false);
 
     resetFocus();
 }

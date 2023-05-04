@@ -38,9 +38,6 @@ public:
 
     QString contextName() override;
 
-    void onRequestStart(mega::MegaApi*,
-                        mega::MegaRequest *request) override;
-
     void onRequestFinish(mega::MegaApi*,
                          mega::MegaRequest *request,
                          mega::MegaError* error) override;
@@ -60,6 +57,10 @@ public:
     Q_INVOKABLE void changeRegistrationEmail(const QString& email);
     Q_INVOKABLE QString getEmail();
     Q_INVOKABLE void createNextBackup(const QString& renameFolder = QString::fromUtf8(""));
+    Q_INVOKABLE void onNotNowClicked();
+    Q_INVOKABLE void getComputerName();
+    Q_INVOKABLE void openPreferences(bool sync) const;
+    Q_INVOKABLE void exitLoggedIn();
 
 signals:
     void twoFARequired();
@@ -77,11 +78,6 @@ signals:
     void backupConflict(const QString& folder);
     void fetchingNodesProgress(double progress);
 
-public slots:
-    void exitLoggedIn();
-    QString getComputerName();
-    void openPreferences(bool sync) const;
-
 private:
     mega::MegaApi* mMegaApi;
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
@@ -94,6 +90,7 @@ private:
     QString mFirstName;
     QString mLastName;
     QStringList mBackupsToDoList;
+
 
 private slots:
     void onSyncAddRequestStatus(int errorCode, const QString& errorMsg, const QString& name);

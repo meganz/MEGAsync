@@ -13,8 +13,6 @@ TwoFAPageForm {
 
     loginButton.onClicked: {
         state = code2FAStatus;
-        loginButton.animationDuration = 2000;
-        loginButton.progressValue = 0.9;
         loginButton.busyIndicatorVisible = true;
         Onboarding.onTwoFARequested(twoFAField.key);
     }
@@ -22,8 +20,8 @@ TwoFAPageForm {
     loginButton.onAnimationFinished: {
         if(completed)
         {
+            console.log("ANIMATION FINISHED 2FA"+completed)
             loginButton.busyIndicatorVisible = false;
-            loginButton.progressValue = 0;
             onboardingFlow.state = syncs;
         }
     }
@@ -33,16 +31,15 @@ TwoFAPageForm {
 
         onTwoFAFailed: {
             twoFAField.hasError = true;
+            loginButton.busyIndicatorVisible = false;
+            state = normalStatus;
         }
 
         onFetchingNodesProgress: {
-            console.log("two fa progress:"+progress)
             loginButton.progressValue = progress;
         }
 
         onLoginFinished: {
-            loginButton.animationDuration = 1;
-            loginButton.progressValue = 0; //start fetching nodes
             state = fetchNodesStatus;
         }
 

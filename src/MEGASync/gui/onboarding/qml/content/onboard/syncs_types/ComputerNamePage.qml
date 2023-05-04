@@ -1,5 +1,8 @@
 import QtQml 2.12
 
+//Local
+import Onboard 1.0
+
 // C++
 import Onboarding 1.0
 
@@ -24,7 +27,7 @@ ComputerNamePageForm {
 
     computerNameTextField.textField {
         enabled: false
-        text: Onboarding.getComputerName()
+        text: OnboardingStrings.myComputer
     }
 
     Connections {
@@ -37,6 +40,9 @@ ComputerNamePageForm {
                 syncsFlow.state = syncType;
             }
         }
+    }
+    Component.onCompleted: {
+        Onboarding.getComputerName();
     }
 }
 

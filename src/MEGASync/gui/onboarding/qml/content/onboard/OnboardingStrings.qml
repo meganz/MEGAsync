@@ -102,4 +102,5 @@ QtObject {
     readonly property var statusFetchNodes: qsTr("Fetching file list...")
     readonly property var statusSignUp: qsTr("Creating account...")
     readonly property var status2FA: qsTr("Validating 2FA code...")
+    readonly property var myComputer: qsTr("My Computer")
 }

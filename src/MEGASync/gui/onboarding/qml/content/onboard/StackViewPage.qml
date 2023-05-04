@@ -13,8 +13,6 @@ import Onboard 1.0
 
 Rectangle {
     id: root
-//    width: parent.width
-//    height: parent.height
     
     readonly property string normalStatus: "normal"
     readonly property string logInStatus: "login"
@@ -96,4 +94,20 @@ Rectangle {
         }
         font.pixelSize: 10
     }
+
+//    ProgressBar {
+//        id: progressBar
+//        indeterminate: true
+//        anchors {
+//            bottom: root.bottom
+//            left: root.left
+//            right: root.right
+//        }
+
+//        background: Rectangle {
+//            radius: 0
+//            border.width: 0
+//            implicitHeight: 5
+//        }
+//        }
 }

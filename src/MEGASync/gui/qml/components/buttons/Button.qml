@@ -26,9 +26,10 @@ Qml.RoundButton {
     property bool busyIndicatorVisible: false
     property size iconSize: Qt.size(16, 16)
     property string busyIndicatorImage: ""
-    property double progressValue: 0 // from 0 to 1
     property bool progressBar: false
     property int animationDuration: 1000 //ms
+    property double progressValue: 0 // from 0 to 1
+    property int progressBarRectWidth: 0
 
     signal animationFinished(bool completed)
 
@@ -37,11 +38,30 @@ Qml.RoundButton {
     leftPadding: 16
     rightPadding: 16
 
+    Timer {
+        id: busyTimer
+        interval: 500;
+        running: false;
+        repeat: false;
+    }
+
     onProgressValueChanged: {
+
+        if(progressValue < 1)
+        {
+            if(busyTimer.running)
+            {
+                return;
+            }
+
+            busyTimer.start();
+        }
+
         if(progressValue > 1)
         {
             progressValue = 1;
         }
+        progressBarRectWidth = backgroundRect.width * progressValue
     }
 
     onProgressBarChanged: {
@@ -149,7 +169,7 @@ Qml.RoundButton {
             id: progressBarRect
             anchors.left: parent.left
             height: backgroundRect.height
-            width: backgroundRect.width * progressValue
+            width: progressBarRectWidth
             radius: 6
             color: Styles.buttonPrimaryPressed
 
