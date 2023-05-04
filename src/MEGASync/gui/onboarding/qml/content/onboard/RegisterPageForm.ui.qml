@@ -225,7 +225,6 @@ StackViewPage {
             iconSource: Images.arrowRight
             text: OnboardingStrings.next
             busyIndicatorImage: Images.loader
-            progressBar: true
         }
 
         Custom.OutlineButton {

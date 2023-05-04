@@ -49,8 +49,6 @@ LoginPageForm {
 
         loginButton.busyIndicatorVisible = true;
         state = logInStatus;
-        loginButton.animationDuration = 2000;
-        loginButton.progressValue = 0.8;
         Onboarding.onLoginClicked({ [Onboarding.RegisterForm.EMAIL]: email.text,
                                     [Onboarding.RegisterForm.PASSWORD]: password.text })
         loginAttempt = true;
@@ -93,7 +91,6 @@ LoginPageForm {
             password.showType = true;
             password.hintText = OnboardingStrings.errorLogin;
             password.hintVisible = true;
-            loginButton.progressValue = 0
             loginButton.busyIndicatorVisible = false;
             state = normalStatus;
         }
@@ -104,7 +101,6 @@ LoginPageForm {
         }
 
         onLoginFinished: {
-            loginButton.progressValue = 0; //start fetching nodes
             loginButton.animationDuration = 1000;
             state = fetchNodesStatus;
         }

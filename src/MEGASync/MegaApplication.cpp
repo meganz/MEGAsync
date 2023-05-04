@@ -2328,6 +2328,12 @@ void MegaApplication::repositionInfoDialog()
 
 void MegaApplication::raiseInfoDialog()
 {
+    if(preferences && !preferences->logged())
+    {
+        openInfoWizard();
+        return;
+    }
+
     if (infoDialog)
     {
         infoDialog->show();
@@ -5866,6 +5872,12 @@ void MegaApplication::openInfoWizard()
         return;
     }
 
+    if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>())
+    {
+        DialogOpener::showDialog(dialog->getDialog());
+        return;
+    }
+
     QPointer<QmlDialogWrapper<Onboarding>> onboarding = new QmlDialogWrapper<Onboarding>();
     DialogOpener::showDialog(onboarding, [onboarding, this]
     {
@@ -5875,8 +5887,10 @@ void MegaApplication::openInfoWizard()
         //{
         //    infoDialog->hide();
         //}
-
-        loggedIn(true);
+       if(preferences && preferences->logged())
+       {
+           loggedIn(true);
+       }
         //startSyncs(syncs);
         qDebug()<<onboarding->result();
 

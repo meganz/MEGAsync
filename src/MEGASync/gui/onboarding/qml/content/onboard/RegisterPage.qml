@@ -63,7 +63,6 @@ RegisterPageForm {
         }
 
         nextButton.busyIndicatorVisible = true;
-        nextButton.progressValue = 0.2;
         state = signUpStatus;
 
         var formData = {
@@ -101,15 +100,22 @@ RegisterPageForm {
 
         onRegisterFinished: (success) => {
                                 if(success) {
-                                    nextButton.progressValue = 1;
+                                    registerFlow.state = confirmEmail;
+                                    password.text = "";
+                                    confirmPassword.text = "";
+                                    firstName.text = "";
+                                    lastName.text = "";
+                                    email.text = "";
+                                    termsCheckBox.checked = false;
+                                    dataLossCheckBox.checked = false;
                                 } else {
                                     nextButton.progressValue = 0;
                                     email.showType = true;
                                     email.hintText = OnboardingStrings.errorEmailAlreadyExist;
                                     email.hintVisible = true;
-                                    state = normalStatus;
-                                    nextButton.busyIndicatorVisible = false;
                                 }
+                                state = normalStatus;
+                                nextButton.busyIndicatorVisible = false;
                             }
     }
 }
