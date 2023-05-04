@@ -75,6 +75,7 @@ SyncsPage {
                         Layout.leftMargin: 19
                         source: Images.plusCircle
                         color: Styles.buttonPrimary
+                        sourceSize: Qt.size(22, 22)
                     }
 
                     Text {

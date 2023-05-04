@@ -10,32 +10,46 @@ import Components 1.0 as Custom
 Qml.ToolTip {
     id: root
 
-    property alias leftIcon: leftIcon
+    property url leftIconSource: ""
+    property int contentSpacing: 0
+
+    onLeftIconSourceChanged: {
+        if(leftIconSource === "") {
+            return;
+        }
+
+        contentSpacing = 4;
+        leftIconLoader.sourceComponent = leftIcon;
+    }
 
     z: 10
+    padding: 4
 
     background: Rectangle {
+        height: parent.height
         color: Styles.buttonPrimary
         radius: 4
     }
 
     contentItem: RowLayout {
-        spacing: leftIcon.source == "" ? 0 : 4
-        anchors.margins: 4
+        height: textToolTip.height
+        spacing: contentSpacing
 
-        Custom.SvgImage {
-            id: leftIcon
-
-            visible: source != ""
-            color: Styles.iconOnColor
-            sourceSize: Qt.size(16, 16)
+        Loader {
+            id: leftIconLoader
         }
 
         Text {
+            id: textToolTip
+
             text: root.text
             color: Styles.textInverse
             Layout.leftMargin: 4
-            Layout.preferredHeight: 16
+            // TODO: Get dialog sizes 800/560 by other way (com.qmldialog.QmlDialog) ???
+            Layout.maximumWidth: 800 - leftIconLoader.width - 2 * root.padding
+            Layout.maximumHeight: 560 - 2 * root.padding
+            // TODO: Get dialog sizes 800/560 by other way (com.qmldialog.QmlDialog) ???
+            wrapMode: Text.WrapAtWordBoundaryOrAnywhere
             font {
                 pixelSize: 12
                 weight: Font.Light
@@ -44,4 +58,15 @@ Qml.ToolTip {
             }
         }
     }
+
+    Component {
+        id: leftIcon
+
+        Custom.SvgImage {
+            source: leftIconSource
+            color: Styles.iconOnColor
+            sourceSize: Qt.size(16, 16)
+        }
+    }
+
 }

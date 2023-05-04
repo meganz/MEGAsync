@@ -171,7 +171,7 @@ Rectangle {
 
                 Layout.preferredHeight: parent.height
                 Layout.preferredWidth: parent.width - 32
-                Layout.leftMargin: 16
+                Layout.leftMargin: 14
                 radius: 8
 
                 color: (index % 2 === 0) ? "transparent" : Styles.surface2
@@ -204,6 +204,9 @@ Rectangle {
 
                         Text {
                             Layout.leftMargin: 13
+                            Layout.maximumWidth: 345
+                            maximumLineCount: 1
+                            wrapMode: Text.WrapAnywhere
                             text: display
                             font.family: "Inter"
                             font.styleName: "normal"
@@ -241,7 +244,7 @@ Rectangle {
 
                 Custom.ToolTip {
                     visible: folderRowArea.containsMouse
-                    leftIcon.source: Images.pc
+                    leftIconSource: toolTip == folder ? Images.pc : ""
                     text: toolTip
                     delay: 500
                     timeout: 5000

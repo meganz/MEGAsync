@@ -39,8 +39,7 @@ SyncsPage {
             id: computerNameTextField
 
             Layout.preferredWidth: parent.width
-            Layout.preferredHeight: 48
-            Layout.leftMargin: -4
+            Layout.leftMargin: -focusWidth
             title: OnboardingStrings.computerName
         }
     }
