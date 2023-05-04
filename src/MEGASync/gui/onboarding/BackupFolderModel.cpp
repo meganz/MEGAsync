@@ -472,19 +472,20 @@ void BackupFolderModel::reviewAllBackupFolders()
 
 void BackupFolderModel::clean()
 {
-    QStringList removedFolders;
     QList<BackupFolder>::iterator item = mBackupFolderList.begin();
     while (item != mBackupFolderList.end())
     {
         if(item->done)
         {
-            removedFolders.append(item->folder);
             const auto row = std::distance(mBackupFolderList.begin(), item);
             beginRemoveRows(QModelIndex(), row, row);
-            mBackupFolderList.erase(item);
+            item = mBackupFolderList.erase(item);
             endRemoveRows();
         }
-        item++;
+        else
+        {
+            item++;
+        }
     }
 
     reviewAllBackupFolders();
