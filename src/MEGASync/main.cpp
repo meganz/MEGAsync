@@ -5,6 +5,7 @@
 #include "control/AppStatsEvents.h"
 #include "control/CrashHandler.h"
 #include "ScaleFactorManager.h"
+#include "PowerOptions.h"
 
 #include <QFontDatabase>
 #include <assert.h>
@@ -183,6 +184,12 @@ void removeSyncData(const QString &localFolder, const QString & name, const QStr
     #endif
 }
 
+void freeStaticResources()
+{
+    PowerOptions::appShutdown();
+    Platform::destroy();
+}
+
 int main(int argc, char *argv[])
 {
     QCoreApplication::setOrganizationName(QString::fromUtf8("Mega Limited"));
@@ -249,7 +256,7 @@ int main(int argc, char *argv[])
             Sleep(5000);
         }
 #endif
-        Platform::destroy();
+        freeStaticResources();
         return 0;
     }
 
@@ -294,9 +301,11 @@ int main(int argc, char *argv[])
 
                 bool success = QProcess::startDetached(app);
                 cout << "Restarting MEGAsync: " << app.toUtf8().constData() << " " << (success?"OK":"FAILED!") << endl;
+                freeStaticResources();
                 exit(!success);
             }
             cout << "Timed out waiting for restart signal" << endl;
+            freeStaticResources();
             exit(2);
         }
     }
@@ -548,7 +557,7 @@ int main(int argc, char *argv[])
     if (alreadyStarted)
     {
         MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "MEGAsync is already started");
-        Platform::destroy();
+        freeStaticResources();
         return 0;
     }
     Platform::getInstance()->initialize(argc, argv);
@@ -575,7 +584,7 @@ int main(int argc, char *argv[])
 
     int toret = app.exec();
 
-    Platform::destroy();
+    freeStaticResources();
 #ifdef WIN32
     extern bool WindowsPlatform_exiting;
     WindowsPlatform_exiting = true;
