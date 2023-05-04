@@ -79,7 +79,7 @@ protected:
         bool lessThan(const QModelIndex& left, const QModelIndex& right) const override;
         QMimeData* mimeData(const QModelIndexList &indexes) const override;
         bool dropMimeData(const QMimeData* data, Qt::DropAction action, int destRow,
-                                          int column, const QModelIndex& parent);
+                                          int column, const QModelIndex& parent) override;
 
 protected:
         TransferData::TransferStates mTransferStates;
