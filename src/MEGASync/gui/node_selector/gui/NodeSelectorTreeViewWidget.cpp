@@ -309,8 +309,15 @@ void NodeSelectorTreeViewWidget::onbNewFolderClicked()
         //2) The dialog has been rejected because the folder already exists. If so, select the existing folder
         if(newNode)
         {
+#ifdef Q_OS_LINUX
+            //It seems that the NodeSelector is not activated when the NewFolderDialog is closed,
+            //so the ui->tMegaFolders is not correctly focused
+            qApp->setActiveWindow(parentWidget()->parentWidget());
+#endif
+
             //Set the focus to the view to allow the user to press enter (or go back, in a future feature)
             ui->tMegaFolders->setFocus();
+
             QModelIndex idx = ui->tMegaFolders->rootIndex();
             if(!idx.isValid())
             {
