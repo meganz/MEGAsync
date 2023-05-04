@@ -542,6 +542,11 @@ bool TransfersManagerSortFilterProxyModel::dropMimeData(const QMimeData *data, Q
                 sourceM->ignoreMoveRowsSignal(false);
             }
         }
+
+#ifdef Q_OS_LINUX
+        //Only Linux needs to reset the mimedata, the other OS remove it
+        mInternalMoveMimeData = nullptr;
+#endif
     }
 
     return false;
