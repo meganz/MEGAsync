@@ -57,7 +57,6 @@ public:
     Q_INVOKABLE void changeRegistrationEmail(const QString& email);
     Q_INVOKABLE QString getEmail();
     Q_INVOKABLE void createNextBackup(const QString& renameFolder = QString::fromUtf8(""));
-    Q_INVOKABLE void onNotNowClicked();
     Q_INVOKABLE void getComputerName();
     Q_INVOKABLE void openPreferences(bool sync) const;
     Q_INVOKABLE void exitLoggedIn();
