@@ -53,6 +53,7 @@ ColumnLayout {
             Layout.preferredHeight: 72
             type: Custom.TextField.Type.Error
             hintVisible: hasError
+            onTextChanged: { hasError = false }
         }
 
         TwoFADigit {
@@ -64,6 +65,7 @@ ColumnLayout {
             previous: digit1
             type: Custom.TextField.Type.Error
             hintVisible: hasError
+            onTextChanged: { hasError = false }
         }
 
         TwoFADigit {
@@ -75,6 +77,7 @@ ColumnLayout {
             previous: digit2
             type: Custom.TextField.Type.Error
             hintVisible: hasError
+            onTextChanged: { hasError = false }
         }
 
         TwoFADigit {
@@ -86,6 +89,7 @@ ColumnLayout {
             previous: digit3
             type: Custom.TextField.Type.Error
             hintVisible: hasError
+            onTextChanged: { hasError = false }
         }
 
         TwoFADigit {
@@ -97,6 +101,7 @@ ColumnLayout {
             previous: digit4
             type: Custom.TextField.Type.Error
             hintVisible: hasError
+            onTextChanged: { hasError = false }
         }
 
         TwoFADigit {
@@ -106,18 +111,19 @@ ColumnLayout {
             Layout.preferredHeight: 72
             previous: digit5
             type: Custom.TextField.Type.Error
+            onTextChanged: { hasError = false }
         }
     }
 
     Custom.NotificationText {
-        id: norification
+        id: notification
 
         visible: hasError
         Layout.leftMargin: 3
         title: qsTr("Authentication failed")
         notificationText.text: qsTr("Please, try again.")
         Layout.preferredWidth: root.width - 4
-        Layout.preferredHeight: norification.height
+        Layout.preferredHeight: notification.height
         type: Custom.NotificationText.Type.AuthenticationError
     }
 
