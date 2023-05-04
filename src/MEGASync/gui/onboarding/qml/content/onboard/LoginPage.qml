@@ -17,10 +17,12 @@ LoginPageForm {
     property bool twoFARequired: false
 
     Keys.onEnterPressed: {
+        loginButton.forceActiveFocus();
         loginButton.clicked();
     }
 
     Keys.onReturnPressed: {
+        loginButton.forceActiveFocus();
         loginButton.clicked();
     }
 

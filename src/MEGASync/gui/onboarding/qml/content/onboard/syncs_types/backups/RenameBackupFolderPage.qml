@@ -13,7 +13,6 @@ import Onboarding 1.0
 RenameBackupFolderPageForm {
 
     footerButtons {
-        notNowButton.visible: false
 
         previousButton.onClicked: {
             syncsFlow.state = syncsFlow.confirmBackup;
@@ -28,6 +27,10 @@ RenameBackupFolderPageForm {
         }
     }
 
+    hint.notificationText.onLinkActivated: {
+        Qt.openUrlExternally(Links.backupCentre);
+    }
+
     Connections {
         target: Onboarding
 
@@ -39,6 +42,5 @@ RenameBackupFolderPageForm {
             renameTextField.textField.forceActiveFocus();
         }
     }
-
 
 }

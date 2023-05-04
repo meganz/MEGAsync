@@ -14,11 +14,9 @@ Text {
     property bool manageMouse: false
     property bool hovered: false
 
-    onManageMouseChanged:
-    {
-        if(manageMouse)
-        {
-            loader.sourceComponent = mouseArea
+    onManageMouseChanged: {
+        if(manageMouse) {
+            loader.sourceComponent = mouseArea;
         }
     }
     color: enabled ? Styles.textPrimary : Styles.textDisabled
@@ -40,18 +38,19 @@ Text {
         }
     }
 
-    onLinkHovered:
-    {
+    onLinkHovered: {
         hovered = link.length
     }
 
-    Loader{
+    Loader {
         id: loader
+
         anchors.fill: parent
     }
 
     Component {
         id: mouseArea
+
         MouseArea {
             anchors.fill: parent
             cursorShape: hovered ? Qt.PointingHandCursor : Qt.ArrowCursor

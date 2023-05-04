@@ -1,4 +1,9 @@
+// C++
+import Onboarding 1.0
+
 ResumePageForm {
+
+    property bool comesFromSync: true
 
     width: parent.width
     height: parent.height
@@ -21,10 +26,10 @@ ResumePageForm {
     }
 
     preferencesButton.onClicked: {
-        console.debug("TODO: Open in preferences button clicked");
+        Onboarding.openPreferences(comesFromSync);
     }
 
     doneButton.onClicked: {
-        console.debug("TODO: Done button clicked");
+        Onboarding.exitLoggedIn();
     }
 }

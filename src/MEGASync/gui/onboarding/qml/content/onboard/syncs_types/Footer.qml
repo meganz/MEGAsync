@@ -38,7 +38,7 @@ RowLayout {
             anchors.fill: notNowButton
             cursorShape: Qt.PointingHandCursor
             onClicked: {
-                Onboarding.onNotNowClicked();
+                Onboarding.exitLoggedIn();
             }
         }
     }
@@ -53,7 +53,7 @@ RowLayout {
 
             text: OnboardingStrings.cancel
             onClicked: {
-                console.log("TODO: Cancel button clicked");
+                Onboarding.exitLoggedIn(); // TODO: Logout?? Pending
             }
         }
 

@@ -7,7 +7,7 @@ ConfirmEmailPageForm {
     id: confirmEmailPage
 
     changeEmailLinkText.onLinkActivated: {
-        registerFlow.state = changeConfirmEmail
+        registerFlow.state = changeConfirmEmail;
     }
 
     email: Onboarding.email
@@ -15,8 +15,8 @@ ConfirmEmailPageForm {
     Connections {
         target: Onboarding
 
-        onAccountConfirmed:{
-            registerFlow.state = login
+        onAccountConfirmed: {
+            registerFlow.state = login;
         }
     }
 }

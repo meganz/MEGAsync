@@ -272,11 +272,13 @@ void Onboarding::addSync(const QString &localPath, mega::MegaHandle remoteHandle
 
 void Onboarding::addBackups(const QStringList& localPathList)
 {
-    mBackupsToDoList = localPathList;
-    for(const QString& localPath : localPathList)
+    if(localPathList.size() <= 0)
     {
-        mBackupController.addBackup(localPath, mSyncController.getSyncNameFromPath(localPath));
+        return;
     }
+
+    mBackupsToDoList = localPathList;
+    createNextBackup();
 }
 
 bool Onboarding::setDeviceName(const QString &deviceName)
@@ -315,11 +317,11 @@ void Onboarding::createNextBackup(const QString& name)
     mBackupController.addBackup(mBackupsToDoList.first(), backupName);
 }
 
-void Onboarding::onNotNowClicked()
+void Onboarding::exitLoggedIn()
 {
     std::unique_ptr<char[]> email(mMegaApi->getMyEmail());
     mPreferences->setEmailAndGeneralSettings(QString::fromUtf8(email.get()));
-    emit notNowFinished();
+    emit exitLoggedInFinished();
 }
 
 QString Onboarding::getComputerName()
@@ -327,6 +329,16 @@ QString Onboarding::getComputerName()
     auto request = UserAttributes::DeviceName::requestDeviceName();
     connect(request.get(), &UserAttributes::DeviceName::attributeReady, this, &Onboarding::deviceNameReady, Qt::UniqueConnection);
     return request->getDeviceName();
+}
+
+void Onboarding::openPreferences(bool sync) const
+{
+    int tab = SettingsDialog::BACKUP_TAB;
+    if(sync)
+    {
+        tab = SettingsDialog::SYNCS_TAB;
+    }
+    MegaSyncApp->openSettings(tab);
 }
 
 void Onboarding::onSyncAddRequestStatus(int errorCode,
@@ -352,7 +364,7 @@ void Onboarding::onBackupAddRequestStatus(int errorCode,
                                           const QString& errorMsg,
                                           const QString& name)
 {
-    qDebug() << "Onboarding::onSyncAddRequestStatus -> path = " << name
+    qDebug() << "Onboarding::onBackupAddRequestStatus -> path = " << name
              << " - errorCode = " << errorCode << " - errorMsg = " << errorMsg;
 
     if(errorCode == 0)
@@ -366,7 +378,7 @@ void Onboarding::onBackupAddRequestStatus(int errorCode,
     else
     {
         // Wait until the rename conflict has been resolved
-        emit backupConflict(mSyncController.getSyncNameFromPath(name));
+        emit backupConflict(mBackupController.getSyncNameFromPath(name));
     }
     emit backupsUpdated(name, errorCode, mBackupsToDoList.size() == 0);
 }

@@ -15,6 +15,7 @@ SyncsPage {
 
     property alias renameTextField: renameTextField
     property alias headerDescription: header.description
+    property alias hint: hint
 
     ColumnLayout {
         id: mainLayout
@@ -54,9 +55,9 @@ SyncsPage {
             Layout.preferredHeight: hint.height
             type: Custom.NotificationText.Type.Info
             notificationText {
-                url: Links.backupCentre
                 urlColor: Styles.textInfo
                 text: OnboardingStrings.renameBackupFolderHint
+                manageMouse: true
             }
         }
     }

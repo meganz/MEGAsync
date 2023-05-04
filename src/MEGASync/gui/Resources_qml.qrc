@@ -4,6 +4,7 @@
 		<file>images/qml/arrow_right.svg</file>
 		<file>images/qml/help_circle.svg</file>
 		<file>images/qml/info_circle.svg</file>
+		<file>images/qml/loader.svg</file>
 		<file>images/qml/lock.svg</file>
 		<file>images/qml/onboarding/building.svg</file>
 		<file>images/qml/onboarding/check.svg</file>
@@ -29,6 +30,10 @@
 		<file>images/qml/onboarding/shield_account_proIII.svg</file>
 		<file>images/qml/onboarding/sync.svg</file>
 		<file>images/qml/onboarding/twofa.png</file>
-        <file>images/qml/loader.svg</file>
+        <file>images/qml/password/average.svg</file>
+		<file>images/qml/password/good.svg</file>
+		<file>images/qml/password/strong.svg</file>
+		<file>images/qml/password/very_weak.svg</file>
+		<file>images/qml/password/weak.svg</file>
     </qresource>
 </RCC>

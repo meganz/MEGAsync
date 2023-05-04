@@ -39,7 +39,7 @@ Cpp.QmlDialog {
     Connections {
         target: Onboarding
 
-        onNotNowFinished: {
+        onExitLoggedInFinished: {
             Wrapper.accept();
         }
     }

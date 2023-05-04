@@ -130,7 +130,7 @@ Rectangle {
         anchors.topMargin: 4
 
         selectByMouse: true
-        selectionColor: Styles.supportInfo
+        selectionColor: Styles.focus
         height: 42
         leftPadding: calculatePaddingWithIcon(leftIconSource != "")
         rightPadding: calculatePaddingWithIcon(rightIconSource != "")

@@ -19,13 +19,13 @@ Item {
     signal twoFARequired
     signal loginFinished
     signal registerFinished(bool success)
-    signal notNowFinished
+    signal exitLoggedInFinished
     signal twoFAFailed
     signal syncSetupSucces
     signal backupsUpdated
     signal backupConflict
     signal accountConfirmed
-    signal changeRegistrationEmailFinished
+    signal changeRegistrationEmailFinished(bool success)
     signal deviceNameReady
     signal fetchingNodesProgress(double progress)
 
@@ -139,9 +139,9 @@ Item {
         changeEmailTimer.start();
     }
 
-    function onNotNowClicked() {
-        console.info("onNotNowClicked()");
-        notNowFinished();
+    function onExitLoggedInClicked() {
+        console.info("onExitLoggedInClicked()");
+        exitLoggedInFinished();
     }
 
     function getComputerName() {
@@ -178,7 +178,6 @@ Item {
 
     function addBackups(backupDirs) {
         console.info("addBackups() => " + JSON.stringify(backupDirs));
-
     }
 
     function createNextBackup(name) {
@@ -191,5 +190,9 @@ Item {
 
         // Rename folder
         //backupsUpdated("C:\\Users\\mega\\Documents", -14, true);
+    }
+
+    function openPreferences(sync) {
+        console.info("openPreferences() -> " + sync);
     }
 }

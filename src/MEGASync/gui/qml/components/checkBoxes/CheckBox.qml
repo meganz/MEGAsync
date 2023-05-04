@@ -89,10 +89,10 @@ Qml.CheckBox {
             SvgImage {
                 id: image
 
-                visible: checkBox.checked
+                visible: checkBox.checked || checkBox.indeterminate
                 source: checkBox.indeterminate ? "images/indeterminate.svg" : "images/check.svg"
                 anchors.centerIn: inside
-                sourceSize: indeterminate ? Qt.size(8, 2) : Qt.size(8, 6.5)
+                sourceSize: checkBox.indeterminate ? Qt.size(8, 2) : Qt.size(8, 6.5)
                 color: Styles.iconInverseAccent
             }
 

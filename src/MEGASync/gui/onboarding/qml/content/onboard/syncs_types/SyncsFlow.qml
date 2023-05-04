@@ -26,6 +26,8 @@ StackView {
     readonly property string renameBackupFolder: "renameBackupFolder"
     readonly property string finalState: "finalState"
 
+    property alias selectedSync: finalPage.comesFromSync
+
     state: computerName
     initialItem: syncsPanel
 
@@ -54,6 +56,7 @@ StackView {
             name: syncs
             StateChangeScript {
                 script: {
+                    selectedSync = true;
                     rightPanel.replace(syncPage);
                     if(syncsFlow.currentItem != syncsPanel) {
                         syncsFlow.replace(syncsPanel);
@@ -89,6 +92,7 @@ StackView {
             name: selectBackup
             StateChangeScript {
                 script: {
+                    selectedSync = false;
                     if(syncsFlow.currentItem != syncsPanel) {
                         syncsFlow.replace(syncsPanel);
                     }

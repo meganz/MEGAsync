@@ -7,7 +7,7 @@ import Onboard 1.0
 ChangeEmailPageForm {
 
     cancelButton.onClicked: {
-        registerFlow.state = confirmEmail
+        registerFlow.state = confirmEmail;
     }
 
     resendButton.onClicked: {
@@ -16,16 +16,13 @@ ChangeEmailPageForm {
 
     emailTextField.text: Onboarding.email
 
-    Connections{
+    Connections {
         target: Onboarding
 
-        onChangeRegistrationEmailFinished:{
-            if(apiOk)
-            {
-                registerFlow.state = confirmEmail
-            }
-            else
-            {
+        onChangeRegistrationEmailFinished: (success) => {
+            if(success) {
+                registerFlow.state = confirmEmail;
+            } else {
                 emailTextField.showType = true;
                 emailTextField.hint.text = OnboardingStrings.errorEmailAlreadyExist;
                 emailTextField.hint.visible = true;

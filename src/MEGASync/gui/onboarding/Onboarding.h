@@ -67,19 +67,20 @@ signals:
     void twoFAFailed();
     void loginFinished();
     void registerFinished(bool success);
-    void notNowFinished();
+    void exitLoggedInFinished();
     void syncSetupSucces();
     void backupsUpdated(const QString& path, int errorCode, bool finished);
     void deviceNameReady(const QString& deviceName);
     void accountConfirmed();
     void emailChanged(const QString& email);
-    void changeRegistrationEmailFinished(bool apiOk);
+    void changeRegistrationEmailFinished(bool success);
     void backupConflict(const QString& folder);
     void fetchingNodesProgress(double progress);
 
 public slots:
-    void onNotNowClicked();
+    void exitLoggedIn();
     QString getComputerName();
+    void openPreferences(bool sync) const;
 
 private:
     mega::MegaApi* mMegaApi;
