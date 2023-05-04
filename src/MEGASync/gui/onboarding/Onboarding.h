@@ -33,6 +33,7 @@ public:
     Q_ENUM(PasswordStrength)
 
     explicit Onboarding(QObject *parent = 0);
+    ~Onboarding();
 
     QUrl getQmlUrl() override;
 
@@ -60,6 +61,7 @@ public:
     Q_INVOKABLE void getComputerName();
     Q_INVOKABLE void openPreferences(bool sync) const;
     Q_INVOKABLE void exitLoggedIn();
+    bool logged();
 
 signals:
     void twoFARequired();
@@ -89,6 +91,7 @@ private:
     QString mFirstName;
     QString mLastName;
     QStringList mBackupsToDoList;
+    bool mLogged;
 
 
 private slots:

@@ -479,7 +479,6 @@ void MegaApplication::initialize()
     qmlRegisterSingletonType<QmlClipboard>("QmlClipboard", 1, 0, "QmlClipboard", &QmlClipboard::qmlInstance);
 
     preferences = Preferences::instance();
-    connect(preferences.get(), SIGNAL(stateChanged()), this, SLOT(changeState()));
     connect(preferences.get(), SIGNAL(updated(int)), this, SLOT(showUpdatedMessage(int)),
             Qt::DirectConnection); // Use direct connection to make sure 'updated' and 'prevVersions' are set as needed
     preferences->initialize(dataPath);
@@ -1307,7 +1306,10 @@ void MegaApplication::loggedIn(bool fromWizard)
         return;
     }
 
-    //DialogOpener::removeDialogByClass<QmlDialogWrapper<Onboarding>>();
+//    if (infoDialog)
+//    {
+//        infoDialog->regenerateLayout();
+//    }
 
     //Send pending crash report log if neccessary
     if (!crashReportFilePath.isNull() && megaApi)
@@ -5922,9 +5924,13 @@ void MegaApplication::openInfoWizard()
         //{
         //    infoDialog->hide();
         //}
-       if(preferences && preferences->logged())
+        qDebug()<<onboarding->result();
+        //onboarding->result() == QDialog::Accepted || onboarding->
+       if(onboarding->wrapper()->logged())
        {
-            loggedIn(true);
+           connect(preferences.get(), SIGNAL(stateChanged()), this, SLOT(changeState()), Qt::UniqueConnection);
+           preferences->setEmailAndGeneralSettings(onboarding->wrapper()->getEmail());
+           loggedIn(true);
        }
         //startSyncs(syncs);
         qDebug()<<onboarding->result();
@@ -6841,7 +6847,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                      {
                          preferences->resetGlobalSettings();
                      }
-
+                     disconnect(preferences.get(), SIGNAL(stateChanged()), this, SLOT(changeState()));
                      DialogOpener::closeAllDialogs();
                      start();
                      periodicTasks();

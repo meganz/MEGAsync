@@ -36,12 +36,12 @@ Cpp.QmlDialog {
         anchors.fill: parent
     }
 
-    Connections {
-        target: Onboarding
+    function accept(){
+        Wrapper.accept()
+    }
 
-        onExitLoggedInFinished: {
-            Wrapper.accept();
-        }
+    function reject(){
+        Wrapper.reject()
     }
 }
 

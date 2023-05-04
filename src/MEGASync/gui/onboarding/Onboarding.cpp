@@ -19,6 +19,7 @@ Onboarding::Onboarding(QObject *parent)
     , mLastName(QString())
     , mFirstName(QString())
     , mEmail(QString())
+    , mLogged(false)
 {
     mMegaApi->addGlobalListener(mGlobalListener.get());
     mMegaApi->addRequestListener(mDelegateListener.get());
@@ -60,6 +61,10 @@ Onboarding::Onboarding(QObject *parent)
             this, &Onboarding::onBackupAddRequestStatus);
 }
 
+Onboarding::~Onboarding()
+{
+}
+
 QUrl Onboarding::getQmlUrl()
 {
     return QUrl(QString::fromUtf8("qrc:/main.qml"));
@@ -78,20 +83,21 @@ void Onboarding::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* erro
     {
         if (error->getErrorCode() == MegaError::API_OK)
         {
-            if(mPreferences->logged())
+            if(mEmail == QString::fromUtf8(request->getEmail()))
             {
                 return;
             }
             qDebug() << "Onboarding::onRequestFinish -> TYPE_LOGIN API_OK";
-            mPreferences->setAccountStateInGeneral(Preferences::STATE_LOGGED_OK);
+            //mPreferences->setAccountStateInGeneral(Preferences::STATE_LOGGED_OK);
             mEmail = QString::fromUtf8(request->getEmail());
             emit emailChanged(mEmail);
-            mPreferences->setEmailAndGeneralSettings(mEmail);
+            static_cast<MegaApplication*>(qApp)->fetchNodes(mEmail);
             if (!mPreferences->hasLoggedIn())
             {
                 mPreferences->setHasLoggedIn(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000);
             }
             emit loginFinished();
+            mLogged = true;
         }
         else
         {
@@ -146,25 +152,25 @@ void Onboarding::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* erro
         {
             emit fetchingNodesProgress(1);
         }
-//        if (error->getErrorCode() != MegaError::API_OK)
-//        {
-//            loggingStarted = false;
+        //        if (error->getErrorCode() != MegaError::API_OK)
+        //        {
+        //            loggingStarted = false;
 
-//            if (error->getErrorCode() != MegaError::API_EBLOCKED) //TODO: review this case API_EBLOCKED
-//            {
-//                page_login();
-//            }
-//            break;
-//        }
+        //            if (error->getErrorCode() != MegaError::API_EBLOCKED) //TODO: review this case API_EBLOCKED
+        //            {
+        //                page_login();
+        //            }
+        //            break;
+        //        }
 
-//        if (loggingStarted)
-//        {
-//            if (!megaApi->isFilesystemAvailable())
-//            {
-//                page_login();
-//                return;
-//            }
-//        }
+        //        if (loggingStarted)
+        //        {
+        //            if (!megaApi->isFilesystemAvailable())
+        //            {
+        //                page_login();
+        //                return;
+        //            }
+        //        }
         break;
     }
     }
@@ -179,9 +185,9 @@ void Onboarding::onRequestUpdate(mega::MegaApi *, mega::MegaRequest *request)
             double total = static_cast<double>(request->getTotalBytes());
             double part = static_cast<double>(request->getTransferredBytes());
             double progress = part/total;
-            if(progress > 0.6)
+            if(progress == 1)
             {
-                progress = 0.6;
+                progress = 0.999;
             }
             emit fetchingNodesProgress(progress);
         }
@@ -343,9 +349,16 @@ void Onboarding::createNextBackup(const QString& name)
 
 void Onboarding::exitLoggedIn()
 {
-    std::unique_ptr<char[]> email(mMegaApi->getMyEmail());
-    mPreferences->setEmailAndGeneralSettings(QString::fromUtf8(email.get()));
-    emit exitLoggedInFinished();
+    if(mPreferences->accountStateInGeneral() == Preferences::STATE_FETCHNODES_OK)
+    {
+        mPreferences->setEmailAndGeneralSettings(mEmail);
+        emit exitLoggedInFinished();
+    }
+}
+
+bool Onboarding::logged()
+{
+    return mLogged;
 }
 
 void Onboarding::getComputerName()
