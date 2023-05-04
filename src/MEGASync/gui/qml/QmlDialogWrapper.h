@@ -44,6 +44,7 @@ public:
     void setGeometry(const QRect &geometry);
     QRect geometry();
     bool isMaximized();
+    bool isMinimized();
     void show();
     void close();
     void activateWindow();

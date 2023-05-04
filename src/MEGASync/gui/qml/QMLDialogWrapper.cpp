@@ -101,6 +101,12 @@ bool QmlDialogWrapperBase::isMaximized()
     return (state & QWindow::Maximized);
 }
 
+bool QmlDialogWrapperBase::isMinimized()
+{
+    QWindow::Visibility state = qvariant_cast<QWindow::Visibility>(QQmlProperty::read(mWindow, QString::fromUtf8("visibility")));
+     return (state & QWindow::Minimized);
+}
+
 void QmlDialogWrapperBase::show()
 {
     setWindowState(mWindow->windowState());
