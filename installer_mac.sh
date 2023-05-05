@@ -180,7 +180,7 @@ if [ ${build} -eq 1 -o ${build_cmake} -eq 1 ]; then
 
     # Prepare bundle
     cp -R ${MSYNC_PREFIX}MEGAsync.app ${MSYNC_PREFIX}MEGAsync_orig.app
-    ${MEGAQTPATH}/bin/macdeployqt ${MSYNC_PREFIX}MEGAsync.app -no-strip
+    ${MEGAQTPATH}/bin/macdeployqt ${MSYNC_PREFIX}MEGAsync.app -qmldir=../src/MEGASync/gui/onboarding/qml -no-strip
     dsymutil ${MSYNC_PREFIX}MEGAsync.app/Contents/MacOS/MEGAsync -o MEGAsync.app.dSYM
     strip ${MSYNC_PREFIX}MEGAsync.app/Contents/MacOS/MEGAsync
     dsymutil ${MUPDATER_PREFIX}MEGAupdater.app/Contents/MacOS/MEGAupdater -o MEGAupdater.dSYM
