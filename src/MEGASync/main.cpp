@@ -5,6 +5,7 @@
 #include "control/AppStatsEvents.h"
 #include "control/CrashHandler.h"
 #include "ScaleFactorManager.h"
+#include "PowerOptions.h"
 
 #include <QFontDatabase>
 #include <assert.h>
@@ -183,12 +184,20 @@ void removeSyncData(const QString &localFolder, const QString & name, const QStr
     #endif
 }
 
+void freeStaticResources()
+{
+    PowerOptions::appShutdown();
+    Platform::destroy();
+}
+
 int main(int argc, char *argv[])
 {
     QCoreApplication::setOrganizationName(QString::fromUtf8("Mega Limited"));
     QCoreApplication::setOrganizationDomain(QString::fromUtf8("mega.co.nz"));
     QCoreApplication::setApplicationName(QString::fromUtf8("MEGAsync")); //Do not change app name, keep MEGAsync because Linux rely on that for app paths.
     QCoreApplication::setApplicationVersion(QString::number(Preferences::VERSION_CODE));
+
+    Platform::create();
 
     if ((argc == 2) && !strcmp("/uninstall", argv[1]))
     {
@@ -247,6 +256,7 @@ int main(int argc, char *argv[])
             Sleep(5000);
         }
 #endif
+        freeStaticResources();
         return 0;
     }
 
@@ -291,9 +301,11 @@ int main(int argc, char *argv[])
 
                 bool success = QProcess::startDetached(app);
                 cout << "Restarting MEGAsync: " << app.toUtf8().constData() << " " << (success?"OK":"FAILED!") << endl;
+                freeStaticResources();
                 exit(!success);
             }
             cout << "Timed out waiting for restart signal" << endl;
+            freeStaticResources();
             exit(2);
         }
     }
@@ -400,8 +412,6 @@ int main(int argc, char *argv[])
     }
 #endif
 
-
-    Platform::create();
     MegaApplication app(argc, argv);
 #if defined(Q_OS_LINUX)
     theapp = &app;
@@ -547,6 +557,7 @@ int main(int argc, char *argv[])
     if (alreadyStarted)
     {
         MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "MEGAsync is already started");
+        freeStaticResources();
         return 0;
     }
     Platform::getInstance()->initialize(argc, argv);
@@ -573,7 +584,7 @@ int main(int argc, char *argv[])
 
     int toret = app.exec();
 
-    Platform::destroy();
+    freeStaticResources();
 #ifdef WIN32
     extern bool WindowsPlatform_exiting;
     WindowsPlatform_exiting = true;
