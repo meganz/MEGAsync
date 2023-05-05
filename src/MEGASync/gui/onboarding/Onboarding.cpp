@@ -14,7 +14,8 @@ Onboarding::Onboarding(QObject *parent)
     , mDelegateListener(new QTMegaRequestListener(mMegaApi, this))
     , mGlobalListener(new QTMegaGlobalListener(mMegaApi, this))
     , mPreferences(Preferences::instance())
-    , mSyncController()
+    , mSyncController(new SyncController())
+    , mBackupController(new SyncController())
     , mPassword(QString())
     , mLastName(QString())
     , mFirstName(QString())
@@ -53,10 +54,10 @@ Onboarding::Onboarding(QObject *parent)
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/backups/SelectFoldersPage.qml")), "Onboard.Syncs_types.Backups", 1, 0, "SelectFoldersPage");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/backups/RenameBackupFolderPage.qml")), "Onboard.Syncs_types.Backups", 1, 0, "RenameBackupFolderPage");
 
-    connect(&mSyncController, &SyncController::syncAddStatus,
+    connect(mSyncController, &SyncController::syncAddStatus,
             this, &Onboarding::onSyncAddRequestStatus);
 
-    connect(&mBackupController, &SyncController::syncAddStatus,
+    connect(mBackupController, &SyncController::syncAddStatus,
             this, &Onboarding::onBackupAddRequestStatus);
 }
 
@@ -289,7 +290,7 @@ void Onboarding::addSync(const QString &localPath, mega::MegaHandle remoteHandle
                                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
                  == QMessageBox::Yes))
     {
-        mSyncController.addSync(localPath, remoteHandle);
+        mSyncController->addSync(localPath, remoteHandle);
     }
     qDebug()<<localPath<<":"<<remoteHandle;
 }
@@ -336,9 +337,9 @@ void Onboarding::createNextBackup(const QString& name)
     QString backupName(name);
     if(name.isEmpty())
     {
-        backupName = mBackupController.getSyncNameFromPath(mBackupsToDoList.first());
+        backupName = mBackupController->getSyncNameFromPath(mBackupsToDoList.first());
     }
-    mBackupController.addBackup(mBackupsToDoList.first(), backupName);
+    mBackupController->addBackup(mBackupsToDoList.first(), backupName);
 }
 
 void Onboarding::exitLoggedIn()
@@ -346,6 +347,14 @@ void Onboarding::exitLoggedIn()
     std::unique_ptr<char[]> email(mMegaApi->getMyEmail());
     mPreferences->setEmailAndGeneralSettings(QString::fromUtf8(email.get()));
     emit exitLoggedInFinished();
+}
+
+void Onboarding::aboutToClose()
+{
+    delete mBackupController;
+    delete mSyncController;
+    mGlobalListener = nullptr;
+    mDelegateListener = nullptr;
 }
 
 void Onboarding::getComputerName()
@@ -405,7 +414,7 @@ void Onboarding::onBackupAddRequestStatus(int errorCode,
     else
     {
         // Wait until the rename conflict has been resolved
-        emit backupConflict(mBackupController.getSyncNameFromPath(name));
+        emit backupConflict(mBackupController->getSyncNameFromPath(name));
     }
     emit backupsUpdated(name, errorCode, mBackupsToDoList.size() == 0);
 }

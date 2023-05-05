@@ -5922,6 +5922,7 @@ void MegaApplication::openInfoWizard()
         //{
         //    infoDialog->hide();
         //}
+       onboarding->wrapper()->aboutToClose();
        if(preferences && preferences->logged())
        {
             loggedIn(true);

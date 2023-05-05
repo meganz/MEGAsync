@@ -61,6 +61,8 @@ public:
     Q_INVOKABLE void openPreferences(bool sync) const;
     Q_INVOKABLE void exitLoggedIn();
 
+    void aboutToClose();
+
 signals:
     void twoFARequired();
     void userPassFailed();
@@ -82,8 +84,8 @@ private:
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
     std::unique_ptr<mega::QTMegaGlobalListener> mGlobalListener;
     std::shared_ptr<Preferences> mPreferences;
-    SyncController mSyncController;
-    SyncController mBackupController;
+    SyncController* mSyncController;
+    SyncController* mBackupController;
     QString mPassword;
     QString mEmail;
     QString mFirstName;
