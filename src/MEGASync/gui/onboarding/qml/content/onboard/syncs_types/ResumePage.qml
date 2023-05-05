@@ -30,6 +30,6 @@ ResumePageForm {
     }
 
     doneButton.onClicked: {
-        accept();
+        Onboarding.exitLoggedIn();
     }
 }
