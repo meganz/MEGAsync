@@ -31,6 +31,7 @@ unix:!macx {
   SOURCES += $$PWD/client/linux/handler/exception_handler.cc
   SOURCES += $$PWD/client/linux/handler/minidump_descriptor.cc
   SOURCES += $$PWD/client/linux/minidump_writer/minidump_writer.cc
+  SOURCES += $$PWD/client/linux/minidump_writer/pe_file.cc
   SOURCES += $$PWD/client/linux/minidump_writer/linux_dumper.cc
   SOURCES += $$PWD/client/linux/minidump_writer/linux_ptrace_dumper.cc
   SOURCES += $$PWD/client/linux/log/log.cc
