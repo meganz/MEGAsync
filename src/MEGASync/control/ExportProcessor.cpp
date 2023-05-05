@@ -61,9 +61,13 @@ void ExportProcessor::requestLinks()
             string tmpPath((const char*)fileList[i].toUtf8().constData());
     #endif
 
-            const char *fpLocal = megaApi->getFingerprint(tmpPath.c_str());
-            node = megaApi->getNodeByFingerprint(fpLocal);
-            delete [] fpLocal;
+            node = megaApi->getSyncedNode(&tmpPath);
+            if (!node)
+            {
+                const char *fpLocal = megaApi->getFingerprint(tmpPath.c_str());
+                node = megaApi->getNodeByFingerprint(fpLocal);
+                delete [] fpLocal;
+            }
         }
         else
         {
