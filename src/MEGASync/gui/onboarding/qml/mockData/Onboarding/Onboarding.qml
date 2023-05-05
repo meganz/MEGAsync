@@ -171,7 +171,7 @@ Item {
         }
     }
 
-    function addSync(localPath : string, remoteHandle : int) {
+    function addSync(localPath , remoteHandle) {
         console.info("addSync()" + " localPath:" + localPath + " remoteHandle:" + remoteHandle)
         addSyncTimer.start();
     }

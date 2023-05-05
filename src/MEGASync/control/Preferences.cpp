@@ -16,13 +16,10 @@ const char Preferences::USER_AGENT[] = "MEGAsync/4.9.3.0";
 const int Preferences::VERSION_CODE = 4903;
 const int Preferences::BUILD_ID = 2;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("4.9.3");
+const QString Preferences::VERSION_STRING = QString::fromAscii("4.9.3-onboarding-prot-v1");
 QString Preferences::SDK_ID = QString::fromAscii("247ea1a");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
-"- You can now search the stored data in your account.\n"
-"- We've improved system notifications.\n"
-"- We've enhanced the UI.\n"
-"- We've fixed the detected crashes on Windows, Linux, and macOS.\n"));
+"- Prototype onboarding QML\n"));
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
