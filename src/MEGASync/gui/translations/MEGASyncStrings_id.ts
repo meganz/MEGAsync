@@ -323,7 +323,7 @@
     <message>
         <source>Your payment for the [A] plan was unsuccessful</source>
         <translatorcomment>Label to indicate that the the payment for a [A] PRO plan has failed. Placeholder will be replaced by the PRO plan name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Kami tidak menerima pembayaran anda untuk paket [A].</translation>
     </message>
     <message>
         <source>Your publicly shared has been taken down</source>
@@ -419,7 +419,7 @@
     <message>
         <source>A folder named &quot;%1&quot; already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
         <translatorcomment>Text shown to the user if there is a name conflict with a folder in the Backups remote folder for the current device</translatorcomment>
-        <translation>Sebuah folder bernama &#8220;%1&#8221; sudah ada di Cadangan anda. Ganti nama folder baru untuk melanjutkan pencadangan. Nama folder tidak akan berubah di komputer anda.</translation>
+        <translation>Sebuah folder bernama “%1” sudah ada di Cadangan anda. Ganti nama folder baru untuk melanjutkan pencadangan. Nama folder tidak akan berubah di komputer anda.</translation>
     </message>
     <message>
         <source>If you don&apos;t want to rename the new folder, stop the backup in the [A]Backup centre[/A] for the existing folder. Then setup the backup for the new folder again.</source>
@@ -457,7 +457,7 @@
     <message>
         <source>A folder named &quot;%1&quot; already exists in your Backups. Rename the new folder to continue with the backup.</source>
         <translatorcomment>Error message displayed in the top of the rename backup dialog. It indicates that a backup with that name already exists.</translatorcomment>
-        <translation>Sebuah folder bernama &#8220;%1&#8221; sudah ada di Cadangan anda. Ganti nama folder baru untuk melanjutkan pencadangan.</translation>
+        <translation>Sebuah folder bernama “%1” sudah ada di Cadangan anda. Ganti nama folder baru untuk melanjutkan pencadangan.</translation>
     </message>
 </context>
 <context>
@@ -1371,13 +1371,13 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
         <source>%1 item selected</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%1 item dipilih.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1. %2 has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%1. %2 telah dihapus. Untuk memilih ulang, tutup jendela ini dan coba lagi. </numerusform></translation>
     </message>
 </context>
 <context>
@@ -1385,7 +1385,7 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
     <message>
         <source>Local Disk</source>
         <translatorcomment>Default drive name shown on the low space dialog when downloading files</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Disk lokal</translation>
     </message>
 </context>
 <context>
@@ -1443,7 +1443,7 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
     <message>
         <source>The file at this destination will be updated if the new file is different.</source>
         <translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>File di tujuan ini akan diperbarui jika file baru berbeda.</translation>
     </message>
 </context>
 <context>
@@ -2080,7 +2080,7 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
     <message>
         <source>Your queued transfers exceed the current quota available for your IP address.</source>
         <translatorcomment>Informative label to indicate that your queued transfers exceed the current quota available for IP. Applies to free users.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Transfer antrean anda melebihi kuota saat ini yang tersedia untuk alamat IP anda.</translation>
     </message>
     <message>
         <source>Upgrade Account</source>
@@ -2090,22 +2090,22 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
     <message>
         <source>I will wait</source>
         <translatorcomment>Button label to dismiss (hide) overquota dialogs. Shown for free users only if they do not want to upgrade account for extra transfer quota.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Saya akan menunggu</translation>
     </message>
     <message>
         <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew.</source>
         <translatorcomment>Informative label to indicate that your queued transfers may be interrupted because the current account does not have enough transfer quota.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Anda tidak dapat melanjutkan pengunduhan karena kuota transfer yang tersisa di akun ini tidak mencukupi. Untuk melanjutkan pengunduhan, membeli paket baru, atau jika anda memiliki langganan berulang dengan MEGA, anda dapat menunggu hingga paket anda diperbarui.</translation>
     </message>
     <message>
         <source>Buy new plan</source>
         <translatorcomment>Button label for button to buy a new plan when there is not enough transfer quota in current non-free plan</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Beli paket baru</translation>
     </message>
     <message>
         <source>Downloading may be interrupted as you have used 90% of your transfer quota on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew. </source>
         <translatorcomment>Message displayed in the InfoDialog when the transfer quota reaches warning stage</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Pengunduhan mungkin terhenti karena anda telah menggunakan 90% kuota transfer di akun ini. Untuk melanjutkan pengunduhan, membeli paket baru, atau jika anda memiliki langganan berulang dengan MEGA, anda dapat menunggu hingga paket anda diperbarui.</translation>
     </message>
 </context>
 <context>
@@ -2138,7 +2138,7 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
     <message>
         <source>Deleted or moved file</source>
         <translatorcomment>Tooltip when the file completed was removed or deleted</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>File yang dihapus atau dipindahkan</translation>
     </message>
 </context>
 <context>
@@ -2278,7 +2278,7 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
     <message>
         <source>Low disk space</source>
         <translatorcomment>Dialog title</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Kapasitas disk kurang</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2293,17 +2293,17 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
     <message>
         <source>There is not enough space on %1. You need an additional %2 to download these files.</source>
         <translatorcomment>Label explaining the problem, %1 is the download target disk name. %2 is the needed size to continue with the download (the size unit depends on the quantity) </translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tidak ada cukup ruang di %1. Anda membutuhkan tambahan %2 untuk mengunduh file-file ini.</translation>
     </message>
     <message>
         <source>Free space: %1</source>
         <translatorcomment>Label informing about the local disk free space</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ruang kosong: %1</translation>
     </message>
     <message>
         <source>Total size: %1</source>
         <translatorcomment>Label informing about the total local disk space</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Total ruang: %1</translation>
     </message>
 </context>
 <context>
@@ -2468,12 +2468,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Sync &#8220;%1&#8221; anda telah dinon-aktifkan karena remote folder tidak tersedia</translation>
+        <translation>Sync “%1” anda telah dinon-aktifkan karena remote folder tidak tersedia</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Sync &#8220;%1&#8221; anda telah di non-aktifkan karena folder lokal tidak ditemukan</translation>
+        <translation>Sync “%1” anda telah di non-aktifkan karena folder lokal tidak ditemukan</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -2498,12 +2498,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Sync anda &#8220;%1&#8221; telah dibatalkan karena folder remote di Tempat sampah</translation>
+        <translation>Sync anda “%1” telah dibatalkan karena folder remote ada di Tempat sampah</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the local folder has changed(moved/deleted/...). Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Sync &#8220;%1&#8221; anda telah di non-aktifkan karena folder lokal telah berubah</translation>
+        <translation>Sync “%1” anda telah di non-aktifkan karena folder lokal telah berubah</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
@@ -2518,7 +2518,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
         <translatorcomment>Notification message launched when an user is trying to sync a non valid VirtualBox shared folder . Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation>Sync anda &#8220;%1&#8221; telah dibatalkan karena sinkronisasi folder berbagi VirtualBox tidak didukung karena defisiensi pada filesystem tersebut.</translation>
+        <translation>Sync anda “%1” telah dibatalkan karena sinkronisasi folder berbagi VirtualBox tidak didukung karena defisiensi pada filesystem tersebut.</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -2780,12 +2780,12 @@ Transfer akan dilanjutkan secara otomatis saat anda membuka kembali aplikasi.</n
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Cadangan anda &#8220;%1&#8221; telah dinonaktifkan karena sinkronisasi folder bersama VirtualBox tidak didukung karena kekurangan dalam sistem file tersebut.</translation>
+        <translation>Cadangan anda “%1” telah dinonaktifkan karena sinkronisasi folder bersama VirtualBox tidak didukung karena kekurangan dalam sistem file tersebut.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Cadangan anda &#8220;%1&#8221; telah dinonaktifkan karena folder jarak jauh ada di Tempat Sampah.</translation>
+        <translation>Cadangan anda “%1” telah dinonaktifkan karena folder jarak jauh ada di Tempat Sampah.</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
@@ -2795,17 +2795,17 @@ Transfer akan dilanjutkan secara otomatis saat anda membuka kembali aplikasi.</n
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the local folder has changed</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Cadangan anda &#8220;%1&#8221; telah dinonaktifkan karena folder lokal telah berubah</translation>
+        <translation>Cadangan anda “%1” telah dinonaktifkan karena folder lokal telah berubah</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled because the remote folder has changed</source>
         <translatorcomment>Warning message shown when a backup is being disabled due to an error. Placeholder displays backup name</translatorcomment>
-        <translation>Cadangan anda &#8220;%1&#8221; telah dinonaktifkan karena folder jarak jauh telah diubah</translation>
+        <translation>Cadangan anda “%1” telah dinonaktifkan karena folder jarak jauh telah diubah</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled. Reason: %2</source>
         <translatorcomment>Notification message launched when a backup is disabled. Keep &quot;%1&quot; code because is filled with the name of the backup at runtime and %2 with the reason of the error.</translatorcomment>
-        <translation>Cadangan anda &#8220;%1&#8221; telah dinonaktifkan. Alasan: %2</translation>
+        <translation>Cadangan anda “%1” telah dinonaktifkan. Alasan: %2</translation>
     </message>
     <message>
         <source>Security upgrade</source>
@@ -2840,7 +2840,7 @@ Transfer akan dilanjutkan secara otomatis saat anda membuka kembali aplikasi.</n
     <message>
         <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
         <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Satu atau beberapa sinkronisasi telah dinonaktifkan. Buka Pengaturan untuk mengaktifkannya lagi.</translation>
     </message>
     <message>
         <source>Open settings</source>
@@ -2855,37 +2855,37 @@ Transfer akan dilanjutkan secara otomatis saat anda membuka kembali aplikasi.</n
     <message>
         <source>Your syncs and backups have been disabled: %1</source>
         <translatorcomment>Warning message shown when all the syncs and backups have been disabled. The placeholder %1 shows the reason;</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Sinkronisasi dan pencadangan anda telah dinonaktifkan: %1</translation>
     </message>
     <message>
         <source>Your backups have been disabled: %1</source>
         <translatorcomment>Warning message shown when all the backups have been disabled. The placeholder %1 shows the reason;</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Cadangan anda telah dinonaktifkan: %1</translation>
     </message>
     <message>
         <source>Your syncs have been disabled: %1</source>
         <translatorcomment>Warning message shown when  all the syncs have been disabled. The placeholder %1 shows the reason;</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Sinkronisasi anda telah dinonaktifkan: %1</translation>
     </message>
     <message>
         <source>Error getting link: %1</source>
         <translatorcomment>Notification message launched when an error occurs getting a public link for a file/folder. Placeholder %1 displays the reason.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Gagal mendapatkan tautan: %1</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been temporarily disabled: %2</source>
         <translatorcomment>Warning message shown when a sync is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Sinkronisasi anda “%1” telah dinonaktifkan sementara: %2</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been temporarily disabled: %2</source>
         <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Cadangan anda “%1” telah dinonaktifkan sementara: %2</translation>
     </message>
     <message>
         <source>Error transferring folder: %1</source>
         <translatorcomment>Label to indicate that has been an error during a folder transfer.  Placeholder %1 displays the reason.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Kesalahan mentransfer folder: %1</translation>
     </message>
 </context>
 <context>
@@ -3660,7 +3660,7 @@ Masukkan nama yang berbeda.</translation>
     <message>
         <source>No results for:</source>
         <translatorcomment>Label indicating that there are no results for the current search, searched text will be following this label.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tidak ada hasil untuk:</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -3673,7 +3673,7 @@ Masukkan nama yang berbeda.</translation>
     <message>
         <source>Searching:</source>
         <translatorcomment>Label indicating the current search, searched text will be following this label.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Mencari:</translation>
     </message>
 </context>
 <context>
@@ -3756,17 +3756,17 @@ Masukkan nama yang berbeda.</translation>
     <message>
         <source>Uploads and downloads</source>
         <translatorcomment>Notification category for completed transfers notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Unggahan dan unduhan</translation>
     </message>
     <message>
         <source>Completed uploads and downloads</source>
         <translatorcomment>Title of a checkbox for disconnectig completed transfer notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Unggahan dan unduhan selesai</translation>
     </message>
     <message>
         <source>Uploads and downloads:</source>
         <translatorcomment>Notification category for completed transfers notifications (macx)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Unggahan dan unduhan:</translation>
     </message>
 </context>
 <context>
@@ -4041,7 +4041,7 @@ Masukkan nama yang berbeda.</translation>
     <message>
         <source>With our end-to-end encryption, the way your team works has never been more secure and private.</source>
         <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of business plan.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Dengan enkripsi tanpa pengetahuan kami, cara kerja tim anda tidak pernah seaman dan sepribadi ini.</translation>
     </message>
     <message>
         <source>Get started with secure file storage.</source>
@@ -4066,12 +4066,12 @@ Masukkan nama yang berbeda.</translation>
     <message>
         <source>[A] storage</source>
         <translatorcomment>Label to indicate the specific storage of a pro plan. [A] is a placeholder for the value of the storage, it must be kept in the translated strings.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[A] penyimpanan</translation>
     </message>
     <message>
         <source>[A] transfer</source>
         <translatorcomment>Label to indicate the specific transfer quota of a pro plan. [A] is a placeholder for the value of the transfer quota, it must be kept in the translated strings.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[A] pemindahan</translation>
     </message>
 </context>
 <context>
@@ -4079,7 +4079,7 @@ Masukkan nama yang berbeda.</translation>
     <message>
         <source>Show in folder</source>
         <translatorcomment>Label to indicate the &quot;Show in folder&quot; option to open local folder of a sync (Linux)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tampilkan di dalam folder</translation>
     </message>
     <message>
         <source>Exit</source>
@@ -4089,17 +4089,17 @@ Masukkan nama yang berbeda.</translation>
     <message>
         <source>Show in Finder</source>
         <translatorcomment>Label to indicate the &quot;Show in Finder&quot; option to open local folder of a sync (macOS). Keep Finder name as it is the app name of file explorer on macOS.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tampilkan di Pencari</translation>
     </message>
     <message>
         <source>Quit</source>
         <translatorcomment>Label displayed on actions exiting Desktop application when on Mac</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Keluar</translation>
     </message>
     <message>
         <source>Show in Explorer</source>
         <translatorcomment>Label to indicate the &quot;Show in Explorer&quot; option to open local folder of a sync (Windows). Keep Explorer name as it is the app name of file explorer on Windows.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tampilkan di File Explorer</translation>
     </message>
 </context>
 <context>
@@ -4110,7 +4110,11 @@ Masukkan nama yang berbeda.</translation>
 - We've enhanced the UI.
 - We've fixed the detected crashes on Windows, Linux, and macOS.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>- Anda sekarang dapat mencari data yang tersimpan di akun anda.
+- Kami telah meningkatkan sistem notifikasi.
+- Kami telah meningkatkan UI.
+- Kami telah memperbaiki kerusakan yang terdeteksi di Windows, Linux, dan macOS.
+</translation>
     </message>
 </context>
 <context>
@@ -5224,7 +5228,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Enable Windows Explorer integration</source>
         <translatorcomment>Checkbox label displayed on Windows, allowing the user to enable / disable the Windows Explorer integration.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Aktifkan integrasi Windows File Explorer</translation>
     </message>
     <message>
         <source>B</source>
@@ -5972,7 +5976,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Only files can be used for streaming.</source>
         <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Anda tidak dapat mengalirkan folder. Pilih file untuk streaming.</translation>
     </message>
 </context>
 <context>
@@ -6279,7 +6283,7 @@ Untuk melanjutkan, pilih folder lain.</translation>
     <message>
         <source>You need Full access right to be able to sync the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying sync a non compatible folder</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Untuk menyinkronkan folder ini, anda harus memiliki izin akses penuh ke folder tersebut.</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -6290,7 +6294,7 @@ Untuk melanjutkan, pilih folder lain.</translation>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tidak dapat menyinkronkan folder. Pastikan anda tidak menggunakan “\”, “/” atau “:” di nama folder.</translation>
     </message>
 </context>
 <context>
@@ -6311,17 +6315,17 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Sync is enabled</source>
         <translatorcomment>Checkbox tooltip that is displayed when it is checked.(sync enabled)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Sinkronisasi diaktifkan</translation>
     </message>
     <message>
         <source>Sync is disabled</source>
         <translatorcomment>Checkbox tooltip that is displayed when it is unchecked.(sync disabled)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Sinkronisasi dinonaktifkan</translation>
     </message>
     <message>
         <source>Click menu for more Sync actions</source>
         <translatorcomment>Menu column tooltip (three dots in the table)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Klik menu tiga titik untuk tindakan sinkronisasi lainnya</translation>
     </message>
 </context>
 <context>
@@ -6646,22 +6650,22 @@ Untuk mendapatkan lebih banyak kuota, upgrade ke akun Pro atau tunggu [A] hingga
     <message>
         <source>Uploaded 1 file to %1.</source>
         <translatorcomment>Notification text that inform 1 file has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Mengunggah 1 file ke %1.</translation>
     </message>
     <message>
         <source>Uploaded 1 folder to %1.</source>
         <translatorcomment>Notification text that inform 1 folder has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Mengunggah 1 folder ke %1.</translation>
     </message>
     <message>
         <source>File uploaded</source>
         <translatorcomment>Notification title when a file has been uploaded</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Berkas diunggah</translation>
     </message>
     <message>
         <source>Folder uploaded</source>
         <translatorcomment>Notification title when a folder has been uploaded</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Folder diunggah</translation>
     </message>
     <message>
         <source>Show in MEGA</source>
@@ -6676,17 +6680,17 @@ Untuk mendapatkan lebih banyak kuota, upgrade ke akun Pro atau tunggu [A] hingga
     <message>
         <source>Downloaded 1 file to %1.</source>
         <translatorcomment>Notification text that inform 1 file has been downloaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Mengunduh 1 file ke %1.</translation>
     </message>
     <message>
         <source>Downloaded 1 folder to %1.</source>
         <translatorcomment>Notification text that inform 1 folder has been downloaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Mengunduh 1 folder ke %1.</translation>
     </message>
     <message>
         <source>Show in folder</source>
         <translatorcomment>Notification button to see the file on the local file explorer</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tampilkan di dalam folder</translation>
     </message>
     <message>
         <source>Open</source>
@@ -6696,62 +6700,62 @@ Untuk mendapatkan lebih banyak kuota, upgrade ke akun Pro atau tunggu [A] hingga
     <message>
         <source>File downloaded</source>
         <translatorcomment>Notification title when a file has been downloaded</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Berkas diunduh</translation>
     </message>
     <message>
         <source>Folder downloaded</source>
         <translatorcomment>Notification title when a folder has been downloaded</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Folder diunduh</translation>
     </message>
     <message numerus="yes">
         <source>%n upload successful</source>
         <translatorcomment>Notification text that inform that an upload was successful. %1 is the number of uploads. This string goes always with the %n upload cancelled and/or %n upload failed strings.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%n unggahan selesai </numerusform></translation>
     </message>
     <message numerus="yes">
         <source>, %n upload cancelled</source>
         <translatorcomment>Appended text that inform that an upload was cancelled. %1 is the number of cancelled uploads. This string goes always appended to the %n upload successful</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>, %n unggahan dibatalkan </numerusform></translation>
     </message>
     <message numerus="yes">
         <source>, %n upload failed</source>
         <translatorcomment>Appended text that inform that an upload has failed. %1 is the number of failed uploads. This string goes always appended to the %n upload successful</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>, %n unggahan gagal </numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Uploaded %n items to %1</source>
         <translatorcomment>Notification text that inform n items (files or folders) has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Mengunggah %n barang ke %1</numerusform></translation>
     </message>
     <message>
         <source>Items uploaded</source>
         <translatorcomment>Notification title when a more than one transfer (file or folders) have been uploaded</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Item diunggah</translation>
     </message>
     <message numerus="yes">
         <source>%n download successful</source>
         <translatorcomment>Notification text that inform that an download was successful. %1 is the number of downloads. This string goes always with the %n download cancelled and/or %n download failed strings.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%n unduhan selesai</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>, %n download cancelled</source>
         <translatorcomment>Appended text that inform that an download was cancelled. %1 is the number of cancelled downloads. This string goes always appended to the %n download successful</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>, %n unduhan dibatalkan</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>, %n download failed</source>
         <translatorcomment>Appended text that inform that an download has failed. %1 is the number of failed downloads. This string goes always appended to the %n download successful</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>, %n unduhan gagal</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Downloaded %n items to %1</source>
         <translatorcomment>Notification text that inform n items (files or folders) has been downloaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Mengunduh %n barang ke %1</numerusform></translation>
     </message>
     <message>
         <source>Items downloaded</source>
         <translatorcomment>Notification title when a more than one transfer (file or folders) have been downloaded</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Barang diunduh</translation>
     </message>
 </context>
 <context>
@@ -7131,7 +7135,7 @@ Harap hapus sinkronisasi folder dari pengaturan untuk membatalkannya.</translati
     <message>
         <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying upload files to a non compatible folder</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Untuk mengunggah folder ini, anda harus memiliki izin baca dan tulis atau akses penuh ke folder tersebut.</translation>
     </message>
 </context>
 <context>
@@ -7280,22 +7284,22 @@ Harap hapus sinkronisasi folder dari pengaturan untuk membatalkannya.</translati
     <message>
         <source>%1 [A]d[/A]</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [DAYS] [HOURS] string, replacing the [DAYS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the days. The space needs to be non-breaking.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1&#xa0;[A]h[/A]</translation>
     </message>
     <message>
         <source>%1 [A]h[/A]</source>
         <translatorcomment>String controlling the formatting of the hour count for time intervals. It is used in [DAYS] [HOURS] and [HOURS] [MINUTES] strings, replacing the [HOURS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the hours. The space needs to be non-breaking.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1&#xa0;[A]j[/A]</translation>
     </message>
     <message>
         <source>%1 [A]m[/A]</source>
         <translatorcomment>String controlling the formatting of the minute count for time intervals. It is used in [HOURS] [MINUTES] and [MINUTES] [SECONDS] strings, replacing the [MINUTES] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the minutes. The space needs to be non-breaking.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1&#xa0;[A]m[/A]</translation>
     </message>
     <message>
         <source>%1 [A]s[/A]</source>
         <translatorcomment>String controlling the formatting of the seconds count for time intervals. It is used in the [MINUTES] [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the seconds. The space needs to be non-breaking.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1&#xa0;[A]d[/A]</translation>
     </message>
 </context>
 <context>

@@ -415,11 +415,18 @@ bool TransferData::canBeRetried() const
     }
     else if(!isUpload())
     {
-        mega::MegaError error = mFailedTransfer->getLastError();
-        if(error.getErrorCode() == mega::MegaError::API_EARGS
-                || (error.getErrorCode() == mega::MegaError::API_ENOENT || error.getErrorCode() == mega::MegaError::API_EREAD))
+        if(!mFailedTransfer)
         {
             result = false;
+        }
+        else
+        {
+            mega::MegaError error = mFailedTransfer->getLastError();
+            if(error.getErrorCode() == mega::MegaError::API_EARGS
+                    || (error.getErrorCode() == mega::MegaError::API_ENOENT || error.getErrorCode() == mega::MegaError::API_EREAD))
+            {
+                result = false;
+            }
         }
     }
 
