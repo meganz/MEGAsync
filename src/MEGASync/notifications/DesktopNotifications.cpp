@@ -289,6 +289,17 @@ void DesktopNotifications::processAlert(mega::MegaUserAlert* alert)
         }
         break;
     }
+    case mega::MegaUserAlert::TYPE_UPDATEDSHAREDNODES:
+    {
+        if(mPreferences->isNotificationEnabled(Preferences::NotificationsTypes::NODES_SHARED_WITH_ME_CREATED_OR_REMOVED))
+        {
+            int64_t updatedItems = alert->getNumber(0);
+            const QString message(tr("[A] updated %n item", "", static_cast<int>(updatedItems))
+                    .replace(QString::fromUtf8("[A]"), fullName));
+            notifySharedUpdate(alert, message, NEW_SHARED_NODES);
+        }
+        break;
+    }
     case mega::MegaUserAlert::TYPE_PAYMENTREMINDER:
     {
         auto notification = new MegaNotification();
