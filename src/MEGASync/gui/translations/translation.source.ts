@@ -396,6 +396,19 @@
         <translatorcomment>Label to indicate a reminder about a contact request.</translatorcomment>
         <translation>Reminder: You have a contact request</translation>
     </message>
+    <message>
+        <source>Shared folder updated</source>
+        <translatorcomment>Label to indicate that a shared folder was updated. CON-295</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>[A] updated %n item</source>
+        <translatorcomment>Label to indicate that user [A] has updated %n items in shared folder. Placeholder [A] will be replaced by the email or full name of the user that made the update and %n with the number of removed items. CON-295</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>[A] updated %n item</numerusform>
+            <numerusform>[A] updated %n items</numerusform>
+        </translation>
+    </message>
 </context>
 <context>
     <name>BackupItemModel</name>
@@ -1336,6 +1349,14 @@ In some cases they may contain details about your data, such as file or folder n
         <source>Show in MEGA</source>
         <translatorcomment>Notification button to redirect the user to remote location. It will open webclient at specific location.</translatorcomment>
         <translation>Show in MEGA</translation>
+    </message>
+    <message numerus="yes">
+        <source>[A] updated %n item</source>
+        <translatorcomment>Label to indicate that user [A] has updated %n items in shared folder. Placeholder [A] will be replaced by the email or full name of the user that made the update and %n with the number of removed items. CON-295</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>[A] updated %n item</numerusform>
+            <numerusform>[A] updated %n items</numerusform>
+        </translation>
     </message>
 </context>
 <context>
