@@ -60,13 +60,7 @@ struct TransferMetaDataItem
 template <class Type>
 struct TransferMetaDataItemsByState
 { 
-    int size() const {return pendingTransfers.size() + completedTransfers.size() + failedTransfers.size() + cancelledTransfers.size();}
-    QList<TransferMetaDataItemId> ids() const
-    {
-        QList<TransferMetaDataItemId> ids;
-        ids << pendingTransfers.keys() << completedTransfers.keys() << failedTransfers.keys() << cancelledTransfers.keys();
-        return ids;
-    }
+    int size() const {return pendingTransfers.size() + completedTransfers.size() + failedTransfers.size() + cancelledTransfers.size() + nonExistFailedTransfers.size();}
 
     QMap<TransferMetaDataItemId, std::shared_ptr<Type>> pendingTransfers;
     QMap<TransferMetaDataItemId, std::shared_ptr<Type>> completedTransfers;

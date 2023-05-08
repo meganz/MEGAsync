@@ -439,7 +439,7 @@ void TransferMetaData::checkAndSendNotification()
                 mFiles.setHasChanged(false);
                 appIds.append(getAppId());
             }
-            else
+            else if(!nonExistData)
             {
                 TransferMetaDataContainer::removeAppData(getAppId());
             }
@@ -531,7 +531,14 @@ void TransferMetaData::setNotification(MegaNotification* newNotification)
 
     mNotification = newNotification;
     mNotificationDestroyedConnection = MegaNotification::connect(newNotification, &MegaNotification::destroyed, [newNotification](){
-        TransferMetaDataContainer::removeAppData(newNotification->getData().toULongLong());
+        auto appDataId(newNotification->getData().toULongLong());
+        auto data = TransferMetaDataContainer::getAppData(appDataId);
+        if(data && data->isNonExistData())
+        {
+            //Also remove the source TransferMetaData
+            TransferMetaDataContainer::removeAppData(appDataId - 1);
+        }
+        TransferMetaDataContainer::removeAppData(appDataId);
     });
 }
 
@@ -572,6 +579,8 @@ void TransferMetaData::retryFileFromFolderFailingItem(int fileTag, int folderTag
 {
     TransferMetaDataItemId fileId(fileTag, nodeHandle);
 
+
+
     auto removed = mFiles.failedTransfers.remove(fileId);
     removed += mFiles.nonExistFailedTransfers.remove(fileId);
 
@@ -591,11 +600,22 @@ void TransferMetaData::retryFailingFile(int tag, mega::MegaHandle nodeHandle)
 {
     TransferMetaDataItemId fileId(tag, nodeHandle);
 
+    //Don´t use isSingleTransfer as this one takes into account empty folders
+    auto isSingle(getTotalFiles() == 1);
+
     auto removed = mFiles.failedTransfers.remove(fileId);
     removed += mFiles.nonExistFailedTransfers.remove(fileId);
 
     if(removed != 0)
     {
+        if(isSingle)
+        {
+            if(mNotification)
+            {
+                mNotification->deleteLater();
+            }
+        }
+
         addInitialPendingTransfer();
     }
 }
@@ -946,6 +966,7 @@ void TransferMetaDataContainer::retryTransfer(mega::MegaTransfer *transfer, unsi
                     if(nonExistData->isEmpty())
                     {
                         removeAppData(data->mNonExistsFailAppId);
+                        removeAppData(data->getAppId());
                         data->mNonExistsFailAppId = 0;
                     }
                 }
