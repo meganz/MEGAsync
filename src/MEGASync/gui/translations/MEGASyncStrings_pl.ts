@@ -531,7 +531,7 @@
     <message>
         <source>Folders will be stored in backups and you can check the status of your backups in backup centre.</source>
         <translatorcomment>Successfull dialog text</translatorcomment>
-        <translation>Katalogi zostaną zapisane w kopiach zapasowych, a stan kopii zapasowych można sprawdzić w centrum kopii zapasowych.</translation>
+        <translation>Katalogi zostaną zapisane w Kopiach zapasowych, a stan kopii zapasowych można sprawdzić w centrum Kopii zapasowych.</translation>
     </message>
     <message>
         <source>Show more…</source>
