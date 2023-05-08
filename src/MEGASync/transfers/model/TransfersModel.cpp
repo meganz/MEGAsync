@@ -102,11 +102,7 @@ QList<QExplicitlySharedDataPointer<TransferData>> TransferThread::extractFromCac
 QExplicitlySharedDataPointer<TransferData> TransferThread::createData(MegaTransfer *transfer, MegaError* e)
 {
     QExplicitlySharedDataPointer<TransferData> d (new TransferData(transfer));
-
-    if(transfer->getState() == MegaTransfer::STATE_FAILED || (e && e->getErrorCode() != mega::MegaError::API_OK))
-    {
-        d->mFailedTransfer = std::shared_ptr<mega::MegaTransfer>(transfer->copy());
-    }
+    updateFailedTransfer(d, transfer, e);
 
     return d;
 }
@@ -197,7 +193,22 @@ QExplicitlySharedDataPointer<TransferData> TransferThread::onTransferEvent(MegaT
         result = checkIfRepeatedAndRemove(mTransfersToProcess.updateTransfersByTag, transfer);
     }
 
+    updateFailedTransfer(result, transfer, e);
+
     return result;
+}
+
+void TransferThread::updateFailedTransfer(QExplicitlySharedDataPointer<TransferData> data,
+                                          mega::MegaTransfer *transfer,
+                                          mega::MegaError *e)
+{
+    if(transfer->getState() == MegaTransfer::STATE_FAILED || (e && e->getErrorCode() != mega::MegaError::API_OK))
+    {
+        if(data && !data->mFailedTransfer)
+        {
+            data->mFailedTransfer = std::shared_ptr<mega::MegaTransfer>(transfer->copy());
+        }
+    }
 }
 
 void TransferThread::onTransferStart(MegaApi *, MegaTransfer *transfer)
@@ -1391,7 +1402,23 @@ void TransfersModel::retryTransfers(const QMultiMap<unsigned long long, std::sha
 
             foreach(auto& failedTransfer, transfers)
             {
-                auto data = TransferMetaDataContainer::getAppData(appData);
+                std::shared_ptr<TransferMetaData> data(nullptr);
+
+                auto transferAppData(failedTransfer->getAppData());
+                if(transferAppData != appDataRaw)
+                {
+                    auto oldAppDataId = TransferMetaDataContainer::appDataToId(failedTransfer->getAppData());
+                    if(oldAppDataId.first)
+                    {
+                        data = TransferMetaDataContainer::getAppData(oldAppDataId.second);
+                        if(data)
+                        {
+                            TransferMetaDataContainer::retryTransfer(failedTransfer.get(), oldAppDataId.second);
+                        }
+                    }
+                }
+
+                data = TransferMetaDataContainer::getAppData(appData);
                 //When retrying, the appDataId is a new one
                 if(!data)
                 {
@@ -1410,6 +1437,7 @@ void TransfersModel::retryTransfers(const QMultiMap<unsigned long long, std::sha
                 {
                     TransferMetaDataContainer::retryTransfer(failedTransfer.get(), appData);
                 }
+
 
                 if (failedTransfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
                 {
@@ -1510,7 +1538,6 @@ void TransfersModel::retryTransfers(QModelIndexList indexes, unsigned long long 
 
             if(d->isUpload())
             {
-
                 unsigned long long appDataId(newAppDataIdUpload);
                 if(appDataId == 0)
                 {
@@ -1519,13 +1546,15 @@ void TransfersModel::retryTransfers(QModelIndexList indexes, unsigned long long 
                     {
                         appDataId = appData->getAppId();
                     }
-
-                    if(newAppDataIdUpload == 0)
+                    else
                     {
-                        newAppDataIdUpload = mPreferences->transferIdentifier();
-                    }
+                        if(newAppDataIdUpload == 0)
+                        {
+                            newAppDataIdUpload = mPreferences->transferIdentifier();
+                        }
 
-                    appDataId = newAppDataIdUpload;
+                        appDataId = newAppDataIdUpload;
+                    }
                 }
 
                 uploadTransfersToRetry.insert(appDataId, copiedTransfer);
@@ -1541,13 +1570,15 @@ void TransfersModel::retryTransfers(QModelIndexList indexes, unsigned long long 
                     {
                         appDataId = appData->getAppId();
                     }
-
-                    if(newAppDataIdUpload == 0)
+                    else
                     {
-                        newAppDataIdDownload = mPreferences->transferIdentifier();
-                    }
+                        if(newAppDataIdUpload == 0)
+                        {
+                            newAppDataIdDownload = mPreferences->transferIdentifier();
+                        }
 
-                    appDataId = newAppDataIdDownload;
+                        appDataId = newAppDataIdDownload;
+                    }
                 }
 
                 downloadTransfersToRetry.insert(appDataId, copiedTransfer);

@@ -384,48 +384,30 @@ bool TransferData::isFailed() const
     return mState & TRANSFER_FAILED && mFailedTransfer;
 }
 
-bool TransferData::isPermanentFail() const
-{
-    auto hasFailed = isFailed();
-    if(hasFailed && !isUpload())
-    {
-        mega::MegaError error = mFailedTransfer->getLastError();
-        if(error.getErrorCode() == mega::MegaError::API_EARGS
-                || error.getErrorCode() == mega::MegaError::API_ENOENT || error.getErrorCode() == mega::MegaError::API_EREAD)
-        {
-            return true;
-        }
-    }
-
-    return false;
-}
-
 bool TransferData::canBeRetried() const
 {
-    auto result(true);
+    auto result(false);
 
     if(!isFailed())
     {
         return result;
     }
 
-    if(isSyncTransfer())
+    if(!isSyncTransfer())
     {
-        result = false;
-    }
-    else if(!isUpload())
-    {
-        if(!mFailedTransfer)
+        if(isUpload())
         {
-            result = false;
+            result = true;
         }
         else
         {
             mega::MegaError error = mFailedTransfer->getLastError();
-            if(error.getErrorCode() == mega::MegaError::API_EARGS
-                    || (error.getErrorCode() == mega::MegaError::API_ENOENT || error.getErrorCode() == mega::MegaError::API_EREAD))
+            //If it is not any of these errors, it can be retried
+            if(error.getErrorCode() != mega::MegaError::API_EARGS
+                    && error.getErrorCode() != mega::MegaError::API_ENOENT
+                    && error.getErrorCode() != mega::MegaError::API_EREAD)
             {
-                result = false;
+                result = true;
             }
         }
     }
