@@ -14,7 +14,6 @@ ResumePageForm {
                 syncsFlow.state = syncs;
                 break;
             case InstallationTypeButton.Type.Backup:
-                selectBackupFoldersPage.backupTable.backupModel.clean();
                 syncsFlow.state = selectBackup;
                 break;
             case InstallationTypeButton.Type.Fuse:

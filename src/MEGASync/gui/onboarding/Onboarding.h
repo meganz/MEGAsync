@@ -74,7 +74,7 @@ signals:
     void accountConfirmed();
     void emailChanged(const QString& email);
     void changeRegistrationEmailFinished(bool success);
-    void backupConflict(const QString& folder);
+    void backupConflict(const QString& folder, const QString& name, bool isNew);
     void fetchingNodesProgress(double progress);
 
 private:
@@ -88,8 +88,9 @@ private:
     QString mEmail;
     QString mFirstName;
     QString mLastName;
-    QStringList mBackupsToDoList;
 
+    // The first field contains the full path and the second contains the backup name
+    QList<QPair<QString, QString>> mBackupsToDoList;
 
 private slots:
     void onSyncAddRequestStatus(int errorCode, const QString& errorMsg, const QString& name);

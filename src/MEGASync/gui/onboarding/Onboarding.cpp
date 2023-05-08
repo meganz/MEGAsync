@@ -302,7 +302,11 @@ void Onboarding::addBackups(const QStringList& localPathList)
         return;
     }
 
-    mBackupsToDoList = localPathList;
+    mBackupsToDoList.clear();
+    for(const QString& path : localPathList)
+    {
+        mBackupsToDoList.append(QPair<QString, QString>(path, QString::fromUtf8("")));
+    }
     createNextBackup();
 }
 
@@ -337,9 +341,13 @@ void Onboarding::createNextBackup(const QString& name)
     QString backupName(name);
     if(name.isEmpty())
     {
-        backupName = mBackupController->getSyncNameFromPath(mBackupsToDoList.first());
+        backupName = mBackupController->getSyncNameFromPath(mBackupsToDoList.first().first);
     }
-    mBackupController->addBackup(mBackupsToDoList.first(), backupName);
+    else
+    {
+        mBackupsToDoList.first().second = name;
+    }
+    mBackupController->addBackup(mBackupsToDoList.first().first, backupName);
 }
 
 void Onboarding::exitLoggedIn()
@@ -405,8 +413,25 @@ void Onboarding::onBackupAddRequestStatus(int errorCode,
     }
     else
     {
-        // Wait until the rename conflict has been resolved
-        emit backupConflict(mBackupController->getSyncNameFromPath(name));
+        bool found = false;
+        auto it = mBackupsToDoList.constBegin();
+        QString backupName(QString::fromUtf8(""));
+        while(!found && it != mBackupsToDoList.constEnd())
+        {
+            if((found = (it->first == name)))
+            {
+                backupName = it->second;
+            }
+            it++;
+        }
+
+        if(found)
+        {
+            // Wait until the rename conflict has been resolved
+            emit backupConflict(mBackupController->getSyncNameFromPath(name),
+                                backupName,
+                                backupName == QString::fromUtf8(""));
+        }
     }
     emit backupsUpdated(name, errorCode, mBackupsToDoList.size() == 0);
 }

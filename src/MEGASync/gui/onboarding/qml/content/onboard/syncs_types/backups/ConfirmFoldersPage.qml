@@ -11,6 +11,7 @@ import Onboard 1.0
 import Onboarding 1.0
 
 ConfirmFoldersPageForm {
+    id: root
 
     property bool success: false
 
@@ -23,8 +24,12 @@ ConfirmFoldersPageForm {
         nextButton {
             text: OnboardingStrings.backup
             iconSource: Images.cloud
+            busyIndicatorImage: Images.loader
+            progressBar: true
             onClicked: {
                 success = false;
+                root.enabled = false;
+                footerButtons.nextButton.busyIndicatorVisible = true;
                 backupTable.backupModel.updateConfirmed();
                 Onboarding.addBackups(backupTable.backupModel.getConfirmedDirs());
             }
@@ -44,8 +49,17 @@ ConfirmFoldersPageForm {
             backupTable.backupModel.update(path, errorCode);
 
             if(finished) {
+                backupTable.backupModel.clean();
+                root.enabled = true;
+                footerButtons.nextButton.busyIndicatorVisible = false;
                 syncsFlow.state = syncsFlow.finalState;
             }
+        }
+
+        onBackupConflict: (folder, name, isNew) => {
+            backupTable.backupModel.clean();
+            root.enabled = true;
+            footerButtons.nextButton.busyIndicatorVisible = false;
         }
     }
 

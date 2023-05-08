@@ -18,8 +18,7 @@ TwoFAPageForm {
     }
 
     loginButton.onAnimationFinished: {
-        if(completed)
-        {
+        if(completed) {
             console.log("ANIMATION FINISHED 2FA"+completed)
             loginButton.busyIndicatorVisible = false;
             onboardingFlow.state = syncs;

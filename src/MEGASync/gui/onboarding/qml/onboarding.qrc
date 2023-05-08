@@ -27,6 +27,7 @@
         <file>content/onboard/syncs_types/SyncsPage.qml</file>
         <file>content/onboard/syncs_types/backups/ConfirmFoldersPage.qml</file>
         <file>content/onboard/syncs_types/backups/ConfirmFoldersPageForm.ui.qml</file>
+		<file>content/onboard/syncs_types/backups/FolderRow.qml</file>
         <file>content/onboard/syncs_types/backups/FoldersTable.qml</file>
         <file>content/onboard/syncs_types/backups/RenameBackupFolderPage.qml</file>
         <file>content/onboard/syncs_types/backups/RenameBackupFolderPageForm.ui.qml</file>

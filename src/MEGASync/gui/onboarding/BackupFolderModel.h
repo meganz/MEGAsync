@@ -21,7 +21,6 @@ struct BackupFolder
 
     // Back (without role)
     long long folderSize;
-    bool syncable;
 
     BackupFolder();
 
@@ -33,6 +32,8 @@ struct BackupFolder
 class BackupFolderModel : public QAbstractListModel
 {
     Q_OBJECT
+
+    Q_PROPERTY(QString totalSize READ getTotalSize NOTIFY totalSizeChanged)
 
 public:
 
@@ -57,6 +58,8 @@ public:
 
     QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const override;
 
+    QString getTotalSize() const;
+
 public slots:
 
     void insertFolder(const QString& folder);
@@ -65,8 +68,6 @@ public slots:
 
     // TODO: Change by property??
     int getNumSelectedRows() const;
-
-    QString getTotalSize() const;
 
     void updateConfirmed();
 
@@ -77,10 +78,9 @@ public slots:
     void update(const QString& path, int errorCode);
 
 signals:
-
     void rowSelectedChanged(bool selectedRow, bool selectedAll);
-
     void disableRow(int index);
+    void totalSizeChanged();
 
 private:
 
@@ -102,14 +102,15 @@ private:
                              const QString& other) const;
 
     void reviewOthers(const QString& folder,
-                      bool enable,
-                      bool force = false);
+                      bool enable);
+
+    void reviewOthersWhenRemoved(const QString& folder);
 
     bool existAnotherBackupFolderRelated(const QString& folder,
                                          const QString& selectedFolder) const;
 
     bool isRelatedFolder(const QString& folder,
-                             const QString& existingPath) const;
+                         const QString& existingPath) const;
 
     QString getToolTipErrorText(const QString& folder,
                                 const QString& existingPath) const;
@@ -127,6 +128,8 @@ private:
 private slots:
 
     void onSyncRemoved(std::shared_ptr<SyncSettings> syncSettings);
+
+    void onSyncChanged(std::shared_ptr<SyncSettings> syncSettings);
 
 };
 

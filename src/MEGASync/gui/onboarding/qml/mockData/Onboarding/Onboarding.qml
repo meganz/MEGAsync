@@ -22,8 +22,8 @@ Item {
     signal exitLoggedInFinished
     signal twoFAFailed
     signal syncSetupSucces
-    signal backupsUpdated
-    signal backupConflict
+    signal backupsUpdated(string path, int errorCode, bool finished)
+    signal backupConflict(string folder, bool isNew)
     signal accountConfirmed
     signal changeRegistrationEmailFinished(bool success)
     signal deviceNameReady
@@ -176,8 +176,20 @@ Item {
         addSyncTimer.start();
     }
 
+    Timer {
+        id: backupTimer
+
+        interval: 2000;
+        running: false;
+        repeat: false;
+        onTriggered: {
+            backupsUpdated("C:\\Users\\mega\\Documents", 0, true);
+        }
+    }
+
     function addBackups(backupDirs) {
         console.info("addBackups() => " + JSON.stringify(backupDirs));
+        backupTimer.start();
     }
 
     function createNextBackup(name) {

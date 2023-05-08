@@ -119,18 +119,12 @@ Rectangle {
                 Text {
                     id: totalSizeText
 
-                    text: "0 B"
+                    text: backupModel.totalSize
                     Layout.rightMargin: 22
                     Layout.alignment: Qt.AlignRight
                     font.pixelSize: 10
                     font.weight: Font.DemiBold
                     visible: backupProxyModel.selectedFilterEnabled
-
-                    onVisibleChanged: {
-                        if(visible) {
-                            totalSizeText.text = backupModel.getTotalSize();
-                        }
-                    }
                 }
 
                 Connections {
@@ -161,97 +155,10 @@ Rectangle {
     Component {
         id: folderItem
 
-        RowLayout {
-
-            height: 32
-            width: parent.width
-
-            Rectangle {
-                id: folderRowItem
-
-                Layout.preferredHeight: parent.height
-                Layout.preferredWidth: parent.width - 32
-                Layout.leftMargin: 14
-                radius: 8
-
-                color: (index % 2 === 0) ? "transparent" : Styles.surface2
-
-                RowLayout {
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.fill: parent
-
-                    RowLayout {
-                        Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
-
-                        Custom.CheckBox {
-                            id: rowCheckbox
-
-                            Layout.leftMargin: 8
-                            Layout.preferredWidth: 16
-                            Layout.preferredHeight: 16
-                            enabled: selectable
-                            checkable: selectable
-                            checked: selected
-                        }
-
-                        Custom.SvgImage {
-                            Layout.leftMargin: 18
-                            source: error ? Images.alertTriangle : Images.folder
-                            sourceSize: Qt.size(14, 14)
-                            color: error ? Styles.textWarning : color
-                            opacity: selectable ? 1.0 : 0.3
-                        }
-
-                        Text {
-                            Layout.leftMargin: 13
-                            Layout.maximumWidth: 345
-                            maximumLineCount: 1
-                            wrapMode: Text.WrapAnywhere
-                            text: display
-                            font.family: "Inter"
-                            font.styleName: "normal"
-                            font.weight: Font.Normal
-                            font.pixelSize: 12
-                            color: selectable ? Styles.textPrimary : Styles.textDisabled
-                        }
-                    }
-
-                    Text {
-                        Layout.alignment: Qt.AlignRight
-                        Layout.rightMargin: 8
-                        text: size
-                        font.family: "Inter"
-                        font.styleName: "normal"
-                        font.weight: Font.Normal
-                        font.pixelSize: 10
-                        color: selectable ? Styles.textPrimary : Styles.textDisabled
-                    }
-                }
-
-                MouseArea {
-                    id: folderRowArea
-
-                    anchors.fill: folderRowItem
-                    hoverEnabled: true
-                    cursorShape: !selectable ? Qt.ArrowCursor : Qt.PointingHandCursor
-                    onClicked: {
-                        if(selectable) {
-                            backupList.currentIndex = index;
-                            selected = !selected;
-                        }
-                    }
-                }
-
-                Custom.ToolTip {
-                    visible: folderRowArea.containsMouse
-                    leftIconSource: toolTip == folder ? Images.pc : ""
-                    text: toolTip
-                    delay: 500
-                    timeout: 5000
-                }
-            }
+        FolderRow {
+            anchors.right: parent.right
+            anchors.left: parent.left
         }
-
     }
 
 }

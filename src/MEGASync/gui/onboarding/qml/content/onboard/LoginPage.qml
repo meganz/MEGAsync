@@ -57,8 +57,7 @@ LoginPageForm {
     }
 
     loginButton.onAnimationFinished: {
-        if(completed)
-        {
+        if(completed) {
             loginButton.busyIndicatorVisible = false;
             state = normalStatus;
             onboardingFlow.state = syncs;
@@ -103,12 +102,3 @@ LoginPageForm {
         }
     }
 }
-
-
-
-
-/*##^##
-Designer {
-    D{i:0;autoSize:true;height:480;width:640}
-}
-##^##*/

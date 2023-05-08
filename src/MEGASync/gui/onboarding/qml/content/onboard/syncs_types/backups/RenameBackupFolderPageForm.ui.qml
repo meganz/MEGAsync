@@ -17,7 +17,7 @@ SyncsPage {
     property alias headerDescription: header.description
     property alias hint: hint
 
-    ColumnLayout {
+    Column {
         id: mainLayout
 
         anchors {
@@ -31,7 +31,10 @@ SyncsPage {
         Header {
             id: header
 
-            Layout.bottomMargin: mainLayout.spacing
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.leftMargin: renameTextField.textField.focusBorderWidth
+            anchors.rightMargin: renameTextField.textField.focusBorderWidth
             title: OnboardingStrings.renameBackupFolderTitle
             description: OnboardingStrings.renameBackupFolderDescription
         }
@@ -39,20 +42,22 @@ SyncsPage {
         Custom.TextField {
             id: renameTextField
 
-            Layout.preferredWidth: parent.width + 2 * renameTextField.textField.focusBorderWidth
-            Layout.preferredHeight: 48
-            Layout.leftMargin: -4
+            anchors.left: parent.left
+            anchors.right: parent.right
             title: OnboardingStrings.renameBackupFolder
             leftIconSource: Images.database
+            hintText: OnboardingStrings.bakupFolderExistsError
+            hintType: Custom.HintText.Type.Error
         }
 
         Custom.NotificationText {
             id: hint
 
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.leftMargin: renameTextField.textField.focusBorderWidth
+            anchors.rightMargin: renameTextField.textField.focusBorderWidth
             visible: true
-            Layout.fillWidth: true
-            Layout.rightMargin: 4
-            Layout.preferredHeight: hint.height
             type: Custom.NotificationText.Type.Info
             notificationText {
                 urlColor: Styles.textInfo

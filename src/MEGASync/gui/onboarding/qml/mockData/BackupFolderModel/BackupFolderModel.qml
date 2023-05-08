@@ -14,10 +14,6 @@ ListModel {
         }
     }
 
-    function getTotalSize() {
-        return "7.33 GB";
-    }
-
     function getNumSelectedRows() {
         var total = 0;
         for (let i = 0; i < backupListModel.count; i++) {
@@ -48,7 +44,21 @@ ListModel {
         return dirs;
     }
 
+    function update(path, errorCode) {
+        for (let i = 0; i < backupListModel.count; i++) {
+            if(backupListModel.get(i).folder === path) {
+                if(errorCode === 0) {
+                    backupListModel.get(i).done = true;
+                } else {
+                    backupListModel.get(i).error = errorCode;
+                }
+            }
+        }
+    }
+
     signal rowSelectedChanged(bool selectedRow, bool selectedAll)
+
+    property string totalSize: "24.7 MB"
 
     ListElement {
         folder: "C:\\Users\\mega\\Desktop"

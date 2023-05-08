@@ -18,6 +18,7 @@ QtObject {
     readonly property var agreeTerms: qsTr("I agree with MEGA [a]Terms of service.[/a]")
     readonly property var backup: qsTr("Backup")
     readonly property var backupButtonDescription: qsTr("Automatically update your files from your computers to MEGA cloud. Files in your computer won’t be affected by the cloud.")
+    readonly property var bakupFolderExistsError: qsTr("A folder named \"<folder name>\" already exists in your Backups.")
     readonly property var backupFolders: qsTr("Backup Folders")
     readonly property var backupTo: qsTr("Backup to:")
     readonly property var cancel: qsTr("Cancel")

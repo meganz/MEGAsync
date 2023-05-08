@@ -17,7 +17,6 @@ BackupFolder::BackupFolder()
     , done(false)
     , error(0)
     , folderSize(0)
-    , syncable(true)
 {
 }
 
@@ -34,7 +33,6 @@ BackupFolder::BackupFolder(const QString& folder,
     , done(false)
     , error(0)
     , folderSize(0)
-    , syncable(true)
 {
     Utilities::getFolderSize(folder, &folderSize);
     size = Utilities::getSizeString(folderSize);
@@ -58,6 +56,7 @@ BackupFolderModel::BackupFolderModel(QObject* parent)
     populateDefaultDirectoryList();
 
     connect(SyncInfo::instance(), &SyncInfo::syncRemoved, this, &BackupFolderModel::onSyncRemoved);
+    connect(SyncInfo::instance(), &SyncInfo::syncStateChanged, this, &BackupFolderModel::onSyncChanged);
 }
 
 void BackupFolderModel::populateDefaultDirectoryList()
@@ -92,6 +91,7 @@ void BackupFolderModel::populateDefaultDirectoryList()
 void BackupFolderModel::updateSelectedAndTotalSize()
 {
     mSelectedRowsTotal = 0;
+    auto lastTotalSize = mTotalSize;
     mTotalSize = 0;
     QList<BackupFolder>::iterator item = mBackupFolderList.begin();
     while (item != mBackupFolderList.end())
@@ -102,6 +102,11 @@ void BackupFolderModel::updateSelectedAndTotalSize()
             mTotalSize += item->folderSize;
         }
         item++;
+    }
+
+    if(mTotalSize != lastTotalSize)
+    {
+        emit totalSizeChanged();
     }
 }
 
@@ -272,16 +277,54 @@ void BackupFolderModel::onSyncRemoved(std::shared_ptr<SyncSettings> syncSettings
 {
     QString localFolder (syncSettings->getLocalFolder());
     QList<BackupFolder>::iterator item = mBackupFolderList.begin();
-    while (item != mBackupFolderList.end())
+    bool found = false;
+    while (!found && item != mBackupFolderList.end())
     {
-        if(item->folder == localFolder)
+        if((found = (item->folder == localFolder)))
         {
-            const auto row = std::distance(mBackupFolderList.begin(), item);
-            QModelIndex modelIndex(index(row, 0));
-            item->syncable = true;
-            item->selectable = true; // TODO: change by real value
+            item->selectable = true;
             item->tooltip = item->folder;
-            emit dataChanged(modelIndex, modelIndex, { SelectableRole, Qt::ToolTipRole });
+            emit dataChanged(getModelIndex(item), getModelIndex(item), { SelectableRole, Qt::ToolTipRole });
+            reviewOthers(localFolder, true);
+            checkSelectedAll();
+        }
+        item++;
+    }
+
+    if(!found)
+    {
+        reviewOthersWhenRemoved(localFolder);
+        checkSelectedAll();
+    }
+}
+
+void BackupFolderModel::onSyncChanged(std::shared_ptr<SyncSettings> syncSettings)
+{
+    if(syncSettings->getType() != mega::MegaSync::SyncType::TYPE_TWOWAY
+        || !syncSettings->isActive())
+    {
+        return;
+    }
+
+    QString localFolder (syncSettings->getLocalFolder());
+    QList<BackupFolder>::iterator item = mBackupFolderList.begin();
+    bool found = false;
+    while (!found && item != mBackupFolderList.end())
+    {
+        if((found = (item->folder == localFolder)))
+        {
+            QString message;
+            auto syncability = SyncController::isLocalFolderSyncable(localFolder, mega::MegaSync::TYPE_BACKUP, message);
+            if(syncability == SyncController::CANT_SYNC && item->selectable)
+            {
+                // This element can not be selected
+                item->selected = false;
+                item->selectable = false;
+                item->tooltip = message;
+                emit dataChanged(getModelIndex(item), getModelIndex(item), { SelectedRole, SelectableRole, Qt::ToolTipRole });
+                reviewOthers(localFolder, false);
+                checkSelectedAll();
+            }
         }
         item++;
     }
@@ -294,7 +337,7 @@ bool BackupFolderModel::folderContainsOther(const QString& folder,
 }
 
 bool BackupFolderModel::isRelatedFolder(const QString& folder,
-                                            const QString& existingPath) const
+                                        const QString& existingPath) const
 {
     return folderContainsOther(folder, existingPath) || folderContainsOther(existingPath, folder);
 }
@@ -306,16 +349,18 @@ QModelIndex BackupFolderModel::getModelIndex(QList<BackupFolder>::iterator item)
 }
 
 void BackupFolderModel::reviewOthers(const QString& folder,
-                                     bool selectable,
-                                     bool force)
+                                     bool selectable)
 {
     QList<BackupFolder>::iterator item = mBackupFolderList.begin();
     while (item != mBackupFolderList.end())
     {
         QString existingPath(item->folder);
-        if ((folder != existingPath) && isRelatedFolder(folder, existingPath) && isLocalFolderSyncable(existingPath))
+        if ((folder != existingPath) && isRelatedFolder(folder, existingPath))
         {
-            if(!item->selectable && selectable && (!existAnotherBackupFolderRelated(existingPath, folder) || force))
+            QString message;
+            auto syncability = SyncController::isLocalFolderSyncable(existingPath, mega::MegaSync::TYPE_BACKUP, message);
+            if(!item->selectable && selectable && (syncability != SyncController::CANT_SYNC)
+                && !existAnotherBackupFolderRelated(existingPath, folder))
             {
                 item->selectable = true;
                 item->tooltip = item->folder;
@@ -325,10 +370,29 @@ void BackupFolderModel::reviewOthers(const QString& folder,
             {
                 item->selectable = false;
                 item->selected = false;
-                item->tooltip = getToolTipErrorText(existingPath, folder);
+                item->tooltip = message.isEmpty() ? getToolTipErrorText(existingPath, folder) : message;
                 emit dataChanged(getModelIndex(item), getModelIndex(item), { SelectableRole, Qt::ToolTipRole, SelectedRole });
-                reviewOthers(existingPath, true, true);
+                reviewOthers(existingPath, true);
             }
+        }
+        item++;
+    }
+}
+
+void BackupFolderModel::reviewOthersWhenRemoved(const QString& folder)
+{
+    QList<BackupFolder>::iterator item = mBackupFolderList.begin();
+    while (item != mBackupFolderList.end())
+    {
+        QString existingPath(item->folder);
+        if (!item->selectable
+                && isRelatedFolder(folder, existingPath)
+                && !existAnotherBackupFolderRelated(existingPath, folder)
+                && isLocalFolderSyncable(existingPath))
+        {
+            item->selectable = true;
+            item->tooltip = item->folder;
+            emit dataChanged(getModelIndex(item), getModelIndex(item), { SelectableRole, Qt::ToolTipRole });
         }
         item++;
     }
@@ -365,7 +429,6 @@ void BackupFolderModel::insertFolder(const QString &folder)
     {
         // This element can not be selected
         BackupFolder data(inputPath, mSyncController.getSyncNameFromPath(inputPath), false);
-        data.syncable = false;
         data.selectable = false;
         data.tooltip = message;
 
@@ -453,9 +516,7 @@ void BackupFolderModel::updateBackupFolder(QList<BackupFolder>::iterator item,
     }
     item->selectable = selectable;
 
-    const auto row = std::distance(mBackupFolderList.begin(), item);
-    QModelIndex modelIndex(index(row, 0));
-    emit dataChanged(modelIndex, modelIndex, { SelectableRole, Qt::ToolTipRole } );
+    emit dataChanged(getModelIndex(item), getModelIndex(item), { SelectableRole, Qt::ToolTipRole } );
 }
 
 void BackupFolderModel::reviewAllBackupFolders()
@@ -495,9 +556,11 @@ void BackupFolderModel::clean()
 void BackupFolderModel::update(const QString& path, int errorCode)
 {
     QModelIndex modelIndex;
-    for (int row = 0; row < rowCount(); row++)
+    bool found = false;
+    int row = 0;
+    while(!found && row < rowCount())
     {
-        if(mBackupFolderList[row].folder == path)
+        if((found = (mBackupFolderList[row].folder == path)))
         {
             modelIndex = index(row, 0);
             if(errorCode == mega::MegaError::API_OK)
@@ -511,6 +574,7 @@ void BackupFolderModel::update(const QString& path, int errorCode)
                 emit dataChanged(modelIndex, modelIndex, { ErrorRole } );
             }
         }
+        row++;
     }
 }
 
