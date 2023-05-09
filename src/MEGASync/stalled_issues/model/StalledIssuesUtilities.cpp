@@ -29,6 +29,8 @@ void StalledIssuesUtilities::ignoreFile(const QString &path)
                 ignore.open(QFile::Append | QFile::Text);
 
                 QTextStream streamIn(&ignore);
+                streamIn.setCodec("UTF-8");
+
                 streamIn << QChar((int)'\n');
 
                 streamIn << QString::fromUtf8("-:");
