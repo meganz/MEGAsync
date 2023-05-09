@@ -777,14 +777,6 @@
     </message>
 </context>
 <context>
-    <name>Bandwith</name>
-    <message>
-        <source>Auto</source>
-        <translatorcomment>Label to indicate that management of rate upload limit is automatic. SNC-3076</translatorcomment>
-        <translation type="unfinished">Auto</translation>
-    </message>
-</context>
-<context>
     <name>BindFolderDialog</name>
     <message>
         <source>Please select a local folder and a MEGA folder</source>
@@ -4255,14 +4247,6 @@ Enter a different name.</translation>
     </message>
 </context>
 <context>
-    <name>Proxies</name>
-    <message>
-        <source>Auto</source>
-        <translatorcomment>Label to indicate that proxy settings are on auto detec mode. SNC-3076</translatorcomment>
-        <translation type="unfinished">Auto</translation>
-    </message>
-</context>
-<context>
     <name>ProxySettings</name>
     <message>
         <source>Proxies</source>
@@ -5666,6 +5650,22 @@ Do you want to restart MEGAsync now?</source>
         <source>Prevent the computer from going to sleep when transfers or syncs are in progress.</source>
         <translatorcomment>Sleep/Active mode: Feature description label for keeping the pc awake when there are active transfers</translatorcomment>
         <translation>Prevent the computer from going to sleep when transfers or syncs are in progress.</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsDialog_Bandwith</name>
+    <message>
+        <source>Auto</source>
+        <translatorcomment>Label to indicate that management of rate upload limit is automatic. SNC-3076</translatorcomment>
+        <translation type="unfinished">Auto</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsDialog_Proxies</name>
+    <message>
+        <source>Auto</source>
+        <translatorcomment>Label to indicate that proxy settings are on auto detec mode. SNC-3076</translatorcomment>
+        <translation type="unfinished">Auto</translation>
     </message>
 </context>
 <context>
