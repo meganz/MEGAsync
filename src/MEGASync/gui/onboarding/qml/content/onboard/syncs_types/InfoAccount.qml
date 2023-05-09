@@ -150,6 +150,10 @@ Rectangle {
             totalStorage.text = accountInfo.totalStorage;
             usedStorage.text = accountInfo.usedStorage;
         }
+
+        Component.onDestruction: {
+            accountInfo.aboutToBeDestroyed();
+        }
     }
 
 }

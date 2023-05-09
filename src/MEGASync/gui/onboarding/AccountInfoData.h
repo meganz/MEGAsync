@@ -36,6 +36,7 @@ public:
 
 public slots:
     void requestAccountInfoData();
+    void aboutToBeDestroyed();
 
 signals:
     void accountDetailsChanged();

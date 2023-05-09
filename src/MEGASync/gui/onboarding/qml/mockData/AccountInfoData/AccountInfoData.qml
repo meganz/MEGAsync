@@ -24,5 +24,4 @@ Item {
         totalStorage = "30 GB";
         accountDetailsChanged();
     }
-
 }

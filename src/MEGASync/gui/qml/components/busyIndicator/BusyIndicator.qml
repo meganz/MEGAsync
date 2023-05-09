@@ -1,7 +1,6 @@
 // System
 import QtQuick 2.12
 import QtQuick.Controls 2.12 as Qml
-import QtQuick.Controls.Styles 1.2
 
 import Components 1.0 as Custom
 import Common 1.0

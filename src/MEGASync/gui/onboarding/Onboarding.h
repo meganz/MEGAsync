@@ -61,8 +61,6 @@ public:
     Q_INVOKABLE void openPreferences(bool sync) const;
     Q_INVOKABLE void exitLoggedIn();
 
-    void aboutToClose();
-
 signals:
     void twoFARequired();
     void userPassFailed();

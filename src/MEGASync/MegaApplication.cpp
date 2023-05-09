@@ -5916,22 +5916,11 @@ void MegaApplication::openInfoWizard()
     QPointer<QmlDialogWrapper<Onboarding>> onboarding = new QmlDialogWrapper<Onboarding>();
     DialogOpener::showDialog(onboarding, [onboarding, this]
     {
-        //QList<PreConfiguredSync> syncs = dialog->preconfiguredSyncs();
-
-        //if (infoDialog && infoDialog->isVisible())
-        //{
-        //    infoDialog->hide();
-        //}
-       onboarding->wrapper()->aboutToClose();
        if(preferences && preferences->logged())
        {
             loggedIn(true);
        }
-        //startSyncs(syncs);
-        qDebug()<<onboarding->result();
-
     });
-
 }
 
 void MegaApplication::openSettings(int tab)

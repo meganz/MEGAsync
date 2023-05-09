@@ -349,14 +349,6 @@ void Onboarding::exitLoggedIn()
     emit exitLoggedInFinished();
 }
 
-void Onboarding::aboutToClose()
-{
-    delete mBackupController;
-    delete mSyncController;
-    mGlobalListener = nullptr;
-    mDelegateListener = nullptr;
-}
-
 void Onboarding::getComputerName()
 {
     auto request = UserAttributes::DeviceName::requestDeviceName();

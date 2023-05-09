@@ -102,7 +102,10 @@ public:
             context->setContextProperty(QString::fromUtf8("Wrapper"), this);
             mWindow = dynamic_cast<QmlDialog*>(qmlComponent.create(context));
             Q_ASSERT(mWindow);
-            connect(mWindow, &QmlDialog::finished, this, &QmlDialogWrapperBase::onWindowFinished);
+            connect(mWindow, &QmlDialog::finished, this, [this](){
+                mWrapper->deleteLater();
+                QmlDialogWrapperBase::onWindowFinished();
+            });
         }
         else
         {
@@ -111,7 +114,7 @@ public:
     }
 
     ~QmlDialogWrapper(){
-        if(!mWrapper->parent())
+        if(mWrapper && !mWrapper->parent())
         {
             mWrapper->deleteLater();
         }

@@ -1286,12 +1286,12 @@ void InfoDialog::changeEvent(QEvent *event)
     {
         ui->retranslateUi(this);
 
-        if (mPreferences->logged())
-        {
-            setUsage();
-            mState = StatusInfo::TRANSFERS_STATES::STATE_STARTING;
-            updateDialogState();
-        }
+//        if (mPreferences->logged())
+//        {
+//            setUsage();
+//            mState = StatusInfo::TRANSFERS_STATES::STATE_STARTING;
+//            updateDialogState();
+//        }
     }
     QDialog::changeEvent(event);
 }
