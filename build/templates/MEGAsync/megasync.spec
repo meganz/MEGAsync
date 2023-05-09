@@ -152,7 +152,7 @@ BuildRequires: ffmpeg-mega
     BuildRequires: libzen-devel, libmediainfo-devel
 %endif
 
-%if 0%{?fedora_version}==19 || 0%{?fedora_version}==20 || 0%{?fedora_version}==23 || 0%{?fedora_version}==24 || 0%{?centos_version} || 0%{?scientificlinux_version} || 0%{?rhel_version} || ( 0%{?suse_version} && 0%{?sle_version} < 120300)
+%if 0%{?fedora_version}==19 || 0%{?fedora_version}==20 || 0%{?fedora_version}==23 || 0%{?fedora_version}==24 || 0%{?fedora_version}==38 || 0%{?centos_version} || 0%{?scientificlinux_version} || 0%{?rhel_version} || ( 0%{?suse_version} && 0%{?sle_version} < 120300)
     %define flag_disablemediainfo %{nil}
 %endif
 
@@ -231,7 +231,7 @@ ln -sfn libfreeimage.so.3 $PWD/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeim
     rm -fr MEGASync/mega/bindings/qt/3rdparty/include/cryptopp
 %endif
 
-%if ( 0%{?fedora_version} && 0%{?fedora_version}<=34 ) || ( 0%{?centos_version} == 600 ) || ( 0%{?centos_version} == 800 ) || ( 0%{?sle_version} && 0%{?sle_version} < 150300 )
+%if ( 0%{?fedora_version} && 0%{?fedora_version}<=35 ) || ( 0%{?centos_version} == 600 ) || ( 0%{?centos_version} == 800 ) || ( 0%{?sle_version} && 0%{?sle_version} < 150400 )
     %define extraqmake DEFINES+=MEGASYNC_DEPRECATED_OS
 %else
     %define extraqmake %{nil}

@@ -255,7 +255,11 @@ TransferBaseDelegateWidget::ActionHoverType InfoDialogTransferDelegateWidget::mo
                 {
                     update = setActionTransferIcon(mUi->lActionTransfer,
                                                    QString::fromAscii("://images/error.png"));
-                    mUi->lActionTransfer->setToolTip(tr("Failed: %1").arg(QString::fromStdString(getData()->mFailedTransfer->getLastError().getErrorString())));
+                    //Double check that the mFailedTransfer is OK
+                    if(getData()->isFailed())
+                    {
+                        mUi->lActionTransfer->setToolTip(tr("Failed: %1").arg(QString::fromStdString(getData()->mFailedTransfer->getLastError().getErrorString())));
+                    }
 
                     if(update)
                     {

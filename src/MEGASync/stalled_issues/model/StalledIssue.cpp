@@ -295,7 +295,7 @@ uint8_t StalledIssue::hasFolders() const
     return mFolders;
 }
 
-const QSize &StalledIssue::getDelegateSize(SizeType type) const
+QSize StalledIssue::getDelegateSize(SizeType type) const
 {
     switch(type)
     {
@@ -304,6 +304,7 @@ const QSize &StalledIssue::getDelegateSize(SizeType type) const
         case SizeType::Body:
             return mBodyDelegateSize;
     }
+    return QSize(0, 0);
 }
 
 void StalledIssue::setDelegateSize(const QSize &newDelegateSize, SizeType type)

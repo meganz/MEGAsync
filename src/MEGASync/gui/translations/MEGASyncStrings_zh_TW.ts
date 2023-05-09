@@ -323,7 +323,7 @@
     <message>
         <source>Your payment for the [A] plan was unsuccessful</source>
         <translatorcomment>Label to indicate that the the payment for a [A] PRO plan has failed. Placeholder will be replaced by the PRO plan name</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>我們尚未收到您購買[A]方案的付款。</translation>
     </message>
     <message>
         <source>Your publicly shared has been taken down</source>
@@ -1443,7 +1443,7 @@
     <message>
         <source>The file at this destination will be updated if the new file is different.</source>
         <translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>如果新的檔案與目的地的檔案不同，目的地的檔案將被更新。</translation>
     </message>
 </context>
 <context>
@@ -2095,7 +2095,7 @@
     <message>
         <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew.</source>
         <translatorcomment>Informative label to indicate that your queued transfers may be interrupted because the current account does not have enough transfer quota.</translatorcomment>
-        <translation>由於您的帳戶剩餘傳輸配額不足，因此您無法繼續下載。若要繼續下載，請購買新的會員方案，或者如果您在MEGA有定期訂閱，可以待方案續訂時再下載。</translation>
+        <translation>由於您帳戶沒有足夠的傳輸配額，因此您無法繼續下載。若要繼續下載，請購買新的會員方案，或者如果您在MEGA有定期訂閱，可以待方案續訂時再下載。</translation>
     </message>
     <message>
         <source>Buy new plan</source>
@@ -2293,7 +2293,7 @@
     <message>
         <source>There is not enough space on %1. You need an additional %2 to download these files.</source>
         <translatorcomment>Label explaining the problem, %1 is the download target disk name. %2 is the needed size to continue with the download (the size unit depends on the quantity) </translatorcomment>
-        <translation>%1的儲存空間不足。您需要額外%2才能下載這些檔案。</translation>
+        <translation>%1沒有足夠的儲存空間。您需要額外%2才能下載這些檔案。</translation>
     </message>
     <message>
         <source>Free space: %1</source>
@@ -2875,12 +2875,12 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your sync &quot;%1&quot; has been temporarily disabled: %2</source>
         <translatorcomment>Warning message shown when a sync is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>您的同步「%1」已暫時停用：%2</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been temporarily disabled: %2</source>
         <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>您的 備份「%1」已暫時停用：%2</translation>
     </message>
     <message>
         <source>Error transferring folder: %1</source>
@@ -4110,7 +4110,11 @@ Enter a different name</source>
 - We've enhanced the UI.
 - We've fixed the detected crashes on Windows, Linux, and macOS.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>- 您現在可以搜尋儲存在您帳戶中的資料。
+- 我們改進了系統通知。
+- 我們加強了使用者介面。
+- 我們修複了在Windows、Linux、和macOS上檢測的崩潰問題。
+</translation>
     </message>
 </context>
 <context>
@@ -7279,22 +7283,22 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>%1 [A]d[/A]</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [DAYS] [HOURS] string, replacing the [DAYS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the days. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1&#xa0;[A]天[/A]</translation>
+        <translation>%1[A]天[/A]</translation>
     </message>
     <message>
         <source>%1 [A]h[/A]</source>
         <translatorcomment>String controlling the formatting of the hour count for time intervals. It is used in [DAYS] [HOURS] and [HOURS] [MINUTES] strings, replacing the [HOURS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the hours. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1&#xa0;[A]小時[/A]</translation>
+        <translation>%1[A]小時[/A]</translation>
     </message>
     <message>
         <source>%1 [A]m[/A]</source>
         <translatorcomment>String controlling the formatting of the minute count for time intervals. It is used in [HOURS] [MINUTES] and [MINUTES] [SECONDS] strings, replacing the [MINUTES] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the minutes. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1&#xa0;[A]分鐘[/A]</translation>
+        <translation>%1[A]分鐘[/A]</translation>
     </message>
     <message>
         <source>%1 [A]s[/A]</source>
         <translatorcomment>String controlling the formatting of the seconds count for time intervals. It is used in the [MINUTES] [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the seconds. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1&#xa0;[A]秒[/A]</translation>
+        <translation>%1[A]秒[/A]</translation>
     </message>
 </context>
 <context>

@@ -5029,7 +5029,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>%1 (local cache)</source>
         <translatorcomment>Section label name for local cache summary and actions. Keep %1 placeholder, which is used to fill in the platform specific name for local sync cache (debris).</translatorcomment>
-        <translation>%1(lokale cashe)</translation>
+        <translation>%1 (lokale cashe)</translation>
     </message>
     <message>
         <source>Space used:</source>
@@ -5164,7 +5164,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>%1 (local cache):</source>
         <translatorcomment>Section label name for local cache summary and actions. Keep %1 placeholder, which is used to fill in the platform specific name for local sync cache (debris) (macOS)</translatorcomment>
-        <translation>%1(lokale cache):</translation>
+        <translation>%1 (lokale cache):</translation>
     </message>
     <message>
         <source>SyncDebris (remote cache):</source>

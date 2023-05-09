@@ -115,7 +115,7 @@ public:
         Body
     };
 
-    const QSize &getDelegateSize(SizeType type) const;
+    QSize getDelegateSize(SizeType type) const;
     void setDelegateSize(const QSize &newDelegateSize, SizeType type);
 
     const std::shared_ptr<mega::MegaSyncStall> &getOriginalStall() const;
@@ -176,7 +176,7 @@ public:
 
     StalledIssueVariant& operator=(const StalledIssueVariant& other) = default;
 
-    const QSize &getDelegateSize(StalledIssue::SizeType type) const
+    QSize getDelegateSize(StalledIssue::SizeType type) const
     {
         return mData->getDelegateSize(type);
     }

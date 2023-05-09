@@ -68,7 +68,7 @@ void StalledIssueChooseWidget::setData(StalledIssueDataPtr data)
         }
     }
 
-    bool discardItem(false);
+    //bool discardItem(false);
 
     if(mPreviousSolveState != mIsSolved)
     {
