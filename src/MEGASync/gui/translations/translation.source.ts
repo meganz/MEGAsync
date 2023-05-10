@@ -663,6 +663,11 @@
         <translation>Want to cancel? All changes will be lost.</translation>
     </message>
     <message>
+        <source>Choose directory</source>
+        <translatorcomment>Folder selector window title text</translatorcomment>
+        <translation>Select folder</translation>
+    </message>
+    <message>
         <source>Error: %1</source>
         <translatorcomment>Placeholder will show the error message, this is being shown in a tooltip</translatorcomment>
         <translation>Error: %1</translation>
@@ -671,11 +676,6 @@
         <source>View in backup centre</source>
         <translatorcomment>Text for a button allowing the user to view the newly created backup i nthe Backup center (in the webclient)</translatorcomment>
         <translation>View in Backup centre</translation>
-    </message>
-    <message>
-        <source>Choose directory</source>
-        <translatorcomment>Folder selector window title text</translatorcomment>
-        <translation>Select folder</translation>
     </message>
 </context>
 <context>
@@ -6824,11 +6824,21 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>File uploaded</source>
         <translatorcomment>Notification title when a file has been uploaded. CON-223</translatorcomment>
+        <translation type="unfinished">File uploaded</translation>
+    </message>
+    <message>
+        <source>%1 no longer exists or was renamed.</source>
+        <translatorcomment>A single local file/folder has been removed or rename before uploading. %1 is the file/folder uploaded name. CON-223</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Couldn&apos;t upload %1 to %2.</source>
         <translatorcomment>A single file/folder upload has failed. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Uploaded %1 to %2.</source>
+        <translatorcomment>A single file/folder has been uploaded correctly. %1 is the file/folder uploaded name, %2 is the name of the target folder in the cloud. CON-223</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6859,6 +6869,11 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>File downloaded</source>
         <translatorcomment>Notification title when a file has been downloaded. CON-223</translatorcomment>
+        <translation type="unfinished">File downloaded</translation>
+    </message>
+    <message>
+        <source>%1 no longer exists.</source>
+        <translatorcomment>A single cloud drive file/folder has been removed before downloading. %1 is the file/folder downloaded name. CON-223</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6889,6 +6904,11 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Items uploaded</source>
         <translatorcomment>Notification title when a more than one transfer (file or folders) have been uploaded. CON-223</translatorcomment>
+        <translation type="unfinished">Items uploaded</translation>
+    </message>
+    <message>
+        <source>Items no longer exist or were renamed</source>
+        <translatorcomment>Several local files/folders have been removed or renamed before uploading. CON-223</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6937,41 +6957,16 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Items downloaded</source>
         <translatorcomment>Notification title when a more than one transfer (file or folders) have been downloaded. CON-223</translatorcomment>
+        <translation type="unfinished">Items downloaded</translation>
+    </message>
+    <message>
+        <source>Items no longer exist</source>
+        <translatorcomment>Several cloud drive files/folders have been removed before downloading. CON-223</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Couldn&apos;t download %1 items to %2.</source>
         <translatorcomment>All files/folder failed to download.  %1 is the number of files/folders, %2 is the name of the target folder in the filesystem. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Downloaded %1 items to %2.</source>
-        <translatorcomment>Several files/folders were downloaded correctly. %1 is the number of successful files/folders. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Uploaded %1 to %2.</source>
-        <translatorcomment>A single file/folder has been uploaded correctly. %1 is the file/folder uploaded name, %2 is the name of the target folder in the cloud. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1 no longer exists or was renamed.</source>
-        <translatorcomment>A single local file/folder has been removed or rename before uploading. %1 is the file/folder uploaded name. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1 no longer exists.</source>
-        <translatorcomment>A single cloud drive file/folder has been removed before downloading. %1 is the file/folder downloaded name. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Items no longer exist or were renamed</source>
-        <translatorcomment>Several local files/folders have been removed or renamed before uploading. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Items no longer exist</source>
-        <translatorcomment>Several cloud drive files/folders have been removed before downloading. CON-223</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6992,6 +6987,11 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Downloaded %1 items, couldn&apos;t download %2 items.</source>
         <translatorcomment>Several files/folders were downloaded correctly, and several files/folders downloads have failed.  %1 is the number of successful files/folders, %2 is the number of failed files/folders. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Downloaded %1 items to %2.</source>
+        <translatorcomment>Several files/folders were downloaded correctly. %1 is the number of successful files/folders. CON-223</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
