@@ -30,21 +30,47 @@ fine), so run the following command:
 $ sudo "/Applications/CMake.app/Contents/bin/cmake-gui" --install
 ```
 
-## YASM (latest version from upstream)
+## NASM
 
-Download and install YASM which is required to build ffmpeg dependency.
+Download and install NASM which is required to build ffmpeg dependency.
 Follow these steps:
 ```
-$ git clone https://github.com/yasm/yasm/
-$ cd yasm
-$ cmake .
-$ cmake --build . 
-$ sudo cmake --install
+# Get autoconf and automake, build them and install them in a local folder
+$ curl -O -L https://ftpmirror.gnu.org/gnu/autoconf/autoconf-2.71.tar.xz
+$ curl -O -L https://ftpmirror.gnu.org/gnu/automake/automake-1.16.5.tar.xz
+$ tar xzf autoconf-2.71.tar.xz
+$ tar xzf automake-1.16.5.tar.xz
+$ mkdir bin_dest
+$ export PATH=$PATH:$PWD/bin_dest/bin
+$ cd autoconf-2.71
+$ ./configure --prefix=$PWD/../bin_dest
+$ make install
+$ cd ..
+$ cd automake-1.16.5
+$ ./configure --prefix=$PWD/../bin_dest
+$ make install
+$ autoconf --version
+$ automake --version
+
+# Get, build and install nasm in the system
+$ curl -O -L https://www.nasm.us/pub/nasm/releasebuilds/2.16.01/nasm-2.16.01.tar.xz
+$ tar xzf nasm-2.16.01.tar.xz
+$ cd nasm-2.16.01
+$ ./configure
+$ make
+$ sudo make install
+$ nasm --version
+# Clean up
+$ cd ..
+$ rm -rf autoconf*
+$ rm -rf automake*
+$ rm -r nasm*
+$ rm -r bin_dest
 ```
 
 # Third-Party dependencies
 
-## Qt SDK (5.12.11)
+## Qt SDK (5.12.12)
 
 Install Qt Open Source and Qt Creator using the Qt Online Installer from:
 https://www.qt.io/download-qt-installer
