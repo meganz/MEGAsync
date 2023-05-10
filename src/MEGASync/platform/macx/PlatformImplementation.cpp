@@ -48,6 +48,11 @@ void PlatformImplementation::raiseFileFolderSelectors()
     raiseFileSelectionPanels();
 }
 
+void PlatformImplementation::closeFileFolderSelectors(QWidget* parent)
+{
+    closeFileSelectionPanels(parent);
+}
+
 bool PlatformImplementation::startOnStartup(bool value)
 {
    return startAtLogin(value);
