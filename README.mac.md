@@ -76,7 +76,7 @@ Install Qt Open Source and Qt Creator using the Qt Online Installer from:
 https://www.qt.io/download-qt-installer
 
 You will have to create an account, even if you only install the Community Editions.
-Install Qt 5.12.11 for macOS; only macOS components are needed during installation.
+Install Qt 5.12.12 for macOS; only macOS components are needed during installation.
 A good installation path is `~/Qt`.
 
 ## VCPKG
@@ -113,7 +113,7 @@ proceed to build those, the SDK and MEGA Desktop in that order, via CMake.
 
 ```
 $ cd ~/mega/desktop/contrib/cmake
-$ cmake -DEXTRA_ARGS="-DCMAKE_PREFIX_PATH=~/Qt/5.12.11/clang_64" -DTARGET=MEGAsync -DTRIPLET=x64-osx-mega -P build_from_scratch.cmake
+$ cmake -DEXTRA_ARGS="-DCMAKE_PREFIX_PATH=~/Qt/5.12.12/clang_64" -DTARGET=MEGAsync -DTRIPLET=x64-osx-mega -P build_from_scratch.cmake
 ```
 
 In a short while, but before the build stops because of missing PDFIUM library, you should
@@ -125,7 +125,7 @@ In case the build fails anyway, just run the cmake command again, once pdfium is
 # Development using Qt Creator
 
 Now you can open open `src/MEGASync/MEGASync.pro` to start editing and building. Set it up
-as any other Qt QMake based project, using the Qt 5.12.11 kit you installed and set
+as any other Qt QMake based project, using the Qt 5.12.12 kit you installed and set
 matching target architecture.
 
 When building using the QMake project, both the application and the SDK are
@@ -139,5 +139,5 @@ go to Tools -> External -> Linguist and click on Release Translations action.
 You can achieve the same, from the command-line:
 ```
 $ cd ~/mega/desktop/src
-$ ~/Qt/5.12.11/clang_64/bin/lrelease MEGASync/MEGASync.pro
+$ ~/Qt/5.12.12/clang_64/bin/lrelease MEGASync/MEGASync.pro
 ```
