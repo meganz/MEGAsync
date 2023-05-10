@@ -21,7 +21,7 @@ Item {
     signal registerFinished(bool success)
     signal exitLoggedInFinished
     signal twoFAFailed
-    signal syncSetupSucces
+    signal syncSetupSuccess
     signal backupsUpdated(string path, int errorCode, bool finished)
     signal backupConflict(string folder, bool isNew)
     signal accountConfirmed
@@ -167,7 +167,7 @@ Item {
         running: false;
         repeat: false;
         onTriggered: {
-            syncSetupSucces();
+            syncSetupSuccess();
         }
     }
 

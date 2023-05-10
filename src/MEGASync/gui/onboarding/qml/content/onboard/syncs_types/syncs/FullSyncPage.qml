@@ -1,7 +1,11 @@
+// System
 import QtQml 2.12
+
+// C++
 import Onboarding 1.0
 
 FullSyncPageForm {
+    id: root
 
     footerButtons {
 
@@ -10,6 +14,8 @@ FullSyncPageForm {
         }
 
         nextButton.onClicked: {
+            root.enabled = false;
+            footerButtons.nextButton.busyIndicatorVisible = true;
             Onboarding.addSync(localFolderChooser.getSyncData());
         }
     }
@@ -17,7 +23,9 @@ FullSyncPageForm {
     Connections {
         target: Onboarding
 
-        onSyncSetupSucces: {
+        onSyncSetupSuccess: {
+            root.enabled = true;
+            footerButtons.nextButton.busyIndicatorVisible = false;
             localFolderChooser.reset();
         }
     }

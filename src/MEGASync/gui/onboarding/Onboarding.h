@@ -68,7 +68,7 @@ signals:
     void loginFinished();
     void registerFinished(bool success);
     void exitLoggedInFinished();
-    void syncSetupSucces();
+    void syncSetupSuccess();
     void backupsUpdated(const QString& path, int errorCode, bool finished);
     void deviceNameReady(const QString& deviceName);
     void accountConfirmed();

@@ -392,7 +392,7 @@ void Onboarding::onSyncAddRequestStatus(int errorCode,
     }
     else
     {
-        emit syncSetupSucces();
+        emit syncSetupSuccess();
     }
 }
 

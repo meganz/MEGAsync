@@ -19,6 +19,8 @@ SyncsPage {
         enabled: localFolderChooser.isValid
         text: OnboardingStrings.sync
         iconSource: Images.sync
+        busyIndicatorImage: Images.loader
+        progressBar: true
     }
 
     ColumnLayout {
