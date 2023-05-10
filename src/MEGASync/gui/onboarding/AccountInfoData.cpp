@@ -23,6 +23,11 @@ void AccountInfoData::onRequestStart(MegaApi*, MegaRequest* request)
 {
 }
 
+void AccountInfoData::aboutToBeDestroyed()
+{
+    mDelegateListener = nullptr;
+}
+
 void AccountInfoData::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* error)
 {
     switch(request->getType())
