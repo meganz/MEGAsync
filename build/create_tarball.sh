@@ -219,6 +219,14 @@ sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtNemo/nemo-megasync.s
 sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtNemo/nemo-megasync.dsc > MEGAsync/MEGAShellExtNemo/nemo-megasync_$EXT_VERSION.dsc
 sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtNemo/PKGBUILD > MEGAsync/MEGAShellExtNemo/PKGBUILD
 
+for dist in xUbuntu_{1,2}{0,1,2,3,4,5,6,7,8,9}.{04,10} Debian_{{7,8,9,10,11}.0,testing}; do
+if [ -f templates/MEGAShellExtNemo/nemo-megasync-$dist.dsc ]; then
+	sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtNemo/nemo-megasync-$dist.dsc > MEGAsync/MEGAShellExtNemo/nemo-megasync-$dist.dsc
+else
+	sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtNemo/nemo-megasync.dsc > MEGAsync/MEGAShellExtNemo/nemo-megasync-$dist.dsc
+fi
+done
+
 # create archive
 mkdir $EXT_NAME
 ln -s ../MEGAsync/MEGAShellExtNemo/nemo-megasync.spec $EXT_NAME/nemo-megasync.spec
@@ -268,8 +276,16 @@ rm -fr MEGAsync/MEGAShellExtThunar/thunar-megasync_*.dsc
 
 # fix version number in template files and copy to appropriate directories
 sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtThunar/thunar-megasync.spec > MEGAsync/MEGAShellExtThunar/thunar-megasync.spec
-sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtThunar/thunar-megasync.dsc > MEGAsync/MEGAShellExtThunar/thunar-megasync_$EXT_VERSION.dsc
 sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtThunar/PKGBUILD > MEGAsync/MEGAShellExtThunar/PKGBUILD
+
+for dist in xUbuntu_{1,2}{0,1,2,3,4,5,6,7,8,9}.{04,10} Debian_{{7,8,9,10,11}.0,testing}; do
+if [ -f templates/MEGAShellExtThunar/thunar-megasync-$dist.dsc ]; then
+	sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtThunar/thunar-megasync-$dist.dsc > MEGAsync/MEGAShellExtThunar/thunar-megasync-$dist.dsc
+else
+	sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtThunar/thunar-megasync.dsc > MEGAsync/MEGAShellExtThunar/thunar-megasync-$dist.dsc
+fi
+done
+
 
 # create archive
 mkdir $EXT_NAME
@@ -321,7 +337,7 @@ rm -fr MEGAsync/MEGAShellExtDolphin/dolphin-megasync_*.dsc
 sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtDolphin/dolphin-megasync.spec > MEGAsync/MEGAShellExtDolphin/dolphin-megasync.spec
 #sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtDolphin/dolphin-megasync.dsc > MEGAsync/MEGAShellExtDolphin/dolphin-megasync_$EXT_VERSION.dsc
 
-for dist in xUbuntu_{1,2}{0,1,2,3,4,5,6,7,8,9}.{04,10} Debian_{7,8,9,10}.0; do
+for dist in xUbuntu_{1,2}{0,1,2,3,4,5,6,7,8,9}.{04,10} Debian_{{7,8,9,10,11}.0,testing}; do
 if [ -f templates/MEGAShellExtDolphin/dolphin-megasync-$dist.dsc ]; then
 	sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtDolphin/dolphin-megasync-$dist.dsc > MEGAsync/MEGAShellExtDolphin/dolphin-megasync-$dist.dsc
 else
@@ -339,15 +355,11 @@ ln -s ../MEGAsync/MEGAShellExtDolphin/dolphin-megasync.spec $EXT_NAME/dolphin-me
 ln -s ../../src/MEGAShellExtDolphin/megasync-plugin.cpp $EXT_NAME/megasync-plugin.cpp
 ln -s ../../src/MEGAShellExtDolphin/megasync-plugin-overlay.cpp $EXT_NAME/megasync-plugin-overlay.cpp
 ln -s ../../src/MEGAShellExtDolphin/megasync-plugin-overlay.json $EXT_NAME/megasync-plugin-overlay.json
-touch $EXT_NAME/megasync-plugin-overlay.moc
-touch $EXT_NAME/megasync-plugin.moc
 ln -s ../../src/MEGAShellExtDolphin/data $EXT_NAME/data
 ln -s ../../src/MEGAShellExtDolphin/CMakeLists.txt $EXT_NAME/CMakeLists.txt
-ln -s ../../src/MEGAShellExtDolphin/CMakeLists_kde5.txt $EXT_NAME/CMakeLists_kde5.txt
 ln -s ../../src/MEGAShellExtDolphin/megasync-plugin.h $EXT_NAME/megasync-plugin.h
 ln -s ../../src/MEGAShellExtDolphin/megasync-plugin.desktop $EXT_NAME/megasync-plugin.desktop
 ln -s ../../src/MEGAShellExtDolphin/MEGAShellExtDolphin.pro $EXT_NAME/MEGAShellExtDolphin.pro
-ln -s /assets/precompiled/dolphinext/megasyncdolphinoverlayplugin.so_* $EXT_NAME/
 ln -s ../MEGAsync/MEGAsync/debian.copyright $EXT_NAME/debian.copyright
 
 export GZIP=-9

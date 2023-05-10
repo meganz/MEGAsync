@@ -27,8 +27,8 @@ pkgdesc="Extension for KDE based file managers to interact with Megasync"
 arch=('i686' 'x86_64')
 url="http://mega.nz/#sync"
 license=() #TODO
-depends=('megasync>=3.5')
-makedepends=('qt4' 'extra-cmake-modules' 'kdelibs' 'automoc4' 'kdelibs4support' 'rsync' 'mesa')
+depends=('megasync>=3.5' 'dolphin')
+makedepends=('extra-cmake-modules' 'dolphin' 'qt5-tools' 'rsync' 'mesa')
 provides=("dolphin-megasync=${pkgver}")
 conflicts=()
 replaces=()
@@ -46,25 +46,11 @@ prepare() {
 
 build() {
 	cd "$pkgname-$pkgver"
-
-	if which kf5-config >/dev/null; then
 	mkdir forplasma
 	cp -r * forplasma/ || :
-	fi
-	
-	cmake -DCMAKE_INSTALL_PREFIX="`kde4-config --prefix`" .
-	make
-	
-	if which kf5-config >/dev/null; then
 	cd forplasma
-	rm megasync-plugin.moc
-	rm CMakeLists.txt
-	mv CMakeLists_kde5.txt CMakeLists.txt
-#	cmake -DCMAKE_INSTALL_PREFIX="`kf5-config --prefix`" $PWD
-	cmake -DCMAKE_INSTALL_PREFIX="/usr" $PWD
+	cmake -DCMAKE_INSTALL_PREFIX="`kf5-config --prefix`" $PWD
 	make
-	fi
-
 }
 
 check() {
@@ -73,26 +59,19 @@ check() {
 
 package() {
 	cd "$pkgname-$pkgver"
+	cd forplasma
 	make install DESTDIR=$pkgdir
-	if which kf5-config >/dev/null; then
-		cd forplasma
-		make install DESTDIR=$pkgdir
-	fi
-	
+
 	#fix conflict with existing /usr/lib64 (pointing to /usr/lib)
 	if [ -d $pkgdir/usr/lib64 ]; then
 		rsync -av $pkgdir/usr/lib64/ $pkgdir/usr/lib/
 		rm -rf $pkgdir/usr/lib64
 	fi
-	
-	if which kf5-config >/dev/null; then
-		#fix missplaced .so for kf5
-		if [ -d $pkgdir/usr/lib/qt5 ]; then
-			rsync -av $pkgdir/usr/lib/qt5/ $pkgdir/usr/lib/qt/
-			rm -rf $pkgdir/usr/lib/qt5
-		fi
-		#mv $pkgdir/usr/lib/qt5/plugins$(find $pkgdir -name megasyncplugin.so) $pkgdir$(kf5-config --path lib | awk -NF ":" '{print $NF}')
+
+	#fix missplaced .so for kf5
+	if [ -d $pkgdir/usr/lib/qt5 ]; then
+		rsync -av $pkgdir/usr/lib/qt5/ $pkgdir/usr/lib/qt/
+		rm -rf $pkgdir/usr/lib/qt5
 	fi
-	cp megasyncdolphinoverlayplugin.so_arch `find $pkgdir -name megasyncdolphinoverlayplugin.so`
 }
 

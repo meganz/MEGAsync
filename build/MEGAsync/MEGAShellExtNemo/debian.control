@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: MEGA Linux Team <linux@mega.co.nz>
 Homepage: https://mega.nz/#sync
 Build-Depends:  debhelper,
-                libqt4-dev,
+                libqt4-dev | qtbase5-dev,
                 intltool,
                 autotools-dev,
                 libnemo-extension-dev,
