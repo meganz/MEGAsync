@@ -1,6 +1,10 @@
 # cmake\vcpkg toolchain dependencies
-vcpkg-cmake-config/7375bb408f2278d2f1875c259beef93332697ba7
-vcpkg-cmake/7375bb408f2278d2f1875c259beef93332697ba7
+vcpkg-cmake-config/94ce0dab56f4d8ba6bd631ba59ed682b02d45c46
+vcpkg-cmake/94ce0dab56f4d8ba6bd631ba59ed682b02d45c46
+pkgconf/94ce0dab56f4d8ba6bd631ba59ed682b02d45c46
+vcpkg-pkgconfig-get-modules/94ce0dab56f4d8ba6bd631ba59ed682b02d45c46
+vcpkg-tool-meson/94ce0dab56f4d8ba6bd631ba59ed682b02d45c46
+vcpkg-cmake-get-vars/94ce0dab56f4d8ba6bd631ba59ed682b02d45c46
 
 # direct core dependencies of the SDK
 c-ares/c303dd024e2dc03a0665ddffbb12a1077933e649
@@ -21,7 +25,7 @@ libmediainfo/19.09
 libzen/0.4.37
 
 # ffmpeg (video preview/thumbnail generation)
-ffmpeg/c303dd024e2dc03a0665ddffbb12a1077933e649 osx:ffmpeg-fix-osx-cross-compilation.patch
+ffmpeg/7f59e0013648f0dd80377330b770b414032233cb all:on ios:off
 
 #freeimage and its dependencies (image preview/thumbnail generation)
 freeimage/94ce0dab56f4d8ba6bd631ba59ed682b02d45c46 osx:freeimage-bool-typedef-xcode-compiler.patch
