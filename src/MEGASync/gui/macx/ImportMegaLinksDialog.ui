@@ -23,6 +23,11 @@
 font-size: 11px;
 }
 
+#linkList
+{
+background-color: #FFFFFF;
+}
+
 QCheckBox::indicator {
      width: 16px;
      height: 16px;

@@ -1120,7 +1120,7 @@ void TransferManager::onFileTypeButtonClicked(TransfersWidget::TM_TAB tab, Utili
 
 void TransferManager::on_bOpenLinks_clicked()
 {
-    MegaSyncApp->importLinksFromWidget(this);
+    MegaSyncApp->importLinks();
 }
 
 void TransferManager::on_tCogWheel_clicked()
@@ -1130,12 +1130,12 @@ void TransferManager::on_tCogWheel_clicked()
 
 void TransferManager::on_bDownload_clicked()
 {
-    MegaSyncApp->downloadActionClickedFromWidget(this);
+    MegaSyncApp->downloadActionClicked();
 }
 
 void TransferManager::on_bUpload_clicked()
 {
-    MegaSyncApp->uploadActionClickedFromWidget(this);
+    MegaSyncApp->uploadActionClicked();
 }
 
 void TransferManager::on_leSearchField_returnPressed()

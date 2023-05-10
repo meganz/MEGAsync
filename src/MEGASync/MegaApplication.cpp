@@ -2348,10 +2348,13 @@ void MegaApplication::showInfoDialog()
 
     if (QWidget *anyModalWindow = QApplication::activeModalWidget())
     {
-        // If the InfoDialog has opened any MessageBox (eg. enter your email), those must be closed first (as we are executing from that dialog's message loop!)
-        // Bring that dialog to the front for the user to dismiss.
-        anyModalWindow->activateWindow();
-        return;
+        if(anyModalWindow->windowModality() == Qt::ApplicationModal)
+        {
+            // If the InfoDialog has opened any MessageBox (eg. enter your email), those must be closed first (as we are executing from that dialog's message loop!)
+            // Bring that dialog to the front for the user to dismiss.s
+            DialogOpener::raiseAllDialogs();
+            return;
+        }
     }
 
     if (infoDialog)
@@ -4699,14 +4702,14 @@ void MegaApplication::goToMyCloud()
     megaApi->getSessionTransferURL(url.toUtf8().constData());
 }
 
-void MegaApplication::importLinksFromWidget(QWidget* parent)
+void MegaApplication::importLinks()
 {
     if (appfinished)
     {
         return;
     }
 
-    mTransferQuota->checkImportLinksAlertDismissed([this, parent](int result){
+    mTransferQuota->checkImportLinksAlertDismissed([this](int result){
         if(result == QDialog::Rejected)
         {
             if (!preferences->logged())
@@ -4716,16 +4719,10 @@ void MegaApplication::importLinksFromWidget(QWidget* parent)
             }
 
             //Show the dialog to paste public links
-            auto pasteMegaLinksDialog = new PasteMegaLinksDialog(parent);
-            DialogOpener::showDialog<PasteMegaLinksDialog>(pasteMegaLinksDialog, this, &MegaApplication::onPasteMegaLinksDialogFinish);
+            auto pasteMegaLinksDialog = new PasteMegaLinksDialog();
+            DialogOpener::showDialog<PasteMegaLinksDialog, TransferManager>(pasteMegaLinksDialog, true, this, &MegaApplication::onPasteMegaLinksDialogFinish);
         }
     });
-}
-
-//Called when the "Import links" menu item is clicked
-void MegaApplication::importLinks()
-{
-    importLinksFromWidget(nullptr);
 }
 
 void MegaApplication::onPasteMegaLinksDialogFinish(QPointer<PasteMegaLinksDialog> pasteMegaLinksDialog)
@@ -4738,7 +4735,7 @@ void MegaApplication::onPasteMegaLinksDialogFinish(QPointer<PasteMegaLinksDialog
 
         //Open the import dialog
         auto importDialog = new ImportMegaLinksDialog(mLinkProcessor);
-        DialogOpener::showDialog<ImportMegaLinksDialog>(importDialog, this, &MegaApplication::onImportDialogFinish);
+        DialogOpener::showDialog<ImportMegaLinksDialog, TransferManager>(importDialog, true, this, &MegaApplication::onImportDialogFinish);
     }
 }
 
@@ -4784,11 +4781,6 @@ void MegaApplication::showChangeLog()
 
 void MegaApplication::uploadActionClicked()
 {
-    uploadActionClickedFromWidget(nullptr);
-}
-
-void MegaApplication::uploadActionClickedFromWidget(QWidget* openFrom)
-{
     if (appfinished)
     {
         return;
@@ -4797,21 +4789,21 @@ void MegaApplication::uploadActionClickedFromWidget(QWidget* openFrom)
     const bool storageIsOverQuota(storageState == MegaApi::STORAGE_STATE_RED || storageState == MegaApi::STORAGE_STATE_PAYWALL);
     if(storageIsOverQuota)
     {
-        auto overQuotaDialog = OverQuotaDialog::showDialog(OverQuotaDialogType::STORAGE_UPLOAD, openFrom);
+        auto overQuotaDialog = OverQuotaDialog::showDialog(OverQuotaDialogType::STORAGE_UPLOAD);
         if(overQuotaDialog)
         {
-            DialogOpener::showDialog(overQuotaDialog, [openFrom, this](){
-                uploadActionClickedFromWindowAfterOverQuotaCheck(openFrom);
+            DialogOpener::showDialog<OverQuotaDialog, TransferManager>(overQuotaDialog, false, [this](){
+                uploadActionClickedFromWindowAfterOverQuotaCheck();
             });
 
             return;
         }
     }
 
-    uploadActionClickedFromWindowAfterOverQuotaCheck(openFrom);
+    uploadActionClickedFromWindowAfterOverQuotaCheck();
 }
 
-void MegaApplication::uploadActionClickedFromWindowAfterOverQuotaCheck(QWidget* openFrom)
+void MegaApplication::uploadActionClickedFromWindowAfterOverQuotaCheck()
 {
     QString  defaultFolderPath = getDefaultUploadPath();
 
@@ -4822,8 +4814,17 @@ void MegaApplication::uploadActionClickedFromWindowAfterOverQuotaCheck(QWidget* 
         return;
     }
 
+    QWidget* parent(nullptr);
+
+    auto TMDialog = DialogOpener::findDialog<TransferManager>();
+    if(TMDialog && (TMDialog->getDialog()->isActiveWindow() || !TMDialog->getDialog()->isMinimized()))
+    {
+        parent = TMDialog->getDialog();
+        DialogOpener::closeDialogsByParentClass<TransferManager>();
+    }
+
     Platform::getInstance()->fileAndFolderSelector(QCoreApplication::translate("ShellExtension", "Upload to MEGA"), defaultFolderPath, true,
-                                 openFrom,
+                                 parent,
                                  [this/*, blocker*/](QStringList files)
     {
         QQueue<QString> qFiles;
@@ -4864,24 +4865,19 @@ bool MegaApplication::isInfoDialogVisible() const
 
 void MegaApplication::downloadActionClicked()
 {
-    downloadActionClickedFromWidget(nullptr);
-}
-
-void MegaApplication::downloadActionClickedFromWidget(QWidget* openFrom)
-{
     if (appfinished)
     {
         return;
     }
 
-    mTransferQuota->checkDownloadAlertDismissed([this, openFrom](int result)
+    mTransferQuota->checkDownloadAlertDismissed([this](int result)
     {
         if(result == QDialog::Rejected)
         {
-            auto downloadNodeSelector = new DownloadNodeSelector(openFrom);
+            auto downloadNodeSelector = new DownloadNodeSelector();
             downloadNodeSelector->setSelectedNodeHandle();
 
-            DialogOpener::showDialog<NodeSelector>(downloadNodeSelector, [this, downloadNodeSelector]()
+            DialogOpener::showDialog<NodeSelector, TransferManager>(downloadNodeSelector, false, [this, downloadNodeSelector]()
             {
                 if (downloadNodeSelector->result() == QDialog::Accepted)
                 {
@@ -5167,7 +5163,7 @@ void MegaApplication::processUploads()
     auto uploadFolderSelector = new UploadToMegaDialog(megaApi);
     uploadFolderSelector->setDefaultFolder(preferences->uploadFolder());
 
-    DialogOpener::showDialog<UploadToMegaDialog>(uploadFolderSelector, [this, uploadFolderSelector]()
+    DialogOpener::showDialog<UploadToMegaDialog, TransferManager>(uploadFolderSelector, false, [this, uploadFolderSelector]()
     {
         if (uploadFolderSelector->result()==QDialog::Accepted)
         {
@@ -5249,7 +5245,7 @@ void MegaApplication::processDownloads()
     }
 
     auto downloadFolderSelector = new DownloadFromMegaDialog(preferences->downloadFolder());
-    DialogOpener::showDialog<DownloadFromMegaDialog>(downloadFolderSelector, this, &MegaApplication::onDownloadFromMegaFinished);
+    DialogOpener::showDialog<DownloadFromMegaDialog, TransferManager>(downloadFolderSelector, false, this, &MegaApplication::onDownloadFromMegaFinished);
 }
 
 void MegaApplication::onDownloadFromMegaFinished(QPointer<DownloadFromMegaDialog> dialog)
@@ -5440,8 +5436,15 @@ void MegaApplication::externalFileUpload(qlonglong targetFolder)
 
     QString  defaultFolderPath = getDefaultUploadPath();
 
+    QWidget* parent(nullptr);
+
+#ifdef Q_OS_WIN
+    repositionInfoDialog();
+    parent = infoDialog;
+#endif
+
     Platform::getInstance()->fileSelector(QCoreApplication::translate("ShellExtension", "Upload to MEGA"), defaultFolderPath,
-                                 true, nullptr, processUpload);
+                                 true, parent, processUpload);
 }
 
 void MegaApplication::externalFolderUpload(qlonglong targetFolder)
@@ -5475,8 +5478,15 @@ void MegaApplication::externalFolderUpload(qlonglong targetFolder)
 
     QString  defaultFolderPath = getDefaultUploadPath();
 
+    QWidget* parent(nullptr);
+
+#ifdef Q_OS_WIN
+    repositionInfoDialog();
+    parent = infoDialog;
+#endif
+
     Platform::getInstance()->folderSelector(QCoreApplication::translate("ShellExtension", "Upload to MEGA"), defaultFolderPath,
-                                 false, nullptr, processUpload);
+                                 false, parent, processUpload);
 }
 
 void MegaApplication::externalFolderSync(qlonglong targetFolder)
