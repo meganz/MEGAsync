@@ -100,12 +100,6 @@ $ cd ~/mega/desktop/contrib/cmake
 $ cmake -DEXTRA_ARGS="-DCMAKE_PREFIX_PATH=~/Qt/5.12.12/clang_64" -DTARGET=MEGAsync -DTRIPLET=x64-osx-mega -P build_from_scratch.cmake
 ```
 
-In a short while, but before the build stops because of missing PDFIUM library, you should
-notice `~/mega/3rdparty_desktop/vcpkg` directory being created. You can start copying
-the extracted pdfium subdirectory to the vcpkg directory.
-
-In case the build fails anyway, just run the cmake command again, once pdfium is copied.
-
 # Development using Qt Creator
 
 Now you can open open `src/MEGASync/MEGASync.pro` to start editing and building. Set it up
