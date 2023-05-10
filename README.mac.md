@@ -79,22 +79,6 @@ You will have to create an account, even if you only install the Community Editi
 Install Qt 5.12.12 for macOS; only macOS components are needed during installation.
 A good installation path is `~/Qt`.
 
-## VCPKG
-
-Along with Qt, MEGA Desktop and the MEGA SDK require another dozen or more
-3rdParty libraries to cover all the functionality exposed to our users. We are
-using Microsoft's VCPKG C++ Library Manager for managing our dependencies and we
-employ it automagically from our CMake scripts. You don't have to install it
-manually.
-
-A notable exception from this rule, is the PDFIUM library, which is used to
-create thumbnails for PDF documents. This library is not available in VCPKG for
-the moment, thus we are using a patched version from upstream Chromium Depot
-Tools for the moment. Download our pre-built version from:
-https://mega.nz/file/M1JCRCRa#Ne5sbVD2yZaCt9ijcCaKXs3m_ayfrw0ZovJMdERXRlU
-
-Start decompressing the zip archive as you proceed to the next step.
-
 # Get the source
 
 Open macOS Terminal and clone the Desktop repository:
