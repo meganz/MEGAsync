@@ -9,14 +9,19 @@ Source0:	nemo-megasync_%{version}.tar.gz
 Vendor:		MEGA Limited
 Packager:	MEGA Linux Team <linux@mega.co.nz>
 
-BuildRequires:  qt-devel, glib2-devel, nemo-devel, gnome-common
-BuildRequires:  pkgconfig(libnemo-extension)
-BuildRequires:	hicolor-icon-theme, gnome-shell
+BuildRequires:   nemo-devel
+
+%if 0%{?suse_version} || 0%{?sle_version}
+BuildRequires: libnemo-extension1, libqt5-qtbase-devel
+%else
+BuildRequires: nemo-extensions, qt5-qtbase-devel
+%endif
 %if 0%{?rhel_version} 
 BuildRequires: redhat-logos
 %endif
 %if 0%{?fedora_version} 
 BuildRequires: fedora-logos
+%global debug_package %{nil}
 %endif
 %if 0%{?scientificlinux_version} 
 BuildRequires: sl-logos, gcc-c++
@@ -41,14 +46,6 @@ Store up to 50 GB for free!
 %setup -q
 
 %build
-export DESKTOP_DESTDIR=$RPM_BUILD_ROOT/usr
-
-%if 0%{?fedora} || 0%{?rhel_version} || 0%{?centos_version} || 0%{?scientificlinux_version}
-qmake-qt4
-%else
-qmake
-%endif
-
 if [ 0$(head /usr/share/doc/nemo/NEWS -n 1 | awk '{print $NF}' | awk -F':' '{print $1}' | awk -F "." '{FS=".";print $1*10000+$2*100+$3}') -gt 31503 ]; then 
     for i in data/emblems/64x64/*smaller.png; do mv $i ${i/-smaller/}; done
     echo "NEWER NEMO REQUIRES SMALLER OVERLAY ICONS"    
@@ -56,20 +53,14 @@ else
     rm data/emblems/64x64/*smaller.png
     echo "OLDER NEMO DOES NOT REQUIRE SMALLER OVERLAY ICONS"
 fi
-%if 0%{?fedora_version} >= 27
-#tweak to have debug symbols to stripe: for some reason they seem gone by default in Fedora 27,
-#   causing "gdb-add-index: No index was created for ..." which lead to error "Empty %files file ....debugsourcefiles.list"
-sed "s# gcc# gcc -g#g" -i Makefile
-%endif
+
+export DESKTOP_DESTDIR=$RPM_BUILD_ROOT/usr
+
+qmake-qt5 || qmake
 make
 
 %install
 make install
-
-export EXTENSIONSDIR=$(pkg-config --variable=extensiondir libnemo-extension)
-mkdir -p %{buildroot}$EXTENSIONSDIR
-%{__install} libMEGAShellExtNemo.so -D %{buildroot}$EXTENSIONSDIR
-
 # clean up
 rm -fr $RPM_BUILD_ROOT/usr/share/icons/hicolor/icon-theme.cache || true
 
@@ -137,7 +128,7 @@ fi
 
 %files
 %defattr(-,root,root)
-%{_libdir}/nemo/extensions-3.0/libMEGAShellExtNemo.so
+%{_libdir}/nemo/extensions-3.0/libMEGAShellExtNemo.so*
 %{_datadir}/icons/hicolor/*/*/mega-*.icon
 %{_datadir}/icons/hicolor/*/*/mega-*.png
 

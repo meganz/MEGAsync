@@ -1,3 +1,10 @@
+nautilus-megasync (5.2.0) stable; urgency=low
+
+  * Bug fixes
+  * Update communication protocol with MEGA desktop app
+
+ -- MEGA Team <linux@mega.co.nz>  Wed, 10 May 2023 13:05:10 +0200
+
 nautilus-megasync (5.1.0) stable; urgency=low
 
   * Support new nautilus extension API v4
