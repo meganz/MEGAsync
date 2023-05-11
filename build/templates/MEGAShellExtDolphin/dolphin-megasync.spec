@@ -25,7 +25,7 @@ BuildRequires: kdelibs-devel gcc-c++
 %endif
 
 %if 0%{?centos_version}
-BuildRequires: kf5-kdelibs4support-devel, kdelibs-devel, extra-cmake-modules, qt-devel
+BuildRequires: extra-cmake-modules, kf5-kdelibs4support, kf5-kio-devel
 %endif
 
 Requires:       megasync >= 3.5
@@ -51,7 +51,7 @@ Store up to 50 GB for free!
 EXTRA_FILES=%{buildroot}/ExtraFiles.list
 touch %{EXTRA_FILES}
 
-cmake -DCMAKE_INSTALL_PREFIX="`kf5-config --prefix`" $PWD
+cmake3 -DCMAKE_INSTALL_PREFIX="`kf5-config --prefix`" $PWD || cmake -DCMAKE_INSTALL_PREFIX="`kf5-config --prefix`" $PWD
 make
 make install DESTDIR=%{buildroot}
 
