@@ -390,6 +390,16 @@
         <translatorcomment>Label to indicate a reminder about a contact request.</translatorcomment>
         <translation>提醒：您有一個聯絡人請求</translation>
     </message>
+    <message>
+        <source>Shared folder updated</source>
+        <translatorcomment>Label to indicate that a shared folder was updated. CON-295</translatorcomment>
+        <translation>共享資料夾已更新</translation>
+    </message>
+    <message numerus="yes">
+        <source>[A] updated %n item</source>
+        <translatorcomment>Label to indicate that user [A] has updated %n items in shared folder. Placeholder [A] will be replaced by the email or full name of the user that made the update and %n with the number of removed items. CON-295</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform></translation>
+    </message>
 </context>
 <context>
     <name>BackupItemModel</name>
@@ -1070,6 +1080,19 @@
     </message>
 </context>
 <context>
+    <name>DateTimeFormatter</name>
+    <message>
+        <source>Today at %1</source>
+        <translatorcomment>Label to indicate the today time of the current alert item displayed or completed transfer. SNC-2977</translatorcomment>
+        <translation>今天 %1</translation>
+    </message>
+    <message>
+        <source>Yesterday at %1</source>
+        <translatorcomment>Label to indicate the yesterday time of the current alert item displayed or completed transfer. SNC-2977</translatorcomment>
+        <translation>昨天 %1</translation>
+    </message>
+</context>
+<context>
     <name>DesktopNotifications</name>
     <message>
         <source>[A] has left the shared folder</source>
@@ -1290,6 +1313,11 @@
         <source>Show in MEGA</source>
         <translatorcomment>Notification button to redirect the user to remote location. It will open webclient at specific location.</translatorcomment>
         <translation>在MEGA中顯示</translation>
+    </message>
+    <message numerus="yes">
+        <source>[A] updated %n item</source>
+        <translatorcomment>Label to indicate that user [A] has updated %n items in shared folder. Placeholder [A] will be replaced by the email or full name of the user that made the update and %n with the number of removed items. CON-295</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -2882,11 +2910,6 @@ Transfer will automatically resume when you re-open the app.</source>
         <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
         <translation>您的 備份「%1」已暫時停用：%2</translation>
     </message>
-    <message>
-        <source>Error transferring folder: %1</source>
-        <translatorcomment>Label to indicate that has been an error during a folder transfer.  Placeholder %1 displays the reason.</translatorcomment>
-        <translation>傳輸資料夾時錯誤：%1</translation>
-    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -4243,7 +4266,7 @@ Enter a different name</source>
     <message>
         <source>Back</source>
         <translatorcomment>Button for going backwards in the navigating in the filesystem</translatorcomment>
-        <translation>返回</translation>
+        <translation>上一個</translation>
     </message>
     <message>
         <source>Go back</source>
@@ -4258,7 +4281,7 @@ Enter a different name</source>
     <message>
         <source>Forward</source>
         <translatorcomment>Button for going forward in the navigating in the filesystem</translatorcomment>
-        <translation>轉寄</translation>
+        <translation>下一個</translation>
     </message>
     <message>
         <source>Go forward</source>
@@ -4807,11 +4830,6 @@ Do you want to delete it anyway?</source>
         <source>Add</source>
         <translatorcomment>Button label to add a synchronization. String as short as possible.</translatorcomment>
         <translation>新增</translation>
-    </message>
-    <message>
-        <source>Auto</source>
-        <translatorcomment>Label to indicate that management of rate upload limit is automatic.</translatorcomment>
-        <translation>自動</translation>
     </message>
     <message>
         <source>Data temporarily unavailable</source>
@@ -5514,6 +5532,22 @@ Do you want to restart MEGAsync now?</source>
         <source>Prevent the computer from going to sleep when transfers or syncs are in progress.</source>
         <translatorcomment>Sleep/Active mode: Feature description label for keeping the pc awake when there are active transfers</translatorcomment>
         <translation>當傳輸或同步正在進行時防止電腦進入睡眠狀態。</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsDialog_Bandwith</name>
+    <message>
+        <source>Auto</source>
+        <translatorcomment>Label to indicate that management of rate upload limit is automatic. SNC-3076</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SettingsDialog_Proxies</name>
+    <message>
+        <source>Auto</source>
+        <translatorcomment>Label to indicate that proxy settings are on auto detec mode. SNC-3076</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6646,116 +6680,186 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     </message>
 </context>
 <context>
-    <name>TransferNotificationBuilderBase</name>
+    <name>TransferNotificationBuilder</name>
     <message>
-        <source>Uploaded 1 file to %1.</source>
-        <translatorcomment>Notification text that inform 1 file has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation>已上傳1個檔案到%1。</translation>
-    </message>
-    <message>
-        <source>Uploaded 1 folder to %1.</source>
-        <translatorcomment>Notification text that inform 1 folder has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation>已上傳1個資料夾到%1。</translation>
-    </message>
-    <message>
-        <source>File uploaded</source>
-        <translatorcomment>Notification title when a file has been uploaded</translatorcomment>
-        <translation>檔案已上傳</translation>
+        <source>Upload failed</source>
+        <translatorcomment>Notification title when a file or folder upload has failed. CON-223</translatorcomment>
+        <translation>上傳失敗</translation>
     </message>
     <message>
         <source>Folder uploaded</source>
-        <translatorcomment>Notification title when a folder has been uploaded</translatorcomment>
+        <translatorcomment>Notification title when a folder has been uploaded. CON-223</translatorcomment>
         <translation>資料夾已上傳</translation>
     </message>
     <message>
+        <source>File uploaded</source>
+        <translatorcomment>Notification title when a file has been uploaded. CON-223</translatorcomment>
+        <translation>檔案已上傳</translation>
+    </message>
+    <message>
+        <source>%1 no longer exists or was renamed.</source>
+        <translatorcomment>A single local file/folder has been removed or rename before uploading. %1 is the file/folder uploaded name. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t upload %1 to %2.</source>
+        <translatorcomment>A single file/folder upload has failed. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Uploaded %1 to %2.</source>
+        <translatorcomment>A single file/folder has been uploaded correctly. %1 is the file/folder uploaded name, %2 is the name of the target folder in the cloud. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Retry</source>
+        <translatorcomment>Notification button to retry the failed file. CON-223</translatorcomment>
+        <translation>重試</translation>
+    </message>
+    <message>
         <source>Show in MEGA</source>
-        <translatorcomment>Notification button to see the file on the webclient</translatorcomment>
+        <translatorcomment>Notification button to see the file on the webclient. CON-223</translatorcomment>
         <translation>在MEGA中顯示</translation>
     </message>
     <message>
         <source>Get link</source>
-        <translatorcomment>Notification button to get the file link</translatorcomment>
+        <translatorcomment>Notification button to get the file link. CON-223</translatorcomment>
         <translation>取得連結</translation>
     </message>
     <message>
-        <source>Downloaded 1 file to %1.</source>
-        <translatorcomment>Notification text that inform 1 file has been downloaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation>已下載1個檔案到%1。</translation>
+        <source>Download failed</source>
+        <translatorcomment>Notification title when a file or folder download has failed. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Downloaded 1 folder to %1.</source>
-        <translatorcomment>Notification text that inform 1 folder has been downloaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation>已下載1個資料夾到%1。</translation>
+        <source>Folder downloaded</source>
+        <translatorcomment>Notification title when a folder has been downloaded. CON-223</translatorcomment>
+        <translation>資料夾已下載</translation>
+    </message>
+    <message>
+        <source>File downloaded</source>
+        <translatorcomment>Notification title when a file has been downloaded. CON-223</translatorcomment>
+        <translation>檔案已下載</translation>
+    </message>
+    <message>
+        <source>%1 no longer exists.</source>
+        <translatorcomment>A single cloud drive file/folder has been removed before downloading. %1 is the file/folder downloaded name. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t download %1 to %2</source>
+        <translatorcomment>A single file/folder download has failed. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Downloaded %1 to %2.</source>
+        <translatorcomment>A single file/folder has been downloaded correctly. %1 is the cloud file/folder download name, %2 is the name of the target folder in the OS filesystem. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Show in folder</source>
-        <translatorcomment>Notification button to see the file on the local file explorer</translatorcomment>
+        <translatorcomment>Notification button to see the file on the local file explorer. CON-223</translatorcomment>
         <translation>在資料夾中顯示</translation>
     </message>
     <message>
         <source>Open</source>
-        <translatorcomment>Notification button to open the file</translatorcomment>
+        <translatorcomment>Notification button to open the file. CON-223</translatorcomment>
         <translation>開啟</translation>
     </message>
     <message>
-        <source>File downloaded</source>
-        <translatorcomment>Notification title when a file has been downloaded</translatorcomment>
-        <translation>檔案已下載</translation>
-    </message>
-    <message>
-        <source>Folder downloaded</source>
-        <translatorcomment>Notification title when a folder has been downloaded</translatorcomment>
-        <translation>資料夾已下載</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n upload successful</source>
-        <translatorcomment>Notification text that inform that an upload was successful. %1 is the number of uploads. This string goes always with the %n upload cancelled and/or %n upload failed strings.</translatorcomment>
-        <translation><numerusform>%n已上傳完成</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>, %n upload cancelled</source>
-        <translatorcomment>Appended text that inform that an upload was cancelled. %1 is the number of cancelled uploads. This string goes always appended to the %n upload successful</translatorcomment>
-        <translation><numerusform>，%n個上傳取消</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>, %n upload failed</source>
-        <translatorcomment>Appended text that inform that an upload has failed. %1 is the number of failed uploads. This string goes always appended to the %n upload successful</translatorcomment>
-        <translation><numerusform>，%n個上傳失敗</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Uploaded %n items to %1</source>
-        <translatorcomment>Notification text that inform n items (files or folders) has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation><numerusform>已上傳%n個項目到%1</numerusform></translation>
+        <source>Not all items were uploaded</source>
+        <translatorcomment>Notification title when at least one file or folder upload has failed. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Items uploaded</source>
-        <translatorcomment>Notification title when a more than one transfer (file or folders) have been uploaded</translatorcomment>
+        <translatorcomment>Notification title when a more than one transfer (file or folders) have been uploaded. CON-223</translatorcomment>
         <translation>項目已上傳</translation>
     </message>
-    <message numerus="yes">
-        <source>%n download successful</source>
-        <translatorcomment>Notification text that inform that an download was successful. %1 is the number of downloads. This string goes always with the %n download cancelled and/or %n download failed strings.</translatorcomment>
-        <translation><numerusform>%n已下載完成</numerusform></translation>
+    <message>
+        <source>Items no longer exist or were renamed</source>
+        <translatorcomment>Several local files/folders have been removed or renamed before uploading. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t upload %1 items to %2.</source>
+        <translatorcomment>All files/folder failed to upload.  %1 is the number of files/folders, %2 is the name of the target folder in the cloud. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Uploaded %1,  couldn&apos;t upload %2.</source>
+        <translatorcomment>One file/folder was uploaded correctly, and one file/folder upload has failed.  %1 is the name of the successful cloud file/folder, %2 is the name of the failed cloud file/folder. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Uploaded %1, couldn&apos;t upload %2 items.</source>
+        <translatorcomment>One file/folder was uploaded correctly, and several files/folders uploads have failed.  %1 is the name of the successful cloud file/folder, %2 is the number of failed files/folders. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Uploaded %1 items, couldn&apos;t upload %2.</source>
+        <translatorcomment>Several files/folders were uploaded correctly, and one file/folder uploads has failed.  %1 is the number of successful files/folders, %2 is the name of the failed cloud file/folder. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Uploaded %1 items, couldn&apos;t upload %2 items.</source>
+        <translatorcomment>Several files/folders were uploaded correctly, and several files/folders uploads have failed.  %1 is the number of successful files/folders, %2 is the number of failed files/folders. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Uploaded %1 items to %2.</source>
+        <translatorcomment>Several files/folders were uploaded correctly. %1 is the number of successful files/folders. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <source>, %n download cancelled</source>
-        <translatorcomment>Appended text that inform that an download was cancelled. %1 is the number of cancelled downloads. This string goes always appended to the %n download successful</translatorcomment>
-        <translation><numerusform>，%n個下載取消</numerusform></translation>
+        <source>Retry failed items</source>
+        <translatorcomment>Notification button to retry failed transfers when not all the transfers failed. CON-223</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
-    <message numerus="yes">
-        <source>, %n download failed</source>
-        <translatorcomment>Appended text that inform that an download has failed. %1 is the number of failed downloads. This string goes always appended to the %n download successful</translatorcomment>
-        <translation><numerusform>，%n個下載失敗</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Downloaded %n items to %1</source>
-        <translatorcomment>Notification text that inform n items (files or folders) has been downloaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation><numerusform>已下載%n個項目到%1</numerusform></translation>
+    <message>
+        <source>Not all items were downloaded</source>
+        <translatorcomment>Notification title when at least one file or folder download has failed. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Items downloaded</source>
-        <translatorcomment>Notification title when a more than one transfer (file or folders) have been downloaded</translatorcomment>
+        <translatorcomment>Notification title when a more than one transfer (file or folders) have been downloaded. CON-223</translatorcomment>
         <translation>項目已下載</translation>
+    </message>
+    <message>
+        <source>Items no longer exist</source>
+        <translatorcomment>Several cloud drive files/folders have been removed before downloading. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t download %1 items to %2.</source>
+        <translatorcomment>All files/folder failed to download.  %1 is the number of files/folders, %2 is the name of the target folder in the filesystem. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Downloaded %1,  couldn&apos;t download %2.</source>
+        <translatorcomment>One file/folder was downloaded correctly, and one file/folder download has failed.  %1 is the name of the successful cloud file/folder, %2 is the name of the failed cloud file/folder. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Downloaded %1, couldn&apos;t download %2 items.</source>
+        <translatorcomment>One file/folder was downloaded correctly, and several files/folders uploads have failed.  %1 is the name of the successful file/folder, %2 is the number of failed files/folders. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Downloaded %1 items, couldn&apos;t download %2.</source>
+        <translatorcomment>Several files/folders were downloaded correctly, and one file/folder uploads has failed.  %1 is the number of successful files/folders, %2 is the name of the failed file/folder. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Downloaded %1 items, couldn&apos;t download %2 items.</source>
+        <translatorcomment>Several files/folders were downloaded correctly, and several files/folders downloads have failed.  %1 is the number of successful files/folders, %2 is the number of failed files/folders. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Downloaded %1 items to %2.</source>
+        <translatorcomment>Several files/folders were downloaded correctly. %1 is the number of successful files/folders. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

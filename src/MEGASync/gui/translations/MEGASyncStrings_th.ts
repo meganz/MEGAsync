@@ -390,6 +390,16 @@
         <translatorcomment>Label to indicate a reminder about a contact request.</translatorcomment>
         <translation>แจ้งเตือน: คุณมีคำขอผู้ติดต่อใหม่</translation>
     </message>
+    <message>
+        <source>Shared folder updated</source>
+        <translatorcomment>Label to indicate that a shared folder was updated. CON-295</translatorcomment>
+        <translation>แชร์โฟลเดอร์อัปเดตแล้ว</translation>
+    </message>
+    <message numerus="yes">
+        <source>[A] updated %n item</source>
+        <translatorcomment>Label to indicate that user [A] has updated %n items in shared folder. Placeholder [A] will be replaced by the email or full name of the user that made the update and %n with the number of removed items. CON-295</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform></translation>
+    </message>
 </context>
 <context>
     <name>BackupItemModel</name>
@@ -1070,6 +1080,19 @@
     </message>
 </context>
 <context>
+    <name>DateTimeFormatter</name>
+    <message>
+        <source>Today at %1</source>
+        <translatorcomment>Label to indicate the today time of the current alert item displayed or completed transfer. SNC-2977</translatorcomment>
+        <translation>วันนี้ เวลา %1</translation>
+    </message>
+    <message>
+        <source>Yesterday at %1</source>
+        <translatorcomment>Label to indicate the yesterday time of the current alert item displayed or completed transfer. SNC-2977</translatorcomment>
+        <translation>เมื่อวานนี้ เวลา %1</translation>
+    </message>
+</context>
+<context>
     <name>DesktopNotifications</name>
     <message>
         <source>[A] has left the shared folder</source>
@@ -1290,6 +1313,11 @@
         <source>Show in MEGA</source>
         <translatorcomment>Notification button to redirect the user to remote location. It will open webclient at specific location.</translatorcomment>
         <translation>แสดงใน MEGA</translation>
+    </message>
+    <message numerus="yes">
+        <source>[A] updated %n item</source>
+        <translatorcomment>Label to indicate that user [A] has updated %n items in shared folder. Placeholder [A] will be replaced by the email or full name of the user that made the update and %n with the number of removed items. CON-295</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -2881,11 +2909,6 @@ Transfer will automatically resume when you re-open the app.</source>
         <source>Your backup &quot;%1&quot; has been temporarily disabled: %2</source>
         <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
         <translation>การสำรองข้อมูล “%1” ของคุณถูกปิดใช้งานชั่วคราว: %2</translation>
-    </message>
-    <message>
-        <source>Error transferring folder: %1</source>
-        <translatorcomment>Label to indicate that has been an error during a folder transfer.  Placeholder %1 displays the reason.</translatorcomment>
-        <translation>เกิดข้อผิดพลาดขณะถ่ายโอนโฟลเดอร์: %1</translation>
     </message>
 </context>
 <context>
@@ -4806,11 +4829,6 @@ Do you want to delete it anyway?</source>
         <translation>เพิ่ม</translation>
     </message>
     <message>
-        <source>Auto</source>
-        <translatorcomment>Label to indicate that management of rate upload limit is automatic.</translatorcomment>
-        <translation>อัตโนมัติ</translation>
-    </message>
-    <message>
         <source>Data temporarily unavailable</source>
         <translatorcomment>Label to indicate that the usage data is temporarily unavailable. String as short as possible.</translatorcomment>
         <translation>ข้อมูลยังไม่พร้อมใช้งานชั่วคราว</translation>
@@ -5511,6 +5529,22 @@ Do you want to restart MEGAsync now?</source>
         <source>Prevent the computer from going to sleep when transfers or syncs are in progress.</source>
         <translatorcomment>Sleep/Active mode: Feature description label for keeping the pc awake when there are active transfers</translatorcomment>
         <translation>ป้องกันไม่ให้คอมพิวเตอร์เข้าสู่โหมดสลีปเมื่อกำลังถ่ายโอนหรือซิงค์อยู่</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsDialog_Bandwith</name>
+    <message>
+        <source>Auto</source>
+        <translatorcomment>Label to indicate that management of rate upload limit is automatic. SNC-3076</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SettingsDialog_Proxies</name>
+    <message>
+        <source>Auto</source>
+        <translatorcomment>Label to indicate that proxy settings are on auto detec mode. SNC-3076</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6643,116 +6677,186 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     </message>
 </context>
 <context>
-    <name>TransferNotificationBuilderBase</name>
+    <name>TransferNotificationBuilder</name>
     <message>
-        <source>Uploaded 1 file to %1.</source>
-        <translatorcomment>Notification text that inform 1 file has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation>อัปโหลดไฟล์ 1 รายการไปไว้ที่ %1 เรียบร้อยแล้ว</translation>
-    </message>
-    <message>
-        <source>Uploaded 1 folder to %1.</source>
-        <translatorcomment>Notification text that inform 1 folder has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation>อัปโหลดโฟลเดอร์ 1 รายการไปไว้ที่ %1 เรียบร้อยแล้ว</translation>
-    </message>
-    <message>
-        <source>File uploaded</source>
-        <translatorcomment>Notification title when a file has been uploaded</translatorcomment>
-        <translation>อัปโหลดไฟล์เสร็จแล้ว</translation>
+        <source>Upload failed</source>
+        <translatorcomment>Notification title when a file or folder upload has failed. CON-223</translatorcomment>
+        <translation>อัปโหลดไม่สำเร็จ</translation>
     </message>
     <message>
         <source>Folder uploaded</source>
-        <translatorcomment>Notification title when a folder has been uploaded</translatorcomment>
+        <translatorcomment>Notification title when a folder has been uploaded. CON-223</translatorcomment>
         <translation>อัปโหลดโฟลเดอร์เสร็จแล้ว</translation>
     </message>
     <message>
+        <source>File uploaded</source>
+        <translatorcomment>Notification title when a file has been uploaded. CON-223</translatorcomment>
+        <translation>อัปโหลดไฟล์เสร็จแล้ว</translation>
+    </message>
+    <message>
+        <source>%1 no longer exists or was renamed.</source>
+        <translatorcomment>A single local file/folder has been removed or rename before uploading. %1 is the file/folder uploaded name. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t upload %1 to %2.</source>
+        <translatorcomment>A single file/folder upload has failed. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Uploaded %1 to %2.</source>
+        <translatorcomment>A single file/folder has been uploaded correctly. %1 is the file/folder uploaded name, %2 is the name of the target folder in the cloud. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Retry</source>
+        <translatorcomment>Notification button to retry the failed file. CON-223</translatorcomment>
+        <translation>ลองใหม่</translation>
+    </message>
+    <message>
         <source>Show in MEGA</source>
-        <translatorcomment>Notification button to see the file on the webclient</translatorcomment>
+        <translatorcomment>Notification button to see the file on the webclient. CON-223</translatorcomment>
         <translation>แสดงใน MEGA</translation>
     </message>
     <message>
         <source>Get link</source>
-        <translatorcomment>Notification button to get the file link</translatorcomment>
+        <translatorcomment>Notification button to get the file link. CON-223</translatorcomment>
         <translation>รับลิงก์</translation>
     </message>
     <message>
-        <source>Downloaded 1 file to %1.</source>
-        <translatorcomment>Notification text that inform 1 file has been downloaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation>ดาวน์โหลดไฟล์ 1 รายการไปไว้ที่ %1 เรียบร้อยแล้ว</translation>
+        <source>Download failed</source>
+        <translatorcomment>Notification title when a file or folder download has failed. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Downloaded 1 folder to %1.</source>
-        <translatorcomment>Notification text that inform 1 folder has been downloaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation>ดาวน์โหลดโฟลเดอร์ 1 รายการไปไว้ที่ %1 เรียบร้อยแล้ว</translation>
+        <source>Folder downloaded</source>
+        <translatorcomment>Notification title when a folder has been downloaded. CON-223</translatorcomment>
+        <translation>ดาวน์โหลดโฟลเดอร์เสร็จแล้ว</translation>
+    </message>
+    <message>
+        <source>File downloaded</source>
+        <translatorcomment>Notification title when a file has been downloaded. CON-223</translatorcomment>
+        <translation>ดาวน์โหลดไฟล์เสร็จแล้ว</translation>
+    </message>
+    <message>
+        <source>%1 no longer exists.</source>
+        <translatorcomment>A single cloud drive file/folder has been removed before downloading. %1 is the file/folder downloaded name. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t download %1 to %2</source>
+        <translatorcomment>A single file/folder download has failed. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Downloaded %1 to %2.</source>
+        <translatorcomment>A single file/folder has been downloaded correctly. %1 is the cloud file/folder download name, %2 is the name of the target folder in the OS filesystem. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Show in folder</source>
-        <translatorcomment>Notification button to see the file on the local file explorer</translatorcomment>
+        <translatorcomment>Notification button to see the file on the local file explorer. CON-223</translatorcomment>
         <translation>แสดงในโฟลเดอร์</translation>
     </message>
     <message>
         <source>Open</source>
-        <translatorcomment>Notification button to open the file</translatorcomment>
+        <translatorcomment>Notification button to open the file. CON-223</translatorcomment>
         <translation>เปิด</translation>
     </message>
     <message>
-        <source>File downloaded</source>
-        <translatorcomment>Notification title when a file has been downloaded</translatorcomment>
-        <translation>ดาวน์โหลดไฟล์เสร็จแล้ว</translation>
-    </message>
-    <message>
-        <source>Folder downloaded</source>
-        <translatorcomment>Notification title when a folder has been downloaded</translatorcomment>
-        <translation>ดาวน์โหลดโฟลเดอร์เสร็จแล้ว</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n upload successful</source>
-        <translatorcomment>Notification text that inform that an upload was successful. %1 is the number of uploads. This string goes always with the %n upload cancelled and/or %n upload failed strings.</translatorcomment>
-        <translation><numerusform>อัปโหลด %n รายการเรียบร้อยแล้ว</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>, %n upload cancelled</source>
-        <translatorcomment>Appended text that inform that an upload was cancelled. %1 is the number of cancelled uploads. This string goes always appended to the %n upload successful</translatorcomment>
-        <translation><numerusform>, ยกเลิกอัปโหลดแล้ว %n รายการ</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>, %n upload failed</source>
-        <translatorcomment>Appended text that inform that an upload has failed. %1 is the number of failed uploads. This string goes always appended to the %n upload successful</translatorcomment>
-        <translation><numerusform>, อัปโหลดไม่สำเร็จ %n รายการ</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Uploaded %n items to %1</source>
-        <translatorcomment>Notification text that inform n items (files or folders) has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation><numerusform>อัปโหลด %n รายการไปไว้ที่ %1 เรียบร้อยแล้ว</numerusform></translation>
+        <source>Not all items were uploaded</source>
+        <translatorcomment>Notification title when at least one file or folder upload has failed. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Items uploaded</source>
-        <translatorcomment>Notification title when a more than one transfer (file or folders) have been uploaded</translatorcomment>
+        <translatorcomment>Notification title when a more than one transfer (file or folders) have been uploaded. CON-223</translatorcomment>
         <translation>รายการที่อัปโหลดเสร็จแล้ว</translation>
     </message>
-    <message numerus="yes">
-        <source>%n download successful</source>
-        <translatorcomment>Notification text that inform that an download was successful. %1 is the number of downloads. This string goes always with the %n download cancelled and/or %n download failed strings.</translatorcomment>
-        <translation><numerusform>ดาวน์โหลด %n รายการเรียบร้อยแล้ว</numerusform></translation>
+    <message>
+        <source>Items no longer exist or were renamed</source>
+        <translatorcomment>Several local files/folders have been removed or renamed before uploading. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t upload %1 items to %2.</source>
+        <translatorcomment>All files/folder failed to upload.  %1 is the number of files/folders, %2 is the name of the target folder in the cloud. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Uploaded %1,  couldn&apos;t upload %2.</source>
+        <translatorcomment>One file/folder was uploaded correctly, and one file/folder upload has failed.  %1 is the name of the successful cloud file/folder, %2 is the name of the failed cloud file/folder. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Uploaded %1, couldn&apos;t upload %2 items.</source>
+        <translatorcomment>One file/folder was uploaded correctly, and several files/folders uploads have failed.  %1 is the name of the successful cloud file/folder, %2 is the number of failed files/folders. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Uploaded %1 items, couldn&apos;t upload %2.</source>
+        <translatorcomment>Several files/folders were uploaded correctly, and one file/folder uploads has failed.  %1 is the number of successful files/folders, %2 is the name of the failed cloud file/folder. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Uploaded %1 items, couldn&apos;t upload %2 items.</source>
+        <translatorcomment>Several files/folders were uploaded correctly, and several files/folders uploads have failed.  %1 is the number of successful files/folders, %2 is the number of failed files/folders. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Uploaded %1 items to %2.</source>
+        <translatorcomment>Several files/folders were uploaded correctly. %1 is the number of successful files/folders. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <source>, %n download cancelled</source>
-        <translatorcomment>Appended text that inform that an download was cancelled. %1 is the number of cancelled downloads. This string goes always appended to the %n download successful</translatorcomment>
-        <translation><numerusform>, ยกเลิกดาวน์โหลดแล้ว %n รายการ</numerusform></translation>
+        <source>Retry failed items</source>
+        <translatorcomment>Notification button to retry failed transfers when not all the transfers failed. CON-223</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
-    <message numerus="yes">
-        <source>, %n download failed</source>
-        <translatorcomment>Appended text that inform that an download has failed. %1 is the number of failed downloads. This string goes always appended to the %n download successful</translatorcomment>
-        <translation><numerusform>, ดาวน์โหลดไม่สำเร็จ %n รายการ</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Downloaded %n items to %1</source>
-        <translatorcomment>Notification text that inform n items (files or folders) has been downloaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation><numerusform>ดาวน์โหลด %n รายการไปไว้ที่ %1 เรียบร้อยแล้ว</numerusform></translation>
+    <message>
+        <source>Not all items were downloaded</source>
+        <translatorcomment>Notification title when at least one file or folder download has failed. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Items downloaded</source>
-        <translatorcomment>Notification title when a more than one transfer (file or folders) have been downloaded</translatorcomment>
+        <translatorcomment>Notification title when a more than one transfer (file or folders) have been downloaded. CON-223</translatorcomment>
         <translation>รายการที่ดาวน์โหลดเสร็จแล้ว</translation>
+    </message>
+    <message>
+        <source>Items no longer exist</source>
+        <translatorcomment>Several cloud drive files/folders have been removed before downloading. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t download %1 items to %2.</source>
+        <translatorcomment>All files/folder failed to download.  %1 is the number of files/folders, %2 is the name of the target folder in the filesystem. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Downloaded %1,  couldn&apos;t download %2.</source>
+        <translatorcomment>One file/folder was downloaded correctly, and one file/folder download has failed.  %1 is the name of the successful cloud file/folder, %2 is the name of the failed cloud file/folder. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Downloaded %1, couldn&apos;t download %2 items.</source>
+        <translatorcomment>One file/folder was downloaded correctly, and several files/folders uploads have failed.  %1 is the name of the successful file/folder, %2 is the number of failed files/folders. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Downloaded %1 items, couldn&apos;t download %2.</source>
+        <translatorcomment>Several files/folders were downloaded correctly, and one file/folder uploads has failed.  %1 is the number of successful files/folders, %2 is the name of the failed file/folder. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Downloaded %1 items, couldn&apos;t download %2 items.</source>
+        <translatorcomment>Several files/folders were downloaded correctly, and several files/folders downloads have failed.  %1 is the number of successful files/folders, %2 is the number of failed files/folders. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Downloaded %1 items to %2.</source>
+        <translatorcomment>Several files/folders were downloaded correctly. %1 is the number of successful files/folders. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
