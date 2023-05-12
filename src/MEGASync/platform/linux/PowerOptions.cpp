@@ -16,7 +16,7 @@
 
 #include <unistd.h>
 
-class PowerOptionsImpl : public QObject
+class PowerOptionsImpl
 {
     const int MAX_SERVICES = 2;
     const uint INHIBIT_SUSPEND_GNOME = 4;
@@ -59,7 +59,6 @@ public:
         return result;
     }
 
-public slots:
     bool onKeepPCAwake()
     {
         bool result(false);
