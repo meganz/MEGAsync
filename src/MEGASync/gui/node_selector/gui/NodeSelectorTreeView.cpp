@@ -46,6 +46,31 @@ MegaHandle NodeSelectorTreeView::getSelectedNodeHandle()
     return ret;
 }
 
+QList<MegaHandle> NodeSelectorTreeView::getMultiSelectionNodeHandle()
+{
+    QList<MegaHandle> ret;
+
+    if(!selectionModel())
+    {
+        return ret;
+    }
+
+    auto selectedRows = selectionModel()->selectedRows();
+
+    // Sort to keep items in the same order
+    std::sort(selectedRows.begin(), selectedRows.end(),[](QModelIndex check1, QModelIndex check2){
+        return check1.row() > check2.row();
+    });
+
+    foreach(auto& s_index,selectedRows)
+    {
+        if(auto node = proxyModel()->getNode(s_index))
+            ret.append(node->getHandle());
+    }
+
+    return ret;
+}
+
 void NodeSelectorTreeView::setModel(QAbstractItemModel *model)
 {
     QTreeView::setModel(model);
@@ -169,6 +194,15 @@ void NodeSelectorTreeView::keyPressEvent(QKeyEvent *event)
                 }
             }
         }
+        else if(event->key() == Qt::Key_Delete)
+        {
+            auto selectionHandles(getMultiSelectionNodeHandle());
+
+            if(areAllEligibleForDeletion(selectionHandles))
+            {
+                removeNode(selectionHandles);
+            }
+        }
 
         QTreeView::keyPressEvent(event);
     }
@@ -176,44 +210,98 @@ void NodeSelectorTreeView::keyPressEvent(QKeyEvent *event)
 
 void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent *event)
 {
-        if(!selectionModel() || selectionModel()->selectedRows().size() > 1)
-        {
-            return;
-        }
+    QMenu customMenu;
+    Platform::getInstance()->initMenu(&customMenu, "CustomMenu");
 
-        if(!indexAt(event->pos()).isValid())
-        {
-            return;
-        }
+    if(!selectionModel())
+    {
+        return;
+    }
 
-        QMenu customMenu;
-        Platform::getInstance()->initMenu(&customMenu, "CustomMenu");
-        auto node = std::unique_ptr<MegaNode>(mMegaApi->getNodeByHandle(getSelectedNodeHandle()));
-        auto parent = std::unique_ptr<MegaNode>(mMegaApi->getParentNode(node.get()));
-        auto proxyModel = static_cast<NodeSelectorProxyModel*>(model());
-        if (parent && node)
-        {
-            int access = mMegaApi->getAccess(node.get());
+    if(!indexAt(event->pos()).isValid())
+    {
+        return;
+    }
 
+
+    if(selectionModel()->selectedRows().size() == 1)
+    {
+        int access = getNodeAccess(getSelectedNodeHandle());
+
+        if (access != MegaShare::ACCESS_UNKNOWN)
+        {
             if (access == MegaShare::ACCESS_OWNER)
             {
-                customMenu.addAction(tr("Get MEGA link"), this, SLOT(getMegaLink()));
+                customMenu.addAction(tr("Get MEGA link"), this, &NodeSelectorTreeView::getMegaLink);
             }
 
-            if (access >= MegaShare::ACCESS_FULL && proxyModel->canBeDeleted() && node->isNodeKeyDecrypted())
+            if (access >= MegaShare::ACCESS_FULL)
             {
-                customMenu.addAction(tr("Rename"), this, SLOT(renameNode()));
-                customMenu.addAction(tr("Delete"), this, SLOT(removeNode()));
+                customMenu.addAction(tr("Rename"), this, &NodeSelectorTreeView::renameNode);
+
+                QList<mega::MegaHandle> selectionHandle{getSelectedNodeHandle()};
+                customMenu.addAction(tr("Delete"), this, [this, selectionHandle](){
+                    removeNode(selectionHandle);
+                });
             }
         }
+    }
+    else
+    {
+        auto selectionHandles(getMultiSelectionNodeHandle());
 
-        if (!customMenu.actions().isEmpty())
+        //All or none
+        if(areAllEligibleForDeletion(selectionHandles))
+        {
+            customMenu.addAction(tr("Delete"), this, [this, selectionHandles](){
+                removeNode(selectionHandles);
+            });
+        }
+    }
+
+    if (!customMenu.actions().isEmpty())
             customMenu.exec(mapToGlobal(event->pos()));
 }
 
-void NodeSelectorTreeView::removeNode()
+bool NodeSelectorTreeView::areAllEligibleForDeletion(const QList<MegaHandle> &handles) const
 {
-    emit removeNodeClicked();
+    auto removableItems(handles.size());
+    foreach(auto&& nodeHandle, handles)
+    {
+        if (getNodeAccess(nodeHandle) >= MegaShare::ACCESS_FULL)
+        {
+            removableItems--;
+        }
+    }
+
+    return removableItems == 0;
+}
+
+int NodeSelectorTreeView::getNodeAccess(MegaHandle handle) const
+{
+    auto node = std::unique_ptr<MegaNode>(mMegaApi->getNodeByHandle(handle));
+    auto parent = std::unique_ptr<MegaNode>(mMegaApi->getParentNode(node.get()));
+    if (parent && node)
+    {
+        auto proxyModel = static_cast<NodeSelectorProxyModel*>(model());
+        auto access(mMegaApi->getAccess(node.get()));
+
+        if (access >= MegaShare::ACCESS_FULL && (!proxyModel->canBeDeleted() || !node->isNodeKeyDecrypted()))
+        {
+            return MegaShare::ACCESS_UNKNOWN;
+        }
+
+        return access;
+    }
+    else
+    {
+        return MegaShare::ACCESS_UNKNOWN;
+    }
+}
+
+void NodeSelectorTreeView::removeNode(const QList<MegaHandle> &handles)
+{
+    emit removeNodeClicked(handles);
 }
 
 void NodeSelectorTreeView::renameNode()
@@ -249,7 +337,7 @@ void NodeSelectorTreeView::onCurrentRowChanged(const QModelIndex &current, const
             return;
         }
 
-        QItemSelectionModel::SelectionFlags flags = QItemSelectionModel::ClearAndSelect|QItemSelectionModel::Rows;
+        QItemSelectionModel::SelectionFlags flags = QItemSelectionModel::Select|QItemSelectionModel::Rows;
         selectionModel()->select(current, flags);
 }
 #endif

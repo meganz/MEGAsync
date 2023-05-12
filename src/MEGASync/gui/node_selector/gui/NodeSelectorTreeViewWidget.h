@@ -10,6 +10,7 @@
 #include <QWidget>
 #include <QDebug>
 #include <QItemSelectionModel>
+#include <QPersistentModelIndex>
 #include <memory>
 
 
@@ -91,7 +92,7 @@ protected:
 
 private slots:
     void onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
-    void onDeleteClicked();
+    void onDeleteClicked(const QList<mega::MegaHandle> &handles);
     void onRenameClicked();
     void onGenMEGALinkClicked();
     virtual void onItemDoubleClick(const QModelIndex &index);
@@ -130,6 +131,9 @@ private:
     bool mUiBlocked;
     mega::MegaHandle mNodeHandleToSelect;
     SelectTypeSPtr mSelectType;
+    QMap<mega::MegaHandle, QPersistentModelIndex> mDeletedHandles;
+    QPersistentModelIndex mLastValidDeletedParent;
+
     friend class DownloadType;
     friend class SyncType;
     friend class UploadType;
