@@ -7,7 +7,6 @@
 #include "Preferences.h"
 #include "MegaApplication.h"
 #include "QMegaMessageBox.h"
-#include "DateTimeFormatter.h"
 
 #include <QMouseEvent>
 #include <QPainterPath>
