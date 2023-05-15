@@ -452,6 +452,10 @@ QString StalledIssueFilePath::getSyncPathProblemString(mega::MegaSyncStall::Sync
         {
             return tr("Local filesystem cannot store this name.");
         }
+        case mega::MegaSyncStall::CloudNodeInvalidFingerprint:
+        {
+            return tr("Fingerprint is missing or invalid.");
+        }
         case mega::MegaSyncStall::SyncPathProblem_LastPlusOne:
         {
             break;
