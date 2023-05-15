@@ -27,7 +27,7 @@ Rectangle {
     // Left icon textField properties
     property bool leftIconVisible: false
     property url leftIconSource: ""
-    property color leftIconColor: Styles.iconSecondary
+    property color leftIconColor: enabled ? Styles.iconSecondary : Styles.iconDisabled
 
     // TextField properties
     property alias textField: textField
@@ -37,7 +37,7 @@ Rectangle {
     // Right icon textField properties
     property bool rightIconVisible: false
     property url rightIconSource: ""
-    property color rightIconColor: Styles.iconSecondary
+    property color rightIconColor: enabled ? Styles.iconSecondary : Styles.iconDisabled
     property alias rightIconMouseArea: rightIconMouseArea
 
     // Hint properties
@@ -167,13 +167,13 @@ Rectangle {
             Rectangle {
 
                 function getBorderColor() {
-                    var color = Styles.borderDisabled;
-                    if(showType && root.type === TextField.Type.Error) {
+                    var color = Styles.borderStrong;
+                    if(!enabled) {
+                        color = Styles.borderDisabled;
+                    } else if(showType && root.type === TextField.Type.Error) {
                         color = Styles.textError;
                     } else if(textField.focus) {
                         color = Styles.borderStrongSelected;
-                    } else if(textField.text.length !== 0 && !textField.focus) {
-                        color = Styles.borderStrong;
                     }
                     return color;
                 }

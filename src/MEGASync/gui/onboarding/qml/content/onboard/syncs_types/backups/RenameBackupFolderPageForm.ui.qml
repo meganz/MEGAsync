@@ -60,7 +60,6 @@ SyncsPage {
             visible: true
             type: Custom.NotificationText.Type.Info
             notificationText {
-                urlColor: Styles.textInfo
                 text: OnboardingStrings.renameBackupFolderHint
                 manageMouse: true
             }

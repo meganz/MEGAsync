@@ -7,12 +7,24 @@ import Common 1.0
 Text {
     id: control
 
+    function updateLinkColor() {
+        var color = Styles.linkPrimary;
+        if(!enabled) {
+            color = Styles.linkInverse;
+        } else if(visited) {
+            color = Styles.linkVisited;
+        }
+        control.text = control.text.replace("color:" + urlColor, "color:" + color);
+        urlColor = color;
+    }
+
     readonly property url defaultUrl: "default"
 
     property url url: defaultUrl
-    property color urlColor: Styles.linkPrimary
     property bool manageMouse: false
     property bool hovered: false
+    property bool visited: false
+    property color urlColor: Styles.linkPrimary
 
     onManageMouseChanged: {
         if(manageMouse) {
@@ -35,11 +47,17 @@ Text {
     onLinkActivated: {
         if(url != defaultUrl) {
             Qt.openUrlExternally(url);
+            visited = true;
+            updateLinkColor();
         }
     }
 
     onLinkHovered: {
-        hovered = link.length
+        hovered = link.length;
+    }
+
+    onEnabledChanged: {
+        updateLinkColor();
     }
 
     Loader {
@@ -54,7 +72,7 @@ Text {
         MouseArea {
             anchors.fill: parent
             cursorShape: hovered ? Qt.PointingHandCursor : Qt.ArrowCursor
-            onPressed: mouse.accepted = false
+            onPressed: mouse.accepted = false;
         }
     }
 }

@@ -11,11 +11,18 @@ Qml.Button {
     id: button
 
     function getLinkColor() {
-        return enabled ? Styles.linkPrimary : Styles.linkInverse;
+        var color = Styles.linkPrimary;
+        if(!enabled) {
+            color = Styles.linkInverse;
+        } else if(visited) {
+            color = Styles.linkVisited;
+        }
+        return color;
     }
 
     property string url
     property size iconSize: text.length == 0 ? Qt.size(24, 24) : Qt.size(16, 16)
+    property bool visited: false
 
     height: Math.max(textLoader.height, icon.height)
 
@@ -67,6 +74,7 @@ Qml.Button {
                 hoverEnabled: true
                 onClicked: {
                     Qt.openUrlExternally(url);
+                    visited = true;
                 }
             }
         }
