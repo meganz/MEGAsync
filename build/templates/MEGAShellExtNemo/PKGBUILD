@@ -30,7 +30,7 @@ url=""
 license=() #TODO
 groups=()
 depends=('ca-certificates' 'megasync>=3.5' 'nemo')
-makedepends=( 'ca-certificates' 'qt4' 'nemo')
+makedepends=('ca-certificates' 'qt5-tools' 'nemo')
 checkdepends=()
 optdepends=()
 provides=("nemo-megasync=${pkgver}")
@@ -51,7 +51,6 @@ prepare() {
 }
 
 build() {
-	#export DESKTOP_DESTDIR=$pkgdir/usr
 	cd "$pkgname-$pkgver"
 	sed -i "s#update_cache.path = \$\$PWD#update_cache.path = \$\${HICOLOR}#g" MEGAShellExtNemo.pro
 	if [ 0$(pacman -Q nemo | awk '{print $NF}' | awk -F='-' '{print $1}' | awk -F "." '{FS=".";print $1*10000+$2*100+$3}') -gt 31503 ]; then 
@@ -61,7 +60,7 @@ build() {
 	 echo "OLDER NEMO DOES NOT REQUIRE SMALLER OVERLAY ICONS"
 	 rm data/emblems/64x64/*smaller.png
 	fi    
-	qmake || qmake-qt4 #qmake would fail when qt4 installed (due to some path missconfigurations)	
+	qmake
 	make
 }
 

@@ -128,7 +128,7 @@ void SyncInfo::activateSync(std::shared_ptr<SyncSettings> syncSetting)
         if (!mIsFirstTwoWaySyncDone && !preferences->isFirstSyncDone())
         {
             MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_1ST_SYNC,
-                                                 "MEGAsync first sync");
+                                                 "MEGAsync first sync", false, nullptr);
         }
         mIsFirstTwoWaySyncDone = true;
         break;
@@ -139,7 +139,7 @@ void SyncInfo::activateSync(std::shared_ptr<SyncSettings> syncSetting)
         if (!mIsFirstBackupDone && !preferences->isFirstBackupDone())
         {
             MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_1ST_BACKUP,
-                                                 "MEGAsync first backup");
+                                                 "MEGAsync first backup", false, nullptr);
         }
         mIsFirstBackupDone = true;
         break;

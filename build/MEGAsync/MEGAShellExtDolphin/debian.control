@@ -3,7 +3,7 @@ Section: gnome
 Priority: optional
 Maintainer: MEGA Linux Team <linux@mega.co.nz>
 Homepage: https://mega.nz/#sync
-Build-Depends: debhelper, libqt4-dev, intltool, libglib2.0-0
+Build-Depends: debhelper, cmake, libkf5kio-dev, libglib2.0-0
 
 Package: dolphin-megasync
 Architecture: any

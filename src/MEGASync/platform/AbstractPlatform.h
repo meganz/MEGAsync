@@ -53,6 +53,7 @@ public:
     virtual void folderSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func);
     virtual void fileAndFolderSelector(QString title, QString defaultDir, bool multiSelection, QWidget *parent, std::function<void(QStringList)> func);
     virtual void raiseFileFolderSelectors();
+    virtual void closeFileFolderSelectors(QWidget* parent);
 
     virtual void addSyncToLeftPane(QString syncPath, QString syncName, QString uuid);
     virtual void removeAllSyncsFromLeftPane();
