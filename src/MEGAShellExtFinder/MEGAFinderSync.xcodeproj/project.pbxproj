@@ -487,6 +487,7 @@
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				INFOPLIST_FILE = megaextension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.mac;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -500,6 +501,7 @@
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				INFOPLIST_FILE = megaextension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.mac;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -515,7 +517,7 @@
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				INFOPLIST_FILE = MEGAShellExtFinder/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.mac.MEGAShellExtFinder;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -532,7 +534,7 @@
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				INFOPLIST_FILE = MEGAShellExtFinder/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.mac.MEGAShellExtFinder;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
