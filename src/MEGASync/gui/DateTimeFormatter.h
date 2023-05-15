@@ -9,6 +9,8 @@
 
 class DateTimeFormatter : public QObject
 {
+    Q_OBJECT
+
 public:
     static QString create(const QString &languageCode, const QDateTime& datetime, QLocale::FormatType format = QLocale::FormatType::LongFormat);
 
