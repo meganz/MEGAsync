@@ -1,5 +1,7 @@
 #include "QmlDialog.h"
 #include <QEvent>
+#include <QScreen>
+#include <QApplication>
 
 QmlDialog::QmlDialog(QWindow *parent)
     : QQuickWindow(parent)

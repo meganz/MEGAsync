@@ -2,6 +2,7 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12 as Qml
 import QtQuick.Layouts 1.12
+import QtGraphicalEffects 1.12
 
 // Local
 import Components 1.0 as Custom
@@ -150,6 +151,20 @@ Qml.RoundButton {
         radius: 6
         opacity: button.enabled || busyIndicatorVisible? 1.0 : 0.5
 
+        layer.enabled: true
+        layer.effect: OpacityMask {
+            maskSource: Item {
+                width: backgroundRect.width
+                height: backgroundRect.height
+                Rectangle {
+                    anchors.centerIn: parent
+                    width:  backgroundRect.width
+                    height: backgroundRect.height
+                    radius: 6
+                }
+            }
+        }
+
         Loader{
             id: backgroundLoader
         }
@@ -170,7 +185,7 @@ Qml.RoundButton {
             anchors.left: parent.left
             height: backgroundRect.height
             width: progressBarRectWidth
-            radius: 6
+            //radius: 6
             color: Styles.buttonPrimaryPressed
 
             Behavior on width {

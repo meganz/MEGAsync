@@ -50,6 +50,15 @@ public:
     void activateWindow();
     void raise();
     void removeDialog();
+    int minimumWidth();
+    int maximumWidth();
+    int maximumHeight();
+    int minimumHeight();
+    QRect rect();
+    void update(const QRect& rect);
+    void resize(int h, int w);
+    void resize(const QSize& size);
+    QSize size();
 
     Q_INVOKABLE int result();
     Q_INVOKABLE void accept();
@@ -106,6 +115,12 @@ public:
                 mWrapper->deleteLater();
                 QmlDialogWrapperBase::onWindowFinished();
             });
+
+            connect(mWindow, &QQuickWindow::screenChanged, this, [this](){
+                QApplication::postEvent(this, new QEvent(QEvent::ScreenChangeInternal));
+            });
+
+            QApplication::postEvent(this, new QEvent(QEvent::ScreenChangeInternal));
         }
         else
         {

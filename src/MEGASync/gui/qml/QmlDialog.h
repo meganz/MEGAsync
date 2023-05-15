@@ -2,7 +2,6 @@
 #define QmlDialog_H
 
 #include <QQuickWindow>
-//#include <QtQml/qqmlregistration.h>
 
 class QmlDialog : public QQuickWindow
 {

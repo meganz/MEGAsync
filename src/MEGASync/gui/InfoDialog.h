@@ -83,7 +83,7 @@ public:
 
     void on_bStorageDetails_clicked();
     void regenerateLayout(int blockState = mega::MegaApi::ACCOUNT_NOT_BLOCKED, InfoDialog* olddialog = nullptr);
-    HighDpiResize highDpiResize;
+    HighDpiResize<QDialog> highDpiResize;
 #ifdef _WIN32
     std::chrono::steady_clock::time_point lastWindowHideTime;
 #endif

@@ -50,7 +50,6 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/Login2FA.cpp \
     $$PWD/QRWidget.cpp \
     $$PWD/CircularUsageProgressBar.cpp \
-    $$PWD/HighDpiResize.cpp \
     $$PWD/AlertItem.cpp \
     $$PWD/QAlertsModel.cpp \
     $$PWD/MegaAlertDelegate.cpp \

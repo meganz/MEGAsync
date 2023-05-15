@@ -5,9 +5,12 @@
 
 #include <QDialog>
 #include <QPointer>
+#include <QMap>
+
 #include <functional>
 #include <memory>
-#include <QMap>
+#include <type_traits>
+
 
 #ifdef Q_OS_WINDOWS
 class ExternalDialogOpener : public QWidget
@@ -337,10 +340,8 @@ private:
                 mOpenedDialogs.removeOne(info);
             }
         });
-
-        //This depends on QDialog -> Check if we can templatizate it in order to reuse it with QML
-        //auto dpiResize = new HighDpiResize(dialog);
-        //Q_UNUSED(dpiResize);
+        auto dpiResize = new HighDpiResize<DialogType>(dialog);
+        Q_UNUSED(dpiResize);
     }
 
     template <class DialogType>

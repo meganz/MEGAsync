@@ -109,12 +109,58 @@ bool QmlDialogWrapperBase::isMinimized()
 
 void QmlDialogWrapperBase::show()
 {
-    setWindowState(mWindow->windowState());
+   setWindowState(mWindow->windowState());
 }
 
 void QmlDialogWrapperBase::activateWindow()
 {
     mWindow->requestActivate();
+}
+
+int QmlDialogWrapperBase::minimumWidth()
+{
+    return mWindow->minimumWidth();
+}
+
+int QmlDialogWrapperBase::maximumWidth()
+{
+    return mWindow->maximumWidth();
+}
+
+int QmlDialogWrapperBase::maximumHeight()
+{
+    return mWindow->maximumHeight();
+}
+
+int QmlDialogWrapperBase::minimumHeight()
+{
+    return mWindow->minimumHeight();
+}
+
+QRect QmlDialogWrapperBase::rect()
+{
+    return mWindow->geometry();
+}
+
+void QmlDialogWrapperBase::update(const QRect& rect)
+{
+    Q_UNUSED(rect)
+    mWindow->update();
+}
+
+void QmlDialogWrapperBase::resize(int w, int h)
+{
+    mWindow->resize(QSize(w, h));
+}
+
+void QmlDialogWrapperBase::resize(const QSize &size)
+{
+    mWindow->resize(size);
+}
+
+QSize QmlDialogWrapperBase::size()
+{
+    return mWindow->size();
 }
 
 void QmlDialogWrapperBase::raise()

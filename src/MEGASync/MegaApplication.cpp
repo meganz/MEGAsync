@@ -6330,7 +6330,7 @@ void MegaApplication::manageBusinessStatus(int64_t event)
             if (megaApi->isMasterBusinessAccount())
             {
                 QMessageBox msgBox;
-                HighDpiResize hDpiResizer(&msgBox);
+                HighDpiResize<QMessageBox> hDpiResizer(&msgBox);
                 msgBox.setIcon(QMessageBox::Warning);
                 // Remove ifdef code for window modality when upgrade to QT 5.9. Issue seems to be fixed.
                 #ifdef __APPLE__
@@ -6362,7 +6362,7 @@ void MegaApplication::manageBusinessStatus(int64_t event)
         case MegaApi::BUSINESS_STATUS_EXPIRED:
         {
             QMessageBox msgBox;
-            HighDpiResize hDpiResizer(&msgBox);
+            HighDpiResize<QMessageBox> hDpiResizer(&msgBox);
             msgBox.setIcon(QMessageBox::Warning);
             // Remove ifdef code for window modality when upgrade to QT 5.9. Issue seems to be fixed.
             #ifdef __APPLE__

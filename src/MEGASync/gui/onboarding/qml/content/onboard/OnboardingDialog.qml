@@ -17,18 +17,18 @@ import com.qmldialog 1.0 as Cpp
 import Onboarding 1.0
 
 Cpp.QmlDialog {
+    id: root
     objectName: "app1"
     title: "Set up MEGA"
     visible: true
     modality: Qt.NonModal
     color: "transparent"
-
     width: 800
     height: 560
-    maximumHeight: height
-    maximumWidth: width
-    minimumHeight: height
-    minimumWidth: width
+    maximumHeight: 560
+    maximumWidth: 800
+    minimumHeight: 560
+    minimumWidth: 800
 
     OnboardingFlow {
         id: onboarding
