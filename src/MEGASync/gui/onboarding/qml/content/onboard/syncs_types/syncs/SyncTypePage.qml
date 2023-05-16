@@ -11,16 +11,16 @@ SyncTypePageForm {
 
         nextButton.enabled: false
         nextButton.onClicked: {
-            switch(syncPage.buttonGroup.checkedButton.type) {
-                case ResumeButton.Type.FullSync:
+            switch(syncPage.buttonGroup.checkedButton.syncType) {
+                case SyncsType.FullSync:
                     syncsFlow.state = fullSync;
                     break;
-                case ResumeButton.Type.SelectiveSync:
+                case SyncsType.SelectiveSync:
                     syncsFlow.state = selectiveSync;
                     break;
                 default:
                     console.error("Button type does not exist -> "
-                                  + syncPage.buttonGroup.checkedButton.type);
+                                  + syncPage.buttonGroup.checkedButton.syncType);
                     break;
             }
         }

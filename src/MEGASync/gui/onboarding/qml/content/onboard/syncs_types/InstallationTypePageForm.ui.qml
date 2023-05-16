@@ -35,33 +35,33 @@ SyncsPage {
         ColumnLayout {
             spacing: 20
 
-            InstallationTypeButton {
+            SyncsHorizontalButton {
                 id: syncButton
 
                 title: OnboardingStrings.sync
                 description: OnboardingStrings.syncButtonDescription
                 imageSource: Images.sync
-                type: InstallationTypeButton.Type.Sync
+                type: SyncsType.Sync
                 ButtonGroup.group: buttonGroup
             }
 
-            InstallationTypeButton {
+            SyncsHorizontalButton {
                 id: backupsButton
 
                 title: OnboardingStrings.backup
                 description: OnboardingStrings.backupButtonDescription
                 imageSource: Images.installationTypeBackups
-                type: InstallationTypeButton.Type.Backup
+                type: SyncsType.Backup
                 ButtonGroup.group: buttonGroup
             }
 
-            InstallationTypeButton {
+            SyncsHorizontalButton {
                 id: fuseButton
 
                 title: OnboardingStrings.fuse
                 description: OnboardingStrings.fuseButtonDescription
                 imageSource: Images.fuse
-                type: InstallationTypeButton.Type.Fuse
+                type: SyncsType.Fuse
                 ButtonGroup.group: buttonGroup
             }
         }

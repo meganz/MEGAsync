@@ -8,8 +8,15 @@
         <file>common/Links.qml</file>
         <file>common/RegexExpressions.qml</file>
         <file>common/Styles.qml</file>
+		<file>components/busyIndicator/BusyIndicator.qml</file>
         <file>components/buttons/Button.qml</file>
+		<file>components/buttons/CardButton.qml</file>
+		<file>components/buttons/CardHorizontalButton.qml</file>
+		<file>components/buttons/CardVerticalButton.qml</file>
         <file>components/buttons/HelpButton.qml</file>
+		<file>components/buttons/OutlineButton.qml</file>
+        <file>components/buttons/PrimaryButton.qml</file>
+        <file>components/buttons/SecondaryButton.qml</file>
         <file>components/checkBoxes/CheckBox.qml</file>
         <file>components/checkBoxes/images/check.svg</file>
         <file>components/checkBoxes/images/indeterminate.svg</file>
@@ -29,9 +36,5 @@
 		<file>components/texts/Text.qml</file>
         <file>components/toolTips/ToolTip.qml</file>
         <file>components/images/Image.qml</file>
-        <file>components/busyIndicator/BusyIndicator.qml</file>
-        <file>components/buttons/OutlineButton.qml</file>
-        <file>components/buttons/PrimaryButton.qml</file>
-        <file>components/buttons/SecondaryButton.qml</file>
     </qresource>
 </RCC>

@@ -10,13 +10,13 @@ ResumePageForm {
 
     buttonGroup.onClicked: {
         switch(button.type) {
-            case InstallationTypeButton.Type.Sync:
+            case SyncsType.Sync:
                 syncsFlow.state = syncs;
                 break;
-            case InstallationTypeButton.Type.Backup:
+            case SyncsType.Backup:
                 syncsFlow.state = selectBackup;
                 break;
-            case InstallationTypeButton.Type.Fuse:
+            case SyncsType.Fuse:
                 break;
             default:
                 console.error("Button type does not exist -> " + button.type);

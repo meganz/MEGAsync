@@ -438,48 +438,7 @@ void MegaApplication::initialize()
     QDesktopServices::setUrlHandler(QString::fromUtf8("mega"), this, "handleMEGAurl");
     QDesktopServices::setUrlHandler(QString::fromUtf8("local"), this, "handleLocalPath");
 
-    //Register metatypes to use them in signals/slots
-    qRegisterMetaType<QQueue<QString> >("QQueueQString");
-    qRegisterMetaTypeStreamOperators<QQueue<QString> >("QQueueQString");
-
-    qmlRegisterType<AccountInfoData>("AccountInfoData", 1, 0, "AccountInfoData");
-    qmlRegisterType<ChooseLocalFolder>("ChooseLocalFolder", 1, 0, "ChooseLocalFolder");
-    qmlRegisterType<ChooseRemoteFolder>("ChooseRemoteFolder", 1, 0, "ChooseRemoteFolder");
-
-    qmlRegisterType<BackupFolderModel>("BackupFolderModel", 1, 0, "BackupFolderModel");
-    qmlRegisterType<BackupFolderFilterProxyModel>("BackupFolderFilterProxyModel", 1, 0, "BackupFolderFilterProxyModel");
-
-    qmlRegisterModule("Components", 1, 0);
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/Button.qml")), "Components", 1, 0, "Button");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/HelpButton.qml")), "Components", 1, 0, "HelpButton");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/OutlineButton.qml")), "Components", 1, 0, "OutlineButton");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/PrimaryButton.qml")), "Components", 1, 0, "PrimaryButton");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/SecondaryButton.qml")), "Components", 1, 0, "SecondaryButton");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/checkBoxes/CheckBox.qml")), "Components", 1, 0, "CheckBox");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/images/SvgImage.qml")), "Components", 1, 0, "SvgImage");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/images/Image.qml")), "Components", 1, 0, "Image");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/EmailTextField.qml")), "Components", 1, 0, "EmailTextField");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/IconTextField.qml")), "Components", 1, 0, "IconTextField");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/PasswordTextField.qml")), "Components", 1, 0, "PasswordTextField");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/TextField.qml")), "Components", 1, 0, "TextField");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/TwoFA.qml")), "Components", 1, 0, "TwoFA");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/HintText.qml")), "Components", 1, 0, "HintText");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/NotificationText.qml")), "Components", 1, 0, "NotificationText");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/RichText.qml")), "Components", 1, 0, "RichText");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/SecondaryText.qml")), "Components", 1, 0, "SecondaryText");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/Text.qml")), "Components", 1, 0, "Text");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/toolTips/ToolTip.qml")), "Components", 1, 0, "ToolTip");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/busyIndicator/BusyIndicator.qml")), "Components", 1, 0, "BusyIndicator");
-
-    qmlRegisterModule("Common", 1, 0);
-    qmlRegisterSingletonType(QUrl(QString::fromUtf8("qrc:/common/Constants.qml")), "Common", 1, 0, "Constants");
-    qmlRegisterSingletonType(QUrl(QString::fromUtf8("qrc:/common/Images.qml")), "Common", 1, 0, "Images");
-    qmlRegisterSingletonType(QUrl(QString::fromUtf8("qrc:/common/Links.qml")), "Common", 1, 0, "Links");
-    qmlRegisterSingletonType(QUrl(QString::fromUtf8("qrc:/common/RegexExpressions.qml")), "Common", 1, 0, "RegexExpressions");
-    qmlRegisterSingletonType(QUrl(QString::fromUtf8("qrc:/common/Styles.qml")), "Common", 1, 0, "Styles");
-
-    qmlRegisterType<QmlDialog>("com.qmldialog", 1, 0, "QmlDialog");
-    qmlRegisterSingletonType<QmlClipboard>("QmlClipboard", 1, 0, "QmlClipboard", &QmlClipboard::qmlInstance);
+    registerCommonQMLElements();
 
     preferences = Preferences::instance();
     connect(preferences.get(), SIGNAL(stateChanged()), this, SLOT(changeState()));
@@ -3552,6 +3511,54 @@ void MegaApplication::processUpgradeSecurityEvent()
         }
 
     });
+}
+
+void MegaApplication::registerCommonQMLElements()
+{
+    //Register metatypes to use them in signals/slots
+    qRegisterMetaType<QQueue<QString> >("QQueueQString");
+    qRegisterMetaTypeStreamOperators<QQueue<QString> >("QQueueQString");
+
+    qmlRegisterType<AccountInfoData>("AccountInfoData", 1, 0, "AccountInfoData");
+    qmlRegisterType<ChooseLocalFolder>("ChooseLocalFolder", 1, 0, "ChooseLocalFolder");
+    qmlRegisterType<ChooseRemoteFolder>("ChooseRemoteFolder", 1, 0, "ChooseRemoteFolder");
+
+    qmlRegisterType<BackupFolderModel>("BackupFolderModel", 1, 0, "BackupFolderModel");
+    qmlRegisterType<BackupFolderFilterProxyModel>("BackupFolderFilterProxyModel", 1, 0, "BackupFolderFilterProxyModel");
+
+    qmlRegisterModule("Components", 1, 0);
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/busyIndicator/BusyIndicator.qml")), "Components", 1, 0, "BusyIndicator");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/Button.qml")), "Components", 1, 0, "Button");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/CardHorizontalButton.qml")), "Components", 1, 0, "CardHorizontalButton");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/CardVerticalButton.qml")), "Components", 1, 0, "CardVerticalButton");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/HelpButton.qml")), "Components", 1, 0, "HelpButton");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/OutlineButton.qml")), "Components", 1, 0, "OutlineButton");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/PrimaryButton.qml")), "Components", 1, 0, "PrimaryButton");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/SecondaryButton.qml")), "Components", 1, 0, "SecondaryButton");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/checkBoxes/CheckBox.qml")), "Components", 1, 0, "CheckBox");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/images/SvgImage.qml")), "Components", 1, 0, "SvgImage");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/images/Image.qml")), "Components", 1, 0, "Image");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/EmailTextField.qml")), "Components", 1, 0, "EmailTextField");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/IconTextField.qml")), "Components", 1, 0, "IconTextField");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/PasswordTextField.qml")), "Components", 1, 0, "PasswordTextField");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/TextField.qml")), "Components", 1, 0, "TextField");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/TwoFA.qml")), "Components", 1, 0, "TwoFA");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/HintText.qml")), "Components", 1, 0, "HintText");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/NotificationText.qml")), "Components", 1, 0, "NotificationText");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/RichText.qml")), "Components", 1, 0, "RichText");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/SecondaryText.qml")), "Components", 1, 0, "SecondaryText");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/Text.qml")), "Components", 1, 0, "Text");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/toolTips/ToolTip.qml")), "Components", 1, 0, "ToolTip");
+
+    qmlRegisterModule("Common", 1, 0);
+    qmlRegisterSingletonType(QUrl(QString::fromUtf8("qrc:/common/Constants.qml")), "Common", 1, 0, "Constants");
+    qmlRegisterSingletonType(QUrl(QString::fromUtf8("qrc:/common/Images.qml")), "Common", 1, 0, "Images");
+    qmlRegisterSingletonType(QUrl(QString::fromUtf8("qrc:/common/Links.qml")), "Common", 1, 0, "Links");
+    qmlRegisterSingletonType(QUrl(QString::fromUtf8("qrc:/common/RegexExpressions.qml")), "Common", 1, 0, "RegexExpressions");
+    qmlRegisterSingletonType(QUrl(QString::fromUtf8("qrc:/common/Styles.qml")), "Common", 1, 0, "Styles");
+
+    qmlRegisterType<QmlDialog>("com.qmldialog", 1, 0, "QmlDialog");
+    qmlRegisterSingletonType<QmlClipboard>("QmlClipboard", 1, 0, "QmlClipboard", &QmlClipboard::qmlInstance);
 }
 
 void MegaApplication::onFolderTransferUpdate(FolderTransferUpdateEvent event)

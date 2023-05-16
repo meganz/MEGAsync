@@ -1,5 +1,8 @@
 module Components
 Button 1.0 buttons/Button.qml
+CardButton 1.0 buttons/CardButton.qml
+CardHorizontalButton 1.0 buttons/CardHorizontalButton.qml
+CardVerticalButton 1.0 buttons/CardVerticalButton.qml
 PrimaryButton 1.0 buttons/PrimaryButton.qml
 SecondaryButton 1.0 buttons/SecondaryButton.qml
 OutlineButton 1.0 buttons/OutlineButton.qml

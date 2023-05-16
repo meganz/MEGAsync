@@ -43,26 +43,24 @@ SyncsPage {
                 spacing: 8
                 anchors.fill: parent
 
-                ResumeButton {
+                SyncTypeButton {
                     id: fullSyncButton
 
                     title: OnboardingStrings.fullSyncTitle
-                    type: ResumeButton.Type.FullSync
+                    syncType: SyncsType.SyncTypes.FullSync
                     description: OnboardingStrings.fullSyncButtonDescription
                     imageSource: Images.fullSync
                     ButtonGroup.group: buttonGroup
-                    imageSourceSize: Qt.size(200, 96)
                 }
 
-                ResumeButton {
+                SyncTypeButton {
                     id: backupsButton
 
                     title: OnboardingStrings.selectiveSyncTitle
-                    type: ResumeButton.Type.SelectiveSync
+                    syncType: SyncsType.SyncTypes.SelectiveSync
                     description: OnboardingStrings.selectiveSyncButtonDescription
                     imageSource: Images.selectiveSync
                     ButtonGroup.group: buttonGroup
-                    imageSourceSize: Qt.size(200, 96)
                 }
             }
         }

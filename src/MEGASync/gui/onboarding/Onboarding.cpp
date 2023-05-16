@@ -38,8 +38,8 @@ Onboarding::Onboarding(QObject *parent)
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/InfoAccount.qml")), "Onboard.Syncs_types", 1, 0, "InfoAccount");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/ResumePage.qml")), "Onboard.Syncs_types", 1, 0, "ResumePage");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/SyncsPage.qml")), "Onboard.Syncs_types", 1, 0, "SyncsPage");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/InstallationType.qml")), "Onboard.Syncs_types", 1, 0, "InstallationType");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/ResumeButton.qml")), "Onboard.Syncs_types", 1, 0, "ResumeButton");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/SyncsType.qml")), "Onboard.Syncs_types", 1, 0, "SyncsType");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/SyncsVerticalButton.qml")), "Onboard.Syncs_types", 1, 0, "SyncsVerticalButton");
 
     qmlRegisterModule("Onboard.Syncs_types.Syncs", 1, 0);
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/syncs/SyncTypePage.qml")), "Onboard.Syncs_types.Syncs", 1, 0, "SyncTypePage");

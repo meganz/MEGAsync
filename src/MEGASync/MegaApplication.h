@@ -665,6 +665,8 @@ private:
 
     void processUpgradeSecurityEvent();
 
+    void registerCommonQMLElements();
+
 private slots:
     void onFolderTransferUpdate(FolderTransferUpdateEvent event);
     void onNotificationProcessed();

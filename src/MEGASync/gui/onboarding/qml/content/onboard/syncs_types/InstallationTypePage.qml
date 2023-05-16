@@ -9,13 +9,13 @@ InstallationTypePageForm {
         nextButton.enabled: false
         nextButton.onClicked: {
             switch(installationTypePage.buttonGroup.checkedButton.type) {
-                case InstallationTypeButton.Type.Sync:
+                case SyncsType.Sync:
                     syncsFlow.state = syncs;
                     break;
-                case InstallationTypeButton.Type.Backup:
+                case SyncsType.Backup:
                     syncsFlow.state = selectBackup;
                     break;
-                case InstallationTypeButton.Type.Fuse:
+                case SyncsType.Fuse:
                 default:
                     console.error("Button type does not exist -> "
                                   + installationTypePage.buttonGroup.checkedButton.type);
