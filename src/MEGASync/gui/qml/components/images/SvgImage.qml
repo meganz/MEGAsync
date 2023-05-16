@@ -15,20 +15,23 @@ Item {
     property alias imageWidth: image.width
     property alias imageHeight: image.height
 
+    property real disabledOpacity: 0.3
+
     width: image.width
     height: image.height
 
     Image {
         id: image
 
+        opacity: enabled ? 1.0 : root.disabledOpacity
         anchors.centerIn: parent
     }
 
     ColorOverlay {
         id: overlay
 
+        opacity: image.opacity
         source: image
-        color: color
         anchors.fill: image
     }
 }

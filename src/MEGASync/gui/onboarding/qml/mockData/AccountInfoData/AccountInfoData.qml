@@ -11,6 +11,10 @@ Item {
         ACCOUNT_TYPE_PRO_FLEXI = 101
     }
 
+    function aboutToBeDestroyed() {
+        deleteLater();
+    }
+
     signal accountDetailsChanged
 
     property int type: AccountInfoData.AccountType.ACCOUNT_TYPE_PROII
