@@ -3,8 +3,9 @@ import QtQuick 2.12
 
 // Local
 import Common 1.0
+import Components 1.0 as Custom
 
-Text {
+Custom.Text {
     id: control
 
     function updateLinkColor() {
@@ -33,7 +34,7 @@ Text {
     }
     color: enabled ? Styles.textPrimary : Styles.textDisabled
     textFormat: Text.RichText
-    font.pixelSize: 14
+    font.pixelSize: Custom.Text.Size.Medium
 
     Component.onCompleted: {
         control.text = control.text.replace("[b]","<b>")

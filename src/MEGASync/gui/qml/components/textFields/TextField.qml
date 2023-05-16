@@ -231,17 +231,11 @@ Rectangle {
     Component {
         id: titleComponent
 
-        Text {
+        Custom.Text {
             id: titleText
 
             text: title
-            color: root.enabled ? Styles.textPrimary : Styles.textDisabled
-            font {
-                pixelSize: 12
-                weight: Font.DemiBold
-                family: "Inter"
-                styleName: "Medium"
-            }
+            font.weight: Font.DemiBold
         }
     }
 

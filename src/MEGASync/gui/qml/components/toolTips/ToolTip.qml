@@ -39,7 +39,7 @@ Qml.ToolTip {
             id: leftIconLoader
         }
 
-        Text {
+        Custom.Text {
             id: textToolTip
 
             text: root.text
@@ -50,12 +50,7 @@ Qml.ToolTip {
             Layout.maximumHeight: 560 - 2 * root.padding
             // TODO: Get dialog sizes 800/560 by other way (com.qmldialog.QmlDialog) ???
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-            font {
-                pixelSize: 12
-                weight: Font.Light
-                family: "Inter"
-                styleName: "Medium"
-            }
+            font.weight: Font.Light
         }
     }
 

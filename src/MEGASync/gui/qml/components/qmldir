@@ -11,6 +11,8 @@ TwoFA 1.0 textFields/TwoFA.qml
 PasswordTextField 1.0 textFields/PasswordTextField.qml
 EmailTextField 1.0 textFields/EmailTextField.qml
 IconTextField 1.0 textFields/IconTextField.qml
+Text 1.0 texts/Text.qml
+SecondaryText 1.0 texts/SecondaryText.qml
 RichText 1.0 texts/RichText.qml
 HintText 1.0 texts/HintText.qml
 NotificationText 1.0 texts/NotificationText.qml

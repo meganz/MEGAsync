@@ -24,15 +24,12 @@ Rectangle {
     ColumnLayout {
         anchors.fill: parent
 
-        Text {
+        Custom.Text {
             text: title
-            color: Styles.textAccent
             Layout.topMargin: 32
-            font.pixelSize: 20
+            font.pixelSize: Custom.Text.Size.Large
             Layout.preferredWidth: parent.width
             font.weight: Font.Bold
-            font.family: "Inter"
-            font.styleName: "normal"
             horizontalAlignment: Text.AlignHCenter
         }
 
@@ -42,19 +39,15 @@ Rectangle {
             Layout.alignment: Qt.AlignHCenter
         }
 
-        Text {
+        Custom.Text {
             text: description
-            color: Styles.textPrimary
             Layout.topMargin: 40
             Layout.preferredHeight: 40
             Layout.alignment: Qt.AlignHCenter
             Layout.preferredWidth: 712
             horizontalAlignment: Text.AlignHCenter
-            font.pixelSize: 14
+            font.pixelSize: Custom.Text.Size.Medium
             font.weight: Font.Light
-            font.family: "Inter"
-            font.styleName: "normal"
-            wrapMode: Text.WordWrap
         }
 
         Rectangle {
@@ -71,40 +64,37 @@ Rectangle {
                 spacing: 11
                 anchors.fill: parent
 
-                ResumeButton {
+                SyncsVerticalButton {
                     id: syncButton
 
                     title: OnboardingStrings.sync
                     description: OnboardingStrings.syncButtonDescription
                     imageSource: Images.sync
                     ButtonGroup.group: buttonGroup
-                    type: InstallationTypeButton.Type.Sync
+                    type: SyncsType.Sync
                     checkable: false
-                    imageSourceSize: Qt.size(64, 64)
                 }
 
-                ResumeButton {
+                SyncsVerticalButton {
                     id: backupsButton
 
                     title: OnboardingStrings.backup
                     description: OnboardingStrings.backupButtonDescription
                     imageSource: Images.cloud
                     ButtonGroup.group: buttonGroup
-                    type: InstallationTypeButton.Type.Backup
+                    type: SyncsType.Backup
                     checkable: false
-                    imageSourceSize: Qt.size(64, 64)
                 }
 
-                ResumeButton {
+                SyncsVerticalButton {
                     id: fuseButton
 
                     title: OnboardingStrings.fuse
                     description: OnboardingStrings.fuseButtonDescription
                     imageSource: Images.fuse
                     ButtonGroup.group: buttonGroup
-                    type: InstallationTypeButton.Type.Fuse
+                    type: SyncsType.Fuse
                     checkable: false
-                    imageSourceSize: Qt.size(64, 64)
                 }
             }
         }

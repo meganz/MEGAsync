@@ -69,18 +69,12 @@ Rectangle {
         ColumnLayout {
             Layout.fillWidth: true
 
-            Text {
+            Custom.Text {
                 id: titleText
 
                 visible: titleText.text.length !== 0
                 Layout.fillWidth: true
-                wrapMode: Text.WordWrap
-                font {
-                    bold: true
-                    pixelSize: 12
-                    family: "Inter"
-                    styleName: "Medium"
-                }
+                font.bold: true
             }
 
             Custom.RichText {

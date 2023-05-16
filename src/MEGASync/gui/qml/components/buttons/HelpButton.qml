@@ -4,7 +4,7 @@ import QtQuick.Controls 2.12 as Qml
 import QtQuick.Layouts 1.12
 
 // Local
-import Components 1.0
+import Components 1.0 as Custom
 import Common 1.0
 
 Qml.Button {
@@ -50,7 +50,7 @@ Qml.Button {
             width: icon.width + textLoader.anchors.leftMargin + textLoader.width
             color: "transparent"
 
-            SvgImage {
+            Custom.SvgImage {
                 id: icon
 
                 anchors.left: parent.left
@@ -87,16 +87,12 @@ Qml.Button {
     Component {
         id: textComponent
 
-        Text {
+        Custom.Text {
             color: getLinkColor()
             text: button.text
             verticalAlignment: Text.AlignVCenter
-            font {
-                pixelSize: 14
-                weight: Font.Light
-                family: "Inter"
-                styleName: "Medium"
-            }
+            font.pixelSize: Custom.Text.Size.Medium
+            font.weight: Font.Light
         }
     }
 }

@@ -55,7 +55,7 @@ StackViewPage {
             anchors.right: parent.right
             anchors.leftMargin: email.textField.focusBorderWidth
             anchors.rightMargin: email.textField.focusBorderWidth
-            font.pixelSize: 20
+            font.pixelSize: Custom.Text.Size.Large
             text: OnboardingStrings.signUpTitle
         }
 

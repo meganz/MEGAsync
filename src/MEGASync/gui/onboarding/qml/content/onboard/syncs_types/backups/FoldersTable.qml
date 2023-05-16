@@ -102,7 +102,7 @@ Rectangle {
                     }
                 }
 
-                Text {
+                Custom.Text {
                     id: headerText
 
                     property int selectedRows: 0
@@ -110,19 +110,17 @@ Rectangle {
                     text: backupProxyModel.selectedFilterEnabled
                           ? OnboardingStrings.backupFolders
                           : "(" + selectedRows + ")"
-                    font.pixelSize: 12
                     Layout.leftMargin: backupProxyModel.selectedFilterEnabled ? 22 : 4
                     Layout.fillWidth: true
-                    color: Styles.textPrimary
                 }
 
-                Text {
+                Custom.Text {
                     id: totalSizeText
 
                     text: backupModel.totalSize
                     Layout.rightMargin: 22
                     Layout.alignment: Qt.AlignRight
-                    font.pixelSize: 10
+                    font.pixelSize: Custom.Text.Size.Small
                     font.weight: Font.DemiBold
                     visible: backupProxyModel.selectedFilterEnabled
                 }

@@ -21,18 +21,14 @@ RowLayout {
 
     width: parent.width
 
-    Text {
+    Custom.Text {
         id: notNowButton
 
         text: OnboardingStrings.notNow
-        font.pixelSize: 12
         font.weight: Font.Light
-        font.family: "Inter"
-        font.styleName: "Medium"
         font.underline: true
         Layout.leftMargin: 32
         Layout.bottomMargin: 24
-        color: Styles.buttonPrimary
 
         MouseArea {
             anchors.fill: notNowButton

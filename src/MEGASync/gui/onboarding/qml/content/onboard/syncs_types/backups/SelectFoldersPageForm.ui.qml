@@ -78,14 +78,10 @@ SyncsPage {
                         sourceSize: Qt.size(22, 22)
                     }
 
-                    Text {
+                    Custom.Text {
                         text: OnboardingStrings.addFolders
-                        font.family: "Inter"
-                        font.styleName: "normal"
                         font.weight: Font.DemiBold
-                        font.pixelSize: 12
                         font.underline: true
-                        color: Styles.buttonPrimary
                     }
                 }
 

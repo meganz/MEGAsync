@@ -165,12 +165,10 @@ Item {
             }
         }
 
-        Text {
+        Custom.Text {
             id: stepTitle
 
             text: title
-            font.pixelSize: 12
-            color: Styles.textPrimary
         }
 
     }

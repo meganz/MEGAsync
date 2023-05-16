@@ -15,10 +15,13 @@ import Onboard 1.0
 import Onboarding 1.0
 
 Rectangle {
+
+    readonly property string separatorStr: "/"
+
     width: parent.width
     height: 48
     color: Styles.pageBackground
-    border.color: Styles.borderStrong
+    border.color: enabled ? Styles.borderStrong : Styles.borderDisabled
     border.width: 1
     radius: 8
 
@@ -36,19 +39,16 @@ Rectangle {
 
                 source: Images.shield_account_free
                 sourceSize: Qt.size(16, 16)
+                visible: false
             }
 
-            Text {
+            Custom.Text {
                 id: typeText
 
-                text: ""
                 Layout.alignment: Qt.AlignLeft
-                font.family: "Inter"
-                font.styleName: "normal"
                 font.weight: Font.DemiBold
-                font.pixelSize: 14
                 font.underline: true
-                color: Styles.textPrimary
+                font.pixelSize: Custom.Text.Size.Medium
 
                 MouseArea {
                     anchors.fill: parent
@@ -65,44 +65,27 @@ Rectangle {
             Layout.alignment: Qt.AlignRight
             Layout.rightMargin: 24
 
-            Text {
+            Custom.Text {
                 text: OnboardingStrings.storageSpace
-                font.family: "Inter"
-                font.styleName: "normal"
                 font.weight: Font.DemiBold
-                font.pixelSize: 12
-                color: Styles.textPrimary
             }
 
-            Text {
+            Custom.Text {
                 id: usedStorage
 
-                text: "0"
-                font.family: "Inter"
-                font.styleName: "normal"
                 font.weight: Font.DemiBold
-                font.pixelSize: 12
-                color: Styles.textPrimary
             }
 
-            Text {
-                text: "/"
-                font.family: "Inter"
-                font.styleName: "normal"
+            Custom.Text {
+                id: separator
+
                 font.weight: Font.ExtraLight
-                font.pixelSize: 12
-                color: Styles.textSecondary
             }
 
-            Text {
+            Custom.Text {
                 id: totalStorage
 
-                text: "0"
-                font.family: "Inter"
-                font.styleName: "normal"
                 font.weight: Font.ExtraLight
-                font.pixelSize: 12
-                color: Styles.textSecondary
             }
 
         }
@@ -147,8 +130,11 @@ Rectangle {
                     break;
             }
 
+            typeImage.visible = true;
+            separator.text = separatorStr;
             totalStorage.text = accountInfo.totalStorage;
             usedStorage.text = accountInfo.usedStorage;
+            enabled = true;
         }
 
         Component.onDestruction: {

@@ -25,6 +25,8 @@
         <file>components/texts/HintText.qml</file>
         <file>components/texts/NotificationText.qml</file>
         <file>components/texts/RichText.qml</file>
+		<file>components/texts/SecondaryText.qml</file>
+		<file>components/texts/Text.qml</file>
         <file>components/toolTips/ToolTip.qml</file>
         <file>components/images/Image.qml</file>
         <file>components/busyIndicator/BusyIndicator.qml</file>

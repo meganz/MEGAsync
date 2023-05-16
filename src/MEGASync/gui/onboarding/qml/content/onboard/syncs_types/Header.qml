@@ -18,7 +18,7 @@ ColumnLayout {
         font.family: "Inter"
         font.styleName: "normal"
         font.weight: Font.DemiBold
-        font.pixelSize: 20
+        font.pixelSize: Custom.Text.Size.Large
         lineHeight: 30
     }
 
@@ -30,7 +30,7 @@ ColumnLayout {
         font.family: "Inter"
         font.styleName: "normal"
         font.weight: Font.Light
-        font.pixelSize: 14
+        font.pixelSize: Custom.Text.Size.Medium
         wrapMode: Text.WordWrap
     }
 

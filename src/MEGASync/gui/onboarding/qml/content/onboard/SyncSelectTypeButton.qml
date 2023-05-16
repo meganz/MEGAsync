@@ -38,29 +38,20 @@ Button {
                 Layout.leftMargin: 24
                 source: imageSource
 
-                Text {
+                Custom.Text {
                     text: title
-                    color: Styles.buttonPrimaryHover
                     Layout.preferredHeight: 24
-                    font.pixelSize: 16
+                    font.pixelSize: Custom.Text.Size.MediumLarge
                     font.weight: Font.Bold
-                    font.family: "Inter"
-                    font.styleName: "normal"
-                    lineHeight: 24
                 }
 
-                Text {
+                Custom.Text {
                     text: description
-                    wrapMode: Text.WordWrap
                     lineHeightMode: Text.FixedHeight
                     Layout.preferredWidth: 324
-                    color: Styles.toastBackground
                     Layout.preferredHeight: 32
-                    font.pixelSize: 10
+                    font.pixelSize: Custom.Text.Size.Small
                     font.weight: Font.Light
-                    font.family: "Inter"
-                    font.styleName: "normal"
-                    lineHeight: 16
                 }
             }
         }

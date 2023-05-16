@@ -33,7 +33,6 @@ Qml.CheckBox {
         leftPadding: checkBox.indicator.width + checkBox.spacing
         anchors.top: parent.top
         wrapMode: RichText.Wrap
-        font.pixelSize: 12
         url: checkBox.url
     }
 

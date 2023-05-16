@@ -55,29 +55,20 @@ Rectangle {
                     opacity: selectable ? 1.0 : 0.3
                 }
 
-                Text {
+                Custom.Text {
                     Layout.leftMargin: 13
                     Layout.maximumWidth: 345
                     maximumLineCount: 1
                     wrapMode: Text.WrapAnywhere
                     text: display
-                    font.family: "Inter"
-                    font.styleName: "normal"
-                    font.weight: Font.Normal
-                    font.pixelSize: 12
-                    color: selectable ? Styles.textPrimary : Styles.textDisabled
                 }
             }
 
-            Text {
+            Custom.Text {
                 Layout.alignment: Qt.AlignRight
                 Layout.rightMargin: 8
                 text: size
-                font.family: "Inter"
-                font.styleName: "normal"
-                font.weight: Font.Normal
-                font.pixelSize: 10
-                color: selectable ? Styles.textPrimary : Styles.textDisabled
+                font.pixelSize: Custom.Text.Size.Small
             }
         }
 

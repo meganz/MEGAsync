@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.12
 
 // QML common
 import Common 1.0
+import Components 1.0 as Custom
 
 Item {
 
@@ -90,14 +91,13 @@ Item {
             }
         }
 
-        Text {
+        Custom.Text {
             id: stepTitle
 
             text: title
-            font.pixelSize: 10
+            font.pixelSize: Custom.Text.Size.Small
             Layout.alignment: Qt.AlignLeft
             horizontalAlignment: Text.AlignLeft
-            color: Styles.textPrimary
         }
     }
 

@@ -145,33 +145,23 @@ Rectangle {
     Component {
         id: titleComponent
 
-        Text {
+        Custom.Text {
             text: title
             color: titleColor
-            wrapMode: Text.WordWrap
-            font {
-                bold: true
-                pixelSize: 12
-                weight: Font.Light
-                family: "Inter"
-                styleName: "Medium"
-            }
+            opacity: enabled ? 1.0 : 0.2
+            font.bold: true
+            font.weight: Font.Light
         }
     }
 
     Component {
         id: textComponent
 
-        Text {
+        Custom.Text {
             text: root.text
             color: textColor
-            wrapMode: Text.WordWrap
-            font {
-                pixelSize: 12
-                weight: Font.Light
-                family: "Inter"
-                styleName: "Medium"
-            }
+            opacity: enabled ? 1.0 : 0.2
+            font.weight: Font.Light
         }
     }
 }

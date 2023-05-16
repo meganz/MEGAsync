@@ -6,6 +6,7 @@ import QtQuick.Controls 2.12
 
 // QML common
 import Common 1.0
+import Components 1.0 as Custom
 
 //Local
 import Onboarding 1.0
@@ -84,30 +85,15 @@ Rectangle {
         }
     ]
 
-    Text {
+    Custom.SecondaryText {
         id: statusText
-        color: Styles.textSecondary
+
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: root.bottom
             bottomMargin: 16
         }
-        font.pixelSize: 10
+        font.pixelSize: Custom.Text.Size.Small
     }
 
-//    ProgressBar {
-//        id: progressBar
-//        indeterminate: true
-//        anchors {
-//            bottom: root.bottom
-//            left: root.left
-//            right: root.right
-//        }
-
-//        background: Rectangle {
-//            radius: 0
-//            border.width: 0
-//            implicitHeight: 5
-//        }
-//        }
 }

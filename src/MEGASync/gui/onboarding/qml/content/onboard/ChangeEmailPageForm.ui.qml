@@ -37,22 +37,19 @@ Rectangle {
         }
         spacing: 24
 
-        Text {
+        Custom.Text {
             id: title
 
             Layout.fillWidth: true
-            font.pixelSize: 20
             text: OnboardingStrings.changeEmailTitle
-            wrapMode: Text.WordWrap
-            color: Styles.textPrimary
+            font.pixelSize: Custom.Text.Size.Large
+
         }
 
-        Text {
-            text: OnboardingStrings.changeEmailBodyText
-            font.pixelSize: 14
-            wrapMode: Text.WordWrap
+        Custom.Text {
             Layout.preferredWidth: layout.width
-            color: Styles.textPrimary
+            text: OnboardingStrings.changeEmailBodyText
+            font.pixelSize: Custom.Text.Size.Medium
         }
 
         Custom.EmailTextField {
@@ -79,6 +76,7 @@ Rectangle {
 
             text: OnboardingStrings.cancel
         }
+
         Custom.PrimaryButton {
             id: resendButton
 

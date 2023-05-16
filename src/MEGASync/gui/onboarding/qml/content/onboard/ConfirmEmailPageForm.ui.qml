@@ -40,18 +40,16 @@ Rectangle {
             id: title
 
             Layout.fillWidth: true
-            font.pixelSize: 20
+            font.pixelSize: Custom.Text.Size.Large
             text: OnboardingStrings.confirmEmailTitle
             wrapMode: Text.WordWrap
             color: Styles.textPrimary
         }
 
-        Text {
-            text: OnboardingStrings.confirmEmailBodyText
-            font.pixelSize: 14
-            wrapMode: Text.WordWrap
+        Custom.Text {
             Layout.preferredWidth: layout.width
-            color: Styles.textPrimary
+            text: OnboardingStrings.confirmEmailBodyText
+            font.pixelSize: Custom.Text.Size.Medium
         }
 
         RowLayout {
@@ -64,12 +62,11 @@ Rectangle {
                 color: Styles.textPrimary
             }
 
-            Text {
+            Custom.Text {
                 id: email
 
                 Layout.alignment: Qt.AlignVCenter
-                font.pixelSize: 14
-                color: Styles.textPrimary
+                font.pixelSize: Custom.Text.Size.Medium
                 font.bold: true
             }
         }
@@ -78,7 +75,7 @@ Rectangle {
             id: changeEmailLinkText
 
             Layout.preferredWidth: layout.width
-            font.pixelSize: 14
+            font.pixelSize: Custom.Text.Size.Medium
             text: OnboardingStrings.confirmEmailChangeText
             wrapMode: Text.WordWrap
             color: Styles.textPrimary

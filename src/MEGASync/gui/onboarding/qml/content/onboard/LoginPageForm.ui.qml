@@ -40,7 +40,7 @@ StackViewPage {
 
             anchors.left: parent.left
             anchors.right: parent.right
-            font.pixelSize: 20
+            font.pixelSize: Custom.Text.Size.Large
             text: OnboardingStrings.loginTitle
         }
 

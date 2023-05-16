@@ -125,15 +125,14 @@ Qml.RoundButton {
             id: leftLoader
         }
 
-        Text {
+        Custom.Text {
             id: buttonText
+
             text: button.text
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
-            font {
-                pixelSize: 14
-                weight: Font.DemiBold
-            }
+            font.pixelSize: Custom.Text.Size.Medium
+            font.weight: Font.DemiBold
         }
 
         Loader {
