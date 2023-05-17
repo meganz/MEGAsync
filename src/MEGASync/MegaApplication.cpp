@@ -3556,6 +3556,7 @@ void MegaApplication::registerCommonQMLElements()
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/checkBoxes/CheckBox.qml")), "Components", 1, 0, "CheckBox");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/images/SvgImage.qml")), "Components", 1, 0, "SvgImage");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/images/Image.qml")), "Components", 1, 0, "Image");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/scrollBars/ScrollBar.qml")), "Components", 1, 0, "ScrollBar");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/EmailTextField.qml")), "Components", 1, 0, "EmailTextField");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/IconTextField.qml")), "Components", 1, 0, "IconTextField");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/PasswordTextField.qml")), "Components", 1, 0, "PasswordTextField");
@@ -3567,6 +3568,7 @@ void MegaApplication::registerCommonQMLElements()
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/SecondaryText.qml")), "Components", 1, 0, "SecondaryText");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/Text.qml")), "Components", 1, 0, "Text");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/toolTips/ToolTip.qml")), "Components", 1, 0, "ToolTip");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/views/ScrollPanel.qml")), "Components", 1, 0, "ScrollPanel");
 
     qmlRegisterModule("Common", 1, 0);
     qmlRegisterSingletonType(QUrl(QString::fromUtf8("qrc:/common/Constants.qml")), "Common", 1, 0, "Constants");
