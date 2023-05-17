@@ -10,6 +10,10 @@
 #include "DialogOpener.h"
 #include "StalledIssuesDialog.h"
 #include "MegaNodeNames.h"
+#include "DateTimeFormatter.h"
+#include "StalledIssuesUtilities.h"
+
+#include <megaapi.h>
 
 #include <QDialogButtonBox>
 
@@ -20,15 +24,18 @@ const char* TITLE_FILENAME = "TITLE_FILENAME";
 
 //NAME CONFLICT TITLE
 //THINK ABOUT ANOTHER WAY TO RESUSE THE STALLED ISSUE ACTION TITLE OR CREATE ONE FOR THE NAME CONFLICT
-NameConflictTitle::NameConflictTitle(int index, QWidget *parent)
+NameConflictTitle::NameConflictTitle(int index, const QString& conflictedName, QWidget *parent)
     : mIndex(index),
       StalledIssueActionTitle(parent)
 {
-    initTitle();
+    initTitle(conflictedName);
 }
 
-void NameConflictTitle::initTitle()
+void NameConflictTitle::initTitle(const QString& conflictedName)
 {
+    setProperty(TITLE_FILENAME, conflictedName);
+    setDisabled(false);
+
     QIcon renameIcon(QString::fromUtf8("://images/StalledIssues/rename_node_default.png"));
     QIcon removeIcon(QString::fromUtf8("://images/StalledIssues/remove_default.png"));
     addActionButton(renameIcon, tr("Rename"), RENAME_ID, false);
@@ -72,7 +79,8 @@ void NameConflict::updateUi(NameConflictedStalledIssue::NameConflictData conflic
 
     for(int index = 0; index < conflictedNames.size(); ++index)
     {
-        QString conflictedName(conflictedNames.at(index).conflictedName);
+        NameConflictedStalledIssue::ConflictedNameInfo info(conflictedNames.at(index));
+        QString conflictedName(info.conflictedName);
 
         NameConflictTitle* title(nullptr);
         if(totalUpdate)
@@ -82,12 +90,33 @@ void NameConflict::updateUi(NameConflictedStalledIssue::NameConflictData conflic
         }
         else
         {
-            title = new NameConflictTitle(index, this);
-            title->setProperty(TITLE_FILENAME, conflictedName);
-            title->setSolved(false);
+            title = new NameConflictTitle(index, conflictedName, this);
             connect(title, &StalledIssueActionTitle::actionClicked, this, &NameConflict::onActionClicked);
 
             ui->nameConflictsLayout->addWidget(title);
+        }
+
+        if(conflictData.data->isCloud())
+        {
+            title->updateUser(conflictData.data->getUserFirstName());
+            auto node = info.getNode();
+            if(node)
+            {
+                QPair<QDateTime, QDateTime> times = StalledIssuesUtilities::getRemoteModificatonAndCreatedTime(node.get());
+
+                title->updateLastTimeModified(std::move(times.first));
+                title->updateCreatedTime(std::move(times.second));
+                title->updateSize(tr("50 bytes"));
+            }
+        }
+        else
+        {
+            QFileInfo fileInfo(info.conflictedPath);
+            if(fileInfo.exists() && fileInfo.isFile())
+            {
+                title->updateLastTimeModified(fileInfo.lastModified());
+                title->updateCreatedTime(fileInfo.created());
+            }
         }
 
         mData.data->checkTrailingSpaces(conflictedName);
@@ -99,8 +128,8 @@ void NameConflict::updateUi(NameConflictedStalledIssue::NameConflictData conflic
                  || (mData.conflictedNames.size() > index
                  && (conflictData.conflictedNames.at(index).isSolved() != mData.conflictedNames.at(index).isSolved()))))
         {
-            bool isSolved(conflictedNames.at(index).isSolved());
-            title->setSolved(isSolved);
+            bool isSolved(info.isSolved());
+            title->setDisabled(isSolved);
             if(isSolved)
             {
                 title->hideActionButton(RENAME_ID);
@@ -134,7 +163,7 @@ void NameConflict::updateUi(NameConflictedStalledIssue::NameConflictData conflic
 
     if(allSolved)
     {
-        setSolved();
+        setDisabled();
     }
 
     //No longer exist conflicts
@@ -152,7 +181,7 @@ void NameConflict::removeConflictedNameWidget(QWidget* widget)
     widget->deleteLater();
 }
 
-void NameConflict::setSolved()
+void NameConflict::setDisabled()
 {
     if(!ui->pathContainer->graphicsEffect())
     {

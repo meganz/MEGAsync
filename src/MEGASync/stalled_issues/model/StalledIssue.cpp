@@ -1,6 +1,7 @@
 #include "StalledIssue.h"
 
 #include "MegaApplication.h"
+#include "UserAttributesRequests/FullName.h"
 
 StalledIssueData::StalledIssueData(std::unique_ptr<mega::MegaSyncStall> originalstall)
     : original(std::move(originalstall))
@@ -133,6 +134,16 @@ QString StalledIssueData::getFileName() const
     return fileName;
 }
 
+const QString &StalledIssueData::getUserFirstName() const
+{
+    if(mUserFullName)
+    {
+        return mUserFullName->getFirstName();
+    }
+
+    return QString();
+}
+
 bool StalledIssueData::isEqual(const mega::MegaSyncStall* stall) const
 {
     QString sourcePath;
@@ -172,6 +183,25 @@ void StalledIssueData::checkTrailingSpaces(QString &name) const
     }
 }
 
+std::shared_ptr<mega::MegaNode> StalledIssueData::getNode() const
+{
+    if(mIsCloud)
+    {
+        auto newNode = std::shared_ptr<mega::MegaNode>(MegaSyncApp->getMegaApi()->getNodeByPath(mPath.path.toStdString().c_str()));
+        if(!newNode)
+        {
+            return mRemoteNode;
+        }
+        else
+        {
+            mRemoteNode = newNode;
+            return newNode;
+        }
+    }
+
+    return nullptr;
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 /// \brief StalledIssue::StalledIssue
 /// \param stallIssue
@@ -180,6 +210,7 @@ StalledIssue::StalledIssue(const mega::MegaSyncStall *stallIssue)
 {
     fillIssue(stallIssue);
     originalStall.reset(stallIssue->copy());
+    endFillingIssue();
 }
 
 bool StalledIssue::initLocalIssue(const mega::MegaSyncStall *stallIssue)
@@ -277,6 +308,33 @@ void StalledIssue::fillIssue(const mega::MegaSyncStall *stall)
         }
 
         setIsFile(cloudTargetPath, false);
+    }
+}
+
+void StalledIssue::endFillingIssue()
+{
+    //Fill user info
+    if(mCloudData)
+    {
+        auto node = std::unique_ptr<mega::MegaNode>(MegaSyncApp->getMegaApi()->getNodeByPath(mCloudData->mPath.path.toStdString().c_str()));
+        if(node)
+        {
+            auto user = node->getOwner();
+            if(user != mega::INVALID_HANDLE)
+            {
+                MegaSyncApp->getMegaApi()->getUserEmail(user,new MegaListenerFuncExecuter(true, [this](mega::MegaApi*,  mega::MegaRequest* request, mega::MegaError* e) {
+                                                            if (e->getErrorCode() == mega::MegaError::API_OK)
+                                                            {
+                                                                auto emailFromRequest = request->getEmail();
+                                                                if (emailFromRequest)
+                                                                {
+                                                                    mCloudData->mUserEmail = QString::fromUtf8(emailFromRequest);
+                                                                    mCloudData->mUserFullName = UserAttributes::FullName::requestFullName(emailFromRequest);
+                                                                }
+                                                            }
+                                                        }));
+            }
+        }
     }
 }
 
@@ -440,6 +498,7 @@ void StalledIssue::updateIssue(const mega::MegaSyncStall *stallIssue)
     mIsSolved = false;
 
     fillIssue(stallIssue);
+    endFillingIssue();
 }
 
 StalledIssueFilterCriterion StalledIssue::getCriterionByReason(mega::MegaSyncStall::SyncStallReason reason)

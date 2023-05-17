@@ -2,6 +2,7 @@
 #define NAMECONFLICTSTALLEDISSUE_H
 
 #include <StalledIssue.h>
+#include <MegaApplication.h>
 
 class NameConflictedStalledIssue : public StalledIssue
 {
@@ -17,15 +18,21 @@ public:
         };
 
         QString conflictedName;
+        QString conflictedPath;
         QString renameTo;
         SolvedType solved;
 
-        ConflictedNameInfo(const QString& name):conflictedName(name),solved(SolvedType::UNSOLVED){}
+        ConflictedNameInfo(const QFileInfo& fileInfo):conflictedName(fileInfo.fileName()), conflictedPath(fileInfo.filePath()), solved(SolvedType::UNSOLVED){}
         bool operator==(const ConflictedNameInfo &data)
         {
             return conflictedName == data.conflictedName;
         }
         bool isSolved() const {return solved != SolvedType::UNSOLVED;}
+
+        std::unique_ptr<mega::MegaNode> getNode()
+        {
+            return std::unique_ptr<mega::MegaNode>(MegaSyncApp->getMegaApi()->getNodeByPath(conflictedPath.toUtf8().constData()));
+        }
     };
 
     struct NameConflictData

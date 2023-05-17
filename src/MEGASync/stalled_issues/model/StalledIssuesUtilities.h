@@ -20,6 +20,8 @@ public:
     void removeRemoteFile(const QString& path);
     void removeLocalFile(const QString& path);
 
+    static QPair<QDateTime, QDateTime> getRemoteModificatonAndCreatedTime(mega::MegaNode* node);
+
 signals:
     void actionFinished();
 

@@ -19,6 +19,10 @@ enum class StalledIssueFilterCriterion
     OTHER_CONFLICTS,
 };
 
+namespace UserAttributes{
+class FullName;
+}
+
 class StalledIssueData : public QSharedData
 {
 public:
@@ -51,12 +55,16 @@ public:
 
     QString getFileName() const;
 
+    const QString& getUserFirstName() const;
+
     bool isEqual(const mega::MegaSyncStall *stall) const;
 
     bool isSolved() const;
     void setIsSolved(bool newIsSolved);
 
     void checkTrailingSpaces(QString& name) const;
+
+    std::shared_ptr<mega::MegaNode> getNode() const;
 
     std::shared_ptr<mega::MegaSyncStall> original;
 
@@ -69,6 +77,12 @@ private:
 
     bool mIsCloud;
     bool mIsSolved;
+
+    QString mUserEmail;
+    std::shared_ptr<const UserAttributes::FullName> mUserFullName;
+
+    mutable std::shared_ptr<mega::MegaNode> mRemoteNode;
+
 };
 
 Q_DECLARE_TYPEINFO(StalledIssueData, Q_MOVABLE_TYPE);
@@ -132,6 +146,7 @@ protected:
     void setIsFile(const QString& path, bool isLocal);
 
     virtual void fillIssue(const mega::MegaSyncStall *stall);
+    void endFillingIssue();
 
     std::shared_ptr<mega::MegaSyncStall> originalStall;
     mega::MegaSyncStall::SyncStallReason mReason = mega::MegaSyncStall::SyncStallReason::NoReason;

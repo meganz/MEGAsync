@@ -97,3 +97,25 @@ void StalledIssuesUtilities::removeLocalFile(const QString& path)
          }
     }
 }
+
+QPair<QDateTime, QDateTime> StalledIssuesUtilities::getRemoteModificatonAndCreatedTime(mega::MegaNode *node)
+{
+    QPair<QDateTime, QDateTime> times;
+
+    std::unique_ptr<mega::MegaNodeList> nodeVersions(MegaSyncApp->getMegaApi()->getVersions(node));
+    if(nodeVersions->size() != 0)
+    {
+        auto lastVersionNode = nodeVersions->get(0);
+        times.first = QDateTime::fromSecsSinceEpoch(lastVersionNode->getModificationTime());
+
+        auto firstVersionNode = nodeVersions->get(nodeVersions->size() - 1);
+        times.second = QDateTime::fromSecsSinceEpoch(firstVersionNode->getCreationTime());
+    }
+    else
+    {
+        times.first = QDateTime::fromSecsSinceEpoch(node->getModificationTime());
+        times.second = QDateTime::fromSecsSinceEpoch(node->getCreationTime());
+    }
+
+    return times;
+}

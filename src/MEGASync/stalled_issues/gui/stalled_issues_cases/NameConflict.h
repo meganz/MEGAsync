@@ -15,10 +15,10 @@ class NameConflictTitle : public StalledIssueActionTitle
     Q_OBJECT
 
 public:
-    explicit NameConflictTitle(int index, QWidget* parent = nullptr);
+    explicit NameConflictTitle(int index, const QString &conflictedName, QWidget* parent = nullptr);
     ~NameConflictTitle() = default;
 
-    void initTitle();
+    void initTitle(const QString &conflictedName);
     int getIndex() const;
 
 private:
@@ -34,7 +34,7 @@ public:
     ~NameConflict();
 
     void updateUi(NameConflictedStalledIssue::NameConflictData data);
-    void setSolved();
+    void setDisabled();
 
 signals:
     void refreshUi();

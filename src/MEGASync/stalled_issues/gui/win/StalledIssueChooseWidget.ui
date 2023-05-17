@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>72</width>
-    <height>90</height>
+    <height>104</height>
    </rect>
   </property>
   <property name="styleSheet">
@@ -16,6 +16,11 @@
     border-radius: 6px;
     border: 1px solid #D6D6D6;
     background-color: #FFFFFF;
+}
+
+#name
+{
+	background-color: #FFFFFF;
 }</string>
   </property>
   <property name="frameShape">
@@ -117,110 +122,25 @@
        </widget>
       </item>
       <item>
-       <widget class="QWidget" name="fileNameContainer" native="true">
-        <property name="styleSheet">
-         <string notr="true">#fileNameText
-{
-    font-family: Lato Bold;
-    font-size: 13px;
-    line-height: 16px;
-    color: #333333;
-}
-
-#fileSize
-{
-    font-family: Lato;
-    font-size: 13px;
-    line-height: 16px;
-    color: #333333;
-}</string>
-        </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,0,0,1">
+       <widget class="QWidget" name="nameContainer" native="true">
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
          <property name="spacing">
-          <number>6</number>
-         </property>
-         <property name="leftMargin">
           <number>0</number>
          </property>
+         <property name="leftMargin">
+          <number>4</number>
+         </property>
+         <property name="topMargin">
+          <number>4</number>
+         </property>
          <property name="rightMargin">
-          <number>9</number>
+          <number>4</number>
          </property>
          <property name="bottomMargin">
           <number>0</number>
          </property>
-         <item alignment="Qt::AlignLeft">
-          <widget class="QLabel" name="fileTypeIcon">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>24</width>
-             <height>24</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>24</width>
-             <height>24</height>
-            </size>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
-         <item alignment="Qt::AlignLeft">
-          <widget class="QLabel" name="fileNameText">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <family>Lato 13</family>
-             <pointsize>-1</pointsize>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
-         <item alignment="Qt::AlignLeft">
-          <widget class="QLabel" name="fileSize">
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
          <item>
-          <spacer name="horizontalSpacer_2">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeType">
-            <enum>QSizePolicy::Expanding</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>0</width>
-             <height>0</height>
-            </size>
-           </property>
-          </spacer>
+          <widget class="StalledIssueActionTitle" name="name" native="true"/>
          </item>
         </layout>
        </widget>
@@ -262,6 +182,12 @@
    <class>StalledIssueChooseTitle</class>
    <extends>QWidget</extends>
    <header>StalledIssueChooseTitle.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>StalledIssueActionTitle</class>
+   <extends>QWidget</extends>
+   <header>StalledIssueActionTitle.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

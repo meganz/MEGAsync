@@ -12,6 +12,7 @@ NameConflictedStalledIssue::NameConflictedStalledIssue(const mega::MegaSyncStall
 {
     mReason = stallIssue->reason();
     fillIssue(stallIssue);
+    endFillingIssue();
 }
 
 void NameConflictedStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
@@ -26,7 +27,7 @@ void NameConflictedStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
         {
             QFileInfo localPath(QString::fromUtf8(stall->path(false,index)));
 
-            ConflictedNameInfo info(localPath.fileName());
+            ConflictedNameInfo info(localPath);
             mLocalConflictedNames.append(info);
 
             if(consultLocalData()->mPath.isEmpty())
@@ -48,7 +49,7 @@ void NameConflictedStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
         {
             QFileInfo cloudPath(QString::fromUtf8(stall->path(true,index)));
 
-            ConflictedNameInfo info(cloudPath.fileName());
+            ConflictedNameInfo info(cloudPath);
             mCloudConflictedNames.append(info);
 
             if(consultCloudData()->mPath.isEmpty())
@@ -85,6 +86,7 @@ void NameConflictedStalledIssue::updateIssue(const mega::MegaSyncStall *stallIss
    mCloudData.reset();
 
    fillIssue(stallIssue);
+   endFillingIssue();
 }
 
 NameConflictedStalledIssue::NameConflictData NameConflictedStalledIssue::getNameConflictLocalData() const

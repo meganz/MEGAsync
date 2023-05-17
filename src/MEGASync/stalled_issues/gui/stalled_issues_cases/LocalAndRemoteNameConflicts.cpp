@@ -78,6 +78,6 @@ void LocalAndRemoteNameConflicts::refreshUi()
 
 void LocalAndRemoteNameConflicts::onNameConflictSolved()
 {
-    ui->cloudConflictNames->setSolved();
-    ui->localConflictNames->setSolved();
+    ui->cloudConflictNames->setDisabled();
+    ui->localConflictNames->setDisabled();
 }

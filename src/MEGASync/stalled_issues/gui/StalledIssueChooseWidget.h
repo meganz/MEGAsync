@@ -19,7 +19,7 @@ public:
     explicit StalledIssueChooseWidget(QWidget *parent = nullptr);
     ~StalledIssueChooseWidget();
 
-    void setData(StalledIssueDataPtr data);
+    void updateUi(StalledIssueDataPtr data);
     const StalledIssueDataPtr& data();
 
     void setIssueSolved(bool newIssueSolved);
@@ -34,7 +34,7 @@ private slots:
     void onActionClicked(int button_id);
 
 private:
-    void setSolved(bool state);
+    void setDisabled(bool solved);
 
     Ui::StalledIssueChooseWidget *ui;
     StalledIssueDataPtr mData;

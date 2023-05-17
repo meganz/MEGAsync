@@ -2,16 +2,20 @@
 #include "ui_StalledIssueActionTitle.h"
 
 #include <Utilities.h>
+#include <MegaApplication.h>
 
 #include <QPushButton>
 #include <QPainter>
 #include <QPainterPath>
 #include <QFileInfo>
+#include <QHBoxLayout>
 
 const char* BUTTON_ID = "button_id";
 const char* ONLY_ICON = "onlyIcon";
 const char* MAIN_BUTTON = "main";
 const char* DISCARDED = "discarded";
+const char* TITLE = "title";
+const char* DISABLE_BACKGROUND = "disable_background";
 
 #include <QGraphicsOpacityEffect>
 
@@ -24,11 +28,19 @@ StalledIssueActionTitle::StalledIssueActionTitle(QWidget *parent) :
     ui->icon->hide();
 
     ui->titleLabel->installEventFilter(this);
+
+    ui->extraInfoContainer->hide();
+    ui->backgroundWidget->setProperty(DISABLE_BACKGROUND, false);
 }
 
 StalledIssueActionTitle::~StalledIssueActionTitle()
 {
     delete ui;
+}
+
+void StalledIssueActionTitle::removeBackgroundColor()
+{
+    ui->backgroundWidget->setProperty(DISABLE_BACKGROUND, true);
 }
 
 void StalledIssueActionTitle::setTitle(const QString &title)
@@ -122,9 +134,44 @@ void StalledIssueActionTitle::addMessage(const QString &message, const QPixmap& 
     ui->actionLayout->addWidget(labelContainer);
 }
 
-void StalledIssueActionTitle::setSolved(bool state)
+QLabel* StalledIssueActionTitle::addExtraInfo(const QString &title, const QString &info, int level)
 {
-    ui->contents->setProperty(DISCARDED,state);
+    ui->extraInfoContainer->show();
+
+    QWidget* container(new QWidget(this));
+    QHBoxLayout* layout(new QHBoxLayout(container));
+    layout->setContentsMargins(0,0,0,0);
+    layout->setSpacing(3);
+    container->setLayout(layout);
+
+    auto titleLabel = new QLabel(title, this);
+    titleLabel->setProperty(TITLE, true);
+    auto infoLabel = new QLabel(info, this);
+    infoLabel->setProperty(TITLE, false);
+
+    layout->addWidget(titleLabel);
+    layout->addWidget(infoLabel);
+
+    auto& items = mExtraInfoItemsByRow[level];
+
+    if(items != 0)
+    {
+        ui->extraInfoLayout->setColumnStretch(items, 0);
+    }
+
+    ui->extraInfoLayout->addWidget(container, level, items, Qt::AlignLeft);
+    items++;
+
+    ui->extraInfoLayout->setColumnStretch(items, 1);
+
+    setStyleSheet(styleSheet());
+
+    return infoLabel;
+}
+
+void StalledIssueActionTitle::setDisabled(bool state)
+{
+    ui->backgroundWidget->setProperty(DISCARDED,state);
     setStyleSheet(styleSheet());
 
     if(state && !ui->titleContainer->graphicsEffect())
@@ -132,6 +179,13 @@ void StalledIssueActionTitle::setSolved(bool state)
         auto effect = new QGraphicsOpacityEffect(this);
         effect->setOpacity(0.30);
         ui->titleContainer->setGraphicsEffect(effect);
+    }
+
+    if(state && !ui->extraInfoContainer->graphicsEffect())
+    {
+        auto effect = new QGraphicsOpacityEffect(this);
+        effect->setOpacity(0.30);
+        ui->extraInfoContainer->setGraphicsEffect(effect);
     }
 }
 
@@ -151,4 +205,53 @@ bool StalledIssueActionTitle::eventFilter(QObject *watched, QEvent *event)
     return QWidget::eventFilter(watched, event);
 }
 
+void StalledIssueActionTitle::updateUser(const QString &user)
+{
+    if(!mUserLabel)
+    {
+        mUserLabel = addExtraInfo(tr("Upload by:"), user, 1);
+    }
+    else
+    {
+        mUserLabel->setText(user);
+    }
+}
 
+void StalledIssueActionTitle::updateSize(const QString &size)
+{
+    if(!mSizeLabel)
+    {
+        mSizeLabel = addExtraInfo(tr("Size:"), size, 0);
+    }
+    else
+    {
+        mSizeLabel->setText(size);
+    }
+}
+
+void StalledIssueActionTitle::updateLastTimeModified(QDateTime&& time)
+{
+    auto timeString = MegaSyncApp->getFormattedDateByCurrentLanguage(time, QLocale::FormatType::ShortFormat);
+    if(!mLastTimeLabel)
+    {
+        mLastTimeLabel = addExtraInfo(tr("Last modified:"), timeString, 0);
+    }
+    else
+    {
+        mLastTimeLabel->setText(timeString);
+    }
+
+}
+
+void StalledIssueActionTitle::updateCreatedTime(QDateTime&& time)
+{
+    auto timeString = MegaSyncApp->getFormattedDateByCurrentLanguage(time, QLocale::FormatType::ShortFormat);
+    if(!mCreatedTimeLabel)
+    {
+        mCreatedTimeLabel = addExtraInfo(mIsCloud ? tr("Upload at:") : tr("Created at:"), timeString, 0);
+    }
+    else
+    {
+        mCreatedTimeLabel->setText(timeString);
+    }
+}

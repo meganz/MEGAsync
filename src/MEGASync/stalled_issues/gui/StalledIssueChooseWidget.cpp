@@ -17,13 +17,10 @@ StalledIssueChooseWidget::StalledIssueChooseWidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    ui->name->removeBackgroundColor();
+
     ui->path->setIndent(StalledIssueHeader::GROUPBOX_CONTENTS_INDENT);
     ui->path->hideLocalOrRemoteTitle();
-    auto layoutMargins = ui->fileNameContainer->contentsMargins();
-    layoutMargins.setLeft(StalledIssueHeader::GROUPBOX_CONTENTS_INDENT);
-
-    ui->fileNameContainer->setContentsMargins(layoutMargins);
-    ui->fileNameContainer->installEventFilter(this);
 
     ui->chooseTitle->addActionButton(QIcon(), tr("Choose"), BUTTON_ID, true);
     connect(ui->chooseTitle, &StalledIssueActionTitle::actionClicked, this, &StalledIssueChooseWidget::onActionClicked); }
@@ -33,7 +30,7 @@ StalledIssueChooseWidget::~StalledIssueChooseWidget()
     delete ui;
 }
 
-void StalledIssueChooseWidget::setData(StalledIssueDataPtr data)
+void StalledIssueChooseWidget::updateUi(StalledIssueDataPtr data)
 {
     auto fileName = data->getFileName();
 
@@ -41,30 +38,33 @@ void StalledIssueChooseWidget::setData(StalledIssueDataPtr data)
     ui->chooseTitle->setIsCloud(data->isCloud());
     ui->chooseTitle->showIcon();
 
-    ui->fileNameText->setText(fileName);
-
-    auto fileTypeIcon = Utilities::getCachedPixmap(Utilities::getExtensionPixmapName(
-                                                       fileName, QLatin1Literal(":/images/drag_")));
-    ui->fileTypeIcon->setPixmap(fileTypeIcon.pixmap(ui->fileTypeIcon->size()));
-    ui->fileSize->setText(Utilities::getSizeString((unsigned long long)50));
+    ui->name->setTitle(fileName);
+    ui->name->showIcon();
 
     ui->path->show();
     ui->path->updateUi(data);
 
     if(data->isCloud())
     {
-        std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(data->getFilePath().toStdString().c_str()));
+        auto node = data->getNode();
         if(node)
         {
-            ui->fileSize->setText(Utilities::getSizeString((long long)node->getSize()));
+            ui->name->updateUser(data->getUserFirstName());
+            QPair<QDateTime, QDateTime> times = StalledIssuesUtilities::getRemoteModificatonAndCreatedTime(node.get());
+
+            ui->name->updateLastTimeModified(std::move(times.first));
+            ui->name->updateCreatedTime(std::move(times.second));
+            ui->name->updateSize(tr("50 bytes"));
         }
     }
     else
     {
-        QFile file(data->getNativeFilePath());
+        QFileInfo file(data->getNativeFilePath());
         if(file.exists())
         {
-            ui->fileSize->setText(Utilities::getSizeString(file.size()));
+            ui->name->updateLastTimeModified(file.lastModified());
+            ui->name->updateCreatedTime(file.created());
+            ui->name->updateSize(Utilities::getSizeString(file.size()));
         }
     }
 
@@ -92,7 +92,7 @@ void StalledIssueChooseWidget::setData(StalledIssueDataPtr data)
         }
     }
 
-    setSolved(data->isSolved());
+    setDisabled(data->isSolved());
 
     update();
 
@@ -106,14 +106,6 @@ const StalledIssueDataPtr &StalledIssueChooseWidget::data()
 
 bool StalledIssueChooseWidget::eventFilter(QObject *watched, QEvent *event)
 {
-    if(mData && watched == ui->fileNameContainer && event->type() == QEvent::Resize)
-    {
-        auto blankSpaces = ui->fileNameContainer->layout()->spacing() * 4 + ui->fileNameContainer->contentsMargins().right() + ui->fileNameContainer->contentsMargins().left();
-        auto availableWidth = ui->fileNameContainer->width() - ui->fileSize->width() - ui->fileTypeIcon->width() - blankSpaces;
-        auto elidedText = ui->fileNameText->fontMetrics().elidedText(mData->getFileName(),Qt::ElideMiddle, availableWidth);
-        ui->fileNameText->setText(elidedText);
-    }
-
     return QFrame::eventFilter(watched, event);
 }
 
@@ -122,16 +114,15 @@ void StalledIssueChooseWidget::onActionClicked(int button_id)
     emit chooseButtonClicked(button_id);
 }
 
-void StalledIssueChooseWidget::setSolved(bool state)
+void StalledIssueChooseWidget::setDisabled(bool solved)
 {
-    ui->chooseTitle->setSolved(state);
+    bool isDisabled(mIsSolved && !solved);
 
-    if(state && !ui->fileNameContainer->graphicsEffect() && !ui->pathContainer->graphicsEffect())
+    ui->chooseTitle->setDisabled(isDisabled);
+    ui->name->setDisabled(isDisabled);
+
+    if(isDisabled && !ui->pathContainer->graphicsEffect())
     {
-        auto fileNameEffect = new QGraphicsOpacityEffect(this);
-        fileNameEffect->setOpacity(0.30);
-        ui->fileNameContainer->setGraphicsEffect(fileNameEffect);
-
         auto pathEffect = new QGraphicsOpacityEffect(this);
         pathEffect->setOpacity(0.30);
         ui->pathContainer->setGraphicsEffect(pathEffect);
