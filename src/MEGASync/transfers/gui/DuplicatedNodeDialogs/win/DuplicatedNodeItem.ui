@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>244</width>
-    <height>131</height>
+    <height>157</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -322,7 +322,7 @@
                <item>
                 <widget class="QLabel" name="lSize">
                  <property name="text">
-                  <string/>
+                  <string>loading size…</string>
                  </property>
                 </widget>
                </item>
@@ -345,7 +345,7 @@
                <item>
                 <widget class="QLabel" name="lDate">
                  <property name="text">
-                  <string/>
+                  <string>loading time…</string>
                  </property>
                 </widget>
                </item>

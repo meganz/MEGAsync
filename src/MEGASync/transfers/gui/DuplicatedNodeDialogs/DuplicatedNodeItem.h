@@ -3,6 +3,7 @@
 
 #include <megaapi.h>
 #include <DuplicatedNodeDialogs/DuplicatedNodeInfo.h>
+#include <control/FolderAttributes.h>
 
 #include <QTMegaRequestListener.h>
 
@@ -11,6 +12,7 @@
 #include <QWidget>
 #include <QFutureWatcher>
 #include <QDateTime>
+#include <QPointer>
 
 namespace Ui {
 class DuplicatedNodeItem;
@@ -27,7 +29,7 @@ public:
     DuplicatedNodeItem(QWidget *parent = nullptr);
     virtual ~DuplicatedNodeItem();
 
-    void setInfo(std::shared_ptr<DuplicatedNodeInfo> info, NodeItemType type);
+    virtual void setInfo(std::shared_ptr<DuplicatedNodeInfo> info, NodeItemType type);
 
     NodeItemType getType(){return mType;}
     void setType(NodeItemType type);
@@ -46,12 +48,12 @@ protected:
 
     void fillUi();
     virtual QString getNodeName() = 0;
-    virtual QDateTime getModifiedTime() = 0;
-    virtual qint64 getNodeSize() = 0;
+    virtual void getModifiedTime() = 0;
+    virtual void getNodeSize() = 0;
     virtual bool isFile() const = 0;
 
-    bool isModifiedTimeVisible();
-    void setModifiedTimeVisible(bool state);
+    void setModifiedTime(QDateTime&& dateTime);
+    void setSize(qint64 size);
 
     bool isValid() const;
 
@@ -66,7 +68,6 @@ protected slots:
 
 private:
     Ui::DuplicatedNodeItem *ui;
-    bool mModifiedTimeVisible;
 
     void setActionAndTitle(const QString& text);
 };
@@ -75,24 +76,25 @@ private:
  * REMOTE IMPLEMENTATION CLASS
  * USE TO SHOW THE REMOTE NODE INFO
 */
-class DuplicatedRemoteItem : public DuplicatedNodeItem, public mega::MegaRequestListener
+class DuplicatedRemoteItem : public DuplicatedNodeItem
 {
     Q_OBJECT
 public:
     DuplicatedRemoteItem(QWidget *parent = nullptr);
     ~DuplicatedRemoteItem();
 
+    void setInfo(std::shared_ptr<DuplicatedNodeInfo> info, NodeItemType type) override;
     std::shared_ptr<mega::MegaNode> getNode();
 
 protected:
     QString getNodeName() override;
-    QDateTime getModifiedTime() override;
-    qint64 getNodeSize() override;
+    void getModifiedTime() override;
+    void getNodeSize() override;
     bool isFile() const override;
-    void onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e) override;
 
 private:
     mega::QTMegaRequestListener* mListener;
+    QPointer<RemoteFolderAttributes> mFolderAttributes;
 };
 
 /*
@@ -105,28 +107,22 @@ class DuplicatedLocalItem : public DuplicatedNodeItem
 
 public:
     explicit DuplicatedLocalItem(QWidget *parent = nullptr);
-    virtual ~DuplicatedLocalItem() = default;
+    virtual ~DuplicatedLocalItem();
 
+    void setInfo(std::shared_ptr<DuplicatedNodeInfo> info, NodeItemType type) override;
     const QString& getLocalPath();
 
 protected:
     QString getNodeName() override;
 
-    QDateTime getModifiedTime() override;
-    qint64 getNodeSize() override;
+    void getModifiedTime() override;
+    void getNodeSize() override;
     bool isFile() const override;
 
-private slots:
-    void onNodeModificationTimeFinished();
-
 private:
-    qint64 getFolderSize(const QString& path, qint64 size);
-
-    QDateTime getFolderModifiedDate(const QString& path, const QDateTime& date);
     QString getFullFileName(const QString& path, const QString& fileName);
 
-    QDateTime mModificationTime;
-    QFutureWatcher<QDateTime> mFolderModificationTimeFuture;
+    QPointer<LocalFolderAttributes> mFolderAttributes;
 };
 
 /*
