@@ -44,7 +44,7 @@ RowLayout {
         Layout.rightMargin: 32
         Layout.bottomMargin: 24
 
-        Custom.Button {
+        Custom.SecondaryButton {
             id: cancelButton
 
             text: OnboardingStrings.cancel
@@ -63,7 +63,7 @@ RowLayout {
             id: nextButton
 
             text: OnboardingStrings.next
-            iconSource: Images.arrowRight
+            icons.source: Images.arrowRight
         }
 
     }

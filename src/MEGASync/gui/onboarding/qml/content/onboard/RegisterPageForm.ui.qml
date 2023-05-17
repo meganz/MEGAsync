@@ -43,9 +43,9 @@ StackViewPage {
         anchors.left: root.left
         anchors.right: root.right
         anchors.top: root.top
-        anchors.leftMargin: contentMargin
         anchors.rightMargin: contentMargin / 2
         anchors.topMargin: contentMargin
+
         spacing: contentMargin / 2
 
         Custom.RichText {
@@ -53,9 +53,10 @@ StackViewPage {
 
             anchors.left: parent.left
             anchors.right: parent.right
-            anchors.leftMargin: email.textField.focusBorderWidth
+            anchors.leftMargin: contentMargin
             anchors.rightMargin: email.textField.focusBorderWidth
             font.pixelSize: Custom.Text.Size.Large
+
             text: OnboardingStrings.signUpTitle
         }
 
@@ -64,9 +65,12 @@ StackViewPage {
 
             anchors.left: parent.left
             anchors.right: parent.right
+
             height: root.scrollViewHeight
             clip: true
-            wheelEnabled: formColumn.height > scrollView.height + checkboxSpacing + checkboxBottomHeight
+
+            wheelEnabled: formColumn.height > scrollView.height
+                          + checkboxSpacing + checkboxBottomHeight
 
             ScrollBar.vertical: ScrollBar {
                 id: scrollbar
@@ -89,7 +93,7 @@ StackViewPage {
                 }
             }
 
-            Column {
+            ColumnLayout {
                 id: formColumn
 
                 anchors.left: parent.left
@@ -98,13 +102,14 @@ StackViewPage {
                 spacing: contentMargin / 2
 
                 Column {
-                    anchors.left: parent.left
-                    anchors.right: parent.right
+                    Layout.fillWidth: true
                     spacing: 20
 
                     Column {
                         anchors.left: parent.left
                         anchors.right: parent.right
+                        anchors.leftMargin: contentMargin
+
                         spacing: 4
 
                         Row {
@@ -149,6 +154,7 @@ StackViewPage {
 
                         anchors.left: parent.left
                         anchors.right: parent.right
+                        anchors.leftMargin: contentMargin
                         anchors.rightMargin: root.rightFormMargin
                         title: OnboardingStrings.email
                     }
@@ -158,6 +164,7 @@ StackViewPage {
 
                         anchors.left: parent.left
                         anchors.right: parent.right
+                        anchors.leftMargin: contentMargin
                         anchors.rightMargin: root.rightFormMargin
                         showHint: true
                         title: OnboardingStrings.password
@@ -168,6 +175,8 @@ StackViewPage {
 
                         anchors.left: parent.left
                         anchors.right: parent.right
+                        anchors.leftMargin: contentMargin
+
                         anchors.rightMargin: root.rightFormMargin
                         title: OnboardingStrings.confirmPassword
                     }
@@ -176,8 +185,7 @@ StackViewPage {
                 Column {
                     id: checksLayout
 
-                    anchors.left: parent.left
-                    anchors.right: parent.right
+                    Layout.fillWidth: true
                     spacing: checkboxSpacing
 
                     Custom.CheckBox {
@@ -185,6 +193,7 @@ StackViewPage {
 
                         anchors.left: parent.left
                         anchors.right: parent.right
+                        anchors.leftMargin: contentMargin
                         anchors.rightMargin: root.rightFormMargin
                         url: Links.security
                         text: OnboardingStrings.understandLossPassword
@@ -195,6 +204,7 @@ StackViewPage {
 
                         anchors.left: parent.left
                         anchors.right: parent.right
+                        anchors.leftMargin: contentMargin
                         anchors.rightMargin: root.rightFormMargin
                         url: Links.terms
                         text: OnboardingStrings.agreeTerms
@@ -222,12 +232,12 @@ StackViewPage {
             id: nextButton
 
             enabled: dataLossCheckBox.checked && termsCheckBox.checked
-            iconSource: Images.arrowRight
+            icons.source: Images.arrowRight
+            icons.busyIndicatorImage: Images.loader
             text: OnboardingStrings.next
-            busyIndicatorImage: Images.loader
         }
 
-        Custom.OutlineButton {
+        Custom.SecondaryButton {
             id: loginButton
 
             text: OnboardingStrings.login

@@ -47,27 +47,25 @@ StackViewPage {
         Custom.EmailTextField {
             id: email
 
-            width: parent.width + 2 * focusWidth
+            width: parent.width
             anchors.left: parent.left
-            anchors.leftMargin: -focusWidth
             title: OnboardingStrings.email
         }
 
         Custom.PasswordTextField {
             id: password
 
-            width: parent.width + 2 * focusWidth
+            width: parent.width
             anchors.left: parent.left
-            anchors.leftMargin: -focusWidth
             title: OnboardingStrings.password
         }
 
-        Custom.HelpButton {
-            anchors.left: parent.left
-            anchors.right: parent.right
-            text: OnboardingStrings.forgotPassword
-            url: Links.recovery
-        }
+        //        Custom.HelpButton {
+        //            anchors.left: parent.left
+        //            anchors.right: parent.right
+        //            text: OnboardingStrings.forgotPassword
+        //            url: Links.recovery
+        //        }
     }
 
     RowLayout {
@@ -80,7 +78,7 @@ StackViewPage {
             bottomMargin: bottomMargin
         }
 
-        Custom.OutlineButton {
+        Custom.SecondaryButton {
             id: signUpButton
 
             text: OnboardingStrings.signUp
@@ -91,10 +89,9 @@ StackViewPage {
             id: loginButton
 
             text: OnboardingStrings.login
-            busyIndicatorImage: Images.loader
-            iconSource: Images.arrowRight
+            icons.busyIndicatorImage: Images.loader
+            icons.source: Images.arrowRight
             Layout.alignment: Qt.AlignRight
-            progressBar: true
         }
     }
 }

@@ -62,7 +62,7 @@ RegisterPageForm {
             return;
         }
 
-        nextButton.busyIndicatorVisible = true;
+        nextButton.icons.busyIndicatorVisible = true;
         state = signUpStatus;
 
         var formData = {
@@ -75,7 +75,7 @@ RegisterPageForm {
         Onboarding.onRegisterClicked(formData);
     }
 
-    nextButton.onAnimationFinished: {
+    nextButton.progress.onAnimationFinished: {
         if(completed){
 
             password.text = "";
@@ -86,7 +86,7 @@ RegisterPageForm {
             termsCheckBox.checked = false;
             dataLossCheckBox.checked = false;
             state = normalStatus;
-            nextButton.busyIndicatorVisible = false;
+            nextButton.icons.busyIndicatorVisible = false;
             registerFlow.state = confirmEmail;
         }
     }
@@ -115,7 +115,7 @@ RegisterPageForm {
                                     email.hintVisible = true;
                                 }
                                 state = normalStatus;
-                                nextButton.busyIndicatorVisible = false;
+                                nextButton.icons.busyIndicatorVisible = false;
                             }
     }
 }

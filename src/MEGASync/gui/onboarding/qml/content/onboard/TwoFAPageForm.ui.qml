@@ -20,7 +20,7 @@ StackViewPage {
 
     readonly property int contentMargin: 48
     readonly property int bottomMargin: 32
-    
+
     color: Styles.pageBackground
 
     ColumnLayout {
@@ -76,9 +76,8 @@ StackViewPage {
 
             text: OnboardingStrings.login
             Layout.alignment: Qt.AlignRight
-            busyIndicatorImage: Images.loader
-            iconSource: Images.arrowRight
-            progressBar: true
+            icons.busyIndicatorImage: Images.loader
+            icons.source: Images.arrowRight
         }
     }
 }

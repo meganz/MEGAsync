@@ -14,13 +14,14 @@ SyncsPage {
 
     property alias localFolderChooser: localFolderChooser
     property alias remoteFolderChooser: remoteFolderChooser
+    color: "#ffffff"
+    border.color: "#ffffff"
 
     footerButtons.nextButton {
         enabled: localFolderChooser.isValid && remoteFolderChooser.isValid
         text: OnboardingStrings.sync
-        iconSource: Images.sync
-        busyIndicatorImage: Images.loader
-        progressBar: true
+        icons.source: Images.sync
+        icons.busyIndicatorImage: Images.loader
     }
 
     ColumnLayout {
@@ -59,3 +60,10 @@ SyncsPage {
         }
     }
 }
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+##^##*/
+

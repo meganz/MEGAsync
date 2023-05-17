@@ -15,7 +15,7 @@ FullSyncPageForm {
 
         nextButton.onClicked: {
             root.enabled = false;
-            footerButtons.nextButton.busyIndicatorVisible = true;
+            footerButtons.nextButton.icons.busyIndicatorVisible = true;
             Onboarding.addSync(localFolderChooser.getSyncData());
         }
     }
@@ -25,7 +25,7 @@ FullSyncPageForm {
 
         onSyncSetupSuccess: {
             root.enabled = true;
-            footerButtons.nextButton.busyIndicatorVisible = false;
+            footerButtons.nextButton.icons.busyIndicatorVisible = false;
             localFolderChooser.reset();
         }
     }

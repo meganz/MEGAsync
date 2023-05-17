@@ -12,7 +12,6 @@ Rectangle {
 
     readonly property int contentMargin: 32
 
-    color: Styles.surface1
 
     Footer {
         id: footerButtons
@@ -23,3 +22,9 @@ Rectangle {
         }
     }
 }
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+##^##*/

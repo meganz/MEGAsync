@@ -49,16 +49,16 @@ LoginPageForm {
             return;
         }
 
-        loginButton.busyIndicatorVisible = true;
+        loginButton.icons.busyIndicatorVisible = true;
         state = logInStatus;
         Onboarding.onLoginClicked({ [Onboarding.RegisterForm.EMAIL]: email.text,
                                     [Onboarding.RegisterForm.PASSWORD]: password.text })
         loginAttempt = true;
     }
 
-    loginButton.onAnimationFinished: {
+    loginButton.progress.onAnimationFinished: {
         if(completed) {
-            loginButton.busyIndicatorVisible = false;
+            loginButton.icons.busyIndicatorVisible = false;
             state = normalStatus;
             onboardingFlow.state = syncs;
         }
@@ -83,13 +83,13 @@ LoginPageForm {
             password.showType = true;
             password.hintText = OnboardingStrings.errorLogin;
             password.hintVisible = true;
-            loginButton.busyIndicatorVisible = false;
+            loginButton.icons.busyIndicatorVisible = false;
             state = normalStatus;
         }
 
         onFetchingNodesProgress: {
             console.log("LOGIN PAGE progress:"+progress)
-            loginButton.progressValue = progress;
+            loginButton.progress.value = progress;
         }
 
         onLoginFinished: {
@@ -97,7 +97,7 @@ LoginPageForm {
         }
 
         onTwoFARequired: {
-            loginButton.busyIndicatorVisible = false;
+            loginButton.icons.busyIndicatorVisible = false;
             registerFlow.state = twoFA;
         }
     }

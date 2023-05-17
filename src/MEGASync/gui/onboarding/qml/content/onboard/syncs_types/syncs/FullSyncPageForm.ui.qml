@@ -18,9 +18,8 @@ SyncsPage {
     footerButtons.nextButton {
         enabled: localFolderChooser.isValid
         text: OnboardingStrings.sync
-        iconSource: Images.sync
-        busyIndicatorImage: Images.loader
-        progressBar: true
+        icons.source: Images.sync
+        icons.busyIndicatorImage: Images.loader
     }
 
     ColumnLayout {
@@ -50,5 +49,10 @@ SyncsPage {
             Layout.leftMargin: -4
         }
     }
-
 }
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+##^##*/

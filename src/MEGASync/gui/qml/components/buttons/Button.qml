@@ -11,33 +11,12 @@ import Common 1.0
 Qml.RoundButton {
     id: button
 
-    enum Position{
-        LEFT = 0,
-        RIGHT,
-        BOTH
-    }
+    property Colors colors: Colors{}
+    property Icon icons: Icon{}
+    property Progress progress: Progress{}
 
-    property alias color: backgroundRect.color
-    property alias textColor: buttonText.color
-    property color borderColor: borderColor
-    property color iconColor: iconColor
-    property string iconSource: ""
-    property int decorationPosition: Button.Position.RIGHT
-    property int busyIndicatorPosition: Button.Position.RIGHT
-    property bool busyIndicatorVisible: false
-    property size iconSize: Qt.size(16, 16)
-    property string busyIndicatorImage: ""
-    property bool progressBar: false
-    property int animationDuration: 1000 //ms
-    property double progressValue: 0 // from 0 to 1
-    property int progressBarRectWidth: 0
-
-    signal animationFinished(bool completed)
-
-    bottomPadding: 8
-    topPadding: 8
-    leftPadding: 16
-    rightPadding: 16
+    readonly property int focusBorderRadius: 11
+    readonly property int focusBorderWidth: 3
 
     Timer {
         id: busyTimer
@@ -46,109 +25,117 @@ Qml.RoundButton {
         repeat: false;
     }
 
-    onProgressValueChanged: {
-
-        if(progressValue < 1)
-        {
-            if(busyTimer.running)
-            {
-                return;
-            }
-
-            busyTimer.start();
-        }
-
-        if(progressValue > 1)
-        {
-            progressValue = 1;
-        }
-        progressBarRectWidth = backgroundRect.width * progressValue
-    }
-
-    onProgressBarChanged: {
-        if(progressBar)
-        {
-            backgroundLoader.sourceComponent = progressBarComp
-        }
-        else
-        {
-            backgroundLoader.destroy();
-        }
-    }
-
-    onBusyIndicatorVisibleChanged:
+    function getBorderColor()
     {
-        if(busyIndicatorVisible)
+        if(button.pressed)
         {
-            switch(busyIndicatorPosition)
-            {
-            case Button.Position.LEFT:
-                leftLoader.sourceComponent = busyIndicator;
-                break;
-            case Button.Position.RIGHT:
-                rightLoader.sourceComponent = busyIndicator;
-                break;
-            case Button.Position.BOTH:
-                leftLoader.sourceComponent = busyIndicator;
-                rightLoader.sourceComponent = busyIndicator;
-                break;
-            }
+            return colors.borderPressed;
         }
-        else
+        if(button.hovered)
         {
-            decorationPositionChanged();
+            return  colors.borderHover;
         }
+        if(!button.enabled && !icons.busyIndicatorVisible)
+        {
+            return colors.borderDisabled;
+        }
+        return colors.border;
     }
 
-    onDecorationPositionChanged: {
-        switch(decorationPosition)
+    function getBackgroundColor()
+    {
+        if(button.pressed)
         {
-        case Button.Position.LEFT:
-            leftLoader.sourceComponent = image;
-            break;
-        case Button.Position.RIGHT:
-            rightLoader.sourceComponent = image;
-            break;
-        case Button.Position.BOTH:
-            leftLoader.sourceComponent = image;
-            rightLoader.sourceComponent = image;
-            break;
+            return colors.pressed;
         }
+        if(button.hovered)
+        {
+            return colors.hover;
+        }
+        if(!button.enabled && !icons.busyIndicatorVisible)
+        {
+            return colors.disabled;
+        }
+        return colors.background;
     }
 
-    contentItem: RowLayout {
-        width: button.width
-        height: button.height
+    function getTextColor()
+    {
+        if(!button.enabled && !icons.busyIndicatorVisible)
+        {
+            return colors.disabled;
+        }
+        return colors.text;
+    }
+
+    bottomPadding: 8 + focusBorderWidth
+    topPadding: 8 + focusBorderWidth
+    leftPadding: 16 + focusBorderWidth
+    rightPadding: 16 + focusBorderWidth
+    height: 36 + 2 * focusBorderWidth
+    Layout.preferredHeight: 36 + 2 * focusBorderWidth
+
+    contentItem: Row {
+        anchors{
+            centerIn: focusRect
+        }
+
         spacing: 8
 
         Loader {
             id: leftLoader
+            anchors.verticalCenter: parent.verticalCenter
         }
 
         Custom.Text {
             id: buttonText
 
+            anchors.verticalCenter: parent.verticalCenter
             text: button.text
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-            font.pixelSize: Custom.Text.Size.Medium
-            font.weight: Font.DemiBold
+            color: getTextColor()
+            font {
+                pixelSize: Custom.Text.Size.Medium
+                weight: Font.DemiBold
+            }
         }
 
         Loader {
             id: rightLoader
+            anchors.verticalCenter: parent.verticalCenter
         }
     }
 
     background: Rectangle {
-        id: backgroundRect
+        id: focusRect
 
-        width: button.width
+        color: "transparent"
+        border.color: button.enabled ? (button.focus ? Styles.focus : "transparent") : "transparent"
+        border.width: button.focusBorderWidth
+        radius: button.focusBorderRadius
         height: button.height
+        anchors {
+            left: button.left
+            leftMargin: -button.focusBorderWidth
+            right: button.right
+            rightMargin: button.focusBorderWidth
+            top: button.top
+            bottom: button.bottom
+        }
+
+        Rectangle {
+        id: backgroundRect
+        color: getBackgroundColor()
+        anchors.top: focusRect.top
+        anchors.left: focusRect.left
+        anchors.topMargin: button.focusBorderWidth
+        anchors.leftMargin: button.focusBorderWidth
+        width: button.width - 2 * button.focusBorderWidth
+        height: button.height - 2 * button.focusBorderWidth
+
         border.width: 2
-        border.color: borderColor
+        border.color: getBorderColor()
         radius: 6
-        opacity: button.enabled || busyIndicatorVisible? 1.0 : 0.5
+       // opacity: button.enabled || icons.busyIndicatorVisible? 1.0 : 0.5
 
         layer.enabled: true
         layer.effect: OpacityMask {
@@ -167,6 +154,7 @@ Qml.RoundButton {
         Loader{
             id: backgroundLoader
         }
+        }
     }
 
     MouseArea {
@@ -178,46 +166,19 @@ Qml.RoundButton {
     }
 
     Component {
-        id: progressBarComp
-        Rectangle {
-            id: progressBarRect
-            anchors.left: parent.left
-            height: backgroundRect.height
-            width: progressBarRectWidth
-            //radius: 6
-            color: Styles.buttonPrimaryPressed
-
-            Behavior on width {
-                NumberAnimation {
-                    id: animation
-                    duration: animationDuration
-                    onRunningChanged: {
-                        if(!running)
-                        {
-                            var finished = progressBarRect.width === backgroundRect.width;
-                            animationFinished(finished);
-                            progressBar = !finished;
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    Component {
         id: image
         Custom.SvgImage {
-            visible: button.iconSource.length
-            source: button.iconSource
-            color: iconColor
-            sourceSize: button.iconSize
+            //visible: button.iconSource.length
+            source: icons.source
+            color: button.enabled ? icons.color : icons.disabledColor
+            sourceSize: icons.size//button.iconSize
         }
     }
     Component {
         id: busyIndicator
         Custom.BusyIndicator {
-            imageSource: busyIndicatorImage
-            color: iconColor
+            imageSource: icons.busyIndicatorImage
+            color: icons.color//iconColor
         }
     }
 }

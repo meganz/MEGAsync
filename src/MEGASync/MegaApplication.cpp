@@ -3494,16 +3494,16 @@ void MegaApplication::processUpgradeSecurityEvent()
         int button =upgradeSecurityDialog->result();
         if (button == QMessageBox::Ok)
         {
-            megaApi->upgradeSecurity(new OnFinishOneShot(megaApi, [=](const MegaError& e){
-                if (e.getErrorCode() != MegaError::API_OK)
-                {
-                    QString errorTitle = tr("Error");
-                    QString errorMessage = tr("Failed to ugrade security. Error: %1")
-                                           .arg(tr(e.getErrorString()));
-                    showErrorMessage(errorMessage, errorTitle);
-                    exitApplication();
-                }
-            }));
+//            megaApi->upgradeSecurity(new OnFinishOneShot(megaApi, [=](const MegaError& e){
+//                if (e.getErrorCode() != MegaError::API_OK)
+//                {
+//                    QString errorTitle = tr("Error");
+//                    QString errorMessage = tr("Failed to ugrade security. Error: %1")
+//                                           .arg(tr(e.getErrorString()));
+//                    showErrorMessage(errorMessage, errorTitle);
+//                    exitApplication();
+//                }
+//            }));
         }
         else if (button == QMessageBox::Cancel)
         {
@@ -6573,10 +6573,10 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
     {
         manageBusinessStatus(event->getNumber());
     }
-    else if (event->getType() == MegaEvent::EVENT_UPGRADE_SECURITY)
-    {
-        processUpgradeSecurityEvent();
-    }
+//    else if (event->getType() == MegaEvent::EVENT_UPGRADE_SECURITY)
+//    {
+//        processUpgradeSecurityEvent();
+//    }
 }
 
 //Called when a request is about to start

@@ -19,8 +19,6 @@ Rectangle {
     property int type: TextField.Type.None
     property bool showType: false
 
-    readonly property int focusWidth: textField.focusBorderWidth + textField.borderWidth
-
     // Title properties
     property string title: ""
 
@@ -96,8 +94,8 @@ Rectangle {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.top: parent.top
-        anchors.leftMargin: textField.focusBorderWidth
-        anchors.rightMargin: textField.focusBorderWidth
+        //anchors.leftMargin: textField.focusBorderWidth
+        //anchors.rightMargin: textField.focusBorderWidth
     }
 
     Qml.TextField {
@@ -131,7 +129,7 @@ Rectangle {
 
         selectByMouse: true
         selectionColor: Styles.focus
-        height: 42
+        height: 36 + 2 * focusBorderWidth
         leftPadding: calculatePaddingWithIcon(leftIconSource != "")
         rightPadding: calculatePaddingWithIcon(rightIconSource != "")
         topPadding: verticalPadding
@@ -153,6 +151,15 @@ Rectangle {
             border.color: textField.focus ? Styles.focus : "transparent"
             border.width: textField.focusBorderWidth
             radius: textField.focusBorderRadius
+
+            anchors {
+                left: textField.left
+                leftMargin: -textField.focusBorderWidth
+                right: textField.right
+                rightMargin: textField.focusBorderWidth
+                top: textField.top
+                bottom: textField.bottom
+            }
 
             Loader {
                 id: leftIconLoader

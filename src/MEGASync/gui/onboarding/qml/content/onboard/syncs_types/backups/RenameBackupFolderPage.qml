@@ -21,12 +21,11 @@ RenameBackupFolderPageForm {
 
         nextButton {
             text: OnboardingStrings.rename
-            iconSource: Images.edit
-            busyIndicatorImage: Images.loader
-            progressBar: true
+            icons.source: Images.edit
+            icons.busyIndicatorImage: Images.loader
             onClicked: {
                 root.enabled = false;
-                footerButtons.nextButton.busyIndicatorVisible = true;
+                footerButtons.nextButton.icons.busyIndicatorVisible = true;
                 Onboarding.createNextBackup(renameTextField.text);
             }
         }
@@ -41,7 +40,7 @@ RenameBackupFolderPageForm {
 
         onBackupConflict: (folder, name, isNew) => {
             root.enabled = true;
-            footerButtons.nextButton.busyIndicatorVisible = false;
+            footerButtons.nextButton.icons.busyIndicatorVisible = false;
 
             const regex = /\".*\"/;
             if(isNew) {

@@ -13,14 +13,14 @@ TwoFAPageForm {
 
     loginButton.onClicked: {
         state = code2FAStatus;
-        loginButton.busyIndicatorVisible = true;
+        loginButton.icons.busyIndicatorVisible = true;
         Onboarding.onTwoFARequested(twoFAField.key);
     }
 
-    loginButton.onAnimationFinished: {
+    loginButton.progress.onAnimationFinished: {
         if(completed) {
             console.log("ANIMATION FINISHED 2FA"+completed)
-            loginButton.busyIndicatorVisible = false;
+            loginButton.icons.busyIndicatorVisible = false;
             onboardingFlow.state = syncs;
         }
     }
@@ -30,7 +30,7 @@ TwoFAPageForm {
 
         onTwoFAFailed: {
             twoFAField.hasError = true;
-            loginButton.busyIndicatorVisible = false;
+            loginButton.icons.busyIndicatorVisible = false;
             state = normalStatus;
         }
 

@@ -15,7 +15,7 @@ SelectiveSyncPageForm {
 
         nextButton.onClicked: {
             root.enabled = false;
-            footerButtons.nextButton.busyIndicatorVisible = true;
+            footerButtons.nextButton.icons.busyIndicatorVisible = true;
             Onboarding.addSync(localFolderChooser.getSyncData(), remoteFolderChooser.getSyncData());
         }
     }
@@ -25,7 +25,7 @@ SelectiveSyncPageForm {
 
         onSyncSetupSuccess: {
             root.enabled = true;
-            footerButtons.nextButton.busyIndicatorVisible = false;
+            footerButtons.nextButton.icons.busyIndicatorVisible = false;
             syncsFlow.state = finalState;
             localFolderChooser.reset();
             remoteFolderChooser.reset();

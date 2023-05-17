@@ -56,8 +56,7 @@ Rectangle {
             id: emailTextField
 
             title: OnboardingStrings.email
-            Layout.preferredWidth: layout.width + 2 * focusWidth
-            Layout.leftMargin: -focusWidth
+            Layout.preferredWidth: layout.width
         }
     }
 
@@ -81,7 +80,13 @@ Rectangle {
             id: resendButton
 
             text: OnboardingStrings.resend
-            iconSource: Images.mail
+            icon.source: Images.mail
         }
     }
 }
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+##^##*/

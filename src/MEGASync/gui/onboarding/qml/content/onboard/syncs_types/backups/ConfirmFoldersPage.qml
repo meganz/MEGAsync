@@ -23,13 +23,12 @@ ConfirmFoldersPageForm {
 
         nextButton {
             text: OnboardingStrings.backup
-            iconSource: Images.cloud
-            busyIndicatorImage: Images.loader
-            progressBar: true
+            icons.source: Images.cloud
+            icons.busyIndicatorImage: Images.loader
             onClicked: {
                 success = false;
                 root.enabled = false;
-                footerButtons.nextButton.busyIndicatorVisible = true;
+                footerButtons.nextButton.icons.busyIndicatorVisible = true;
                 backupTable.backupModel.updateConfirmed();
                 Onboarding.addBackups(backupTable.backupModel.getConfirmedDirs());
             }
@@ -59,7 +58,7 @@ ConfirmFoldersPageForm {
         onBackupConflict: (folder, name, isNew) => {
             backupTable.backupModel.clean();
             root.enabled = true;
-            footerButtons.nextButton.busyIndicatorVisible = false;
+            footerButtons.nextButton.icons.busyIndicatorVisible = false;
         }
     }
 
