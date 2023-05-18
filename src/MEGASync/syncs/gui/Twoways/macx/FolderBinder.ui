@@ -10,6 +10,9 @@
     <height>96</height>
    </rect>
   </property>
+  <property name="focusPolicy">
+   <enum>Qt::StrongFocus</enum>
+  </property>
   <property name="windowTitle">
    <string/>
   </property>
@@ -93,7 +96,7 @@ height: 16px;
          </size>
         </property>
         <property name="focusPolicy">
-         <enum>Qt::StrongFocus</enum>
+         <enum>Qt::NoFocus</enum>
         </property>
         <property name="text">
          <string>MEGA folder:</string>
@@ -119,6 +122,12 @@ height: 16px;
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
+          <property name="acceptDrops">
+           <bool>false</bool>
+          </property>
           <property name="readOnly">
            <bool>true</bool>
           </property>
@@ -126,6 +135,9 @@ height: 16px;
         </item>
         <item>
          <widget class="QPushButton" name="bMegaFolder">
+          <property name="focusPolicy">
+           <enum>Qt::StrongFocus</enum>
+          </property>
           <property name="text">
            <string>Choose</string>
           </property>
@@ -148,7 +160,7 @@ height: 16px;
          </size>
         </property>
         <property name="focusPolicy">
-         <enum>Qt::StrongFocus</enum>
+         <enum>Qt::NoFocus</enum>
         </property>
         <property name="text">
          <string>Local folder:</string>
@@ -174,6 +186,12 @@ height: 16px;
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
+          <property name="acceptDrops">
+           <bool>false</bool>
+          </property>
           <property name="readOnly">
            <bool>true</bool>
           </property>
@@ -181,6 +199,9 @@ height: 16px;
         </item>
         <item>
          <widget class="QPushButton" name="bLocalFolder">
+          <property name="focusPolicy">
+           <enum>Qt::StrongFocus</enum>
+          </property>
           <property name="text">
            <string>Choose</string>
           </property>
@@ -194,11 +215,7 @@ height: 16px;
   </layout>
  </widget>
  <tabstops>
-  <tabstop>lLocalFolder</tabstop>
-  <tabstop>eLocalFolder</tabstop>
   <tabstop>bLocalFolder</tabstop>
-  <tabstop>lMegaFolder</tabstop>
-  <tabstop>eMegaFolder</tabstop>
   <tabstop>bMegaFolder</tabstop>
  </tabstops>
  <resources/>

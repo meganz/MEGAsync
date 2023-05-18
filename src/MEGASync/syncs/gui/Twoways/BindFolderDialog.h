@@ -29,8 +29,10 @@ public:
 
 private slots:
     void on_bOK_clicked();
+    void allSelectionsDone();
 
 protected:
+    bool focusNextPrevChild(bool next) override;
     void changeEvent(QEvent * event);
 
 private:
