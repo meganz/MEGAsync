@@ -806,31 +806,8 @@ QVariant NodeSelectorModel::getText(const QModelIndex &index, NodeSelectorModelI
                 return QVariant();
             }
 
-            const QString language = MegaSyncApp->getCurrentLanguageCode();
-            QLocale locale(language);
             QDateTime dateTime = dateTime.fromSecsSinceEpoch(item->getNode()->getCreationTime());
-            QDateTime currentDate = currentDate.currentDateTime();
-            QLatin1String dateFormat ("dd MMM yyyy");
-            QString timeFormat = locale.timeFormat(QLocale::ShortFormat);
-
-            int hours = dateTime.time().hour();
-
-            if(currentDate.toString(dateFormat)
-                    == dateTime.toString(dateFormat))
-            {
-                return tr("Today at %1", "", hours).arg(locale.toString(dateTime, timeFormat));
-            }
-
-            currentDate = currentDate.addDays(-1); //for checking if it was yesterday
-
-            if(currentDate.toString(dateFormat)
-                    == dateTime.toString(dateFormat))
-            {
-                return tr("Yesterday at %1", "", hours).arg(locale.toString(dateTime, timeFormat));
-            }
-            //First: day Second: hour. This is done for allow translators to change the order
-            //in case there are any language that needs to put in another order.
-            return tr("%1 at %2", "", hours).arg(locale.toString(dateTime, dateFormat), locale.toString(dateTime, timeFormat));
+            return MegaSyncApp->getFormattedDateByCurrentLanguage(dateTime, QLocale::FormatType::ShortFormat);
         }
         default:
             break;
