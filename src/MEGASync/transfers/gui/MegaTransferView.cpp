@@ -589,22 +589,26 @@ QMenu* MegaTransferView::createContextMenu()
 
         auto d (qvariant_cast<TransferItem>(index.data()).getTransferData());
 
-        std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(d->mNodeHandle));
-
-        if(node && MegaSyncApp->getMegaApi()->checkAccess(node.get(), mega::MegaShare::ACCESS_OWNER).getErrorCode() != mega::MegaError::API_OK)
-        {
-            containsIncomingShares = true;
-        }
-
         if(d->isCompleted() || d->mType & TransferData::TRANSFER_DOWNLOAD)
         {
+            if(!containsIncomingShares)
+            {
+                std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(d->mNodeHandle));
+
+                if(Utilities::isIncommingShare(node.get()))
+                {
+                    containsIncomingShares = true;
+                }
+            }
+
             //Handles to open
             if(handlesToOpenByContextMenu.size() <= MAX_ITEMS_FOR_CONTEXT_MENU)
             {
-                auto node = mParentTransferWidget->getModel()->getParentNodeToOpenByRow(index.row());
-                if(node && !handlesToOpenByContextMenu.contains(node->getHandle()))
+
+                auto parentNode = mParentTransferWidget->getModel()->getParentNodeToOpenByRow(index.row());
+                if(parentNode && !handlesToOpenByContextMenu.contains(parentNode->getHandle()))
                 {
-                    handlesToOpenByContextMenu.append(node->getHandle());
+                    handlesToOpenByContextMenu.append(parentNode->getHandle());
                 }
             }
         }
@@ -791,6 +795,7 @@ QMenu* MegaTransferView::createContextMenu()
             connect(openInMEGAAction, &QAction::triggered, this, &MegaTransferView::openInMEGAClicked);
 
             contextMenu->addAction(openInMEGAAction);
+
         }
 
         if(!containsIncomingShares)
