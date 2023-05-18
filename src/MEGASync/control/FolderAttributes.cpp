@@ -13,8 +13,8 @@
 #endif
 
 FolderAttributes::FolderAttributes(QObject* parent)
-    : mSize(-1),
-      mCancelled(false),
+    : mCancelled(false),
+      mSize(-1),
       QObject(parent)
 {
 }
@@ -184,7 +184,7 @@ void RemoteFolderAttributes::requestSize()
     {
         if(node->isFile())
         {
-            mSize = std::max(node->getSize(), 0LL);
+            mSize = std::max(static_cast<long long>(node->getSize()), static_cast<long long>(0));
             emit sizeReady(mSize);
         }
         else

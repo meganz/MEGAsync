@@ -26,19 +26,36 @@
    <string notr="true"/>
   </property>
   <property name="styleSheet">
-   <string notr="true">#contents
+   <string notr="true">#backgroundWidget
 {
     border-radius: 4px;
 }
 
-#contents[discarded=false] 
+#backgroundWidget[discarded=false][disable_background=false]
 {
 	background-color: #F5F5F5;
 }
 
-#contents[discarded=true]
+#backgroundWidget[discarded=true][disable_background=false]
 {
 	background-color: #FCFCFC;
+}
+
+#extraInfoContainer QLabel[title=false]
+{
+	font-family: Lato;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 16px;
+    color: #333333;
+}
+
+#extraInfoContainer QLabel[title=true]
+{
+	font-family: Lato;
+    font-size: 13px;
+    line-height: 16px;
+    color: #333333;
 }
 
 #titleContainer QLabel
@@ -84,7 +101,7 @@ QPushButton[main=true]
    color: #333333;
 }</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
     <number>0</number>
    </property>
@@ -101,13 +118,10 @@ QPushButton[main=true]
     <number>0</number>
    </property>
    <item>
-    <widget class="QFrame" name="contents">
-     <property name="styleSheet">
-      <string notr="true"/>
-     </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_3">
+    <widget class="QWidget" name="backgroundWidget" native="true">
+     <layout class="QVBoxLayout" name="verticalLayout_2">
       <property name="spacing">
-       <number>8</number>
+       <number>0</number>
       </property>
       <property name="leftMargin">
        <number>0</number>
@@ -116,113 +130,155 @@ QPushButton[main=true]
        <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>5</number>
-      </property>
-      <property name="bottomMargin">
        <number>0</number>
       </property>
+      <property name="bottomMargin">
+       <number>10</number>
+      </property>
       <item>
-       <widget class="QWidget" name="titleContainer" native="true">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
+       <widget class="QFrame" name="contents">
+        <property name="styleSheet">
+         <string notr="true"/>
         </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
          <property name="spacing">
           <number>8</number>
          </property>
          <property name="leftMargin">
-          <number>4</number>
+          <number>0</number>
          </property>
          <property name="topMargin">
           <number>0</number>
          </property>
          <property name="rightMargin">
-          <number>0</number>
+          <number>5</number>
          </property>
          <property name="bottomMargin">
           <number>0</number>
          </property>
          <item>
-          <widget class="QLabel" name="icon">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>24</width>
-             <height>24</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>24</width>
-             <height>24</height>
-            </size>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="titleLabel">
+          <widget class="QWidget" name="titleContainer" native="true">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
-           <property name="font">
-            <font>
-             <family>Lato</family>
-             <pointsize>-1</pointsize>
-             <bold>true</bold>
-            </font>
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <property name="spacing">
+             <number>8</number>
+            </property>
+            <property name="leftMargin">
+             <number>4</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="icon">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>24</width>
+                <height>24</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>24</width>
+                <height>24</height>
+               </size>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="titleLabel">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <family>Lato</family>
+                <pointsize>-1</pointsize>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
            </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>5</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QWidget" name="actionContainer" native="true">
            <property name="styleSheet">
             <string notr="true"/>
            </property>
-           <property name="text">
-            <string/>
-           </property>
+           <layout class="QHBoxLayout" name="actionLayout">
+            <property name="spacing">
+             <number>5</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+           </layout>
           </widget>
          </item>
         </layout>
        </widget>
       </item>
       <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>5</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QWidget" name="actionContainer" native="true">
-        <property name="styleSheet">
-         <string notr="true"/>
-        </property>
-        <layout class="QHBoxLayout" name="actionLayout">
-         <property name="spacing">
-          <number>5</number>
-         </property>
+       <widget class="QWidget" name="extraInfoContainer" native="true">
+        <layout class="QGridLayout" name="extraInfoLayout">
          <property name="leftMargin">
-          <number>0</number>
+          <number>36</number>
          </property>
          <property name="topMargin">
           <number>0</number>
@@ -232,6 +288,12 @@ QPushButton[main=true]
          </property>
          <property name="bottomMargin">
           <number>0</number>
+         </property>
+         <property name="horizontalSpacing">
+          <number>20</number>
+         </property>
+         <property name="verticalSpacing">
+          <number>5</number>
          </property>
         </layout>
        </widget>

@@ -64,7 +64,6 @@
          <string notr="true">StalledIssueActionTitle
 {
     min-height: 40 px;
-    max-height: 40 px;
     background-color: #F5F5F5;
 }</string>
         </property>
