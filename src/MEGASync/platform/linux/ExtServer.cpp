@@ -262,7 +262,7 @@ QString ExtServer::getActionName(const int actionId)
         case STRING_GETLINK:
         {
             std::unique_ptr<MegaNode> node(MegaSyncApp->getMegaApi()->getSyncedNode(&mLastPath));
-            if(node && MegaSyncApp->getMegaApi()->checkAccess(node.get(), MegaShare::ACCESS_OWNER).getErrorCode() == MegaError::API_OK)
+            if(!Utilities::isIncommingShare(node.get()))
             {
                 name = QCoreApplication::translate("ShellExtension", "Get MEGA link");
             }
