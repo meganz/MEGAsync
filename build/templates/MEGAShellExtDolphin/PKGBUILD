@@ -24,11 +24,11 @@ pkgver=EXT_VERSION
 pkgrel=`cat MEGA_BUILD_ID || echo "1"`
 epoch=
 pkgdesc="Extension for KDE based file managers to interact with Megasync"
-arch=('i686' 'x86_64')
+arch=('x86_64')
 url="http://mega.nz/#sync"
 license=() #TODO
 depends=('megasync>=3.5' 'dolphin')
-makedepends=('extra-cmake-modules' 'dolphin' 'qt5-tools' 'rsync' 'mesa')
+makedepends=('extra-cmake-modules' 'kde-sdk-meta' 'dolphin')
 provides=("dolphin-megasync=${pkgver}")
 conflicts=()
 replaces=()
@@ -46,10 +46,7 @@ prepare() {
 
 build() {
 	cd "$pkgname-$pkgver"
-	mkdir forplasma
-	cp -r * forplasma/ || :
-	cd forplasma
-	cmake -DCMAKE_INSTALL_PREFIX="`kf5-config --prefix`" $PWD
+	cmake $PWD
 	make
 }
 
@@ -59,19 +56,11 @@ check() {
 
 package() {
 	cd "$pkgname-$pkgver"
-	cd forplasma
 	make install DESTDIR=$pkgdir
-
-	#fix conflict with existing /usr/lib64 (pointing to /usr/lib)
-	if [ -d $pkgdir/usr/lib64 ]; then
-		rsync -av $pkgdir/usr/lib64/ $pkgdir/usr/lib/
-		rm -rf $pkgdir/usr/lib64
-	fi
 
 	#fix missplaced .so for kf5
 	if [ -d $pkgdir/usr/lib/qt5 ]; then
-		rsync -av $pkgdir/usr/lib/qt5/ $pkgdir/usr/lib/qt/
+		cp -av $pkgdir/usr/lib/qt5/* $pkgdir/usr/lib/qt/
 		rm -rf $pkgdir/usr/lib/qt5
 	fi
 }
-

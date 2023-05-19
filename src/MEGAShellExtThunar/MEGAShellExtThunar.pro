@@ -28,8 +28,8 @@ isEmpty(DESKTOP_DESTDIR) {
 }
 
 # library
-EXTENSIONS_PATH = $$system(pkg-config --variable=extensionsdir thunarx-2 || pkg-config --variable=extensionsdir thunarx-3 | sed \"s@/usr@@\")
-target.path = $${DESKTOP_DESTDIR}$${EXTENSIONS_PATH}
+EXTENSIONS_PATH = $$system(pkg-config --variable=extensionsdir thunarx-2 || pkg-config --variable=extensionsdir thunarx-3)
+target.path = $${DESKTOP_DESTDIR}/../$${EXTENSIONS_PATH}
 INSTALLS += target
 
 QMAKE_CLEAN += $(TARGET) lib$${TARGET}.so lib$${TARGET}.so.1 lib$${TARGET}.so.1.0

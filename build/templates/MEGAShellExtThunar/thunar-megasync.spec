@@ -16,6 +16,7 @@ BuildRequires:  glib2-devel, thunar-devel, libqt5-qtbase-devel
 %if 0%{?fedora}
 BuildRequires: Thunar-devel
 BuildRequires: qt5-qtbase-devel
+%global debug_package %{nil}
 %endif
 
 %if 0%{?rhel_version} || 0%{?centos_version}
@@ -65,7 +66,6 @@ make install
 
 %files
 %defattr(-,root,root)
-
 %(pkg-config --variable=extensionsdir thunarx-3 || pkg-config --variable=extensionsdir thunarx-2)/libMEGAShellExtThunar.so*
 
 %changelog
