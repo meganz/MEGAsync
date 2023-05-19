@@ -8,14 +8,14 @@ namespace mega {
 class MegaUserAlert;
 }
 
-class RemovedSharesNotificator: public QObject
+class NotificationDelayer: public QObject
 {
     Q_OBJECT
 public:
     void addUserAlert(mega::MegaUserAlert* userAlert, const QString &userName);
 
 signals:
-    void sendClusteredAlert(mega::MegaUserAlert* alert, const QString& message);
+    void sendClusteredAlert(mega::MegaUserAlert* alert, uint64_t number);
 
 private:
     using AlertId = unsigned;

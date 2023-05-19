@@ -1,10 +1,10 @@
-#include "RemovedSharesNotificator.h"
+#include "NotificationDelayer.h"
 #include "megaapi.h"
 #include "mega/types.h"
 
 constexpr auto alertClusterMaxElapsedTime = std::chrono::minutes(10);
 
-void RemovedSharesNotificator::removeObsoleteAlertClusters()
+void NotificationDelayer::removeObsoleteAlertClusters()
 {
     for(const auto& clusterTimestamp : mClusterTimestamps)
     {
@@ -21,7 +21,7 @@ void RemovedSharesNotificator::removeObsoleteAlertClusters()
     }
 }
 
-void RemovedSharesNotificator::addUserAlert(mega::MegaUserAlert *userAlert, const QString& userName)
+void NotificationDelayer::addUserAlert(mega::MegaUserAlert *userAlert, const QString& userName)
 {
     removeObsoleteAlertClusters();
 
@@ -32,7 +32,7 @@ void RemovedSharesNotificator::addUserAlert(mega::MegaUserAlert *userAlert, cons
     {
         auto userAlertTimedClustering = ::mega::make_unique<UserAlertTimedClustering>();
         QObject::connect(userAlertTimedClustering.get(), &UserAlertTimedClustering::sendUserAlert,
-                         this, &RemovedSharesNotificator::sendClusteredAlert);
+                         this, &NotificationDelayer::sendClusteredAlert);
         mAlertClusters[userAlert->getId()] = std::move(userAlertTimedClustering);
     }
     mAlertClusters[userAlertId]->addUserAlert(userAlert, userName);

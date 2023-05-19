@@ -1,6 +1,6 @@
 #pragma once
 #include "Notificator.h"
-#include "RemovedSharesNotificator.h"
+#include "NotificationDelayer.h"
 #include "Preferences.h"
 #include "QTMegaRequestListener.h"
 
@@ -47,7 +47,7 @@ public slots:
     void viewShareOnWebClient() const;
     void viewShareOnWebClientByHandle(const QString &nodeBase64Handle) const;
     void getRemoteNodeLink(const QList<std::shared_ptr<mega::MegaNode> > &nodes) const;
-    void receiveClusteredAlert(mega::MegaUserAlert* alert, const QString& message) const;
+    void receiveClusteredAlert(mega::MegaUserAlert* alert, int64_t number) const;
     void replyNewShareReceived(MegaNotification::Action action) const;
     void viewOnInfoDialogNotifications(MegaNotification::Action action) const;
 
@@ -73,7 +73,7 @@ private:
     std::unique_ptr<Notificator> mNotificator;
     QString mNewContactIconPath, mStorageQuotaFullIconPath, mStorageQuotaWarningIconPath;
     QString mFolderIconPath, mFileDownloadSucceedIconPath;
-    RemovedSharesNotificator mRemovedSharedNotificator;
+    NotificationDelayer mDelayedNotificator;
     std::shared_ptr<Preferences> mPreferences;
     bool mIsFirstTime;//Check first time alerts are added to show unified message of unread.
 

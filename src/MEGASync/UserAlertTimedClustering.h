@@ -26,5 +26,5 @@ private slots:
     void onClusterTimerTimeout();
 
 signals:
-    void sendUserAlert(mega::MegaUserAlert* userAlert, const QString& message);
+    void sendUserAlert(mega::MegaUserAlert* userAlert, int64_t number);
 };

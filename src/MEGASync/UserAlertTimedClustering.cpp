@@ -47,7 +47,6 @@ void UserAlertTimedClustering::onClusterTimerTimeout()
     const auto totalRemovedItems = mUserAlert->getNumber(0);
     const auto currentRemovedItems = totalRemovedItems - mPreviousTotalRemovedItems;
     mPreviousTotalRemovedItems = totalRemovedItems;
-    const QString email{QString::fromUtf8(mUserAlert->getEmail())};
     const QString message{getRemovedItemsMessage(currentRemovedItems, mUserName)};
-    emit sendUserAlert(mUserAlert, message);
+    emit sendUserAlert(mUserAlert, currentRemovedItems);
 }
