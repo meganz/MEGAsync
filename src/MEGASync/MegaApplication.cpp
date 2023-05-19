@@ -2018,6 +2018,11 @@ void MegaApplication::checkOverStorageStates()
                                "Almost overstorage notification shown", false, nullptr);
             mOsNotifications->sendOverStorageNotification(Preferences::STATE_ALMOST_OVER_STORAGE);
         }
+
+        if(mStorageOverquotaDialog)
+        {
+            mStorageOverquotaDialog->close();
+        }
     }
     else if (appliedStorageState == MegaApi::STORAGE_STATE_PAYWALL)
     {
@@ -2040,6 +2045,11 @@ void MegaApplication::checkOverStorageStates()
                     mOsNotifications->sendOverStorageNotification(Preferences::STATE_PAYWALL);
                 }
             }
+
+            if(mStorageOverquotaDialog)
+            {
+                mStorageOverquotaDialog->close();
+            }
         }
     }
     else
@@ -2047,6 +2057,11 @@ void MegaApplication::checkOverStorageStates()
         if (infoDialog)
         {
             infoDialog->updateOverStorageState(Preferences::STATE_BELOW_OVER_STORAGE);
+        }
+
+        if(mStorageOverquotaDialog)
+        {
+            mStorageOverquotaDialog->close();
         }
     }
 
