@@ -16,8 +16,6 @@ Item {
     property int scrollBarVerticalMargin: 8
     property int scrollBarHorizontalMargin: 8
 
-    activeFocusOnTab: true
-
     Flickable {
         id: flickable
 
@@ -26,12 +24,17 @@ Item {
         height: root.height
         width: root.width
         clip: true
-        boundsBehavior: Flickable.StopAtBounds
+        interactive: false
+
+        MouseArea {
+            anchors.fill: parent
+            onWheel: if(scrollbarVertical.visible) {
+                        flickable.flick(0, wheel.angleDelta.y * 5);
+                    }
+        }
 
         Qml.ScrollBar.vertical: scrollbarVertical
         Qml.ScrollBar.horizontal: scrollbarHorizontal
-
-        focus: true
     }
 
     Keys.onUpPressed: {
