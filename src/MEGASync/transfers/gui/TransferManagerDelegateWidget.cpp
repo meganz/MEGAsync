@@ -212,7 +212,9 @@ void TransferManagerDelegateWidget::updateTransferState()
                 showTPauseResume = false;
             }
 
-            timeString = getData()->getFormattedFinishedTime();
+            auto dateTime = getData()->getFinishedDateTime();
+            timeString = MegaSyncApp->getFormattedDateByCurrentLanguage(dateTime, QLocale::FormatType::ShortFormat);
+
             timeTooltip = getData()->getFullFormattedFinishedTime();
             speedString = QString::fromUtf8("…");
 
