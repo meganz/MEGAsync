@@ -4,12 +4,12 @@ INCLUDEPATH += $$PWD
 SOURCES += $$PWD/DesktopNotifications.cpp \
            $$PWD/TransferNotificationBuilder.cpp \
            $$PWD/NotificatorBase.cpp \
-           $$PWD/RemovedSharesNotificator.cpp
+           $$PWD/NotificationDelayer.cpp
 
 HEADERS += $$PWD/DesktopNotifications.h \
            $$PWD/TransferNotificationBuilder.h  \
            $$PWD/NotificatorBase.h \
-           $$PWD/RemovedSharesNotificator.h
+           $$PWD/NotificationDelayer.h
 
 win32 {
     RESOURCES += $$PWD/../gui/Resources_win.qrc

@@ -67,7 +67,7 @@ DesktopNotifications::DesktopNotifications(const QString &appName, QSystemTrayIc
     appDir.mkdir(iconFolderName);
     copyIconsToAppFolder(getIconsPath());
 
-    QObject::connect(&mRemovedSharedNotificator, &RemovedSharesNotificator::sendClusteredAlert, this, &DesktopNotifications::receiveClusteredAlert);
+    QObject::connect(&mDelayedNotificator, &NotificationDelayer::sendClusteredAlert, this, &DesktopNotifications::receiveClusteredAlert);
 }
 
 QString DesktopNotifications::getItemsAddedText(mega::MegaUserAlert *info)
@@ -282,21 +282,11 @@ void DesktopNotifications::processAlert(mega::MegaUserAlert* alert)
         break;
     }
     case mega::MegaUserAlert::TYPE_REMOVEDSHAREDNODES:
-    {
-        if(mPreferences->isNotificationEnabled(Preferences::NotificationsTypes::NODES_SHARED_WITH_ME_CREATED_OR_REMOVED))
-        {
-            mRemovedSharedNotificator.addUserAlert(alert, fullName);
-        }
-        break;
-    }
     case mega::MegaUserAlert::TYPE_UPDATEDSHAREDNODES:
     {
         if(mPreferences->isNotificationEnabled(Preferences::NotificationsTypes::NODES_SHARED_WITH_ME_CREATED_OR_REMOVED))
         {
-            int64_t updatedItems = alert->getNumber(0);
-            const QString message(tr("[A] updated %n item", "", static_cast<int>(updatedItems))
-                    .replace(QString::fromUtf8("[A]"), fullName));
-            notifySharedUpdate(alert, message, NEW_SHARED_NODES);
+            mDelayedNotificator.addUserAlert(alert, fullName);
         }
         break;
     }
@@ -877,13 +867,34 @@ void DesktopNotifications::viewShareOnWebClientByHandle(const QString& nodeBase6
     }
 }
 
-void DesktopNotifications::receiveClusteredAlert(mega::MegaUserAlert *alert, const QString &message) const
+void DesktopNotifications::receiveClusteredAlert(mega::MegaUserAlert *alert, int64_t number) const
 {
+    QString email = QString::fromUtf8(alert->getEmail());
+    QString fullName = email;
+    if (!email.isEmpty())
+    {
+        auto FullNameRequest = UserAttributes::FullName::requestFullName(email.toUtf8().constData());
+        if (FullNameRequest)
+        {
+            fullName = FullNameRequest->getFullName();
+        }
+    }
+
     switch (alert->getType())
     {
         case mega::MegaUserAlert::TYPE_REMOVEDSHAREDNODES:
         {
+            QString message = QCoreApplication::translate("OsNotifications", "[A] removed %n item", "", number)
+                    .replace(QString::fromUtf8("[A]"), fullName);
             notifySharedUpdate(alert, message, REMOVED_SHARED_NODES);
+            break;
+        }
+        case mega::MegaUserAlert::TYPE_UPDATEDSHAREDNODES:
+        {
+            const QString message(tr("[A] updated %n item", "", number)
+                    .replace(QString::fromUtf8("[A]"), fullName));
+            notifySharedUpdate(alert, message, NEW_SHARED_NODES);
+            break;
         }
     }
 }
