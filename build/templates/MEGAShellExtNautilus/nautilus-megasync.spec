@@ -9,7 +9,6 @@ Source0:	nautilus-megasync_%{version}.tar.gz
 Vendor:		MEGA Limited
 Packager:	MEGA Linux Team <linux@mega.co.nz>
 
-#BuildRequires:  glib2-devel, nautilus-devel, gnome-common, hicolor-icon-theme, gnome-shell
 BuildRequires:  nautilus-devel
 
 %if 0%{?suse_version} || 0%{?sle_version}
