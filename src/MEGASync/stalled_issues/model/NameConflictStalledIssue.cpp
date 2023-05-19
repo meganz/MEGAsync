@@ -1,5 +1,7 @@
 #include "NameConflictStalledIssue.h"
 
+#include "mega/types.h"
+
 //Name conflict Stalled Issue
 NameConflictedStalledIssue::NameConflictedStalledIssue(const NameConflictedStalledIssue &tdr)
     : StalledIssue(tdr)
@@ -27,7 +29,7 @@ void NameConflictedStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
         {
             QFileInfo localPath(QString::fromUtf8(stall->path(false,index)));
 
-            ConflictedNameInfo info(localPath);
+            ConflictedNameInfo info(localPath, std::make_shared<LocalFileFolderAttributes>(localPath.filePath(), nullptr));
             mLocalConflictedNames.append(info);
 
             if(consultLocalData()->mPath.isEmpty())
@@ -49,7 +51,8 @@ void NameConflictedStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
         {
             QFileInfo cloudPath(QString::fromUtf8(stall->path(true,index)));
 
-            ConflictedNameInfo info(cloudPath);
+            std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(cloudPath.filePath().toUtf8().constData()));
+            ConflictedNameInfo info(cloudPath, std::make_shared<RemoteFileFolderAttributes>(node  ? node->getHandle() : mega::INVALID_HANDLE, nullptr));
             mCloudConflictedNames.append(info);
 
             if(consultCloudData()->mPath.isEmpty())

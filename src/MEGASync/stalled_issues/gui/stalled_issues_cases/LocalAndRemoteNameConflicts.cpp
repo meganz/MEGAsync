@@ -26,6 +26,9 @@ LocalAndRemoteNameConflicts::LocalAndRemoteNameConflicts(std::shared_ptr<mega::M
 
     connect(ui->cloudConflictNames, &NameConflict::allSolved, this, &LocalAndRemoteNameConflicts::onNameConflictSolved);
     connect(ui->localConflictNames, &NameConflict::allSolved, this, &LocalAndRemoteNameConflicts::onNameConflictSolved);
+
+    ui->cloudConflictNames->setDelegate(this);
+    ui->localConflictNames->setDelegate(this);
 }
 
 LocalAndRemoteNameConflicts::~LocalAndRemoteNameConflicts()

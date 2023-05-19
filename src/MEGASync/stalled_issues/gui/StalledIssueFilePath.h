@@ -35,8 +35,6 @@ private:
     void updateFileIcons();
     void updateMoveFileIcons();
 
-    QIcon getPathIcon(const QFileInfo& fileInfo, bool hasProblem);
-
     void fillFilePath();
     QString getFilePath();
 

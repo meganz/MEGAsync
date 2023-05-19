@@ -3,6 +3,7 @@
 
 #include <Utilities.h>
 #include <MegaApplication.h>
+#include <StalledIssuesUtilities.h>
 
 #include <QPushButton>
 #include <QPainter>
@@ -96,18 +97,8 @@ void StalledIssueActionTitle::hideActionButton(int id)
 
 void StalledIssueActionTitle::showIcon()
 {
-    QFileInfo fileInfo(title());
-    QIcon fileTypeIcon;
-
-    if(!fileInfo.completeSuffix().isEmpty())
-    {
-        fileTypeIcon = Utilities::getCachedPixmap(Utilities::getExtensionPixmapName(
-                                                      title(), QLatin1Literal(":/images/drag_")));
-    }
-    else
-    {
-        fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/folder_orange_default@2x.png"));
-    }
+    QFileInfo fileInfo(mPath);
+    QIcon fileTypeIcon = StalledIssuesUtilities::getFileIcon(fileInfo, false);
 
     ui->icon->setPixmap(fileTypeIcon.pixmap(ui->icon->size()));
     ui->icon->show();
@@ -229,7 +220,12 @@ void StalledIssueActionTitle::updateSize(const QString &size)
     }
 }
 
-void StalledIssueActionTitle::updateLastTimeModified(QDateTime&& time)
+void StalledIssueActionTitle::setPath(const QString &newPath)
+{
+    mPath = newPath;
+}
+
+void StalledIssueActionTitle::updateLastTimeModified(const QDateTime& time)
 {
     auto timeString = MegaSyncApp->getFormattedDateByCurrentLanguage(time, QLocale::FormatType::ShortFormat);
     if(!mLastTimeLabel)
@@ -243,7 +239,7 @@ void StalledIssueActionTitle::updateLastTimeModified(QDateTime&& time)
 
 }
 
-void StalledIssueActionTitle::updateCreatedTime(QDateTime&& time)
+void StalledIssueActionTitle::updateCreatedTime(const QDateTime& time)
 {
     auto timeString = MegaSyncApp->getFormattedDateByCurrentLanguage(time, QLocale::FormatType::ShortFormat);
     if(!mCreatedTimeLabel)

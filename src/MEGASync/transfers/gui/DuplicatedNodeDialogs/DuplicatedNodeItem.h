@@ -44,27 +44,20 @@ protected:
     NodeItemType mType;
     std::shared_ptr<DuplicatedNodeInfo> mInfo;
     qint64 mNodeSize;
-    QFutureWatcher<qint64> mFolderSizeFuture;
 
     void fillUi();
     virtual QString getNodeName() = 0;
-    virtual void getModifiedTime() = 0;
-    virtual void getNodeSize() = 0;
     virtual bool isFile() const = 0;
 
-    void setModifiedTime(QDateTime&& dateTime);
+    void setModifiedTime(const QDateTime &dateTime);
     void setSize(qint64 size);
 
     bool isValid() const;
-
-    void updateSize();
-    void updateModificationTime();
 
     bool eventFilter(QObject *watched, QEvent *event) override;
 
 protected slots:
     void on_bAction_clicked();
-    void onNodeSizeFinished();
 
 private:
     Ui::DuplicatedNodeItem *ui;
@@ -88,13 +81,11 @@ public:
 
 protected:
     QString getNodeName() override;
-    void getModifiedTime() override;
-    void getNodeSize() override;
     bool isFile() const override;
 
 private:
     mega::QTMegaRequestListener* mListener;
-    QPointer<RemoteFolderAttributes> mFolderAttributes;
+    QPointer<RemoteFileFolderAttributes> mFolderAttributes;
 };
 
 /*
@@ -114,15 +105,12 @@ public:
 
 protected:
     QString getNodeName() override;
-
-    void getModifiedTime() override;
-    void getNodeSize() override;
     bool isFile() const override;
 
 private:
     QString getFullFileName(const QString& path, const QString& fileName);
 
-    QPointer<LocalFolderAttributes> mFolderAttributes;
+    QPointer<LocalFileFolderAttributes> mFolderAttributes;
 };
 
 /*

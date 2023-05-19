@@ -1,6 +1,8 @@
 #ifndef STALLEDISSUE_H
 #define STALLEDISSUE_H
 
+#include <FolderAttributes.h>
+
 #include <megaapi.h>
 
 #include <QSharedData>
@@ -38,11 +40,11 @@ public:
     StalledIssueData(std::unique_ptr<mega::MegaSyncStall> originalstall);
     StalledIssueData(const StalledIssueData&);
     StalledIssueData();
-    ~StalledIssueData(){}
+    virtual ~StalledIssueData() = default;
 
     const Path& getPath() const;
     const Path& getMovePath() const;
-    bool isCloud() const;
+    virtual bool isCloud() const {return false;}
 
     QString getFilePath() const;
     QString getMoveFilePath() const;
@@ -55,34 +57,39 @@ public:
 
     QString getFileName() const;
 
-    const QString& getUserFirstName() const;
-
-    bool isEqual(const mega::MegaSyncStall *stall) const;
+    virtual bool isEqual(const mega::MegaSyncStall*) const {return false;}
 
     bool isSolved() const;
     void setIsSolved(bool newIsSolved);
 
     void checkTrailingSpaces(QString& name) const;
 
-    std::shared_ptr<mega::MegaNode> getNode() const;
-
     std::shared_ptr<mega::MegaSyncStall> original;
 
-private:
+    template <class Type>
+    QExplicitlySharedDataPointer<const Type> convert() const
+    {
+        return QExplicitlySharedDataPointer<const Type>(dynamic_cast<const Type*>(this));
+    }
+
+    virtual void initFileFolderAttributes()
+    {}
+
+    std::shared_ptr<FileFolderAttributes> getFileFolderAttributes() const
+    {
+        return mAttributes;
+    }
+
+protected:
     friend class StalledIssue;
     friend class NameConflictedStalledIssue;
 
     Path mMovePath;
     Path mPath;
 
-    bool mIsCloud;
     bool mIsSolved;
 
-    QString mUserEmail;
-    std::shared_ptr<const UserAttributes::FullName> mUserFullName;
-
-    mutable std::shared_ptr<mega::MegaNode> mRemoteNode;
-
+    std::shared_ptr<FileFolderAttributes> mAttributes;
 };
 
 Q_DECLARE_TYPEINFO(StalledIssueData, Q_MOVABLE_TYPE);
@@ -94,6 +101,102 @@ using StalledIssuesDataList = QList<StalledIssueDataPtr>;
 Q_DECLARE_METATYPE(StalledIssueDataPtr)
 Q_DECLARE_METATYPE(StalledIssuesDataList)
 
+//CLOUD DATA
+class CloudStalledIssueData : public StalledIssueData
+{
+public:
+
+    CloudStalledIssueData(std::unique_ptr<mega::MegaSyncStall> originalstall)
+        :StalledIssueData(std::move(originalstall))
+    {}
+
+    CloudStalledIssueData(const CloudStalledIssueData& data)
+        :StalledIssueData(data)
+    {}
+
+    CloudStalledIssueData()
+        : StalledIssueData()
+    {}
+
+    ~CloudStalledIssueData(){}
+
+    bool isCloud() const override
+    {
+        return true;
+    }
+
+    QString getUserFirstName() const;
+    std::shared_ptr<mega::MegaNode> getNode() const;
+
+    bool isEqual(const mega::MegaSyncStall *stall) const override;
+
+    void initFileFolderAttributes() override
+    {
+        mAttributes = std::make_shared<RemoteFileFolderAttributes>(getNode()->getHandle(), nullptr);
+    }
+
+private:
+    friend class StalledIssue;
+    friend class NameConflictedStalledIssue;
+
+    QString mUserEmail;
+    std::shared_ptr<const UserAttributes::FullName> mUserFullName;
+    mutable std::shared_ptr<mega::MegaNode> mRemoteNode;
+};
+
+Q_DECLARE_TYPEINFO(CloudStalledIssueData, Q_MOVABLE_TYPE);
+Q_DECLARE_METATYPE(CloudStalledIssueData)
+
+using CloudStalledIssueDataPtr = QExplicitlySharedDataPointer<const CloudStalledIssueData>;
+using CloudStalledIssuesDataList = QList<CloudStalledIssueDataPtr>;
+
+Q_DECLARE_METATYPE(CloudStalledIssueDataPtr)
+Q_DECLARE_METATYPE(CloudStalledIssuesDataList)
+
+//LOCAL DATA
+class LocalStalledIssueData : public StalledIssueData
+{
+public:
+
+    LocalStalledIssueData(std::unique_ptr<mega::MegaSyncStall> originalstall)
+        :StalledIssueData(std::move(originalstall))
+    {
+
+    }
+    LocalStalledIssueData(const CloudStalledIssueData& data)
+        :StalledIssueData(data)
+    {
+
+    }
+    LocalStalledIssueData()
+        : StalledIssueData()
+    {
+
+    }
+    ~LocalStalledIssueData(){}
+
+    bool isCloud() const override
+    {
+        return false;
+    }
+
+    bool isEqual(const mega::MegaSyncStall *stall) const override;
+
+    void initFileFolderAttributes() override
+    {
+        mAttributes = std::make_shared<LocalFileFolderAttributes>(mPath.path, nullptr);
+    }
+};
+
+Q_DECLARE_TYPEINFO(LocalStalledIssueData, Q_MOVABLE_TYPE);
+Q_DECLARE_METATYPE(LocalStalledIssueData)
+
+using LocalStalledIssueDataPtr = QExplicitlySharedDataPointer<const LocalStalledIssueData>;
+using LocalStalledIssueDataList = QList<LocalStalledIssueDataPtr>;
+
+Q_DECLARE_METATYPE(LocalStalledIssueDataPtr)
+Q_DECLARE_METATYPE(LocalStalledIssueDataList)
+
 class StalledIssue
 {
 public:
@@ -101,8 +204,8 @@ public:
     //StalledIssue(const StalledIssue& tdr) : mDetectedMEGASide(tdr.mDetectedMEGASide), mLocalData(tdr.mLocalData), mCloudData(tdr.mCloudData), mReason(tdr.getReason()), mIsSolved(tdr.mIsSolved)  {}
     StalledIssue(const mega::MegaSyncStall *stallIssue);
 
-    const StalledIssueDataPtr consultLocalData() const;
-    const StalledIssueDataPtr consultCloudData() const;
+    const LocalStalledIssueDataPtr consultLocalData() const;
+    const CloudStalledIssueDataPtr consultCloudData() const;
 
     mega::MegaSyncStall::SyncStallReason getReason() const;
     QString getFileName(bool preferCloud) const;
@@ -135,13 +238,13 @@ public:
     const std::shared_ptr<mega::MegaSyncStall> &getOriginalStall() const;
 
 protected:
-    bool initCloudIssue(const mega::MegaSyncStall *stallIssue);
-    const QExplicitlySharedDataPointer<StalledIssueData>& getLocalData() const;
-    QExplicitlySharedDataPointer<StalledIssueData> mLocalData;
-
     bool initLocalIssue(const mega::MegaSyncStall *stallIssue);
-    const QExplicitlySharedDataPointer<StalledIssueData>& getCloudData() const;
-    QExplicitlySharedDataPointer<StalledIssueData> mCloudData;
+    const QExplicitlySharedDataPointer<LocalStalledIssueData>& getLocalData() const;
+    QExplicitlySharedDataPointer<LocalStalledIssueData> mLocalData;
+
+    bool initCloudIssue(const mega::MegaSyncStall *stallIssue);
+    const QExplicitlySharedDataPointer<CloudStalledIssueData>& getCloudData() const;
+    QExplicitlySharedDataPointer<CloudStalledIssueData> mCloudData;
 
     void setIsFile(const QString& path, bool isLocal);
 

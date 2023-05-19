@@ -39,31 +39,21 @@ void StalledIssueChooseWidget::updateUi(StalledIssueDataPtr data)
     ui->chooseTitle->showIcon();
 
     ui->name->setTitle(fileName);
+    ui->name->setPath(data->getNativeFilePath());
     ui->name->showIcon();
 
     ui->path->show();
     ui->path->updateUi(data);
 
-    if(data->isCloud())
-    {
-        auto node = data->getNode();
-        if(node)
-        {
-            ui->name->updateUser(data->getUserFirstName());
-            QPair<QDateTime, QDateTime> times = StalledIssuesUtilities::getRemoteModificatonAndCreatedTime(node.get());
-
-            ui->name->updateLastTimeModified(std::move(times.first));
-            ui->name->updateCreatedTime(std::move(times.second));
-            ui->name->updateSize(tr("50 bytes"));
-        }
-    }
-    else
+    if(!data->isCloud())
     {
         QFileInfo file(data->getNativeFilePath());
         if(file.exists())
         {
             ui->name->updateLastTimeModified(file.lastModified());
+#ifndef Q_OS_LINUX
             ui->name->updateCreatedTime(file.created());
+#endif
             ui->name->updateSize(Utilities::getSizeString(file.size()));
         }
     }
@@ -132,4 +122,28 @@ void StalledIssueChooseWidget::setDisabled(bool solved)
 void StalledIssueChooseWidget::setIssueSolved(bool newIssueSolved)
 {
     mIsSolved = newIssueSolved;
+}
+
+void CloudStalledIssueChooseWidget::updateUi(CloudStalledIssueDataPtr cloudData)
+{
+    StalledIssueChooseWidget::updateUi(cloudData);
+
+    auto node = cloudData->getNode();
+    if(node)
+    {
+        ui->name->updateUser(cloudData->getUserFirstName());
+
+        cloudData->getFileFolderAttributes()->requestModifiedTime(this, [this](const QDateTime& time){
+            ui->name->updateLastTimeModified(time);
+        });
+
+#ifndef Q_OS_LINUX
+        cloudData->getFileFolderAttributes()->requestCreatedTime(this, [this](const QDateTime& time){
+            ui->name->updateCreatedTime(time);
+        });
+#endif
+        cloudData->getFileFolderAttributes()->requestSize(this, [this](qint64 size){
+            ui->name->updateSize(Utilities::getSizeString(size));
+        });
+    }
 }

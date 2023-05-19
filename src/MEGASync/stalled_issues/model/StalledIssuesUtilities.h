@@ -6,6 +6,7 @@
 #include <QObject>
 #include <QString>
 #include <QFutureWatcher>
+#include <QFileInfo>
 
 #include <memory>
 
@@ -20,7 +21,7 @@ public:
     void removeRemoteFile(const QString& path);
     void removeLocalFile(const QString& path);
 
-    static QPair<QDateTime, QDateTime> getRemoteModificatonAndCreatedTime(mega::MegaNode* node);
+    static QIcon getFileIcon(const QFileInfo& fileInfo, bool hasProblem);
 
 signals:
     void actionFinished();

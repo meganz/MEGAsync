@@ -6,24 +6,26 @@
 #include <QDateTime>
 #include <QFutureWatcher>
 
-class FolderAttributes : public QObject
+#include <functional>
+
+class FileFolderAttributes : public QObject
 {
     Q_OBJECT
 
 public:
-    FolderAttributes(QObject* parent);
-    virtual ~FolderAttributes();
+    FileFolderAttributes(QObject* parent);
+    virtual ~FileFolderAttributes();
 
-    virtual void requestSize() = 0;
-    virtual void requestModifiedTime() = 0;
-    virtual void requestCreatedTime() = 0;
+    virtual void requestSize(QObject* caller,std::function<void(qint64)> func);
+    virtual void requestModifiedTime(QObject *caller, std::function<void(const QDateTime&)> func);
+    virtual void requestCreatedTime(QObject *caller, std::function<void(const QDateTime&)> func);
 
     void cancel();
 
 signals:
-    void sizeReady(qint64 size);
-    void modifiedTimeReady(QDateTime time);
-    void createdTimeReady(QDateTime time);
+    void sizeReady(qint64);
+    void modifiedTimeReady(const QDateTime&);
+    void createdTimeReady(const QDateTime&);
 
 protected:
     bool mCancelled;
@@ -33,17 +35,17 @@ protected:
     QDateTime mCreatedTime;
 };
 
-class LocalFolderAttributes : public FolderAttributes
+class LocalFileFolderAttributes : public FileFolderAttributes
 {
     Q_OBJECT
 
 public:
-    LocalFolderAttributes(const QString& path, QObject* parent);
-    ~LocalFolderAttributes() override = default;
+    LocalFileFolderAttributes(const QString& path, QObject* parent);
+    ~LocalFileFolderAttributes() override = default;
 
-    void requestSize() override;
-    void requestModifiedTime() override;
-    void requestCreatedTime() override;
+    void requestSize(QObject* caller,std::function<void(qint64)> func) override;
+    void requestModifiedTime(QObject* caller,std::function<void(const QDateTime&)> func) override;
+    void requestCreatedTime(QObject* caller,std::function<void(const QDateTime&)> func) override;
 
 private slots:
     void onModifiedTimeCalculated();
@@ -59,17 +61,17 @@ private:
     bool mIsEmpty;
 };
 
-class RemoteFolderAttributes : public FolderAttributes, public mega::MegaRequestListener
+class RemoteFileFolderAttributes : public FileFolderAttributes, public mega::MegaRequestListener
 {
     Q_OBJECT
 
 public:
-    RemoteFolderAttributes(mega::MegaHandle handle, QObject *parent);
-    ~RemoteFolderAttributes() override;
+    RemoteFileFolderAttributes(mega::MegaHandle handle, QObject *parent);
+    ~RemoteFileFolderAttributes() override;
 
-    void requestSize() override;
-    void requestModifiedTime() override;
-    void requestCreatedTime() override;
+    void requestSize(QObject* caller,std::function<void(qint64)> func) override;
+    void requestModifiedTime(QObject* caller,std::function<void(const QDateTime&)> func) override;
+    void requestCreatedTime(QObject* caller,std::function<void(const QDateTime&)> func) override;
 
     void onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e) override;
 

@@ -12,40 +12,72 @@
 #define stat _stat
 #endif
 
-FolderAttributes::FolderAttributes(QObject* parent)
+FileFolderAttributes::FileFolderAttributes(QObject* parent)
     : mCancelled(false),
       mSize(-1),
       QObject(parent)
 {
 }
 
-FolderAttributes::~FolderAttributes()
+FileFolderAttributes::~FileFolderAttributes()
 {
 }
 
-void FolderAttributes::cancel()
+void FileFolderAttributes::requestSize(QObject* caller,std::function<void (qint64)> func)
+{
+    connect(this, &FileFolderAttributes::sizeReady, caller, [func](qint64 size){
+        if(func)
+        {
+            func(size);
+        }
+    });
+}
+
+void FileFolderAttributes::requestModifiedTime(QObject* caller, std::function<void (const QDateTime &)> func)
+{
+    connect(this, &FileFolderAttributes::modifiedTimeReady, caller, [func](const QDateTime& time){
+        if(func)
+        {
+            func(time);
+        }
+    });
+}
+
+void FileFolderAttributes::requestCreatedTime(QObject* caller, std::function<void (const QDateTime &)> func)
+{
+    connect(this, &FileFolderAttributes::createdTimeReady, caller, [func](const QDateTime& time){
+        if(func)
+        {
+            func(time);
+        }
+    });
+}
+
+void FileFolderAttributes::cancel()
 {
     mCancelled = true;
 }
 
 
 //LOCAL
-LocalFolderAttributes::LocalFolderAttributes(const QString &path, QObject *parent)
+LocalFileFolderAttributes::LocalFileFolderAttributes(const QString &path, QObject *parent)
     : mPath(path),
-      FolderAttributes(parent)
+      FileFolderAttributes(parent)
 {
     connect(&mModifiedTimeWatcher, &QFutureWatcher<QDateTime>::finished,
-            this, &LocalFolderAttributes::onModifiedTimeCalculated);
+            this, &LocalFileFolderAttributes::onModifiedTimeCalculated);
 
     connect(&mFolderSizeFuture, &QFutureWatcher<qint64>::finished,
-            this, &LocalFolderAttributes::onSizeCalculated);
+            this, &LocalFileFolderAttributes::onSizeCalculated);
 
     QDirIterator filesIt(mPath, QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks, QDirIterator::Subdirectories);
     mIsEmpty = !filesIt.hasNext();
 }
 
-void LocalFolderAttributes::requestSize()
+void LocalFileFolderAttributes::requestSize(QObject* caller,std::function<void(qint64)> func)
 {
+    FileFolderAttributes::requestSize(caller,func);
+
     QFileInfo fileInfo(mPath);
 
     if(fileInfo.isFile())
@@ -62,36 +94,49 @@ void LocalFolderAttributes::requestSize()
             });
             mFolderSizeFuture.setFuture(future);
         }
-    }
-}
-
-void LocalFolderAttributes::requestModifiedTime()
-{
-    QFileInfo fileInfo(mPath);
-
-    if(fileInfo.isFile())
-    {
-        mModifiedTime = fileInfo.lastModified();
-        emit modifiedTimeReady(mModifiedTime);
-    }
-    //Is local folder
-    else
-    {
-        if(mIsEmpty)
-        {
-            requestCreatedTime();
-        }
         else
         {
-            auto future = QtConcurrent::run([this]() -> QDateTime{
-                return calculateModifiedTime();
-            });
-            mModifiedTimeWatcher.setFuture(future);
+            emit sizeReady(mSize);
         }
     }
 }
 
-void LocalFolderAttributes::onModifiedTimeCalculated()
+void LocalFileFolderAttributes::requestModifiedTime(QObject* caller,std::function<void(const QDateTime&)> func)
+{
+    FileFolderAttributes::requestModifiedTime(caller,func);
+
+    QFileInfo fileInfo(mPath);
+
+    if(fileInfo.exists())
+    {
+        if(fileInfo.isFile())
+        {
+            mModifiedTime = fileInfo.lastModified();
+            emit modifiedTimeReady(mModifiedTime);
+        }
+        //Is local folder
+        else
+        {
+            if(mIsEmpty)
+            {
+                requestCreatedTime(caller,func);
+            }
+            else
+            {
+                auto future = QtConcurrent::run([this]() -> QDateTime{
+                    return calculateModifiedTime();
+                });
+                mModifiedTimeWatcher.setFuture(future);
+            }
+        }
+    }
+    else if(mModifiedTime.isValid())
+    {
+        emit modifiedTimeReady(mModifiedTime);
+    }
+}
+
+void LocalFileFolderAttributes::onModifiedTimeCalculated()
 {
     mModifiedTime = mModifiedTimeWatcher.result();
     if(mModifiedTime.isValid())
@@ -100,14 +145,16 @@ void LocalFolderAttributes::onModifiedTimeCalculated()
     }
 }
 
-void LocalFolderAttributes::onSizeCalculated()
+void LocalFileFolderAttributes::onSizeCalculated()
 {
     mSize = mFolderSizeFuture.result();
     emit sizeReady(mSize);
 }
 
-void LocalFolderAttributes::requestCreatedTime()
+void LocalFileFolderAttributes::requestCreatedTime(QObject* caller,std::function<void(const QDateTime&)> func)
 {
+    FileFolderAttributes::requestCreatedTime(caller,func);
+
     struct stat result;
     if(stat(mPath.toUtf8().constData(), &result)==0)
     {
@@ -125,9 +172,13 @@ void LocalFolderAttributes::requestCreatedTime()
             }
         }
     }
+    else if(mCreatedTime.isValid())
+    {
+        emit createdTimeReady(mCreatedTime);
+    }
 }
 
-QDateTime LocalFolderAttributes::calculateModifiedTime()
+QDateTime LocalFileFolderAttributes::calculateModifiedTime()
 {
     QDateTime newDate;
     QDirIterator filesIt(mPath, QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks, QDirIterator::Subdirectories);
@@ -149,7 +200,7 @@ QDateTime LocalFolderAttributes::calculateModifiedTime()
     return newDate;
 }
 
-qint64 LocalFolderAttributes::calculateSize()
+qint64 LocalFileFolderAttributes::calculateSize()
 {
     qint64 newSize(0);
 
@@ -165,20 +216,22 @@ qint64 LocalFolderAttributes::calculateSize()
 }
 
 //REMOTE
-RemoteFolderAttributes::RemoteFolderAttributes(mega::MegaHandle handle, QObject* parent)
+RemoteFileFolderAttributes::RemoteFileFolderAttributes(mega::MegaHandle handle, QObject* parent)
     : mHandle(handle),
-      FolderAttributes(parent)
+      FileFolderAttributes(parent)
 {
     mListener = new mega::QTMegaRequestListener(MegaSyncApp->getMegaApi(), this);
 }
 
-RemoteFolderAttributes::~RemoteFolderAttributes()
+RemoteFileFolderAttributes::~RemoteFileFolderAttributes()
 {
     delete mListener;
 }
 
-void RemoteFolderAttributes::requestSize()
+void RemoteFileFolderAttributes::requestSize(QObject* caller,std::function<void(qint64)> func)
 {
+    FileFolderAttributes::requestSize(caller,func);
+
     std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(mHandle));
     if(node)
     {
@@ -197,8 +250,10 @@ void RemoteFolderAttributes::requestSize()
     }
 }
 
-void RemoteFolderAttributes::requestModifiedTime()
+void RemoteFileFolderAttributes::requestModifiedTime(QObject* caller,std::function<void(const QDateTime&)> func)
 {
+    FileFolderAttributes::requestModifiedTime(caller,func);
+
     std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(mHandle));
     if(node)
     {
@@ -209,8 +264,10 @@ void RemoteFolderAttributes::requestModifiedTime()
     }
 }
 
-void RemoteFolderAttributes::requestCreatedTime()
+void RemoteFileFolderAttributes::requestCreatedTime(QObject* caller,std::function<void(const QDateTime&)> func)
 {
+    FileFolderAttributes::requestCreatedTime(caller, func);
+
     std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(mHandle));
     if(node)
     {
@@ -221,7 +278,7 @@ void RemoteFolderAttributes::requestCreatedTime()
     }
 }
 
-void RemoteFolderAttributes::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e)
+void RemoteFileFolderAttributes::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e)
 {
     mega::MegaRequestListener::onRequestFinish(api, request, e);
 

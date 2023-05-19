@@ -36,6 +36,8 @@ public:
     void updateUi(NameConflictedStalledIssue::NameConflictData data);
     void setDisabled();
 
+    void setDelegate(QPointer<StalledIssueBaseDelegateWidget> newDelegate);
+
 signals:
     void refreshUi();
     void allSolved();
@@ -49,6 +51,7 @@ private:
     Ui::NameConflict *ui;
     NameConflictedStalledIssue::NameConflictData mData;
     StalledIssuesUtilities mUtilities;
+    QPointer<StalledIssueBaseDelegateWidget> mDelegate;
 };
 
 #endif // NAMECONFLICT_H

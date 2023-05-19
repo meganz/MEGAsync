@@ -5,7 +5,6 @@
 
 StalledIssueData::StalledIssueData(std::unique_ptr<mega::MegaSyncStall> originalstall)
     : original(std::move(originalstall))
-    , mIsCloud(false)
     , mIsSolved(false)
 {
     qRegisterMetaType<StalledIssueDataPtr>("StalledIssueDataPtr");
@@ -25,11 +24,6 @@ const StalledIssueData::Path &StalledIssueData::getPath() const
 const StalledIssueData::Path &StalledIssueData::getMovePath() const
 {
     return mMovePath;
-}
-
-bool StalledIssueData::isCloud() const
-{
-    return mIsCloud;
 }
 
 QString StalledIssueData::getFilePath() const
@@ -134,7 +128,7 @@ QString StalledIssueData::getFileName() const
     return fileName;
 }
 
-const QString &StalledIssueData::getUserFirstName() const
+QString CloudStalledIssueData::getUserFirstName() const
 {
     if(mUserFullName)
     {
@@ -142,25 +136,6 @@ const QString &StalledIssueData::getUserFirstName() const
     }
 
     return QString();
-}
-
-bool StalledIssueData::isEqual(const mega::MegaSyncStall* stall) const
-{
-    QString sourcePath;
-    QString targetPath;
-
-    if(mIsCloud)
-    {
-        sourcePath = QString::fromUtf8(stall->path(true,0));
-        targetPath = QString::fromUtf8(stall->path(true,1));
-    }
-    else
-    {
-        sourcePath = QString::fromUtf8(stall->path(false,0));
-        targetPath = QString::fromUtf8(stall->path(false,1));
-    }
-
-    return (sourcePath.compare(mPath.path) == 0 || targetPath.compare(mMovePath.path) == 0);
 }
 
 bool StalledIssueData::isSolved() const
@@ -183,23 +158,42 @@ void StalledIssueData::checkTrailingSpaces(QString &name) const
     }
 }
 
-std::shared_ptr<mega::MegaNode> StalledIssueData::getNode() const
+//CLOUD
+std::shared_ptr<mega::MegaNode> CloudStalledIssueData::getNode() const
 {
-    if(mIsCloud)
+    auto newNode = std::shared_ptr<mega::MegaNode>(MegaSyncApp->getMegaApi()->getNodeByPath(mPath.path.toStdString().c_str()));
+    if(!newNode)
     {
-        auto newNode = std::shared_ptr<mega::MegaNode>(MegaSyncApp->getMegaApi()->getNodeByPath(mPath.path.toStdString().c_str()));
-        if(!newNode)
-        {
-            return mRemoteNode;
-        }
-        else
-        {
-            mRemoteNode = newNode;
-            return newNode;
-        }
+        return mRemoteNode;
     }
+    else
+    {
+        mRemoteNode = newNode;
+        return newNode;
+    }
+}
 
-    return nullptr;
+bool CloudStalledIssueData::isEqual(const mega::MegaSyncStall* stall) const
+{
+    QString sourcePath;
+    QString targetPath;
+
+    sourcePath = QString::fromUtf8(stall->path(true,0));
+    targetPath = QString::fromUtf8(stall->path(true,1));
+
+    return (sourcePath.compare(mPath.path) == 0 || targetPath.compare(mMovePath.path) == 0);
+}
+
+//LOCAL
+bool LocalStalledIssueData::isEqual(const mega::MegaSyncStall* stall) const
+{
+    QString sourcePath;
+    QString targetPath;
+
+    sourcePath = QString::fromUtf8(stall->path(false,0));
+    targetPath = QString::fromUtf8(stall->path(false,1));
+
+    return (sourcePath.compare(mPath.path) == 0 || targetPath.compare(mMovePath.path) == 0);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -217,7 +211,7 @@ bool StalledIssue::initLocalIssue(const mega::MegaSyncStall *stallIssue)
 {
     if(!mLocalData)
     {
-        mLocalData = QExplicitlySharedDataPointer<StalledIssueData>(new StalledIssueData(std::unique_ptr<mega::MegaSyncStall>(stallIssue->copy())));
+        mLocalData = QExplicitlySharedDataPointer<LocalStalledIssueData>(new LocalStalledIssueData(std::unique_ptr<mega::MegaSyncStall>(stallIssue->copy())));
         return true;
     }
 
@@ -228,8 +222,7 @@ bool StalledIssue::initCloudIssue(const mega::MegaSyncStall *stallIssue)
 {
     if(!mCloudData)
     {
-        mCloudData = QExplicitlySharedDataPointer<StalledIssueData>(new StalledIssueData(std::unique_ptr<mega::MegaSyncStall>(stallIssue->copy())));
-        mCloudData->mIsCloud = true;
+        mCloudData = QExplicitlySharedDataPointer<CloudStalledIssueData>(new CloudStalledIssueData(std::unique_ptr<mega::MegaSyncStall>(stallIssue->copy())));
 
         return true;
     }
@@ -335,6 +328,13 @@ void StalledIssue::endFillingIssue()
                                                         }));
             }
         }
+
+        mCloudData->initFileFolderAttributes();
+    }
+
+    if(mLocalData)
+    {
+        mLocalData->initFileFolderAttributes();
     }
 }
 
@@ -407,22 +407,22 @@ QStringList StalledIssue::getIgnoredFiles() const
     return mIgnoredPaths;
 }
 
-const StalledIssueDataPtr StalledIssue::consultLocalData() const
+const LocalStalledIssueDataPtr StalledIssue::consultLocalData() const
 {
     return mLocalData;
 }
 
-const StalledIssueDataPtr StalledIssue::consultCloudData() const
+const CloudStalledIssueDataPtr StalledIssue::consultCloudData() const
 {
     return mCloudData;
 }
 
-const QExplicitlySharedDataPointer<StalledIssueData> &StalledIssue::getLocalData() const
+const QExplicitlySharedDataPointer<LocalStalledIssueData> &StalledIssue::getLocalData() const
 {
     return mLocalData;
 }
 
-const QExplicitlySharedDataPointer<StalledIssueData> &StalledIssue::getCloudData() const
+const QExplicitlySharedDataPointer<CloudStalledIssueData> &StalledIssue::getCloudData() const
 {
     return mCloudData;
 }

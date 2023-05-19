@@ -18,8 +18,6 @@ DuplicatedNodeItem::DuplicatedNodeItem(QWidget *parent) :
     ui->setupUi(this);
     ui->lNodeName->installEventFilter(this);
     ui->lLearnMore->hide();
-
-    connect(&mFolderSizeFuture, &QFutureWatcher<qint64>::finished, this, &DuplicatedLocalItem::onNodeSizeFinished);
 }
 
 DuplicatedNodeItem::~DuplicatedNodeItem()
@@ -30,8 +28,6 @@ DuplicatedNodeItem::~DuplicatedNodeItem()
 void DuplicatedNodeItem::setInfo(std::shared_ptr<DuplicatedNodeInfo>info, NodeItemType type)
 {
     mInfo = info;
-    connect(mInfo.get(), &DuplicatedNodeInfo::localModifiedDateUpdated, this, &DuplicatedNodeItem::updateModificationTime);
-
     mType = type;
 
     fillUi();
@@ -88,12 +84,9 @@ void DuplicatedNodeItem::fillUi()
                                         : QIcon(QLatin1Literal(":/images/icons/folder/medium-folder.png"));
 
     ui->lIcon->setPixmap(icon.pixmap(ui->lIcon->size()));
-
-    updateSize();
-    updateModificationTime();
 }
 
-void DuplicatedNodeItem::setModifiedTime(QDateTime &&dateTime)
+void DuplicatedNodeItem::setModifiedTime(const QDateTime& dateTime)
 {
     QString timeString;
 
@@ -124,16 +117,6 @@ void DuplicatedNodeItem::setActionAndTitle(const QString &text)
     ui->lTitle->setText(text);
 }
 
-void DuplicatedNodeItem::updateSize()
-{
-    getNodeSize();
-}
-
-void DuplicatedNodeItem::updateModificationTime()
-{
-    getModifiedTime();
-}
-
 bool DuplicatedNodeItem::eventFilter(QObject *watched, QEvent *event)
 {
     if(watched == ui->lNodeName && event->type() == QEvent::Resize)
@@ -156,12 +139,6 @@ void DuplicatedNodeItem::on_bAction_clicked()
     emit actionClicked();
 }
 
-void DuplicatedNodeItem::onNodeSizeFinished()
-{
-    mNodeSize = mFolderSizeFuture.result();
-    updateSize();
-}
-
 /*
  * REMOTE IMPLEMENTATION CLASS
  * USE TO SHOW THE REMOTE NODE INFO
@@ -180,11 +157,13 @@ void DuplicatedRemoteItem::setInfo(std::shared_ptr<DuplicatedNodeInfo> info, Nod
 {
     if(!mFolderAttributes)
     {
-        mFolderAttributes = new RemoteFolderAttributes(info->getRemoteConflictNode()->getHandle(), this);
-        connect(mFolderAttributes, &LocalFolderAttributes::modifiedTimeReady, [this](QDateTime modifiedTime){
-            setModifiedTime(std::move(modifiedTime));
+        mFolderAttributes = new RemoteFileFolderAttributes(info->getRemoteConflictNode()->getHandle(), this);
+        mFolderAttributes->requestModifiedTime(this,[this](const QDateTime& time)
+        {
+            setModifiedTime(time);
         });
-        connect(mFolderAttributes, &LocalFolderAttributes::sizeReady, [this](qint64 size){
+        mFolderAttributes->requestSize(this,[this](qint64 size)
+        {
             setSize(size);
         });
     }
@@ -200,16 +179,6 @@ std::shared_ptr<mega::MegaNode> DuplicatedRemoteItem::getNode()
 QString DuplicatedRemoteItem::getNodeName()
 {
     return mInfo->getName();
-}
-
-void DuplicatedRemoteItem::getModifiedTime()
-{
-    mFolderAttributes->requestModifiedTime();
-}
-
-void DuplicatedRemoteItem::getNodeSize()
-{
-    mFolderAttributes->requestSize();
 }
 
 bool DuplicatedRemoteItem::isFile() const
@@ -235,12 +204,13 @@ void DuplicatedLocalItem::setInfo(std::shared_ptr<DuplicatedNodeInfo> info, Node
 {
     if(!mFolderAttributes)
     {
-        mFolderAttributes = new LocalFolderAttributes(info->getLocalPath(), this);
-        connect(mFolderAttributes, &LocalFolderAttributes::modifiedTimeReady, [this](QDateTime modifiedTime){
-            setModifiedTime(std::move(modifiedTime));
+        mFolderAttributes = new LocalFileFolderAttributes(info->getLocalPath(), this);
+        mFolderAttributes->requestModifiedTime(this,[this](const QDateTime& time)
+        {
+            setModifiedTime(time);
         });
-
-        connect(mFolderAttributes, &LocalFolderAttributes::sizeReady, [this](qint64 size){
+        mFolderAttributes->requestSize(this,[this](qint64 size)
+        {
             setSize(size);
         });
     }
@@ -265,16 +235,6 @@ QString DuplicatedLocalItem::getNodeName()
         QDir dir(mInfo->getLocalPath());
         return dir.dirName();
     }
-}
-
-void DuplicatedLocalItem::getModifiedTime()
-{
-    mFolderAttributes->requestModifiedTime();
-}
-
-void DuplicatedLocalItem::getNodeSize()
-{
-    mFolderAttributes->requestSize();
 }
 
 bool DuplicatedLocalItem::isFile() const

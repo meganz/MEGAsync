@@ -98,29 +98,31 @@ void NameConflict::updateUi(NameConflictedStalledIssue::NameConflictData conflic
 
         if(conflictData.data->isCloud())
         {
-            title->updateUser(conflictData.data->getUserFirstName());
-            auto node = info.getNode();
-            if(node)
-            {
-                QPair<QDateTime, QDateTime> times = StalledIssuesUtilities::getRemoteModificatonAndCreatedTime(node.get());
+            CloudStalledIssueDataPtr cloudData(conflictData.data->convert<CloudStalledIssueData>());
+            title->updateUser(cloudData->getUserFirstName());
+        }
 
-                title->updateLastTimeModified(std::move(times.first));
-                title->updateCreatedTime(std::move(times.second));
-                title->updateSize(tr("50 bytes"));
-            }
-        }
-        else
+
+        info.itemAttributes->requestModifiedTime(this, [title](const QDateTime& time)
         {
-            QFileInfo fileInfo(info.conflictedPath);
-            if(fileInfo.exists() && fileInfo.isFile())
-            {
-                title->updateLastTimeModified(fileInfo.lastModified());
-                title->updateCreatedTime(fileInfo.created());
-            }
-        }
+            title->updateLastTimeModified(time);
+        });
+
+#ifndef Q_OS_LINUX
+        info.itemAttributes->requestCreatedTime(this,[this](const QDateTime& time)
+        {
+            title->updateCreatedTime(time);
+        });
+#endif
+
+        info.itemAttributes->requestSize(this,[title](qint64 size)
+        {
+            title->updateSize(Utilities::getSizeString(size));
+        });
 
         mData.data->checkTrailingSpaces(conflictedName);
         title->setTitle(conflictedName);
+        title->setPath(info.conflictedPath);
         title->showIcon();
 
         if(title &&
@@ -181,6 +183,11 @@ void NameConflict::removeConflictedNameWidget(QWidget* widget)
     widget->deleteLater();
 }
 
+void NameConflict::setDelegate(QPointer<StalledIssueBaseDelegateWidget> newDelegate)
+{
+    mDelegate = newDelegate;
+}
+
 void NameConflict::setDisabled()
 {
     if(!ui->pathContainer->graphicsEffect())
@@ -199,8 +206,6 @@ void NameConflict::onActionClicked(int actionId)
         auto titleFileName = chooseTitle->property(TITLE_FILENAME).toString();
         info.setFile(mData.data->getNativePath(), titleFileName);
 
-        auto delegateWidget = dynamic_cast<StalledIssueBaseDelegateWidget*>(parentWidget());
-
         if(actionId == RENAME_ID)
         {
             auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
@@ -218,7 +223,7 @@ void NameConflict::onActionClicked(int actionId)
             renameDialog->init();
 
             DialogOpener::showDialog<RenameNodeDialog>(renameDialog,
-                                                       [this, titleFileName, delegateWidget, chooseTitle, renameDialog](){
+                                                       [this, titleFileName, chooseTitle, renameDialog](){
 
                 if(renameDialog->result() == QDialog::Accepted)
                 {
@@ -229,12 +234,12 @@ void NameConflict::onActionClicked(int actionId)
                     if(mData.isCloud)
                     {
                         areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveCloudConflictedNameByRename(titleFileName
-                                                                                                              , newName, chooseTitle->getIndex(), delegateWidget->getCurrentIndex());
+                                                                                                              , newName, chooseTitle->getIndex(), mDelegate->getCurrentIndex());
                     }
                     else
                     {
                         areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveLocalConflictedNameByRename(titleFileName
-                                                                                                              , newName,chooseTitle->getIndex(), delegateWidget->getCurrentIndex());
+                                                                                                              , newName,chooseTitle->getIndex(), mDelegate->getCurrentIndex());
                     }
 
                     // Prevent this one showing again (if they Refresh) until sync has made a full fresh pass
@@ -248,7 +253,7 @@ void NameConflict::onActionClicked(int actionId)
                     chooseTitle->setDisabled(true);
 
                     //Now, close the editor because the action has been finished
-                    if(delegateWidget)
+                    if(mDelegate)
                     {
                         emit refreshUi();
                     }
@@ -290,13 +295,13 @@ void NameConflict::onActionClicked(int actionId)
 
                 if(mData.isCloud)
                 {
+                    areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveCloudConflictedNameByRemove(titleFileName,chooseTitle->getIndex(), mDelegate->getCurrentIndex());
                     mUtilities.removeRemoteFile(info.filePath());
-                    areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveCloudConflictedNameByRemove(titleFileName,chooseTitle->getIndex(), delegateWidget->getCurrentIndex());
                 }
                 else
                 {
+                    areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveLocalConflictedNameByRemove(titleFileName,chooseTitle->getIndex(), mDelegate->getCurrentIndex());
                     mUtilities.removeLocalFile(QDir::toNativeSeparators(info.filePath()));
-                    areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveLocalConflictedNameByRemove(titleFileName,chooseTitle->getIndex(), delegateWidget->getCurrentIndex());
                 }
 
                 // Prevent this one showing again (if they Refresh) until sync has made a full fresh pass
@@ -308,7 +313,7 @@ void NameConflict::onActionClicked(int actionId)
                 }
 
                 //Now, close the editor because the action has been finished
-                if(delegateWidget)
+                if(mDelegate)
                 {
                     emit refreshUi();
                 }

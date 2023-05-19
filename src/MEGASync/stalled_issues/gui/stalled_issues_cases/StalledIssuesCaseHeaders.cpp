@@ -237,6 +237,14 @@ void NameConflictsHeader::refreshCaseUi(StalledIssueHeader* header)
         {
             header->addFileName(cloudData.conflictedNames.first().conflictedName);
         }
+        else
+        {
+            auto localData = nameConflict->getNameConflictLocalData();
+            if(!localData.conflictedNames.isEmpty())
+            {
+                header->addFileName(localData.conflictedNames.first().conflictedName);
+            }
+        }
 
         header->setLeftTitleText(tr("Name Conflicts:"));
 

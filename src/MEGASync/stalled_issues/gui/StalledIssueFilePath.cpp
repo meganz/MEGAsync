@@ -164,7 +164,7 @@ void StalledIssueFilePath::updateFileIcons()
 {
     QFileInfo fileInfo(getFilePath());
     auto hasProblem(mData->getPath().mPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem);
-    QIcon fileTypeIcon(getPathIcon(fileInfo, hasProblem));
+    QIcon fileTypeIcon(StalledIssuesUtilities::getFileIcon(fileInfo, hasProblem));
 
     ui->filePathIcon->setPixmap(fileTypeIcon.pixmap(ui->filePathIcon->size()));
 }
@@ -173,53 +173,9 @@ void StalledIssueFilePath::updateMoveFileIcons()
 {
     QFileInfo fileInfo(getMoveFilePath());
     auto hasProblem(mData->getMovePath().mPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem);
-    QIcon fileTypeIcon(getPathIcon(fileInfo, hasProblem));
+    QIcon fileTypeIcon(StalledIssuesUtilities::getFileIcon(fileInfo, hasProblem));
 
     ui->moveFilePathIcon->setPixmap(fileTypeIcon.pixmap(ui->moveFilePathIcon->size()));
-}
-
-QIcon StalledIssueFilePath::getPathIcon(const QFileInfo &fileInfo, bool hasProblem)
-{
-    QIcon fileTypeIcon;
-
-    bool isFile(false);
-
-    if(fileInfo.exists())
-    {
-        isFile = fileInfo.isFile();
-    }
-    else
-    {
-        isFile = !fileInfo.completeSuffix().isEmpty();
-    }
-
-    if(isFile)
-    {
-        //Without extension
-        if(fileInfo.completeSuffix().isEmpty())
-        {
-            fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/drag_generic.png"));
-        }
-        else
-        {
-            fileTypeIcon = Utilities::getCachedPixmap(Utilities::getExtensionPixmapName(
-                                                          fileInfo.fileName(), QLatin1Literal(":/images/drag_")));
-        }
-    }
-    else
-    {
-        if(hasProblem)
-        {
-            fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/folder_error_default.png"));
-        }
-        else
-        {
-            fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/folder_orange_default.png"));
-        }
-
-    }
-
-    return fileTypeIcon;
 }
 
 bool StalledIssueFilePath::eventFilter(QObject *watched, QEvent *event)

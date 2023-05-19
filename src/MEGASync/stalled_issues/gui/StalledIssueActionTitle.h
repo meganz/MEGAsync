@@ -34,10 +34,12 @@ public:
     void setDisabled(bool state);
     void setIsCloud(bool state);
 
-    void updateLastTimeModified(QDateTime &&time);
-    void updateCreatedTime(QDateTime &&time);
+    void updateLastTimeModified(const QDateTime &time);
+    void updateCreatedTime(const QDateTime &time);
     void updateUser(const QString& user);
-    void updateSize(const QString& size);
+    void updateSize(const QString &size);
+
+    void setPath(const QString &newPath);
 
 signals:
     void actionClicked(int id);
@@ -46,6 +48,7 @@ protected:
     Ui::StalledIssueActionTitle *ui;
     bool mIsCloud;
     QString mTitle;
+    QString mPath;
 
     bool eventFilter(QObject *watched, QEvent *event) override;
 

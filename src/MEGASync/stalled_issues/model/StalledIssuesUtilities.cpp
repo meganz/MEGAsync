@@ -98,24 +98,46 @@ void StalledIssuesUtilities::removeLocalFile(const QString& path)
     }
 }
 
-QPair<QDateTime, QDateTime> StalledIssuesUtilities::getRemoteModificatonAndCreatedTime(mega::MegaNode *node)
+QIcon StalledIssuesUtilities::getFileIcon(const QFileInfo &fileInfo, bool hasProblem)
 {
-    QPair<QDateTime, QDateTime> times;
+    QIcon fileTypeIcon;
 
-    std::unique_ptr<mega::MegaNodeList> nodeVersions(MegaSyncApp->getMegaApi()->getVersions(node));
-    if(nodeVersions->size() != 0)
+    bool isFile(false);
+
+    if(fileInfo.exists())
     {
-        auto lastVersionNode = nodeVersions->get(0);
-        times.first = QDateTime::fromSecsSinceEpoch(lastVersionNode->getModificationTime());
-
-        auto firstVersionNode = nodeVersions->get(nodeVersions->size() - 1);
-        times.second = QDateTime::fromSecsSinceEpoch(firstVersionNode->getCreationTime());
+        isFile = fileInfo.isFile();
     }
     else
     {
-        times.first = QDateTime::fromSecsSinceEpoch(node->getModificationTime());
-        times.second = QDateTime::fromSecsSinceEpoch(node->getCreationTime());
+        isFile = !fileInfo.completeSuffix().isEmpty();
     }
 
-    return times;
+    if(isFile)
+    {
+        //Without extension
+        if(fileInfo.completeSuffix().isEmpty())
+        {
+            fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/drag_generic.png"));
+        }
+        else
+        {
+            fileTypeIcon = Utilities::getCachedPixmap(Utilities::getExtensionPixmapName(
+                                                          fileInfo.fileName(), QLatin1Literal(":/images/drag_")));
+        }
+    }
+    else
+    {
+        if(hasProblem)
+        {
+            fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/folder_error_default.png"));
+        }
+        else
+        {
+            fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/folder_orange_default.png"));
+        }
+
+    }
+
+    return fileTypeIcon;
 }

@@ -17,7 +17,7 @@ class StalledIssueChooseWidget : public QFrame
 
 public:
     explicit StalledIssueChooseWidget(QWidget *parent = nullptr);
-    ~StalledIssueChooseWidget();
+    virtual ~StalledIssueChooseWidget();
 
     void updateUi(StalledIssueDataPtr data);
     const StalledIssueDataPtr& data();
@@ -29,6 +29,7 @@ signals:
 
 protected:
     bool eventFilter(QObject *watched, QEvent *event) override;
+    Ui::StalledIssueChooseWidget *ui;
 
 private slots:
     void onActionClicked(int button_id);
@@ -36,11 +37,24 @@ private slots:
 private:
     void setDisabled(bool solved);
 
-    Ui::StalledIssueChooseWidget *ui;
     StalledIssueDataPtr mData;
     bool mIsSolved;
     bool mPreviousSolveState;
     QPointer<QGraphicsOpacityEffect> mDisableEffect;
+};
+
+class CloudStalledIssueChooseWidget : public StalledIssueChooseWidget
+{
+public:
+    explicit CloudStalledIssueChooseWidget(QWidget *parent = nullptr)
+        : StalledIssueChooseWidget(parent)
+    {
+
+    }
+    ~CloudStalledIssueChooseWidget() = default;
+
+    void updateUi(CloudStalledIssueDataPtr cloudData);
+
 };
 
 #endif // STALLEDISSUECHOOSEWIDGET_H
