@@ -14,51 +14,8 @@ RegisterPageForm {
     id: registerPage
 
     nextButton.onClicked: {
-        var error = firstName.text.length === 0 || lastName.text.length === 0;
-        firstLastNameHint.visible = error;
-        firstName.showType = error;
-        lastName.showType = error;
 
-        var valid = email.valid();
-        if(!valid) {
-            error = true;
-            email.hintText = OnboardingStrings.errorValidEmail;
-        }
-        email.showType = !valid;
-        email.hintVisible = !valid;
-
-        valid = password.text.length !== 0;
-        if(!valid) {
-            error = true;
-            password.hintType = Custom.HintText.Type.Error;
-            password.type = Custom.TextField.Type.Error;
-            password.showType = true;
-        }
-        password.showType = !valid;
-
-        if(confirmPassword.text.length === 0) {
-            error = true;
-            confirmPassword.showType = true;
-            confirmPassword.hintVisible = true;
-            confirmPassword.hintText = OnboardingStrings.errorConfirmPassword;
-            confirmPassword.type = Custom.TextField.Type.Error;
-            confirmPassword.hintType = Custom.HintText.Type.Error;
-        } else if(password.text !== confirmPassword.text) {
-            error = true;
-            confirmPassword.showType = true;
-            confirmPassword.hintVisible = true;
-            confirmPassword.type = Custom.TextField.Type.Error;
-            confirmPassword.hintText = OnboardingStrings.errorPasswordsMatch;
-            confirmPassword.hintType = Custom.HintText.Type.Error;
-            password.hintVisible = false;
-            password.type = Custom.TextField.Type.Error;
-            password.showType = true;
-        } else {
-            confirmPassword.showType = false;
-            confirmPassword.hintVisible = false;
-        }
-
-        if(error) {
+        if(registerContent.error()) {
             return;
         }
 
@@ -66,25 +23,18 @@ RegisterPageForm {
         state = signUpStatus;
 
         var formData = {
-            [Onboarding.RegisterForm.PASSWORD]: password.text,
-            [Onboarding.RegisterForm.EMAIL]: email.text,
-            [Onboarding.RegisterForm.FIRST_NAME]: firstName.text,
-            [Onboarding.RegisterForm.LAST_NAME]: lastName.text
+            [Onboarding.RegisterForm.PASSWORD]: registerContent.password.text,
+            [Onboarding.RegisterForm.EMAIL]: registerContent.email.text,
+            [Onboarding.RegisterForm.FIRST_NAME]: registerContent.firstName.text,
+            [Onboarding.RegisterForm.LAST_NAME]: registerContent.lastName.text
         }
 
         Onboarding.onRegisterClicked(formData);
     }
 
     nextButton.progress.onAnimationFinished: {
-        if(completed){
-
-            password.text = "";
-            confirmPassword.text = "";
-            firstName.text = "";
-            lastName.text = "";
-            email.text = "";
-            termsCheckBox.checked = false;
-            dataLossCheckBox.checked = false;
+        if(completed) {
+            registerContent.clean();
             state = normalStatus;
             nextButton.icons.busyIndicatorVisible = false;
             registerFlow.state = confirmEmail;
@@ -99,23 +49,15 @@ RegisterPageForm {
         target: Onboarding
 
         onRegisterFinished: (success) => {
-                                if(success) {
-                                    registerFlow.state = confirmEmail;
-                                    password.text = "";
-                                    confirmPassword.text = "";
-                                    firstName.text = "";
-                                    lastName.text = "";
-                                    email.text = "";
-                                    termsCheckBox.checked = false;
-                                    dataLossCheckBox.checked = false;
-                                } else {
-                                    nextButton.progressValue = 0;
-                                    email.showType = true;
-                                    email.hintText = OnboardingStrings.errorEmailAlreadyExist;
-                                    email.hintVisible = true;
-                                }
-                                state = normalStatus;
-                                nextButton.icons.busyIndicatorVisible = false;
-                            }
+            if(success) {
+                registerFlow.state = confirmEmail;
+                registerContent.clean();
+            } else {
+                nextButton.progressValue = 0;
+                registerContent.showEmailAlreadyExistsError();
+            }
+            state = normalStatus;
+            nextButton.busyIndicatorVisible = false;
+        }
     }
 }

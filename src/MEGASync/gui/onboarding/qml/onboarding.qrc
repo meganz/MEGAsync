@@ -6,6 +6,7 @@
         <file>content/onboard/OnboardingDialog.qml</file>
         <file>content/onboard/OnboardingFlow.qml</file>
         <file>content/onboard/OnboardingStrings.qml</file>
+        <file>content/onboard/RegisterContent.qml</file>
         <file>content/onboard/RegisterFlow.qml</file>
         <file>content/onboard/RegisterPage.qml</file>
         <file>content/onboard/RegisterPageForm.ui.qml</file>
@@ -22,13 +23,13 @@
         <file>content/onboard/syncs_types/ResumePage.qml</file>
         <file>content/onboard/syncs_types/ResumePageForm.ui.qml</file>
         <file>content/onboard/syncs_types/SyncsFlow.qml</file>
-		<file>content/onboard/syncs_types/SyncsHorizontalButton.qml</file>
+        <file>content/onboard/syncs_types/SyncsHorizontalButton.qml</file>
         <file>content/onboard/syncs_types/SyncsPage.qml</file>
-		<file>content/onboard/syncs_types/SyncsType.qml</file>
-		<file>content/onboard/syncs_types/SyncsVerticalButton.qml</file>
+        <file>content/onboard/syncs_types/SyncsType.qml</file>
+        <file>content/onboard/syncs_types/SyncsVerticalButton.qml</file>
         <file>content/onboard/syncs_types/backups/ConfirmFoldersPage.qml</file>
         <file>content/onboard/syncs_types/backups/ConfirmFoldersPageForm.ui.qml</file>
-		<file>content/onboard/syncs_types/backups/FolderRow.qml</file>
+        <file>content/onboard/syncs_types/backups/FolderRow.qml</file>
         <file>content/onboard/syncs_types/backups/FoldersTable.qml</file>
         <file>content/onboard/syncs_types/backups/RenameBackupFolderPage.qml</file>
         <file>content/onboard/syncs_types/backups/RenameBackupFolderPageForm.ui.qml</file>
@@ -42,7 +43,7 @@
         <file>content/onboard/syncs_types/syncs/FullSyncPageForm.ui.qml</file>
         <file>content/onboard/syncs_types/syncs/SelectiveSyncPage.qml</file>
         <file>content/onboard/syncs_types/syncs/SelectiveSyncPageForm.ui.qml</file>
-		<file>content/onboard/syncs_types/syncs/SyncTypeButton.qml</file>
+        <file>content/onboard/syncs_types/syncs/SyncTypeButton.qml</file>
         <file>content/onboard/syncs_types/syncs/SyncTypePage.qml</file>
         <file>content/onboard/syncs_types/syncs/SyncTypePageForm.ui.qml</file>
         <file>content/onboard/ConfirmEmailPage.qml</file>

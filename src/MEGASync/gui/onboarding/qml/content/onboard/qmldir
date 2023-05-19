@@ -4,6 +4,7 @@ LoginPage 1.0 LoginPage.qml
 LoginPageForm 1.0 LoginPageForm.ui.qml
 OnboardingDialog 1.0 OnboardingDialog.qml
 OnboardingFlow 1.0 OnboardingFlow.qml
+RegisterContent 1.0 RegisterContent.qml
 RegisterFlow 1.0 RegisterFlow.qml
 RegisterPageForm 1.0 RegisterPageForm.ui.qml
 SyncSelectTypeButton 1.0 SyncSelectTypeButton.qml

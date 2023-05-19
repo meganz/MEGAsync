@@ -19,20 +19,11 @@ StackViewPage {
     readonly property int contentMargin: 48
     readonly property int bottomMargin: 32
     readonly property int buttonSpacing: 8
-    readonly property int scrollbarWidth: 8
-    readonly property int rightFormMargin: 13 + scrollbarWidth
-    readonly property int scrollViewHeight: 374
-    readonly property int checkboxSpacing: 16
-    readonly property int checkboxBottomHeight: 1
+    readonly property int contentHeight: 374
 
-    property alias firstName: firstName
-    property alias lastName: lastName
-    property alias firstLastNameHint: firstLastNameHint
-    property alias email: email
-    property alias password: password
-    property alias confirmPassword: confirmPassword
-    property alias termsCheckBox: termsCheckBox
-    property alias dataLossCheckBox: dataLossCheckBox
+    property RegisterContent registerContent: RegisterContent {
+        parent: scrollPanel.flickable.contentItem
+    }
 
     property alias loginButton: loginButton
     property alias nextButton: nextButton
@@ -40,10 +31,13 @@ StackViewPage {
     color: Styles.pageBackground
 
     Column {
+        id: mainColumn
+
         anchors.left: root.left
         anchors.right: root.right
         anchors.top: root.top
-        anchors.rightMargin: contentMargin / 2
+        anchors.leftMargin: contentMargin
+        anchors.rightMargin: contentMargin
         anchors.topMargin: contentMargin
 
         spacing: contentMargin / 2
@@ -53,171 +47,20 @@ StackViewPage {
 
             anchors.left: parent.left
             anchors.right: parent.right
-            anchors.leftMargin: contentMargin
-            anchors.rightMargin: email.textField.focusBorderWidth
+            anchors.leftMargin: registerContent.email.textField.focusBorderWidth
             font.pixelSize: Custom.Text.Size.Large
 
             text: OnboardingStrings.signUpTitle
         }
 
-        ScrollView {
-            id: scrollView
+        Custom.ScrollPanel {
+            id: scrollPanel
 
             anchors.left: parent.left
             anchors.right: parent.right
-
-            height: root.scrollViewHeight
-            clip: true
-
-            wheelEnabled: formColumn.height > scrollView.height
-                          + checkboxSpacing + checkboxBottomHeight
-
-            ScrollBar.vertical: ScrollBar {
-                id: scrollbar
-
-                anchors.right: scrollView.right
-                height: scrollView.height
-                width: root.scrollbarWidth
-                visible: scrollView.wheelEnabled
-
-                contentItem: Rectangle {
-                    radius: 10
-                    color: Styles.iconPrimary
-                    opacity: scrollbar.pressed ? 0.6 : 1.0
-                }
-
-                background: Rectangle {
-                    radius: 10
-                    color: Styles.iconPrimary
-                    opacity: 0.1
-                }
-            }
-
-            ColumnLayout {
-                id: formColumn
-
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.top: parent.top
-                spacing: contentMargin / 2
-
-                Column {
-                    Layout.fillWidth: true
-                    spacing: 20
-
-                    Column {
-                        anchors.left: parent.left
-                        anchors.right: parent.right
-                        anchors.leftMargin: contentMargin
-
-                        spacing: 4
-
-                        Row {
-                            id: nameLayout
-
-                            anchors.left: parent.left
-                            anchors.right: parent.right
-                            anchors.rightMargin: root.rightFormMargin
-                            spacing: 8
-
-                            Custom.TextField {
-                                id: firstName
-
-                                width: nameLayout.width / 2 - nameLayout.spacing / 2
-                                title: OnboardingStrings.firstName
-                                type: Custom.TextField.Type.Error
-                            }
-
-                            Custom.TextField {
-                                id: lastName
-
-                                width: nameLayout.width / 2 - nameLayout.spacing / 2
-                                title: OnboardingStrings.lastName
-                                type: Custom.TextField.Type.Error
-                            }
-                        }
-
-                        Custom.HintText {
-                            id: firstLastNameHint
-
-                            anchors.left: parent.left
-                            anchors.right: parent.right
-                            anchors.leftMargin: email.textField.focusBorderWidth
-                            anchors.rightMargin: email.textField.focusBorderWidth
-                            type: Custom.HintText.Type.Error
-                            text: OnboardingStrings.errorFirstLastName
-                        }
-                    }
-
-                    Custom.EmailTextField {
-                        id: email
-
-                        anchors.left: parent.left
-                        anchors.right: parent.right
-                        anchors.leftMargin: contentMargin
-                        anchors.rightMargin: root.rightFormMargin
-                        title: OnboardingStrings.email
-                    }
-
-                    Custom.PasswordTextField {
-                        id: password
-
-                        anchors.left: parent.left
-                        anchors.right: parent.right
-                        anchors.leftMargin: contentMargin
-                        anchors.rightMargin: root.rightFormMargin
-                        showHint: true
-                        title: OnboardingStrings.password
-                    }
-
-                    Custom.PasswordTextField {
-                        id: confirmPassword
-
-                        anchors.left: parent.left
-                        anchors.right: parent.right
-                        anchors.leftMargin: contentMargin
-
-                        anchors.rightMargin: root.rightFormMargin
-                        title: OnboardingStrings.confirmPassword
-                    }
-                }
-
-                Column {
-                    id: checksLayout
-
-                    Layout.fillWidth: true
-                    spacing: checkboxSpacing
-
-                    Custom.CheckBox {
-                        id: dataLossCheckBox
-
-                        anchors.left: parent.left
-                        anchors.right: parent.right
-                        anchors.leftMargin: contentMargin
-                        anchors.rightMargin: root.rightFormMargin
-                        url: Links.security
-                        text: OnboardingStrings.understandLossPassword
-                    }
-
-                    Custom.CheckBox {
-                        id: termsCheckBox
-
-                        anchors.left: parent.left
-                        anchors.right: parent.right
-                        anchors.leftMargin: contentMargin
-                        anchors.rightMargin: root.rightFormMargin
-                        url: Links.terms
-                        text: OnboardingStrings.agreeTerms
-                    }
-
-                    Rectangle {
-                        height: checkboxBottomHeight
-                        anchors.left: parent.left
-                        anchors.right: parent.right
-                        color: "transparent"
-                    }
-                }
-            }
+            height: root.contentHeight
+            flickable.contentHeight: registerContent.implicitHeight
+            flickable.contentWidth: registerContent.implicitWidth
         }
     }
 
@@ -231,9 +74,9 @@ StackViewPage {
         Custom.PrimaryButton {
             id: nextButton
 
-            enabled: dataLossCheckBox.checked && termsCheckBox.checked
+            enabled: registerContent.dataLossCheckBox.checked
+                     && registerContent.termsCheckBox.checked
             icons.source: Images.arrowRight
-            icons.busyIndicatorImage: Images.loader
             text: OnboardingStrings.next
         }
 
@@ -244,10 +87,3 @@ StackViewPage {
         }
     }
 }
-
-/*##^##
-Designer {
-    D{i:0;autoSize:true;height:480;width:640}
-}
-##^##*/
-
