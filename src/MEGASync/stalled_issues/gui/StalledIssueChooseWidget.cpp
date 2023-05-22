@@ -23,7 +23,8 @@ StalledIssueChooseWidget::StalledIssueChooseWidget(QWidget *parent) :
     ui->path->hideLocalOrRemoteTitle();
 
     ui->chooseTitle->addActionButton(QIcon(), tr("Choose"), BUTTON_ID, true);
-    connect(ui->chooseTitle, &StalledIssueActionTitle::actionClicked, this, &StalledIssueChooseWidget::onActionClicked); }
+    connect(ui->chooseTitle, &StalledIssueActionTitle::actionClicked, this, &StalledIssueChooseWidget::onActionClicked);
+}
 
 StalledIssueChooseWidget::~StalledIssueChooseWidget()
 {
@@ -45,21 +46,6 @@ void StalledIssueChooseWidget::updateUi(StalledIssueDataPtr data)
     ui->path->show();
     ui->path->updateUi(data);
 
-    if(!data->isCloud())
-    {
-        QFileInfo file(data->getNativeFilePath());
-        if(file.exists())
-        {
-            ui->name->updateLastTimeModified(file.lastModified());
-#ifndef Q_OS_LINUX
-            ui->name->updateCreatedTime(file.created());
-#endif
-            ui->name->updateSize(Utilities::getSizeString(file.size()));
-        }
-    }
-
-    //bool discardItem(false);
-
     if(mPreviousSolveState != mIsSolved)
     {
         mPreviousSolveState = mIsSolved;
@@ -77,7 +63,7 @@ void StalledIssueChooseWidget::updateUi(StalledIssueDataPtr data)
             else
             {
                 icon.addFile(QString::fromUtf8(":/images/StalledIssues/remove_default.png"));
-                ui->chooseTitle->addMessage(PlatformStrings::movedFileToBin(), icon.pixmap(16,16));
+                ui->chooseTitle->addMessage(movedToBinText(), icon.pixmap(16,16));
             }
         }
     }
@@ -124,26 +110,58 @@ void StalledIssueChooseWidget::setIssueSolved(bool newIssueSolved)
     mIsSolved = newIssueSolved;
 }
 
+//LOCAL
+QString LocalStalledIssueChooseWidget::movedToBinText() const
+{
+    return PlatformStrings::movedFileToBin();
+}
+
+void LocalStalledIssueChooseWidget::updateUi(LocalStalledIssueDataPtr localData)
+{
+    QFileInfo file(localData->getNativeFilePath());
+    if(file.exists())
+    {
+        ui->name->updateLastTimeModified(file.lastModified());
+#ifndef Q_OS_LINUX
+        ui->name->updateCreatedTime(file.created());
+#endif
+        ui->name->updateSize(Utilities::getSizeString(file.size()));
+    }
+
+    StalledIssueChooseWidget::updateUi(localData);
+}
+
+//CLOUD
+QString CloudStalledIssueChooseWidget::movedToBinText() const
+{
+    return tr("Moved to MEGA Bin");
+}
+
 void CloudStalledIssueChooseWidget::updateUi(CloudStalledIssueDataPtr cloudData)
 {
-    StalledIssueChooseWidget::updateUi(cloudData);
-
     auto node = cloudData->getNode();
     if(node)
     {
-        ui->name->updateUser(cloudData->getUserFirstName());
 
         cloudData->getFileFolderAttributes()->requestModifiedTime(this, [this](const QDateTime& time){
             ui->name->updateLastTimeModified(time);
         });
 
-#ifndef Q_OS_LINUX
         cloudData->getFileFolderAttributes()->requestCreatedTime(this, [this](const QDateTime& time){
             ui->name->updateCreatedTime(time);
         });
-#endif
+
         cloudData->getFileFolderAttributes()->requestSize(this, [this](qint64 size){
             ui->name->updateSize(Utilities::getSizeString(size));
         });
+
+        if(MegaSyncApp->getMegaApi()->checkAccess(node.get(), mega::MegaShare::ACCESS_OWNER).getErrorCode() != mega::MegaError::API_OK)
+        {
+            cloudData->getFileFolderAttributes()->requestUser(this, [this](QString user){
+                ui->name->updateUser(user);
+            });
+        }
     }
+
+    StalledIssueChooseWidget::updateUi(cloudData);
 }

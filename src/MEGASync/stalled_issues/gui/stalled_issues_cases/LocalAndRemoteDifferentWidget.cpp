@@ -70,27 +70,27 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
 
     auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
     QMessageBox* msgBox = new QMessageBox(dialog->getDialog());
+    msgBox->setAttribute(Qt::WA_DeleteOnClose);
     msgBox->setWindowTitle(QString::fromUtf8("MEGAsync"));
     msgBox->setIcon(QMessageBox::Warning);
-    msgBox->setText(tr("Are you sure you want to keep the local %1 %2?"));
-    msgBox->setInformativeText(tr("The remote %1 %2 will be moved to the rubbish bin along with all its versions."));
+    msgBox->setTextFormat(Qt::RichText);
 
     if(localInfo.isFile())
     {
-        msgBox->setText(tr("Are you sure you want to keep the local file %1?").arg(ui->chooseLocalCopy->data()->getFileName()));
+        msgBox->setText(tr("Are you sure you want to keep the <b>local file</b> %1?").arg(ui->chooseLocalCopy->data()->getFileName()));
     }
     else
     {
-        msgBox->setText(tr("Are you sure you want to keep the local folder %1?").arg(ui->chooseLocalCopy->data()->getFileName()));
+        msgBox->setText(tr("Are you sure you want to keep the <b>local folder</b> %1?").arg(ui->chooseLocalCopy->data()->getFileName()));
     }
 
     if(node->isFile())
     {
-        msgBox->setInformativeText(tr("The remote file %1 will be moved to the rubbish bin along with all its versions.").arg(localInfo.fileName()));
+        msgBox->setInformativeText(tr("The <b>remote file</b> %1 will be moved to the rubbish bin along with all its versions.").arg(localInfo.fileName()));
     }
     else
     {
-        msgBox->setInformativeText(tr("The remote folder %1 will be moved to the rubbish bin along with all its versions.").arg(localInfo.fileName()));
+        msgBox->setInformativeText(tr("The <b>remote folder</b> %1 will be moved to the rubbish bin along with all its versions.").arg(localInfo.fileName()));
     }
 
     msgBox->addButton(tr("Ok"), QMessageBox::AcceptRole);
@@ -118,24 +118,27 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
 
     auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
     QMessageBox* msgBox = new QMessageBox(dialog->getDialog());
+    msgBox->setAttribute(Qt::WA_DeleteOnClose);
     msgBox->setWindowTitle(QString::fromUtf8("MEGAsync"));
     msgBox->setIcon(QMessageBox::Warning);
+    msgBox->setTextFormat(Qt::RichText);
+
     if(node->isFile())
     {
-        msgBox->setText(tr("Are you sure you want to keep the remote file %1?").arg(ui->chooseRemoteCopy->data()->getFileName()));
+        msgBox->setText(tr("Are you sure you want to keep the <b>remote file</b> %1?").arg(ui->chooseRemoteCopy->data()->getFileName()));
     }
     else
     {
-        msgBox->setText(tr("Are you sure you want to keep the remote folder %1?").arg(ui->chooseRemoteCopy->data()->getFileName()));
+        msgBox->setText(tr("Are you sure you want to keep the <b>remote folder</b> %1?").arg(ui->chooseRemoteCopy->data()->getFileName()));
     }
 
     if(localInfo.isFile())
     {
-        msgBox->setInformativeText(tr("The local file %1 will be moved to the rubbish bin").arg(localInfo.fileName()));
+        msgBox->setInformativeText(tr("The <b>local file</b> %1 will be moved to the rubbish bin").arg(localInfo.fileName()));
     }
     else
     {
-        msgBox->setInformativeText(tr("The local folder %1 will be moved to the rubbish bin").arg(localInfo.fileName()));
+        msgBox->setInformativeText(tr("The <b>local folder</b> %1 will be moved to the rubbish bin").arg(localInfo.fileName()));
     }
 
     msgBox->addButton(tr("Ok"), QMessageBox::AcceptRole);

@@ -1,7 +1,7 @@
 #ifndef STALLEDISSUE_H
 #define STALLEDISSUE_H
 
-#include <FolderAttributes.h>
+#include <FileFolderAttributes.h>
 
 #include <megaapi.h>
 
@@ -20,10 +20,6 @@ enum class StalledIssueFilterCriterion
     ITEM_TYPE_CONFLICTS,
     OTHER_CONFLICTS,
 };
-
-namespace UserAttributes{
-class FullName;
-}
 
 class StalledIssueData : public QSharedData
 {
@@ -75,11 +71,6 @@ public:
     virtual void initFileFolderAttributes()
     {}
 
-    std::shared_ptr<FileFolderAttributes> getFileFolderAttributes() const
-    {
-        return mAttributes;
-    }
-
 protected:
     friend class StalledIssue;
     friend class NameConflictedStalledIssue;
@@ -125,22 +116,24 @@ public:
         return true;
     }
 
-    QString getUserFirstName() const;
     std::shared_ptr<mega::MegaNode> getNode() const;
 
     bool isEqual(const mega::MegaSyncStall *stall) const override;
 
     void initFileFolderAttributes() override
     {
-        mAttributes = std::make_shared<RemoteFileFolderAttributes>(getNode()->getHandle(), nullptr);
+        mAttributes = std::make_shared<RemoteFileFolderAttributes>(getFilePath(), nullptr);
+    }
+
+    std::shared_ptr<RemoteFileFolderAttributes> getFileFolderAttributes() const
+    {
+        return std::dynamic_pointer_cast<RemoteFileFolderAttributes>(mAttributes);
     }
 
 private:
     friend class StalledIssue;
     friend class NameConflictedStalledIssue;
 
-    QString mUserEmail;
-    std::shared_ptr<const UserAttributes::FullName> mUserFullName;
     mutable std::shared_ptr<mega::MegaNode> mRemoteNode;
 };
 
@@ -185,6 +178,11 @@ public:
     void initFileFolderAttributes() override
     {
         mAttributes = std::make_shared<LocalFileFolderAttributes>(mPath.path, nullptr);
+    }
+
+    std::shared_ptr<LocalFileFolderAttributes> getFileFolderAttributes() const
+    {
+        return std::dynamic_pointer_cast<LocalFileFolderAttributes>(mAttributes);
     }
 };
 

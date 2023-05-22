@@ -2,7 +2,7 @@
 
 QString PlatformStrings::movedFileToBin()
 {
-    return tr("Moved to recycle bin");
+    return tr("Moved to OS Recycle Bin");
 }
 
 QString PlatformStrings::fileExplorer()

@@ -1,5 +1,5 @@
-#ifndef FOLDERATTRIBUTES_H
-#define FOLDERATTRIBUTES_H
+#ifndef FILEFOLDERATTRIBUTES_H
+#define FILEFOLDERATTRIBUTES_H
 
 #include <QTMegaRequestListener.h>
 
@@ -7,6 +7,11 @@
 #include <QFutureWatcher>
 
 #include <functional>
+#include <memory>
+
+namespace UserAttributes{
+class FullName;
+}
 
 class FileFolderAttributes : public QObject
 {
@@ -22,17 +27,39 @@ public:
 
     void cancel();
 
+    template <class Type>
+    static std::shared_ptr<Type> convert(std::shared_ptr<FileFolderAttributes> attributes)
+    {
+        return std::dynamic_pointer_cast<Type>(attributes);
+    }
+
 signals:
     void sizeReady(qint64);
     void modifiedTimeReady(const QDateTime&);
     void createdTimeReady(const QDateTime&);
 
 protected:
+    enum AttributeTypes
+    {
+        Size = 0,
+        ModifiedTime,
+        CreatedTime,
+        LocalAttributes = 10,
+        RemoteAttributes = 20,
+        Last
+    };
+
     bool mCancelled;
 
     qint64 mSize;
     QDateTime mModifiedTime;
     QDateTime mCreatedTime;
+
+    bool attributeNeedsUpdate(int type);
+    QObject* requestReady(int type, QObject* caller);
+    void requestFinish(int type);
+    QMap<int, QObject*> mRequests;
+    QMap<int, int64_t> mRequestTimestamps;
 };
 
 class LocalFileFolderAttributes : public FileFolderAttributes
@@ -66,18 +93,39 @@ class RemoteFileFolderAttributes : public FileFolderAttributes, public mega::Meg
     Q_OBJECT
 
 public:
+    RemoteFileFolderAttributes(const QString& filePath, QObject *parent);
     RemoteFileFolderAttributes(mega::MegaHandle handle, QObject *parent);
+
     ~RemoteFileFolderAttributes() override;
 
     void requestSize(QObject* caller,std::function<void(qint64)> func) override;
     void requestModifiedTime(QObject* caller,std::function<void(const QDateTime&)> func) override;
     void requestCreatedTime(QObject* caller,std::function<void(const QDateTime&)> func) override;
+    void requestUser(QObject* caller, std::function<void(QString)> func);
 
     void onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e) override;
 
 private:
+    enum class Version
+    {
+        First,
+        Last
+    };
+
+    std::unique_ptr<mega::MegaNode> getNode(Version type = Version::Last) const;
+
     mega::QTMegaRequestListener* mListener;
     mega::MegaHandle mHandle;
+    QString mFilePath;
+
+    enum RemoteAttributeTypes
+    {
+        User = AttributeTypes::RemoteAttributes
+    };
+
+    QString mUserEmail;
+    mega::MegaHandle mOwner = mega::INVALID_HANDLE;
+    std::shared_ptr<const UserAttributes::FullName> mUserFullName;
 };
 
-#endif // FOLDERATTRIBUTES_H
+#endif // FILEFOLDERATTRIBUTES_H

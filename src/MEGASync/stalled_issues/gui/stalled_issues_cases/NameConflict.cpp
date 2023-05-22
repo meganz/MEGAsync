@@ -96,11 +96,6 @@ void NameConflict::updateUi(NameConflictedStalledIssue::NameConflictData conflic
             ui->nameConflictsLayout->addWidget(title);
         }
 
-        if(conflictData.data->isCloud())
-        {
-            CloudStalledIssueDataPtr cloudData(conflictData.data->convert<CloudStalledIssueData>());
-            title->updateUser(cloudData->getUserFirstName());
-        }
 
 
         info.itemAttributes->requestModifiedTime(this, [title](const QDateTime& time)
@@ -108,17 +103,47 @@ void NameConflict::updateUi(NameConflictedStalledIssue::NameConflictData conflic
             title->updateLastTimeModified(time);
         });
 
-#ifndef Q_OS_LINUX
-        info.itemAttributes->requestCreatedTime(this,[this](const QDateTime& time)
+        if(conflictData.data->isCloud())
         {
-            title->updateCreatedTime(time);
-        });
+            info.itemAttributes->requestCreatedTime(this, [title](const QDateTime& time)
+            {
+                title->updateCreatedTime(time);
+            });
+        }
+        else
+        {
+#ifndef Q_OS_LINUX
+            info.itemAttributes->requestCreatedTime(this, [title](const QDateTime& time)
+            {
+                title->updateCreatedTime(time);
+            });
 #endif
+        }
 
         info.itemAttributes->requestSize(this,[title](qint64 size)
         {
             title->updateSize(Utilities::getSizeString(size));
         });
+
+        //These items go in order
+        //Modified time -- created time -- size
+        //User
+        if(conflictData.data->isCloud())
+        {
+            CloudStalledIssueDataPtr cloudData(conflictData.data->convert<CloudStalledIssueData>());
+            auto node = cloudData->getNode();
+            if(node && MegaSyncApp->getMegaApi()->checkAccess(node.get(), mega::MegaShare::ACCESS_OWNER).getErrorCode() != mega::MegaError::API_OK)
+            {
+                auto cloudAttributes(FileFolderAttributes::convert<RemoteFileFolderAttributes>(info.itemAttributes));
+                if(cloudAttributes)
+                {
+                    cloudAttributes->requestUser(this, [title](QString user)
+                    {
+                        title->updateUser(user);
+                    });
+                }
+            }
+        }
 
         mData.data->checkTrailingSpaces(conflictedName);
         title->setTitle(conflictedName);

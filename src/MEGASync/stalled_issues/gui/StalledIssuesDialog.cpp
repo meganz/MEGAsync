@@ -89,6 +89,8 @@ void StalledIssuesDialog::toggleTab(StalledIssueFilterCriterion filterCriterion)
 {
   if(auto proxyModel = dynamic_cast<StalledIssuesProxyModel*>(ui->stalledIssuesTree->model()))
   {
+      //Show the view to show the loading view
+      ui->TreeViewContainer->setCurrentWidget(ui->TreeViewContainerPage);
       proxyModel->filter(filterCriterion);
   }
 }

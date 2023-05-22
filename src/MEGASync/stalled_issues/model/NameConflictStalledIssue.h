@@ -3,7 +3,7 @@
 
 #include <StalledIssue.h>
 #include <MegaApplication.h>
-#include <FolderAttributes.h>
+#include <FileFolderAttributes.h>
 
 class NameConflictedStalledIssue : public StalledIssue
 {

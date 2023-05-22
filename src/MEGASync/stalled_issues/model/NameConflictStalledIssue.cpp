@@ -51,8 +51,7 @@ void NameConflictedStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
         {
             QFileInfo cloudPath(QString::fromUtf8(stall->path(true,index)));
 
-            std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(cloudPath.filePath().toUtf8().constData()));
-            ConflictedNameInfo info(cloudPath, std::make_shared<RemoteFileFolderAttributes>(node  ? node->getHandle() : mega::INVALID_HANDLE, nullptr));
+            ConflictedNameInfo info(cloudPath, std::make_shared<RemoteFileFolderAttributes>(cloudPath.filePath(), nullptr));
             mCloudConflictedNames.append(info);
 
             if(consultCloudData()->mPath.isEmpty())

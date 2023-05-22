@@ -47,7 +47,6 @@ signals:
 protected:
     Ui::StalledIssueActionTitle *ui;
     bool mIsCloud;
-    QString mTitle;
     QString mPath;
 
     bool eventFilter(QObject *watched, QEvent *event) override;

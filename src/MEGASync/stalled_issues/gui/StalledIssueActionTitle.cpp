@@ -17,6 +17,7 @@ const char* MAIN_BUTTON = "main";
 const char* DISCARDED = "discarded";
 const char* TITLE = "title";
 const char* DISABLE_BACKGROUND = "disable_background";
+const char* MESSAGE_TEXT = "message_text";
 
 #include <QGraphicsOpacityEffect>
 
@@ -26,11 +27,14 @@ StalledIssueActionTitle::StalledIssueActionTitle(QWidget *parent) :
     mIsCloud(false)
 {
     ui->setupUi(this);
+
     ui->icon->hide();
+    ui->messageContainer->hide();
+    ui->actionContainer->hide();
+    ui->extraInfoContainer->hide();
 
     ui->titleLabel->installEventFilter(this);
 
-    ui->extraInfoContainer->hide();
     ui->backgroundWidget->setProperty(DISABLE_BACKGROUND, false);
 }
 
@@ -46,13 +50,13 @@ void StalledIssueActionTitle::removeBackgroundColor()
 
 void StalledIssueActionTitle::setTitle(const QString &title)
 {
-    mTitle = title;
-    ui->titleLabel->setText(mTitle);
+    ui->titleLabel->setText(title);
+    ui->titleLabel->setProperty(MESSAGE_TEXT, title);
 }
 
 QString StalledIssueActionTitle::title() const
 {
-    return mTitle;
+    return ui->titleLabel->property(MESSAGE_TEXT).toString();
 }
 
 void StalledIssueActionTitle::addActionButton(const QIcon& icon,const QString &text, int id, bool mainButton)
@@ -81,10 +85,13 @@ void StalledIssueActionTitle::addActionButton(const QIcon& icon,const QString &t
     }
 
     ui->actionContainer->setStyleSheet(ui->actionContainer->styleSheet());
+    ui->actionContainer->show();
 }
 
 void StalledIssueActionTitle::hideActionButton(int id)
 {
+    bool allHidden(true);
+
     auto buttons = ui->actionContainer->findChildren<QPushButton*>();
     foreach(auto& button, buttons)
     {
@@ -92,6 +99,15 @@ void StalledIssueActionTitle::hideActionButton(int id)
         {
             button->hide();
         }
+        else if(button->isVisible())
+        {
+            allHidden = false;
+        }
+    }
+
+    if(allHidden)
+    {
+        ui->actionContainer->hide();
     }
 }
 
@@ -107,9 +123,13 @@ void StalledIssueActionTitle::showIcon()
 void StalledIssueActionTitle::addMessage(const QString &message, const QPixmap& pixmap)
 {
     QWidget* labelContainer= new QWidget(this);
+    labelContainer->installEventFilter(this);
+    labelContainer->setStyleSheet(tr("background-color: red;"));
+    labelContainer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     QHBoxLayout* labelContainerLayout = new QHBoxLayout();
     labelContainerLayout->setContentsMargins(0,0,10,0);
     labelContainer->setLayout(labelContainerLayout);
+    labelContainerLayout->addStretch();
 
     if(!pixmap.isNull())
     {
@@ -119,17 +139,20 @@ void StalledIssueActionTitle::addMessage(const QString &message, const QPixmap& 
     }
 
     auto messageLabel = new QLabel(message,this);
+    messageLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
     messageLabel->setText(message);
+    messageLabel->setProperty(MESSAGE_TEXT, message);
     labelContainerLayout->addWidget(messageLabel);
 
-    ui->actionLayout->addWidget(labelContainer);
+    ui->messageContainer->show();
+    ui->messageLayout->addWidget(labelContainer);
 }
 
 QLabel* StalledIssueActionTitle::addExtraInfo(const QString &title, const QString &info, int level)
 {
     ui->extraInfoContainer->show();
 
-    QWidget* container(new QWidget(this));
+    QWidget* container(new QWidget());
     QHBoxLayout* layout(new QHBoxLayout(container));
     layout->setContentsMargins(0,0,0,0);
     layout->setSpacing(3);
@@ -143,17 +166,24 @@ QLabel* StalledIssueActionTitle::addExtraInfo(const QString &title, const QStrin
     layout->addWidget(titleLabel);
     layout->addWidget(infoLabel);
 
-    auto& items = mExtraInfoItemsByRow[level];
-
-    if(items != 0)
+    QHBoxLayout* rowLayout(nullptr);
+    auto rowItem = ui->extraInfoLayout->itemAt(level);
+    if(!rowItem)
     {
-        ui->extraInfoLayout->setColumnStretch(items, 0);
+        auto rowWidget = new QWidget();
+        rowLayout = new QHBoxLayout(rowWidget);
+        rowLayout->setContentsMargins(0,0,0,0);
+        rowLayout->setSpacing(20);
+        rowLayout->addStretch();
+
+        ui->extraInfoLayout->addWidget(rowWidget);
+    }
+    else
+    {
+        rowLayout = dynamic_cast<QHBoxLayout*>(rowItem->widget()->layout());
     }
 
-    ui->extraInfoLayout->addWidget(container, level, items, Qt::AlignLeft);
-    items++;
-
-    ui->extraInfoLayout->setColumnStretch(items, 1);
+    rowLayout->insertWidget(rowLayout->count()-1, container, 0, Qt::AlignLeft);
 
     setStyleSheet(styleSheet());
 
@@ -187,10 +217,33 @@ void StalledIssueActionTitle::setIsCloud(bool state)
 
 bool StalledIssueActionTitle::eventFilter(QObject *watched, QEvent *event)
 {
-    if(!mTitle.isEmpty() && watched == ui->titleLabel && event->type() == QEvent::Resize)
+    if(event->type() == QEvent::Resize)
     {
-        auto elidedText = ui->titleLabel->fontMetrics().elidedText(mTitle,Qt::ElideMiddle, ui->titleLabel->width());
-        ui->titleLabel->setText(elidedText);
+        if(watched == ui->titleLabel)
+        {
+            auto titleText = ui->titleLabel->property(MESSAGE_TEXT).toString();
+            if(!titleText.isEmpty())
+            {
+                auto elidedText = ui->titleLabel->fontMetrics().elidedText(titleText, Qt::ElideMiddle, ui->titleLabel->width());
+                ui->titleLabel->setText(elidedText);
+            }
+        }
+        else
+        {
+            auto contentWidget = dynamic_cast<QWidget*>(watched);
+            if(contentWidget)
+            {
+                auto childLabels = contentWidget->findChildren<QLabel*>();
+                foreach(auto label, childLabels)
+                {
+                    if(label != ui->titleLabel)
+                    {
+                        auto elidedText = label->fontMetrics().elidedText(label->property(MESSAGE_TEXT).toString(), Qt::ElideMiddle, contentWidget->width() - 50);
+                        label->setText(elidedText);
+                    }
+                }
+            }
+        }
     }
 
     return QWidget::eventFilter(watched, event);
@@ -198,25 +251,28 @@ bool StalledIssueActionTitle::eventFilter(QObject *watched, QEvent *event)
 
 void StalledIssueActionTitle::updateUser(const QString &user)
 {
+    auto userText = user.isEmpty() ? tr("Loading user…") : user;
     if(!mUserLabel)
     {
-        mUserLabel = addExtraInfo(tr("Upload by:"), user, 1);
+        mUserLabel = addExtraInfo(tr("Upload by:"), userText, 1);
     }
     else
     {
-        mUserLabel->setText(user);
+        mUserLabel->setText(userText);
     }
 }
 
 void StalledIssueActionTitle::updateSize(const QString &size)
 {
+    auto sizeText = size.isEmpty() ? tr("Loading size…") : size;
+
     if(!mSizeLabel)
     {
-        mSizeLabel = addExtraInfo(tr("Size:"), size, 0);
+        mSizeLabel = addExtraInfo(tr("Size:"), sizeText, 0);
     }
     else
     {
-        mSizeLabel->setText(size);
+        mSizeLabel->setText(sizeText);
     }
 }
 
@@ -227,7 +283,7 @@ void StalledIssueActionTitle::setPath(const QString &newPath)
 
 void StalledIssueActionTitle::updateLastTimeModified(const QDateTime& time)
 {
-    auto timeString = MegaSyncApp->getFormattedDateByCurrentLanguage(time, QLocale::FormatType::ShortFormat);
+    auto timeString = time.isValid() ? MegaSyncApp->getFormattedDateByCurrentLanguage(time, QLocale::FormatType::ShortFormat) : tr("Loading time…");
     if(!mLastTimeLabel)
     {
         mLastTimeLabel = addExtraInfo(tr("Last modified:"), timeString, 0);
@@ -241,10 +297,10 @@ void StalledIssueActionTitle::updateLastTimeModified(const QDateTime& time)
 
 void StalledIssueActionTitle::updateCreatedTime(const QDateTime& time)
 {
-    auto timeString = MegaSyncApp->getFormattedDateByCurrentLanguage(time, QLocale::FormatType::ShortFormat);
+    auto timeString = time.isValid() ? MegaSyncApp->getFormattedDateByCurrentLanguage(time, QLocale::FormatType::ShortFormat) : tr("Loading time…");
     if(!mCreatedTimeLabel)
     {
-        mCreatedTimeLabel = addExtraInfo(mIsCloud ? tr("Upload at:") : tr("Created at:"), timeString, 0);
+        mCreatedTimeLabel = addExtraInfo(mIsCloud ? tr("Upload at:") : tr("Created at:"),  timeString, 0);
     }
     else
     {

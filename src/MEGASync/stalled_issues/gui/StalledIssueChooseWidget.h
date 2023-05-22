@@ -28,6 +28,7 @@ signals:
     void chooseButtonClicked(int id);
 
 protected:
+    virtual QString movedToBinText() const = 0;
     bool eventFilter(QObject *watched, QEvent *event) override;
     Ui::StalledIssueChooseWidget *ui;
 
@@ -43,18 +44,30 @@ private:
     QPointer<QGraphicsOpacityEffect> mDisableEffect;
 };
 
+class LocalStalledIssueChooseWidget : public StalledIssueChooseWidget
+{
+public:
+    explicit LocalStalledIssueChooseWidget(QWidget *parent = nullptr)
+        : StalledIssueChooseWidget(parent)
+    {}
+
+    ~LocalStalledIssueChooseWidget() = default;
+
+    QString movedToBinText() const override;
+    void updateUi(LocalStalledIssueDataPtr localData);
+};
+
 class CloudStalledIssueChooseWidget : public StalledIssueChooseWidget
 {
 public:
     explicit CloudStalledIssueChooseWidget(QWidget *parent = nullptr)
         : StalledIssueChooseWidget(parent)
-    {
+    {}
 
-    }
     ~CloudStalledIssueChooseWidget() = default;
 
+    QString movedToBinText() const override;
     void updateUi(CloudStalledIssueDataPtr cloudData);
-
 };
 
 #endif // STALLEDISSUECHOOSEWIDGET_H

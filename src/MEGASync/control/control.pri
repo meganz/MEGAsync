@@ -10,7 +10,7 @@ CONFIG += object_parallel_to_source
 SOURCES += $$PWD/HTTPServer.cpp \
     $$PWD/DialogOpener.cpp \
     $$PWD/DownloadQueueController.cpp \
-    $$PWD/FolderAttributes.cpp \
+    $$PWD/FileFolderAttributes.cpp \
     $$PWD/Preferences.cpp \
     $$PWD/LinkProcessor.cpp \
     $$PWD/MegaUploader.cpp \
@@ -33,7 +33,7 @@ HEADERS  +=  $$PWD/HTTPServer.h \
     $$PWD/AppStatsEvents.h \
     $$PWD/DialogOpener.h \
     $$PWD/DownloadQueueController.h \
-    $$PWD/FolderAttributes.h \
+    $$PWD/FileFolderAttributes.h \
     $$PWD/Preferences.h \
     $$PWD/LinkProcessor.h \
     $$PWD/MegaUploader.h \

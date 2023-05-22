@@ -95,7 +95,7 @@ QPushButton[main=true]
    color: #FFFFFF;
 }
 
-#actionContainer QLabel
+#actionContainer QLabel, #messageContainer QLabel
 {
    font-size:14px;
    color: #333333;
@@ -127,20 +127,20 @@ QPushButton[main=true]
        <number>0</number>
       </property>
       <property name="topMargin">
-       <number>0</number>
+       <number>3</number>
       </property>
       <property name="rightMargin">
        <number>0</number>
       </property>
       <property name="bottomMargin">
-       <number>10</number>
+       <number>5</number>
       </property>
       <item>
        <widget class="QFrame" name="contents">
         <property name="styleSheet">
          <string notr="true"/>
         </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="1,0,1,0">
          <property name="spacing">
           <number>8</number>
          </property>
@@ -271,12 +271,48 @@ QPushButton[main=true]
            </layout>
           </widget>
          </item>
+         <item>
+          <widget class="QWidget" name="messageContainer" native="true">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
+           <layout class="QHBoxLayout" name="messageLayout">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+           </layout>
+          </widget>
+         </item>
         </layout>
        </widget>
       </item>
       <item>
        <widget class="QWidget" name="extraInfoContainer" native="true">
-        <layout class="QGridLayout" name="extraInfoLayout">
+        <layout class="QVBoxLayout" name="extraInfoLayout">
+         <property name="spacing">
+          <number>5</number>
+         </property>
          <property name="leftMargin">
           <number>36</number>
          </property>
@@ -288,12 +324,6 @@ QPushButton[main=true]
          </property>
          <property name="bottomMargin">
           <number>0</number>
-         </property>
-         <property name="horizontalSpacing">
-          <number>20</number>
-         </property>
-         <property name="verticalSpacing">
-          <number>5</number>
          </property>
         </layout>
        </widget>

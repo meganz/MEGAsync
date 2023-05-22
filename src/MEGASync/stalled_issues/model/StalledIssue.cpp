@@ -128,16 +128,6 @@ QString StalledIssueData::getFileName() const
     return fileName;
 }
 
-QString CloudStalledIssueData::getUserFirstName() const
-{
-    if(mUserFullName)
-    {
-        return mUserFullName->getFirstName();
-    }
-
-    return QString();
-}
-
 bool StalledIssueData::isSolved() const
 {
     return mIsSolved;
@@ -161,6 +151,11 @@ void StalledIssueData::checkTrailingSpaces(QString &name) const
 //CLOUD
 std::shared_ptr<mega::MegaNode> CloudStalledIssueData::getNode() const
 {
+    if(mRemoteNode)
+    {
+        return mRemoteNode;
+    }
+
     auto newNode = std::shared_ptr<mega::MegaNode>(MegaSyncApp->getMegaApi()->getNodeByPath(mPath.path.toStdString().c_str()));
     if(!newNode)
     {
@@ -309,27 +304,7 @@ void StalledIssue::endFillingIssue()
     //Fill user info
     if(mCloudData)
     {
-        auto node = std::unique_ptr<mega::MegaNode>(MegaSyncApp->getMegaApi()->getNodeByPath(mCloudData->mPath.path.toStdString().c_str()));
-        if(node)
-        {
-            auto user = node->getOwner();
-            if(user != mega::INVALID_HANDLE)
-            {
-                MegaSyncApp->getMegaApi()->getUserEmail(user,new MegaListenerFuncExecuter(true, [this](mega::MegaApi*,  mega::MegaRequest* request, mega::MegaError* e) {
-                                                            if (e->getErrorCode() == mega::MegaError::API_OK)
-                                                            {
-                                                                auto emailFromRequest = request->getEmail();
-                                                                if (emailFromRequest)
-                                                                {
-                                                                    mCloudData->mUserEmail = QString::fromUtf8(emailFromRequest);
-                                                                    mCloudData->mUserFullName = UserAttributes::FullName::requestFullName(emailFromRequest);
-                                                                }
-                                                            }
-                                                        }));
-            }
-        }
-
-        mCloudData->initFileFolderAttributes();
+       mCloudData->initFileFolderAttributes();
     }
 
     if(mLocalData)

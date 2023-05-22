@@ -3,7 +3,7 @@
 
 #include <megaapi.h>
 #include <DuplicatedNodeDialogs/DuplicatedNodeInfo.h>
-#include <control/FolderAttributes.h>
+#include <control/FileFolderAttributes.h>
 
 #include <QTMegaRequestListener.h>
 

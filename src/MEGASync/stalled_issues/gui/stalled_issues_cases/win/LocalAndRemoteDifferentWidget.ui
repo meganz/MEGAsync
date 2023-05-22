@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>336</width>
-    <height>86</height>
+    <height>95</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -93,10 +93,10 @@
        <number>1</number>
       </property>
       <item>
-       <widget class="StalledIssueChooseWidget" name="chooseRemoteCopy" native="true"/>
+       <widget class="CloudStalledIssueChooseWidget" name="chooseRemoteCopy" native="true"/>
       </item>
       <item>
-       <widget class="StalledIssueChooseWidget" name="chooseLocalCopy" native="true"/>
+       <widget class="LocalStalledIssueChooseWidget" name="chooseLocalCopy" native="true"/>
       </item>
      </layout>
     </widget>
@@ -105,7 +105,13 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>StalledIssueChooseWidget</class>
+   <class>CloudStalledIssueChooseWidget</class>
+   <extends>QWidget</extends>
+   <header>StalledIssueChooseWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>LocalStalledIssueChooseWidget</class>
    <extends>QWidget</extends>
    <header>StalledIssueChooseWidget.h</header>
    <container>1</container>
