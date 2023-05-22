@@ -32,7 +32,10 @@ void FileFolderAttributes::requestSize(QObject* caller,std::function<void (qint6
             if(func)
             {
                 func(size);
-                requestFinish(AttributeTypes::Size);
+                if(size >= 0)
+                {
+                    requestFinish(AttributeTypes::Size);
+                }
             }
         });
     }
@@ -46,7 +49,10 @@ void FileFolderAttributes::requestModifiedTime(QObject* caller, std::function<vo
             if(func)
             {
                 func(time);
-                requestFinish(AttributeTypes::ModifiedTime);
+                if(time.isValid())
+                {
+                    requestFinish(AttributeTypes::ModifiedTime);
+                }
             }
         });
     }
@@ -60,7 +66,10 @@ void FileFolderAttributes::requestCreatedTime(QObject* caller, std::function<voi
             if(func)
             {
                 func(time);
-                requestFinish(AttributeTypes::CreatedTime);
+                if(time.isValid())
+                {
+                    requestFinish(AttributeTypes::CreatedTime);
+                }
             }
         });
     }
