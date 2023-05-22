@@ -1395,6 +1395,9 @@
         <file>images/icons/folder/small-folder-outgoing-disabled.png</file>
         <file>images/icons/folder/small-folder-outgoing-disabled@2x.png</file>
         <file>images/icons/folder/small-folder-outgoing-disabled@3x.png</file>
+        <file>images/StalledIssues/ic-open-outside@3x.png</file>
+        <file>images/StalledIssues/ic-open-outside@2x.png</file>
+        <file>images/StalledIssues/ic-open-outside.png</file>
     </qresource>
     <qresource prefix="/new/prefix1"/>
 </RCC>
