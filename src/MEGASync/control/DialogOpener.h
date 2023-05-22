@@ -65,7 +65,7 @@ private:
         {
             if(raiseIfMinimized && mDialog->isMinimized())
             {
-                mDialog->showNormal();
+                //mDialog->showNormal();
             }
 
             if(!mDialog->isMinimized())
@@ -77,7 +77,7 @@ private:
 
         void close() override
         {
-            Platform::getInstance()->closeFileFolderSelectors(mDialog);
+            //Platform::getInstance()->closeFileFolderSelectors(mDialog); //TODO: EKA FIX THIS
             mDialog->close();
         }
 
@@ -289,7 +289,7 @@ public:
 
             if(dialog->parent())
             {
-                qApp->setActiveWindow(dialog->parentWidget());
+                //qApp->setActiveWindow(dialog->parentWidget());
             }
 
             dialog->deleteLater();
