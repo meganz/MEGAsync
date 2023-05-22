@@ -47,7 +47,7 @@ public slots:
     void viewShareOnWebClient() const;
     void viewShareOnWebClientByHandle(const QString &nodeBase64Handle) const;
     void getRemoteNodeLink(const QList<std::shared_ptr<mega::MegaNode> > &nodes) const;
-    void receiveClusteredAlert(mega::MegaUserAlert* alert, int64_t number) const;
+    void receiveClusteredAlert(mega::MegaUserAlert* alert, const QString &message) const;
     void replyNewShareReceived(MegaNotification::Action action) const;
     void viewOnInfoDialogNotifications(MegaNotification::Action action) const;
 

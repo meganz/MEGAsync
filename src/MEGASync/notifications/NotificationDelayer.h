@@ -15,7 +15,7 @@ public:
     void addUserAlert(mega::MegaUserAlert* userAlert, const QString &userName);
 
 signals:
-    void sendClusteredAlert(mega::MegaUserAlert* alert, uint64_t number);
+    void sendClusteredAlert(mega::MegaUserAlert* alert, const QString& message);
 
 private:
     using AlertId = unsigned;
