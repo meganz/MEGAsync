@@ -127,7 +127,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 ui->eRepeatPassword->clear();
 
                 megaApi->sendEvent(AppStatsEvents::EVENT_ACC_CREATION_START,
-                                   "MEGAsync account creation start");
+                                   "MEGAsync account creation start", false, nullptr);
                 if (!preferences->accountCreationTime())
                 {
                     preferences->setAccountCreationTime(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000);

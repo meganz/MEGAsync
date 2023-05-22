@@ -1,7 +1,7 @@
 ﻿#ifndef SETTINGSDIALOG_H
 #define SETTINGSDIALOG_H
 
-#include "syncs/gui/Twoways/BindFolderDialog.h"
+#include "AccountDetailsDialog.h"
 #include "DownloadFromMegaDialog.h"
 #include "ChangePassword.h"
 #include "Preferences.h"

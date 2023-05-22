@@ -2,6 +2,7 @@
 #define DIALOGOPENER_H
 
 #include <HighDpiResize.h>
+#include <Platform.h>
 
 #include <QDialog>
 #include <QPointer>
@@ -11,6 +12,8 @@
 #include <memory>
 #include <type_traits>
 
+#include <QMap>
+#include <QApplication>
 
 #ifdef Q_OS_WINDOWS
 class ExternalDialogOpener : public QWidget
@@ -40,8 +43,9 @@ private:
         QString getDialogClass() const {return mDialogClass;}
         void setDialogClass(const QString &newDialogClass) {mDialogClass = newDialogClass;}
 
-        virtual void raise() = 0;
+        virtual void raise(bool raiseIfMinimized = false) = 0;
         virtual void close() = 0;
+        virtual bool isParent(QObject* parent) = 0;
 
     protected:
         QString mDialogClass;
@@ -57,8 +61,13 @@ private:
             mDialog = newDialog;
         }
 
-        void raise() override
+        void raise(bool raiseIfMinimized = false) override
         {
+            if(raiseIfMinimized && mDialog->isMinimized())
+            {
+                mDialog->showNormal();
+            }
+
             if(!mDialog->isMinimized())
             {
                 mDialog->raise();
@@ -68,6 +77,7 @@ private:
 
         void close() override
         {
+            Platform::getInstance()->closeFileFolderSelectors(mDialog);
             mDialog->close();
         }
 
@@ -75,6 +85,11 @@ private:
         {
             mDialogClass.clear();
             DialogOpener::removeDialog<DialogType>(mDialog);
+        }
+
+        bool isParent(QObject* parent) override
+        {
+            return mDialog->parent() == parent;
         }
 
         bool operator==(const DialogInfo &info)
@@ -127,6 +142,52 @@ public:
         }
     }
 
+    template <class ParentType>
+    static void closeDialogsByParentClass()
+    {
+        auto parentDialog = findDialog<ParentType>();
+        if(parentDialog)
+        {
+            Platform::getInstance()->closeFileFolderSelectors(parentDialog->getDialog());
+
+            foreach(auto dialogInfo, mOpenedDialogs)
+            {
+                if(dialogInfo->isParent(parentDialog->getDialog()))
+                {
+                    dialogInfo->close();
+                }
+            }
+
+            qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
+        }
+    }
+
+    template <class DialogType, class ParentType>
+    static void setParent(QPointer<DialogType> dialog, bool whenParentIsActivated)
+    {
+        auto parentDialog = findDialog<ParentType>();
+        if(parentDialog && ((whenParentIsActivated && parentDialog->getDialog()->isActiveWindow())
+                            || (!whenParentIsActivated && !parentDialog->getDialog()->isMinimized())))
+        {
+            closeDialogsByParentClass<ParentType>();
+
+            auto windowFlags = dialog->windowFlags();
+            parentDialog->raise(true);
+            dialog->setParent(parentDialog->getDialog());
+            dialog->setWindowFlags(windowFlags);
+        }
+    }
+
+    template <class DialogType, class ParentType>
+    static void showDialog(QPointer<DialogType> dialog, bool whenParentIsActivated, std::function<void()> func)
+    {
+        if(dialog)
+        {
+            setParent<DialogType, ParentType>(dialog,whenParentIsActivated);
+            showDialog<DialogType>(dialog, func);
+        }
+    }
+
     template <class DialogType>
     static void showDialog(QPointer<DialogType> dialog, std::function<void()> func)
     {
@@ -139,6 +200,25 @@ public:
                 }
                 removeDialog(dialog);
             });
+            showDialogImpl(dialog);
+        }
+    }
+
+    template <class DialogType, class ParentType, class CallbackClass>
+    static void showDialog(QPointer<DialogType> dialog, bool whenParentIsActivated, CallbackClass* caller, void(CallbackClass::*func)(QPointer<DialogType>))
+    {
+        if(dialog)
+        {
+            setParent<DialogType, ParentType>(dialog, whenParentIsActivated);
+
+            dialog->connect(dialog.data(), &DialogType::finished, [dialog, caller, func](){
+                removeDialog(dialog);
+                if(caller && func)
+                {
+                    (caller->*func)(dialog);
+                }
+            });
+
             showDialogImpl(dialog);
         }
     }
@@ -165,14 +245,6 @@ public:
     {
         if(dialog)
         {
-            if(dialog->parent())
-            {
-                auto dialogGeo = dialog->geometry();
-                auto parentDialogGeo = dialog->parentWidget()->geometry();
-                dialogGeo.moveCenter(parentDialogGeo.center());
-                dialog->setGeometry(dialogGeo);
-                dialog->setParent(nullptr);
-            }
             removeWhenClose(dialog);
             dialog->setModal(false);
             showDialogImpl(dialog, false);
@@ -190,7 +262,6 @@ public:
             mSavedGeometries.insert(classType, GeometryInfo());
         }
     }
-
 
     template <class DialogType>
     static void showDialog(QPointer<DialogType> dialog)
@@ -216,6 +287,11 @@ public:
                 mSavedGeometries.insert(classType, info);
             }
 
+            if(dialog->parent())
+            {
+                qApp->setActiveWindow(dialog->parentWidget());
+            }
+
             dialog->deleteLater();
         }
     }
@@ -226,6 +302,8 @@ public:
         {
             dialogInfo->raise();
         }
+
+        qApp->processEvents();
     }
 
     static void closeAllDialogs()
@@ -255,18 +333,18 @@ private:
         if(dialog)
         {
             auto classType = QString::fromUtf8(DialogType::staticMetaObject.className());
-            auto siblingDialogInfo = findSiblingDialogInfo<DialogType>(classType);
+            auto info = findSiblingDialogInfo<DialogType>(classType);
 
-            if(siblingDialogInfo)
+            if(info)
             {
-                if(siblingDialogInfo->getDialog() != dialog)
+                if(info->getDialog() != dialog)
                 {
-                    QRect siblingGeometry = siblingDialogInfo->getDialog()->geometry();
-                    bool siblingIsMaximized = siblingDialogInfo->getDialog()->isMaximized();
-                    dialog->setWindowFlags(siblingDialogInfo->getDialog()->windowFlags());
-                    removeDialog(siblingDialogInfo->getDialog());
-                    siblingDialogInfo->setDialog(dialog);
-                    siblingDialogInfo->setDialogClass(classType);
+                    QRect siblingGeometry = info->getDialog()->geometry();
+                    bool siblingIsMaximized = info->getDialog()->isMaximized();
+                    dialog->setWindowFlags(info->getDialog()->windowFlags());
+                    removeDialog(info->getDialog());
+                    info->setDialog(dialog);
+                    info->setDialogClass(classType);
 
                     initDialog(dialog);
 
@@ -282,7 +360,7 @@ private:
             }
             else
             {
-                std::shared_ptr<DialogInfo<DialogType>> info = std::make_shared<DialogInfo<DialogType>>();
+                info = std::make_shared<DialogInfo<DialogType>>();
                 info->setDialog(dialog);
                 info->setDialogClass(classType);
                 mOpenedDialogs.append(info);
@@ -325,8 +403,7 @@ private:
                 dialog->show();
             }
 
-            dialog->raise();
-            dialog->activateWindow();
+            info->raise(true);
         }
     }
 

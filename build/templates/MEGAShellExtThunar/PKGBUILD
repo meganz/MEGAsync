@@ -28,7 +28,7 @@ arch=('i686' 'x86_64')
 url="http://mega.nz/#sync"
 license=() #TODO
 depends=('thunar' 'megasync>=3.5')
-makedepends=( 'ca-certificates' 'qt5-tools' 'thunar')
+makedepends=('ca-certificates' 'qt5-tools' 'thunar')
 provides=("thunar-megasync=${pkgver}")
 conflicts=()
 replaces=()

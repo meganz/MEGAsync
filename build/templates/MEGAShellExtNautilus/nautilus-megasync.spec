@@ -9,9 +9,7 @@ Source0:	nautilus-megasync_%{version}.tar.gz
 Vendor:		MEGA Limited
 Packager:	MEGA Linux Team <linux@mega.co.nz>
 
-BuildRequires:  glib2-devel, nautilus-devel, gnome-common
 BuildRequires:  nautilus-devel
-BuildRequires:	hicolor-icon-theme, gnome-shell
 
 %if 0%{?suse_version} || 0%{?sle_version}
 BuildRequires: libqt5-qtbase-devel

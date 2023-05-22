@@ -25,6 +25,7 @@
 #include "QMegaMessageBox.h"
 #include "TextDecorator.h"
 #include "DialogOpener.h"
+#include "syncs/gui/Twoways/BindFolderDialog.h"
 
 #ifdef _WIN32    
 #include <chrono>

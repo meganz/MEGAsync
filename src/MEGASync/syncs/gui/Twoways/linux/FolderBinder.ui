@@ -10,6 +10,9 @@
     <height>99</height>
    </rect>
   </property>
+  <property name="focusPolicy">
+   <enum>Qt::StrongFocus</enum>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
     <number>5</number>
@@ -60,6 +63,9 @@
          <width>16777215</width>
          <height>23</height>
         </size>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
        </property>
        <property name="accessibleName">
         <string>Local folder:</string>
@@ -115,6 +121,9 @@
          <width>16777215</width>
          <height>23</height>
         </size>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
        </property>
        <property name="accessibleName">
         <string>MEGA folder:</string>

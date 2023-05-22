@@ -16,6 +16,7 @@
 #include "syncs/gui/Backups/RemoveBackupDialog.h"
 #include "TextDecorator.h"
 #include "DialogOpener.h"
+#include "syncs/gui/Twoways/BindFolderDialog.h"
 
 #include "mega/types.h"
 
@@ -2306,7 +2307,7 @@ void SettingsDialog::updateNetworkTab()
     int uploadLimitKB = mPreferences->uploadLimitKB();
     if (uploadLimitKB < 0)
     {
-        mUi->lUploadRateLimit->setText(tr("Auto"));
+        mUi->lUploadRateLimit->setText(QCoreApplication::translate("SettingsDialog_Bandwith", "Auto"));
     }
     else if (uploadLimitKB > 0)
     {
@@ -2333,7 +2334,7 @@ void SettingsDialog::updateNetworkTab()
             mUi->lProxySettings->setText(tr("No Proxy"));
             break;
         case Preferences::PROXY_TYPE_AUTO:
-            mUi->lProxySettings->setText(tr("Auto"));
+            mUi->lProxySettings->setText(QCoreApplication::translate("SettingsDialog_Proxies","Auto"));
             break;
         case Preferences::PROXY_TYPE_CUSTOM:
             mUi->lProxySettings->setText(tr("Manual"));

@@ -1,4 +1,3 @@
-#include <kactionmenu.h>
 #include <kfileitem.h>
 #include <kfileitemlistproperties.h>
 #include <QDir>
@@ -67,6 +66,7 @@ const char OP_PREVIOUS    = 'R'; //View previous versions
 MEGASyncPlugin::MEGASyncPlugin(QObject* parent, const QList<QVariant> & args):
     KAbstractFileItemActionPlugin(parent)
 {
+    qDebug("MEGASYNCPLUGIN : Started");
     Q_UNUSED(args);
 #if QT_VERSION < 0x050000
     sockPath = QDir::home().path();
@@ -80,6 +80,7 @@ MEGASyncPlugin::MEGASyncPlugin(QObject* parent, const QList<QVariant> & args):
 
 MEGASyncPlugin::~MEGASyncPlugin()
 {
+    qDebug("MEGASYNCPLUGIN : Closing");
     sock.close();
 }
 
@@ -139,24 +140,19 @@ QList<QAction*> MEGASyncPlugin::actions(const KFileItemListProperties & fileItem
     // if there any unsynced files / folders selected
     if (unsyncedFiles || unsyncedFolders)
     {
-        QString actionText = getString(STRING_UPLOAD, unsyncedFiles, unsyncedFolders);
-        if(!actionText.isEmpty())
+        QAction* act = createChildAction(menuAction, STRING_UPLOAD, unsyncedFiles, unsyncedFolders);
+        if (act)
         {
-            QAction *act = new KAction(actionText, this);
-            menuAction->addAction(act);
-            connect(act, SIGNAL(triggered()), this, SLOT(uploadFiles()));
+            connect(act, &QAction::triggered, this, &MEGASyncPlugin::uploadFiles);
         }
     }
 
     // if there any synced files / folders selected
     if (syncedFiles || syncedFolders)
     {
-        QString actionText = getString(STRING_GETLINK, syncedFiles, syncedFolders);
-        if(!actionText.isEmpty())
+        QAction* act = createChildAction(menuAction, STRING_GETLINK, syncedFiles, syncedFolders);
+        if (act)
         {
-            QAction *act = new KAction(actionText, this);
-            menuAction->addAction(act);
-
             // set menu icon //TODO: state refers to the last file. Does it make any sense??
             if (state == FILE_SYNCED)
                 act->setIcon(KIcon("mega-synced"));
@@ -174,27 +170,23 @@ QList<QAction*> MEGASyncPlugin::actions(const KFileItemListProperties & fileItem
     {
         if (syncedFolders)
         {
-            QString actionText = getString(STRING_VIEW_ON_MEGA, 0, 0);
-            if(!actionText.isEmpty())
+            QAction* act = createChildAction(menuAction, STRING_VIEW_ON_MEGA);
+            if (act)
             {
-                QAction *act = new KAction(actionText, this);
-
-                menuAction->addAction(act);
-                connect(act, SIGNAL(triggered()), this, SLOT(viewOnMega()));
+                connect(act, &QAction::triggered, this, &MEGASyncPlugin::viewOnMega);
             }
         }
         else
         {
-            QString actionText = getString(STRING_VIEW_VERSIONS, 0, 0);
-            if(!actionText.isEmpty())
+            QAction* act = createChildAction(menuAction, STRING_VIEW_VERSIONS);
+            if (act)
             {
-                QAction *act = new KAction(actionText, this);
-
-                menuAction->addAction(act);
-                connect(act, SIGNAL(triggered()), this, SLOT(viewPreviousVersions()));
+                connect(act, &QAction::triggered, this, &MEGASyncPlugin::viewPreviousVersions);
             }
         }
     }
+
+    qDebug("MEGASYNCPLUGIN : Created actions");
 
     return actions;
 }
@@ -281,6 +273,17 @@ QString MEGASyncPlugin::getString(int type, int numFiles,int numFolders)
     return res;
 }
 
+QAction *MEGASyncPlugin::createChildAction(KActionMenu *menu, int type, int numFiles, int numFolders)
+{
+    QString actionText = getString(type, numFiles, numFolders);
+    if(!actionText.isEmpty())
+    {
+       QAction *act = new KAction(actionText, this);
+       menu->addAction(act);
+       return act;
+    }
+    return nullptr;
+}
 
 // send request and receive response from Extension server
 // Return newly-allocated response string
@@ -297,6 +300,8 @@ QString MEGASyncPlugin::sendRequest(char type, QString command)
     }
 
     req.sprintf("%c:%s", type, command.toUtf8().constData());
+
+    qDebug("MEGASYNCPLUGIN : Sending request \"%s\"", req.toUtf8().constData());
 
     sock.write(req.toUtf8());
     sock.flush();

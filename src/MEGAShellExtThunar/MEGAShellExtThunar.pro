@@ -21,8 +21,15 @@ DEFINES+=USING_THUNAR3
 
 PKGCONFIG+=glib-2.0
 
+# get env variable
+DESKTOP_DESTDIR = $$(DESKTOP_DESTDIR)
+isEmpty(DESKTOP_DESTDIR) {
+    DESKTOP_DESTDIR = /usr
+}
+
 # library
-target.path = $$system(pkg-config --variable=extensionsdir thunarx-2 || pkg-config --variable=extensionsdir thunarx-3)
+EXTENSIONS_PATH = $$system(pkg-config --variable=extensionsdir thunarx-2 || pkg-config --variable=extensionsdir thunarx-3)
+target.path = $${DESKTOP_DESTDIR}/../$${EXTENSIONS_PATH}
 INSTALLS += target
 
 QMAKE_CLEAN += $(TARGET) lib$${TARGET}.so lib$${TARGET}.so.1 lib$${TARGET}.so.1.0

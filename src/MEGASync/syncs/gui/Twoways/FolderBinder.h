@@ -27,15 +27,20 @@ public:
     bool setSelectedMegaFolder(mega::MegaHandle handle);
     QString selectedLocalFolder();
 
+signals:
+    void selectionDone();
+
 private slots:
     void on_bLocalFolder_clicked();
     void on_bMegaFolder_clicked();
 
 protected:
     void changeEvent(QEvent * event);
+    void showEvent(QShowEvent *event) override;
 
 private:
     void onLocalFolderSet(const QString& path);
+    void checkSelectedSides();
 
     Ui::FolderBinder *ui;
     MegaApplication *app;

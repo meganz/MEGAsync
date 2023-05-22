@@ -9,8 +9,6 @@
 #include <QFutureWatcher>
 #include <QFuture>
 
-#include "DateTimeFormatter.h"
-
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
 #endif
@@ -130,6 +128,7 @@ void AlertItem::setAlertType(int type)
             case MegaUserAlert::TYPE_DELETEDSHARE:
             case MegaUserAlert::TYPE_NEWSHAREDNODES:
             case MegaUserAlert::TYPE_REMOVEDSHAREDNODES:
+            case MegaUserAlert::TYPE_UPDATEDSHAREDNODES:
             {
                 if (type == MegaUserAlert::TYPE_DELETEDSHARE)
                 {
@@ -259,6 +258,18 @@ void AlertItem::setAlertHeading(MegaUserAlert *alert)
             }
             break;
         }
+        case MegaUserAlert::TYPE_UPDATEDSHAREDNODES:
+        {
+            ui->sIconWidget->setCurrentWidget(ui->pSharedFolder);
+            ui->sIconWidget->show();
+            mNotificationHeading = MegaNodeNames::getNodeName(mAlertNode.get());
+
+            if (mNotificationHeading.isEmpty())
+            {
+                mNotificationHeading = tr("Shared folder updated");
+            }
+            break;
+        }
         // Payment notifications
         case MegaUserAlert::TYPE_PAYMENT_SUCCEEDED:
         case MegaUserAlert::TYPE_PAYMENT_FAILED:
@@ -368,6 +379,13 @@ void AlertItem::setAlertContent(MegaUserAlert *alert)
             {
                 int64_t updatedItems = alert->getNumber(0);
                 notificationContent = tr("[A] removed %n item", "", static_cast<int>(updatedItems))
+                        .replace(QString::fromUtf8("[A]"), formatRichString(getUserFullName(alert)));
+                break;
+            }
+            case MegaUserAlert::TYPE_UPDATEDSHAREDNODES:
+            {
+                int64_t updatedItems = alert->getNumber(0);
+                notificationContent = tr("[A] updated %n item", "", static_cast<int>(updatedItems))
                         .replace(QString::fromUtf8("[A]"), formatRichString(getUserFullName(alert)));
                 break;
             }

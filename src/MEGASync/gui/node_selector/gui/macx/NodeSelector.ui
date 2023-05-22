@@ -31,11 +31,6 @@ border-radius: 0px;
 background-color: transparent;
 }
 
-QDialog
-{
-background:#FFFFFF;
-}
-
 #cbAlwaysUploadToLocation
 {
     spacing: 10px;

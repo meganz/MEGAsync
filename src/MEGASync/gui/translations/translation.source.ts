@@ -396,6 +396,19 @@
         <translatorcomment>Label to indicate a reminder about a contact request.</translatorcomment>
         <translation>Reminder: You have a contact request</translation>
     </message>
+    <message>
+        <source>Shared folder updated</source>
+        <translatorcomment>Label to indicate that a shared folder was updated. CON-295</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>[A] updated %n item</source>
+        <translatorcomment>Label to indicate that user [A] has updated %n items in shared folder. Placeholder [A] will be replaced by the email or full name of the user that made the update and %n with the number of removed items. CON-295</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>[A] updated %n item</numerusform>
+            <numerusform>[A] updated %n items</numerusform>
+        </translation>
+    </message>
 </context>
 <context>
     <name>BackupItemModel</name>
@@ -1336,6 +1349,14 @@ In some cases they may contain details about your data, such as file or folder n
         <source>Show in MEGA</source>
         <translatorcomment>Notification button to redirect the user to remote location. It will open webclient at specific location.</translatorcomment>
         <translation>Show in MEGA</translation>
+    </message>
+    <message numerus="yes">
+        <source>[A] updated %n item</source>
+        <translatorcomment>Label to indicate that user [A] has updated %n items in shared folder. Placeholder [A] will be replaced by the email or full name of the user that made the update and %n with the number of removed items. CON-295</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>[A] updated %n item</numerusform>
+            <numerusform>[A] updated %n items</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -4923,11 +4944,6 @@ Do you want to delete it anyway?</translation>
         <translation>Add</translation>
     </message>
     <message>
-        <source>Auto</source>
-        <translatorcomment>Label to indicate that management of rate upload limit is automatic.</translatorcomment>
-        <translation>Auto</translation>
-    </message>
-    <message>
         <source>Data temporarily unavailable</source>
         <translatorcomment>Label to indicate that the usage data is temporarily unavailable. String as short as possible.</translatorcomment>
         <translation>Data temporarily unavailable</translation>
@@ -5634,6 +5650,22 @@ Do you want to restart MEGAsync now?</source>
         <source>Prevent the computer from going to sleep when transfers or syncs are in progress.</source>
         <translatorcomment>Sleep/Active mode: Feature description label for keeping the pc awake when there are active transfers</translatorcomment>
         <translation>Prevent the computer from going to sleep when transfers or syncs are in progress.</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsDialog_Bandwith</name>
+    <message>
+        <source>Auto</source>
+        <translatorcomment>Label to indicate that management of rate upload limit is automatic. SNC-3076</translatorcomment>
+        <translation type="unfinished">Auto</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsDialog_Proxies</name>
+    <message>
+        <source>Auto</source>
+        <translatorcomment>Label to indicate that proxy settings are on auto detec mode. SNC-3076</translatorcomment>
+        <translation type="unfinished">Auto</translation>
     </message>
 </context>
 <context>

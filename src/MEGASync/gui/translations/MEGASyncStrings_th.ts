@@ -6211,7 +6211,7 @@ To continue, select a different folder.</source>
     <message>
         <source>Invalid remote path.</source>
         <translatorcomment>The selected remote path for the sync creation is invalid</translatorcomment>
-        <translation> โฟลเดอร์ MEGA นี้ไม่สามารถใช้ในการซิงค์ได้</translation>
+        <translation>โฟลเดอร์ MEGA นี้ไม่สามารถใช้ในการซิงค์ได้</translation>
     </message>
     <message>
         <source>The selected MEGA folder is already synced.</source>

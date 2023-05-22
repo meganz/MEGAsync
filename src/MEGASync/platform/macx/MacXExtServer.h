@@ -53,13 +53,13 @@ private:
    {
        command->append(":");
        std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getSyncedNode(path));
-       if(!node || MegaSyncApp->getMegaApi()->checkAccess(node.get(), mega::MegaShare::ACCESS_OWNER).getErrorCode() == mega::MegaError::API_OK)
+       if(Utilities::isIncommingShare(node.get()))
        {
-           command->append("0");
+           command->append("1");
        }
        else
        {
-           command->append("1");
+           command->append("0");
        }
    }
 

@@ -226,6 +226,11 @@ void AbstractPlatform::raiseFileFolderSelectors()
     DialogOpener::raiseAllDialogs();
 }
 
+void AbstractPlatform::closeFileFolderSelectors(QWidget *parent)
+{
+
+}
+
 void AbstractPlatform::addSyncToLeftPane(QString /*syncPath*/, QString /*syncName*/, QString /*uuid*/)
 {
 }

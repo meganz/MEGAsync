@@ -3,7 +3,7 @@ Section: gnome
 Priority: optional
 Maintainer: MEGA Linux Team <linux@mega.co.nz>
 Homepage: https://mega.nz/#sync
-Build-Depends: debhelper, libqt4-dev | qt5-qmake-bin, intltool, libglib2.0-0, libthunarx-2-0 | libthunarx-3-0, libthunarx-2-dev |libthunarx-3-dev
+Build-Depends: debhelper, qt4-qmake | qt5-qmake | qt5-qmake-bin, libthunarx-2-dev | libthunarx-3-dev
 
 Package: thunar-megasync
 Architecture: any

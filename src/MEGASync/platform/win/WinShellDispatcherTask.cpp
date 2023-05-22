@@ -379,7 +379,7 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
                     //Only for non incoming share syncs
                     string tmpPath((const char*)lastPath.utf16(), lastPath.size()*sizeof(wchar_t));
                     std::unique_ptr<MegaNode> node(MegaSyncApp->getMegaApi()->getSyncedNode(&tmpPath));
-                    if(node && MegaSyncApp->getMegaApi()->checkAccess(node.get(), MegaShare::ACCESS_OWNER).getErrorCode() == MegaError::API_OK)
+                    if(!Utilities::isIncommingShare(node.get()))
                     {
                         actionString = QCoreApplication::translate("ShellExtension", "Get MEGA link");
                     }

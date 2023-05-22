@@ -35,6 +35,7 @@ class InfoDialog;
 
 class MegaApplication;
 class TransferManager;
+class BindFolderDialog;
 
 class InfoDialog : public QDialog, public mega::MegaTransferListener
 {
