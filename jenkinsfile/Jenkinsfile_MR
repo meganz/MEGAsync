@@ -96,7 +96,7 @@ pipeline {
                                 env.TRIGGERED_BUILD_DISPLAY_NAME_MACOS = triggeredBuild.getFullDisplayName()
                                 
                                 if (triggeredBuild.result != 'SUCCESS') {
-                                    currentBuild.result = 'FAILURE'
+                                    currentbuild.currentResult = 'FAILURE'
                                 }
                             }
                         }
@@ -156,7 +156,7 @@ pipeline {
                                 env.TRIGGERED_BUILD_DISPLAY_NAME_LINUX = triggeredBuild.getFullDisplayName()
 
                                 if (triggeredBuild.result != 'SUCCESS') {
-                                    currentBuild.result = 'FAILURE'
+                                    currentbuild.currentResult = 'FAILURE'
                                 }
                             }
                         }
@@ -216,7 +216,7 @@ pipeline {
                                 env.TRIGGERED_BUILD_DISPLAY_NAME_WINDOWS = triggeredBuild.getFullDisplayName()
 
                                 if (triggeredBuild.result != 'SUCCESS') {
-                                    currentBuild.result = 'FAILURE'
+                                    currentBuild.currentResult = 'FAILURE'
                                 }
                             }
                         }
