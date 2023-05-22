@@ -137,8 +137,10 @@ void BugReportDialog::onTransferFinish(MegaApi*, MegaTransfer* transfer, MegaErr
 
 void BugReportDialog::onTransferTemporaryError(MegaApi*, MegaTransfer*, MegaError *e)
 {
-    MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Temporary error at report dialog: %1")
-                 .arg(QString::fromUtf8(e->getErrorString())).toUtf8().constData());
+    MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                 QString::fromUtf8("Temporary error at report dialog: %1")
+                     .arg(QString::fromUtf8(mega::MegaError::getErrorString(e->getErrorCode(), mega::MegaError::API_EC_UPLOAD)))
+                     .toUtf8().constData());
 }
 
 void BugReportDialog::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* e)
