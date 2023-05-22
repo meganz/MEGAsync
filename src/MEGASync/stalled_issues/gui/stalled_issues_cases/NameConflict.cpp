@@ -96,8 +96,6 @@ void NameConflict::updateUi(NameConflictedStalledIssue::NameConflictData conflic
             ui->nameConflictsLayout->addWidget(title);
         }
 
-
-
         info.itemAttributes->requestModifiedTime(this, [title](const QDateTime& time)
         {
             title->updateLastTimeModified(time);
@@ -130,11 +128,12 @@ void NameConflict::updateUi(NameConflictedStalledIssue::NameConflictData conflic
         //User
         if(conflictData.data->isCloud())
         {
+            auto cloudAttributes(FileFolderAttributes::convert<RemoteFileFolderAttributes>(info.itemAttributes));
+
             CloudStalledIssueDataPtr cloudData(conflictData.data->convert<CloudStalledIssueData>());
             auto node = cloudData->getNode();
             if(node && MegaSyncApp->getMegaApi()->checkAccess(node.get(), mega::MegaShare::ACCESS_OWNER).getErrorCode() != mega::MegaError::API_OK)
             {
-                auto cloudAttributes(FileFolderAttributes::convert<RemoteFileFolderAttributes>(info.itemAttributes));
                 if(cloudAttributes)
                 {
                     cloudAttributes->requestUser(this, [title](QString user)
@@ -142,7 +141,13 @@ void NameConflict::updateUi(NameConflictedStalledIssue::NameConflictData conflic
                         title->updateUser(user);
                     });
                 }
+
             }
+
+            cloudAttributes->requestVersions(this,[title](int versions)
+            {
+                    title->updateVersionsCount(versions);
+            });
         }
 
         mData.data->checkTrailingSpaces(conflictedName);
@@ -287,7 +292,6 @@ void NameConflict::onActionClicked(int actionId)
         }
         else if(actionId == REMOVE_ID)
         {
-            QPointer<NameConflict> currentWidget = QPointer<NameConflict>(this);
             auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
 
             auto isFile(false);
@@ -305,45 +309,61 @@ void NameConflict::onActionClicked(int actionId)
                 fileName = info.fileName();
             }
 
-            auto warning = new QMessageBox(QMessageBox::Warning,QString::fromUtf8("MEGAsync"),
-                                           tr("Are you sure you want to remove the %1 %2 %3?")
-                                           .arg(mData.isCloud ? tr("remote") : tr("local"))
-                                           .arg(isFile ? tr("file") : tr("folder"))
-                                           .arg(fileName),
-                                           QMessageBox::Yes | QMessageBox::No, dialog->getDialog());
-            warning->setDefaultButton(QMessageBox::No);
-            auto result = warning->exec();
-
-            if (currentWidget && result == QMessageBox::Yes)
+            QMessageBox* msgBox = new QMessageBox(dialog->getDialog());
+            msgBox->setAttribute(Qt::WA_DeleteOnClose);
+            msgBox->setWindowTitle(QString::fromUtf8("MEGAsync"));
+            msgBox->setIcon(QMessageBox::Warning);
+            msgBox->setTextFormat(Qt::RichText);
+            msgBox->setText(tr("Are you sure you want to remove the %1 %2 %3?")
+                            .arg(mData.isCloud ? tr("remote") : tr("local"))
+                            .arg(isFile ? tr("file") : tr("folder"))
+                            .arg(fileName));
+            if(mData.isCloud)
             {
-                bool areAllSolved(false);
-
-                if(mData.isCloud)
+                if(isFile)
                 {
-                    areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveCloudConflictedNameByRemove(titleFileName,chooseTitle->getIndex(), mDelegate->getCurrentIndex());
-                    mUtilities.removeRemoteFile(info.filePath());
+                    msgBox->setInformativeText(tr("It will be moved to MEGA Rubbish Bin along with its versions.<br>You will be able to retrieve the file and its versions from there.</br>"));
                 }
                 else
                 {
-                    areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveLocalConflictedNameByRemove(titleFileName,chooseTitle->getIndex(), mDelegate->getCurrentIndex());
-                    mUtilities.removeLocalFile(QDir::toNativeSeparators(info.filePath()));
-                }
-
-                // Prevent this one showing again (if they Refresh) until sync has made a full fresh pass
-                MegaSyncApp->getMegaApi()->clearStalledPath(mData.data->original.get());
-
-                if(areAllSolved)
-                {
-                    emit allSolved();
-                }
-
-                //Now, close the editor because the action has been finished
-                if(mDelegate)
-                {
-                    emit refreshUi();
+                    msgBox->setInformativeText(tr("It will be moved to MEGA Rubbish Bin.<br>You will be able to retrieve the folder from there.</br>"));
                 }
             }
-        }
+            msgBox->addButton(tr("Yes"), QMessageBox::AcceptRole);
+            msgBox->addButton(tr("Cancel"), QMessageBox::RejectRole);
 
+            DialogOpener::showDialog<QMessageBox>(msgBox, [this, info, titleFileName, chooseTitle, msgBox]()
+            {
+                if (msgBox->result() == QDialogButtonBox::AcceptRole)
+                {
+                    bool areAllSolved(false);
+
+                    if(mData.isCloud)
+                    {
+                        areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveCloudConflictedNameByRemove(titleFileName,chooseTitle->getIndex(), mDelegate->getCurrentIndex());
+                        mUtilities.removeRemoteFile(info.filePath());
+                    }
+                    else
+                    {
+                        areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveLocalConflictedNameByRemove(titleFileName,chooseTitle->getIndex(), mDelegate->getCurrentIndex());
+                        mUtilities.removeLocalFile(QDir::toNativeSeparators(info.filePath()));
+                    }
+
+                    // Prevent this one showing again (if they Refresh) until sync has made a full fresh pass
+                    MegaSyncApp->getMegaApi()->clearStalledPath(mData.data->original.get());
+
+                    if(areAllSolved)
+                    {
+                        emit allSolved();
+                    }
+
+                    //Now, close the editor because the action has been finished
+                    if(mDelegate)
+                    {
+                        emit refreshUi();
+                    }
+                }
+            });
+        }
     }
 }

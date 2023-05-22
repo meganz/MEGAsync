@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>72</width>
-    <height>90</height>
+    <height>98</height>
    </rect>
   </property>
   <property name="styleSheet">
@@ -59,7 +59,7 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <property name="spacing">
-       <number>20</number>
+       <number>0</number>
       </property>
       <property name="leftMargin">
        <number>0</number>

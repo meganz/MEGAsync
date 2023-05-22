@@ -102,6 +102,7 @@ public:
     void requestModifiedTime(QObject* caller,std::function<void(const QDateTime&)> func) override;
     void requestCreatedTime(QObject* caller,std::function<void(const QDateTime&)> func) override;
     void requestUser(QObject* caller, std::function<void(QString)> func);
+    void requestVersions(QObject*, std::function<void(int)> func);
 
     void onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e) override;
 
@@ -115,17 +116,19 @@ private:
     std::unique_ptr<mega::MegaNode> getNode(Version type = Version::Last) const;
 
     mega::QTMegaRequestListener* mListener;
-    mega::MegaHandle mHandle;
     QString mFilePath;
+    mega::MegaHandle mHandle;
 
     enum RemoteAttributeTypes
     {
-        User = AttributeTypes::RemoteAttributes
+        User = AttributeTypes::RemoteAttributes,
+        Versions
     };
 
     QString mUserEmail;
     mega::MegaHandle mOwner = mega::INVALID_HANDLE;
     std::shared_ptr<const UserAttributes::FullName> mUserFullName;
+    int mVersionCount;
 };
 
 #endif // FILEFOLDERATTRIBUTES_H

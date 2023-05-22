@@ -161,6 +161,11 @@ void CloudStalledIssueChooseWidget::updateUi(CloudStalledIssueDataPtr cloudData)
                 ui->name->updateUser(user);
             });
         }
+
+        cloudData->getFileFolderAttributes()->requestVersions(this, [this](int versions){
+                ui->name->updateVersionsCount(versions);
+        });
+
     }
 
     StalledIssueChooseWidget::updateUi(cloudData);

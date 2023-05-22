@@ -124,7 +124,6 @@ void StalledIssueActionTitle::addMessage(const QString &message, const QPixmap& 
 {
     QWidget* labelContainer= new QWidget(this);
     labelContainer->installEventFilter(this);
-    labelContainer->setStyleSheet(tr("background-color: red;"));
     labelContainer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     QHBoxLayout* labelContainerLayout = new QHBoxLayout();
     labelContainerLayout->setContentsMargins(0,0,10,0);
@@ -260,6 +259,27 @@ void StalledIssueActionTitle::updateUser(const QString &user)
     {
         mUserLabel->setText(userText);
     }
+}
+
+void StalledIssueActionTitle::updateVersionsCount(int versions)
+{
+    if(versions > 1)
+    {
+        QString versionsText(QString::number(versions));
+        if(!mVersionsLabel)
+        {
+            mVersionsLabel = addExtraInfo(tr("Versions:"), versionsText, 1);
+        }
+        else
+        {
+            mVersionsLabel->setText(versionsText);
+        }
+    }
+    else if(mVersionsLabel)
+    {
+        mVersionsLabel->parentWidget()->hide();
+    }
+
 }
 
 void StalledIssueActionTitle::updateSize(const QString &size)

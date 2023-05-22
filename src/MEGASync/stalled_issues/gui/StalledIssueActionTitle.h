@@ -37,6 +37,7 @@ public:
     void updateLastTimeModified(const QDateTime &time);
     void updateCreatedTime(const QDateTime &time);
     void updateUser(const QString& user);
+    void updateVersionsCount(int versions);
     void updateSize(const QString &size);
 
     void setPath(const QString &newPath);
@@ -52,11 +53,13 @@ protected:
     bool eventFilter(QObject *watched, QEvent *event) override;
 
 private:
-    QMap<int, int> mExtraInfoItemsByRow;
+    //There are better ways to do this...as User and Versions label are only cloud attributes
+    //And the system is not very scalable
     QPointer<QLabel> mUserLabel;
     QPointer<QLabel> mLastTimeLabel;
     QPointer<QLabel> mCreatedTimeLabel;
     QPointer<QLabel> mSizeLabel;
+    QPointer<QLabel> mVersionsLabel;
 };
 
 #endif // STALLEDISSUEACTIONTITLE_H

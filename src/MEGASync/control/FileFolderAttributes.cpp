@@ -268,16 +268,18 @@ qint64 LocalFileFolderAttributes::calculateSize()
 
 //REMOTE
 RemoteFileFolderAttributes::RemoteFileFolderAttributes(const QString &filePath, QObject *parent)
-    : mFilePath(filePath),
+    : FileFolderAttributes(parent),
+      mFilePath(filePath),
       mHandle(mega::INVALID_HANDLE),
-      FileFolderAttributes(parent)
+      mVersionCount(0)
 {
     mListener = new mega::QTMegaRequestListener(MegaSyncApp->getMegaApi(), this);
 }
 
 RemoteFileFolderAttributes::RemoteFileFolderAttributes(mega::MegaHandle handle, QObject* parent)
-    : mHandle(handle),
-      FileFolderAttributes(parent)
+    : FileFolderAttributes(parent),
+      mHandle(handle),
+      mVersionCount(0)
 {
     mListener = new mega::QTMegaRequestListener(MegaSyncApp->getMegaApi(), this);
 }
@@ -339,19 +341,7 @@ void RemoteFileFolderAttributes::requestCreatedTime(QObject* caller,std::functio
         std::unique_ptr<mega::MegaNode> node = getNode(Version::First);
         if(node)
         {
-            int64_t newTime;
-
-            auto nodeVersions = MegaSyncApp->getMegaApi()->getVersions(node.get());
-            if(nodeVersions->size() > 1)
-            {
-                newTime = nodeVersions->get(nodeVersions->size() - 1)->getCreationTime();
-            }
-            else
-            {
-                newTime = node->getCreationTime();
-            }
-
-            mCreatedTime = QDateTime::fromSecsSinceEpoch(newTime);
+            mCreatedTime = QDateTime::fromSecsSinceEpoch(node->getCreationTime());
         }
     }
 
@@ -420,6 +410,20 @@ void RemoteFileFolderAttributes::onRequestFinish(mega::MegaApi *api, mega::MegaR
         mSize = std::max(folderInfo->getCurrentSize(), 0LL);
         emit sizeReady(mSize);
     }
+}
+
+void RemoteFileFolderAttributes::requestVersions(QObject*, std::function<void (int)> func)
+{
+    if(attributeNeedsUpdate(RemoteFileFolderAttributes::Versions))
+    {
+        std::unique_ptr<mega::MegaNode> node = getNode();
+        if(node)
+        {
+            mVersionCount = MegaSyncApp->getMegaApi()->getVersions(node.get())->size();
+        }
+    }
+
+    func(mVersionCount);
 }
 
 std::unique_ptr<mega::MegaNode> RemoteFileFolderAttributes::getNode(Version type) const

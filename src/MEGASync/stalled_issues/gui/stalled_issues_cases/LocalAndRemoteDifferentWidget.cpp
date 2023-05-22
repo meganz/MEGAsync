@@ -6,6 +6,7 @@
 #include "StalledIssueHeader.h"
 #include <DialogOpener.h>
 #include <StalledIssuesDialog.h>
+#include <PlatformStrings.h>
 
 #include "mega/types.h"
 
@@ -86,11 +87,11 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
 
     if(node->isFile())
     {
-        msgBox->setInformativeText(tr("The <b>remote file</b> %1 will be moved to the rubbish bin along with all its versions.").arg(localInfo.fileName()));
+        msgBox->setInformativeText(tr("The <b>remote file</b> %1 will be moved to MEGA Rubbish Bin along with its versions.<br>You will be able to retrieve the file and its versions from there.</br>").arg(localInfo.fileName()));
     }
     else
     {
-        msgBox->setInformativeText(tr("The <b>remote folder</b> %1 will be moved to the rubbish bin along with all its versions.").arg(localInfo.fileName()));
+        msgBox->setInformativeText(tr("The <b>remote folder</b> %1 will be moved to MEGA Rubbish Bin.<br>You will be able to retrieve the folder from there.</br>").arg(localInfo.fileName()));
     }
 
     msgBox->addButton(tr("Ok"), QMessageBox::AcceptRole);
@@ -134,11 +135,11 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
 
     if(localInfo.isFile())
     {
-        msgBox->setInformativeText(tr("The <b>local file</b> %1 will be moved to the rubbish bin").arg(localInfo.fileName()));
+        msgBox->setInformativeText(tr("The <b>local file</b> %1 will be moved to OS %2").arg(localInfo.fileName(), PlatformStrings::bin()));
     }
     else
     {
-        msgBox->setInformativeText(tr("The <b>local folder</b> %1 will be moved to the rubbish bin").arg(localInfo.fileName()));
+        msgBox->setInformativeText(tr("The <b>local folder</b> %1 will be moved to OS %2").arg(localInfo.fileName(), PlatformStrings::bin()));
     }
 
     msgBox->addButton(tr("Ok"), QMessageBox::AcceptRole);

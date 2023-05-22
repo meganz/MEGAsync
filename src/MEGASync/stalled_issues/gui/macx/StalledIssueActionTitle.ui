@@ -303,7 +303,7 @@ QPushButton[main=true]
       </item>
       <item>
        <widget class="QWidget" name="extraInfoContainer" native="true">
-        <layout class="QVBoxLayout" name="verticalLayout_3">
+        <layout class="QVBoxLayout" name="extraInfoLayout">
          <property name="spacing">
           <number>5</number>
          </property>
