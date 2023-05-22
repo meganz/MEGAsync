@@ -5,7 +5,7 @@ ListModel {
 
     function insertFolder(folder) {
         backupListModel.insert(0, { folder: folder, selected: true, size: "24.5 TB" });
-        rowSelectedChanged();
+        rowSelectedChanged(true, false);
     }
 
     function setAllSelected(checked) {

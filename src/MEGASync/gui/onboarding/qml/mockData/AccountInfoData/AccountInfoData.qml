@@ -12,7 +12,6 @@ Item {
     }
 
     function aboutToBeDestroyed() {
-        deleteLater();
     }
 
     signal accountDetailsChanged

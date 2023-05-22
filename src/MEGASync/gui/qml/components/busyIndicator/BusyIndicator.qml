@@ -10,6 +10,7 @@ Qml.BusyIndicator {
     property alias color: iconImage.color
     property alias imageSource: iconImage.source
     property alias imageSize: iconImage.sourceSize
+    property alias disabledOpacity: iconImage.disabledOpacity
 
     width: imageSize.width
     height: imageSize.height

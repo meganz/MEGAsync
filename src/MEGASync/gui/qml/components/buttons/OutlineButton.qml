@@ -12,7 +12,9 @@ Custom.Button {
         borderHover: Styles.buttonOutlineHover
         borderDisabled: Styles.buttonDisabled
         text: Styles.buttonPrimary
-        disabledText: Styles.textDisabled
+        textDisabled: Styles.textDisabled
+        textHover: Styles.buttonOutlineHover
+        textPressed: Styles.buttonOutlinePressed
         pressed: "transparent"
         borderPressed: Styles.buttonOutlinePressed
     }

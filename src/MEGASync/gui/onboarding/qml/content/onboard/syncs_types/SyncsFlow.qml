@@ -26,7 +26,7 @@ StackView {
     readonly property string renameBackupFolder: "renameBackupFolder"
     readonly property string finalState: "finalState"
 
-    property alias selectedSync: finalPage.comesFromSync
+    //property alias selectedSync: finalPage.comesFromSync
 
     state: computerName
     initialItem: syncsPanel
@@ -56,7 +56,7 @@ StackView {
             name: syncs
             StateChangeScript {
                 script: {
-                    selectedSync = true;
+                    //selectedSync = true;
                     rightPanel.replace(syncPage);
                     if(syncsFlow.currentItem != syncsPanel) {
                         syncsFlow.replace(syncsPanel);
@@ -92,7 +92,7 @@ StackView {
             name: selectBackup
             StateChangeScript {
                 script: {
-                    selectedSync = false;
+                    //selectedSync = false;
                     if(syncsFlow.currentItem != syncsPanel) {
                         syncsFlow.replace(syncsPanel);
                     }
@@ -131,11 +131,12 @@ StackView {
             }
         }
     ]
-
-    ResumePage {
+    Component {
         id: finalPage
+        ResumePage {
 
-        visible: false
+            visible: false
+        }
     }
 
     Rectangle {
@@ -166,56 +167,60 @@ StackView {
                 top: parent.top
                 bottom: parent.bottom
             }
-
-            ComputerNamePage {
+            Component{
                 id: computerNamePage
+                ComputerNamePage {
 
-                Layout.fillHeight: true
-                Layout.fillWidth: true
-                visible: false
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true
+                }
             }
 
-            InstallationTypePage {
+            Component{
                 id: installationTypePage
+                InstallationTypePage {
 
-                visible: false
+                }
             }
 
-            SyncTypePage {
+            Component{
                 id: syncPage
+                SyncTypePage {
 
-                visible: false
+                }
             }
 
-            FullSyncPage {
+            Component{
                 id: fullSyncPage
+                FullSyncPage {
 
-                visible: false
+                }
             }
 
-            SelectiveSyncPage {
+            Component {
                 id: selectiveSyncPage
-
-                visible: false
+                SelectiveSyncPage {
+                }
             }
 
-            SelectFoldersPage {
+            Component{
                 id: selectBackupFoldersPage
-
-                visible: false
+                SelectFoldersPage {
+                    id: selectBackupFolders
+                }
             }
 
-            ConfirmFoldersPage {
+            Component {
                 id: confirmBackupFoldersPage
-
-                backupTable: selectBackupFoldersPage.backupTable
-                visible: false
+                ConfirmFoldersPage {
+                    backupTable: selectBackupFolders.backupTable
+                }
             }
 
-            RenameBackupFolderPage {
+            Component {
                 id: renameBackupFoldersPage
-
-                visible: false
+                RenameBackupFolderPage {
+                }
             }
         }
     }

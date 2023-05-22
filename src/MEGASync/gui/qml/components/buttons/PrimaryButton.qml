@@ -14,7 +14,8 @@ Custom.Button {
         hover: Styles.buttonPrimaryHover
         borderHover: colors.hover
         text: Styles.textOnColor
-
+        textPressed: Styles.textOnColor
+        textHover: Styles.textOnColor
     }
 }
 

@@ -61,9 +61,17 @@ Qml.RoundButton {
 
     function getTextColor()
     {
+        if(button.pressed)
+        {
+            return colors.textPressed;
+        }
+        if(button.hovered)
+        {
+            return colors.textHover;
+        }
         if(!button.enabled && !icons.busyIndicatorVisible)
         {
-            return colors.disabled;
+            return colors.textDisabled;
         }
         return colors.text;
     }
@@ -76,9 +84,6 @@ Qml.RoundButton {
     Layout.preferredHeight: 36 + 2 * focusBorderWidth
 
     contentItem: Row {
-        anchors{
-            centerIn: focusRect
-        }
 
         spacing: 8
 
@@ -113,14 +118,6 @@ Qml.RoundButton {
         border.width: button.focusBorderWidth
         radius: button.focusBorderRadius
         height: button.height
-        anchors {
-            left: button.left
-            leftMargin: -button.focusBorderWidth
-            right: button.right
-            rightMargin: button.focusBorderWidth
-            top: button.top
-            bottom: button.bottom
-        }
 
         Rectangle {
         id: backgroundRect
@@ -142,7 +139,8 @@ Qml.RoundButton {
             maskSource: Item {
                 width: backgroundRect.width
                 height: backgroundRect.height
-                Rectangle {
+                Rectangle
+                {
                     anchors.centerIn: parent
                     width:  backgroundRect.width
                     height: backgroundRect.height
@@ -171,14 +169,15 @@ Qml.RoundButton {
             //visible: button.iconSource.length
             source: icons.source
             color: button.enabled ? icons.color : icons.disabledColor
-            sourceSize: icons.size//button.iconSize
+            sourceSize: icons.size
         }
     }
     Component {
         id: busyIndicator
         Custom.BusyIndicator {
             imageSource: icons.busyIndicatorImage
-            color: icons.color//iconColor
+            disabledOpacity: 1
+            color: icons.color
         }
     }
 }
