@@ -214,11 +214,13 @@ void LocalFileFolderAttributes::onSizeCalculated()
 
 void LocalFileFolderAttributes::requestCreatedTime(QObject* caller,std::function<void(const QDateTime&)> func)
 {
+    //Created time not available for LINUX
     FileFolderAttributes::requestCreatedTime(caller,func);
 
     if(attributeNeedsUpdate(AttributeTypes::CreatedTime))
     {
 #ifdef Q_OS_WINDOWS
+        struct stat result;
         const QString sourcePath = mPath;
         QVarLengthArray<wchar_t, MAX_PATH + 1> file(sourcePath.length() + 2);
         sourcePath.toWCharArray(file.data());
