@@ -9,6 +9,7 @@
 #include <unistd.h>
 #endif
 
+
 #ifdef WIN32
 #define stat _stat
 #endif
@@ -218,7 +219,18 @@ void LocalFileFolderAttributes::requestCreatedTime(QObject* caller,std::function
     if(attributeNeedsUpdate(AttributeTypes::CreatedTime))
     {
         struct stat result;
-        if(stat(mPath.toUtf8().constData(), &result)==0)
+
+#ifdef Q_OS_WINDOWS
+        const QString sourcePath = mPath;
+        QVarLengthArray<wchar_t, MAX_PATH + 1> file(sourcePath.length() + 2);
+        sourcePath.toWCharArray(file.data());
+        file[sourcePath.length()] = wchar_t{};
+        file[sourcePath.length() + 1] = wchar_t{};
+        if(_wstat(file.constData(), &result)==0)
+#else
+        const char* rawFile = mPath.toUtf8().constData();
+        if(stat(rawFile, &result)==0)
+#endif
         {
             auto mod_time = result.st_ctime;
             mCreatedTime = QDateTime::fromSecsSinceEpoch(mod_time);
