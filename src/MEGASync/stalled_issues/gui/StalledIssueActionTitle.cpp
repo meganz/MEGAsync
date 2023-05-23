@@ -113,8 +113,18 @@ void StalledIssueActionTitle::hideActionButton(int id)
 
 void StalledIssueActionTitle::showIcon()
 {
+    QIcon fileTypeIcon;
     QFileInfo fileInfo(mPath);
-    QIcon fileTypeIcon = StalledIssuesUtilities::getFileIcon(fileInfo, false);
+
+    if(mIsCloud)
+    {
+        std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(mPath.toUtf8().constData()));
+        fileTypeIcon = StalledIssuesUtilities::getRemoteFileIcon(node.get(), fileInfo, false);
+    }
+    else
+    {
+        fileTypeIcon = StalledIssuesUtilities::getLocalFileIcon(fileInfo, false);
+    }
 
     ui->icon->setPixmap(fileTypeIcon.pixmap(ui->icon->size()));
     ui->icon->show();
@@ -248,16 +258,26 @@ bool StalledIssueActionTitle::eventFilter(QObject *watched, QEvent *event)
     return QWidget::eventFilter(watched, event);
 }
 
-void StalledIssueActionTitle::updateUser(const QString &user)
+void StalledIssueActionTitle::updateUser(const QString &user, bool show)
 {
-    auto userText = user.isEmpty() ? tr("Loading user…") : user;
-    if(!mUserLabel)
+    if(show)
     {
-        mUserLabel = addExtraInfo(tr("Upload by:"), userText, 1);
+        auto userText = user.isEmpty() ? tr("Loading user…") : user;
+        auto& userLabel = mUpdateLabels[AttributeType::User];
+        if(!userLabel)
+        {
+            userLabel = addExtraInfo(tr("Upload by:"), userText, 1);
+        }
+        else
+        {
+            userLabel->setText(userText);
+        }
+
+        showAttribute(AttributeType::User);
     }
     else
     {
-        mUserLabel->setText(userText);
+        hideAttribute(AttributeType::User);
     }
 }
 
@@ -266,64 +286,92 @@ void StalledIssueActionTitle::updateVersionsCount(int versions)
     if(versions > 1)
     {
         QString versionsText(QString::number(versions));
-        if(!mVersionsLabel)
+        auto& versionsLabel = mUpdateLabels[AttributeType::Versions];
+        if(!versionsLabel)
         {
-            mVersionsLabel = addExtraInfo(tr("Versions:"), versionsText, 1);
+            versionsLabel = addExtraInfo(tr("Versions:"), versionsText, 1);
         }
         else
         {
-            mVersionsLabel->setText(versionsText);
+            versionsLabel->setText(versionsText);
         }
-    }
-    else if(mVersionsLabel)
-    {
-        mVersionsLabel->parentWidget()->hide();
-    }
 
+        showAttribute(AttributeType::Versions);
+    }
+    else
+    {
+        hideAttribute(AttributeType::Versions);
+    }
 }
 
 void StalledIssueActionTitle::updateSize(const QString &size)
 {
     auto sizeText = size.isEmpty() ? tr("Loading size…") : size;
 
-    if(!mSizeLabel)
+    auto& sizeLabel = mUpdateLabels[AttributeType::Size];
+    if(!sizeLabel)
     {
-        mSizeLabel = addExtraInfo(tr("Size:"), sizeText, 0);
+        sizeLabel = addExtraInfo(tr("Size:"), sizeText, 0);
     }
     else
     {
-        mSizeLabel->setText(sizeText);
+        sizeLabel->setText(sizeText);
+    }
+
+    showAttribute(AttributeType::Size);
+}
+
+void StalledIssueActionTitle::updateLastTimeModified(const QDateTime& time)
+{
+    auto timeString = time.isValid() ? MegaSyncApp->getFormattedDateByCurrentLanguage(time, QLocale::FormatType::ShortFormat) : tr("Loading time…");
+    auto& lastTimeLabel = mUpdateLabels[AttributeType::LastModified];
+    if(!lastTimeLabel)
+    {
+        lastTimeLabel = addExtraInfo(tr("Last modified:"), timeString, 0);
+    }
+    else
+    {
+        lastTimeLabel->setText(timeString);
+    }
+
+    showAttribute(AttributeType::LastModified);
+}
+
+void StalledIssueActionTitle::updateCreatedTime(const QDateTime& time)
+{
+    auto timeString = time.isValid() ? MegaSyncApp->getFormattedDateByCurrentLanguage(time, QLocale::FormatType::ShortFormat) : tr("Loading time…");
+    auto& createdTimeLabel = mUpdateLabels[AttributeType::CreatedTime];
+    if(!createdTimeLabel)
+    {
+        createdTimeLabel = addExtraInfo(mIsCloud ? tr("Upload at:") : tr("Created at:"),  timeString, 0);
+    }
+    else
+    {
+        createdTimeLabel->setText(timeString);
+    }
+
+    showAttribute(AttributeType::CreatedTime);
+}
+
+void StalledIssueActionTitle::hideAttribute(AttributeType type)
+{
+    auto updateLabel = mUpdateLabels.value(type);
+    if(updateLabel)
+    {
+        updateLabel->parentWidget()->hide();
+    }
+}
+
+void StalledIssueActionTitle::showAttribute(AttributeType type)
+{
+    auto updateLabel = mUpdateLabels.value(type);
+    if(updateLabel)
+    {
+        updateLabel->parentWidget()->show();
     }
 }
 
 void StalledIssueActionTitle::setPath(const QString &newPath)
 {
     mPath = newPath;
-}
-
-void StalledIssueActionTitle::updateLastTimeModified(const QDateTime& time)
-{
-    auto timeString = time.isValid() ? MegaSyncApp->getFormattedDateByCurrentLanguage(time, QLocale::FormatType::ShortFormat) : tr("Loading time…");
-    if(!mLastTimeLabel)
-    {
-        mLastTimeLabel = addExtraInfo(tr("Last modified:"), timeString, 0);
-    }
-    else
-    {
-        mLastTimeLabel->setText(timeString);
-    }
-
-}
-
-void StalledIssueActionTitle::updateCreatedTime(const QDateTime& time)
-{
-    auto timeString = time.isValid() ? MegaSyncApp->getFormattedDateByCurrentLanguage(time, QLocale::FormatType::ShortFormat) : tr("Loading time…");
-    if(!mCreatedTimeLabel)
-    {
-        mCreatedTimeLabel = addExtraInfo(mIsCloud ? tr("Upload at:") : tr("Created at:"),  timeString, 0);
-    }
-    else
-    {
-        mCreatedTimeLabel->setText(timeString);
-    }
 }

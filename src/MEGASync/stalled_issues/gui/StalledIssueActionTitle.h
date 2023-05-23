@@ -34,13 +34,24 @@ public:
     void setDisabled(bool state);
     void setIsCloud(bool state);
 
+
+    void setPath(const QString &newPath);
+
     void updateLastTimeModified(const QDateTime &time);
     void updateCreatedTime(const QDateTime &time);
-    void updateUser(const QString& user);
+    void updateUser(const QString& user, bool show);
     void updateVersionsCount(int versions);
     void updateSize(const QString &size);
 
-    void setPath(const QString &newPath);
+    enum class AttributeType
+    {
+        LastModified,
+        CreatedTime,
+        Size,
+        User,
+        Versions
+    };
+    void hideAttribute(AttributeType type);
 
 signals:
     void actionClicked(int id);
@@ -53,13 +64,8 @@ protected:
     bool eventFilter(QObject *watched, QEvent *event) override;
 
 private:
-    //There are better ways to do this...as User and Versions label are only cloud attributes
-    //And the system is not very scalable
-    QPointer<QLabel> mUserLabel;
-    QPointer<QLabel> mLastTimeLabel;
-    QPointer<QLabel> mCreatedTimeLabel;
-    QPointer<QLabel> mSizeLabel;
-    QPointer<QLabel> mVersionsLabel;
+    void showAttribute(AttributeType type);
+    QMap<AttributeType, QPointer<QLabel>> mUpdateLabels;
 };
 
 #endif // STALLEDISSUEACTIONTITLE_H

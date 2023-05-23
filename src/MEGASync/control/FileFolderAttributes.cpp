@@ -357,7 +357,7 @@ void RemoteFileFolderAttributes::requestCreatedTime(QObject* caller,std::functio
     emit createdTimeReady(mCreatedTime);
 }
 
-void RemoteFileFolderAttributes::requestUser(QObject *caller, std::function<void (QString)> func)
+void RemoteFileFolderAttributes::requestUser(QObject *caller, std::function<void (QString, bool)> func)
 {
     if(attributeNeedsUpdate(RemoteAttributeTypes::User))
     {
@@ -381,7 +381,7 @@ void RemoteFileFolderAttributes::requestUser(QObject *caller, std::function<void
                                 mUserFullName = UserAttributes::FullName::requestFullName(emailFromRequest);
 
                                 connect(mUserFullName.get(), &UserAttributes::FullName::fullNameReady, context, [this, func]{
-                                    func(mUserFullName->getFullName());
+                                    func(mUserFullName->getFullName(), true);
                                     requestFinish(RemoteAttributeTypes::User);
                                 });
 
@@ -400,11 +400,32 @@ void RemoteFileFolderAttributes::requestUser(QObject *caller, std::function<void
     if(mUserFullName)
     {
         //We always send the name, even if the request is async...just to show on GUI a "loading user..." or the most recent user while the new is received
-        func(mUserFullName->getFullName());
+        func(mUserFullName->getFullName(), true);
     }
     else
     {
-        func(QString());
+        func(QString(), true);
+    }
+}
+
+void RemoteFileFolderAttributes::requestUser(QObject *caller, mega::MegaHandle currentUser, std::function<void (QString, bool)> func)
+{
+    std::unique_ptr<mega::MegaNode> node = getNode();
+    if(node)
+    {
+        auto user = node->getOwner();
+
+        if(user != mega::INVALID_HANDLE && user != currentUser)
+        {
+            requestUser(caller, func);
+        }
+        else
+        {
+            mOwner = mega::INVALID_HANDLE;
+            mUserEmail.clear();
+            mUserFullName = nullptr;
+            func(QString(), false);
+        }
     }
 }
 

@@ -55,7 +55,7 @@ void RenameNodeDialog::title()
 RenameRemoteNodeDialog::RenameRemoteNodeDialog(const QString &nodePath, QWidget *parent)
     : RenameNodeDialog(parent)
 {
-    mNodeToRename = std::unique_ptr<mega::MegaNode>(MegaSyncApp->getMegaApi()->getNodeByPath(nodePath.toStdString().c_str()));
+    mNodeToRename = std::unique_ptr<mega::MegaNode>(MegaSyncApp->getMegaApi()->getNodeByPath(nodePath.toUtf8().constData()));
     if(mNodeToRename)
     {
         mNodeName = QString::fromUtf8(mNodeToRename->getName());
@@ -75,7 +75,7 @@ void RenameRemoteNodeDialog::onDialogAccepted()
         std::shared_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getParentNode(mNodeToRename.get()));
         if(!checkAlreadyExistingNode(getName(), parentNode))
         {
-            MegaSyncApp->getMegaApi()->renameNode(mNodeToRename.get(), getName().toStdString().c_str(), mDelegateListener.get());
+            MegaSyncApp->getMegaApi()->renameNode(mNodeToRename.get(), getName().toUtf8().constData(), mDelegateListener.get());
         }
     }
     //Folder already exists

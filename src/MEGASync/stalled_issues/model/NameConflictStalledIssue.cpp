@@ -29,7 +29,7 @@ void NameConflictedStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
         {
             QFileInfo localPath(QString::fromUtf8(stall->path(false,index)));
 
-            ConflictedNameInfo info(localPath, std::make_shared<LocalFileFolderAttributes>(localPath.filePath(), nullptr));
+            ConflictedNameInfo info(localPath, std::make_shared<LocalFileFolderAttributes>(getLocalData()->getNativeFilePath(), nullptr));
             mLocalConflictedNames.append(info);
 
             if(consultLocalData()->mPath.isEmpty())

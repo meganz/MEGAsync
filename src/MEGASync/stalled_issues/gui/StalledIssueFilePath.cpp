@@ -162,20 +162,51 @@ QString StalledIssueFilePath::getMoveFilePath()
 
 void StalledIssueFilePath::updateFileIcons()
 {
+    QIcon fileTypeIcon;
+    QSize iconSize(ui->filePathIcon->size());
+
     QFileInfo fileInfo(getFilePath());
     auto hasProblem(mData->getPath().mPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem);
-    QIcon fileTypeIcon(StalledIssuesUtilities::getFileIcon(fileInfo, hasProblem));
+    if(mData->isCloud())
+    {
+        std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(fileInfo.filePath().toUtf8().constData()));
+        fileTypeIcon = StalledIssuesUtilities::getRemoteFileIcon(node.get(), fileInfo, hasProblem);
+        if(!node)
+        {
+            iconSize = QSize(16,16);
+        }
+    }
+    else
+    {
+        fileTypeIcon = StalledIssuesUtilities::getLocalFileIcon(fileInfo, hasProblem);
+    }
 
-    ui->filePathIcon->setPixmap(fileTypeIcon.pixmap(ui->filePathIcon->size()));
+    ui->filePathIcon->setPixmap(fileTypeIcon.pixmap(iconSize));
 }
 
 void StalledIssueFilePath::updateMoveFileIcons()
 {
+    QIcon fileTypeIcon;
+    QSize iconSize(ui->moveFilePathIcon->size());
+
     QFileInfo fileInfo(getMoveFilePath());
     auto hasProblem(mData->getMovePath().mPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem);
-    QIcon fileTypeIcon(StalledIssuesUtilities::getFileIcon(fileInfo, hasProblem));
 
-    ui->moveFilePathIcon->setPixmap(fileTypeIcon.pixmap(ui->moveFilePathIcon->size()));
+    if(mData->isCloud())
+    {
+        std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(fileInfo.filePath().toUtf8().constData()));
+        fileTypeIcon = StalledIssuesUtilities::getRemoteFileIcon(node.get(), fileInfo, hasProblem);
+        if(!node)
+        {
+            iconSize = QSize(16,16);
+        }
+    }
+    else
+    {
+        fileTypeIcon = StalledIssuesUtilities::getLocalFileIcon(fileInfo, hasProblem);
+    }
+
+    ui->moveFilePathIcon->setPixmap(fileTypeIcon.pixmap(iconSize));
 }
 
 bool StalledIssueFilePath::eventFilter(QObject *watched, QEvent *event)
@@ -280,7 +311,7 @@ void StalledIssueFilePath::showHoverAction(QEvent::Type type, QWidget *actionWid
     {
         if(mData->isCloud())
         {
-            mega::MegaNode* node (MegaSyncApp->getMegaApi()->getNodeByPath(path.toStdString().c_str()));
+            mega::MegaNode* node (MegaSyncApp->getMegaApi()->getNodeByPath(path.toUtf8().constData()));
             if (node)
             {
                 const char* handle = node->getBase64Handle();

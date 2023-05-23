@@ -41,6 +41,7 @@ void StalledIssueChooseWidget::updateUi(StalledIssueDataPtr data)
 
     ui->name->setTitle(fileName);
     ui->name->setPath(data->getNativeFilePath());
+    ui->name->setIsCloud(data->isCloud());
     ui->name->showIcon();
 
     ui->path->show();
@@ -118,15 +119,19 @@ QString LocalStalledIssueChooseWidget::movedToBinText() const
 
 void LocalStalledIssueChooseWidget::updateUi(LocalStalledIssueDataPtr localData)
 {
-    QFileInfo file(localData->getNativeFilePath());
-    if(file.exists())
-    {
-        ui->name->updateLastTimeModified(file.lastModified());
+    localData->getFileFolderAttributes()->requestModifiedTime(this, [this](const QDateTime& time){
+        ui->name->updateLastTimeModified(time);
+    });
+
 #ifndef Q_OS_LINUX
-        ui->name->updateCreatedTime(file.created());
+    localData->getFileFolderAttributes()->requestCreatedTime(this, [this](const QDateTime& time){
+        ui->name->updateCreatedTime(time);
+    });
 #endif
-        ui->name->updateSize(Utilities::getSizeString(file.size()));
-    }
+
+    localData->getFileFolderAttributes()->requestSize(this, [this](qint64 size){
+        ui->name->updateSize(Utilities::getSizeString(size));
+    });
 
     StalledIssueChooseWidget::updateUi(localData);
 }
@@ -142,7 +147,6 @@ void CloudStalledIssueChooseWidget::updateUi(CloudStalledIssueDataPtr cloudData)
     auto node = cloudData->getNode();
     if(node)
     {
-
         cloudData->getFileFolderAttributes()->requestModifiedTime(this, [this](const QDateTime& time){
             ui->name->updateLastTimeModified(time);
         });
@@ -155,17 +159,13 @@ void CloudStalledIssueChooseWidget::updateUi(CloudStalledIssueDataPtr cloudData)
             ui->name->updateSize(Utilities::getSizeString(size));
         });
 
-        if(MegaSyncApp->getMegaApi()->checkAccess(node.get(), mega::MegaShare::ACCESS_OWNER).getErrorCode() != mega::MegaError::API_OK)
-        {
-            cloudData->getFileFolderAttributes()->requestUser(this, [this](QString user){
-                ui->name->updateUser(user);
-            });
-        }
-
         cloudData->getFileFolderAttributes()->requestVersions(this, [this](int versions){
                 ui->name->updateVersionsCount(versions);
         });
 
+        cloudData->getFileFolderAttributes()->requestUser(this, MegaSyncApp->getMegaApi()->getMyUserHandleBinary(), [this](QString user, bool show){
+            ui->name->updateUser(user, show);
+        });
     }
 
     StalledIssueChooseWidget::updateUi(cloudData);

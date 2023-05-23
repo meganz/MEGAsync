@@ -131,28 +131,26 @@ void NameConflict::updateUi(NameConflictedStalledIssue::NameConflictData conflic
             auto cloudAttributes(FileFolderAttributes::convert<RemoteFileFolderAttributes>(info.itemAttributes));
 
             CloudStalledIssueDataPtr cloudData(conflictData.data->convert<CloudStalledIssueData>());
-            auto node = cloudData->getNode();
-            if(node && MegaSyncApp->getMegaApi()->checkAccess(node.get(), mega::MegaShare::ACCESS_OWNER).getErrorCode() != mega::MegaError::API_OK)
-            {
-                if(cloudAttributes)
-                {
-                    cloudAttributes->requestUser(this, [title](QString user)
-                    {
-                        title->updateUser(user);
-                    });
-                }
-
-            }
-
             cloudAttributes->requestVersions(this,[title](int versions)
             {
-                    title->updateVersionsCount(versions);
+                title->updateVersionsCount(versions);
             });
+
+            auto node = cloudData->getNode();
+            if(node && cloudAttributes)
+            {
+                cloudAttributes->requestUser(this, MegaSyncApp->getMegaApi()->getMyUserHandleBinary(), [title](QString user, bool showAttribute)
+                {
+                    title->updateUser(user, showAttribute);
+                });
+            }
+
         }
 
         mData.data->checkTrailingSpaces(conflictedName);
         title->setTitle(conflictedName);
         title->setPath(info.conflictedPath);
+        title->setIsCloud(conflictData.data->isCloud());
         title->showIcon();
 
         if(title &&
@@ -299,7 +297,7 @@ void NameConflict::onActionClicked(int actionId)
 
             if(mData.isCloud)
             {
-                std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(mData.data->getFilePath().toStdString().c_str()));
+                std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(mData.data->getFilePath().toUtf8().constData()));
                 isFile = node->isFile();
                 fileName = MegaNodeNames::getNodeName(node.get());
             }

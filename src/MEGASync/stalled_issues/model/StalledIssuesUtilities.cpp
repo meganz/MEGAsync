@@ -98,10 +98,8 @@ void StalledIssuesUtilities::removeLocalFile(const QString& path)
     }
 }
 
-QIcon StalledIssuesUtilities::getFileIcon(const QFileInfo &fileInfo, bool hasProblem)
+QIcon StalledIssuesUtilities::getLocalFileIcon(const QFileInfo &fileInfo, bool hasProblem)
 {
-    QIcon fileTypeIcon;
-
     bool isFile(false);
 
     if(fileInfo.exists())
@@ -112,6 +110,25 @@ QIcon StalledIssuesUtilities::getFileIcon(const QFileInfo &fileInfo, bool hasPro
     {
         isFile = !fileInfo.completeSuffix().isEmpty();
     }
+
+    return getFileIcon(isFile, fileInfo, hasProblem);
+}
+
+QIcon StalledIssuesUtilities::getRemoteFileIcon(mega::MegaNode *node, const QFileInfo& fileInfo, bool hasProblem)
+{
+    if(node)
+    {
+        return getFileIcon(node->isFile(), fileInfo, hasProblem);
+    }
+    else
+    {
+        return Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/help-circle.png"));
+    }
+}
+
+QIcon StalledIssuesUtilities::getFileIcon(bool isFile, const QFileInfo& fileInfo, bool hasProblem)
+{
+    QIcon fileTypeIcon;
 
     if(isFile)
     {
@@ -136,7 +153,6 @@ QIcon StalledIssuesUtilities::getFileIcon(const QFileInfo &fileInfo, bool hasPro
         {
             fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/folder_orange_default.png"));
         }
-
     }
 
     return fileTypeIcon;

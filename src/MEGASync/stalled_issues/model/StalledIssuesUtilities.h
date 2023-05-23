@@ -21,7 +21,8 @@ public:
     void removeRemoteFile(const QString& path);
     void removeLocalFile(const QString& path);
 
-    static QIcon getFileIcon(const QFileInfo& fileInfo, bool hasProblem);
+    static QIcon getLocalFileIcon(const QFileInfo& fileInfo, bool hasProblem);
+    static QIcon getRemoteFileIcon(mega::MegaNode* node, const QFileInfo &fileInfo, bool hasProblem);
 
 signals:
     void actionFinished();
@@ -33,6 +34,8 @@ private slots:
     void onIgnoreFileFinished();
 
 private:
+    static QIcon getFileIcon(bool isFile, const QFileInfo &fileInfo, bool hasProblem);
+
     QFutureWatcher<void> mIgnoreWatcher;
 
     std::unique_ptr<mega::QTMegaRequestListener> mListener;

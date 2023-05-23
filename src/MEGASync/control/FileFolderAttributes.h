@@ -101,7 +101,8 @@ public:
     void requestSize(QObject* caller,std::function<void(qint64)> func) override;
     void requestModifiedTime(QObject* caller,std::function<void(const QDateTime&)> func) override;
     void requestCreatedTime(QObject* caller,std::function<void(const QDateTime&)> func) override;
-    void requestUser(QObject* caller, std::function<void(QString)> func);
+    void requestUser(QObject* caller, std::function<void(QString, bool)> func);
+    void requestUser(QObject* caller, mega::MegaHandle currentUser, std::function<void(QString, bool)> func);
     void requestVersions(QObject*, std::function<void(int)> func);
 
     void onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e) override;
