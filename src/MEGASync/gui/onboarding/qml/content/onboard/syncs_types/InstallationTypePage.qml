@@ -6,7 +6,6 @@ InstallationTypePageForm {
             syncsFlow.state = computerName;
         }
 
-        nextButton.enabled: false
         nextButton.onClicked: {
             switch(buttonGroup.checkedButton.type) {
                 case SyncsType.Sync:

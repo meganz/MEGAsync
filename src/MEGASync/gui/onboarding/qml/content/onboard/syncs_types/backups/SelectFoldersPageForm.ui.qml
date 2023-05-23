@@ -20,6 +20,8 @@ SyncsPage {
     property alias addFoldersMouseArea: addFoldersMouseArea
     property alias backupTable: backupTable
 
+    footerButtons.nextButton.enabled: false
+
     BackupFolderModel {
         id: backupModel
     }

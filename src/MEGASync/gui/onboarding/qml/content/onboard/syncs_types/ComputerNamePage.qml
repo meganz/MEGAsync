@@ -10,24 +10,13 @@ ComputerNamePageForm {
 
     property bool changingDeviceName: false
 
-    footerButtons {
-        previousButton.visible: false
-
-        notNowButton.visible: false
-
-        nextButton.onClicked: {
-            changingDeviceName = Onboarding.setDeviceName(computerNameTextField.text);
-            if(!changingDeviceName) {
-                syncsFlow.state = syncType;
-                return;
-            }
-            computerNameTextField.textField.enabled = false;
+    footerButtons.nextButton.onClicked: {
+        changingDeviceName = Onboarding.setDeviceName(computerNameTextField.text);
+        if(!changingDeviceName) {
+            syncsFlow.state = syncType;
+            return;
         }
-    }
-
-    computerNameTextField.textField {
-        enabled: false
-        text: OnboardingStrings.myComputer
+        computerNameTextField.textField.enabled = false;
     }
 
     Connections {
@@ -41,6 +30,7 @@ ComputerNamePageForm {
             }
         }
     }
+
     Component.onCompleted: {
         Onboarding.getComputerName();
     }

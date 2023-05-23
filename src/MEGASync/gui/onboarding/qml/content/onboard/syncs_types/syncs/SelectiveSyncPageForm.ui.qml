@@ -14,8 +14,6 @@ SyncsPage {
 
     property alias localFolderChooser: localFolderChooser
     property alias remoteFolderChooser: remoteFolderChooser
-    color: "#ffffff"
-    border.color: "#ffffff"
 
     footerButtons.nextButton {
         enabled: localFolderChooser.isValid && remoteFolderChooser.isValid
@@ -60,10 +58,3 @@ SyncsPage {
         }
     }
 }
-
-/*##^##
-Designer {
-    D{i:0;autoSize:true;height:480;width:640}
-}
-##^##*/
-

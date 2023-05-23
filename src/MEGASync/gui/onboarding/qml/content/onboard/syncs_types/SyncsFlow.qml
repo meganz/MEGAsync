@@ -133,8 +133,8 @@ StackView {
     ]
     Component {
         id: finalPage
-        ResumePage {
 
+        ResumePage {
             visible: false
         }
     }
@@ -169,8 +169,8 @@ StackView {
             }
             Component{
                 id: computerNamePage
-                ComputerNamePage {
 
+                ComputerNamePage {
                     Layout.fillHeight: true
                     Layout.fillWidth: true
                 }
@@ -178,33 +178,31 @@ StackView {
 
             Component{
                 id: installationTypePage
-                InstallationTypePage {
 
-                }
+                InstallationTypePage {}
             }
 
             Component{
                 id: syncPage
-                SyncTypePage {
 
-                }
+                SyncTypePage {}
             }
 
             Component{
                 id: fullSyncPage
-                FullSyncPage {
 
-                }
+                FullSyncPage {}
             }
 
             Component {
                 id: selectiveSyncPage
-                SelectiveSyncPage {
-                }
+
+                SelectiveSyncPage {}
             }
 
             Component{
                 id: selectBackupFoldersPage
+
                 SelectFoldersPage {
                     id: selectBackupFolders
                 }
@@ -212,6 +210,7 @@ StackView {
 
             Component {
                 id: confirmBackupFoldersPage
+
                 ConfirmFoldersPage {
                     backupTable: selectBackupFolders.backupTable
                 }
@@ -219,8 +218,8 @@ StackView {
 
             Component {
                 id: renameBackupFoldersPage
-                RenameBackupFolderPage {
-                }
+
+                RenameBackupFolderPage {}
             }
         }
     }

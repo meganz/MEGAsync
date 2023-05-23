@@ -19,39 +19,26 @@ RowLayout {
     property alias previousButton: previousButton
     property alias nextButton: nextButton
 
+    readonly property int horizontalMargin: 32
+    readonly property int verticalMargin: 32
+
     width: parent.width
 
-    Custom.Text {
+    Custom.SecondaryButton {
         id: notNowButton
 
+        Layout.leftMargin: horizontalMargin
+        Layout.bottomMargin: verticalMargin
         text: OnboardingStrings.notNow
-        font.weight: Font.Light
-        font.underline: true
-        Layout.leftMargin: 32
-        Layout.bottomMargin: 24
-
-        MouseArea {
-            anchors.fill: notNowButton
-            cursorShape: Qt.PointingHandCursor
-            onClicked: {
-                Onboarding.exitLoggedIn();
-            }
+        onClicked: {
+            Onboarding.exitLoggedIn();
         }
     }
 
     RowLayout {
         Layout.alignment: Qt.AlignRight
-        Layout.rightMargin: 32
-        Layout.bottomMargin: 24
-
-        Custom.SecondaryButton {
-            id: cancelButton
-
-            text: OnboardingStrings.cancel
-            onClicked: {
-                Onboarding.exitLoggedIn(); // TODO: Logout?? Pending
-            }
-        }
+        Layout.rightMargin: horizontalMargin
+        Layout.bottomMargin: verticalMargin
 
         Custom.OutlineButton {
             id: previousButton

@@ -21,17 +21,12 @@ ConfirmFoldersPageForm {
             syncsFlow.state = syncsFlow.selectBackup;
         }
 
-        nextButton {
-            text: OnboardingStrings.backup
-            icons.source: Images.cloud
-            icons.busyIndicatorImage: Images.loader
-            onClicked: {
-                success = false;
-                root.enabled = false;
-                footerButtons.nextButton.icons.busyIndicatorVisible = true;
-                backupTable.backupModel.updateConfirmed();
-                Onboarding.addBackups(backupTable.backupModel.getConfirmedDirs());
-            }
+        nextButton.onClicked: {
+            success = false;
+            root.enabled = false;
+            footerButtons.nextButton.icons.busyIndicatorVisible = true;
+            backupTable.backupModel.updateConfirmed();
+            Onboarding.addBackups(backupTable.backupModel.getConfirmedDirs());
         }
     }
 

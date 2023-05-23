@@ -14,6 +14,8 @@ SyncsPage {
 
     property alias computerNameTextField: computerNameTextField
 
+    footerButtons.previousButton.visible: false
+
     ColumnLayout {
 
         anchors {
@@ -40,6 +42,8 @@ SyncsPage {
 
             Layout.preferredWidth: parent.width
             title: OnboardingStrings.computerName
+            textField.enabled: false
+            textField.text: OnboardingStrings.myComputer
         }
     }
 }

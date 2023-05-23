@@ -30,7 +30,7 @@ Rectangle {
     readonly property int lineRadius: 1
     readonly property int helpButtonMargin: 25
 
-    color: Styles.pageBackground
+    color: Styles.surface1
     height: parent.height
 
     state: step1ComputerName

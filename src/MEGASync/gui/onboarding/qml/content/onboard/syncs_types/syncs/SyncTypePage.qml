@@ -9,9 +9,8 @@ SyncTypePageForm {
             syncsFlow.state = syncType;
         }
 
-        nextButton.enabled: false
         nextButton.onClicked: {
-            switch(syncPage.buttonGroup.checkedButton.syncType) {
+            switch(buttonGroup.checkedButton.syncType) {
                 case SyncsType.FullSync:
                     syncsFlow.state = fullSync;
                     break;
