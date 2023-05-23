@@ -254,7 +254,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/BlockingStageProgressController.h
 
     ${MEGAsyncDir}/notifications/DesktopNotifications.h
-    ${MEGAsyncDir}/notifications/RemovedSharesNotificator.h
+    ${MEGAsyncDir}/notifications/NotificationDelayer.h
     ${MEGAsyncDir}/notifications/TransferNotificationBuilder.h
     ${MEGAsyncDir}/notifications/NotificatorBase.h
     ${MEGAsyncDir}/notifications/${UiDir}/Notificator.h
@@ -486,7 +486,7 @@ set (SRCS
 
     ${MEGAsyncDir}/notifications/TransferNotificationBuilder.cpp
     ${MEGAsyncDir}/notifications/DesktopNotifications.cpp
-    ${MEGAsyncDir}/notifications/RemovedSharesNotificator.cpp
+    ${MEGAsyncDir}/notifications/NotificationDelayer.cpp
     ${MEGAsyncDir}/notifications/NotificatorBase.cpp
     ${MEGAsyncDir}/notifications/${UiDir}/Notificator.cpp
 
