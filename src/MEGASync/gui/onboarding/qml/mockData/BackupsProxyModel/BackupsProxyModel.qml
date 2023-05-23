@@ -1,23 +1,23 @@
 import QtQuick 2.0
 
 ListModel {
-    id: backupListModel
+    id: proxyModel
 
     function insertFolder(folder) {
-        backupListModel.insert(0, { folder: folder, selected: true, size: "24.5 TB" });
+        proxyModel.insert(0, { folder: folder, selected: true, size: "24.5 TB" });
         rowSelectedChanged(true, false);
     }
 
     function setAllSelected(checked) {
-        for (let i = 0; i < backupListModel.count; i++) {
-            backupListModel.get(i).selected = checked;
+        for (let i = 0; i < proxyModel.count; i++) {
+            proxyModel.get(i).selected = checked;
         }
     }
 
     function getNumSelectedRows() {
         var total = 0;
-        for (let i = 0; i < backupListModel.count; i++) {
-            if(backupListModel.get(i).selected) {
+        for (let i = 0; i < proxyModel.count; i++) {
+            if(proxyModel.get(i).selected) {
                 total++;
             }
         }
@@ -29,28 +29,28 @@ ListModel {
     }
 
     function updateConfirmed() {
-        for (let i = 0; i < backupListModel.count; i++) {
-            backupListModel.get(i).confirmed = backupListModel.get(i).selected;
+        for (let i = 0; i < proxyModel.count; i++) {
+            proxyModel.get(i).confirmed = proxyModel.get(i).selected;
         }
     }
 
     function getConfirmedDirs() {
         var dirs = [];
-        for (let i = 0; i < backupListModel.count; i++) {
-            if(backupListModel.get(i).confirmed) {
-                dirs.push(backupListModel.get(i).folder);
+        for (let i = 0; i < proxyModel.count; i++) {
+            if(proxyModel.get(i).confirmed) {
+                dirs.push(proxyModel.get(i).folder);
             }
         }
         return dirs;
     }
 
     function update(path, errorCode) {
-        for (let i = 0; i < backupListModel.count; i++) {
-            if(backupListModel.get(i).folder === path) {
+        for (let i = 0; i < proxyModel.count; i++) {
+            if(proxyModel.get(i).folder === path) {
                 if(errorCode === 0) {
-                    backupListModel.get(i).done = true;
+                    proxyModel.get(i).done = true;
                 } else {
-                    backupListModel.get(i).error = errorCode;
+                    proxyModel.get(i).error = errorCode;
                 }
             }
         }
@@ -59,6 +59,7 @@ ListModel {
     signal rowSelectedChanged(bool selectedRow, bool selectedAll)
 
     property string totalSize: "24.7 MB"
+    property bool selectedFilterEnabled: false
 
     ListElement {
         folder: "C:\\Users\\mega\\Desktop"

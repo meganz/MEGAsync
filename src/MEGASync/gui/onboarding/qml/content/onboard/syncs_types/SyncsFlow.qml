@@ -13,6 +13,9 @@ import Onboard.Syncs_types.Left_panel 1.0
 import Onboard.Syncs_types.Syncs 1.0
 import Onboard.Syncs_types.Backups 1.0
 
+// C++
+import BackupsProxyModel 1.0
+
 StackView {
     id: syncsFlow
 
@@ -204,7 +207,7 @@ StackView {
                 id: selectBackupFoldersPage
 
                 SelectFoldersPage {
-                    id: selectBackupFolders
+                    proxyModel: backupsProxyModel
                 }
             }
 
@@ -212,7 +215,7 @@ StackView {
                 id: confirmBackupFoldersPage
 
                 ConfirmFoldersPage {
-                    backupTable: selectBackupFolders.backupTable
+                    proxyModel: backupsProxyModel
                 }
             }
 
@@ -222,5 +225,9 @@ StackView {
                 RenameBackupFolderPage {}
             }
         }
+    }
+
+    BackupsProxyModel {
+        id: backupsProxyModel
     }
 }

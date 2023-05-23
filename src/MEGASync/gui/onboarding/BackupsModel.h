@@ -29,14 +29,11 @@ struct BackupFolder
                  bool selected = true);
 };
 
-class BackupFolderModel : public QAbstractListModel
+class BackupsModel : public QAbstractListModel
 {
     Q_OBJECT
 
-    Q_PROPERTY(QString totalSize READ getTotalSize NOTIFY totalSizeChanged)
-
 public:
-
     enum BackupFolderRoles
     {
         FolderRole = Qt::UserRole + 1,
@@ -48,7 +45,7 @@ public:
         ErrorRole
     };
 
-    explicit BackupFolderModel(QObject* parent = nullptr);
+    explicit BackupsModel(QObject* parent = nullptr);
 
     QHash<int,QByteArray> roleNames() const override;
 
@@ -59,8 +56,6 @@ public:
     QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const override;
 
     QString getTotalSize() const;
-
-public slots:
 
     void insertFolder(const QString& folder);
 
@@ -79,11 +74,12 @@ public slots:
 
 signals:
     void rowSelectedChanged(bool selectedRow, bool selectedAll);
+
     void disableRow(int index);
+
     void totalSizeChanged();
 
 private:
-
     QList<BackupFolder> mBackupFolderList;
     QHash<int, QByteArray> mRoleNames;
     int mSelectedRowsTotal;
@@ -133,29 +129,62 @@ private slots:
 
 };
 
-class BackupFolderFilterProxyModel : public QSortFilterProxyModel
+class BackupsProxyModel : public QSortFilterProxyModel
 {
     Q_OBJECT
 
     Q_PROPERTY(bool selectedFilterEnabled READ selectedFilterEnabled
                WRITE setSelectedFilterEnabled NOTIFY selectedFilterEnabledChanged)
 
+    Q_PROPERTY(QString totalSize READ getTotalSize NOTIFY totalSizeChanged)
+
 public:
-    explicit BackupFolderFilterProxyModel(QObject* parent = nullptr);
+    explicit BackupsProxyModel(QObject* parent = nullptr);
 
     bool selectedFilterEnabled() const;
+
+    QString getTotalSize();
 
 public slots:
     void setSelectedFilterEnabled(bool enabled);
 
+    void setAllSelected(bool selected);
+
+    int getNumSelectedRows();
+
+    void insertFolder(const QString& folder);
+
+    void updateConfirmed();
+
+    QStringList getConfirmedDirs();
+
+    void clean();
+
+    void update(const QString& path, int errorCode);
+
 signals:
     void selectedFilterEnabledChanged();
+
+    void rowSelectedChanged(bool selectedRow, bool selectedAll);
+
+    void disableRow(int index);
+
+    void totalSizeChanged();
 
 protected:
     bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const;
 
 private:
     bool mSelectedFilterEnabled;
+
+    BackupsModel* backupsModel();
+
+private slots:
+    void onRowSelectedChanged(bool selectedRow, bool selectedAll);
+
+    void onDisableRowChanged(int index);
+
+    void onTotalSizeChanged();
 
 };
 

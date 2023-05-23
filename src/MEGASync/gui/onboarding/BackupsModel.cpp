@@ -1,5 +1,5 @@
 
-#include "BackupFolderModel.h"
+#include "BackupsModel.h"
 
 #include "MegaApi.h"
 #include "Utilities.h"
@@ -38,7 +38,7 @@ BackupFolder::BackupFolder(const QString& folder,
     size = Utilities::getSizeString(folderSize);
 }
 
-BackupFolderModel::BackupFolderModel(QObject* parent)
+BackupsModel::BackupsModel(QObject* parent)
     : QAbstractListModel(parent)
     , mRoleNames(QAbstractItemModel::roleNames())
     , mSelectedRowsTotal(0)
@@ -55,11 +55,11 @@ BackupFolderModel::BackupFolderModel(QObject* parent)
     // Append mBackupFolderList with the default dirs
     populateDefaultDirectoryList();
 
-    connect(SyncInfo::instance(), &SyncInfo::syncRemoved, this, &BackupFolderModel::onSyncRemoved);
-    connect(SyncInfo::instance(), &SyncInfo::syncStateChanged, this, &BackupFolderModel::onSyncChanged);
+    connect(SyncInfo::instance(), &SyncInfo::syncRemoved, this, &BackupsModel::onSyncRemoved);
+    connect(SyncInfo::instance(), &SyncInfo::syncStateChanged, this, &BackupsModel::onSyncChanged);
 }
 
-void BackupFolderModel::populateDefaultDirectoryList()
+void BackupsModel::populateDefaultDirectoryList()
 {
     // Default directories definition
     QVector<QStandardPaths::StandardLocation> defaultPaths =
@@ -88,7 +88,7 @@ void BackupFolderModel::populateDefaultDirectoryList()
     }
 }
 
-void BackupFolderModel::updateSelectedAndTotalSize()
+void BackupsModel::updateSelectedAndTotalSize()
 {
     mSelectedRowsTotal = 0;
     auto lastTotalSize = mTotalSize;
@@ -110,7 +110,7 @@ void BackupFolderModel::updateSelectedAndTotalSize()
     }
 }
 
-void BackupFolderModel::checkSelectedAll()
+void BackupsModel::checkSelectedAll()
 {
     updateSelectedAndTotalSize();
 
@@ -118,18 +118,18 @@ void BackupFolderModel::checkSelectedAll()
                             mSelectedRowsTotal == mBackupFolderList.size());
 }
 
-QHash<int, QByteArray> BackupFolderModel::roleNames() const
+QHash<int, QByteArray> BackupsModel::roleNames() const
 {
     return mRoleNames;
 }
 
-int BackupFolderModel::rowCount(const QModelIndex& parent) const
+int BackupsModel::rowCount(const QModelIndex& parent) const
 {
     // When implementing a table based model, rowCount() should return 0 when the parent is valid.
     return parent.isValid() ? 0 : mBackupFolderList.size();
 }
 
-bool BackupFolderModel::setData(const QModelIndex& index, const QVariant& value, int role)
+bool BackupsModel::setData(const QModelIndex& index, const QVariant& value, int role)
 {
     bool result = hasIndex(index.row(), index.column(), index.parent()) && value.isValid();
 
@@ -187,7 +187,7 @@ bool BackupFolderModel::setData(const QModelIndex& index, const QVariant& value,
     return result;
 }
 
-QVariant BackupFolderModel::data(const QModelIndex &index, int role) const
+QVariant BackupsModel::data(const QModelIndex &index, int role) const
 {
     QVariant field;
 
@@ -231,13 +231,13 @@ QVariant BackupFolderModel::data(const QModelIndex &index, int role) const
     return field;
 }
 
-bool BackupFolderModel::isLocalFolderSyncable(const QString& inputPath)
+bool BackupsModel::isLocalFolderSyncable(const QString& inputPath)
 {
     QString message;
     return (SyncController::isLocalFolderSyncable(inputPath, mega::MegaSync::TYPE_BACKUP, message) != SyncController::CANT_SYNC);
 }
 
-bool BackupFolderModel::selectIfExistsInsertion(const QString& inputPath)
+bool BackupsModel::selectIfExistsInsertion(const QString& inputPath)
 {
     bool exists = false;
     int row = 0;
@@ -258,7 +258,7 @@ bool BackupFolderModel::selectIfExistsInsertion(const QString& inputPath)
     return exists;
 }
 
-QString BackupFolderModel::getToolTipErrorText(const QString& folder,
+QString BackupsModel::getToolTipErrorText(const QString& folder,
                                                const QString& existingPath) const
 {
     QString message(QString::fromUtf8(""));
@@ -273,7 +273,7 @@ QString BackupFolderModel::getToolTipErrorText(const QString& folder,
     return message;
 }
 
-void BackupFolderModel::onSyncRemoved(std::shared_ptr<SyncSettings> syncSettings)
+void BackupsModel::onSyncRemoved(std::shared_ptr<SyncSettings> syncSettings)
 {
     QString localFolder (syncSettings->getLocalFolder());
     QList<BackupFolder>::iterator item = mBackupFolderList.begin();
@@ -298,7 +298,7 @@ void BackupFolderModel::onSyncRemoved(std::shared_ptr<SyncSettings> syncSettings
     }
 }
 
-void BackupFolderModel::onSyncChanged(std::shared_ptr<SyncSettings> syncSettings)
+void BackupsModel::onSyncChanged(std::shared_ptr<SyncSettings> syncSettings)
 {
     if(syncSettings->getType() != mega::MegaSync::SyncType::TYPE_TWOWAY
         || !syncSettings->isActive())
@@ -330,25 +330,25 @@ void BackupFolderModel::onSyncChanged(std::shared_ptr<SyncSettings> syncSettings
     }
 }
 
-bool BackupFolderModel::folderContainsOther(const QString& folder,
+bool BackupsModel::folderContainsOther(const QString& folder,
                                             const QString& other) const
 {
     return folder.startsWith(other) && folder[other.size()] == QDir::separator();
 }
 
-bool BackupFolderModel::isRelatedFolder(const QString& folder,
+bool BackupsModel::isRelatedFolder(const QString& folder,
                                         const QString& existingPath) const
 {
     return folderContainsOther(folder, existingPath) || folderContainsOther(existingPath, folder);
 }
 
-QModelIndex BackupFolderModel::getModelIndex(QList<BackupFolder>::iterator item)
+QModelIndex BackupsModel::getModelIndex(QList<BackupFolder>::iterator item)
 {
     const auto row = std::distance(mBackupFolderList.begin(), item);
     return QModelIndex(index(row, 0));
 }
 
-void BackupFolderModel::reviewOthers(const QString& folder,
+void BackupsModel::reviewOthers(const QString& folder,
                                      bool selectable)
 {
     QList<BackupFolder>::iterator item = mBackupFolderList.begin();
@@ -379,7 +379,7 @@ void BackupFolderModel::reviewOthers(const QString& folder,
     }
 }
 
-void BackupFolderModel::reviewOthersWhenRemoved(const QString& folder)
+void BackupsModel::reviewOthersWhenRemoved(const QString& folder)
 {
     QList<BackupFolder>::iterator item = mBackupFolderList.begin();
     while (item != mBackupFolderList.end())
@@ -398,7 +398,7 @@ void BackupFolderModel::reviewOthersWhenRemoved(const QString& folder)
     }
 }
 
-bool BackupFolderModel::existAnotherBackupFolderRelated(const QString& folder,
+bool BackupsModel::existAnotherBackupFolderRelated(const QString& folder,
                                                         const QString& selectedFolder) const {
     bool exists = false;
     int row = 0;
@@ -414,7 +414,7 @@ bool BackupFolderModel::existAnotherBackupFolderRelated(const QString& folder,
     return exists;
 }
 
-void BackupFolderModel::insertFolder(const QString &folder)
+void BackupsModel::insertFolder(const QString &folder)
 {
     QString inputPath(QDir::toNativeSeparators(QDir(folder).absolutePath()));
     if(selectIfExistsInsertion(inputPath))
@@ -447,7 +447,7 @@ void BackupFolderModel::insertFolder(const QString &folder)
     }
 }
 
-void BackupFolderModel::setAllSelected(bool selected)
+void BackupsModel::setAllSelected(bool selected)
 {
     QList<BackupFolder>::iterator item = mBackupFolderList.end()-1;
     while (item != mBackupFolderList.begin()-1)
@@ -464,17 +464,17 @@ void BackupFolderModel::setAllSelected(bool selected)
     updateSelectedAndTotalSize();
 }
 
-int BackupFolderModel::getNumSelectedRows() const
+int BackupsModel::getNumSelectedRows() const
 {
     return mSelectedRowsTotal;
 }
 
-QString BackupFolderModel::getTotalSize() const
+QString BackupsModel::getTotalSize() const
 {
     return Utilities::getSizeString(mTotalSize);
 }
 
-void BackupFolderModel::updateConfirmed()
+void BackupsModel::updateConfirmed()
 {
     for (int row = 0; row < rowCount(); row++)
     {
@@ -482,7 +482,7 @@ void BackupFolderModel::updateConfirmed()
     }
 }
 
-QStringList BackupFolderModel::getConfirmedDirs() const
+QStringList BackupsModel::getConfirmedDirs() const
 {
     QStringList dirs;
     for (int row = 0; row < rowCount(); row++)
@@ -495,7 +495,7 @@ QStringList BackupFolderModel::getConfirmedDirs() const
     return dirs;
 }
 
-void BackupFolderModel::updateBackupFolder(QList<BackupFolder>::iterator item,
+void BackupsModel::updateBackupFolder(QList<BackupFolder>::iterator item,
                                            bool selectable,
                                            const QString& message)
 {
@@ -519,7 +519,7 @@ void BackupFolderModel::updateBackupFolder(QList<BackupFolder>::iterator item,
     emit dataChanged(getModelIndex(item), getModelIndex(item), { SelectableRole, Qt::ToolTipRole } );
 }
 
-void BackupFolderModel::reviewAllBackupFolders()
+void BackupsModel::reviewAllBackupFolders()
 {
     QList<BackupFolder>::iterator item = mBackupFolderList.begin();
     while (item != mBackupFolderList.end())
@@ -531,7 +531,7 @@ void BackupFolderModel::reviewAllBackupFolders()
     }
 }
 
-void BackupFolderModel::clean()
+void BackupsModel::clean()
 {
     QList<BackupFolder>::iterator item = mBackupFolderList.begin();
     while (item != mBackupFolderList.end())
@@ -553,7 +553,7 @@ void BackupFolderModel::clean()
     checkSelectedAll();
 }
 
-void BackupFolderModel::update(const QString& path, int errorCode)
+void BackupsModel::update(const QString& path, int errorCode)
 {
     QModelIndex modelIndex;
     bool found = false;
@@ -578,19 +578,24 @@ void BackupFolderModel::update(const QString& path, int errorCode)
     }
 }
 
-BackupFolderFilterProxyModel::BackupFolderFilterProxyModel(QObject* parent)
+BackupsProxyModel::BackupsProxyModel(QObject* parent)
     : QSortFilterProxyModel(parent)
     , mSelectedFilterEnabled(false)
 {
+    setSourceModel(new BackupsModel(this));
     setDynamicSortFilter(true);
+
+    connect(backupsModel(), &BackupsModel::rowSelectedChanged, this, &BackupsProxyModel::onRowSelectedChanged);
+    connect(backupsModel(), &BackupsModel::disableRow, this, &BackupsProxyModel::disableRow);
+    connect(backupsModel(), &BackupsModel::totalSizeChanged, this, &BackupsProxyModel::totalSizeChanged);
 }
 
-bool BackupFolderFilterProxyModel::selectedFilterEnabled() const
+bool BackupsProxyModel::selectedFilterEnabled() const
 {
     return mSelectedFilterEnabled;
 }
 
-void BackupFolderFilterProxyModel::setSelectedFilterEnabled(bool enabled)
+void BackupsProxyModel::setSelectedFilterEnabled(bool enabled)
 {
     if(mSelectedFilterEnabled == enabled) {
         return;
@@ -602,13 +607,72 @@ void BackupFolderFilterProxyModel::setSelectedFilterEnabled(bool enabled)
     invalidateFilter();
 }
 
-bool BackupFolderFilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const
+bool BackupsProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const
 {
     if(!mSelectedFilterEnabled) {
         return true;
     }
 
     const QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
-    return index.data(BackupFolderModel::BackupFolderRoles::ConfirmedRole).toBool();
+    return index.data(BackupsModel::BackupFolderRoles::ConfirmedRole).toBool();
 }
 
+QString BackupsProxyModel::getTotalSize()
+{
+    return backupsModel()->getTotalSize();
+}
+
+void BackupsProxyModel::setAllSelected(bool selected)
+{
+    backupsModel()->setAllSelected(selected);
+}
+
+int BackupsProxyModel::getNumSelectedRows()
+{
+    return backupsModel()->getNumSelectedRows();
+}
+
+void BackupsProxyModel::insertFolder(const QString &folder)
+{
+    backupsModel()->insertFolder(folder);
+}
+
+void BackupsProxyModel::updateConfirmed()
+{
+    backupsModel()->updateConfirmed();
+}
+
+QStringList BackupsProxyModel::getConfirmedDirs()
+{
+    return backupsModel()->getConfirmedDirs();
+}
+
+void BackupsProxyModel::clean()
+{
+    backupsModel()->clean();
+}
+
+void BackupsProxyModel::update(const QString& path, int errorCode)
+{
+    backupsModel()->update(path, errorCode);
+}
+
+BackupsModel* BackupsProxyModel::backupsModel()
+{
+    return dynamic_cast<BackupsModel*>(sourceModel());
+}
+
+void BackupsProxyModel::onRowSelectedChanged(bool selectedRow, bool selectedAll)
+{
+    emit rowSelectedChanged(selectedRow, selectedAll);
+}
+
+void BackupsProxyModel::onDisableRowChanged(int index)
+{
+    emit disableRow(index);
+}
+
+void BackupsProxyModel::onTotalSizeChanged()
+{
+    emit totalSizeChanged();
+}

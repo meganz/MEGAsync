@@ -84,7 +84,6 @@ protected:
     bool eventFilter(QObject *obj, QEvent *event)
     {
     #if QT_VERSION >= 0x050000
-        qDebug()<<event->type();
         if (event->type() == QEvent::ScreenChangeInternal)
         {
             queueRedraw();

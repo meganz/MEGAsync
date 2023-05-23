@@ -27,7 +27,7 @@
 #include "onboarding/ChooseFolder.h"
 #include "onboarding/Onboarding.h"
 #include "onboarding/AccountInfoData.h"
-#include "onboarding/BackupFolderModel.h"
+#include "onboarding/BackupsModel.h"
 
 #include <QQmlApplicationEngine>
 #include "DialogOpener.h"
@@ -3541,8 +3541,7 @@ void MegaApplication::registerCommonQMLElements()
     qmlRegisterType<ChooseLocalFolder>("ChooseLocalFolder", 1, 0, "ChooseLocalFolder");
     qmlRegisterType<ChooseRemoteFolder>("ChooseRemoteFolder", 1, 0, "ChooseRemoteFolder");
 
-    qmlRegisterType<BackupFolderModel>("BackupFolderModel", 1, 0, "BackupFolderModel");
-    qmlRegisterType<BackupFolderFilterProxyModel>("BackupFolderFilterProxyModel", 1, 0, "BackupFolderFilterProxyModel");
+    qmlRegisterType<BackupsProxyModel>("BackupsProxyModel", 1, 0, "BackupsProxyModel");
 
     qmlRegisterModule("Components", 1, 0);
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/busyIndicator/BusyIndicator.qml")), "Components", 1, 0, "BusyIndicator");

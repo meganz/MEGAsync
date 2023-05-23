@@ -86,7 +86,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/onboarding/ChooseFolder.cpp \
     $$PWD/onboarding/Onboarding.cpp \
     $$PWD/onboarding/AccountInfoData.cpp \
-    $$PWD/onboarding/BackupFolderModel.cpp
+    $$PWD/onboarding/BackupsModel.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/AutoResizeStackedWidget.h \
@@ -170,7 +170,7 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/onboarding/ChooseFolder.h \
     $$PWD/onboarding/Onboarding.h \
     $$PWD/onboarding/AccountInfoData.h \
-    $$PWD/onboarding/BackupFolderModel.h
+    $$PWD/onboarding/BackupsModel.h
 
 INCLUDEPATH += $$PWD
 

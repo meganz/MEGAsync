@@ -18,18 +18,15 @@ SelectFoldersPageForm {
         }
 
         nextButton {
-            enabled: false
             onClicked: {
-                backupTable.backupModel.updateConfirmed();
+                proxyModel.updateConfirmed();
                 syncsFlow.state = confirmBackup;
             }
         }
     }
 
-    onVisibleChanged: {
-        if(visible) {
-            backupTable.backupProxyModel.selectedFilterEnabled = false;
-        }
+    Component.onCompleted: {
+        proxyModel.selectedFilterEnabled = false;
     }
 
     addFoldersMouseArea.onClicked: {
@@ -44,7 +41,7 @@ SelectFoldersPageForm {
         selectFolder: true
         onAccepted: {
             var processedFolder = folder.toString().substring(8);
-            backupTable.backupModel.insertFolder(processedFolder);
+            proxyModel.insertFolder(processedFolder);
         }
     }
 

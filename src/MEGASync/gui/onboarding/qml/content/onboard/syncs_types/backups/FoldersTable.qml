@@ -11,14 +11,12 @@ import Components 1.0 as Custom
 import Onboard 1.0
 
 // C++
-import BackupFolderModel 1.0
-import BackupFolderFilterProxyModel 1.0
+import BackupsProxyModel 1.0
 
 Rectangle {
     id: tableRectangle
 
-    property BackupFolderFilterProxyModel backupProxyModel
-    property BackupFolderModel backupModel
+    property BackupsProxyModel backupsProxyModel
 
     height: 186
     radius: 8
@@ -40,7 +38,7 @@ Rectangle {
     ListView {
         id: backupList
 
-        model: backupProxyModel
+        model: backupsProxyModel
         anchors.fill: parent
         headerPositioning: ListView.OverlayHeader
         focus: true
@@ -73,10 +71,10 @@ Rectangle {
                         selectAll.checked = false;
                     }
                     selectAll.indeterminate = false;
-                    backupModel.setAllSelected(checked);
+                    backupsProxyModel.setAllSelected(checked);
                 }
 
-                headerText.selectedRows = backupModel.getNumSelectedRows();                
+                headerText.selectedRows = backupsProxyModel.getNumSelectedRows();
                 footerButtons.nextButton.enabled = checked;
                 selectAll.fromModel = false;
             }
@@ -95,7 +93,7 @@ Rectangle {
                     Layout.leftMargin: 22
                     text: OnboardingStrings.selectAll
                     indeterminate: false
-                    visible: !backupProxyModel.selectedFilterEnabled
+                    visible: !backupsProxyModel.selectedFilterEnabled
 
                     onCheckedChanged: {
                         checkSelectAll(checked);
@@ -107,31 +105,31 @@ Rectangle {
 
                     property int selectedRows: 0
 
-                    text: backupProxyModel.selectedFilterEnabled
+                    text: backupsProxyModel.selectedFilterEnabled
                           ? OnboardingStrings.backupFolders
                           : "(" + selectedRows + ")"
-                    Layout.leftMargin: backupProxyModel.selectedFilterEnabled ? 22 : 4
+                    Layout.leftMargin: backupsProxyModel.selectedFilterEnabled ? 22 : 4
                     Layout.fillWidth: true
                 }
 
                 Custom.Text {
                     id: totalSizeText
 
-                    text: backupModel.totalSize
+                    text: backupsProxyModel.totalSize
                     Layout.rightMargin: 22
                     Layout.alignment: Qt.AlignRight
                     font.pixelSize: Custom.Text.Size.Small
                     font.weight: Font.DemiBold
-                    visible: backupProxyModel.selectedFilterEnabled
+                    visible: backupsProxyModel.selectedFilterEnabled
                 }
 
                 Connections {
-                    target: backupModel
+                    target: backupsProxyModel
 
                     onRowSelectedChanged: (selectedRow, selectedAll) => {
                         if(selectedRow) {
                             selectAll.indeterminate = true;
-                            headerText.selectedRows = backupModel.getNumSelectedRows();
+                            headerText.selectedRows = backupsProxyModel.getNumSelectedRows();
                             footerButtons.nextButton.enabled = true;
                         } else {
                             selectAll.fromModel = true;

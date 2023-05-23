@@ -11,14 +11,10 @@ import Common 1.0
 import Onboard 1.0
 import Onboard.Syncs_types 1.0
 
-// C++
-import BackupFolderModel 1.0
-
 SyncsPage {
 
     property alias mainLayout: mainLayout
-
-    property FoldersTable backupTable
+    property alias proxyModel: backupTable.backupsProxyModel
 
     footerButtons.nextButton {
         text: OnboardingStrings.backup
@@ -48,10 +44,10 @@ SyncsPage {
             spacing: 24
 
             FoldersTable {
+                id: backupTable
+
                 Layout.preferredWidth: parent.width
                 Layout.preferredHeight: 176
-                backupProxyModel: backupTable.backupProxyModel
-                backupModel: backupTable.backupModel
             }
 
             Custom.TextField {

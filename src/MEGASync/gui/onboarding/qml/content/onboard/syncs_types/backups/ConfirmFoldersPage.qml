@@ -25,25 +25,23 @@ ConfirmFoldersPageForm {
             success = false;
             root.enabled = false;
             footerButtons.nextButton.icons.busyIndicatorVisible = true;
-            backupTable.backupModel.updateConfirmed();
-            Onboarding.addBackups(backupTable.backupModel.getConfirmedDirs());
+            proxyModel.updateConfirmed();
+            Onboarding.addBackups(proxyModel.getConfirmedDirs());
         }
     }
 
-    onVisibleChanged: {
-        if(visible) {
-            backupTable.backupProxyModel.selectedFilterEnabled = true;
-        }
+    Component.onCompleted: {
+        proxyModel.selectedFilterEnabled = true;
     }
 
     Connections {
         target: Onboarding
 
         onBackupsUpdated: (path, errorCode, finished) => {
-            backupTable.backupModel.update(path, errorCode);
+            proxyModel.update(path, errorCode);
 
             if(finished) {
-                backupTable.backupModel.clean();
+                proxyModel.clean();
                 root.enabled = true;
                 footerButtons.nextButton.busyIndicatorVisible = false;
                 syncsFlow.state = syncsFlow.finalState;
@@ -51,7 +49,7 @@ ConfirmFoldersPageForm {
         }
 
         onBackupConflict: (folder, name, isNew) => {
-            backupTable.backupModel.clean();
+            proxyModel.clean();
             root.enabled = true;
             footerButtons.nextButton.icons.busyIndicatorVisible = false;
         }
