@@ -218,8 +218,6 @@ void LocalFileFolderAttributes::requestCreatedTime(QObject* caller,std::function
 
     if(attributeNeedsUpdate(AttributeTypes::CreatedTime))
     {
-        struct stat result;
-
 #ifdef Q_OS_WINDOWS
         const QString sourcePath = mPath;
         QVarLengthArray<wchar_t, MAX_PATH + 1> file(sourcePath.length() + 2);
@@ -227,22 +225,21 @@ void LocalFileFolderAttributes::requestCreatedTime(QObject* caller,std::function
         file[sourcePath.length()] = wchar_t{};
         file[sourcePath.length() + 1] = wchar_t{};
         if(_wstat(file.constData(), &result)==0)
-#else
-        const char* rawFile = mPath.toUtf8().constData();
-        if(stat(rawFile, &result)==0)
-#endif
         {
-            auto mod_time = result.st_ctime;
-            mCreatedTime = QDateTime::fromSecsSinceEpoch(mod_time);
-
-            QFileInfo fileInfo(mPath);
-            if(!fileInfo.isFile())
+            mCreatedTime = QDateTime::fromSecsSinceEpoch(result.st_ctime);
+        }
+#elif defined(Q_OS_MACOS)
+        struct stat the_time;
+        stat(mPath.toUtf8(), &the_time);
+        mCreatedTime.setTime_t(the_time.st_birthtimespec.tv_sec);
+#endif
+        QFileInfo fileInfo(mPath);
+        if(!fileInfo.isFile())
+        {
+            if(mIsEmpty)
             {
-                if(mIsEmpty)
-                {
-                    mModifiedTime = mCreatedTime;
-                    emit modifiedTimeReady(mModifiedTime);
-                }
+                mModifiedTime = mCreatedTime;
+                emit modifiedTimeReady(mModifiedTime);
             }
         }
     }
