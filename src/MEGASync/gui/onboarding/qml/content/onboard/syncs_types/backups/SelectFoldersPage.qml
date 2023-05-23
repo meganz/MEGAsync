@@ -20,7 +20,7 @@ SelectFoldersPageForm {
         nextButton {
             onClicked: {
                 proxyModel.updateConfirmed();
-                syncsFlow.state = confirmBackup;
+                backupsFlow.state = confirmBackup;
             }
         }
     }

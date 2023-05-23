@@ -18,7 +18,7 @@ ConfirmFoldersPageForm {
     footerButtons {
 
         previousButton.onClicked: {
-            syncsFlow.state = syncsFlow.selectBackup;
+            backupsFlow.state = backupsFlow.selectBackup;
         }
 
         nextButton.onClicked: {

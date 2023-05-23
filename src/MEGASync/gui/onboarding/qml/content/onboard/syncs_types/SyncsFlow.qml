@@ -24,9 +24,7 @@ StackView {
     readonly property string syncs: "syncs"
     readonly property string selectiveSync: "selectiveSync"
     readonly property string fullSync: "fullSync"
-    readonly property string selectBackup: "selectBackup"
-    readonly property string confirmBackup: "confirmBackup"
-    readonly property string renameBackupFolder: "renameBackupFolder"
+    readonly property string backupsFlow: "backups"
     readonly property string finalState: "finalState"
 
     //property alias selectedSync: finalPage.comesFromSync
@@ -92,39 +90,19 @@ StackView {
             }
         },
         State {
-            name: selectBackup
+            name: backupsFlow
             StateChangeScript {
                 script: {
                     //selectedSync = false;
                     if(syncsFlow.currentItem != syncsPanel) {
                         syncsFlow.replace(syncsPanel);
                     }
-                    rightPanel.replace(selectBackupFoldersPage);
+                    rightPanel.replace(backupsFlowPage);
                 }
             }
             PropertyChanges {
                 target: stepPanel
                 state: stepPanel.stepBackupsSelectFolders
-            }
-        },
-        State {
-            name: confirmBackup
-            StateChangeScript {
-                script: rightPanel.replace(confirmBackupFoldersPage);
-            }
-            PropertyChanges {
-                target: stepPanel
-                state: stepPanel.stepBackupsConfirm
-            }
-        },
-        State {
-            name: renameBackupFolder
-            StateChangeScript {
-                script: rightPanel.replace(renameBackupFoldersPage);
-            }
-            PropertyChanges {
-                target: stepPanel
-                state: stepPanel.stepBackupsRename
             }
         },
         State {
@@ -134,6 +112,7 @@ StackView {
             }
         }
     ]
+
     Component {
         id: finalPage
 
@@ -170,7 +149,7 @@ StackView {
                 top: parent.top
                 bottom: parent.bottom
             }
-            Component{
+            Component {
                 id: computerNamePage
 
                 ComputerNamePage {
@@ -179,19 +158,19 @@ StackView {
                 }
             }
 
-            Component{
+            Component {
                 id: installationTypePage
 
                 InstallationTypePage {}
             }
 
-            Component{
+            Component {
                 id: syncPage
 
                 SyncTypePage {}
             }
 
-            Component{
+            Component {
                 id: fullSyncPage
 
                 FullSyncPage {}
@@ -204,30 +183,12 @@ StackView {
             }
 
             Component{
-                id: selectBackupFoldersPage
+                id: backupsFlowPage
 
-                SelectFoldersPage {
-                    proxyModel: backupsProxyModel
+                BackupsFlow {
+                    stepLeftPanel: stepPanel
                 }
-            }
-
-            Component {
-                id: confirmBackupFoldersPage
-
-                ConfirmFoldersPage {
-                    proxyModel: backupsProxyModel
-                }
-            }
-
-            Component {
-                id: renameBackupFoldersPage
-
-                RenameBackupFolderPage {}
             }
         }
-    }
-
-    BackupsProxyModel {
-        id: backupsProxyModel
     }
 }

@@ -12,7 +12,7 @@ InstallationTypePageForm {
                     syncsFlow.state = syncs;
                     break;
                 case SyncsType.Backup:
-                    syncsFlow.state = selectBackup;
+                    syncsFlow.state = backupsFlow;
                     break;
                 case SyncsType.Fuse:
                 default:

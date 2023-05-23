@@ -50,9 +50,7 @@ Onboarding::Onboarding(QObject *parent)
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/left_panel/StepPanel.qml")), "Onboard.Syncs_types.Left_panel", 1, 0, "StepPanel");
 
     qmlRegisterModule("Onboard.Syncs_types.Backups", 1, 0);
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/backups/ConfirmFoldersPage.qml")), "Onboard.Syncs_types.Backups", 1, 0, "ConfirmFoldersPage");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/backups/SelectFoldersPage.qml")), "Onboard.Syncs_types.Backups", 1, 0, "SelectFoldersPage");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/backups/RenameBackupFolderPage.qml")), "Onboard.Syncs_types.Backups", 1, 0, "RenameBackupFolderPage");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/backups/BackupsFlow.qml")), "Onboard.Syncs_types.Backups", 1, 0, "BackupsFlow");
 
     connect(mSyncController, &SyncController::syncAddStatus,
             this, &Onboarding::onSyncAddRequestStatus);

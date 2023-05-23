@@ -27,6 +27,7 @@
         <file>content/onboard/syncs_types/SyncsPage.qml</file>
         <file>content/onboard/syncs_types/SyncsType.qml</file>
         <file>content/onboard/syncs_types/SyncsVerticalButton.qml</file>
+        <file>content/onboard/syncs_types/backups/BackupsFlow.qml</file>
         <file>content/onboard/syncs_types/backups/ConfirmFoldersPage.qml</file>
         <file>content/onboard/syncs_types/backups/ConfirmFoldersPageForm.ui.qml</file>
         <file>content/onboard/syncs_types/backups/FolderRow.qml</file>
