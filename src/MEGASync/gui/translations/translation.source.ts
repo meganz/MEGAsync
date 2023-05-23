@@ -4234,10 +4234,14 @@ Enter a different name.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- We&apos;ve enhanced the UI.
+        <source>- We&apos;ve enhanced system notifications.
+- We&apos;ve enhanced the UI.
 - We&apos;ve fixed the detected crashes on Windows, Linux, and macOS.
 </source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Changelog for v4.9.5</translatorcomment>
+        <translation>- We&apos;ve enhanced system notifications.
+- We&apos;ve enhanced the UI.
+- We&apos;ve fixed the detected crashes on Windows, Linux, and macOS.</translation>
     </message>
 </context>
 <context>

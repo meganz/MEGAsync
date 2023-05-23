@@ -19,6 +19,7 @@ const int Preferences::BUILD_ID = 0;
 const QString Preferences::VERSION_STRING = QString::fromAscii("4.9.5");
 QString Preferences::SDK_ID = QString::fromAscii("c7573da");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
+"- We've enhanced system notifications.\n"
 "- We've enhanced the UI.\n"
 "- We've fixed the detected crashes on Windows, Linux, and macOS.\n"));
 
