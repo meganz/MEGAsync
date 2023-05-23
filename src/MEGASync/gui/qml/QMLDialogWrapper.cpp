@@ -19,8 +19,8 @@ QQmlEngine *QMLComponent::getEngine()
     return MegaSyncApp->qmlEngine();
 }
 
-QmlDialogWrapperBase::QmlDialogWrapperBase(QObject *parent)
-    : QObject(parent)
+QmlDialogWrapperBase::QmlDialogWrapperBase(QWidget *parent)
+    : QWidget(parent)
     , mWindow(nullptr)
     , mResult(QDialog::Rejected)
 {
@@ -85,6 +85,11 @@ void QmlDialogWrapperBase::showMaximized()
     mWindow->showMaximized();
 }
 
+void QmlDialogWrapperBase::showNormal()
+{
+    mWindow->showNormal();
+}
+
 void QmlDialogWrapperBase::setGeometry(const QRect &geometry)
 {
     mWindow->setGeometry(geometry);
@@ -114,7 +119,12 @@ void QmlDialogWrapperBase::show()
 
 void QmlDialogWrapperBase::activateWindow()
 {
-    mWindow->requestActivate();
+   mWindow->requestActivate();
+}
+
+QWindow *QmlDialogWrapperBase::window()
+{
+   return mWindow;
 }
 
 int QmlDialogWrapperBase::minimumWidth()

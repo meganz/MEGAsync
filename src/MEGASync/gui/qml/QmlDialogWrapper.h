@@ -27,11 +27,11 @@ public:
     QQmlEngine* getEngine();
 };
 
-class QmlDialogWrapperBase : public QObject
+class QmlDialogWrapperBase : public QWidget
 {
     Q_OBJECT
 public:
-    QmlDialogWrapperBase(QObject* parent = 0);
+    QmlDialogWrapperBase(QWidget *parent = 0);
     ~QmlDialogWrapperBase();
 
     Qt::WindowModality windowModality();
@@ -41,6 +41,7 @@ public:
     void setWindowState(Qt::WindowState state);
     void move(const QPoint& point);
     void showMaximized();
+    void showNormal();
     void setGeometry(const QRect &geometry);
     QRect geometry();
     bool isMaximized();
@@ -48,6 +49,7 @@ public:
     void show();
     void close();
     void activateWindow();
+    QWindow* window();
     void raise();
     void removeDialog();
     int minimumWidth();
@@ -86,7 +88,7 @@ class QmlDialogWrapper : public QmlDialogWrapperBase
 {
 
 public:
-    QmlDialogWrapper(QObject* parent = nullptr)
+    QmlDialogWrapper(QWidget* parent = nullptr)
         : QmlDialogWrapperBase(parent)
     {
         Q_ASSERT((std::is_base_of<QMLComponent, Type>::value));
