@@ -8,7 +8,7 @@ namespace mega {
 class MegaUserAlert;
 }
 
-class RemovedSharesNotificator: public QObject
+class NotificationDelayer: public QObject
 {
     Q_OBJECT
 public:
