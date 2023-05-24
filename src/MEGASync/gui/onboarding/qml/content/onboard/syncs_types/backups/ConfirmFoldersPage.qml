@@ -32,10 +32,16 @@ ConfirmFoldersPageForm {
 
     Component.onCompleted: {
         proxyModel.selectedFilterEnabled = true;
+        Onboarding.getComputerName();
     }
 
     Connections {
         target: Onboarding
+
+        onDeviceNameReady: (deviceName) => {
+            folderField.textField.text = "/" + deviceName;
+            folderField.enabled = true;
+        }
 
         onBackupsUpdated: (path, errorCode, finished) => {
             proxyModel.update(path, errorCode);

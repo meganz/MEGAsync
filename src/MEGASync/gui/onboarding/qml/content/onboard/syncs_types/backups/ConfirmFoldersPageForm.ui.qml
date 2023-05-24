@@ -11,9 +11,12 @@ import Common 1.0
 import Onboard 1.0
 import Onboard.Syncs_types 1.0
 
+// C++
+import Onboarding 1.0
+
 SyncsPage {
 
-    property alias mainLayout: mainLayout
+    property alias folderField: folderField
     property alias proxyModel: backupTable.backupsProxyModel
 
     footerButtons.nextButton {
@@ -56,9 +59,9 @@ SyncsPage {
                 Layout.preferredWidth: parent.width
                 Layout.leftMargin: -folderField.textField.focusBorderWidth
                 title: OnboardingStrings.backupTo
-                text: "/Backups"
                 leftIconSource: Images.database
                 textField.readOnly: true
+                enabled: false
             }
         }
     }
