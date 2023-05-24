@@ -62,15 +62,7 @@ Rectangle {
             z: 3
 
             function checkSelectAll(checked) {
-                if(selectAll.fromModel && selectAll.indeterminate) {
-                    selectAll.indeterminate = false;
-                    selectAll.checked = checked;
-                } else {
-                    if(selectAll.indeterminate && checked) {
-                        checked = false;
-                        selectAll.checked = false;
-                    }
-                    selectAll.indeterminate = false;
+                if(!selectAll.fromModel) {
                     backupsProxyModel.setAllSelected(checked);
                 }
 
@@ -92,11 +84,14 @@ Rectangle {
                     implicitHeight: parent.height
                     Layout.leftMargin: 22
                     text: OnboardingStrings.selectAll
-                    indeterminate: false
+                    tristate: false
                     visible: !backupsProxyModel.selectedFilterEnabled
 
                     onCheckedChanged: {
-                        checkSelectAll(checked);
+                        if(!selectAll.fromModel) {
+                            tristate = false;
+                            checkSelectAll(checked);
+                        }
                     }
                 }
 
@@ -127,12 +122,14 @@ Rectangle {
                     target: backupsProxyModel
 
                     onRowSelectedChanged: (selectedRow, selectedAll) => {
+                        selectAll.fromModel = true;
                         if(selectedRow) {
-                            selectAll.indeterminate = true;
+                            selectAll.toIndeterminate();
                             headerText.selectedRows = backupsProxyModel.getNumSelectedRows();
                             footerButtons.nextButton.enabled = true;
                         } else {
-                            selectAll.fromModel = true;
+                            selectAll.fromIndeterminate(selectedAll);
+                            selectAll.checked = selectedAll;
                             checkSelectAll(selectedAll);
                         }
                     }
@@ -155,6 +152,10 @@ Rectangle {
             anchors.right: parent.right
             anchors.left: parent.left
         }
+    }
+
+    Component.onCompleted: {
+        console.error("created table");
     }
 
 }

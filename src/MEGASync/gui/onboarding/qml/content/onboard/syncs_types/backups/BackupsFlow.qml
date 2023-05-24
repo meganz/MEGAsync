@@ -16,8 +16,6 @@ StackView {
     readonly property string selectBackup: "selectBackup"
     readonly property string confirmBackup: "confirmBackup"
 
-    initialItem: selectBackupFoldersPage
-
     onStepLeftPanelChanged: {
         state = selectBackup;
     }
