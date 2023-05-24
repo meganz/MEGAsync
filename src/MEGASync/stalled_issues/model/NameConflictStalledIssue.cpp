@@ -29,13 +29,13 @@ void NameConflictedStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
         {
             QFileInfo localPath(QString::fromUtf8(stall->path(false,index)));
 
-            ConflictedNameInfo info(localPath, std::make_shared<LocalFileFolderAttributes>(getLocalData()->getNativeFilePath(), nullptr));
-            mLocalConflictedNames.append(info);
-
             if(consultLocalData()->mPath.isEmpty())
             {
                 getLocalData()->mPath.path = localPath.filePath();
             }
+
+            ConflictedNameInfo info(localPath, std::make_shared<LocalFileFolderAttributes>(getLocalData()->getNativeFilePath(), nullptr));
+            mLocalConflictedNames.append(info);
 
             setIsFile(localPath.filePath(), true);
         }
@@ -51,13 +51,13 @@ void NameConflictedStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
         {
             QFileInfo cloudPath(QString::fromUtf8(stall->path(true,index)));
 
-            ConflictedNameInfo info(cloudPath, std::make_shared<RemoteFileFolderAttributes>(cloudPath.filePath(), nullptr));
-            mCloudConflictedNames.append(info);
-
             if(consultCloudData()->mPath.isEmpty())
             {
                 getCloudData()->mPath.path = cloudPath.filePath();
             }
+
+            ConflictedNameInfo info(cloudPath, std::make_shared<RemoteFileFolderAttributes>(cloudPath.filePath(), nullptr));
+            mCloudConflictedNames.append(info);
 
             setIsFile(cloudPath.filePath(), false);
         }

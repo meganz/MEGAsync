@@ -41,23 +41,13 @@
 	background-color: #FCFCFC;
 }
 
-#extraInfoContainer QLabel[title=false]
+#extraInfoContainer QLabel
 {
 	font-family: Lato;
-    font-size: 13px;
-    font-weight: 700;
+    font-size: 12px;
     line-height: 16px;
     color: #333333;
 }
-
-#extraInfoContainer QLabel[title=true]
-{
-	font-family: Lato;
-    font-size: 13px;
-    line-height: 16px;
-    color: #333333;
-}
-
 #titleContainer QLabel
 {
     font-family: Lato;

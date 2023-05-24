@@ -136,24 +136,26 @@ void LocalFileFolderAttributes::requestSize(QObject* caller,std::function<void(q
 {
     FileFolderAttributes::requestSize(caller,func);
 
-    if(attributeNeedsUpdate(AttributeTypes::Size))
+    if(!mPath.isEmpty() && attributeNeedsUpdate(AttributeTypes::Size))
     {
         QFileInfo fileInfo(mPath);
+        if(fileInfo.exists())
+        {
 
-        if(fileInfo.isFile())
-        {
-            mSize = fileInfo.size();
-        }
-        else
-        {
-            if(mSize < 0)
+            if(fileInfo.isFile())
             {
-                auto future = QtConcurrent::run([this]() -> qint64{
-                    return calculateSize();
-                });
-                mFolderSizeFuture.setFuture(future);
+                mSize = fileInfo.size();
             }
-
+            else
+            {
+                if(mSize < 0)
+                {
+                    auto future = QtConcurrent::run([this]() -> qint64{
+                        return calculateSize();
+                    });
+                    mFolderSizeFuture.setFuture(future);
+                }
+            }
         }
     }
 
@@ -165,7 +167,7 @@ void LocalFileFolderAttributes::requestModifiedTime(QObject* caller,std::functio
 {
     FileFolderAttributes::requestModifiedTime(caller,func);
 
-    if(attributeNeedsUpdate(AttributeTypes::ModifiedTime))
+    if(!mPath.isEmpty() && attributeNeedsUpdate(AttributeTypes::ModifiedTime))
     {
         QFileInfo fileInfo(mPath);
 
@@ -217,7 +219,7 @@ void LocalFileFolderAttributes::requestCreatedTime(QObject* caller,std::function
     //Created time not available for LINUX
     FileFolderAttributes::requestCreatedTime(caller,func);
 
-    if(attributeNeedsUpdate(AttributeTypes::CreatedTime))
+    if(!mPath.isEmpty() && attributeNeedsUpdate(AttributeTypes::CreatedTime))
     {
 #ifdef Q_OS_WINDOWS
         struct stat result;
@@ -275,12 +277,16 @@ qint64 LocalFileFolderAttributes::calculateSize()
 {
     qint64 newSize(0);
 
-    QDirIterator filesIt(mPath, QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks, QDirIterator::Subdirectories);
-
-    while (filesIt.hasNext())
+    QFileInfo fileInfo(mPath);
+    if(!mPath.isEmpty() && fileInfo.exists())
     {
-        filesIt.next();
-        newSize += filesIt.fileInfo().size();
+        QDirIterator filesIt(mPath, QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks, QDirIterator::Subdirectories);
+
+        while (filesIt.hasNext())
+        {
+            filesIt.next();
+            newSize += filesIt.fileInfo().size();
+        }
     }
 
     return newSize;

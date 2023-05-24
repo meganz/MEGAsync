@@ -15,7 +15,6 @@ const char* BUTTON_ID = "button_id";
 const char* ONLY_ICON = "onlyIcon";
 const char* MAIN_BUTTON = "main";
 const char* DISCARDED = "discarded";
-const char* TITLE = "title";
 const char* DISABLE_BACKGROUND = "disable_background";
 const char* MESSAGE_TEXT = "message_text";
 
@@ -168,9 +167,7 @@ QLabel* StalledIssueActionTitle::addExtraInfo(const QString &title, const QStrin
     container->setLayout(layout);
 
     auto titleLabel = new QLabel(title, this);
-    titleLabel->setProperty(TITLE, true);
     auto infoLabel = new QLabel(info, this);
-    infoLabel->setProperty(TITLE, false);
 
     layout->addWidget(titleLabel);
     layout->addWidget(infoLabel);

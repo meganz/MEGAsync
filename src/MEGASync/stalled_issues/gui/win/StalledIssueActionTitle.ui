@@ -29,19 +29,10 @@
 	background-color: #FCFCFC;
 }
 
-#extraInfoContainer QLabel[title=false]
+#extraInfoContainer QLabel
 {
 	font-family: Lato;
-    font-size: 13px;
-    font-weight: 700;
-    line-height: 16px;
-    color: #333333;
-}
-
-#extraInfoContainer QLabel[title=true]
-{
-	font-family: Lato;
-    font-size: 13px;
+    font-size: 12px;
     line-height: 16px;
     color: #333333;
 }
@@ -87,7 +78,7 @@ QPushButton[main=true]
 {
    font-size:14px;
    color: #333333;
-}</string>
+}k</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
