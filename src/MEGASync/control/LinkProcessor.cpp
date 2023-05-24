@@ -276,6 +276,12 @@ void LinkProcessor::importLinks(MegaNode *node)
             }
         }
     }
+
+    if(remainingNodes == 0)
+    {
+        emit onLinkImportFinish();
+    }
+
     delete children;
 }
 
