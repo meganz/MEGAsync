@@ -4776,6 +4776,10 @@ void MegaApplication::onImportDialogFinish(QPointer<ImportMegaLinksDialog> dialo
             connect(mLinkProcessor.get(), &LinkProcessor::onLinkImportFinish, this, &MegaApplication::onLinkImportFinished);
             mLinkProcessor->importLinks(dialog->getImportPath());
         }
+        else
+        {
+            mLinkProcessor.reset();
+        }
     }
     else
     {
