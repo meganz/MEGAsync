@@ -17,7 +17,7 @@
 
 using namespace mega;
 
-ImportMegaLinksDialog::ImportMegaLinksDialog(std::shared_ptr<LinkProcessor> linkProcessor, QWidget *parent) :
+ImportMegaLinksDialog::ImportMegaLinksDialog(LinkProcessor *linkProcessor, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ImportMegaLinksDialog),
     mMegaApi(MegaSyncApp->getMegaApi()),
@@ -72,8 +72,8 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(std::shared_ptr<LinkProcessor> link
         initUiAsUnlogged();
     }
 
-    connect(mLinkProcessor.get(), &LinkProcessor::onLinkInfoAvailable, this, &ImportMegaLinksDialog::onLinkInfoAvailable);
-    connect(mLinkProcessor.get(), &LinkProcessor::onLinkInfoRequestFinish, this, &ImportMegaLinksDialog::onLinkInfoRequestFinish);
+    connect(mLinkProcessor, &LinkProcessor::onLinkInfoAvailable, this, &ImportMegaLinksDialog::onLinkInfoAvailable);
+    connect(mLinkProcessor, &LinkProcessor::onLinkInfoRequestFinish, this, &ImportMegaLinksDialog::onLinkInfoRequestFinish);
 
     mFinished = false;
     mLinkProcessor->requestLinkInfo();
