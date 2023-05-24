@@ -9,76 +9,84 @@ import Components 1.0
 Qml.CheckBox {
     id: checkBox
 
-    property string url: ""
-    property bool indeterminate: false
-
-    spacing: richText.text !== "" ? 8 : 0
-    indicator: checkBoxOutRect
-    contentItem: richText
-    padding: 0
-
-    MouseArea {
-        id: mouseArea
-
-        anchors.fill: checkBox
-        onPressed: mouse.accepted = false
-        cursorShape: Qt.PointingHandCursor
+    function indeterminate() {
+        return checkState === Qt.PartiallyChecked;
     }
 
-    RichText {
-        id: richText
+    function toIndeterminate() {
+        tristate = true;
+        checkState = Qt.PartiallyChecked;
+    }
 
-        text: checkBox.text
-        horizontalAlignment: Text.AlignLeft
-        leftPadding: checkBox.indicator.width + checkBox.spacing
-        anchors.top: parent.top
-        wrapMode: RichText.Wrap
-        url: checkBox.url
+    function fromIndeterminate(value) {
+        tristate = false;
+        checkState = value ? Qt.Checked : Qt.Unchecked;
+    }
+
+    property string url: ""
+    property Sizes sizes: Sizes {}
+    property Colors colors: Colors {}
+    property Icons icons: Icons {}
+
+    spacing: (text.length === 0) ? 0 : 8
+    indicator: checkBoxOutRect
+    contentItem: Loader { id: textLoader }
+    padding: 0
+    height: (text.length === 0) ? checkBoxOutRect.height : textLoader.height
+
+    onTextChanged: {
+        if(text.length === 0) {
+            return;
+        }
+
+        textLoader.sourceComponent = textComponent;
     }
 
     Rectangle {
         id: checkBoxOutRect
 
         function getBorderColor() {
-            var color;
-            if(checkBox.pressed) {
-                color = Styles.buttonPrimaryPressed;
+            var color = colors.border;
+            if(!checkBox.enabled) {
+                color = colors.borderDisabled;
+            } else if(checkBox.pressed) {
+                color = colors.borderPressed;
             } else if(checkBox.hovered) {
-                color = Styles.buttonPrimaryHover;
-            } else {
-                color = Styles.buttonPrimary;
+                color = colors.borderHover;
             }
             return color;
         }
 
         function getBackgroundColor() {
-            var color;
-            if(checkBox.pressed) {
-                if(checkBox.checked) {
-                    color = Styles.buttonPrimaryPressed;
-                } else {
-                    color = "transparent";
-                }
-            } else if(checkBox.hovered) {
-                color = Styles.buttonPrimaryHover;
-            } else {
-                color = Styles.buttonPrimary;
+            var color = colors.backgroundUnchecked;
+            if(checkState === Qt.Unchecked) {
+                return color;
             }
+
+            if(!checkBox.enabled) {
+                color = colors.backgroundDisabled;
+            } else if(checkBox.pressed) {
+                color = colors.backgroundPressed;
+            } else if(checkBox.hovered) {
+                color = colors.backgroundHover;
+            } else {
+                color = colors.background;
+            }
+
             return color;
         }
 
-        width: 16
-        height: 16
-        radius: 4
+        width: sizes.indicatorWidth
+        height: sizes.indicatorWidth
+        radius: sizes.indicatorRadius
         border.color: checkBoxOutRect.getBorderColor()
-        border.width: 2
+        border.width: sizes.indicatorBorderWidth
         color: "transparent"
-        opacity: checkBox.enabled ? 1.0 : 0.1
 
         Rectangle {
             id: inside
 
-            visible: checkBox.checked || checkBox.down || checkBox.indeterminate
+            visible: checkBox.checked || checkBox.down || indeterminate()
             color: checkBoxOutRect.getBackgroundColor()
             radius: 1
             width: checkBoxOutRect.width - checkBoxOutRect.border.width
@@ -88,15 +96,36 @@ Qml.CheckBox {
             SvgImage {
                 id: image
 
-                visible: checkBox.checked || checkBox.indeterminate
-                source: checkBox.indeterminate ? "images/indeterminate.svg" : "images/check.svg"
+                visible: indeterminate() || checked
+                source: indeterminate() ? icons.indeterminate : icons.checked
                 anchors.centerIn: inside
-                sourceSize: checkBox.indeterminate ? Qt.size(8, 2) : Qt.size(8, 6.5)
+                sourceSize: indeterminate() ? sizes.iconSizeIndeterminate : sizes.iconSize
                 color: Styles.iconInverseAccent
             }
 
         }
 
+    }
+
+    Component {
+        id: textComponent
+
+        RichText {
+            text: checkBox.text
+            leftPadding: checkBoxOutRect.width + checkBox.spacing
+            wrapMode: Text.WordWrap
+            fontSizeMode: Text.Fit
+            url: checkBox.url
+            textFormat: Text.AutoText
+        }
+    }
+
+    MouseArea {
+        id: mouseArea
+
+        anchors.fill: parent
+        onPressed: mouse.accepted = false
+        cursorShape: Qt.PointingHandCursor
     }
 
 }

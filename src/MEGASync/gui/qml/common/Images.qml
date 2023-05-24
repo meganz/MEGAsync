@@ -17,13 +17,14 @@ QtObject {
 
     readonly property url alertTriangle: imagesPath + "alert_triangle.svg"
     readonly property url arrowRight: imagesPath + "arrow_right.svg"
+    readonly property url check: imagesPath + "check.svg"
     readonly property url helpCircle: imagesPath + "help_circle.svg"
+    readonly property url indeterminate: imagesPath + "indeterminate.svg"
     readonly property url infoCircle: imagesPath + "info_circle.svg"
     readonly property url lock: imagesPath + "lock.svg"
     readonly property url loader: imagesPath + "loader.svg"
 
     readonly property url building: imagesOnboardingPath + "building.svg"
-    readonly property url check: imagesOnboardingPath + "check.svg"
     readonly property url cloud: imagesOnboardingPath + "cloud.svg"
     readonly property url database: imagesOnboardingPath + "database.svg"
     readonly property url edit: imagesOnboardingPath + "edit.svg"

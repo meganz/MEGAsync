@@ -21,8 +21,9 @@
 		<file>components/buttons/Icon.qml</file>
 		<file>components/buttons/Progress.qml</file>
         <file>components/checkBoxes/CheckBox.qml</file>
-        <file>components/checkBoxes/images/check.svg</file>
-        <file>components/checkBoxes/images/indeterminate.svg</file>
+        <file>components/checkBoxes/Colors.qml</file>
+        <file>components/checkBoxes/Icons.qml</file>
+        <file>components/checkBoxes/Sizes.qml</file>
         <file>components/images/Image.qml</file>
         <file>components/images/SvgImage.qml</file>
         <file>components/scrollBars/ScrollBar.qml</file>
