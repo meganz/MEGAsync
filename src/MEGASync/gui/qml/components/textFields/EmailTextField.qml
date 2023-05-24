@@ -16,6 +16,5 @@ Custom.TextField {
         regExp: RegexExpressions.email
     }
 
-    type: Custom.TextField.Type.Error
-    hintType: Custom.HintText.Type.Error
+    hint.icon: Images.alertTriangle
 }

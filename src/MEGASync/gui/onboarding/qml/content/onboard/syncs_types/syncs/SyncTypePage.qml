@@ -19,7 +19,7 @@ SyncTypePageForm {
                     break;
                 default:
                     console.error("Button type does not exist -> "
-                                  + syncPage.buttonGroup.checkedButton.syncType);
+                                  + buttonGroup.checkedButton.syncType);
                     break;
             }
         }

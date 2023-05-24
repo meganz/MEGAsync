@@ -14,8 +14,9 @@ QtObject {
     property color hover
     property color borderHover
     property color pressed
-    property color borderPressed
     property color border
     property color borderDisabled: Styles.buttonDisabled
+    property color borderSelected
+    property color borderPressed
 }
 

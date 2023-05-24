@@ -22,6 +22,7 @@ Item {
     signal exitLoggedInFinished
     signal twoFAFailed
     signal syncSetupSuccess
+    signal cantSync
     signal backupsUpdated(string path, int errorCode, bool finished)
     signal backupConflict(string folder, bool isNew)
     signal accountConfirmed

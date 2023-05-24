@@ -32,18 +32,18 @@ LoginPageForm {
         var valid = email.valid();
         if(!valid) {
             error = true;
-            email.hintText = OnboardingStrings.errorValidEmail;
+            email.hint.text = OnboardingStrings.errorValidEmail;
         }
-        email.showType = !valid;
-        email.hintVisible = !valid;
+        email.error = !valid;
+        email.hint.visible = !valid;
 
         valid = (password.text.length !== 0);
         if(!valid) {
             error = true;
-            password.hintText = OnboardingStrings.errorEmptyPassword;
+            password.hint.text = OnboardingStrings.errorEmptyPassword;
         }
-        password.showType = !valid;
-        password.hintVisible = !valid;
+        password.error = !valid;
+        password.hint.visible = !valid;
 
         if(error) {
             return;
@@ -69,8 +69,8 @@ LoginPageForm {
     }
 
     password.onTextChanged: {
-        if(loginAttempt && !email.hintVisible && email.showType) {
-            email.showType = false;
+        if(loginAttempt && !email.hint.visible && email.error) {
+            email.error = false;
         }
     }
 
@@ -79,10 +79,10 @@ LoginPageForm {
 
         onUserPassFailed: {
             root.enabled = true;
-            email.showType = true;
-            password.showType = true;
-            password.hintText = OnboardingStrings.errorLogin;
-            password.hintVisible = true;
+            email.error = true;
+            password.error = true;
+            password.hint.text = OnboardingStrings.errorLogin;
+            password.hint.visible = true;
             loginButton.icons.busyIndicatorVisible = false;
             state = normalStatus;
         }

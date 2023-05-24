@@ -18,64 +18,105 @@ Custom.TextField {
         PasswordStrengthStrong
     }
 
-    type: Custom.TextField.Type.Error
-    hintType: Custom.HintText.Type.Error
-
     textField.echoMode: TextInput.Password
-    textField.onTextChanged: {
-        rightIconVisible = (text.length > 0);
-        hintVisible = text.length && showHint;
-        showType = false;
 
-        if(!showHint || !(text.length > 0)) {
+    function getCoso()
+    {
+        return Custom.HintPasswordVeryWeakStyle;
+    }
+
+    readonly property Custom.HintStyle veryWeak: Custom.HintStyle{
+        iconColor: Styles.indicatorPink
+        titleColor: Styles.textError
+        textColor: Styles.textSecondary
+    }
+
+    readonly property Custom.HintStyle weak: Custom.HintStyle{
+        iconColor: Styles.supportError;
+        titleColor: Styles.textError;
+        textColor: Styles.textSecondary;
+    }
+
+    readonly property Custom.HintStyle medium: Custom.HintStyle{
+        iconColor: Styles.supportWarning;
+        titleColor: Styles.supportWarning;
+        textColor: Styles.textSecondary;
+    }
+
+    readonly property Custom.HintStyle good: Custom.HintStyle{
+        iconColor: Styles.supportSuccess;
+        titleColor: Styles.textSuccess;
+        textColor: Styles.textSecondary;
+    }
+
+    readonly property Custom.HintStyle strong: Custom.HintStyle{
+        iconColor: Styles.supportSuccess;
+        titleColor: Styles.supportSuccess;
+        textColor: Styles.textSecondary;
+    }
+
+    textField.onTextChanged: {
+        rightIcon.visible = (text.length > 0);
+        error = false;
+
+        if(!(text.length > 0)) {
             return;
+        }
+        else
+        {
+            hint.visible = true;
         }
 
         var strength = Onboarding.getPasswordStrength(text);
         switch(strength) {
             case PasswordTextField.PasswordStrength.PasswordStrengthVeryWeak: {
-                hintTitle = qsTr("Too weak");
-                hintText = qsTr("Your password needs to be at least 8 characters long.");
-                hintType = Custom.HintText.Type.PasswordStrengthVeryWeak;
+                hint.title = qsTr("Too weak");
+                hint.text = qsTr("Your password needs to be at least 8 characters long.");
+                hint.styles = veryWeak;
+                hint.icon = Images.passwordVeryWeak
                 break;
             }
             case PasswordTextField.PasswordStrength.PasswordStrengthWeak: {
-                hintTitle = qsTr("Weak");
-                hintText = qsTr("Your password is easily guessed. Try making your password longer. Combine uppercase and lowercase letters. Add special characters. Do not use names or dictionary words.");
-                hintType = Custom.HintText.Type.PasswordStrengthWeak;
+                hint.title = qsTr("Weak");
+                hint.text = qsTr("Your password is easily guessed. Try making your password longer. Combine uppercase and lowercase letters. Add special characters. Do not use names or dictionary words.");
+                hint.styles = weak;
+                hint.icon = Images.passwordWeak;
                 break;
             }
             case PasswordTextField.PasswordStrength.PasswordStrengthMedium: {
-                hintTitle = qsTr("Average");
-                hintText = qsTr("Your password is good enough to proceed, but it is recommended to strengthen it further.");
-                hintType = Custom.HintText.Type.PasswordStrengthMedium;
+                hint.title = qsTr("Average");
+                hint.text = qsTr("Your password is good enough to proceed, but it is recommended to strengthen it further.");
+                hint.styles = medium;
+                hint.icon = Images.passwordAverage;
                 break;
             }
             case PasswordTextField.PasswordStrength.PasswordStrengthGood: {
-                hintTitle = qsTr("Strong");
-                hintText = qsTr("This password will withstand most typical brute-force attacks. Please ensure that you will remember it.");
-                hintType = Custom.HintText.Type.PasswordStrengthGood;
+                hint.title = qsTr("Strong");
+                hint.text = qsTr("This password will withstand most typical brute-force attacks. Please ensure that you will remember it.");
+                hint.styles = good;
+                hint.icon = Images.passwordGood;
                 break;
             }
             case PasswordTextField.PasswordStrength.PasswordStrengthStrong: {
-                hintTitle = qsTr("Excellent");
-                hintText = qsTr("This password will withstand most sophisticated brute-force attacks. Please ensure that you will remember it.");
-                hintType = Custom.HintText.Type.PasswordStrengthStrong;
+                hint.title = qsTr("Excellent");
+                hint.text = qsTr("This password will withstand most sophisticated brute-force attacks. Please ensure that you will remember it.");
+                hint.styles = strong;
+                hint.icon = Images.passwordStrong;
                 break;
             }
         }
     }
 
-    rightIconVisible: false
-    rightIconSource: "images/eye.svg"
+    rightIcon.visible: false
+    rightIcon.source: "images/eye.svg"
     rightIconMouseArea.onClicked: {
         textField.focus = true;
         if(textField.echoMode === TextInput.Password) {
             textField.echoMode = TextInput.Normal;
-            rightIconSource = "images/eye-off.svg";
+            rightIcon.source = "images/eye-off.svg";
         } else if(textField.echoMode === TextInput.Normal) {
             textField.echoMode = TextInput.Password;
-            rightIconSource = "images/eye.svg";
+            rightIcon.source = "images/eye.svg";
         }
     }
 }

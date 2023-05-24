@@ -10,43 +10,18 @@ import Components 1.0 as Custom
 Rectangle {
     id: root
 
-    enum Type {
-        None = 0,
-        Error
-    }
-
-    // Component properties
-    property int type: TextField.Type.None
-    property bool showType: false
-
-    // Title properties
-    property string title: ""
-
-    // Left icon textField properties
-    property bool leftIconVisible: false
-    property url leftIconSource: ""
-    property color leftIconColor: enabled ? Styles.iconSecondary : Styles.iconDisabled
-
-    // TextField properties
+    // Alias
     property alias textField: textField
     property alias text: textField.text
     property alias placeholderText: textField.placeholderText
-
-    // Right icon textField properties
-    property bool rightIconVisible: false
-    property url rightIconSource: ""
-    property color rightIconColor: enabled ? Styles.iconSecondary : Styles.iconDisabled
     property alias rightIconMouseArea: rightIconMouseArea
 
-    // Hint properties
-    property int hintType: Custom.HintText.Type.None
-    property bool hintVisible: false
-    property url hintIconSource: ""
-    property color hintIconColor
-    property string hintTitle: ""
-    property color hintTitleColor
-    property string hintText: ""
-    property color hintTextColor
+    // Component properties
+    property bool error: false
+    property string title: ""
+    property RightIcon rightIcon: RightIcon{}
+    property LeftIcon leftIcon: LeftIcon{}
+    property Hint hint: Hint{}
 
     signal backPressed()
     signal pastePressed()
@@ -62,40 +37,12 @@ Rectangle {
         titleLoader.sourceComponent = titleComponent;
     }
 
-    onLeftIconSourceChanged: {
-        if(leftIconSource === "") {
-            return;
-        }
-
-        leftIconVisible = true;
-        leftIconLoader.sourceComponent = leftIconComponent;
-    }
-
-    onRightIconSourceChanged: {
-        if(rightIconSource === "") {
-            return;
-        }
-
-        rightIconVisible = true;
-        rightIconLoader.sourceComponent = rightIconComponent;
-    }
-
-    onHintVisibleChanged: {
-        if(!hintVisible) {
-            return;
-        }
-
-        hintLoader.sourceComponent = hintComponent;
-    }
-
     Loader {
         id: titleLoader
 
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.top: parent.top
-        //anchors.leftMargin: textField.focusBorderWidth
-        //anchors.rightMargin: textField.focusBorderWidth
     }
 
     Qml.TextField {
@@ -130,8 +77,8 @@ Rectangle {
         selectByMouse: true
         selectionColor: Styles.focus
         height: 36 + 2 * focusBorderWidth
-        leftPadding: calculatePaddingWithIcon(leftIconSource != "")
-        rightPadding: calculatePaddingWithIcon(rightIconSource != "")
+        leftPadding: calculatePaddingWithIcon(leftIcon.source != "")
+        rightPadding: calculatePaddingWithIcon(rightIcon.source != "")
         topPadding: verticalPadding
         bottomPadding: verticalPadding
         placeholderTextColor: Styles.textPlaceholder
@@ -177,7 +124,7 @@ Rectangle {
                     var color = Styles.borderStrong;
                     if(!enabled) {
                         color = Styles.borderDisabled;
-                    } else if(showType && root.type === TextField.Type.Error) {
+                    } else if(error) {
                         color = Styles.textError;
                     } else if(textField.focus) {
                         color = Styles.borderStrongSelected;
@@ -252,14 +199,11 @@ Rectangle {
         Custom.HintText {
             id: hint
 
-            iconSource: root.hintIconSource
-            iconColor: root.hintIconColor
-            title: root.hintTitle
-            titleColor: root.hintTitleColor
-            text: root.hintText
-            textColor: root.hintTextColor
-            visible: root.hintVisible
-            type: root.hintType
+            icon: root.hint.icon
+            title: root.hint.title
+            text: root.hint.text
+            styles: root.hint.styles
+            visible: root.hint.visible
         }
     }
 
@@ -267,9 +211,9 @@ Rectangle {
         id: leftIconComponent
 
         Custom.SvgImage {
-            visible: leftIconVisible
-            source: leftIconSource
-            color: leftIconColor
+            visible: leftIcon.visible
+            source: leftIcon.source
+            color: leftIcon.color
             sourceSize: textField.iconSize
             z: 2
         }
@@ -279,9 +223,9 @@ Rectangle {
         id: rightIconComponent
 
         Custom.SvgImage {
-            visible: rightIconVisible
-            source: rightIconSource
-            color: rightIconColor
+            visible: rightIcon.visible
+            source: rightIcon.source
+            color: rightIcon.color
             sourceSize: textField.iconSize
             z: 2
         }

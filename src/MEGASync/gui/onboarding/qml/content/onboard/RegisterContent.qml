@@ -16,46 +16,43 @@ Column {
     function error() {
         var error = firstName.text.length === 0 || lastName.text.length === 0;
         firstLastNameHint.visible = error;
-        firstName.showType = error;
-        lastName.showType = error;
+        firstName.error = error;
+        lastName.error = error;
 
         var valid = email.valid();
         if(!valid) {
             error = true;
-            email.hintText = OnboardingStrings.errorValidEmail;
+            email.hint.text = OnboardingStrings.errorValidEmail;
         }
-        email.showType = !valid;
-        email.hintVisible = !valid;
+        email.error = !valid;
+        email.hint.visible = !valid;
 
         valid = password.text.length !== 0;
         if(!valid) {
             error = true;
-            password.hintType = Custom.HintText.Type.Error;
-            password.type = Custom.TextField.Type.Error;
-            password.showType = true;
+            password.hint.type = Custom.HintText.Type.Error;
+            password.error = true;
         }
-        password.showType = !valid;
+        password.error = !valid;
 
         if(confirmPassword.text.length === 0) {
             error = true;
-            confirmPassword.showType = true;
-            confirmPassword.hintVisible = true;
-            confirmPassword.hintText = OnboardingStrings.errorConfirmPassword;
-            confirmPassword.type = Custom.TextField.Type.Error;
-            confirmPassword.hintType = Custom.HintText.Type.Error;
+            confirmPassword.error = true;
+            confirmPassword.hint.visible = true;
+            confirmPassword.hint.text = OnboardingStrings.errorConfirmPassword;
+            confirmPassword.hint.type = Custom.HintText.Type.Error;
         } else if(password.text !== confirmPassword.text) {
             error = true;
-            confirmPassword.showType = true;
-            confirmPassword.hintVisible = true;
+            confirmPassword.error = true;
+            confirmPassword.hint.visible = true;
             confirmPassword.type = Custom.TextField.Type.Error;
-            confirmPassword.hintText = OnboardingStrings.errorPasswordsMatch;
-            confirmPassword.hintType = Custom.HintText.Type.Error;
-            password.hintVisible = false;
-            password.type = Custom.TextField.Type.Error;
-            password.showType = true;
+            confirmPassword.hint.text = OnboardingStrings.errorPasswordsMatch;
+            confirmPassword.hint.type = Custom.HintText.Type.Error;
+            password.hint.visible = false;
+            password.error = true;
         } else {
-            confirmPassword.showType = false;
-            confirmPassword.hintVisible = false;
+            confirmPassword.error = false;
+            confirmPassword.hint.visible = false;
         }
 
         return error;
@@ -72,9 +69,9 @@ Column {
     }
 
     function showEmailAlreadyExistsError() {
-        email.showType = true;
-        email.hintText = OnboardingStrings.errorEmailAlreadyExist;
-        email.hintVisible = true;
+        email.error = true;
+        email.hint.text = OnboardingStrings.errorEmailAlreadyExist;
+        email.hint.visible = true;
     }
 
     property alias firstName: firstName
@@ -116,7 +113,6 @@ Column {
 
                     width: nameLayout.width / 2 - nameLayout.spacing / 2
                     title: OnboardingStrings.firstName
-                    type: Custom.TextField.Type.Error
                 }
 
                 Custom.TextField {
@@ -124,7 +120,6 @@ Column {
 
                     width: nameLayout.width / 2 - nameLayout.spacing / 2
                     title: OnboardingStrings.lastName
-                    type: Custom.TextField.Type.Error
                 }
             }
 
@@ -135,8 +130,8 @@ Column {
                 anchors.right: parent.right
                 anchors.leftMargin: email.textField.focusBorderWidth
                 anchors.rightMargin: email.textField.focusBorderWidth
-                type: Custom.HintText.Type.Error
                 text: OnboardingStrings.errorFirstLastName
+                icon: Images.alertTriangle
             }
         }
 

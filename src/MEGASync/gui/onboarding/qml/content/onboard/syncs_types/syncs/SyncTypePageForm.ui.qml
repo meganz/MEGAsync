@@ -11,7 +11,6 @@ import Onboard 1.0
 import Onboard.Syncs_types 1.0
 
 SyncsPage {
-
     property alias buttonGroup: buttonGroup
 
     footerButtons.nextButton.enabled: false

@@ -278,6 +278,7 @@ void Onboarding::addSync(const QString &localPath, mega::MegaHandle remoteHandle
         else
         {
             QMegaMessageBox::warning(nullptr, tr("Warning"), warningMessage, QMessageBox::Ok);
+            emit cantSync(warningMessage);
         }
     }
     else if (syncability == SyncController::CAN_SYNC

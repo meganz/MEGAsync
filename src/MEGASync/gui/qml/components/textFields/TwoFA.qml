@@ -51,8 +51,7 @@ ColumnLayout {
             next: digit2
             Layout.preferredWidth: 60
             Layout.preferredHeight: 72
-            type: Custom.TextField.Type.Error
-            hintVisible: hasError
+            hint.visible: hasError
             onTextChanged: { hasError = false }
         }
 
@@ -63,8 +62,7 @@ ColumnLayout {
             Layout.preferredHeight: 72
             next: digit3
             previous: digit1
-            type: Custom.TextField.Type.Error
-            hintVisible: hasError
+            hint.visible: hasError
             onTextChanged: { hasError = false }
         }
 
@@ -75,8 +73,7 @@ ColumnLayout {
             Layout.preferredHeight: 72
             next: digit4
             previous: digit2
-            type: Custom.TextField.Type.Error
-            hintVisible: hasError
+            hint.visible: hasError
             onTextChanged: { hasError = false }
         }
 
@@ -87,8 +84,7 @@ ColumnLayout {
             Layout.preferredHeight: 72
             next: digit5
             previous: digit3
-            type: Custom.TextField.Type.Error
-            hintVisible: hasError
+            hint.visible: hasError
             onTextChanged: { hasError = false }
         }
 
@@ -99,8 +95,7 @@ ColumnLayout {
             Layout.preferredHeight: 72
             next: digit6
             previous: digit4
-            type: Custom.TextField.Type.Error
-            hintVisible: hasError
+            hint.visible: hasError
             onTextChanged: { hasError = false }
         }
 
@@ -110,7 +105,6 @@ ColumnLayout {
             Layout.preferredWidth: 60
             Layout.preferredHeight: 72
             previous: digit5
-            type: Custom.TextField.Type.Error
             onTextChanged: { hasError = false }
         }
     }

@@ -34,7 +34,11 @@
         <file>components/textFields/TwoFADigit.qml</file>
         <file>components/textFields/images/eye.svg</file>
         <file>components/textFields/images/eye-off.svg</file>
+        <file>components/textFields/Hint.qml</file>
+        <file>components/textFields/LeftIcon.qml</file>
+        <file>components/textFields/RightIcon.qml</file>
         <file>components/texts/HintText.qml</file>
+        <file>components/texts/HintStyle.qml</file>
         <file>components/texts/NotificationText.qml</file>
         <file>components/texts/RichText.qml</file>
         <file>components/texts/SecondaryText.qml</file>

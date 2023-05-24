@@ -23,7 +23,7 @@ ChangeEmailPageForm {
             if(success) {
                 registerFlow.state = confirmEmail;
             } else {
-                emailTextField.showType = true;
+                emailTextField.error = true;
                 emailTextField.hint.text = OnboardingStrings.errorEmailAlreadyExist;
                 emailTextField.hint.visible = true;
             }

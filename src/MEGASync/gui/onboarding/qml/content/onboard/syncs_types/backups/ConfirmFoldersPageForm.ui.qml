@@ -59,11 +59,11 @@ SyncsPage {
                 Layout.preferredWidth: parent.width
                 Layout.leftMargin: -folderField.textField.focusBorderWidth
                 title: OnboardingStrings.backupTo
-                leftIconSource: Images.database
+                text: "/Backups"
+                leftIcon.source: Images.database
                 textField.readOnly: true
                 enabled: false
             }
         }
     }
-
 }

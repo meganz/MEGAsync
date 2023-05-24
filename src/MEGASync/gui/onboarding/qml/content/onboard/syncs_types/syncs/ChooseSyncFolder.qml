@@ -15,6 +15,16 @@ import ChooseRemoteFolder 1.0
 
 Rectangle {
 
+    property bool local: true
+    property url selectedUrl: selectedUrl
+    property double selectedNode: selectedNode
+    property bool isValid: false
+    property alias folderField: folderField
+
+    readonly property int buttonWidth: 85
+    readonly property int buttonHeight: 36
+    readonly property int textEditMargin: 8
+
     function getSyncData() {
         return local ? localFolderChooser.getFolder() : remoteFolderChooser.getHandle();
     }
@@ -25,17 +35,16 @@ Rectangle {
     }
 
     function reset() {
-        local ? localFolderChooser.reset() : remoteFolderChooser.reset();
+        if(local)
+        {
+            localFolderChooser.reset()
+        }
+        else
+        {
+            remoteFolderChooser.reset();
+        }
     }
 
-    property bool local: true
-    property url selectedUrl: selectedUrl
-    property double selectedNode: selectedNode
-    property bool isValid: false
-
-    readonly property int buttonWidth: 85
-    readonly property int buttonHeight: 36
-    readonly property int textEditMargin: 8
 
     width: parent.width
     height: folderField.height
@@ -47,21 +56,23 @@ Rectangle {
         anchors.left: parent.left
         anchors.right: changeButton.left
         anchors.top: parent.top
+        anchors.bottom: parent.bottom
         anchors.rightMargin: textEditMargin
         title: local ? OnboardingStrings.selectLocalFolder : OnboardingStrings.selectMEGAFolder
         text: "/MEGA"
-        leftIconSource: local ? Images.pc : Images.mega
-        leftIconColor: Styles.iconSecondary
+        leftIcon.source: local ? Images.pc : Images.mega
+        leftIcon.color: Styles.iconSecondary
         textField.readOnly: true
+        hint.icon: Images.alertTriangle
     }
 
-    Custom.Button {
+    Custom.OutlineButton {
         id: changeButton
 
         width: buttonWidth
-        height: buttonHeight
+        height: folderField.textField.height
         anchors.right: parent.right
-        anchors.bottom: folderField.bottom
+        y: folderField.y + 18
         text: OnboardingStrings.change
         onClicked: {
             var folderChooser = local ? localFolderChooser : remoteFolderChooser;

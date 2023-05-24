@@ -45,9 +45,9 @@ SyncsPage {
             anchors.left: parent.left
             anchors.right: parent.right
             title: OnboardingStrings.renameBackupFolder
-            leftIconSource: Images.database
-            hintText: OnboardingStrings.bakupFolderExistsError
-            hintType: Custom.HintText.Type.Error
+            leftIcon.source: Images.database
+            hint.text: OnboardingStrings.bakupFolderExistsError
+            hint.icon: Images.alertTriangle
         }
 
         Custom.NotificationText {
@@ -65,5 +65,4 @@ SyncsPage {
             }
         }
     }
-
 }

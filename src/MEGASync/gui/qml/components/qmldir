@@ -21,6 +21,7 @@ Text 1.0 texts/Text.qml
 SecondaryText 1.0 texts/SecondaryText.qml
 RichText 1.0 texts/RichText.qml
 HintText 1.0 texts/HintText.qml
+HintStyle 1.0 texts/HintStyle.qml
 NotificationText 1.0 texts/NotificationText.qml
 ToolTip 1.0 toolTips/ToolTip.qml
 ScrollPanel 1.0 views/ScrollPanel.qml

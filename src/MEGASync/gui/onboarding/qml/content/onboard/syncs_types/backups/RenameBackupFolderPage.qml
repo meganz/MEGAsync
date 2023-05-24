@@ -47,8 +47,8 @@ RenameBackupFolderPageForm {
                 headerDescription = headerDescription.replace(regex, "\"" + folder + "\"");
                 renameTextField.text = folder + " (1)";
             } else {
-                renameTextField.hintText = renameTextField.hintText.replace(regex, "\"" + name + "\"");
-                renameTextField.hintVisible = true;
+                renameTextField.hint.text = renameTextField.hint.text.replace(regex, "\"" + name + "\"");
+                renameTextField.hint.visible = true;
             }
 
             syncsFlow.state = syncsFlow.renameBackupFolder;

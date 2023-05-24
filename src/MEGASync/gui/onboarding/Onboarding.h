@@ -76,6 +76,7 @@ signals:
     void changeRegistrationEmailFinished(bool success);
     void backupConflict(const QString& folder, const QString& name, bool isNew);
     void fetchingNodesProgress(double progress);
+    void cantSync(const QString& message);
 
 private:
     mega::MegaApi* mMegaApi;

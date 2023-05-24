@@ -170,6 +170,7 @@ Qml.RoundButton {
             source: icons.source
             color: button.enabled ? icons.color : icons.disabledColor
             sourceSize: icons.size
+            disabledOpacity: 1
         }
     }
     Component {
