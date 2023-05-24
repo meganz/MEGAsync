@@ -27,7 +27,7 @@ StackView {
     readonly property string backupsFlow: "backups"
     readonly property string finalState: "finalState"
 
-    //property alias selectedSync: finalPage.comesFromSync
+    property int lastTypeSelected: SyncsType.Types.None
 
     state: computerName
     initialItem: syncsPanel
@@ -57,7 +57,7 @@ StackView {
             name: syncs
             StateChangeScript {
                 script: {
-                    //selectedSync = true;
+                    lastTypeSelected = SyncsType.Types.Sync;
                     rightPanel.replace(syncPage);
                     if(syncsFlow.currentItem != syncsPanel) {
                         syncsFlow.replace(syncsPanel);
@@ -93,7 +93,7 @@ StackView {
             name: backupsFlow
             StateChangeScript {
                 script: {
-                    //selectedSync = false;
+                    lastTypeSelected = SyncsType.Types.Backup;
                     if(syncsFlow.currentItem != syncsPanel) {
                         syncsFlow.replace(syncsPanel);
                     }

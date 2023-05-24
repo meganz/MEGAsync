@@ -25,7 +25,7 @@ ResumePageForm {
     }
 
     preferencesButton.onClicked: {
-        Onboarding.openPreferences(comesFromSync);
+        Onboarding.openPreferences(lastTypeSelected === SyncsType.Types.Sync);
     }
 
     doneButton.onClicked: {

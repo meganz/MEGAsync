@@ -4,14 +4,16 @@ import QtQuick 2.12
 QtObject {
 
     enum Types {
-        Sync = 0,
-        Backup = 1,
-        Fuse = 2
+        None = 0,
+        Sync = 1,
+        Backup = 2,
+        Fuse = 3
     }
 
     enum SyncTypes {
-        FullSync = 0,
-        SelectiveSync = 1
+        NoSync = 0,
+        FullSync = 1,
+        SelectiveSync = 2
     }
 
     property int type: SyncsType.Types.Sync
