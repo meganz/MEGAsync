@@ -46,7 +46,7 @@ class MenuItemDelegate : public QStyledItemDelegate
 {
 public:
     explicit MenuItemDelegate(QObject *parent = nullptr);
-    ~MenuItemDelegate();
+    ~MenuItemDelegate() = default;
 
     void paint(QPainter* painter, const QStyleOptionViewItem& option,
                const QModelIndex& index) const override;
@@ -56,7 +56,7 @@ class IconMiddleDelegate : public QStyledItemDelegate
 {
 public:
     explicit IconMiddleDelegate(QObject *parent = nullptr);
-    ~IconMiddleDelegate();
+    ~IconMiddleDelegate() = default;
 
     void paint(QPainter* painter, const QStyleOptionViewItem& option,
                const QModelIndex& index) const override;
@@ -68,7 +68,8 @@ class ElideMiddleDelegate : public QStyledItemDelegate
 {
 public:
     explicit ElideMiddleDelegate(QObject *parent = nullptr);
-    ~ElideMiddleDelegate();
+    ~ElideMiddleDelegate() = default;
+
     void paint(QPainter* painter, const QStyleOptionViewItem& option,
                const QModelIndex& index) const override;
     void initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const override;

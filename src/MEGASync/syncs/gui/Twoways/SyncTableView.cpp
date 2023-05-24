@@ -140,7 +140,6 @@ void SyncTableView::showContextMenu(const QPoint &pos, const QModelIndex index)
     // Remove Sync action
     auto delAction (new MenuItemAction(tr("Remove synced folder"),
                                        QIcon(QString::fromUtf8("://images/ico_Delete.png"))));
-    delAction->setAccent(true);
     connect(delAction, &MenuItemAction::triggered, this, [this, sync]()
     {
         emit signalRemoveSync(sync);
@@ -153,69 +152,78 @@ void SyncTableView::showContextMenu(const QPoint &pos, const QModelIndex index)
     menu->addAction(showLocalAction);
     menu->addAction(showRemoteAction);
     menu->addSeparator();
-    menu->addAction(delAction);
-
-    menu->addSeparator();
 
     createStatesContextActions(menu, sync);
+    menu->addSeparator();
 
-    menu->popup(pos);
+    menu->addAction(delAction);
+
+    if(!menu->actions().isEmpty())
+    {
+        menu->popup(pos);
+    }
 }
 
 void SyncTableView::createStatesContextActions(QMenu* menu, std::shared_ptr<SyncSettings> sync)
 {
-    auto syncRun (new MenuItemAction(tr("Run"), QIcon(QString::fromUtf8("://images/ico_open_MEGA.png"))));
-    auto syncPause (new MenuItemAction(tr("Pause"), QIcon(QString::fromUtf8("://images/ico_open_MEGA.png"))));
-    auto syncSuspend (new MenuItemAction(tr("Suspend"), QIcon(QString::fromUtf8("://images/ico_open_MEGA.png"))));
-    auto syncDisable (new MenuItemAction(tr("Disable"), QIcon(QString::fromUtf8("://images/ico_open_MEGA.png"))));
+    if(sync->getSync()->getRunState() != mega::MegaSync::RUNSTATE_PENDING
+            && sync->getSync()->getRunState() != mega::MegaSync::RUNSTATE_LOADING && sync->getSync()->getRunState() != mega::MegaSync::RUNSTATE_RUNNING)
+    {
+        auto syncRun (new MenuItemAction(tr("Run"), QIcon(QString::fromUtf8("://images/ico_open_MEGA.png"))));
+        connect(syncRun, &MenuItemAction::triggered, this, [this, sync]() { emit signalRunSync(sync); });
+        syncRun->setParent(menu);
+        menu->addAction(syncRun);
+    }
+
+    if(sync->getSync()->getRunState() != mega::MegaSync::RUNSTATE_PAUSED)
+    {
+        auto syncPause (new MenuItemAction(tr("Pause"), QIcon(QString::fromUtf8("://images/ico_open_MEGA.png"))));
+        connect(syncPause, &MenuItemAction::triggered, this, [this, sync]() { emit signalPauseSync(sync); });
+        syncPause->setParent(menu);
+        menu->addAction(syncPause);
+    }
+
+    if(sync->getSync()->getRunState() != mega::MegaSync::RUNSTATE_SUSPENDED)
+    {
+        auto syncSuspend (new MenuItemAction(tr("Suspend"), QIcon(QString::fromUtf8("://images/ico_open_MEGA.png"))));
+        connect(syncSuspend, &MenuItemAction::triggered, this, [this, sync]() { emit signalSuspendSync(sync); });
+        syncSuspend->setParent(menu);
+        menu->addAction(syncSuspend);
+    }
+
+    if(sync->getSync()->getRunState() != mega::MegaSync::RUNSTATE_DISABLED)
+    {
+        auto syncDisable (new MenuItemAction(tr("Disable"), QIcon(QString::fromUtf8("://images/ico_open_MEGA.png"))));
+        connect(syncDisable, &MenuItemAction::triggered, this, [this, sync]() { emit signalDisableSync(sync); });
+        syncDisable->setParent(menu);
+        menu->addAction(syncDisable);
+    }
+
     auto openMegaignore (new MenuItemAction(tr("Edit .megaignore"), QIcon(QString::fromUtf8("://images/ico_open_MEGA.png"))));
-    auto rescanQuick (new MenuItemAction(tr("Quick Rescan"), QIcon(QString::fromUtf8("://images/ico_open_MEGA.png"))));
-    auto rescanDeep (new MenuItemAction(tr("Deep Rescan (checks file fingerprints)"), QIcon(QString::fromUtf8("://images/ico_open_MEGA.png"))));
-
-    connect(syncRun, &MenuItemAction::triggered, this, [this, sync]() { emit signalRunSync(sync); });
-    connect(syncPause, &MenuItemAction::triggered, this, [this, sync]() { emit signalPauseSync(sync); });
-    connect(syncSuspend, &MenuItemAction::triggered, this, [this, sync]() { emit signalSuspendSync(sync); });
-    connect(syncDisable, &MenuItemAction::triggered, this, [this, sync]() { emit signalDisableSync(sync); });
     connect(openMegaignore, &MenuItemAction::triggered, this, [this, sync]() { emit signalOpenMegaignore(sync); });
-    connect(rescanQuick, &MenuItemAction::triggered, this, [this, sync]() { emit signalRescanQuick(sync); });
-    connect(rescanDeep, &MenuItemAction::triggered, this, [this, sync]() { emit signalRescanDeep(sync); });
-
-    syncRun->setEnabled(sync->getSync()->getRunState() !=  mega::MegaSync::RUNSTATE_RUNNING);
-    syncPause->setEnabled(sync->getSync()->getRunState() !=  mega::MegaSync::RUNSTATE_PAUSED);
-    syncSuspend->setEnabled(sync->getSync()->getRunState() !=  mega::MegaSync::RUNSTATE_SUSPENDED);
-    syncDisable->setEnabled(sync->getSync()->getRunState() !=  mega::MegaSync::RUNSTATE_DISABLED);
-
-    rescanQuick->setEnabled(sync->getSync()->getRunState() ==  mega::MegaSync::RUNSTATE_RUNNING);
-    rescanDeep->setEnabled(sync->getSync()->getRunState() ==  mega::MegaSync::RUNSTATE_RUNNING);
-
-    syncRun->setParent(menu);
-    syncPause->setParent(menu);
-    syncSuspend->setParent(menu);
-    syncDisable->setParent(menu);
     openMegaignore->setParent(menu);
-    rescanQuick->setParent(menu);
-    rescanDeep->setParent(menu);
-
-    menu->addAction(syncRun);
-    menu->addAction(syncPause);
-    menu->addAction(syncSuspend);
-    menu->addAction(syncDisable);
-
     menu->addSeparator();
     menu->addAction(openMegaignore);
-    menu->addSeparator();
-    menu->addAction(rescanQuick);
-    menu->addAction(rescanDeep);
+
+    if(sync->getSync()->getRunState() == mega::MegaSync::RUNSTATE_RUNNING)
+    {
+        auto rescanQuick (new MenuItemAction(tr("Quick Rescan"), QIcon(QString::fromUtf8("://images/ico_open_MEGA.png"))));
+        connect(rescanQuick, &MenuItemAction::triggered, this, [this, sync]() { emit signalRescanQuick(sync); });
+        rescanQuick->setParent(menu);
+
+        auto rescanDeep (new MenuItemAction(tr("Deep Rescan (checks file fingerprints)"), QIcon(QString::fromUtf8("://images/ico_open_MEGA.png"))));
+        connect(rescanDeep, &MenuItemAction::triggered, this, [this, sync]() { emit signalRescanDeep(sync); });
+        rescanDeep->setParent(menu);
+
+        menu->addSeparator();
+        menu->addAction(rescanQuick);
+        menu->addAction(rescanDeep);
+    }
 }
 
 MenuItemDelegate::MenuItemDelegate(QObject *parent) : QStyledItemDelegate(parent)
 {
 }
-
-MenuItemDelegate::~MenuItemDelegate()
-{
-}
-
 
 void MenuItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
@@ -231,10 +239,6 @@ void MenuItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
 
 IconMiddleDelegate::IconMiddleDelegate(QObject* parent) :
     QStyledItemDelegate(parent)
-{
-}
-
-IconMiddleDelegate::~IconMiddleDelegate()
 {
 }
 
@@ -284,11 +288,6 @@ void IconMiddleDelegate::initStyleOption(QStyleOptionViewItem *option, const QMo
 
 ElideMiddleDelegate::ElideMiddleDelegate(QObject *parent) :
     QStyledItemDelegate(parent)
-{
-
-}
-
-ElideMiddleDelegate::~ElideMiddleDelegate()
 {
 
 }
