@@ -20,6 +20,10 @@ protected:
     void showEvent(QShowEvent *event) override;
     virtual void initTable();
     void createStatesContextActions(QMenu* menu, std::shared_ptr<SyncSettings> sync);
+    virtual void removeActionClicked(std::shared_ptr<SyncSettings> settings);
+    void showContextMenu(const QPoint &pos, const QModelIndex index);
+
+    const char* mContextMenuName;
 
 signals:
     void signalRemoveSync(std::shared_ptr<SyncSettings> sync);
@@ -36,8 +40,6 @@ private slots:
     virtual void onCellClicked(const QModelIndex &index);
 
 private:
-    void showContextMenu(const QPoint &pos, const QModelIndex index);
-
     SyncController mSyncController;
     bool mIsFirstTime;
 };

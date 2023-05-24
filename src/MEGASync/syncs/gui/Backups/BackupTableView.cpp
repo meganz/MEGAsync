@@ -11,6 +11,7 @@
 BackupTableView::BackupTableView(QWidget *parent)
     : SyncTableView(parent)
 {
+    mContextMenuName = "BackupContextMenu";
 }
 
 void BackupTableView::initTable()
@@ -64,50 +65,7 @@ void BackupTableView::onCellClicked(const QModelIndex &index)
     }
 }
 
-void BackupTableView::showContextMenu(const QPoint &pos, const QModelIndex index)
+void BackupTableView::removeActionClicked(std::shared_ptr<SyncSettings> settings)
 {
-    auto sync = index.data(Qt::UserRole).value<std::shared_ptr<SyncSettings>>();
-
-    QMenu *menu(new QMenu(this));
-    Platform::getInstance()->initMenu(menu, "BackupContextMenu");
-    menu->setAttribute(Qt::WA_DeleteOnClose);
-
-    // Show in system file explorer action
-    auto openLocalAction (new MenuItemAction(PlatformStrings::fileExplorer(),
-                                             QIcon(QString::fromUtf8("://images/show_in_folder_ico.png"))));
-    connect(openLocalAction, &MenuItemAction::triggered, this, [sync]()
-    {
-        Utilities::openUrl(QUrl::fromLocalFile(sync->getLocalFolder()));
-    });
-
-    // Show in MEGA Web App action
-    auto openRemoteAction (new MenuItemAction(tr("Open in MEGA"),
-                                              QIcon(QString::fromUtf8("://images/ico_open_MEGA.png"))));
-    connect(openRemoteAction, &MenuItemAction::triggered, this, [this, sync]()
-    {
-        emit openInMEGA(sync->getMegaHandle());
-    });
-
-    // Remove Backup action
-    auto removeAction (new MenuItemAction(tr("Remove backup"),
-                                       QIcon(QString::fromUtf8("://images/ico_Delete.png"))));
-    removeAction->setAccent(true);
-    connect(removeAction, &MenuItemAction::triggered, this, [this, sync]()
-    {
-        emit removeBackup(sync);
-    });
-
-    openLocalAction->setParent(menu);
-    openRemoteAction->setParent(menu);
-    removeAction->setParent(menu);
-
-    menu->addAction(openLocalAction);
-    menu->addAction(openRemoteAction);
-    menu->addSeparator();
-    menu->addAction(removeAction);
-
-    menu->addSeparator();
-    createStatesContextActions(menu, sync);
-
-    menu->popup(pos);
+    emit removeBackup(settings);
 }

@@ -21,13 +21,11 @@ signals:
 
 protected:
     void initTable() override;
+    void removeActionClicked(std::shared_ptr<SyncSettings> settings) override;
 
 private slots:
     void onCustomContextMenuRequested(const QPoint& pos) override;
     void onCellClicked(const QModelIndex &index) override;
-
-private:
-    void showContextMenu(const QPoint &pos, const QModelIndex index);
 };
 
 #endif // BACKUPTABLEVIEW_H

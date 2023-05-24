@@ -11,7 +11,8 @@
 SyncTableView::SyncTableView(QWidget *parent)
     : QTableView(parent),
     mSyncController(this),
-    mIsFirstTime(true)
+    mIsFirstTime(true),
+    mContextMenuName("SyncContextMenu")
 {
     setIconSize(QSize(24, 24));
 
@@ -116,7 +117,7 @@ void SyncTableView::onCellClicked(const QModelIndex &index)
 void SyncTableView::showContextMenu(const QPoint &pos, const QModelIndex index)
 {
     QMenu *menu(new QMenu(this));
-    Platform::getInstance()->initMenu(menu, "SyncContextMenu");
+    Platform::getInstance()->initMenu(menu, mContextMenuName);
     menu->setAttribute(Qt::WA_DeleteOnClose);
 
     auto sync = index.data(Qt::UserRole).value<std::shared_ptr<SyncSettings>>();
@@ -142,7 +143,7 @@ void SyncTableView::showContextMenu(const QPoint &pos, const QModelIndex index)
                                        QIcon(QString::fromUtf8("://images/ico_Delete.png"))));
     connect(delAction, &MenuItemAction::triggered, this, [this, sync]()
     {
-        emit signalRemoveSync(sync);
+        removeActionClicked(sync);
     });
 
     showLocalAction->setParent(menu);
@@ -162,6 +163,11 @@ void SyncTableView::showContextMenu(const QPoint &pos, const QModelIndex index)
     {
         menu->popup(pos);
     }
+}
+
+void SyncTableView::removeActionClicked(std::shared_ptr<SyncSettings> settings)
+{
+    emit signalRemoveSync(settings);
 }
 
 void SyncTableView::createStatesContextActions(QMenu* menu, std::shared_ptr<SyncSettings> sync)
