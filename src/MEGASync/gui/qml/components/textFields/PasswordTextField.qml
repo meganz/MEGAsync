@@ -59,7 +59,7 @@ Custom.TextField {
         rightIcon.visible = (text.length > 0);
         error = false;
 
-        if(!(text.length > 0)) {
+        if(!(text.length > 0) || !showHint) {
             return;
         }
         else

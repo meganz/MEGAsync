@@ -72,7 +72,7 @@ Rectangle {
         width: buttonWidth
         height: folderField.textField.height
         anchors.right: parent.right
-        y: folderField.y + 18
+        anchors.bottom: parent.bottom
         text: OnboardingStrings.change
         onClicked: {
             var folderChooser = local ? localFolderChooser : remoteFolderChooser;
