@@ -261,8 +261,6 @@ private:
     QStringList mSyncNames;
     bool mHasDefaultUploadOption;
     bool mHasDefaultDownloadOption;
-    std::unique_ptr<SyncTableViewTooltips> mSyncTableEventFilter;
-    std::unique_ptr<BackupTableViewTooltips> mBackupTableEventFilter;
     QFutureWatcher<bool> mOpenUrlWatcher;
 };
 #endif // SETTINGSDIALOG_H

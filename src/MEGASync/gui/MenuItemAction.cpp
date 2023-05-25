@@ -22,17 +22,16 @@ MenuItemAction::MenuItemAction(const QString& title, const QString& icon,
     mContainer->setObjectName(QLatin1String("wContainer"));
     mContainer->installEventFilter(this);
 
-    QSize iconSize;
+    QSize iconSize(24,24);
 
-    QImageReader reader(icon);
-    if(reader.canRead())
+    if(!icon.isEmpty())
     {
-        iconSize = reader.size();
-        mIcon = QIcon(icon);
-    }
-    else
-    {
-        iconSize = QSize(24,24);
+        QImageReader reader(icon);
+        if(reader.canRead())
+        {
+            iconSize = reader.size();
+            mIcon = QIcon(icon);
+        }
     }
 
     setupActionWidget(iconSize);

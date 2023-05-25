@@ -59,6 +59,8 @@ public:
 
 class IconMiddleDelegate : public QStyledItemDelegate
 {
+    static const int ICON_WIDTH;
+
 public:
     explicit IconMiddleDelegate(QObject *parent = nullptr);
     ~IconMiddleDelegate() = default;
@@ -67,6 +69,7 @@ public:
                const QModelIndex& index) const override;
     void initStyleOption(QStyleOptionViewItem *option,
                                 const QModelIndex &index) const override;
+    bool helpEvent(QHelpEvent *event, QAbstractItemView *view, const QStyleOptionViewItem &option, const QModelIndex &index);
 };
 
 class ElideMiddleDelegate : public QStyledItemDelegate

@@ -6,6 +6,7 @@
 
 #include <QHeaderView>
 #include <QMenu>
+#include <QTooltip>
 #include <QtConcurrent/QtConcurrent>
 
 SyncTableView::SyncTableView(QWidget *parent)
@@ -247,6 +248,8 @@ void MenuItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     QStyledItemDelegate::paint(painter, opt, index);
 }
 
+const int IconMiddleDelegate::ICON_WIDTH = 60;
+
 IconMiddleDelegate::IconMiddleDelegate(QObject* parent) :
     QStyledItemDelegate(parent)
 {
@@ -259,7 +262,7 @@ void IconMiddleDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
     opt.decorationAlignment = Qt::AlignVCenter | Qt::AlignHCenter;
     opt.decorationPosition = QStyleOptionViewItem::Top;
     QRect rect = option.rect;
-    rect.setRight(60);
+    rect.setRight(ICON_WIDTH);
     QIcon icon = index.data(Qt::DecorationRole).value<QIcon>();
 
     QIcon::Mode iconMode = QIcon::Normal;
@@ -270,7 +273,7 @@ void IconMiddleDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
     icon.paint(painter, rect, Qt::AlignVCenter | Qt::AlignHCenter, iconMode);
     QString text = index.data(Qt::DisplayRole).toString();
     QRect textRect = option.rect;
-    textRect.setLeft(60);
+    textRect.setLeft(ICON_WIDTH);
     QTextOption textOption;
     textOption.setAlignment(Qt::AlignVCenter);
 
@@ -294,6 +297,23 @@ void IconMiddleDelegate::initStyleOption(QStyleOptionViewItem *option, const QMo
     QStyledItemDelegate::initStyleOption(option, index);
     option->icon = QIcon();
     option->text = QString();
+}
+
+bool IconMiddleDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view, const QStyleOptionViewItem &option, const QModelIndex &index)
+{
+    auto sync = index.data(Qt::UserRole).value<std::shared_ptr<SyncSettings>>();
+    if(sync->getError())
+    {
+        QRect rect = option.rect;
+        rect.setRight(ICON_WIDTH);
+        if(rect.contains(event->pos()))
+        {
+           QToolTip::showText(event->globalPos(), index.data(SyncItemModel::ErrorTooltipRole).toString());
+           return true;
+        }
+    }
+
+    return QStyledItemDelegate::helpEvent(event, view, option,index);
 }
 
 ElideMiddleDelegate::ElideMiddleDelegate(QObject *parent) :

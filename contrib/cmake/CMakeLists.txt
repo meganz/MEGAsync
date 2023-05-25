@@ -375,11 +375,9 @@ set (MOC_INPUT
     ${MEGAsyncDir}/syncs/gui/SyncTooltipCreator.h
     ${MEGAsyncDir}/syncs/gui/SyncsMenu.h
     ${MEGAsyncDir}/syncs/gui/Twoways/SyncTableView.h
-    ${MEGAsyncDir}/syncs/gui/Twoways/SyncTableViewTooltips.h
     ${MEGAsyncDir}/syncs/gui/Twoways/BindFolderDialog.h
     ${MEGAsyncDir}/syncs/gui/Twoways/FolderBinder.h
     ${MEGAsyncDir}/syncs/gui/Backups/BackupTableView.h
-    ${MEGAsyncDir}/syncs/gui/Backups/BackupTableViewTooltips.h
     ${MEGAsyncDir}/syncs/gui/Backups/AddBackupDialog.h
     ${MEGAsyncDir}/syncs/gui/Backups/RemoveBackupDialog.h
     ${MEGAsyncDir}/syncs/gui/Backups/BackupsWizard.h
@@ -696,11 +694,9 @@ set (SRCS
     ${MEGAsyncDir}/syncs/gui/SyncTooltipCreator.cpp
     ${MEGAsyncDir}/syncs/gui/SyncsMenu.cpp
     ${MEGAsyncDir}/syncs/gui/Twoways/SyncTableView.cpp
-    ${MEGAsyncDir}/syncs/gui/Twoways/SyncTableViewTooltips.cpp
     ${MEGAsyncDir}/syncs/gui/Twoways/BindFolderDialog.cpp
     ${MEGAsyncDir}/syncs/gui/Twoways/FolderBinder.cpp
     ${MEGAsyncDir}/syncs/gui/Backups/BackupTableView.cpp
-    ${MEGAsyncDir}/syncs/gui/Backups/BackupTableViewTooltips.cpp
     ${MEGAsyncDir}/syncs/gui/Backups/AddBackupDialog.cpp
     ${MEGAsyncDir}/syncs/gui/Backups/RemoveBackupDialog.cpp
     ${MEGAsyncDir}/syncs/gui/Backups/BackupsWizard.cpp

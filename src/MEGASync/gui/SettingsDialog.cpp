@@ -106,8 +106,6 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     mRemoteCacheSize (-1),
     mDebugCounter (0)
 {
-    mSyncTableEventFilter = std::unique_ptr<SyncTableViewTooltips>(new SyncTableViewTooltips());
-    mBackupTableEventFilter = std::unique_ptr<BackupTableViewTooltips>(new BackupTableViewTooltips());
     mUi->setupUi(this);
 
     mUi->bOpenBackupFolder->setEnabled(false);
@@ -256,9 +254,6 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     connect(mApp, &MegaApplication::shellNotificationsProcessed,
             this, &SettingsDialog::onShellNotificationsProcessed);
     mUi->cOverlayIcons->setEnabled(!mApp->isShellNotificationProcessingOngoing());
-
-    mUi->syncTableView->installEventFilter(mSyncTableEventFilter.get());
-    mUi->backupTableView->installEventFilter(mBackupTableEventFilter.get());
 }
 
 SettingsDialog::~SettingsDialog()
@@ -1534,7 +1529,6 @@ void SettingsDialog::loadSyncSettings()
     SyncItemSortModel *sortModel = new SyncItemSortModel(mUi->syncTableView);
     sortModel->setSourceModel(model);
     mUi->syncTableView->setModel(sortModel);
-    mSyncTableEventFilter->setSourceModel(model);
 }
 
 void SettingsDialog::addSyncFolder(MegaHandle megaFolderHandle)
@@ -1799,7 +1793,6 @@ void SettingsDialog::loadBackupSettings()
     SyncItemSortModel *sortModel = new SyncItemSortModel(mUi->syncTableView);
     sortModel->setSourceModel(model);
     mUi->backupTableView->setModel(sortModel);
-    mBackupTableEventFilter->setSourceModel(model);
 }
 
 void SettingsDialog::on_bBackup_clicked()
