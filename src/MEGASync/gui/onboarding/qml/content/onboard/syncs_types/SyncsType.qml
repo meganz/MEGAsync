@@ -6,8 +6,7 @@ QtObject {
     enum Types {
         None = 0,
         Sync = 1,
-        Backup = 2,
-        Fuse = 3
+        Backup = 2
     }
 
     enum SyncTypes {

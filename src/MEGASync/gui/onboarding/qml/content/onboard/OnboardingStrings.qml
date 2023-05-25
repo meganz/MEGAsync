@@ -49,8 +49,6 @@ QtObject {
     readonly property var fullSyncTitle: qsTr("Full Sync")
     readonly property var fullSyncDescription: qsTr("Your entire Cloud Drive will be synchronized with a local folder")
     readonly property var forgotPassword: qsTr("Forgot password?")
-    readonly property var fuse: qsTr("Fuse")
-    readonly property var fuseButtonDescription: qsTr("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.")
     readonly property var installationType: qsTr("Installation type")
     readonly property var installationTypeDescription: qsTr("Choose a installation type")
     readonly property var installationTypeTitle: qsTr("Choose how you want to use MEGA")

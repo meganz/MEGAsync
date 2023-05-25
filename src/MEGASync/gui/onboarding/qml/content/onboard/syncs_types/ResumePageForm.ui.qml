@@ -85,17 +85,6 @@ Rectangle {
                     type: SyncsType.Backup
                     checkable: false
                 }
-
-                SyncsVerticalButton {
-                    id: fuseButton
-
-                    title: OnboardingStrings.fuse
-                    description: OnboardingStrings.fuseButtonDescription
-                    imageSource: Images.fuse
-                    ButtonGroup.group: buttonGroup
-                    type: SyncsType.Fuse
-                    checkable: false
-                }
             }
         }
 

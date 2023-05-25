@@ -14,7 +14,6 @@ InstallationTypePageForm {
                 case SyncsType.Backup:
                     syncsFlow.state = backupsFlow;
                     break;
-                case SyncsType.Fuse:
                 default:
                     console.error("Button type does not exist -> "
                                   + buttonGroup.checkedButton.type);

@@ -56,16 +56,6 @@ SyncsPage {
                 type: SyncsType.Backup
                 ButtonGroup.group: buttonGroup
             }
-
-            SyncsHorizontalButton {
-                id: fuseButton
-
-                title: OnboardingStrings.fuse
-                description: OnboardingStrings.fuseButtonDescription
-                imageSource: Images.fuse
-                type: SyncsType.Fuse
-                ButtonGroup.group: buttonGroup
-            }
         }
     }
 

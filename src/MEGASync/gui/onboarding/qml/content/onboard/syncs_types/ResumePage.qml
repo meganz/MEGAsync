@@ -16,8 +16,6 @@ ResumePageForm {
             case SyncsType.Backup:
                 syncsFlow.state = backupsFlow;
                 break;
-            case SyncsType.Fuse:
-                break;
             default:
                 console.error("Button type does not exist -> " + button.type);
                 break;
