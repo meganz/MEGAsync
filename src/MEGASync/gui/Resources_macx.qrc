@@ -1163,5 +1163,35 @@
         <file>images/icons/folder/small-folder-outgoing-disabled.png</file>
         <file>images/icons/folder/small-folder-outgoing-disabled@2x.png</file>
         <file>images/icons/folder/small-folder-outgoing-disabled@3x.png</file>
+        <file>images/sync_context_menu/edit-small.png</file>
+        <file>images/sync_context_menu/edit-small@2x.png</file>
+        <file>images/sync_context_menu/edit-small@3x.png</file>
+        <file>images/sync_context_menu/folder-small.png</file>
+        <file>images/sync_context_menu/folder-small@2x.png</file>
+        <file>images/sync_context_menu/folder-small@3x.png</file>
+        <file>images/sync_context_menu/hand-small.png</file>
+        <file>images/sync_context_menu/hand-small@2x.png</file>
+        <file>images/sync_context_menu/hand-small@3x.png</file>
+        <file>images/sync_context_menu/MEGA-small.png</file>
+        <file>images/sync_context_menu/MEGA-small@2x.png</file>
+        <file>images/sync_context_menu/MEGA-small@3x.png</file>
+        <file>images/sync_context_menu/minus-circle.png</file>
+        <file>images/sync_context_menu/minus-circle@2x.png</file>
+        <file>images/sync_context_menu/minus-circle@3x.png</file>
+        <file>images/sync_context_menu/pause-circle.png</file>
+        <file>images/sync_context_menu/pause-circle@2x.png</file>
+        <file>images/sync_context_menu/pause-circle@3x.png</file>
+        <file>images/sync_context_menu/play-circle.png</file>
+        <file>images/sync_context_menu/play-circle@2x.png</file>
+        <file>images/sync_context_menu/play-circle@3x.png</file>
+        <file>images/sync_context_menu/search-dark-small.png</file>
+        <file>images/sync_context_menu/search-dark-small@2x.png</file>
+        <file>images/sync_context_menu/search-dark-small@3x.png</file>
+        <file>images/sync_context_menu/search-small.png</file>
+        <file>images/sync_context_menu/search-small@2x.png</file>
+        <file>images/sync_context_menu/search-small@3x.png</file>
+        <file>images/sync_context_menu/x-circle.png</file>
+        <file>images/sync_context_menu/x-circle@2x.png</file>
+        <file>images/sync_context_menu/x-circle@3x.png</file>
     </qresource>
 </RCC>

@@ -23,13 +23,11 @@ SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type, QObject *parent) : QObject(p
     mMyBackupsHandleRequest (nullptr),
     mType (type),
     mMenu (new QMenu()),
-    mAddAction (new MenuItemAction(QString(), QIcon(), true)),
-    mMenuAction (new MenuItemAction(QString(), QIcon(), true)),
+    mAddAction (new MenuItemAction(QString(), QString(), nullptr)),
+    mMenuAction (new MenuItemAction(QString(), QString(), nullptr)),
     mLastHovered (nullptr),
     mDevNameAction (nullptr)
 {
-    QString textAdd;
-    QString textMenu;
     QIcon iconMenu;
 
     switch (mType)
@@ -53,11 +51,13 @@ SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type, QObject *parent) : QObject(p
             break;
         }
     }
+    mAddAction->setManagesHoverStates(true);
     mAddAction->setLabelText(getAddText());
     mAddAction->setParent(this);
     connect(mAddAction.get(), &MenuItemAction::triggered,
             this, &SyncsMenu::onAddSync);
 
+    mMenuAction->setManagesHoverStates(true);
     mMenuAction->setLabelText(getMenuText());
     mMenuAction->setIcon(iconMenu);
     mMenuAction->setParent(this);
@@ -117,8 +117,9 @@ void SyncsMenu::refresh()
                 activeFolders++;
                 MenuItemAction* action =
                         new MenuItemAction(SyncController::getSyncNameFromPath(backupSetting->getLocalFolder(true)),
-                                           QIcon(QLatin1String("://images/icons/folder/folder-mono_24.png")),
-                                           true, itemIndent);
+                                           QLatin1String("://images/icons/folder/folder-mono_24.png"), nullptr);
+                action->setManagesHoverStates(true);
+                action->setTreeDepth(itemIndent);
                 action->setToolTip(createSyncTooltipText(backupSetting));
                 connect(action, &MenuItemAction::triggered,
                         this, [backupSetting](){
@@ -175,7 +176,8 @@ void SyncsMenu::refresh()
             if (!mDevNameAction)
             {
                 // Display device name before folders
-                mDevNameAction.reset(new MenuItemAction(QString(), QIcon(DEVICE_ICON), true));
+                mDevNameAction.reset(new MenuItemAction(QString(), DEVICE_ICON, nullptr));
+                mDevNameAction->setManagesHoverStates(true);
                 // Insert the action in the menu to make sure it is here when the
                 // set device name slot is called.
                 mMenu->insertAction(firstBackup, mDevNameAction.get());

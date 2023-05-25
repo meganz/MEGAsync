@@ -21,6 +21,9 @@ signals:
 
 protected:
     void initTable() override;
+
+    //Reimplemented methods for contextMenu
+    QString getRemoveActionString() override;
     void removeActionClicked(std::shared_ptr<SyncSettings> settings) override;
 
 private slots:

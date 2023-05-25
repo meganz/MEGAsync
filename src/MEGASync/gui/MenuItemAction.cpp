@@ -1,55 +1,42 @@
 #include "MenuItemAction.h"
 #include <QKeyEvent>
 #include <QStyle>
+#include <QImageReader>
 
 const QString MenuItemAction::Colors::Normal = QLatin1String("#777777");
 const QString MenuItemAction::Colors::Highlight = QLatin1String("#000000");
 const QString MenuItemAction::Colors::Accent = QLatin1String("#F46265");
 static constexpr int ENTRY_MAX_WIDTH_PX = 240;
 
-MenuItemAction::MenuItemAction(const QString& title, const QString& value,
-                               const QIcon& icon, const QIcon& hoverIcon, bool manageHoverStates,
-                               int treeDepth, const QSize& iconSize, QObject* parent)
+MenuItemAction::MenuItemAction(const QString& title, const QString& icon,
+               QObject *parent)
     : QWidgetAction (parent),
       mAccent(false),
       mContainer (new QWidget()),
-      mIcon (icon),
-      mHoverIcon (hoverIcon),
       mTitle (new QLabel(mContainer)),
-      mValue (value.isNull() ? nullptr : new QLabel(value, mContainer)),
-      mTreeDepth (treeDepth),
-      mIconButton (new QPushButton(mContainer))
+      mValue(nullptr),
+      mIconButton (new QPushButton(mContainer)),
+      mActionLayout(nullptr)
 {
     setLabelText(title);
     mContainer->setObjectName(QLatin1String("wContainer"));
     mContainer->installEventFilter(this);
 
-    if (manageHoverStates)
+    QSize iconSize;
+
+    QImageReader reader(icon);
+    if(reader.canRead())
     {
-        mContainer->setAttribute(Qt::WA_TransparentForMouseEvents);
+        iconSize = reader.size();
+        mIcon = QIcon(icon);
+    }
+    else
+    {
+        iconSize = QSize(24,24);
     }
 
     setupActionWidget(iconSize);
     setDefaultWidget(mContainer);
-}
-
-MenuItemAction::MenuItemAction(const QString& title, const QIcon& icon,
-                               bool manageHoverStates, int treeDepth, const QSize& iconSize, QObject *parent)
-    : MenuItemAction (title, QString(), icon, QIcon(), manageHoverStates, treeDepth, iconSize, parent)
-{
-}
-
-MenuItemAction::MenuItemAction(const QString& title, const QString& value, const QIcon& icon,
-                               bool manageHoverStates, int treeDepth, const QSize& iconSize, QObject *parent)
-    : MenuItemAction (title, value, icon,  QIcon(), manageHoverStates, treeDepth, iconSize, parent)
-{
-}
-
-MenuItemAction::MenuItemAction(const QString& title, const QIcon& icon,
-               QObject *parent)
-    : MenuItemAction (title, QString(), icon,  QIcon(), false, 0, QSize(24, 24), parent)
-{
-
 }
 
 void MenuItemAction::setIcon(const QIcon& icon)
@@ -87,6 +74,19 @@ MenuItemAction::~MenuItemAction()
     mContainer->deleteLater();
 }
 
+void MenuItemAction::setManagesHoverStates(bool managesHoverStates)
+{
+    if (managesHoverStates)
+    {
+        mContainer->setAttribute(Qt::WA_TransparentForMouseEvents);
+    }
+}
+
+void MenuItemAction::setTreeDepth(int treeDepth)
+{
+    mActionLayout->setContentsMargins(QMargins(16 + treeDepth * 20, 0, 16, 0));
+}
+
 void MenuItemAction::setLabelText(const QString& title)
 {
     setObjectName(title);
@@ -111,26 +111,25 @@ void MenuItemAction::setupActionWidget(const QSize& iconSize)
 
     mIconButton->setAttribute(Qt::WA_TransparentForMouseEvents, true);
     mIconButton->setText(QString());
-    mIconButton->setMinimumSize(iconSize);
-    mIconButton->setMaximumSize(iconSize);
+    mIconButton->setFixedSize(iconSize);
     mIconButton->setIconSize(iconSize);
     mIconButton->setIcon(mIcon);
 
     mTitle->setStyleSheet(QString::fromLatin1("color: %1;").arg(getColor()));
 
-    auto layout = new QHBoxLayout();
-    layout->setContentsMargins(QMargins(16 + mTreeDepth * 20, 0, 16, 0));
-    layout->setSpacing(12);
-    layout->addWidget(mIconButton);
-    layout->addWidget(mTitle);
+    mActionLayout = new QHBoxLayout();
+    mActionLayout->setContentsMargins(QMargins(16, 0, 16, 0));
+    mActionLayout->setSpacing(12);
+    mActionLayout->addWidget(mIconButton, 0, Qt::AlignVCenter);
+    mActionLayout->addWidget(mTitle, 0, Qt::AlignVCenter);
 
     if (mValue)
     {
-        layout->addItem(new QSpacerItem(10, 10, QSizePolicy::Expanding, QSizePolicy::Expanding));
+        mActionLayout->addItem(new QSpacerItem(10, 10, QSizePolicy::Expanding, QSizePolicy::Expanding));
         mValue->setStyleSheet(QString::fromLatin1("color: %1;").arg(getColor()));
-        layout->addWidget(mValue);
+        mActionLayout->addWidget(mValue);
     }
-    mContainer->setLayout(layout);
+    mContainer->setLayout(mActionLayout);
 }
 
 bool MenuItemAction::eventFilter(QObject *obj, QEvent *event)

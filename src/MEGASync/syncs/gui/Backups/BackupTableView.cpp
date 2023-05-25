@@ -43,6 +43,11 @@ void BackupTableView::initTable()
     horizontalHeader()->setSortIndicator(SyncItemModel::Column::LNAME, Qt::AscendingOrder);
 }
 
+QString BackupTableView::getRemoveActionString()
+{
+    return tr("Stop backup");
+}
+
 void BackupTableView::onCustomContextMenuRequested(const QPoint &pos)
 {
     QModelIndex index = indexAt(pos);

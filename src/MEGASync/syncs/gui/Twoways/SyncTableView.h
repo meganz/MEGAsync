@@ -20,8 +20,11 @@ protected:
     void showEvent(QShowEvent *event) override;
     virtual void initTable();
     void createStatesContextActions(QMenu* menu, std::shared_ptr<SyncSettings> sync);
-    virtual void removeActionClicked(std::shared_ptr<SyncSettings> settings);
     void showContextMenu(const QPoint &pos, const QModelIndex index);
+
+    //Reimplemented methods for context menu
+    virtual QString getRemoveActionString();
+    virtual void removeActionClicked(std::shared_ptr<SyncSettings> settings);
 
     const char* mContextMenuName;
 

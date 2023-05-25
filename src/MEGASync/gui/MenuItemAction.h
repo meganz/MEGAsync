@@ -9,16 +9,8 @@
 class MenuItemAction : public QWidgetAction
 {
 public:
-    MenuItemAction(const QString& title, const QString& value,
-                   const QIcon& icon, const QIcon& hoverIcon, bool manageHoverStates = false,
-                   int treeDepth = 0, const QSize& iconSize = QSize(24, 24), QObject *parent = nullptr);
-    MenuItemAction(const QString& title, const QIcon& icon, bool manageHoverStates = false,
-                   int treeDepth = 0, const QSize& iconSize = QSize(24, 24), QObject* parent = nullptr);
-    MenuItemAction(const QString& title, const QString& value, const QIcon& icon,
-                   bool manageHoverStates = false, int treeDepth = 0,
-                   const QSize& iconSize = QSize(24, 24), QObject *parent = nullptr);
-    MenuItemAction(const QString& title, const QIcon& icon,
-                   QObject *parent);
+    MenuItemAction(const QString& title, const QString& icon,
+                   QObject *parent = nullptr);
 
     void setLabelText(const QString& title);
     void setIcon(const QIcon& icon);
@@ -29,6 +21,10 @@ public:
 
     ~MenuItemAction();
 
+    void setManagesHoverStates(bool managesHoverStates);
+
+    void setTreeDepth(int treeDepth);
+
 private:
     struct Colors {static const QString Normal; static const QString Highlight; static const QString Accent;};
     bool mAccent; /* accent items will have red label text */
@@ -37,8 +33,8 @@ private:
     QIcon mHoverIcon;
     QLabel* mTitle;
     QLabel* mValue;
-    int mTreeDepth;
     QPushButton* mIconButton;
+    QHBoxLayout* mActionLayout;
 
     void setupActionWidget(const QSize& iconSize);
 
