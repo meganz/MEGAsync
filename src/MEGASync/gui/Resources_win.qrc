@@ -1424,29 +1424,32 @@
         <file>images/sync_context_menu/folder-small.png</file>
         <file>images/sync_context_menu/folder-small@2x.png</file>
         <file>images/sync_context_menu/folder-small@3x.png</file>
-        <file>images/sync_context_menu/hand-small.png</file>
-        <file>images/sync_context_menu/hand-small@2x.png</file>
-        <file>images/sync_context_menu/hand-small@3x.png</file>
         <file>images/sync_context_menu/MEGA-small.png</file>
         <file>images/sync_context_menu/MEGA-small@2x.png</file>
         <file>images/sync_context_menu/MEGA-small@3x.png</file>
         <file>images/sync_context_menu/minus-circle.png</file>
         <file>images/sync_context_menu/minus-circle@2x.png</file>
         <file>images/sync_context_menu/minus-circle@3x.png</file>
-        <file>images/sync_context_menu/pause-circle.png</file>
-        <file>images/sync_context_menu/pause-circle@2x.png</file>
-        <file>images/sync_context_menu/pause-circle@3x.png</file>
-        <file>images/sync_context_menu/play-circle.png</file>
-        <file>images/sync_context_menu/play-circle@2x.png</file>
-        <file>images/sync_context_menu/play-circle@3x.png</file>
         <file>images/sync_context_menu/search-dark-small.png</file>
         <file>images/sync_context_menu/search-dark-small@2x.png</file>
         <file>images/sync_context_menu/search-dark-small@3x.png</file>
         <file>images/sync_context_menu/search-small.png</file>
         <file>images/sync_context_menu/search-small@2x.png</file>
         <file>images/sync_context_menu/search-small@3x.png</file>
-        <file>images/sync_context_menu/x-circle.png</file>
-        <file>images/sync_context_menu/x-circle@2x.png</file>
-        <file>images/sync_context_menu/x-circle@3x.png</file>
+        <file>images/backup_ico_black_default@3x.png</file>
+        <file>images/backup_ico_black_default@2x.png</file>
+        <file>images/backup_ico_black_default.png</file>
+        <file>images/sync_states/hand-small.png</file>
+        <file>images/sync_states/hand-small@2x.png</file>
+        <file>images/sync_states/hand-small@3x.png</file>
+        <file>images/sync_states/pause-circle.png</file>
+        <file>images/sync_states/pause-circle@2x.png</file>
+        <file>images/sync_states/pause-circle@3x.png</file>
+        <file>images/sync_states/play-circle.png</file>
+        <file>images/sync_states/play-circle@2x.png</file>
+        <file>images/sync_states/play-circle@3x.png</file>
+        <file>images/sync_states/x-circle.png</file>
+        <file>images/sync_states/x-circle@2x.png</file>
+        <file>images/sync_states/x-circle@3x.png</file>
     </qresource>
 </RCC>

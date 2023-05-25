@@ -177,25 +177,25 @@ void SyncTableView::removeActionClicked(std::shared_ptr<SyncSettings> settings)
 
 void SyncTableView::createStatesContextActions(QMenu* menu, std::shared_ptr<SyncSettings> sync)
 {
-    if(sync->getSync()->getRunState() != mega::MegaSync::RUNSTATE_PAUSED)
-    {
-        auto syncPause (new MenuItemAction(tr("Pause"), QLatin1String("://images/sync_context_menu/pause-circle.png")));
-        connect(syncPause, &MenuItemAction::triggered, this, [this, sync]() { emit signalPauseSync(sync); });
-        syncPause->setParent(menu);
-        menu->addAction(syncPause);
-    }
-
     if(sync->getSync()->getRunState() != mega::MegaSync::RUNSTATE_RUNNING)
     {
-        auto syncRun (new MenuItemAction(tr("Run"), QLatin1String("://images/sync_context_menu/play-circle.png")));
+        auto syncRun (new MenuItemAction(tr("Run"), QLatin1String("://images/sync_states/play-circle.png")));
         connect(syncRun, &MenuItemAction::triggered, this, [this, sync]() { emit signalRunSync(sync); });
         syncRun->setParent(menu);
         menu->addAction(syncRun);
     }
 
+    if(sync->getSync()->getRunState() != mega::MegaSync::RUNSTATE_PAUSED)
+    {
+        auto syncPause (new MenuItemAction(tr("Pause"), QLatin1String("://images/sync_states/pause-circle.png")));
+        connect(syncPause, &MenuItemAction::triggered, this, [this, sync]() { emit signalPauseSync(sync); });
+        syncPause->setParent(menu);
+        menu->addAction(syncPause);
+    }
+
     if(sync->getSync()->getRunState() != mega::MegaSync::RUNSTATE_SUSPENDED)
     {
-        auto syncSuspend (new MenuItemAction(tr("Suspend"), QLatin1String("://images/sync_context_menu/hand-small.png")));
+        auto syncSuspend (new MenuItemAction(tr("Suspend"), QLatin1String("://images/sync_states/hand-small.png")));
         connect(syncSuspend, &MenuItemAction::triggered, this, [this, sync]() { emit signalSuspendSync(sync); });
         syncSuspend->setParent(menu);
         menu->addAction(syncSuspend);
@@ -203,7 +203,7 @@ void SyncTableView::createStatesContextActions(QMenu* menu, std::shared_ptr<Sync
 
     if(sync->getSync()->getRunState() != mega::MegaSync::RUNSTATE_DISABLED)
     {
-        auto syncDisable (new MenuItemAction(tr("Disable"), QLatin1String("://images/sync_context_menu/x-circle.png")));
+        auto syncDisable (new MenuItemAction(tr("Disable"), QLatin1String("://images/sync_states/x-circle.png")));
         connect(syncDisable, &MenuItemAction::triggered, this, [this, sync]() { emit signalDisableSync(sync); });
         syncDisable->setParent(menu);
         menu->addAction(syncDisable);
