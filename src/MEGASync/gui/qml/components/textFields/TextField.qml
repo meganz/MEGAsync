@@ -26,7 +26,25 @@ Rectangle {
     signal backPressed()
     signal pastePressed()
 
-    height: textField.height + titleLoader.height + hintLoader.height
+    function getHintHeight()
+    {
+        if(hintLoader.height > 0)
+        {
+            return hintLoader.height + hintLoader.anchors.topMargin;
+        }
+        return hintLoader.height;
+    }
+
+    function getTitleHeight()
+    {
+        if(titleLoader.height > 0)
+        {
+            return titleLoader.height + textField.anchors.topMargin;
+        }
+        return titleLoader.height;
+    }
+
+    height: textField.height + getTitleHeight() + getHintHeight()
     color: "transparent"
 
     onTitleChanged: {
@@ -40,9 +58,12 @@ Rectangle {
     Loader {
         id: titleLoader
 
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.top: parent.top
+        anchors {
+            left: parent.left
+            leftMargin: textField.focusBorderWidth
+            right: parent.right
+            top: parent.top
+        }
     }
 
     Qml.TextField {
@@ -101,9 +122,7 @@ Rectangle {
 
             anchors {
                 left: textField.left
-                leftMargin: -textField.focusBorderWidth
                 right: textField.right
-                rightMargin: textField.focusBorderWidth
                 top: textField.top
                 bottom: textField.bottom
             }
@@ -132,10 +151,14 @@ Rectangle {
                     return color;
                 }
 
-                anchors.top: focusBorder.top
-                anchors.left: focusBorder.left
-                anchors.topMargin: textField.focusBorderWidth
-                anchors.leftMargin: textField.focusBorderWidth
+                anchors {
+                    top: focusBorder.top
+                    left: focusBorder.left
+                    right: focusBorder.right
+                    rightMargin: textField.focusBorderWidth
+                    topMargin: textField.focusBorderWidth
+                    leftMargin: textField.focusBorderWidth
+                }
                 width: textField.width - 2 * textField.focusBorderWidth
                 height: textField.height - 2 * textField.focusBorderWidth
                 color: Styles.pageBackground
