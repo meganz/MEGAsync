@@ -40,14 +40,12 @@ Column {
             confirmPassword.error = true;
             confirmPassword.hint.visible = true;
             confirmPassword.hint.text = OnboardingStrings.errorConfirmPassword;
-            confirmPassword.hint.type = Custom.HintText.Type.Error;
         } else if(password.text !== confirmPassword.text) {
             error = true;
             confirmPassword.error = true;
             confirmPassword.hint.visible = true;
             confirmPassword.type = Custom.TextField.Type.Error;
             confirmPassword.hint.text = OnboardingStrings.errorPasswordsMatch;
-            confirmPassword.hint.type = Custom.HintText.Type.Error;
             password.hint.visible = false;
             password.error = true;
         } else {
@@ -158,6 +156,7 @@ Column {
             anchors.left: parent.left
             anchors.right: parent.right
             title: OnboardingStrings.confirmPassword
+            hint.icon: Images.alertTriangle
         }
     }
 

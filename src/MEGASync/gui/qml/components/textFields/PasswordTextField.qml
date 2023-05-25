@@ -58,14 +58,11 @@ Custom.TextField {
     textField.onTextChanged: {
         rightIcon.visible = (text.length > 0);
         error = false;
-
-        if(!(text.length > 0) || !showHint) {
+        hint.visible = text.length > 0 && showHint;
+        if(!(text.length > 0)) {
             return;
         }
-        else
-        {
-            hint.visible = true;
-        }
+
 
         var strength = Onboarding.getPasswordStrength(text);
         switch(strength) {
