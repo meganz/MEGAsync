@@ -9,8 +9,6 @@
 #include "control/Utilities.h"
 #include "syncs/model/SyncItemModel.h"
 #include "syncs/model/BackupItemModel.h"
-#include "syncs/gui/Backups/BackupTableViewTooltips.h"
-#include "syncs/gui/Twoways/SyncTableViewTooltips.h"
 
 #include "syncs/control/SyncController.h"
 #include "syncs/control/SyncInfo.h"
