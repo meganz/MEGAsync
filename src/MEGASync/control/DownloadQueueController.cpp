@@ -118,7 +118,11 @@ bool DownloadQueueController::hasEnoughSpaceForDownloads()
     if (!mCurrentTargetPath.isEmpty())
     {
         QStorageInfo destinationDrive(mCurrentTargetPath);
-        return (mTotalQueueDiskSize < destinationDrive.bytesAvailable());
+        // bytesAvailable() is valid only if isReady().
+        // Network paths in Windows such as \\<ip>\<dir> are not handled by QStorageInfo,
+        // so we can't get available space this way. For now, allow download if we can't check
+        // available space.
+        return (!destinationDrive.isReady() || mTotalQueueDiskSize < destinationDrive.bytesAvailable());
     }
     return true;
 }
