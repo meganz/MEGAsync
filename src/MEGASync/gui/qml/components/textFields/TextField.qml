@@ -5,7 +5,8 @@ import QtQuick.Layouts 1.12
 
 // Local
 import Common 1.0
-import Components 1.0 as Custom
+import Components.Texts 1.0 as MegaTexts
+import Components.Images 1.0 as MegaImages
 
 Rectangle {
     id: root
@@ -208,7 +209,7 @@ Rectangle {
     Component {
         id: titleComponent
 
-        Custom.Text {
+        MegaTexts.Text {
             id: titleText
 
             text: title
@@ -219,7 +220,7 @@ Rectangle {
     Component {
         id: hintComponent
 
-        Custom.HintText {
+        MegaTexts.HintText {
             id: hint
 
             icon: root.hint.icon
@@ -233,7 +234,7 @@ Rectangle {
     Component {
         id: leftIconComponent
 
-        Custom.SvgImage {
+        MegaImages.SvgImage {
             visible: leftIcon.visible
             source: leftIcon.source
             color: leftIcon.color
@@ -245,7 +246,7 @@ Rectangle {
     Component {
         id: rightIconComponent
 
-        Custom.SvgImage {
+        MegaImages.SvgImage {
             visible: rightIcon.visible
             source: rightIcon.source
             color: rightIcon.color

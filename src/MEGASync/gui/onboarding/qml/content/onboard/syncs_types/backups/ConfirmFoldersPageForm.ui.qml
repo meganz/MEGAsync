@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.12
 
 // QML common
-import Components 1.0 as Custom
+import Components.TextFields 1.0 as MegaTextFields
 import Common 1.0
 
 // Local
@@ -52,7 +52,7 @@ SyncsPage {
                 Layout.preferredHeight: 176
             }
 
-            Custom.TextField {
+            MegaTextFields.TextField {
                 id: folderField
 
                 Layout.preferredWidth: parent.width

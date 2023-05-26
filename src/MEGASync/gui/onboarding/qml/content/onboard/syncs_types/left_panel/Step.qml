@@ -4,7 +4,8 @@ import QtQuick.Layouts 1.12
 
 // QML common
 import Common 1.0
-import Components 1.0 as Custom
+import Components.Texts 1.0 as MegaTexts
+import Components.Images 1.0 as MegaImages
 
 Item {
 
@@ -154,7 +155,7 @@ Item {
                 }
             }
 
-            Custom.SvgImage {
+            MegaImages.SvgImage {
                 id: checkImage
 
                 visible: false
@@ -165,7 +166,7 @@ Item {
             }
         }
 
-        Custom.Text {
+        MegaTexts.Text {
             id: stepTitle
 
             text: title

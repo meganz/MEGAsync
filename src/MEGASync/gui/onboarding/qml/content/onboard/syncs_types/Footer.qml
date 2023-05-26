@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.12
 
 // QML common
-import Components 1.0 as Custom
+import Components.Buttons 1.0 as MegaButtons
 import Common 1.0
 
 // Local
@@ -24,7 +24,7 @@ RowLayout {
 
     width: parent.width
 
-    Custom.SecondaryButton {
+    MegaButtons.SecondaryButton {
         id: notNowButton
 
         Layout.leftMargin: horizontalMargin
@@ -40,13 +40,13 @@ RowLayout {
         Layout.rightMargin: horizontalMargin
         Layout.bottomMargin: verticalMargin
 
-        Custom.OutlineButton {
+        MegaButtons.OutlineButton {
             id: previousButton
 
             text: OnboardingStrings.previous
         }
 
-        Custom.PrimaryButton {
+        MegaButtons.PrimaryButton {
             id: nextButton
 
             text: OnboardingStrings.next

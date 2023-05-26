@@ -2,14 +2,14 @@
 import QtQuick 2.12
 
 //Local
-import Components 1.0
+import Components.Texts 1.0 as MegaTexts
 
 QtObject {
     property bool visible: false
     property url icon: ""
     property string title: ""
     property string text: ""
-    property HintStyle styles: HintStyle {}
+    property MegaTexts.HintStyle styles: MegaTexts.HintStyle {}
 
     onVisibleChanged: {
         if(!visible) {

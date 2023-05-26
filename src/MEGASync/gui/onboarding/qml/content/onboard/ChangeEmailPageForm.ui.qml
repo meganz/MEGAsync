@@ -4,7 +4,9 @@ import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 
 // QML common
-import Components 1.0 as Custom
+import Components.Buttons 1.0 as MegaButtons
+import Components.Texts 1.0 as MegaTexts
+import Components.TextFields 1.0 as MegaTextFields
 import Common 1.0
 
 // Local
@@ -37,22 +39,22 @@ Rectangle {
         }
         spacing: 24
 
-        Custom.Text {
+        MegaTexts.Text {
             id: title
 
             Layout.fillWidth: true
             text: OnboardingStrings.changeEmailTitle
-            font.pixelSize: Custom.Text.Size.Large
+            font.pixelSize: MegaTexts.Text.Size.Large
 
         }
 
-        Custom.Text {
+        MegaTexts.Text {
             Layout.preferredWidth: layout.width
             text: OnboardingStrings.changeEmailBodyText
-            font.pixelSize: Custom.Text.Size.Medium
+            font.pixelSize: MegaTexts.Text.Size.Medium
         }
 
-        Custom.EmailTextField {
+        MegaTextFields.EmailTextField {
             id: emailTextField
 
             title: OnboardingStrings.email
@@ -70,13 +72,13 @@ Rectangle {
         }
         spacing: 8
 
-        Custom.OutlineButton {
+        MegaButtons.OutlineButton {
             id: cancelButton
 
             text: OnboardingStrings.cancel
         }
 
-        Custom.PrimaryButton {
+        MegaButtons.PrimaryButton {
             id: resendButton
 
             text: OnboardingStrings.resend

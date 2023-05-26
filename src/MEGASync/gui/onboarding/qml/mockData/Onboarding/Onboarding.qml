@@ -2,7 +2,6 @@ pragma Singleton
 import QtQuick 2.0
 
 import AccountInfoData 1.0
-import Components 1.0
 
 Item {
 

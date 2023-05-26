@@ -4,7 +4,8 @@ import QtQuick.Controls 2.12 as Qml
 
 // Local
 import Common 1.0
-import Components 1.0
+import Components.Texts 1.0 as MegaTexts
+import Components.Images 1.0 as MegaImages
 
 Qml.CheckBox {
     id: checkBox
@@ -93,7 +94,7 @@ Qml.CheckBox {
             height: inside.width
             anchors.centerIn: checkBoxOutRect
 
-            SvgImage {
+            MegaImages.SvgImage {
                 id: image
 
                 visible: indeterminate() || checked
@@ -110,7 +111,7 @@ Qml.CheckBox {
     Component {
         id: textComponent
 
-        RichText {
+        MegaTexts.RichText {
             text: checkBox.text
             leftPadding: checkBoxOutRect.width + checkBox.spacing
             wrapMode: Text.WordWrap

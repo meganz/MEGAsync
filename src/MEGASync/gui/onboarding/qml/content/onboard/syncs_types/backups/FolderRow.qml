@@ -4,7 +4,10 @@ import QtQuick.Layouts 1.12
 
 // QML common
 import Common 1.0
-import Components 1.0 as Custom
+import Components.Texts 1.0 as MegaTexts
+import Components.Images 1.0 as MegaImages
+import Components.CheckBoxes 1.0 as MegaCheckBoxes
+import Components.ToolTips 1.0 as MegaToolTips
 
 Rectangle {
     id: root
@@ -38,7 +41,7 @@ Rectangle {
             RowLayout {
                 Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
 
-                Custom.CheckBox {
+                MegaCheckBoxes.CheckBox {
                     Layout.leftMargin: 8
                     Layout.preferredWidth: 16
                     Layout.preferredHeight: 16
@@ -47,7 +50,7 @@ Rectangle {
                     enabled: selectable
                 }
 
-                Custom.SvgImage {
+                MegaImages.SvgImage {
                     Layout.leftMargin: 18
                     source: error ? Images.alertTriangle : Images.folder
                     sourceSize: Qt.size(14, 14)
@@ -55,7 +58,7 @@ Rectangle {
                     opacity: selectable ? 1.0 : 0.3
                 }
 
-                Custom.Text {
+                MegaTexts.Text {
                     Layout.leftMargin: 13
                     Layout.maximumWidth: 345
                     maximumLineCount: 1
@@ -64,11 +67,11 @@ Rectangle {
                 }
             }
 
-            Custom.Text {
+            MegaTexts.Text {
                 Layout.alignment: Qt.AlignRight
                 Layout.rightMargin: 8
                 text: size
-                font.pixelSize: Custom.Text.Size.Small
+                font.pixelSize: MegaTexts.Text.Size.Small
             }
         }
 
@@ -85,7 +88,7 @@ Rectangle {
             }
         }
 
-        Custom.ToolTip {
+        MegaToolTips.ToolTip {
             visible: folderRowArea.containsMouse
             leftIconSource: (toolTip === folder) ? Images.pc : ""
             text: toolTip

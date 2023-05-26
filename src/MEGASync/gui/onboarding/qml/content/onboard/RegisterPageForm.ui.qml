@@ -4,7 +4,9 @@ import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 
 // QML common
-import Components 1.0 as Custom
+import Components.Buttons 1.0 as MegaButtons
+import Components.Texts 1.0 as MegaTexts
+import Components.Views 1.0 as MegaViews
 import Common 1.0
 
 // Local
@@ -42,18 +44,18 @@ StackViewPage {
 
         spacing: contentMargin / 2
 
-        Custom.RichText {
+        MegaTexts.RichText {
             id: title
 
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.leftMargin: registerContent.email.textField.focusBorderWidth
-            font.pixelSize: Custom.Text.Size.Large
+            font.pixelSize: MegaTexts.Text.Size.Large
 
             text: OnboardingStrings.signUpTitle
         }
 
-        Custom.ScrollPanel {
+        MegaViews.ScrollPanel {
             id: scrollPanel
 
             anchors.left: parent.left
@@ -71,7 +73,7 @@ StackViewPage {
         anchors.bottomMargin: bottomMargin
         spacing: buttonSpacing
 
-        Custom.PrimaryButton {
+        MegaButtons.PrimaryButton {
             id: nextButton
 
             enabled: registerContent.dataLossCheckBox.checked
@@ -80,7 +82,7 @@ StackViewPage {
             text: OnboardingStrings.next
         }
 
-        Custom.SecondaryButton {
+        MegaButtons.SecondaryButton {
             id: loginButton
 
             text: OnboardingStrings.login

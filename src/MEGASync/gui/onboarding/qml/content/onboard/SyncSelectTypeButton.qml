@@ -5,7 +5,8 @@ import QtQuick.Layouts 1.12
 
 // QML common
 import Common 1.0
-import Components 1.0 as Custom
+import Components.Texts 1.0 as MegaTexts
+import Components.Images 1.0 as MegaImages
 
 Button {
     id: syncButton
@@ -33,24 +34,24 @@ Button {
             anchors.fill: parent
             spacing: 16
 
-            Custom.SvgImage {
+            MegaImages.SvgImage {
                 color: syncButton.checked ? Styles.iconAccent : Styles.iconSecondary
                 Layout.leftMargin: 24
                 source: imageSource
 
-                Custom.Text {
+                MegaTexts.Text {
                     text: title
                     Layout.preferredHeight: 24
-                    font.pixelSize: Custom.Text.Size.MediumLarge
+                    font.pixelSize: MegaTexts.Text.Size.MediumLarge
                     font.weight: Font.Bold
                 }
 
-                Custom.Text {
+                MegaTexts.Text {
                     text: description
                     lineHeightMode: Text.FixedHeight
                     Layout.preferredWidth: 324
                     Layout.preferredHeight: 32
-                    font.pixelSize: Custom.Text.Size.Small
+                    font.pixelSize: MegaTexts.Text.Size.Small
                     font.weight: Font.Light
                 }
             }

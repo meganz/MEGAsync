@@ -5,7 +5,8 @@ import QtQuick.Controls 2.12
 
 // QML common
 import Common 1.0
-import Components 1.0 as Custom
+import Components.Texts 1.0 as MegaTexts
+import Components.Images 1.0 as MegaImages
 
 // Local
 import Onboard 1.0
@@ -57,14 +58,14 @@ SyncsPage {
 
                     spacing: 9
 
-                    Custom.SvgImage {
+                    MegaImages.SvgImage {
                         Layout.leftMargin: 19
                         source: Images.plusCircle
                         color: Styles.buttonPrimary
                         sourceSize: Qt.size(22, 22)
                     }
 
-                    Custom.Text {
+                    MegaTexts.Text {
                         text: OnboardingStrings.addFolders
                         font.weight: Font.DemiBold
                         font.underline: true

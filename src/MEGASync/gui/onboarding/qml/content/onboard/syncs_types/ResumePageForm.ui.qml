@@ -5,7 +5,9 @@ import QtQuick.Controls 2.12
 
 // QML common
 import Common 1.0
-import Components 1.0 as Custom
+import Components.Texts 1.0 as MegaTexts
+import Components.Images 1.0 as MegaImages
+import Components.Buttons 1.0 as MegaButtons
 
 // C++
 import Onboard 1.0
@@ -24,29 +26,29 @@ Rectangle {
     ColumnLayout {
         anchors.fill: parent
 
-        Custom.Text {
+        MegaTexts.Text {
             text: title
             Layout.topMargin: 32
-            font.pixelSize: Custom.Text.Size.Large
+            font.pixelSize: MegaTexts.Text.Size.Large
             Layout.preferredWidth: parent.width
             font.weight: Font.Bold
             horizontalAlignment: Text.AlignHCenter
         }
 
-        Custom.SvgImage {
+        MegaImages.SvgImage {
             source: Images.resume
             Layout.topMargin: 40
             Layout.alignment: Qt.AlignHCenter
         }
 
-        Custom.Text {
+        MegaTexts.Text {
             text: description
             Layout.topMargin: 40
             Layout.preferredHeight: 40
             Layout.alignment: Qt.AlignHCenter
             Layout.preferredWidth: 712
             horizontalAlignment: Text.AlignHCenter
-            font.pixelSize: Custom.Text.Size.Medium
+            font.pixelSize: MegaTexts.Text.Size.Medium
             font.weight: Font.Light
         }
 
@@ -94,13 +96,13 @@ Rectangle {
             Layout.bottomMargin: 24
             Layout.alignment: Qt.AlignBottom | Qt.AlignRight
 
-            Custom.OutlineButton {
+            MegaButtons.OutlineButton {
                 id: preferencesButton
 
                 text: OnboardingStrings.openInPreferences
             }
 
-            Custom.PrimaryButton {
+            MegaButtons.PrimaryButton {
                 id: doneButton
 
                 text: OnboardingStrings.done

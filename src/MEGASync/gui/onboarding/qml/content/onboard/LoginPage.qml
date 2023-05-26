@@ -1,9 +1,6 @@
 // System
 import QtQuick 2.12
 
-// QML common
-import Components 1.0 as Custom
-
 // Local
 import Onboarding 1.0
 

@@ -6,7 +6,8 @@ import QtQuick.Dialogs 1.3
 
 // QML common
 import Common 1.0
-import Components 1.0 as Custom
+import Components.Buttons 1.0 as MegaButtons
+import Components.TextFields 1.0 as MegaTextFields
 
 // Local
 import Onboard 1.0
@@ -50,7 +51,7 @@ Rectangle {
     height: folderField.height
     color: "transparent"
 
-    Custom.TextField {
+    MegaTextFields.TextField {
         id: folderField
 
         anchors.left: parent.left
@@ -66,7 +67,7 @@ Rectangle {
         hint.icon: Images.alertTriangle
     }
 
-    Custom.OutlineButton {
+    MegaButtons.OutlineButton {
         id: changeButton
 
         width: buttonWidth

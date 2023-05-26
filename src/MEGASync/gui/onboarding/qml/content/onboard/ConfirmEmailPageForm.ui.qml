@@ -4,7 +4,8 @@ import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 
 // QML common
-import Components 1.0 as Custom
+import Components.Texts 1.0 as MegaTexts
+import Components.Images 1.0 as MegaImages
 import Common 1.0
 
 // Local
@@ -36,46 +37,46 @@ Rectangle {
         }
         spacing: 24
 
-        Custom.RichText {
+        MegaTexts.RichText {
             id: title
 
             Layout.fillWidth: true
-            font.pixelSize: Custom.Text.Size.Large
+            font.pixelSize: MegaTexts.Text.Size.Large
             text: OnboardingStrings.confirmEmailTitle
             wrapMode: Text.WordWrap
             color: Styles.textPrimary
         }
 
-        Custom.Text {
+        MegaTexts.Text {
             Layout.preferredWidth: layout.width
             text: OnboardingStrings.confirmEmailBodyText
-            font.pixelSize: Custom.Text.Size.Medium
+            font.pixelSize: MegaTexts.Text.Size.Medium
         }
 
         RowLayout {
             spacing: 9
 
-            Custom.SvgImage {
+            MegaImages.SvgImage {
                 source: Images.mail
                 sourceSize: Qt.size(24, 24)
                 Layout.alignment: Qt.AlignVCenter
                 color: Styles.textPrimary
             }
 
-            Custom.Text {
+            MegaTexts.Text {
                 id: email
 
                 Layout.alignment: Qt.AlignVCenter
-                font.pixelSize: Custom.Text.Size.Medium
+                font.pixelSize: MegaTexts.Text.Size.Medium
                 font.bold: true
             }
         }
 
-        Custom.RichText {
+        MegaTexts.RichText {
             id: changeEmailLinkText
 
             Layout.preferredWidth: layout.width
-            font.pixelSize: Custom.Text.Size.Medium
+            font.pixelSize: MegaTexts.Text.Size.Medium
             text: OnboardingStrings.confirmEmailChangeText
             wrapMode: Text.WordWrap
             color: Styles.textPrimary

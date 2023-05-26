@@ -4,7 +4,8 @@ import QtQuick.Layouts 1.12
 
 // QML common
 import Common 1.0
-import Components 1.0 as Custom
+import Components.Texts 1.0 as MegaTexts
+import Components.Images 1.0 as MegaImages
 
 CardButton {
     id: button
@@ -27,7 +28,7 @@ CardButton {
             anchors.bottomMargin: verticalMargin
             spacing: 16
 
-            Custom.SvgImage {
+            MegaImages.SvgImage {
                 color: button.checked || button.hovered
                        ? Styles.iconAccent
                        : Styles.iconSecondary
@@ -39,21 +40,21 @@ CardButton {
                 width: parent.width - x
                 spacing: main.textSpacing
 
-                Custom.Text {
+                MegaTexts.Text {
                     text: title
                     height: main.textTopHeight
                     anchors.left: parent.left
                     anchors.right: parent.right
-                    font.pixelSize: Custom.Text.Size.MediumLarge
+                    font.pixelSize: MegaTexts.Text.Size.MediumLarge
                     font.weight: Font.Bold
                 }
 
-                Custom.Text {
+                MegaTexts.Text {
                     text: description
                     height: main.textBottomHeight
                     anchors.left: parent.left
                     anchors.right: parent.right
-                    font.pixelSize: Custom.Text.Size.Small
+                    font.pixelSize: MegaTexts.Text.Size.Small
                     font.weight: Font.Light
                 }
             }

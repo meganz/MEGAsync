@@ -5,7 +5,6 @@ import QtQuick.Dialogs 1.1
 
 // QML common
 import Common 1.0
-import Components 1.0 as Custom
 
 // Local
 import Onboard.Syncs_types 1.0

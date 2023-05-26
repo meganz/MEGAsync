@@ -4,7 +4,8 @@ import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.12
 
 // QML common
-import Components 1.0 as Custom
+import Components.TextFields 1.0 as MegaTextFields
+import Components.Images 1.0 as MegaImages
 import Common 1.0
 
 // Local
@@ -31,13 +32,13 @@ SyncsPage {
             description: OnboardingStrings.computerNameDescription
         }
 
-        Custom.SvgImage {
+        MegaImages.SvgImage {
             source: Images.pcMega
             sourceSize: Qt.size(48, 48)
             color: Styles.textPrimary
         }
 
-        Custom.TextField {
+        MegaTextFields.TextField {
             id: computerNameTextField
 
             Layout.preferredWidth: parent.width

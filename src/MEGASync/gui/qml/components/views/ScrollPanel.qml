@@ -4,7 +4,7 @@ import QtQuick.Controls 2.12 as Qml
 
 // Local
 import Common 1.0
-import Components 1.0 as Custom
+import Components.ScrollBars 1.0 as MegaScrollBar
 
 Item {
     id: root
@@ -53,7 +53,7 @@ Item {
         scrollbarHorizontal.increase();
     }
 
-    Custom.ScrollBar {
+    MegaScrollBar.ScrollBar {
         id: scrollbarVertical
 
         anchors {
@@ -62,10 +62,10 @@ Item {
             bottom: flickable.bottom
             leftMargin: scrollBarVerticalMargin
         }
-        direction: Custom.ScrollBar.Direction.Vertical
+        direction: MegaScrollBar.ScrollBar.Direction.Vertical
     }
 
-    Custom.ScrollBar {
+    MegaScrollBar.ScrollBar {
         id: scrollbarHorizontal
 
         anchors {
@@ -74,7 +74,7 @@ Item {
             top: flickable.bottom
             topMargin: scrollBarHorizontalMargin
         }
-        direction: Custom.ScrollBar.Direction.Horizontal
+        direction: MegaScrollBar.ScrollBar.Direction.Horizontal
     }
 
 }

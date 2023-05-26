@@ -2,11 +2,12 @@
 import QtQuick 2.12
 
 // Local
-import Components 1.0 as Custom
+import Components.Texts 1.0 as MegaTexts
+import Components.TextFields 1.0 as MegaTextFields
 import Common 1.0
 import Onboarding 1.0
 
-Custom.TextField {
+MegaTextFields.TextField {
 
     property bool showHint: false
 
@@ -20,36 +21,31 @@ Custom.TextField {
 
     textField.echoMode: TextInput.Password
 
-    function getCoso()
-    {
-        return Custom.HintPasswordVeryWeakStyle;
-    }
-
-    readonly property Custom.HintStyle veryWeak: Custom.HintStyle{
+    readonly property MegaTexts.HintStyle veryWeak: MegaTexts.HintStyle {
         iconColor: Styles.indicatorPink
         titleColor: Styles.textError
         textColor: Styles.textSecondary
     }
 
-    readonly property Custom.HintStyle weak: Custom.HintStyle{
+    readonly property MegaTexts.HintStyle weak: MegaTexts.HintStyle {
         iconColor: Styles.supportError;
         titleColor: Styles.textError;
         textColor: Styles.textSecondary;
     }
 
-    readonly property Custom.HintStyle medium: Custom.HintStyle{
+    readonly property MegaTexts.HintStyle medium: MegaTexts.HintStyle {
         iconColor: Styles.supportWarning;
         titleColor: Styles.supportWarning;
         textColor: Styles.textSecondary;
     }
 
-    readonly property Custom.HintStyle good: Custom.HintStyle{
+    readonly property MegaTexts.HintStyle good: MegaTexts.HintStyle {
         iconColor: Styles.supportSuccess;
         titleColor: Styles.textSuccess;
         textColor: Styles.textSecondary;
     }
 
-    readonly property Custom.HintStyle strong: Custom.HintStyle{
+    readonly property MegaTexts.HintStyle strong: MegaTexts.HintStyle {
         iconColor: Styles.supportSuccess;
         titleColor: Styles.supportSuccess;
         textColor: Styles.textSecondary;

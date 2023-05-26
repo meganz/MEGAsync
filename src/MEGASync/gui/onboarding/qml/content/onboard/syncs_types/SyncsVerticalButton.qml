@@ -2,9 +2,9 @@
 import QtQuick.Layouts 1.12
 
 // QML common
-import Components 1.0 as Custom
+import Components.Buttons 1.0 as MegaButtons
 
-Custom.CardVerticalButton {
+MegaButtons.CardVerticalButton {
 
     property alias type: syncsType.type
     property alias syncType: syncsType.subType

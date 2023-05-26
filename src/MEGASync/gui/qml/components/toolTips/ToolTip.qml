@@ -5,7 +5,8 @@ import QtQuick.Layouts 1.12
 
 // Local
 import Common 1.0
-import Components 1.0 as Custom
+import Components.Texts 1.0 as MegaTexts
+import Components.Images 1.0 as MegaImages
 
 Qml.ToolTip {
     id: root
@@ -39,7 +40,7 @@ Qml.ToolTip {
             id: leftIconLoader
         }
 
-        Custom.Text {
+        MegaTexts.Text {
             id: textToolTip
 
             text: root.text
@@ -57,7 +58,7 @@ Qml.ToolTip {
     Component {
         id: leftIcon
 
-        Custom.SvgImage {
+        MegaImages.SvgImage {
             source: leftIconSource
             color: Styles.iconOnColor
             sourceSize: Qt.size(16, 16)

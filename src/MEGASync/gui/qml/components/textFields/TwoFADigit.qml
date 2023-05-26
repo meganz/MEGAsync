@@ -3,10 +3,10 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12
 
 // Local
-import Components 1.0 as Custom
+import Components.TextFields 1.0 as MegaTextFields
 import Common 1.0
 
-Custom.TextField {
+MegaTextFields.TextField {
 
     property var next
     property var previous

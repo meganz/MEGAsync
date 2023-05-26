@@ -1,0 +1,2 @@
+module Components.ScrollBars
+ScrollBar 1.0 ScrollBar.qml

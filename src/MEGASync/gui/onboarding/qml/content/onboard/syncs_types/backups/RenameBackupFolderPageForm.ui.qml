@@ -4,7 +4,8 @@ import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.12
 
 // QML common
-import Components 1.0 as Custom
+import Components.Texts 1.0 as MegaTexts
+import Components.TextFields 1.0 as MegaTextFields
 import Common 1.0
 
 // Local
@@ -39,7 +40,7 @@ SyncsPage {
             description: OnboardingStrings.renameBackupFolderDescription
         }
 
-        Custom.TextField {
+        MegaTextFields.TextField {
             id: renameTextField
 
             anchors.left: parent.left
@@ -50,7 +51,7 @@ SyncsPage {
             hint.icon: Images.alertTriangle
         }
 
-        Custom.NotificationText {
+        MegaTexts.NotificationText {
             id: hint
 
             anchors.left: parent.left
@@ -58,7 +59,7 @@ SyncsPage {
             anchors.leftMargin: renameTextField.textField.focusBorderWidth
             anchors.rightMargin: renameTextField.textField.focusBorderWidth
             visible: true
-            type: Custom.NotificationText.Type.Info
+            type: MegaTexts.NotificationText.Type.Info
             notificationText {
                 text: OnboardingStrings.renameBackupFolderHint
                 manageMouse: true

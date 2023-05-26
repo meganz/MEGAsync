@@ -4,7 +4,9 @@ import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 
 // QML common
-import Components 1.0 as Custom
+import Components.CheckBoxes 1.0 as MegaCheckBoxes
+import Components.TextFields 1.0 as MegaTextFields
+import Components.Texts 1.0 as MegaTexts
 import Common 1.0
 
 //Local
@@ -30,7 +32,7 @@ Column {
         valid = password.text.length !== 0;
         if(!valid) {
             error = true;
-            password.hint.type = Custom.HintText.Type.Error;
+            password.hint.type = MegaTexts.HintText.Type.Error;
             password.error = true;
         }
         password.error = !valid;
@@ -44,7 +46,7 @@ Column {
             error = true;
             confirmPassword.error = true;
             confirmPassword.hint.visible = true;
-            confirmPassword.type = Custom.TextField.Type.Error;
+            confirmPassword.type = MegaTextFields.TextField.Type.Error;
             confirmPassword.hint.text = OnboardingStrings.errorPasswordsMatch;
             password.hint.visible = false;
             password.error = true;
@@ -106,14 +108,14 @@ Column {
                 anchors.right: parent.right
                 spacing: 8
 
-                Custom.TextField {
+                MegaTextFields.TextField {
                     id: firstName
 
                     width: nameLayout.width / 2 - nameLayout.spacing / 2
                     title: OnboardingStrings.firstName
                 }
 
-                Custom.TextField {
+                MegaTextFields.TextField {
                     id: lastName
 
                     width: nameLayout.width / 2 - nameLayout.spacing / 2
@@ -121,7 +123,7 @@ Column {
                 }
             }
 
-            Custom.HintText {
+            MegaTexts.HintText {
                 id: firstLastNameHint
 
                 anchors.left: parent.left
@@ -133,7 +135,7 @@ Column {
             }
         }
 
-        Custom.EmailTextField {
+        MegaTextFields.EmailTextField {
             id: email
 
             anchors.left: parent.left
@@ -141,7 +143,7 @@ Column {
             title: OnboardingStrings.email
         }
 
-        Custom.PasswordTextField {
+        MegaTextFields.PasswordTextField {
             id: password
 
             anchors.left: parent.left
@@ -150,7 +152,7 @@ Column {
             title: OnboardingStrings.password
         }
 
-        Custom.PasswordTextField {
+        MegaTextFields.PasswordTextField {
             id: confirmPassword
 
             anchors.left: parent.left
@@ -167,7 +169,7 @@ Column {
         anchors.right: parent.right
         spacing: checkboxSpacing
 
-        Custom.CheckBox {
+        MegaCheckBoxes.CheckBox {
             id: dataLossCheckBox
 
             anchors.left: parent.left
@@ -176,7 +178,7 @@ Column {
             text: OnboardingStrings.understandLossPassword
         }
 
-        Custom.CheckBox {
+        MegaCheckBoxes.CheckBox {
             id: termsCheckBox
 
             anchors.left: parent.left

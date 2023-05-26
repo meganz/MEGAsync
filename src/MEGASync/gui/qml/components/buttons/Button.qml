@@ -5,7 +5,9 @@ import QtQuick.Layouts 1.12
 import QtGraphicalEffects 1.12
 
 // Local
-import Components 1.0 as Custom
+import Components.Texts 1.0 as MegaTexts
+import Components.BusyIndicator 1.0 as MegaBusyIndicator
+import Components.Images 1.0 as MegaImages
 import Common 1.0
 
 Qml.RoundButton {
@@ -92,14 +94,14 @@ Qml.RoundButton {
             anchors.verticalCenter: parent.verticalCenter
         }
 
-        Custom.Text {
+        MegaTexts.Text {
             id: buttonText
 
             anchors.verticalCenter: parent.verticalCenter
             text: button.text
             color: getTextColor()
             font {
-                pixelSize: Custom.Text.Size.Medium
+                pixelSize: MegaTexts.Text.Size.Medium
                 weight: Font.DemiBold
             }
         }
@@ -165,7 +167,7 @@ Qml.RoundButton {
 
     Component {
         id: image
-        Custom.SvgImage {
+        MegaImages.SvgImage {
             //visible: button.iconSource.length
             source: icons.source
             color: button.enabled ? icons.color : icons.disabledColor
@@ -175,7 +177,7 @@ Qml.RoundButton {
     }
     Component {
         id: busyIndicator
-        Custom.BusyIndicator {
+        MegaBusyIndicator.BusyIndicator {
             imageSource: Images.loader
             disabledOpacity: 1
             color: icons.color

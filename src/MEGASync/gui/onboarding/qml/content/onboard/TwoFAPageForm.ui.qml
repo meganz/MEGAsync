@@ -4,7 +4,8 @@ import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 
 // QML common
-import Components 1.0 as Custom
+import Components.Buttons 1.0 as MegaButtons
+import Components.TextFields 1.0 as MegaTextFields
 import Common 1.0
 
 // Local
@@ -39,7 +40,7 @@ StackViewPage {
             description: OnboardingStrings.twoFASubtitle
         }
 
-        Custom.TwoFA {
+        MegaTextFields.TwoFA {
             id: twoFAField
 
             Layout.leftMargin: -3
@@ -47,7 +48,7 @@ StackViewPage {
             Layout.fillHeight: true
         }
 
-        Custom.HelpButton {
+        MegaButtons.HelpButton {
             text: OnboardingStrings.twoFANeedHelp
             url: Links.recovery
         }
@@ -64,14 +65,14 @@ StackViewPage {
             bottomMargin: bottomMargin
         }
 
-        Custom.OutlineButton {
+        MegaButtons.OutlineButton {
             id: signUpButton
 
             text: OnboardingStrings.signUp
             Layout.alignment: Qt.AlignLeft
         }
 
-        Custom.PrimaryButton {
+        MegaButtons.PrimaryButton {
             id: loginButton
 
             text: OnboardingStrings.login

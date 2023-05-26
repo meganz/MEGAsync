@@ -1,8 +1,8 @@
 // Local
-import Components 1.0 as Custom
+import Components.Buttons 1.0 as MegaButtons
 import Common 1.0
 
-Custom.Button {
+MegaButtons.Button {
     icons.color: Styles.iconSecondary
     icons.disabledColor: Styles.textDisabled
 

@@ -6,7 +6,7 @@ import QtQuick.Controls 2.12
 
 // QML common
 import Common 1.0
-import Components 1.0 as Custom
+import Components.Texts 1.0 as MegaTexts
 
 //Local
 import Onboarding 1.0
@@ -85,7 +85,7 @@ Rectangle {
         }
     ]
 
-    Custom.SecondaryText {
+    MegaTexts.SecondaryText {
         id: statusText
 
         anchors {
@@ -93,7 +93,7 @@ Rectangle {
             bottom: root.bottom
             bottomMargin: 16
         }
-        font.pixelSize: Custom.Text.Size.Small
+        font.pixelSize: MegaTexts.Text.Size.Small
     }
 
 }

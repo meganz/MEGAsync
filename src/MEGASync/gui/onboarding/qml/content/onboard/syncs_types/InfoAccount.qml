@@ -5,7 +5,8 @@ import QtQuick.Layouts 1.12
 
 // QML common
 import Common 1.0
-import Components 1.0 as Custom
+import Components.Texts 1.0 as MegaTexts
+import Components.Images 1.0 as MegaImages
 
 // Local
 import AccountInfoData 1.0
@@ -34,7 +35,7 @@ Rectangle {
             Layout.leftMargin: 24
             spacing: 8
 
-            Custom.SvgImage {
+            MegaImages.SvgImage {
                 id: typeImage
 
                 source: Images.shield_account_free
@@ -42,13 +43,13 @@ Rectangle {
                 visible: false
             }
 
-            Custom.Text {
+            MegaTexts.Text {
                 id: typeText
 
                 Layout.alignment: Qt.AlignLeft
                 font.weight: Font.DemiBold
                 font.underline: true
-                font.pixelSize: Custom.Text.Size.Medium
+                font.pixelSize: MegaTexts.Text.Size.Medium
 
                 MouseArea {
                     anchors.fill: parent
@@ -65,24 +66,24 @@ Rectangle {
             Layout.alignment: Qt.AlignRight
             Layout.rightMargin: 24
 
-            Custom.Text {
+            MegaTexts.Text {
                 text: OnboardingStrings.storageSpace
                 font.weight: Font.DemiBold
             }
 
-            Custom.Text {
+            MegaTexts.Text {
                 id: usedStorage
 
                 font.weight: Font.DemiBold
             }
 
-            Custom.Text {
+            MegaTexts.Text {
                 id: separator
 
                 font.weight: Font.ExtraLight
             }
 
-            Custom.Text {
+            MegaTexts.Text {
                 id: totalStorage
 
                 font.weight: Font.ExtraLight

@@ -4,7 +4,8 @@ import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 
 // Local
-import Components 1.0 as Custom
+import Components.Texts 1.0 as MegaTexts
+import Components.Images 1.0 as MegaImages
 import Common 1.0
 
 Rectangle {
@@ -80,7 +81,7 @@ Rectangle {
     Component {
         id: iconComponent
 
-        Custom.SvgImage {
+        MegaImages.SvgImage {
             source: icon
             color: styles.iconColor
             sourceSize: Qt.size(16, 16)
@@ -90,7 +91,7 @@ Rectangle {
     Component {
         id: titleComponent
 
-        Custom.Text {
+        MegaTexts.Text {
             text: title
             color: styles.titleColor
             opacity: enabled ? 1.0 : 0.2
@@ -102,7 +103,7 @@ Rectangle {
     Component {
         id: textComponent
 
-        Custom.Text {
+        MegaTexts.Text {
             text: root.text
             color: styles.textColor
             opacity: enabled ? 1.0 : 0.2

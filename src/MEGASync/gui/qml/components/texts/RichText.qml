@@ -3,9 +3,9 @@ import QtQuick 2.12
 
 // Local
 import Common 1.0
-import Components 1.0 as Custom
+import Components.Texts 1.0 as MegaTexts
 
-Custom.Text {
+MegaTexts.Text {
     id: control
 
     function updateLinkColor() {
@@ -34,7 +34,7 @@ Custom.Text {
     }
     color: enabled ? Styles.textPrimary : Styles.textDisabled
     textFormat: Text.RichText
-    font.pixelSize: Custom.Text.Size.Medium
+    font.pixelSize: MegaTexts.Text.Size.Medium
 
     Component.onCompleted: {
         control.text = control.text.replace("[b]","<b>")

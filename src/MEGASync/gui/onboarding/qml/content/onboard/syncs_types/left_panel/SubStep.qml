@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.12
 
 // QML common
 import Common 1.0
-import Components 1.0 as Custom
+import Components.Texts 1.0 as MegaTexts
 
 Item {
 
@@ -91,11 +91,11 @@ Item {
             }
         }
 
-        Custom.Text {
+        MegaTexts.Text {
             id: stepTitle
 
             text: title
-            font.pixelSize: Custom.Text.Size.Small
+            font.pixelSize: MegaTexts.Text.Size.Small
             Layout.alignment: Qt.AlignLeft
             horizontalAlignment: Text.AlignLeft
         }

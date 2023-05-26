@@ -5,7 +5,7 @@ import QtQuick.Controls 2.12
 
 // QML common
 import Common 1.0
-import Components 1.0 as Custom
+import Components.Buttons 1.0 as MegaButtons
 
 // Local
 import Onboard 1.0
@@ -519,7 +519,7 @@ Rectangle {
         }
     }
 
-    Custom.HelpButton {
+    MegaButtons.HelpButton {
         anchors.bottom: parent.bottom
         anchors.left: parent.left
         anchors.leftMargin: helpButtonMargin

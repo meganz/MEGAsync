@@ -5,7 +5,8 @@ import QtQuick.Controls 2.12
 
 // QML common
 import Common 1.0
-import Components 1.0 as Custom
+import Components.CheckBoxes 1.0 as MegaCheckBoxes
+import Components.Texts 1.0 as MegaTexts
 
 // Local
 import Onboard 1.0
@@ -76,7 +77,7 @@ Rectangle {
                 anchors.verticalCenter: tableHeaderBackground.verticalCenter
                 spacing: 0
 
-                Custom.CheckBox {
+                MegaCheckBoxes.CheckBox {
                     id: selectAll
 
                     property bool fromModel: false
@@ -95,7 +96,7 @@ Rectangle {
                     }
                 }
 
-                Custom.Text {
+                MegaTexts.Text {
                     id: headerText
 
                     property int selectedRows: 0
@@ -107,13 +108,13 @@ Rectangle {
                     Layout.fillWidth: true
                 }
 
-                Custom.Text {
+                MegaTexts.Text {
                     id: totalSizeText
 
                     text: backupsProxyModel.totalSize
                     Layout.rightMargin: 22
                     Layout.alignment: Qt.AlignRight
-                    font.pixelSize: Custom.Text.Size.Small
+                    font.pixelSize: MegaTexts.Text.Size.Small
                     font.weight: Font.DemiBold
                     visible: backupsProxyModel.selectedFilterEnabled
                 }

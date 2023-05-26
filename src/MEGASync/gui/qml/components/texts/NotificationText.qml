@@ -4,7 +4,8 @@ import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 
 // Local
-import Components 1.0 as Custom
+import Components.Texts 1.0 as MegaTexts
+import Components.Images 1.0 as MegaImages
 import Common 1.0
 
 Rectangle {
@@ -58,7 +59,7 @@ Rectangle {
             margins: 12
         }
 
-        Custom.SvgImage {
+        MegaImages.SvgImage {
             id: icon
 
             visible: icon.source !== ""
@@ -69,7 +70,7 @@ Rectangle {
         ColumnLayout {
             Layout.fillWidth: true
 
-            Custom.Text {
+            MegaTexts.Text {
                 id: titleText
 
                 visible: titleText.text.length !== 0
@@ -77,7 +78,7 @@ Rectangle {
                 font.bold: true
             }
 
-            Custom.RichText {
+            MegaTexts.RichText {
                 id: notificationText
 
                 visible: notificationText.text.length !== 0

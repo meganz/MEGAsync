@@ -3543,32 +3543,59 @@ void MegaApplication::registerCommonQMLElements()
 
     qmlRegisterType<BackupsProxyModel>("BackupsProxyModel", 1, 0, "BackupsProxyModel");
 
-    qmlRegisterModule("Components", 1, 0);
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/busyIndicator/BusyIndicator.qml")), "Components", 1, 0, "BusyIndicator");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/Button.qml")), "Components", 1, 0, "Button");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/CardHorizontalButton.qml")), "Components", 1, 0, "CardHorizontalButton");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/CardVerticalButton.qml")), "Components", 1, 0, "CardVerticalButton");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/HelpButton.qml")), "Components", 1, 0, "HelpButton");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/OutlineButton.qml")), "Components", 1, 0, "OutlineButton");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/PrimaryButton.qml")), "Components", 1, 0, "PrimaryButton");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/SecondaryButton.qml")), "Components", 1, 0, "SecondaryButton");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/checkBoxes/CheckBox.qml")), "Components", 1, 0, "CheckBox");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/images/SvgImage.qml")), "Components", 1, 0, "SvgImage");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/images/Image.qml")), "Components", 1, 0, "Image");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/scrollBars/ScrollBar.qml")), "Components", 1, 0, "ScrollBar");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/EmailTextField.qml")), "Components", 1, 0, "EmailTextField");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/IconTextField.qml")), "Components", 1, 0, "IconTextField");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/PasswordTextField.qml")), "Components", 1, 0, "PasswordTextField");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/TextField.qml")), "Components", 1, 0, "TextField");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/TwoFA.qml")), "Components", 1, 0, "TwoFA");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/HintText.qml")), "Components", 1, 0, "HintText");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/HintStyle.qml")), "Components", 1, 0, "HintStyle");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/NotificationText.qml")), "Components", 1, 0, "NotificationText");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/RichText.qml")), "Components", 1, 0, "RichText");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/SecondaryText.qml")), "Components", 1, 0, "SecondaryText");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/Text.qml")), "Components", 1, 0, "Text");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/toolTips/ToolTip.qml")), "Components", 1, 0, "ToolTip");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/views/ScrollPanel.qml")), "Components", 1, 0, "ScrollPanel");
+    qmlRegisterModule("Components.BusyIndicator", 1, 0);
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/busyIndicator/BusyIndicator.qml")), "Components.BusyIndicator", 1, 0, "BusyIndicator");
+
+    qmlRegisterModule("Components.Buttons", 1, 0);
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/Button.qml")), "Components.Buttons", 1, 0, "Button");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/CardButton.qml")), "Components.Buttons", 1, 0, "CardButton");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/CardHorizontalButton.qml")), "Components.Buttons", 1, 0, "CardHorizontalButton");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/CardVerticalButton.qml")), "Components.Buttons", 1, 0, "CardVerticalButton");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/HelpButton.qml")), "Components.Buttons", 1, 0, "HelpButton");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/OutlineButton.qml")), "Components.Buttons", 1, 0, "OutlineButton");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/PrimaryButton.qml")), "Components.Buttons", 1, 0, "PrimaryButton");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/SecondaryButton.qml")), "Components.Buttons", 1, 0, "SecondaryButton");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/Colors.qml")), "Components.Buttons", 1, 0, "Colors");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/Icon.qml")), "Components.Buttons", 1, 0, "Icon");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/Progress.qml")), "Components.Buttons", 1, 0, "Progress");
+
+    qmlRegisterModule("Components.CheckBoxes", 1, 0);
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/checkBoxes/CheckBox.qml")), "Components.CheckBoxes", 1, 0, "CheckBox");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/checkBoxes/Colors.qml")), "Components.CheckBoxes", 1, 0, "Colors");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/checkBoxes/Icons.qml")), "Components.CheckBoxes", 1, 0, "Icons");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/checkBoxes/Sizes.qml")), "Components.CheckBoxes", 1, 0, "Sizes");
+
+    qmlRegisterModule("Components.Images", 1, 0);
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/images/SvgImage.qml")), "Components.Images", 1, 0, "SvgImage");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/images/Image.qml")), "Components.Images", 1, 0, "Image");
+
+    qmlRegisterModule("Components.ScrollBars", 1, 0);
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/scrollBars/ScrollBar.qml")), "Components.ScrollBars", 1, 0, "ScrollBar");
+
+    qmlRegisterModule("Components.TextFields", 1, 0);
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/EmailTextField.qml")), "Components.TextFields", 1, 0, "EmailTextField");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/Hint.qml")), "Components.TextFields", 1, 0, "Hint");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/IconTextField.qml")), "Components.TextFields", 1, 0, "IconTextField");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/LeftIcon.qml")), "Components.TextFields", 1, 0, "LeftIcon");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/PasswordTextField.qml")), "Components.TextFields", 1, 0, "PasswordTextField");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/RightIcon.qml")), "Components.TextFields", 1, 0, "RightIcon");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/TextField.qml")), "Components.TextFields", 1, 0, "TextField");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/TwoFA.qml")), "Components.TextFields", 1, 0, "TwoFA");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/TwoFADigit.qml")), "Components.TextFields", 1, 0, "TwoFADigit");
+
+    qmlRegisterModule("Components.Texts", 1, 0);
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/HintStyle.qml")), "Components.Texts", 1, 0, "HintStyle");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/HintText.qml")), "Components.Texts", 1, 0, "HintText");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/NotificationText.qml")), "Components.Texts", 1, 0, "NotificationText");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/RichText.qml")), "Components.Texts", 1, 0, "RichText");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/SecondaryText.qml")), "Components.Texts", 1, 0, "SecondaryText");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/Text.qml")), "Components.Texts", 1, 0, "Text");
+
+    qmlRegisterModule("Components.ToolTips", 1, 0);
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/toolTips/ToolTip.qml")), "Components.ToolTips", 1, 0, "ToolTip");
+
+    qmlRegisterModule("Components.Views", 1, 0);
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/views/ScrollPanel.qml")), "Components.Views", 1, 0, "ScrollPanel");
 
     qmlRegisterModule("Common", 1, 0);
     qmlRegisterSingletonType(QUrl(QString::fromUtf8("qrc:/common/Constants.qml")), "Common", 1, 0, "Constants");

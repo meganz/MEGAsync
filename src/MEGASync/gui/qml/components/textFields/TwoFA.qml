@@ -3,7 +3,7 @@ import QtQuick 2.12
 import QtQuick.Layouts 1.12
 
 // Local
-import Components 1.0 as Custom
+import Components.Texts 1.0 as MegaTexts
 import Common 1.0
 
 // C++
@@ -109,7 +109,7 @@ ColumnLayout {
         }
     }
 
-    Custom.NotificationText {
+    MegaTexts.NotificationText {
         id: notification
 
         visible: hasError
@@ -118,7 +118,7 @@ ColumnLayout {
         notificationText.text: qsTr("Please, try again.")
         Layout.preferredWidth: root.width - 4
         Layout.preferredHeight: notification.height
-        type: Custom.NotificationText.Type.AuthenticationError
+        type: MegaTexts.NotificationText.Type.AuthenticationError
     }
 
     Shortcut {

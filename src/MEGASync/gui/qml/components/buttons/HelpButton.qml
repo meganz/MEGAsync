@@ -4,7 +4,8 @@ import QtQuick.Controls 2.12 as Qml
 import QtQuick.Layouts 1.12
 
 // Local
-import Components 1.0 as Custom
+import Components.Texts 1.0 as MegaTexts
+import Components.Images 1.0 as MegaImages
 import Common 1.0
 
 Qml.Button {
@@ -50,7 +51,7 @@ Qml.Button {
             width: icon.width + textLoader.anchors.leftMargin + textLoader.width
             color: "transparent"
 
-            Custom.SvgImage {
+            MegaImages.SvgImage {
                 id: icon
 
                 anchors.left: parent.left
@@ -87,11 +88,11 @@ Qml.Button {
     Component {
         id: textComponent
 
-        Custom.Text {
+        MegaTexts.Text {
             color: getLinkColor()
             text: button.text
             verticalAlignment: Text.AlignVCenter
-            font.pixelSize: Custom.Text.Size.Medium
+            font.pixelSize: MegaTexts.Text.Size.Medium
             font.weight: Font.Light
         }
     }

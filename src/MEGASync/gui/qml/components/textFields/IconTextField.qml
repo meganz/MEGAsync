@@ -3,10 +3,11 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12
 
 // Local
-import Components 1.0 as Custom
+import Components.TextFields 1.0 as MegaTextFields
+import Components.Images 1.0 as MegaImages
 import Common 1.0
 
-Custom.TextField {
+MegaTextFields.TextField {
     id: control
     property url imageSource: imageSource
     property bool readOnly: true
@@ -17,7 +18,7 @@ Custom.TextField {
     height: outRect.height
     textField.leftPadding: 16 + image.width
     textField.readOnly: readOnly
-    Custom.SvgImage {
+    MegaImages.SvgImage {
         id: image
 
         source: imageSource
@@ -31,4 +32,4 @@ Custom.TextField {
         sourceSize: Qt.size(16 ,16)
     }
 
-} // Custom.TextField -> control
+}

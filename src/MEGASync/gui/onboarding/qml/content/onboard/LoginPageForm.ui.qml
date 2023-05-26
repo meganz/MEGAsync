@@ -4,7 +4,9 @@ import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 
 // QML common
-import Components 1.0 as Custom
+import Components.Buttons 1.0 as MegaButtons
+import Components.Texts 1.0 as MegaTexts
+import Components.TextFields 1.0 as MegaTextFields
 import Common 1.0
 
 // Local
@@ -35,16 +37,16 @@ StackViewPage {
         anchors.rightMargin: contentMargin
         spacing: contentMargin / 2
 
-        Custom.RichText {
+        MegaTexts.RichText {
             id: pageTitle
 
             anchors.left: parent.left
             anchors.right: parent.right
-            font.pixelSize: Custom.Text.Size.Large
+            font.pixelSize: MegaTexts.Text.Size.Large
             text: OnboardingStrings.loginTitle
         }
 
-        Custom.EmailTextField {
+        MegaTextFields.EmailTextField {
             id: email
 
             width: parent.width
@@ -52,7 +54,7 @@ StackViewPage {
             title: OnboardingStrings.email
         }
 
-        Custom.PasswordTextField {
+        MegaTextFields.PasswordTextField {
             id: password
 
             width: parent.width
@@ -60,12 +62,12 @@ StackViewPage {
             title: OnboardingStrings.password
         }
 
-        //        Custom.HelpButton {
-        //            anchors.left: parent.left
-        //            anchors.right: parent.right
-        //            text: OnboardingStrings.forgotPassword
-        //            url: Links.recovery
-        //        }
+        MegaButtons.HelpButton {
+            anchors.left: parent.left
+            anchors.right: parent.right
+            text: OnboardingStrings.forgotPassword
+            url: Links.recovery
+        }
     }
 
     RowLayout {
@@ -78,14 +80,14 @@ StackViewPage {
             bottomMargin: bottomMargin
         }
 
-        Custom.SecondaryButton {
+        MegaButtons.SecondaryButton {
             id: signUpButton
 
             text: OnboardingStrings.signUp
             Layout.alignment: Qt.AlignLeft
         }
 
-        Custom.PrimaryButton {
+        MegaButtons.PrimaryButton {
             id: loginButton
 
             text: OnboardingStrings.login

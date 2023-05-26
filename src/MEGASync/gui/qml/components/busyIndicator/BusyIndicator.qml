@@ -4,7 +4,7 @@ import QtQuick.Controls 2.12 as Qml
 import QtGraphicalEffects 1.15
 
 
-import Components 1.0 as Custom
+import Components.Images 1.0 as MegaImages
 import Common 1.0
 
 Qml.BusyIndicator {
@@ -17,7 +17,7 @@ Qml.BusyIndicator {
     width: imageSize.width
     height: imageSize.height
 
-    contentItem: Custom.SvgImage {
+    contentItem: MegaImages.SvgImage {
         id: iconImage
 
         anchors.fill: parent
