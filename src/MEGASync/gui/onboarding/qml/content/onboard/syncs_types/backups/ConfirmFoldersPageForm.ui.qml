@@ -17,11 +17,12 @@ import Onboarding 1.0
 SyncsPage {
 
     property alias folderField: folderField
-    property alias proxyModel: backupTable.backupsProxyModel
+    property var proxyModel
 
     footerButtons.nextButton {
         text: OnboardingStrings.backup
         icons.source: Images.cloud
+        enabled: !_cppBackupsModel.mExistConflicts
     }
 
     ColumnLayout {
@@ -50,6 +51,7 @@ SyncsPage {
 
                 Layout.preferredWidth: parent.width
                 Layout.preferredHeight: 176
+                model: proxyModel
             }
 
             MegaTextFields.TextField {
@@ -62,6 +64,7 @@ SyncsPage {
                 leftIcon.source: Images.database
                 textField.readOnly: true
                 enabled: false
+                visible: !_cppBackupsModel.mExistConflicts
             }
         }
     }

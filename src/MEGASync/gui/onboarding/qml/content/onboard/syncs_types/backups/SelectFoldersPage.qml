@@ -18,39 +18,24 @@ SelectFoldersPageForm {
         }
 
         nextButton {
+            enabled: _cppBackupsModel.mCheckAllState !== Qt.Unchecked
             onClicked: {
-                proxyModel.updateConfirmed();
+                _cppBackupsModel.checkBackups();
+                backupsProxyModel.selectedFilterEnabled = true;
                 backupsFlow.state = confirmBackup;
             }
         }
     }
 
-    Component.onCompleted: {
-        proxyModel.selectedFilterEnabled = false;
-    }
-
     addFoldersMouseArea.onClicked: {
         folderDialog.openFolderSelector();
     }
-
-//    FileDialog {
-//        id: folderDialog
-
-//        title: "";
-//        folder: shortcuts.home;
-//        selectFolder: true
-//        onAccepted: {
-//            var processedFolder = folder.toString().substring(8);
-//            proxyModel.insertFolder(processedFolder);
-//        }
-//    }
+	
     ChooseLocalFolder {
         id: folderDialog
 
         onFolderChanged: {
-            //folderSelectionChanged(folder);
-            //var processedFolder = folder.toString().substring(8);
-            proxyModel.insertFolder(folderDialog.getFolder());
+            _cppBackupsModel.insertFolder(folderDialog.getFolder());
         }
     }
 

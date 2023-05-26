@@ -15,7 +15,6 @@ Onboarding::Onboarding(QObject *parent)
     , mGlobalListener(new QTMegaGlobalListener(mMegaApi, this))
     , mPreferences(Preferences::instance())
     , mSyncController(new SyncController())
-    , mBackupController(new SyncController())
     , mPassword(QString())
     , mLastName(QString())
     , mFirstName(QString())
@@ -54,9 +53,6 @@ Onboarding::Onboarding(QObject *parent)
 
     connect(mSyncController, &SyncController::syncAddStatus,
             this, &Onboarding::onSyncAddRequestStatus);
-
-    connect(mBackupController, &SyncController::syncAddStatus,
-            this, &Onboarding::onBackupAddRequestStatus);
 }
 
 QUrl Onboarding::getQmlUrl()
@@ -293,21 +289,6 @@ void Onboarding::addSync(const QString &localPath, mega::MegaHandle remoteHandle
     qDebug()<<localPath<<":"<<remoteHandle;
 }
 
-void Onboarding::addBackups(const QStringList& localPathList)
-{
-    if(localPathList.size() <= 0)
-    {
-        return;
-    }
-
-    mBackupsToDoList.clear();
-    for(const QString& path : localPathList)
-    {
-        mBackupsToDoList.append(QPair<QString, QString>(path, QString::fromUtf8("")));
-    }
-    createNextBackup();
-}
-
 bool Onboarding::setDeviceName(const QString &deviceName)
 {
     return UserAttributes::DeviceName::requestDeviceName()->setDeviceName(deviceName);
@@ -327,25 +308,6 @@ void Onboarding::changeRegistrationEmail(const QString &email)
 QString Onboarding::getEmail()
 {
     return mEmail;
-}
-
-void Onboarding::createNextBackup(const QString& name)
-{
-    if(mBackupsToDoList.size() <= 0)
-    {
-        return;
-    }
-
-    QString backupName(name);
-    if(name.isEmpty())
-    {
-        backupName = mBackupController->getSyncNameFromPath(mBackupsToDoList.first().first);
-    }
-    else
-    {
-        mBackupsToDoList.first().second = name;
-    }
-    mBackupController->addBackup(mBackupsToDoList.first().first, backupName);
 }
 
 void Onboarding::exitLoggedIn()
@@ -392,44 +354,4 @@ void Onboarding::onSyncAddRequestStatus(int errorCode,
     {
         emit syncSetupSuccess();
     }
-}
-
-void Onboarding::onBackupAddRequestStatus(int errorCode,
-                                          const QString& errorMsg,
-                                          const QString& name)
-{
-    qDebug() << "Onboarding::onBackupAddRequestStatus -> path = " << name
-             << " - errorCode = " << errorCode << " - errorMsg = " << errorMsg;
-
-    if(errorCode == 0)
-    {
-        mBackupsToDoList.removeFirst();
-        if(mBackupsToDoList.size() > 0)
-        {
-            createNextBackup();
-        }
-    }
-    else
-    {
-        bool found = false;
-        auto it = mBackupsToDoList.constBegin();
-        QString backupName(QString::fromUtf8(""));
-        while(!found && it != mBackupsToDoList.constEnd())
-        {
-            if((found = (it->first == name)))
-            {
-                backupName = it->second;
-            }
-            it++;
-        }
-
-        if(found)
-        {
-            // Wait until the rename conflict has been resolved
-            emit backupConflict(mBackupController->getSyncNameFromPath(name),
-                                backupName,
-                                backupName == QString::fromUtf8(""));
-        }
-    }
-    emit backupsUpdated(name, errorCode, mBackupsToDoList.size() == 0);
 }

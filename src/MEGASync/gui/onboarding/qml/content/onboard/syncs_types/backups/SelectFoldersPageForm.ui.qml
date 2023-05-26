@@ -15,9 +15,6 @@ import Onboard.Syncs_types 1.0
 SyncsPage {
 
     property alias addFoldersMouseArea: addFoldersMouseArea
-    property alias proxyModel: backupTable.backupsProxyModel
-
-    footerButtons.nextButton.enabled: false
 
     ColumnLayout {
 
@@ -48,6 +45,7 @@ SyncsPage {
 
                 Layout.preferredWidth: parent.width
                 Layout.preferredHeight: 186
+                model: _cppBackupsModel
             }
 
             Rectangle {

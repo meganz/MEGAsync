@@ -35,7 +35,7 @@ TwoFAPageForm {
         }
 
         onFetchingNodesProgress: {
-            loginButton.progressValue = progress;
+            loginButton.progress.value = progress;
         }
 
         onLoginFinished: {

@@ -51,7 +51,7 @@ StackView {
         id: selectBackupFoldersPage
 
         SelectFoldersPage {
-            proxyModel: backupsProxyModel
+            //proxyModel: backupsProxyModel
         }
     }
 

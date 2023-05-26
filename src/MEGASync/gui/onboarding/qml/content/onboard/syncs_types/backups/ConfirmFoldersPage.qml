@@ -18,6 +18,7 @@ ConfirmFoldersPageForm {
     footerButtons {
 
         previousButton.onClicked: {
+            backupsProxyModel.selectedFilterEnabled = false;
             backupsFlow.state = backupsFlow.selectBackup;
         }
 
@@ -25,13 +26,12 @@ ConfirmFoldersPageForm {
             success = false;
             root.enabled = false;
             footerButtons.nextButton.icons.busyIndicatorVisible = true;
-            proxyModel.updateConfirmed();
-            Onboarding.addBackups(proxyModel.getConfirmedDirs());
+            backupsProxyModel.createBackups();
         }
     }
 
     Component.onCompleted: {
-        proxyModel.selectedFilterEnabled = true;
+        console.error("Created Confirm Folders");
         Onboarding.getComputerName();
     }
 
@@ -42,22 +42,15 @@ ConfirmFoldersPageForm {
             folderField.textField.text = "/" + deviceName;
             folderField.enabled = true;
         }
+    }
 
-        onBackupsUpdated: (path, errorCode, finished) => {
-            proxyModel.update(path, errorCode);
+    Connections {
+        target: _cppBackupsController
 
-            if(finished) {
-                proxyModel.clean();
-                root.enabled = true;
-                footerButtons.nextButton.icons.busyIndicatorVisible = false;
-                syncsFlow.state = syncsFlow.finalState;
-            }
-        }
-
-        onBackupConflict: (folder, name, isNew) => {
-            proxyModel.clean();
+        onBackupsCreationFinished: {
             root.enabled = true;
             footerButtons.nextButton.icons.busyIndicatorVisible = false;
+            syncsFlow.state = syncsFlow.finalState;
         }
     }
 

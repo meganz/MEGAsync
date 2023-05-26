@@ -17,7 +17,7 @@ import BackupsProxyModel 1.0
 Rectangle {
     id: tableRectangle
 
-    property BackupsProxyModel backupsProxyModel
+    property var model
 
     height: 186
     radius: 8
@@ -39,7 +39,7 @@ Rectangle {
     ListView {
         id: backupList
 
-        model: backupsProxyModel
+        model: tableRectangle.model
         anchors.fill: parent
         headerPositioning: ListView.OverlayHeader
         focus: true
@@ -62,16 +62,6 @@ Rectangle {
             radius: tableRectangle.radius
             z: 3
 
-            function checkSelectAll(checked) {
-                if(!selectAll.fromModel) {
-                    backupsProxyModel.setAllSelected(checked);
-                }
-
-                headerText.selectedRows = backupsProxyModel.getNumSelectedRows();
-                footerButtons.nextButton.enabled = checked;
-                selectAll.fromModel = false;
-            }
-
             RowLayout {
                 width: tableHeaderBackground.width
                 anchors.verticalCenter: tableHeaderBackground.verticalCenter
@@ -85,55 +75,48 @@ Rectangle {
                     implicitHeight: parent.height
                     Layout.leftMargin: 22
                     text: OnboardingStrings.selectAll
-                    tristate: false
+                    tristate: true
                     visible: !backupsProxyModel.selectedFilterEnabled
 
-                    onCheckedChanged: {
-                        if(!selectAll.fromModel) {
-                            tristate = false;
-                            checkSelectAll(checked);
+                    onCheckStateChanged: {
+                        if (!selectAll.fromModel) {
+                            _cppBackupsModel.mCheckAllState = checkState;
                         }
+                        selectAll.fromModel = false;
+                    }
+
+                    Connections {
+                        target: _cppBackupsModel
+
+                        onCheckAllStateChanged: {
+                            selectAll.fromModel = true;
+                            selectAll.checkState = _cppBackupsModel.mCheckAllState;
+                        }
+                    }
+
+                    Component.onCompleted: {
+                        selectAll.checkState = _cppBackupsModel.mCheckAllState;
                     }
                 }
 
                 MegaTexts.Text {
                     id: headerText
 
-                    property int selectedRows: 0
-
-                    text: backupsProxyModel.selectedFilterEnabled
-                          ? OnboardingStrings.backupFolders
-                          : "(" + selectedRows + ")"
-                    Layout.leftMargin: backupsProxyModel.selectedFilterEnabled ? 22 : 4
+                    Layout.leftMargin: 22
                     Layout.fillWidth: true
+                    text: OnboardingStrings.backupFolders
+                    visible: backupsProxyModel.selectedFilterEnabled
                 }
 
                 MegaTexts.Text {
                     id: totalSizeText
 
-                    text: backupsProxyModel.totalSize
                     Layout.rightMargin: 22
                     Layout.alignment: Qt.AlignRight
+                    text: _cppBackupsModel.totalSize
                     font.pixelSize: MegaTexts.Text.Size.Small
                     font.weight: Font.DemiBold
                     visible: backupsProxyModel.selectedFilterEnabled
-                }
-
-                Connections {
-                    target: backupsProxyModel
-
-                    onRowSelectedChanged: (selectedRow, selectedAll) => {
-                        selectAll.fromModel = true;
-                        if(selectedRow) {
-                            selectAll.toIndeterminate();
-                            headerText.selectedRows = backupsProxyModel.getNumSelectedRows();
-                            footerButtons.nextButton.enabled = true;
-                        } else {
-                            selectAll.fromIndeterminate(selectedAll);
-                            selectAll.checked = selectedAll;
-                            checkSelectAll(selectedAll);
-                        }
-                    }
                 }
             }
             Rectangle {
@@ -153,10 +136,6 @@ Rectangle {
             anchors.right: parent.right
             anchors.left: parent.left
         }
-    }
-
-    Component.onCompleted: {
-        console.error("created table");
     }
 
 }

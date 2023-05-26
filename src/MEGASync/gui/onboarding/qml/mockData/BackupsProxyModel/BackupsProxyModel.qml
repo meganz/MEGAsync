@@ -56,10 +56,24 @@ ListModel {
         }
     }
 
+    function checkBackups() {
+        console.log("checkBackups()");
+    }
+
+    function createBackups() {
+        console.log("createBackups()");
+        backupsCreationFinished();
+    }
+
+    signal backupsCreationFinished()
     signal rowSelectedChanged(bool selectedRow, bool selectedAll)
 
     property string totalSize: "24.7 MB"
     property bool selectedFilterEnabled: false
+
+    onSelectedFilterEnabledChanged: {
+        console.log("selectedFilterEnabled: " + selectedFilterEnabled);
+    }
 
     ListElement {
         folder: "C:\\Users\\mega\\Desktop"
