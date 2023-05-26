@@ -254,6 +254,7 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     connect(mApp, &MegaApplication::shellNotificationsProcessed,
             this, &SettingsDialog::onShellNotificationsProcessed);
     mUi->cOverlayIcons->setEnabled(!mApp->isShellNotificationProcessingOngoing());
+    mUi->backupGroupView->setUsePermissions(false);
 }
 
 SettingsDialog::~SettingsDialog()
@@ -1563,7 +1564,6 @@ void SettingsDialog::addSyncFolderAfterOverQuotaCheck(MegaHandle megaFolderHandl
     {
         QString localFolderPath = QDir::toNativeSeparators(QDir(dialog->getLocalFolder())
                                                            .canonicalPath());
-        
 
     if (localFolderPath.isEmpty() || dialog->getMegaPath().isEmpty()
         || dialog->getSyncName().isEmpty() || !dialog->getMegaFolder())
@@ -1728,8 +1728,8 @@ void SettingsDialog::syncsStateInformation(SyncStateInformation state)
 // Backup ----------------------------------------------------------------------------------------
 void SettingsDialog::connectBackupHandlers()
 {
-    connect(mUi->backupTableView, &BackupTableView::removeBackup, this, &SettingsDialog::removeBackup);
-    connect(mUi->backupTableView, &BackupTableView::openInMEGA, this, &SettingsDialog::openHandleInMega);
+    //connect(mUi->backupTableView, &BackupTableView::removeBackup, this, &SettingsDialog::removeBackup);
+    //connect(mUi->backupTableView, &BackupTableView::openInMEGA, this, &SettingsDialog::openHandleInMega);
 
     connect(mUi->backupTableView, &BackupTableView::signalRunSync, this, &SettingsDialog::setSyncToRun);
     connect(mUi->backupTableView, &BackupTableView::signalPauseSync, this, &SettingsDialog::setSyncToPause);
@@ -1777,7 +1777,7 @@ void SettingsDialog::connectBackupHandlers()
 
 void SettingsDialog::loadBackupSettings()
 {
-    BackupItemModel *model(new BackupItemModel(mUi->backupTableView));
+    BackupItemModel *model(new BackupItemModel(/*mUi->backupTableView*/));
     model->fillData();
 
     connect(model, &SyncItemModel::signalSyncCheckboxOn, this, &SettingsDialog::setSyncToRun);
@@ -1792,7 +1792,6 @@ void SettingsDialog::loadBackupSettings()
     });
     SyncItemSortModel *sortModel = new SyncItemSortModel(mUi->syncTableView);
     sortModel->setSourceModel(model);
-    mUi->backupTableView->setModel(sortModel);
 }
 
 void SettingsDialog::on_bBackup_clicked()
@@ -1829,7 +1828,7 @@ void SettingsDialog::on_bAddBackup_clicked()
 
 void SettingsDialog::on_bDeleteBackup_clicked()
 {
-    if(!mUi->backupTableView->selectionModel()->hasSelection())
+/*    if(!mUi->backupTableView->selectionModel()->hasSelection())
         return;
 
     QModelIndex index = mUi->backupTableView->selectionModel()->selectedRows().first();
@@ -1838,7 +1837,7 @@ void SettingsDialog::on_bDeleteBackup_clicked()
     if(backup == nullptr)
         return;
 
-    removeBackup(backup);
+    removeBackup(backup);*/
 }
 
 void SettingsDialog::removeBackup(std::shared_ptr<SyncSettings> backup)
