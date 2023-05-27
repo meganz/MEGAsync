@@ -65,6 +65,8 @@ protected:
 
 private:
     void showAttribute(AttributeType type);
+    void updateLabel(QLabel* label, const QString& text);
+
     QMap<AttributeType, QPointer<QLabel>> mUpdateLabels;
 };
 

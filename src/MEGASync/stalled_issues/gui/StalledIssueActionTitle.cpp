@@ -10,6 +10,7 @@
 #include <QPainterPath>
 #include <QFileInfo>
 #include <QHBoxLayout>
+#include <QSpacerItem>
 
 const char* BUTTON_ID = "button_id";
 const char* ONLY_ICON = "onlyIcon";
@@ -17,6 +18,7 @@ const char* MAIN_BUTTON = "main";
 const char* DISCARDED = "discarded";
 const char* DISABLE_BACKGROUND = "disable_background";
 const char* MESSAGE_TEXT = "message_text";
+const char* EXTRAINFO_INFO = "extrainfo_info";
 
 #include <QGraphicsOpacityEffect>
 
@@ -31,6 +33,7 @@ StalledIssueActionTitle::StalledIssueActionTitle(QWidget *parent) :
     ui->messageContainer->hide();
     ui->actionContainer->hide();
     ui->extraInfoContainer->hide();
+    ui->generalContainer->installEventFilter(this);
 
     ui->titleLabel->installEventFilter(this);
 
@@ -148,7 +151,6 @@ void StalledIssueActionTitle::addMessage(const QString &message, const QPixmap& 
 
     auto messageLabel = new QLabel(message,this);
     messageLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
-    messageLabel->setText(message);
     messageLabel->setProperty(MESSAGE_TEXT, message);
     labelContainerLayout->addWidget(messageLabel);
 
@@ -160,17 +162,10 @@ QLabel* StalledIssueActionTitle::addExtraInfo(const QString &title, const QStrin
 {
     ui->extraInfoContainer->show();
 
-    QWidget* container(new QWidget());
-    QHBoxLayout* layout(new QHBoxLayout(container));
-    layout->setContentsMargins(0,0,0,0);
-    layout->setSpacing(3);
-    container->setLayout(layout);
-
     auto titleLabel = new QLabel(title, this);
     auto infoLabel = new QLabel(info, this);
-
-    layout->addWidget(titleLabel);
-    layout->addWidget(infoLabel);
+    infoLabel->setProperty(MESSAGE_TEXT, info);
+    infoLabel->setProperty(EXTRAINFO_INFO, true);
 
     QHBoxLayout* rowLayout(nullptr);
     auto rowItem = ui->extraInfoLayout->itemAt(level);
@@ -179,7 +174,7 @@ QLabel* StalledIssueActionTitle::addExtraInfo(const QString &title, const QStrin
         auto rowWidget = new QWidget();
         rowLayout = new QHBoxLayout(rowWidget);
         rowLayout->setContentsMargins(0,0,0,0);
-        rowLayout->setSpacing(20);
+        rowLayout->setSpacing(3);
         rowLayout->addStretch();
 
         ui->extraInfoLayout->addWidget(rowWidget);
@@ -189,7 +184,9 @@ QLabel* StalledIssueActionTitle::addExtraInfo(const QString &title, const QStrin
         rowLayout = dynamic_cast<QHBoxLayout*>(rowItem->widget()->layout());
     }
 
-    rowLayout->insertWidget(rowLayout->count()-1, container, 0, Qt::AlignLeft);
+    rowLayout->insertWidget(rowLayout->count()-1,titleLabel, 0 , Qt::AlignLeft);
+    rowLayout->insertWidget(rowLayout->count()-1,infoLabel, 0 , Qt::AlignLeft);
+    rowLayout->insertItem(rowLayout->count()-1, new QSpacerItem(20,10,QSizePolicy::Fixed, QSizePolicy::Fixed));
 
     setStyleSheet(styleSheet());
 
@@ -234,6 +231,44 @@ bool StalledIssueActionTitle::eventFilter(QObject *watched, QEvent *event)
                 ui->titleLabel->setText(elidedText);
             }
         }
+        else if(watched == ui->generalContainer)
+        {
+            for(int row = 0; row < ui->extraInfoLayout->count(); ++row)
+            {
+                QLabel* infoLabel(nullptr);
+
+                auto SizeAvailable(ui->generalContainer->width()
+                                   - (ui->extraInfoLayout->contentsMargins().left() + ui->extraInfoLayout->contentsMargins().right()));
+
+                auto childLabels = ui->extraInfoLayout->itemAt(row)->widget()->findChildren<QLabel*>();
+                foreach(auto label, childLabels)
+                {
+                    if(label->property(EXTRAINFO_INFO).toBool())
+                    {
+                        if(label != childLabels.last())
+                        {
+                            auto size = label->fontMetrics().width(label->property(MESSAGE_TEXT).toString());
+                            SizeAvailable -= (size + 30);
+                        }
+                        else
+                        {
+                            infoLabel = label;
+                        }
+                    }
+                    else
+                    {
+                        auto size = (10 + label->fontMetrics().width(label->text()));
+                        SizeAvailable -= size;
+                    }
+                }
+
+                if(infoLabel && SizeAvailable > 0)
+                {
+                    auto elidedText = infoLabel->fontMetrics().elidedText(infoLabel->property(MESSAGE_TEXT).toString(), Qt::ElideMiddle, SizeAvailable );
+                    infoLabel->setText(elidedText);
+                }
+            }
+        }
         else
         {
             auto contentWidget = dynamic_cast<QWidget*>(watched);
@@ -267,7 +302,7 @@ void StalledIssueActionTitle::updateUser(const QString &user, bool show)
         }
         else
         {
-            userLabel->setText(userText);
+            updateLabel(userLabel, userText);
         }
 
         showAttribute(AttributeType::User);
@@ -290,7 +325,7 @@ void StalledIssueActionTitle::updateVersionsCount(int versions)
         }
         else
         {
-            versionsLabel->setText(versionsText);
+            updateLabel(versionsLabel, versionsText);
         }
 
         showAttribute(AttributeType::Versions);
@@ -312,7 +347,7 @@ void StalledIssueActionTitle::updateSize(const QString &size)
     }
     else
     {
-        sizeLabel->setText(sizeText);
+        updateLabel(sizeLabel, sizeText);
     }
 
     showAttribute(AttributeType::Size);
@@ -328,7 +363,7 @@ void StalledIssueActionTitle::updateLastTimeModified(const QDateTime& time)
     }
     else
     {
-        lastTimeLabel->setText(timeString);
+        updateLabel(lastTimeLabel, timeString);
     }
 
     showAttribute(AttributeType::LastModified);
@@ -344,7 +379,7 @@ void StalledIssueActionTitle::updateCreatedTime(const QDateTime& time)
     }
     else
     {
-        createdTimeLabel->setText(timeString);
+        updateLabel(createdTimeLabel, timeString);
     }
 
     showAttribute(AttributeType::CreatedTime);
@@ -366,6 +401,12 @@ void StalledIssueActionTitle::showAttribute(AttributeType type)
     {
         updateLabel->parentWidget()->show();
     }
+}
+
+void StalledIssueActionTitle::updateLabel(QLabel *label, const QString &text)
+{
+    label->setText(text);
+    label->setProperty(MESSAGE_TEXT, text);
 }
 
 void StalledIssueActionTitle::setPath(const QString &newPath)
