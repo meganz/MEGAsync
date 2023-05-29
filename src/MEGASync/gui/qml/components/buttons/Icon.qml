@@ -16,7 +16,6 @@ QtObject {
     property size size: Qt.size(16, 16)
     property int busyIndicatorPosition: Icon.Position.RIGHT
     property bool busyIndicatorVisible: false
-    property string busyIndicatorImage
 
     onSourceChanged: {
             switch(position)

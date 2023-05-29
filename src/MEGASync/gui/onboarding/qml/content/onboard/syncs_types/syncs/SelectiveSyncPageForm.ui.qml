@@ -19,7 +19,6 @@ SyncsPage {
         enabled: localFolderChooser.isValid && remoteFolderChooser.isValid
         text: OnboardingStrings.sync
         icons.source: Images.sync
-        icons.busyIndicatorImage: Images.loader
     }
 
     ColumnLayout {

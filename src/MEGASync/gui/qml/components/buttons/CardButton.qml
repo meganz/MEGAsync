@@ -81,7 +81,6 @@ Button {
         border.color: button.enabled ? (button.focus ? Styles.focus : "transparent") : "transparent"
         border.width: focusRect.focusBorderWidth
         radius: focusRect.focusBorderRadius
-        height: focusRect.height
 
         Rectangle{
             id: buttonBackground

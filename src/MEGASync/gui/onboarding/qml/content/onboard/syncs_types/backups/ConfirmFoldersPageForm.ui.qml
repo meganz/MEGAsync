@@ -22,7 +22,6 @@ SyncsPage {
     footerButtons.nextButton {
         text: OnboardingStrings.backup
         icons.source: Images.cloud
-        icons.busyIndicatorImage: Images.loader
     }
 
     ColumnLayout {

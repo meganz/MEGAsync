@@ -89,7 +89,6 @@ StackViewPage {
             id: loginButton
 
             text: OnboardingStrings.login
-            icons.busyIndicatorImage: Images.loader
             icons.source: Images.arrowRight
             Layout.alignment: Qt.AlignRight
         }

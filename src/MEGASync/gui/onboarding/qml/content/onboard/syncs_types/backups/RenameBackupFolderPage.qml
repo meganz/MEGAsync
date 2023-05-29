@@ -22,7 +22,6 @@ RenameBackupFolderPageForm {
         nextButton {
             text: OnboardingStrings.rename
             icons.source: Images.edit
-            icons.busyIndicatorImage: Images.loader
             onClicked: {
                 root.enabled = false;
                 footerButtons.nextButton.icons.busyIndicatorVisible = true;

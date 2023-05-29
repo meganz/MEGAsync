@@ -176,7 +176,7 @@ Qml.RoundButton {
     Component {
         id: busyIndicator
         Custom.BusyIndicator {
-            imageSource: icons.busyIndicatorImage
+            imageSource: Images.loader
             disabledOpacity: 1
             color: icons.color
         }
