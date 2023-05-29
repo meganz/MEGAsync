@@ -20,6 +20,9 @@ static const QModelIndex DEFAULT_IDX = QModelIndex();
 
 const int MAX_TRANSFERS = 2000;
 const int CANCEL_THRESHOLD_THREAD = 100;
+const int QUICK_CANCEL_THRESHOLD = 10000;
+const int QUICK_CANCEL_MIN_THRESHOLD = 300;
+const double QUICK_CANCEL_PERCENTAGE_THRESHOLD = 0.8;
 const int START_THRESHOLD_THREAD = 50;
 const int FAILED_THRESHOLD_THREAD = 100;
 const int PAUSE_RESUME_THRESHOLD_THREAD = 300;
@@ -793,7 +796,7 @@ TransfersModel::TransfersModel(QObject *parent) :
     mMostPriorityTransferTimer.setSingleShot(true);
     QObject::connect(&mMostPriorityTransferTimer, &QTimer::timeout, this, &TransfersModel::askForMostPriorityTransfer);
 
-    connect(&mUpdateTransferWatcher, &QFutureWatcher<void>::finished, this, &TransfersModel::updateTransfersCount);
+    connect(&mUpdateTransferWatcher, &QFutureWatcher<void>::finished, this, &TransfersModel::onUpdateTransfersFinished);
     connect(&mClearTransferWatcher, &QFutureWatcher<void>::finished, this, &TransfersModel::onClearTransfersFinished);
     connect(&mAskForMostPriorityTransfersWatcher, &QFutureWatcher<QPair<int,int>>::finished, this, &TransfersModel::onAskForMostPriorityTransfersFinished);
 
@@ -895,6 +898,8 @@ void TransfersModel::onProcessTransfers()
     {
         mostPriorityTransferMayChanged(true);
 
+        bool asynchronousProcessed(false);
+
         int containsTransfersToStart(mTransfersToProcess.startTransfersByTag.size());
         int containsSyncTransfersToStart(mTransfersToProcess.startSyncTransfersByTag.size());
         int containsTransfersToUpdate(mTransfersToProcess.updateTransfersByTag.size());
@@ -939,6 +944,7 @@ void TransfersModel::onProcessTransfers()
             if(isUiBlockedModeActive() || containsTransfersFailed > FAILED_THRESHOLD_THREAD)
             {
                 setUiBlockedMode(true);
+                asynchronousProcessed = true;
 
                 auto future = QtConcurrent::run([this](){
                     if(mModelMutex.tryLock())
@@ -994,6 +1000,8 @@ void TransfersModel::onProcessTransfers()
             {
                 if(isUiBlockedByCounter())
                 {
+                    asynchronousProcessed = true;
+
                     auto future = QtConcurrent::run([this, containsTransfersToUpdate](){
                         if(mModelMutex.tryLock())
                         {
@@ -1026,14 +1034,16 @@ void TransfersModel::onProcessTransfers()
             }
         }
 
-        updateTransfersCount();
+        //Do not update transfers count yet, as the filtering will be done in a differente thread
+        if(!asynchronousProcessed)
+        {
+            updateTransfersCount();
+        }
 
         if(isUiBlockedModeActive())
         {
             setUiBlockedMode(false);
         }
-
-        modelHasChanged(true);
     }
     else
     {
@@ -1206,7 +1216,27 @@ void TransfersModel::processCancelTransfers()
 
         mRowsToCancel.clear();
 
-        removeRows(indexesToCancel);
+        float cancelledPercentage(indexesToCancel.size()/(rowCount()*1.0));
+
+        //For large amount of transfers, this is quite faster: remove all transfers and recreate the tags by row map
+        if(indexesToCancel.size() >= QUICK_CANCEL_THRESHOLD
+                || (indexesToCancel.size() >  QUICK_CANCEL_MIN_THRESHOLD && cancelledPercentage > QUICK_CANCEL_PERCENTAGE_THRESHOLD))
+        {
+            std::sort(indexesToCancel.begin(), indexesToCancel.end(),[](QModelIndex check1, QModelIndex check2){
+                return check1.row() > check2.row();
+            });
+
+            foreach(auto& index, indexesToCancel)
+            {
+                removeTransfer(index.row());
+            }
+
+            restoreTagsByRow();
+        }
+        else
+        {
+            removeRows(indexesToCancel);
+        }
     }
 }
 
@@ -1916,6 +1946,12 @@ void TransfersModel::onClearTransfersFinished()
     emit unblockUiAndFilter();
 }
 
+void TransfersModel::onUpdateTransfersFinished()
+{
+    modelHasChanged(true);
+    updateTransfersCount();
+}
+
 void TransfersModel::onKeepPCAwake()
 {
     PowerOptions options;
@@ -2297,6 +2333,19 @@ void TransfersModel::sendDataChanged(int row)
     }
 }
 
+void TransfersModel::restoreTagsByRow()
+{
+    mTagByOrder.clear();
+    for(int row = 0; row < rowCount(); ++row)
+    {
+        auto transfer = getTransfer(row);
+        if(transfer)
+        {
+            mTagByOrder.insert(transfer->mTag, QPersistentModelIndex(index(row,0)));
+        }
+    }
+}
+
 bool TransfersModel::isUiBlockedModeActive() const
 {
     return mUiBlockedCounter > 0;
@@ -2316,8 +2365,6 @@ void TransfersModel::setUiBlockedMode(bool state)
 
         if(mUiBlockedCounter == 0)
         {
-            updateTransfersCount();
-
             if(!mRowsToCancel.isEmpty() || !mFailedTransferToClear.isEmpty())
             {
                 auto task = QtConcurrent::run([this]()
@@ -2338,6 +2385,7 @@ void TransfersModel::setUiBlockedMode(bool state)
             }
             else
             {
+                updateTransfersCount();
                 emit unblockUiAndFilter();
             }
         }

@@ -414,6 +414,8 @@ void MegaTransferView::onCancelSelectedTransfers()
             && dialog)
     {
         QModelIndexList indexes = getSelectedTransfers();
+        selectionModel()->clear();
+        verticalScrollBar()->setValue(0);
 
         auto sourceModel = MegaSyncApp->getTransfersModel();
         sourceModel->cancelAndClearTransfers(indexes, this);
