@@ -388,7 +388,7 @@
     <message>
         <source>Reminder: You have a contact request</source>
         <translatorcomment>Label to indicate a reminder about a contact request.</translatorcomment>
-        <translation>Напоминание: У вас запрос на контакт</translation>
+        <translation>Напоминание: у вас есть запрос контакта</translation>
     </message>
     <message>
         <source>Shared folder updated</source>
@@ -1307,7 +1307,7 @@
     <message>
         <source>Reminder: You have a contact request</source>
         <translatorcomment>Label to indicate a reminder about a contact request.</translatorcomment>
-        <translation>Напоминание: У вас запрос на контакт</translation>
+        <translation>Напоминание: у вас есть запрос контакта</translation>
     </message>
     <message>
         <source>Show in MEGA</source>
@@ -4131,16 +4131,12 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- You can now search the stored data in your account.
-- We've improved system notifications.
+        <source>- We&apos;ve enhanced system notifications.
 - We've enhanced the UI.
 - We've fixed the detected crashes on Windows, Linux, and macOS.
 </source>
-        <translation>- Теперь можно искать хранящиеся в аккаунте данные.
-- Улучшены системные уведомления.
-- Улучшен пользовательский интерфейс.
-- Исправлены обнаруженные сбои в Windows, Linux и macOS.
-</translation>
+        <translatorcomment>Changelog for v4.9.5</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6685,36 +6681,6 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
 <context>
     <name>TransferNotificationBuilder</name>
     <message>
-        <source>Upload failed</source>
-        <translatorcomment>Notification title when a file or folder upload has failed. CON-223</translatorcomment>
-        <translation>Загрузка не удалась</translation>
-    </message>
-    <message>
-        <source>Folder uploaded</source>
-        <translatorcomment>Notification title when a folder has been uploaded. CON-223</translatorcomment>
-        <translation>Папка загружена</translation>
-    </message>
-    <message>
-        <source>File uploaded</source>
-        <translatorcomment>Notification title when a file has been uploaded. CON-223</translatorcomment>
-        <translation>Файл загружен</translation>
-    </message>
-    <message>
-        <source>%1 no longer exists or was renamed.</source>
-        <translatorcomment>A single local file/folder has been removed or rename before uploading. %1 is the file/folder uploaded name. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Couldn&apos;t upload %1 to %2.</source>
-        <translatorcomment>A single file/folder upload has failed. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Uploaded %1 to %2.</source>
-        <translatorcomment>A single file/folder has been uploaded correctly. %1 is the file/folder uploaded name, %2 is the name of the target folder in the cloud. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Retry</source>
         <translatorcomment>Notification button to retry the failed file. CON-223</translatorcomment>
         <translation>Повторить попытку</translation>
@@ -6730,36 +6696,6 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
         <translation>Получить ссылку</translation>
     </message>
     <message>
-        <source>Download failed</source>
-        <translatorcomment>Notification title when a file or folder download has failed. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Folder downloaded</source>
-        <translatorcomment>Notification title when a folder has been downloaded. CON-223</translatorcomment>
-        <translation>Папка скачана</translation>
-    </message>
-    <message>
-        <source>File downloaded</source>
-        <translatorcomment>Notification title when a file has been downloaded. CON-223</translatorcomment>
-        <translation>Файл скачан</translation>
-    </message>
-    <message>
-        <source>%1 no longer exists.</source>
-        <translatorcomment>A single cloud drive file/folder has been removed before downloading. %1 is the file/folder downloaded name. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Couldn&apos;t download %1 to %2</source>
-        <translatorcomment>A single file/folder download has failed. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Downloaded %1 to %2.</source>
-        <translatorcomment>A single file/folder has been downloaded correctly. %1 is the cloud file/folder download name, %2 is the name of the target folder in the OS filesystem. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Show in folder</source>
         <translatorcomment>Notification button to see the file on the local file explorer. CON-223</translatorcomment>
         <translation>Показать в папке</translation>
@@ -6769,99 +6705,159 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
         <translatorcomment>Notification button to open the file. CON-223</translatorcomment>
         <translation>Открыть</translation>
     </message>
-    <message>
-        <source>Not all items were uploaded</source>
-        <translatorcomment>Notification title when at least one file or folder upload has failed. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Items uploaded</source>
-        <translatorcomment>Notification title when a more than one transfer (file or folders) have been uploaded. CON-223</translatorcomment>
-        <translation>Элементы загружены</translation>
-    </message>
-    <message>
-        <source>Items no longer exist or were renamed</source>
-        <translatorcomment>Several local files/folders have been removed or renamed before uploading. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Couldn&apos;t upload %1 items to %2.</source>
-        <translatorcomment>All files/folder failed to upload.  %1 is the number of files/folders, %2 is the name of the target folder in the cloud. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Uploaded %1,  couldn&apos;t upload %2.</source>
-        <translatorcomment>One file/folder was uploaded correctly, and one file/folder upload has failed.  %1 is the name of the successful cloud file/folder, %2 is the name of the failed cloud file/folder. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Uploaded %1, couldn&apos;t upload %2 items.</source>
-        <translatorcomment>One file/folder was uploaded correctly, and several files/folders uploads have failed.  %1 is the name of the successful cloud file/folder, %2 is the number of failed files/folders. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Uploaded %1 items, couldn&apos;t upload %2.</source>
-        <translatorcomment>Several files/folders were uploaded correctly, and one file/folder uploads has failed.  %1 is the number of successful files/folders, %2 is the name of the failed cloud file/folder. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Uploaded %1 items, couldn&apos;t upload %2 items.</source>
-        <translatorcomment>Several files/folders were uploaded correctly, and several files/folders uploads have failed.  %1 is the number of successful files/folders, %2 is the number of failed files/folders. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Uploaded %1 items to %2.</source>
-        <translatorcomment>Several files/folders were uploaded correctly. %1 is the number of successful files/folders. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
     <message numerus="yes">
         <source>Retry failed items</source>
         <translatorcomment>Notification button to retry failed transfers when not all the transfers failed. CON-223</translatorcomment>
         <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
-        <source>Not all items were downloaded</source>
-        <translatorcomment>Notification title when at least one file or folder download has failed. CON-223</translatorcomment>
+        <source>Could not upload</source>
+        <translatorcomment>Notification title for a failed upload of files/folders. CON-223</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Items downloaded</source>
-        <translatorcomment>Notification title when a more than one transfer (file or folders) have been downloaded. CON-223</translatorcomment>
-        <translation>Элементы скачаны</translation>
-    </message>
-    <message>
-        <source>Items no longer exist</source>
-        <translatorcomment>Several cloud drive files/folders have been removed before downloading. CON-223</translatorcomment>
+        <source>Upload incomplete</source>
+        <translatorcomment>Notification title for a combination of completed and failed uploads. CON-223</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Couldn&apos;t download %1 items to %2.</source>
-        <translatorcomment>All files/folder failed to download.  %1 is the number of files/folders, %2 is the name of the target folder in the filesystem. CON-223</translatorcomment>
+        <source>Upload complete</source>
+        <translatorcomment>Notification title for a successfully upload of files/folders. CON-223</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Downloaded %1,  couldn&apos;t download %2.</source>
-        <translatorcomment>One file/folder was downloaded correctly, and one file/folder download has failed.  %1 is the name of the successful cloud file/folder, %2 is the name of the failed cloud file/folder. CON-223</translatorcomment>
+        <source>Could not download</source>
+        <translatorcomment>Notification title for a failed download of files/folders. CON-223</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Downloaded %1, couldn&apos;t download %2 items.</source>
-        <translatorcomment>One file/folder was downloaded correctly, and several files/folders uploads have failed.  %1 is the name of the successful file/folder, %2 is the number of failed files/folders. CON-223</translatorcomment>
+        <source>Download incomplete</source>
+        <translatorcomment>Notification title for a combination of completed and failed downloads. CON-223</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Downloaded %1 items, couldn&apos;t download %2.</source>
-        <translatorcomment>Several files/folders were downloaded correctly, and one file/folder uploads has failed.  %1 is the number of successful files/folders, %2 is the name of the failed file/folder. CON-223</translatorcomment>
+        <source>Download complete</source>
+        <translatorcomment>Notification title for a successfully download of files/folders. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n item couldn’t be uploaded to %1.</source>
+        <translatorcomment>Body text of a system notification shown when %n items could not be uploaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n item uploaded</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
+        First part of string for multi plural support. Full string looks like: X item uploaded, but Y item couldn’t be uploaded (X and Y will be replaced with specific numbers).</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1, but %n item couldn’t be uploaded.</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
+        Second part of string for multi plural support. Full string looks like: X item uploaded, but Y item couldn’t be uploaded (X and Y will be replaced with specific numbers).</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n item uploaded to %1.</source>
+        <translatorcomment>Body text of a system notification shown when %n items were uploaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n item downloaded</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
+        First part of string for multi plural support. Full string looks like: X item downloaded, but Y item couldn’t be downloaded (X and Y will be replaced with specific numbers).</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1, but %n item couldn’t be downloaded.</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
+        Second part of string for multi plural support. Full string looks like: X item downloaded, but Y item couldn’t be downloaded (X and Y will be replaced with specific numbers).</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n item couldn’t be downloaded to %1.</source>
+        <translatorcomment>Body text of a system notification shown when %n items could not be downloaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n item downloaded to %1.</source>
+        <translatorcomment>Body text of a system notification shown when %n items were downloaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n item no longer exist or was renamed.</source>
+        <translatorcomment>Body text of a system notification shown when %n items no longer exist or were renamed during an upload operation. %n will be replaced with the number of items. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n item no longer exist.</source>
+        <translatorcomment>Body text of a system notification shown when %n items no longer exist or were renamed during a download operation. %n will be replaced with the number of items. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+</context>
+<context>
+    <name>TransferNotificationBuilder_File</name>
+    <message>
+        <source>%1 couldn’t be uploaded to %2.</source>
+        <translatorcomment>Body text of a system notification shown when %1 file could not be uploaded to %2. %1 will be replaced with the name of the file and %2 with the remote destination path. CON-223</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Downloaded %1 items, couldn&apos;t download %2 items.</source>
-        <translatorcomment>Several files/folders were downloaded correctly, and several files/folders downloads have failed.  %1 is the number of successful files/folders, %2 is the number of failed files/folders. CON-223</translatorcomment>
+        <source>%1 uploaded to %2.</source>
+        <translatorcomment>Body text of a system notification shown when %1 was succesfully uploaded to %2. %1 will be replaced with the name of the file and %2 with the remote destination path. CON-223</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Downloaded %1 items to %2.</source>
-        <translatorcomment>Several files/folders were downloaded correctly. %1 is the number of successful files/folders. CON-223</translatorcomment>
+        <source>%1 couldn’t be downloaded to %2.</source>
+        <translatorcomment>Body text of a system notification shown when %1 file could not be downloaded to %2. %1 will be replaced with the name of the file and %2 with the local destination path. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 downloaded to %2.</source>
+        <translatorcomment>Body text of a system notification shown when %1 was succesfully downloaded to %2. %1 will be replaced with the name of the file and %2 with the local destination path. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 no longer exists or was renamed.</source>
+        <translatorcomment>Body text of a system notification shown when %1 no longer exists or was removed during upload operation. %1 will be replaced with the name of the file. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 no longer exists.</source>
+        <translatorcomment>Body text of a system notification shown when %1 no longer exists during download operation. %1 will be replaced with the name of the file. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TransferNotificationBuilder_Folder</name>
+    <message>
+        <source>%1 couldn’t be uploaded to %2.</source>
+        <translatorcomment>Body text of a system notification shown when %1 folder could not be uploaded to %2. %1 will be replaced with the name of the folder and %2 with the remote destination path. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 uploaded to %2.</source>
+        <translatorcomment>Body text of a system notification shown when %1 was succesfully uploaded to %2. %1 will be replaced with the name of the folder and %2 with the remote destination path. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 couldn’t be downloaded to %2.</source>
+        <translatorcomment>Body text of a system notification shown when %1 file could not be downloaded to %2. %1 will be replaced with the name of the folder and %2 with the local destination path. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 downloaded to %2.</source>
+        <translatorcomment>Body text of a system notification shown when %1 was succesfully downloaded to %2. %1 will be replaced with the name of the folder and %2 with the local destination path. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 no longer exists or was renamed.</source>
+        <translatorcomment>Body text of a system notification shown when %1 no longer exists or was removed during upload operation. %1 will be replaced with the name of the folder. CON-223</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 no longer exists.</source>
+        <translatorcomment>Body text of a system notification shown when %1 no longer exists during download operation. %1 will be replaced with the name of the folder. CON-223</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>

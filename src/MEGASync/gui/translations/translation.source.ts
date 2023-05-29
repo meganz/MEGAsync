@@ -4239,7 +4239,7 @@ Enter a different name.</translation>
 - We&apos;ve fixed the detected crashes on Windows, Linux, and macOS.
 </source>
         <translatorcomment>Changelog for v4.9.5</translatorcomment>
-        <translation>- We&apos;ve enhanced system notifications.
+        <translation>- We’ve enhanced system notifications.
 - We&apos;ve enhanced the UI.
 - We&apos;ve fixed the detected crashes on Windows, Linux, and macOS.</translation>
     </message>
@@ -6845,37 +6845,37 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Could not upload</source>
         <translatorcomment>Notification title for a failed upload of files/folders. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Could not upload</translation>
     </message>
     <message>
         <source>Upload incomplete</source>
         <translatorcomment>Notification title for a combination of completed and failed uploads. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Upload incomplete</translation>
     </message>
     <message>
         <source>Upload complete</source>
         <translatorcomment>Notification title for a successfully upload of files/folders. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Upload complete</translation>
     </message>
     <message>
         <source>Could not download</source>
         <translatorcomment>Notification title for a failed download of files/folders. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Could not download</translation>
     </message>
     <message>
         <source>Download incomplete</source>
         <translatorcomment>Notification title for a combination of completed and failed downloads. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Download incomplete</translation>
     </message>
     <message>
         <source>Download complete</source>
         <translatorcomment>Notification title for a successfully download of files/folders. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Download complete</translation>
     </message>
     <message numerus="yes">
         <source>%n item couldn’t be uploaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items could not be uploaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%n item couldn’t be uploaded to %1.</numerusform>
             <numerusform>%n items couldn’t be uploaded to %1.</numerusform>
         </translation>
@@ -6884,7 +6884,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
         <source>%n item uploaded</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: X item uploaded, but Y item couldn’t be uploaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%n item uploaded</numerusform>
             <numerusform>%n items uploaded</numerusform>
         </translation>
@@ -6893,7 +6893,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
         <source>%1, but %n item couldn’t be uploaded.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         Second part of string for multi plural support. Full string looks like: X item uploaded, but Y item couldn’t be uploaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%1, but %n item couldn’t be uploaded.</numerusform>
             <numerusform>%1, but %n items couldn’t be uploaded.</numerusform>
         </translation>
@@ -6901,7 +6901,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message numerus="yes">
         <source>%n item uploaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items were uploaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%n item uploaded to %1.</numerusform>
             <numerusform>%n items uploaded to %1.</numerusform>
         </translation>
@@ -6910,7 +6910,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
         <source>%n item downloaded</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: X item downloaded, but Y item couldn’t be downloaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%n item downloaded</numerusform>
             <numerusform>%n items downloaded</numerusform>
         </translation>
@@ -6919,7 +6919,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
         <source>%1, but %n item couldn’t be downloaded.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         Second part of string for multi plural support. Full string looks like: X item downloaded, but Y item couldn’t be downloaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%1, but %n item couldn’t be downloaded.</numerusform>
             <numerusform>%1, but %n items couldn’t be downloaded.</numerusform>
         </translation>
@@ -6927,7 +6927,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message numerus="yes">
         <source>%n item couldn’t be downloaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items could not be downloaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%n item couldn’t be downloaded to %1.</numerusform>
             <numerusform>%n items couldn’t be downloaded to %1.</numerusform>
         </translation>
@@ -6935,7 +6935,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message numerus="yes">
         <source>%n item downloaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items were downloaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%n item downloaded to %1.</numerusform>
             <numerusform>%n items downloaded to %1.</numerusform>
         </translation>
@@ -6943,7 +6943,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message numerus="yes">
         <source>%n item no longer exist or was renamed.</source>
         <translatorcomment>Body text of a system notification shown when %n items no longer exist or were renamed during an upload operation. %n will be replaced with the number of items. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%n item no longer exist or was renamed.</numerusform>
             <numerusform>%n items no longer exist or were renamed.</numerusform>
         </translation>
@@ -6951,7 +6951,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message numerus="yes">
         <source>%n item no longer exist.</source>
         <translatorcomment>Body text of a system notification shown when %n items no longer exist or were renamed during a download operation. %n will be replaced with the number of items. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%n item no longer exist.</numerusform>
             <numerusform>%n items no longer exist.</numerusform>
         </translation>
@@ -6962,32 +6962,32 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>%1 couldn’t be uploaded to %2.</source>
         <translatorcomment>Body text of a system notification shown when %1 file could not be uploaded to %2. %1 will be replaced with the name of the file and %2 with the remote destination path. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 couldn’t be uploaded to %2.</translation>
     </message>
     <message>
         <source>%1 uploaded to %2.</source>
         <translatorcomment>Body text of a system notification shown when %1 was succesfully uploaded to %2. %1 will be replaced with the name of the file and %2 with the remote destination path. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 uploaded to %2.</translation>
     </message>
     <message>
         <source>%1 couldn’t be downloaded to %2.</source>
         <translatorcomment>Body text of a system notification shown when %1 file could not be downloaded to %2. %1 will be replaced with the name of the file and %2 with the local destination path. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 couldn’t be downloaded to %2.</translation>
     </message>
     <message>
         <source>%1 downloaded to %2.</source>
         <translatorcomment>Body text of a system notification shown when %1 was succesfully downloaded to %2. %1 will be replaced with the name of the file and %2 with the local destination path. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 downloaded to %2.</translation>
     </message>
     <message>
         <source>%1 no longer exists or was renamed.</source>
         <translatorcomment>Body text of a system notification shown when %1 no longer exists or was removed during upload operation. %1 will be replaced with the name of the file. CON-223</translatorcomment>
-        <translation type="unfinished">%1 no longer exists or was renamed.</translation>
+        <translation>%1 no longer exists or was renamed.</translation>
     </message>
     <message>
         <source>%1 no longer exists.</source>
         <translatorcomment>Body text of a system notification shown when %1 no longer exists during download operation. %1 will be replaced with the name of the file. CON-223</translatorcomment>
-        <translation type="unfinished">%1 no longer exists.</translation>
+        <translation>%1 no longer exists.</translation>
     </message>
 </context>
 <context>
@@ -6995,32 +6995,32 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>%1 couldn’t be uploaded to %2.</source>
         <translatorcomment>Body text of a system notification shown when %1 folder could not be uploaded to %2. %1 will be replaced with the name of the folder and %2 with the remote destination path. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 couldn’t be uploaded to %2.</translation>
     </message>
     <message>
         <source>%1 uploaded to %2.</source>
         <translatorcomment>Body text of a system notification shown when %1 was succesfully uploaded to %2. %1 will be replaced with the name of the folder and %2 with the remote destination path. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 uploaded to %2.</translation>
     </message>
     <message>
         <source>%1 couldn’t be downloaded to %2.</source>
         <translatorcomment>Body text of a system notification shown when %1 file could not be downloaded to %2. %1 will be replaced with the name of the folder and %2 with the local destination path. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 couldn’t be downloaded to %2.</translation>
     </message>
     <message>
         <source>%1 downloaded to %2.</source>
         <translatorcomment>Body text of a system notification shown when %1 was succesfully downloaded to %2. %1 will be replaced with the name of the folder and %2 with the local destination path. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 downloaded to %2.</translation>
     </message>
     <message>
         <source>%1 no longer exists or was renamed.</source>
         <translatorcomment>Body text of a system notification shown when %1 no longer exists or was removed during upload operation. %1 will be replaced with the name of the folder. CON-223</translatorcomment>
-        <translation type="unfinished">%1 no longer exists or was renamed.</translation>
+        <translation>%1 no longer exists or was renamed.</translation>
     </message>
     <message>
         <source>%1 no longer exists.</source>
         <translatorcomment>Body text of a system notification shown when %1 no longer exists during download operation. %1 will be replaced with the name of the folder. CON-223</translatorcomment>
-        <translation type="unfinished">%1 no longer exists.</translation>
+        <translation>%1 no longer exists.</translation>
     </message>
 </context>
 <context>
