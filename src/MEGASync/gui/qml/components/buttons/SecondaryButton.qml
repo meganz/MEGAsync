@@ -12,6 +12,7 @@ MegaButtons.Button {
         text: Styles.textSecondary
         textPressed: Styles.buttonSecondaryPressed
         textHover: Styles.textSecondary
+        textDisabled: Styles.textDisabled
         pressed: Styles.buttonSecondaryPressed
         borderPressed: colors.pressed
         hover: Styles.buttonSecondaryHover

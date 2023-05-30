@@ -1,7 +1,7 @@
 // System
 import QtQuick 2.12
 import QtQuick.Controls 2.12 as Qml
-import QtGraphicalEffects 1.15
+import QtGraphicalEffects 1.0
 
 
 import Components.Images 1.0 as MegaImages
@@ -12,7 +12,7 @@ Qml.BusyIndicator {
     property alias color: iconImage.color
     property alias imageSource: iconImage.source
     property alias imageSize: iconImage.sourceSize
-    property alias disabledOpacity: iconImage.disabledOpacity
+    //property alias disabledOpacity: iconImage.disabledOpacity
 
     width: imageSize.width
     height: imageSize.height

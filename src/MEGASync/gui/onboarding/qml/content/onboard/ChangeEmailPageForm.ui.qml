@@ -24,7 +24,7 @@ Rectangle {
 
     readonly property int contentMargin: 48
 
-    color: Styles.pageBackground
+    color: Styles.surface1
 
     ColumnLayout {
         id: layout

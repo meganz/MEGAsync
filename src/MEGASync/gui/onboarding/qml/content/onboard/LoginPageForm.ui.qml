@@ -18,16 +18,11 @@ import Onboarding 1.0
 StackViewPage {
     id: root
 
-    readonly property int contentMargin: 48
-    readonly property int bottomMargin: 32
-
     property alias signUpButton: signUpButton
     property alias loginButton: loginButton
 
     property alias email: email
     property alias password: password
-
-    color: Styles.pageBackground
 
     Column {
         anchors.verticalCenter: root.verticalCenter

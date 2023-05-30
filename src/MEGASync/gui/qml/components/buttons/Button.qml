@@ -172,14 +172,14 @@ Qml.RoundButton {
             source: icons.source
             color: button.enabled ? icons.color : icons.disabledColor
             sourceSize: icons.size
-            disabledOpacity: 1
+           // disabledOpacity: 1
         }
     }
     Component {
         id: busyIndicator
         MegaBusyIndicator.BusyIndicator {
             imageSource: Images.loader
-            disabledOpacity: 1
+            //disabledOpacity: 1
             color: icons.color
         }
     }

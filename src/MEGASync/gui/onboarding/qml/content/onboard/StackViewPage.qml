@@ -21,7 +21,11 @@ Rectangle {
     readonly property string fetchNodesStatus: "fetchNodes"
     readonly property string code2FAStatus: "twoFA"
 
-    color: "transparent"
+    readonly property int contentMargin: 48
+    readonly property int bottomMargin: 32
+
+    color: Styles.surface1
+
     state: normalStatus
     states: [
         State {

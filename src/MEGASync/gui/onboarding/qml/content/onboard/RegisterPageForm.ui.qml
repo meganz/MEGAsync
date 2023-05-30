@@ -17,10 +17,6 @@ import Onboarding 1.0
 
 StackViewPage {
     id: root
-
-    readonly property int contentMargin: 48
-    readonly property int bottomMargin: 32
-    readonly property int buttonSpacing: 8
     readonly property int contentHeight: 374
 
     property RegisterContent registerContent: RegisterContent {
@@ -29,8 +25,6 @@ StackViewPage {
 
     property alias loginButton: loginButton
     property alias nextButton: nextButton
-
-    color: Styles.pageBackground
 
     Column {
         id: mainColumn
@@ -66,12 +60,23 @@ StackViewPage {
         }
     }
 
-    Row {
-        anchors.right: root.right
-        anchors.bottom: root.bottom
-        anchors.rightMargin: contentMargin
-        anchors.bottomMargin: bottomMargin
-        spacing: buttonSpacing
+    RowLayout {
+        anchors {
+            right: root.right
+            bottom: root.bottom
+            left: root.left
+            leftMargin: contentMargin
+            rightMargin: contentMargin
+            bottomMargin: bottomMargin
+        }
+        Layout.fillWidth: true
+
+        Custom.SecondaryButton {
+            id: loginButton
+
+            text: OnboardingStrings.login
+            Layout.alignment: Qt.AlignLeft
+        }
 
         MegaButtons.PrimaryButton {
             id: nextButton
@@ -86,6 +91,7 @@ StackViewPage {
             id: loginButton
 
             text: OnboardingStrings.login
+            Layout.alignment: Qt.AlignRight
         }
     }
 }

@@ -16,6 +16,7 @@ MegaButtons.Button {
         text: Styles.textOnColor
         textPressed: Styles.textOnColor
         textHover: Styles.textOnColor
+        textDisabled: Styles.textDisabled
     }
 }
 
