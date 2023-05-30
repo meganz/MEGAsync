@@ -36,6 +36,12 @@ private:
     int findItemCountInLineEdit();
     static QString createWindowTitle(int fileCount, int folderCount);
 
+    void onKeyPressEvent(QKeyEvent* e);
+    bool onEnabledChangeEvent();
+    void onHoverEnterEvent();
+
+    bool isSelectionOverLimit = false;
+
 private slots:
     void onSelectionChanged();
 };
