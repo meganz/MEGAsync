@@ -71,7 +71,7 @@ StackViewPage {
         }
         Layout.fillWidth: true
 
-        Custom.SecondaryButton {
+        MegaButtons.SecondaryButton {
             id: loginButton
 
             text: OnboardingStrings.login
@@ -85,12 +85,7 @@ StackViewPage {
                      && registerContent.termsCheckBox.checked
             icons.source: Images.arrowRight
             text: OnboardingStrings.next
-        }
 
-        MegaButtons.SecondaryButton {
-            id: loginButton
-
-            text: OnboardingStrings.login
             Layout.alignment: Qt.AlignRight
         }
     }
