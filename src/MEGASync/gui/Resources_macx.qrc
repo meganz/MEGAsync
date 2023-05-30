@@ -1187,12 +1187,6 @@
         <file>images/sync_states/x-circle.png</file>
         <file>images/sync_states/x-circle@2x.png</file>
         <file>images/sync_states/x-circle@3x.png</file>
-        <file>images/sync_states/alert-circle.png</file>
-        <file>images/sync_states/alert-circle@2x.png</file>
-        <file>images/sync_states/alert-circle@3x.png</file>
-        <file>images/sync_states/alert-circle-selected.png</file>
-        <file>images/sync_states/alert-circle-selected@2x.png</file>
-        <file>images/sync_states/alert-circle-selected@3x.png</file>
         <file>images/sync_states/backup.png</file>
         <file>images/sync_states/backup@2x.png</file>
         <file>images/sync_states/backup@3x.png</file>
@@ -1220,5 +1214,11 @@
         <file>images/sync_context_menu/play-circle.png</file>
         <file>images/sync_context_menu/play-circle@2x.png</file>
         <file>images/sync_context_menu/play-circle@3x.png</file>
+        <file>images/sync_states/x-circle-error.png</file>
+        <file>images/sync_states/x-circle-error@2x.png</file>
+        <file>images/sync_states/x-circle-error@3x.png</file>
+        <file>images/sync_states/hand-error.png</file>
+        <file>images/sync_states/hand-error@2x.png</file>
+        <file>images/sync_states/hand-error@3x.png</file>
     </qresource>
 </RCC>

@@ -7,6 +7,7 @@
 #include <QHeaderView>
 #include <QMenu>
 #include <QTooltip>
+#include <QPainter>
 #include <QtConcurrent/QtConcurrent>
 
 SyncTableView::SyncTableView(QWidget *parent)
@@ -60,6 +61,7 @@ void SyncTableView::showEvent(QShowEvent *event)
 
 void SyncTableView::initTable()
 {
+    setItemDelegateForColumn(SyncItemModel::Column::ENABLED, new BackgroundColorDelegate(this));
     setItemDelegateForColumn(SyncItemModel::Column::MENU, new MenuItemDelegate(this));
     setItemDelegateForColumn(SyncItemModel::Column::LNAME, new IconMiddleDelegate(this));
     setItemDelegateForColumn(SyncItemModel::Column::Column_STATE, new ElideMiddleDelegate(this));
@@ -178,14 +180,23 @@ void SyncTableView::removeActionClicked(std::shared_ptr<SyncSettings> settings)
 
 void SyncTableView::createStatesContextActions(QMenu* menu, std::shared_ptr<SyncSettings> sync)
 {
-    if(!sync->getSync()->getError())
+    auto addRun = [this, sync, menu]()
+    {
+        auto syncRun (new MenuItemAction(tr("Run"), QLatin1String("://images/sync_context_menu/play-circle.png")));
+        connect(syncRun, &MenuItemAction::triggered, this, [this, sync]() { emit signalRunSync(sync); });
+        syncRun->setParent(menu);
+        menu->addAction(syncRun);
+    };
+
+    if(sync->getSync()->getError())
+    {
+        addRun();
+    }
+    else
     {
         if(sync->getSync()->getRunState() != mega::MegaSync::RUNSTATE_RUNNING)
         {
-            auto syncRun (new MenuItemAction(tr("Run"), QLatin1String("://images/sync_context_menu/play-circle.png")));
-            connect(syncRun, &MenuItemAction::triggered, this, [this, sync]() { emit signalRunSync(sync); });
-            syncRun->setParent(menu);
-            menu->addAction(syncRun);
+           addRun();
         }
 
         if(sync->getSync()->getRunState() != mega::MegaSync::RUNSTATE_PAUSED)
@@ -195,23 +206,24 @@ void SyncTableView::createStatesContextActions(QMenu* menu, std::shared_ptr<Sync
             syncPause->setParent(menu);
             menu->addAction(syncPause);
         }
-    }
 
-    if(sync->getSync()->getRunState() != mega::MegaSync::RUNSTATE_DISABLED)
-    {
-        if(sync->getSync()->getRunState() != mega::MegaSync::RUNSTATE_SUSPENDED)
+        if(sync->getSync()->getRunState() != mega::MegaSync::RUNSTATE_DISABLED)
         {
-            auto syncSuspend (new MenuItemAction(tr("Suspend"), QLatin1String("://images/sync_states/hand.png")));
-            connect(syncSuspend, &MenuItemAction::triggered, this, [this, sync]() { emit signalSuspendSync(sync); });
-            syncSuspend->setParent(menu);
-            menu->addAction(syncSuspend);
-        }
+            if(sync->getSync()->getRunState() != mega::MegaSync::RUNSTATE_SUSPENDED)
+            {
+                auto syncSuspend (new MenuItemAction(tr("Suspend"), QLatin1String("://images/sync_states/hand.png")));
+                connect(syncSuspend, &MenuItemAction::triggered, this, [this, sync]() { emit signalSuspendSync(sync); });
+                syncSuspend->setParent(menu);
+                menu->addAction(syncSuspend);
+            }
 
-        auto syncDisable (new MenuItemAction(tr("Disable"), QLatin1String("://images/sync_states/x-circle.png")));
-        connect(syncDisable, &MenuItemAction::triggered, this, [this, sync]() { emit signalDisableSync(sync); });
-        syncDisable->setParent(menu);
-        menu->addAction(syncDisable);
+            auto syncDisable (new MenuItemAction(tr("Disable"), QLatin1String("://images/sync_states/x-circle.png")));
+            connect(syncDisable, &MenuItemAction::triggered, this, [this, sync]() { emit signalDisableSync(sync); });
+            syncDisable->setParent(menu);
+            menu->addAction(syncDisable);
+        }
     }
+
 
     auto openMegaignore (new MenuItemAction(tr("Edit .megaignore"), QLatin1String("://images/sync_context_menu/edit-small.png")));
     connect(openMegaignore, &MenuItemAction::triggered, this, [this, sync]() { emit signalOpenMegaignore(sync); });
@@ -219,7 +231,7 @@ void SyncTableView::createStatesContextActions(QMenu* menu, std::shared_ptr<Sync
     menu->addSeparator();
     menu->addAction(openMegaignore);
 
-    if(sync->getSync()->getRunState() == mega::MegaSync::RUNSTATE_RUNNING)
+    if(sync->getSync()->getRunState() == mega::MegaSync::RUNSTATE_RUNNING || sync->getError())
     {
         auto rescanQuick (new MenuItemAction(tr("Quick Rescan"), QLatin1String("://images/sync_context_menu/search-small.png")));
         connect(rescanQuick, &MenuItemAction::triggered, this, [this, sync]() { emit signalRescanQuick(sync); });
@@ -234,8 +246,42 @@ void SyncTableView::createStatesContextActions(QMenu* menu, std::shared_ptr<Sync
         menu->addAction(rescanDeep);
     }
 }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+BackgroundColorDelegate::BackgroundColorDelegate(QObject *parent) : QStyledItemDelegate(parent)
+{
 
-MenuItemDelegate::MenuItemDelegate(QObject *parent) : QStyledItemDelegate(parent)
+}
+
+void BackgroundColorDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+    QStyleOptionViewItem opt(option);
+
+    QPalette::ColorGroup cg = option.state & QStyle::State_Enabled
+            ? QPalette::Normal : QPalette::Disabled;
+
+    if (option.state & QStyle::State_Selected)
+    {
+        painter->setPen(option.palette.color(cg, QPalette::HighlightedText));
+    }
+    else
+    {
+        auto sync = index.data(Qt::UserRole).value<std::shared_ptr<SyncSettings>>();
+        if(sync->getError())
+        {
+            painter->fillRect(option.rect, QColor(QLatin1String("#FFE4E8")));
+            painter->setPen(QColor(QLatin1String("#E31B57")));
+        }
+        else
+        {
+            painter->setPen(option.palette.color(cg, QPalette::Text));
+        }
+    }
+
+    QStyledItemDelegate::paint(painter, opt, index);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+MenuItemDelegate::MenuItemDelegate(QObject *parent) : BackgroundColorDelegate(parent)
 {
 }
 
@@ -248,19 +294,20 @@ void MenuItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     {
         opt.state.setFlag(QStyle::State_Enabled, true);
     }
-    QStyledItemDelegate::paint(painter, opt, index);
+    BackgroundColorDelegate::paint(painter, opt, index);
 }
 
 const int IconMiddleDelegate::ICON_WIDTH = 60;
 
 IconMiddleDelegate::IconMiddleDelegate(QObject* parent) :
-    QStyledItemDelegate(parent)
+    BackgroundColorDelegate(parent)
 {
 }
 
 void IconMiddleDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    QStyledItemDelegate::paint(painter, option, index);
+    BackgroundColorDelegate::paint(painter, option, index);
+
     QStyleOptionViewItem opt(option);
     opt.decorationAlignment = Qt::AlignVCenter | Qt::AlignHCenter;
     opt.decorationPosition = QStyleOptionViewItem::Top;
@@ -280,19 +327,9 @@ void IconMiddleDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
     QTextOption textOption;
     textOption.setAlignment(Qt::AlignVCenter);
 
-    QPalette::ColorGroup cg = option.state & QStyle::State_Enabled
-                          ? QPalette::Normal : QPalette::Disabled;
-
-    if (option.state & QStyle::State_Selected) {
-        painter->setPen(option.palette.color(cg, QPalette::HighlightedText));
-    } else {
-        painter->setPen(option.palette.color(cg, QPalette::Text));
-    }
-
     QString elidedText = option.fontMetrics.elidedText(text, Qt::ElideMiddle, textRect.width());
 
     painter->drawText(textRect, elidedText, textOption);
-
 }
 
 void IconMiddleDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const
@@ -320,14 +357,14 @@ bool IconMiddleDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view, c
 }
 
 ElideMiddleDelegate::ElideMiddleDelegate(QObject *parent) :
-    QStyledItemDelegate(parent)
+    BackgroundColorDelegate(parent)
 {
 
 }
 
 void ElideMiddleDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    QStyledItemDelegate::paint(painter, option, index);
+    BackgroundColorDelegate::paint(painter, option, index);
 
     QString elidedText = option.fontMetrics.elidedText(index.data(Qt::DisplayRole).toString(), Qt::ElideMiddle, option.rect.width());
 

@@ -16,6 +16,7 @@ BackupTableView::BackupTableView(QWidget *parent)
 
 void BackupTableView::initTable()
 {
+    setItemDelegate(new BackgroundColorDelegate(this));
     setItemDelegateForColumn(BackupItemModel::Column::MENU, new MenuItemDelegate(this));
     setItemDelegateForColumn(SyncItemModel::Column::LNAME, new IconMiddleDelegate(this));
     horizontalHeader()->setSortIndicator(-1, Qt::AscendingOrder);
