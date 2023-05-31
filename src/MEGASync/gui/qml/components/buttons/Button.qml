@@ -146,7 +146,7 @@ Qml.RoundButton {
                     anchors.centerIn: parent
                     width:  backgroundRect.width
                     height: backgroundRect.height
-                    radius: 6
+                    radius: 7
                 }
             }
         }

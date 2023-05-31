@@ -1,5 +1,6 @@
 // System
 import QtQuick 2.12
+import QtGraphicalEffects 1.0
 
 // QML common
 import Common 1.0
@@ -98,6 +99,17 @@ Button {
             anchors.leftMargin: button.focusBorderWidth
             width: button.width - 2 * button.focusBorderWidth
             height: button.height - 2 * button.focusBorderWidth
+        }
+
+        DropShadow {
+            anchors.fill: buttonBackground
+            horizontalOffset: 0
+            verticalOffset: 5
+            radius: 5.0
+            samples: 11
+            cached: true
+            color: "#0d000000"//
+            source: buttonBackground
         }
 
         Loader {

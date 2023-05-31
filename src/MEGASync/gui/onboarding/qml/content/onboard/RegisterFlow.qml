@@ -19,7 +19,7 @@ Rectangle {
     readonly property string confirmEmail: "confirmEmail"
     readonly property string changeConfirmEmail: "changeConfirmEmail"
 
-    color: "transparent"
+    color: Styles.gradientPinkTop
     state: login
     states: [
         State {

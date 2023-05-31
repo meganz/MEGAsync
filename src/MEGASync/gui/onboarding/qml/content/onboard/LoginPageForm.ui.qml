@@ -86,7 +86,6 @@ StackViewPage {
             id: loginButton
 
             text: OnboardingStrings.login
-            icons.source: Images.arrowRight
             Layout.alignment: Qt.AlignRight
         }
     }

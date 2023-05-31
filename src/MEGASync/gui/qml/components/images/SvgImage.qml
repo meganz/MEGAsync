@@ -24,6 +24,10 @@ Item {
         id: iconFill
         anchors.fill: parent
         visible: false
+        onColorChanged: {
+            opacityLoader.sourceComponent = opacityMask
+            image.visible = false
+        }
     }
 
     Image {
@@ -31,13 +35,18 @@ Item {
 
         opacity: enabled ? 1.0 : root.disabledOpacity
         anchors.centerIn: parent
-        visible: false
     }
 
-    OpacityMask {
-        id: overlay
+    Loader{
+        id: opacityLoader
         anchors.fill: iconFill
-        source: iconFill
-        maskSource: image
+    }
+    Component{
+        id: opacityMask
+        OpacityMask {
+            anchors.fill: parent
+            source: iconFill
+            maskSource: image
+        }
     }
 }

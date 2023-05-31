@@ -25,9 +25,9 @@ CardButton {
             spacing: 8
 
             MegaImages.SvgImage {
-                color: button.checked || button.hovered
-                       ? Styles.iconAccent
-                       : Styles.iconSecondary
+//                color: button.checked || button.hovered
+//                       ? Styles.iconAccent
+//                       : Styles.iconSecondary
                 source: imageSource
                 sourceSize: imageSourceSize
             }
@@ -52,6 +52,7 @@ CardButton {
                 anchors.rightMargin: main.textHorizontalMargin
                 font.pixelSize: MegaTexts.Text.Size.Small
                 font.weight: Font.Light
+                color: Styles.textSecondary
             }
         }
     }

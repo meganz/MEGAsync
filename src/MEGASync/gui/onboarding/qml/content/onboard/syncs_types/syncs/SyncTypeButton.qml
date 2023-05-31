@@ -12,5 +12,5 @@ SyncsVerticalButton {
     Layout.preferredHeight: 220
     width: 240
     height: 220
-    imageSourceSize: Qt.size(208, 104)
+    imageSourceSize: Qt.size(172, 100)
 }
