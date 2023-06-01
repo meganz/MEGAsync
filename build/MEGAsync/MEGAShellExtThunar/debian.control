@@ -9,7 +9,7 @@ Package: thunar-megasync
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, megasync
 Description: MEGA Desktop App plugin for Thunar
-- Easily see and track your sync statuses.
-- Send files and folders to MEGA.
-- Share your synced files and folders with anyone by creating links.
-- View files in MEGA's browser (webclient).
+  - Easily see and track your sync statuses.
+  - Send files and folders to MEGA.
+  - Share your synced files and folders with anyone by creating links.
+  - View files in MEGA's browser (webclient).

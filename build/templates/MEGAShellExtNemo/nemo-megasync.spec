@@ -31,8 +31,11 @@ Requires:       nemo, megasync >= 3.5
 
 %description
 - Easily see and track your sync statuses.
+
 - Send files and folders to MEGA.
+
 - Share your synced files and folders with anyone by creating links.
+
 - View files in MEGA's browser (webclient).
 
 %prep
