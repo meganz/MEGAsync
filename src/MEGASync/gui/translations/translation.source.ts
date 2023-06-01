@@ -1442,7 +1442,7 @@ In some cases they may contain details about your data, such as file or folder n
     </message>
     <message numerus="yes">
         <source>%1 item selected</source>
-        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed.
         First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
         <translation>
             <numerusform>%1 item selected.</numerusform>
@@ -1451,7 +1451,7 @@ In some cases they may contain details about your data, such as file or folder n
     </message>
     <message numerus="yes">
         <source>%1. %2 has been removed. To reselect, close this window and try again.</source>
-        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed.
         First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
         <translation>
             <numerusform>%1. %2 has been removed. To reselect, close this window and try again.</numerusform>
@@ -3400,11 +3400,6 @@ Transfers will automatically resume when you re-open the app.</numerusform>
         <translation>Show in folder</translation>
     </message>
     <message>
-        <source>Clear</source>
-        <translatorcomment>Label of context menu option to clear selected transfer item of completed view</translatorcomment>
-        <translation>Clear</translation>
-    </message>
-    <message>
         <source>Get link</source>
         <translatorcomment>Context menu action to get transfer link</translatorcomment>
         <translation>Get link</translation>
@@ -3563,19 +3558,29 @@ Your selected incomplete sync transfers won’t be cancelled. All the other sele
         </translation>
     </message>
     <message>
-        <source>Yes, cancel</source>
-        <translatorcomment>Dialog button to do the proposed actions (cancel the transfers)</translatorcomment>
-        <translation>Yes, cancel</translation>
+        <source>Cancel</source>
+        <translatorcomment>Dialog button to do the proposed actions (cancel the transfers). See CON-188.</translatorcomment>
+        <translation type="unfinished">Cancel</translation>
     </message>
     <message>
-        <source>No, continue</source>
-        <translatorcomment>Dialog button to abort the proposed action</translatorcomment>
-        <translation>No, continue</translation>
+        <source>Don&apos;t cancel</source>
+        <translatorcomment>Dialog button to abort the proposed action (cancel the transfers). See CON-188.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Yes, clear</source>
-        <translatorcomment>Dialog button to do the proposed actions (clear the transfers)</translatorcomment>
-        <translation>Yes, clear</translation>
+        <source>Don&apos;t clear</source>
+        <translatorcomment>Dialog button to abort the proposed actions (clear the transfers). See CON-188.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <comment>Dialog button to do the proposed actions (clear the transfers). See CON-188.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <comment>Label of context menu option to clear selected transfer item of completed view</comment>
+        <translation>Clear</translation>
     </message>
 </context>
 <context>
@@ -3702,30 +3707,6 @@ Enter a different name.</translation>
         <source>Sort by name</source>
         <translatorcomment>Node name column title tooltip. Sorts the order of the column by date.</translatorcomment>
         <translation>Sort by name</translation>
-    </message>
-    <message numerus="yes">
-        <source>Today at %1</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened today. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation>
-            <numerusform>Today at %1</numerusform>
-            <numerusform>Today at %1</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>Yesterday at %1</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened yesterday. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation>
-            <numerusform>Yesterday at %1</numerusform>
-            <numerusform>Yesterday at %1</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>%1 at %2</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was previously to yesterday. %1 represents the date (day month and year), while %2 represents the hour). Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation>
-            <numerusform>%1 at %2</numerusform>
-            <numerusform>%1 at %2</numerusform>
-        </translation>
     </message>
 </context>
 <context>
