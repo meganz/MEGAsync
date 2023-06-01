@@ -47,7 +47,17 @@ private:
     bool mIsFirstTime;
 };
 
-class MenuItemDelegate : public QStyledItemDelegate
+class BackgroundColorDelegate : public QStyledItemDelegate
+{
+public:
+    explicit BackgroundColorDelegate(QObject* parent = nullptr);
+    ~BackgroundColorDelegate() = default;
+
+    void paint(QPainter* painter, const QStyleOptionViewItem& option,
+               const QModelIndex& index) const override;
+};
+
+class MenuItemDelegate : public BackgroundColorDelegate
 {
 public:
     explicit MenuItemDelegate(QObject *parent = nullptr);
@@ -57,7 +67,7 @@ public:
                const QModelIndex& index) const override;
 };
 
-class IconMiddleDelegate : public QStyledItemDelegate
+class IconMiddleDelegate : public BackgroundColorDelegate
 {
     static const int ICON_WIDTH;
 
@@ -72,7 +82,7 @@ public:
     bool helpEvent(QHelpEvent *event, QAbstractItemView *view, const QStyleOptionViewItem &option, const QModelIndex &index);
 };
 
-class ElideMiddleDelegate : public QStyledItemDelegate
+class ElideMiddleDelegate : public BackgroundColorDelegate
 {
 public:
     explicit ElideMiddleDelegate(QObject *parent = nullptr);

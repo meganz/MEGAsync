@@ -100,8 +100,8 @@ QVariant BackupItemModel::data(const QModelIndex &index, int role) const
             if(sync->getRunState() == mega::MegaSync::RUNSTATE_RUNNING)
             {
                 QIcon syncIcon;
-                syncIcon.addFile(QLatin1String(":/images/backup_ico_black_default.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Normal);
-                syncIcon.addFile(QLatin1String(":/images/backup_ico_black_default.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Selected);
+                syncIcon.addFile(QLatin1String(":/images/sync_states/backup.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Normal);
+                syncIcon.addFile(QLatin1String(":/images/sync_states/backup-selected.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Selected);
                 return syncIcon;
             }
         }

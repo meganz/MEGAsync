@@ -12,7 +12,6 @@
 
 const int SyncItemModel::ICON_SIZE = 24;
 const int SyncItemModel::STATES_ICON_SIZE = 16;
-const int SyncItemModel::WARNING_ICON_SIZE = 18;
 
 const int SyncItemModel::ErrorTooltipRole = Qt::UserRole + 1;
 
@@ -80,7 +79,13 @@ QVariant SyncItemModel::headerData(int section, Qt::Orientation orientation, int
 Qt::ItemFlags SyncItemModel::flags(const QModelIndex &index) const
 {
     if (index.isValid() && (index.column() == Column::ENABLED))
-        return QAbstractItemModel::flags(index) | Qt::ItemIsUserCheckable;
+    {
+        auto sync = mList.at(index.row());
+        if(sync)
+        {
+            return QAbstractItemModel::flags(index) | Qt::ItemIsUserCheckable;
+        }
+    }
 
     return QAbstractItemModel::flags(index);
 }
@@ -143,33 +148,44 @@ QVariant SyncItemModel::data(const QModelIndex &index, int role) const
         if(role == Qt::DecorationRole)
         {
             QIcon syncIcon;
-            if(sync->getError())
+
+            if(sync->getRunState() == mega::MegaSync::RUNSTATE_RUNNING)
             {
-                syncIcon.addFile(QLatin1String(":/images/ic_sync_warning.png"), QSize(WARNING_ICON_SIZE, WARNING_ICON_SIZE), QIcon::Normal);
+                syncIcon.addFile(QLatin1String(":/images/sync_states/sync-running.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Normal);
+                syncIcon.addFile(QLatin1String(":/images/sync_states/sync-running-selected.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Selected);
             }
-            else
+            else if(sync->getRunState() == mega::MegaSync::RUNSTATE_PAUSED)
             {
-                if(sync->getRunState() == mega::MegaSync::RUNSTATE_RUNNING)
+                syncIcon.addFile(QLatin1String(":/images/sync_states/pause-circle.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Normal);
+                syncIcon.addFile(QLatin1String(":/images/sync_states/pause-circle-selected.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Selected);
+            }
+            else if(sync->getRunState() == mega::MegaSync::RUNSTATE_DISABLED)
+            {
+                if(sync->getError())
                 {
-                    syncIcon.addFile(QLatin1String(":/images/Item-sync-rest.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Normal);
-                    syncIcon.addFile(QLatin1String(":/images/Item-sync-press.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Selected);
+                    syncIcon.addFile(QLatin1String(":/images/sync_states/x-circle-error.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Normal);
                 }
-                else if(sync->getRunState() == mega::MegaSync::RUNSTATE_PAUSED)
-                {
-                    syncIcon.addFile(QLatin1String(":/images/sync_states/pause-circle.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Normal);
-                    syncIcon.addFile(QLatin1String(":/images/sync_states/pause-circle.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Selected);
-                }
-                else if(sync->getRunState() == mega::MegaSync::RUNSTATE_DISABLED)
+                else
                 {
                     syncIcon.addFile(QLatin1String(":/images/sync_states/x-circle.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Normal);
-                    syncIcon.addFile(QLatin1String(":/images/sync_states/x-circle.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Selected);
                 }
-                else if(sync->getRunState() == mega::MegaSync::RUNSTATE_SUSPENDED)
-                {
-                    syncIcon.addFile(QLatin1String(":/images/sync_states/hand-small.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Normal);
-                    syncIcon.addFile(QLatin1String(":/images/sync_states/hand-small.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Selected);
-                }
+
+                syncIcon.addFile(QLatin1String(":/images/sync_states/x-circle-selected.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Selected);
             }
+            else if(sync->getRunState() == mega::MegaSync::RUNSTATE_SUSPENDED)
+            {
+                if(sync->getError())
+                {
+                    syncIcon.addFile(QLatin1String(":/images/sync_states/hand-error.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Normal);
+                }
+                else
+                {
+                    syncIcon.addFile(QLatin1String(":/images/sync_states/hand.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Normal);
+                }
+
+                syncIcon.addFile(QLatin1String(":/images/sync_states/hand-selected.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Selected);
+            }
+
             return syncIcon;
         }
         else if(role == Qt::DisplayRole)
@@ -289,6 +305,7 @@ QVariant SyncItemModel::data(const QModelIndex &index, int role) const
         }
         break;
     }
+
     return QVariant();
 }
 

@@ -28,7 +28,6 @@ public:
 
     static const int ICON_SIZE;
     static const int STATES_ICON_SIZE;
-    static const int WARNING_ICON_SIZE;
 
     static const int ErrorTooltipRole;
 
