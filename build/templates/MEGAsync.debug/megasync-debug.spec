@@ -38,7 +38,9 @@ BuildRequires: qt, qt-x11
 
 %description
 - Sync your entire MEGA Cloud or selected folders with your computer so your MEGA stays up to date with the changes you make to your data on your computer and vice versa.
+
 - Back up your computer with MEGA to automatically copy data to MEGA in real time and eliminate the risk of accidental data loss.
+
 - Easily add, sort, search for, prioritise, pause, and cancel your uploads and downloads using our transfer manager.
 
 %prep

@@ -19,7 +19,7 @@ Depends: ${shlibs:Depends},
          megasync
 Recommends: nautilus (>= 2.16.0)
 Description: MEGA Desktop App plugin for Nautilus
-- Easily see and track your sync statuses.
-- Send files and folders to MEGA.
-- Share your synced files and folders with anyone by creating links.
-- View files in MEGA's browser (webclient).
+  - Easily see and track your sync statuses.
+  - Send files and folders to MEGA.
+  - Share your synced files and folders with anyone by creating links.
+  - View files in MEGA's browser (webclient).
