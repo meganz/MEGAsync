@@ -48,6 +48,7 @@ void UNUserNotificationHandler::showNotification(MegaNotification *notification)
     [content setCategoryIdentifier:(NSString *) categoryText];
 
     Notificator::notifications[currentNotificationId] = notification;
+    notification->setId(currentNotificationId);
     currentNotificationId++;
 
     UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger
@@ -65,6 +66,14 @@ void UNUserNotificationHandler::showNotification(MegaNotification *notification)
             NSLog(@"%@", error);
         }
     }];
+}
+
+void UNUserNotificationHandler::hideNotification(MegaNotification *notification)
+{
+    NSString *idString = [[NSNumber numberWithLongLong:notification->getId()] stringValue];
+    NSArray<NSString*>* arrayOfIds = [NSArray arrayWithObject: idString];
+    UNUserNotificationCenter* center = [UNUserNotificationCenter currentNotificationCenter];
+    [center removeDeliveredNotificationsWithIdentifiers:arrayOfIds];
 }
 
 bool UNUserNotificationHandler::acceptsMultipleSelection()
