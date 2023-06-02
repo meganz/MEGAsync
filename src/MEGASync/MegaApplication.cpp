@@ -2331,14 +2331,17 @@ void MegaApplication::raiseInfoDialog()
 {
     if (infoDialog)
     {
-        infoDialog->show();
         infoDialog->updateDialogState();
-        infoDialog->highDpiResize.queueRedraw();
-
+        infoDialog->show();
         DialogOpener::raiseAllDialogs();
+
 #ifdef __APPLE__
         Platform::getInstance()->raiseFileFolderSelectors();
 #endif
+
+        infoDialog->raise();
+        infoDialog->activateWindow();
+        infoDialog->highDpiResize.queueRedraw();
     }
 }
 
