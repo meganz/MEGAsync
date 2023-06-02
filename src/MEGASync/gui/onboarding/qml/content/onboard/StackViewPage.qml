@@ -98,6 +98,7 @@ Rectangle {
             bottomMargin: 16
         }
         font.pixelSize: MegaTexts.Text.Size.Small
+        color: Styles.textSecondary
     }
 
 }

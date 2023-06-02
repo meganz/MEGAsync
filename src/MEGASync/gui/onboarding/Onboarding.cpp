@@ -11,9 +11,8 @@ using namespace mega;
 Onboarding::Onboarding(QObject *parent)
     : QMLComponent(parent)
     , mMegaApi(MegaSyncApp->getMegaApi())
-//    , mDelegateListener(new QTMegaRequestListener(mMegaApi, this))
-//    , mGlobalListener(new QTMegaGlobalListener(mMegaApi, this))
-    ,mListener(new QTMegaListener(mMegaApi,this))
+    , mDelegateListener(new QTMegaRequestListener(mMegaApi, this))
+    , mGlobalListener(new QTMegaGlobalListener(mMegaApi, this))
     , mPreferences(Preferences::instance())
     , mSyncController(new SyncController())
     , mBackupController(new SyncController())
@@ -22,9 +21,8 @@ Onboarding::Onboarding(QObject *parent)
     , mFirstName(QString())
     , mEmail(QString())
 {
-//    mMegaApi->addGlobalListener(mGlobalListener.get());
-//    mMegaApi->addRequestListener(mDelegateListener.get());
-    mMegaApi->addListener(mListener.get());
+    mMegaApi->addGlobalListener(mGlobalListener.get());
+    mMegaApi->addRequestListener(mDelegateListener.get());
 
     qmlRegisterUncreatableType<Onboarding>("Onboarding", 1, 0, "RegisterForm", QString::fromUtf8("Cannot create WarningLevel in QML"));
     qmlRegisterUncreatableType<Onboarding>("Onboarding", 1, 0, "PasswordStrength", QString::fromUtf8("Cannot create WarningLevel in QML"));
@@ -195,7 +193,7 @@ void Onboarding::onEvent(mega::MegaApi *, mega::MegaEvent *event)
 {
     if(event->getType() == MegaEvent::EVENT_ACCOUNT_CONFIRMATION)
     {
-        //emit accountConfirmed();
+        emit accountConfirmed();
     }
 }
 

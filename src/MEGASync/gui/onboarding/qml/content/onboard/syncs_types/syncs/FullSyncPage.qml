@@ -26,6 +26,7 @@ FullSyncPageForm {
         onSyncSetupSuccess: {
             root.enabled = true;
             footerButtons.nextButton.icons.busyIndicatorVisible = false;
+            syncsFlow.state = finalState;
             localFolderChooser.reset();
         }
     }

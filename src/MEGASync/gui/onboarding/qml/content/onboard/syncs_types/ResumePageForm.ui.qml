@@ -26,25 +26,25 @@ Rectangle {
     ColumnLayout {
         anchors.fill: parent
 
+        MegaImages.SvgImage {
+            source: Images.okIcon
+            Layout.topMargin: 30
+            Layout.alignment: Qt.AlignHCenter
+        }
+
         MegaTexts.Text {
             text: title
-            Layout.topMargin: 32
+            Layout.topMargin: 15
             font.pixelSize: MegaTexts.Text.Size.Large
             Layout.preferredWidth: parent.width
             font.weight: Font.Bold
             horizontalAlignment: Text.AlignHCenter
         }
 
-        MegaImages.SvgImage {
-            source: Images.resume
-            Layout.topMargin: 40
-            Layout.alignment: Qt.AlignHCenter
-        }
-
         MegaTexts.Text {
             text: description
-            Layout.topMargin: 40
-            Layout.preferredHeight: 40
+            Layout.topMargin: 5
+            //Layout.preferredHeight: 40
             Layout.alignment: Qt.AlignHCenter
             Layout.preferredWidth: 712
             horizontalAlignment: Text.AlignHCenter
@@ -75,6 +75,11 @@ Rectangle {
                     ButtonGroup.group: buttonGroup
                     type: SyncsType.Sync
                     checkable: false
+                    width: 346
+                    height: 148
+                    Layout.preferredWidth: 346
+                    Layout.preferredHeight: 148
+                    imageSourceSize: Qt.size(40, 40)
                 }
 
                 SyncsVerticalButton {
@@ -82,10 +87,15 @@ Rectangle {
 
                     title: OnboardingStrings.backup
                     description: OnboardingStrings.backupButtonDescription
-                    imageSource: Images.cloud
+                    imageSource: Images.installationTypeBackups
                     ButtonGroup.group: buttonGroup
                     type: SyncsType.Backup
                     checkable: false
+                    width: 346
+                    height: 148
+                    Layout.preferredWidth: 346
+                    Layout.preferredHeight: 148
+                    imageSourceSize: Qt.size(40, 40)
                 }
             }
         }

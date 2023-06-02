@@ -47,6 +47,7 @@ QtObject {
     readonly property url shield_account_proIII: imagesOnboardingPath + "shield_account_proIII.svg"
     readonly property url sync: imagesOnboardingPath + "sync.svg"
     readonly property url twofa: imagesOnboardingPath + "twofa.png"
+    readonly property url okIcon: imagesOnboardingPath + "OKIcon.png"
     readonly property url passwordVeryWeak: imagesPasswordPath + "very_weak.svg"
     readonly property url passwordWeak: imagesPasswordPath + "weak.svg"
     readonly property url passwordAverage: imagesPasswordPath + "average.svg"
