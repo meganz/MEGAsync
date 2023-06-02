@@ -236,7 +236,7 @@ void SyncTableView::createStatesContextActions(QMenu* menu, std::shared_ptr<Sync
         connect(rescanQuick, &MenuItemAction::triggered, this, [this, sync]() { emit signalRescanQuick(sync); });
         rescanQuick->setParent(menu);
 
-        auto rescanDeep (new MenuItemAction(tr("Deep Rescan (checks file fingerprints)"), QLatin1String("://images/sync_context_menu/search-dark-small.png")));
+        auto rescanDeep (new MenuItemAction(tr("Deep Rescan"), QLatin1String("://images/sync_context_menu/search-dark-small.png")));
         connect(rescanDeep, &MenuItemAction::triggered, this, [this, sync]() { emit signalRescanDeep(sync); });
         rescanDeep->setParent(menu);
 
