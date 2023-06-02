@@ -11,8 +11,9 @@ using namespace mega;
 Onboarding::Onboarding(QObject *parent)
     : QMLComponent(parent)
     , mMegaApi(MegaSyncApp->getMegaApi())
-    , mDelegateListener(new QTMegaRequestListener(mMegaApi, this))
-    , mGlobalListener(new QTMegaGlobalListener(mMegaApi, this))
+//    , mDelegateListener(new QTMegaRequestListener(mMegaApi, this))
+//    , mGlobalListener(new QTMegaGlobalListener(mMegaApi, this))
+    ,mListener(new QTMegaListener(mMegaApi,this))
     , mPreferences(Preferences::instance())
     , mSyncController(new SyncController())
     , mBackupController(new SyncController())
@@ -21,8 +22,9 @@ Onboarding::Onboarding(QObject *parent)
     , mFirstName(QString())
     , mEmail(QString())
 {
-    mMegaApi->addGlobalListener(mGlobalListener.get());
-    mMegaApi->addRequestListener(mDelegateListener.get());
+//    mMegaApi->addGlobalListener(mGlobalListener.get());
+//    mMegaApi->addRequestListener(mDelegateListener.get());
+    mMegaApi->addListener(mListener.get());
 
     qmlRegisterUncreatableType<Onboarding>("Onboarding", 1, 0, "RegisterForm", QString::fromUtf8("Cannot create WarningLevel in QML"));
     qmlRegisterUncreatableType<Onboarding>("Onboarding", 1, 0, "PasswordStrength", QString::fromUtf8("Cannot create WarningLevel in QML"));
@@ -143,6 +145,8 @@ void Onboarding::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* erro
     {
         if (error->getErrorCode() == MegaError::API_OK)
         {
+            qDebug() << QString::fromUtf8("Onboarding::onRequestFinish -> TYPE_CREATE_ACCOUNT Error code: %1").arg(error->getErrorCode());
+
             emit fetchingNodesProgress(1);
         }
 //        if (error->getErrorCode() != MegaError::API_OK)
@@ -191,7 +195,7 @@ void Onboarding::onEvent(mega::MegaApi *, mega::MegaEvent *event)
 {
     if(event->getType() == MegaEvent::EVENT_ACCOUNT_CONFIRMATION)
     {
-        emit accountConfirmed();
+        //emit accountConfirmed();
     }
 }
 
@@ -201,7 +205,7 @@ void Onboarding::onLoginClicked(const QVariantMap& data)
 
     std::string email = data.value(QString::number(EMAIL)).toString().toStdString();
     std::string password = data.value(QString::number(PASSWORD)).toString().toStdString();
-    mMegaApi->login(email.c_str(), password.c_str(), this->mDelegateListener.get());
+    mMegaApi->login(email.c_str(), password.c_str());
 }
 
 void Onboarding::onRegisterClicked(const QVariantMap& data)
@@ -215,16 +219,14 @@ void Onboarding::onRegisterClicked(const QVariantMap& data)
     mMegaApi->createAccount(email.toUtf8().constData(),
                             password.toUtf8().constData(),
                             firstName.toUtf8().constData(),
-                            lastName.toUtf8().constData(),
-                            this->mDelegateListener.get());
+                            lastName.toUtf8().constData());
 }
 
 void Onboarding::onTwoFARequested(const QString& pin)
 {
     mMegaApi->multiFactorAuthLogin(mEmail.toUtf8().constData(),
                                    mPassword.toUtf8().constData(),
-                                   pin.toUtf8().constData(),
-                                   this->mDelegateListener.get());
+                                   pin.toUtf8().constData());
 }
 
 QString Onboarding::convertUrlToNativeFilePath(const QUrl &urlStylePath) const
@@ -321,7 +323,7 @@ Onboarding::PasswordStrength Onboarding::getPasswordStrength(const QString &pass
 void Onboarding::changeRegistrationEmail(const QString &email)
 {
     QString fullName = mFirstName + QString::fromUtf8(" ") + mLastName;
-    mMegaApi->sendSignupLink(email.toUtf8().constData(), fullName.toUtf8().constData(), mPassword.toUtf8().constData(), mDelegateListener.get());
+    mMegaApi->sendSignupLink(email.toUtf8().constData(), fullName.toUtf8().constData(), mPassword.toUtf8().constData()/*, mDelegateListener.get()*/);
 }
 
 QString Onboarding::getEmail()

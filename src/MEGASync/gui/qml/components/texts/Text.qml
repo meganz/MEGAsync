@@ -20,5 +20,4 @@ Qml.Text {
     font.pixelSize: Text.Size.Normal
     color: enabled ? Styles.textPrimary : Styles.textDisabled
     wrapMode: Text.WordWrap
-
 }

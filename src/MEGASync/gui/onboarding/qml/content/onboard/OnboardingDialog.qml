@@ -19,7 +19,6 @@ Cpp.QmlDialog {
     title: "Set up MEGA"
     visible: true
     modality: Qt.NonModal
-    color: "transparent"
     width: 800
     height: 560
     maximumHeight: 560

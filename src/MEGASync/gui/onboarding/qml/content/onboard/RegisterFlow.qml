@@ -19,7 +19,17 @@ Rectangle {
     readonly property string confirmEmail: "confirmEmail"
     readonly property string changeConfirmEmail: "changeConfirmEmail"
 
-    color: Styles.gradientPinkTop
+    gradient: Gradient{
+        GradientStop{
+            position: 0.0
+            color: Styles.gradientContrastTop
+        }
+        GradientStop{
+            position: 1.0
+            color: Styles.gradientContrastBottom
+        }
+    }
+
     state: login
     states: [
         State {
@@ -53,14 +63,6 @@ Rectangle {
             }
         }
     ]
-
-    Rectangle {
-        anchors.fill: registerFlow
-        layer.smooth: true
-        layer.enabled: true
-        color: Styles.surface1
-        opacity: 0.9
-    }
 
     Image {
         id: leftImage
