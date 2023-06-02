@@ -7419,7 +7419,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Verify your email</source>
         <translatorcomment>Label to verify a locked account. It will redirect to webclient to confirm email.</translatorcomment>
-        <translation>Verify your email</translation>
+        <translation>Check your email inbox</translation>
     </message>
     <message>
         <source>Locked account</source>
@@ -7429,7 +7429,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
         <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
-        <translation>Your account has been temporarily locked for your safety. Please verify your email and follow its steps to unlock your account.</translation>
+        <translation>Your account has been temporarily locked for your safety. Please check your email and follow its steps to unlock your account.</translation>
     </message>
     <message>
         <source>Resend email</source>

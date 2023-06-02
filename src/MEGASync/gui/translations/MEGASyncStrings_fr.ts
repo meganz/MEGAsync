@@ -398,7 +398,7 @@
     <message numerus="yes">
         <source>[A] updated %n item</source>
         <translatorcomment>Label to indicate that user [A] has updated %n items in shared folder. Placeholder [A] will be replaced by the email or full name of the user that made the update and %n with the number of removed items. CON-295</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>[A] a mis %n&#xa0;élément à jour</numerusform><numerusform>[A] a mis %n&#xa0;éléments à jour</numerusform></translation>
     </message>
 </context>
 <context>
@@ -1317,7 +1317,7 @@ Dans certains cas, ils pourraient comprendre des détails sur vos données, tels
     <message numerus="yes">
         <source>[A] updated %n item</source>
         <translatorcomment>Label to indicate that user [A] has updated %n items in shared folder. Placeholder [A] will be replaced by the email or full name of the user that made the update and %n with the number of removed items. CON-295</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>[A] a mis %n&#xa0;élément à jour</numerusform><numerusform>[A] a mis %n&#xa0;éléments à jour</numerusform></translation>
     </message>
 </context>
 <context>
@@ -2133,7 +2133,7 @@ Dans certains cas, ils pourraient comprendre des détails sur vos données, tels
     <message>
         <source>Downloading may be interrupted as you have used 90% of your transfer quota on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew. </source>
         <translatorcomment>Message displayed in the InfoDialog when the transfer quota reaches warning stage</translatorcomment>
-        <translation>Downloading may be interrupted as you have used 90% of your transfer quota on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew.</translation>
+        <translation>Le téléchargement pourrait être interrompu, car 90&#xa0;% du quota de transfert de ce compte a été utilisé. Pour le poursuivre, souscrivez un nouvel abonnement ou si vous avez un abonnement MEGA périodique, vous pouvez attendre que votre abonnement se renouvelle.</translation>
     </message>
 </context>
 <context>
@@ -4135,7 +4135,9 @@ Saisissez un nom différent.</translation>
 - We've fixed the detected crashes on Windows, Linux, and macOS.
 </source>
         <translatorcomment>Changelog for v4.9.5</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>– Nous avons amélioré les notifications du système.
+– Nous avons amélioré l’interface graphique.
+– Nous avons corrigé les plantages détectés sous Windows, Linux et macOS.</translation>
     </message>
 </context>
 <context>
@@ -5537,7 +5539,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Auto</source>
         <translatorcomment>Label to indicate that management of rate upload limit is automatic. SNC-3076</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Automatique</translation>
     </message>
 </context>
 <context>
@@ -5545,7 +5547,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Auto</source>
         <translatorcomment>Label to indicate that proxy settings are on auto detec mode. SNC-3076</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Automatique</translation>
     </message>
 </context>
 <context>
@@ -6707,91 +6709,91 @@ Pour en obtenir davantage, passez à un compte Pro ou attendez [A] pour qu’un 
     <message numerus="yes">
         <source>Retry failed items</source>
         <translatorcomment>Notification button to retry failed transfers when not all the transfers failed. CON-223</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Réessayer l’élément en échec</numerusform><numerusform>Réessayer les éléments en échec</numerusform></translation>
     </message>
     <message>
         <source>Could not upload</source>
         <translatorcomment>Notification title for a failed upload of files/folders. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Le téléversement est impossible</translation>
     </message>
     <message>
         <source>Upload incomplete</source>
         <translatorcomment>Notification title for a combination of completed and failed uploads. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Le téléversement n’est pas terminé</translation>
     </message>
     <message>
         <source>Upload complete</source>
         <translatorcomment>Notification title for a successfully upload of files/folders. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Le téléversement est terminé</translation>
     </message>
     <message>
         <source>Could not download</source>
         <translatorcomment>Notification title for a failed download of files/folders. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Le téléchargement est impossible</translation>
     </message>
     <message>
         <source>Download incomplete</source>
         <translatorcomment>Notification title for a combination of completed and failed downloads. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Le téléchargement n’est pas terminé</translation>
     </message>
     <message>
         <source>Download complete</source>
         <translatorcomment>Notification title for a successfully download of files/folders. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Le téléchargement est terminé</translation>
     </message>
     <message numerus="yes">
         <source>%n item couldn’t be uploaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items could not be uploaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n&#xa0;élément n&apos;a pas pu être téléversé vers %1.</numerusform><numerusform>%n&#xa0;éléments n&apos;ont pas pu être téléversés vers %1.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n item uploaded</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: X item uploaded, but Y item couldn’t be uploaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n&#xa0;élément a été téléversé</numerusform><numerusform>%n&#xa0;éléments ont été téléversés</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1, but %n item couldn’t be uploaded.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         Second part of string for multi plural support. Full string looks like: X item uploaded, but Y item couldn’t be uploaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1, mais %n&#xa0;élément n’a pas pu être téléversé.</numerusform><numerusform>%1, mais %n&#xa0;éléments n’ont pas pu être téléversés.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n item uploaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items were uploaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n&#xa0;élément a été téléversé vers %1.</numerusform><numerusform>%n&#xa0;éléments ont été téléversés vers %1.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n item downloaded</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: X item downloaded, but Y item couldn’t be downloaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n&#xa0;élément a été téléchargé</numerusform><numerusform>%n&#xa0;éléments ont été téléchargés</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1, but %n item couldn’t be downloaded.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         Second part of string for multi plural support. Full string looks like: X item downloaded, but Y item couldn’t be downloaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1, mais %n&#xa0;élément n’a pas pu être téléchargé.</numerusform><numerusform>%1, mais %n&#xa0;éléments n’ont pas pu être téléchargés.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n item couldn’t be downloaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items could not be downloaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n&#xa0;élément n&apos;a pas pu être téléchargé vers %1.</numerusform><numerusform>%n&#xa0;éléments n&apos;ont pas pu être téléchargés vers %1.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n item downloaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items were downloaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n&#xa0;élément a été téléchargé vers %1.</numerusform><numerusform>%n&#xa0;éléments ont été téléchargés vers %1.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n item no longer exist or was renamed.</source>
         <translatorcomment>Body text of a system notification shown when %n items no longer exist or were renamed during an upload operation. %n will be replaced with the number of items. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n&#xa0;élément n’existe plus ou a été renommé.</numerusform><numerusform>%n&#xa0;éléments n’existent plus ou ont été renommés.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n item no longer exist.</source>
         <translatorcomment>Body text of a system notification shown when %n items no longer exist or were renamed during a download operation. %n will be replaced with the number of items. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n&#xa0;élément n’existe plus.</numerusform><numerusform>%n&#xa0;éléments n’existent plus.</numerusform></translation>
     </message>
 </context>
 <context>
@@ -6799,32 +6801,32 @@ Pour en obtenir davantage, passez à un compte Pro ou attendez [A] pour qu’un 
     <message>
         <source>%1 couldn’t be uploaded to %2.</source>
         <translatorcomment>Body text of a system notification shown when %1 file could not be uploaded to %2. %1 will be replaced with the name of the file and %2 with the remote destination path. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%n n&#8217;a pas pu être téléversé vers %1.</translation>
     </message>
     <message>
         <source>%1 uploaded to %2.</source>
         <translatorcomment>Body text of a system notification shown when %1 was succesfully uploaded to %2. %1 will be replaced with the name of the file and %2 with the remote destination path. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 a été téléversé vers %2.</translation>
     </message>
     <message>
         <source>%1 couldn’t be downloaded to %2.</source>
         <translatorcomment>Body text of a system notification shown when %1 file could not be downloaded to %2. %1 will be replaced with the name of the file and %2 with the local destination path. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 n&#8217;a pas pu être téléchargé vers %2.</translation>
     </message>
     <message>
         <source>%1 downloaded to %2.</source>
         <translatorcomment>Body text of a system notification shown when %1 was succesfully downloaded to %2. %1 will be replaced with the name of the file and %2 with the local destination path. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 a été téléchargé vers %2.</translation>
     </message>
     <message>
         <source>%1 no longer exists or was renamed.</source>
         <translatorcomment>Body text of a system notification shown when %1 no longer exists or was removed during upload operation. %1 will be replaced with the name of the file. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 n’existe plus ou a été renommé.</translation>
     </message>
     <message>
         <source>%1 no longer exists.</source>
         <translatorcomment>Body text of a system notification shown when %1 no longer exists during download operation. %1 will be replaced with the name of the file. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 n’existe plus.</translation>
     </message>
 </context>
 <context>
@@ -6832,32 +6834,32 @@ Pour en obtenir davantage, passez à un compte Pro ou attendez [A] pour qu’un 
     <message>
         <source>%1 couldn’t be uploaded to %2.</source>
         <translatorcomment>Body text of a system notification shown when %1 folder could not be uploaded to %2. %1 will be replaced with the name of the folder and %2 with the remote destination path. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 n&#8217;a pas pu être téléversé vers %2.</translation>
     </message>
     <message>
         <source>%1 uploaded to %2.</source>
         <translatorcomment>Body text of a system notification shown when %1 was succesfully uploaded to %2. %1 will be replaced with the name of the folder and %2 with the remote destination path. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 a été téléversé vers %2.</translation>
     </message>
     <message>
         <source>%1 couldn’t be downloaded to %2.</source>
         <translatorcomment>Body text of a system notification shown when %1 file could not be downloaded to %2. %1 will be replaced with the name of the folder and %2 with the local destination path. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 n&#8217;a pas pu être téléchargé vers %2.</translation>
     </message>
     <message>
         <source>%1 downloaded to %2.</source>
         <translatorcomment>Body text of a system notification shown when %1 was succesfully downloaded to %2. %1 will be replaced with the name of the folder and %2 with the local destination path. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 a été téléchargé vers %2.</translation>
     </message>
     <message>
         <source>%1 no longer exists or was renamed.</source>
         <translatorcomment>Body text of a system notification shown when %1 no longer exists or was removed during upload operation. %1 will be replaced with the name of the folder. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 n’existe plus ou a été renommé.</translation>
     </message>
     <message>
         <source>%1 no longer exists.</source>
         <translatorcomment>Body text of a system notification shown when %1 no longer exists during download operation. %1 will be replaced with the name of the folder. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 n’existe plus.</translation>
     </message>
 </context>
 <context>
@@ -7418,7 +7420,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Verify your email</source>
         <translatorcomment>Label to verify a locked account. It will redirect to webclient to confirm email.</translatorcomment>
-        <translation>Confirmer votre adresse courriel</translation>
+        <translation>Vérifiez votre boîte de réception</translation>
     </message>
     <message>
         <source>Locked account</source>

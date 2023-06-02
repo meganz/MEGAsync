@@ -16,12 +16,12 @@
     <message>
         <source>Storage</source>
         <translatorcomment>Label to indicate the section of used storage of the current account.</translatorcomment>
-        <translation>Archivio</translation>
+        <translation>Spazio di archiviazione</translation>
     </message>
     <message>
         <source>Transfer</source>
         <translatorcomment>Label to indicate the section of transfer used of the current account.</translatorcomment>
-        <translation>Trasferisci</translation>
+        <translation>Banda di trasferimento</translation>
     </message>
     <message>
         <source>Of that, size taken up by file versions:</source>
@@ -102,7 +102,7 @@
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation>Inserisci un nome, un percorso assoluto (i simboli * e ? sono concessi) o scegli quale file o cartella vuoi escludere dalla sincronizzazione.</translation>
+        <translation>Inserisci un nome, un percorso assoluto (i simboli * e ? sono permessi) o scegli quale file o cartella vuoi escludere dalla sincronizzazione.</translation>
     </message>
     <message>
         <source>Choose File</source>
@@ -238,7 +238,7 @@
     <message>
         <source>Contact Denied</source>
         <translatorcomment>Notification label that indicates that the user has denied a contact request</translatorcomment>
-        <translation>Richiesta di contatto declinata</translation>
+        <translation>Richiesta di contatto rifiutata</translation>
     </message>
     <message>
         <source>Payment Info</source>
@@ -398,7 +398,7 @@
     <message numerus="yes">
         <source>[A] updated %n item</source>
         <translatorcomment>Label to indicate that user [A] has updated %n items in shared folder. Placeholder [A] will be replaced by the email or full name of the user that made the update and %n with the number of removed items. CON-295</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>[A] ha aggiornato %n oggetto</numerusform><numerusform>[A] ha aggiornato %n oggetti</numerusform></translation>
     </message>
 </context>
 <context>
@@ -1316,7 +1316,7 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message numerus="yes">
         <source>[A] updated %n item</source>
         <translatorcomment>Label to indicate that user [A] has updated %n items in shared folder. Placeholder [A] will be replaced by the email or full name of the user that made the update and %n with the number of removed items. CON-295</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>[A] ha aggiornato %n oggetto</numerusform><numerusform>[A] ha aggiornato %n oggetti</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4132,7 +4132,9 @@ Inserisci un nome differente.</translation>
 - We've fixed the detected crashes on Windows, Linux, and macOS.
 </source>
         <translatorcomment>Changelog for v4.9.5</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Abbiamo migliorato le notifiche di sistema.
+- Abbiamo migliorato la UI.
+- Abbiamo sistemato alcuni crash su Windows, Linux, e macOS.</translation>
     </message>
 </context>
 <context>
@@ -5534,7 +5536,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Auto</source>
         <translatorcomment>Label to indicate that management of rate upload limit is automatic. SNC-3076</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Automatico</translation>
     </message>
 </context>
 <context>
@@ -5542,7 +5544,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Auto</source>
         <translatorcomment>Label to indicate that proxy settings are on auto detec mode. SNC-3076</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Automatiche</translation>
     </message>
 </context>
 <context>
@@ -6704,91 +6706,91 @@ Per ottenere altra banda di trasferimento, effettua l&apos;upgrade ad un account
     <message numerus="yes">
         <source>Retry failed items</source>
         <translatorcomment>Notification button to retry failed transfers when not all the transfers failed. CON-223</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Riprova l&#8217;oggetto fallito</numerusform><numerusform>Riprova gli oggetti falliti</numerusform></translation>
     </message>
     <message>
         <source>Could not upload</source>
         <translatorcomment>Notification title for a failed upload of files/folders. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Impossibile caricare</translation>
     </message>
     <message>
         <source>Upload incomplete</source>
         <translatorcomment>Notification title for a combination of completed and failed uploads. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Caricamento incompleto</translation>
     </message>
     <message>
         <source>Upload complete</source>
         <translatorcomment>Notification title for a successfully upload of files/folders. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Caricamento completato</translation>
     </message>
     <message>
         <source>Could not download</source>
         <translatorcomment>Notification title for a failed download of files/folders. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Impossibile scaricare</translation>
     </message>
     <message>
         <source>Download incomplete</source>
         <translatorcomment>Notification title for a combination of completed and failed downloads. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Download incompleto</translation>
     </message>
     <message>
         <source>Download complete</source>
         <translatorcomment>Notification title for a successfully download of files/folders. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Download completato</translation>
     </message>
     <message numerus="yes">
         <source>%n item couldn’t be uploaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items could not be uploaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Impossibile caricare %n oggetti in %1.</numerusform><numerusform>Impossibile caricare %n oggetti in %1.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n item uploaded</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: X item uploaded, but Y item couldn’t be uploaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n oggetto caricato</numerusform><numerusform>%n oggetti caricati</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1, but %n item couldn’t be uploaded.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         Second part of string for multi plural support. Full string looks like: X item uploaded, but Y item couldn’t be uploaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1, ma %n oggetto non è stato caricato.</numerusform><numerusform>%1, ma %n oggetti non sono stati caricati.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n item uploaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items were uploaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n oggetto caricato in %1.</numerusform><numerusform>%n oggetti caricati in %1.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n item downloaded</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: X item downloaded, but Y item couldn’t be downloaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n oggetto scaricato</numerusform><numerusform>%n oggetti scaricati</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1, but %n item couldn’t be downloaded.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         Second part of string for multi plural support. Full string looks like: X item downloaded, but Y item couldn’t be downloaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1, ma %n oggetto non è stato scaricato.</numerusform><numerusform>%1, ma %n oggetti non sono stati scaricati.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n item couldn’t be downloaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items could not be downloaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n oggetto non è stato scaricato in %1.</numerusform><numerusform>%n oggetti non sono stati scaricati in %1.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n item downloaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items were downloaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n oggetto scaricato in %1.</numerusform><numerusform>%n oggetti scaricati in %1.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n item no longer exist or was renamed.</source>
         <translatorcomment>Body text of a system notification shown when %n items no longer exist or were renamed during an upload operation. %n will be replaced with the number of items. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n oggetto non esiste più o è stato rinominato.</numerusform><numerusform>%n oggetti non esistono più o sono stati rinominati.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n item no longer exist.</source>
         <translatorcomment>Body text of a system notification shown when %n items no longer exist or were renamed during a download operation. %n will be replaced with the number of items. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n oggetto non esiste più.</numerusform><numerusform>%n oggetti non esistono più.</numerusform></translation>
     </message>
 </context>
 <context>
@@ -6796,32 +6798,32 @@ Per ottenere altra banda di trasferimento, effettua l&apos;upgrade ad un account
     <message>
         <source>%1 couldn’t be uploaded to %2.</source>
         <translatorcomment>Body text of a system notification shown when %1 file could not be uploaded to %2. %1 will be replaced with the name of the file and %2 with the remote destination path. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 non è stato caricato in %2.</translation>
     </message>
     <message>
         <source>%1 uploaded to %2.</source>
         <translatorcomment>Body text of a system notification shown when %1 was succesfully uploaded to %2. %1 will be replaced with the name of the file and %2 with the remote destination path. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 caricato in %2.</translation>
     </message>
     <message>
         <source>%1 couldn’t be downloaded to %2.</source>
         <translatorcomment>Body text of a system notification shown when %1 file could not be downloaded to %2. %1 will be replaced with the name of the file and %2 with the local destination path. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 non è stato scaricato in %2.</translation>
     </message>
     <message>
         <source>%1 downloaded to %2.</source>
         <translatorcomment>Body text of a system notification shown when %1 was succesfully downloaded to %2. %1 will be replaced with the name of the file and %2 with the local destination path. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 scaricato in %2.</translation>
     </message>
     <message>
         <source>%1 no longer exists or was renamed.</source>
         <translatorcomment>Body text of a system notification shown when %1 no longer exists or was removed during upload operation. %1 will be replaced with the name of the file. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 non esiste più o è stato rinominato.</translation>
     </message>
     <message>
         <source>%1 no longer exists.</source>
         <translatorcomment>Body text of a system notification shown when %1 no longer exists during download operation. %1 will be replaced with the name of the file. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 non esiste più.</translation>
     </message>
 </context>
 <context>
@@ -6829,32 +6831,32 @@ Per ottenere altra banda di trasferimento, effettua l&apos;upgrade ad un account
     <message>
         <source>%1 couldn’t be uploaded to %2.</source>
         <translatorcomment>Body text of a system notification shown when %1 folder could not be uploaded to %2. %1 will be replaced with the name of the folder and %2 with the remote destination path. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 non è stata caricata in %2.</translation>
     </message>
     <message>
         <source>%1 uploaded to %2.</source>
         <translatorcomment>Body text of a system notification shown when %1 was succesfully uploaded to %2. %1 will be replaced with the name of the folder and %2 with the remote destination path. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 caricata in %2.</translation>
     </message>
     <message>
         <source>%1 couldn’t be downloaded to %2.</source>
         <translatorcomment>Body text of a system notification shown when %1 file could not be downloaded to %2. %1 will be replaced with the name of the folder and %2 with the local destination path. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 non è stata scaricata in %2.</translation>
     </message>
     <message>
         <source>%1 downloaded to %2.</source>
         <translatorcomment>Body text of a system notification shown when %1 was succesfully downloaded to %2. %1 will be replaced with the name of the folder and %2 with the local destination path. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 scaricata in %2.</translation>
     </message>
     <message>
         <source>%1 no longer exists or was renamed.</source>
         <translatorcomment>Body text of a system notification shown when %1 no longer exists or was removed during upload operation. %1 will be replaced with the name of the folder. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 non esiste più o è stata rinominata.</translation>
     </message>
     <message>
         <source>%1 no longer exists.</source>
         <translatorcomment>Body text of a system notification shown when %1 no longer exists during download operation. %1 will be replaced with the name of the folder. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 non esiste più.</translation>
     </message>
 </context>
 <context>
@@ -7415,7 +7417,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Verify your email</source>
         <translatorcomment>Label to verify a locked account. It will redirect to webclient to confirm email.</translatorcomment>
-        <translation>Verifica la tua email</translation>
+        <translation>Controlla la tua posta in arrivo</translation>
     </message>
     <message>
         <source>Locked account</source>
@@ -7425,7 +7427,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
         <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
-        <translation>Il tuo account è stato temporaneamente bloccato per la tua sicurezza. Per favore, verifica la tua email e segui gli step per sbloccare il tuo account.</translation>
+        <translation>Il tuo account è stato temporaneamente bloccato per la tua sicurezza. Per favore, controlla la tua posta in arrivo e segui gli step per sbloccare il tuo account.</translation>
     </message>
     <message>
         <source>Resend email</source>

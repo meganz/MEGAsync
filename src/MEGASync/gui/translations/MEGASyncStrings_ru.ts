@@ -398,7 +398,7 @@
     <message numerus="yes">
         <source>[A] updated %n item</source>
         <translatorcomment>Label to indicate that user [A] has updated %n items in shared folder. Placeholder [A] will be replaced by the email or full name of the user that made the update and %n with the number of removed items. CON-295</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>[A] обновил %n элемент</numerusform><numerusform>[A] обновил %n элемента</numerusform><numerusform>[A] обновил %n элементов</numerusform><numerusform>[A] обновил %n элемента</numerusform></translation>
     </message>
 </context>
 <context>
@@ -1317,7 +1317,7 @@
     <message numerus="yes">
         <source>[A] updated %n item</source>
         <translatorcomment>Label to indicate that user [A] has updated %n items in shared folder. Placeholder [A] will be replaced by the email or full name of the user that made the update and %n with the number of removed items. CON-295</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>[A] обновил %n элемент</numerusform><numerusform>[A] обновил %n элемента</numerusform><numerusform>[A] обновил %n элементов</numerusform><numerusform>[A] обновил %n элемента</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4136,7 +4136,9 @@ Enter a different name</source>
 - We've fixed the detected crashes on Windows, Linux, and macOS.
 </source>
         <translatorcomment>Changelog for v4.9.5</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Улучшены системные уведомления.
+- Улучшен пользовательский интерфейс.
+- Исправлены обнаруженные сбои в Windows, Linux и macOS.</translation>
     </message>
 </context>
 <context>
@@ -5538,7 +5540,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Auto</source>
         <translatorcomment>Label to indicate that management of rate upload limit is automatic. SNC-3076</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Авто</translation>
     </message>
 </context>
 <context>
@@ -5546,7 +5548,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Auto</source>
         <translatorcomment>Label to indicate that proxy settings are on auto detec mode. SNC-3076</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Авто</translation>
     </message>
 </context>
 <context>
@@ -6708,91 +6710,91 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message numerus="yes">
         <source>Retry failed items</source>
         <translatorcomment>Notification button to retry failed transfers when not all the transfers failed. CON-223</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Повторить неудачный элемент</numerusform><numerusform>Повторить неудачные элементы</numerusform><numerusform>Повторить неудачные элементы</numerusform><numerusform>Повторить неудачные элементы</numerusform></translation>
     </message>
     <message>
         <source>Could not upload</source>
         <translatorcomment>Notification title for a failed upload of files/folders. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось загрузить</translation>
     </message>
     <message>
         <source>Upload incomplete</source>
         <translatorcomment>Notification title for a combination of completed and failed uploads. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Загрузка завершена не полностью</translation>
     </message>
     <message>
         <source>Upload complete</source>
         <translatorcomment>Notification title for a successfully upload of files/folders. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Загрузка завершена</translation>
     </message>
     <message>
         <source>Could not download</source>
         <translatorcomment>Notification title for a failed download of files/folders. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось скачать</translation>
     </message>
     <message>
         <source>Download incomplete</source>
         <translatorcomment>Notification title for a combination of completed and failed downloads. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Скачивание завершено не полностью</translation>
     </message>
     <message>
         <source>Download complete</source>
         <translatorcomment>Notification title for a successfully download of files/folders. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Скачивание завершено</translation>
     </message>
     <message numerus="yes">
         <source>%n item couldn’t be uploaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items could not be uploaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n элемент не удалось загрузить в %1.</numerusform><numerusform>%n элемента не удалось загрузить в %1.</numerusform><numerusform>%n элементов не удалось загрузить в %1.</numerusform><numerusform>%n элемента не удалось загрузить в %1.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n item uploaded</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: X item uploaded, but Y item couldn’t be uploaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n элемент загружен</numerusform><numerusform>%n элемента загружено</numerusform><numerusform>%n элементов загружено</numerusform><numerusform>%n элемента загружено</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1, but %n item couldn’t be uploaded.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         Second part of string for multi plural support. Full string looks like: X item uploaded, but Y item couldn’t be uploaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1, но %n не удалось загрузить.</numerusform><numerusform>%1, но %n не удалось загрузить.</numerusform><numerusform>%1, но %n не удалось загрузить.</numerusform><numerusform>%1, но %n не удалось загрузить.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n item uploaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items were uploaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n элемент загружен в %1.</numerusform><numerusform>%n элемента загружено в %1.</numerusform><numerusform>%n элементов загружено в %1.</numerusform><numerusform>%n элемента загружено в %1.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n item downloaded</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: X item downloaded, but Y item couldn’t be downloaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n элемент скачан</numerusform><numerusform>%n элемента скачано</numerusform><numerusform>%n элементов скачано</numerusform><numerusform>%n элемента скачано</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1, but %n item couldn’t be downloaded.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         Second part of string for multi plural support. Full string looks like: X item downloaded, but Y item couldn’t be downloaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1, но %n не удалось скачать.</numerusform><numerusform>%1, но %n не удалось скачать.</numerusform><numerusform>%1, но %n не удалось скачать.</numerusform><numerusform>%1, но %n не удалось скачать.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n item couldn’t be downloaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items could not be downloaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n элемент не удалось скачать в %1.</numerusform><numerusform>%n элемента не удалось скачать в %1.</numerusform><numerusform>%n элементов не удалось скачать в %1.</numerusform><numerusform>%n элемента не удалось скачать в %1.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n item downloaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items were downloaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n элемент скачан в %1.</numerusform><numerusform>%n элемента скачано в %1.</numerusform><numerusform>%n элементов скачано в %1.</numerusform><numerusform>%n элемента скачано в %1.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n item no longer exist or was renamed.</source>
         <translatorcomment>Body text of a system notification shown when %n items no longer exist or were renamed during an upload operation. %n will be replaced with the number of items. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n элемент больше не существует или был переименован.</numerusform><numerusform>%n элемента больше не существуют или были переименованы.</numerusform><numerusform>%n элементов больше не существуют или были переименованы.</numerusform><numerusform>%n элемента больше не существуют или были переименованы.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n item no longer exist.</source>
         <translatorcomment>Body text of a system notification shown when %n items no longer exist or were renamed during a download operation. %n will be replaced with the number of items. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n элемент больше не существует.</numerusform><numerusform>%n элемента больше не существует.</numerusform><numerusform>%n элементов больше не существуют.</numerusform><numerusform>%n элемента больше не существует.</numerusform></translation>
     </message>
 </context>
 <context>
@@ -6800,32 +6802,32 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>%1 couldn’t be uploaded to %2.</source>
         <translatorcomment>Body text of a system notification shown when %1 file could not be uploaded to %2. %1 will be replaced with the name of the file and %2 with the remote destination path. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 не удалось загрузить в %2.</translation>
     </message>
     <message>
         <source>%1 uploaded to %2.</source>
         <translatorcomment>Body text of a system notification shown when %1 was succesfully uploaded to %2. %1 will be replaced with the name of the file and %2 with the remote destination path. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 загружен в %2.</translation>
     </message>
     <message>
         <source>%1 couldn’t be downloaded to %2.</source>
         <translatorcomment>Body text of a system notification shown when %1 file could not be downloaded to %2. %1 will be replaced with the name of the file and %2 with the local destination path. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 не удалось скачать в %2.</translation>
     </message>
     <message>
         <source>%1 downloaded to %2.</source>
         <translatorcomment>Body text of a system notification shown when %1 was succesfully downloaded to %2. %1 will be replaced with the name of the file and %2 with the local destination path. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 скачан в %2.</translation>
     </message>
     <message>
         <source>%1 no longer exists or was renamed.</source>
         <translatorcomment>Body text of a system notification shown when %1 no longer exists or was removed during upload operation. %1 will be replaced with the name of the file. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 больше не существует или был переименован.</translation>
     </message>
     <message>
         <source>%1 no longer exists.</source>
         <translatorcomment>Body text of a system notification shown when %1 no longer exists during download operation. %1 will be replaced with the name of the file. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 больше не существует.</translation>
     </message>
 </context>
 <context>
@@ -6833,32 +6835,32 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>%1 couldn’t be uploaded to %2.</source>
         <translatorcomment>Body text of a system notification shown when %1 folder could not be uploaded to %2. %1 will be replaced with the name of the folder and %2 with the remote destination path. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 не удалось загрузить в %2.</translation>
     </message>
     <message>
         <source>%1 uploaded to %2.</source>
         <translatorcomment>Body text of a system notification shown when %1 was succesfully uploaded to %2. %1 will be replaced with the name of the folder and %2 with the remote destination path. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 загружена в %2.</translation>
     </message>
     <message>
         <source>%1 couldn’t be downloaded to %2.</source>
         <translatorcomment>Body text of a system notification shown when %1 file could not be downloaded to %2. %1 will be replaced with the name of the folder and %2 with the local destination path. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 не удалось скачать в %2.</translation>
     </message>
     <message>
         <source>%1 downloaded to %2.</source>
         <translatorcomment>Body text of a system notification shown when %1 was succesfully downloaded to %2. %1 will be replaced with the name of the folder and %2 with the local destination path. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 скачана в %2.</translation>
     </message>
     <message>
         <source>%1 no longer exists or was renamed.</source>
         <translatorcomment>Body text of a system notification shown when %1 no longer exists or was removed during upload operation. %1 will be replaced with the name of the folder. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 больше не существует или была переименована.</translation>
     </message>
     <message>
         <source>%1 no longer exists.</source>
         <translatorcomment>Body text of a system notification shown when %1 no longer exists during download operation. %1 will be replaced with the name of the folder. CON-223</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 больше не существует.</translation>
     </message>
 </context>
 <context>
@@ -7419,7 +7421,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Verify your email</source>
         <translatorcomment>Label to verify a locked account. It will redirect to webclient to confirm email.</translatorcomment>
-        <translation>Подтвердить электронную почту</translation>
+        <translation>Проверьте свою электронную почту</translation>
     </message>
     <message>
         <source>Locked account</source>
@@ -7429,7 +7431,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
         <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
-        <translation>Ваш аккаунт был временно заблокирован для вашей безопасности. Пожалуйста, подтвердите свою электронную почту и следуйте инструкциям, чтобы разблокировать аккаунт.</translation>
+        <translation>Ваш аккаунт был временно заблокирован для вашей безопасности. Пожалуйста, проверьте свою электронную почту и следуйте инструкциям, чтобы разблокировать аккаунт.</translation>
     </message>
     <message>
         <source>Resend email</source>
