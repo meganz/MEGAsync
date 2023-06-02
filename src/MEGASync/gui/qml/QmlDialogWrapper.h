@@ -11,6 +11,7 @@
 #include <QEvent>
 #include <QPointer>
 #include <QDialog>
+#include <QApplication>
 
 #include <memory>
 
