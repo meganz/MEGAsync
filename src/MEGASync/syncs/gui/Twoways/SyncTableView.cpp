@@ -224,14 +224,13 @@ void SyncTableView::createStatesContextActions(QMenu* menu, std::shared_ptr<Sync
         }
     }
 
-
     auto openMegaignore (new MenuItemAction(tr("Edit .megaignore"), QLatin1String("://images/sync_context_menu/edit-small.png")));
     connect(openMegaignore, &MenuItemAction::triggered, this, [this, sync]() { emit signalOpenMegaignore(sync); });
     openMegaignore->setParent(menu);
     menu->addSeparator();
     menu->addAction(openMegaignore);
 
-    if(sync->getSync()->getRunState() == mega::MegaSync::RUNSTATE_RUNNING || sync->getError())
+    if(sync->getSync()->getRunState() == mega::MegaSync::RUNSTATE_RUNNING)
     {
         auto rescanQuick (new MenuItemAction(tr("Quick Rescan"), QLatin1String("://images/sync_context_menu/search-small.png")));
         connect(rescanQuick, &MenuItemAction::triggered, this, [this, sync]() { emit signalRescanQuick(sync); });
