@@ -8,6 +8,7 @@ import Common 1.0
 
 // Local
 import Onboard.Syncs_types 1.0
+import ChooseLocalFolder 1.0
 
 SelectFoldersPageForm {
 
@@ -29,18 +30,27 @@ SelectFoldersPageForm {
     }
 
     addFoldersMouseArea.onClicked: {
-        folderDialog.visible = true;
+        folderDialog.openFolderSelector();
     }
 
-    FileDialog {
+//    FileDialog {
+//        id: folderDialog
+
+//        title: "";
+//        folder: shortcuts.home;
+//        selectFolder: true
+//        onAccepted: {
+//            var processedFolder = folder.toString().substring(8);
+//            proxyModel.insertFolder(processedFolder);
+//        }
+//    }
+    ChooseLocalFolder {
         id: folderDialog
 
-        title: "";
-        folder: shortcuts.home;
-        selectFolder: true
-        onAccepted: {
-            var processedFolder = folder.toString().substring(8);
-            proxyModel.insertFolder(processedFolder);
+        onFolderChanged: {
+            //folderSelectionChanged(folder);
+            //var processedFolder = folder.toString().substring(8);
+            proxyModel.insertFolder(folderDialog.getFolder());
         }
     }
 
