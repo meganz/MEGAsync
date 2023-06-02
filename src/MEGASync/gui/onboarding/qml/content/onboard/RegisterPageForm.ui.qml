@@ -81,8 +81,7 @@ StackViewPage {
         MegaButtons.PrimaryButton {
             id: nextButton
 
-            enabled: registerContent.dataLossCheckBox.checked
-                     && registerContent.termsCheckBox.checked
+            enabled: registerContent.termsCheckBox.checked
             icons.source: Images.arrowRight
             text: OnboardingStrings.next
 

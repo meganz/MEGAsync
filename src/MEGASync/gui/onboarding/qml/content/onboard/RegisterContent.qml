@@ -65,7 +65,6 @@ Column {
         lastName.text = "";
         email.text = "";
         termsCheckBox.checked = false;
-        dataLossCheckBox.checked = false;
     }
 
     function showEmailAlreadyExistsError() {
@@ -81,7 +80,6 @@ Column {
     property alias password: password
     property alias confirmPassword: confirmPassword
     property alias termsCheckBox: termsCheckBox
-    property alias dataLossCheckBox: dataLossCheckBox
 
     readonly property int contentWidth: 400
     readonly property int contentMargin: 48
@@ -168,15 +166,6 @@ Column {
         anchors.left: parent.left
         anchors.right: parent.right
         spacing: checkboxSpacing
-
-        MegaCheckBoxes.CheckBox {
-            id: dataLossCheckBox
-
-            anchors.left: parent.left
-            anchors.right: parent.right
-            url: Links.security
-            text: OnboardingStrings.understandLossPassword
-        }
 
         MegaCheckBoxes.CheckBox {
             id: termsCheckBox

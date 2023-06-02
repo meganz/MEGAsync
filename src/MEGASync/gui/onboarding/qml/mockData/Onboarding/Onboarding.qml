@@ -2,6 +2,7 @@ pragma Singleton
 import QtQuick 2.0
 
 import AccountInfoData 1.0
+import Components.TextFields 1.0 as MegaTextFields
 
 Item {
 
@@ -157,7 +158,9 @@ Item {
     function getPasswordStrength(password) {
         console.info("getPasswordStrength(password)" + password);
         var strength = password.length - 1;
-        return strength > PasswordTextField.PasswordStrength.PasswordStrengthStrong ? PasswordTextField.PasswordStrength.PasswordStrengthStrong : strength;
+        return strength > MegaTextFields.PasswordTextField.PasswordStrength.PasswordStrengthStrong
+               ? MegaTextFields.PasswordTextField.PasswordStrength.PasswordStrengthStrong
+               : strength;
     }
 
     Timer {

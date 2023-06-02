@@ -85,6 +85,7 @@ Rectangle {
             source: icon
             color: styles.iconColor
             sourceSize: Qt.size(16, 16)
+            opacity: enabled ? 1.0 : 0.2
         }
     }
 

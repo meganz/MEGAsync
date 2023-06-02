@@ -117,7 +117,7 @@ Qml.CheckBox {
             wrapMode: Text.WordWrap
             fontSizeMode: Text.Fit
             url: checkBox.url
-            textFormat: Text.AutoText
+            enabled: checkBox.enabled
         }
     }
 

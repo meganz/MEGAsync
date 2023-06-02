@@ -11,7 +11,7 @@ MegaTexts.Text {
     function updateLinkColor() {
         var color = Styles.linkPrimary;
         if(!enabled) {
-            color = Styles.linkInverse;
+            color = Styles.notificationInfo;
         } else if(visited) {
             color = Styles.linkVisited;
         }
