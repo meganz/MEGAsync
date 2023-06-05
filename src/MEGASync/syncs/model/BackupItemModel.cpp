@@ -19,10 +19,6 @@ QVariant BackupItemModel::headerData(int section, Qt::Orientation orientation, i
     {
         switch(section)
         {
-        case Column::ENABLED:
-            if(role == Qt::ToolTipRole)
-                return tr("Sort by state");
-            break;
         case Column::LNAME:
             if(role == Qt::DisplayRole)
                 return tr("Local Folder");
@@ -35,26 +31,9 @@ QVariant BackupItemModel::headerData(int section, Qt::Orientation orientation, i
             if(role == Qt::ToolTipRole)
                 return tr("Sort by backup state");
             break;
-        case Column_FILES:
-            if(role == Qt::DisplayRole)
-                return tr("Files");
-            if(role == Qt::ToolTipRole)
-                return tr("Sort by file count");
-            break;
-        case Column_FOLDERS:
-            if(role == Qt::DisplayRole)
-                return tr("Folders");
-            if(role == Qt::ToolTipRole)
-                return tr("Sort by folder count");
-            break;
-        case Column_UPLOADS:
-            if(role == Qt::DisplayRole)
-                return tr("Uploads");
-            if(role == Qt::ToolTipRole)
-                return tr("Sort by Uploads");
         }
     }
-    return QVariant();
+    return SyncItemModel::headerData(section, orientation, role);
 }
 
 int BackupItemModel::columnCount(const QModelIndex &parent) const
@@ -76,7 +55,7 @@ void BackupItemModel::sendDataChanged(int row)
                      QVector<int>()<< Qt::CheckStateRole << Qt::DecorationRole << Qt::ToolTipRole);
 }
 
-QVariant BackupItemModel::data(const QModelIndex &index, int role) const
+QVariant BackupItemModel::data(const QModelIndex& index, int role) const
 {
     if (!index.isValid())
         return QVariant();
@@ -97,7 +76,8 @@ QVariant BackupItemModel::data(const QModelIndex &index, int role) const
     case Column::LNAME:
         if(role == Qt::DecorationRole)
         {
-            if(sync->getRunState() == mega::MegaSync::RUNSTATE_RUNNING)
+            if(sync->getRunState() == mega::MegaSync::RUNSTATE_RUNNING
+                     || (sync->getRunState() == mega::MegaSync::RUNSTATE_LOADING || sync->getRunState() == mega::MegaSync::RUNSTATE_PENDING))
             {
                 QIcon syncIcon;
                 syncIcon.addFile(QLatin1String(":/images/sync_states/backup.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Normal);

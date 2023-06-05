@@ -149,7 +149,8 @@ QVariant SyncItemModel::data(const QModelIndex &index, int role) const
         {
             QIcon syncIcon;
 
-            if(sync->getRunState() == mega::MegaSync::RUNSTATE_RUNNING)
+            if(sync->getRunState() == mega::MegaSync::RUNSTATE_RUNNING
+                    || (sync->getRunState() == mega::MegaSync::RUNSTATE_LOADING || sync->getRunState() == mega::MegaSync::RUNSTATE_PENDING))
             {
                 syncIcon.addFile(QLatin1String(":/images/sync_states/sync-running.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Normal);
                 syncIcon.addFile(QLatin1String(":/images/sync_states/sync-running-selected.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Selected);
