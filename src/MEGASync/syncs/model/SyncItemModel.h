@@ -13,17 +13,17 @@ class SyncItemModel : public QAbstractItemModel
     Q_OBJECT
 
 public:
-    typedef enum
+    enum Column
     {
         ENABLED = 0,
         LNAME,
-        Column_STATE,
-        Column_FILES,
-        Column_FOLDERS,
-        Column_DOWNLOADS,
-        Column_UPLOADS,
+        STATE,
+        FILES,
+        FOLDERS,
+        DOWNLOADS,
+        UPLOADS,
         MENU
-    } Column;
+    };
     const unsigned int kColumns = 8;
 
     static const int ICON_SIZE;

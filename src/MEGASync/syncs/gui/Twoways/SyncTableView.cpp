@@ -64,19 +64,19 @@ void SyncTableView::initTable()
     setItemDelegateForColumn(SyncItemModel::Column::ENABLED, new BackgroundColorDelegate(this));
     setItemDelegateForColumn(SyncItemModel::Column::MENU, new MenuItemDelegate(this));
     setItemDelegateForColumn(SyncItemModel::Column::LNAME, new IconMiddleDelegate(this));
-    setItemDelegateForColumn(SyncItemModel::Column::Column_STATE, new ElideMiddleDelegate(this));
-    setItemDelegateForColumn(SyncItemModel::Column::Column_FILES, new ElideMiddleDelegate(this));
-    setItemDelegateForColumn(SyncItemModel::Column::Column_FOLDERS, new ElideMiddleDelegate(this));
-    setItemDelegateForColumn(SyncItemModel::Column::Column_DOWNLOADS, new ElideMiddleDelegate(this));
-    setItemDelegateForColumn(SyncItemModel::Column::Column_UPLOADS, new ElideMiddleDelegate(this));
+    setItemDelegateForColumn(SyncItemModel::Column::STATE, new ElideMiddleDelegate(this));
+    setItemDelegateForColumn(SyncItemModel::Column::FILES, new ElideMiddleDelegate(this));
+    setItemDelegateForColumn(SyncItemModel::Column::FOLDERS, new ElideMiddleDelegate(this));
+    setItemDelegateForColumn(SyncItemModel::Column::DOWNLOADS, new ElideMiddleDelegate(this));
+    setItemDelegateForColumn(SyncItemModel::Column::UPLOADS, new ElideMiddleDelegate(this));
 
     horizontalHeader()->resizeSection(SyncItemModel::Column::ENABLED, FIXED_COLUMN_WIDTH);
     horizontalHeader()->resizeSection(SyncItemModel::Column::MENU, FIXED_COLUMN_WIDTH);
-    horizontalHeader()->resizeSection(SyncItemModel::Column::Column_STATE, 3 * FIXED_COLUMN_WIDTH);
-    horizontalHeader()->resizeSection(SyncItemModel::Column::Column_FILES, 2 * FIXED_COLUMN_WIDTH);
-    horizontalHeader()->resizeSection(SyncItemModel::Column::Column_FOLDERS, 2 * FIXED_COLUMN_WIDTH);
-    horizontalHeader()->resizeSection(SyncItemModel::Column::Column_DOWNLOADS, 2 * FIXED_COLUMN_WIDTH);
-    horizontalHeader()->resizeSection(SyncItemModel::Column::Column_UPLOADS, 2 * FIXED_COLUMN_WIDTH);
+    horizontalHeader()->resizeSection(SyncItemModel::Column::STATE, 3 * FIXED_COLUMN_WIDTH);
+    horizontalHeader()->resizeSection(SyncItemModel::Column::FILES, 2 * FIXED_COLUMN_WIDTH);
+    horizontalHeader()->resizeSection(SyncItemModel::Column::FOLDERS, 2 * FIXED_COLUMN_WIDTH);
+    horizontalHeader()->resizeSection(SyncItemModel::Column::DOWNLOADS, 2 * FIXED_COLUMN_WIDTH);
+    horizontalHeader()->resizeSection(SyncItemModel::Column::UPLOADS, 2 * FIXED_COLUMN_WIDTH);
 
     horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
     horizontalHeader()->setSectionResizeMode(SyncItemModel::Column::ENABLED, QHeaderView::Fixed);

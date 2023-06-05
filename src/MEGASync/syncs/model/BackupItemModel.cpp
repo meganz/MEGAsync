@@ -25,7 +25,7 @@ QVariant BackupItemModel::headerData(int section, Qt::Orientation orientation, i
             if(role == Qt::ToolTipRole)
                 return tr("Sort by name");
             break;
-        case Column_STATE:
+        case Column::STATE:
             if(role == Qt::DisplayRole)
                 return tr("State");
             if(role == Qt::ToolTipRole)
