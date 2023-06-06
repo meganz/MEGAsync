@@ -74,6 +74,7 @@ void UNUserNotificationHandler::hideNotification(MegaNotification *notification)
     NSArray<NSString*>* arrayOfIds = [NSArray arrayWithObject: idString];
     UNUserNotificationCenter* center = [UNUserNotificationCenter currentNotificationCenter];
     [center removeDeliveredNotificationsWithIdentifiers:arrayOfIds];
+    [center removePendingNotificationRequestsWithIdentifiers:arrayOfIds];
 }
 
 bool UNUserNotificationHandler::acceptsMultipleSelection()
