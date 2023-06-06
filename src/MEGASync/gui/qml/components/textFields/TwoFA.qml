@@ -115,10 +115,10 @@ ColumnLayout {
         visible: hasError
         Layout.leftMargin: 3
         title: qsTr("Authentication failed")
-        notificationText.text: qsTr("Please, try again.")
+        text: qsTr("Please, try again.")
         Layout.preferredWidth: root.width - 4
         Layout.preferredHeight: notification.height
-        type: MegaTexts.NotificationText.Type.AuthenticationError
+        attributes.type: MegaTexts.NotificationText.Type.AuthenticationError
     }
 
     Shortcut {

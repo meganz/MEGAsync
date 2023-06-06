@@ -34,7 +34,6 @@ MegaTexts.Text {
     }
     color: enabled ? Styles.textPrimary : Styles.textDisabled
     textFormat: Text.RichText
-    font.pixelSize: MegaTexts.Text.Size.Medium
 
     Component.onCompleted: {
         control.text = control.text.replace("[b]","<b>")

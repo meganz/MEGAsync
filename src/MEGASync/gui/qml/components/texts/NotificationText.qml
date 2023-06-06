@@ -8,91 +8,108 @@ import Components.Texts 1.0 as MegaTexts
 import Components.Images 1.0 as MegaImages
 import Common 1.0
 
-Rectangle {
+Item {
     id: root
 
-    enum Type {
-        None = 0,
-        Info,
-        AuthenticationError
-    }
+    property NotificationInfo attributes: NotificationInfo {}
 
-    property int type: NotificationText.Type.None
+    property string title
+    property string text
 
-    property alias title: titleText.text
-    property alias notificationText: notificationText
-
-    height: mainLayout.height + 24
-    radius: 8
     visible: false
+    height: content.height
+    Layout.preferredHeight: content.height
 
-    onTypeChanged: {
-        switch(type) {
-            case NotificationText.Type.Info:
-                icon.source = Images.infoCircle;
-                icon.color = Styles.textInfo;
-                notificationText.color = Styles.textInfo;
-                titleText.color = Styles.textInfo;
-                root.color = Styles.notificationInfo;
-                break;
-            case NotificationText.Type.AuthenticationError:
-                icon.source = Images.lock;
-                icon.color = Styles.textError;
-                notificationText.color = Styles.textError;
-                titleText.color = Styles.textError;
-                root.color = Styles.notificationError
-                break;
-            default:
-                break;
+    onTitleChanged: {
+        if(title.length === 0) {
+            return;
         }
+
+        titleLoader.sourceComponent = titleComponent;
     }
 
-    RowLayout {
-        id: mainLayout
-
-        width: root.width
-
-        anchors {
-            top: root.top
-            left: root.left
-            right: root.right
-            margins: 12
+    onTextChanged: {
+        if(text.length === 0) {
+            return;
         }
 
-        MegaImages.SvgImage {
-            id: icon
+        textLoader.sourceComponent = textComponent;
+    }
 
-            visible: icon.source !== ""
-            Layout.alignment: Qt.AlignTop
-            sourceSize: Qt.size(16, 16)
-        }
+    Rectangle {
+        id: content
 
-        ColumnLayout {
-            Layout.fillWidth: true
+        anchors.left: parent.left
+        anchors.right: parent.right
+        height: mainLayout.height + 2 * attributes.margin
+        color: attributes.backgroundColor
+        radius: attributes.radius
 
-            MegaTexts.Text {
-                id: titleText
+        Row {
+            id: mainLayout
 
-                visible: titleText.text.length !== 0
-                Layout.fillWidth: true
-                font.bold: true
+            anchors.top: parent.top
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.margins: attributes.margin
+            height: textColumn.height + attributes.margin
+            spacing: attributes.spacing
+
+            Loader {
+                id: iconLoader
             }
 
-            MegaTexts.RichText {
-                id: notificationText
+            Column {
+                id: textColumn
 
-                visible: notificationText.text.length !== 0
-                Layout.fillWidth: true
-                wrapMode: Text.WordWrap
-                font {
-                    pixelSize: 12
-                    family: "Inter"
-                    styleName: "Medium"
+                height: titleLoader.height + textLoader.height
+                width: mainLayout.width - iconLoader.width - mainLayout.spacing
+                spacing: attributes.spacing
+
+                Loader {
+                    id: titleLoader
+
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                }
+
+                Loader {
+                    id: textLoader
+
+                    anchors.left: parent.left
+                    anchors.right: parent.right
                 }
             }
         }
     }
 
+    Component {
+        id: iconComponent
+
+        MegaImages.SvgImage {
+            color: attributes.iconColor
+            source: attributes.icon.source
+            sourceSize: attributes.icon.size
+        }
+    }
+
+    Component {
+        id: titleComponent
+
+        MegaTexts.Text {
+            text: root.title
+            color: attributes.titleColor
+            font.bold: true
+        }
+    }
+
+    Component {
+        id: textComponent
+
+        MegaTexts.RichText {
+            text: root.text
+            color: attributes.textColor
+        }
+    }
+
 }
-
-
