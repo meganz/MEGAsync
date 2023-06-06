@@ -31,10 +31,6 @@ public slots:
 
 protected:
     QIcon image;
-
-#ifdef USE_DBUS
-    int dbusId;
-#endif
 };
 
 
