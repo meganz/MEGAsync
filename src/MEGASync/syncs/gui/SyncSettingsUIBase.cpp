@@ -24,7 +24,29 @@ SyncSettingsUIBase::SyncSettingsUIBase(QWidget *parent):
 
     connect(ui->gSyncs, &RemoteItemUi::addClicked, this, &SyncSettingsUIBase::addButtonClicked);
     connect(ui->gSyncs, &RemoteItemUi::deleteClicked, this, &SyncSettingsUIBase::removeSyncButtonClicked);
-    //connect(ui->gSyncs, &RemoteItemUi::permissionsClicked, this, &SyncSettingsUIBase::removeSyncButtonClicked);
+}
+
+void SyncSettingsUIBase::insertUIElement(QWidget *widget, int position)
+{
+    ui->SyncSettingsLayout->insertWidget(position, widget);
+
+    if(position == 0 && ui->SyncSettingsLayout->count() > 0)
+    {
+        auto secondWidget = ui->SyncSettingsLayout->itemAt(position +1)->widget();
+        setTabOrder(widget,secondWidget);
+    }
+    else if(position > 0 && position < ui->SyncSettingsLayout->count())
+    {
+        auto previousWidget = ui->SyncSettingsLayout->itemAt(position-1)->widget();
+        setTabOrder(previousWidget,widget);
+        auto nextWidget = ui->SyncSettingsLayout->itemAt(position + 1)->widget();
+        setTabOrder(widget, nextWidget);
+    }
+    else if(position > 0  && position >= ui->SyncSettingsLayout->count())
+    {
+        auto previousWidget = ui->SyncSettingsLayout->itemAt(position-1)->widget();
+        setTabOrder(previousWidget,widget);
+    }
 }
 
 void SyncSettingsUIBase::onSavingSyncsCompleted(SyncStateInformation value)
@@ -84,11 +106,6 @@ void SyncSettingsUIBase::syncsStateInformation(SyncStateInformation state)
                 }
                 break;
         }
-}
-
-void SyncSettingsUIBase::setOverQuotaMode(bool mode)
-{
-    ui->wOQError->setVisible(mode);
 }
 
 #ifdef Q_OS_MACOS

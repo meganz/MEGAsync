@@ -9,10 +9,8 @@
 #include "BugReportDialog.h"
 #include "ProxySettings.h"
 #include "UserAttributesRequests/FullName.h"
-#include "UserAttributesRequests/MyBackupsHandle.h"
 #include "PowerOptions.h"
 #include "syncs/gui/Backups/BackupsWizard.h"
-#include "syncs/gui/Backups/AddBackupDialog.h"
 #include "syncs/gui/Backups/RemoveBackupDialog.h"
 #include "TextDecorator.h"
 #include "DialogOpener.h"
@@ -1336,14 +1334,7 @@ void SettingsDialog::on_lAccountType_clicked()
 
 void SettingsDialog::on_bUpgrade_clicked()
 {
-    QString url = QString::fromUtf8("mega://#pro");
-    Utilities::getPROurlWithParameters(url);
-    Utilities::openUrl(QUrl(url));
-}
-
-void SettingsDialog::on_bBuyMoreSpace_clicked()
-{
-    on_bUpgrade_clicked();
+    Utilities::upgradeClicked();
 }
 
 void SettingsDialog::on_bMyAccount_clicked()

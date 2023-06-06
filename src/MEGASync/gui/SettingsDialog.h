@@ -120,7 +120,6 @@ private slots:
     void on_bAccount_clicked();
     void on_lAccountType_clicked();
     void on_bUpgrade_clicked();
-    void on_bBuyMoreSpace_clicked();
     void on_bMyAccount_clicked();
     void on_bStorageDetails_clicked();
     void on_bLogout_clicked();

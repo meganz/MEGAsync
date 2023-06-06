@@ -2,6 +2,7 @@ INCLUDEPATH += $$PWD/model
 INCLUDEPATH += $$PWD/gui
 
 SOURCES += $$PWD/gui/Backups/AddBackupDialog.cpp \
+           $$PWD/gui/Backups/BackupSettingsElements.cpp \
            $$PWD/gui/Backups/BackupNameConflictDialog.cpp \
            $$PWD/gui/Backups/BackupRenameWidget.cpp \
            $$PWD/gui/Backups/BackupTableView.cpp \
@@ -15,6 +16,7 @@ SOURCES += $$PWD/gui/Backups/AddBackupDialog.cpp \
            $$PWD/gui/Twoways/FolderBinder.cpp \
            $$PWD/gui/Twoways/SyncTableView.cpp \
            $$PWD/gui/Twoways/SyncSettingsUI.cpp \
+           $$PWD/gui/Twoways/SyncSettingsElements.cpp \
            $$PWD/model/BackupItemModel.cpp \
            $$PWD/model/SyncItemModel.cpp \
            $$PWD/control/SyncInfo.cpp \
@@ -22,6 +24,7 @@ SOURCES += $$PWD/gui/Backups/AddBackupDialog.cpp \
            $$PWD/control/SyncSettings.cpp
 
 HEADERS += $$PWD/gui/Backups/AddBackupDialog.h \
+           $$PWD/gui/Backups/BackupSettingsElements.h \
            $$PWD/gui/Backups/BackupNameConflictDialog.h \
            $$PWD/gui/Backups/BackupRenameWidget.h \
            $$PWD/gui/Backups/BackupTableView.h \
@@ -35,6 +38,7 @@ HEADERS += $$PWD/gui/Backups/AddBackupDialog.h \
            $$PWD/gui/Twoways/FolderBinder.h \
            $$PWD/gui/Twoways/SyncTableView.h \
            $$PWD/gui/Twoways/SyncSettingsUI.h \
+           $$PWD/gui/Twoways/SyncSettingsElements.h \
            $$PWD/model/BackupItemModel.h \
            $$PWD/model/SyncItemModel.h \
            $$PWD/control/SyncController.h \
@@ -47,12 +51,13 @@ win32 {
     FORMS    += $$PWD/gui/Twoways/win/FolderBinder.ui \
                 $$PWD/gui/Twoways/win/BindFolderDialog.ui \
                 $$PWD/gui/Twoways/win/SyncSettingsUIBase.ui \
+                $$PWD/gui/Twoways/win/SyncAccountFullMessage.ui \
                 $$PWD/gui/Backups/win/BackupsWizard.ui \
                 $$PWD/gui/Backups/win/AddBackupDialog.ui \
                 $$PWD/gui/Backups/win/RemoveBackupDialog.ui \
                 $$PWD/gui/Backups/win/BackupNameConflictDialog.ui \
                 $$PWD/gui/Backups/win/BackupRenameWidget.ui \
-                $$PWD/gui/Backups/win/BackupSettingsUI.ui
+                $$PWD/gui/Backups/win/OpenBackupsFolder.ui
 }
 
 macx {
@@ -78,3 +83,7 @@ unix:!macx {
                 $$PWD/gui/Backups/linux/BackupNameConflictDialog.ui \
                 $$PWD/gui/Backups/linux/BackupRenameWidget.ui
 }
+
+FORMS += \
+
+

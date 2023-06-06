@@ -26,7 +26,11 @@ public:
 signals:
     void addClicked(mega::MegaHandle);
     void deleteClicked();
-    void permissionsClicked();
+
+#ifndef Q_OS_WIN
+private slots:
+    void on_bPermissions_clicked();
+#endif
 
 private:
     void setTableViewProperties(QTableView* view) const;

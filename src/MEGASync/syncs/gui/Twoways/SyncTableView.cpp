@@ -64,19 +64,19 @@ void SyncTableView::initTable()
     setItemDelegateForColumn(SyncItemModel::Column::ENABLED, new BackgroundColorDelegate(this));
     setItemDelegateForColumn(SyncItemModel::Column::MENU, new MenuItemDelegate(this));
     setItemDelegateForColumn(SyncItemModel::Column::LNAME, new IconMiddleDelegate(this));
-    setItemDelegateForColumn(SyncItemModel::Column::Column_STATE, new ElideMiddleDelegate(this));
-    setItemDelegateForColumn(SyncItemModel::Column::Column_FILES, new ElideMiddleDelegate(this));
-    setItemDelegateForColumn(SyncItemModel::Column::Column_FOLDERS, new ElideMiddleDelegate(this));
-    setItemDelegateForColumn(SyncItemModel::Column::Column_DOWNLOADS, new ElideMiddleDelegate(this));
-    setItemDelegateForColumn(SyncItemModel::Column::Column_UPLOADS, new ElideMiddleDelegate(this));
+    setItemDelegateForColumn(SyncItemModel::Column::STATE, new ElideMiddleDelegate(this));
+    setItemDelegateForColumn(SyncItemModel::Column::FILES, new ElideMiddleDelegate(this));
+    setItemDelegateForColumn(SyncItemModel::Column::FOLDERS, new ElideMiddleDelegate(this));
+    setItemDelegateForColumn(SyncItemModel::Column::DOWNLOADS, new ElideMiddleDelegate(this));
+    setItemDelegateForColumn(SyncItemModel::Column::UPLOADS, new ElideMiddleDelegate(this));
 
     horizontalHeader()->resizeSection(SyncItemModel::Column::ENABLED, FIXED_COLUMN_WIDTH);
     horizontalHeader()->resizeSection(SyncItemModel::Column::MENU, FIXED_COLUMN_WIDTH);
-    horizontalHeader()->resizeSection(SyncItemModel::Column::Column_STATE, 3 * FIXED_COLUMN_WIDTH);
-    horizontalHeader()->resizeSection(SyncItemModel::Column::Column_FILES, 2 * FIXED_COLUMN_WIDTH);
-    horizontalHeader()->resizeSection(SyncItemModel::Column::Column_FOLDERS, 2 * FIXED_COLUMN_WIDTH);
-    horizontalHeader()->resizeSection(SyncItemModel::Column::Column_DOWNLOADS, 2 * FIXED_COLUMN_WIDTH);
-    horizontalHeader()->resizeSection(SyncItemModel::Column::Column_UPLOADS, 2 * FIXED_COLUMN_WIDTH);
+    horizontalHeader()->resizeSection(SyncItemModel::Column::STATE, 3 * FIXED_COLUMN_WIDTH);
+    horizontalHeader()->resizeSection(SyncItemModel::Column::FILES, 2 * FIXED_COLUMN_WIDTH);
+    horizontalHeader()->resizeSection(SyncItemModel::Column::FOLDERS, 2 * FIXED_COLUMN_WIDTH);
+    horizontalHeader()->resizeSection(SyncItemModel::Column::DOWNLOADS, 2 * FIXED_COLUMN_WIDTH);
+    horizontalHeader()->resizeSection(SyncItemModel::Column::UPLOADS, 2 * FIXED_COLUMN_WIDTH);
 
     horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
     horizontalHeader()->setSectionResizeMode(SyncItemModel::Column::ENABLED, QHeaderView::Fixed);
@@ -224,20 +224,19 @@ void SyncTableView::createStatesContextActions(QMenu* menu, std::shared_ptr<Sync
         }
     }
 
-
     auto openMegaignore (new MenuItemAction(tr("Edit .megaignore"), QLatin1String("://images/sync_context_menu/edit-small.png")));
     connect(openMegaignore, &MenuItemAction::triggered, this, [this, sync]() { emit signalOpenMegaignore(sync); });
     openMegaignore->setParent(menu);
     menu->addSeparator();
     menu->addAction(openMegaignore);
 
-    if(sync->getSync()->getRunState() == mega::MegaSync::RUNSTATE_RUNNING || sync->getError())
+    if(sync->getSync()->getRunState() == mega::MegaSync::RUNSTATE_RUNNING)
     {
         auto rescanQuick (new MenuItemAction(tr("Quick Rescan"), QLatin1String("://images/sync_context_menu/search-small.png")));
         connect(rescanQuick, &MenuItemAction::triggered, this, [this, sync]() { emit signalRescanQuick(sync); });
         rescanQuick->setParent(menu);
 
-        auto rescanDeep (new MenuItemAction(tr("Deep Rescan (checks file fingerprints)"), QLatin1String("://images/sync_context_menu/search-dark-small.png")));
+        auto rescanDeep (new MenuItemAction(tr("Deep Rescan"), QLatin1String("://images/sync_context_menu/search-dark-small.png")));
         connect(rescanDeep, &MenuItemAction::triggered, this, [this, sync]() { emit signalRescanDeep(sync); });
         rescanDeep->setParent(menu);
 

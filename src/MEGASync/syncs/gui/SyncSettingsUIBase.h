@@ -40,10 +40,10 @@ public:
         SAVING_FINISHED,
     };
 
+    void insertUIElement(QWidget* widget, int position);
+
     void onSavingSyncsCompleted(SyncStateInformation value);
     void syncsStateInformation(SyncStateInformation state);
-
-    void setOverQuotaMode(bool mode);
 
     template <class TableType, class ModelType, class SortModelType = SyncItemSortModel>
     void setTable()

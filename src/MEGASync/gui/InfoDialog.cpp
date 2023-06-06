@@ -990,9 +990,7 @@ void InfoDialog::on_bSettings_clicked()
 
 void InfoDialog::on_bUpgrade_clicked()
 {
-    QString url = QString::fromUtf8("mega://#pro");
-    Utilities::getPROurlWithParameters(url);
-    Utilities::openUrl(QUrl(url));
+    Utilities::upgradeClicked();
 }
 
 void InfoDialog::on_bUpgradeOverDiskQuota_clicked()

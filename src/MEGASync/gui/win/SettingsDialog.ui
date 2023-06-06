@@ -74,46 +74,6 @@ background-color: white;
 border: none;
 }
 
-#wSyncsTable
-{
-background: white;
-border: 1px solid #D8D8D8;
-}
-
-#wSyncsTable QHeaderView
-{
-background: transparent;
-}
-
-#wSyncsTable QHeaderView::section
-{
-border-style: none;
-color: #4A607A;
-background: white;
-}
-
-#wSyncsTable QHeaderView::section:horizontal
-{
-border-right: 1px solid #D8D8D8;
-padding-left: 10px;
-}
-
-#wSyncsTable QTableView
-{
-border: none;
-background: transparent;
-}
-#wSyncsTable QTableView::item
-{
-border-right: 1px solid #D8D8D8;
-}
-
-#wSyncsTable QTableWidget::item:selected
-{
-background-color: rgba(0,120,215,0.8);
-border-right: 1px solid #2b8bd7;
-}
-
 #lAccountType, #lName
 {
 font-size: 13px;
@@ -229,7 +189,7 @@ margin-top: 4px;
          <string>General</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset resource="../Resources_linux.qrc">
           <normaloff>:/images/settings-general.png</normaloff>:/images/settings-general.png</iconset>
         </property>
         <property name="iconSize">
@@ -278,7 +238,7 @@ margin-top: 4px;
          <string>Account</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset resource="../Resources_linux.qrc">
           <normaloff>:/images/settings-account.png</normaloff>:/images/settings-account.png</iconset>
         </property>
         <property name="iconSize">
@@ -324,7 +284,7 @@ margin-top: 4px;
          <string>Sync</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset resource="../Resources_linux.qrc">
           <normaloff>:/images/settings-syncs.png</normaloff>:/images/settings-syncs.png</iconset>
         </property>
         <property name="iconSize">
@@ -370,7 +330,7 @@ margin-top: 4px;
          <string>Backup</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset resource="../Resources_linux.qrc">
           <normaloff>:/images/settings-backup.png</normaloff>:/images/settings-backup.png</iconset>
         </property>
         <property name="iconSize">
@@ -416,7 +376,7 @@ margin-top: 4px;
          <string>Security</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset resource="../Resources_linux.qrc">
           <normaloff>:/images/settings-security.png</normaloff>:/images/settings-security.png</iconset>
         </property>
         <property name="iconSize">
@@ -462,7 +422,7 @@ margin-top: 4px;
          <string>Folders</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset resource="../Resources_linux.qrc">
           <normaloff>:/images/settings-folders.png</normaloff>:/images/settings-folders.png</iconset>
         </property>
         <property name="iconSize">
@@ -508,7 +468,7 @@ margin-top: 4px;
          <string>Network</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset resource="../Resources_linux.qrc">
           <normaloff>:/images/Icon_Win_Network.png</normaloff>:/images/Icon_Win_Network.png</iconset>
         </property>
         <property name="iconSize">
@@ -549,7 +509,7 @@ margin-top: 4px;
          <string>Notifications</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset resource="../Resources_linux.qrc">
           <normaloff>:/images/Icon_Win_Notifications.png</normaloff>:/images/Icon_Win_Notifications.png</iconset>
         </property>
         <property name="iconSize">
@@ -1262,7 +1222,7 @@ margin-top: 4px;
                 </sizepolicy>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_win.qrc">
+                <iconset resource="../Resources_macx.qrc">
                  <normaloff>:/images/Small_Free.png</normaloff>:/images/Small_Free.png</iconset>
                </property>
                <property name="iconSize">
@@ -2159,7 +2119,7 @@ min-height: 72px;
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_win.qrc">
+             <iconset resource="../Resources_macx.qrc">
               <normaloff>:/images/ic_sync_warning.png</normaloff>:/images/ic_sync_warning.png</iconset>
             </property>
             <property name="iconSize">
@@ -2481,7 +2441,7 @@ color: grey;
          <string>Help</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset resource="../Resources_linux.qrc">
           <normaloff>:/images/help_ico.png</normaloff>:/images/help_ico.png</iconset>
         </property>
         <property name="iconSize">
@@ -2678,7 +2638,7 @@ color: grey;
   <customwidget>
    <class>NotificationsSettings</class>
    <extends>QWidget</extends>
-   <header>NotificationsSettings.h</header>
+   <header>notificationssettings.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
@@ -2695,11 +2655,16 @@ color: grey;
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../Resources_win.qrc"/>
-  <include location="../Resources_win.qrc"/>
-  <include location="../Resources_win.qrc"/>
-  <include location="../Resources_win.qrc"/>
-  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_macx.qrc"/>
+  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_macx.qrc"/>
+  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_macx.qrc"/>
+  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_macx.qrc"/>
+  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_macx.qrc"/>
+  <include location="../Resources_linux.qrc"/>
  </resources>
  <connections/>
 </ui>

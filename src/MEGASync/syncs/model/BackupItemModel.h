@@ -8,8 +8,6 @@ class BackupItemModel : public SyncItemModel
     Q_OBJECT
 
 public:
-    const unsigned int kColumns = 7;
-
     explicit BackupItemModel(QObject *parent = nullptr);
 
     // Header

@@ -1139,6 +1139,13 @@ QPair<QString, QString> Utilities::getFilenameBasenameAndSuffix(const QString& f
     return result;
 }
 
+void Utilities::upgradeClicked()
+{
+    QString url = QString::fromUtf8("mega://#pro");
+    getPROurlWithParameters(url);
+    openUrl(QUrl(url));
+}
+
 QString Utilities::getNodePath(MegaTransfer* transfer)
 {
     if (transfer->getPath() != nullptr)

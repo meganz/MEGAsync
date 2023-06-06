@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_2">
+  <layout class="QVBoxLayout" name="SyncSettingsLayout">
    <property name="spacing">
     <number>0</number>
    </property>
@@ -59,50 +59,6 @@
       <property name="bottomMargin">
        <number>10</number>
       </property>
-     </layout>
-    </widget>
-   </item>
-   <item>
-    <widget class="QGroupBox" name="wOQError">
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <property name="spacing">
-       <number>10</number>
-      </property>
-      <property name="leftMargin">
-       <number>10</number>
-      </property>
-      <property name="topMargin">
-       <number>10</number>
-      </property>
-      <property name="rightMargin">
-       <number>10</number>
-      </property>
-      <property name="bottomMargin">
-       <number>10</number>
-      </property>
-      <item>
-       <widget class="QLabel" name="lOQWarning">
-        <property name="text">
-         <string>Your MEGA account is full. Uploads are disabled and folder synchronisation is paused.</string>
-        </property>
-        <property name="wordWrap">
-         <bool>true</bool>
-        </property>
-        <property name="openExternalLinks">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item alignment="Qt::AlignLeft">
-       <widget class="QPushButton" name="bBuyMoreSpace">
-        <property name="text">
-         <string>Purchase more storage</string>
-        </property>
-        <property name="autoDefault">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
      </layout>
     </widget>
    </item>
@@ -254,7 +210,7 @@
   <customwidget>
    <class>WaitingSpinnerWidget</class>
    <extends>QWidget</extends>
-   <header>WaitingSpinnerWidget.h</header>
+   <header>waitingspinnerwidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

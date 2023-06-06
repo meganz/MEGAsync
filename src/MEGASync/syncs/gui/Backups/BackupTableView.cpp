@@ -16,6 +16,7 @@ BackupTableView::BackupTableView(QWidget *parent)
 
 void BackupTableView::initTable()
 {
+    setColumnHidden(BackupItemModel::Column::DOWNLOADS, true);
     setItemDelegate(new BackgroundColorDelegate(this));
     setItemDelegateForColumn(BackupItemModel::Column::MENU, new MenuItemDelegate(this));
     setItemDelegateForColumn(SyncItemModel::Column::LNAME, new IconMiddleDelegate(this));

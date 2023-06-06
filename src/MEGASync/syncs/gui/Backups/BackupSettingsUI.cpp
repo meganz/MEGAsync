@@ -5,7 +5,6 @@
 #include "syncs/model/BackupItemModel.h"
 
 #include "Utilities.h"
-#include "UserAttributesRequests/MyBackupsHandle.h"
 #include "DialogOpener.h"
 #include "RemoveBackupDialog.h"
 #include "QMegaMessageBox.h"
@@ -13,14 +12,8 @@
 BackupSettingsUI::BackupSettingsUI(QWidget *parent) :
     SyncSettingsUIBase(parent)
 {
-    auto myBackupsHandle = UserAttributes::MyBackupsHandle::requestMyBackupsHandle();
-    connect(myBackupsHandle.get(), &UserAttributes::MyBackupsHandle::attributeReady,
-            this, &BackupSettingsUI::onMyBackupsFolderHandleSet);
-    onMyBackupsFolderHandleSet(myBackupsHandle->getMyBackupsHandle());
-
     setType(mega::MegaSync::SyncType::TYPE_BACKUP);
     setTable<BackupTableView, BackupItemModel>();
-    mTable->setColumnHidden(SyncItemModel::Column_DOWNLOADS, true);
 
     connect(mSyncController, &SyncController::backupMoveOrRemoveRemoteFolderError, this, [this](std::shared_ptr<mega::MegaError> err)
     {
@@ -31,8 +24,7 @@ BackupSettingsUI::BackupSettingsUI(QWidget *parent) :
 
     });
 
-//    ui->bOpenBackupFolder->setEnabled(false);
-//    ui->gSyncs->setUsePermissions(false);
+    mElements.initElements(this);
 }
 
 BackupSettingsUI::~BackupSettingsUI()
@@ -54,8 +46,10 @@ void BackupSettingsUI::addButtonClicked(mega::MegaHandle)
 
 void BackupSettingsUI::changeEvent(QEvent *event)
 {
-    QString backupsDirPath = UserAttributes::MyBackupsHandle::getMyBackupsLocalizedPath();
-    //ui->lBackupFolder->setText(backupsDirPath);
+    if(event->type() == QEvent::LanguageChange)
+    {
+        mElements.updateUI();
+    }
 
     SyncSettingsUIBase::changeEvent(event);
 }
@@ -74,22 +68,17 @@ void BackupSettingsUI::removeSync(std::shared_ptr<SyncSettings> backup)
     });
 }
 
-void BackupSettingsUI::on_bOpenBackupFolder_clicked()
+QString BackupSettingsUI::getFinishWarningIconString()
 {
-    auto myBackupsHandle = UserAttributes::MyBackupsHandle::requestMyBackupsHandle();
-    Utilities::openInMega(myBackupsHandle->getMyBackupsHandle());
+    return QString::fromUtf8(":/images/settings-backups-warn.png");
 }
 
-void BackupSettingsUI::onMyBackupsFolderHandleSet(mega::MegaHandle h)
+QString BackupSettingsUI::getFinishIconString()
 {
-//    ui->lBackupFolder->setText(UserAttributes::MyBackupsHandle::getMyBackupsLocalizedPath());
+    return QString::fromUtf8(":/images/settings-backup.png");
+}
 
-//    if (h == mega::INVALID_HANDLE)
-//    {
-//        ui->bOpenBackupFolder->setEnabled(false);
-//    }
-//    else
-//    {
-//        ui->bOpenBackupFolder->setEnabled(true);
-//    }
+QString BackupSettingsUI::typeString()
+{
+    return tr("backup");
 }

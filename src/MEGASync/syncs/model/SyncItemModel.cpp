@@ -41,31 +41,31 @@ QVariant SyncItemModel::headerData(int section, Qt::Orientation orientation, int
             if(role == Qt::ToolTipRole)
                 return tr("Sort by sync name");
             break;
-        case Column_STATE:
+        case Column::STATE:
             if(role == Qt::DisplayRole)
                 return tr("State");
             if(role == Qt::ToolTipRole)
                 return tr("Sort by sync state");
             break;
-        case Column_FILES:
+        case Column::FILES:
             if(role == Qt::DisplayRole)
                 return tr("Files");
             if(role == Qt::ToolTipRole)
                 return tr("Sort by file count");
             break;
-        case Column_FOLDERS:
+        case Column::FOLDERS:
             if(role == Qt::DisplayRole)
                 return tr("Folders");
             if(role == Qt::ToolTipRole)
                 return tr("Sort by folder count");
             break;
-        case Column_DOWNLOADS:
+        case Column::DOWNLOADS:
             if(role == Qt::DisplayRole)
                 return tr("Downloads");
             if(role == Qt::ToolTipRole)
                 return tr("Sort by Downloads");
             break;
-        case Column_UPLOADS:
+        case Column::UPLOADS:
             if(role == Qt::DisplayRole)
                 return tr("Uploads");
             if(role == Qt::ToolTipRole)
@@ -149,7 +149,8 @@ QVariant SyncItemModel::data(const QModelIndex &index, int role) const
         {
             QIcon syncIcon;
 
-            if(sync->getRunState() == mega::MegaSync::RUNSTATE_RUNNING)
+            if(sync->getRunState() == mega::MegaSync::RUNSTATE_RUNNING
+                    || (sync->getRunState() == mega::MegaSync::RUNSTATE_LOADING || sync->getRunState() == mega::MegaSync::RUNSTATE_PENDING))
             {
                 syncIcon.addFile(QLatin1String(":/images/sync_states/sync-running.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Normal);
                 syncIcon.addFile(QLatin1String(":/images/sync_states/sync-running-selected.png"), QSize(STATES_ICON_SIZE, STATES_ICON_SIZE), QIcon::Selected);
@@ -207,7 +208,7 @@ QVariant SyncItemModel::data(const QModelIndex &index, int role) const
             return toolTip;
         }
         break;
-    case Column_STATE:
+    case Column::STATE:
         if(role == Qt::DisplayRole)
         {
             std::string s;
@@ -242,7 +243,7 @@ QVariant SyncItemModel::data(const QModelIndex &index, int role) const
             return QString::fromStdString(s);
         }
         break;
-    case Column_FILES:
+    case Column::FILES:
         if(role == Qt::DisplayRole)
         {
             auto it = mSyncInfo->mSyncStatsMap.find(sync->backupId());
@@ -253,7 +254,7 @@ QVariant SyncItemModel::data(const QModelIndex &index, int role) const
             }
         }
         break;
-    case Column_FOLDERS:
+    case Column::FOLDERS:
         if(role == Qt::DisplayRole)
         {
             auto it = mSyncInfo->mSyncStatsMap.find(sync->backupId());
@@ -264,7 +265,7 @@ QVariant SyncItemModel::data(const QModelIndex &index, int role) const
             }
         }
         break;
-    case Column_DOWNLOADS:
+    case Column::DOWNLOADS:
         if(role == Qt::DisplayRole)
         {
             auto it = mSyncInfo->mSyncStatsMap.find(sync->backupId());
@@ -275,7 +276,7 @@ QVariant SyncItemModel::data(const QModelIndex &index, int role) const
             }
         }
         break;
-    case Column_UPLOADS:
+    case Column::UPLOADS:
         if(role == Qt::DisplayRole)
         {
             auto it = mSyncInfo->mSyncStatsMap.find(sync->backupId());

@@ -946,9 +946,7 @@ void TransferManager::on_tActionButton_clicked()
 
 void TransferManager::on_tSeePlans_clicked()
 {
-    QString url = QString::fromUtf8("mega://#pro");
-    Utilities::getPROurlWithParameters(url);
-    Utilities::openUrl(QUrl(url));
+    Utilities::upgradeClicked();
 }
 
 void TransferManager::on_bPause_toggled()

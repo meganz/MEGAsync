@@ -1,6 +1,12 @@
 #include "RemoteItemUi.h"
 #include "ui_RemoteItemUi.h"
 
+#ifndef Q_OS_WIN
+#include <MegaApplication.h>
+#include <DialogOpener.h>
+#include <PermissionsDialog.h>
+#endif
+
 RemoteItemUi::RemoteItemUi(QWidget *parent) :
     QGroupBox(parent),
     ui(new Ui::RemoteItemUi)
@@ -10,7 +16,10 @@ RemoteItemUi::RemoteItemUi(QWidget *parent) :
         emit addClicked(mega::INVALID_HANDLE);
     });
     connect(ui->bDelete, &QPushButton::clicked, this, &RemoteItemUi::deleteClicked);
-    connect(ui->bPermissions, &QPushButton::clicked, this, &RemoteItemUi::permissionsClicked);
+
+#ifdef Q_OS_WIN
+    setUsePermissions(false);
+#endif
 }
 
 RemoteItemUi::~RemoteItemUi()
@@ -58,3 +67,31 @@ void RemoteItemUi::setTableViewProperties(QTableView *view) const
     view->verticalHeader()->setMinimumSectionSize(24);
     view->verticalHeader()->setDefaultSectionSize(24);
 }
+
+#ifndef Q_OS_WIN
+void RemoteItemUi::on_bPermissions_clicked()
+{
+    MegaSyncApp->getMegaApi()->setDefaultFolderPermissions(Preferences::instance()->folderPermissionsValue());
+    int folderPermissions = MegaSyncApp->getMegaApi()->getDefaultFolderPermissions();
+    MegaSyncApp->getMegaApi()->setDefaultFilePermissions(Preferences::instance()->filePermissionsValue());
+    int filePermissions = MegaSyncApp->getMegaApi()->getDefaultFilePermissions();
+
+    QPointer<PermissionsDialog> dialog = new PermissionsDialog(this);
+    dialog->setFolderPermissions(folderPermissions);
+    dialog->setFilePermissions(filePermissions);
+    DialogOpener::showDialog<PermissionsDialog>(dialog, [dialog, &folderPermissions, &filePermissions, this](){
+        if (dialog->result() == QDialog::Accepted)
+        {
+            filePermissions = dialog->filePermissions();
+            folderPermissions = dialog->folderPermissions();
+
+            if (filePermissions != Preferences::instance()->filePermissionsValue()
+                    || folderPermissions != Preferences::instance()->folderPermissionsValue())
+            {
+                Preferences::instance()->setFilePermissionsValue(filePermissions);
+                Preferences::instance()->setFolderPermissionsValue(folderPermissions);
+            }
+        }
+    });
+}
+#endif
