@@ -53,7 +53,6 @@ public:
     void setProxyOnly(bool proxyOnly);
 
     // General
-    void setOverQuotaMode(bool mode);
     void setUpdateAvailable(bool updateAvailable);
     void storageChanged();
 
@@ -63,13 +62,6 @@ public:
     void updateAccountElements() override;
 
     // Syncs
-    enum SyncStateInformation
-    {
-        SAVING_SYNCS = 0,
-        SAVING_BACKUPS,
-        SAVING_SYNCS_FINISHED,
-        SAVING_BACKUPS_FINISHED,
-    };
     void addSyncFolder(mega::MegaHandle megaFolderHandle = mega::INVALID_HANDLE);
 
     // Folders
@@ -97,6 +89,7 @@ public slots:
     void storageStateChanged(int state);
 
 private slots:
+    void on_bBackupCenter_clicked();
     void on_bHelp_clicked();
 #ifdef Q_OS_MACOS
     void onAnimationFinished();
@@ -135,35 +128,14 @@ private slots:
     // Syncs
     void on_bSyncs_clicked();
     void on_bAddSync_clicked();
-    void on_bDeleteSync_clicked();
-
-    void openMegaIgnore(std::shared_ptr<SyncSettings>);
-    void onOpenMegaIgnoreFinished();
-    void showOpenMegaIgnoreError();
-    void rescanQuick(std::shared_ptr<SyncSettings>);
-    void rescanDeep(std::shared_ptr<SyncSettings>);
 
 #ifndef WIN32
     void on_bPermissions_clicked();
 #endif
 
-    void onSavingSyncsCompleted(SyncStateInformation value);
-
     // Backup
     void on_bBackup_clicked();
     void on_bAddBackup_clicked();
-    void on_bDeleteBackup_clicked();
-    void removeBackup(std::shared_ptr<SyncSettings> backup);
-    void removeSync(std::shared_ptr<SyncSettings> sync);
-    void setSyncToRun(std::shared_ptr<SyncSettings> sync);
-    void setSyncToPause(std::shared_ptr<SyncSettings> sync);
-    void setSyncToSuspend(std::shared_ptr<SyncSettings> sync);
-    void setSyncToDisabled(std::shared_ptr<SyncSettings> sync);
-
-    void on_bOpenBackupFolder_clicked();
-    void openHandleInMega(mega::MegaHandle handle);
-    void on_bBackupCenter_clicked();
-    void onMyBackupsFolderHandleSet(mega::MegaHandle h);
 
     // Security
     void on_bSecurity_clicked();
@@ -205,11 +177,6 @@ private slots:
     void onShellNotificationsProcessed();
 
 private:
-    void connectSyncHandlers();
-    void loadSyncSettings();
-    void connectBackupHandlers();
-    void loadBackupSettings();
-
     void loadSettings();
     void onCacheSizeAvailable();
     void saveExcludeSyncNames();
@@ -217,10 +184,6 @@ private:
     void setShortCutsForToolBarItems();
     void showUnexpectedSyncError(const QString& message);
     void updateCacheSchedulerDaysLabel();
-
-    void syncsStateInformation(SyncStateInformation state);
-
-    void addSyncFolderAfterOverQuotaCheck(mega::MegaHandle megaFolderHandle);
 
 #ifdef Q_OS_MACOS
     void reloadToolBarItemNames();
@@ -259,6 +222,5 @@ private:
     QStringList mSyncNames;
     bool mHasDefaultUploadOption;
     bool mHasDefaultDownloadOption;
-    QFutureWatcher<bool> mOpenUrlWatcher;
 };
 #endif // SETTINGSDIALOG_H

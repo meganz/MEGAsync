@@ -1438,7 +1438,6 @@ void TransfersModel::retryTransfers(const QMultiMap<unsigned long long, std::sha
                     TransferMetaDataContainer::retryTransfer(failedTransfer.get(), appData);
                 }
 
-
                 if (failedTransfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
                 {
                     std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(failedTransfer->getNodeHandle()));

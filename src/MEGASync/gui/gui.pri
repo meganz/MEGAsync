@@ -15,7 +15,6 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/QtPositioningBugFixer.cpp \
     $$PWD/PasswordLineEdit.cpp \
     $$PWD/SetupWizard.cpp \
-    $$PWD/SyncSettings.cpp \
     $$PWD/UploadToMegaDialog.cpp \
     $$PWD/PasteMegaLinksDialog.cpp \
     $$PWD/ImportMegaLinksDialog.cpp \
@@ -60,6 +59,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/SwitchButton.cpp \
     $$PWD/GuiUtilities.cpp \
     $$PWD/CancelConfirmWidget.cpp \
+    $$PWD/RemoteItemUI.cpp \
     $$PWD/NodeNameSetterDialog/NodeNameSetterDialog.cpp \
     $$PWD/NodeNameSetterDialog/NewFolderDialog.cpp \
     $$PWD/NodeNameSetterDialog/RenameNodeDialog.cpp \   
@@ -94,7 +94,6 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/QtPositioningBugFixer.h \
     $$PWD/PasswordLineEdit.h \
     $$PWD/SetupWizard.h \
-    $$PWD/SyncSettings.h \
     $$PWD/UploadToMegaDialog.h \
     $$PWD/PasteMegaLinksDialog.h \
     $$PWD/ImportMegaLinksDialog.h \
@@ -140,6 +139,7 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/SwitchButton.h \
     $$PWD/GuiUtilities.h \
     $$PWD/CancelConfirmWidget.h \
+    $$PWD/RemoteItemUI.h \
     $$PWD/NodeNameSetterDialog/NodeNameSetterDialog.h \
     $$PWD/NodeNameSetterDialog/NewFolderDialog.h \
     $$PWD/NodeNameSetterDialog/RenameNodeDialog.h \
@@ -186,8 +186,7 @@ win32 {
                 $$PWD/win/AddExclusionDialog.ui \
                 $$PWD/win/StatusInfo.ui \
                 $$PWD/win/PSAwidget.ui \
-                $$PWD/win/RemoteItemUI.ui \    
-                $$PWD/win/SyncSettings.ui \
+                $$PWD/win/RemoteItemUI.ui \
                 $$PWD/win/UpgradeOverStorage.ui \
                 $$PWD/win/ChangePassword.ui \
                 $$PWD/win/Login2FA.ui \

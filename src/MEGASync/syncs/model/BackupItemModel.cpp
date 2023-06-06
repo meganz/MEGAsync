@@ -54,14 +54,15 @@ QVariant BackupItemModel::headerData(int section, Qt::Orientation orientation, i
                 return tr("Sort by Uploads");
         }
     }
-    return QVariant();
+    return SyncItemModel::headerData(section, orientation, role);
 }
 
 int BackupItemModel::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)
 
-    return kColumns;
+    //We don´t have downloads on backups
+    return kColumns -1;
 }
 
 void BackupItemModel::fillData()
@@ -116,6 +117,9 @@ QVariant BackupItemModel::data(const QModelIndex &index, int role) const
             return toolTip;
         }
         break;
+    case Column::Column_DOWNLOADS:
+            return QVariant();
+            break;
     }
     return SyncItemModel::data(index,role);
 }

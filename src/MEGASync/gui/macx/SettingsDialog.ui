@@ -3326,7 +3326,7 @@ color:white;
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../Resources_win.qrc">
               <normaloff>:/images/key_big.png</normaloff>:/images/key_big.png</iconset>
             </property>
             <property name="iconSize">
@@ -3437,7 +3437,7 @@ color:white;
              <string/>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../Resources_win.qrc">
               <normaloff>:/images/lock_big.png</normaloff>:/images/lock_big.png</iconset>
             </property>
             <property name="iconSize">
@@ -4314,7 +4314,7 @@ color:white;
                    <string/>
                   </property>
                   <property name="icon">
-                   <iconset>
+                   <iconset resource="../Resources_win.qrc">
                     <normaloff>:/images/ic_sync_warning.png</normaloff>:/images/ic_sync_warning.png</iconset>
                   </property>
                   <property name="iconSize">
@@ -4835,7 +4835,7 @@ margin-right: 32px;</string>
             <property name="bottomMargin">
              <number>0</number>
             </property>
-			<item>
+            <item>
              <widget class="QPushButton" name="bFullCheck">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -4984,6 +4984,12 @@ margin-right: 32px;</string>
    <container>1</container>
   </customwidget>
   <customwidget>
+   <class>BackupTableView</class>
+   <extends>QTableView</extends>
+   <header>syncs/gui/Backups/BackupTableView.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>QMacSpinningProgressIndicator</class>
    <extends>QWidget</extends>
    <header location="global">QMacSpinningProgressIndicator.h</header>
@@ -4999,12 +5005,6 @@ margin-right: 32px;</string>
    <class>SyncTableView</class>
    <extends>QTableView</extends>
    <header>syncs/gui/Twoways/SyncTableView.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>BackupTableView</class>
-   <extends>QTableView</extends>
-   <header>syncs/gui/Backups/BackupTableView.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
@@ -5039,6 +5039,12 @@ margin-right: 32px;</string>
   <tabstop>bSessionHistory</tabstop>
   <tabstop>bRestart</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_win.qrc"/>
+ </resources>
  <connections/>
 </ui>

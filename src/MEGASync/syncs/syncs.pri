@@ -7,11 +7,14 @@ SOURCES += $$PWD/gui/Backups/AddBackupDialog.cpp \
            $$PWD/gui/Backups/BackupTableView.cpp \
            $$PWD/gui/Backups/BackupsWizard.cpp \
            $$PWD/gui/Backups/RemoveBackupDialog.cpp \
+           $$PWD/gui/Backups/BackupSettingsUI.cpp \
+           $$PWD/gui/SyncSettingsUIBase.cpp \
            $$PWD/gui/SyncTooltipCreator.cpp \
            $$PWD/gui/SyncsMenu.cpp \
            $$PWD/gui/Twoways/BindFolderDialog.cpp \
            $$PWD/gui/Twoways/FolderBinder.cpp \
            $$PWD/gui/Twoways/SyncTableView.cpp \
+           $$PWD/gui/Twoways/SyncSettingsUI.cpp \
            $$PWD/model/BackupItemModel.cpp \
            $$PWD/model/SyncItemModel.cpp \
            $$PWD/control/SyncInfo.cpp \
@@ -24,11 +27,14 @@ HEADERS += $$PWD/gui/Backups/AddBackupDialog.h \
            $$PWD/gui/Backups/BackupTableView.h \
            $$PWD/gui/Backups/BackupsWizard.h \
            $$PWD/gui/Backups/RemoveBackupDialog.h \
+           $$PWD/gui/Backups/BackupSettingsUI.h \
+           $$PWD/gui/SyncSettingsUIBase.h \
            $$PWD/gui/SyncTooltipCreator.h \
            $$PWD/gui/SyncsMenu.h \
            $$PWD/gui/Twoways/BindFolderDialog.h \
            $$PWD/gui/Twoways/FolderBinder.h \
            $$PWD/gui/Twoways/SyncTableView.h \
+           $$PWD/gui/Twoways/SyncSettingsUI.h \
            $$PWD/model/BackupItemModel.h \
            $$PWD/model/SyncItemModel.h \
            $$PWD/control/SyncController.h \
@@ -40,11 +46,13 @@ win32 {
     RESOURCES += $$PWD/../gui/Resources_win.qrc
     FORMS    += $$PWD/gui/Twoways/win/FolderBinder.ui \
                 $$PWD/gui/Twoways/win/BindFolderDialog.ui \
+                $$PWD/gui/Twoways/win/SyncSettingsUIBase.ui \
                 $$PWD/gui/Backups/win/BackupsWizard.ui \
                 $$PWD/gui/Backups/win/AddBackupDialog.ui \
                 $$PWD/gui/Backups/win/RemoveBackupDialog.ui \
                 $$PWD/gui/Backups/win/BackupNameConflictDialog.ui \
-                $$PWD/gui/Backups/win/BackupRenameWidget.ui
+                $$PWD/gui/Backups/win/BackupRenameWidget.ui \
+                $$PWD/gui/Backups/win/BackupSettingsUI.ui
 }
 
 macx {

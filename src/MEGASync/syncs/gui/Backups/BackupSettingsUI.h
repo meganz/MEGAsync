@@ -1,0 +1,29 @@
+#ifndef BACKUPSSETTINGSUI_H
+#define BACKUPSSETTINGSUI_H
+
+#include <QWidget>
+#include <QPointer>
+
+#include <SyncSettingsUIBase.h>
+#include <syncs/gui/Backups/BackupTableView.h>
+
+class BackupSettingsUI : public SyncSettingsUIBase
+{
+    Q_OBJECT
+
+public:
+    explicit BackupSettingsUI(QWidget *parent = nullptr);
+    ~BackupSettingsUI() override;
+
+    void addButtonClicked(mega::MegaHandle megaFolderHandle = mega::INVALID_HANDLE) override;
+
+protected:
+    void changeEvent(QEvent* event);
+
+protected slots:
+    void removeSync(std::shared_ptr<SyncSettings> sync) override;
+    void on_bOpenBackupFolder_clicked();
+    void onMyBackupsFolderHandleSet(mega::MegaHandle h);
+};
+
+#endif // BACKUPSSETTINGSUI_H
