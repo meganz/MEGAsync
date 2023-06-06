@@ -9,6 +9,7 @@ import Onboard 1.0
 
 // C++
 import Onboarding 1.0
+import BackupsController 1.0
 
 ConfirmFoldersPageForm {
     id: root
@@ -31,7 +32,6 @@ ConfirmFoldersPageForm {
     }
 
     Component.onCompleted: {
-        console.error("Created Confirm Folders");
         Onboarding.getComputerName();
     }
 
@@ -45,7 +45,7 @@ ConfirmFoldersPageForm {
     }
 
     Connections {
-        target: _cppBackupsController
+        target: BackupsController
 
         onBackupsCreationFinished: {
             root.enabled = true;

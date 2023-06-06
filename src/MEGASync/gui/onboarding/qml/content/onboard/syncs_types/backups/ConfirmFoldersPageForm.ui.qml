@@ -5,6 +5,7 @@ import QtQuick.Controls 2.12
 
 // QML common
 import Components.TextFields 1.0 as MegaTextFields
+import Components.Texts 1.0 as MegaTexts
 import Common 1.0
 
 // Local
@@ -13,6 +14,7 @@ import Onboard.Syncs_types 1.0
 
 // C++
 import Onboarding 1.0
+import BackupsModel 1.0
 
 SyncsPage {
 
@@ -22,7 +24,7 @@ SyncsPage {
     footerButtons.nextButton {
         text: OnboardingStrings.backup
         icons.source: Images.cloud
-        enabled: !_cppBackupsModel.mExistConflicts
+        enabled: !BackupsModel.mExistConflicts
     }
 
     ColumnLayout {
@@ -64,7 +66,17 @@ SyncsPage {
                 leftIcon.source: Images.database
                 textField.readOnly: true
                 enabled: false
-                visible: !_cppBackupsModel.mExistConflicts
+                visible: !BackupsModel.mExistConflicts
+            }
+
+            MegaTexts.NotificationText {
+                Layout.preferredWidth: parent.width
+                attributes.type: MegaTexts.NotificationInfo.Type.Warning
+                attributes.icon.source: ""
+                attributes.icon.visible: false
+                visible: true
+                title: "This is a test"
+                text: "This is a long long long long long long long long long long long long long long long long long long long long long long long long long long long test";
             }
         }
     }

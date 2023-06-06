@@ -34,7 +34,7 @@ class BackupsModel : public QAbstractListModel
 {
     Q_OBJECT
 
-    Q_PROPERTY(QString totalSize READ getTotalSize NOTIFY totalSizeChanged)
+    Q_PROPERTY(QString mTotalSize READ getTotalSize NOTIFY totalSizeChanged)
     Q_PROPERTY(Qt::CheckState mCheckAllState READ getCheckAllState WRITE setCheckAllState NOTIFY checkAllStateChanged)
     Q_PROPERTY(bool mExistConflicts READ getExistConflicts NOTIFY existConfilctsChanged)
 
@@ -51,6 +51,14 @@ public:
         ErrorRole,
         ErrorVisibleRole
     };
+
+    enum BackupErrorCode
+    {
+        None = 0,
+        DuplicatedName = 1,
+        ExistsRemote = 2
+    };
+    Q_ENUM(BackupErrorCode)
 
     explicit BackupsModel(QObject* parent = nullptr);
 
@@ -95,7 +103,7 @@ private:
     QList<BackupFolder> mBackupFolderList;
     QHash<int, QByteArray> mRoleNames;
     int mSelectedRowsTotal;
-    long long mTotalSize;
+    long long mBackupsTotalSize;
     SyncController mSyncController;
     BackupsController* mBackupsController;
     bool mExistConflicts;

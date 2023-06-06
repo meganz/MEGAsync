@@ -14,11 +14,14 @@ import Components.TextFields 1.0 as MegaTextFields
 // Local
 import Onboard 1.0
 
+// C++
+import BackupsModel 1.0
+
 Rectangle {
     id: root
 
     readonly property int totalHeight: 32
-    readonly property int horizontalMargin: 6
+    readonly property int horizontalMargin: 8
     readonly property int internalMargin: 8
 
     height: totalHeight
@@ -46,15 +49,13 @@ Rectangle {
             anchors.fill: parent
             sourceComponent: {
                 if(backupsProxyModel.selectedFilterEnabled) {
-                    if(mError !== 100 && mError !== 101) {
-                        console.log("confirm component");
+                    if(mError !== BackupsModel.BackupErrorCode.DuplicatedName
+                            && mError !== BackupsModel.BackupErrorCode.ExistsRemote) {
                         return confirmContent;
                     } else {
-                        console.log("conflict component");
                         return conflictContent;
                     }
                 } else {
-                    console.log("select component");
                     return selectContent;
                 }
             }
@@ -64,47 +65,50 @@ Rectangle {
     Component {
         id: selectContent
 
-        RowLayout {
+        Item {
+            anchors.fill: parent
 
             RowLayout {
-                Layout.alignment: Qt.AlignLeft
+                anchors.fill: parent
 
-                MegaCheckBoxes.CheckBox {
-                    Layout.leftMargin: 8
-                    Layout.preferredWidth: 16
-                    Layout.preferredHeight: 16
-                    checked: mSelected
-                    checkable: mSelectable
-                    enabled: mSelectable
-                }
+                RowLayout {
+                    Layout.alignment: Qt.AlignLeft
 
-                MegaImages.SvgImage {
-                    Layout.leftMargin: 18
-                    source: mError ? Images.alertTriangle : Images.folder
-                    sourceSize: Qt.size(14, 14)
-                    color: mError ? Styles.textWarning : color
-                    opacity: mSelectable ? 1.0 : 0.3
+                    MegaCheckBoxes.CheckBox {
+                        Layout.leftMargin: 8
+                        Layout.preferredWidth: 16
+                        Layout.preferredHeight: 16
+                        checked: mSelected
+                        checkable: mSelectable
+                        enabled: mSelectable
+                    }
+
+                    MegaImages.SvgImage {
+                        Layout.leftMargin: 18
+                        source: mError ? Images.alertTriangle : Images.folder
+                        sourceSize: Qt.size(14, 14)
+                        color: mError ? Styles.textWarning : color
+                        opacity: mSelectable ? 1.0 : 0.3
+                    }
+
+                    MegaTexts.Text {
+                        Layout.leftMargin: 13
+                        Layout.maximumWidth: 345
+                        maximumLineCount: 1
+                        wrapMode: Text.WrapAnywhere
+                        text: mName
+                    }
                 }
 
                 MegaTexts.Text {
-                    Layout.leftMargin: 13
-                    Layout.maximumWidth: 345
-                    maximumLineCount: 1
-                    wrapMode: Text.WrapAnywhere
-                    text: mName
+                    Layout.alignment: Qt.AlignRight
+                    Layout.rightMargin: 8
+                    text: mSize
+                    font.pixelSize: MegaTexts.Text.Size.Small
                 }
             }
 
-            MegaTexts.Text {
-                Layout.alignment: Qt.AlignRight
-                Layout.rightMargin: 8
-                text: mSize
-                font.pixelSize: MegaTexts.Text.Size.Small
-            }
-
             MouseArea {
-                id: defaultMouseArea
-
                 anchors.fill: parent
                 hoverEnabled: true
                 cursorShape: Qt.PointingHandCursor
@@ -168,7 +172,8 @@ Rectangle {
                 }
 
                 MegaTexts.Text {
-                    Layout.maximumWidth: 208
+                    Layout.maximumWidth: 300
+                    Layout.preferredWidth: 300
                     maximumLineCount: 1
                     wrapMode: Text.WrapAnywhere
                     text: mName
@@ -201,7 +206,7 @@ Rectangle {
                 MegaButtons.SecondaryButton {
                     Layout.preferredHeight: 26
                     Layout.preferredWidth: 87
-                    text: "Rename"
+                    text: OnboardingStrings.rename
                     icons.position: MegaButtons.Icon.Position.LEFT
                     icons.source: Images.edit
                     onClicked: {
@@ -214,7 +219,7 @@ Rectangle {
                     Layout.rightMargin: 8
                     icons.source: Images.trash
                     onClicked: {
-                        _cppBackupsModel.remove(mFolder);
+                        BackupsModel.remove(mFolder);
                     }
                 }
             }
@@ -228,19 +233,18 @@ Rectangle {
             MegaTextFields.TextField {
                 id: editTextField
 
-                Layout.preferredHeight: 32
-                Layout.fillWidth: true
+                Layout.preferredWidth: 313
                 text: mName
                 leftIcon.source: Images.edit
                 leftIcon.color: Styles.iconSecondary
                 error: mErrorVisible
                 hint.visible: mErrorVisible
                 hint.text: {
-                    if(mError === 100) {
-                        return "ERROR 100";
+                    if(mError === BackupsModel.BackupErrorCode.ExistsRemote) {
+                        return OnboardingStrings.confirmBackupErrorRemote;
                     }
-                    if(mError === 101) {
-                        return "ERROR 101";
+                    if(mError === BackupsModel.BackupErrorCode.DuplicatedName) {
+                        return OnboardingStrings.confirmBackupErrorDuplicated;
                     }
                     return "";
                 }
@@ -251,7 +255,7 @@ Rectangle {
                 Layout.preferredWidth: 47
                 text: OnboardingStrings.done
                 onClicked: {
-                    if(_cppBackupsModel.renameBackup(mFolder, editTextField.text)) {
+                    if(BackupsModel.renameBackup(mFolder, editTextField.text)) {
                         mName = editTextField.text;
                         content.sourceComponent = confirmContent;
                     }

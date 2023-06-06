@@ -29,6 +29,8 @@ QtObject {
     readonly property var computerNameDescription: qsTr("You can assign the name for personal use or workgroup membership of this computer.")
     readonly property var computerNameTitle: qsTr("Set up MEGA")
     readonly property var confirm: qsTr("Confirm")
+    readonly property var confirmBackupErrorDuplicated: qsTr("There is already a folder named \"<backup name>\" in this backup")
+    readonly property var confirmBackupErrorRemote: qsTr("A folder named \"<backup name>\" already exists on your backups")
     readonly property var confirmBackupFoldersDescription: qsTr("Will be added to your cloud and available in your other devices.")
     readonly property var confirmBackupFoldersTitle: qsTr("Confirm folders to back up")
     readonly property var confirmEmailTitle: qsTr("Welcome to [b]MEGA[/b]")
@@ -61,10 +63,6 @@ QtObject {
     readonly property var password: qsTr("Password")
     readonly property var previous: qsTr("Previous")
     readonly property var rename: qsTr("Rename")
-    readonly property var renameBackupFolder: qsTr("Rename backup folder")
-    readonly property var renameBackupFolderDescription: qsTr("A folder named [b]\"<folder name>\"[/b] already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.")
-    readonly property var renameBackupFolderTitle: qsTr("Rename folder")
-    readonly property var renameBackupFolderHint: qsTr("If you don’t want to rename the new folder, stop the backup in the [a]Backup centre[/a] for the existing folder. Then set up the backup for the new folder again.");
     readonly property var resend: qsTr("Resend")
     readonly property var selectAll: qsTr("[b]Select all[/b]");
     readonly property var selectBackupFoldersTitle: qsTr("Select folders to back up")

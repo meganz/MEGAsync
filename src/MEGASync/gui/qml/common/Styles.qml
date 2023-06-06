@@ -17,6 +17,9 @@ QtObject {
                                                   pixelSize: Qt.application.font.pixelSize * 1.6
                                               })
 
+    readonly property string fontFamily: "Inter"
+    readonly property string fontStyleName: "normal"
+
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //   Colors - Sorted like in Figma
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

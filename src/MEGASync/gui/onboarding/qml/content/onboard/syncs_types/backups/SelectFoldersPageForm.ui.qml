@@ -12,9 +12,10 @@ import Components.Images 1.0 as MegaImages
 import Onboard 1.0
 import Onboard.Syncs_types 1.0
 
-SyncsPage {
+// C++
+import BackupsModel 1.0
 
-    property alias addFoldersMouseArea: addFoldersMouseArea
+SyncsPage {
 
     ColumnLayout {
 
@@ -44,38 +45,8 @@ SyncsPage {
                 id: backupTable
 
                 Layout.preferredWidth: parent.width
-                Layout.preferredHeight: 186
-                model: _cppBackupsModel
-            }
-
-            Rectangle {
-                Layout.preferredWidth: parent.width
-
-                RowLayout {
-                    id: addFolders
-
-                    spacing: 9
-
-                    MegaImages.SvgImage {
-                        Layout.leftMargin: 19
-                        source: Images.plusCircle
-                        color: Styles.buttonPrimary
-                        sourceSize: Qt.size(22, 22)
-                    }
-
-                    MegaTexts.Text {
-                        text: OnboardingStrings.addFolders
-                        font.weight: Font.DemiBold
-                        font.underline: true
-                    }
-                }
-
-                MouseArea {
-                    id: addFoldersMouseArea
-
-                    anchors.fill: addFolders
-                    cursorShape: Qt.PointingHandCursor
-                }
+                Layout.preferredHeight: 224
+                model: BackupsModel
             }
         }
     }
