@@ -2556,12 +2556,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>DEBUG mode disabled</source>
         <translatorcomment>Notification message shown when the DEBUG mode is disabled.</translatorcomment>
-        <translation>نظام البحث عن الأخطاء معطل</translation>
+        <translation>وضع اكتشاف الأخطاء معطل</translation>
     </message>
     <message>
         <source>DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log)</source>
         <translatorcomment>Notification message shown when the DEBUG mode is enabled.</translatorcomment>
-        <translation>تم تمكين وضع Debug. يتم إنشاء سجل يسمى ”MEGAsync.log“على سطح المكتب الخاص بك.</translation>
+        <translation>تم تمكين وضع اكتشاف الأخطاء. يتم إنشاء سجل يسمى ”MEGAsync.log“على حاسوبك.</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The download has been cancelled</source>

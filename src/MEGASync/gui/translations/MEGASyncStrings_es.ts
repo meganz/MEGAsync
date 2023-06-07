@@ -6822,7 +6822,7 @@ Para obtener más cuota, amplía tu cuenta a Pro o espera [A] hasta que haya má
     <message>
         <source>%1 no longer exists or was renamed.</source>
         <translatorcomment>Body text of a system notification shown when %1 no longer exists or was removed during upload operation. %1 will be replaced with the name of the file. CON-223</translatorcomment>
-        <translation>%1  ya no existe o han sido renombrado. </translation>
+        <translation>%1  ya no existe o ha sido renombrado. </translation>
     </message>
     <message>
         <source>%1 no longer exists.</source>
@@ -6855,7 +6855,7 @@ Para obtener más cuota, amplía tu cuenta a Pro o espera [A] hasta que haya má
     <message>
         <source>%1 no longer exists or was renamed.</source>
         <translatorcomment>Body text of a system notification shown when %1 no longer exists or was removed during upload operation. %1 will be replaced with the name of the folder. CON-223</translatorcomment>
-        <translation>%1  ya no existe o han sido renombrado. </translation>
+        <translation>%1  ya no existe o ha sido renombrada. </translation>
     </message>
     <message>
         <source>%1 no longer exists.</source>

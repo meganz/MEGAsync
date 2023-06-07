@@ -4839,7 +4839,7 @@ Voulez-vous le supprimer quand même ?</translation>
     <message>
         <source>%1 (%2%) of %3 used</source>
         <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically.</translatorcomment>
-        <translation>%1 (%2 %) utilisés sur %3</translation>
+        <translation>%1 (%2&#xa0;%) utilisés sur %3</translation>
     </message>
     <message>
         <source>Warning</source>

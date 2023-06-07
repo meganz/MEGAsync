@@ -7417,7 +7417,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Verify your email</source>
         <translatorcomment>Label to verify a locked account. It will redirect to webclient to confirm email.</translatorcomment>
-        <translation>Kiểm tra hộp thư email của bạn.</translation>
+        <translation>Kiểm&#xa0;tra hộp&#xa0;thư email của bạn</translation>
     </message>
     <message>
         <source>Locked account</source>
@@ -7427,7 +7427,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
         <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
-        <translation>Tài khoản đã tạm thời bị khóa để đảm bảo an toàn. Xin kiểm tra email và làm theo hướng dẫn để mở khóa tài khoản.</translation>
+        <translation>Tài&#xa0;khoản tạm&#xa0;thời bị khóa để đảm&#xa0;bảo an&#xa0;toàn cho bạn. Xin kiểm&#xa0;tra email của bạn và làm theo hướng&#xa0;dẫn để mở khóa tài&#xa0;khoản.</translation>
     </message>
     <message>
         <source>Resend email</source>
