@@ -6,6 +6,7 @@
 #include <QDialog>
 #include <QHBoxLayout>
 #include <QMovie>
+#include "control/Utilities.h"
 
 #include <memory>
 
@@ -13,7 +14,7 @@ namespace Ui {
 class UpgradeOverStorage;
 }
 
-class UpgradeOverStorage : public QDialog
+class UpgradeOverStorage : public QDialog, public IAccountObserver
 {
     Q_OBJECT
 
@@ -26,6 +27,8 @@ public:
     void refreshStorageDetails();
     void setPricing(std::shared_ptr<mega::MegaPricing> pricing,
                     std::shared_ptr<mega::MegaCurrency> currency);
+
+    void updateAccountElements() override;
 
 protected:
     void changeEvent(QEvent* event) override;
