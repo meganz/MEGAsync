@@ -80,6 +80,9 @@
       </item>
       <item>
        <widget class="QPushButton" name="bOpenBackupFolder">
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
         <property name="text">
          <string>View in MEGA</string>
         </property>

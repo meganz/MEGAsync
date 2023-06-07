@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="SyncSettingsLayout">
    <property name="spacing">
-    <number>0</number>
+    <number>5</number>
    </property>
    <property name="leftMargin">
     <number>0</number>
@@ -169,6 +169,9 @@
          <layout class="QVBoxLayout" name="verticalLayout_91">
           <property name="spacing">
            <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>10</number>
           </property>
           <item>
            <widget class="QLabel" name="lDisabledSyncs">

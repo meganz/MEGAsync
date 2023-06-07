@@ -12,7 +12,6 @@
 BackupSettingsUI::BackupSettingsUI(QWidget *parent) :
     SyncSettingsUIBase(parent)
 {
-    setType(mega::MegaSync::SyncType::TYPE_BACKUP);
     setTable<BackupTableView, BackupItemModel>();
 
     connect(mSyncController, &SyncController::backupMoveOrRemoveRemoteFolderError, this, [this](std::shared_ptr<mega::MegaError> err)

@@ -3,6 +3,7 @@
 #include "platform/Platform.h"
 #include "PlatformStrings.h"
 #include "MenuItemAction.h"
+#include "SyncItemModel.h"
 
 #include <QHeaderView>
 #include <QMenu>
@@ -14,7 +15,8 @@ SyncTableView::SyncTableView(QWidget *parent)
     : QTableView(parent),
     mSyncController(this),
     mIsFirstTime(true),
-    mContextMenuName("SyncContextMenu")
+    mContextMenuName("SyncContextMenu"),
+    mType(mega::MegaSync::TYPE_TWOWAY)
 {
     setIconSize(QSize(24, 24));
 
@@ -70,13 +72,23 @@ void SyncTableView::initTable()
     setItemDelegateForColumn(SyncItemModel::Column::DOWNLOADS, new ElideMiddleDelegate(this));
     setItemDelegateForColumn(SyncItemModel::Column::UPLOADS, new ElideMiddleDelegate(this));
 
+    setFont(QFont().defaultFamily());
+    auto StateColumnWidth = horizontalHeader()->fontMetrics().width(model()->headerData(SyncItemModel::Column::STATE, Qt::Horizontal).toString()) + 6;
+    auto FilesColumnWidth = horizontalHeader()->fontMetrics().width(model()->headerData(SyncItemModel::Column::FILES, Qt::Horizontal).toString()) + 6;
+    auto FoldersColumnWidth = horizontalHeader()->fontMetrics().width(model()->headerData(SyncItemModel::Column::FOLDERS, Qt::Horizontal).toString()) + 6;
+    auto DownloadsColumnWidth = horizontalHeader()->fontMetrics().width(model()->headerData(SyncItemModel::Column::DOWNLOADS, Qt::Horizontal).toString()) + 6;
+    auto UploadsColumnWidth = horizontalHeader()->fontMetrics().width(model()->headerData(SyncItemModel::Column::UPLOADS, Qt::Horizontal).toString()) + 6;
+
     horizontalHeader()->resizeSection(SyncItemModel::Column::ENABLED, FIXED_COLUMN_WIDTH);
     horizontalHeader()->resizeSection(SyncItemModel::Column::MENU, FIXED_COLUMN_WIDTH);
-    horizontalHeader()->resizeSection(SyncItemModel::Column::STATE, 3 * FIXED_COLUMN_WIDTH);
-    horizontalHeader()->resizeSection(SyncItemModel::Column::FILES, 2 * FIXED_COLUMN_WIDTH);
-    horizontalHeader()->resizeSection(SyncItemModel::Column::FOLDERS, 2 * FIXED_COLUMN_WIDTH);
-    horizontalHeader()->resizeSection(SyncItemModel::Column::DOWNLOADS, 2 * FIXED_COLUMN_WIDTH);
-    horizontalHeader()->resizeSection(SyncItemModel::Column::UPLOADS, 2 * FIXED_COLUMN_WIDTH);
+
+    //6 is the padding left of the header (set on RemoteItemUI stylesheet)
+    horizontalHeader()->resizeSection(SyncItemModel::Column::STATE, 3*StateColumnWidth);
+    horizontalHeader()->resizeSection(SyncItemModel::Column::FILES, 2*FilesColumnWidth);
+    //10 is an arbitrary padding for these two categories
+    horizontalHeader()->resizeSection(SyncItemModel::Column::FOLDERS, FoldersColumnWidth + 10);
+    horizontalHeader()->resizeSection(SyncItemModel::Column::DOWNLOADS, DownloadsColumnWidth + 10);
+    horizontalHeader()->resizeSection(SyncItemModel::Column::UPLOADS, UploadsColumnWidth + 10);
 
     horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
     horizontalHeader()->setSectionResizeMode(SyncItemModel::Column::ENABLED, QHeaderView::Fixed);
@@ -84,9 +96,7 @@ void SyncTableView::initTable()
     horizontalHeader()->resizeSection(SyncItemModel::Column::LNAME, (width() - FIXED_COLUMN_WIDTH * 11));
 
     horizontalHeader()->setSectionResizeMode(SyncItemModel::Column::LNAME, QHeaderView::Stretch); //QHeaderView::Interactive);
-    //horizontalHeader()->setSectionResizeMode(SyncItemModel::Column::RNAME, QHeaderView::Stretch);
-
-    setFont(QFont().defaultFamily());
+    horizontalHeader()->setTextElideMode(Qt::ElideMiddle);
 
     // Hijack the sorting on the dots MENU column and hide the sort indicator,
     // instead of showing a bogus sort on that column;
@@ -115,6 +125,11 @@ void SyncTableView::onCellClicked(const QModelIndex &index)
        selectionModel()->setCurrentIndex(model()->index(index.row(), SyncItemModel::Column::ENABLED), QItemSelectionModel::NoUpdate);
     if(index.isValid() && (index.column() == SyncItemModel::Column::MENU))
         showContextMenu(QCursor().pos(), index);
+}
+
+mega::MegaSync::SyncType SyncTableView::getType() const
+{
+    return mType;
 }
 
 void SyncTableView::showContextMenu(const QPoint &pos, const QModelIndex index)
@@ -324,6 +339,7 @@ void IconMiddleDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
     QRect textRect = option.rect;
     textRect.setLeft(ICON_WIDTH);
     QTextOption textOption;
+    textOption.setWrapMode(QTextOption::WrapMode::NoWrap);
     textOption.setAlignment(Qt::AlignVCenter);
 
     QString elidedText = option.fontMetrics.elidedText(text, Qt::ElideMiddle, textRect.width());
@@ -365,10 +381,11 @@ void ElideMiddleDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
 {
     BackgroundColorDelegate::paint(painter, option, index);
 
-    QString elidedText = option.fontMetrics.elidedText(index.data(Qt::DisplayRole).toString(), Qt::ElideMiddle, option.rect.width());
+    QString elidedText = painter->fontMetrics().elidedText(index.data(Qt::DisplayRole).toString(), Qt::ElideMiddle, option.rect.width() -6);
 
     QTextOption textAlign;
     textAlign.setAlignment(Qt::AlignVCenter);
+    textAlign.setWrapMode(QTextOption::WrapMode::NoWrap);
     QRect textRect = option.rect;
     textRect.setLeft(option.rect.left() + 6);
     painter->drawText(textRect, elidedText, textAlign);

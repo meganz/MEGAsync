@@ -94,8 +94,6 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     mUi (new Ui::SettingsDialog),
     mApp (app),
     mPreferences (Preferences::instance()),
-    mSyncController (),
-    mBackupController (),
     mModel (SyncInfo::instance()),
     mMegaApi (app->getMegaApi()),
     mLoadingSettings (0),
@@ -234,9 +232,6 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     mApp->attachStorageObserver(*this);
     mApp->attachBandwidthObserver(*this);
     mApp->attachAccountObserver(*this);
-
-    connect(mApp, &MegaApplication::storageStateChanged, this, &SettingsDialog::storageStateChanged);
-    storageStateChanged(app->getAppliedStorageState());
 
     connect(mApp, &MegaApplication::shellNotificationsProcessed,
             this, &SettingsDialog::onShellNotificationsProcessed);
@@ -1296,12 +1291,6 @@ void SettingsDialog::updateAccountElements()
     }
 
     mUi->lAccountType->setIcon(icon);
-}
-
-void SettingsDialog::storageStateChanged(int newStorageState)
-{
-    mUi->syncSettings->setOverQuotaMode(newStorageState == MegaApi::STORAGE_STATE_RED
-                                        || newStorageState == MegaApi::STORAGE_STATE_PAYWALL);
 }
 
 void SettingsDialog::on_bAccount_clicked()

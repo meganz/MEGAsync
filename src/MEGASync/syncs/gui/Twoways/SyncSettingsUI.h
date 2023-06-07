@@ -16,12 +16,13 @@ public:
     explicit SyncSettingsUI(QWidget *parent = nullptr);
     ~SyncSettingsUI() override;
 
-    void setOverQuotaMode(bool state);
-
 protected:
     QString getFinishWarningIconString() override;
     QString getFinishIconString() override;
     QString typeString() override;
+
+private slots:
+    void storageStateChanged(int newStorageState);
 
 private:
     SyncSettingsElements mSyncElement;

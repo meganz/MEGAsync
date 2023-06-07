@@ -9,14 +9,15 @@
 
 #include "ui_SyncSettingsUIBase.h"
 
+QMap<mega::MegaSync::SyncType,QPointer<SyncItemModel>> SyncSettingsUIBase::mModels = QMap<mega::MegaSync::SyncType,QPointer<SyncItemModel>>();
+
 SyncSettingsUIBase::SyncSettingsUIBase(QWidget *parent):
     QWidget(parent),
     ui(new Ui::SyncSettingsUIBase),
     mTable(nullptr),
     mSyncController(new SyncController(this)),
     mSyncInfo(SyncInfo::instance()),
-    mModel(nullptr),
-    mType(mega::MegaSync::SyncType::TYPE_TWOWAY)
+    mToolBarItem(nullptr)
 {
     ui->setupUi(this);
 
@@ -24,6 +25,11 @@ SyncSettingsUIBase::SyncSettingsUIBase(QWidget *parent):
 
     connect(ui->gSyncs, &RemoteItemUi::addClicked, this, &SyncSettingsUIBase::addButtonClicked);
     connect(ui->gSyncs, &RemoteItemUi::deleteClicked, this, &SyncSettingsUIBase::removeSyncButtonClicked);
+}
+
+void SyncSettingsUIBase::hideTitle()
+{
+   ui->gSyncs->setTitle(QString());
 }
 
 void SyncSettingsUIBase::insertUIElement(QWidget *widget, int position)
@@ -76,33 +82,39 @@ void SyncSettingsUIBase::syncsStateInformation(SyncStateInformation state)
                 emit enableStateChanged(true);
                 ui->wSpinningIndicatorSyncs->stop();
                 // If any sync is disabled, shows warning message
-                if (mSyncInfo->syncWithErrorExist(mType))
+                if (mSyncInfo->syncWithErrorExist(mTable->getType()))
                 {
                     ui->sSyncsState->setCurrentWidget(ui->pSyncsDisabled);
 
-    #ifdef Q_OS_MACOS
-                    QCustomMacToolbar* toolBar = dynamic_cast<QCustomMacToolbar*>(mToolBarItem->parent());
-                    if(toolBar)
+                    if(mToolBarItem)
                     {
-                        toolBar->customizeIconToolBarItem(mToolBarItem, getFinishWarningIconString());
+#ifdef Q_OS_MACOS
+                        QCustomMacToolbar* toolBar = dynamic_cast<QCustomMacToolbar*>(mToolBarItem->parent());
+                        if(toolBar)
+                        {
+                            toolBar->customizeIconToolBarItem(mToolBarItem, getFinishWarningIconString());
+                        }
+#else
+                        mToolBarItem->setIcon(QIcon(getFinishWarningIconString()));
+#endif
                     }
-    #else
-                    mToolBarItem->setIcon(QIcon(getFinishWarningIconString()));
-    #endif
                 }
                 else
                 {
                     ui->sSyncsState->setCurrentWidget(ui->pNoErrorsSyncs);
 
-    #ifdef Q_OS_MACOS
-                    QCustomMacToolbar* toolBar = dynamic_cast<QCustomMacToolbar*>(mToolBarItem->parent());
-                    if(toolBar)
+                    if(mToolBarItem)
                     {
-                        toolBar->customizeIconToolBarItem(mToolBarItem, getFinishIconString());
+#ifdef Q_OS_MACOS
+                        QCustomMacToolbar* toolBar = dynamic_cast<QCustomMacToolbar*>(mToolBarItem->parent());
+                        if(toolBar)
+                        {
+                            toolBar->customizeIconToolBarItem(mToolBarItem, getFinishIconString());
+                        }
+#else
+                        mToolBarItem->setIcon(QIcon(getFinishIconString()));
+#endif
                     }
-    #else
-                    mToolBarItem->setIcon(QIcon(getFinishIconString()));
-    #endif
                 }
                 break;
         }

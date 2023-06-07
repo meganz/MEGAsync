@@ -132,6 +132,9 @@ border-right:0px;
       </property>
       <item>
        <widget class="QPushButton" name="bPermissions">
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
         <property name="text">
          <string>Permissions</string>
         </property>
@@ -155,6 +158,9 @@ border-right:0px;
       </item>
       <item>
        <widget class="QPushButton" name="bAdd">
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
         <property name="focusPolicy">
          <enum>Qt::StrongFocus</enum>
         </property>
@@ -168,6 +174,9 @@ border-right:0px;
       </item>
       <item>
        <widget class="QPushButton" name="bDelete">
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
         <property name="focusPolicy">
          <enum>Qt::StrongFocus</enum>
         </property>

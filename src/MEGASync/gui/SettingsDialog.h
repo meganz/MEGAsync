@@ -7,10 +7,7 @@
 #include "ChangePassword.h"
 #include "Preferences.h"
 #include "control/Utilities.h"
-#include "syncs/model/SyncItemModel.h"
-#include "syncs/model/BackupItemModel.h"
 
-#include "syncs/control/SyncController.h"
 #include "syncs/control/SyncInfo.h"
 #include "megaapi.h"
 
@@ -84,9 +81,6 @@ public slots:
     // General
     void onLocalCacheSizeAvailable();
     void onRemoteCacheSizeAvailable();
-
-    // Account
-    void storageStateChanged(int state);
 
 private slots:
     void on_bBackupCenter_clicked();
@@ -205,8 +199,6 @@ private:
     Ui::SettingsDialog* mUi;
     MegaApplication* mApp;
     std::shared_ptr<Preferences> mPreferences;
-    SyncController mSyncController;
-    SyncController mBackupController;
     SyncInfo* mModel;
     mega::MegaApi* mMegaApi;
     bool mProxyOnly;

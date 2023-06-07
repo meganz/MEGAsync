@@ -2,14 +2,17 @@
 
 #include "syncs/gui/Twoways/SyncTableView.h"
 #include "syncs/model/SyncItemModel.h"
+#include <MegaApplication.h>
 
 SyncSettingsUI::SyncSettingsUI(QWidget *parent) :
     SyncSettingsUIBase(parent)
 {
-    setType(mega::MegaSync::SyncType::TYPE_TWOWAY);
     setTable<SyncTableView,SyncItemModel>();
 
     mSyncElement.initElements(this);
+
+    connect(MegaSyncApp, &MegaApplication::storageStateChanged, this, &SyncSettingsUI::storageStateChanged);
+    storageStateChanged(MegaSyncApp->getAppliedStorageState());
 }
 
 SyncSettingsUI::~SyncSettingsUI()
@@ -31,9 +34,10 @@ QString SyncSettingsUI::typeString()
     return tr("sync");
 }
 
-void SyncSettingsUI::setOverQuotaMode(bool state)
+void SyncSettingsUI::storageStateChanged(int newStorageState)
 {
-    mSyncElement.setOverQuotaMode(state);
+    mSyncElement.setOverQuotaMode(newStorageState == mega::MegaApi::STORAGE_STATE_RED
+                                  || newStorageState == mega::MegaApi::STORAGE_STATE_PAYWALL);
 }
 
 

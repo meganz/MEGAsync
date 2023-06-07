@@ -40,6 +40,8 @@ public:
         SAVING_FINISHED,
     };
 
+    void hideTitle();
+
     void insertUIElement(QWidget* widget, int position);
 
     void onSavingSyncsCompleted(SyncStateInformation value);
@@ -60,19 +62,23 @@ public:
         connect(mTable, &SyncTableView::signalRescanQuick, this, &SyncSettingsUIBase::rescanQuick);
         connect(mTable, &SyncTableView::signalRescanDeep, this, &SyncSettingsUIBase::rescanDeep);
 
-        mModel = new ModelType(mTable);
-        mModel->fillData();
-        connect(mModel, &SyncItemModel::signalSyncCheckboxOn, this, &SyncSettingsUIBase::setSyncToRun);
-        connect(mModel, &SyncItemModel::signalSyncCheckboxOff, this, &SyncSettingsUIBase::setSyncToSuspend);
-
-        connect(mModel, &SyncItemModel::syncUpdateFinished, this, [this](std::shared_ptr<SyncSettings> syncSetting)
+        auto& model = mModels[mTable->getType()];
+        if(!model)
         {
+            model = new ModelType(mTable);
+            model->fillData();
+            connect(model, &SyncItemModel::signalSyncCheckboxOn, this, &SyncSettingsUIBase::setSyncToRun);
+            connect(model, &SyncItemModel::signalSyncCheckboxOff, this, &SyncSettingsUIBase::setSyncToSuspend);
+
+            connect(model, &SyncItemModel::syncUpdateFinished, this, [this](std::shared_ptr<SyncSettings> syncSetting)
+            {
                 onSavingSyncsCompleted(SAVING_FINISHED);
-        });
+            });
+        }
 
 
         SortModelType *sortModel = new SortModelType(mTable);
-        sortModel->setSourceModel(mModel);
+        sortModel->setSourceModel(model);
         mTable->setModel(sortModel);
 
         connect(mSyncController, &SyncController::signalSyncOperationBegins, this, [this](std::shared_ptr<SyncSettings> sync)
@@ -112,11 +118,8 @@ public:
                                       tr("Your %1 can't be removed. Reason: %2")
                                       .arg(typeString(), QCoreApplication::translate("MegaError", err->getErrorString())));
         });
-    }
 
-    inline void setType(mega::MegaSync::SyncType newType)
-    {
-        mType = newType;
+        syncsStateInformation(SAVING_FINISHED);
     }
 
 #ifdef Q_OS_MACOS
@@ -161,8 +164,7 @@ private:
     void addSyncFolderAfterOverQuotaCheck(mega::MegaHandle megaFolderHandle);
 
     SyncInfo* mSyncInfo;
-    SyncItemModel* mModel;
-    mega::MegaSync::SyncType mType;
+    static QMap<mega::MegaSync::SyncType,QPointer<SyncItemModel>> mModels;
     QFutureWatcher<bool> mOpeMegaIgnoreWatcher;
 
 #ifdef Q_OS_MACOS

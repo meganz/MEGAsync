@@ -15,6 +15,8 @@ public:
     static const int FIXED_COLUMN_WIDTH = 32;
     SyncTableView(QWidget *parent = nullptr);
 
+    mega::MegaSync::SyncType getType() const;
+
 protected:
     void keyPressEvent(QKeyEvent *event) override;
     void showEvent(QShowEvent *event) override;
@@ -27,6 +29,7 @@ protected:
     virtual void removeActionClicked(std::shared_ptr<SyncSettings> settings);
 
     const char* mContextMenuName;
+    mega::MegaSync::SyncType mType;
 
 signals:
     void signalRemoveSync(std::shared_ptr<SyncSettings> sync);

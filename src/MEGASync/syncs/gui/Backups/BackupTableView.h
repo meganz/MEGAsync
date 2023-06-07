@@ -16,7 +16,6 @@ public:
     void customize();
 
 signals:
-    void removeBackup(std::shared_ptr<SyncSettings> backup);
     void openInMEGA(mega::MegaHandle handle);
 
 protected:
@@ -24,11 +23,6 @@ protected:
 
     //Reimplemented methods for contextMenu
     QString getRemoveActionString() override;
-    void removeActionClicked(std::shared_ptr<SyncSettings> settings) override;
-
-private slots:
-    void onCustomContextMenuRequested(const QPoint& pos) override;
-    void onCellClicked(const QModelIndex &index) override;
 };
 
 #endif // BACKUPTABLEVIEW_H
