@@ -19,7 +19,6 @@ import BackupsModel 1.0
 SyncsPage {
 
     property alias folderField: folderField
-    property var proxyModel
 
     footerButtons.nextButton {
         text: OnboardingStrings.backup
@@ -53,13 +52,13 @@ SyncsPage {
 
                 Layout.preferredWidth: parent.width
                 Layout.preferredHeight: 176
-                model: proxyModel
+                model: backupsProxyModel
             }
 
             MegaTextFields.TextField {
                 id: folderField
 
-                Layout.preferredWidth: parent.width
+                Layout.preferredWidth: parent.width + 2 * folderField.textField.focusBorderWidth
                 Layout.leftMargin: -folderField.textField.focusBorderWidth
                 title: OnboardingStrings.backupTo
                 text: "/Backups"
@@ -74,9 +73,8 @@ SyncsPage {
                 attributes.type: MegaTexts.NotificationInfo.Type.Warning
                 attributes.icon.source: ""
                 attributes.icon.visible: false
-                visible: true
-                title: "This is a test"
-                text: "This is a long long long long long long long long long long long long long long long long long long long long long long long long long long long test";
+                text: BackupsModel.mConflictsNotificationText
+                visible: BackupsModel.mExistConflicts
             }
         }
     }

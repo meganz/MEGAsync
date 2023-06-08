@@ -106,7 +106,7 @@ Item {
     Component {
         id: textComponent
 
-        MegaTexts.RichText {
+        MegaTexts.Text {
             text: root.text
             color: attributes.textColor
         }

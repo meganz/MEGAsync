@@ -36,7 +36,8 @@ class BackupsModel : public QAbstractListModel
 
     Q_PROPERTY(QString mTotalSize READ getTotalSize NOTIFY totalSizeChanged)
     Q_PROPERTY(Qt::CheckState mCheckAllState READ getCheckAllState WRITE setCheckAllState NOTIFY checkAllStateChanged)
-    Q_PROPERTY(bool mExistConflicts READ getExistConflicts NOTIFY existConfilctsChanged)
+    Q_PROPERTY(bool mExistConflicts  READ getExistConflicts NOTIFY existConflictsChanged)
+    Q_PROPERTY(QString mConflictsNotificationText READ getConflictsNotificationText NOTIFY existConflictsChanged)
 
 public:
 
@@ -80,6 +81,8 @@ public:
 
     bool getExistConflicts() const;
 
+    QString getConflictsNotificationText() const;
+
 public slots:
 
     void insertFolder(const QString& folder);
@@ -96,7 +99,7 @@ signals:
 
     void checkAllStateChanged();
 
-    void existConfilctsChanged();
+    void existConflictsChanged();
 
 private:
 
@@ -106,7 +109,8 @@ private:
     long long mBackupsTotalSize;
     SyncController mSyncController;
     BackupsController* mBackupsController;
-    bool mExistConflicts;
+    int mConflictsSize;
+    QString mConflictsNotificationText;
     Qt::CheckState mCheckAllState;
 
     void populateDefaultDirectoryList();
@@ -154,6 +158,8 @@ private:
 
     void checkDuplicatedBackupNames(const QSet<QString>& candidateSet,
                                     const QStringList& candidateList);
+
+    void reviewConflicts();
 
 private slots:
 

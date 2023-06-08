@@ -11,15 +11,10 @@ import BackupsProxyModel 1.0
 StackView {
     id: backupsFlow
 
-    property StepPanel stepLeftPanel
-
     readonly property string selectBackup: "selectBackup"
     readonly property string confirmBackup: "confirmBackup"
 
-    onStepLeftPanelChanged: {
-        state = selectBackup;
-    }
-
+    state: selectBackup
     states: [
         State {
             name: selectBackup
@@ -27,8 +22,8 @@ StackView {
                 script: backupsFlow.replace(selectBackupFoldersPage);
             }
             PropertyChanges {
-                target: stepLeftPanel
-                state: stepLeftPanel.stepBackupsSelectFolders
+                target: stepPanel
+                state: stepPanel.stepBackupsSelectFolders
             }
         },
         State {
@@ -37,8 +32,8 @@ StackView {
                 script: backupsFlow.replace(confirmBackupFoldersPage);
             }
             PropertyChanges {
-                target: stepLeftPanel
-                state: stepLeftPanel.stepBackupsConfirm
+                target: stepPanel
+                state: stepPanel.stepBackupsConfirm
             }
         }
     ]
@@ -51,7 +46,6 @@ StackView {
         id: selectBackupFoldersPage
 
         SelectFoldersPage {
-            //proxyModel: backupsProxyModel
         }
     }
 
@@ -59,7 +53,6 @@ StackView {
         id: confirmBackupFoldersPage
 
         ConfirmFoldersPage {
-            proxyModel: backupsProxyModel
         }
     }
 

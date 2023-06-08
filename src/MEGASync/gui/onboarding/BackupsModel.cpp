@@ -45,7 +45,7 @@ BackupsModel::BackupsModel(QObject* parent)
     , mSelectedRowsTotal(0)
     , mBackupsTotalSize(0)
     , mBackupsController(new BackupsController(this))
-    , mExistConflicts(false)
+    , mConflictsSize(0)
     , mCheckAllState(Qt::CheckState::Unchecked)
 {
     mRoleNames[NameRole] = "mName";
@@ -65,7 +65,7 @@ BackupsModel::BackupsModel(QObject* parent)
     connect(mBackupsController, &BackupsController::backupsCreationFinished, this, &BackupsModel::clean);
 
     MegaSyncApp->qmlEngine()->rootContext()->setContextProperty(QString::fromUtf8("BackupsModel"), this);
-    MegaSyncApp->qmlEngine()->rootContext()->setContextProperty(QString::fromUtf8("_cppBackupsController"), mBackupsController);
+    MegaSyncApp->qmlEngine()->rootContext()->setContextProperty(QString::fromUtf8("BackupsController"), mBackupsController);
     qmlRegisterUncreatableType<BackupsModel>("BackupsModel", 1, 0, "BackupErrorCode", QString::fromUtf8("Cannot create WarningLevel in QML"));
 }
 
@@ -223,7 +223,12 @@ BackupsController* BackupsModel::backupsController() const
 
 bool BackupsModel::getExistConflicts() const
 {
-    return mExistConflicts;
+    return mConflictsSize > 0;
+}
+
+QString BackupsModel::getConflictsNotificationText() const
+{
+    return mConflictsNotificationText;
 }
 
 void BackupsModel::insertFolder(const QString &folder)
@@ -531,11 +536,56 @@ void BackupsModel::checkDuplicatedBackupNames(const QSet<QString>& candidateSet,
                     }
                     setData(index(i, 0), QVariant(BackupErrorCode::DuplicatedName), ErrorRole);
                     repeatedCounter++;
-                    mExistConflicts = true;
                 }
             }
         }
     }
+}
+
+void BackupsModel::reviewConflicts()
+{
+    QList<BackupFolder>::iterator item = mBackupFolderList.begin();
+    QString firstRemoteNameConflict = QString::fromUtf8("");
+    int remoteCount = 0;
+    int duplicatedCount = 0;
+
+    while (item != mBackupFolderList.end())
+    {
+        if(item->mSelected)
+        {
+            if(item->mError == DuplicatedName)
+            {
+                duplicatedCount++;
+            }
+            else if(item->mError == ExistsRemote)
+            {
+                if(firstRemoteNameConflict.isEmpty())
+                {
+                    firstRemoteNameConflict = item->mName;
+                }
+                remoteCount++;
+            }
+        }
+        item++;
+    }
+
+    mConflictsSize = duplicatedCount + remoteCount;
+
+    mConflictsNotificationText = QString::fromUtf8("");
+    if(duplicatedCount > 0)
+    {
+        mConflictsNotificationText = tr("You can't back up folders with the same name. Rename them to continue with the backup. Folder names won't change on your computer.");
+    }
+    else if(remoteCount == 1)
+    {
+        mConflictsNotificationText = tr("A folder named \"%1\" already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.").arg(firstRemoteNameConflict);
+    }
+    else if(remoteCount > 1)
+    {
+        mConflictsNotificationText = tr("Some folders with the same name already exist in your Backups. Rename the new folders to continue with the backup. Folder names will not change on your computer.");
+    }
+
+    emit existConflictsChanged();
 }
 
 void BackupsModel::checkRemoteDuplicatedBackups(const QSet<QString>& candidateSet)
@@ -555,7 +605,6 @@ void BackupsModel::checkRemoteDuplicatedBackups(const QSet<QString>& candidateSe
                                 && mBackupFolderList[row].mName == *backup))
                 {
                     setData(index(row, 0), QVariant(BackupErrorCode::ExistsRemote), ErrorRole);
-                    mExistConflicts = true;
                 }
             }
             backup++;
@@ -565,7 +614,6 @@ void BackupsModel::checkRemoteDuplicatedBackups(const QSet<QString>& candidateSe
 
 void BackupsModel::checkBackups()
 {
-    mExistConflicts = false;
     QStringList candidateList;
     for (int row = 0; row < rowCount(); row++)
     {
@@ -583,7 +631,7 @@ void BackupsModel::checkBackups()
         checkDuplicatedBackupNames(candidateSet, candidateList);
     }
 
-    emit existConfilctsChanged();
+    reviewConflicts();
 }
 
 int BackupsModel::getRow(const QString& folder)
@@ -641,7 +689,6 @@ bool BackupsModel::renameBackup(const QString& folder, const QString& name)
     {
         setData(index(row, 0), QVariant(BackupErrorCode::ExistsRemote), ErrorRole);
         setData(index(row, 0), QVariant(true), ErrorVisibleRole);
-        mExistConflicts = true;
         hasError = true;
     }
 
@@ -655,7 +702,6 @@ bool BackupsModel::renameBackup(const QString& folder, const QString& name)
             {
                 setData(index(row, 0), QVariant(BackupErrorCode::DuplicatedName), ErrorRole);
                 setData(index(row, 0), QVariant(true), ErrorVisibleRole);
-                mExistConflicts = true;
             }
         }
     }
@@ -670,7 +716,7 @@ bool BackupsModel::renameBackup(const QString& folder, const QString& name)
     }
     else
     {
-        emit existConfilctsChanged();
+        reviewConflicts();
     }
 
     return !hasError;
@@ -699,6 +745,7 @@ void BackupsModel::remove(const QString& folder)
 
     if(found)
     {
+        reviewConflicts();
         reviewOtherBackupErrors(name);
         reviewAllBackupFolders();
         checkSelectedAll();

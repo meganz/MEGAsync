@@ -5,10 +5,10 @@
         <file>images/qml/check.svg</file>
         <file>images/qml/help_circle.svg</file>
         <file>images/qml/indeterminate.svg</file>
-        <file>images/qml/info_circle.svg</file>
         <file>images/qml/loader.svg</file>
         <file>images/qml/lock.svg</file>
         <file>images/qml/trash.svg</file>
+        <file>images/qml/x_circle.svg</file>
         <file>images/qml/onboarding/building.svg</file>
         <file>images/qml/onboarding/cloud.svg</file>
         <file>images/qml/onboarding/database.svg</file>
@@ -21,7 +21,7 @@
         <file>images/qml/onboarding/mega.svg</file>
         <file>images/qml/onboarding/pc.svg</file>
         <file>images/qml/onboarding/pc_mega.svg</file>
-        <file>images/qml/onboarding/plus_circle.svg</file>
+        <file>images/qml/onboarding/plus.svg</file>
         <file>images/qml/onboarding/resume.svg</file>
         <file>images/qml/onboarding/selective_sync.svg</file>
         <file>images/qml/onboarding/shield_account_free.svg</file>

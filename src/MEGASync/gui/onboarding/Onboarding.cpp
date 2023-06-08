@@ -52,6 +52,7 @@ Onboarding::Onboarding(QObject *parent)
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/backups/BackupsFlow.qml")), "Onboard.Syncs_types.Backups", 1, 0, "BackupsFlow");
 
     qmlRegisterModule("BackupsModel", 1, 0);
+    qmlRegisterModule("BackupsController", 1, 0);
 
     connect(mSyncController, &SyncController::syncAddStatus,
             this, &Onboarding::onSyncAddRequestStatus);
