@@ -8,6 +8,8 @@
 #include <syncs/gui/Backups/BackupTableView.h>
 #include <syncs/gui/Backups/BackupSettingsElements.h>
 
+#include "ui_SyncSettingsUIBase.h"
+
 class BackupSettingsUI : public SyncSettingsUIBase
 {
     Q_OBJECT

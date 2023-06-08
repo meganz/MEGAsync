@@ -122,10 +122,6 @@ private slots:
     void on_bSyncs_clicked();
     void on_bAddSync_clicked();
 
-#ifndef WIN32
-    void on_bPermissions_clicked();
-#endif
-
     // Backup
     void on_bBackup_clicked();
     void on_bAddBackup_clicked();

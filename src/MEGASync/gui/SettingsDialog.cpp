@@ -1406,34 +1406,6 @@ void SettingsDialog::on_bSyncs_clicked()
     SyncInfo::instance()->dismissUnattendedDisabledSyncs(MegaSync::TYPE_TWOWAY);
 }
 
-#ifndef WIN32
-void SettingsDialog::on_bPermissions_clicked()
-{
-    mMegaApi->setDefaultFolderPermissions(mPreferences->folderPermissionsValue());
-    int folderPermissions = mMegaApi->getDefaultFolderPermissions();
-    mMegaApi->setDefaultFilePermissions(mPreferences->filePermissionsValue());
-    int filePermissions = mMegaApi->getDefaultFilePermissions();
-
-    QPointer<PermissionsDialog> dialog = new PermissionsDialog(this);
-    dialog->setFolderPermissions(folderPermissions);
-    dialog->setFilePermissions(filePermissions);
-    DialogOpener::showDialog<PermissionsDialog>(dialog, [dialog, &folderPermissions, &filePermissions, this](){
-        if (dialog->result() == QDialog::Accepted)
-        {
-            filePermissions = dialog->filePermissions();
-            folderPermissions = dialog->folderPermissions();
-
-            if (filePermissions != mPreferences->filePermissionsValue()
-                    || folderPermissions != mPreferences->folderPermissionsValue())
-            {
-                mPreferences->setFilePermissionsValue(filePermissions);
-                mPreferences->setFolderPermissionsValue(folderPermissions);
-            }
-        }
-    });
-}
-#endif
-
 void SettingsDialog::on_bAddSync_clicked()
 {
     addSyncFolder(mega::INVALID_HANDLE);

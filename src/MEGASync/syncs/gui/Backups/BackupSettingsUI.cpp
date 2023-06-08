@@ -1,5 +1,4 @@
 #include "BackupSettingsUI.h"
-#include "ui_BackupSettingsUI.h"
 
 #include "syncs/gui/Backups/BackupTableView.h"
 #include "syncs/model/BackupItemModel.h"
@@ -12,6 +11,7 @@
 BackupSettingsUI::BackupSettingsUI(QWidget *parent) :
     SyncSettingsUIBase(parent)
 {
+    setTitle(tr("Backups"));
     setTable<BackupTableView, BackupItemModel>();
 
     connect(mSyncController, &SyncController::backupMoveOrRemoveRemoteFolderError, this, [this](std::shared_ptr<mega::MegaError> err)
@@ -24,6 +24,7 @@ BackupSettingsUI::BackupSettingsUI(QWidget *parent) :
     });
 
     mElements.initElements(this);
+    ui->gSyncs->setUsePermissions(false);
 }
 
 BackupSettingsUI::~BackupSettingsUI()

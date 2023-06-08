@@ -5,12 +5,13 @@
 #include <QIcon>
 #include <QFutureWatcher>
 #ifdef Q_OS_MACOS
-#include <QCustomMacToolbar.h>
+#include "platform/macx/QCustomMacToolbar.h"
 #else
 #include <QToolButton>
 #endif
 
 #include <syncs/control/SyncInfo.h>
+#include <syncs/gui/Twoways/SyncTableView.h>
 #include <syncs/model/SyncItemModel.h>
 #include <QMegaMessageBox.h>
 #include <TextDecorator.h>
@@ -21,7 +22,6 @@ namespace Ui {
 class SyncSettingsUIBase;
 }
 
-class SyncTableView;
 class SyncItemModel;
 class SyncController;
 
@@ -40,7 +40,7 @@ public:
         SAVING_FINISHED,
     };
 
-    void hideTitle();
+    void setTitle(const QString& title);
 
     void insertUIElement(QWidget* widget, int position);
 
@@ -53,14 +53,14 @@ public:
         mTable = new TableType();
         initTable();
 
-        connect(mTable, &SyncTableView::signalRunSync, this, &SyncSettingsUIBase::setSyncToRun);
-        connect(mTable, &SyncTableView::signalPauseSync, this, &SyncSettingsUIBase::setSyncToPause);
-        connect(mTable, &SyncTableView::signalSuspendSync, this, &SyncSettingsUIBase::setSyncToSuspend);
-        connect(mTable, &SyncTableView::signalDisableSync, this, &SyncSettingsUIBase::setSyncToDisabled);
-        connect(mTable, &SyncTableView::signalRemoveSync, this, &SyncSettingsUIBase::removeSync);
-        connect(mTable, &SyncTableView::signalOpenMegaignore, this, &SyncSettingsUIBase::openMegaIgnore);
-        connect(mTable, &SyncTableView::signalRescanQuick, this, &SyncSettingsUIBase::rescanQuick);
-        connect(mTable, &SyncTableView::signalRescanDeep, this, &SyncSettingsUIBase::rescanDeep);
+        connect(mTable, &TableType::signalRunSync, this, &SyncSettingsUIBase::setSyncToRun);
+        connect(mTable, &TableType::signalPauseSync, this, &SyncSettingsUIBase::setSyncToPause);
+        connect(mTable, &TableType::signalSuspendSync, this, &SyncSettingsUIBase::setSyncToSuspend);
+        connect(mTable, &TableType::signalDisableSync, this, &SyncSettingsUIBase::setSyncToDisabled);
+        connect(mTable, &TableType::signalRemoveSync, this, &SyncSettingsUIBase::removeSync);
+        connect(mTable, &TableType::signalOpenMegaignore, this, &SyncSettingsUIBase::openMegaIgnore);
+        connect(mTable, &TableType::signalRescanQuick, this, &SyncSettingsUIBase::rescanQuick);
+        connect(mTable, &TableType::signalRescanDeep, this, &SyncSettingsUIBase::rescanDeep);
 
         auto& model = mModels[mTable->getType()];
         if(!model)

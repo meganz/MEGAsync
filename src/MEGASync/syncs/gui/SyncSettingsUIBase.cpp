@@ -27,9 +27,9 @@ SyncSettingsUIBase::SyncSettingsUIBase(QWidget *parent):
     connect(ui->gSyncs, &RemoteItemUi::deleteClicked, this, &SyncSettingsUIBase::removeSyncButtonClicked);
 }
 
-void SyncSettingsUIBase::hideTitle()
+void SyncSettingsUIBase::setTitle(const QString &title)
 {
-   ui->gSyncs->setTitle(QString());
+    ui->gSyncs->setTitle(title);
 }
 
 void SyncSettingsUIBase::insertUIElement(QWidget *widget, int position)

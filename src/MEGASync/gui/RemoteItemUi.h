@@ -1,7 +1,7 @@
 #ifndef REMOTEITEMUI_H
 #define REMOTEITEMUI_H
 
-#include <QGroupBox>
+#include <QWidget>
 #include <QTableView>
 
 #include <megaapi.h>
@@ -10,7 +10,7 @@ namespace Ui {
 class RemoteItemUi;
 }
 
-class RemoteItemUi : public QGroupBox
+class RemoteItemUi : public QWidget
 {
     Q_OBJECT
 
@@ -18,6 +18,7 @@ public:
     explicit RemoteItemUi(QWidget *parent = nullptr);
     ~RemoteItemUi();
 
+    void setTitle(const QString& title);
     void initView(QTableView* newView);
     void setUsePermissions(const bool use);
 

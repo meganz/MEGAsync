@@ -8,10 +8,12 @@
 #endif
 
 RemoteItemUi::RemoteItemUi(QWidget *parent) :
-    QGroupBox(parent),
+    QWidget(parent),
     ui(new Ui::RemoteItemUi)
 {
     ui->setupUi(this);
+
+#ifndef Q_OS_MACOS
     connect(ui->bAdd, &QPushButton::clicked, this, [this](){
         emit addClicked(mega::INVALID_HANDLE);
     });
@@ -20,11 +22,21 @@ RemoteItemUi::RemoteItemUi(QWidget *parent) :
 #ifdef Q_OS_WIN
     setUsePermissions(false);
 #endif
+#endif
 }
 
 RemoteItemUi::~RemoteItemUi()
 {
     delete ui;
+}
+
+void RemoteItemUi::setTitle(const QString &title)
+{
+#ifdef Q_OS_MACOS
+    ui->title->setText(title);
+#else
+    ui->groupBox->setTitle(title);
+#endif
 }
 
 void RemoteItemUi::initView(QTableView *newView)
@@ -34,7 +46,7 @@ void RemoteItemUi::initView(QTableView *newView)
     newView->setStyleSheet(ui->tableView->styleSheet());
     setTableViewProperties(newView);
 
-    auto oldLayoutItem = ui->verticalLayout->replaceWidget(ui->tableView, newView);
+    auto oldLayoutItem = ui->tableLayout->replaceWidget(ui->tableView, newView);
     delete oldLayoutItem;
     delete ui->tableView;
     ui->tableView = newView;
@@ -43,6 +55,15 @@ void RemoteItemUi::initView(QTableView *newView)
 void RemoteItemUi::setUsePermissions(const bool use)
 {
     ui->bPermissions->setVisible(use);
+
+    if(ui->bPermissions->isHidden()
+        #ifndef Q_OS_MACOS
+            && ui->bAdd->isHidden() && ui->bDelete->isHidden()
+        #endif
+            )
+    {
+        ui->wControlButtons->hide();
+    }
 }
 
 QTableView *RemoteItemUi::getView()
@@ -79,7 +100,7 @@ void RemoteItemUi::on_bPermissions_clicked()
     QPointer<PermissionsDialog> dialog = new PermissionsDialog(this);
     dialog->setFolderPermissions(folderPermissions);
     dialog->setFilePermissions(filePermissions);
-    DialogOpener::showDialog<PermissionsDialog>(dialog, [dialog, &folderPermissions, &filePermissions, this](){
+    DialogOpener::showDialog<PermissionsDialog>(dialog, [dialog, &folderPermissions, &filePermissions](){
         if (dialog->result() == QDialog::Accepted)
         {
             filePermissions = dialog->filePermissions();

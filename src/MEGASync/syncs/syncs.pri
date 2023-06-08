@@ -65,11 +65,14 @@ macx {
     RESOURCES += $$PWD/../gui/Resources_macx.qrc
     FORMS    += $$PWD/gui/Twoways/macx/FolderBinder.ui \
                 $$PWD/gui/Twoways/macx/BindFolderDialog.ui \
+                $$PWD/gui/Twoways/macx/SyncAccountFullMessage.ui \
+                $$PWD/gui/Twoways/macx/SyncSettingsUIBase.ui \
                 $$PWD/gui/Backups/macx/BackupsWizard.ui \
                 $$PWD/gui/Backups/macx/AddBackupDialog.ui \
                 $$PWD/gui/Backups/macx/RemoveBackupDialog.ui \
                 $$PWD/gui/Backups/macx/BackupNameConflictDialog.ui \
-                $$PWD/gui/Backups/macx/BackupRenameWidget.ui
+                $$PWD/gui/Backups/macx/BackupRenameWidget.ui \
+                $$PWD/gui/Backups/macx/OpenBackupsFolder.ui
 }
 
 unix:!macx {

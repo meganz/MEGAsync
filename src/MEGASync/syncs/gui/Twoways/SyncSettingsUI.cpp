@@ -7,6 +7,7 @@
 SyncSettingsUI::SyncSettingsUI(QWidget *parent) :
     SyncSettingsUIBase(parent)
 {
+    setTitle(tr("Synced Folders"));
     setTable<SyncTableView,SyncItemModel>();
 
     mSyncElement.initElements(this);
