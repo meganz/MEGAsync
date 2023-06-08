@@ -452,28 +452,6 @@ void SettingsDialog::initializeNativeUIComponents()
     // Attach to the window according Qt docs
     this->window()->winId(); // create window->windowhandle()
     mToolBar->attachToWindowWithStyle(window()->windowHandle(), QCustomMacToolbar::StylePreference);
-
-    // Configure segmented control for +/- syncs
-//    mUi->wSyncsSegmentedControl->configureTableSegment();
-//    connect(mUi->wSyncsSegmentedControl, &QSegmentedControl::addButtonClicked,
-//            this, &SettingsDialog::on_bAddSync_clicked);
-//    connect(mUi->wSyncsSegmentedControl, &QSegmentedControl::removeButtonClicked,
-//            this, &SettingsDialog::on_bDeleteSync_clicked);
-
-//    mUi->wBackupSegmentedControl->configureTableSegment();
-//    connect(mUi->wBackupSegmentedControl, &QSegmentedControl::addButtonClicked,
-//            this, &SettingsDialog::on_bAddBackup_clicked);
-//    connect(mUi->wBackupSegmentedControl, &QSegmentedControl::removeButtonClicked,
-//            this, &SettingsDialog::on_bDeleteBackup_clicked);
-
-//    mUi->wExclusionsSegmentedControl->configureTableSegment();
-
-#ifndef Q_OS_MACOS
-    connect(mUi->wExclusionsSegmentedControl, &QSegmentedControl::addButtonClicked,
-            this, &SettingsDialog::on_bAddName_clicked);
-    connect(mUi->wExclusionsSegmentedControl, &QSegmentedControl::removeButtonClicked,
-            this, &SettingsDialog::on_bDeleteName_clicked);
-#endif // ! Q_OS_MACOS
 }
 #endif
 

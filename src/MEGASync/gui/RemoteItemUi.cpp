@@ -22,6 +22,14 @@ RemoteItemUi::RemoteItemUi(QWidget *parent) :
 #ifdef Q_OS_WIN
     setUsePermissions(false);
 #endif
+#else
+    ui->tableSegementedControl->configureTableSegment();
+    connect(ui->tableSegementedControl, &QSegmentedControl::addButtonClicked,
+            this, [this](){
+        emit addClicked(mega::INVALID_HANDLE);
+    });
+    connect(ui->tableSegementedControl, &QSegmentedControl::removeButtonClicked,
+            this,  &RemoteItemUi::deleteClicked);
 #endif
 }
 
