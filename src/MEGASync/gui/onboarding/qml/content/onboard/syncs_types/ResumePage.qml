@@ -5,9 +5,6 @@ ResumePageForm {
 
     property bool comesFromSync: true
 
-    width: parent.width
-    height: parent.height
-
     buttonGroup.onClicked: {
         switch(button.type) {
             case SyncsType.Sync:

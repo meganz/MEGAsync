@@ -1,5 +1,7 @@
 import QtQuick 2.0
 
+import BackupsController 1.0
+
 ListModel {
     id: proxyModel
 

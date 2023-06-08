@@ -197,7 +197,7 @@ Rectangle {
                 id: folderDialog
 
                 onFolderChanged: {
-                    _cppBackupsModel.insertFolder(folderDialog.getFolder());
+                    BackupsModel.insertFolder(folderDialog.getFolder());
                 }
             }
 
