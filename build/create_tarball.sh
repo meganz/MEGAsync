@@ -219,7 +219,7 @@ sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtNemo/nemo-megasync.s
 sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtNemo/nemo-megasync.dsc > MEGAsync/MEGAShellExtNemo/nemo-megasync_$EXT_VERSION.dsc
 sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtNemo/PKGBUILD > MEGAsync/MEGAShellExtNemo/PKGBUILD
 
-for dist in xUbuntu_{1,2}{0,1,2,3,4,5,6,7,8,9}.{04,10} Debian_{{7,8,9,10,11}.0,testing}; do
+for dist in xUbuntu_{1,2}{0,1,2,3,4,5,6,7,8,9}.{04,10} Debian_{{7,8,9,10,11,12}.0,testing}; do
 if [ -f templates/MEGAShellExtNemo/nemo-megasync-$dist.dsc ]; then
 	sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtNemo/nemo-megasync-$dist.dsc > MEGAsync/MEGAShellExtNemo/nemo-megasync-$dist.dsc
 else
@@ -278,7 +278,7 @@ rm -fr MEGAsync/MEGAShellExtThunar/thunar-megasync_*.dsc
 sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtThunar/thunar-megasync.spec > MEGAsync/MEGAShellExtThunar/thunar-megasync.spec
 sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtThunar/PKGBUILD > MEGAsync/MEGAShellExtThunar/PKGBUILD
 
-for dist in xUbuntu_{1,2}{0,1,2,3,4,5,6,7,8,9}.{04,10} Debian_{{7,8,9,10,11}.0,testing}; do
+for dist in xUbuntu_{1,2}{0,1,2,3,4,5,6,7,8,9}.{04,10} Debian_{{7,8,9,10,11,12}.0,testing}; do
 if [ -f templates/MEGAShellExtThunar/thunar-megasync-$dist.dsc ]; then
 	sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtThunar/thunar-megasync-$dist.dsc > MEGAsync/MEGAShellExtThunar/thunar-megasync-$dist.dsc
 else
@@ -337,7 +337,7 @@ rm -fr MEGAsync/MEGAShellExtDolphin/dolphin-megasync_*.dsc
 sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtDolphin/dolphin-megasync.spec > MEGAsync/MEGAShellExtDolphin/dolphin-megasync.spec
 #sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtDolphin/dolphin-megasync.dsc > MEGAsync/MEGAShellExtDolphin/dolphin-megasync_$EXT_VERSION.dsc
 
-for dist in xUbuntu_{1,2}{0,1,2,3,4,5,6,7,8,9}.{04,10} Debian_{{7,8,9,10,11}.0,testing}; do
+for dist in xUbuntu_{1,2}{0,1,2,3,4,5,6,7,8,9}.{04,10} Debian_{{7,8,9,10,11,12}.0,testing}; do
 if [ -f templates/MEGAShellExtDolphin/dolphin-megasync-$dist.dsc ]; then
 	sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtDolphin/dolphin-megasync-$dist.dsc > MEGAsync/MEGAShellExtDolphin/dolphin-megasync-$dist.dsc
 else
