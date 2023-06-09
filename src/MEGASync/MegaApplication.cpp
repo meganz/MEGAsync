@@ -3506,7 +3506,7 @@ void MegaApplication::processUpgradeSecurityEvent()
         int button =upgradeSecurityDialog->result();
         if (button == QMessageBox::Ok)
         {
-            megaApi->upgradeSecurity(new OnFinishOneShot(megaApi, [=](const MegaError& e){
+            megaApi->upgradeSecurity(new OnFinishOneShot(megaApi, [=](const MegaError& e, const MegaRequest&){
                 if (e.getErrorCode() != MegaError::API_OK)
                 {
                     QString errorTitle = tr("Error");
