@@ -46,7 +46,7 @@ AttributeRequest::RequestInfo CameraUploadFolder::fillRequestInfo()
     };
     QSharedPointer<ParamInfo> acameraParamInfo(new ParamInfo(cameraRequestFunc, QList<int>()<<mega::MegaError::API_OK));
     ParamInfoMap paramInfo({{mega::MegaApi::USER_ATTR_CAMERA_UPLOADS_FOLDER, acameraParamInfo}});
-    RequestInfo ret(paramInfo, QMap<int, int>({{mega::MegaUser::CHANGE_TYPE_CAMERA_UPLOADS_FOLDER, mega::MegaApi::USER_ATTR_CAMERA_UPLOADS_FOLDER}}));
+    RequestInfo ret(paramInfo, QMap<int64_t, int>({{mega::MegaUser::CHANGE_TYPE_CAMERA_UPLOADS_FOLDER, mega::MegaApi::USER_ATTR_CAMERA_UPLOADS_FOLDER}}));
     return ret;
 }
 

@@ -1273,6 +1273,7 @@ void TransferManager::refreshView()
             updateTransferWidget(widgetToShow);
         }
 
+        //In case the media group // actions buttons must be hidden
         checkActionAndMediaVisibility();
     }
 }

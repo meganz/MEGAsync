@@ -16,6 +16,7 @@
 #include "syncs/gui/Backups/RemoveBackupDialog.h"
 #include "TextDecorator.h"
 #include "DialogOpener.h"
+#include "syncs/gui/Twoways/BindFolderDialog.h"
 
 #include "mega/types.h"
 

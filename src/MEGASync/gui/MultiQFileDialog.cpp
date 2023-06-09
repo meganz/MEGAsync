@@ -3,6 +3,7 @@
 #include "CommonMessages.h"
 #include <QApplication>
 #include <QKeyEvent>
+#include <QToolTip>
 
 MultiQFileDialog::MultiQFileDialog(QWidget *parent, const QString &caption, const QString &directory, bool multiSelect, const QString &filter)
     : QFileDialog(parent, caption, directory, filter),
@@ -87,73 +88,19 @@ bool MultiQFileDialog::eventFilter(QObject *obj, QEvent *e)
     if (e->type() == QEvent::KeyPress)
     {
         QKeyEvent* keyEvent = dynamic_cast<QKeyEvent*>(e);
-        Qt::KeyboardModifiers modifiers = QApplication::queryKeyboardModifiers();
-        if (modifiers.testFlag(Qt::ControlModifier) && keyEvent && keyEvent->key() == Qt::Key_H)
-        {
-            if (mShowHidden)
-            {
-                if (mMultiSelect)
-                {
-                    setFilter(QDir::AllDirs | QDir::AllEntries | QDir::NoDotAndDotDot);
-                }
-                else
-                {
-                    setFilter(QDir::AllDirs | QDir::NoDotAndDotDot);
-                }
-            }
-            else
-            {
-                if (mMultiSelect)
-                {
-                    setFilter(QDir::AllDirs | QDir::AllEntries | QDir::Hidden | QDir::System | QDir::NoDotAndDotDot);
-                }
-                else
-                {
-                    setFilter(QDir::AllDirs | QDir::Hidden | QDir::System | QDir::NoDotAndDotDot);
-                }
-            }
-            mShowHidden = !mShowHidden;
-        }
+        onKeyPressEvent(keyEvent);
     }
-
-    // Override the OK button enabled state to respect our own logic.
-    // We return to prevent QFileDialog from overriding us.
-    else if ((obj == mBOpen) && (e->type() == QEvent::EnabledChange))
+    else if (obj == mBOpen)
     {
-        bool enabled (mBOpen->isEnabled());
-        bool pathExists (QFileInfo::exists(mLe->text()));
-        if (!pathExists)
+        if (e->type() == QEvent::EnabledChange)
         {
-            pathExists = true;
-            const QStringList items (mLe->text().split(QString::fromUtf8("\"")));
-            auto item (items.cbegin());
-
-            while (pathExists && item != items.cend())
-            {
-                if (!item->trimmed().isEmpty())
-                {
-                    pathExists &= QFileInfo::exists(directory().absolutePath()
-                                                    + QDir::separator() + *item);
-                }
-                item++;
-            }
+            // Override the OK button enabled state to respect our own logic.
+            // We return to prevent QFileDialog from overriding us.
+            return onEnabledChangeEvent();
         }
-
-        if (enabled && !mEnableOkButton && !pathExists)
+        else if (e->type() == QEvent::HoverEnter)
         {
-            mBOpen->setEnabled(false);
-            mEnableOkButton = false;
-            return true;
-        }
-        else if (!enabled && pathExists)
-        {
-            mEnableOkButton = true;
-            mBOpen->setEnabled(true);
-            return true;
-        }
-        else
-        {
-            return false;
+            onHoverEnterEvent();
         }
     }
 
@@ -227,11 +174,20 @@ void MultiQFileDialog::findSelectedFilesAndFoldersCount(int& fileCount, int& fol
 void MultiQFileDialog::updateOpenButtonEnabledStatus(int selectedItemCount)
 {
     mEnableOkButton = (selectedItemCount > 0);
+    isSelectionOverLimit = false;
 
     if (selectedItemCount > 0)
     {
-        int nbItemsInLineEdit = findItemCountInLineEdit();
-        mEnableOkButton = nbItemsInLineEdit == selectedItemCount;
+        if (mLe->text().length() < mLe->maxLength())
+        {
+            int nbItemsInLineEdit = findItemCountInLineEdit();
+            mEnableOkButton = nbItemsInLineEdit == selectedItemCount;
+        }
+        else
+        {
+            mEnableOkButton = false;
+            isSelectionOverLimit = true;
+        }
     }
     mBOpen->setEnabled(mEnableOkButton);
 }
@@ -254,4 +210,83 @@ QString MultiQFileDialog::createWindowTitle(int fileCount, int folderCount)
 {
     QString actionString = QCoreApplication::translate("ShellExtension", "Upload to MEGA");
     return CommonMessages::createShellExtensionActionLabel(actionString, fileCount, folderCount);
+}
+
+void MultiQFileDialog::onKeyPressEvent(QKeyEvent *keyEvent)
+{
+    Qt::KeyboardModifiers modifiers = QApplication::queryKeyboardModifiers();
+    if (modifiers.testFlag(Qt::ControlModifier) && keyEvent && keyEvent->key() == Qt::Key_H)
+    {
+        if (mShowHidden)
+        {
+            if (mMultiSelect)
+            {
+                setFilter(QDir::AllDirs | QDir::AllEntries | QDir::NoDotAndDotDot);
+            }
+            else
+            {
+                setFilter(QDir::AllDirs | QDir::NoDotAndDotDot);
+            }
+        }
+        else
+        {
+            if (mMultiSelect)
+            {
+                setFilter(QDir::AllDirs | QDir::AllEntries | QDir::Hidden | QDir::System | QDir::NoDotAndDotDot);
+            }
+            else
+            {
+                setFilter(QDir::AllDirs | QDir::Hidden | QDir::System | QDir::NoDotAndDotDot);
+            }
+        }
+        mShowHidden = !mShowHidden;
+    }
+}
+
+bool MultiQFileDialog::onEnabledChangeEvent()
+{
+    bool enabled (mBOpen->isEnabled());
+    bool pathExists (QFileInfo::exists(mLe->text()));
+    if (!pathExists)
+    {
+        pathExists = true;
+        const QStringList items (mLe->text().split(QString::fromUtf8("\"")));
+        auto item (items.cbegin());
+
+        while (pathExists && item != items.cend())
+        {
+            if (!item->trimmed().isEmpty())
+            {
+                pathExists &= QFileInfo::exists(directory().absolutePath()
+                                                + QDir::separator() + *item);
+            }
+            item++;
+        }
+    }
+
+    if (enabled && !mEnableOkButton && !pathExists)
+    {
+        mBOpen->setEnabled(false);
+        mEnableOkButton = false;
+        return true;
+    }
+    else if (!enabled && pathExists)
+    {
+        mEnableOkButton = true;
+        mBOpen->setEnabled(true);
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+void MultiQFileDialog::onHoverEnterEvent()
+{
+    if (isSelectionOverLimit)
+    {
+        QPoint pos = mBOpen->rect().center();
+        QToolTip::showText(mBOpen->mapToGlobal(pos), tr("Too many items selected. To continue, deselect some or select the parent folder instead."));
+    }
 }

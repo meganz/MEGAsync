@@ -7,7 +7,7 @@ build: build-stamp
 build-stamp:
 	dh_testdir
 	sed -i -E "0,/dolphin-megasync \(([0-9.]*)[^\)]*\)/s//dolphin-megasync \(\1-$(MEGA_BUILD_ID).1)/" debian.changelog || :
-	cmake -DCMAKE_INSTALL_PREFIX="`kf5-config --prefix`" -DPLUGIN_INSTALL_DIR=`kf5-config --qt-plugins` .
+	cmake -DCMAKE_INSTALL_PREFIX="`qtpaths --install-prefix`" -DPLUGIN_INSTALL_DIR="`qtpaths --plugin-dir`" .
 	make
 	touch build-stamp
 

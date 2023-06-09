@@ -144,7 +144,11 @@ void MegaDownloader::startDownload(WrappedNode *parent, const QString& appData,
     bool startFirst = hasTransferPriority(parent->getTransferOrigin());
     QByteArray localPath = currentPathWithSep.toUtf8();
     const char* name = parent->getMegaNode()->getName();
-    megaApi->startDownload(parent->getMegaNode(), localPath.constData(), name, appData.toUtf8().constData(), startFirst, cancelToken, listener.get());
+    megaApi->startDownload(parent->getMegaNode(), localPath.constData(), name,
+                           appData.toUtf8().constData(), startFirst, cancelToken,
+                           MegaTransfer::COLLISION_CHECK_FINGERPRINT,
+                           MegaTransfer::COLLISION_RESOLUTION_NEW_WITH_N,
+                           listener.get());
 }
 
 void MegaDownloader::downloadForeignDir(MegaNode *node, const std::shared_ptr<DownloadTransferMetaData> &data, const QString& currentPathWithSep)

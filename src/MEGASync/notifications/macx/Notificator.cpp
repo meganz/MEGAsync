@@ -79,6 +79,11 @@ MegaNotification::MegaNotification()
 {
 }
 
+MegaNotification::~MegaNotification()
+{
+    NotificationHandler::instance()->hideNotification(this);
+}
+
 QStringList MegaNotification::getActions() const
 {
     if(NotificationHandler::instance()->acceptsMultipleSelection())

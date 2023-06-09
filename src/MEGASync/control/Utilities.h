@@ -359,6 +359,8 @@ public:
 
     static QString getCommonPath(const QString& path1, const QString& path2, bool cloudPaths);
 
+    static bool isIncommingShare(mega::MegaNode* node);
+
 private:
     Utilities() {}
     static QHash<QString, QString> extensionIcons;
