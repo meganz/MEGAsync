@@ -14,7 +14,7 @@ SelectFoldersPageForm {
 
     footerButtons {
         previousButton.onClicked: {
-            syncsFlow.state = syncType;
+            mainFlow.state = syncType;
         }
 
         nextButton {
@@ -33,23 +33,10 @@ SelectFoldersPageForm {
         folderDialog.openFolderSelector();
     }
 
-//    FileDialog {
-//        id: folderDialog
-
-//        title: "";
-//        folder: shortcuts.home;
-//        selectFolder: true
-//        onAccepted: {
-//            var processedFolder = folder.toString().substring(8);
-//            proxyModel.insertFolder(processedFolder);
-//        }
-//    }
     ChooseLocalFolder {
         id: folderDialog
 
         onFolderChanged: {
-            //folderSelectionChanged(folder);
-            //var processedFolder = folder.toString().substring(8);
             proxyModel.insertFolder(folderDialog.getFolder());
         }
     }

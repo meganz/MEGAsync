@@ -50,7 +50,7 @@ ConfirmFoldersPageForm {
                 proxyModel.clean();
                 root.enabled = true;
                 footerButtons.nextButton.icons.busyIndicatorVisible = false;
-                syncsFlow.state = syncsFlow.finalState;
+                mainFlow.state = mainFlow.finalState;
             }
         }
 

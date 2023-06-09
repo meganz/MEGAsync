@@ -1,8 +1,8 @@
 // System
 import QtQml 2.12
 
-// C++
-import Onboarding 1.0
+//C++
+import Syncs 1.0
 
 FullSyncPageForm {
     id: root
@@ -10,25 +10,33 @@ FullSyncPageForm {
     footerButtons {
 
         previousButton.onClicked: {
-            syncsFlow.state = syncs;
+            syncsFlow.state = syncType;
         }
 
         nextButton.onClicked: {
             root.enabled = false;
             footerButtons.nextButton.icons.busyIndicatorVisible = true;
-            Onboarding.addSync(localFolderChooser.getSyncData());
+            syncsCpp.addSync(localFolderChooser.getSyncData());
         }
     }
 
-    Connections {
-        target: Onboarding
+    Syncs {
+        id: syncsCpp
 
         onSyncSetupSuccess: {
             root.enabled = true;
             footerButtons.nextButton.icons.busyIndicatorVisible = false;
-            syncsFlow.state = finalState;
+            mainFlow.state = finalState;
             localFolderChooser.reset();
         }
-    }
 
+        onCantSync: {
+            root.enabled = true;
+            footerButtons.nextButton.icons.busyIndicatorVisible = false;
+            console.log(message);
+            localFolderChooser.folderField.error = true;
+            localFolderChooser.folderField.hint.text = message;
+            localFolderChooser.folderField.hint.visible = true;
+        }
+    }
 }

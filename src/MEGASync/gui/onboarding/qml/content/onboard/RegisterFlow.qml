@@ -8,7 +8,7 @@ import QtQuick.Layouts 1.12
 import Common 1.0
 
 // C++
-import Onboarding 1.0
+import Login 1.0
 
 Rectangle {
     id: registerFlow
@@ -152,6 +152,9 @@ Rectangle {
 
             visible: false
         }
+        }
+        Login{
+            id: loginCpp
         }
     }
 }

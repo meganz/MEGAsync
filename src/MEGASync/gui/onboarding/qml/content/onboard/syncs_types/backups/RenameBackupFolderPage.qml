@@ -7,16 +7,13 @@ import Common 1.0
 // Local
 import Onboard 1.0
 
-// C++
-import Onboarding 1.0
-
 RenameBackupFolderPageForm {
     id: root
 
     footerButtons {
 
         previousButton.onClicked: {
-            syncsFlow.state = syncsFlow.confirmBackup;
+            mainFlow.state = mainFlow.confirmBackup;
         }
 
         nextButton {
@@ -50,7 +47,7 @@ RenameBackupFolderPageForm {
                 renameTextField.hint.visible = true;
             }
 
-            syncsFlow.state = syncsFlow.renameBackupFolder;
+            mainFlow.state = mainFlow.renameBackupFolder;
             renameTextField.textField.forceActiveFocus();
         }
     }

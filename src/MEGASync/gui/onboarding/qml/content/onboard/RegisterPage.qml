@@ -7,7 +7,7 @@ import Common 1.0
 import Onboard 1.0
 
 // C++
-import Onboarding 1.0
+import Login 1.0
 
 RegisterPageForm {
     id: registerPage
@@ -22,13 +22,13 @@ RegisterPageForm {
         state = signUpStatus;
 
         var formData = {
-            [Onboarding.RegisterForm.PASSWORD]: registerContent.password.text,
-            [Onboarding.RegisterForm.EMAIL]: registerContent.email.text,
-            [Onboarding.RegisterForm.FIRST_NAME]: registerContent.firstName.text,
-            [Onboarding.RegisterForm.LAST_NAME]: registerContent.lastName.text
+            [Login.PASSWORD]: registerContent.password.text,
+            [Login.EMAIL]: registerContent.email.text,
+            [Login.FIRST_NAME]: registerContent.firstName.text,
+            [Login.LAST_NAME]: registerContent.lastName.text
         }
 
-        Onboarding.onRegisterClicked(formData);
+        loginCpp.onRegisterClicked(formData);
     }
 
     nextButton.progress.onAnimationFinished: {
@@ -45,7 +45,7 @@ RegisterPageForm {
     }
 
     Connections {
-        target: Onboarding
+        target: loginCpp
 
         onRegisterFinished: (success) => {
             if(success) {
@@ -56,7 +56,7 @@ RegisterPageForm {
                 registerContent.showEmailAlreadyExistsError();
             }
             state = normalStatus;
-            nextButton.busyIndicatorVisible = false;
+            nextButton.icons.busyIndicatorVisible = false;
         }
     }
 }

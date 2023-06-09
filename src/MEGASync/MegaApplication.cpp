@@ -24,9 +24,7 @@
 #include "qml/QmlDialog.h"
 #include "qml/QmlDialogWrapper.h"
 #include "qml/QmlClipboard.h"
-#include "onboarding/ChooseFolder.h"
 #include "onboarding/Onboarding.h"
-#include "onboarding/AccountInfoData.h"
 #include "onboarding/BackupsModel.h"
 
 #include <QQmlApplicationEngine>
@@ -1205,7 +1203,6 @@ void MegaApplication::requestUserData()
     {
         return;
     }
-    UserAttributes::DeviceName::requestDeviceName();
     UserAttributes::MyBackupsHandle::requestMyBackupsHandle();
     UserAttributes::FullName::requestFullName();
     UserAttributes::Avatar::requestAvatar();
@@ -3536,10 +3533,6 @@ void MegaApplication::registerCommonQMLElements()
     //Register metatypes to use them in signals/slots
     qRegisterMetaType<QQueue<QString> >("QQueueQString");
     qRegisterMetaTypeStreamOperators<QQueue<QString> >("QQueueQString");
-
-    qmlRegisterType<AccountInfoData>("AccountInfoData", 1, 0, "AccountInfoData");
-    qmlRegisterType<ChooseLocalFolder>("ChooseLocalFolder", 1, 0, "ChooseLocalFolder");
-    qmlRegisterType<ChooseRemoteFolder>("ChooseRemoteFolder", 1, 0, "ChooseRemoteFolder");
 
     qmlRegisterType<BackupsProxyModel>("BackupsProxyModel", 1, 0, "BackupsProxyModel");
 

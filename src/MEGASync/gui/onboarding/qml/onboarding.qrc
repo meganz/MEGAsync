@@ -13,6 +13,7 @@
         <file>content/onboard/SyncSelectTypeButton.qml</file>
         <file>content/onboard/TwoFAPage.qml</file>
         <file>content/onboard/TwoFAPageForm.ui.qml</file>
+        <file>content/onboard/syncs_types/MainFlow.qml</file>
         <file>content/onboard/syncs_types/ComputerNamePage.qml</file>
         <file>content/onboard/syncs_types/ComputerNamePageForm.ui.qml</file>
         <file>content/onboard/syncs_types/Footer.qml</file>
@@ -22,7 +23,6 @@
         <file>content/onboard/syncs_types/InstallationTypePageForm.ui.qml</file>
         <file>content/onboard/syncs_types/ResumePage.qml</file>
         <file>content/onboard/syncs_types/ResumePageForm.ui.qml</file>
-        <file>content/onboard/syncs_types/SyncsFlow.qml</file>
         <file>content/onboard/syncs_types/SyncsHorizontalButton.qml</file>
         <file>content/onboard/syncs_types/SyncsPage.qml</file>
         <file>content/onboard/syncs_types/SyncsType.qml</file>
@@ -47,6 +47,7 @@
         <file>content/onboard/syncs_types/syncs/SyncTypeButton.qml</file>
         <file>content/onboard/syncs_types/syncs/SyncTypePage.qml</file>
         <file>content/onboard/syncs_types/syncs/SyncTypePageForm.ui.qml</file>
+        <file>content/onboard/syncs_types/syncs/SyncsFlow.qml</file>
         <file>content/onboard/ConfirmEmailPage.qml</file>
         <file>content/onboard/ConfirmEmailPageForm.ui.qml</file>
         <file>content/onboard/ChangeEmailPage.qml</file>

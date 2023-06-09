@@ -6,7 +6,7 @@ SyncTypePageForm {
     footerButtons {
 
         previousButton.onClicked: {
-            syncsFlow.state = syncType;
+            mainFlow.state = syncType;
         }
 
         nextButton.onClicked: {

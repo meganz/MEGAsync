@@ -44,7 +44,7 @@ StackView {
     Component {
         id: syncsComponent
 
-        SyncsFlow {
+        MainFlow {
             width: onboardingFlow.width
             height: onboardingFlow.height
         }

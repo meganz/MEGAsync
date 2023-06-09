@@ -13,7 +13,7 @@ ConfirmEmailPageForm {
     email: Onboarding.email
 
     Connections {
-        target: Onboarding
+        target: loginCpp
 
         onAccountConfirmed: {
             registerFlow.state = login;

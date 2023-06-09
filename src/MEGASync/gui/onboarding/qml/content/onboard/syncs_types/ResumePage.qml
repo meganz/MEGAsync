@@ -11,10 +11,10 @@ ResumePageForm {
     buttonGroup.onClicked: {
         switch(button.type) {
             case SyncsType.Sync:
-                syncsFlow.state = syncs;
+                mainFlow.state = syncs;
                 break;
             case SyncsType.Backup:
-                syncsFlow.state = backupsFlow;
+                mainFlow.state = backupsFlow;
                 break;
             default:
                 console.error("Button type does not exist -> " + button.type);

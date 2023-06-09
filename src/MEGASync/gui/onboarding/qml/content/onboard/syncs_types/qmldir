@@ -1,5 +1,5 @@
 module Onboard.Syncs_types
-SyncsFlow 1.0 SyncsFlow.qml
+MainFlow 1.0 MainFlow.qml
 Header 1.0 Header.qml
 Footer 1.0 Footer.qml
 InfoAccount 1.0 InfoAccount.qml

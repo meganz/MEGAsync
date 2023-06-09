@@ -16,7 +16,7 @@ import Onboard.Syncs_types.Backups 1.0
 import BackupsProxyModel 1.0
 
 StackView {
-    id: syncsFlow
+    id: mainFlow
 
     readonly property string computerName: "computerName"
     readonly property string syncType: "syncType"
@@ -57,9 +57,9 @@ StackView {
             StateChangeScript {
                 script: {
                     lastTypeSelected = SyncsType.Types.Sync;
-                    rightPanel.replace(syncPage);
-                    if(syncsFlow.currentItem != syncsPanel) {
-                        syncsFlow.replace(syncsPanel);
+                    rightPanel.replace(syncsFlowPage);
+                    if(mainFlow.currentItem != syncsPanel) {
+                        mainFlow.replace(syncsPanel);
                     }
                 }
             }
@@ -69,32 +69,12 @@ StackView {
             }
         },
         State {
-            name: selectiveSync
-            StateChangeScript {
-                script: rightPanel.replace(selectiveSyncPage);
-            }
-            PropertyChanges {
-                target: stepPanel
-                state: stepPanel.stepSyncFolder
-            }
-        },
-        State {
-            name: fullSync
-            StateChangeScript {
-                script: rightPanel.replace(fullSyncPage);
-            }
-            PropertyChanges {
-                target: stepPanel
-                state: stepPanel.stepSyncFolder
-            }
-        },
-        State {
             name: backupsFlow
             StateChangeScript {
                 script: {
                     lastTypeSelected = SyncsType.Types.Backup;
-                    if(syncsFlow.currentItem != syncsPanel) {
-                        syncsFlow.replace(syncsPanel);
+                    if(mainFlow.currentItem != syncsPanel) {
+                        mainFlow.replace(syncsPanel);
                     }
                     rightPanel.replace(backupsFlowPage);
                 }
@@ -107,7 +87,7 @@ StackView {
         State {
             name: finalState
             StateChangeScript {
-                script: syncsFlow.replace(finalPage);
+                script: mainFlow.replace(finalPage);
             }
         }
     ]
@@ -123,8 +103,8 @@ StackView {
     Rectangle {
         id: syncsPanel
 
-        width: syncsFlow.width
-        height: syncsFlow.height
+        width: mainFlow.width
+        height: mainFlow.height
         visible: false
 
         StepPanel {
@@ -164,21 +144,9 @@ StackView {
             }
 
             Component {
-                id: syncPage
+                id: syncsFlowPage
 
-                SyncTypePage {}
-            }
-
-            Component {
-                id: fullSyncPage
-
-                FullSyncPage {}
-            }
-
-            Component {
-                id: selectiveSyncPage
-
-                SelectiveSyncPage {}
+                SyncsFlow {}
             }
 
             Component{

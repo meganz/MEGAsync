@@ -67,7 +67,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/CancelConfirmWidget.cpp \
     $$PWD/NodeNameSetterDialog/NodeNameSetterDialog.cpp \
     $$PWD/NodeNameSetterDialog/NewFolderDialog.cpp \
-    $$PWD/NodeNameSetterDialog/RenameNodeDialog.cpp \   
+    $$PWD/NodeNameSetterDialog/RenameNodeDialog.cpp \
     $$PWD/node_selector/model/NodeSelectorDelegates.cpp \
     $$PWD/node_selector/model/NodeSelectorProxyModel.cpp \
     $$PWD/node_selector/model/NodeSelectorModel.cpp \
@@ -86,7 +86,12 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/onboarding/ChooseFolder.cpp \
     $$PWD/onboarding/Onboarding.cpp \
     $$PWD/onboarding/AccountInfoData.cpp \
-    $$PWD/onboarding/BackupsModel.cpp
+    $$PWD/onboarding/BackupsModel.cpp \
+    $$PWD/onboarding/Login.cpp \
+    $$PWD/onboarding/Syncs.cpp \
+    $$PWD/onboarding/ComputerName.cpp \
+    $$PWD/onboarding/PasswordStrengthChecker.cpp
+
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/AutoResizeStackedWidget.h \
@@ -94,6 +99,7 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/BlurredShadowEffect.h \
     $$PWD/ButtonIconManager.h \
     $$PWD/DateTimeFormatter.h \
+    $$PWD/Login.h \
     $$PWD/LowDiskSpaceDialog.h \
     $$PWD/EventHelper.h \
     $$PWD/InfoDialog.h \
@@ -170,7 +176,11 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/onboarding/ChooseFolder.h \
     $$PWD/onboarding/Onboarding.h \
     $$PWD/onboarding/AccountInfoData.h \
-    $$PWD/onboarding/BackupsModel.h
+    $$PWD/onboarding/BackupsModel.h \
+    $$PWD/onboarding/Login.h \
+    $$PWD/onboarding/Syncs.h \
+    $$PWD/onboarding/ComputerName.h \
+    $$PWD/onboarding/PasswordStrengthChecker.h
 
 INCLUDEPATH += $$PWD
 

@@ -1,7 +1,6 @@
 import QtQml 2.12
 
 // Local
-import Onboarding 1.0
 import Onboard 1.0
 
 ChangeEmailPageForm {
@@ -17,7 +16,7 @@ ChangeEmailPageForm {
     emailTextField.text: Onboarding.email
 
     Connections {
-        target: Onboarding
+        target: loginCpp
 
         onChangeRegistrationEmailFinished: (success) => {
             if(success) {
