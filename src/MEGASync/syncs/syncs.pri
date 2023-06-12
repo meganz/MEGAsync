@@ -80,11 +80,14 @@ unix:!macx {
     RESOURCES += $$PWD/../gui/Resources_linux.qrc
     FORMS    += $$PWD/gui/Twoways/linux/FolderBinder.ui \
                 $$PWD/gui/Twoways/linux/BindFolderDialog.ui \
+                $$PWD/gui/Twoways/linux/SyncAccountFullMessage.ui \
+                $$PWD/gui/Twoways/linux/SyncSettingsUIBase.ui \
                 $$PWD/gui/Backups/linux/BackupsWizard.ui \
                 $$PWD/gui/Backups/linux/AddBackupDialog.ui \
                 $$PWD/gui/Backups/linux/RemoveBackupDialog.ui \
                 $$PWD/gui/Backups/linux/BackupNameConflictDialog.ui \
-                $$PWD/gui/Backups/linux/BackupRenameWidget.ui
+                $$PWD/gui/Backups/linux/BackupRenameWidget.ui\
+                $$PWD/gui/Backups/linux/OpenBackupsFolder.ui
 }
 
 FORMS += \

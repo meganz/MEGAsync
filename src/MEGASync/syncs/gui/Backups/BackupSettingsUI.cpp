@@ -8,6 +8,8 @@
 #include "RemoveBackupDialog.h"
 #include "QMegaMessageBox.h"
 
+#include "ui_SyncSettingsUIBase.h"
+
 BackupSettingsUI::BackupSettingsUI(QWidget *parent) :
     SyncSettingsUIBase(parent)
 {

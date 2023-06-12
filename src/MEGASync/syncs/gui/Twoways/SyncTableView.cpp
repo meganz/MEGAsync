@@ -7,7 +7,7 @@
 
 #include <QHeaderView>
 #include <QMenu>
-#include <QTooltip>
+#include <QToolTip>
 #include <QPainter>
 #include <QtConcurrent/QtConcurrent>
 

@@ -59,7 +59,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/SwitchButton.cpp \
     $$PWD/GuiUtilities.cpp \
     $$PWD/CancelConfirmWidget.cpp \
-    $$PWD/RemoteItemUI.cpp \
+    $$PWD/RemoteItemUi.cpp \
     $$PWD/NodeNameSetterDialog/NodeNameSetterDialog.cpp \
     $$PWD/NodeNameSetterDialog/NewFolderDialog.cpp \
     $$PWD/NodeNameSetterDialog/RenameNodeDialog.cpp \   
@@ -139,7 +139,7 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/SwitchButton.h \
     $$PWD/GuiUtilities.h \
     $$PWD/CancelConfirmWidget.h \
-    $$PWD/RemoteItemUI.h \
+    $$PWD/RemoteItemUi.h \
     $$PWD/NodeNameSetterDialog/NodeNameSetterDialog.h \
     $$PWD/NodeNameSetterDialog/NewFolderDialog.h \
     $$PWD/NodeNameSetterDialog/RenameNodeDialog.h \
@@ -327,7 +327,7 @@ unix:!macx {
                 $$PWD/linux/NodeNameSetterDialog.ui \
                 $$PWD/linux/NotificationsSettings.ui \
                 $$PWD/linux/LowDiskSpaceDialog.ui \
-                $$PWD/linux/RemoteItemUI.ui \
+                $$PWD/linux/RemoteItemUi.ui \
                 $$PWD/node_selector/gui/linux/NodeSelectorTreeViewWidget.ui \
                 $$PWD/node_selector/gui/linux/NodeSelectorLoadingDelegate.ui \
                 $$PWD/node_selector/gui/linux/NodeSelector.ui \
