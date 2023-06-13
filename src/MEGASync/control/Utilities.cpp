@@ -1236,6 +1236,16 @@ QString Utilities::getCommonPath(const QString &path1, const QString &path2, boo
     return ret;
 }
 
+bool Utilities::isIncommingShare(MegaNode *node)
+{
+    if(node && MegaSyncApp->getMegaApi()->checkAccess(node, MegaShare::ACCESS_OWNER).getErrorCode() != MegaError::API_OK)
+    {
+        return true;
+    }
+
+    return false;
+}
+
 long long Utilities::getSystemsAvailableMemory()
 {
     long long availMemory = 0;

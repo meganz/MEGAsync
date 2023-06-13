@@ -49,6 +49,21 @@ void NSUserNotificationHandler::showNotification(MegaNotification *notification)
     [userNotification release];
 }
 
+void NSUserNotificationHandler::hideNotification(MegaNotification *notification)
+{
+    NSString *idString = [[NSNumber numberWithLongLong:notification->getId()] stringValue];
+
+    NSUserNotificationCenter *notificationCenterInstance = [NSUserNotificationCenter defaultUserNotificationCenter];
+    NSArray<NSUserNotification*>* arrayOfNotifications = [notificationCenterInstance deliveredNotifications];
+    for (NSUserNotification* OSNotification in arrayOfNotifications) {
+        if(OSNotification.identifier == idString)
+        {
+            [notificationCenterInstance removeDeliveredNotification:OSNotification];
+            break;
+        }
+    }
+}
+
 bool NSUserNotificationHandler::acceptsMultipleSelection()
 {
     return false;

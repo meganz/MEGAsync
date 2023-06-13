@@ -84,7 +84,7 @@ void SyncController::removeSync(std::shared_ptr<SyncSettings> syncSetting, const
     MegaHandle backupRoot = syncSetting->getMegaHandle();
     MegaHandle backupId = syncSetting->backupId();
 
-    mApi->removeSync(backupId, new OnFinishOneShot(mApi, [=](const MegaError& e){
+    mApi->removeSync(backupId, new OnFinishOneShot(mApi, [=](const MegaError& e, const MegaRequest&){
         if (e.getErrorCode() != MegaError::API_OK)
         {
             QString errorMsg = QString::fromUtf8(e.getErrorString());
@@ -99,7 +99,7 @@ void SyncController::removeSync(std::shared_ptr<SyncSettings> syncSetting, const
         {
             // We now have to delete or remove the remote folder
             mApi->moveOrRemoveDeconfiguredBackupNodes(backupRoot, remoteHandle,
-                                                      new OnFinishOneShot(mApi, [=](const MegaError& e){
+                                                      new OnFinishOneShot(mApi, [=](const MegaError& e, const MegaRequest&){
                 if (e.getErrorCode() != MegaError::API_OK)
                 {
                     QString errorMsg = QString::fromUtf8(e.getErrorString());
@@ -132,7 +132,7 @@ void SyncController::setSyncToRun(std::shared_ptr<SyncSettings> syncSetting)
                  .toUtf8().constData());
 
     emit signalSyncOperationBegins(syncSetting);
-    mApi->setSyncRunState(syncSetting->backupId(), MegaSync::RUNSTATE_RUNNING, new OnFinishOneShot(mApi, [=](const MegaError& e){
+    mApi->setSyncRunState(syncSetting->backupId(), MegaSync::RUNSTATE_RUNNING, new OnFinishOneShot(mApi, [=](const MegaError& e, const MegaRequest&){
         emit signalSyncOperationEnds(syncSetting);
         if (e.getErrorCode() != MegaError::API_OK)
         {
@@ -154,7 +154,7 @@ void SyncController::setSyncToPause(std::shared_ptr<SyncSettings> syncSetting)
                  .toUtf8().constData());
 
     emit signalSyncOperationBegins(syncSetting);
-    mApi->setSyncRunState(syncSetting->backupId(), MegaSync::RUNSTATE_PAUSED, new OnFinishOneShot(mApi, [=](const MegaError& e){
+    mApi->setSyncRunState(syncSetting->backupId(), MegaSync::RUNSTATE_PAUSED, new OnFinishOneShot(mApi, [=](const MegaError& e, const MegaRequest&){
         emit signalSyncOperationEnds(syncSetting);
         if (e.getErrorCode() != MegaError::API_OK)
         {
@@ -176,7 +176,7 @@ void SyncController::setSyncToSuspend(std::shared_ptr<SyncSettings> syncSetting)
                  .toUtf8().constData());
 
     emit signalSyncOperationBegins(syncSetting);
-    mApi->setSyncRunState(syncSetting->backupId(), MegaSync::RUNSTATE_SUSPENDED, new OnFinishOneShot(mApi, [=](const MegaError& e){
+    mApi->setSyncRunState(syncSetting->backupId(), MegaSync::RUNSTATE_SUSPENDED, new OnFinishOneShot(mApi, [=](const MegaError& e, const MegaRequest&){
         emit signalSyncOperationEnds(syncSetting);
         if (e.getErrorCode() != MegaError::API_OK)
         {
@@ -198,7 +198,7 @@ void SyncController::setSyncToDisabled(std::shared_ptr<SyncSettings> syncSetting
                  .toUtf8().constData());
 
     emit signalSyncOperationBegins(syncSetting);
-    mApi->setSyncRunState(syncSetting->backupId(), MegaSync::RUNSTATE_DISABLED, new OnFinishOneShot(mApi, [=](const MegaError& e){
+    mApi->setSyncRunState(syncSetting->backupId(), MegaSync::RUNSTATE_DISABLED, new OnFinishOneShot(mApi, [=](const MegaError& e, const MegaRequest&){
         emit signalSyncOperationEnds(syncSetting);
         if (e.getErrorCode() != MegaError::API_OK)
         {

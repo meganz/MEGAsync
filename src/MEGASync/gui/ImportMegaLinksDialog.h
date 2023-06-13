@@ -18,7 +18,7 @@ class ImportMegaLinksDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit ImportMegaLinksDialog(std::shared_ptr<LinkProcessor> linkProcessor, QWidget *parent = 0);
+    explicit ImportMegaLinksDialog(LinkProcessor* linkProcessor, QWidget *parent = 0);
     ~ImportMegaLinksDialog();
 
     bool shouldImport();
@@ -45,7 +45,7 @@ private:
     Ui::ImportMegaLinksDialog *ui;
     mega::MegaApi *mMegaApi;
     std::shared_ptr<Preferences> mPreferences;
-    std::shared_ptr<LinkProcessor> mLinkProcessor;
+    LinkProcessor* mLinkProcessor;
     bool mFinished;
 
     void initUiAsLogged();

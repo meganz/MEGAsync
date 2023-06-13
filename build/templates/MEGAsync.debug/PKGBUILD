@@ -4,7 +4,7 @@ pkgrel=`cat MEGA_BUILD_ID || echo "1"`
 arch=('any')
 url="https://mega.nz/#sync"
 license=('Freeware')
-pkgdesc="Easy automated syncing between your computers and your MEGA cloud drive"
+pkgdesc="Get more control over your data"
 depends=(
 'qt4'
 'openssl'

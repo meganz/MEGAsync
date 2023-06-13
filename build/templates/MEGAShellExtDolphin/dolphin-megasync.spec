@@ -1,7 +1,7 @@
 Name:       dolphin-megasync
 Version:    EXT_VERSION
 Release:	%(cat MEGA_BUILD_ID || echo "1").1
-Summary:	Extension for Dolphin to interact with Megasync
+Summary:	MEGA Desktop App plugin for Dolphin
 License:	Freeware
 Group:		Applications/Others
 Url:		https://mega.nz
@@ -25,23 +25,19 @@ BuildRequires: kdelibs-devel gcc-c++
 %endif
 
 %if 0%{?centos_version}
-BuildRequires: kf5-kdelibs4support-devel, kdelibs-devel, extra-cmake-modules, qt-devel
+BuildRequires: extra-cmake-modules, kf5-kdelibs4support, kf5-kio-devel
 %endif
 
 Requires:       megasync >= 3.5
 
 %description
-Secure:
-Your data is encrypted end to end. Nobody can intercept it while in storage or in transit.
+- Easily see and track your sync statuses.
 
-Flexible:
-Sync any folder from your PC to any folder in the cloud. Sync any number of folders in parallel.
+- Send files and folders to MEGA.
 
-Fast:
-Take advantage of MEGA's high-powered infrastructure and multi-connection transfers.
+- Share your synced files and folders with anyone by creating links.
 
-Generous:
-Store up to 50 GB for free!
+- View files in MEGA's browser (webclient).
 
 %prep
 %setup -q
@@ -51,7 +47,7 @@ Store up to 50 GB for free!
 EXTRA_FILES=%{buildroot}/ExtraFiles.list
 touch %{EXTRA_FILES}
 
-cmake -DCMAKE_INSTALL_PREFIX="`kf5-config --prefix`" $PWD
+cmake3 -DCMAKE_INSTALL_PREFIX="`kf5-config --prefix`" $PWD || cmake -DCMAKE_INSTALL_PREFIX="`kf5-config --prefix`" $PWD
 make
 make install DESTDIR=%{buildroot}
 

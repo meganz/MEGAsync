@@ -15,6 +15,9 @@ BindFolderDialog::BindFolderDialog(MegaApplication* _app, QWidget *parent) :
     ui->setupUi(this);
 
     ui->bOK->setDefault(true);
+
+    connect(ui->wBinder, &FolderBinder::selectionDone, this, &BindFolderDialog::allSelectionsDone);
+    setFocusProxy(ui->bOK);
 }
 
 BindFolderDialog::~BindFolderDialog()
@@ -94,6 +97,26 @@ void BindFolderDialog::on_bOK_clicked()
     mSyncName = SyncController::getSyncNameFromPath(localFolderPath);
 
     accept();
+}
+
+void BindFolderDialog::allSelectionsDone()
+{
+    ui->bOK->setFocus();
+}
+
+bool BindFolderDialog::focusNextPrevChild(bool next)
+{
+#ifdef Q_OS_MACOS
+    if(next && ui->bOK->hasFocus())
+#else
+    if(next && ui->bCancel->hasFocus())
+#endif
+    {
+        ui->wBinder->setFocus();
+        return true;
+    }
+
+    return QDialog::focusNextPrevChild(next);
 }
 
 void BindFolderDialog::changeEvent(QEvent *event)

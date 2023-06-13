@@ -1,3 +1,5 @@
+[[_TOC_]]
+
 # Windows instructions
 
 For MEGA Desktop App development we are targeting Windows 10, although we are providing

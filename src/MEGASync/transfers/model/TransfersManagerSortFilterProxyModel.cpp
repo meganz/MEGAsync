@@ -122,9 +122,9 @@ void TransfersManagerSortFilterProxyModel::invalidateModel()
     emit layoutAboutToBeChanged();
     QFuture<void> filtered = QtConcurrent::run([this](){
         startProcessingInOtherThread();
-#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
+
         invalidate();
-#else
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
         invalidateFilter();
 #endif
         if(sortOrder() == mSortOrder)

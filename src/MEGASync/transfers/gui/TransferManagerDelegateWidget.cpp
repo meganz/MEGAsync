@@ -211,7 +211,9 @@ void TransferManagerDelegateWidget::updateTransferState()
                 showTPauseResume = false;
             }
 
-            timeString = getData()->getFormattedFinishedTime();
+            auto dateTime = getData()->getFinishedDateTime();
+            timeString = MegaSyncApp->getFormattedDateByCurrentLanguage(dateTime, QLocale::FormatType::ShortFormat);
+
             timeTooltip = getData()->getFullFormattedFinishedTime();
             speedString = QString::fromUtf8("…");
 
@@ -367,6 +369,7 @@ void TransferManagerDelegateWidget::adjustFileName()
                                 .elidedText(getData()->mFilename, Qt::ElideMiddle,
                                            getNameAvailableSize(mUi->wTransferName, mUi->lSyncIcon, mUi->nameSpacer)));
     mUi->lTransferName->adjustSize();
+    mUi->lTransferName->parentWidget()->layout()->activate();
 }
 
 TransferBaseDelegateWidget::ActionHoverType TransferManagerDelegateWidget::mouseHoverTransfer(bool isHover, const QPoint &pos)

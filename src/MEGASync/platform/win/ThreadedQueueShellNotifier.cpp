@@ -49,11 +49,6 @@ void ThreadedQueueShellNotifier::checkReportQueueSize()
 
 void ThreadedQueueShellNotifier::notify(const QString &localPath)
 {
-    // Don't actually log here under normal circumstances.
-    // Imagine a million-node sync, that'll kill performance and make the logs unusable
-    // Uncomment this for dev purposes only when needed for debugging
-    //logNotify("ThreadedShellNotifier", localPath);
-
     // make sure the thread was started
     if (!mThread.joinable())
     {
