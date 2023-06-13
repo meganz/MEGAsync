@@ -5446,7 +5446,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Are you sure?</source>
         <translatorcomment>Warning message second part asking if you are sure about continuing with the logout.</translatorcomment>
-        <translation>Confirmez-vous ?</translation>
+        <translation>Voulez-vous vous déconnecter ?</translation>
     </message>
     <message>
         <source>Error adding sync</source>

@@ -388,7 +388,7 @@
     <message>
         <source>Reminder: You have a contact request</source>
         <translatorcomment>Label to indicate a reminder about a contact request.</translatorcomment>
-        <translation>Erinnerung: Sie haben ein wartendes Kontaktersuchen</translation>
+        <translation>Erinnerung: Sie haben eine Kontaktanfrage</translation>
     </message>
     <message>
         <source>Shared folder updated</source>
@@ -1307,7 +1307,7 @@
     <message>
         <source>Reminder: You have a contact request</source>
         <translatorcomment>Label to indicate a reminder about a contact request.</translatorcomment>
-        <translation>Erinnerung: Sie haben ein wartendes Kontaktersuchen</translation>
+        <translation>Erinnerung: Sie haben eine Kontaktanfrage</translation>
     </message>
     <message>
         <source>Show in MEGA</source>
@@ -1731,7 +1731,7 @@
     <message>
         <source>Log out</source>
         <translatorcomment>Button label to log out the current account.</translatorcomment>
-        <translation>Ausloggen</translation>
+        <translation>Abmelden</translation>
     </message>
     <message>
         <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
@@ -1860,7 +1860,7 @@
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message shown when a user is trying to download a file to a local folder without the right permissions.</translatorcomment>
-        <translation>Sie haben keine Schreibrechte in diesem Pfad.</translation>
+        <translation>Sie haben keine Schreibrechte in diesem lokalen Ordner.</translation>
     </message>
     <message>
         <source>Open links</source>
@@ -4813,7 +4813,7 @@ Trotzdem löschen?</translation>
     <message>
         <source>Log out</source>
         <translatorcomment>Button label to log out of the application. String as short as possible.</translatorcomment>
-        <translation>Ausloggen</translation>
+        <translation>Abmelden</translation>
     </message>
     <message>
         <source>Upgrade</source>
@@ -5445,7 +5445,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Are you sure?</source>
         <translatorcomment>Warning message second part asking if you are sure about continuing with the logout.</translatorcomment>
-        <translation>Sind Sie sicher?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Error adding sync</source>
@@ -7414,7 +7414,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Log out</source>
         <translatorcomment>Button label to log out the current account</translatorcomment>
-        <translation>Ausloggen</translation>
+        <translation>Abmelden</translation>
     </message>
     <message>
         <source>Verify your email</source>
