@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>390</width>
+    <width>401</width>
     <height>79</height>
    </rect>
   </property>
@@ -85,6 +85,9 @@
         </property>
         <property name="text">
          <string>View in MEGA</string>
+        </property>
+        <property name="default">
+         <bool>false</bool>
         </property>
        </widget>
       </item>

@@ -5,6 +5,7 @@
 #include <DialogOpener.h>
 
 #include <syncs/gui/Twoways/SyncTableView.h>
+#include <syncs/gui/Twoways/BindFolderDialog.h>
 #include <syncs/model/SyncItemModel.h>
 
 #ifndef Q_OS_WIN
@@ -12,6 +13,7 @@
 #include <DialogOpener.h>
 #include <PermissionsDialog.h>
 #endif
+
 
 #include "ui_SyncSettingsUIBase.h"
 
