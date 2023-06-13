@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>RemoteItemUi</class>
- <widget class="Widget" name="RemoteItemUi">
+ <widget class="QWidget" name="RemoteItemUi">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -34,21 +34,21 @@
      <property name="title">
       <string/>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_2">
+     <layout class="QVBoxLayout" name="tableLayout">
       <property name="spacing">
        <number>8</number>
       </property>
       <property name="leftMargin">
-       <number>0</number>
+       <number>10</number>
       </property>
       <property name="topMargin">
-       <number>0</number>
+       <number>10</number>
       </property>
       <property name="rightMargin">
-       <number>0</number>
+       <number>10</number>
       </property>
       <property name="bottomMargin">
-       <number>0</number>
+       <number>10</number>
       </property>
       <item>
        <widget class="QTableView" name="tableView">
@@ -217,14 +217,6 @@ border-right:0px;
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>Widget</class>
-   <extends>QWidget</extends>
-   <header>widget.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

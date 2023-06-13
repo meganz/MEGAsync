@@ -27,10 +27,8 @@ public:
 signals:
     void addClicked(mega::MegaHandle);
     void deleteClicked();
-
 #ifndef Q_OS_WIN
-private slots:
-    void on_bPermissions_clicked();
+    void permissionsClicked();
 #endif
 
 private:

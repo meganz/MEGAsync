@@ -10,9 +10,6 @@
 #include <QToolButton>
 #endif
 
-#include <syncs/control/SyncInfo.h>
-#include <syncs/gui/Twoways/SyncTableView.h>
-#include <syncs/model/SyncItemModel.h>
 #include <QMegaMessageBox.h>
 #include <TextDecorator.h>
 #include <Utilities.h>
@@ -24,6 +21,7 @@ class SyncSettingsUIBase;
 
 class SyncItemModel;
 class SyncController;
+class SyncTableView;
 
 class SyncSettingsUIBase : public QWidget
 {
@@ -50,17 +48,18 @@ public:
     template <class TableType, class ModelType, class SortModelType = SyncItemSortModel>
     void setTable()
     {
-        mTable = new TableType();
+        auto table = new TableType();
+        mTable = table;
         initTable();
 
-        connect(mTable, &TableType::signalRunSync, this, &SyncSettingsUIBase::setSyncToRun);
-        connect(mTable, &TableType::signalPauseSync, this, &SyncSettingsUIBase::setSyncToPause);
-        connect(mTable, &TableType::signalSuspendSync, this, &SyncSettingsUIBase::setSyncToSuspend);
-        connect(mTable, &TableType::signalDisableSync, this, &SyncSettingsUIBase::setSyncToDisabled);
-        connect(mTable, &TableType::signalRemoveSync, this, &SyncSettingsUIBase::removeSync);
-        connect(mTable, &TableType::signalOpenMegaignore, this, &SyncSettingsUIBase::openMegaIgnore);
-        connect(mTable, &TableType::signalRescanQuick, this, &SyncSettingsUIBase::rescanQuick);
-        connect(mTable, &TableType::signalRescanDeep, this, &SyncSettingsUIBase::rescanDeep);
+        connect(table, &TableType::signalRunSync, this, &SyncSettingsUIBase::setSyncToRun);
+        connect(table, &TableType::signalPauseSync, this, &SyncSettingsUIBase::setSyncToPause);
+        connect(table, &TableType::signalSuspendSync, this, &SyncSettingsUIBase::setSyncToSuspend);
+        connect(table, &TableType::signalDisableSync, this, &SyncSettingsUIBase::setSyncToDisabled);
+        connect(table, &TableType::signalRemoveSync, this, &SyncSettingsUIBase::removeSync);
+        connect(table, &TableType::signalOpenMegaignore, this, &SyncSettingsUIBase::openMegaIgnore);
+        connect(table, &TableType::signalRescanQuick, this, &SyncSettingsUIBase::rescanQuick);
+        connect(table, &TableType::signalRescanDeep, this, &SyncSettingsUIBase::rescanDeep);
 
         auto& model = mModels[mTable->getType()];
         if(!model)
@@ -76,10 +75,9 @@ public:
             });
         }
 
-
         SortModelType *sortModel = new SortModelType(mTable);
         sortModel->setSourceModel(model);
-        mTable->setModel(sortModel);
+        table->setModel(sortModel);
 
         connect(mSyncController, &SyncController::signalSyncOperationBegins, this, [this](std::shared_ptr<SyncSettings> sync)
         {
@@ -128,16 +126,19 @@ public:
     void setToolBarItem(QToolButton* item);
 #endif
 
+    void setParentDialog(QDialog *newParentDialog);
+
 public slots:
     virtual void addButtonClicked(mega::MegaHandle megaFolderHandle = mega::INVALID_HANDLE);
-
-signals:
-    void enableStateChanged(bool state);
+#ifndef Q_OS_WINDOWS
+    void onPermissionsClicked();
+#endif
 
 protected:
     Ui::SyncSettingsUIBase* ui;
     SyncTableView* mTable;
     SyncController* mSyncController;
+    QDialog* mParentDialog;
 
     virtual QString getFinishWarningIconString(){return QString();}
     virtual QString getFinishIconString(){return QString();}

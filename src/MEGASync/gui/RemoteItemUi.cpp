@@ -13,16 +13,13 @@ RemoteItemUi::RemoteItemUi(QWidget *parent) :
 {
     ui->setupUi(this);
 
-#ifndef Q_OS_MACOS
-    connect(ui->bAdd, &QPushButton::clicked, this, [this](){
-        emit addClicked(mega::INVALID_HANDLE);
-    });
-    connect(ui->bDelete, &QPushButton::clicked, this, &RemoteItemUi::deleteClicked);
-
 #ifdef Q_OS_WIN
     setUsePermissions(false);
-#endif
 #else
+    connect(ui->bPermissions, &QPushButton::clicked, this, &RemoteItemUi::permissionsClicked);
+#endif
+
+#ifdef Q_OS_MACOS
     ui->tableSegementedControl->configureTableSegment();
     connect(ui->tableSegementedControl, &QSegmentedControl::addButtonClicked,
             this, [this](){
@@ -30,6 +27,11 @@ RemoteItemUi::RemoteItemUi(QWidget *parent) :
     });
     connect(ui->tableSegementedControl, &QSegmentedControl::removeButtonClicked,
             this,  &RemoteItemUi::deleteClicked);
+#else
+    connect(ui->bAdd, &QPushButton::clicked, this, [this](){
+        emit addClicked(mega::INVALID_HANDLE);
+    });
+    connect(ui->bDelete, &QPushButton::clicked, this, &RemoteItemUi::deleteClicked);
 #endif
 }
 
@@ -96,31 +98,3 @@ void RemoteItemUi::setTableViewProperties(QTableView *view) const
     view->verticalHeader()->setMinimumSectionSize(24);
     view->verticalHeader()->setDefaultSectionSize(24);
 }
-
-#ifndef Q_OS_WIN
-void RemoteItemUi::on_bPermissions_clicked()
-{
-    MegaSyncApp->getMegaApi()->setDefaultFolderPermissions(Preferences::instance()->folderPermissionsValue());
-    int folderPermissions = MegaSyncApp->getMegaApi()->getDefaultFolderPermissions();
-    MegaSyncApp->getMegaApi()->setDefaultFilePermissions(Preferences::instance()->filePermissionsValue());
-    int filePermissions = MegaSyncApp->getMegaApi()->getDefaultFilePermissions();
-
-    QPointer<PermissionsDialog> dialog = new PermissionsDialog(this);
-    dialog->setFolderPermissions(folderPermissions);
-    dialog->setFilePermissions(filePermissions);
-    DialogOpener::showDialog<PermissionsDialog>(dialog, [dialog, &folderPermissions, &filePermissions](){
-        if (dialog->result() == QDialog::Accepted)
-        {
-            filePermissions = dialog->filePermissions();
-            folderPermissions = dialog->folderPermissions();
-
-            if (filePermissions != Preferences::instance()->filePermissionsValue()
-                    || folderPermissions != Preferences::instance()->folderPermissionsValue())
-            {
-                Preferences::instance()->setFilePermissionsValue(filePermissions);
-                Preferences::instance()->setFolderPermissionsValue(folderPermissions);
-            }
-        }
-    });
-}
-#endif

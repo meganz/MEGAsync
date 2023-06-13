@@ -16,6 +16,7 @@ SyncSettingsUIBase::SyncSettingsUIBase(QWidget *parent):
     ui(new Ui::SyncSettingsUIBase),
     mTable(nullptr),
     mSyncController(new SyncController(this)),
+    mParentDialog(nullptr),
     mSyncInfo(SyncInfo::instance()),
     mToolBarItem(nullptr)
 {
@@ -25,6 +26,9 @@ SyncSettingsUIBase::SyncSettingsUIBase(QWidget *parent):
 
     connect(ui->gSyncs, &RemoteItemUi::addClicked, this, &SyncSettingsUIBase::addButtonClicked);
     connect(ui->gSyncs, &RemoteItemUi::deleteClicked, this, &SyncSettingsUIBase::removeSyncButtonClicked);
+#ifndef Q_OS_WINDOWS
+    connect(ui->gSyncs, &RemoteItemUi::permissionsClicked, this, &SyncSettingsUIBase::onPermissionsClicked);
+#endif
 }
 
 void SyncSettingsUIBase::setTitle(const QString &title)
@@ -74,12 +78,18 @@ void SyncSettingsUIBase::syncsStateInformation(SyncStateInformation state)
         switch (state)
         {
             case SAVING:
-                emit enableStateChanged(false);
+                if(mParentDialog)
+                {
+                    mParentDialog->setEnabled(false);
+                }
                 ui->wSpinningIndicatorSyncs->start();
                 ui->sSyncsState->setCurrentWidget(ui->pSavingSyncs);
                 break;
             case SAVING_FINISHED:
-                emit enableStateChanged(true);
+                if(mParentDialog)
+                {
+                    mParentDialog->setEnabled(true);
+                }
                 ui->wSpinningIndicatorSyncs->stop();
                 // If any sync is disabled, shows warning message
                 if (mSyncInfo->syncWithErrorExist(mTable->getType()))
@@ -147,6 +157,39 @@ void SyncSettingsUIBase::addButtonClicked(mega::MegaHandle megaFolderHandle)
     {
         addSyncFolderAfterOverQuotaCheck(megaFolderHandle);
     }
+}
+
+#ifndef Q_OS_WIN
+void SyncSettingsUIBase::onPermissionsClicked()
+{
+    MegaSyncApp->getMegaApi()->setDefaultFolderPermissions(Preferences::instance()->folderPermissionsValue());
+    int folderPermissions = MegaSyncApp->getMegaApi()->getDefaultFolderPermissions();
+    MegaSyncApp->getMegaApi()->setDefaultFilePermissions(Preferences::instance()->filePermissionsValue());
+    int filePermissions = MegaSyncApp->getMegaApi()->getDefaultFilePermissions();
+
+    QPointer<PermissionsDialog> dialog = new PermissionsDialog(this);
+    dialog->setFolderPermissions(folderPermissions);
+    dialog->setFilePermissions(filePermissions);
+    DialogOpener::showDialog<PermissionsDialog>(dialog, [dialog, &folderPermissions, &filePermissions](){
+        if (dialog->result() == QDialog::Accepted)
+        {
+            filePermissions = dialog->filePermissions();
+            folderPermissions = dialog->folderPermissions();
+
+            if (filePermissions != Preferences::instance()->filePermissionsValue()
+                    || folderPermissions != Preferences::instance()->folderPermissionsValue())
+            {
+                Preferences::instance()->setFilePermissionsValue(filePermissions);
+                Preferences::instance()->setFolderPermissionsValue(folderPermissions);
+            }
+        }
+    });
+}
+#endif
+
+void SyncSettingsUIBase::setParentDialog(QDialog *newParentDialog)
+{
+    mParentDialog = newParentDialog;
 }
 
 void SyncSettingsUIBase::addSyncFolderAfterOverQuotaCheck(mega::MegaHandle megaFolderHandle)

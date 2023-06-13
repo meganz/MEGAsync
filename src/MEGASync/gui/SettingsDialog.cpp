@@ -417,11 +417,13 @@ void SettingsDialog::initializeNativeUIComponents()
 
     bSyncs.reset(mToolBar->addItem(QIcon(), tr("Sync")));
     mToolBar->customizeIconToolBarItem(bSyncs.get(), syncs);
+    mUi->syncSettings->setToolBarItem(bSyncs.get());
     connect(bSyncs.get(), &QMacToolBarItem::activated,
             this, &SettingsDialog::on_bSyncs_clicked);
 
     bBackup.reset(mToolBar->addItem(QIcon(), tr("Backup")));
     mToolBar->customizeIconToolBarItem(bBackup.get(), backup);
+    mUi->backupSettings->setToolBarItem(bBackup.get());
     connect(bBackup.get(), &QMacToolBarItem::activated,
             this, &SettingsDialog::on_bBackup_clicked);
 
@@ -617,6 +619,9 @@ void SettingsDialog::loadSettings()
     mUi->cbExcludeLowerUnit->setEnabled(lowerSizeLimit);
     mUi->eLowerThan->setValue(static_cast<int>(mPreferences->lowerSizeLimitValue()));
     mUi->cbExcludeLowerUnit->setCurrentIndex(mPreferences->lowerSizeLimitUnit());
+
+    mUi->syncSettings->setParentDialog(this);
+    mUi->backupSettings->setParentDialog(this);
 
     //Syncs and backups
 #ifndef Q_OS_MACOS
