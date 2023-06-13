@@ -20,6 +20,7 @@ class SyncSettingsUIBase;
 }
 
 class SyncItemModel;
+class SyncItemSortModel;
 class SyncController;
 class SyncTableView;
 
@@ -66,10 +67,10 @@ public:
         {
             model = new ModelType(mTable);
             model->fillData();
-            connect(model, &SyncItemModel::signalSyncCheckboxOn, this, &SyncSettingsUIBase::setSyncToRun);
-            connect(model, &SyncItemModel::signalSyncCheckboxOff, this, &SyncSettingsUIBase::setSyncToSuspend);
+            connect(model, &ModelType::signalSyncCheckboxOn, this, &SyncSettingsUIBase::setSyncToRun);
+            connect(model, &ModelType::signalSyncCheckboxOff, this, &SyncSettingsUIBase::setSyncToSuspend);
 
-            connect(model, &SyncItemModel::syncUpdateFinished, this, [this](std::shared_ptr<SyncSettings> syncSetting)
+            connect(model, &ModelType::syncUpdateFinished, this, [this](std::shared_ptr<SyncSettings> syncSetting)
             {
                 onSavingSyncsCompleted(SAVING_FINISHED);
             });

@@ -213,7 +213,7 @@ margin-top: 4px;
          <string>General</string>
         </property>
         <property name="icon">
-         <iconset>
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/settings-general.png</normaloff>:/images/settings-general.png</iconset>
         </property>
         <property name="iconSize">
@@ -262,7 +262,7 @@ margin-top: 4px;
          <string>Account</string>
         </property>
         <property name="icon">
-         <iconset>
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/settings-account.png</normaloff>:/images/settings-account.png</iconset>
         </property>
         <property name="iconSize">
@@ -308,7 +308,7 @@ margin-top: 4px;
          <string>Sync</string>
         </property>
         <property name="icon">
-         <iconset>
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/settings-syncs.png</normaloff>:/images/settings-syncs.png</iconset>
         </property>
         <property name="iconSize">
@@ -354,7 +354,7 @@ margin-top: 4px;
          <string>Backup</string>
         </property>
         <property name="icon">
-         <iconset>
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/settings-backup.png</normaloff>:/images/settings-backup.png</iconset>
         </property>
         <property name="iconSize">
@@ -400,7 +400,7 @@ margin-top: 4px;
          <string>Security</string>
         </property>
         <property name="icon">
-         <iconset>
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/settings-security.png</normaloff>:/images/settings-security.png</iconset>
         </property>
         <property name="iconSize">
@@ -446,7 +446,7 @@ margin-top: 4px;
          <string>Folders</string>
         </property>
         <property name="icon">
-         <iconset>
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/settings-folders.png</normaloff>:/images/settings-folders.png</iconset>
         </property>
         <property name="iconSize">
@@ -492,7 +492,7 @@ margin-top: 4px;
          <string>Network</string>
         </property>
         <property name="icon">
-         <iconset>
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/Icon_Win_Network.png</normaloff>:/images/Icon_Win_Network.png</iconset>
         </property>
         <property name="iconSize">
@@ -538,7 +538,7 @@ margin-top: 4px;
          <string>Notifications</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/Icon_Win_Notifications.png</normaloff>:/images/Icon_Win_Notifications.png</iconset>
         </property>
         <property name="iconSize">
@@ -1211,7 +1211,7 @@ margin-top: 4px;
                 </sizepolicy>
                </property>
                <property name="icon">
-                <iconset>
+                <iconset resource="../Resources_win.qrc">
                  <normaloff>:/images/Small_Free.png</normaloff>:/images/Small_Free.png</iconset>
                </property>
                <property name="iconSize">
@@ -2055,7 +2055,7 @@ min-height: 72px;
              <enum>Qt::NoFocus</enum>
             </property>
             <property name="icon">
-             <iconset>
+             <iconset resource="../Resources_win.qrc">
               <normaloff>:/images/ic_sync_warning.png</normaloff>:/images/ic_sync_warning.png</iconset>
             </property>
             <property name="iconSize">
@@ -2357,7 +2357,7 @@ color: grey;
          <string>Help</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/help_ico.png</normaloff>:/images/help_ico.png</iconset>
         </property>
         <property name="iconSize">
@@ -2561,32 +2561,22 @@ color: grey;
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>SyncTableView</class>
-   <extends>QTableView</extends>
-   <header>syncs/gui/Twoways/SyncTableView.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>BackupTableView</class>
-   <extends>QTableView</extends>
-   <header>syncs/gui/Backups/BackupTableView.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>WaitingSpinnerWidget</class>
+   <class>SyncSettingsUI</class>
    <extends>QWidget</extends>
-   <header>WaitingSpinnerWidget.h</header>
-   <container>1</container>
+   <header>syncs/gui/Twoways/SyncSettingsUI.h</header>
   </customwidget>
   <customwidget>
-   <class>WaitingSpinnerWidget</class>
+   <class>BackupSettingsUI</class>
    <extends>QWidget</extends>
-   <header location="global">WaitingSpinnerWidget.h</header>
-   <container>1</container>
+   <header>syncs/gui/Backups/BackupSettingsUI.h</header>
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_win.qrc"/>
  </resources>
  <connections/>
 </ui>

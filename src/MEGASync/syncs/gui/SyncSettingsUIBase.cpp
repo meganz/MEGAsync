@@ -7,6 +7,12 @@
 #include <syncs/gui/Twoways/SyncTableView.h>
 #include <syncs/model/SyncItemModel.h>
 
+#ifndef Q_OS_WIN
+#include <MegaApplication.h>
+#include <DialogOpener.h>
+#include <PermissionsDialog.h>
+#endif
+
 #include "ui_SyncSettingsUIBase.h"
 
 QMap<mega::MegaSync::SyncType,QPointer<SyncItemModel>> SyncSettingsUIBase::mModels = QMap<mega::MegaSync::SyncType,QPointer<SyncItemModel>>();

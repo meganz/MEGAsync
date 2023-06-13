@@ -1,12 +1,6 @@
 #include "RemoteItemUi.h"
 #include "ui_RemoteItemUi.h"
 
-#ifndef Q_OS_WIN
-#include <MegaApplication.h>
-#include <DialogOpener.h>
-#include <PermissionsDialog.h>
-#endif
-
 RemoteItemUi::RemoteItemUi(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::RemoteItemUi)
