@@ -292,66 +292,20 @@ if [ "$notarize" = "1" ]; then
 		exit 1
 	fi
 
-	rm querystatus.txt staple.txt || :
+	echo "Sending dmg for notarization (1/3)"
 
-	echo "NOTARIZATION PROCESS..."
-	echo "Getting USERNAME for notarization commands (1/7)"
+	xcrun notarytool submit $APP_NAME.dmg  --keychain-profile "AC_PASSWORD" --wait
+	xcrun stapler staple -v $APP_NAME.dmg
+    echo "Stapling ok (2/3)"
 
-	AC_USERNAME=$(security find-generic-password -s AC_PASSWORD | grep  acct | cut -d '"' -f 4)
-	if [[ -z "$AC_USERNAME" ]]; then
-		echo "Error USERNAME not found for notarization process. You should add item named AC_PASSWORD with and account value matching the username to macOS keychain"
-		false
-	fi
+    #Mount dmg volume to check if app bundle is notarized
+    echo "Checking signature and notarization (3/3)"
+    mkdir $MOUNTDIR || :
+    hdiutil attach $APP_NAME.dmg -mountroot $MOUNTDIR >/dev/null
+    spctl -v -a $MOUNTDIR/$APP_NAME/$APP_NAME.app
+    hdiutil detach $MOUNTDIR/$APP_NAME >/dev/null
+    rmdir $MOUNTDIR
 
-	echo "Sending dmg for notarization (2/7)"
-	xcrun altool --notarize-app -t osx -f $APP_NAME.dmg --primary-bundle-id $ID_BUNDLE -u $AC_USERNAME -p "@keychain:AC_PASSWORD" --output-format xml 2>&1 > staple.txt
-	RUUID=$(cat staple.txt | grep RequestUUID -A 1 | tail -n 1 | awk -F "[<>]" '{print $3}')
-	echo $RUUID
-	if [ ! -z "$RUUID" ] ; then
-		echo "Received UUID for notarization request. Checking state... (3/7)"
-		attempts=60
-		while [ $attempts -gt 0 ]
-		do
-			echo "Querying state of notarization..."
-			xcrun altool --notarization-info $RUUID -u $AC_USERNAME -p "@keychain:AC_PASSWORD" --output-format xml  2>&1 > querystatus.txt
-			RUUIDQUERY=$(cat querystatus.txt | grep RequestUUID -A 1 | tail -n 1 | awk -F "[<>]" '{print $3}')
-			if [[ "$RUUID" != "$RUUIDQUERY" ]]; then
-				echo "UUIDs missmatch"
-				false
-			fi
-
-			STATUS=$(cat querystatus.txt  | grep -i ">Status<" -A 1 | tail -n 1  | awk -F "[<>]" '{print $3}')
-
-			if [[ $STATUS == "invalid" ]]; then
-				echo "INVALID status. Check file querystatus.txt for further information"
-				echo $STATUS
-				break
-			elif [[ $STATUS == "success" ]]; then
-				echo "Notarized ok. Stapling dmg file..."
-				xcrun stapler staple -v $APP_NAME.dmg
-				echo "Stapling ok"
-
-				#Mount dmg volume to check if app bundle is notarized
-				echo "Checking signature and notarization"
-				mkdir $MOUNTDIR || :
-				hdiutil attach $APP_NAME.dmg -mountroot $MOUNTDIR >/dev/null
-				spctl -v -a $MOUNTDIR/$APP_NAME/$APP_NAME.app
-				hdiutil detach $MOUNTDIR/$APP_NAME >/dev/null
-				rmdir $MOUNTDIR
-				break
-			else
-				echo $STATUS
-			fi
-
-			attempts=$((attempts - 1))
-			sleep 30
-		done
-
-		if [[ $attempts -eq 0 ]]; then
-			echo "Notarization still in process, timed out waiting for the process to end"
-			false
-		fi
-	fi
 	cd ..
     notarize_time=`expr $(date +%s) - $notarize_time_start`
 fi
