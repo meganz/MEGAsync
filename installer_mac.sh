@@ -294,15 +294,19 @@ if [ "$notarize" = "1" ]; then
 
 	echo "Sending dmg for notarization (1/3)"
 
-	xcrun notarytool submit $APP_NAME.dmg  --keychain-profile "AC_PASSWORD" --wait
-	xcrun stapler staple -v $APP_NAME.dmg
+	xcrun notarytool submit $APP_NAME.dmg  --keychain-profile "AC_PASSWORD" --wait >> notarylog.txt 2>&1
+    echo >> notarylog.txt
+
+	xcrun stapler staple -v $APP_NAME.dmg >> notarylog.txt 2>&1
+    echo notarylog.txt
+    
     echo "Stapling ok (2/3)"
 
     #Mount dmg volume to check if app bundle is notarized
     echo "Checking signature and notarization (3/3)"
     mkdir $MOUNTDIR || :
     hdiutil attach $APP_NAME.dmg -mountroot $MOUNTDIR >/dev/null
-    spctl -v -a $MOUNTDIR/$APP_NAME/$APP_NAME.app
+    spctl --assess -vv -a $MOUNTDIR/$APP_NAME/$APP_NAME.app
     hdiutil detach $MOUNTDIR/$APP_NAME >/dev/null
     rmdir $MOUNTDIR
 
