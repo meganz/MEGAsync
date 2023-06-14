@@ -294,11 +294,10 @@ if [ "$notarize" = "1" ]; then
 
 	echo "Sending dmg for notarization (1/3)"
 
-	xcrun notarytool submit $APP_NAME.dmg  --keychain-profile "AC_PASSWORD" --wait >> notarylog.txt 2>&1
+	xcrun notarytool submit $APP_NAME.dmg  --keychain-profile "AC_PASSWORD" --wait 2>&1 | tee notarylog.txt
     echo >> notarylog.txt
 
-	xcrun stapler staple -v $APP_NAME.dmg >> notarylog.txt 2>&1
-    echo notarylog.txt
+	xcrun stapler staple -v $APP_NAME.dmg 2>&1 | tee -a notarylog.txt
     
     echo "Stapling ok (2/3)"
 
