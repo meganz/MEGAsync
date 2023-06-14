@@ -20,6 +20,7 @@ void BackupSettingsElements::initElements(SyncSettingsUIBase *syncSettingsUi)
     QWidget* openBackupsFolder(new QWidget());
     openFolderUi->setupUi(openBackupsFolder);
     openFolderUi->bOpenBackupFolder->setEnabled(false);
+    openFolderUi->bOpenBackupFolder->setAutoDefault(false);
     connect(openFolderUi->bOpenBackupFolder, &QPushButton::clicked, this, &BackupSettingsElements::onOpenBackupFolderClicked);
 
     auto myBackupsHandle = UserAttributes::MyBackupsHandle::requestMyBackupsHandle();

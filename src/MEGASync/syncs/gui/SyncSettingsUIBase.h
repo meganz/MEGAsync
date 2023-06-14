@@ -92,7 +92,10 @@ public:
 
         connect(mSyncController, &SyncController::signalSyncOperationError, this, [this](std::shared_ptr<SyncSettings> sync)
         {
-                QMegaMessageBox::critical(nullptr, tr("%1 operation failed"),
+            QString messageBoxTitle(tr("%1 operation failed").arg(typeString()));
+            auto it = messageBoxTitle.begin();
+            (*it) = it->toUpper();
+            QMegaMessageBox::critical(this,messageBoxTitle,
                                           tr("Operation on %1 '%2' failed. Reason: %3")
                                           .arg(typeString(), sync->name(), QCoreApplication::translate("MegaSyncError", mega::MegaSync::getMegaSyncErrorCode(sync->getError()))));
         });
@@ -106,7 +109,7 @@ public:
                 Text::Decorator dec(&link);
                 QString msg = errorMsg;
                 dec.process(msg);
-                QMegaMessageBox::warning(nullptr, tr("Error adding %1").arg(typeString()), msg, QMessageBox::Ok, QMessageBox::NoButton, QMap<QMessageBox::StandardButton, QString>(), Qt::RichText);
+                QMegaMessageBox::warning(this, tr("Error adding %1").arg(typeString()), msg, QMessageBox::Ok, QMessageBox::NoButton, QMap<QMessageBox::StandardButton, QString>(), Qt::RichText);
             }
         });
 
@@ -118,6 +121,7 @@ public:
                                       .arg(typeString(), QCoreApplication::translate("MegaError", err->getErrorString())));
         });
 
+        setDisabledSyncsText();
         syncsStateInformation(SAVING_FINISHED);
     }
 
@@ -141,9 +145,10 @@ protected:
     SyncController* mSyncController;
     QDialog* mParentDialog;
 
-    virtual QString getFinishWarningIconString(){return QString();}
-    virtual QString getFinishIconString(){return QString();}
-    virtual QString typeString(){return QString();}
+    virtual QString getFinishWarningIconString() = 0;
+    virtual QString getFinishIconString() = 0;
+    virtual QString typeString() = 0;
+    virtual QString disableString() = 0;
 
 protected slots:
     virtual void removeSyncButtonClicked();
@@ -164,6 +169,7 @@ private:
     void initTable();
     void setModel(SyncItemModel* model);
     void addSyncFolderAfterOverQuotaCheck(mega::MegaHandle megaFolderHandle);
+    void setDisabledSyncsText();
 
     SyncInfo* mSyncInfo;
     static QMap<mega::MegaSync::SyncType,QPointer<SyncItemModel>> mModels;

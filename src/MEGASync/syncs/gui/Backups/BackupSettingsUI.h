@@ -22,6 +22,7 @@ protected:
     QString getFinishWarningIconString() override;
     QString getFinishIconString() override;
     QString typeString() override;
+    QString disableString() override;
 
     void changeEvent(QEvent* event);
 

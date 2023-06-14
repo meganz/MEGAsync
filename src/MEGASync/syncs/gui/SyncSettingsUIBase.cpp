@@ -226,6 +226,11 @@ void SyncSettingsUIBase::addSyncFolderAfterOverQuotaCheck(mega::MegaHandle megaF
 
 }
 
+void SyncSettingsUIBase::setDisabledSyncsText()
+{
+    ui->lDisabledSyncs->setText(disableString());
+}
+
 void SyncSettingsUIBase::removeSyncButtonClicked()
 {
     if(mTable->selectionModel()->hasSelection())

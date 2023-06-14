@@ -170,7 +170,7 @@
           <item>
            <widget class="QLabel" name="lDisabledSyncs">
             <property name="text">
-             <string>Some folders have not synchronised. For more information please hover over the yellow warning icon.</string>
+             <string/>
             </property>
             <property name="wordWrap">
              <bool>true</bool>

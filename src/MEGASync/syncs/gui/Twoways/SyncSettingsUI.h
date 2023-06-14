@@ -20,6 +20,7 @@ protected:
     QString getFinishWarningIconString() override;
     QString getFinishIconString() override;
     QString typeString() override;
+    QString disableString() override;
 
 private slots:
     void storageStateChanged(int newStorageState);

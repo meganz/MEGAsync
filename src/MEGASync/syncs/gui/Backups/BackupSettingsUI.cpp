@@ -84,3 +84,8 @@ QString BackupSettingsUI::typeString()
 {
     return tr("backup");
 }
+
+QString BackupSettingsUI::disableString()
+{
+    return tr("Some folders haven't been backed up. For more information, hover over the red icon.");
+}

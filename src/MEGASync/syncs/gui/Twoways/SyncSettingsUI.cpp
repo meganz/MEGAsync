@@ -35,6 +35,11 @@ QString SyncSettingsUI::typeString()
     return tr("sync");
 }
 
+QString SyncSettingsUI::disableString()
+{
+    return tr("Some folders have not synchronised. For more information please hover over the red icon.");
+}
+
 void SyncSettingsUI::storageStateChanged(int newStorageState)
 {
     mSyncElement.setOverQuotaMode(newStorageState == mega::MegaApi::STORAGE_STATE_RED
