@@ -3,7 +3,7 @@
 #include "platform/Platform.h"
 #include "PlatformStrings.h"
 #include "MenuItemAction.h"
-#include "SyncItemModel.h"
+#include "syncs/model/SyncItemModel.h"
 
 #include <QHeaderView>
 #include <QMenu>

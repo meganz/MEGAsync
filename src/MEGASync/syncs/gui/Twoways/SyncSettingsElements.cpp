@@ -1,7 +1,7 @@
 #include "SyncSettingsElements.h"
 #include "ui_SyncAccountFullMessage.h"
 
-#include <SyncSettingsUIBase.h>
+#include <syncs/gui/SyncSettingsUIBase.h>
 #include <Utilities.h>
 
 SyncSettingsElements::SyncSettingsElements(QObject *parent) :

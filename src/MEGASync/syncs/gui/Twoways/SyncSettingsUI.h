@@ -4,7 +4,7 @@
 #include <QWidget>
 #include <QPointer>
 
-#include <SyncSettingsUIBase.h>
+#include <syncs/gui/SyncSettingsUIBase.h>
 #include <syncs/gui/Twoways/SyncTableView.h>
 #include <syncs/gui/Twoways/SyncSettingsElements.h>
 
