@@ -13,66 +13,55 @@ import Common 1.0
 Qml.RoundButton {
     id: button
 
-    property Colors colors: Colors{}
-    property Icon icons: Icon{}
-    property Progress progress: Progress{}
+    property Colors colors: Colors {}
+    property Icon icons: Icon {}
+    property Progress progress: Progress {}
 
     readonly property int focusBorderRadius: 11
     readonly property int focusBorderWidth: 3
 
     Timer {
         id: busyTimer
+
         interval: 500;
         running: false;
         repeat: false;
     }
 
-    function getBorderColor()
-    {
-        if(button.pressed)
-        {
+    function getBorderColor() {
+        if(button.pressed) {
             return colors.borderPressed;
         }
-        if(button.hovered)
-        {
+        if(button.hovered) {
             return  colors.borderHover;
         }
-        if(!button.enabled && !icons.busyIndicatorVisible)
-        {
+        if(!button.enabled && !icons.busyIndicatorVisible) {
             return colors.borderDisabled;
         }
         return colors.border;
     }
 
-    function getBackgroundColor()
-    {
-        if(button.pressed)
-        {
+    function getBackgroundColor() {
+        if(button.pressed) {
             return colors.pressed;
         }
-        if(button.hovered)
-        {
+        if(button.hovered) {
             return colors.hover;
         }
-        if(!button.enabled && !icons.busyIndicatorVisible)
-        {
+        if(!button.enabled && !icons.busyIndicatorVisible) {
             return colors.disabled;
         }
         return colors.background;
     }
 
-    function getTextColor()
-    {
-        if(button.pressed)
-        {
+    function getTextColor() {
+        if(button.pressed) {
             return colors.textPressed;
         }
-        if(button.hovered)
-        {
+        if(button.hovered) {
             return colors.textHover;
         }
-        if(!button.enabled && !icons.busyIndicatorVisible)
-        {
+        if(!button.enabled && !icons.busyIndicatorVisible) {
             return colors.textDisabled;
         }
         return colors.text;
@@ -91,6 +80,7 @@ Qml.RoundButton {
 
         Loader {
             id: leftLoader
+
             anchors.verticalCenter: parent.verticalCenter
         }
 
@@ -108,6 +98,7 @@ Qml.RoundButton {
 
         Loader {
             id: rightLoader
+
             anchors.verticalCenter: parent.verticalCenter
         }
     }
@@ -122,38 +113,36 @@ Qml.RoundButton {
         height: button.height
 
         Rectangle {
-        id: backgroundRect
-        color: getBackgroundColor()
-        anchors.top: focusRect.top
-        anchors.left: focusRect.left
-        anchors.topMargin: button.focusBorderWidth
-        anchors.leftMargin: button.focusBorderWidth
-        width: button.width - 2 * button.focusBorderWidth
-        height: button.height - 2 * button.focusBorderWidth
+            id: backgroundRect
 
-        border.width: 2
-        border.color: getBorderColor()
-        radius: 6
-       // opacity: button.enabled || icons.busyIndicatorVisible? 1.0 : 0.5
+            color: getBackgroundColor()
+            anchors.top: focusRect.top
+            anchors.left: focusRect.left
+            anchors.topMargin: button.focusBorderWidth
+            anchors.leftMargin: button.focusBorderWidth
+            width: button.width - 2 * button.focusBorderWidth
+            height: button.height - 2 * button.focusBorderWidth
+            border.width: 2
+            border.color: getBorderColor()
+            radius: 6
+            layer.enabled: true
 
-        layer.enabled: true
-        layer.effect: OpacityMask {
-            maskSource: Item {
-                width: backgroundRect.width
-                height: backgroundRect.height
-                Rectangle
-                {
-                    anchors.centerIn: parent
-                    width:  backgroundRect.width
+            layer.effect: OpacityMask {
+                maskSource: Item {
+                    width: backgroundRect.width
                     height: backgroundRect.height
-                    radius: 7
+                    Rectangle {
+                        anchors.centerIn: parent
+                        width:  backgroundRect.width
+                        height: backgroundRect.height
+                        radius: 7
+                    }
                 }
             }
-        }
 
-        Loader{
-            id: backgroundLoader
-        }
+            Loader {
+                id: backgroundLoader
+            }
         }
     }
 
@@ -161,27 +150,26 @@ Qml.RoundButton {
         id: mouseArea
 
         anchors.fill: parent
-        onPressed: {mouse.accepted = false;}
+        onPressed: { mouse.accepted = false; }
         cursorShape: Qt.PointingHandCursor
     }
 
     Component {
         id: image
+
         MegaImages.SvgImage {
-            //visible: button.iconSource.length
             source: icons.source
             color: button.enabled ? icons.color : icons.disabledColor
             sourceSize: icons.size
-           // disabledOpacity: 1
         }
     }
+
     Component {
         id: busyIndicator
+
         MegaBusyIndicator.BusyIndicator {
             imageSource: Images.loader
-            //disabledOpacity: 1
             color: icons.color
         }
     }
 }
-

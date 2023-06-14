@@ -19,20 +19,13 @@ StackViewPage {
     property alias signUpButton: signUpButton
     property alias twoFAField: twoFAField
 
-    readonly property int contentMargin: 48
-    readonly property int bottomMargin: 32
-
-    color: Styles.pageBackground
-
     ColumnLayout {
 
-        spacing: 24
+        spacing: contentSpacing
         anchors {
             verticalCenter: root.verticalCenter
             left: root.left
             right: root.right
-            leftMargin: 48
-            rightMargin: 48
         }
 
         Header {
@@ -42,10 +35,6 @@ StackViewPage {
 
         MegaTextFields.TwoFA {
             id: twoFAField
-
-            Layout.leftMargin: -3
-            Layout.preferredWidth: parent.width
-            Layout.fillHeight: true
         }
 
         MegaButtons.HelpButton {
@@ -55,14 +44,10 @@ StackViewPage {
     }
 
     RowLayout {
-        spacing: 8
         anchors {
             right: root.right
             bottom: root.bottom
             left: root.left
-            leftMargin: contentMargin
-            rightMargin: contentMargin
-            bottomMargin: bottomMargin
         }
 
         MegaButtons.OutlineButton {
@@ -70,6 +55,7 @@ StackViewPage {
 
             text: OnboardingStrings.signUp
             Layout.alignment: Qt.AlignLeft
+            Layout.leftMargin: -signUpButton.focusBorderWidth
         }
 
         MegaButtons.PrimaryButton {
@@ -77,6 +63,7 @@ StackViewPage {
 
             text: OnboardingStrings.login
             Layout.alignment: Qt.AlignRight
+            Layout.rightMargin: -loginButton.focusBorderWidth
             icons.source: Images.arrowRight
         }
     }

@@ -20,26 +20,22 @@ Rectangle {
     // Component properties
     property bool error: false
     property string title: ""
-    property RightIcon rightIcon: RightIcon{}
-    property LeftIcon leftIcon: LeftIcon{}
-    property Hint hint: Hint{}
+    property RightIcon rightIcon: RightIcon {}
+    property LeftIcon leftIcon: LeftIcon {}
+    property Hint hint: Hint {}
 
     signal backPressed()
     signal pastePressed()
 
-    function getHintHeight()
-    {
-        if(hintLoader.height > 0)
-        {
+    function getHintHeight() {
+        if(hintLoader.height > 0) {
             return hintLoader.height + hintLoader.anchors.topMargin;
         }
         return hintLoader.height;
     }
 
-    function getTitleHeight()
-    {
-        if(titleLoader.height > 0)
-        {
+    function getTitleHeight() {
+        if(titleLoader.height > 0) {
             return titleLoader.height + textField.anchors.topMargin;
         }
         return titleLoader.height;
@@ -180,8 +176,9 @@ Rectangle {
                 MouseArea {
                     id: rightIconMouseArea
 
+                    enabled: rightIcon.visible
                     anchors.fill: parent
-                    cursorShape: Qt.PointingHandCursor
+                    cursorShape: rightIcon.visible ? Qt.PointingHandCursor : Qt.ArrowCursor
                 }
             }
         }

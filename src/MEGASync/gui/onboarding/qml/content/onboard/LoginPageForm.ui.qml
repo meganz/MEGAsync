@@ -28,9 +28,7 @@ StackViewPage {
         anchors.verticalCenter: root.verticalCenter
         anchors.left: root.left
         anchors.right: root.right
-        anchors.leftMargin: contentMargin
-        anchors.rightMargin: contentMargin
-        spacing: contentMargin / 2
+        spacing: contentSpacing
 
         MegaTexts.RichText {
             id: pageTitle
@@ -44,17 +42,20 @@ StackViewPage {
         MegaTextFields.EmailTextField {
             id: email
 
-            width: parent.width
+            width: parent.width + 2 * email.textField.focusBorderWidth
             anchors.left: parent.left
+            anchors.leftMargin: -email.textField.focusBorderWidth
             title: OnboardingStrings.email
         }
 
         MegaTextFields.PasswordTextField {
             id: password
 
-            width: parent.width
+            width: parent.width + 2 * password.textField.focusBorderWidth
             anchors.left: parent.left
+            anchors.leftMargin: -password.textField.focusBorderWidth
             title: OnboardingStrings.password
+            hint.icon: Images.alertTriangle
         }
 
         MegaButtons.HelpButton {
@@ -66,20 +67,16 @@ StackViewPage {
     }
 
     RowLayout {
-        anchors {
-            right: root.right
-            bottom: root.bottom
-            left: root.left
-            leftMargin: contentMargin
-            rightMargin: contentMargin
-            bottomMargin: bottomMargin
-        }
+        anchors.right: root.right
+        anchors.bottom: root.bottom
+        anchors.left: root.left
 
-        MegaButtons.SecondaryButton {
+        MegaButtons.OutlineButton {
             id: signUpButton
 
             text: OnboardingStrings.signUp
             Layout.alignment: Qt.AlignLeft
+            Layout.leftMargin: -signUpButton.focusBorderWidth
         }
 
         MegaButtons.PrimaryButton {
@@ -87,6 +84,7 @@ StackViewPage {
 
             text: OnboardingStrings.login
             Layout.alignment: Qt.AlignRight
+            Layout.rightMargin: -loginButton.focusBorderWidth
         }
     }
 }
