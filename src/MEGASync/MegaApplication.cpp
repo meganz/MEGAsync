@@ -5036,16 +5036,6 @@ void MegaApplication::transferManagerActionClicked(int tab)
     DialogOpener::showGeometryRetainerDialog(mTransferManager);
 }
 
-void MegaApplication::loginActionClicked()
-{
-    if (appfinished)
-    {
-        return;
-    }
-
-   // userAction(SetupWizard::PAGE_LOGIN); // TODO ONBOARDING
-}
-
 void MegaApplication::showSetupWizard(int action)
 {
     mSetupWizard = new SetupWizard(this);

@@ -286,7 +286,7 @@ margin-top: -1px;</string>
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_win.qrc">
+            <iconset resource="../Resources_macx.qrc">
              <normaloff>:/images/tray_preferences_ico.png</normaloff>:/images/tray_preferences_ico.png</iconset>
            </property>
            <property name="iconSize">
@@ -321,7 +321,7 @@ margin-top: -1px;</string>
          </size>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>3</number>
         </property>
         <widget class="QWidget" name="pLogin">
          <property name="minimumSize">
@@ -403,7 +403,7 @@ margin-top: -1px;</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_win.qrc">
+                <iconset resource="../Resources_macx.qrc">
                  <normaloff>:/images/app_64.png</normaloff>:/images/app_64.png</iconset>
                </property>
                <property name="iconSize">
@@ -857,7 +857,7 @@ image: none;</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_win.qrc">
+                <iconset resource="../Resources_macx.qrc">
                  <normaloff>:/images/app_64.png</normaloff>:/images/app_64.png</iconset>
                </property>
                <property name="iconSize">
@@ -1184,7 +1184,7 @@ image: none;</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_win.qrc">
+                <iconset resource="../Resources_macx.qrc">
                  <normaloff>:/images/app_64.png</normaloff>:/images/app_64.png</iconset>
                </property>
                <property name="iconSize">
@@ -2713,6 +2713,13 @@ image:none;
   <tabstop>bLogoSettingUp</tabstop>
  </tabstops>
  <resources>
+  <include location="../Resources_macx.qrc"/>
+  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_macx.qrc"/>
+  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_macx.qrc"/>
+  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_macx.qrc"/>
   <include location="../Resources_win.qrc"/>
  </resources>
  <connections/>

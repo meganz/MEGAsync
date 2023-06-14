@@ -250,7 +250,6 @@ public slots:
     void showChangeLog();
     void uploadActionClicked();
     void uploadActionClickedFromWindowAfterOverQuotaCheck();
-    void loginActionClicked();
     void downloadActionClicked();
     void streamActionClicked();
     void transferManagerActionClicked(int tab = 0);
@@ -296,12 +295,10 @@ public slots:
     void scanningAnimationStep();
     void setupWizardFinished(QPointer<SetupWizard> dialog);
     void clearDownloadAndPendingLinks();
-    //void infoWizardDialogFinished(QPointer<QmlDialogWrapper<Onboarding>> dialog);
     void runConnectivityCheck();
     void onConnectivityCheckSuccess();
     void onConnectivityCheckError();
     void proExpirityTimedOut();
-    //void userAction(int action);
     void showSetupWizard(int action);
     void applyNotificationFilter(int opt);
     void changeState();

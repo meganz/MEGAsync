@@ -137,7 +137,6 @@ private slots:
     void on_bAddSync_clicked();
     void on_bAddBackup_clicked();
     void on_bUpload_clicked();
-    void onUserAction(int action);
     void resetLoggedInMode();
 
     void on_tTransfers_clicked();

@@ -56,6 +56,7 @@ private:
     QString mEmail;
     QString mFirstName;
     QString mLastName;
+    bool mLoginStarted;
 };
 
 #endif // LOGIN_H

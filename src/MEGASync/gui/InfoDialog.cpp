@@ -719,14 +719,6 @@ void InfoDialog::updateState()
 {
     if (!mPreferences->logged())
     {
-        if (gWidget)
-        {
-            gWidget->resetFocus();
-        }
-    }
-
-    if (!mPreferences->logged())
-    {
         return;
     }
 
@@ -1402,18 +1394,7 @@ void InfoDialog::regenerateLayout(int blockState, InfoDialog* olddialog)
 
                 connect(gWidget, SIGNAL(onPageLogin()), this, SLOT(resetLoggedInMode()));
                 connect(gWidget, SIGNAL(forwardAction(int)), this, SLOT(onUserAction(int)));
-                if (olddialog)
-                {
-                    auto t = olddialog->gWidget->getTexts();
-                    gWidget->setTexts(t.first, t.second);
-                }
             }
-            else
-            {
-                gWidget->enableListener();
-            }
-
-            gWidget->setBlockState(blockState);
 
             updateOverStorageState(Preferences::STATE_BELOW_OVER_STORAGE);
             setOverQuotaMode(false);
@@ -1445,9 +1426,6 @@ void InfoDialog::regenerateLayout(int blockState, InfoDialog* olddialog)
         {
             if (gWidget)
             {
-                gWidget->disableListener();
-                gWidget->initialize();
-
                 dialogLayout->removeWidget(gWidget);
                 gWidget->setVisible(false);
             }
@@ -1521,11 +1499,6 @@ void InfoDialog::animateStates(bool opt)
             }
         }
     }
-}
-
-void InfoDialog::onUserAction(int action)
-{
-    //app->userAction(action); TODO ONBOARDING
 }
 
 void InfoDialog::resetLoggedInMode()
