@@ -718,11 +718,11 @@ modeselected:
   AccessControl::GrantOnFile "$INSTDIR\MEGAupdater.exe" "$USERNAME" "GenericRead + GenericWrite"
 
 !ifdef BUILD_X64_VERSION
-  !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libcrypto-1_1-x64.dll"  "$INSTDIR\libcrypto-1_1-x64.dll"
-  !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libssl-1_1-x64.dll"  "$INSTDIR\libssl-1_1-x64.dll"
+  !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libssl-3-x64.dll"  "$INSTDIR\libssl-3-x64.dll"
+  !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libcrypto-3-x64.dll"  "$INSTDIR\libcrypto-3-x64.dll"
 !else
-  !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libcrypto-1_1.dll"  "$INSTDIR\libcrypto-1_1.dll"
-  !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libssl-1_1.dll"  "$INSTDIR\libssl-1_1.dll"
+  !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libcrypto-3.dll"  "$INSTDIR\libcrypto-3.dll"
+  !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libssl-3.dll"  "$INSTDIR\libssl-3.dll"
 !endif
 
   File "${SRCDIR_MEGASYNC}\libcurl.dll"
@@ -756,6 +756,7 @@ modeselected:
   File "${SRCDIR_MEGASYNC}\swresample-3.dll"
   AccessControl::SetFileOwner "$INSTDIR\swresample-3.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\swresample-3.dll" "$USERNAME" "GenericRead + GenericWrite"
+
   
   ;remove old DLLs that we no longer use (some became static; some have later version number)
   Delete "$INSTDIR\avcodec-57.dll"
@@ -765,6 +766,13 @@ modeselected:
   Delete "$INSTDIR\swresample-2.dll"
   Delete "$INSTDIR\libsodium.dll"
   Delete "$INSTDIR\pdfium.dll"
+  !ifdef BUILD_X64_VERSION
+  Delete  "$INSTDIR\libcrypto-1_1-x64.dll"
+  Delete  "$INSTDIR\libssl-1_1-x64.dll"
+!else
+  Delete  "$INSTDIR\libcrypto-1_1.dll"
+  Delete  "$INSTDIR\libssl-1_1.dll"
+!endif
 
 !ifndef BUILD_UNINSTALLER  ; if building uninstaller, skip this check
   File "${SRCDIR_MEGASYNC}\${UNINSTALLER_NAME}"
