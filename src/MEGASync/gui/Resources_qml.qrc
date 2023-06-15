@@ -17,10 +17,12 @@
         <file>images/qml/onboarding/full_sync.svg</file>
         <file>images/qml/onboarding/infinity.svg</file>
         <file>images/qml/onboarding/installation_type_backups.svg</file>
+        <file>images/qml/onboarding/key.svg</file>
         <file>images/qml/onboarding/login.png</file>
         <file>images/qml/onboarding/mega.svg</file>
         <file>images/qml/onboarding/pc.svg</file>
         <file>images/qml/onboarding/pc_mega.svg</file>
+        <file>images/qml/onboarding/person.svg</file>
         <file>images/qml/onboarding/plus.svg</file>
         <file>images/qml/onboarding/resume.svg</file>
         <file>images/qml/onboarding/selective_sync.svg</file>

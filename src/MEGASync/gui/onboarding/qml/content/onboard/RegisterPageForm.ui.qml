@@ -17,6 +17,7 @@ import Onboarding 1.0
 
 StackViewPage {
     id: root
+
     readonly property int contentHeight: 374
 
     property RegisterContent registerContent: RegisterContent {
@@ -32,11 +33,9 @@ StackViewPage {
         anchors.left: root.left
         anchors.right: root.right
         anchors.top: root.top
-        anchors.leftMargin: contentMargin
-        anchors.rightMargin: contentMargin
-        anchors.topMargin: contentMargin
+        anchors.leftMargin: -3
 
-        spacing: contentMargin / 2
+        spacing: contentSpacing
 
         MegaTexts.RichText {
             id: title
@@ -45,7 +44,6 @@ StackViewPage {
             anchors.right: parent.right
             anchors.leftMargin: registerContent.email.textField.focusBorderWidth
             font.pixelSize: MegaTexts.Text.Size.Large
-
             text: OnboardingStrings.signUpTitle
         }
 
@@ -65,27 +63,25 @@ StackViewPage {
             right: root.right
             bottom: root.bottom
             left: root.left
-            leftMargin: contentMargin
-            rightMargin: contentMargin
-            bottomMargin: bottomMargin
         }
-        Layout.fillWidth: true
 
-        MegaButtons.SecondaryButton {
+        MegaButtons.OutlineButton {
             id: loginButton
 
-            text: OnboardingStrings.login
             Layout.alignment: Qt.AlignLeft
+            Layout.leftMargin: -loginButton.focusBorderWidth
+            text: OnboardingStrings.login
+
         }
 
         MegaButtons.PrimaryButton {
             id: nextButton
 
+            Layout.alignment: Qt.AlignRight
+            Layout.rightMargin: -nextButton.focusBorderWidth
             enabled: registerContent.termsCheckBox.checked
             icons.source: Images.arrowRight
             text: OnboardingStrings.next
-
-            Layout.alignment: Qt.AlignRight
         }
     }
 }

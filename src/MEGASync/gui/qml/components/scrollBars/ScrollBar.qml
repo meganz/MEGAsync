@@ -241,7 +241,7 @@ Qml.ScrollBar {
             MegaImages.SvgImage {
                 source: Images.arrowRight
                 sourceSize: Qt.size(iconSize, iconSize)
-                color: Styles.iconButton
+                color: enabled ? Styles.iconButton : Styles.iconButtonDisabled
                 rotation: buttonRotation
                 anchors.left: parent.left
                 anchors.top: parent.top

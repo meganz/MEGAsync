@@ -14,15 +14,11 @@ import Onboard 1.0
 // C++
 import Onboarding 1.0
 
-Rectangle {
+StackViewPage {
     id: root
 
     property alias email: email.text
     property alias changeEmailLinkText: changeEmailLinkText
-
-    readonly property int contentMargin: 48
-
-    color: Styles.surface1
 
     ColumnLayout {
         id: layout
@@ -31,9 +27,6 @@ Rectangle {
             top: parent.top
             left: parent.left
             right: parent.right
-            rightMargin: contentMargin
-            leftMargin: contentMargin
-            topMargin: contentMargin
         }
         spacing: 24
 
