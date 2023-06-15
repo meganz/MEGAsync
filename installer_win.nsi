@@ -737,26 +737,25 @@ modeselected:
   AccessControl::SetFileOwner "$INSTDIR\qt.conf" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\qt.conf" "$USERNAME" "GenericRead + GenericWrite"
 
-  File "${SRCDIR_MEGASYNC}\avcodec-58.dll"
-  AccessControl::SetFileOwner "$INSTDIR\avcodec-58.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\avcodec-58.dll" "$USERNAME" "GenericRead + GenericWrite"
+  File "${SRCDIR_MEGASYNC}\avcodec-59.dll"
+  AccessControl::SetFileOwner "$INSTDIR\avcodec-59.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\avcodec-59.dll" "$USERNAME" "GenericRead + GenericWrite"
 
-  File "${SRCDIR_MEGASYNC}\avformat-58.dll"
-  AccessControl::SetFileOwner "$INSTDIR\avformat-58.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\avformat-58.dll" "$USERNAME" "GenericRead + GenericWrite"
+  File "${SRCDIR_MEGASYNC}\avformat-59.dll"
+  AccessControl::SetFileOwner "$INSTDIR\avformat-59.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\avformat-59.dll" "$USERNAME" "GenericRead + GenericWrite"
 
-  File "${SRCDIR_MEGASYNC}\avutil-56.dll"
-  AccessControl::SetFileOwner "$INSTDIR\avutil-56.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\avutil-56.dll" "$USERNAME" "GenericRead + GenericWrite"
+  File "${SRCDIR_MEGASYNC}\avutil-57.dll"
+  AccessControl::SetFileOwner "$INSTDIR\avutil-57.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\avutil-57.dll" "$USERNAME" "GenericRead + GenericWrite"
 
-  File "${SRCDIR_MEGASYNC}\swscale-5.dll"
-  AccessControl::SetFileOwner "$INSTDIR\swscale-5.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\swscale-5.dll" "$USERNAME" "GenericRead + GenericWrite"
+  File "${SRCDIR_MEGASYNC}\swscale-6.dll"
+  AccessControl::SetFileOwner "$INSTDIR\swscale-6.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\swscale-6.dll" "$USERNAME" "GenericRead + GenericWrite"
 
-  File "${SRCDIR_MEGASYNC}\swresample-3.dll"
-  AccessControl::SetFileOwner "$INSTDIR\swresample-3.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\swresample-3.dll" "$USERNAME" "GenericRead + GenericWrite"
-
+  File "${SRCDIR_MEGASYNC}\swresample-4.dll"
+  AccessControl::SetFileOwner "$INSTDIR\swresample-4.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\swresample-4.dll" "$USERNAME" "GenericRead + GenericWrite"
   
   ;remove old DLLs that we no longer use (some became static; some have later version number)
   Delete "$INSTDIR\avcodec-57.dll"
@@ -766,13 +765,18 @@ modeselected:
   Delete "$INSTDIR\swresample-2.dll"
   Delete "$INSTDIR\libsodium.dll"
   Delete "$INSTDIR\pdfium.dll"
-  !ifdef BUILD_X64_VERSION
-  Delete  "$INSTDIR\libcrypto-1_1-x64.dll"
-  Delete  "$INSTDIR\libssl-1_1-x64.dll"
-!else
-  Delete  "$INSTDIR\libcrypto-1_1.dll"
-  Delete  "$INSTDIR\libssl-1_1.dll"
-!endif
+  Delete "$INSTDIR\avcodec-58.dll"
+  Delete "$INSTDIR\avformat-58.dll"
+  Delete "$INSTDIR\avutil-56.dll"
+  Delete "$INSTDIR\swscale-5.dll"
+  Delete "$INSTDIR\swresample-3.dll"
+
+  Delete "$INSTDIR\libcrypto-1_1-x64.dll"
+  Delete "$INSTDIR\libssl-1_1-x64.dll"
+
+  Delete "$INSTDIR\libcrypto-1_1.dll"
+  Delete "$INSTDIR\libssl-1_1.dll"
+
 
 !ifndef BUILD_UNINSTALLER  ; if building uninstaller, skip this check
   File "${SRCDIR_MEGASYNC}\${UNINSTALLER_NAME}"
