@@ -1037,6 +1037,7 @@ void TransfersModel::onProcessTransfers()
         //Do not update transfers count yet, as the filtering will be done in a differente thread
         if(!asynchronousProcessed)
         {
+            modelHasChanged(true);
             updateTransfersCount();
         }
 
