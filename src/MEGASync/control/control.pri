@@ -44,5 +44,6 @@ HEADERS  +=  $$PWD/HTTPServer.h \
     $$PWD/ConnectivityChecker.h \
     $$PWD/TransferBatch.h \
     $$PWD/TextDecorator.h \
+    $$PWD/Version.h \
     $$PWD/qrcodegen.h \
     $$PWD/gzjoin.h
