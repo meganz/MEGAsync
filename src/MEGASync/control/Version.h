@@ -17,7 +17,7 @@
 #define VER_ORIGINALFILENAME_STR    "MEGAsync.exe\0"
 #define VER_PRODUCTNAME_STR         "MEGAsync\0"
 
-#define VER_SDK_ID                  "965e4c7"
+#define VER_SDK_ID                  "0f65318"
 
 // Update scrips relying on this value if you move it
 // Format: 1 item by line, starting from line following the #define
