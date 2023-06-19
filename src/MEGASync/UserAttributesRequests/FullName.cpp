@@ -74,7 +74,7 @@ AttributeRequest::RequestInfo FullName::fillRequestInfo()
     ParamInfoMap paramInfo({{mega::MegaApi::USER_ATTR_FIRSTNAME, firstNameInfo},
                             {mega::MegaApi::USER_ATTR_LASTNAME, lastNameInfo}});
 
-    RequestInfo ret(paramInfo, QMap<int, int>({{mega::MegaUser::CHANGE_TYPE_FIRSTNAME, mega::MegaApi::USER_ATTR_FIRSTNAME},
+    RequestInfo ret(paramInfo, QMap<int64_t, int>({{mega::MegaUser::CHANGE_TYPE_FIRSTNAME, mega::MegaApi::USER_ATTR_FIRSTNAME},
                                                {mega::MegaUser::CHANGE_TYPE_LASTNAME, mega::MegaApi::USER_ATTR_LASTNAME}}));
     return ret;
 }

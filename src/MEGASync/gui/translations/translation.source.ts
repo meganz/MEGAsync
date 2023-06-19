@@ -3579,6 +3579,14 @@ Your selected incomplete sync transfers won’t be cancelled. All the other sele
     </message>
 </context>
 <context>
+    <name>MultiQFileDialog</name>
+    <message>
+        <source>Too many items selected. To continue, deselect some or select the parent folder instead.</source>
+        <translatorcomment>Message displayed as a tooltip on the OK button when there are too many items selected. See CON-326.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>NewFolderDialog</name>
     <message>
         <source>Enter the new folder name</source>

@@ -94,6 +94,10 @@ pipeline {
                                 env.TRIGGERED_BUILD_URL_MACOS = triggeredBuild.getAbsoluteUrl()
                                 env.TRIGGERED_PROJECT_NAME_MACOS = triggeredBuild.getProjectName()
                                 env.TRIGGERED_BUILD_DISPLAY_NAME_MACOS = triggeredBuild.getFullDisplayName()
+                                
+                                if (triggeredBuild.result != 'SUCCESS') {
+                                    currentbuild.currentResult = 'FAILURE'
+                                }
                             }
                         }
                     }
@@ -150,6 +154,10 @@ pipeline {
                                 env.TRIGGERED_BUILD_URL_LINUX = triggeredBuild.getAbsoluteUrl()
                                 env.TRIGGERED_PROJECT_NAME_LINUX = triggeredBuild.getProjectName()
                                 env.TRIGGERED_BUILD_DISPLAY_NAME_LINUX = triggeredBuild.getFullDisplayName()
+
+                                if (triggeredBuild.result != 'SUCCESS') {
+                                    currentbuild.currentResult = 'FAILURE'
+                                }
                             }
                         }
                     }
@@ -206,6 +214,10 @@ pipeline {
                                 env.TRIGGERED_BUILD_URL_WINDOWS = triggeredBuild.getAbsoluteUrl()
                                 env.TRIGGERED_PROJECT_NAME_WINDOWS = triggeredBuild.getProjectName()
                                 env.TRIGGERED_BUILD_DISPLAY_NAME_WINDOWS = triggeredBuild.getFullDisplayName()
+
+                                if (triggeredBuild.result != 'SUCCESS') {
+                                    currentBuild.currentResult = 'FAILURE'
+                                }
                             }
                         }
                     }

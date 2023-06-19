@@ -97,6 +97,9 @@ min-height: 48px;
    </item>
    <item>
     <widget class="FolderBinder" name="wBinder" native="true">
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
+     </property>
      <property name="styleSheet">
       <string notr="true"/>
      </property>
@@ -191,6 +194,9 @@ margin-right: 32px;</string>
           <height>16</height>
          </size>
         </property>
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
         <property name="text">
          <string>Cancel</string>
         </property>
@@ -210,6 +216,9 @@ margin-right: 32px;</string>
           <height>16</height>
          </size>
         </property>
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
         <property name="text">
          <string>Add</string>
         </property>
@@ -228,6 +237,11 @@ margin-right: 32px;</string>
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>wBinder</tabstop>
+  <tabstop>bCancel</tabstop>
+  <tabstop>bOK</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

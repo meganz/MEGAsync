@@ -319,6 +319,7 @@ private slots:
     void onProcessTransfers();
     void updateTransfersCount();
     void onClearTransfersFinished();
+    void onUpdateTransfersFinished();
     void onAskForMostPriorityTransfersFinished();
     void onKeepPCAwake();
 
@@ -328,6 +329,7 @@ private:
     void addTransfer(QExplicitlySharedDataPointer<TransferData>);
     void removeTransfer(int row);
     void sendDataChanged(int row);
+    void restoreTagsByRow();
 
     void retryTransfers(const QMultiMap<unsigned long long, std::shared_ptr<mega::MegaTransfer>>& transfersToRetry);
 
