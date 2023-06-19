@@ -13,10 +13,8 @@ BindFolderDialog::BindFolderDialog(MegaApplication* _app, QWidget *parent) :
     mApp(_app)
 {
     ui->setupUi(this);
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
     ui->bOK->setDefault(true);
-    mHighDpiResize.init(this);
 }
 
 BindFolderDialog::~BindFolderDialog()

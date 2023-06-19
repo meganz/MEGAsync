@@ -255,7 +255,8 @@ TransferBaseDelegateWidget::ActionHoverType InfoDialogTransferDelegateWidget::mo
                 {
                     update = setActionTransferIcon(mUi->lActionTransfer,
                                                    QString::fromAscii("://images/error.png"));
-                    if(getData()->mFailedTransfer)
+                    //Double check that the mFailedTransfer is OK
+                    if(getData()->isFailed())
                     {
                         mUi->lActionTransfer->setToolTip(tr("Failed: %1").arg(QString::fromStdString(getData()->mFailedTransfer->getLastError().getErrorString())));
                     }
@@ -404,6 +405,13 @@ bool InfoDialogTransferDelegateWidget::eventFilter(QObject *watched, QEvent *eve
     }
 
     return TransferBaseDelegateWidget::eventFilter(watched, event);
+}
+
+void InfoDialogTransferDelegateWidget::reset()
+{
+    mIsHover = false;
+    mTransferRemainingTime.reset();
+    TransferBaseDelegateWidget::reset();
 }
 
 void InfoDialogTransferDelegateWidget::on_lShowInFolder_clicked()

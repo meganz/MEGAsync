@@ -53,6 +53,7 @@ bool QFilterAlertsModel::checkFilterType(int typeToCheck) const
             case MegaUserAlert::TYPE_DELETEDSHARE:
             case MegaUserAlert::TYPE_NEWSHAREDNODES:
             case MegaUserAlert::TYPE_REMOVEDSHAREDNODES:
+            case MegaUserAlert::TYPE_UPDATEDSHAREDNODES:
                 return actualFilter == FILTER_SHARES;
                 break;
 

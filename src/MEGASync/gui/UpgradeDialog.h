@@ -1,8 +1,6 @@
 #ifndef UPGRADEDIALOG_H
 #define UPGRADEDIALOG_H
 
-#include "HighDpiResize.h"
-
 #include <megaapi.h>
 
 #include <QDialog>
@@ -40,7 +38,6 @@ private:
 
     Ui::UpgradeDialog* mUi;
     std::unique_ptr<QMovie> mAnimation;
-    HighDpiResize mHighDpiResize;
     mega::MegaApi* mMegaApi;
     std::shared_ptr<mega::MegaPricing> mPricing;
     std::shared_ptr<mega::MegaCurrency> mCurrency;

@@ -3,7 +3,7 @@
  <class>BandwidthSettings</class>
  <widget class="QDialog" name="BandwidthSettings">
   <property name="windowModality">
-   <enum>Qt::WindowModal</enum>
+   <enum>Qt::NonModal</enum>
   </property>
   <property name="geometry">
    <rect>
@@ -29,9 +29,6 @@
 	padding: 0px;
 	border: none;
 }</string>
-  </property>
-  <property name="modal">
-   <bool>true</bool>
   </property>
   <layout class="QVBoxLayout" name="BandwidthSettingsLayout">
    <property name="spacing">

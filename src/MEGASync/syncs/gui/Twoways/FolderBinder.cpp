@@ -2,9 +2,11 @@
 #include "ui_FolderBinder.h"
 
 #include "MegaApplication.h"
-#include "gui/node_selector/gui/NodeSelectorSpecializations.h"
-#include "QMegaMessageBox.h"
 #include "control/Utilities.h"
+#include "DialogOpener.h"
+#include "Platform.h"
+
+#include "QMegaMessageBox.h"
 
 using namespace mega;
 
@@ -78,32 +80,23 @@ void FolderBinder::on_bLocalFolder_clicked()
     defaultPath = QDir::toNativeSeparators(defaultPath);
 
     MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Opening folder selector in: %1").arg(defaultPath).toUtf8().constData());
-#ifndef _WIN32
-    if (defaultPath.isEmpty())
-    {
-        defaultPath = QString::fromUtf8("/");
-    }
 
-    QPointer<MultiQFileDialog> dialog = new MultiQFileDialog(0,  tr("Select local folder"), defaultPath, false);
-    dialog->setOptions(QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
-    dialog->setFileMode(QFileDialog::DirectoryOnly);
-    int result = dialog->exec();
-    if (!dialog || result != QDialog::Accepted || dialog->selectedFiles().isEmpty())
-    {
-        delete dialog;
-        return;
-    }
-    QString path = dialog->selectedFiles().value(0);
-    delete dialog;
-#else
-    QString path = QFileDialog::getExistingDirectory(0,  tr("Select local folder"), defaultPath);
-#endif
+    Platform::getInstance()->folderSelector(tr("Select local folder"),defaultPath,false,this,[this](QStringList selection){
+        if(!selection.isEmpty())
+        {
+            QString fPath = selection.first();
+            onLocalFolderSet(fPath);
+        }
+    });
+}
 
+void FolderBinder::onLocalFolderSet(const QString& path)
+{
     MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Folder selector closed. Result: %1").arg(path).toUtf8().constData());
     if (QDir(path).exists())
     {
-        path = QDir::toNativeSeparators(path);
-        ui->eLocalFolder->setText(path);
+        auto nativePath = QDir::toNativeSeparators(path);
+        ui->eLocalFolder->setText(nativePath);
     }
 }
 
@@ -113,15 +106,14 @@ void FolderBinder::on_bMegaFolder_clicked()
     std::shared_ptr<MegaNode> defaultNode(megaApi->getNodeByPath(ui->eMegaFolder->text().toUtf8().constData()));
     nodeSelector->setSelectedNodeHandle(defaultNode);
 
-    int result = nodeSelector->exec();
-    if (!nodeSelector || result != QDialog::Accepted)
+    DialogOpener::showDialog<SyncNodeSelector>(nodeSelector, [nodeSelector, this]()
     {
-        delete nodeSelector;
-        return;
-    }
-    MegaHandle selectedFolder = nodeSelector->getSelectedNodeHandle();
-    setSelectedMegaFolder(selectedFolder);
-    delete nodeSelector;
+        if (nodeSelector->result() == QDialog::Accepted)
+        {
+            MegaHandle selectedFolder = nodeSelector->getSelectedNodeHandle();
+            setSelectedMegaFolder(selectedFolder);
+        }
+    });
 }
 
 void FolderBinder::changeEvent(QEvent *event)

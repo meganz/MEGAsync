@@ -23,12 +23,12 @@ pkgname=thunar-megasync
 pkgver=EXT_VERSION
 pkgrel=`cat MEGA_BUILD_ID || echo "1"`
 epoch=
-pkgdesc="Extension for Thunar to interact with Megasync"
+pkgdesc="MEGA Desktop App plugin for Thunar"
 arch=('i686' 'x86_64')
 url="http://mega.nz/#sync"
 license=() #TODO
 depends=('thunar' 'megasync>=3.5')
-makedepends=( 'ca-certificates' 'qt5-tools' 'thunar')
+makedepends=('ca-certificates' 'qt5-tools' 'thunar')
 provides=("thunar-megasync=${pkgver}")
 conflicts=()
 replaces=()

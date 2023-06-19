@@ -29,16 +29,13 @@ void MegaUploader::upload(QString path, const QString& nodeName, std::shared_ptr
 {
     QFileInfo info(path);
 
-    if (info.isFile() || info.isDir())
-    {
-        QString currentPath = QDir::toNativeSeparators(info.absoluteFilePath());
-        QString msg = QString::fromLatin1("Starting upload : '%1' - '%2' - '%3'").arg(info.fileName(), currentPath).arg(appDataID);
-        megaApi->log(MegaApi::LOG_LEVEL_DEBUG, msg.toUtf8().constData());
-        transferBatch->add(info.absoluteFilePath(), QString());
-        startUpload(currentPath, nodeName, appDataID, parent.get(), transferBatch->getCancelTokenPtr());
+    QString currentPath = QDir::toNativeSeparators(info.absoluteFilePath());
+    QString msg = QString::fromLatin1("Starting upload : '%1' - '%2' - '%3'").arg(info.fileName(), currentPath).arg(appDataID);
+    megaApi->log(MegaApi::LOG_LEVEL_DEBUG, msg.toUtf8().constData());
+    transferBatch->add(info.absoluteFilePath(), QString());
+    startUpload(currentPath, nodeName, appDataID, parent.get(), transferBatch->getCancelTokenPtr());
 
-        emit startingTransfers();
-    }
+    emit startingTransfers();
 }
 
 void MegaUploader::startUpload(const QString& localPath, const QString &nodeName, unsigned long long appDataID, MegaNode* parent, MegaCancelToken* cancelToken)

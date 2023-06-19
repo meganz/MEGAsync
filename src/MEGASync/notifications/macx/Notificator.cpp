@@ -72,9 +72,16 @@ void Notificator::notify(MegaNotification *notification)
     }
 }
 
+const QString& MegaNotificationBase::defaultImage = QString();
+
 MegaNotification::MegaNotification()
     : MegaNotificationBase()
 {
+}
+
+MegaNotification::~MegaNotification()
+{
+    NotificationHandler::instance()->hideNotification(this);
 }
 
 QStringList MegaNotification::getActions() const

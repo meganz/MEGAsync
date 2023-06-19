@@ -3,6 +3,7 @@
 #include "Utilities.h"
 #include "Preferences.h"
 #include "gui/PlanWidget.h"
+#include "MegaApplication.h"
 
 using namespace mega;
 
@@ -14,20 +15,21 @@ UpgradeOverStorage::UpgradeOverStorage(MegaApi* megaApi, std::shared_ptr<mega::M
     mPricing (pricing),
     mCurrency (currency)
 {
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     mUi->setupUi(this);
 
     updatePlans();  
     configureAnimation();
 
-    mHighDpiResize.init(this);
-
     //Keep storage details hidden until we receive the account details
     mUi->lAccountUsed->hide();
+
+    qobject_cast<MegaApplication*>(qApp)->attachAccountObserver(*this);
 }
 
 UpgradeOverStorage::~UpgradeOverStorage()
 {
+    qobject_cast<MegaApplication*>(qApp)->dettachAccountObserver(*this);
+
     delete mUi;
 }
 
@@ -40,6 +42,11 @@ void UpgradeOverStorage::setPricing(std::shared_ptr<mega::MegaPricing> pricing,
         mCurrency = currency;
         updatePlans();
     }
+}
+
+void UpgradeOverStorage::updateAccountElements()
+{
+    updatePlans();
 }
 
 void UpgradeOverStorage::refreshStorageDetails()

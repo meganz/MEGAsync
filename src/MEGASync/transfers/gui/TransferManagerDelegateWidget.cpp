@@ -7,6 +7,7 @@
 #include "Preferences.h"
 #include "MegaApplication.h"
 #include "QMegaMessageBox.h"
+#include "DateTimeFormatter.h"
 
 #include <QMouseEvent>
 #include <QPainterPath>
@@ -211,7 +212,9 @@ void TransferManagerDelegateWidget::updateTransferState()
                 showTPauseResume = false;
             }
 
-            timeString = getData()->getFormattedFinishedTime();
+            auto dateTime = getData()->getFinishedDateTime();
+            timeString = MegaSyncApp->getFormattedDateByCurrentLanguage(dateTime, QLocale::FormatType::ShortFormat);
+
             timeTooltip = getData()->getFullFormattedFinishedTime();
             speedString = QString::fromUtf8("…");
 
@@ -254,7 +257,9 @@ void TransferManagerDelegateWidget::updateTransferState()
                 mUi->sStatus->setCurrentWidget(mUi->pActive);
             }
             speedString = Utilities::getSizeString(getData()->mSpeed) + QLatin1Literal("/s");
-            timeString = getData()->getFormattedFinishedTime();
+            auto dateTime = getData()->getFinishedDateTime();
+            timeString = MegaSyncApp->getFormattedDateByCurrentLanguage(dateTime, QLocale::FormatType::ShortFormat);
+
             timeTooltip = getData()->getFullFormattedFinishedTime();
             break;
         }
@@ -365,6 +370,7 @@ void TransferManagerDelegateWidget::adjustFileName()
                                 .elidedText(getData()->mFilename, Qt::ElideMiddle,
                                            getNameAvailableSize(mUi->wTransferName, mUi->lSyncIcon, mUi->nameSpacer)));
     mUi->lTransferName->adjustSize();
+    mUi->lTransferName->parentWidget()->layout()->activate();
 }
 
 TransferBaseDelegateWidget::ActionHoverType TransferManagerDelegateWidget::mouseHoverTransfer(bool isHover, const QPoint &pos)
@@ -538,6 +544,12 @@ bool TransferManagerDelegateWidget::eventFilter(QObject *watched, QEvent *event)
     }
 
     return TransferBaseDelegateWidget::eventFilter(watched, event);
+}
+
+void TransferManagerDelegateWidget::reset()
+{
+    mPauseResumeTransferDefaultIconName.clear();
+    TransferBaseDelegateWidget::reset();
 }
 
 void TransferManagerDelegateWidget::on_tPauseResumeTransfer_clicked()

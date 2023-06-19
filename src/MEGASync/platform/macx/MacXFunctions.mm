@@ -76,30 +76,93 @@ QStringList qt_mac_NSArrayToQStringList(void *nsarray)
     return result;
 }
 
-QStringList uploadMultipleFiles(QString uploadTitle)
+
+void selectorsImpl(QString title, QString defaultDir, bool multiSelection, bool showFiles, bool showFolders, QWidget *parent, std::function<void (QStringList)> func)
 {
     QStringList uploads;
-    static NSOpenPanel *panel = NULL;
+
+    if(panel)
+    {
+        auto panelParentWindow = [panel sheetParent];
+        if(panelParentWindow)
+        {
+            [panelParentWindow endSheet: panel];
+        }
+        else
+        {
+            [panel close];
+            panel = NULL;
+        }
+    }
 
     if (!panel)
     {
         panel = [NSOpenPanel openPanel];
-        [panel setTitle:[NSString stringWithUTF8String:uploadTitle.toUtf8().constData()]];
-        [panel setCanChooseFiles:YES];
-        [panel setCanChooseDirectories:YES];
-        [panel setAllowsMultipleSelection:YES];
-
-        NSInteger clicked = [panel runModal];
-        if (clicked == NSFileHandlingPanelOKButton)
+        if(!parent)
         {
-            uploads = qt_mac_NSArrayToQStringList([panel URLs]);
+            [panel setTitle:[NSString stringWithUTF8String:title.toUtf8().constData()]];
+        }
+        [panel setCanChooseFiles: showFiles ? YES : NO];
+        [panel setCanChooseDirectories:showFolders ? YES : NO];
+        [panel setAllowsMultipleSelection:multiSelection ? YES : NO];
+        if(!defaultDir.isEmpty())
+        {
+            NSURL *baseURL = [NSURL fileURLWithPath:[NSString stringWithUTF8String:defaultDir.toUtf8().constData()]];
+            [panel setDirectoryURL:baseURL];
         }
 
-        panel = NULL;
-        return uploads;
+        if(parent)
+        {
+            NSView* nsview = (__bridge NSView*)reinterpret_cast<void*>(parent->window()->winId());
+            NSWindow *nswindow = [nsview window];
+            [panel beginSheetModalForWindow: nswindow
+                                             completionHandler:^(NSInteger result) {
+                QStringList selection;
+                if(result  == NSFileHandlingPanelOKButton)
+                {
+                    selection = qt_mac_NSArrayToQStringList([panel URLs]);
+                }
+                func(selection);
+                panel = NULL;
+            }];
+        }
+        else
+        {
+            [panel beginWithCompletionHandler:^(NSInteger result){
+                QStringList selection;
+                if(result  == NSFileHandlingPanelOKButton)
+                {
+                    selection = qt_mac_NSArrayToQStringList([panel URLs]);
+                }
+                func(selection);
+                panel = NULL;
+            }];
+        }
+        raiseFileSelectionPanels();
     }
+}
 
-    return QStringList();
+void raiseFileSelectionPanels()
+{
+    if(panel)
+    {
+        [panel orderFrontRegardless];
+    }
+}
+
+void closeFileSelectionPanels(QWidget* parent)
+{
+    if(panel)
+    {
+        NSWindow* panelParentWindow(nullptr);
+        NSView* checkParentview = (__bridge NSView*)reinterpret_cast<void*>(parent->window()->winId());
+        NSWindow* checkParentWindow = [checkParentview window];
+        panelParentWindow = [panel sheetParent];
+        if(checkParentWindow == panelParentWindow)
+        {
+            [panelParentWindow endSheet: panel];
+        }
+    }
 }
 
 bool startAtLogin(bool opt)

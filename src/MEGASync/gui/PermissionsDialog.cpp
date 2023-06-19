@@ -7,7 +7,6 @@ PermissionsDialog::PermissionsDialog(QWidget *parent) :
     ui(new Ui::PermissionsDialog)
 {
     ui->setupUi(this);
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
     ui->wFileOwner->configurePermissions(PermissionsWidget::ENABLED_EXECUTION);
 

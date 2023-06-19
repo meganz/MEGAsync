@@ -12,15 +12,14 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/4.9.4.0";
-const int Preferences::VERSION_CODE = 4904;
-const int Preferences::BUILD_ID = 0;
+const char Preferences::USER_AGENT[] = "MEGAsync/4.9.5.0";
+const int Preferences::VERSION_CODE = 4905;
+const int Preferences::BUILD_ID = 4;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("4.9.4");
-QString Preferences::SDK_ID = QString::fromAscii("965e4c7");
+const QString Preferences::VERSION_STRING = QString::fromAscii("4.9.5");
+QString Preferences::SDK_ID = QString::fromAscii("0f65318");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
-"- You can now search the stored data in your account.\n"
-"- We've improved system notifications.\n"
+"- We've enhanced system notifications.\n"
 "- We've enhanced the UI.\n"
 "- We've fixed the detected crashes on Windows, Linux, and macOS.\n"));
 
@@ -342,6 +341,8 @@ const QString Preferences::hasDefaultUploadFolderKey    = QString::fromAscii("ha
 const QString Preferences::hasDefaultDownloadFolderKey  = QString::fromAscii("hasDefaultDownloadFolder");
 const QString Preferences::hasDefaultImportFolderKey    = QString::fromAscii("hasDefaultImportFolder");
 const QString Preferences::localFingerprintKey      = QString::fromAscii("localFingerprint");
+const QString Preferences::deleteSdkCacheAtStartupKey = QString::fromAscii("deleteSdkCacheAtStartup");
+const int     Preferences::LAST_VERSION_WITHOUT_deleteSdkCacheAtStartup_FLAG = 4904;
 const QString Preferences::isCrashedKey             = QString::fromAscii("isCrashed");
 const QString Preferences::wasPausedKey             = QString::fromAscii("wasPaused");
 const QString Preferences::wasUploadsPausedKey      = QString::fromAscii("wasUploadsPaused");
@@ -2644,6 +2645,19 @@ void Preferences::resetGlobalSettings()
     mutex.unlock();
 
     emit stateChanged();
+}
+
+bool Preferences::mustDeleteSdkCacheAtStartup()
+{
+    mutex.lock();
+    bool value = getValue<bool>(deleteSdkCacheAtStartupKey, false);
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setDeleteSdkCacheAtStartup(bool value)
+{
+    setValueAndSyncConcurrent(deleteSdkCacheAtStartupKey, value);
 }
 
 bool Preferences::isCrashed()

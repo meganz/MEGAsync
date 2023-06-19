@@ -17,7 +17,8 @@
 const char* INDEX_PROPERTY = "INDEX";
 
 NodeRequester::NodeRequester(NodeSelectorModel *model)
-    : mModel(model),
+    : QObject(nullptr),
+      mModel(model),
       mCancelToken(mega::MegaCancelToken::createInstance())
 {}
 

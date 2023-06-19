@@ -76,10 +76,9 @@ private slots:
     void onOptionSelected(int index);
     void updateNodeSelectorTabs();
     void onSearch(const QString& text);
-    void on_tClearSearchResult_clicked();
+    void on_tClearSearchResultNS_clicked();
 
 private:
-    void processCloseEvent(NodeSelectorProxyModel *proxy, QCloseEvent* event);
     QModelIndex getParentIncomingShareByIndex(QModelIndex idx);
     void setToggledStyle(TabItem item);
     void setAllFramesItsOnProperty();

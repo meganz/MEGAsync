@@ -179,6 +179,9 @@ bool MegaAlertDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, co
             case MegaUserAlert::TYPE_REMOVEDSHAREDNODES:
             case MegaUserAlert::TYPE_TAKEDOWN:
             case MegaUserAlert::TYPE_TAKEDOWN_REINSTATED:
+            // Disabled case MegaUserAlert::TYPE_UPDATEDSHAREDNODES:
+            // due to alert node is always NULL. If this behaviour changes, adapt to include update case
+
                 {
                     MegaNode *node = api->getNodeByHandle(alert->getNodeHandle());
                     if (node)

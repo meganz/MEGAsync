@@ -4,7 +4,6 @@
 #include "ButtonIconManager.h"
 #include "QTMegaRequestListener.h"
 #include <megaapi.h>
-#include "NodeSelectorLoadingDelegate.h"
 #include "../model/NodeSelectorModelItem.h"
 #include <ViewLoadingScene.h>
 
@@ -130,7 +129,6 @@ private:
     bool first;
     bool mUiBlocked;
     mega::MegaHandle mNodeHandleToSelect;
-    ViewLoadingScene<NodeSelectorLoadingDelegate> mLoadingScene;
     SelectTypeSPtr mSelectType;
     friend class DownloadType;
     friend class SyncType;

@@ -91,7 +91,7 @@ void MegaDownloader::onAvailableSpaceCheckFinished(bool isDownloadPossible)
     if (isDownloadPossible)
     {
         auto appData = TransferMetaDataContainer::getAppData<DownloadTransferMetaData>(mQueueData.getCurrentAppDataId());
-        appData->setPendingTransfers(mQueueData.getDownloadQueueSize());
+        appData->setInitialPendingTransfers(mQueueData.getDownloadQueueSize());
 
         auto batch = std::shared_ptr<TransferBatch>(new TransferBatch());
         mQueueData.addTransferBatch(batch);
@@ -160,10 +160,9 @@ void MegaDownloader::downloadForeignDir(MegaNode *node, const std::shared_ptr<Do
     // Once the folder has been checked for existence/created with success:
     // - check if this was A "root folder" for the transfer with updateForeignDir (if yes, update
     //     transfer metadata)
-    // - check if this was the last pending transfer. If yes, emit notification.
     if (data)
     {
-        data->updateForeignDir();
+        data->updateForeignDir(node->getParentHandle());
     }
 
     // Add path to pathMap

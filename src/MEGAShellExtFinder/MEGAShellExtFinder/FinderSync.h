@@ -16,6 +16,12 @@ typedef enum {
     FILE_IGNORED = 4,
 } FileState;
 
+struct NodeInfo
+{
+    FileState state;
+    bool isIncomingShare;
+};
+
 const NSString* OP_PATH_STATE = @"P";
 const NSString* OP_UPLOAD     = @"F";
 const NSString* OP_LINK       = @"L";

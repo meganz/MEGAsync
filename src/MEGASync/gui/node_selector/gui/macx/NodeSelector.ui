@@ -3,7 +3,7 @@
  <class>NodeSelector</class>
  <widget class="QDialog" name="NodeSelector">
   <property name="windowModality">
-   <enum>Qt::WindowModal</enum>
+   <enum>Qt::NonModal</enum>
   </property>
   <property name="geometry">
    <rect>
@@ -31,11 +31,6 @@ border-radius: 0px;
 background-color: transparent;
 }
 
-QDialog
-{
-background:#FFFFFF;
-}
-
 #cbAlwaysUploadToLocation
 {
     spacing: 10px;
@@ -61,7 +56,7 @@ height: 16px;
     font-family: Lato;
 }
 
-#wLeftPane
+#wLeftPaneNS
 {
     background-color: #FAFAFA;
     border-right: 1px solid #EEEEEE;
@@ -72,22 +67,13 @@ height: 16px;
     background-color: white;
 }
 
-#lTextSearch
-{
-    color: #666666;
-    font-size: 20px;
-    font-weight: 600;
-    padding-left: 12px;
-    qproperty-alignment: 'AlignLeft | AlignVCenter';
-}
-
 #wStorage QFrame
 {
     padding-right: 6px;
     padding-left: 6px;
 }
 
-#wSearch  QFrame
+#wSearchNS  QFrame
 {
     padding-right: 6px;
     padding-left: 6px;
@@ -98,7 +84,7 @@ height: 16px;
     height: 34px;
 }
 
-#wSearch QPushButton
+#wSearchNS QPushButton
 {
     height: 34px;
 }
@@ -127,7 +113,7 @@ QGroupBox::title
     qProperty-iconSize: 24px;
 }
 
-#wSearch QPushButton
+#wSearchNS QPushButton
 {
     font-size: 14px;
     color: #15191F;
@@ -138,16 +124,13 @@ QGroupBox::title
     qProperty-iconSize: 24px;
 }
  
-#wLeftPane QToolButton
+#wLeftPaneNS QToolButton
 {
   border: none;
 }
 
 
 </string>
-  </property>
-  <property name="modal">
-   <bool>true</bool>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_15" stretch="0,1">
    <property name="spacing">
@@ -166,7 +149,7 @@ QGroupBox::title
     <number>0</number>
    </property>
    <item>
-    <widget class="QWidget" name="wLeftPane" native="true">
+    <widget class="QWidget" name="wLeftPaneNS" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
        <horstretch>0</horstretch>
@@ -186,7 +169,7 @@ QGroupBox::title
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">#wLeftPane QFrame &gt; QLabel
+      <string notr="true">#wLeftPaneNS QFrame &gt; QLabel
 {
     font-weight: bold;
     color: #999999;
@@ -195,37 +178,37 @@ QGroupBox::title
     border-radius: 12px;
 }
 
-#wLeftPane QFrame[itsOn=true] 
+#wLeftPaneNS QFrame[itsOn=true] 
 {
 	border-radius: 4px;
     background: solid white;
 }
 
-#wLeftPane QFrame[itsOn=true]  &gt; QLabel
+#wLeftPaneNS QFrame[itsOn=true]  &gt; QLabel
 {
     border: 1px solid #F5F5F5; 
     background-color: #FAFAFA;
     color: #333333;
 }
 
-#wLeftPane QFrame[itsOn=false] 
+#wLeftPaneNS QFrame[itsOn=false] 
 {
 	border-radius: none;
     background-color: transparent;
 }
 
-#wLeftPane QFrame[itsOn=false] &gt; QLabel
+#wLeftPaneNS QFrame[itsOn=false] &gt; QLabel
 {
     border: 1px transparent #FAFAFA; 
     background: transparent;
 }
 
-#wLeftPane QFrame
+#wLeftPaneNS QFrame
 {
 min-height:36px;
 }
 
-#wLeftPane QPushbutton
+#wLeftPaneNS QPushbutton
 {
 min-height:36px;
 }
@@ -530,7 +513,7 @@ min-height:36px;
        </widget>
       </item>
       <item>
-       <widget class="QGroupBox" name="wSearch">
+       <widget class="QGroupBox" name="wSearchNS">
         <property name="title">
          <string>Search</string>
         </property>
@@ -551,7 +534,7 @@ min-height:36px;
           <number>4</number>
          </property>
          <item alignment="Qt::AlignBottom">
-          <widget class="QFrame" name="fSearchString">
+          <widget class="QFrame" name="fSearchStringNS">
            <property name="focusPolicy">
             <enum>Qt::StrongFocus</enum>
            </property>
@@ -578,7 +561,7 @@ min-height:36px;
              <number>0</number>
             </property>
             <item>
-             <widget class="QPushButton" name="bSearch">
+             <widget class="QPushButton" name="bSearchNS">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -610,7 +593,7 @@ min-height:36px;
              </widget>
             </item>
             <item>
-             <widget class="QToolButton" name="tClearSearchResult">
+             <widget class="QToolButton" name="tClearSearchResultNS">
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>
               </property>

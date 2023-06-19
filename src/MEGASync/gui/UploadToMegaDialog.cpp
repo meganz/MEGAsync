@@ -3,6 +3,7 @@
 #include "gui/node_selector/gui/NodeSelectorSpecializations.h"
 #include "control/Utilities.h"
 #include "MegaApplication.h"
+#include "DialogOpener.h"
 
 #include <QPointer>
 
@@ -17,8 +18,6 @@ UploadToMegaDialog::UploadToMegaDialog(MegaApi *megaApi, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::UploadToMegaDialog)
 {
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-
     ui->setupUi(this);
 
     this->megaApi = megaApi;
@@ -31,7 +30,6 @@ UploadToMegaDialog::UploadToMegaDialog(MegaApi *megaApi, QWidget *parent) :
     ui->bChange->setEnabled(true);
     ui->bOK->setEnabled(true);
     ui->bOK->setDefault(true);
-    highDpiResize.init(this);
 }
 
 UploadToMegaDialog::~UploadToMegaDialog()
@@ -137,24 +135,22 @@ void UploadToMegaDialog::showNodeSelector()
 
     std::shared_ptr<MegaNode> defaultNode(megaApi->getNodeByPath(ui->eFolderPath->property(NODE_PATH_PROPERTY).toString().toUtf8().constData()));
     nodeSelector->setSelectedNodeHandle(defaultNode);
-    QPointer<UploadToMegaDialog> thisDialog(this);
-    int result = nodeSelector->exec();
-    if(!thisDialog)
-    {
-        return;
-    }
-    if (nodeSelector && result == QDialog::Accepted)
-    {
-        MegaHandle selectedMegaFolderHandle = nodeSelector->getSelectedNodeHandle();
-        std::unique_ptr<const char[]> pathStr(megaApi->getNodePathByNodeHandle(selectedMegaFolderHandle));
-        if (pathStr)
-        {
-            QString path = QString::fromUtf8(pathStr.get());
-            ui->eFolderPath->setProperty(NODE_PATH_PROPERTY, path);
-            ui->eFolderPath->setText(path);
-        }
-    }
 
-    ui->bOK->setFocus();
-    nodeSelector->deleteLater();
+    DialogOpener::showDialog<NodeSelector>(nodeSelector, [nodeSelector, this]()
+    {
+        if (nodeSelector->result() == QDialog::Accepted)
+        {
+            MegaHandle selectedMegaFolderHandle = nodeSelector->getSelectedNodeHandle();
+            std::unique_ptr<const char[]> pathStr(megaApi->getNodePathByNodeHandle(selectedMegaFolderHandle));
+            if (pathStr)
+            {
+                QString path = QString::fromUtf8(pathStr.get());
+                ui->eFolderPath->setProperty(NODE_PATH_PROPERTY, path);
+                ui->eFolderPath->setText(path);
+            }
+
+            ui->bOK->setFocus();
+            nodeSelector->deleteLater();
+        }
+    });
 }

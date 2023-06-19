@@ -1,13 +1,12 @@
 #ifndef UPGRADEOVERSTORAGE_H
 #define UPGRADEOVERSTORAGE_H
 
-#include "HighDpiResize.h"
-
 #include <megaapi.h>
 
 #include <QDialog>
 #include <QHBoxLayout>
 #include <QMovie>
+#include "control/Utilities.h"
 
 #include <memory>
 
@@ -15,7 +14,7 @@ namespace Ui {
 class UpgradeOverStorage;
 }
 
-class UpgradeOverStorage : public QDialog
+class UpgradeOverStorage : public QDialog, public IAccountObserver
 {
     Q_OBJECT
 
@@ -29,6 +28,8 @@ public:
     void setPricing(std::shared_ptr<mega::MegaPricing> pricing,
                     std::shared_ptr<mega::MegaCurrency> currency);
 
+    void updateAccountElements() override;
+
 protected:
     void changeEvent(QEvent* event) override;
 
@@ -39,7 +40,6 @@ private:
 
     Ui::UpgradeOverStorage* mUi;
     std::unique_ptr<QMovie> mAnimation;
-    HighDpiResize mHighDpiResize;
     mega::MegaApi* mMegaApi;
     std::shared_ptr<mega::MegaPricing> mPricing;
     std::shared_ptr<mega::MegaCurrency> mCurrency;

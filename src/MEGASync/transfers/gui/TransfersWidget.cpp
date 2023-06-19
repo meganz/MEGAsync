@@ -56,7 +56,7 @@ void TransfersWidget::setupTransfers()
     connect(mProxyModel, &TransfersManagerSortFilterProxyModel::pauseResumeTransfer, this, &TransfersWidget::onPauseResumeTransfer);
     connect(mProxyModel, &TransfersManagerSortFilterProxyModel::transferCancelClear, this, &TransfersWidget::onCancelClearButtonPressedOnDelegate);
     connect(mProxyModel, &TransfersManagerSortFilterProxyModel::transferRetry, this, &TransfersWidget::onRetryButtonPressedOnDelegate);
-    connect(&mLoadingScene, &ViewLoadingScene<TransferManagerLoadingItem>::sceneVisibilityChange, this, &TransfersWidget::onUiLoadingViewVisibilityChanged);
+    connect(&ui->tvTransfers->loadingView(), &ViewLoadingScene<TransferManagerLoadingItem, QTreeView>::sceneVisibilityChange, this, &TransfersWidget::onUiLoadingViewVisibilityChanged);
     connect(app->getTransfersModel(), &TransfersModel::blockUi, this, &TransfersWidget::onUiBlockedRequested);
     connect(app->getTransfersModel(), &TransfersModel::unblockUi, this, &TransfersWidget::onUiUnblockedRequested);
     connect(app->getTransfersModel(), &TransfersModel::unblockUiAndFilter, this, &TransfersWidget::onUiUnblockedAndFilter);
@@ -88,7 +88,6 @@ void TransfersWidget::configureTransferView()
     ui->tvTransfers->setDragDropMode(QAbstractItemView::InternalMove);
     ui->tvTransfers->enableContextMenu();
 
-    mLoadingScene.setView(ui->tvTransfers);
     mDelegateHoverManager.setView(ui->tvTransfers);
 }
 
@@ -400,18 +399,18 @@ bool TransfersWidget::eventFilter(QObject *watched, QEvent *event)
 
 bool TransfersWidget::isLoadingViewSet()
 {
-    return mLoadingScene.isLoadingViewSet();
+    return ui->tvTransfers->loadingView().isLoadingViewSet();
 }
 
 void TransfersWidget::setScanningWidgetVisible(bool state)
 {
     mScanningIsActive = state;
 
-    if(!state && mLoadingScene.isLoadingViewSet())
+    if(!state && ui->tvTransfers->loadingView().isLoadingViewSet())
     {
         emit disableTransferManager(true);
     }
-    else if(state && mLoadingScene.isLoadingViewSet())
+    else if(state && ui->tvTransfers->loadingView().isLoadingViewSet())
     {
         emit disableTransferManager(false);
     }
@@ -419,19 +418,16 @@ void TransfersWidget::setScanningWidgetVisible(bool state)
 
 void TransfersWidget::onUiBlockedRequested()
 {
-    mLoadingScene.toggleLoadingScene(true);
+    ui->tvTransfers->loadingView().toggleLoadingScene(true);
 }
 
 void TransfersWidget::onUiUnblockedRequested()
 {
-    mLoadingScene.toggleLoadingScene(false);
+    ui->tvTransfers->loadingView().toggleLoadingScene(false);
 }
 
 void TransfersWidget::onUiLoadingViewVisibilityChanged(bool state)
 {
-    ui->tvTransfers->blockSignals(state);
-    ui->tvTransfers->header()->blockSignals(state);
-
     if(!mScanningIsActive)
     {
         emit disableTransferManager(state);
@@ -453,7 +449,7 @@ void TransfersWidget::onUiLoadingViewVisibilityChanged(bool state)
 
 void TransfersWidget::onUiUnblockedAndFilter()
 {
-    if(mLoadingScene.isLoadingViewSet())
+    if(ui->tvTransfers->loadingView().isLoadingViewSet())
     {
         mProxyModel->refreshFilterFixedString();
     }

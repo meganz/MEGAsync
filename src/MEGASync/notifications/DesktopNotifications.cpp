@@ -67,7 +67,7 @@ DesktopNotifications::DesktopNotifications(const QString &appName, QSystemTrayIc
     appDir.mkdir(iconFolderName);
     copyIconsToAppFolder(getIconsPath());
 
-    QObject::connect(&mRemovedSharedNotificator, &RemovedSharesNotificator::sendClusteredAlert, this, &DesktopNotifications::receiveClusteredAlert);
+    QObject::connect(&mDelayedNotificator, &NotificationDelayer::sendClusteredAlert, this, &DesktopNotifications::receiveClusteredAlert);
 }
 
 QString DesktopNotifications::getItemsAddedText(mega::MegaUserAlert *info)
@@ -282,10 +282,11 @@ void DesktopNotifications::processAlert(mega::MegaUserAlert* alert)
         break;
     }
     case mega::MegaUserAlert::TYPE_REMOVEDSHAREDNODES:
+    case mega::MegaUserAlert::TYPE_UPDATEDSHAREDNODES:
     {
         if(mPreferences->isNotificationEnabled(Preferences::NotificationsTypes::NODES_SHARED_WITH_ME_CREATED_OR_REMOVED))
         {
-            mRemovedSharedNotificator.addUserAlert(alert, fullName);
+            mDelayedNotificator.addUserAlert(alert, fullName);
         }
         break;
     }
@@ -702,32 +703,58 @@ void DesktopNotifications::actionPressedOnDownloadFinishedTransferNotification(M
         return;
     }
 
-    auto dataId = notification->getData().toULongLong();
-    auto data = TransferMetaDataContainer::getAppData<DownloadTransferMetaData>(dataId);
-    if(data)
+    if(notification->getData().isValid())
     {
+        auto dataId = notification->getData().toULongLong();
+        auto data = TransferMetaDataContainer::getAppData<DownloadTransferMetaData>(dataId);
+        if(data)
+        {
+            switch(action)
+            {
+                case MegaNotification::Action::firstButton:
+                {
+                    if(data->allHaveFailed())
+                    {
+                        data->unlinkNotification();
+                        MegaSyncApp->getTransfersModel()->retryTransfersByAppDataId(data);
+                    }
+                    else
+                    {
+                        auto localPaths = data->getLocalPaths();
+                        if(!localPaths.isEmpty())
+                        {
+                            Platform::getInstance()->showInFolder(localPaths.first());
+                        }
+                        else
+                        {
+                            QtConcurrent::run(QDesktopServices::openUrl,
+                                              QUrl::fromLocalFile(data->getLocalTargetPath()));
+                        }
+                    }
+                    break;
+                }
+                case MegaNotification::Action::secondButton:
+                {
+                    if(data->isSingleTransfer())
+                    {
+                        auto localPaths = data->getLocalPaths();
+                        if(!localPaths.isEmpty())
+                        {
+                            QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(localPaths.first()));
+                        }
+                    }
+                    else
+                    {
+                        if(data->someHaveFailed())
+                        {
+                            data->unlinkNotification();
+                            MegaSyncApp->getTransfersModel()->retryTransfersByAppDataId(data);
+                        }
+                    }
 
-        switch(action)
-        {
-        case MegaNotification::Action::firstButton:
-        {
-            if(data->isSingleTransfer() && !data->getLocalPaths().isEmpty())
-            {
-                Platform::getInstance()->showInFolder(data->getLocalPaths().first());
+                    break;
+                }
             }
-            else
-            {
-                auto path = data->getData().toString();
-                QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(path));
-            }
-            break;
-        }
-        case MegaNotification::Action::secondButton:
-        {
-            auto path = data->getData().toString();
-            QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(path));
-            break;
-        }
         }
     }
 }
@@ -750,15 +777,34 @@ void DesktopNotifications::actionPressedOnUploadFinishedTransferNotification(Meg
             {
             case MegaNotification::Action::firstButton:
             {
-                auto node = UploadTransferMetaData::getDestinationNodeByData(data);
-                viewShareOnWebClientByHandle(QString::fromUtf8(node->getBase64Handle()));
+                if(data->allHaveFailed())
+                {
+                    data->unlinkNotification();
+                    MegaSyncApp->getTransfersModel()->retryTransfersByAppDataId(data);
+                }
+                else
+                {
+                    auto node = UploadTransferMetaData::getDestinationNodeByData(data);
+                    if(node)
+                    {
+                        viewShareOnWebClientByHandle(QString::fromUtf8(node->getBase64Handle()));
+                    }
+                }
 
                 break;
             }
             case MegaNotification::Action::secondButton:
             {
-                auto nodes = UploadTransferMetaData::getNodesByData(data);
-                getRemoteNodeLink(nodes);
+                if(data->someHaveFailed())
+                {
+                    data->unlinkNotification();
+                    MegaSyncApp->getTransfersModel()->retryTransfersByAppDataId(data);
+                }
+                else if(data->isSingleTransfer())
+                {
+                    QList<std::shared_ptr<mega::MegaNode>> nodes = UploadTransferMetaData::getNodesByData(data);
+                    getRemoteNodeLink(nodes);
+                }
                 break;
             }
             }
@@ -821,13 +867,19 @@ void DesktopNotifications::viewShareOnWebClientByHandle(const QString& nodeBase6
     }
 }
 
-void DesktopNotifications::receiveClusteredAlert(mega::MegaUserAlert *alert, const QString &message) const
+void DesktopNotifications::receiveClusteredAlert(mega::MegaUserAlert *alert, const QString& message) const
 {
     switch (alert->getType())
     {
         case mega::MegaUserAlert::TYPE_REMOVEDSHAREDNODES:
         {
             notifySharedUpdate(alert, message, REMOVED_SHARED_NODES);
+            break;
+        }
+        case mega::MegaUserAlert::TYPE_UPDATEDSHAREDNODES:
+        {
+            notifySharedUpdate(alert, message, NEW_SHARED_NODES);
+            break;
         }
     }
 }

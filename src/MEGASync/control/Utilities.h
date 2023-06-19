@@ -13,6 +13,8 @@
 #include <QDir>
 #include <QIcon>
 #include <QLabel>
+#include <QQueue>
+
 #include <QEasingCurve>
 
 #include <functional>
@@ -349,6 +351,8 @@ public:
     static void openInMega(mega::MegaHandle handle);
     static void openBackupCenter();
 
+    static QString getCommonPath(const QString& path1, const QString& path2, bool cloudPaths);
+
 private:
     Utilities() {}
     static QHash<QString, QString> extensionIcons;
@@ -418,8 +422,7 @@ public:
 
     // Constructor with origin and pointer to MEGA node. Default to unknown/nullptr
     WrappedNode(TransferOrigin from = WrappedNode::TransferOrigin::FROM_UNKNOWN,
-                mega::MegaNode* node = nullptr)
-        : mTransfersFrom(from), mNode(node) {}
+                mega::MegaNode* node = nullptr);
 
     // Destructor
     ~WrappedNode()
@@ -447,5 +450,7 @@ private:
     // Wrapped MEGA node
     mega::MegaNode* mNode;
 };
+
+Q_DECLARE_METATYPE(QQueue<WrappedNode*>)
 
 #endif // UTILITIES_H

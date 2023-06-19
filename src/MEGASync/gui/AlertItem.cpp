@@ -9,6 +9,8 @@
 #include <QFutureWatcher>
 #include <QFuture>
 
+#include "DateTimeFormatter.h"
+
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
 #endif
@@ -128,6 +130,7 @@ void AlertItem::setAlertType(int type)
             case MegaUserAlert::TYPE_DELETEDSHARE:
             case MegaUserAlert::TYPE_NEWSHAREDNODES:
             case MegaUserAlert::TYPE_REMOVEDSHAREDNODES:
+            case MegaUserAlert::TYPE_UPDATEDSHAREDNODES:
             {
                 if (type == MegaUserAlert::TYPE_DELETEDSHARE)
                 {
@@ -257,6 +260,18 @@ void AlertItem::setAlertHeading(MegaUserAlert *alert)
             }
             break;
         }
+        case MegaUserAlert::TYPE_UPDATEDSHAREDNODES:
+        {
+            ui->sIconWidget->setCurrentWidget(ui->pSharedFolder);
+            ui->sIconWidget->show();
+            mNotificationHeading = MegaNodeNames::getNodeName(mAlertNode.get());
+
+            if (mNotificationHeading.isEmpty())
+            {
+                mNotificationHeading = tr("Shared folder updated");
+            }
+            break;
+        }
         // Payment notifications
         case MegaUserAlert::TYPE_PAYMENT_SUCCEEDED:
         case MegaUserAlert::TYPE_PAYMENT_FAILED:
@@ -369,6 +384,13 @@ void AlertItem::setAlertContent(MegaUserAlert *alert)
                         .replace(QString::fromUtf8("[A]"), formatRichString(getUserFullName(alert)));
                 break;
             }
+            case MegaUserAlert::TYPE_UPDATEDSHAREDNODES:
+            {
+                int64_t updatedItems = alert->getNumber(0);
+                notificationContent = tr("[A] updated %n item", "", static_cast<int>(updatedItems))
+                        .replace(QString::fromUtf8("[A]"), formatRichString(getUserFullName(alert)));
+                break;
+            }
             // Payment notifications
             case MegaUserAlert::TYPE_PAYMENT_SUCCEEDED:
                 notificationContent = tr("Your payment for the [A] plan was received")
@@ -446,32 +468,13 @@ void AlertItem::setAlertTimeStamp(int64_t ts)
 {
     if (ts != -1)
     {
-        QString dateTimeFormat;
         const QDateTime dateTime{QDateTime::fromMSecsSinceEpoch(ts * 1000)};
-        const bool sameYear(dateTime.date().year() == QDateTime::currentDateTime().date().year());
-        const bool sameWeek{QDateTime::currentDateTime().date().weekNumber() == dateTime.date().weekNumber()};
-
-        if(sameWeek && sameYear)
-        {
-            dateTimeFormat.append(QStringLiteral("dddd, "));
-        }
-        dateTimeFormat.append(QStringLiteral("d MMMM "));
-
-        if(!sameYear)
-        {
-            dateTimeFormat.append(QStringLiteral("yyyy "));
-        }
-
-        const QString language{static_cast<MegaApplication*>(qApp)->getCurrentLanguageCode()};
-        dateTimeFormat.append(QLocale(language).timeFormat(QLocale::ShortFormat));
-        const QString dateTimeTranslated{QLocale(language).toString(dateTime, dateTimeFormat)};
-        ui->lTimeStamp->setText(dateTimeTranslated);
+        ui->lTimeStamp->setText(MegaSyncApp->getFormattedDateByCurrentLanguage(dateTime));
     }
     else
     {
         ui->lTimeStamp->setText(QString::fromUtf8(""));
     }
-
 }
 
 QString AlertItem::getHeadingString()
@@ -516,3 +519,4 @@ QString AlertItem::getUserFullName(MegaUserAlert *alert)
     }
     return QString::fromUtf8(alert->getEmail());
 }
+

@@ -24,6 +24,8 @@ using namespace WinToastLib;
 
 using namespace mega;
 
+const QString& MegaNotificationBase::defaultImage = QString();
+
 Notificator::Notificator(const QString &programName, QSystemTrayIcon *trayicon, QObject *parent) :
     NotificatorBase(programName, trayicon, parent)
 {

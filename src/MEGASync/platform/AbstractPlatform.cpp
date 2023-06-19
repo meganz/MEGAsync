@@ -1,5 +1,8 @@
 #include "AbstractPlatform.h"
 
+#include "MultiQFileDialog.h"
+#include "control/DialogOpener.h"
+
 void AbstractPlatform::prepareForSync()
 {
 
@@ -60,16 +63,6 @@ void AbstractPlatform::enableDialogBlur(QDialog* /*dialog*/)
 {
 }
 
-void AbstractPlatform::execBackgroundWindow(QDialog *window)
-{
-    window->exec();
-}
-
-void AbstractPlatform::showBackgroundWindow(QDialog *window)
-{
-    window->show();
-}
-
 void AbstractPlatform::uninstall()
 {
 }
@@ -115,9 +108,127 @@ void AbstractPlatform::initMenu(QMenu *m, const char *objectName, const bool app
     }
 }
 
-QStringList AbstractPlatform::multipleUpload(QString /*uploadTitle*/)
+void AbstractPlatform::fileSelector(QString title, QString defaultDir, bool multiSelection, QWidget* parent, std::function<void(QStringList)> func)
 {
-    return QStringList();
+    auto previousFileUploadSelector = DialogOpener::findDialog<QFileDialog>();
+    if(previousFileUploadSelector)
+    {
+        defaultDir = previousFileUploadSelector->getDialog()->directory().path();
+    }
+
+    QPointer<QFileDialog> fileDialog = new QFileDialog(parent);
+    fileDialog->setWindowTitle(title);
+    fileDialog->setDirectory(defaultDir);
+    fileDialog->setOption(QFileDialog::DontResolveSymlinks, true);
+    fileDialog->setOption(QFileDialog::DontUseNativeDialog, false);
+    if(multiSelection)
+    {
+        fileDialog->setFileMode(QFileDialog::ExistingFiles);
+    }
+    else
+    {
+        fileDialog->setFileMode(QFileDialog::ExistingFile);
+    }
+    //Orphan native dialogs must be modal in Windows and Linux. On macOS this method has its own implementation.
+    if(!parent)
+    {
+        fileDialog->setModal(true);
+    }
+    DialogOpener::showDialog<QFileDialog>(fileDialog, [fileDialog, func]()
+    {
+        QStringList files;
+        if(fileDialog->result() == QDialog::Accepted)
+        {
+            files = fileDialog->selectedFiles();
+        }
+        func(files);
+    });
+}
+
+void AbstractPlatform::folderSelector(QString title, QString defaultDir, bool multiSelection, QWidget* parent, std::function<void(QStringList)> func)
+{
+    auto previousFileUploadSelector = DialogOpener::findDialog<QFileDialog>();
+    if(previousFileUploadSelector)
+    {
+        defaultDir = previousFileUploadSelector->getDialog()->directory().path();
+    }
+
+    if(!multiSelection)
+    {
+        QPointer<QFileDialog> fileDialog = new QFileDialog(parent);
+        fileDialog->setWindowTitle(title);
+        fileDialog->setDirectory(defaultDir);
+        fileDialog->setOption(QFileDialog::DontResolveSymlinks, true);
+        fileDialog->setOption(QFileDialog::DontUseNativeDialog, false);
+        fileDialog->setOption(QFileDialog::ShowDirsOnly, true);
+        fileDialog->setFileMode(QFileDialog::DirectoryOnly);
+        //Orphan native dialogs must be modal in Windows and Linux. On macOS this method has its own implementation.
+        if(!parent)
+        {
+            fileDialog->setModal(true);
+        }
+
+        DialogOpener::showDialog<QFileDialog>(fileDialog, [fileDialog, func]()
+        {
+            QStringList files;
+            if(fileDialog->result() == QDialog::Accepted)
+            {
+                files = fileDialog->selectedFiles();
+            }
+            func(files);
+        });
+    }
+    else
+    {
+        auto multiUploadFileDialog = new MultiQFileDialog(parent,
+                                                      title,
+                                                      defaultDir, multiSelection);
+        multiUploadFileDialog->setOption(QFileDialog::DontResolveSymlinks, true);
+        multiUploadFileDialog->setOption(QFileDialog::ShowDirsOnly, true);
+
+        DialogOpener::showDialog<MultiQFileDialog>(multiUploadFileDialog, [multiUploadFileDialog, func](){
+            QStringList files;
+            if(multiUploadFileDialog->result() == QDialog::Accepted)
+            {
+                files = multiUploadFileDialog->selectedFiles();
+            }
+            func(files);
+        });
+    }
+}
+
+void AbstractPlatform::fileAndFolderSelector(QString title, QString defaultDir, bool multiSelection, QWidget* parent, std::function<void(QStringList)> func)
+{
+    auto previousFileUploadSelector = DialogOpener::findDialog<MultiQFileDialog>();
+     if(previousFileUploadSelector)
+     {
+         defaultDir = previousFileUploadSelector->getDialog()->directory().path();
+     }
+
+    auto multiUploadFileDialog = new MultiQFileDialog(parent,
+                                                  title,
+                                                  defaultDir, multiSelection);
+
+    multiUploadFileDialog->setOption(QFileDialog::DontResolveSymlinks, true);
+
+    DialogOpener::showDialog<MultiQFileDialog>(multiUploadFileDialog, [func, multiUploadFileDialog](){
+        QStringList files;
+        if(multiUploadFileDialog->result() == QDialog::Accepted)
+        {
+            files = multiUploadFileDialog->selectedFiles();
+        }
+        func(files);
+    });
+}
+
+void AbstractPlatform::raiseFileFolderSelectors()
+{
+    DialogOpener::raiseAllDialogs();
+}
+
+void AbstractPlatform::closeFileFolderSelectors(QWidget *parent)
+{
+
 }
 
 void AbstractPlatform::addSyncToLeftPane(QString /*syncPath*/, QString /*syncName*/, QString /*uuid*/)

@@ -530,16 +530,6 @@ QString SyncController::getSyncTypeString(const mega::MegaSync::SyncType& syncTy
             typeString = QLatin1String("Backup");
             break;
         }
-        case MegaSync::SyncType::TYPE_UP:
-        {
-            typeString = QLatin1String("One-way: up");
-            break;
-        }
-        case MegaSync::SyncType::TYPE_DOWN:
-        {
-            typeString = QLatin1String("One-way: down");
-            break;
-        }
         case MegaSync::SyncType::TYPE_UNKNOWN:
         default:
         {
