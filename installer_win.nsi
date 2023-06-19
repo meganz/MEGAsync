@@ -718,11 +718,11 @@ modeselected:
   AccessControl::GrantOnFile "$INSTDIR\MEGAupdater.exe" "$USERNAME" "GenericRead + GenericWrite"
 
 !ifdef BUILD_X64_VERSION
-  !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libcrypto-1_1-x64.dll"  "$INSTDIR\libcrypto-1_1-x64.dll"
-  !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libssl-1_1-x64.dll"  "$INSTDIR\libssl-1_1-x64.dll"
+  !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libssl-3-x64.dll"  "$INSTDIR\libssl-3-x64.dll"
+  !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libcrypto-3-x64.dll"  "$INSTDIR\libcrypto-3-x64.dll"
 !else
-  !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libcrypto-1_1.dll"  "$INSTDIR\libcrypto-1_1.dll"
-  !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libssl-1_1.dll"  "$INSTDIR\libssl-1_1.dll"
+  !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libcrypto-3.dll"  "$INSTDIR\libcrypto-3.dll"
+  !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libssl-3.dll"  "$INSTDIR\libssl-3.dll"
 !endif
 
   File "${SRCDIR_MEGASYNC}\libcurl.dll"
@@ -770,6 +770,13 @@ modeselected:
   Delete "$INSTDIR\avutil-56.dll"
   Delete "$INSTDIR\swscale-5.dll"
   Delete "$INSTDIR\swresample-3.dll"
+
+  Delete "$INSTDIR\libcrypto-1_1-x64.dll"
+  Delete "$INSTDIR\libssl-1_1-x64.dll"
+
+  Delete "$INSTDIR\libcrypto-1_1.dll"
+  Delete "$INSTDIR\libssl-1_1.dll"
+
 
 !ifndef BUILD_UNINSTALLER  ; if building uninstaller, skip this check
   File "${SRCDIR_MEGASYNC}\${UNINSTALLER_NAME}"
