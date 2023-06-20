@@ -295,6 +295,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/control/TextDecorator.h
     ${MEGAsyncDir}/control/TransferBatch.h
     ${MEGAsyncDir}/control/DialogOpener.h
+    ${MEGAsyncDir}/control/Version.h
     ${MEGAsyncDir}/control/FileFolderAttributes.h
 
     ${MEGAsyncDir}/gui/AlertItem.h

@@ -134,7 +134,7 @@ min-height:32px;
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="../../../Resources_macx.qrc">
+           <iconset resource="../../../Resources_win.qrc">
             <normaloff>:/images/node_selector/chevron-right-active.png</normaloff>
             <disabledoff>:/images/node_selector/chevron-right.png</disabledoff>:/images/node_selector/chevron-right-active.png</iconset>
           </property>
@@ -242,7 +242,7 @@ color:#3D3D3D;
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="../../../Resources_macx.qrc">
+           <iconset resource="../../../Resources_win.qrc">
             <normaloff>:/images/node_selector/chevron-left-active.png</normaloff>
             <disabledoff>:/images/node_selector/chevron-left.png</disabledoff>:/images/node_selector/chevron-left-active.png</iconset>
           </property>
@@ -404,7 +404,7 @@ QToolButton:pressed
               <string>Cloud drive</string>
              </property>
              <property name="icon">
-              <iconset resource="../../../Resources_macx.qrc">
+              <iconset resource="../../../Resources_win.qrc">
                <normaloff>:/images/node_selector/search_filter/small_cloud_default.png</normaloff>:/images/node_selector/search_filter/small_cloud_default.png</iconset>
              </property>
              <property name="iconSize">
@@ -434,6 +434,9 @@ QToolButton:pressed
              <property name="hover_selected" stdset="0">
               <bool>true</bool>
              </property>
+             <attribute name="buttonGroup">
+              <string notr="true">searchFilterButtonGroup</string>
+             </attribute>
             </widget>
            </item>
            <item>
@@ -445,7 +448,7 @@ QToolButton:pressed
               <string>Backups</string>
              </property>
              <property name="icon">
-              <iconset resource="../../../Resources_macx.qrc">
+              <iconset resource="../../../Resources_win.qrc">
                <normaloff>:/images/node_selector/search_filter/small_database_default.png</normaloff>:/images/node_selector/search_filter/small_database_default.png</iconset>
              </property>
              <property name="iconSize">
@@ -472,6 +475,9 @@ QToolButton:pressed
              <property name="hover_selected" stdset="0">
               <bool>true</bool>
              </property>
+             <attribute name="buttonGroup">
+              <string notr="true">searchFilterButtonGroup</string>
+             </attribute>
             </widget>
            </item>
            <item>
@@ -483,7 +489,7 @@ QToolButton:pressed
               <string>Incoming Shares</string>
              </property>
              <property name="icon">
-              <iconset resource="../../../Resources_macx.qrc">
+              <iconset resource="../../../Resources_win.qrc">
                <normaloff>:/images/node_selector/search_filter/small_folder_default.png</normaloff>:/images/node_selector/search_filter/small_folder_default.png</iconset>
              </property>
              <property name="iconSize">
@@ -510,6 +516,9 @@ QToolButton:pressed
              <property name="hover_selected" stdset="0">
               <bool>true</bool>
              </property>
+             <attribute name="buttonGroup">
+              <string notr="true">searchFilterButtonGroup</string>
+             </attribute>
             </widget>
            </item>
           </layout>
@@ -785,7 +794,7 @@ QScrollBar::handle:vertical
                 <string notr="true"/>
                </property>
                <property name="icon">
-                <iconset resource="../../../Resources_macx.qrc">
+                <iconset resource="../../../Resources_win.qrc">
                  <normaloff>:/images/node_selector/view/cloud.png</normaloff>:/images/node_selector/view/cloud.png</iconset>
                </property>
                <property name="iconSize">
@@ -951,7 +960,7 @@ background-color:qlineargradient( x1:0 y1:0, x2:1 y2:0, stop:0 #8D8D8D, stop:1 #
             <string>New folder</string>
            </property>
            <property name="icon">
-            <iconset resource="../../../Resources_macx.qrc">
+            <iconset resource="../../../Resources_win.qrc">
              <normaloff>:/images/node_selector/plus.png</normaloff>:/images/node_selector/plus.png</iconset>
            </property>
            <property name="iconSize">
@@ -1056,10 +1065,7 @@ color:#333333;
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../../Resources_macx.qrc"/>
-  <include location="../../../Resources_macx.qrc"/>
-  <include location="../../../Resources_macx.qrc"/>
-  <include location="../../../Resources_macx.qrc"/>
+  <include location="../../../Resources_win.qrc"/>
  </resources>
  <connections/>
  <buttongroups>

@@ -1,4 +1,5 @@
 #include "Preferences.h"
+#include "Version.h"
 #include "platform/Platform.h"
 #include "UserAttributesRequests/FullName.h"
 
@@ -10,17 +11,15 @@ using namespace mega;
 #ifdef WIN32
 extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
-
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/5.0.17.0";
-const int Preferences::VERSION_CODE = 5017;
-const int Preferences::BUILD_ID = 0;
-// Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("5.0.17");
-QString Preferences::SDK_ID = QString::fromAscii("4b61f7f");
-const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
-"- Sync Rework ALPHA test version.\n"
-"- All the very latest code changes.\n"));
+const QString Preferences::USER_AGENT = QString::fromUtf8("%1/%2").arg(QString::fromUtf8(VER_FILEDESCRIPTION_STR),
+                                                                       QString::fromUtf8(VER_PRODUCTVERSION_STR));
+const int Preferences::VERSION_CODE = VER_FILEVERSION_CODE;
+const int Preferences::BUILD_ID = VER_BUILD_ID;
+// VER_PRODUCTVERSION_STR is "W.X.Y.Z". Drop the last number to keep "W.X.Y"
+const QString Preferences::VERSION_STRING = QString::fromUtf8(VER_PRODUCTVERSION_STR).left(QString::fromUtf8(VER_PRODUCTVERSION_STR).lastIndexOf(QLatin1Char('.')));
+QString Preferences::SDK_ID = QString::fromUtf8(VER_SDK_ID);
+const QString Preferences::CHANGELOG = QString::fromUtf8(VER_CHANGES_NOTES);
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");

@@ -1,7 +1,7 @@
 #ifndef PREFERENCES_H
 #define PREFERENCES_H
 
-#include "megaapi.h"
+#include <megaapi.h>
 #include "control/EncryptedSettings.h"
 #include "syncs/control/SyncInfo.h"
 
@@ -498,7 +498,7 @@ public:
     static const char UPDATE_PUBLIC_KEY[];
 
     static const char CLIENT_KEY[];
-    static const char USER_AGENT[];
+    static const QString USER_AGENT;
     static const int VERSION_CODE;
     static const int BUILD_ID;
     static const QString VERSION_STRING;
