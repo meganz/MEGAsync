@@ -334,6 +334,11 @@ int TransferMetaData::getFileTransfersCancelled() const
     return mFiles.cancelledTransfers.size();
 }
 
+int TransferMetaData::getNonExistentCount() const
+{
+    return mFiles.nonExistFailedTransfers.size();
+}
+
 TransferMetaDataItemId TransferMetaData::getFirstTransferIdByState(TransferData::TransferState state) const
 {
     TransferMetaDataItemId id = mFiles.getFirstTransferIdByState(state);

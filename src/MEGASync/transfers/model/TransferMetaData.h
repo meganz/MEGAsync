@@ -284,6 +284,7 @@ public:
     void getFileTransferFailedTags(QList<std::shared_ptr<TransferMetaDataItem> > &files, QList<TransferMetaDataItemId>& folders) const;
     QList<TransferMetaDataItemId> getFileFailedTagsFromFolderTag(const TransferMetaDataItemId& folderId) const;
     int getFileTransfersCancelled() const;
+    int getNonExistentCount() const;
 
     TransferMetaDataItemId getFirstTransferIdByState(TransferData::TransferState state) const;
     QList<TransferMetaDataItemId> getTransferIdsByState(TransferData::TransferState state) const;
