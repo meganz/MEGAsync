@@ -138,17 +138,9 @@ if [ ${build} -eq 1 -o ${build_cmake} -eq 1 ]; then
     fi
 
     if [ ${build_cmake} -ne 1 ]; then
-        AVCODEC_VERSION=libavcodec.58.dylib
-        AVFORMAT_VERSION=libavformat.58.dylib
-        AVUTIL_VERSION=libavutil.56.dylib
-        SWSCALE_VERSION=libswscale.5.dylib
         CARES_VERSION=libcares.2.dylib
         CURL_VERSION=libcurl.dylib
 
-        AVCODEC_PATH=${VCPKGPATH}/vcpkg/installed/${target_arch//x86_64/x64}-osx-mega/lib/$AVCODEC_VERSION
-        AVFORMAT_PATH=${VCPKGPATH}/vcpkg/installed/${target_arch//x86_64/x64}-osx-mega/lib/$AVFORMAT_VERSION
-        AVUTIL_PATH=${VCPKGPATH}/vcpkg/installed/${target_arch//x86_64/x64}-osx-mega/lib/$AVUTIL_VERSION
-        SWSCALE_PATH=${VCPKGPATH}/vcpkg/installed/${target_arch//x86_64/x64}-osx-mega/lib/$SWSCALE_VERSION
         CARES_PATH=${VCPKGPATH}/vcpkg/installed/${target_arch//x86_64/x64}-osx-mega/lib/$CARES_VERSION
         CURL_PATH=${VCPKGPATH}/vcpkg/installed/${target_arch//x86_64/x64}-osx-mega/lib/$CURL_VERSION
     fi
@@ -191,19 +183,13 @@ if [ ${build} -eq 1 -o ${build_cmake} -eq 1 ]; then
     touch ${MSYNC_PREFIX}MEGAsync.app/Contents/MacOS/MEGAclient
 
     if [ ${build_cmake} -ne 1 ]; then
-        [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$AVCODEC_VERSION ] && cp -L $AVCODEC_PATH MEGASync/MEGAsync.app/Contents/Frameworks/
-        [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$AVFORMAT_VERSION ] && cp -L $AVFORMAT_PATH MEGASync/MEGAsync.app/Contents/Frameworks/
-        [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$AVUTIL_VERSION ] && cp -L $AVUTIL_PATH MEGASync/MEGAsync.app/Contents/Frameworks/
-        [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$SWSCALE_VERSION ] && cp -L $SWSCALE_PATH MEGASync/MEGAsync.app/Contents/Frameworks/
         [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$CARES_VERSION ] && cp -L $CARES_PATH MEGASync/MEGAsync.app/Contents/Frameworks/
         [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$CURL_VERSION ] && cp -L $CURL_PATH MEGASync/MEGAsync.app/Contents/Frameworks/
 
-        if [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$AVCODEC_VERSION ]  \
-            || [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$AVFORMAT_VERSION ]  \
-            || [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$AVUTIL_VERSION ]  \
-            || [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$SWSCALE_VERSION ];
+        if [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$CARES_VERSION ]  \
+            || [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$CURL_VERSION ];
         then
-            echo "Error copying FFmpeg libs to app bundle."
+            echo "Error copying libs to app bundle."
             exit 1
         fi
     fi
@@ -212,11 +198,6 @@ if [ ${build} -eq 1 -o ${build_cmake} -eq 1 ]; then
     /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString $MEGASYNC_VERSION" "${MSYNC_PREFIX}$APP_NAME.app/Contents/Info.plist"
 
     if [ ${build_cmake} -ne 1 ]; then
-        install_name_tool -change @loader_path/$AVCODEC_VERSION @executable_path/../Frameworks/$AVCODEC_VERSION MEGASync/MEGAsync.app/Contents/MacOS/MEGAsync
-        install_name_tool -change @loader_path/$AVFORMAT_VERSION @executable_path/../Frameworks/$AVFORMAT_VERSION MEGASync/MEGAsync.app/Contents/MacOS/MEGAsync
-        install_name_tool -change @loader_path/$AVUTIL_VERSION @executable_path/../Frameworks/$AVUTIL_VERSION MEGASync/MEGAsync.app/Contents/MacOS/MEGAsync
-        install_name_tool -change @loader_path/$SWSCALE_VERSION @executable_path/../Frameworks/$SWSCALE_VERSION MEGASync/MEGAsync.app/Contents/MacOS/MEGAsync
-
         rm -r $APP_NAME.app || :
         mv $MSYNC_PREFIX/$APP_NAME.app ./
     fi
