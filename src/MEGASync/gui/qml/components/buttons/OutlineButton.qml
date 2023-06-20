@@ -3,7 +3,13 @@ import Components.Buttons 1.0 as MegaButtons
 import Common 1.0
 
 MegaButtons.Button {
-    icons.color: Styles.buttonPrimary
+
+    icons {
+        colorEnabled: Styles.buttonPrimary
+        colorHovered: Styles.buttonPrimary
+        colorPressed: Styles.buttonPrimary
+    }
+
     colors {
         background: "transparent"
         disabled: "transparent"

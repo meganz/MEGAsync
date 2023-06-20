@@ -4,6 +4,7 @@ CardButton 1.0 CardButton.qml
 CardHorizontalButton 1.0 CardHorizontalButton.qml
 CardVerticalButton 1.0 CardVerticalButton.qml
 HelpButton 1.0 HelpButton.qml
+IconButton 1.0 IconButton.qml
 OutlineButton 1.0 OutlineButton.qml
 PrimaryButton 1.0 PrimaryButton.qml
 SecondaryButton 1.0 SecondaryButton.qml

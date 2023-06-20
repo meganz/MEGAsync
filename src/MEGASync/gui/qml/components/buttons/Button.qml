@@ -19,6 +19,7 @@ Qml.RoundButton {
 
     readonly property int focusBorderRadius: 11
     readonly property int focusBorderWidth: 3
+    property int borderWidth: 2
 
     Timer {
         id: busyTimer
@@ -29,7 +30,7 @@ Qml.RoundButton {
     }
 
     function getBorderColor() {
-        if(button.pressed) {
+        if(button.pressed || button.checked) {
             return colors.borderPressed;
         }
         if(button.hovered) {
@@ -42,7 +43,7 @@ Qml.RoundButton {
     }
 
     function getBackgroundColor() {
-        if(button.pressed) {
+        if(button.pressed || button.checked) {
             return colors.pressed;
         }
         if(button.hovered) {
@@ -55,7 +56,7 @@ Qml.RoundButton {
     }
 
     function getTextColor() {
-        if(button.pressed) {
+        if(button.pressed || button.checked) {
             return colors.textPressed;
         }
         if(button.hovered) {
@@ -65,6 +66,19 @@ Qml.RoundButton {
             return colors.textDisabled;
         }
         return colors.text;
+    }
+
+    function getIconColor() {
+        if(button.pressed || button.checked) {
+            return icons.colorPressed;
+        }
+        if(button.hovered) {
+            return icons.colorHovered;
+        }
+        if(!button.enabled && !icons.busyIndicatorVisible) {
+            return icons.colorDisabled;
+        }
+        return icons.colorEnabled;
     }
 
     bottomPadding: 8 + focusBorderWidth
@@ -122,7 +136,7 @@ Qml.RoundButton {
             anchors.leftMargin: button.focusBorderWidth
             width: button.width - 2 * button.focusBorderWidth
             height: button.height - 2 * button.focusBorderWidth
-            border.width: 2
+            border.width: borderWidth
             border.color: getBorderColor()
             radius: 6
             layer.enabled: true
@@ -159,7 +173,7 @@ Qml.RoundButton {
 
         MegaImages.SvgImage {
             source: icons.source
-            color: button.enabled ? icons.color : icons.disabledColor
+            color: getIconColor()
             sourceSize: icons.size
         }
     }
@@ -169,7 +183,10 @@ Qml.RoundButton {
 
         MegaBusyIndicator.BusyIndicator {
             imageSource: Images.loader
-            color: icons.color
+            color: icons.colorEnabled
         }
     }
+
+    Keys.onReturnPressed: button.clicked()
+    Keys.onEnterPressed: button.clicked()
 }

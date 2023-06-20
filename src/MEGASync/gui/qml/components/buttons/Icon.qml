@@ -1,6 +1,9 @@
 // System
 import QtQuick 2.12
 
+// Local
+import Common 1.0
+
 QtObject {
 
     enum Position {
@@ -9,8 +12,10 @@ QtObject {
         BOTH
     }
 
-    property color color
-    property color disabledColor
+    property color colorEnabled: Styles.textInverseAccent
+    property color colorDisabled: Styles.textDisabled
+    property color colorHovered: Styles.textInverseAccent
+    property color colorPressed: Styles.textInverseAccent
     property string source
     property int position: Icon.Position.RIGHT
     property size size: Qt.size(16, 16)

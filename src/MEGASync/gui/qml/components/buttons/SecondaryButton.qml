@@ -3,8 +3,12 @@ import Components.Buttons 1.0 as MegaButtons
 import Common 1.0
 
 MegaButtons.Button {
-    icons.color: Styles.iconSecondary
-    icons.disabledColor: Styles.textDisabled
+
+    icons {
+        colorEnabled: Styles.iconSecondary
+        colorHovered: Styles.iconSecondary
+        colorPressed: Styles.iconSecondary
+    }
 
     colors {
         background: Styles.buttonSecondary
