@@ -16,7 +16,7 @@ ChangeEmailPageForm {
     emailTextField.text: Onboarding.email
 
     Connections {
-        target: loginCpp
+        target: loginController
 
         onChangeRegistrationEmailFinished: (success) => {
             if(success) {

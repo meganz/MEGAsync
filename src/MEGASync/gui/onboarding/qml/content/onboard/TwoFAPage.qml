@@ -11,7 +11,7 @@ TwoFAPageForm {
     loginButton.onClicked: {
         state = code2FAStatus;
         loginButton.icons.busyIndicatorVisible = true;
-        Onboarding.onTwoFARequested(twoFAField.key);
+        loginController.login2FA(twoFAField.key);
     }
 
     loginButton.progress.onAnimationFinished: {
@@ -23,7 +23,7 @@ TwoFAPageForm {
     }
 
     Connections {
-        target: loginCpp
+        target: loginController
 
         onTwoFAFailed: {
             twoFAField.hasError = true;
@@ -32,12 +32,46 @@ TwoFAPageForm {
         }
 
         onFetchingNodesProgress: {
-            loginButton.progressValue = progress;
+            loginButton.progress.value = progress;
+        }
+
+        onFetchingNodesFinished: {
+            loginButton.progress.value = 1;
         }
 
         onLoginFinished: {
-            state = fetchNodesStatus;
+            switch(errorCode)
+            {
+            case -26: //mega::MegaError::API_EMFAREQUIRED:->2FA required
+            {
+                loginButton.icons.busyIndicatorVisible = false;
+                registerFlow.state = twoFA;
+                break;
+            }
+            case -5: //mega::MegaError::API_EFAILED: ->
+            case -8: //mega::MegaError::API_EEXPIRED: -> 2FA failed
+            {
+                twoFAField.hasError = true;
+                loginButton.icons.busyIndicatorVisible = false;
+                state = normalStatus;
+                break;
+            }
+            case -6: //mega::MegaError::API_ETOOMANY: -> too many attempts
+            {
+                //what to do here?
+                break;
+            }
+            case -16: //mega::MegaError::API_EBLOCKED: ->  blocked account
+            {
+                //what to do here?
+                break;
+            }
+            case 0: //mega::MegaError::API_OK:
+            {
+                state = fetchNodesStatus;
+                break;
+            }
         }
-
+    }
     }
 }

@@ -2,12 +2,6 @@ import QtQuick 2.0
 
 Item {
     id: root
-    enum RegisterForm {
-        FIRST_NAME = 0,
-        LAST_NAME = 1,
-        EMAIL = 2,
-        PASSWORD = 3
-    }
 
     property string email: "test.email@mega.co.nz"
 

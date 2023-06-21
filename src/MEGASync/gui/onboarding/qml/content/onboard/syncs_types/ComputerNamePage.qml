@@ -20,7 +20,7 @@ ComputerNamePageForm {
         id: computerName
 
         onDeviceNameChanged: {
-            if(!computerName.requestingDeviceName) {
+            if(!computerName.requestingDeviceName && !computerName.changingDeviceName) {
                 mainFlow.state = syncType;
             }
         }

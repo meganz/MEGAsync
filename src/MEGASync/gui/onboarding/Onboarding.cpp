@@ -3,12 +3,12 @@
 #include "MegaApplication.h"
 #include "QMegaMessageBox.h"
 #include <QQmlEngine>
-#include "Login.h"
 #include "Syncs.h"
 #include "AccountInfoData.h"
 #include "ChooseFolder.h"
 #include "PasswordStrengthChecker.h"
 #include "ComputerName.h"
+#include "LoginController.h"
 
 using namespace mega;
 
@@ -18,10 +18,11 @@ Onboarding::Onboarding(QObject *parent)
     , mBackupController(new SyncController())
 {
     qmlRegisterModule("Onboard", 1, 0);
+    qmlRegisterModule("Onboarding", 1, 0);
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/OnboardingDialog.qml")), "Onboard", 1, 0, "OnboardingDialog");
     qmlRegisterSingletonType(QUrl(QString::fromUtf8("qrc:/content/onboard/OnboardingStrings.qml")), "Onboard", 1, 0, "OnboardingStrings");
 
-    qmlRegisterType<Login>("Login", 1, 0, "Login");
+    qmlRegisterType<LoginController>("LoginController", 1, 0, "LoginController");
     qmlRegisterType<Syncs>("Syncs", 1, 0, "Syncs");
     qmlRegisterType<PasswordStrengthChecker>("PasswordStrengthChecker", 1, 0, "PasswordStrengthChecker");
     qmlRegisterType<ComputerName>("ComputerName", 1, 0, "ComputerName");

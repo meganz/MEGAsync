@@ -6,9 +6,6 @@ import Common 1.0
 // Local
 import Onboard 1.0
 
-// C++
-import Login 1.0
-
 RegisterPageForm {
     id: registerPage
 
@@ -21,14 +18,8 @@ RegisterPageForm {
         nextButton.icons.busyIndicatorVisible = true;
         state = signUpStatus;
 
-        var formData = {
-            [Login.PASSWORD]: registerContent.password.text,
-            [Login.EMAIL]: registerContent.email.text,
-            [Login.FIRST_NAME]: registerContent.firstName.text,
-            [Login.LAST_NAME]: registerContent.lastName.text
-        }
-
-        loginCpp.onRegisterClicked(formData);
+        loginController.onRegisterClicked(registerContent.email.text, registerContent.password.text,
+                                   registerContent.firstName.text, registerContent.lastName.text);
     }
 
     nextButton.progress.onAnimationFinished: {
@@ -45,7 +36,7 @@ RegisterPageForm {
     }
 
     Connections {
-        target: loginCpp
+        target: loginController
 
         onRegisterFinished: (success) => {
             if(success) {

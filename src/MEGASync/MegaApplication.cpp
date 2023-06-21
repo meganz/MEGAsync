@@ -6,12 +6,14 @@
 #include "control/Utilities.h"
 #include "control/CrashHandler.h"
 #include "control/ExportProcessor.h"
+#include "control/LoginController.h"
 #include "EventUpdater.h"
 #include "platform/Platform.h"
 #include "OverQuotaDialog.h"
-#include "ConnectivityChecker.h"
 #include "TransferMetaData.h"
 #include "DuplicatedNodeDialogs/DuplicatedNodeDialog.h"
+#include "gui/node_selector/gui/NodeSelectorSpecializations.h"
+
 #include "PlatformStrings.h"
 #include "UserAttributesManager.h"
 #include "UserAttributesRequests/FullName.h"
@@ -239,7 +241,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     infoDialog = nullptr;
     blockState = MegaApi::ACCOUNT_NOT_BLOCKED;
     blockStateSet = false;
-    mSetupWizard = nullptr;
     mSettingsDialog = nullptr;
     reboot = false;
     exitAction = nullptr;
@@ -553,11 +554,6 @@ void MegaApplication::initialize()
     connect(downloader, &MegaDownloader::startingTransfers,
             &scanStageController, &ScanStageController::startDelayedScanStage);
     connect(downloader, &MegaDownloader::folderTransferUpdated, this, &MegaApplication::onFolderTransferUpdate);
-
-    connectivityTimer = new QTimer(this);
-    connectivityTimer->setSingleShot(true);
-    connectivityTimer->setInterval(Preferences::MAX_LOGIN_TIME_MS);
-    connect(connectivityTimer, SIGNAL(timeout()), this, SLOT(runConnectivityCheck()));
 
     proExpirityTimer.setSingleShot(true);
     connect(&proExpirityTimer, SIGNAL(timeout()), this, SLOT(proExpirityTimedOut()));
@@ -1176,19 +1172,14 @@ void MegaApplication::start()
     }
     else //Otherwise, login in the account
     {
-        QString theSession;
-        theSession = preferences->getSession();
-
-        if (theSession.size())
-        {
-            megaApi->fastLogin(theSession.toUtf8().constData());
-        }
-        else //In case preferences are corrupt with empty session, just unlink and remove associated data.
+        FastLoginController *loginController = new FastLoginController();
+        connect(loginController, &LoginController::fetchingNodesFinished,
+                loginController, &LoginController::deleteLater);
+        if (!loginController->fastLogin()) //In case preferences are corrupt with empty session, just unlink and remove associated data.
         {
             MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "MEGAsync preferences logged but empty session. Unlink account and fresh start.");
             unlink();
         }
-
         if (updated)
         {
             megaApi->sendEvent(AppStatsEvents::EVENT_UPDATE, "MEGAsync update", false, nullptr);
@@ -1266,7 +1257,8 @@ void MegaApplication::loggedIn(bool fromWizard)
         return;
     }
 
-    //DialogOpener::removeDialogByClass<QmlDialogWrapper<Onboarding>>();
+    LogoutController* logoutController = new LogoutController();
+    connect(logoutController, &LogoutController::onLogoutFinished, this, &MegaApplication::onLogout);
 
     //Send pending crash report log if neccessary
     if (!crashReportFilePath.isNull() && megaApi)
@@ -1504,26 +1496,41 @@ if (!preferences->lastExecutionTime())
     preferences->monitorUserAttributes();
 }
 
-void MegaApplication::startSyncs(QList<PreConfiguredSync> syncs)
+void MegaApplication::onLogout()
 {
-    if (appfinished)
-    {
-        return;
-    }
+    sender()->deleteLater();
 
-    // Load default exclusion rules before adding the new syncs from setup wizard.
-    // We could not load them before fetch nodes, because default exclusion rules
-    // are only created once the local preferences are logged.
-    std::unique_ptr<char[]> email(megaApi->getMyEmail());
-    loadSyncExclusionRules(QString::fromUtf8(email.get()));
+    model->reset();
+    mTransfersModel->resetModel();
 
-    // add syncs from setupWizard
-    for (auto & ps : syncs)
-    {
-        QString localFolderPath = ps.localFolder();
-        MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromLatin1("Adding sync %1 from SetupWizard: ").arg(localFolderPath).toUtf8().constData());
-        mSyncController->addSync(localFolderPath, ps.megaFolderHandle(), ps.syncName(), MegaSync::TYPE_TWOWAY);
-    }
+    // Queue processing of logout cleanup to avoid race conditions
+    // due to threadifing processing.
+    // Eg: transfers added to data model after a logout
+    mThreadPool->push([this]()
+                      {
+                          Utilities::queueFunctionInAppThread([this]()
+                          {
+                              if (preferences)
+                              {
+                                  if (preferences->logged())
+                                  {
+                                      clearUserAttributes();
+                                      preferences->unlink();
+                                      removeAllFinishedTransfers();
+                                      clearViewedTransfers();
+                                      preferences->setFirstStartDone();
+                                  }
+                                  else
+                                  {
+                                      preferences->resetGlobalSettings();
+                                  }
+
+                                  DialogOpener::closeAllDialogs();
+                                  start();
+                                  periodicTasks();
+                              }
+                          });
+                      });
 }
 
 void MegaApplication::applyStorageState(int state, bool doNotAskForUserStats)
@@ -2742,11 +2749,6 @@ int MegaApplication::getBlockState() const
     return blockState;
 }
 
-QPointer<SetupWizard> MegaApplication::getSetupWizard() const
-{
-    return mSetupWizard;
-}
-
 void MegaApplication::renewLocalSSLcert()
 {
     if (!updatingSSLcert)
@@ -2797,172 +2799,9 @@ void MegaApplication::scanningAnimationStep()
     trayIcon->setIcon(ic);
 }
 
-void MegaApplication::runConnectivityCheck()
-{
-    if (appfinished)
-    {
-        return;
-    }
-
-    QNetworkProxy proxy;
-    proxy.setType(QNetworkProxy::NoProxy);
-    if (preferences->proxyType() == Preferences::PROXY_TYPE_CUSTOM)
-    {
-        int proxyProtocol = preferences->proxyProtocol();
-        switch (proxyProtocol)
-        {
-        case Preferences::PROXY_PROTOCOL_SOCKS5H:
-            proxy.setType(QNetworkProxy::Socks5Proxy);
-            break;
-        default:
-            proxy.setType(QNetworkProxy::HttpProxy);
-            break;
-        }
-
-        proxy.setHostName(preferences->proxyServer());
-        proxy.setPort(qint16(preferences->proxyPort()));
-        if (preferences->proxyRequiresAuth())
-        {
-            proxy.setUser(preferences->getProxyUsername());
-            proxy.setPassword(preferences->getProxyPassword());
-        }
-    }
-    else if (preferences->proxyType() == MegaProxy::PROXY_AUTO)
-    {
-        MegaProxy* autoProxy = megaApi->getAutoProxySettings();
-        if (autoProxy && autoProxy->getProxyType()==MegaProxy::PROXY_CUSTOM)
-        {
-            string sProxyURL = autoProxy->getProxyURL();
-            QString proxyURL = QString::fromUtf8(sProxyURL.data());
-
-            QStringList parts = proxyURL.split(QString::fromUtf8("://"));
-            if (parts.size() == 2 && parts[0].startsWith(QString::fromUtf8("socks")))
-            {
-                proxy.setType(QNetworkProxy::Socks5Proxy);
-            }
-            else
-            {
-                proxy.setType(QNetworkProxy::HttpProxy);
-            }
-
-            QStringList arguments = parts[parts.size()-1].split(QString::fromUtf8(":"));
-            if (arguments.size() == 2)
-            {
-                proxy.setHostName(arguments[0]);
-                proxy.setPort(quint16(arguments[1].toInt()));
-            }
-        }
-        delete autoProxy;
-    }
-
-    ConnectivityChecker *connectivityChecker = new ConnectivityChecker(Preferences::PROXY_TEST_URL);
-    connectivityChecker->setProxy(proxy);
-    connectivityChecker->setTestString(Preferences::PROXY_TEST_SUBSTRING);
-    connectivityChecker->setTimeout(Preferences::PROXY_TEST_TIMEOUT_MS);
-
-    connect(connectivityChecker, SIGNAL(testError()), this, SLOT(onConnectivityCheckError()));
-    connect(connectivityChecker, SIGNAL(testSuccess()), this, SLOT(onConnectivityCheckSuccess()));
-    connect(connectivityChecker, SIGNAL(testFinished()), connectivityChecker, SLOT(deleteLater()));
-
-    connectivityChecker->startCheck();
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Running connectivity test...");
-}
-
-void MegaApplication::onConnectivityCheckSuccess()
-{
-    if (appfinished)
-    {
-        return;
-    }
-
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Connectivity test finished OK");
-}
-
-void MegaApplication::onConnectivityCheckError()
-{
-    if (appfinished)
-    {
-        return;
-    }
-
-    showErrorMessage(tr("MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall."));
-}
-
 void MegaApplication::proExpirityTimedOut()
 {
     updateUserStats(true, true, true, true, USERSTATS_PRO_EXPIRED);
-}
-
-void MegaApplication::loadSyncExclusionRules(QString email)
-{
-    assert(preferences->logged() || !email.isEmpty());
-
-    // if not logged in & email provided, read old syncs from that user and load new-cache sync from prev session
-    bool temporarilyLoggedPrefs = false;
-    if (!preferences->logged() && !email.isEmpty())
-    {
-        temporarilyLoggedPrefs = preferences->enterUser(email);
-        if (!temporarilyLoggedPrefs) // nothing to load
-        {
-            return;
-        }
-
-        preferences->loadExcludedSyncNames(); //to attend the corner case:
-                  // comming from old versions that didn't include some defaults
-
-    }
-    assert(preferences->logged()); //At this point preferences should be logged, just because you enterUser() or it was already logged
-
-    if (!preferences->logged())
-    {
-        return;
-    }
-
-    QStringList exclusions = preferences->getExcludedSyncNames();
-    vector<string> vExclusions;
-    for (int i = 0; i < exclusions.size(); i++)
-    {
-        vExclusions.push_back(exclusions[i].toUtf8().constData());
-    }
-    megaApi->setExcludedNames(&vExclusions);
-
-    QStringList exclusionPaths = preferences->getExcludedSyncPaths();
-    vector<string> vExclusionPaths;
-    for (int i = 0; i < exclusionPaths.size(); i++)
-    {
-        vExclusionPaths.push_back(exclusionPaths[i].toUtf8().constData());
-    }
-    megaApi->setExcludedPaths(&vExclusionPaths);
-
-    if (preferences->lowerSizeLimit())
-    {
-        megaApi->setExclusionLowerSizeLimit(computeExclusionSizeLimit(preferences->lowerSizeLimitValue(), preferences->lowerSizeLimitUnit()));
-    }
-    else
-    {
-        megaApi->setExclusionLowerSizeLimit(0);
-    }
-
-    if (preferences->upperSizeLimit())
-    {
-        megaApi->setExclusionUpperSizeLimit(computeExclusionSizeLimit(preferences->upperSizeLimitValue(), preferences->upperSizeLimitUnit()));
-    }
-    else
-    {
-        megaApi->setExclusionUpperSizeLimit(0);
-    }
-
-
-    if (temporarilyLoggedPrefs)
-    {
-        preferences->leaveUser();
-    }
-}
-
-long long MegaApplication::computeExclusionSizeLimit(const long long sizeLimitValue, const int unit)
-{
-    const double sizeLimitPower = pow(static_cast<double>(1024), static_cast<double>(unit));
-    return sizeLimitValue * static_cast<long long>(sizeLimitPower);
 }
 
 QList<QNetworkInterface> MegaApplication::findNewNetworkInterfaces()
@@ -3626,40 +3465,6 @@ void MegaApplication::onNotificationProcessed()
     }
 }
 
-void MegaApplication::setupWizardFinished(QPointer<SetupWizard> dialog)
-{
-    if(dialog)
-    {
-        auto result = dialog->result();
-
-        if (appfinished)
-        {
-            return;
-        }
-
-        if (result == QDialog::Rejected)
-        {
-            auto onboarding = DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>();
-            if(!onboarding)
-            {
-                //clearDownloadAndPendingLinks(); // TODO: ONBOARDING
-            }
-        }
-        else
-        {
-            QList<PreConfiguredSync> syncs = dialog->preconfiguredSyncs();
-
-            if (infoDialog && infoDialog->isVisible())
-            {
-                infoDialog->hide();
-            }
-
-            loggedIn(true);
-            startSyncs(syncs);
-        }
-    }
-}
-
 void MegaApplication::clearDownloadAndPendingLinks()
 {
     if (downloadQueue.size() || pendingLinks.size())
@@ -3683,24 +3488,6 @@ void MegaApplication::clearDownloadAndPendingLinks()
         showInfoMessage(tr("Transfer canceled"));
     }
 }
-
-//void MegaApplication::infoWizardDialogFinished(QPointer<QmlDialogWrapper<Onboarding>> dialog)
-//{
-//    if (appfinished)
-//    {
-//        return;
-//    }
-//
-//    if (dialog->result() != QDialog::Accepted)
-//    {
-//        auto setupWizard = DialogOpener::findDialog<SetupWizard>();
-//        if(!setupWizard)
-//        {
-//            clearDownloadAndPendingLinks();
-//        }
-//    }
-//}
-
 
 void MegaApplication::unlink(bool keepLogs)
 {
@@ -4339,72 +4126,6 @@ void MegaApplication::onSyncDeleted(std::shared_ptr<SyncSettings>)
     createAppMenus();
 }
 
-void MegaApplication::migrateSyncConfToSdk(QString email)
-{
-    bool needsMigratingFromOldSession = !preferences->logged();
-    assert(preferences->logged() || !email.isEmpty());
-
-
-    int cachedBusinessState = 999;
-    int cachedBlockedState = 999;
-    int cachedStorageState = 999;
-
-    auto oldCachedSyncs = preferences->readOldCachedSyncs(&cachedBusinessState, &cachedBlockedState, &cachedStorageState, email);
-    std::shared_ptr<int>oldCacheSyncsCount(new int(oldCachedSyncs.size()));
-    if (*oldCacheSyncsCount > 0)
-    {
-        if (cachedBusinessState == -2)
-        {
-            cachedBusinessState = 999;
-        }
-        if (cachedBlockedState == -2)
-        {
-            cachedBlockedState = 999;
-        }
-        if (cachedStorageState == MegaApi::STORAGE_STATE_UNKNOWN)
-        {
-            cachedStorageState = 999;
-        }
-
-        megaApi->copyCachedStatus(cachedStorageState, cachedBlockedState, cachedBusinessState);
-    }
-
-    foreach(SyncData osd, oldCachedSyncs)
-    {
-        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Copying sync data to SDK cache: %1. Name: %2")
-                     .arg(osd.mLocalFolder).arg(osd.mName).toUtf8().constData());
-
-        megaApi->copySyncDataToCache(osd.mLocalFolder.toUtf8().constData(), osd.mName.toUtf8().constData(),
-                                     osd.mMegaHandle, osd.mMegaFolder.toUtf8().constData(),
-                                     osd.mLocalfp, osd.mEnabled, osd.mTemporarilyDisabled,
-                                     new MegaListenerFuncExecuter(true, [this, osd, oldCacheSyncsCount, needsMigratingFromOldSession, email](MegaApi*,  MegaRequest* request, MegaError* e)
-        {
-
-            if (e->getErrorCode() == MegaError::API_OK)
-            {
-                //preload the model with the restored configuration: that includes info that the SDK does not handle (e.g: syncID)
-                model->pickInfoFromOldSync(osd, request->getParentHandle(), needsMigratingFromOldSession);
-                preferences->removeOldCachedSync(osd.mPos, email);
-            }
-            else
-            {
-                MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Failed to copy sync %1: %2").arg(osd.mLocalFolder).arg(QString::fromUtf8(e->getErrorString())).toUtf8().constData());
-            }
-
-            --*oldCacheSyncsCount;
-            if (*oldCacheSyncsCount == 0)//All syncs copied to sdk, proceed with fetchnodes
-            {
-                megaApi->fetchNodes();
-            }
-         }));
-    }
-
-    if (*oldCacheSyncsCount == 0)//No syncs to be copied to sdk, proceed with fetchnodes
-    {
-        megaApi->fetchNodes();
-    }
-}
-
 void MegaApplication::onBlocked()
 {
     updateTrayIconMenu();
@@ -4430,63 +4151,6 @@ void MegaApplication::onTransfersModelUpdate()
     {
         onGlobalSyncStateChanged(megaApi);
     }
-}
-
-void MegaApplication::fetchNodes(QString email)
-{
-    assert(!mFetchingNodes);
-    mFetchingNodes = true;
-
-    // We need to load exclusions and migrate sync configurations from MEGAsync held cache, to SDK's
-    // prior fetching nodes (when the SDK will resume syncing)
-
-    // If we are loging into a new session of an account previously used in MEGAsync,
-    // we will use the previous configurations stored in that user preferences
-    // However, there is a case in which we are not able to do so at this point:
-    // we don't know the user email.
-    // That should only happen when trying to resume a session (using the session id stored in general preferences)
-    // that didn't complete a fetch nodes (i.e. does not have preferences logged).
-    // that can happen for blocked accounts.
-    // Fortunately, the SDK can help us get the email of the session
-    bool needFindingOutEmail = !preferences->logged() && email.isEmpty();
-
-    auto loadMigrateAndFetchNodes = [this](const QString &email)
-    {
-        if (!preferences->logged() && email.isEmpty()) // I still couldn't get the the email: won't be able to access user settings
-        {
-            megaApi->fetchNodes();
-        }
-        else
-        {
-            loadSyncExclusionRules(email);
-            migrateSyncConfToSdk(email); // this will produce the fetch nodes once done
-        }
-    };
-
-    if (!needFindingOutEmail)
-    {
-        loadMigrateAndFetchNodes(email);
-    }
-    else // we will ask the SDK the email
-    {
-        megaApi->getUserEmail(megaApi->getMyUserHandleBinary(),new MegaListenerFuncExecuter(true, [loadMigrateAndFetchNodes](MegaApi*,  MegaRequest* request, MegaError* e) {
-              QString email;
-
-              if (e->getErrorCode() == API_OK)
-              {
-                  auto emailFromRequest = request->getEmail();
-                  if (emailFromRequest)
-                  {
-                      email = QString::fromUtf8(emailFromRequest);
-                  }
-              }
-
-              // in any case, proceed:
-              loadMigrateAndFetchNodes(email);
-        }));
-
-    }
-
 }
 
 void MegaApplication::whyAmIBlocked(bool periodicCall)
@@ -4524,6 +4188,13 @@ std::shared_ptr<MegaNode> MegaApplication::getRubbishNode(bool forceReset)
         mRubbishNode.reset(megaApi->getRubbishNode());
     }
     return mRubbishNode;
+}
+
+void MegaApplication::resetRootNodes()
+{
+    getRootNode(true);
+    getVaultNode(true);
+    getRubbishNode(true);
 }
 
 void MegaApplication::onDismissStorageOverquota(bool overStorage)
@@ -5034,14 +4705,6 @@ void MegaApplication::transferManagerActionClicked(int tab)
     }
 
     DialogOpener::showGeometryRetainerDialog(mTransferManager);
-}
-
-void MegaApplication::showSetupWizard(int action)
-{
-    mSetupWizard = new SetupWizard(this);
-    emit setupWizardCreated();
-    mSetupWizard->goToStep(action);
-    DialogOpener::showDialog(mSetupWizard, this, &MegaApplication::setupWizardFinished);
 }
 
 void MegaApplication::applyNotificationFilter(int opt)
@@ -5884,26 +5547,18 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
     {
         if (!infoDialog)
         {
-            if (mSetupWizard)
+            if (blockState)
             {
-                DialogOpener::showDialog(mSetupWizard);
+                showInfoMessage(tr("Locked account"));
+            }
+            else if (!megaApi->isLoggedIn())
+            {
+                showInfoMessage(tr("Logging in..."));
             }
             else
             {
-                if (blockState)
-                {
-                    showInfoMessage(tr("Locked account"));
-                }
-                else if (!megaApi->isLoggedIn())
-                {
-                    showInfoMessage(tr("Logging in..."));
-                }
-                else
-                {
-                    showInfoMessage(tr("Fetching file list..."));
-                }
+                showInfoMessage(tr("Fetching file list..."));
             }
-
             return;
         }
 
@@ -6624,11 +6279,7 @@ void MegaApplication::onRequestStart(MegaApi* , MegaRequest *request)
         return;
     }
 
-    if (request->getType() == MegaRequest::TYPE_LOGIN)
-    {
-        connectivityTimer->start();
-    }
-    else if (request->getType() == MegaRequest::TYPE_GET_LOCAL_SSL_CERT)
+    if (request->getType() == MegaRequest::TYPE_GET_LOCAL_SSL_CERT)
     {
         updatingSSLcert = true;
     }
@@ -6749,144 +6400,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         }
         break;
     }
-    case MegaRequest::TYPE_LOGIN:
-    {
-        connectivityTimer->stop();
-
-        // We do this after login to ensure the request to get the local SSL certs is not in the queue
-        // while login request is being processed. This way, the local SSL certs request is not aborted.
-        initLocalServer();
-
-        if (e->getErrorCode() == MegaError::API_OK)
-        {
-            preferences->setAccountStateInGeneral(Preferences::STATE_LOGGED_OK); //TODO: setGlobalAccountState
-
-            auto needsFetchNodes = preferences->needsFetchNodesInGeneral();
-
-            std::unique_ptr<char []> session(megaApi->dumpSession());
-            if (session)
-            {
-                preferences->setSession(QString::fromUtf8(session.get()));
-            }
-
-            // In case fetchnode fails in previous request,
-            // but we have an active session, we will need to launch a fetchnodes
-            if (!preferences->logged()
-                    && needsFetchNodes)
-            {
-                auto email = request->getEmail();
-                fetchNodes(QString::fromUtf8(email ? email : ""));
-            }
-        }
-
-        //This prevents to handle logins in the initial setup wizard
-        if (preferences->logged())
-        {
-            Platform::getInstance()->prepareForSync();
-            int errorCode = e->getErrorCode();
-            if (errorCode == MegaError::API_OK)
-            {
-                if (!preferences->getSession().isEmpty())
-                {
-                    //Successful login, fetch nodes
-                    fetchNodes();
-                    break;
-                }
-            }
-            else if (errorCode == MegaError::API_EBLOCKED)
-            {
-                QMegaMessageBox::critical(nullptr, tr("MEGAsync"), tr("Your account has been blocked. Please contact support@mega.co.nz"));
-            }
-            else if (errorCode != MegaError::API_ESID && errorCode != MegaError::API_ESSL)
-            //Invalid session or public key, already managed in TYPE_LOGOUT
-            {
-                QMegaMessageBox::warning(nullptr, tr("MEGAsync"), tr("Login error: %1").arg(QCoreApplication::translate("MegaError", e->getErrorString())));
-            }
-
-            //Wrong login -> logout
-            unlink(true);
-        }
-        onGlobalSyncStateChanged(megaApi);
-        break;
-    }
-    case MegaRequest::TYPE_LOGOUT:
-    {
-        int errorCode = e->getErrorCode();
-        if (errorCode)
-        {
-            if (errorCode == MegaError::API_EINCOMPLETE && request->getParamType() == MegaError::API_ESSL)
-            {
-                //Typical case: Connecting from a public wifi when the wifi sends you to a landing page
-                //SDK cannot connect through SSL securely and asks MEGA Desktop to log out
-
-                //In previous versions, the user was asked to continue with a warning about a MITM risk.
-                //One of the options was disabling the public key pinning to continue working as usual
-                //This option was to risky and the solution taken was silently retry reconnection
-
-                // Retry while enforcing key pinning silently
-                megaApi->retryPendingConnections();
-                break;
-            }
-
-            if (errorCode == MegaError::API_ESID)
-            {
-                QMegaMessageBox::information(nullptr, QString::fromUtf8("MEGAsync"), tr("You have been logged out on this computer from another location"));
-            }
-            else if (errorCode == MegaError::API_ESSL)
-            {
-                QMegaMessageBox::critical(nullptr, QString::fromUtf8("MEGAsync"),
-                                      tr("Our SSL key can't be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.")
-                                       + QString::fromUtf8(" (Issuer: %1)").arg(QString::fromUtf8(request->getText() ? request->getText() : "Unknown")));
-            }
-            else if (errorCode != MegaError::API_EACCESS)
-            {
-                QMegaMessageBox::information(nullptr, QString::fromUtf8("MEGAsync"), tr("You have been logged out because of this error: %1")
-                                         .arg(QCoreApplication::translate("MegaError", e->getErrorString())));
-            }
-            unlink();
-        }
-
-        //Check for any sync disabled by logout to warn user on next login with user&password
-        const auto syncSettings (model->getAllSyncSettings());
-        auto isErrorLoggedOut = [](std::shared_ptr<SyncSettings> s) {return s->getError() == MegaSync::LOGGED_OUT;};
-        if (std::any_of(syncSettings.cbegin(), syncSettings.cend(), isErrorLoggedOut))
-        {
-            preferences->setNotifyDisabledSyncsOnLogin(true);
-        }
-
-        model->reset();
-        mTransfersModel->resetModel();
-
-        // Queue processing of logout cleanup to avoid race conditions
-        // due to threadifing processing.
-        // Eg: transfers added to data model after a logout
-        mThreadPool->push([this]()
-        {
-             Utilities::queueFunctionInAppThread([this]()
-             {
-                 if (preferences)
-                 {
-                     if (preferences->logged())
-                     {
-                         clearUserAttributes();
-                         preferences->unlink();
-                         removeAllFinishedTransfers();
-                         clearViewedTransfers();
-                         preferences->setFirstStartDone();
-                     }
-                     else
-                     {
-                         preferences->resetGlobalSettings();
-                     }
-
-                     DialogOpener::closeAllDialogs();
-                     start();
-                     periodicTasks();
-                 }
-             });
-        });
-        break;
-    }
     case MegaRequest::TYPE_GET_LOCAL_SSL_CERT:
     {
         updatingSSLcert = false;
@@ -6939,79 +6452,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 renewLocalSSLcert();
                 break;
             }
-        }
-
-        break;
-    }
-    case MegaRequest::TYPE_FETCH_NODES:
-    {
-        mFetchingNodes = false;
-        if (e->getErrorCode() == MegaError::API_OK)
-        {
-            //Update/set root node
-            getRootNode(true); //TODO: move this to thread pool, notice that mRootNode is used below
-            getVaultNode(true);
-            getRubbishNode(true);
-
-            preferences->setAccountStateInGeneral(Preferences::STATE_FETCHNODES_OK);
-            preferences->setNeedsFetchNodesInGeneral(false);
-
-            // TODO: check with sdk team if this case is possible
-            if (!mRootNode)
-            {
-                QMegaMessageBox::warning(nullptr, tr("Error"), tr("Unable to get the filesystem.\n"
-                                                       "Please, try again. If the problem persists "
-                                                       "please contact bug@mega.co.nz"), QMessageBox::Ok);
-
-//                auto onboarding = DialogOpener::findDialogByClass<Onboarding>();
-//                if(onboarding)
-//                {
-//                   // onboarding->close(); TODO ONBOARDING
-//                }
-
-                rebootApplication(false);
-                break;
-            }
-
-            std::unique_ptr<char[]> email(megaApi->getMyEmail());
-            bool logged = preferences->logged();
-            bool firstTime = !logged && email && !preferences->hasEmail(QString::fromUtf8(email.get()));
-            if (!logged) //session resumed from general storage (or logged in via user/pass)
-            {
-                if (firstTime)
-                {
-                    //showSetupWizard(SetupWizard::PAGE_MODE);
-                }
-                else
-                {
-                    // We will proceed with a new login
-                    preferences->setEmailAndGeneralSettings(QString::fromUtf8(email.get()));
-                    model->rewriteSyncSettings(); //write sync settings into user's preferences
-
-                    if (infoDialog && infoDialog->isVisible())
-                    {
-                        infoDialog->hide();
-                    }
-
-                    loggedIn(true);
-
-                    if(mSetupWizard)
-                    {
-                        mSetupWizard->close();
-                    }
-                }
-            }
-            else // session resumed regularly
-            {
-                loggedIn(false);
-            }
-        }
-        else
-        {
-            preferences->setAccountStateInGeneral(Preferences::STATE_FETCHNODES_FAILED);
-            preferences->setNeedsFetchNodesInGeneral(true);
-            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error fetching nodes: %1")
-                         .arg(QString::fromUtf8(e->getErrorString())).toUtf8().constData());
         }
 
         break;
@@ -7324,7 +6764,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             // we want to try again now that we are no longer blocked
             if (!mFetchingNodes && !getRootNode())
             {
-                fetchNodes();
+                //fetchNodes(); //TODO: FIX THIS
                 emit fetchNodesAfterBlock(); //so that guest widget notice and loads fetch noding page
             }
 

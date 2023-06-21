@@ -23,10 +23,8 @@ ProxySettings::ProxySettings(MegaApplication *app, QWidget *parent) :
 
     initialize();
 
-    connect(mConnectivityChecker, &ConnectivityChecker::testError,
-            this, &ProxySettings::onProxyTestError);
-    connect(mConnectivityChecker, &ConnectivityChecker::testSuccess,
-            this, &ProxySettings::onProxyTestSuccess);
+    connect(mConnectivityChecker, &ConnectivityChecker::testFinished,
+            this, &ProxySettings::onProxyTestFinished);
 
     connect(mUi->rProxyManual, &QRadioButton::clicked, this, [this]{setManualMode(true);});
     connect(mUi->cProxyRequiresPassword, &QCheckBox::toggled, this, [this]{setManualMode(true);});

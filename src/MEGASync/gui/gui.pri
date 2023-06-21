@@ -22,7 +22,6 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/ScanningWidget.cpp \
     $$PWD/QtPositioningBugFixer.cpp \
     $$PWD/PasswordLineEdit.cpp \
-    $$PWD/SetupWizard.cpp \
     $$PWD/UploadToMegaDialog.cpp \
     $$PWD/PasteMegaLinksDialog.cpp \
     $$PWD/ImportMegaLinksDialog.cpp \
@@ -33,7 +32,6 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/AccountDetailsDialog.cpp \
     $$PWD/DownloadFromMegaDialog.cpp \
     $$PWD/ChangeLogDialog.cpp \
-    $$PWD/GuestWidget.cpp \
     $$PWD/StreamingFromMegaDialog.cpp \
     $$PWD/MegaProgressCustomDialog.cpp \
     $$PWD/UpgradeDialog.cpp \
@@ -87,7 +85,6 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/onboarding/Onboarding.cpp \
     $$PWD/onboarding/AccountInfoData.cpp \
     $$PWD/onboarding/BackupsModel.cpp \
-    $$PWD/onboarding/Login.cpp \
     $$PWD/onboarding/Syncs.cpp \
     $$PWD/onboarding/ComputerName.cpp \
     $$PWD/onboarding/PasswordStrengthChecker.cpp
@@ -99,7 +96,6 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/BlurredShadowEffect.h \
     $$PWD/ButtonIconManager.h \
     $$PWD/DateTimeFormatter.h \
-    $$PWD/Login.h \
     $$PWD/LowDiskSpaceDialog.h \
     $$PWD/EventHelper.h \
     $$PWD/InfoDialog.h \
@@ -110,7 +106,6 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/ScanningWidget.h \
     $$PWD/QtPositioningBugFixer.h \
     $$PWD/PasswordLineEdit.h \
-    $$PWD/SetupWizard.h \
     $$PWD/UploadToMegaDialog.h \
     $$PWD/PasteMegaLinksDialog.h \
     $$PWD/ImportMegaLinksDialog.h \
@@ -121,7 +116,6 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/AccountDetailsDialog.h \
     $$PWD/DownloadFromMegaDialog.h \
     $$PWD/ChangeLogDialog.h \
-    $$PWD/GuestWidget.h \
     $$PWD/StreamingFromMegaDialog.h \
     $$PWD/MegaProgressCustomDialog.h \
     $$PWD/UpgradeDialog.h \
@@ -202,7 +196,6 @@ win32 {
                 $$PWD/win/AccountDetailsDialog.ui \
                 $$PWD/win/DownloadFromMegaDialog.ui \
                 $$PWD/win/ChangeLogDialog.ui \
-                $$PWD/win/GuestWidget.ui \
                 $$PWD/win/StreamingFromMegaDialog.ui \
                 $$PWD/win/MegaProgressCustomDialog.ui \
                 $$PWD/win/PlanWidget.ui \
@@ -248,7 +241,6 @@ macx {
                 $$PWD/macx/AccountDetailsDialog.ui \
                 $$PWD/macx/DownloadFromMegaDialog.ui \
                 $$PWD/macx/ChangeLogDialog.ui \
-                $$PWD/macx/GuestWidget.ui \
                 $$PWD/macx/StreamingFromMegaDialog.ui \
                 $$PWD/macx/PermissionsDialog.ui \
                 $$PWD/macx/PermissionsWidget.ui \
@@ -319,7 +311,6 @@ unix:!macx {
                 $$PWD/linux/AccountDetailsDialog.ui \
                 $$PWD/linux/DownloadFromMegaDialog.ui \
                 $$PWD/linux/ChangeLogDialog.ui \
-                $$PWD/linux/GuestWidget.ui \
                 $$PWD/linux/StreamingFromMegaDialog.ui \
                 $$PWD/linux/PermissionsDialog.ui \
                 $$PWD/linux/PermissionsWidget.ui \

@@ -48,8 +48,7 @@ LoginPageForm {
 
         loginButton.icons.busyIndicatorVisible = true;
         state = logInStatus;
-        Onboarding.onLoginClicked({ [Onboarding.RegisterForm.EMAIL]: email.text,
-                                    [Onboarding.RegisterForm.PASSWORD]: password.text })
+        loginController.login(email.text, password.text);
         loginAttempt = true;
     }
 
@@ -72,30 +71,64 @@ LoginPageForm {
     }
 
     Connections {
-        target: Onboarding
-
-        onUserPassFailed: {
-            root.enabled = true;
-            email.error = true;
-            password.error = true;
-            password.hint.text = OnboardingStrings.errorLogin;
-            password.hint.visible = true;
-            loginButton.icons.busyIndicatorVisible = false;
-            state = normalStatus;
-        }
+        target: loginController
 
         onFetchingNodesProgress: {
             console.log("LOGIN PAGE progress:"+progress)
             loginButton.progress.value = progress;
         }
 
-        onLoginFinished: {
-            state = fetchNodesStatus;
+        onFetchingNodesFinished: {
+            loginButton.progress.value = 1;
         }
 
-        onTwoFARequired: {
-            loginButton.icons.busyIndicatorVisible = false;
-            registerFlow.state = twoFA;
+        onLoginFinished: {
+            switch(errorCode)
+            {
+                case -26: //mega::MegaError::API_EMFAREQUIRED:->2FA required
+                {
+                    loginButton.icons.busyIndicatorVisible = false;
+                    registerFlow.state = twoFA;
+                    break;
+                }
+                case -5: //mega::MegaError::API_EFAILED: ->
+                case -8: //mega::MegaError::API_EEXPIRED: -> 2FA failed
+                {
+
+                    break;
+                }
+                case -9: //mega::MegaError::API_ENOENT: -> user or pass failed
+                {
+                    root.enabled = true;
+                    email.error = true;
+                    password.error = true;
+                    password.hint.text = OnboardingStrings.errorLogin;
+                    password.hint.visible = true;
+                    loginButton.icons.busyIndicatorVisible = false;
+                    state = normalStatus;
+                    break;
+                }
+                case -13: //mega::MegaError::API_EINCOMPLETE: -> account not confirmed
+                {
+                    //what to do here?
+                    break;
+                }
+                case -6: //mega::MegaError::API_ETOOMANY: -> too many attempts
+                {
+                    //what to do here?
+                    break;
+                }
+                case -16: //mega::MegaError::API_EBLOCKED: ->  blocked account
+                {
+                    //what to do here?
+                    break;
+                }
+                case 0: //mega::MegaError::API_OK:
+                {
+                    state = fetchNodesStatus;
+                    break;
+                }
+            }
         }
     }
 }

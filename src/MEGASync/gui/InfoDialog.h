@@ -6,7 +6,6 @@
 #include <QProcess>
 #include <QDateTime>
 #include <QPainter>
-#include "GuestWidget.h"
 #include "SettingsDialog.h"
 #include "MenuItemAction.h"
 #include "control/Preferences.h"
@@ -203,7 +202,6 @@ private:
     bool mWaiting;
     bool mSyncing; //if any sync is in syncing state
     bool mTransferring; // if there are ongoing regular transfers
-    GuestWidget *gWidget;
     StatusInfo::TRANSFERS_STATES mState;
     bool overQuotaState;
     bool transferOverquotaAlertEnabled;

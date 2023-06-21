@@ -10,10 +10,10 @@ ConfirmEmailPageForm {
         registerFlow.state = changeConfirmEmail;
     }
 
-    email: Onboarding.email
+    email: loginController.email
 
     Connections {
-        target: loginCpp
+        target: loginController
 
         onAccountConfirmed: {
             registerFlow.state = login;

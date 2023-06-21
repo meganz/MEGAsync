@@ -29,9 +29,7 @@ public:
     void startCheck();
 
 signals:
-    void testError();
-    void testSuccess();
-    void testFinished();
+    void testFinished(bool success);
 
 protected slots:
     void onTestTimeout();
