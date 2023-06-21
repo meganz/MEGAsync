@@ -11,9 +11,8 @@ c-ares/c303dd024e2dc03a0665ddffbb12a1077933e649
 cryptopp/c303dd024e2dc03a0665ddffbb12a1077933e649
 curl/7375bb408f2278d2f1875c259beef93332697ba7
 libsodium/92adeffbce95847e141411177248ed04ac49ea9b
-openssl/c303dd024e2dc03a0665ddffbb12a1077933e649 osx:off
-openssl-unix/c303dd024e2dc03a0665ddffbb12a1077933e649 all:off linux:on
-openssl-windows/c303dd024e2dc03a0665ddffbb12a1077933e649 all:off windows:on
+openssl/6172c4b5a08aecf5755f753c6338fa74103d39cf ios:off osx:off
+
 sqlite3/c303dd024e2dc03a0665ddffbb12a1077933e649
 zlib/e0a9559a9b24af116388eae242d675bf9fde025c
 

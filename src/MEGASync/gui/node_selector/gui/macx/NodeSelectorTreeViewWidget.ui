@@ -438,6 +438,9 @@ QToolButton:pressed
           <property name="hover_selected" stdset="0">
            <bool>true</bool>
           </property>
+          <attribute name="buttonGroup">
+           <string notr="true">searchFilterButtonGroup</string>
+          </attribute>
          </widget>
         </item>
         <item>
@@ -476,6 +479,9 @@ QToolButton:pressed
           <property name="hover_selected" stdset="0">
            <bool>true</bool>
           </property>
+          <attribute name="buttonGroup">
+           <string notr="true">searchFilterButtonGroup</string>
+          </attribute>
          </widget>
         </item>
         <item>
@@ -514,6 +520,9 @@ QToolButton:pressed
           <property name="hover_selected" stdset="0">
            <bool>true</bool>
           </property>
+          <attribute name="buttonGroup">
+           <string notr="true">searchFilterButtonGroup</string>
+          </attribute>
          </widget>
         </item>
        </layout>
