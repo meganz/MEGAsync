@@ -18,6 +18,7 @@ public:
     NSUserNotificationHandler();
 
     void showNotification(MegaNotification *notification) override;
+    void hideNotification(MegaNotification *notification) override;
     bool acceptsMultipleSelection() override;
 };
 

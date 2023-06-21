@@ -1,7 +1,7 @@
 Name:       thunar-megasync
 Version:    EXT_VERSION
 Release:	%(cat MEGA_BUILD_ID || echo "1").1
-Summary:	Extension for Thunar to interact with Megasync
+Summary:	MEGA Desktop App plugin for Thunar
 License:	Freeware
 Group:		Applications/Others
 Url:		https://mega.nz
@@ -31,17 +31,13 @@ BuildRequires: qt-devel
 Requires:       thunar, megasync >= 3.5
 
 %description
-Secure:
-Your data is encrypted end to end. Nobody can intercept it while in storage or in transit.
+- Easily see and track your sync statuses.
 
-Flexible:
-Sync any folder from your PC to any folder in the cloud. Sync any number of folders in parallel.
+- Send files and folders to MEGA.
 
-Fast:
-Take advantage of MEGA's high-powered infrastructure and multi-connection transfers.
+- Share your synced files and folders with anyone by creating links.
 
-Generous:
-Store up to 50 GB for free!
+- View files in MEGA's browser (webclient).
 
 %prep
 %setup -q

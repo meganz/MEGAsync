@@ -488,10 +488,10 @@ void MegaApplication::initialize()
     }
 
     QString basePath = QDir::toNativeSeparators(dataPath + QString::fromUtf8("/"));
-    megaApi = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT);
+    megaApi = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT.toUtf8().constData());
     megaApi->disableGfxFeatures(mDisableGfx);
 
-    megaApiFolders = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT);
+    megaApiFolders = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT.toUtf8().constData());
     megaApiFolders->disableGfxFeatures(mDisableGfx);
 
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromLatin1("Graphics processing %1")
@@ -2351,14 +2351,17 @@ void MegaApplication::raiseInfoDialog()
 
     if (infoDialog)
     {
-        infoDialog->show();
         infoDialog->updateDialogState();
-        infoDialog->highDpiResize.queueRedraw();
-
+        infoDialog->show();
         DialogOpener::raiseAllDialogs();
+
 #ifdef __APPLE__
         Platform::getInstance()->raiseFileFolderSelectors();
 #endif
+
+        infoDialog->raise();
+        infoDialog->activateWindow();
+        infoDialog->highDpiResize.queueRedraw();
     }
 }
 
@@ -4504,40 +4507,51 @@ void MegaApplication::onPasteMegaLinksDialogFinish(QPointer<PasteMegaLinksDialog
     {
         //Get the list of links from the dialog
         QStringList linkList = pasteMegaLinksDialog->getLinks();
-        mLinkProcessor = std::make_shared<LinkProcessor>(linkList, MegaSyncApp->getMegaApi(), MegaSyncApp->getMegaApiFolders());
+
+        //We prefer to use a raw pointer to avoid crashes if the app is closed while the link is still being imported
+        //If the app is closed while the link is being imported, there is a memory leak but nothing else
+        auto linkProcessor = new LinkProcessor(linkList, MegaSyncApp->getMegaApi(), MegaSyncApp->getMegaApiFolders());
 
         //Open the import dialog
-        auto importDialog = new ImportMegaLinksDialog(mLinkProcessor);
-        DialogOpener::showDialog<ImportMegaLinksDialog, TransferManager>(importDialog, true, this, &MegaApplication::onImportDialogFinish);
-    }
-}
-
-void MegaApplication::onImportDialogFinish(QPointer<ImportMegaLinksDialog> dialog)
-{
-    if (dialog->result() == QDialog::Accepted)
-    {
-        //If the user wants to download some links, do it
-        if (dialog->shouldDownload())
+        auto importDialog = new ImportMegaLinksDialog(linkProcessor);
+        DialogOpener::showDialog<ImportMegaLinksDialog, TransferManager>(importDialog, true, [this, linkProcessor, importDialog]()
         {
-            if (!preferences->hasDefaultDownloadFolder())
+            if (importDialog->result() == QDialog::Accepted)
             {
-                preferences->setDownloadFolder(dialog->getDownloadPath());
+                //If the user wants to download some links, do it
+                if (importDialog->shouldDownload())
+                {
+                    if (!preferences->hasDefaultDownloadFolder())
+                    {
+                        preferences->setDownloadFolder(importDialog->getDownloadPath());
+                    }
+
+                    linkProcessor->downloadLinks(importDialog->getDownloadPath());
+                }
+
+                //If the user wants to import some links, do it
+                if (preferences->logged() && importDialog->shouldImport())
+                {
+                    preferences->setOverStorageDismissExecution(0);
+
+                    connect(linkProcessor, &LinkProcessor::onLinkImportFinish, this, [this, linkProcessor]() mutable
+                    {
+                        preferences->setImportFolder(linkProcessor->getImportParentFolder());
+                        linkProcessor->deleteLater();
+                    });
+
+                    linkProcessor->importLinks(importDialog->getImportPath());
+                }
+                else
+                {
+                    linkProcessor->deleteLater();
+                }
             }
-            mLinkProcessor->downloadLinks(dialog->getDownloadPath());
-        }
-
-        //If the user wants to import some links, do it
-        if (preferences->logged() && dialog->shouldImport())
-        {
-            preferences->setOverStorageDismissExecution(0);
-
-            connect(mLinkProcessor.get(), &LinkProcessor::onLinkImportFinish, this, &MegaApplication::onLinkImportFinished);
-            mLinkProcessor->importLinks(dialog->getImportPath());
-        }
-    }
-    else
-    {
-        mLinkProcessor.reset();
+            else
+            {
+                linkProcessor->deleteLater();
+            }
+        });
     }
 }
 
@@ -5292,19 +5306,6 @@ void MegaApplication::internalDownload(long long handle)
 
     downloadQueue.append(new WrappedNode(WrappedNode::TransferOrigin::FROM_APP, node));
     processDownloads();
-}
-
-//Called when the link import finishes
-void MegaApplication::onLinkImportFinished()
-{
-    if (appfinished)
-    {
-        return;
-    }
-
-
-    preferences->setImportFolder(mLinkProcessor->getImportParentFolder());
-    mLinkProcessor.reset();
 }
 
 void MegaApplication::onRequestLinksFinished()

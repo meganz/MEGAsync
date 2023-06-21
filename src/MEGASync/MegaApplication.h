@@ -270,7 +270,6 @@ public slots:
     void externalAddBackup();
     void externalOpenTransferManager(int tab);
     void internalDownload(long long handle);
-    void onLinkImportFinished();
     void onRequestLinksFinished();
     void onUpdateCompleted();
     void onUpdateAvailable(bool requested);
@@ -341,7 +340,6 @@ private slots:
 protected slots:
     void onUploadsCheckedAndReady(QPointer<DuplicatedNodeDialog> checkDialog);
     void onPasteMegaLinksDialogFinish(QPointer<PasteMegaLinksDialog>);
-    void onImportDialogFinish(QPointer<ImportMegaLinksDialog>);
     void onDownloadFromMegaFinished(QPointer<DownloadFromMegaDialog> dialog);
 
 protected:
@@ -474,7 +472,6 @@ protected:
     std::unique_ptr<std::thread> mMutexStealerThread;
 
     QTranslator translator;
-    std::shared_ptr<LinkProcessor> mLinkProcessor;
     QString lastTrayMessage;
     QStringList extraLinks;
     QString currentLanguageCode;

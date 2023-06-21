@@ -34,11 +34,27 @@ void UserAlertTimedClustering::addUserAlert(mega::MegaUserAlert *alert, const QS
     }
 }
 
-QString getRemovedItemsMessage(int64_t removedItems, const QString& userName)
+QString getMessage(int64_t itemCount, const QString& userName, int type)
 {
-    const int removedItemsAsInt = static_cast<int>(removedItems);
-    return QCoreApplication::translate("OsNotifications", "[A] removed %n item", "", removedItemsAsInt)
-            .replace(QString::fromUtf8("[A]"), userName);
+    const int itemCountAsInt = static_cast<int>(itemCount);
+
+    QString message;
+    switch(type)
+    {
+    case mega::MegaUserAlert::TYPE_REMOVEDSHAREDNODES:
+    {
+        message = QCoreApplication::translate("OsNotifications", "[A] removed %n item", "", itemCountAsInt)
+                      .replace(QString::fromUtf8("[A]"), userName);
+        break;
+    }
+    case mega::MegaUserAlert::TYPE_UPDATEDSHAREDNODES:
+    {
+        message = QCoreApplication::translate("DesktopNotifications", "[A] updated %n item", "", itemCountAsInt)
+                      .replace(QString::fromUtf8("[A]"), userName);
+        break;
+    }
+    }
+    return message;
 }
 
 void UserAlertTimedClustering::onClusterTimerTimeout()
@@ -47,7 +63,5 @@ void UserAlertTimedClustering::onClusterTimerTimeout()
     const auto totalRemovedItems = mUserAlert->getNumber(0);
     const auto currentRemovedItems = totalRemovedItems - mPreviousTotalRemovedItems;
     mPreviousTotalRemovedItems = totalRemovedItems;
-    const QString email{QString::fromUtf8(mUserAlert->getEmail())};
-    const QString message{getRemovedItemsMessage(currentRemovedItems, mUserName)};
-    emit sendUserAlert(mUserAlert, message);
+    emit sendUserAlert(mUserAlert, getMessage(currentRemovedItems, mUserName, mUserAlert->getType()));
 }

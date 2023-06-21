@@ -238,7 +238,7 @@ int main(int argc, char *argv[])
 #ifdef WIN32
         if (preferences->installationTime() != -1)
         {
-            MegaApi *megaApi = new MegaApi(Preferences::CLIENT_KEY, (char *)NULL, Preferences::USER_AGENT);
+            MegaApi *megaApi = new MegaApi(Preferences::CLIENT_KEY, (char *)NULL, Preferences::USER_AGENT.toUtf8().constData());
             QString stats = QString::fromUtf8("{\"it\":%1,\"act\":%2,\"lt\":%3}")
                     .arg(preferences->installationTime())
                     .arg(preferences->accountCreationTime())

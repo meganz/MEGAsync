@@ -334,6 +334,11 @@ int TransferMetaData::getFileTransfersCancelled() const
     return mFiles.cancelledTransfers.size();
 }
 
+int TransferMetaData::getNonExistentCount() const
+{
+    return mFiles.nonExistFailedTransfers.size();
+}
+
 TransferMetaDataItemId TransferMetaData::getFirstTransferIdByState(TransferData::TransferState state) const
 {
     TransferMetaDataItemId id = mFiles.getFirstTransferIdByState(state);
@@ -579,8 +584,6 @@ void TransferMetaData::retryFileFromFolderFailingItem(int fileTag, int folderTag
 {
     TransferMetaDataItemId fileId(fileTag, nodeHandle);
 
-
-
     auto removed = mFiles.failedTransfers.remove(fileId);
     removed += mFiles.nonExistFailedTransfers.remove(fileId);
 
@@ -612,7 +615,7 @@ void TransferMetaData::retryFailingFile(int tag, mega::MegaHandle nodeHandle)
         {
             if(mNotification)
             {
-                mNotification->deleteLater();
+                unlinkNotification();
             }
         }
 
@@ -627,7 +630,7 @@ void TransferMetaData::retryAllPressed()
 
     if(mNotification)
     {
-        mNotification->deleteLater();
+        unlinkNotification();
     }
 }
 
