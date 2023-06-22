@@ -139,6 +139,12 @@ void SyncSettingsUIBase::syncsStateInformation(SyncStateInformation state)
 }
 
 #ifdef Q_OS_MACOS
+void SyncSettingsUIBase::setToolBarItem(QMacToolBarItem *item)
+{
+    mToolBarItem = item;
+
+    syncsStateInformation(SAVING_FINISHED);
+}
 #else
 void SyncSettingsUIBase::setToolBarItem(QToolButton *item)
 {

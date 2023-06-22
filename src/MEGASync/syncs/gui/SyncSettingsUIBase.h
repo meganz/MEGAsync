@@ -62,7 +62,7 @@ public:
         connect(table, &TableType::signalRescanQuick, this, &SyncSettingsUIBase::rescanQuick);
         connect(table, &TableType::signalRescanDeep, this, &SyncSettingsUIBase::rescanDeep);
 
-        auto& model = mModels[mTable->getType()];
+        auto& model = mModels[table->getType()];
         if(!model)
         {
             model = new ModelType(mTable);

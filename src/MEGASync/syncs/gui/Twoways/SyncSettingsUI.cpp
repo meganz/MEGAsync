@@ -22,12 +22,20 @@ SyncSettingsUI::~SyncSettingsUI()
 
 QString SyncSettingsUI::getFinishWarningIconString()
 {
+#ifdef Q_OS_MACOS
+    return QString::fromUtf8("settings-syncs-error");
+#else
     return QString::fromUtf8(":/images/settings-syncs-warn.png");
+#endif
 }
 
 QString SyncSettingsUI::getFinishIconString()
 {
+#ifdef Q_OS_MACOS
+    return QString::fromUtf8("settings-syncs");
+#else
     return QString::fromUtf8(":/images/settings-syncs.png");
+#endif
 }
 
 QString SyncSettingsUI::typeString()

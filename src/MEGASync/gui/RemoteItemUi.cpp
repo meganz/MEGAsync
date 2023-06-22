@@ -26,9 +26,8 @@ RemoteItemUi::RemoteItemUi(QWidget *parent) :
         emit addClicked(mega::INVALID_HANDLE);
     });
     connect(ui->bDelete, &QPushButton::clicked, this, &RemoteItemUi::deleteClicked);
-#endif
-
     ui->bAdd->setAutoDefault(true);
+#endif
 }
 
 RemoteItemUi::~RemoteItemUi()
