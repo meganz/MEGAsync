@@ -10,10 +10,10 @@ ChangeEmailPageForm {
     }
 
     resendButton.onClicked: {
-        Onboarding.changeRegistrationEmail(emailTextField.text);
+        loginController.changeRegistrationEmail(emailTextField.text);
     }
 
-    emailTextField.text: Onboarding.email
+    emailTextField.text: loginController.email
 
     Connections {
         target: loginController

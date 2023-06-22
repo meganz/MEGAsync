@@ -18,7 +18,7 @@ RegisterPageForm {
         nextButton.icons.busyIndicatorVisible = true;
         state = signUpStatus;
 
-        loginController.onRegisterClicked(registerContent.email.text, registerContent.password.text,
+        loginController.createAccount(registerContent.email.text, registerContent.password.text,
                                    registerContent.firstName.text, registerContent.lastName.text);
     }
 
