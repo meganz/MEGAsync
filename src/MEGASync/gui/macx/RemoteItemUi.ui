@@ -10,10 +10,16 @@
     <height>266</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="windowTitle">
    <string>Item Type</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="1,0">
    <property name="spacing">
     <number>10</number>
    </property>
@@ -74,7 +80,7 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
-        <layout class="QVBoxLayout" name="tableLayout">
+        <layout class="QVBoxLayout" name="tableLayout" stretch="1,0">
          <property name="spacing">
           <number>0</number>
          </property>

@@ -2383,7 +2383,7 @@ margin-right: 7px;
         <number>25</number>
        </property>
        <property name="bottomMargin">
-        <number>16</number>
+        <number>0</number>
        </property>
        <item>
         <widget class="SyncSettingsUI" name="syncSettings" native="true"/>
@@ -2405,7 +2405,7 @@ margin-right: 7px;
         <number>25</number>
        </property>
        <property name="bottomMargin">
-        <number>16</number>
+        <number>0</number>
        </property>
        <item>
         <widget class="BackupSettingsUI" name="backupSettings" native="true"/>
@@ -4105,6 +4105,12 @@ margin-right: 32px;</string>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
+   <class>QSegmentedControl</class>
+   <extends>QWidget</extends>
+   <header location="global">QSegmentedControl.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>AvatarWidget</class>
    <extends>QWidget</extends>
    <header>AvatarWidget.h</header>
@@ -4114,12 +4120,6 @@ margin-right: 32px;</string>
    <class>NotificationsSettings</class>
    <extends>QWidget</extends>
    <header>NotificationsSettings.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>QSegmentedControl</class>
-   <extends>QWidget</extends>
-   <header location="global">QSegmentedControl.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
