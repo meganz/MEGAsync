@@ -4779,19 +4779,10 @@ void MegaApplication::onPasteMegaLinksDialogFinish(QPointer<PasteMegaLinksDialog
                     connect(linkProcessor, &LinkProcessor::onLinkImportFinish, this, [this, linkProcessor]() mutable
                     {
                         preferences->setImportFolder(linkProcessor->getImportParentFolder());
-                        linkProcessor->deleteLater();
                     });
 
                     linkProcessor->importLinks(importDialog->getImportPath());
                 }
-                else
-                {
-                    linkProcessor->deleteLater();
-                }
-            }
-            else
-            {
-                linkProcessor->deleteLater();
             }
         });
     }

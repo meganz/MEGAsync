@@ -27,6 +27,7 @@ using namespace mega;
 StreamingFromMegaDialog::StreamingFromMegaDialog(mega::MegaApi *megaApi, mega::MegaApi* megaApiFolders, QWidget *parent) :
     QDialog(parent),
     ui(::mega::make_unique<Ui::StreamingFromMegaDialog>()),
+    mLinkProcessor(nullptr),
     lastStreamSelection{LastStreamingSelection::NOT_SELECTED}
 {
     ui->setupUi(this);
@@ -131,8 +132,9 @@ void StreamingFromMegaDialog::requestNodeToLinkProcessor()
         return;
     }
 
-    mLinkProcessor.reset(new LinkProcessor(QStringList() << mPublicLink, megaApi, mMegaApiFolders));
-    connect(mLinkProcessor.get(), &LinkProcessor::onLinkInfoRequestFinish, this, &StreamingFromMegaDialog::onLinkInfoAvailable);
+    mLinkProcessor = new LinkProcessor(QStringList() << mPublicLink, megaApi, mMegaApiFolders);
+    mLinkProcessor->setParentHandler(this);
+    connect(mLinkProcessor, &LinkProcessor::onLinkInfoRequestFinish, this, &StreamingFromMegaDialog::onLinkInfoAvailable);
 
     updateFileInfo(QString(),LinkStatus::LOADING);
 
@@ -165,9 +167,6 @@ void StreamingFromMegaDialog::onLinkInfoAvailable()
         QMegaMessageBox::warning(nullptr, tr("Error"), tr("Error getting link information"), QMessageBox::Ok);
         ui->sFileInfo->setCurrentWidget(ui->pNothingSelected);
     }
-
-    //This deletes the LinkProcess
-    mLinkProcessor.reset(nullptr);
 }
 
 void StreamingFromMegaDialog::on_bCopyLink_clicked()
