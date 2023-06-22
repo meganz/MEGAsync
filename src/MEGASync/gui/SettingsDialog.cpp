@@ -1390,11 +1390,6 @@ void SettingsDialog::on_bSyncs_clicked()
     SyncInfo::instance()->dismissUnattendedDisabledSyncs(MegaSync::TYPE_TWOWAY);
 }
 
-void SettingsDialog::on_bAddSync_clicked()
-{
-    addSyncFolder(mega::INVALID_HANDLE);
-}
-
 // Backup ----------------------------------------------------------------------------------------
 void SettingsDialog::on_bBackup_clicked()
 {
@@ -1413,11 +1408,6 @@ void SettingsDialog::on_bBackup_clicked()
 #endif
 
     SyncInfo::instance()->dismissUnattendedDisabledSyncs(MegaSync::TYPE_BACKUP);
-}
-
-void SettingsDialog::on_bAddBackup_clicked()
-{
-    mUi->backupSettings->addButtonClicked();
 }
 
 void SettingsDialog::on_bBackupCenter_clicked()

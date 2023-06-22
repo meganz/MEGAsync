@@ -5,7 +5,7 @@
 #define VER_FILEVERSION_CODE        5017
 #define VER_PRODUCTVERSION          5, 0, 17, 0
 // Update scrips relying on this value if you move it
-#define VER_PRODUCTVERSION_STR      "5.0.17.0\0"
+#define VER_PRODUCTVERSION_STR      "5.0.17.0 FM-326 with FM-313 to FM-316\0"
 
 #define VER_BUILD_ID                0
 
@@ -28,8 +28,8 @@
 //"- item n\n"
 //)
 #define VER_CHANGES_NOTES  QT_TRANSLATE_NOOP("Preferences",                                        \
-"- Sync Rework ALPHA test version.\n"                                                              \
-"- All the very latest code changes.\n"                                                            \
+"- Sync/Backup table revamp \n"                                                                    \
+"- New context menu, icons and color for sync/backup table views.\n"                               \
 )
 
 #endif // VERSION_H

@@ -119,11 +119,9 @@ private slots:
 
     // Syncs
     void on_bSyncs_clicked();
-    void on_bAddSync_clicked();
 
     // Backup
     void on_bBackup_clicked();
-    void on_bAddBackup_clicked();
 
     // Security
     void on_bSecurity_clicked();
