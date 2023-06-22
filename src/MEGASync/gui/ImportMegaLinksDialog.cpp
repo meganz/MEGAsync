@@ -72,6 +72,7 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(LinkProcessor *linkProcessor, QWidg
         initUiAsUnlogged();
     }
 
+    mLinkProcessor->setParentHandler(this);
     connect(mLinkProcessor, &LinkProcessor::onLinkInfoAvailable, this, &ImportMegaLinksDialog::onLinkInfoAvailable);
     connect(mLinkProcessor, &LinkProcessor::onLinkInfoRequestFinish, this, &ImportMegaLinksDialog::onLinkInfoRequestFinish);
 
