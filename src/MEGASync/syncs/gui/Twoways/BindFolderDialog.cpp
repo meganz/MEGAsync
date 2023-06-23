@@ -54,7 +54,11 @@ void BindFolderDialog::on_bOK_clicked()
     std::shared_ptr<MegaNode> node {megaApi->getNodeByHandle(handle)};
     if (!localFolderPath.length() || !node)
     {
-        QMegaMessageBox::warning(nullptr, QString(), tr("Please select a local folder and a MEGA folder"), QMessageBox::Ok);
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.title = MegaSyncApp->getMEGAString();
+        msgInfo.parent = this;
+        msgInfo.text = tr("Please select a local folder and a MEGA folder");
+        QMegaMessageBox::warning(msgInfo);
         return;
     }
 
@@ -78,25 +82,34 @@ void BindFolderDialog::on_bOK_clicked()
         syncability = std::max(SyncController::isRemoteFolderSyncable(node, warningMessage), syncability);
     }
 
-    // Display warning if needed
-    if (syncability == SyncController::CANT_SYNC)
-    {
-        QMegaMessageBox::warning(nullptr, QString(), warningMessage, QMessageBox::Ok);
-        return;
-    }
-    else if (syncability == SyncController::WARN_SYNC
-             && (QMegaMessageBox::warning(nullptr, QString(), warningMessage
-                                         + QLatin1Char('\n')
-                                         + tr("Do you want to continue?"),
-                                         QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
-             == QMessageBox::No))
-    {
-        return;
-    }
+    auto finishFunc = [this, localFolderPath](QPointer<QMessageBox> msg){
+        if(!msg || msg->result() == QMessageBox::Yes)
+        {
+            mSyncName = SyncController::getSyncNameFromPath(localFolderPath);
+            accept();
+        }
+    };
 
-    mSyncName = SyncController::getSyncNameFromPath(localFolderPath);
+    if (syncability == SyncController::CAN_SYNC)
+    {
+        finishFunc(nullptr);
+    }
+    else
+    {
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.title = MegaSyncApp->getMEGAString();
+        msgInfo.parent = this;
+        msgInfo.text = warningMessage;
 
-    accept();
+        if (syncability == SyncController::WARN_SYNC)
+        {
+            msgInfo.text += QLatin1Char('\n') + tr("Do you want to continue?");
+            msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
+            msgInfo.defaultButton = QMessageBox::No;
+            msgInfo.finishFunc = finishFunc;
+        }
+        QMegaMessageBox::warning(msgInfo);
+    }
 }
 
 void BindFolderDialog::allSelectionsDone()
