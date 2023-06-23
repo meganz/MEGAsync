@@ -3,7 +3,7 @@ import QtQuick 2.12
 
 QtObject {
 
-    enum Position{
+    enum Position {
         LEFT = 0,
         RIGHT,
         BOTH
@@ -18,8 +18,7 @@ QtObject {
     property bool busyIndicatorVisible: false
 
     onSourceChanged: {
-            switch(position)
-            {
+        switch(position) {
             case Icon.Position.LEFT:
                 leftLoader.sourceComponent = image;
                 break;
@@ -30,29 +29,24 @@ QtObject {
                 leftLoader.sourceComponent = image;
                 rightLoader.sourceComponent = image;
                 break;
-            }
+        }
     }
 
-    onBusyIndicatorVisibleChanged:
-    {
-        if(busyIndicatorVisible)
-        {
-            switch(busyIndicatorPosition)
-            {
-            case Icon.Position.LEFT:
-                leftLoader.sourceComponent = busyIndicator;
-                break;
-            case Icon.Position.RIGHT:
-                rightLoader.sourceComponent = busyIndicator;
-                break;
-            case Icon.Position.BOTH:
-                leftLoader.sourceComponent = busyIndicator;
-                rightLoader.sourceComponent = busyIndicator;
-                break;
+    onBusyIndicatorVisibleChanged: {
+        if(busyIndicatorVisible) {
+            switch(busyIndicatorPosition) {
+                case Icon.Position.LEFT:
+                    leftLoader.sourceComponent = busyIndicator;
+                    break;
+                case Icon.Position.RIGHT:
+                    rightLoader.sourceComponent = busyIndicator;
+                    break;
+                case Icon.Position.BOTH:
+                    leftLoader.sourceComponent = busyIndicator;
+                    rightLoader.sourceComponent = busyIndicator;
+                    break;
             }
-        }
-        else
-        {
+        } else {
             sourceChanged();
         }
     }

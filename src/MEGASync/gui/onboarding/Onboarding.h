@@ -3,7 +3,6 @@
 
 #include "qml/QmlDialogWrapper.h"
 #include "Preferences.h"
-#include "syncs/control/SyncController.h"
 
 #include <QQmlContext>
 
@@ -22,25 +21,42 @@ public:
     QVector<QQmlContext::PropertyPair> contextProperties() override;
 
 
-    Q_INVOKABLE void addBackups(const QStringList& localPathList);
-    Q_INVOKABLE void createNextBackup(const QString& renameFolder = QString::fromUtf8(""));
+    Q_INVOKABLE void onLoginClicked(const QVariantMap& data);
+    Q_INVOKABLE void onRegisterClicked(const QVariantMap& data);
+    Q_INVOKABLE void onTwoFARequested(const QString& pin);
+    Q_INVOKABLE QString convertUrlToNativeFilePath(const QUrl& urlStylePath) const;
+    Q_INVOKABLE void addSync(const QString& localPath, mega::MegaHandle remoteHandle = mega::INVALID_HANDLE);
+    Q_INVOKABLE bool setDeviceName(const QString& deviceName);
+    Q_INVOKABLE PasswordStrength getPasswordStrength(const QString& password);
+    Q_INVOKABLE void changeRegistrationEmail(const QString& email);
+    Q_INVOKABLE QString getEmail();
+    Q_INVOKABLE void getComputerName();
     Q_INVOKABLE void openPreferences(bool sync) const;
     Q_INVOKABLE void exitLoggedIn();
 
 signals:
     void exitLoggedInFinished();
-    void backupsUpdated(const QString& path, int errorCode, bool finished);
-    void backupConflict(const QString& folder, const QString& name, bool isNew);
+    void syncSetupSuccess();
+    void deviceNameReady(const QString& deviceName);
+    void accountConfirmed();
+    void emailChanged(const QString& email);
+    void changeRegistrationEmailFinished(bool success);
+    void fetchingNodesProgress(double progress);
+    void cantSync(const QString& message);
 
 private:
     mega::MegaApi* mMegaApi;
-    SyncController* mBackupController;
-
-    // The first field contains the full path and the second contains the backup name
-    QList<QPair<QString, QString>> mBackupsToDoList;
+    std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
+    std::unique_ptr<mega::QTMegaGlobalListener> mGlobalListener;
+    std::shared_ptr<Preferences> mPreferences;
+    SyncController* mSyncController;
+    QString mPassword;
+    QString mEmail;
+    QString mFirstName;
+    QString mLastName;
 
 private slots:
-    void onBackupAddRequestStatus(int errorCode, const QString& errorMsg, const QString& name);
+    void onSyncAddRequestStatus(int errorCode, const QString& errorMsg, const QString& name);
 
 };
 

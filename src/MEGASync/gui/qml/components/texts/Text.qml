@@ -15,8 +15,8 @@ Qml.Text {
         Huge = 48
     }
 
-    font.family: Constants.fontFamily
-    font.styleName: Constants.fontStyleName
+    font.family: Styles.fontFamily
+    font.styleName: Styles.fontStyleName
     font.pixelSize: Text.Size.Normal
     color: enabled ? Styles.textPrimary : Styles.textDisabled
     wrapMode: Text.WordWrap

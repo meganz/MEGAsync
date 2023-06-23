@@ -15,16 +15,12 @@ import Onboard 1.0
 // C++
 import Onboarding 1.0
 
-Rectangle {
+StackViewPage {
     id: root
 
     property alias emailTextField: emailTextField
     property alias cancelButton: cancelButton
     property alias resendButton: resendButton
-
-    readonly property int contentMargin: 48
-
-    color: Styles.surface1
 
     ColumnLayout {
         id: layout
@@ -33,11 +29,8 @@ Rectangle {
             top: parent.top
             left: parent.left
             right: parent.right
-            rightMargin: contentMargin
-            leftMargin: contentMargin
-            topMargin: contentMargin
         }
-        spacing: 24
+        spacing: contentSpacing
 
         MegaTexts.Text {
             id: title
@@ -58,7 +51,8 @@ Rectangle {
             id: emailTextField
 
             title: OnboardingStrings.email
-            Layout.preferredWidth: layout.width
+            Layout.preferredWidth: layout.width + 2 * emailTextField.textField.focusBorderWidth
+            Layout.leftMargin: -emailTextField.textField.focusBorderWidth
         }
     }
 
@@ -67,8 +61,6 @@ Rectangle {
         anchors {
             bottom: parent.bottom
             right: parent.right
-            rightMargin: contentMargin
-            bottomMargin: 32
         }
         spacing: 8
 
@@ -81,8 +73,9 @@ Rectangle {
         MegaButtons.PrimaryButton {
             id: resendButton
 
+            Layout.rightMargin: -resendButton.focusBorderWidth
             text: OnboardingStrings.resend
-            icon.source: Images.mail
+            icons.source: Images.mail
         }
     }
 }

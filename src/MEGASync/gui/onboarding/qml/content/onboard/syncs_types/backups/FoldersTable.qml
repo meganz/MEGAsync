@@ -2,27 +2,33 @@
 import QtQuick 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.12
+import QtQuick.Dialogs 1.1
 
 // QML common
 import Common 1.0
 import Components.CheckBoxes 1.0 as MegaCheckBoxes
 import Components.Texts 1.0 as MegaTexts
+import Components.Images 1.0 as MegaImages
 
 // Local
 import Onboard 1.0
 
 // C++
 import BackupsProxyModel 1.0
+import BackupsModel 1.0
+import ChooseLocalFolder 1.0
 
 Rectangle {
     id: tableRectangle
 
-    property BackupsProxyModel backupsProxyModel
+    property var model
+    property int headerFooterMargin: 24
+    property int headerFooterHeight: 40
 
     height: 186
     radius: 8
 
-    color: Styles.pageBackground
+    color: "white"
 
     Rectangle {
         id: borderRectangle
@@ -39,42 +45,32 @@ Rectangle {
     ListView {
         id: backupList
 
-        model: backupsProxyModel
+        model: tableRectangle.model
         anchors.fill: parent
         headerPositioning: ListView.OverlayHeader
         focus: true
         clip: true
-        delegate: folderItem
-        header: tableHeader
+        delegate: folderComponent
+        header: headerComponent
+        footerPositioning: ListView.OverlayFooter
+        footer: footerComponent
     }
 
     Component {
-        id: tableHeader
+        id: headerComponent
 
         Rectangle {
-            id: tableHeaderBackground
-
-            height: 36
-            width: tableRectangle.width - tableRectangle.border.width
-            Layout.topMargin: tableRectangle.border.width
-            Layout.leftMargin: tableRectangle.border.width
-            color: Styles.surface2
+            height: headerFooterHeight
+            anchors.top: parent.top
+            anchors.left: parent.left
+            anchors.right: parent.right
+            color: "white"
             radius: tableRectangle.radius
             z: 3
 
-            function checkSelectAll(checked) {
-                if(!selectAll.fromModel) {
-                    backupsProxyModel.setAllSelected(checked);
-                }
-
-                headerText.selectedRows = backupsProxyModel.getNumSelectedRows();
-                footerButtons.nextButton.enabled = checked;
-                selectAll.fromModel = false;
-            }
-
             RowLayout {
-                width: tableHeaderBackground.width
-                anchors.verticalCenter: tableHeaderBackground.verticalCenter
+                width: parent.width
+                anchors.verticalCenter: parent.verticalCenter
                 spacing: 0
 
                 MegaCheckBoxes.CheckBox {
@@ -83,71 +79,71 @@ Rectangle {
                     property bool fromModel: false
 
                     implicitHeight: parent.height
-                    Layout.leftMargin: 22
+                    Layout.leftMargin: headerFooterMargin
                     text: OnboardingStrings.selectAll
-                    tristate: false
+                    tristate: true
                     visible: !backupsProxyModel.selectedFilterEnabled
 
-                    onCheckedChanged: {
-                        if(!selectAll.fromModel) {
-                            tristate = false;
-                            checkSelectAll(checked);
+                    onCheckStateChanged: {
+                        if (!selectAll.fromModel) {
+                            BackupsModel.mCheckAllState = checkState;
                         }
+                        selectAll.fromModel = false;
+                    }
+
+                    Connections {
+                        target: BackupsModel
+
+                        onCheckAllStateChanged: {
+                            selectAll.fromModel = true;
+                            selectAll.checkState = BackupsModel.mCheckAllState;
+                        }
+                    }
+
+                    Component.onCompleted: {
+                        selectAll.checkState = BackupsModel.mCheckAllState;
+                    }
+                }
+
+                RowLayout {
+                    Layout.leftMargin: headerFooterMargin
+                    Layout.fillWidth: true
+                    spacing: headerFooterMargin / 2
+                    visible: backupsProxyModel.selectedFilterEnabled
+
+                    MegaImages.SvgImage {
+                        source: Images.database
+                        color: Styles.iconPrimary
+                        sourceSize: Qt.size(16, 16)
+                    }
+
+                    MegaTexts.Text {
+                        text: OnboardingStrings.backupFolders
                     }
                 }
 
                 MegaTexts.Text {
-                    id: headerText
-
-                    property int selectedRows: 0
-
-                    text: backupsProxyModel.selectedFilterEnabled
-                          ? OnboardingStrings.backupFolders
-                          : "(" + selectedRows + ")"
-                    Layout.leftMargin: backupsProxyModel.selectedFilterEnabled ? 22 : 4
-                    Layout.fillWidth: true
-                }
-
-                MegaTexts.Text {
-                    id: totalSizeText
-
-                    text: backupsProxyModel.totalSize
-                    Layout.rightMargin: 22
+                    Layout.rightMargin: headerFooterMargin
                     Layout.alignment: Qt.AlignRight
+                    text: BackupsModel.mTotalSize
                     font.pixelSize: MegaTexts.Text.Size.Small
                     font.weight: Font.DemiBold
                     visible: backupsProxyModel.selectedFilterEnabled
                 }
-
-                Connections {
-                    target: backupsProxyModel
-
-                    onRowSelectedChanged: (selectedRow, selectedAll) => {
-                        selectAll.fromModel = true;
-                        if(selectedRow) {
-                            selectAll.toIndeterminate();
-                            headerText.selectedRows = backupsProxyModel.getNumSelectedRows();
-                            footerButtons.nextButton.enabled = true;
-                        } else {
-                            selectAll.fromIndeterminate(selectedAll);
-                            selectAll.checked = selectedAll;
-                            checkSelectAll(selectedAll);
-                        }
-                    }
-                }
             }
+
             Rectangle {
-                height: tableHeaderBackground.radius
-                color: tableHeaderBackground.color
-                anchors.bottom: tableHeaderBackground.bottom
-                anchors.left: tableHeaderBackground.left
-                anchors.right: tableHeaderBackground.right
+                height: borderRectangle.border.width
+                color: borderRectangle.border.color
+                anchors.bottom: parent.bottom
+                anchors.left: parent.left
+                anchors.right: parent.right
             }
         }
     }
 
     Component {
-        id: folderItem
+        id: folderComponent
 
         FolderRow {
             anchors.right: parent.right
@@ -155,8 +151,70 @@ Rectangle {
         }
     }
 
-    Component.onCompleted: {
-        console.error("created table");
+    Component {
+        id: footerComponent
+
+        Rectangle {
+            anchors.right: parent.right
+            anchors.left: parent.left
+            height: headerFooterHeight
+            z: 3
+            visible: !backupsProxyModel.selectedFilterEnabled
+            color: "white"
+            radius: tableRectangle.radius
+
+            RowLayout {
+                id: addFoldersButton
+
+                anchors.left: parent.left
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                anchors.leftMargin: headerFooterMargin
+                spacing: headerFooterMargin / 2
+
+                MegaImages.SvgImage {
+                    source: Images.plus
+                    color: Styles.buttonPrimary
+                    sourceSize: Qt.size(16, 16)
+                }
+
+                MegaTexts.Text {
+                    text: OnboardingStrings.addFolders
+                    font.weight: Font.DemiBold
+                }
+            }
+
+            MouseArea {
+                anchors.fill: addFoldersButton
+                cursorShape: Qt.PointingHandCursor
+                z: 3
+                onClicked: {
+                    folderDialog.openFolderSelector();
+                }
+            }
+
+            ChooseLocalFolder {
+                id: folderDialog
+
+                onFolderChanged: {
+                    BackupsModel.insertFolder(folderDialog.getFolder());
+                }
+            }
+
+            Rectangle {
+                height: borderRectangle.border.width
+                color: borderRectangle.border.color
+                anchors.top: parent.top
+                anchors.left: parent.left
+                anchors.right: parent.right
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                cursorShape: Qt.ArrowCursor
+            }
+        }
+
     }
 
 }

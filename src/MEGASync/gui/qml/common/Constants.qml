@@ -17,7 +17,4 @@ QtObject {
 
     readonly property color backgroundColor: "#c2c2c2"
 
-    readonly property string fontFamily: "Inter"
-    readonly property string fontStyleName: "normal"
-
 }

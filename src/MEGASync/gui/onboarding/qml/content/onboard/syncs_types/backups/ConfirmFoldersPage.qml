@@ -9,6 +9,7 @@ import Onboard 1.0
 
 // C++
 import Onboarding 1.0
+import BackupsController 1.0
 
 ConfirmFoldersPageForm {
     id: root
@@ -18,6 +19,7 @@ ConfirmFoldersPageForm {
     footerButtons {
 
         previousButton.onClicked: {
+            backupsProxyModel.selectedFilterEnabled = false;
             backupsFlow.state = backupsFlow.selectBackup;
         }
 
@@ -25,13 +27,11 @@ ConfirmFoldersPageForm {
             success = false;
             root.enabled = false;
             footerButtons.nextButton.icons.busyIndicatorVisible = true;
-            proxyModel.updateConfirmed();
-            Onboarding.addBackups(proxyModel.getConfirmedDirs());
+            backupsProxyModel.createBackups();
         }
     }
 
     Component.onCompleted: {
-        proxyModel.selectedFilterEnabled = true;
         Onboarding.getComputerName();
     }
 
@@ -42,22 +42,15 @@ ConfirmFoldersPageForm {
             folderField.textField.text = "/" + deviceName;
             folderField.enabled = true;
         }
+    }
 
-        onBackupsUpdated: (path, errorCode, finished) => {
-            proxyModel.update(path, errorCode);
+    Connections {
+        target: BackupsController
 
-            if(finished) {
-                proxyModel.clean();
-                root.enabled = true;
-                footerButtons.nextButton.icons.busyIndicatorVisible = false;
-                mainFlow.state = mainFlow.finalState;
-            }
-        }
-
-        onBackupConflict: (folder, name, isNew) => {
-            proxyModel.clean();
+        onBackupsCreationFinished: {
             root.enabled = true;
             footerButtons.nextButton.icons.busyIndicatorVisible = false;
+            syncsFlow.state = syncsFlow.finalState;
         }
     }
 

@@ -19,17 +19,6 @@ Rectangle {
     readonly property string confirmEmail: "confirmEmail"
     readonly property string changeConfirmEmail: "changeConfirmEmail"
 
-    gradient: Gradient{
-        GradientStop{
-            position: 0.0
-            color: Styles.gradientContrastTop
-        }
-        GradientStop{
-            position: 1.0
-            color: Styles.gradientContrastBottom
-        }
-    }
-
     state: login
     states: [
         State {
@@ -64,12 +53,16 @@ Rectangle {
         }
     ]
 
+    color: Styles.surface1
+
     Image {
         id: leftImage
 
         source: registerFlow.state === twoFA ? Images.twofa : Images.login
         anchors.left: registerFlow.left
+        anchors.leftMargin: 2
         anchors.verticalCenter: registerFlow.verticalCenter
+        width: 300
 
         NumberAnimation on opacity {
             id: imageAnimation
@@ -84,15 +77,35 @@ Rectangle {
         }
     }
 
-    StackView {
-        id: stack
+    Rectangle {
+        id: separatorLine
 
         anchors {
             left: leftImage.right
             top: registerFlow.top
+            leftMargin: 2
+            topMargin: 48
+        }
+        width: 1
+        height: 464
+        radius: 2
+        border.color: Styles.borderDisabled
+    }
+
+    StackView {
+        id: stack
+
+        anchors {
+            left: separatorLine.right
+            top: registerFlow.top
             bottom: registerFlow.bottom
             right: registerFlow.right
+            leftMargin: 48
+            rightMargin: 48
+            topMargin: 45
+            bottomMargin: 45
         }
+
         replaceEnter: Transition {
             XAnimator {
                 from: (stack.mirrored ? -1 : 1) * leftImage.width
@@ -104,54 +117,38 @@ Rectangle {
             XAnimator {
                 from: 0
                 to: (stack.mirrored ? -1 : 1) * stack.width
-                duration: 400
+                duration: 300
             }
         }
 
-        Component{
+        Component {
             id: loginPage
-        LoginPage {
 
-            width: stack.width
-            height: stack.height
-            visible: false
-        }
+            LoginPage {}
         }
 
-        Component{
-
+        Component {
             id: twoFAPage
-        TwoFAPage {
 
-            visible: false
-        }
+            TwoFAPage {}
         }
 
-        Component{
-
+        Component {
             id: registerPage
-        RegisterPage {
 
-            visible: false
-        }
+            RegisterPage {}
         }
 
-        Component{
-
+        Component {
             id: confirmEmailPage
-        ConfirmEmailPage {
 
-            visible: false
-        }
+            ConfirmEmailPage {}
         }
 
-        Component{
-
+        Component {
             id: changeConfirmEmailPage
-        ChangeEmailPage {
 
-            visible: false
-        }
+            ChangeEmailPage {}
         }
         LoginController{
             id: loginController

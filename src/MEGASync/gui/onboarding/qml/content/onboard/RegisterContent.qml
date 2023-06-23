@@ -16,10 +16,18 @@ Column {
     id: formColumn
 
     function error() {
-        var error = firstName.text.length === 0 || lastName.text.length === 0;
-        firstLastNameHint.visible = error;
-        firstName.error = error;
-        lastName.error = error;
+        var error = false;
+        if(firstName.text.length === 0) {
+            error = true;
+            firstName.error = true;
+            firstName.hint.visible = true;
+        }
+
+        if(lastName.text.length === 0) {
+            error = true;
+            lastName.error = true;
+            lastName.hint.visible = true;
+        }
 
         var valid = email.valid();
         if(!valid) {
@@ -32,7 +40,6 @@ Column {
         valid = password.text.length !== 0;
         if(!valid) {
             error = true;
-            password.hint.type = MegaTexts.HintText.Type.Error;
             password.error = true;
         }
         password.error = !valid;
@@ -75,13 +82,12 @@ Column {
 
     property alias firstName: firstName
     property alias lastName: lastName
-    property alias firstLastNameHint: firstLastNameHint
     property alias email: email
     property alias password: password
     property alias confirmPassword: confirmPassword
     property alias termsCheckBox: termsCheckBox
 
-    readonly property int contentWidth: 400
+    readonly property int contentWidth: 402
     readonly property int contentMargin: 48
     readonly property int checkboxSpacing: 16
     readonly property int checkboxBottomHeight: 1
@@ -111,6 +117,13 @@ Column {
 
                     width: nameLayout.width / 2 - nameLayout.spacing / 2
                     title: OnboardingStrings.firstName
+                    hint.icon: Images.person
+                    hint.text: OnboardingStrings.errorName
+
+                    textField.onTextChanged: {
+                        firstName.error = false;
+                        firstName.hint.visible = false;
+                    }
                 }
 
                 MegaTextFields.TextField {
@@ -118,18 +131,14 @@ Column {
 
                     width: nameLayout.width / 2 - nameLayout.spacing / 2
                     title: OnboardingStrings.lastName
+                    hint.icon: Images.person
+                    hint.text: OnboardingStrings.errorLastName
+
+                    textField.onTextChanged: {
+                        lastName.error = false;
+                        lastName.hint.visible = false;
+                    }
                 }
-            }
-
-            MegaTexts.HintText {
-                id: firstLastNameHint
-
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.leftMargin: email.textField.focusBorderWidth
-                anchors.rightMargin: email.textField.focusBorderWidth
-                text: OnboardingStrings.errorFirstLastName
-                icon: Images.alertTriangle
             }
         }
 
@@ -139,6 +148,7 @@ Column {
             anchors.left: parent.left
             anchors.right: parent.right
             title: OnboardingStrings.email
+            hint.icon: Images.mail
         }
 
         MegaTextFields.PasswordTextField {
@@ -156,31 +166,18 @@ Column {
             anchors.left: parent.left
             anchors.right: parent.right
             title: OnboardingStrings.confirmPassword
-            hint.icon: Images.alertTriangle
+            hint.icon: Images.key
+            showHint: false
         }
     }
 
-    Column {
-        id: checksLayout
+    MegaCheckBoxes.CheckBox {
+        id: termsCheckBox
 
         anchors.left: parent.left
         anchors.right: parent.right
-        spacing: checkboxSpacing
-
-        MegaCheckBoxes.CheckBox {
-            id: termsCheckBox
-
-            anchors.left: parent.left
-            anchors.right: parent.right
-            url: Links.terms
-            text: OnboardingStrings.agreeTerms
-        }
-
-        Rectangle {
-            height: checkboxBottomHeight
-            anchors.left: parent.left
-            anchors.right: parent.right
-            color: "transparent"
-        }
+        anchors.leftMargin: email.textField.focusBorderWidth
+        url: Links.terms
+        text: OnboardingStrings.agreeTerms
     }
 }

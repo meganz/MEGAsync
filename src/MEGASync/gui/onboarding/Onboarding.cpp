@@ -16,6 +16,14 @@ Onboarding::Onboarding(QObject *parent)
     : QMLComponent(parent)
     , mMegaApi(MegaSyncApp->getMegaApi())
     , mBackupController(new SyncController())
+    , mDelegateListener(new QTMegaRequestListener(mMegaApi, this))
+    , mGlobalListener(new QTMegaGlobalListener(mMegaApi, this))
+    , mPreferences(Preferences::instance())
+    , mSyncController(new SyncController())
+    , mPassword(QString())
+    , mLastName(QString())
+    , mFirstName(QString())
+    , mEmail(QString())
 {
     qmlRegisterModule("Onboard", 1, 0);
     qmlRegisterModule("Onboarding", 1, 0);
@@ -57,9 +65,10 @@ Onboarding::Onboarding(QObject *parent)
 
     connect(mBackupController, &SyncController::syncAddStatus,
             this, &Onboarding::onBackupAddRequestStatus);
+    connect(mSyncController, &SyncController::syncAddStatus,
+            this, &Onboarding::onSyncAddRequestStatus);
 }
 
-Onboarding::~Onboarding()
 {
 }
 
@@ -84,46 +93,11 @@ QVector<QQmlContext::PropertyPair> Onboarding::contextProperties()
     return contextVector;
 }
 
-void Onboarding::addBackups(const QStringList& localPathList)
-{
-    if(localPathList.size() <= 0)
-    {
-        return;
-    }
-
-    mBackupsToDoList.clear();
-    for(const QString& path : localPathList)
-    {
-        mBackupsToDoList.append(QPair<QString, QString>(path, QString::fromUtf8("")));
-    }
-    createNextBackup();
-}
-
-void Onboarding::createNextBackup(const QString& name)
-{
-    if(mBackupsToDoList.size() <= 0)
-    {
-        return;
-    }
-
-    QString backupName(name);
-    if(name.isEmpty())
-    {
-        backupName = mBackupController->getSyncNameFromPath(mBackupsToDoList.first().first);
-    }
-    else
-    {
-        mBackupsToDoList.first().second = name;
-    }
-    mBackupController->addBackup(mBackupsToDoList.first().first, backupName);
-}
-
 void Onboarding::exitLoggedIn()
 {
     std::unique_ptr<char[]> email(mMegaApi->getMyEmail());
     Preferences::instance()->setEmailAndGeneralSettings(QString::fromUtf8(email.get()));
     emit exitLoggedInFinished();
-}
 
 void Onboarding::openPreferences(bool sync) const
 {
@@ -135,42 +109,21 @@ void Onboarding::openPreferences(bool sync) const
     MegaSyncApp->openSettings(tab);
 }
 
-void Onboarding::onBackupAddRequestStatus(int errorCode,
-                                          const QString& errorMsg,
-                                          const QString& name)
+void Onboarding::onSyncAddRequestStatus(int errorCode,
+                                        const QString &errorMsg,
+                                        const QString &name)
 {
-    qDebug() << "Onboarding::onBackupAddRequestStatus -> path = " << name
-             << " - errorCode = " << errorCode << " - errorMsg = " << errorMsg;
-
-    if(errorCode == 0)
+    Q_UNUSED(name)
+    if (errorCode != MegaError::API_OK)
     {
-        mBackupsToDoList.removeFirst();
-        if(mBackupsToDoList.size() > 0)
-        {
-            createNextBackup();
-        }
+        Text::Link link(Utilities::SUPPORT_URL);
+        Text::Decorator dec(&link);
+        QString msg = errorMsg;
+        dec.process(msg);
+        QMegaMessageBox::warning(nullptr, tr("Error adding sync"), msg, QMessageBox::Ok, QMessageBox::NoButton, QMap<QMessageBox::StandardButton, QString>(), Qt::RichText);
     }
     else
     {
-        bool found = false;
-        auto it = mBackupsToDoList.constBegin();
-        QString backupName(QString::fromUtf8(""));
-        while(!found && it != mBackupsToDoList.constEnd())
-        {
-            if((found = (it->first == name)))
-            {
-                backupName = it->second;
-            }
-            it++;
-        }
-
-        if(found)
-        {
-            // Wait until the rename conflict has been resolved
-            emit backupConflict(mBackupController->getSyncNameFromPath(name),
-                                backupName,
-                                backupName == QString::fromUtf8(""));
-        }
+        emit syncSetupSuccess();
     }
-    emit backupsUpdated(name, errorCode, mBackupsToDoList.size() == 0);
 }

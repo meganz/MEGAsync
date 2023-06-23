@@ -51,10 +51,9 @@ MegaTextFields.TextField {
         rightIcon.visible = (text.length > 0);
         error = false;
         hint.visible = text.length > 0 && showHint;
-        if(!(text.length > 0)) {
+        if(!(text.length > 0) || !showHint) {
             return;
         }
-
 
         var strength = strengthCheckerLoader.item.getPasswordStrength(text);
         switch(strength) {
@@ -93,6 +92,12 @@ MegaTextFields.TextField {
             hint.icon = Images.passwordStrong;
             break;
         }
+        }
+    }
+
+    textField.onFocusChanged: {
+        if(textField.focus) {
+            rightIcon.visible = true;
         }
     }
 

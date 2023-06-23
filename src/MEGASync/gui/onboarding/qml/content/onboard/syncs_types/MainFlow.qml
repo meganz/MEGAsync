@@ -152,9 +152,7 @@ StackView {
             Component{
                 id: backupsFlowPage
 
-                BackupsFlow {
-                    stepLeftPanel: stepPanel
-                }
+                BackupsFlow {}
             }
         }
     }

@@ -14,16 +14,6 @@ Qml.CheckBox {
         return checkState === Qt.PartiallyChecked;
     }
 
-    function toIndeterminate() {
-        tristate = true;
-        checkState = Qt.PartiallyChecked;
-    }
-
-    function fromIndeterminate(value) {
-        tristate = false;
-        checkState = value ? Qt.Checked : Qt.Unchecked;
-    }
-
     property string url: ""
     property Sizes sizes: Sizes {}
     property Colors colors: Colors {}

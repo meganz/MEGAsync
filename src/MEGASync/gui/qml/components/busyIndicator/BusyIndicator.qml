@@ -3,7 +3,6 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12 as Qml
 import QtGraphicalEffects 1.0
 
-
 import Components.Images 1.0 as MegaImages
 import Common 1.0
 

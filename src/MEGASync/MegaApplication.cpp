@@ -3421,6 +3421,7 @@ void MegaApplication::registerCommonQMLElements()
     qmlRegisterModule("Components.Texts", 1, 0);
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/HintStyle.qml")), "Components.Texts", 1, 0, "HintStyle");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/HintText.qml")), "Components.Texts", 1, 0, "HintText");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/NotificationInfo.qml")), "Components.Texts", 1, 0, "NotificationInfo");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/NotificationText.qml")), "Components.Texts", 1, 0, "NotificationText");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/RichText.qml")), "Components.Texts", 1, 0, "RichText");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/SecondaryText.qml")), "Components.Texts", 1, 0, "SecondaryText");
