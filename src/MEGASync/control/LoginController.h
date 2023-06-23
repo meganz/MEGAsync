@@ -14,7 +14,7 @@ class Preferences;
 class LoginController : public QObject, public mega::MegaRequestListener
 {
     Q_OBJECT
-    Q_PROPERTY(QString email MEMBER mEmail WRITE setEmail READ getEmail NOTIFY emailChanged)
+    Q_PROPERTY(QString email MEMBER mEmail READ getEmail NOTIFY emailChanged)
 
 public:
     explicit LoginController(QObject *parent = nullptr);
@@ -75,7 +75,7 @@ class FastLoginController : public LoginController
 
 public:
     explicit FastLoginController(QObject* parent =  nullptr);
-    void fastLogin();
+    bool fastLogin();
 
 protected:
     void onLogin(mega::MegaRequest* request, mega::MegaError* e) override;
@@ -83,8 +83,10 @@ protected:
 
 };
 
-class LogoutController : public mega::MegaRequestListener
+class LogoutController : public QObject, mega::MegaRequestListener
 {
+    Q_OBJECT
+
 public:
     explicit LogoutController(QObject* parent =  nullptr);
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest* request, mega::MegaError* e) override;

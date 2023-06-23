@@ -5,7 +5,7 @@
 
 #include <QObject>
 
-class PasswordStrengthChecker
+class PasswordStrengthChecker : public QObject
 {
     Q_OBJECT
 
@@ -18,7 +18,7 @@ class PasswordStrengthChecker
     };
 
 public:
-    PasswordStrengthChecker();
+    PasswordStrengthChecker(QObject* parent = nullptr);
 
     Q_INVOKABLE PasswordStrength getPasswordStrength(const QString& password);
 

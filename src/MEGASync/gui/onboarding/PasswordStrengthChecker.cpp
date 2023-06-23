@@ -1,8 +1,9 @@
 #include "PasswordStrengthChecker.h"
 #include "MegaApplication.h"
 
-PasswordStrengthChecker::PasswordStrengthChecker()
-    : mMegaApi(MegaSyncApp->getMegaApi())
+PasswordStrengthChecker::PasswordStrengthChecker(QObject* parent)
+    : QObject(parent)
+    , mMegaApi(MegaSyncApp->getMegaApi())
 {
 
 }

@@ -77,50 +77,53 @@ void ProxySettings::setManualMode(bool enabled)
     }
 }
 
-void ProxySettings::onProxyTestError()
+void ProxySettings::onProxyTestFinished(bool success)
 {
-    MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Proxy test failed");
-    if(mProgressDialog)
+    if(success)
     {
-        mProgressDialog->close();
-    }
-    QMegaMessageBox::critical(this, tr("Error"),
-                              tr("Your proxy settings are invalid or the proxy doesn't respond"));
-}
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Proxy test OK");
 
-void ProxySettings::onProxyTestSuccess()
-{
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Proxy test OK");
-
-    if (mUi->rNoProxy->isChecked())
-    {
-        mPreferences->setProxyType(Preferences::PROXY_TYPE_NONE);
-    }
+        if (mUi->rNoProxy->isChecked())
+        {
+            mPreferences->setProxyType(Preferences::PROXY_TYPE_NONE);
+        }
 #ifndef Q_OS_LINUX
-    else if (mUi->rProxyAuto->isChecked())
-    {
-        mPreferences->setProxyType(Preferences::PROXY_TYPE_AUTO);
-    }
+        else if (mUi->rProxyAuto->isChecked())
+        {
+            mPreferences->setProxyType(Preferences::PROXY_TYPE_AUTO);
+        }
 #endif
-    else if (mUi->rProxyManual->isChecked())
-    {
-        mPreferences->setProxyType(Preferences::PROXY_TYPE_CUSTOM);
+        else if (mUi->rProxyManual->isChecked())
+        {
+            mPreferences->setProxyType(Preferences::PROXY_TYPE_CUSTOM);
+        }
+
+        mPreferences->setProxyProtocol(mUi->cProxyType->currentIndex());
+        mPreferences->setProxyServer(mUi->eProxyServer->text().trimmed());
+        mPreferences->setProxyPort(mUi->eProxyPort->text().toInt());
+        mPreferences->setProxyRequiresAuth(mUi->cProxyRequiresPassword->isChecked());
+        mPreferences->setProxyUsername(mUi->eProxyUsername->text());
+        mPreferences->setProxyPassword(mUi->eProxyPassword->text());
+
+        if(mProgressDialog)
+        {
+            mProgressDialog->close();
+        }
+
+        accept();
     }
-
-    mPreferences->setProxyProtocol(mUi->cProxyType->currentIndex());
-    mPreferences->setProxyServer(mUi->eProxyServer->text().trimmed());
-    mPreferences->setProxyPort(mUi->eProxyPort->text().toInt());
-    mPreferences->setProxyRequiresAuth(mUi->cProxyRequiresPassword->isChecked());
-    mPreferences->setProxyUsername(mUi->eProxyUsername->text());
-    mPreferences->setProxyPassword(mUi->eProxyPassword->text());
-
-    if(mProgressDialog)
+    else
     {
-        mProgressDialog->close();
+        MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Proxy test failed");
+        if(mProgressDialog)
+        {
+            mProgressDialog->close();
+        }
+        QMegaMessageBox::critical(this, tr("Error"),
+                                  tr("Your proxy settings are invalid or the proxy doesn't respond"));
     }
-
-    accept();
 }
+
 
 void ProxySettings::on_bUpdate_clicked()
 {

@@ -59,7 +59,7 @@ void LoginController::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *req
 
         if(e->getErrorCode() == mega::MegaError::API_OK)
         {
-            std::unique_ptr<char []> session(megaApi->dumpSession());
+            std::unique_ptr<char []> session(mMegaApi->dumpSession());
             if (session)
             {
                 mPreferences->setSession(QString::fromUtf8(session.get()));
@@ -159,7 +159,7 @@ void LoginController::onLogin(mega::MegaRequest *request, mega::MegaError *e)
         default:
             if(e->getErrorCode() != mega::MegaError::API_ESSL)
             {
-                QMegaMessageBox::warning(nullptr, tr("Error"), QCoreApplication::translate("MegaError", error->getErrorString()), QMessageBox::Ok);
+                QMegaMessageBox::warning(nullptr, tr("Error"), QCoreApplication::translate("MegaError", e->getErrorString()), QMessageBox::Ok);
             }
             break;
         }
@@ -171,35 +171,13 @@ void LoginController::onLogin(mega::MegaRequest *request, mega::MegaError *e)
 
 void LoginController::onFetchNodesSuccess()
 {
-    std::unique_ptr<char[]> email(megaApi->getMyEmail());
+    std::unique_ptr<char[]> email(mMegaApi->getMyEmail());
 
     // We will proceed with a new login
     mPreferences->setEmailAndGeneralSettings(QString::fromUtf8(email.get()));
     SyncInfo::instance()->rewriteSyncSettings(); //write sync settings into user's preferences
 
     MegaSyncApp->loggedIn(true);
-}
-
-void LoginController::onLoginSpecific(mega::MegaRequest *request, mega::MegaError *e)
-{
-    if (e->getErrorCode() == mega::MegaError::API_OK)
-    {
-        mPreferences->setAccountStateInGeneral(Preferences::STATE_LOGGED_OK); //TODO: setGlobalAccountState
-
-        std::unique_ptr<char []> session(megaApi()->dumpSession());
-        if (session)
-        {
-            mPreferences->setSession(QString::fromUtf8(session.get()));
-        }
-
-        // In case fetchnode fails in previous request,
-        // but we have an active session, we will need to launch a fetchnodes
-        if (mPreferences->needsFetchNodesInGeneral())
-        {
-            auto email = request->getEmail();
-            fetchNodes(QString::fromUtf8(email ? email : ""));
-        }
-    }
 }
 
 void LoginController::onAccountCreation(mega::MegaRequest *request, mega::MegaError *e)
@@ -266,7 +244,7 @@ void LoginController::onLogout(mega::MegaRequest *request, mega::MegaError *e)
         QMegaMessageBox::critical(nullptr, QString::fromUtf8("MEGAsync"),
                                   tr("Our SSL key can't be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.")
                                       + QString::fromUtf8(" (Issuer: %1)").arg(QString::fromUtf8(request->getText() ? request->getText() : "Unknown")));
-        megaApi->localLogout();
+        megaApi()->localLogout();
         // TODO: to login page??
     }
 }
@@ -308,10 +286,10 @@ void LoginController::fetchNodes(const QString& email)
     }
     else // we will ask the SDK the email
     {
-        mMegaApi->getUserEmail(mMegaApi->getMyUserHandleBinary(),new MegaListenerFuncExecuter(true, [loadMigrateAndFetchNodes](MegaApi*,  MegaRequest* request, MegaError* e) {
+        mMegaApi->getUserEmail(mMegaApi->getMyUserHandleBinary(),new MegaListenerFuncExecuter(true, [loadMigrateAndFetchNodes](mega::MegaApi*,  mega::MegaRequest* request, mega::MegaError* e) {
                                   QString email;
 
-                                  if (e->getErrorCode() == API_OK)
+                                   if (e->getErrorCode() == mega::MegaError::API_OK)
                                   {
                                       auto emailFromRequest = request->getEmail();
                                       if (emailFromRequest)
@@ -550,12 +528,12 @@ FastLoginController::FastLoginController(QObject *parent)
 
 }
 
-void FastLoginController::fastLogin()
+bool FastLoginController::fastLogin()
 {
     QString session = mPreferences->getSession();
     if(session.size())
     {
-        megaApi()->fastLogin(session);
+        megaApi()->fastLogin(session.toUtf8().constData());
         return true;
     }
     return false;
@@ -590,7 +568,7 @@ void FastLoginController::onLogin(mega::MegaRequest *request, mega::MegaError *e
 
         //Wrong login -> logout
         MegaSyncApp->unlink(true);
-        MegaSyncApp->onGlobalSyncStateChanged(mMegaApi);
+        MegaSyncApp->onGlobalSyncStateChanged(megaApi());
     }
 }
 
@@ -602,7 +580,7 @@ void FastLoginController::onFetchNodesSuccess()
 LogoutController::LogoutController(QObject *parent)
     : QObject(parent)
     , mMegaApi(MegaSyncApp->getMegaApi())
-    , mDelegateListener(new mega::QTMegaRequestListener(MegasyncApp->megaApi(), this))
+    , mDelegateListener(new mega::QTMegaRequestListener(MegaSyncApp->getMegaApi(), this))
 {
 
 }
@@ -622,7 +600,7 @@ void LogoutController::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *re
             //This option was to risky and the solution taken was silently retry reconnection
 
             // Retry while enforcing key pinning silently
-            megaApi->retryPendingConnections();
+            mMegaApi->retryPendingConnections();
             return;
         }
 
@@ -656,5 +634,5 @@ void LogoutController::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *re
 
 void LogoutController::logout()
 {
-    mMegaApi->logout(true);
+    mMegaApi->logout(true, nullptr);
 }
