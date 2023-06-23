@@ -356,17 +356,16 @@ public:
 
     inline void hideLoadingScene() override
     {
-
         mLoadingViewSet = false;
         emit sceneVisibilityChange(false);
 
         mLoadingModel->setRowCount(0);
+        mViewLayout->replaceWidget(mLoadingView, mView);
         mLoadingView->hide();
         if(mWasFocused)
         {
             mView->setFocus();
         }
-        mViewLayout->replaceWidget(mLoadingView, mView);
         mView->show();
         mView->viewport()->update();
         mLoadingDelegate->setLoading(false);
@@ -406,12 +405,12 @@ private:
             mLoadingModel->appendRow(new QStandardItem());
         }
 
+        mView->setViewPortEventsBlocked(true);
+        mViewLayout->replaceWidget(mView, mLoadingView);
+        mLoadingView->show();
         mView->hide();
         mView->blockSignals(true);
         mView->header()->blockSignals(true);
-        mView->setViewPortEventsBlocked(true);
-        mLoadingView->show();
-        mViewLayout->replaceWidget(mView, mLoadingView);
         mStartTime = QDateTime::currentMSecsSinceEpoch();
         mLoadingDelegate->setLoading(true);
 

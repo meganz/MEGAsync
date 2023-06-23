@@ -1905,9 +1905,14 @@ void InfoDialog::setupSyncController()
                 Text::Link link(Utilities::SUPPORT_URL);
                 Text::Decorator tc(&link);
                 tc.process(msg);
-                QMegaMessageBox::warning(nullptr, tr("Error"), tr("Error adding %1:").arg(name)
-                                         + QString::fromLatin1("\n")
-                                         + msg, QMessageBox::Ok, QMessageBox::NoButton, QMap<QMessageBox::StandardButton, QString>(), Qt::RichText);
+
+                QMegaMessageBox::MessageBoxInfo info;
+                info.title = QMegaMessageBox::errorTitle();
+                info.text = tr("Error adding %1:").arg(name)
+                        + QString::fromLatin1("\n")
+                        + msg;
+
+                QMegaMessageBox::warning(info);
             }
         });
     }

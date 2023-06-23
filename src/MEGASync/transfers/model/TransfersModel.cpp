@@ -9,6 +9,8 @@
 #include "platform/PowerOptions.h"
 #include "PlatformStrings.h"
 #include "TransferMetaData.h"
+#include <QMegaMessageBox.h>
+#include "MegaTransferView.h"
 
 #include <QSharedData>
 
@@ -1406,6 +1408,13 @@ void TransfersModel::openFolder(const QFileInfo& info)
             emit showInFolderFinished(Platform::getInstance()->showInFolder(info.filePath()));
         });
     }
+    else
+    {
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.title = MegaSyncApp->getMEGAString();
+        msgInfo.text = MegaTransferView::errorOpeningFileText();
+        QMegaMessageBox::warning(msgInfo);
+    }
 }
 
 QFileInfo TransfersModel::getFileInfoByIndex(const QModelIndex& index)
@@ -1789,22 +1798,31 @@ void TransfersModel::showSyncCancelledWarning()
 {
     if(syncsInRowsToCancel())
     {
-        QPointer<QMessageBox> removeSync = new QMessageBox(QMessageBox::Warning, QLatin1Literal("MEGAsync"),
-                                                           tr("Sync transfers cannot be cancelled individually.\n"
-                                                                         "Please delete the folder sync from settings to cancel them."),
-                                                           QMessageBox::No | QMessageBox::Yes, mCancelledFrom);
-        removeSync->setButtonText(QMessageBox::No, tr("Dismiss"));
-        removeSync->setButtonText(QMessageBox::Yes, tr("Open settings"));
-        removeSync->open();
-
-        connect(removeSync.data(), &QMessageBox::finished, [this, removeSync](){
-            if(removeSync->result() == QMessageBox::Yes)
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.title = MegaSyncApp->getMEGAString();
+        msgInfo.text = tr("Sync transfers cannot be cancelled individually.\n"
+                          "Please delete the folder sync from settings to cancel them.");
+        msgInfo.parent = mCancelledFrom;
+        msgInfo.buttons = QMessageBox::Yes|QMessageBox::No;
+        QMap<QMessageBox::Button, QString> textsByButton;
+        textsByButton.insert(QMessageBox::Yes, tr("Open settings"));
+        textsByButton.insert(QMessageBox::No, tr("Dismiss"));
+        msgInfo.buttonsText = textsByButton;
+        msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
+        {
+            if(msg->result() == QMessageBox::Yes)
             {
-                MegaSyncApp->openSettings(SettingsDialog::SYNCS_TAB);
+                //Do it in the following event loop to ensure dialog is correctly raised
+                QTimer::singleShot(0,
+                []()
+                {
+                    MegaSyncApp->openSettings(SettingsDialog::SYNCS_TAB);
+                });
             }
 
             resetSyncInRowsToCancel();
-        });
+        };
+        QMegaMessageBox::warning(msgInfo);
     }
 }
 
@@ -2126,7 +2144,6 @@ int TransfersModel::performPauseResumeAllTransfers(int activeTransfers, bool use
 
         //This needs to be done after pausing all the transfers one by one
         mMegaApi->pauseTransfers(mAreAllPaused);
-
     }
 
     return tagsUpdated;

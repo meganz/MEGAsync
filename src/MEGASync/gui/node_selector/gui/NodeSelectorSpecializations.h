@@ -11,7 +11,7 @@ public:
     explicit UploadNodeSelector(QWidget *parent = 0);
 
 private:
-    bool isSelectionCorrect() override;
+    void checkSelection() override;
 };
 
 class DownloadNodeSelector : public NodeSelector
@@ -22,7 +22,7 @@ public:
     explicit DownloadNodeSelector(QWidget *parent = 0);
 
 private:
-    bool isSelectionCorrect() override;
+    void checkSelection() override;
 };
 
 class SyncNodeSelector : public NodeSelector
@@ -33,7 +33,7 @@ public:
     explicit SyncNodeSelector(QWidget *parent = 0);
 
 private:
-    bool isSelectionCorrect() override;
+    void checkSelection() override;
 };
 
 class StreamNodeSelector : public NodeSelector
@@ -44,7 +44,7 @@ public:
     explicit StreamNodeSelector(QWidget *parent = 0);
 
 private:
-    bool isSelectionCorrect() override;
+    void checkSelection() override;
 };
 
 #endif // NODESELECTORSPECIALIZED_H
