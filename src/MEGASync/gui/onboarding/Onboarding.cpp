@@ -14,16 +14,6 @@ using namespace mega;
 
 Onboarding::Onboarding(QObject *parent)
     : QMLComponent(parent)
-    , mMegaApi(MegaSyncApp->getMegaApi())
-    , mBackupController(new SyncController())
-    , mDelegateListener(new QTMegaRequestListener(mMegaApi, this))
-    , mGlobalListener(new QTMegaGlobalListener(mMegaApi, this))
-    , mPreferences(Preferences::instance())
-    , mSyncController(new SyncController())
-    , mPassword(QString())
-    , mLastName(QString())
-    , mFirstName(QString())
-    , mEmail(QString())
 {
     qmlRegisterModule("Onboard", 1, 0);
     qmlRegisterModule("Onboarding", 1, 0);
@@ -63,14 +53,10 @@ Onboarding::Onboarding(QObject *parent)
     qmlRegisterModule("Onboard.Syncs_types.Backups", 1, 0);
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/onboard/syncs_types/backups/BackupsFlow.qml")), "Onboard.Syncs_types.Backups", 1, 0, "BackupsFlow");
 
-    connect(mBackupController, &SyncController::syncAddStatus,
-            this, &Onboarding::onBackupAddRequestStatus);
-    connect(mSyncController, &SyncController::syncAddStatus,
-            this, &Onboarding::onSyncAddRequestStatus);
+    qmlRegisterModule("BackupsModel", 1, 0);
+    qmlRegisterModule("BackupsController", 1, 0);
 }
 
-{
-}
 
 QUrl Onboarding::getQmlUrl()
 {
@@ -82,23 +68,6 @@ QString Onboarding::contextName()
     return QString::fromUtf8("Onboarding");
 }
 
-QVector<QQmlContext::PropertyPair> Onboarding::contextProperties()
-{
-    QVector<QQmlContext::PropertyPair> contextVector;
-    QQmlContext::PropertyPair property;
-    property.name  = QString::fromUtf8("loginController");
-    auto obj = new QObject();
-    property.value = QVariant(QMetaType::QObjectStar, &obj);
-    contextVector.append(property);
-    return contextVector;
-}
-
-void Onboarding::exitLoggedIn()
-{
-    std::unique_ptr<char[]> email(mMegaApi->getMyEmail());
-    Preferences::instance()->setEmailAndGeneralSettings(QString::fromUtf8(email.get()));
-    emit exitLoggedInFinished();
-
 void Onboarding::openPreferences(bool sync) const
 {
     int tab = SettingsDialog::BACKUP_TAB;
@@ -109,21 +78,6 @@ void Onboarding::openPreferences(bool sync) const
     MegaSyncApp->openSettings(tab);
 }
 
-void Onboarding::onSyncAddRequestStatus(int errorCode,
-                                        const QString &errorMsg,
-                                        const QString &name)
-{
-    Q_UNUSED(name)
-    if (errorCode != MegaError::API_OK)
-    {
-        Text::Link link(Utilities::SUPPORT_URL);
-        Text::Decorator dec(&link);
-        QString msg = errorMsg;
-        dec.process(msg);
-        QMegaMessageBox::warning(nullptr, tr("Error adding sync"), msg, QMessageBox::Ok, QMessageBox::NoButton, QMap<QMessageBox::StandardButton, QString>(), Qt::RichText);
-    }
-    else
-    {
-        emit syncSetupSuccess();
-    }
-}
+
+
+

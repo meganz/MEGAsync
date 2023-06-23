@@ -7,6 +7,8 @@
 #include "syncs/control/SyncInfo.h"
 #include "MegaApplication.h"
 
+#include <QQmlContext>
+
 BackupFolder::BackupFolder()
     : mName(QString::fromUtf8(""))
     , mTooltip(QString::fromUtf8(""))

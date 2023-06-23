@@ -87,7 +87,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/onboarding/BackupsModel.cpp \
     $$PWD/onboarding/Syncs.cpp \
     $$PWD/onboarding/ComputerName.cpp \
-    $$PWD/onboarding/PasswordStrengthChecker.cpp
+    $$PWD/onboarding/PasswordStrengthChecker.cpp \
     $$PWD/onboarding/BackupsController.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
@@ -174,7 +174,7 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/onboarding/Login.h \
     $$PWD/onboarding/Syncs.h \
     $$PWD/onboarding/ComputerName.h \
-    $$PWD/onboarding/PasswordStrengthChecker.h
+    $$PWD/onboarding/PasswordStrengthChecker.h \
     $$PWD/onboarding/BackupsController.h
 
 INCLUDEPATH += $$PWD

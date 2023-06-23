@@ -24,6 +24,6 @@ ResumePageForm {
     }
 
     doneButton.onClicked: {
-        Onboarding.exitLoggedIn();
+        onboardingWindow.close();
     }
 }

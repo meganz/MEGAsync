@@ -31,7 +31,7 @@ RowLayout {
         Layout.bottomMargin: verticalMargin
         text: OnboardingStrings.notNow
         onClicked: {
-            Onboarding.exitLoggedIn();
+            onboardingWindow.close();
         }
     }
 
