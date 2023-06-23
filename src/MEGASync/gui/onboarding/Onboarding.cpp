@@ -59,6 +59,10 @@ Onboarding::Onboarding(QObject *parent)
             this, &Onboarding::onBackupAddRequestStatus);
 }
 
+Onboarding::~Onboarding()
+{
+}
+
 QUrl Onboarding::getQmlUrl()
 {
     return QUrl(QString::fromUtf8("qrc:/main.qml"));
@@ -67,6 +71,17 @@ QUrl Onboarding::getQmlUrl()
 QString Onboarding::contextName()
 {
     return QString::fromUtf8("Onboarding");
+}
+
+QVector<QQmlContext::PropertyPair> Onboarding::contextProperties()
+{
+    QVector<QQmlContext::PropertyPair> contextVector;
+    QQmlContext::PropertyPair property;
+    property.name  = QString::fromUtf8("loginController");
+    auto obj = new QObject();
+    property.value = QVariant(QMetaType::QObjectStar, &obj);
+    contextVector.append(property);
+    return contextVector;
 }
 
 void Onboarding::addBackups(const QStringList& localPathList)

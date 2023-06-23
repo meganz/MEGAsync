@@ -43,7 +43,6 @@ SyncsPage {
 
             Layout.preferredWidth: parent.width
             title: OnboardingStrings.computerName
-            textField.enabled: !computerName.requestingDeviceName
             textField.text: computerName.deviceName
         }
     }

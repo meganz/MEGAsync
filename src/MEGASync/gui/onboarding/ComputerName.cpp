@@ -5,13 +5,12 @@
 ComputerName::ComputerName(QObject *parent)
     : QObject{parent}
     , mDeviceNameRequest(UserAttributes::DeviceName::requestDeviceName())
-    , mRequesting(true)
+    , mChanging(false)
 {
     connect(mDeviceNameRequest.get(), &UserAttributes::DeviceName::attributeReady,
             this, &ComputerName::onDeviceNameSet);
     if(mDeviceNameRequest->isAttributeReady())
     {
-        mRequesting = false;
         onDeviceNameSet();
     }
 }
@@ -23,7 +22,8 @@ QString ComputerName::getDeviceName()
 
 bool ComputerName::setDeviceName(const QString &newName)
 {
-    return mDeviceNameRequest->setDeviceName(newName);
+    mChanging = mDeviceNameRequest->setDeviceName(newName);
+    return mChanging;
 }
 
 void ComputerName::onDeviceNameSet()
@@ -32,5 +32,10 @@ void ComputerName::onDeviceNameSet()
     {
         mDeviceName = mDeviceNameRequest->getDeviceName();
         emit deviceNameChanged();
+        if(mChanging)
+        {
+            mChanging = false;
+            emit deviceNameSet();
+        }
     }
 }

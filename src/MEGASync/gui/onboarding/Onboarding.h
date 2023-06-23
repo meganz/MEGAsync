@@ -5,6 +5,8 @@
 #include "Preferences.h"
 #include "syncs/control/SyncController.h"
 
+#include <QQmlContext>
+
 class Onboarding : public QMLComponent, public mega::MegaRequestListener, public mega::MegaGlobalListener
 {
     Q_OBJECT
@@ -12,10 +14,13 @@ class Onboarding : public QMLComponent, public mega::MegaRequestListener, public
 public:
 
     explicit Onboarding(QObject *parent = 0);
+    virtual ~Onboarding();
 
     QUrl getQmlUrl() override;
 
     QString contextName() override;
+    QVector<QQmlContext::PropertyPair> contextProperties() override;
+
 
     Q_INVOKABLE void addBackups(const QStringList& localPathList);
     Q_INVOKABLE void createNextBackup(const QString& renameFolder = QString::fromUtf8(""));

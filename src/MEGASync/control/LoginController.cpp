@@ -19,6 +19,10 @@ LoginController::LoginController(QObject *parent)
     connect(mConnectivityTimer, &QTimer::timeout, this, &LoginController::runConnectivityCheck);
 }
 
+LoginController::~LoginController()
+{
+}
+
 void LoginController::login(const QString &email, const QString &password)
 {
     mMegaApi->login(email.toUtf8().constData(), password.toUtf8().constData());
@@ -130,7 +134,6 @@ void LoginController::onLogin(mega::MegaRequest *request, mega::MegaError *e)
         {
             mPreferences->setHasLoggedIn(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000);
         }
-        return;
     }
     else
     {
@@ -154,6 +157,12 @@ void LoginController::onLogin(mega::MegaRequest *request, mega::MegaError *e)
         case mega::MegaError::API_EBLOCKED:
         {
             QMegaMessageBox::critical(nullptr, tr("Error"), tr("Your account has been blocked. Please contact support@mega.co.nz"));
+            break;
+        }
+        case mega::MegaError::API_EMFAREQUIRED:
+        {
+            mPassword = QString::fromUtf8(request->getPassword());
+            mEmail = QString::fromUtf8(request->getEmail());
             break;
         }
         default:
@@ -582,11 +591,15 @@ LogoutController::LogoutController(QObject *parent)
     , mMegaApi(MegaSyncApp->getMegaApi())
     , mDelegateListener(new mega::QTMegaRequestListener(MegaSyncApp->getMegaApi(), this))
 {
-
+    mMegaApi->addRequestListener(mDelegateListener.get());
 }
 
 void LogoutController::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e)
 {
+    if(request->getType() != mega::MegaRequest::TYPE_LOGOUT)
+    {
+        return;
+    }
     int errorCode = e->getErrorCode();
     if (errorCode)
     {
@@ -632,7 +645,3 @@ void LogoutController::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *re
     emit onLogoutFinished();
 }
 
-void LogoutController::logout()
-{
-    mMegaApi->logout(true, nullptr);
-}

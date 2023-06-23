@@ -5613,17 +5613,12 @@ void MegaApplication::openInfoWizard()
     if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>())
     {
         DialogOpener::showDialog(dialog->getDialog());
+        dialog->getDialog()->raise();
         return;
     }
 
     QPointer<QmlDialogWrapper<Onboarding>> onboarding = new QmlDialogWrapper<Onboarding>();
-    DialogOpener::showDialog(onboarding, [onboarding, this]
-    {
-       if(preferences && preferences->logged())
-       {
-            loggedIn(true);
-       }
-    });
+    DialogOpener::showDialog(onboarding);
 }
 
 void MegaApplication::openSettings(int tab)

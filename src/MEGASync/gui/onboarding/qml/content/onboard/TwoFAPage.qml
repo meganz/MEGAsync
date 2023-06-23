@@ -14,29 +14,17 @@ TwoFAPageForm {
         loginController.login2FA(twoFAField.key);
     }
 
-    loginButton.progress.onAnimationFinished: {
-        if(completed) {
-            console.log("ANIMATION FINISHED 2FA"+completed)
-            loginButton.icons.busyIndicatorVisible = false;
-            onboardingFlow.state = syncs;
-        }
-    }
-
     Connections {
         target: loginController
-
-        onTwoFAFailed: {
-            twoFAField.hasError = true;
-            loginButton.icons.busyIndicatorVisible = false;
-            state = normalStatus;
-        }
 
         onFetchingNodesProgress: {
             loginButton.progress.value = progress;
         }
 
         onFetchingNodesFinished: {
-            loginButton.progress.value = 1;
+            loginButton.icons.busyIndicatorVisible = false;
+            onboardingFlow.state = syncs;
+            onboardingWindow.loggingIn = false;
         }
 
         onLoginFinished: {
@@ -48,8 +36,8 @@ TwoFAPageForm {
                 registerFlow.state = twoFA;
                 break;
             }
-            case -5: //mega::MegaError::API_EFAILED: ->
-            case -8: //mega::MegaError::API_EEXPIRED: -> 2FA failed
+            case -5: //mega::MegaError::API_EFAILED: -> 2FA failed
+            case -8: //mega::MegaError::API_EEXPIRED: -> 2FA failed (expired)
             {
                 twoFAField.hasError = true;
                 loginButton.icons.busyIndicatorVisible = false;

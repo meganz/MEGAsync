@@ -18,6 +18,7 @@ class LoginController : public QObject, public mega::MegaRequestListener
 
 public:
     explicit LoginController(QObject *parent = nullptr);
+    virtual ~LoginController();
     Q_INVOKABLE void login(const QString& email, const QString& password);
     Q_INVOKABLE void createAccount(const QString& email, const QString& password, const QString& name, const QString& lastName);
     Q_INVOKABLE void changeRegistrationEmail(const QString& email);
@@ -90,7 +91,6 @@ class LogoutController : public QObject, mega::MegaRequestListener
 public:
     explicit LogoutController(QObject* parent =  nullptr);
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest* request, mega::MegaError* e) override;
-    void logout();
 
 signals:
     void onLogoutFinished();

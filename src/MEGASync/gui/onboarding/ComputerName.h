@@ -19,6 +19,7 @@ public:
 
 signals:
     void deviceNameChanged();
+    void deviceNameSet();
 
 private slots:
     void onDeviceNameSet();
@@ -26,6 +27,7 @@ private slots:
 private:
     QString mDeviceName;
     std::shared_ptr<UserAttributes::DeviceName> mDeviceNameRequest;
+    bool mChanging;
     bool mRequesting;
 };
 

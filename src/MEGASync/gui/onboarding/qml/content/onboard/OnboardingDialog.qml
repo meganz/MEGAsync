@@ -14,7 +14,7 @@ import com.qmldialog 1.0 as Cpp
 import Onboarding 1.0
 
 Cpp.QmlDialog {
-    id: root
+    id: onboardingWindow
     objectName: "app1"
     title: "Set up MEGA"
     visible: true

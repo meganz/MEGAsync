@@ -9,8 +9,7 @@ ComputerNamePageForm {
     property bool changingDeviceName: false
 
     footerButtons.nextButton.onClicked: {
-        computerName.setDeviceName(computerNameTextField.text);
-        if(!computerName.requestingDeviceName) {
+        if(!computerName.setDeviceName(computerNameTextField.text)) {
             mainFlow.state = syncType;
             return;
         }
@@ -19,10 +18,8 @@ ComputerNamePageForm {
     ComputerName {
         id: computerName
 
-        onDeviceNameChanged: {
-            if(!computerName.requestingDeviceName && !computerName.changingDeviceName) {
+        onDeviceNameSet: {
                 mainFlow.state = syncType;
-            }
         }
     }
 }

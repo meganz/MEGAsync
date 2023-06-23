@@ -49,15 +49,8 @@ LoginPageForm {
         loginButton.icons.busyIndicatorVisible = true;
         state = logInStatus;
         loginController.login(email.text, password.text);
+        onboardingWindow.loggingIn = true;
         loginAttempt = true;
-    }
-
-    loginButton.progress.onAnimationFinished: {
-        if(completed) {
-            loginButton.icons.busyIndicatorVisible = false;
-            state = normalStatus;
-            onboardingFlow.state = syncs;
-        }
     }
 
     signUpButton.onClicked: {
@@ -79,7 +72,10 @@ LoginPageForm {
         }
 
         onFetchingNodesFinished: {
-            loginButton.progress.value = 1;
+            loginButton.icons.busyIndicatorVisible = false;
+            state = normalStatus;
+            onboardingFlow.state = syncs;
+            onboardingWindow.loggingIn = false;
         }
 
         onLoginFinished: {
