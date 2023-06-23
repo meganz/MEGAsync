@@ -25,23 +25,29 @@ public:
     FinishedTransferNotificationInfo buildNotification();
 
 protected:
+    QString buildUploadTitle();
+    QString buildDownloadTitle();
+
     QString buildSingleUploadMessage();
-    QString buildSingleUploadTitle();
     QStringList buildSingleUploadActions();
 
     QString buildSingleDownloadMessage(const QString& destinationPath);
-    QString buildSingleDownloadTitle(const QString &);
     QStringList buildSingleDownloadActions(const QString &);
 
     QString buildMultipleUploadMessage();
-    QString buildMultipleUploadTitle();
     QStringList buildMultipleUploadActions();
 
     QString buildMultipleDownloadMessage(const QString& destinationPath);
-    QString buildMultipleDownloadTitle(const QString &);
     QStringList buildMultipleDownloadActions(const QString &);
 
+    QString buildSingleNonExistentDataMessageUpload(const QString& itemName);
+    QString buildSingleNonExistentDataMessageDownload(const QString& itemName);
+    QString buildNonExistentItemsMessageUploads();
+    QString buildNonExistentItemsMessageDownloads();
+
     QString getImagePath();
+
+    bool isFolder() const;
 
     const std::shared_ptr<TransferMetaData> data;
 };

@@ -2,7 +2,6 @@
 #include "control/Utilities.h"
 #include "MegaApplication.h"
 
-#include <QMessageBox>
 #include <QtCore>
 #include <QApplication>
 #include <QPointer>

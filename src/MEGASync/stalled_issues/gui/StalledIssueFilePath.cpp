@@ -4,6 +4,8 @@
 #include "Utilities.h"
 #include "Platform.h"
 #include "QMegaMessageBox.h"
+#include <DialogOpener.h>
+#include <StalledIssuesDialog.h>
 
 #include <QPainter>
 #include <QPoint>
@@ -309,6 +311,8 @@ void StalledIssueFilePath::showHoverAction(QEvent::Type type, QWidget *actionWid
     }
     else if(type == QEvent::MouseButtonRelease)
     {
+        auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
+
         if(mData->isCloud())
         {
             mega::MegaNode* node (MegaSyncApp->getMegaApi()->getNodeByPath(path.toUtf8().constData()));
@@ -322,7 +326,11 @@ void StalledIssueFilePath::showHoverAction(QEvent::Type type, QWidget *actionWid
             }
             else
             {
-                QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"), QString::fromUtf8("Node %1 does not exist.").arg(path));
+                QMegaMessageBox::MessageBoxInfo msgInfo;
+                msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
+                msgInfo.title = QMegaMessageBox::warningTitle();
+                msgInfo.text = QString::fromUtf8("Node %1 does not exist.").arg(path);
+                QMegaMessageBox::warning(msgInfo);
             }
         }
         else
@@ -337,7 +345,11 @@ void StalledIssueFilePath::showHoverAction(QEvent::Type type, QWidget *actionWid
             }
             else
             {
-                QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"), QString::fromUtf8("Path %1 does not exist.").arg(path));
+                QMegaMessageBox::MessageBoxInfo msgInfo;
+                msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
+                msgInfo.title = QMegaMessageBox::warningTitle();
+                msgInfo.text =  QString::fromUtf8("Path %1 does not exist.").arg(path);
+                QMegaMessageBox::warning(msgInfo);
             }
         }
     }

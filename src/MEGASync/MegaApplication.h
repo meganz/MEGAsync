@@ -144,11 +144,13 @@ public:
     mega::MegaApi *getMegaApiFolders() { return megaApiFolders; }
     std::unique_ptr<mega::MegaApiLock> megaApiLock;
 
+    QString getMEGAString(){return QLatin1String("MEGA");}
+
     void cleanLocalCaches(bool all = false);
-    void showInfoMessage(QString message, QString title = tr("MEGAsync"));
-    void showWarningMessage(QString message, QString title = tr("MEGAsync"));
-    void showErrorMessage(QString message, QString title = tr("MEGAsync"));
-    void showNotificationMessage(QString message, QString title = tr("MEGAsync"));
+    void showInfoMessage(QString message, QString title = MegaSyncApp->getMEGAString());
+    void showWarningMessage(QString message, QString title = MegaSyncApp->getMEGAString());
+    void showErrorMessage(QString message, QString title = MegaSyncApp->getMEGAString());
+    void showNotificationMessage(QString message, QString title = MegaSyncApp->getMEGAString());
     void setUploadLimit(int limit);
     void setMaxUploadSpeed(int limit);
     void setMaxDownloadSpeed(int limit);
@@ -532,6 +534,7 @@ protected:
     int businessStatus = -2;
     int blockState;
     bool blockStateSet = false;
+    bool mLogoutWithError = false;
     bool whyamiblockedPeriodicPetition = false;
     friend class DeferPreferencesSyncForScope;
     std::shared_ptr<TransferQuota> mTransferQuota;
@@ -606,6 +609,8 @@ private:
     void exitApplication();
 
     QString getDefaultUploadPath();
+
+    void checkSystemTray();
 
     struct NodeCount
     {

@@ -7,6 +7,7 @@
 #include <DialogOpener.h>
 #include <StalledIssuesDialog.h>
 #include <PlatformStrings.h>
+#include <QMegaMessageBox.h>
 
 #include "mega/types.h"
 
@@ -70,34 +71,32 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
     QFileInfo localInfo(ui->chooseLocalCopy->data()->getFilePath());
 
     auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
-    QMessageBox* msgBox = new QMessageBox(dialog->getDialog());
-    msgBox->setAttribute(Qt::WA_DeleteOnClose);
-    msgBox->setWindowTitle(QString::fromUtf8("MEGAsync"));
-    msgBox->setIcon(QMessageBox::Warning);
-    msgBox->setTextFormat(Qt::RichText);
+
+    QMegaMessageBox::MessageBoxInfo msgInfo;
+    msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
+    msgInfo.title = MegaSyncApp->getMEGAString();
+    msgInfo.textFormat = Qt::RichText;
+    msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
 
     if(localInfo.isFile())
     {
-        msgBox->setText(tr("Are you sure you want to keep the <b>local file</b> %1?").arg(ui->chooseLocalCopy->data()->getFileName()));
+        msgInfo.text = tr("Are you sure you want to keep the <b>local file</b> %1?").arg(ui->chooseLocalCopy->data()->getFileName());
     }
     else
     {
-        msgBox->setText(tr("Are you sure you want to keep the <b>local folder</b> %1?").arg(ui->chooseLocalCopy->data()->getFileName()));
+        msgInfo.text = tr("Are you sure you want to keep the <b>local folder</b> %1?").arg(ui->chooseLocalCopy->data()->getFileName());
     }
 
     if(node->isFile())
     {
-        msgBox->setInformativeText(tr("The <b>remote file</b> %1 will be moved to MEGA Rubbish Bin along with its versions.<br>You will be able to retrieve the file and its versions from there.</br>").arg(localInfo.fileName()));
+        msgInfo.informativeText = tr("The <b>remote file</b> %1 will be moved to MEGA Rubbish Bin along with its versions.<br>You will be able to retrieve the file and its versions from there.</br>").arg(localInfo.fileName());
     }
     else
     {
-        msgBox->setInformativeText(tr("The <b>remote folder</b> %1 will be moved to MEGA Rubbish Bin.<br>You will be able to retrieve the folder from there.</br>").arg(localInfo.fileName()));
+        msgInfo.informativeText = tr("The <b>remote folder</b> %1 will be moved to MEGA Rubbish Bin.<br>You will be able to retrieve the folder from there.</br>").arg(localInfo.fileName());
     }
 
-    msgBox->addButton(tr("Ok"), QMessageBox::AcceptRole);
-    msgBox->addButton(tr("Cancel"), QMessageBox::RejectRole);
-
-    DialogOpener::showDialog<QMessageBox>(msgBox, [this, msgBox]()
+    msgInfo.finishFunc = [this](QMessageBox* msgBox)
     {
         if(msgBox->result() == QDialogButtonBox::AcceptRole)
         {
@@ -109,7 +108,9 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
 
             refreshUi();
         }
-    });
+    };
+
+    QMegaMessageBox::warning(msgInfo);
 }
 
 void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
@@ -118,34 +119,32 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
     QFileInfo localInfo(ui->chooseLocalCopy->data()->getFilePath());
 
     auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
-    QMessageBox* msgBox = new QMessageBox(dialog->getDialog());
-    msgBox->setAttribute(Qt::WA_DeleteOnClose);
-    msgBox->setWindowTitle(QString::fromUtf8("MEGAsync"));
-    msgBox->setIcon(QMessageBox::Warning);
-    msgBox->setTextFormat(Qt::RichText);
+
+    QMegaMessageBox::MessageBoxInfo msgInfo;
+    msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
+    msgInfo.title = MegaSyncApp->getMEGAString();
+    msgInfo.textFormat = Qt::RichText;
+    msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
 
     if(node->isFile())
     {
-        msgBox->setText(tr("Are you sure you want to keep the <b>remote file</b> %1?").arg(ui->chooseRemoteCopy->data()->getFileName()));
+        msgInfo.text = tr("Are you sure you want to keep the <b>remote file</b> %1?").arg(ui->chooseRemoteCopy->data()->getFileName());
     }
     else
     {
-        msgBox->setText(tr("Are you sure you want to keep the <b>remote folder</b> %1?").arg(ui->chooseRemoteCopy->data()->getFileName()));
+        msgInfo.text = tr("Are you sure you want to keep the <b>remote folder</b> %1?").arg(ui->chooseRemoteCopy->data()->getFileName());
     }
 
     if(localInfo.isFile())
     {
-        msgBox->setInformativeText(tr("The <b>local file</b> %1 will be moved to OS %2").arg(localInfo.fileName(), PlatformStrings::bin()));
+        msgInfo.informativeText = tr("The <b>local file</b> %1 will be moved to OS %2").arg(localInfo.fileName(), PlatformStrings::bin());
     }
     else
     {
-        msgBox->setInformativeText(tr("The <b>local folder</b> %1 will be moved to OS %2").arg(localInfo.fileName(), PlatformStrings::bin()));
+        msgInfo.informativeText = tr("The <b>local folder</b> %1 will be moved to OS %2").arg(localInfo.fileName(), PlatformStrings::bin());
     }
 
-    msgBox->addButton(tr("Ok"), QMessageBox::AcceptRole);
-    msgBox->addButton(tr("Cancel"), QMessageBox::RejectRole);
-
-    DialogOpener::showDialog<QMessageBox>(msgBox, [this, msgBox]()
+    msgInfo.finishFunc = [this](QMessageBox* msgBox)
     {
         if(msgBox->result() == QDialogButtonBox::AcceptRole)
         {
@@ -157,5 +156,7 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
 
             refreshUi();
         }
-    });
+    };
+
+    QMegaMessageBox::warning(msgInfo);
 }

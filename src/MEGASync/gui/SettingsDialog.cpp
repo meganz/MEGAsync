@@ -900,38 +900,29 @@ void SettingsDialog::on_bClearCache_clicked()
         }
     }
 
-    QPointer<SettingsDialog> thisPointer(this);
-
-    QPointer<QMessageBox> warningDel = new QMessageBox(this);
-    warningDel->setIcon(QMessageBox::Warning);
-    warningDel->setWindowTitle(tr("Clear local backup"));
-    warningDel->setTextFormat(Qt::RichText);
-    warningDel->setTextInteractionFlags(Qt::NoTextInteraction | Qt::LinksAccessibleByMouse);
-
-    warningDel->setText(tr("Backups of the previous versions of your synced files in your computer"
-                           " will be permanently deleted. Please, check your backup folders to see"
-                           " if you need to rescue something before continuing:")
-                        + QString::fromUtf8("<br/>") + syncs
-                        + QString::fromUtf8("<br/><br/>")
-                        + tr("Do you want to delete your local backup now?"));
-    warningDel->setStandardButtons(QMessageBox::No | QMessageBox::Yes);
-    warningDel->setDefaultButton(QMessageBox::No);
-
-    int result = warningDel->exec();
-    if (!warningDel || (result != QMessageBox::Yes))
+    QMegaMessageBox::MessageBoxInfo msgInfo;
+    msgInfo.parent = this;
+    msgInfo.title = tr("Clear local backup");
+    msgInfo.text = tr("Backups of the previous versions of your synced files in your computer"
+                      " will be permanently deleted. Please, check your backup folders to see"
+                      " if you need to rescue something before continuing:")
+                   + QString::fromUtf8("<br/>") + syncs
+                   + QString::fromUtf8("<br/><br/>")
+                   + tr("Do you want to delete your local backup now?");
+    msgInfo.textFormat = Qt::RichText;
+    msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
+    msgInfo.defaultButton = QMessageBox::No;
+    msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
     {
-        delete warningDel;
-        return;
-    }
+        if(msg->result() == QMessageBox::Yes)
+        {
+            QtConcurrent::run(deleteCache);
+            mCacheSize = 0;
+            onCacheSizeAvailable();
+        }
+    };
 
-    delete warningDel;
-
-    if (thisPointer)
-    {
-        QtConcurrent::run(deleteCache);
-        mCacheSize = 0;
-        onCacheSizeAvailable();
-    }
+    QMegaMessageBox::warning(msgInfo);
 }
 
 void SettingsDialog::on_bClearRemoteCache_clicked()
@@ -945,68 +936,62 @@ void SettingsDialog::on_bClearRemoteCache_clicked()
 
     std::unique_ptr<const char[]> base64Handle(syncDebris->getBase64Handle());
 
-    QPointer<SettingsDialog> thisPointer(this);
-
-    QPointer<QMessageBox> warningDel = new QMessageBox(QMessageBox::Warning,tr("Clear remote backup"),
-                                                       tr("Backups of the previous versions of your synced files in MEGA will be"
-                                                          " permanently deleted. Please, check your [A] folder in the Rubbish Bin"
-                                                          " of your MEGA account to see if you need to rescue something"
-                                                          " before continuing.")
-                                                       .replace(QString::fromUtf8("[A]"),
-                                                                QString::fromUtf8("<a href=\"mega://#fm/%1\">SyncDebris</a>")
-                                                                .arg(QString::fromUtf8(base64Handle.get())))
-                                                       + QString::fromUtf8("<br/><br/>")
-                                                       + tr("Do you want to delete your remote backup now?"),
-                                                       QMessageBox::Yes | QMessageBox::No,
-                                                       this
-                                                       );
-    warningDel->setAttribute(Qt::WA_DeleteOnClose);
-    warningDel->setTextFormat(Qt::RichText);
-    warningDel->setTextInteractionFlags(Qt::NoTextInteraction | Qt::LinksAccessibleByMouse);
-    warningDel->setDefaultButton(QMessageBox::No);
-
-    int result = warningDel->exec();
-    if (!thisPointer || (result != QMessageBox::Yes))
+    QMegaMessageBox::MessageBoxInfo msgInfo;
+    msgInfo.parent = this;
+    msgInfo.title = tr("Clear remote backup");
+    msgInfo.text = tr("Backups of the previous versions of your synced files in MEGA will be"
+                      " permanently deleted. Please, check your [A] folder in the Rubbish Bin"
+                      " of your MEGA account to see if you need to rescue something"
+                      " before continuing.")
+            .replace(QString::fromUtf8("[A]"),
+                     QString::fromUtf8("<a href=\"mega://#fm/%1\">SyncDebris</a>")
+                     .arg(QString::fromUtf8(base64Handle.get())))
+            + QString::fromUtf8("<br/><br/>")
+            + tr("Do you want to delete your remote backup now?");
+    msgInfo.textFormat = Qt::RichText;
+    msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
+    msgInfo.defaultButton = QMessageBox::No;
+    msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
     {
-        return;
-    }
+        if(msg->result() == QMessageBox::Yes)
+        {
+            QtConcurrent::run(deleteRemoteCache, mMegaApi);
+            mRemoteCacheSize = 0;
+            onCacheSizeAvailable();
+        }
+    };
 
-    QtConcurrent::run(deleteRemoteCache, mMegaApi);
-    mRemoteCacheSize = 0;
-    onCacheSizeAvailable();
+    QMegaMessageBox::warning(msgInfo);
 }
 
 void SettingsDialog::on_bClearFileVersions_clicked()
 {
-    QPointer<SettingsDialog> thisPointer = QPointer<SettingsDialog>(this);
-    QPointer<QMessageBox> warningDel = new QMessageBox(QMessageBox::Warning,QString::fromUtf8("MEGAsync"),
-                                                       tr("You are about to permanently remove all file versions."
-                                                          " Would you like to proceed?"),
-                                                       QMessageBox::Yes | QMessageBox::No,
-                                                       this
-                                                       );
-
-    warningDel->setAttribute(Qt::WA_DeleteOnClose);
-    warningDel->setTextFormat(Qt::RichText);
-    warningDel->setTextInteractionFlags(Qt::NoTextInteraction | Qt::LinksAccessibleByMouse);
-    warningDel->setDefaultButton(QMessageBox::No);
-
-    int result = warningDel->exec();
-    if (!thisPointer || (result != QMessageBox::Yes))
+    QMegaMessageBox::MessageBoxInfo msgInfo;
+    msgInfo.parent = this;
+    msgInfo.title = MegaSyncApp->getMEGAString();
+    msgInfo.text = tr("You are about to permanently remove all file versions."
+                      " Would you like to proceed?");
+    msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
+    msgInfo.textFormat = Qt::RichText;
+    msgInfo.defaultButton = QMessageBox::No;
+    msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
     {
-        return;
-    }
-
-    mMegaApi->removeVersions(new MegaListenerFuncExecuter(true, [](MegaApi* api,
-                                                         MegaRequest* request, MegaError* e)
-    {
-        Q_UNUSED(api)
-        Q_UNUSED(request)
-        if (e->getErrorCode() == MegaError::API_OK)
+        if(msg->result() == QMessageBox::Yes)
         {
-            MegaSyncApp->updateUserStats(true, false, false, true, USERSTATS_REMOVEVERSIONS);
+            mMegaApi->removeVersions(new MegaListenerFuncExecuter(true, [](MegaApi* api,
+                                                                 MegaRequest* request, MegaError* e)
+            {
+                Q_UNUSED(api)
+                Q_UNUSED(request)
+                if (e->getErrorCode() == MegaError::API_OK)
+                {
+                    MegaSyncApp->updateUserStats(true, false, false, true, USERSTATS_REMOVEVERSIONS);
+                }
+            }));
         }
-    }));
+    };
+
+    QMegaMessageBox::warning(msgInfo);
 }
 
 void SettingsDialog::on_cCacheSchedulerEnabled_toggled()
@@ -1084,21 +1069,35 @@ void SettingsDialog::on_cFileVersioning_toggled(bool checked)
     if (mLoadingSettings) return;
     if (!checked)
     {
-        auto answer = QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"),
-                                               tr("Disabling file versioning will prevent"
-                                                  " the creation and storage of new file versions."
-                                                  " Do you want to continue?"),
-                                               QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
-        if (answer == QMessageBox::No)
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.title = MegaSyncApp->getMEGAString();
+        msgInfo.text = tr("Disabling file versioning will prevent"
+                          " the creation and storage of new file versions."
+                          " Do you want to continue?");
+        msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
+        msgInfo.defaultButton = QMessageBox::No;
+        msgInfo.parent = this;
+        msgInfo.finishFunc = [this, checked](QPointer<QMessageBox> msg)
         {
-            mUi->cFileVersioning->blockSignals(true);
-            mUi->cFileVersioning->setChecked(true);
-            mUi->cFileVersioning->blockSignals(false);
-            return;
-        }
+            if(msg->result() == QMessageBox::No)
+            {
+                mUi->cFileVersioning->blockSignals(true);
+                mUi->cFileVersioning->setChecked(true);
+                mUi->cFileVersioning->blockSignals(false);
+            }
+            else
+            {
+                mMegaApi->setFileVersionsOption(!checked);
+            }
+        };
+
+        QMegaMessageBox::warning(msgInfo);
     }
-    // This is actually saved to Preferences after the MegaApi call succeeds;
-    mMegaApi->setFileVersionsOption(!checked);
+    else
+    {
+        // This is actually saved to Preferences after the MegaApi call succeeds;
+        mMegaApi->setFileVersionsOption(!checked);
+    }
 }
 
 void SettingsDialog::on_cbSleepMode_toggled(bool checked)
@@ -1113,15 +1112,21 @@ void SettingsDialog::on_cbSleepMode_toggled(bool checked)
 
     if (checked && !result)
     {
-        QMegaMessageBox::critical(nullptr, tr("Sleep mode can't be setup"),
-                                               tr("Your operating system doesn't allow its sleep setting to be overwritten."),
-                                               QMessageBox::Ok, QMessageBox::Ok);
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.title = tr("Sleep mode can't be setup");
+        msgInfo.text = tr("Your operating system doesn't allow its sleep setting to be overwritten.");
+        msgInfo.buttons = QMessageBox::Ok;
+        msgInfo.defaultButton = QMessageBox::Ok;
+        msgInfo.parent = this;
+        msgInfo.finishFunc = [this, checked](QPointer<QMessageBox> msg)
+        {
+            mUi->cbSleepMode->blockSignals(true);
+            mUi->cbSleepMode->setChecked(!checked);
+            mPreferences->setAwakeIfActive(!checked);
+            mUi->cbSleepMode->blockSignals(false);
+        };
 
-        mUi->cbSleepMode->blockSignals(true);
-        mUi->cbSleepMode->setChecked(!checked);
-        mPreferences->setAwakeIfActive(!checked);
-        mUi->cbSleepMode->blockSignals(false);
-        return;
+        QMegaMessageBox::critical(msgInfo);
     }
 }
 
@@ -1172,19 +1177,24 @@ void SettingsDialog::on_bUpdate_clicked()
 void SettingsDialog::on_bFullCheck_clicked()
 {
     mMegaApi->rescanSync(INVALID_HANDLE, true);
-    /*QPointer<SettingsDialog> currentDialog = this;
-    if (QMegaMessageBox::warning(nullptr, tr("Full scan"),
-                                 tr("MEGAsync will perform a full scan of your synced folders"
-                                    " when it starts.\n\nDo you want to restart MEGAsync now?"),
-                                 QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
-            == QMessageBox::Yes)
+    /*
+    QMegaMessageBox::MessageBoxInfo msgInfo;
+    msgInfo.title = tr("Full scan");
+    msgInfo.text = tr("MEGAsync will perform a full scan of your synced folders"
+                      " when it starts.\n\nDo you want to restart MEGAsync now?");
+    msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
+    msgInfo.defaultButton = QMessageBox::No;
+    msgInfo.parent = this;
+    msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
     {
-        if (currentDialog)
+        if(msg->result() == QMessageBox::Yes)
         {
             MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting deleteSdkCacheAtStartup true: full re-scan requested");
             restartApp();
         }
-    }*/
+    });
+    QMegaMessageBox::warning(msgInfo);
+    */
 }
 
 void SettingsDialog::on_bSendBug_clicked()
@@ -1402,14 +1412,18 @@ void SettingsDialog::on_bMyAccount_clicked()
 
 void SettingsDialog::on_bStorageDetails_clicked()
 {
+#ifdef Q_OS_MACOS
+    auto accountDetailsDialog = new AccountDetailsDialog(this);
+#else
     auto accountDetailsDialog = new AccountDetailsDialog();
+#endif
+
     mApp->updateUserStats(true, true, true, true, USERSTATS_STORAGECLICKED);
     DialogOpener::showNonModalDialog<AccountDetailsDialog>(accountDetailsDialog);
 }
 
 void SettingsDialog::on_bLogout_clicked()
 {
-    QPointer<SettingsDialog> currentDialog = this;
     QString text;
     bool haveSyncs (false);
     bool haveBackups (false);
@@ -1435,17 +1449,32 @@ void SettingsDialog::on_bLogout_clicked()
         text = tr("Synchronizations will stop working.");
     }
 
-    // Display the message if it has been set
-    if (text.isEmpty() || QMegaMessageBox::question(nullptr, tr("Log out"),
-                                                    text + QLatin1Char(' ') + tr("Are you sure?"),
-                                                    QMessageBox::Yes | QMessageBox::No)
-            == QMessageBox::Yes)
+    auto unlink = [this](){
+        close();
+        mApp->unlink();
+    };
+
+    if(text.isEmpty())
     {
-        if (currentDialog)
+        unlink();
+    }
+    else
+    {
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.title = tr("Log out");
+        msgInfo.text = text + QLatin1Char(' ') + tr("Are you sure?");
+        msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
+        msgInfo.defaultButton = QMessageBox::Yes;
+        msgInfo.parent = this;
+        msgInfo.finishFunc = [this,unlink](QPointer<QMessageBox> msg)
         {
-            close();
-            mApp->unlink();
-        }
+            if(msg->result() == QMessageBox::Yes)
+            {
+                unlink();
+            }
+        };
+
+        QMegaMessageBox::question(msgInfo);
     }
 }
 
@@ -1466,22 +1495,30 @@ void SettingsDialog::connectSyncHandlers()
         if (errorCode != MegaError::API_OK)
         {
             onSavingSyncsCompleted(SyncStateInformation::SAVING_SYNCS_FINISHED);
+
+            QMegaMessageBox::MessageBoxInfo msgInfo;
+            msgInfo.parent = this;
+            msgInfo.title = tr("Error adding sync");
+            msgInfo.text = errorMsg;
+
             Text::Link link(Utilities::SUPPORT_URL);
             Text::Decorator dec(&link);
-            QString msg = errorMsg;
-            dec.process(msg);
-            QMegaMessageBox::warning(nullptr, tr("Error adding sync"), msg, QMessageBox::Ok, QMessageBox::NoButton, QMap<QMessageBox::StandardButton, QString>(), Qt::RichText);
+            dec.process(msgInfo.text);
+
+            QMegaMessageBox::warning(msgInfo);
         }
     });
 
     connect(&mSyncController, &SyncController::syncRemoveError, this, [this](std::shared_ptr<mega::MegaError> err)
     {
         onSavingSyncsCompleted(SAVING_SYNCS_FINISHED);
-        QMegaMessageBox::warning(nullptr, tr("Error removing sync"),
-                                  tr("Your sync can't be removed. Reason: %1")
-                                  .arg(QCoreApplication::translate("MegaError", err->getErrorString())));
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.parent = this;
+        msgInfo.title = tr("Error removing sync");
+        msgInfo.text = tr("Your sync can't be removed. Reason: %1")
+                .arg(QCoreApplication::translate("MegaError", err->getErrorString()));
+        QMegaMessageBox::warning(msgInfo);
     });
-
 }
 
 void SettingsDialog::loadSyncSettings()
@@ -1517,17 +1554,21 @@ void SettingsDialog::loadSyncSettings()
     {
         if (sync->getType() == mega::MegaSync::SyncType::TYPE_BACKUP)
         {
-            QMegaMessageBox::critical(nullptr, tr("Backup operation failed"),
-                                      tr("Operation on backup '%1' failed. Reason: %2")
-                                      .arg(sync->name())
-                                      .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(sync->getError()))));
+            QMegaMessageBox::MessageBoxInfo msgInfo;
+            msgInfo.title = tr("Backup operation failed");
+            msgInfo.text = tr("Operation on backup '%1' failed. Reason: %2")
+                    .arg(sync->name())
+                    .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(sync->getError())));
+            QMegaMessageBox::critical(msgInfo);
         }
         else
         {
-            QMegaMessageBox::critical(nullptr, tr("Sync operation failed"),
-                                      tr("Operation on sync '%1' failed. Reason: %2")
-                                      .arg(sync->name())
-                                      .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(sync->getError()))));
+            QMegaMessageBox::MessageBoxInfo msgInfo;
+            msgInfo.title = tr("Sync operation failed");
+            msgInfo.text = tr("Operation on sync '%1' failed. Reason: %2")
+                    .arg(sync->name())
+                    .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(sync->getError())));
+            QMegaMessageBox::critical(msgInfo);
         }
     });
 
@@ -1616,7 +1657,11 @@ void SettingsDialog::onOpenMegaIgnoreFinished()
 
 void SettingsDialog::showOpenMegaIgnoreError()
 {
-    QMegaMessageBox::warning(nullptr, tr("Error"), tr("Error opening megaignore file"), QMessageBox::Ok);
+    QMegaMessageBox::MessageBoxInfo msgInfo;
+    msgInfo.parent = this;
+    msgInfo.title = QMegaMessageBox::errorTitle();
+    msgInfo.text = tr("Error opening megaignore file");
+    QMegaMessageBox::warning(msgInfo);
 }
 
 #ifndef WIN32
@@ -1760,25 +1805,34 @@ void SettingsDialog::connectBackupHandlers()
             Text::Decorator dec(&link);
             QString msg = errorMsg;
             dec.process(msg);
-            QMegaMessageBox::critical(nullptr, tr("Error adding backup %1").arg(name), msg, QMessageBox::Ok, QMessageBox::NoButton, QMap<QMessageBox::StandardButton, QString>(), Qt::RichText);
+            QMegaMessageBox::MessageBoxInfo msgInfo;
+            msgInfo.parent = this;
+            msgInfo.title = tr("Error adding backup %1").arg(name);
+            msgInfo.text = msg;
+            QMegaMessageBox::critical(msgInfo);
         }
     });
 
     connect(&mBackupController, &SyncController::syncRemoveError, this, [this](std::shared_ptr<mega::MegaError> err)
     {
         onSavingSyncsCompleted(SyncStateInformation::SAVING_BACKUPS_FINISHED);
-        QMegaMessageBox::warning(nullptr, tr("Error removing backup"),
-                                  tr("Your backup can't be removed. Reason: %1")
-                                  .arg(QCoreApplication::translate("MegaError", err->getErrorString())));
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.parent = this;
+        msgInfo.title = tr("Error removing backup");
+        msgInfo.text = tr("Your backup can't be removed. Reason: %1")
+                .arg(QCoreApplication::translate("MegaError", err->getErrorString()));
+        QMegaMessageBox::warning(msgInfo);
     });
 
     connect(&mBackupController, &SyncController::backupMoveOrRemoveRemoteFolderError, this, [this](std::shared_ptr<mega::MegaError> err)
     {
         onSavingSyncsCompleted(SyncStateInformation::SAVING_BACKUPS_FINISHED);
-        QMegaMessageBox::warning(nullptr, tr("Error moving or removing remote backup folder"),
-                                 tr("Failed to move or remove the remote backup folder. Reason: %1")
-                                 .arg(QCoreApplication::translate("MegaError", err->getErrorString())));
-
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.parent = this;
+        msgInfo.title = tr("Error moving or removing remote backup folder");
+        msgInfo.text = tr("Failed to move or remove the remote backup folder. Reason: %1")
+                .arg(QCoreApplication::translate("MegaError", err->getErrorString()));
+        QMegaMessageBox::warning(msgInfo);
     });
 }
 
@@ -1969,46 +2023,59 @@ void SettingsDialog::on_bExportMasterKey_clicked()
     }
 #endif
 
-    DialogBlocker* blocker = new DialogBlocker(this);
     QDir dir(defaultPath);
-    QPointer<SettingsDialog> currentDialog = this;
-    QString fileName = QFileDialog::getSaveFileName(nullptr, tr("Export Master key"),
-                                                    dir.filePath(tr("MEGA-RECOVERYKEY")),
-                                                    QString::fromUtf8("Txt file (*.txt)"), nullptr,
-                                                    QFileDialog::ShowDirsOnly
-                                                    | QFileDialog::DontResolveSymlinks);
 
-    if(currentDialog)
+    QFileDialog* dialog = new QFileDialog(this);
+    dialog->setFileMode(QFileDialog::AnyFile);
+    dialog->setOptions(QFileDialog::ShowDirsOnly
+                      | QFileDialog::DontResolveSymlinks);
+    dialog->selectFile(dir.filePath(tr("MEGA-RECOVERYKEY")));
+    dialog->setWindowTitle(tr("Export Master key"));
+    dialog->setNameFilter(QString::fromUtf8("Txt file (*.txt)"));
+    const QStringList schemes = QStringList(QStringLiteral("file"));
+    dialog->setSupportedSchemes(schemes);
+    dialog->setAcceptMode(QFileDialog::AcceptSave);
+    DialogOpener::showDialog<QFileDialog>(dialog, [this, dialog]
     {
-        blocker->deleteLater();
-
-        if (fileName.isEmpty())
+        if(dialog->result() == QDialog::Accepted)
         {
-            return;
+            auto fileNames = dialog->selectedFiles();
+
+            if (fileNames.isEmpty())
+            {
+                return;
+            }
+
+            QFile file(fileNames.first());
+            if (!file.open(QIODevice::WriteOnly | QFile::Truncate))
+            {
+                QMegaMessageBox::MessageBoxInfo msgInfo;
+                msgInfo.parent = this;
+                msgInfo.title =  tr("Unable to write file");
+                msgInfo.text = file.errorString();
+                QMegaMessageBox::warning(msgInfo);
+            }
+            else
+            {
+                QTextStream out(&file);
+                out << mMegaApi->exportMasterKey();
+
+                file.close();
+
+                mMegaApi->masterKeyExported();
+
+                QMegaMessageBox::MessageBoxInfo msgInfo;
+                msgInfo.parent = this;
+                msgInfo.title =  QMegaMessageBox::warningTitle();
+                msgInfo.text =   tr("Exporting the master key and keeping it in a secure location"
+                                    " enables you to set a new password without data loss.")
+                        + QString::fromUtf8("\n")
+                        + tr("Always keep physical control of your master key (e.g. on a"
+                             " client device, external storage, or print).");
+                QMegaMessageBox::information(msgInfo);
+            }
         }
-
-        QFile file(fileName);
-        if (!file.open(QIODevice::WriteOnly | QFile::Truncate))
-        {
-            QMegaMessageBox::information(this, tr("Unable to write file"), file.errorString());
-            return;
-        }
-
-        QTextStream out(&file);
-        out << mMegaApi->exportMasterKey();
-
-        file.close();
-
-        mMegaApi->masterKeyExported();
-
-        QMegaMessageBox::information(this, tr("Warning"),
-                                     tr("Exporting the master key and keeping it in a secure location"
-                                        " enables you to set a new password without data loss.")
-                                     + QString::fromUtf8("\n")
-                                     + tr("Always keep physical control of your master key (e.g. on a"
-                                          " client device, external storage, or print)."),
-                                     QMessageBox::Ok);
-    }
+    });
 }
 
 void SettingsDialog::on_bChangePassword_clicked()
@@ -2128,8 +2195,12 @@ void SettingsDialog::on_bDownloadFolder_clicked()
                 }
                 else
                 {
-                    QMegaMessageBox::critical(nullptr, tr("Error"), tr("You don't have write permissions"
-                                                                       " in this local folder."));
+                    QMegaMessageBox::MessageBoxInfo msgInfo;
+                    msgInfo.parent = this;
+                    msgInfo.title =  QMegaMessageBox::errorTitle();
+                    msgInfo.text =   tr("You don't have write permissions"
+                                        " in this local folder.");
+                    QMegaMessageBox::critical(msgInfo);
                 }
             }
         }
@@ -2287,17 +2358,19 @@ void SettingsDialog::restartApp()
 
 //void SettingsDialog::on_bRestart_clicked()
 //{
-//    QPointer<SettingsDialog> currentDialog = this;
-//    if (QMegaMessageBox::warning(nullptr, tr("Restart MEGAsync"),
-//                                 tr("Do you want to restart MEGAsync now?"),
-//                                 QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
-//            == QMessageBox::Yes)
-//    {
-//        if (currentDialog)
-//        {
-//            restartApp();
-//        }
-//    }
+//   QMegaMessageBox::MessageBoxInfo msgInfo;
+//   msgInfo.parent = this;
+//   msgInfo.title =  tr("Restart MEGAsync");
+//   msgInfo.text =   tr("Do you want to restart MEGAsync now?");
+//   msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
+//   msgInfo.defaultButton = QMessageBox::No;
+//   msgInfo.finishFunc = [this](QPointer<QMessageBox> msg){
+//       if(msg->result() == QMessageBox::Yes)
+//       {
+//           restartApp();
+//       }
+//   };
+//   QMegaMessageBox::warning(msgInfo);
 //}
 void SettingsDialog::onShellNotificationsProcessed()
 {
@@ -2421,7 +2494,10 @@ void SettingsDialog::showUnexpectedSyncError(const QString& message)
     QObject temporary;
 
     auto completion = [message]() {
-        QMegaMessageBox::critical(nullptr, tr("Error"), message);
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.title = QMegaMessageBox::errorTitle();
+        msgInfo.text = message;
+        QMegaMessageBox::critical(msgInfo);
     };
 
     QObject::connect(&temporary,

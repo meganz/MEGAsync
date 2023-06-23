@@ -3,6 +3,8 @@
 
 #include <QObject>
 #include <QStringList>
+#include <QPointer>
+
 #include <memory>
 
 #include "megaapi.h"
@@ -24,7 +26,7 @@ public:
 
     void requestLinkInfo();
     void importLinks(QString nodePath);
-    void importLinks(mega::MegaNode *node);
+    void importLinks(mega::MegaNode* node);
     mega::MegaHandle getImportParentFolder();
 
     void downloadLinks(const QString& localPath);
@@ -35,6 +37,8 @@ public:
     int getCurrentIndex();
 
     bool atLeastOneLinkValidAndSelected() const;
+
+    void setParentHandler(QObject* parent);
 
 protected:
     mega::MegaApi *megaApi;
@@ -61,6 +65,9 @@ public slots:
 
 private:
     void startDownload(mega::MegaNode* linkNode, const QString& localPath);
+
+    QPointer<QObject> mParentHandler;
+    uint32_t mRequestCounter;
 };
 
 #endif // LINKPROCESSOR_H

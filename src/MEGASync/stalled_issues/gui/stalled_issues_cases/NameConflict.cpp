@@ -233,6 +233,7 @@ void NameConflict::onActionClicked(int actionId)
         QFileInfo info;
         auto titleFileName = chooseTitle->property(TITLE_FILENAME).toString();
         info.setFile(mData.data->getNativePath(), titleFileName);
+        QString filePath(info.filePath());
 
         if(actionId == RENAME_ID)
         {
@@ -241,11 +242,11 @@ void NameConflict::onActionClicked(int actionId)
 
             if(mData.isCloud)
             {
-                renameDialog = new RenameRemoteNodeDialog(info.filePath(), dialog->getDialog());
+                renameDialog = new RenameRemoteNodeDialog(filePath, dialog->getDialog());
             }
             else
             {
-                renameDialog = new RenameLocalNodeDialog(info.filePath(), dialog->getDialog());
+                renameDialog = new RenameLocalNodeDialog(filePath, dialog->getDialog());
             }
 
             renameDialog->init();
@@ -267,7 +268,7 @@ void NameConflict::onActionClicked(int actionId)
                     else
                     {
                         areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveLocalConflictedNameByRename(titleFileName
-                                                                                                              , newName,chooseTitle->getIndex(), mDelegate->getCurrentIndex());
+                                                                                                              , newName, chooseTitle->getIndex(), mDelegate->getCurrentIndex());
                     }
 
                     // Prevent this one showing again (if they Refresh) until sync has made a full fresh pass
@@ -307,30 +308,30 @@ void NameConflict::onActionClicked(int actionId)
                 fileName = info.fileName();
             }
 
-            QMessageBox* msgBox = new QMessageBox(dialog->getDialog());
-            msgBox->setAttribute(Qt::WA_DeleteOnClose);
-            msgBox->setWindowTitle(QString::fromUtf8("MEGAsync"));
-            msgBox->setIcon(QMessageBox::Warning);
-            msgBox->setTextFormat(Qt::RichText);
-            msgBox->setText(tr("Are you sure you want to remove the %1 %2 %3?")
-                            .arg(mData.isCloud ? tr("remote") : tr("local"))
-                            .arg(isFile ? tr("file") : tr("folder"))
-                            .arg(fileName));
+            QMegaMessageBox::MessageBoxInfo msgInfo;
+            msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
+            msgInfo.title = MegaSyncApp->getMEGAString();
+            msgInfo.textFormat = Qt::RichText;
+            msgInfo.buttons = QMessageBox::Yes | QMessageBox::Cancel;
+
+            msgInfo.text = tr("Are you sure you want to remove the %1 %2 %3?")
+                    .arg(mData.isCloud ? tr("remote") : tr("local"))
+                    .arg(isFile ? tr("file") : tr("folder"))
+                    .arg(fileName);
+
             if(mData.isCloud)
             {
                 if(isFile)
                 {
-                    msgBox->setInformativeText(tr("It will be moved to MEGA Rubbish Bin along with its versions.<br>You will be able to retrieve the file and its versions from there.</br>"));
+                    msgInfo.informativeText = tr("It will be moved to MEGA Rubbish Bin along with its versions.<br>You will be able to retrieve the file and its versions from there.</br>");
                 }
                 else
                 {
-                    msgBox->setInformativeText(tr("It will be moved to MEGA Rubbish Bin.<br>You will be able to retrieve the folder from there.</br>"));
+                    msgInfo.informativeText = tr("It will be moved to MEGA Rubbish Bin.<br>You will be able to retrieve the folder from there.</br>");
                 }
             }
-            msgBox->addButton(tr("Yes"), QMessageBox::AcceptRole);
-            msgBox->addButton(tr("Cancel"), QMessageBox::RejectRole);
 
-            DialogOpener::showDialog<QMessageBox>(msgBox, [this, info, titleFileName, chooseTitle, msgBox]()
+            msgInfo.finishFunc = [this, filePath, titleFileName, chooseTitle](QMessageBox* msgBox)
             {
                 if (msgBox->result() == QDialogButtonBox::AcceptRole)
                 {
@@ -339,12 +340,12 @@ void NameConflict::onActionClicked(int actionId)
                     if(mData.isCloud)
                     {
                         areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveCloudConflictedNameByRemove(titleFileName,chooseTitle->getIndex(), mDelegate->getCurrentIndex());
-                        mUtilities.removeRemoteFile(info.filePath());
+                        mUtilities.removeRemoteFile(filePath);
                     }
                     else
                     {
-                        areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveLocalConflictedNameByRemove(titleFileName,chooseTitle->getIndex(), mDelegate->getCurrentIndex());
-                        mUtilities.removeLocalFile(QDir::toNativeSeparators(info.filePath()));
+                        areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveLocalConflictedNameByRemove(titleFileName, chooseTitle->getIndex(), mDelegate->getCurrentIndex());
+                        mUtilities.removeLocalFile(QDir::toNativeSeparators(filePath));
                     }
 
                     // Prevent this one showing again (if they Refresh) until sync has made a full fresh pass
@@ -361,7 +362,9 @@ void NameConflict::onActionClicked(int actionId)
                         emit refreshUi();
                     }
                 }
-            });
+            };
+
+            QMegaMessageBox::warning(msgInfo);
         }
     }
 }

@@ -299,7 +299,7 @@ void NodeSelectorTreeViewWidget::onbNewFolderClicked()
             return;
     }
 
-    QPointer<NewFolderDialog> dialog(new NewFolderDialog(parentNode, this));
+    QPointer<NewFolderDialog> dialog(new NewFolderDialog(parentNode, ui->tMegaFolders));
     dialog->init();
     DialogOpener::showDialog(dialog,  [this, dialog]()
     {
@@ -321,13 +321,13 @@ void NodeSelectorTreeViewWidget::onbNewFolderClicked()
             QModelIndex idx = ui->tMegaFolders->rootIndex();
             if(!idx.isValid())
             {
-                QModelIndex idx = ui->tMegaFolders->rootIndex();
-                if(!idx.isValid())
+                QModelIndex rootIdx = ui->tMegaFolders->rootIndex();
+                if(!rootIdx.isValid())
                 {
-                    idx = mProxyModel->getIndexFromNode(MegaSyncApp->getRootNode());
+                    rootIdx = mProxyModel->getIndexFromNode(MegaSyncApp->getRootNode());
                 }
                 mProxyModel->setExpandMapped(true);
-                mProxyModel->addNode(std::move(newNode), idx);
+                mProxyModel->addNode(std::move(newNode), rootIdx);
             }
             mProxyModel->setExpandMapped(true);
             mProxyModel->addNode(std::move(newNode), idx);
@@ -479,7 +479,7 @@ void NodeSelectorTreeViewWidget::onRenameClicked()
 
 void NodeSelectorTreeViewWidget::onDeleteClicked()
 {
-    auto node = std::unique_ptr<MegaNode>(mMegaApi->getNodeByHandle(getSelectedNodeHandle()));
+    auto node = std::shared_ptr<MegaNode>(mMegaApi->getNodeByHandle(getSelectedNodeHandle()));
     int access = mMegaApi->getAccess(node.get());
     //This is for an extra protection as we don´t show the rename action if one of this conditions are not met
     if (!node || access < MegaShare::ACCESS_FULL || !node->isNodeKeyDecrypted())
@@ -487,18 +487,17 @@ void NodeSelectorTreeViewWidget::onDeleteClicked()
         return;
     }
 
-    QPointer<NodeSelectorTreeViewWidget> currentDialog = this;
-    if (QMegaMessageBox::question(this,
-                             QLatin1String("MEGAsync"),
-                             tr("Are you sure that you want to delete \"%1\"?")
-                                .arg(QString::fromUtf8(node->getName())),
-                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes)
+    QMegaMessageBox::MessageBoxInfo msgInfo;
+    msgInfo.parent = ui->tMegaFolders;
+    msgInfo.title =  MegaSyncApp->getMEGAString();
+    msgInfo.text = tr("Are you sure that you want to delete \"%1\"?")
+            .arg(QString::fromUtf8(node->getName()));
+            msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
+    msgInfo.defaultButton = QMessageBox::No;
+    msgInfo.finishFunc = [this, node, access](QPointer<QMessageBox> msg)
     {
-        if (!currentDialog)
+        if(msg->result() == QMessageBox::Yes)
         {
-            return;
-        }
-
         ui->tMegaFolders->setEnabled(false);
         ui->bBack->setEnabled(false);
         ui->bForward->setEnabled(false);
@@ -515,7 +514,9 @@ void NodeSelectorTreeViewWidget::onDeleteClicked()
             auto rubbish = MegaSyncApp->getRubbishNode();
             mMegaApi->moveNode(node.get(), rubbish.get(), mDelegateListener.get());
         }
-    }
+        }
+    };
+    QMegaMessageBox::question(msgInfo);
 }
 
 void NodeSelectorTreeViewWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e)
@@ -526,27 +527,33 @@ void NodeSelectorTreeViewWidget::onRequestFinish(MegaApi *, MegaRequest *request
     if (e->getErrorCode() != MegaError::API_OK)
     {
         ui->tMegaFolders->setEnabled(true);
-        QMegaMessageBox::critical(nullptr, QLatin1String("MEGAsync"), tr("Error:") + QLatin1String(" ") + QCoreApplication::translate("MegaError", e->getErrorString()));
-        return;
-    }
 
-    if (request->getType() == MegaRequest::TYPE_REMOVE || request->getType() == MegaRequest::TYPE_MOVE)
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.parent = this;
+        msgInfo.title =  MegaSyncApp->getMEGAString();
+        msgInfo.text =   tr("Error:") + QLatin1String(" ") + QCoreApplication::translate("MegaError", e->getErrorString());
+        QMegaMessageBox::critical(msgInfo);
+    }
+    else
     {
-        if (e->getErrorCode() == MegaError::API_OK)
+        if (request->getType() == MegaRequest::TYPE_REMOVE || request->getType() == MegaRequest::TYPE_MOVE)
         {
-            auto selectedIndex = getSelectedIndex();
-            if(!selectedIndex.isValid())
-              return;
+            if (e->getErrorCode() == MegaError::API_OK)
+            {
+                auto selectedIndex = getSelectedIndex();
+                if(!selectedIndex.isValid())
+                    return;
 
-            auto parent = mProxyModel->getNode(selectedIndex.parent());
-            mNavigationInfo.remove(mProxyModel->getHandle(selectedIndex));
-            mProxyModel->removeNode(selectedIndex);
-            if(parent)
-                setSelectedNodeHandle(parent->getHandle());
+                auto parent = mProxyModel->getNode(selectedIndex.parent());
+                mNavigationInfo.remove(mProxyModel->getHandle(selectedIndex));
+                mProxyModel->removeNode(selectedIndex);
+                if(parent)
+                    setSelectedNodeHandle(parent->getHandle());
+            }
         }
+        checkBackForwardButtons();
+        ui->tMegaFolders->setEnabled(true);
     }
-    checkBackForwardButtons();
-    ui->tMegaFolders->setEnabled(true);
 }
 
 void NodeSelectorTreeViewWidget::setSelectedNodeHandle(const MegaHandle& selectedHandle, bool goToInit)

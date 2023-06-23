@@ -158,7 +158,7 @@ string getDistroVersion()
         oss << "Application: " << QApplication::applicationName().toUtf8().constData() << (sizeof(char*) == 4 ? " [32 bit]" : "") << (sizeof(char*) == 8 ? " [64 bit]" : "") << "\n";
         oss << "Version code: " << QString::number(Preferences::VERSION_CODE).toUtf8().constData() <<
                "." << QString::number(Preferences::BUILD_ID).toUtf8().constData() << "\n";
-        oss << "Module name: " << "megasync" << "\n";
+        oss << "Module name: " << MegaSyncApp->getMEGAString().toUtf8().constData() << "\n";
         oss << "Timestamp: " << QDateTime::currentMSecsSinceEpoch() << "\n";
 
         string distroinfo;
