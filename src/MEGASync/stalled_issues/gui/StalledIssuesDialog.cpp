@@ -21,8 +21,6 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
 #ifndef Q_OS_MACOS
     Qt::WindowFlags flags =  Qt::Window;
     this->setWindowFlags(flags);
-#else
-    ui->stalledIssuesTree->verticalScrollBar()->setSingleStep(20);
 #endif
 
     setAttribute(Qt::WA_DeleteOnClose, true);

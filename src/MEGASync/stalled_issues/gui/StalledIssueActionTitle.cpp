@@ -19,6 +19,7 @@ const char* DISCARDED = "discarded";
 const char* DISABLE_BACKGROUND = "disable_background";
 const char* MESSAGE_TEXT = "message_text";
 const char* EXTRAINFO_INFO = "extrainfo_info";
+const char* EXTRAINFO_SIZE = "extrainfo_size";
 
 #include <QGraphicsOpacityEffect>
 
@@ -248,7 +249,7 @@ bool StalledIssueActionTitle::eventFilter(QObject *watched, QEvent *event)
                         if(label != childLabels.last())
                         {
                             auto size = label->fontMetrics().width(label->property(MESSAGE_TEXT).toString());
-                            SizeAvailable -= (size + 30);
+                            SizeAvailable -= (size + 25);
                         }
                         else
                         {
@@ -264,7 +265,8 @@ bool StalledIssueActionTitle::eventFilter(QObject *watched, QEvent *event)
 
                 if(infoLabel && SizeAvailable > 0)
                 {
-                    auto elidedText = infoLabel->fontMetrics().elidedText(infoLabel->property(MESSAGE_TEXT).toString(), Qt::ElideMiddle, SizeAvailable );
+                    infoLabel->setProperty(EXTRAINFO_SIZE, SizeAvailable);
+                    auto elidedText = infoLabel->fontMetrics().elidedText(infoLabel->property(MESSAGE_TEXT).toString(), Qt::ElideMiddle, SizeAvailable);
                     infoLabel->setText(elidedText);
                 }
             }
@@ -405,7 +407,16 @@ void StalledIssueActionTitle::showAttribute(AttributeType type)
 
 void StalledIssueActionTitle::updateLabel(QLabel *label, const QString &text)
 {
-    label->setText(text);
+    if(label->property(EXTRAINFO_SIZE).isValid())
+    {
+        auto elidedText = label->fontMetrics().elidedText(text, Qt::ElideMiddle, label->property(EXTRAINFO_SIZE).toInt());
+        label->setText(elidedText);
+    }
+    else
+    {
+        label->setText(text);
+    }
+
     label->setProperty(MESSAGE_TEXT, text);
 }
 

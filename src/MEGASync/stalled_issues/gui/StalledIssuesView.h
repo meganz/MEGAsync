@@ -11,7 +11,6 @@ class StalledIssuesView : public LoadingSceneView<StalledIssueLoadingItem, QTree
     Q_OBJECT
 public:
     StalledIssuesView(QWidget* parent);
-    void closeEditor(QWidget *editor, QAbstractItemDelegate::EndEditHint hint) override;
 };
 
 #endif // STALLEDISSUESVIEW_H
