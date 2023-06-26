@@ -206,11 +206,12 @@ void LoginController::onEmailChanged(mega::MegaRequest *request, mega::MegaError
 {
     mEmail = QString::fromUtf8(request->getEmail());
     emit emailChanged();
-    emit changeRegistrationEmailFinished(e->getErrorCode() != mega::MegaError::API_OK);
+    emit changeRegistrationEmailFinished(e->getErrorCode() == mega::MegaError::API_OK);
 }
 
 void LoginController::onFetchNodes(mega::MegaRequest *request, mega::MegaError *e)
 {
+    Q_UNUSED(request)
     if (e->getErrorCode() == mega::MegaError::API_OK)
     {
         //Update/set root node
