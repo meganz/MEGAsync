@@ -43,7 +43,7 @@ RegisterPageForm {
                 registerFlow.state = confirmEmail;
                 registerContent.clean();
             } else {
-                nextButton.progressValue = 0;
+                nextButton.progress.value = 0;
                 registerContent.showEmailAlreadyExistsError();
             }
             state = normalStatus;

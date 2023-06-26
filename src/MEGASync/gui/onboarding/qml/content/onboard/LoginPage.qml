@@ -8,7 +8,7 @@ import Onboarding 1.0
 import Onboard 1.0
 
 LoginPageForm {
-    id: root
+    id: loginPageRoot
 
     property bool loginAttempt: false
     property bool twoFARequired: false
@@ -125,6 +125,13 @@ LoginPageForm {
                     break;
                 }
             }
+        }
+    }
+
+    Component.onCompleted: {
+        if(email.text.length && password.text.length)
+        {
+            loginPageRoot.loginButton.clicked();
         }
     }
 }

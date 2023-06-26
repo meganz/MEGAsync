@@ -17,6 +17,7 @@ ConfirmEmailPageForm {
 
         onAccountConfirmed: {
             registerFlow.state = login;
+            onboardingWindow.requestActivate();
         }
     }
 }

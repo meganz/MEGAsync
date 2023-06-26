@@ -31,14 +31,6 @@ Cpp.QmlDialog {
 
         anchors.fill: parent
     }
-
-    Connections {
-        target: Onboarding
-
-        onExitLoggedInFinished: {
-            Wrapper.accept();
-        }
-    }
 }
 
 

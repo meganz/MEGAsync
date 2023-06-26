@@ -9,6 +9,7 @@ class PasswordStrengthChecker : public QObject
 {
     Q_OBJECT
 
+public:
     enum PasswordStrength {
         PasswordStrengthVeryWeak,
         PasswordStrengthWeak,
@@ -16,8 +17,8 @@ class PasswordStrengthChecker : public QObject
         PasswordStrengthGood,
         PasswordStrengthStrong
     };
+    Q_ENUM(PasswordStrength)
 
-public:
     PasswordStrengthChecker(QObject* parent = nullptr);
 
     Q_INVOKABLE PasswordStrength getPasswordStrength(const QString& password);

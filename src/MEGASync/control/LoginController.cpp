@@ -17,6 +17,8 @@ LoginController::LoginController(QObject *parent)
     mConnectivityTimer->setSingleShot(true);
     mConnectivityTimer->setInterval(Preferences::MAX_LOGIN_TIME_MS);
     connect(mConnectivityTimer, &QTimer::timeout, this, &LoginController::runConnectivityCheck);
+
+    new AccountConfirmationListener(this);
 }
 
 LoginController::~LoginController()
@@ -49,6 +51,11 @@ void LoginController::login2FA(const QString &pin)
 QString LoginController::getEmail() const
 {
     return mEmail;
+}
+
+QString LoginController::getPassword() const
+{
+    return mPassword;
 }
 
 void LoginController::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e)
@@ -119,6 +126,11 @@ void LoginController::onRequestStart(mega::MegaApi *api, mega::MegaRequest *requ
     {
         mConnectivityTimer->start();
     }
+}
+
+void LoginController::accountConfirmation()
+{
+    emit accountConfirmed();
 }
 
 void LoginController::onLogin(mega::MegaRequest *request, mega::MegaError *e)
@@ -196,6 +208,7 @@ void LoginController::onAccountCreation(mega::MegaRequest *request, mega::MegaEr
         mEmail = QString::fromUtf8(request->getEmail());
         emit emailChanged();
         mPassword = QString::fromUtf8(request->getPassword());
+        emit passwordChanged();
         mName = QString::fromUtf8(request->getName());
         mLastName = QString::fromUtf8(request->getText());
     }
@@ -597,6 +610,7 @@ LogoutController::LogoutController(QObject *parent)
 
 void LogoutController::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e)
 {
+    Q_UNUSED(api)
     if(request->getType() != mega::MegaRequest::TYPE_LOGOUT)
     {
         return;
@@ -646,3 +660,18 @@ void LogoutController::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *re
     emit onLogoutFinished();
 }
 
+
+AccountConfirmationListener::AccountConfirmationListener(LoginController* parent)
+    : QObject(parent)
+    , mGlobalListener(new mega::QTMegaGlobalListener(MegaSyncApp->getMegaApi(), this))
+{
+    MegaSyncApp->getMegaApi()->addGlobalListener(mGlobalListener.get());
+}
+
+void AccountConfirmationListener::onEvent(mega::MegaApi *, mega::MegaEvent *event)
+{
+    if(event->getType() == mega::MegaEvent::EVENT_ACCOUNT_CONFIRMATION)
+    {
+        static_cast<LoginController*>(parent())->accountConfirmation();
+    }
+}

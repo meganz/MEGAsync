@@ -46,6 +46,7 @@ StackViewPage {
             anchors.left: parent.left
             anchors.leftMargin: -email.textField.focusBorderWidth
             title: OnboardingStrings.email
+            text: loginController.email
         }
 
         MegaTextFields.PasswordTextField {
@@ -56,6 +57,7 @@ StackViewPage {
             anchors.leftMargin: -password.textField.focusBorderWidth
             title: OnboardingStrings.password
             hint.icon: Images.alertTriangle
+            text: loginController.password
         }
 
         MegaButtons.HelpButton {
