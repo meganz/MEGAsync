@@ -7,11 +7,11 @@ import Common 1.0
 
 MegaButtons.Button {
     borderWidth: 0
-    leftPadding: 5 + focusBorderWidth
-    rightPadding: 5 + focusBorderWidth
-    topPadding: 5 + focusBorderWidth
-    bottomPadding: 5 + focusBorderWidth
-    height: 32 + 2 * focusBorderWidth
+    leftPadding: 5 + sizes.focusBorderWidth
+    rightPadding: 5 + sizes.focusBorderWidth
+    topPadding: 5 + sizes.focusBorderWidth
+    bottomPadding: 5 + sizes.focusBorderWidth
+    height: 32 + 2 * sizes.focusBorderWidth
     width: height
     Layout.preferredHeight: height
     Layout.preferredWidth: width

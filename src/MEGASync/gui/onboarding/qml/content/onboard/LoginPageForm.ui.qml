@@ -76,7 +76,7 @@ StackViewPage {
 
             text: OnboardingStrings.signUp
             Layout.alignment: Qt.AlignLeft
-            Layout.leftMargin: -signUpButton.focusBorderWidth
+            Layout.leftMargin: -signUpButton.sizes.focusBorderWidth
         }
 
         MegaButtons.PrimaryButton {
@@ -84,7 +84,7 @@ StackViewPage {
 
             text: OnboardingStrings.login
             Layout.alignment: Qt.AlignRight
-            Layout.rightMargin: -loginButton.focusBorderWidth
+            Layout.rightMargin: -loginButton.sizes.focusBorderWidth
         }
     }
 }

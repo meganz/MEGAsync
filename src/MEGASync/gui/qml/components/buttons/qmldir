@@ -11,3 +11,6 @@ SecondaryButton 1.0 SecondaryButton.qml
 Colors 1.0 Colors.qml
 Icon 1.0 Icon.qml
 Progress 1.0 Progress.qml
+Sizes 1.0 Sizes.qml
+SmallSizes 1.0 SmallSizes.qml
+LargeSizes 1.0 LargeSizes.qml

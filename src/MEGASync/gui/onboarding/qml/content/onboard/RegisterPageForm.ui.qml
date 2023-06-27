@@ -69,7 +69,7 @@ StackViewPage {
             id: loginButton
 
             Layout.alignment: Qt.AlignLeft
-            Layout.leftMargin: -loginButton.focusBorderWidth
+            Layout.leftMargin: -loginButton.sizes.focusBorderWidth
             text: OnboardingStrings.login
 
         }
@@ -78,7 +78,7 @@ StackViewPage {
             id: nextButton
 
             Layout.alignment: Qt.AlignRight
-            Layout.rightMargin: -nextButton.focusBorderWidth
+            Layout.rightMargin: -nextButton.sizes.focusBorderWidth
             enabled: registerContent.termsCheckBox.checked
             icons.source: Images.arrowRight
             text: OnboardingStrings.next

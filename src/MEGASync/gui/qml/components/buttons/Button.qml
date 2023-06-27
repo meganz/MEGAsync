@@ -16,8 +16,8 @@ Qml.RoundButton {
     property Colors colors: Colors {}
     property Icon icons: Icon {}
     property Progress progress: Progress {}
+    property Sizes sizes: Sizes {}
 
-    readonly property int focusBorderRadius: 11
     readonly property int focusBorderWidth: 3
     property int borderWidth: 2
 
@@ -81,16 +81,16 @@ Qml.RoundButton {
         return icons.colorEnabled;
     }
 
-    bottomPadding: 8 + focusBorderWidth
-    topPadding: 8 + focusBorderWidth
-    leftPadding: 16 + focusBorderWidth
-    rightPadding: 16 + focusBorderWidth
-    height: 36 + 2 * focusBorderWidth
-    Layout.preferredHeight: 36 + 2 * focusBorderWidth
+    bottomPadding: sizes.verticalPadding + sizes.focusBorderWidth
+    topPadding: sizes.verticalPadding + sizes.focusBorderWidth
+    leftPadding: sizes.horizontalPadding + sizes.focusBorderWidth
+    rightPadding: sizes.horizontalPadding + sizes.focusBorderWidth
+    height: sizes.height + 2 * sizes.focusBorderWidth
+    Layout.preferredHeight: sizes.height + 2 * sizes.focusBorderWidth
 
     contentItem: Row {
 
-        spacing: 8
+        spacing: sizes.spacing
 
         Loader {
             id: leftLoader
@@ -105,7 +105,7 @@ Qml.RoundButton {
             text: button.text
             color: getTextColor()
             font {
-                pixelSize: MegaTexts.Text.Size.Medium
+                pixelSize: sizes.textFontSize
                 weight: Font.DemiBold
             }
         }
@@ -122,8 +122,8 @@ Qml.RoundButton {
 
         color: "transparent"
         border.color: button.enabled ? (button.focus ? Styles.focus : "transparent") : "transparent"
-        border.width: button.focusBorderWidth
-        radius: button.focusBorderRadius
+        border.width: sizes.focusBorderWidth
+        radius: sizes.focusBorderRadius
         height: button.height
 
         Rectangle {
@@ -132,13 +132,13 @@ Qml.RoundButton {
             color: getBackgroundColor()
             anchors.top: focusRect.top
             anchors.left: focusRect.left
-            anchors.topMargin: button.focusBorderWidth
-            anchors.leftMargin: button.focusBorderWidth
-            width: button.width - 2 * button.focusBorderWidth
-            height: button.height - 2 * button.focusBorderWidth
-            border.width: borderWidth
+            anchors.topMargin: sizes.focusBorderWidth
+            anchors.leftMargin: sizes.focusBorderWidth
+            width: button.width - 2 * sizes.focusBorderWidth
+            height: button.height - 2 * sizes.focusBorderWidth
+            border.width: sizes.borderWidth
             border.color: getBorderColor()
-            radius: 6
+            radius: sizes.radius
             layer.enabled: true
 
             layer.effect: OpacityMask {
@@ -174,7 +174,7 @@ Qml.RoundButton {
         MegaImages.SvgImage {
             source: icons.source
             color: getIconColor()
-            sourceSize: icons.size
+            sourceSize: sizes.iconSize
         }
     }
 

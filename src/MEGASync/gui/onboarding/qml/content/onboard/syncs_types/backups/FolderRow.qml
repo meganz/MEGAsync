@@ -204,23 +204,22 @@ Rectangle {
                 spacing: 4
 
                 MegaButtons.SecondaryButton {
-                    Layout.preferredHeight: 26
-                    Layout.preferredWidth: 87
                     text: OnboardingStrings.rename
                     icons.position: MegaButtons.Icon.Position.LEFT
                     icons.source: Images.edit
                     onClicked: {
                         content.sourceComponent = editContent;
                     }
+                    sizes: MegaButtons.SmallSizes {}
                 }
 
                 MegaButtons.SecondaryButton {
-                    Layout.preferredHeight: 26
                     Layout.rightMargin: 8
                     icons.source: Images.trash
                     onClicked: {
                         BackupsModel.remove(mFolder);
                     }
+                    sizes: MegaButtons.SmallSizes {}
                 }
             }
         }
@@ -251,8 +250,6 @@ Rectangle {
             }
 
             MegaButtons.PrimaryButton {
-                Layout.preferredHeight: 26
-                Layout.preferredWidth: 47
                 text: OnboardingStrings.done
                 onClicked: {
                     if(BackupsModel.renameBackup(mFolder, editTextField.text)) {
@@ -260,6 +257,7 @@ Rectangle {
                         content.sourceComponent = confirmContent;
                     }
                 }
+                sizes: MegaButtons.SmallSizes {}
             }
         }
     }

@@ -18,7 +18,6 @@ QtObject {
     property color colorPressed: Styles.textInverseAccent
     property string source
     property int position: Icon.Position.RIGHT
-    property size size: Qt.size(16, 16)
     property int busyIndicatorPosition: Icon.Position.RIGHT
     property bool busyIndicatorVisible: false
 

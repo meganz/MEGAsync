@@ -3559,6 +3559,9 @@ void MegaApplication::registerCommonQMLElements()
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/Colors.qml")), "Components.Buttons", 1, 0, "Colors");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/Icon.qml")), "Components.Buttons", 1, 0, "Icon");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/Progress.qml")), "Components.Buttons", 1, 0, "Progress");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/Sizes.qml")), "Components.Buttons", 1, 0, "Sizes");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/SmallSizes.qml")), "Components.Buttons", 1, 0, "SmallSizes");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/LargeSizes.qml")), "Components.Buttons", 1, 0, "LargeSizes");
 
     qmlRegisterModule("Components.CheckBoxes", 1, 0);
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/checkBoxes/CheckBox.qml")), "Components.CheckBoxes", 1, 0, "CheckBox");

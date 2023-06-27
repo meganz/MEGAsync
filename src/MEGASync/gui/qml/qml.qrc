@@ -21,6 +21,9 @@
         <file>components/buttons/Colors.qml</file>
         <file>components/buttons/Icon.qml</file>
         <file>components/buttons/Progress.qml</file>
+        <file>components/buttons/Sizes.qml</file>
+        <file>components/buttons/SmallSizes.qml</file>
+        <file>components/buttons/LargeSizes.qml</file>
         <file>components/checkBoxes/CheckBox.qml</file>
         <file>components/checkBoxes/Colors.qml</file>
         <file>components/checkBoxes/Icons.qml</file>

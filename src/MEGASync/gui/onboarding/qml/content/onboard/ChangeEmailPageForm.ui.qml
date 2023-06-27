@@ -73,7 +73,7 @@ StackViewPage {
         MegaButtons.PrimaryButton {
             id: resendButton
 
-            Layout.rightMargin: -resendButton.focusBorderWidth
+            Layout.rightMargin: -resendButton.sizes.focusBorderWidth
             text: OnboardingStrings.resend
             icons.source: Images.mail
         }
