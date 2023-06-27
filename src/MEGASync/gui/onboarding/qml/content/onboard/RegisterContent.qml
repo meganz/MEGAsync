@@ -176,7 +176,7 @@ Column {
 
         anchors.left: parent.left
         anchors.right: parent.right
-        anchors.leftMargin: email.textField.focusBorderWidth
+        anchors.leftMargin: confirmPassword.sizes.focusBorderWidth
         url: Links.terms
         text: OnboardingStrings.agreeTerms
     }

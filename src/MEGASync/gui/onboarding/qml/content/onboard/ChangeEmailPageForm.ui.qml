@@ -51,8 +51,8 @@ StackViewPage {
             id: emailTextField
 
             title: OnboardingStrings.email
-            Layout.preferredWidth: layout.width + 2 * emailTextField.textField.focusBorderWidth
-            Layout.leftMargin: -emailTextField.textField.focusBorderWidth
+            Layout.preferredWidth: layout.width + 2 * emailTextField.sizes.focusBorderWidth
+            Layout.leftMargin: -emailTextField.sizes.focusBorderWidth
         }
     }
 

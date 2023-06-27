@@ -247,6 +247,7 @@ Rectangle {
                     }
                     return "";
                 }
+                sizes: MegaTextFields.SmallSizes {}
             }
 
             MegaButtons.PrimaryButton {

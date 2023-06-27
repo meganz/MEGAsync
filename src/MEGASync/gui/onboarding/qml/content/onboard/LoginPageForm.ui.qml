@@ -42,18 +42,18 @@ StackViewPage {
         MegaTextFields.EmailTextField {
             id: email
 
-            width: parent.width + 2 * email.textField.focusBorderWidth
+            width: parent.width + 2 * email.sizes.focusBorderWidth
             anchors.left: parent.left
-            anchors.leftMargin: -email.textField.focusBorderWidth
+            anchors.leftMargin: -email.sizes.focusBorderWidth
             title: OnboardingStrings.email
         }
 
         MegaTextFields.PasswordTextField {
             id: password
 
-            width: parent.width + 2 * password.textField.focusBorderWidth
+            width: parent.width + 2 * password.sizes.focusBorderWidth
             anchors.left: parent.left
-            anchors.leftMargin: -password.textField.focusBorderWidth
+            anchors.leftMargin: -password.sizes.focusBorderWidth
             title: OnboardingStrings.password
             hint.icon: Images.alertTriangle
         }

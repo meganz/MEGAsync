@@ -42,6 +42,9 @@
         <file>components/textFields/Hint.qml</file>
         <file>components/textFields/LeftIcon.qml</file>
         <file>components/textFields/RightIcon.qml</file>
+        <file>components/textFields/Sizes.qml</file>
+        <file>components/textFields/SmallSizes.qml</file>
+        <file>components/textFields/LargeSizes.qml</file>
         <file>components/texts/HintText.qml</file>
         <file>components/texts/HintStyle.qml</file>
         <file>components/texts/NotificationIcon.qml</file>
