@@ -98,7 +98,7 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
 
     msgInfo.finishFunc = [this](QMessageBox* msgBox)
     {
-        if(msgBox->result() == QDialogButtonBox::AcceptRole)
+        if(msgBox->result() == QDialogButtonBox::Ok)
         {
             mUtilities.removeRemoteFile(ui->chooseRemoteCopy->data()->getFilePath());
             MegaSyncApp->getStalledIssuesModel()->solveIssue(false, getCurrentIndex());
@@ -146,7 +146,7 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
 
     msgInfo.finishFunc = [this](QMessageBox* msgBox)
     {
-        if(msgBox->result() == QDialogButtonBox::AcceptRole)
+        if(msgBox->result() == QDialogButtonBox::Ok)
         {
             mUtilities.removeLocalFile(ui->chooseLocalCopy->data()->getNativeFilePath());
             MegaSyncApp->getStalledIssuesModel()->solveIssue(true, getCurrentIndex());

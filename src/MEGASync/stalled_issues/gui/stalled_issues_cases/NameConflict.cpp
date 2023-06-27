@@ -333,7 +333,7 @@ void NameConflict::onActionClicked(int actionId)
 
             msgInfo.finishFunc = [this, filePath, titleFileName, chooseTitle](QMessageBox* msgBox)
             {
-                if (msgBox->result() == QDialogButtonBox::AcceptRole)
+                if (msgBox->result() == QDialogButtonBox::Yes)
                 {
                     bool areAllSolved(false);
 
