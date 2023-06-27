@@ -10,7 +10,7 @@
 
 #include <memory>
 
-class StalledIssuesUtilities : public QObject , public mega::MegaRequestListener
+class StalledIssuesUtilities : public QObject
 {
     Q_OBJECT
 
@@ -19,6 +19,7 @@ public:
 
     void ignoreFile(const QString& path);
     void removeRemoteFile(const QString& path);
+    void removeRemoteFile(mega::MegaNode* node);
     void removeLocalFile(const QString& path);
 
     static QIcon getLocalFileIcon(const QFileInfo& fileInfo, bool hasProblem);
@@ -26,9 +27,7 @@ public:
 
 signals:
     void actionFinished();
-
-protected slots:
-    void onRequestFinish(mega::MegaApi *, mega::MegaRequest *request, mega::MegaError *e);
+    void remoteActionFinished(mega::MegaHandle handle);
 
 private slots:
     void onIgnoreFileFinished();
@@ -37,9 +36,7 @@ private:
     static QIcon getFileIcon(bool isFile, const QFileInfo &fileInfo, bool hasProblem);
 
     QFutureWatcher<void> mIgnoreWatcher;
-
-    std::unique_ptr<mega::QTMegaRequestListener> mListener;
-    mega::MegaHandle mRemoteHandle;
+    QList<mega::MegaHandle> mRemoteHandles;
 };
 
 #endif // STALLEDISSUESUTILITIES_H

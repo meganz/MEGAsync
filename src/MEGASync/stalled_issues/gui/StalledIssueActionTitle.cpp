@@ -194,7 +194,7 @@ QLabel* StalledIssueActionTitle::addExtraInfo(const QString &title, const QStrin
     return infoLabel;
 }
 
-void StalledIssueActionTitle::setDisabled(bool state)
+void StalledIssueActionTitle::setSolved(bool state)
 {
     ui->backgroundWidget->setProperty(DISCARDED,state);
     setStyleSheet(styleSheet());
@@ -212,6 +212,11 @@ void StalledIssueActionTitle::setDisabled(bool state)
         effect->setOpacity(0.30);
         ui->extraInfoContainer->setGraphicsEffect(effect);
     }
+}
+
+bool StalledIssueActionTitle::isSolved() const
+{
+    return ui->backgroundWidget->property(DISCARDED).toBool();
 }
 
 void StalledIssueActionTitle::setIsCloud(bool state)

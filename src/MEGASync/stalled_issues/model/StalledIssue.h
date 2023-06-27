@@ -309,7 +309,7 @@ private:
         return mData;
     }
 
-    std::shared_ptr<StalledIssue> mData;
+   std::shared_ptr<StalledIssue> mData;
 };
 
 Q_DECLARE_METATYPE(StalledIssueVariant)

@@ -31,9 +31,10 @@ public:
 
     QLabel* addExtraInfo(const QString& title, const QString& info, int level);
 
-    void setDisabled(bool state);
-    void setIsCloud(bool state);
+    void setSolved(bool state);
+    bool isSolved() const;
 
+    void setIsCloud(bool state);
 
     void setPath(const QString &newPath);
 

@@ -110,7 +110,7 @@ StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::createBodyWid
         }
         case mega::MegaSyncStall::SyncStallReason::NamesWouldClashWhenSynced:
         {
-            item = new LocalAndRemoteNameConflicts(issue.consultData()->getOriginalStall(), parent);
+            item = new LocalAndRemoteNameConflicts(parent);
             break;
         }
         case mega::MegaSyncStall::SyncStallReason::FileIssue:

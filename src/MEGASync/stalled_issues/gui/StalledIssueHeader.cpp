@@ -140,6 +140,14 @@ QString StalledIssueHeader::fileName()
     return QString();
 }
 
+void StalledIssueHeader::on_actionButton_clicked()
+{
+    if(mHeaderCase)
+    {
+        mHeaderCase->onActionButtonClicked(this);
+    }
+}
+
 void StalledIssueHeader::on_ignoreFileButton_clicked()
 {
     auto info = getData().consultData();

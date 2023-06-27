@@ -95,8 +95,8 @@ void StalledIssueChooseWidget::setDisabled(bool solved)
 {
     bool isDisabled(mIsSolved && !solved);
 
-    ui->chooseTitle->setDisabled(isDisabled);
-    ui->name->setDisabled(isDisabled);
+    ui->chooseTitle->setSolved(isDisabled);
+    ui->name->setSolved(isDisabled);
 
     if(isDisabled && !ui->pathContainer->graphicsEffect())
     {

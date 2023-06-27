@@ -87,10 +87,10 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="NameConflict" name="cloudConflictNames" native="true"/>
+       <widget class="CloudNameConflict" name="cloudConflictNames" native="true"/>
       </item>
       <item>
-       <widget class="NameConflict" name="localConflictNames" native="true"/>
+       <widget class="LocalNameConflict" name="localConflictNames" native="true"/>
       </item>
      </layout>
     </widget>
@@ -99,7 +99,13 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>NameConflict</class>
+   <class>CloudNameConflict</class>
+   <extends>QWidget</extends>
+   <header>stalled_issues_cases/NameConflict.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>LocalNameConflict</class>
    <extends>QWidget</extends>
    <header>stalled_issues_cases/NameConflict.h</header>
    <container>1</container>

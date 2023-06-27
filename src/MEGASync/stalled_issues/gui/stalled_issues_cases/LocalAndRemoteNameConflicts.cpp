@@ -2,6 +2,7 @@
 #include "ui_LocalAndRemoteNameConflicts.h"
 
 #include <StalledIssueHeader.h>
+#include <NameConflictStalledIssue.h>
 
 const QString LocalAndRemoteNameConflicts::FILES_DESCRIPTION = QString::fromLatin1(QT_TR_NOOP("Renaming or removing files can resolve this issue,"
                                                                                                      "\nor click the Folders below to make adjustments in the local filesystem or in MEGA"));
@@ -10,9 +11,8 @@ const QString LocalAndRemoteNameConflicts::FOLDERS_DESCRIPTION = QString::fromLa
 const QString LocalAndRemoteNameConflicts::FILES_AND_FOLDERS_DESCRIPTION = QString::fromLatin1(QT_TR_NOOP("Renaming or removing files or folders can resolve this issue,"
                                                                                                        "\nor click the Folders below to make adjustments in the local filesystem or in MEGA"));
 
-LocalAndRemoteNameConflicts::LocalAndRemoteNameConflicts(std::shared_ptr<mega::MegaSyncStall> originalstall, QWidget *parent) :
+LocalAndRemoteNameConflicts::LocalAndRemoteNameConflicts(QWidget *parent) :
     StalledIssueBaseDelegateWidget(parent),
-    originalStall(originalstall),
     ui(new Ui::LocalAndRemoteNameConflicts)
 {
     ui->setupUi(this);
@@ -47,7 +47,7 @@ void LocalAndRemoteNameConflicts::refreshUi()
         }
         else
         {
-            ui->cloudConflictNames->updateUi(cloudData);
+            ui->cloudConflictNames->updateUi(nameConflict);
             ui->cloudConflictNames->show();
         }
 
@@ -58,7 +58,7 @@ void LocalAndRemoteNameConflicts::refreshUi()
         }
         else
         {
-            ui->localConflictNames->updateUi(localData);
+            ui->localConflictNames->updateUi(nameConflict);
             ui->localConflictNames->show();
         }
 

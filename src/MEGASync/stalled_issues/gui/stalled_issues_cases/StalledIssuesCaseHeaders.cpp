@@ -7,6 +7,9 @@
 #include <StalledIssuesModel.h>
 #include <StalledIssue.h>
 #include <NameConflictStalledIssue.h>
+#include <QMegaMessageBox.h>
+#include <DialogOpener.h>
+#include <StalledIssuesDialog.h>
 
 #ifdef _WIN32
     #include "minwindef.h"
@@ -233,16 +236,16 @@ void NameConflictsHeader::refreshCaseUi(StalledIssueHeader* header)
     if(auto nameConflict = std::dynamic_pointer_cast<const NameConflictedStalledIssue>(header->getData().consultData()))
     {
         auto cloudData = nameConflict->getNameConflictCloudData();
-        if(!cloudData.conflictedNames.isEmpty())
+        if(cloudData.firstNameConflict())
         {
-            header->addFileName(cloudData.conflictedNames.first().conflictedName);
+            header->addFileName(cloudData.firstNameConflict()->mConflictedName);
         }
         else
         {
-            auto localData = nameConflict->getNameConflictLocalData();
-            if(!localData.conflictedNames.isEmpty())
+            auto localConflictedNames = nameConflict->getNameConflictLocalData();
+            if(!localConflictedNames.isEmpty())
             {
-                header->addFileName(localData.conflictedNames.first().conflictedName);
+                header->addFileName(localConflictedNames.first()->mConflictedName);
             }
         }
 
@@ -263,5 +266,36 @@ void NameConflictsHeader::refreshCaseUi(StalledIssueHeader* header)
             header->setTitleDescriptionText(tr("These folders contain multiple names on one side, that would all become the same single name on the other side of the sync."
                                                "\nThis may be due to syncing to case insensitive local filesystems, or the effects of escaped characters."));
         }
+
+        //header->showAction(tr("Solve"));
     }
 }
+
+void NameConflictsHeader::onActionButtonClicked(StalledIssueHeader* header)
+{
+    if(auto nameConflict = std::dynamic_pointer_cast<const NameConflictedStalledIssue>(header->getData().consultData()))
+    {
+        auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
+
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
+        msgInfo.title = MegaSyncApp->getMEGAString();
+        msgInfo.textFormat = Qt::RichText;
+        msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
+
+        msgInfo.text = tr("Are you sure you want to solve the issue?");
+        msgInfo.informativeText = tr("This action will delete the duplicate files and rename the remaining ones until the problem is solved.");
+
+        msgInfo.finishFunc = [this, header, nameConflict](QMessageBox* msgBox)
+        {
+            if(msgBox->result() == QDialogButtonBox::Ok)
+            {
+                MegaSyncApp->getStalledIssuesModel()->solveDuplicatedIssues(header->getCurrentIndex());
+            }
+        };
+
+        QMegaMessageBox::warning(msgInfo);
+    }
+}
+
+

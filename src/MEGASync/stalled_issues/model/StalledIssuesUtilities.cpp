@@ -6,9 +6,7 @@
 #include <QFile>
 #include <QDir>
 
-StalledIssuesUtilities::StalledIssuesUtilities() : mega::MegaRequestListener(),
-    mListener(mega::make_unique<mega::QTMegaRequestListener>(MegaSyncApp->getMegaApi(), this)),
-    mRemoteHandle(0)
+StalledIssuesUtilities::StalledIssuesUtilities()
 {}
 
 void StalledIssuesUtilities::ignoreFile(const QString &path)
@@ -58,31 +56,38 @@ void StalledIssuesUtilities::onIgnoreFileFinished()
                this, &StalledIssuesUtilities::onIgnoreFileFinished);
 }
 
-void StalledIssuesUtilities::onRequestFinish(mega::MegaApi *, mega::MegaRequest *request, mega::MegaError *e)
-{
-    if (request->getType() == mega::MegaRequest::TYPE_MOVE
-            || request->getType() == mega::MegaRequest::TYPE_RENAME)
-    {
-        if (e->getErrorCode() == mega::MegaError::API_OK)
-        {
-            auto handle = request->getNodeHandle();
-            if(handle && handle == mRemoteHandle)
-            {
-                emit actionFinished();
-                mRemoteHandle = 0;
-            }
-        }
-    }
-}
-
 void StalledIssuesUtilities::removeRemoteFile(const QString& path)
 {
-    auto fileNode(MegaSyncApp->getMegaApi()->getNodeByPath(path.toStdString().c_str()));
-    if(fileNode)
+    std::unique_ptr<mega::MegaNode>fileNode(MegaSyncApp->getMegaApi()->getNodeByPath(path.toStdString().c_str()));
+    removeRemoteFile(fileNode.get());
+}
+
+void StalledIssuesUtilities::removeRemoteFile(mega::MegaNode *node)
+{
+    if(node)
     {
-        mRemoteHandle = fileNode->getHandle();
+        mRemoteHandles.append(node->getHandle());
         auto rubbishNode = MegaSyncApp->getMegaApi()->getRubbishNode();
-        MegaSyncApp->getMegaApi()->moveNode(fileNode,rubbishNode, mListener.get());
+        QPointer<StalledIssuesUtilities> currentThis(this);
+        MegaSyncApp->getMegaApi()->moveNode(node,rubbishNode,
+                                            new mega::OnFinishOneShot(MegaSyncApp->getMegaApi(), [=](const mega::MegaError& e, const mega::MegaRequest& request){
+            if(currentThis)
+            {
+                if (request.getType() == mega::MegaRequest::TYPE_MOVE
+                        || request.getType() == mega::MegaRequest::TYPE_RENAME)
+                {
+                    if (e.getErrorCode() == mega::MegaError::API_OK)
+                    {
+                        auto handle = request.getNodeHandle();
+                        if(mRemoteHandles.contains(handle))
+                        {
+                            emit remoteActionFinished(handle);
+                            mRemoteHandles.removeOne(handle);
+                        }
+                    }
+                }
+            }
+        }));
     }
 }
 

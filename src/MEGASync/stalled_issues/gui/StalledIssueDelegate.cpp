@@ -138,6 +138,7 @@ QWidget *StalledIssueDelegate::createEditor(QWidget*, const QStyleOptionViewItem
     {
         mEditor = getStalledIssueItemWidget(index, stalledIssueItem, true);
         mEditor->setGeometry(option.rect);
+        mEditor->update();
     }
 
     return mEditor;
