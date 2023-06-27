@@ -134,7 +134,7 @@ void NameConflictedStalledIssue::solveIssue()
 
    auto cloudConflictedNames(mCloudConflictedNames.getConflictedNames());
 
-   if(cloudConflictedNames.size() == 1 && mLocalConflictedNames.size() == 1)
+   if(cloudConflictedNames.size() + mLocalConflictedNames.size() <= 2)
    {
        MegaSyncApp->getMegaApi()->clearStalledPath(originalStall.get());
        mIsSolved = true;
