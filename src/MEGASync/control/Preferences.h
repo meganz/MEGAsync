@@ -388,10 +388,6 @@ public:
     QString getDataPath();
     void clearTemporalBandwidth();
     void clearAll();
-    void sync();
-
-    void deferSyncs(bool b);  // this must receive balanced calls with true and false, as it maintains a count (to support threads).
-    bool needsDeferredSync();
 
     enum {
         PROXY_TYPE_NONE = 0,
@@ -544,7 +540,6 @@ protected:
     template<typename T>
     T getValueConcurrent(const QString &key, const T &defaultValue);
     void setAndCachedValue(const QString &key, const QVariant &value);
-    void setValueAndSyncConcurrent(const QString &key, const QVariant &value);
     void setValueConcurrent(const QString &key, const QVariant &value);
     void setCachedValue(const QString &key, const QVariant &value);
     void cleanCache();
