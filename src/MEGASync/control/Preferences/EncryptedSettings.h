@@ -36,6 +36,9 @@ protected:
     QByteArray encryptionKey;
     int mDeferSyncEnableCount = 0;
     bool mSyncDeferred = false;
+
+    bool event(QEvent *event) override;
+
 };
 
 #endif // ENCRYPTEDSETTINGS_H

@@ -78,6 +78,10 @@ LoginPageForm {
             onboardingWindow.loggingIn = false;
         }
 
+        onAccountCreationResumed: {
+            registerFlow.state = confirmEmail;
+        }
+
         onLoginFinished: {
             switch(errorCode)
             {

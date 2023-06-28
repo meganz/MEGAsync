@@ -7,6 +7,7 @@
 #include "control/CrashHandler.h"
 #include "control/ExportProcessor.h"
 #include "control/LoginController.h"
+#include "control/Preferences/EphemeralCredentials.h"
 #include "EventUpdater.h"
 #include "platform/Platform.h"
 #include "OverQuotaDialog.h"
@@ -438,6 +439,8 @@ void MegaApplication::initialize()
     QDesktopServices::setUrlHandler(QString::fromUtf8("local"), this, "handleLocalPath");
 
     registerCommonQMLElements();
+    qRegisterMetaType<EphemeralCredentials>("EphemeralCredentials");
+    qRegisterMetaTypeStreamOperators<EphemeralCredentials>("EphemeralCredentials");
 
     preferences = Preferences::instance();
     connect(preferences.get(), SIGNAL(stateChanged()), this, SLOT(changeState()));

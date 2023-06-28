@@ -1,4 +1,4 @@
-#include "Preferences.h"
+#include "Preferences/Preferences.h"
 #include "Version.h"
 #include "platform/Platform.h"
 #include "UserAttributesRequests/FullName.h"
@@ -359,6 +359,7 @@ const QString Preferences::disableOverlayIconsKey   = QString::fromAscii("disabl
 const QString Preferences::disableFileVersioningKey = QString::fromAscii("disableFileVersioning");
 const QString Preferences::disableLeftPaneIconsKey  = QString::fromAscii("disableLeftPaneIcons");
 const QString Preferences::sessionKey               = QString::fromAscii("session");
+const QString Preferences::ephemeralSessionKey      = QString::fromAscii("ephemeralSession");
 const QString Preferences::firstStartDoneKey        = QString::fromAscii("firstStartDone");
 const QString Preferences::firstSyncDoneKey         = QString::fromAscii("firstSyncDone");
 const QString Preferences::firstBackupDoneKey       = QString::fromAscii("firstBackupDone");
@@ -639,6 +640,56 @@ QString Preferences::getSession()
 
     mutex.unlock();
     return value;
+}
+
+void Preferences::setEphemeralSession(const QString& sid)
+{
+    mutex.lock();
+    mSettings->setValue(ephemeralSessionKey, sid);
+    setCachedValue(ephemeralSessionKey, sid);
+    //mSettings->sync();
+    mutex.unlock();
+}
+
+void Preferences::removeEphemeralSession()
+{
+    mutex.lock();
+    mSettings->remove(ephemeralSessionKey);
+    removeFromCache(ephemeralSessionKey);
+    mSettings->sync();
+    mutex.unlock();
+}
+
+void Preferences::setEphemeralCredentials(EphemeralCredentials& cred)
+{
+    mutex.lock();
+
+    QByteArray array;
+    QDataStream stream(&array, QIODevice::WriteOnly);
+    stream << cred;
+    //array.replace('\0','X');
+//    QString string = QString::fromLatin1(array.toBase64());
+//    qDebug()<<string;
+//    qDebug()<<QByteArray::fromHex(string);
+    qDebug()<<array.toBase64();
+    mSettings->setValue(ephemeralSessionKey, array.toBase64());
+    setCachedValue(ephemeralSessionKey, array.toBase64());
+    mSettings->sync();
+    mutex.unlock();
+}
+
+EphemeralCredentials Preferences::getEphemeralCredentials()
+{
+    mutex.lock();
+    QString string = getValue<QString>(ephemeralSessionKey);
+    QByteArray base64 = string.toLatin1();
+    QByteArray array = QByteArray::fromBase64(base64);
+    QDataStream stream(&array, QIODevice::ReadOnly);
+    EphemeralCredentials cred;
+    stream >> cred;
+
+    mutex.unlock();
+    return cred;
 }
 
 unsigned long long Preferences::transferIdentifier()

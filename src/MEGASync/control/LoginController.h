@@ -42,11 +42,13 @@ signals:
     void fetchingNodesProgress(double progress);
     void fetchingNodesFinished();
     void accountConfirmed();
+    void accountCreationResumed();
 
 protected:
     virtual void onLogin(mega::MegaRequest* request, mega::MegaError* e);
     virtual void onFetchNodesSuccess();
     void onAccountCreation(mega::MegaRequest* request, mega::MegaError* e);
+    void onAccountCreationResume(mega::MegaRequest* request, mega::MegaError* e);
     void onEmailChanged(mega::MegaRequest* request, mega::MegaError* e);
     void onFetchNodes(mega::MegaRequest* request, mega::MegaError* e);
 

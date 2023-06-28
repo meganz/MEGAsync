@@ -2,7 +2,7 @@
 #define ACCOUNTDETAILSDIALOG_H
 
 #include "Utilities.h"
-#include "control/Preferences.h"
+#include "control/Preferences/Preferences.h"
 
 #include <QDialog>
 

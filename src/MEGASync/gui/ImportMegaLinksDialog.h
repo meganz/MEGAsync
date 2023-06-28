@@ -5,7 +5,7 @@
 #include <QStringList>
 #include "megaapi.h"
 #include "control/LinkProcessor.h"
-#include "control/Preferences.h"
+#include "control/Preferences/Preferences.h"
 
 namespace Ui {
 class ImportMegaLinksDialog;

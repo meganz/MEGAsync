@@ -31,11 +31,15 @@ EncryptedSettings::EncryptedSettings(QString file) :
 
 void EncryptedSettings::setValue(const QString &key, const QVariant &value)
 {
+    //QSettings::setValue(key, value);
+
     QSettings::setValue(hash(key), encrypt(key, value.toString()));
 }
 
 QVariant EncryptedSettings::value(const QString &key, const QVariant &defaultValue)
 {
+    //return QSettings::value(key);
+
     return QVariant(decrypt(key, QSettings::value(hash(key), encrypt(key, defaultValue.toString())).toString()));
 }
 
@@ -176,4 +180,10 @@ QString EncryptedSettings::hash(const QString key) const
     QByteArray keyHash = QCryptographicHash::hash(xPath, QCryptographicHash::Sha1);
     QByteArray xKeyHash = XOR(key.toUtf8(), keyHash);
     return QString::fromAscii(xKeyHash.toHex());
+}
+
+bool EncryptedSettings::event(QEvent *event)
+{
+    qDebug()<<"QSettings event type:"<<event->type();
+    return QSettings::event(event);
 }

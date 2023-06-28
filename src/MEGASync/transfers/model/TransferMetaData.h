@@ -7,7 +7,7 @@
 #include <QPointer>
 #include <QMutex>
 
-#include <Preferences.h>
+#include "Preferences/Preferences.h"
 #include "TransferItem.h"
 
 namespace mega

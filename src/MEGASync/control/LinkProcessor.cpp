@@ -1,6 +1,6 @@
 #include "LinkProcessor.h"
 #include "Utilities.h"
-#include "Preferences.h"
+#include "Preferences/Preferences.h"
 #include "MegaApplication.h"
 #include <QDir>
 #include <QDateTime>

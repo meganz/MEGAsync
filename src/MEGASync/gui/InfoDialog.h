@@ -8,7 +8,7 @@
 #include <QPainter>
 #include "SettingsDialog.h"
 #include "MenuItemAction.h"
-#include "control/Preferences.h"
+#include "control/Preferences/Preferences.h"
 #include "syncs/control/SyncInfo.h"
 #include <QGraphicsOpacityEffect>
 #include "TransferScanCancelUi.h"

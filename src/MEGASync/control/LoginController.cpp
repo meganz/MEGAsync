@@ -1,6 +1,6 @@
 #include "LoginController.h"
 #include "MegaApplication.h"
-#include "Preferences.h"
+#include "Preferences/Preferences.h"
 #include "ConnectivityChecker.h"
 #include "Platform.h"
 #include "QMegaMessageBox.h"
@@ -18,6 +18,11 @@ LoginController::LoginController(QObject *parent)
     mConnectivityTimer->setInterval(Preferences::MAX_LOGIN_TIME_MS);
     connect(mConnectivityTimer, &QTimer::timeout, this, &LoginController::runConnectivityCheck);
 
+    EphemeralCredentials credentials = mPreferences->getEphemeralCredentials();
+    if(credentials.sessionId.size() > 0)
+    {
+        mMegaApi->resumeCreateAccount(credentials.sessionId.toUtf8().constData());
+    }
     new AccountConfirmationListener(this);
 }
 
@@ -73,6 +78,7 @@ void LoginController::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *req
             std::unique_ptr<char []> session(mMegaApi->dumpSession());
             if (session)
             {
+                qDebug()<<"SESSION:" << QString::fromUtf8(session.get());
                 mPreferences->setSession(QString::fromUtf8(session.get()));
             }
         }
@@ -87,7 +93,14 @@ void LoginController::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *req
     }
     case mega::MegaRequest::TYPE_CREATE_ACCOUNT:
     {
-        onAccountCreation(request, e);
+        if(request->getParamType() == mega::MegaApi::RESUME_ACCOUNT)
+        {
+            onAccountCreationResume(request, e);
+        }
+        else
+        {
+            onAccountCreation(request, e);
+        }
         break;
     }
     case mega::MegaRequest::TYPE_SEND_SIGNUP_LINK:
@@ -211,8 +224,21 @@ void LoginController::onAccountCreation(mega::MegaRequest *request, mega::MegaEr
         emit passwordChanged();
         mName = QString::fromUtf8(request->getName());
         mLastName = QString::fromUtf8(request->getText());
+        EphemeralCredentials credentials;
+        credentials.email = mEmail;
+        credentials.password = mPassword;
+        credentials.sessionId = QString::fromUtf8(request->getSessionKey());
+        mPreferences->setEphemeralCredentials(credentials);
+        //qDebug()<<"SESSION:" << QString::fromUtf8(request->getSessionKey()); //ephemeral session id and final session id are different, create new key for ephemeral session
     }
     emit registerFinished(e->getErrorCode() == mega::MegaError::API_OK);
+}
+
+void LoginController::onAccountCreationResume(mega::MegaRequest *request, mega::MegaError *e)
+{
+    qDebug()<< QString::fromUtf8(mMegaApi->getMyEmail());
+    mPreferences->removeEphemeralSession();
+    emit accountCreationResumed();
 }
 
 void LoginController::onEmailChanged(mega::MegaRequest *request, mega::MegaError *e)
