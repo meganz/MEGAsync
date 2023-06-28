@@ -17,7 +17,6 @@ public:
             REMOVE = 0,
             RENAME,
             SOLVED_BY_OTHER_SIDE,
-            REMOVE_AUTOMATICALLY,
             UNSOLVED
         };
 
@@ -64,9 +63,12 @@ public:
             : fingerprint(ufingerprint), size(usize), modifiedTime(umodifiedTime)
         {}
 
+        CloudConflictedNames()
+        {}
+
         QString fingerprint;
-        int64_t size;
-        int64_t modifiedTime;
+        int64_t size = -1;
+        int64_t modifiedTime = -1;
 
         QMap<int64_t, std::shared_ptr<ConflictedNameInfo>> conflictedNames;
     };
@@ -77,11 +79,10 @@ public:
         CloudConflictedNamesByHandle()
         {}
 
-        void addFolderConflictedName(int64_t modifiedTimestamp, int64_t size, int64_t creationtimestamp,
-                                     QString fingerprint, std::shared_ptr<ConflictedNameInfo> info)
+        void addFolderConflictedName(mega::MegaHandle handle, std::shared_ptr<ConflictedNameInfo> info)
         {
-            CloudConflictedNames newConflictedName(fingerprint, size, modifiedTimestamp);
-            newConflictedName.conflictedNames.insert(creationtimestamp, info);
+            CloudConflictedNames newConflictedName;
+            newConflictedName.conflictedNames.insert(handle, info);
             mConflictedNames.append(newConflictedName);
         }
 
@@ -184,10 +185,14 @@ public:
         {
             if(mConflictedNames.size() > groupIndex)
             {
-                StalledIssuesUtilities utilities;
                 auto& conflictedNamesGroup = mConflictedNames[groupIndex];
                 if(conflictedNamesGroup.conflictedNames.size() > 1)
                 {
+                    //The object is auto deleted when finished (as it needs to survive this issue)
+                    StalledIssuesSyncDebrisUtilities* utilities(new StalledIssuesSyncDebrisUtilities());
+
+                    QList<mega::MegaHandle> nodesToMove;
+
                     int counter(0);
                     foreach(auto conflictedNameTimestamp, conflictedNamesGroup.conflictedNames.keys())
                     {
@@ -196,19 +201,15 @@ public:
                             auto conflictedName(conflictedNamesGroup.conflictedNames.value(conflictedNameTimestamp));
                             if(conflictedName)
                             {
-                                std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(conflictedName->mHandle));
-                                if(node)
-                                {
-                                    //conflictedName->mSolved = ConflictedNameInfo::SolvedType::REMOVE_AUTOMATICALLY;
-                                    utilities.removeRemoteFile(node.get());
-                                }
-
+                                nodesToMove.append(conflictedName->mHandle);
                                 conflictedNamesGroup.conflictedNames.remove(conflictedNameTimestamp);
                             }
                         }
 
                         counter++;
                     }
+
+                    utilities->moveToSyncDebris(nodesToMove);
                 }
             }
         }

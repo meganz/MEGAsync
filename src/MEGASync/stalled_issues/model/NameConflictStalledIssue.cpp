@@ -47,14 +47,13 @@ void NameConflictedStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
     {
         initCloudIssue(stall);
 
-        std::shared_ptr<mega::MegaNode> parentNode(nullptr);
-
         auto firstCloudPath(stall->path(true,0));
         if(consultCloudData()->mPath.isEmpty())
         {
             QFileInfo cloudPathInfo(QString::fromUtf8(firstCloudPath));
             //We set the first path, as it will be used to get the folder path (discarding the filename)
             getCloudData()->mPath.path = cloudPathInfo.filePath();
+            getCloudData()->mPathHandle = stall->cloudNodeHandle(0);
         }
 
         for(unsigned int index = 0; index < cloudConflictNames; ++index)
@@ -76,7 +75,7 @@ void NameConflictedStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
                 }
                 else
                 {
-                    mCloudConflictedNames.addFolderConflictedName(node->getModificationTime(), node->getSize(), node->getCreationTime(), QString::fromUtf8(node->getFingerprint()), info);
+                    mCloudConflictedNames.addFolderConflictedName(cloudHandle, info);
                     mFolders++;
                 }
             }
@@ -107,7 +106,7 @@ void NameConflictedStalledIssue::solveIssue()
 
    auto cloudConflictedNames(mCloudConflictedNames.getConflictedNames());
 
-   if(cloudConflictedNames.size() + mLocalConflictedNames.size() <= 2)
+   if(cloudConflictedNames.size() <= 1 && mLocalConflictedNames.size() <= 1)
    {
        MegaSyncApp->getMegaApi()->clearStalledPath(originalStall.get());
        mIsSolved = true;

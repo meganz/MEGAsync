@@ -42,7 +42,7 @@ class NameConflict : public QWidget
 
 public:
     explicit NameConflict(QWidget *parent = nullptr);
-    ~NameConflict();
+    virtual ~NameConflict();
 
     void updateUi(std::shared_ptr<const NameConflictedStalledIssue> data);
     void setDisabled();
@@ -79,6 +79,8 @@ public:
         : NameConflict(parent)
     {}
 
+    ~CloudNameConflict() override {}
+
 protected:
     bool isCloud(){return true;}
     QList<std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo>> getConflictedNames(std::shared_ptr<const NameConflictedStalledIssue> issue)
@@ -113,6 +115,8 @@ public:
     LocalNameConflict(QWidget* parent)
         : NameConflict(parent)
     {}
+
+    ~LocalNameConflict() override {}
 
 protected:
     bool isCloud(){return false;}

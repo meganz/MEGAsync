@@ -6,6 +6,84 @@
 #include <QFile>
 #include <QDir>
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+void StalledIssuesSyncDebrisUtilities::moveToSyncDebris(const QList<mega::MegaHandle> &handles)
+{
+    auto moveToDateFolder = [this, handles](std::unique_ptr<mega::MegaNode> parentNode, const QString& duplicatedSyncFolderPath)
+    {
+        auto moveLambda = [this, handles](std::unique_ptr<mega::MegaNode> rubbishNode){
+            foreach(auto handle, handles)
+            {
+                std::unique_ptr<mega::MegaNode> nodeToMove(MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
+                if(nodeToMove)
+                {
+                    MegaSyncApp->getMegaApi()->moveNode(nodeToMove.get(),rubbishNode.get());
+                }
+            }
+
+            deleteLater();
+        };
+
+        QString dateFolder(QDate::currentDate().toString(Qt::DateFormat::ISODate));
+        QString dateFolderPath(QString::fromLatin1("%1/%2").arg(duplicatedSyncFolderPath, dateFolder));
+        std::unique_ptr<mega::MegaNode> duplicatedRubbishDateNode(MegaSyncApp->getMegaApi()->getNodeByPath(dateFolderPath.toUtf8().constData()));
+        if(!duplicatedRubbishDateNode)
+        {
+            MegaSyncApp->getMegaApi()->createFolder(dateFolder.toUtf8().constData(), parentNode.get(), new mega::OnFinishOneShot(MegaSyncApp->getMegaApi(),
+                                                                                                                                 [this, moveLambda, handles]
+                                                                                                                                 (const mega::MegaError& e, const mega::MegaRequest& request)
+            {
+                if (e.getErrorCode() == mega::MegaError::API_OK)
+                {
+                    std::unique_ptr<mega::MegaNode> newFolder(MegaSyncApp->getMegaApi()->getNodeByHandle(request.getNodeHandle()));
+                    if(newFolder)
+                    {
+                        moveLambda(std::move(newFolder));
+                        return;
+                    }
+                }
+
+                deleteLater();
+            }));
+        }
+        else
+        {
+            moveLambda(std::move(duplicatedRubbishDateNode));
+        }
+    };
+
+    auto binNode = MegaSyncApp->getRubbishNode();
+
+    QString duplicatedFolder(QLatin1String("SyncDuplicated"));
+    QString fullDuplicatedFolderPath(QString::fromLatin1("//bin/%1").arg(duplicatedFolder));
+
+    std::unique_ptr<mega::MegaNode> duplicatedRubbishNode(MegaSyncApp->getMegaApi()->getNodeByPath(fullDuplicatedFolderPath.toUtf8().constData()));
+    if(!duplicatedRubbishNode)
+    {
+        MegaSyncApp->getMegaApi()->createFolder(duplicatedFolder.toUtf8().constData(), binNode.get(), new mega::OnFinishOneShot(MegaSyncApp->getMegaApi(),
+                                                                                                                                [this, fullDuplicatedFolderPath, moveToDateFolder]
+                                                                                                                                (const mega::MegaError& e, const mega::MegaRequest& request)
+        {
+            if (e.getErrorCode() == mega::MegaError::API_OK)
+            {
+                std::unique_ptr<mega::MegaNode> newFolder(MegaSyncApp->getMegaApi()->getNodeByHandle(request.getNodeHandle()));
+                if(newFolder)
+                {
+                    moveToDateFolder(std::move(newFolder),fullDuplicatedFolderPath);
+                    return;
+                }
+            }
+
+            deleteLater();
+        }));
+    }
+    else
+    {
+        moveToDateFolder(std::move(duplicatedRubbishNode), fullDuplicatedFolderPath);
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 StalledIssuesUtilities::StalledIssuesUtilities()
 {}
 

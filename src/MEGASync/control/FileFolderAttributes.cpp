@@ -478,7 +478,7 @@ std::unique_ptr<mega::MegaNode> RemoteFileFolderAttributes::getNode(Version type
     std::unique_ptr<mega::MegaNode> node;
     std::unique_ptr<mega::MegaNode> lastVersionNode;
 
-    if(mFilePath.isEmpty())
+    if(mHandle != mega::INVALID_HANDLE)
     {
         node.reset(MegaSyncApp->getMegaApi()->getNodeByHandle(mHandle));
     }
@@ -487,14 +487,17 @@ std::unique_ptr<mega::MegaNode> RemoteFileFolderAttributes::getNode(Version type
         node.reset(MegaSyncApp->getMegaApi()->getNodeByPath(mFilePath.toUtf8().constData()));
     }
 
-    auto nodeVersions = MegaSyncApp->getMegaApi()->getVersions(node.get());
-    if(nodeVersions->size() > 1)
+    if(node)
     {
-        lastVersionNode.reset(nodeVersions->get(type == Version::Last ? 0 : (nodeVersions->size() - 1)));
-    }
-    else
-    {
-        lastVersionNode = std::move(node);
+        auto nodeVersions = MegaSyncApp->getMegaApi()->getVersions(node.get());
+        if(nodeVersions->size() > 1)
+        {
+            lastVersionNode.reset(nodeVersions->get(type == Version::Last ? 0 : (nodeVersions->size() - 1)));
+        }
+        else
+        {
+            lastVersionNode = std::move(node);
+        }
     }
 
     return lastVersionNode;

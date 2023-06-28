@@ -128,7 +128,14 @@ public:
 
     void initFileFolderAttributes() override
     {
-        mAttributes = std::make_shared<RemoteFileFolderAttributes>(mPathHandle, nullptr);
+        if(mPathHandle != mega::INVALID_HANDLE)
+        {
+            mAttributes = std::make_shared<RemoteFileFolderAttributes>(mPathHandle, nullptr);
+        }
+        else
+        {
+            mAttributes = std::make_shared<RemoteFileFolderAttributes>(mPath.path, nullptr);
+        }
     }
 
     std::shared_ptr<RemoteFileFolderAttributes> getFileFolderAttributes() const

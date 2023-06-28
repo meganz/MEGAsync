@@ -1,7 +1,7 @@
 #ifndef STALLEDISSUESUTILITIES_H
 #define STALLEDISSUESUTILITIES_H
 
-#include <QTMegaRequestListener.h>
+#include <megaapi.h>
 
 #include <QObject>
 #include <QString>
@@ -9,6 +9,7 @@
 #include <QFileInfo>
 
 #include <memory>
+
 
 class StalledIssuesUtilities : public QObject
 {
@@ -37,6 +38,14 @@ private:
 
     QFutureWatcher<void> mIgnoreWatcher;
     QList<mega::MegaHandle> mRemoteHandles;
+};
+
+class StalledIssuesSyncDebrisUtilities : public QObject
+{
+public:
+    StalledIssuesSyncDebrisUtilities(){}
+
+    void moveToSyncDebris(const QList<mega::MegaHandle>& handles);
 };
 
 #endif // STALLEDISSUESUTILITIES_H

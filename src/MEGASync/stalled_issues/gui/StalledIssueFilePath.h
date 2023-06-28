@@ -20,7 +20,7 @@ public:
     ~StalledIssueFilePath();
 
     void setIndent(int indent);
-    void updateUi(StalledIssueDataPtr data);
+    void updateUi(StalledIssueDataPtr newData);
     void showFullPath();
     void hideLocalOrRemoteTitle();
 
@@ -36,10 +36,13 @@ private:
     void updateMoveFileIcons();
 
     void fillFilePath();
-    QString getFilePath();
+    QString getFilePath() const;
 
     void fillMoveFilePath();
-    QString getMoveFilePath();
+    QString getMoveFilePath() const;
+
+    std::unique_ptr<mega::MegaNode> getHandle() const;
+    std::unique_ptr<mega::MegaNode> getMoveHandle() const;
 
     QString getSyncPathProblemString(mega::MegaSyncStall::SyncPathProblem pathProblem);
     QString getHelpLink(mega::MegaSyncStall::SyncPathProblem pathProblem);
