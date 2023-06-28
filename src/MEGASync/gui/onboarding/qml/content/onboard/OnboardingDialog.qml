@@ -32,4 +32,5 @@ Cpp.QmlDialog {
 
         anchors.fill: parent
     }
+
 }

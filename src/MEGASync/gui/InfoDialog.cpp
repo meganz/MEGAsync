@@ -26,6 +26,7 @@
 #include "TextDecorator.h"
 #include "DialogOpener.h"
 #include "syncs/gui/Twoways/BindFolderDialog.h"
+#include "onboarding/Onboarding.h"
 
 #ifdef _WIN32    
 #include <chrono>
@@ -315,19 +316,23 @@ PSA_info *InfoDialog::getPSAdata()
 
 void InfoDialog::showEvent(QShowEvent *event)
 {
-    if(!ui->wInfoDialogIn->isVisible()) {
-        return;
-    }
-
-    emit ui->sTabs->currentChanged(ui->sTabs->currentIndex());
-    if (ui->bTransferManager->alwaysAnimateOnShow || ui->bTransferManager->neverPainted )
+    if(mPreferences->logged())
     {
-        ui->bTransferManager->showAnimated();
-    }
+        emit ui->sTabs->currentChanged(ui->sTabs->currentIndex());
+        if (ui->bTransferManager->alwaysAnimateOnShow || ui->bTransferManager->neverPainted )
+        {
+            ui->bTransferManager->showAnimated();
+        }
 
-    isShown = true;
-    QDialog::showEvent(event);
-    mTransferScanCancelUi->update();
+        isShown = true;
+        QDialog::showEvent(event);
+        mTransferScanCancelUi->update();
+    } else {
+        if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>())
+        {
+            dialog->getDialog()->wrapper()->showGuestInfoDialog();
+        }
+    }
 }
 
 void InfoDialog::moveEvent(QMoveEvent*)
@@ -363,33 +368,45 @@ void InfoDialog::enableTransferAlmostOverquotaAlert()
 
 void InfoDialog::hideEvent(QHideEvent *event)
 {
+    if(mPreferences->logged())
+    {
+
 #ifdef __APPLE__
     arrow->hide();
 #endif
 
-    if (filterMenu && filterMenu->isVisible())
-    {
-        filterMenu->hide();
-    }
-
-    QTimer::singleShot(1000, this, [this] () {
-        if (!isShown)
+        if (filterMenu && filterMenu->isVisible())
         {
-            emit ui->sTabs->currentChanged(-1);
+            filterMenu->hide();
         }
-    });
+
+        QTimer::singleShot(1000, this, [this] () {
+            if (!isShown)
+            {
+                emit ui->sTabs->currentChanged(-1);
+            }
+        });
 
 
-    isShown = false;
-    if (ui->bTransferManager->alwaysAnimateOnShow || ui->bTransferManager->neverPainted )
-    {
-        ui->bTransferManager->shrink(true);
-    }
-    QDialog::hideEvent(event);
+        isShown = false;
+        if (ui->bTransferManager->alwaysAnimateOnShow || ui->bTransferManager->neverPainted )
+        {
+            ui->bTransferManager->shrink(true);
+        }
+        QDialog::hideEvent(event);
 
 #ifdef _WIN32
     lastWindowHideTime = std::chrono::steady_clock::now();
 #endif
+
+    }
+    else
+    {
+        if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>())
+        {
+            dialog->getDialog()->wrapper()->hideGuestInfoDialog();
+        }
+    }
 }
 
 void InfoDialog::setAvatar()

@@ -181,13 +181,25 @@ Rectangle {
 
         width: guestContent.width
         height: guestContent.height
-        visible: true
         modality: Qt.NonModal
         flags: Qt.FramelessWindowHint
         color: "transparent"
 
         GuestContent {
             id: guestContent
+        }
+
+        Connections {
+            target: Onboarding
+
+            onShowGuestWindow: {
+                console.error("show");
+                guestWindow.visible = true;
+            }
+
+            onHideGuestWindow: {
+                guestWindow.visible = false;
+            }
         }
 
         Component.onCompleted: {

@@ -356,7 +356,6 @@ protected:
     void disableSyncs();
     void restoreSyncs();
     void createTransferManagerDialog(TransfersWidget::TM_TAB tab);
-    void calculateInfoDialogCoordinates(QDialog *dialog, int *posx, int *posy);
     void deleteMenu(QMenu *menu);
     void startHttpServer();
     void startHttpsServer();
@@ -576,11 +575,7 @@ private:
 
     void ConnectServerSignals(HTTPServer* server);
 
-    static QString RectToString(const QRect& rect);
-
     void fixMultiscreenResizeBug(int& posX, int& posY);
-
-    static void logInfoDialogCoordinates(const char* message, const QRect& screenGeometry, const QString& otherInformation);
 
     bool dontAskForExitConfirmation(bool force);
     void exitApplication();
