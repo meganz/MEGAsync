@@ -121,7 +121,8 @@ void StalledIssueActionTitle::showIcon()
 
     if(mIsCloud)
     {
-        std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(mPath.toUtf8().constData()));
+        std::unique_ptr<mega::MegaNode> node(mHandle != mega::INVALID_HANDLE ? MegaSyncApp->getMegaApi()->getNodeByHandle(mHandle)
+                                                                             : MegaSyncApp->getMegaApi()->getNodeByPath(mPath.toUtf8().constData()));
         fileTypeIcon = StalledIssuesUtilities::getRemoteFileIcon(node.get(), fileInfo, false);
     }
     else
@@ -428,4 +429,9 @@ void StalledIssueActionTitle::updateLabel(QLabel *label, const QString &text)
 void StalledIssueActionTitle::setPath(const QString &newPath)
 {
     mPath = newPath;
+}
+
+void StalledIssueActionTitle::setHandle(mega::MegaHandle handle)
+{
+    mHandle = handle;
 }

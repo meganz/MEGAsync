@@ -98,15 +98,21 @@ class CloudStalledIssueData : public StalledIssueData
 public:
 
     CloudStalledIssueData(std::unique_ptr<mega::MegaSyncStall> originalstall)
-        :StalledIssueData(std::move(originalstall))
+        :StalledIssueData(std::move(originalstall)),
+          mPathHandle(mega::INVALID_HANDLE),
+          mMovePathHandle(mega::INVALID_HANDLE)
     {}
 
     CloudStalledIssueData(const CloudStalledIssueData& data)
-        :StalledIssueData(data)
+        :StalledIssueData(data),
+         mPathHandle(data.mPathHandle),
+         mMovePathHandle(data.mMovePathHandle)
     {}
 
     CloudStalledIssueData()
-        : StalledIssueData()
+        : StalledIssueData(),
+          mPathHandle(mega::INVALID_HANDLE),
+          mMovePathHandle(mega::INVALID_HANDLE)
     {}
 
     ~CloudStalledIssueData(){}
@@ -122,7 +128,7 @@ public:
 
     void initFileFolderAttributes() override
     {
-        mAttributes = std::make_shared<RemoteFileFolderAttributes>(getFilePath(), nullptr);
+        mAttributes = std::make_shared<RemoteFileFolderAttributes>(mPathHandle, nullptr);
     }
 
     std::shared_ptr<RemoteFileFolderAttributes> getFileFolderAttributes() const
@@ -130,11 +136,17 @@ public:
         return std::dynamic_pointer_cast<RemoteFileFolderAttributes>(mAttributes);
     }
 
+    mega::MegaHandle getPathHandle() const;
+    mega::MegaHandle getMovePathHandle() const;
+
 private:
     friend class StalledIssue;
     friend class NameConflictedStalledIssue;
 
     mutable std::shared_ptr<mega::MegaNode> mRemoteNode;
+
+    mega::MegaHandle mPathHandle;
+    mega::MegaHandle mMovePathHandle;
 };
 
 Q_DECLARE_TYPEINFO(CloudStalledIssueData, Q_MOVABLE_TYPE);

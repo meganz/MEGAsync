@@ -6,6 +6,8 @@
 #include <QLabel>
 #include <QPointer>
 
+#include <megaapi.h>
+
 namespace Ui {
 class StalledIssueActionTitle;
 }
@@ -37,6 +39,7 @@ public:
     void setIsCloud(bool state);
 
     void setPath(const QString &newPath);
+    void setHandle(mega::MegaHandle handle);
 
     void updateLastTimeModified(const QDateTime &time);
     void updateCreatedTime(const QDateTime &time);
@@ -61,6 +64,7 @@ protected:
     Ui::StalledIssueActionTitle *ui;
     bool mIsCloud;
     QString mPath;
+    mega::MegaHandle mHandle;
 
     bool eventFilter(QObject *watched, QEvent *event) override;
 

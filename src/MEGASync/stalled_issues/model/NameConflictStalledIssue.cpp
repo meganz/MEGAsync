@@ -50,61 +50,34 @@ void NameConflictedStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
         std::shared_ptr<mega::MegaNode> parentNode(nullptr);
 
         auto firstCloudPath(stall->path(true,0));
-        std::unique_ptr<mega::MegaNode> firstNode(MegaSyncApp->getMegaApi()->getNodeByPath(firstCloudPath));
-        if(firstNode)
+        if(consultCloudData()->mPath.isEmpty())
         {
-            if(!parentNode)
-            {
-                parentNode.reset(MegaSyncApp->getMegaApi()->getNodeByHandle(firstNode->getParentHandle()));
-            }
-
-            if(consultCloudData()->mPath.isEmpty())
-            {
-                QFileInfo cloudPathInfo(QString::fromUtf8(firstCloudPath));
-                //We set the first path, as it will be used to get the folder path (discarding the filename)
-                getCloudData()->mPath.path = cloudPathInfo.filePath();
-            }
+            QFileInfo cloudPathInfo(QString::fromUtf8(firstCloudPath));
+            //We set the first path, as it will be used to get the folder path (discarding the filename)
+            getCloudData()->mPath.path = cloudPathInfo.filePath();
         }
 
-        std::unique_ptr<mega::MegaNodeList> nodeList(MegaSyncApp->getMegaApi()->getChildren(parentNode.get(), mega::MegaApi::ORDER_CREATION_DESC));
-        QList<int> removedIndexes;
-
-        for(int nodeIndex = 0; nodeIndex < nodeList->size(); ++nodeIndex)
+        for(unsigned int index = 0; index < cloudConflictNames; ++index)
         {
-            if(removedIndexes.contains(nodeIndex))
-            {
-                continue;
-            }
+            auto cloudHandle(stall->cloudNodeHandle(index));
+            auto cloudPath = QString::fromUtf8(stall->path(true,index));
 
-            auto node(nodeList->get(nodeIndex));
+            std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(cloudHandle));
             if(node)
             {
-                for(unsigned int index = 0; index < cloudConflictNames; ++index)
+                QFileInfo cloudPathInfo(cloudPath);
+                std::shared_ptr<ConflictedNameInfo> info(new ConflictedNameInfo(cloudPathInfo, std::make_shared<RemoteFileFolderAttributes>(node->getHandle(), nullptr)));
+                info->mHandle = cloudHandle;
+
+                if(node->isFile())
                 {
-                    QString cloudPath = QString::fromUtf8(stall->path(true,index));
-                    QFileInfo cloudPathInfo(cloudPath);
-
-                    QString nodeName(QString::fromUtf8(node->getName()));
-                    if(nodeName.compare(cloudPathInfo.fileName(),Qt::CaseSensitive) == 0)
-                    {
-                        std::shared_ptr<ConflictedNameInfo> info(new ConflictedNameInfo(cloudPathInfo, std::make_shared<RemoteFileFolderAttributes>(node->getHandle(), nullptr)));
-                        info->mHandle = node->getHandle();
-
-                        if(node->isFile())
-                        {
-                            mCloudConflictedNames.addFileConflictedName(node->getModificationTime(), QString::fromUtf8(node->getFingerprint()), info);
-                            mFiles++;
-                        }
-                        else
-                        {
-                            mCloudConflictedNames.addFolderConflictedName(node->getModificationTime(), QString::fromUtf8(node->getFingerprint()), info);
-                            mFolders++;
-                        }
-
-                        removedIndexes.append(nodeIndex);
-
-                        break;
-                    }
+                    mCloudConflictedNames.addFileConflictedName(node->getModificationTime(), node->getSize(), node->getCreationTime(), QString::fromUtf8(node->getFingerprint()), info);
+                    mFiles++;
+                }
+                else
+                {
+                    mCloudConflictedNames.addFolderConflictedName(node->getModificationTime(), node->getSize(), node->getCreationTime(), QString::fromUtf8(node->getFingerprint()), info);
+                    mFolders++;
                 }
             }
         }

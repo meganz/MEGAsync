@@ -60,14 +60,15 @@ public:
     class CloudConflictedNames
     {
     public:
-        CloudConflictedNames(int64_t utimestamp, QString ufingerprint)
-            : timestamp(utimestamp), fingerprint(ufingerprint)
+        CloudConflictedNames(QString ufingerprint, int64_t usize, int64_t umodifiedTime)
+            : fingerprint(ufingerprint), size(usize), modifiedTime(umodifiedTime)
         {}
 
-        int64_t timestamp;
         QString fingerprint;
+        int64_t size;
+        int64_t modifiedTime;
 
-        QList<std::shared_ptr<ConflictedNameInfo>> conflictedNames;
+        QMap<int64_t, std::shared_ptr<ConflictedNameInfo>> conflictedNames;
     };
 
     class CloudConflictedNamesByHandle
@@ -76,20 +77,23 @@ public:
         CloudConflictedNamesByHandle()
         {}
 
-        void addFolderConflictedName(int64_t timestamp, QString fingerprint, std::shared_ptr<ConflictedNameInfo> info)
+        void addFolderConflictedName(int64_t modifiedTimestamp, int64_t size, int64_t creationtimestamp,
+                                     QString fingerprint, std::shared_ptr<ConflictedNameInfo> info)
         {
-            CloudConflictedNames newConflictedName(timestamp, fingerprint);
-            newConflictedName.conflictedNames.append(info);
+            CloudConflictedNames newConflictedName(fingerprint, size, modifiedTimestamp);
+            newConflictedName.conflictedNames.insert(creationtimestamp, info);
             mConflictedNames.append(newConflictedName);
         }
 
-        void addFileConflictedName(int64_t timestamp, QString fingerprint, std::shared_ptr<ConflictedNameInfo> info)
+        void addFileConflictedName(int64_t modifiedtimestamp, int64_t size, int64_t creationtimestamp,
+                                   QString fingerprint, std::shared_ptr<ConflictedNameInfo> info)
         {
             for(int index = 0; index < mConflictedNames.size(); ++index)
             {
                 auto& namesByHandle = mConflictedNames[index];
-                if(namesByHandle.timestamp == timestamp
-                        && fingerprint == namesByHandle.fingerprint)
+                if(fingerprint == namesByHandle.fingerprint
+                        && size == namesByHandle.size
+                        && modifiedtimestamp == namesByHandle.modifiedTime)
                 {
                     auto previousSize = namesByHandle.conflictedNames.size();
 
@@ -106,13 +110,13 @@ public:
                         info->mDuplicatedGroupId = index;
                     }
 
-                    namesByHandle.conflictedNames.append(info);
+                    namesByHandle.conflictedNames.insert(creationtimestamp, info);
                     return;
                 }
             }
 
-            CloudConflictedNames newConflictedName(timestamp, fingerprint);
-            newConflictedName.conflictedNames.append(info);
+            CloudConflictedNames newConflictedName(fingerprint, size, modifiedtimestamp);
+            newConflictedName.conflictedNames.insert(creationtimestamp,info);
             mConflictedNames.append(newConflictedName);
         }
 
@@ -148,7 +152,7 @@ public:
             {
                 if(!namesByHandle.conflictedNames.isEmpty())
                 {
-                    aux.append(namesByHandle.conflictedNames);
+                    aux.append(namesByHandle.conflictedNames.values());
                 }
             }
 
@@ -185,16 +189,21 @@ public:
                 if(conflictedNamesGroup.conflictedNames.size() > 1)
                 {
                     int counter(0);
-                    foreach(auto conflictedName, conflictedNamesGroup.conflictedNames)
+                    foreach(auto conflictedNameTimestamp, conflictedNamesGroup.conflictedNames.keys())
                     {
                         if(counter > 0)
                         {
-                            std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(conflictedName->mHandle));
-                            if(node)
+                            auto conflictedName(conflictedNamesGroup.conflictedNames.value(conflictedNameTimestamp));
+                            if(conflictedName)
                             {
-                                //conflictedName->mSolved = ConflictedNameInfo::SolvedType::REMOVE_AUTOMATICALLY;
-                                utilities.removeRemoteFile(node.get());
-                                conflictedNamesGroup.conflictedNames.removeOne(conflictedName);
+                                std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(conflictedName->mHandle));
+                                if(node)
+                                {
+                                    //conflictedName->mSolved = ConflictedNameInfo::SolvedType::REMOVE_AUTOMATICALLY;
+                                    utilities.removeRemoteFile(node.get());
+                                }
+
+                                conflictedNamesGroup.conflictedNames.remove(conflictedNameTimestamp);
                             }
                         }
 
