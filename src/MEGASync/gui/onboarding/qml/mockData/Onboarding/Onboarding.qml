@@ -202,20 +202,4 @@ Item {
         console.info("exitLoggedIn()");
     }
 
-    function onExitLoggedInClicked() {
-        console.info("onExitLoggedInClicked()");
-        exitLoggedInFinished();
-    }
-
-    Timer {
-        id: backupTimer
-
-        interval: 2000;
-        running: false;
-        repeat: false;
-        onTriggered: {
-            backupsUpdated("C:\\Users\\mega\\Documents", 0, true);
-        }
-    }
-
 }

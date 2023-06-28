@@ -65,8 +65,14 @@ public:
 
     std::shared_ptr<AbstractShellNotifier> getShellNotifier();
 
+    void calculateInfoDialogCoordinates(const QRect& rect, int *posx, int *posy);
+
 protected:
     std::shared_ptr<AbstractShellNotifier> mShellNotifier = nullptr;
+
+private:
+    QString RectToString(const QRect &rect);
+    void logInfoDialogCoordinates(const char *message, const QRect &screenGeometry, const QString &otherInformation);
 };
 
 #endif // ABSTRACTPLATFORM_H
