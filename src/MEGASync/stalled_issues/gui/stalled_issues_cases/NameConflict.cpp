@@ -286,6 +286,7 @@ void NameConflict::onActionClicked(int actionId)
         {
             auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
             RenameNodeDialog* renameDialog(nullptr);
+            auto conflictIndex(chooseTitle->getIndex());
 
             if(isCloud())
             {
@@ -299,7 +300,7 @@ void NameConflict::onActionClicked(int actionId)
             renameDialog->init();
 
             DialogOpener::showDialog<RenameNodeDialog>(renameDialog,
-                                                       [this, data, titleFileName, chooseTitle, renameDialog](){
+                                                       [this, data, titleFileName, conflictIndex, renameDialog](){
 
                 if(renameDialog->result() == QDialog::Accepted)
                 {
@@ -309,11 +310,11 @@ void NameConflict::onActionClicked(int actionId)
 
                     if(isCloud())
                     {
-                        areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveCloudConflictedNameByRename(newName, chooseTitle->getIndex(), mDelegate->getCurrentIndex());
+                        areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveCloudConflictedNameByRename(newName, conflictIndex, mDelegate->getCurrentIndex());
                     }
                     else
                     {
-                        areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveLocalConflictedNameByRename(newName, chooseTitle->getIndex(), mDelegate->getCurrentIndex());
+                        areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveLocalConflictedNameByRename(newName, conflictIndex, mDelegate->getCurrentIndex());
                     }
 
                     // Prevent this one showing again (if they Refresh) until sync has made a full fresh pass
