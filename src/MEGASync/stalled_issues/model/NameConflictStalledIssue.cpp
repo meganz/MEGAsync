@@ -92,12 +92,12 @@ void NameConflictedStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
 
                         if(node->isFile())
                         {
-                            mCloudConflictedNames.addFileConflictedName(node->getModificationTime(), QString::fromUtf8(node->getFingerprint()), info);
+                            mCloudConflictedNames.addFileConflictedName(node->getModificationTime(), node->getSize(), QString::fromUtf8(node->getFingerprint()), info);
                             mFiles++;
                         }
                         else
                         {
-                            mCloudConflictedNames.addFolderConflictedName(node->getModificationTime(), QString::fromUtf8(node->getFingerprint()), info);
+                            mCloudConflictedNames.addFolderConflictedName(node->getModificationTime(), info);
                             mFolders++;
                         }
 
@@ -134,7 +134,7 @@ void NameConflictedStalledIssue::solveIssue()
 
    auto cloudConflictedNames(mCloudConflictedNames.getConflictedNames());
 
-   if(cloudConflictedNames.size() + mLocalConflictedNames.size() <= 2)
+   if(cloudConflictedNames.size() <= 1 && mLocalConflictedNames.size() <= 1)
    {
        MegaSyncApp->getMegaApi()->clearStalledPath(originalStall.get());
        mIsSolved = true;

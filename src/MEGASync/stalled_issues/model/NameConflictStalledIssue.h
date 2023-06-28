@@ -60,11 +60,12 @@ public:
     class CloudConflictedNames
     {
     public:
-        CloudConflictedNames(int64_t utimestamp, QString ufingerprint)
-            : timestamp(utimestamp), fingerprint(ufingerprint)
+        CloudConflictedNames(int64_t utimestamp, int64_t usize, QString ufingerprint)
+            : timestamp(utimestamp), size(usize), fingerprint(ufingerprint)
         {}
 
         int64_t timestamp;
+        int64_t size;
         QString fingerprint;
 
         QList<std::shared_ptr<ConflictedNameInfo>> conflictedNames;
@@ -76,20 +77,21 @@ public:
         CloudConflictedNamesByHandle()
         {}
 
-        void addFolderConflictedName(int64_t timestamp, QString fingerprint, std::shared_ptr<ConflictedNameInfo> info)
+        void addFolderConflictedName(int64_t timestamp, std::shared_ptr<ConflictedNameInfo> info)
         {
-            CloudConflictedNames newConflictedName(timestamp, fingerprint);
+            CloudConflictedNames newConflictedName(timestamp, -1, QString());
             newConflictedName.conflictedNames.append(info);
             mConflictedNames.append(newConflictedName);
         }
 
-        void addFileConflictedName(int64_t timestamp, QString fingerprint, std::shared_ptr<ConflictedNameInfo> info)
+        void addFileConflictedName(int64_t timestamp, int64_t size, QString fingerprint, std::shared_ptr<ConflictedNameInfo> info)
         {
             for(int index = 0; index < mConflictedNames.size(); ++index)
             {
                 auto& namesByHandle = mConflictedNames[index];
                 if(namesByHandle.timestamp == timestamp
-                        && fingerprint == namesByHandle.fingerprint)
+                        && fingerprint == namesByHandle.fingerprint
+                        && size == namesByHandle.size)
                 {
                     auto previousSize = namesByHandle.conflictedNames.size();
 
@@ -111,7 +113,7 @@ public:
                 }
             }
 
-            CloudConflictedNames newConflictedName(timestamp, fingerprint);
+            CloudConflictedNames newConflictedName(timestamp, size, fingerprint);
             newConflictedName.conflictedNames.append(info);
             mConflictedNames.append(newConflictedName);
         }
