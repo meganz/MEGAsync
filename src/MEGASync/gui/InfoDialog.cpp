@@ -240,8 +240,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     arrow->setStyleSheet(QString::fromAscii("border: none;"));
     arrow->resize(30,10);
     arrow->hide();
-
-    dummy = NULL;
 #endif
 
     //Create the overlay widget with a transparent background
@@ -262,10 +260,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
         setAvatar();
         setUsage();
     }
-    else
-    {
-        regenerateLayout(MegaApi::ACCOUNT_NOT_BLOCKED, olddialog);
-    }
+    regenerate();
     highDpiResize.init(this);
 
 #ifdef _WIN32
@@ -320,6 +315,10 @@ PSA_info *InfoDialog::getPSAdata()
 
 void InfoDialog::showEvent(QShowEvent *event)
 {
+    if(!ui->wInfoDialogIn->isVisible()) {
+        return;
+    }
+
     emit ui->sTabs->currentChanged(ui->sTabs->currentIndex());
     if (ui->bTransferManager->alwaysAnimateOnShow || ui->bTransferManager->neverPainted )
     {
@@ -1364,7 +1363,7 @@ void InfoDialog::on_bStorageDetails_clicked()
     */
 }
 
-void InfoDialog::regenerateLayout(int blockState, InfoDialog* olddialog)
+void InfoDialog::regenerate(int blockState)
 {
     int actualAccountState;
 
@@ -1376,55 +1375,24 @@ void InfoDialog::regenerateLayout(int blockState, InfoDialog* olddialog)
     {
         return;
     }
-
     loggedInMode = actualAccountState;
 
-    QLayout *dialogLayout = layout();
     switch(loggedInMode)
     {
         case STATE_LOGOUT:
         case STATE_LOCKED_EMAIL:
         case STATE_LOCKED_SMS:
         {
-            updateOverStorageState(Preferences::STATE_BELOW_OVER_STORAGE);
-            setOverQuotaMode(false);
-            ui->wPSA->removeAnnounce();
-
-            dialogLayout->removeWidget(ui->wInfoDialogIn);
             ui->wInfoDialogIn->setVisible(false);
-
-            #ifdef __APPLE__
-                if (!dummy)
-                {
-                    dummy = new QWidget();
-                }
-
-                dummy->resize(1,1);
-                dummy->setWindowFlags(Qt::FramelessWindowHint);
-                dummy->setAttribute(Qt::WA_NoSystemBackground);
-                dummy->setAttribute(Qt::WA_TranslucentBackground);
-                dummy->show();
-            #endif
-
-            adjustSize();
+            setVisible(false);
+            hide();
             break;
         }
-
         case STATE_LOGGEDIN:
         {
-            dialogLayout->addWidget(ui->wInfoDialogIn);
             ui->wInfoDialogIn->setVisible(true);
-
-            #ifdef __APPLE__
-                if (dummy)
-                {
-                    dummy->hide();
-                    delete dummy;
-                    dummy = NULL;
-                }
-            #endif
-
             adjustSize();
+            show();
             break;
         }
     }

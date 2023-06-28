@@ -7,8 +7,13 @@ import QtQuick.Layouts 1.12
 // QML common
 import Common 1.0
 
+// Local
+import Guest 1.0
+
 // C++
 import LoginController 1.0
+import Onboarding 1.0
+import GuestWindow 1.0
 
 Rectangle {
     id: registerFlow
@@ -168,6 +173,25 @@ Rectangle {
 
         LoginController {
             id: loginController
+        }
+    }
+
+    GuestWindow {
+        id: guestWindow
+
+        width: guestContent.width
+        height: guestContent.height
+        visible: true
+        modality: Qt.NonModal
+        flags: Qt.FramelessWindowHint
+        color: "transparent"
+
+        GuestContent {
+            id: guestContent
+        }
+
+        Component.onCompleted: {
+            guestWindow.realocate();
         }
     }
 }

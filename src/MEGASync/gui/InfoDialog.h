@@ -82,7 +82,7 @@ public:
 #endif
 
     void on_bStorageDetails_clicked();
-    void regenerateLayout(int blockState = mega::MegaApi::ACCOUNT_NOT_BLOCKED, InfoDialog* olddialog = nullptr);
+    void regenerate(int blockState = mega::MegaApi::ACCOUNT_NOT_BLOCKED);
     HighDpiResize<QDialog> highDpiResize;
 #ifdef _WIN32
     std::chrono::steady_clock::time_point lastWindowHideTime;
@@ -181,7 +181,6 @@ private:
     QPushButton *overlay;
 #ifdef __APPLE__
     QPushButton *arrow;
-    QWidget *dummy; // Patch to let text input on line edits of GuestWidget
 #endif
 
     FilterAlertWidget *filterMenu;

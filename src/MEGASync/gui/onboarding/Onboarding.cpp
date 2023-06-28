@@ -2,6 +2,9 @@
 #include "Onboarding.h"
 #include "MegaApplication.h"
 #include "QMegaMessageBox.h"
+#include "GuestWindow.h"
+#include "GuestController.h"
+
 #include <QQmlEngine>
 #include "Syncs.h"
 #include "AccountInfoData.h"
@@ -55,6 +58,12 @@ Onboarding::Onboarding(QObject *parent)
 
     qmlRegisterModule("BackupsModel", 1, 0);
     qmlRegisterModule("BackupsController", 1, 0);
+
+    qmlRegisterModule("Guest", 1, 0);
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/content/guest/GuestContent.qml")), "Guest", 1, 0, "GuestContent");
+    qmlRegisterSingletonType(QUrl(QString::fromUtf8("qrc:/content/guest/GuestStrings.qml")), "Guest", 1, 0, "GuestStrings");
+    qmlRegisterType<GuestWindow>("GuestWindow", 1, 0, "GuestWindow");
+    qmlRegisterType<GuestController>("GuestController", 1, 0, "GuestController");
 }
 
 

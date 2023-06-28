@@ -4748,7 +4748,7 @@ void MegaApplication::changeState()
 
     if (infoDialog)
     {
-        infoDialog->regenerateLayout();
+        infoDialog->regenerate();
     }
     updateTrayIconMenu();
 }
@@ -6208,7 +6208,7 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
                     {
                         if (infoDialog->getLoggedInMode() != blockState)
                         {
-                            infoDialog->regenerateLayout(blockState);
+                            infoDialog->regenerate(blockState);
                             DialogOpener::closeAllDialogs();
                         }
                     }
@@ -6800,7 +6800,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             //in any case we reflect the change in the InfoDialog
             if (infoDialog)
             {
-                infoDialog->regenerateLayout(MegaApi::ACCOUNT_NOT_BLOCKED);
+                infoDialog->regenerate();
             }
 
             if (mSettingsDialog)
