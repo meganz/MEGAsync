@@ -61,7 +61,7 @@ Rectangle {
         anchors.rightMargin: textEditMargin
         title: local ? OnboardingStrings.selectLocalFolder : OnboardingStrings.selectMEGAFolder
         text: "/MEGA"
-        leftIcon.source: local ? Images.pc : Images.mega
+        leftIcon.source: local ? Images.pc : Images.megaOutline
         leftIcon.color: Styles.iconSecondary
         textField.readOnly: true
         hint.icon: Images.alertTriangle

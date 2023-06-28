@@ -22,7 +22,6 @@
         <file>images/qml/onboarding/installation_type_backups.svg</file>
         <file>images/qml/onboarding/key.svg</file>
         <file>images/qml/onboarding/login.png</file>
-        <file>images/qml/onboarding/mega.svg</file>
         <file>images/qml/onboarding/pc.svg</file>
         <file>images/qml/onboarding/pc_mega.svg</file>
         <file>images/qml/onboarding/person.svg</file>
@@ -44,5 +43,11 @@
         <file>images/qml/password/weak.svg</file>
         <file>images/qml/onboarding/OKIcon.png</file>
         <file>images/qml/onboarding/warning.png</file>
+        <file>images/qml/mega.svg</file>
+        <file>images/qml/mega_outline.svg</file>
+        <file>images/qml/guest/exit.svg</file>
+        <file>images/qml/guest/guest.png</file>
+        <file>images/qml/guest/menu.svg</file>
+        <file>images/qml/guest/settings.svg</file>
     </qresource>
 </RCC>
