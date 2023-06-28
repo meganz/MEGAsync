@@ -57,5 +57,9 @@
         <file>content/onboard/PasswordInfoContent.qml</file>
         <file>content/onboard/PasswordInfoContentForm.ui.qml</file>
         <file>content/onboard/PasswordInfoPopUp.qml</file>
+        <file>content/guest/GuestContent.qml</file>
+        <file>content/guest/GuestContentForm.ui.qml</file>
+        <file>content/guest/GuestStrings.qml</file>
+        <file>content/guest/MenuItem.qml</file>
     </qresource>
 </RCC>

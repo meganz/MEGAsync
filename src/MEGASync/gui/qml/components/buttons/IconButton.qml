@@ -21,13 +21,18 @@ MegaButtons.Button {
         colorDisabled: Styles.iconButtonDisabled
         colorHovered: Styles.iconButtonHover
         colorPressed: Styles.iconButtonPressed
-        size: Qt.size(24, 24)
     }
 
     colors {
         background: "transparent"
         hover: "transparent"
         pressed: Styles.iconButtonPressedBackground
+        border: "transparent"
+        borderDisabled: "transparent"
+        borderHover: "transparent"
+        borderSelected: "transparent"
+        borderPressed: "transparent"
     }
 
+    sizes.iconWidth: 24
 }
