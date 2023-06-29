@@ -32,7 +32,7 @@ SyncsPage {
 
         Header {
             Layout.preferredWidth: parent.width
-            title: OnboardingStrings.fullSyncTitle
+            title: OnboardingStrings.fullSync
             description: OnboardingStrings.fullSyncDescription
         }
 

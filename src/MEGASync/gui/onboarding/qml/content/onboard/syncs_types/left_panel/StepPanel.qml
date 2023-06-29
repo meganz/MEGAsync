@@ -11,24 +11,24 @@ import Components.Buttons 1.0 as MegaButtons
 import Onboard 1.0
 
 Rectangle {
+    id: root
 
     readonly property string step1ComputerName: "STEP1_COMPUTER_NAME"
     readonly property string step2InstallationType: "STEP2_INSTALLATION_TYPE"
-    readonly property string stepBackupsSelectFolders: "STEP_BACKUPS_SELECT_FOLDERS"
-    readonly property string stepBackupsConfirm: "STEP_BACKUPS_CONFIRM"
-    readonly property string stepBackupsRename: "STEP_BACKUPS_RENAME"
-    readonly property string stepSelectSyncType: "STEP_SELECT_SYNC_TYPE"
-    readonly property string stepSyncFolder: "STEP_SELECT_SYNC_FOLDER"
+    readonly property string step3: "STEP3"
+    readonly property string step4: "STEP4"
+    readonly property string step4Warning: "STEP4_WARNING"
+    readonly property string step4Error: "STEP4_ERROR"
 
-    readonly property int lineLeftMargin: 42
-    readonly property int stepLeftMargin: 32
-    readonly property int subStepLeftMargin: 39
-    readonly property int layoutTopMargin: 40
+    readonly property int lineLeftMargin: 15
+    readonly property int subStepLeftMargin: 4
     readonly property int lineWidth: 2
-    readonly property int lineMainStepHeight: 56
-    readonly property int lineSubStepHeight: 12
+    readonly property int lineMainStepHeight: 28
+    readonly property int lineSubStepHeight: 16
     readonly property int lineRadius: 1
-    readonly property int helpButtonMargin: 25
+
+    property string step3Text: ""
+    property string step4Text: ""
 
     color: Styles.surface1
     height: parent.height
@@ -44,34 +44,26 @@ Rectangle {
             }
             PropertyChanges {
                 target: step2_line;
-                color: Styles.buttonSecondaryPressed;
+                color: Styles.iconButtonDisabled;
             }
             PropertyChanges {
                 target: step2_installationType;
                 toState: Step.ToStates.Disabled;
             }
             PropertyChanges {
-                target: step3_1_line;
+                target: step3_line;
                 visible: false;
             }
             PropertyChanges {
-                target: step3_1_selectFolder;
+                target: step3_content;
                 visible: false;
             }
             PropertyChanges {
-                target: step3_2_line;
+                target: step4_line;
                 visible: false;
             }
             PropertyChanges {
-                target: step3_2_confirm;
-                visible: false;
-            }
-            PropertyChanges {
-                target: step3_3_line;
-                visible: false;
-            }
-            PropertyChanges {
-                target: step3_3_rename;
+                target: step4_content;
                 visible: false;
             }
         },
@@ -79,335 +71,107 @@ Rectangle {
             name: step2InstallationType
             PropertyChanges {
                 target: step1_computerName;
-                toState: Step.ToStates.Done
+                toState: Step.ToStates.Done;
             }
             PropertyChanges {
                 target: step2_line;
-                color: Styles.buttonPrimaryPressed
+                color: Styles.iconButton;
             }
             PropertyChanges {
                 target: step2_installationType;
-                toState: Step.ToStates.Current
+                toState: Step.ToStates.Current;
             }
             PropertyChanges {
                 target: step3_line;
-                color: Styles.buttonSecondaryPressed
-            }
-            PropertyChanges {
-                target: step3_syncs;
-                toState: Step.ToStates.Disabled
-            }
-            PropertyChanges {
-                target: step3_1_line;
-                color: Styles.buttonSecondaryPressed
-            }
-            PropertyChanges {
-                target: step3_1_selectFolder;
-                toState: SubStep.ToStates.Disabled
-            }
-            PropertyChanges {
-                target: step3_1_line;
                 visible: false;
             }
             PropertyChanges {
-                target: step3_1_selectFolder;
+                target: step3_content;
                 visible: false;
             }
             PropertyChanges {
-                target: step3_2_line;
+                target: step4_line;
                 visible: false;
             }
             PropertyChanges {
-                target: step3_2_confirm;
-                visible: false;
-            }
-            PropertyChanges {
-                target: step3_3_line;
-                visible: false;
-            }
-            PropertyChanges {
-                target: step3_3_rename;
+                target: step4_content;
                 visible: false;
             }
         },
         State {
-            name: stepBackupsSelectFolders
+            name: step3
             PropertyChanges {
                 target: step1_computerName;
-                toState: Step.ToStates.DoneLight
+                toState: Step.ToStates.Done;
             }
             PropertyChanges {
                 target: step2_line;
-                color: Styles.buttonPrimaryPressed
+                color: Styles.iconButton;
             }
             PropertyChanges {
                 target: step2_installationType;
-                toState: Step.ToStates.DoneLight
+                toState: Step.ToStates.CurrentSubstep;
             }
             PropertyChanges {
                 target: step3_line;
-                color: Styles.buttonPrimaryPressed
+                color: Styles.iconButton;
+                visible: true;
             }
             PropertyChanges {
-                target: step3_syncs;
-                toState: Step.ToStates.Current
-                title: OnboardingStrings.backup
+                target: step3_content;
+                toState: SubStep.ToStates.Current;
+                visible: true;
             }
             PropertyChanges {
-                target: step3_1_line;
-                color: Styles.buttonPrimaryPressed
-                visible: true
+                target: step4_line;
+                color: Styles.iconButtonDisabled;
+                visible: true;
             }
             PropertyChanges {
-                target: step3_1_selectFolder;
-                toState: SubStep.ToStates.Current
-                visible: true
-                title: OnboardingStrings.selectFolders
-            }
-            PropertyChanges {
-                target: step3_2_line;
-                color: Styles.buttonSecondaryPressed
-                visible: true
-            }
-            PropertyChanges {
-                target: step3_2_confirm;
-                toState: SubStep.ToStates.Disabled
-                visible: true
-                title: OnboardingStrings.confirm
-            }
-            PropertyChanges {
-                target: step3_3_line;
-                visible: false;
-            }
-            PropertyChanges {
-                target: step3_3_rename;
-                visible: false;
+                target: step4_content;
+                toState: SubStep.ToStates.Disabled;
+                visible: true;
             }
         },
         State {
-            name: stepBackupsConfirm
+            name: step4
             PropertyChanges {
                 target: step1_computerName;
-                toState: Step.ToStates.DoneLight
+                toState: Step.ToStates.Done;
             }
             PropertyChanges {
                 target: step2_line;
-                color: Styles.buttonPrimaryPressed
+                color: Styles.iconButton;
             }
             PropertyChanges {
                 target: step2_installationType;
-                toState: Step.ToStates.DoneLight
+                toState: Step.ToStates.CurrentSubstep;
             }
             PropertyChanges {
                 target: step3_line;
-                color: Styles.buttonPrimaryPressed
-            }
-            PropertyChanges {
-                target: step3_syncs;
-                toState: Step.ToStates.DoneConfirm
-                title: OnboardingStrings.backup
-            }
-            PropertyChanges {
-                target: step3_1_line;
-                color: Styles.buttonPrimaryPressed
+                color: Styles.iconButton;
                 visible: true;
             }
             PropertyChanges {
-                target: step3_1_selectFolder;
-                toState: SubStep.ToStates.Done
-                visible: true;
-                title: OnboardingStrings.selectFolders
-            }
-            PropertyChanges {
-                target: step3_2_line;
-                color: Styles.buttonPrimaryPressed
+                target: step3_content;
+                toState: SubStep.ToStates.Done;
                 visible: true;
             }
             PropertyChanges {
-                target: step3_2_confirm;
-                toState: SubStep.ToStates.Current
-                visible: true;
-                title: OnboardingStrings.confirm
-            }
-            PropertyChanges {
-                target: step3_3_line;
-                visible: false;
-            }
-            PropertyChanges {
-                target: step3_3_rename;
-                visible: false;
-            }
-        },
-        State {
-            name: stepBackupsRename
-            PropertyChanges {
-                target: step1_computerName;
-                toState: Step.ToStates.DoneLight
-            }
-            PropertyChanges {
-                target: step2_line;
-                color: Styles.buttonPrimaryPressed
-            }
-            PropertyChanges {
-                target: step2_installationType;
-                toState: Step.ToStates.DoneLight
-            }
-            PropertyChanges {
-                target: step3_line;
-                color: Styles.buttonPrimaryPressed
-            }
-            PropertyChanges {
-                target: step3_syncs;
-                toState: Step.ToStates.DoneConfirm
-                title: OnboardingStrings.backup
-            }
-            PropertyChanges {
-                target: step3_1_line;
-                color: Styles.buttonPrimaryPressed
+                target: step4_line;
+                color: Styles.iconButton;
                 visible: true;
             }
             PropertyChanges {
-                target: step3_1_selectFolder;
-                toState: SubStep.ToStates.Done
+                target: step4_content;
+                toState: SubStep.ToStates.Current;
                 visible: true;
-                title: OnboardingStrings.selectFolders
-            }
-            PropertyChanges {
-                target: step3_2_line;
-                color: Styles.buttonPrimaryPressed
-                visible: true;
-            }
-            PropertyChanges {
-                target: step3_2_confirm;
-                toState: SubStep.ToStates.Done
-                visible: true;
-                title: OnboardingStrings.confirm
-            }
-            PropertyChanges {
-                target: step3_3_line;
-                color: Styles.buttonPrimaryPressed
-                visible: true;
-            }
-            PropertyChanges {
-                target: step3_3_rename;
-                toState: SubStep.ToStates.Current
-                visible: true;
-                title: OnboardingStrings.rename
-            }
-        },
-        State {
-            name: stepSelectSyncType
-            PropertyChanges {
-                target: step1_computerName;
-                toState: Step.ToStates.DoneLight
-            }
-            PropertyChanges {
-                target: step2_line;
-                color: Styles.buttonPrimaryPressed
-            }
-            PropertyChanges {
-                target: step2_installationType;
-                toState: Step.ToStates.DoneLight
-            }
-            PropertyChanges {
-                target: step3_line;
-                color: Styles.buttonPrimaryPressed
-            }
-            PropertyChanges {
-                target: step3_syncs;
-                toState: Step.ToStates.Current
-                title: OnboardingStrings.sync
-            }
-            PropertyChanges {
-                target: step3_1_line;
-                color: Styles.buttonPrimaryPressed
-                visible: true;
-            }
-            PropertyChanges {
-                target: step3_1_selectFolder;
-                toState: SubStep.ToStates.Current
-                visible: true;
-                title: OnboardingStrings.syncTitle
-            }
-            PropertyChanges {
-                target: step3_2_line;
-                color: Styles.buttonSecondaryPressed
-                visible: true;
-            }
-            PropertyChanges {
-                target: step3_2_confirm;
-                toState: SubStep.ToStates.Disabled
-                visible: true;
-                title: OnboardingStrings.selectFolders
-            }
-            PropertyChanges {
-                target: step3_3_line;
-                visible: false;
-            }
-            PropertyChanges {
-                target: step3_3_rename;
-                visible: false;
-            }
-        },
-        State {
-            name: stepSyncFolder
-            PropertyChanges {
-                target: step1_computerName;
-                toState: Step.ToStates.DoneLight
-            }
-            PropertyChanges {
-                target: step2_line;
-                color: Styles.buttonPrimaryPressed
-            }
-            PropertyChanges {
-                target: step2_installationType;
-                toState: Step.ToStates.DoneLight
-            }
-            PropertyChanges {
-                target: step3_line;
-                color: Styles.buttonPrimaryPressed
-            }
-            PropertyChanges {
-                target: step3_syncs;
-                toState: Step.ToStates.DoneConfirm
-                title: OnboardingStrings.sync
-            }
-            PropertyChanges {
-                target: step3_1_line;
-                color: Styles.buttonPrimaryPressed
-                visible: true;
-            }
-            PropertyChanges {
-                target: step3_1_selectFolder;
-                toState: SubStep.ToStates.Done
-                visible: true;
-                title: OnboardingStrings.syncTitle
-            }
-            PropertyChanges {
-                target: step3_2_line;
-                color: Styles.buttonPrimaryPressed
-                visible: true;
-            }
-            PropertyChanges {
-                target: step3_2_confirm;
-                toState: SubStep.ToStates.Current
-                visible: true;
-                title: OnboardingStrings.selectFolders
-            }
-            PropertyChanges {
-                target: step3_3_line;
-                visible: false;
-            }
-            PropertyChanges {
-                target: step3_3_rename;
-                visible: false;
             }
         }
     ]
 
     ColumnLayout {
         anchors.fill: parent
-        spacing: 0
 
         ColumnLayout {
             id: stepsLayout
@@ -419,9 +183,8 @@ Rectangle {
             Step {
                 id: step1_computerName
 
-                title: OnboardingStrings.computerName
-                Layout.leftMargin: stepLeftMargin
-                Layout.topMargin: layoutTopMargin
+                number: 1
+                text: OnboardingStrings.computerName
             }
 
             Rectangle {
@@ -437,8 +200,8 @@ Rectangle {
             Step {
                 id: step2_installationType
 
-                title: OnboardingStrings.installationType
-                Layout.leftMargin: stepLeftMargin
+                number: 2
+                text: OnboardingStrings.installationType
             }
 
             Rectangle {
@@ -446,84 +209,40 @@ Rectangle {
 
                 color: Styles.buttonSecondaryPressed
                 Layout.preferredWidth: lineWidth
-                Layout.preferredHeight: lineMainStepHeight
+                Layout.preferredHeight: lineSubStepHeight
                 radius: lineRadius
                 Layout.leftMargin: lineLeftMargin
             }
 
-            Step {
-                id: step3_syncs
+            SubStep {
+                id: step3_content
 
-                title: OnboardingStrings.synchronize
-                Layout.leftMargin: stepLeftMargin
+                text: step3Text
+                Layout.leftMargin: subStepLeftMargin
             }
 
-            ColumnLayout {
-                id: leftSubStepsLayout
+            Rectangle {
+                id: step4_line
 
-                Layout.preferredWidth: parent.width
-                spacing: 0
-
-                Rectangle {
-                    id: step3_1_line
-
-                    color: Styles.buttonSecondaryPressed
-                    Layout.preferredWidth: lineWidth
-                    Layout.preferredHeight: lineSubStepHeight
-                    radius: lineRadius
-                    Layout.leftMargin: lineLeftMargin
-                }
-
-                SubStep {
-                    id: step3_1_selectFolder
-
-                    title: OnboardingStrings.selectFolders
-                    Layout.leftMargin: subStepLeftMargin
-                }
-
-                Rectangle {
-                    id: step3_2_line
-
-                    color: Styles.buttonSecondaryPressed
-                    Layout.preferredWidth: lineWidth
-                    Layout.preferredHeight: lineSubStepHeight
-                    radius: lineRadius
-                    Layout.leftMargin: lineLeftMargin
-                }
-
-                SubStep {
-                    id: step3_2_confirm
-
-                    title: OnboardingStrings.confirm
-                    Layout.leftMargin: subStepLeftMargin
-                }
-
-                Rectangle {
-                    id: step3_3_line
-
-                    color: Styles.buttonSecondaryPressed
-                    Layout.preferredWidth: lineWidth
-                    Layout.preferredHeight: lineSubStepHeight
-                    radius: lineRadius
-                    Layout.leftMargin: lineLeftMargin
-                }
-
-                SubStep {
-                    id: step3_3_rename
-
-                    title: OnboardingStrings.rename
-                    Layout.leftMargin: subStepLeftMargin
-                }
+                color: Styles.buttonSecondaryPressed
+                Layout.preferredWidth: lineWidth
+                Layout.preferredHeight: lineSubStepHeight
+                radius: lineRadius
+                Layout.leftMargin: lineLeftMargin
             }
 
+            SubStep {
+                id: step4_content
+
+                text: step4Text
+                Layout.leftMargin: subStepLeftMargin
+            }
         }
     }
 
     MegaButtons.HelpButton {
         anchors.bottom: parent.bottom
         anchors.left: parent.left
-        anchors.leftMargin: helpButtonMargin
-        anchors.bottomMargin: helpButtonMargin
         url: Links.desktopSyncApp
     }
 

@@ -26,6 +26,11 @@ StackView {
     readonly property string backupsFlow: "backups"
     readonly property string finalState: "finalState"
 
+    readonly property int stepPanelWidth: 304
+    readonly property int contentMargin: 48
+    readonly property int contentHeight: 464
+    readonly property int lineWidth: 2
+
     property int lastTypeSelected: SyncsType.Types.None
 
     state: computerName
@@ -38,8 +43,8 @@ StackView {
                 script: rightPanel.replace(computerNamePage);
             }
             PropertyChanges {
-                target: stepPanel
-                state: stepPanel.step1ComputerName
+                target: stepPanel;
+                state: stepPanel.step1ComputerName;
             }
         },
         State {
@@ -48,8 +53,8 @@ StackView {
                 script: rightPanel.replace(installationTypePage);
             }
             PropertyChanges {
-                target: stepPanel
-                state: stepPanel.step2InstallationType
+                target: stepPanel;
+                state: stepPanel.step2InstallationType;
             }
         },
         State {
@@ -64,8 +69,10 @@ StackView {
                 }
             }
             PropertyChanges {
-                target: stepPanel
-                state: stepPanel.stepSelectSyncType
+                target: stepPanel;
+                state: stepPanel.step3;
+                step3Text: OnboardingStrings.syncChooseType;
+                step4Text: OnboardingStrings.confirm;
             }
         },
         State {
@@ -74,8 +81,10 @@ StackView {
                 script: rightPanel.replace(selectiveSyncPage);
             }
             PropertyChanges {
-                target: stepPanel
-                state: stepPanel.stepSyncFolder
+                target: stepPanel;
+                state: stepPanel.step4;
+                step3Text: OnboardingStrings.syncChooseType;
+                step4Text: OnboardingStrings.selectiveSync;
             }
         },
         State {
@@ -84,8 +93,10 @@ StackView {
                 script: rightPanel.replace(fullSyncPage);
             }
             PropertyChanges {
-                target: stepPanel
-                state: stepPanel.stepSyncFolder
+                target: stepPanel;
+                state: stepPanel.step4;
+                step3Text: OnboardingStrings.syncChooseType;
+                step4Text: OnboardingStrings.fullSync;
             }
         },
         State {
@@ -100,8 +111,8 @@ StackView {
                 }
             }
             PropertyChanges {
-                target: stepPanel
-                state: stepPanel.stepBackupsSelectFolders
+                target: stepPanel;
+                state: stepPanel.step3;
             }
         },
         State {
@@ -126,16 +137,35 @@ StackView {
         width: syncsFlow.width
         height: syncsFlow.height
         visible: false
+        color: Styles.surface1
 
-        StepPanel {
-            id: stepPanel
+        Rectangle {
+            id: leftPanel
 
+            width: stepPanelWidth + lineWidth
+            height: parent.height
+            color: Styles.surface1
             z: 2
-            width: 224
-            anchors {
-                left: parent.left
-                top: parent.top
-                bottom: parent.bottom
+
+            StepPanel {
+                id: stepPanel
+
+                anchors.fill: parent
+                anchors.topMargin: contentMargin
+                anchors.bottomMargin: contentMargin
+                anchors.leftMargin: contentMargin
+            }
+
+            Rectangle {
+                id: separatorLine
+
+                width: lineWidth
+                radius: lineWidth
+                color: Styles.borderDisabled
+                height: contentHeight
+                anchors.left: leftPanel.right
+                anchors.top: parent.top
+                anchors.topMargin: contentMargin
             }
         }
 
@@ -143,11 +173,12 @@ StackView {
             id: rightPanel
 
             anchors {
-                left: stepPanel.right
+                left: leftPanel.right
                 right: parent.right
                 top: parent.top
                 bottom: parent.bottom
             }
+
             Component {
                 id: computerNamePage
 
