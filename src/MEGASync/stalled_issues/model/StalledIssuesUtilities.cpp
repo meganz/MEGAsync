@@ -6,22 +6,37 @@
 #include <QFile>
 #include <QDir>
 
+QList<mega::MegaHandle> StalledIssuesSyncDebrisUtilities::mHandles = QList<mega::MegaHandle>();
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void StalledIssuesSyncDebrisUtilities::moveToSyncDebris(const QList<mega::MegaHandle> &handles)
 {
-    auto moveToDateFolder = [this, handles](std::unique_ptr<mega::MegaNode> parentNode, const QString& duplicatedSyncFolderPath)
+    if(mHandles.isEmpty())
     {
-        auto moveLambda = [this, handles](std::unique_ptr<mega::MegaNode> rubbishNode){
-            foreach(auto handle, handles)
+        mHandles = handles;
+    }
+    else
+    {
+        mHandles.append(handles);
+        //If there are still handles, it is because other handles are being moved, so no need to create again the folder
+        return;
+    }
+
+    auto moveToDateFolder = [this](std::unique_ptr<mega::MegaNode> parentNode, const QString& duplicatedSyncFolderPath)
+    {
+        auto moveLambda = [this](std::unique_ptr<mega::MegaNode> rubbishNode){
+            foreach(auto handle, mHandles)
             {
                 std::unique_ptr<mega::MegaNode> nodeToMove(MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
                 if(nodeToMove)
                 {
                     MegaSyncApp->getMegaApi()->moveNode(nodeToMove.get(),rubbishNode.get());
                 }
+
+                mHandles.removeOne(handle);
             }
 
-            deleteLater();
+            delete this;
         };
 
         QString dateFolder(QDate::currentDate().toString(Qt::DateFormat::ISODate));
@@ -30,7 +45,7 @@ void StalledIssuesSyncDebrisUtilities::moveToSyncDebris(const QList<mega::MegaHa
         if(!duplicatedRubbishDateNode)
         {
             MegaSyncApp->getMegaApi()->createFolder(dateFolder.toUtf8().constData(), parentNode.get(), new mega::OnFinishOneShot(MegaSyncApp->getMegaApi(),
-                                                                                                                                 [this, moveLambda, handles]
+                                                                                                                                 [this, moveLambda]
                                                                                                                                  (const mega::MegaError& e, const mega::MegaRequest& request)
             {
                 if (e.getErrorCode() == mega::MegaError::API_OK)
@@ -43,7 +58,7 @@ void StalledIssuesSyncDebrisUtilities::moveToSyncDebris(const QList<mega::MegaHa
                     }
                 }
 
-                deleteLater();
+                delete this;
             }));
         }
         else
@@ -74,7 +89,7 @@ void StalledIssuesSyncDebrisUtilities::moveToSyncDebris(const QList<mega::MegaHa
                 }
             }
 
-            deleteLater();
+            delete this;
         }));
     }
     else

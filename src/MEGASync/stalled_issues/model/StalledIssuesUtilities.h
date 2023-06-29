@@ -40,12 +40,15 @@ private:
     QList<mega::MegaHandle> mRemoteHandles;
 };
 
-class StalledIssuesSyncDebrisUtilities : public QObject
+class StalledIssuesSyncDebrisUtilities
 {
 public:
     StalledIssuesSyncDebrisUtilities(){}
 
     void moveToSyncDebris(const QList<mega::MegaHandle>& handles);
+
+private:
+    static QList<mega::MegaHandle> mHandles;
 };
 
 #endif // STALLEDISSUESUTILITIES_H
