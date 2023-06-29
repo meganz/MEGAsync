@@ -231,16 +231,12 @@ void LoginController::onAccountCreation(mega::MegaRequest *request, mega::MegaEr
     {
         mEmail = QString::fromUtf8(request->getEmail());
         emit emailChanged();
-        mPassword = QString::fromUtf8(request->getPassword());
-        emit passwordChanged();
         mName = QString::fromUtf8(request->getName());
         mLastName = QString::fromUtf8(request->getText());
         EphemeralCredentials credentials;
         credentials.email = mEmail;
-        credentials.password = mPassword;
         credentials.sessionId = QString::fromUtf8(request->getSessionKey());
         mPreferences->setEphemeralCredentials(credentials);
-        //qDebug()<<"SESSION:" << QString::fromUtf8(request->getSessionKey()); //ephemeral session id and final session id are different, create new key for ephemeral session
     }
     emit registerFinished(e->getErrorCode() == mega::MegaError::API_OK);
 }
@@ -252,7 +248,6 @@ void LoginController::onAccountCreationResume(mega::MegaRequest *request, mega::
     {
         EphemeralCredentials credentials = mPreferences->getEphemeralCredentials();
         mEmail = credentials.email;
-        mPassword = credentials.password;
         emit emailChanged();
         emit accountCreationResumed();
     }

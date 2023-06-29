@@ -13,7 +13,6 @@ public:
 
     QString email;
     QString sessionId;
-    QString password;
 
     bool operator==(const EphemeralCredentials& cred) const;
     friend QDataStream& operator>>(QDataStream& in, EphemeralCredentials& cred);

@@ -16,7 +16,7 @@ class LoginController : public QObject, public mega::MegaRequestListener
 {
     Q_OBJECT
     Q_PROPERTY(QString email MEMBER mEmail READ getEmail NOTIFY emailChanged)
-    Q_PROPERTY(QString password MEMBER mPassword READ getPassword NOTIFY passwordChanged)
+    Q_PROPERTY(QString password MEMBER mPassword READ getPassword)
     Q_PROPERTY(bool emailConfirmed MEMBER mEmailConfirmed READ getIsEmailConfirmed NOTIFY emailConfirmed)
 
 public:
@@ -39,7 +39,6 @@ signals:
     void loginFinished(int errorCode);
     void registerFinished(bool success);
     void emailChanged();
-    void passwordChanged();
     void changeRegistrationEmailFinished(bool success);
     void fetchingNodesProgress(double progress);
     void fetchingNodesFinished();
