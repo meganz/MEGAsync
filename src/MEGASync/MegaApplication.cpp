@@ -439,7 +439,6 @@ void MegaApplication::initialize()
     QDesktopServices::setUrlHandler(QString::fromUtf8("local"), this, "handleLocalPath");
 
     registerCommonQMLElements();
-    qRegisterMetaType<EphemeralCredentials>("EphemeralCredentials");
     qRegisterMetaTypeStreamOperators<EphemeralCredentials>("EphemeralCredentials");
 
     preferences = Preferences::instance();

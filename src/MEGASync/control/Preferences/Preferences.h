@@ -54,8 +54,7 @@ public:
     void setSession(QString session);
     void setSessionInUserGroup(QString session);
     QString getSession();
-    void setEphemeralSession(const QString& sid);
-    void removeEphemeralSession();
+    void removeEphemeralCredentials();
     void setEphemeralCredentials(EphemeralCredentials &cred);
     EphemeralCredentials getEphemeralCredentials();
 

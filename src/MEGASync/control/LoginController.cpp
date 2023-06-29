@@ -143,6 +143,7 @@ void LoginController::onRequestStart(mega::MegaApi *api, mega::MegaRequest *requ
 
 void LoginController::accountConfirmation()
 {
+    mPreferences->removeEphemeralCredentials();
     emit accountConfirmed();
 }
 
@@ -236,9 +237,15 @@ void LoginController::onAccountCreation(mega::MegaRequest *request, mega::MegaEr
 
 void LoginController::onAccountCreationResume(mega::MegaRequest *request, mega::MegaError *e)
 {
-    qDebug()<< QString::fromUtf8(mMegaApi->getMyEmail());
-    mPreferences->removeEphemeralSession();
-    emit accountCreationResumed();
+    Q_UNUSED(request)
+    if(e->getErrorCode() == mega::MegaError::API_OK)
+    {
+        EphemeralCredentials credentials = mPreferences->getEphemeralCredentials();
+        mEmail = credentials.email;
+        mPassword = credentials.password;
+        emit emailChanged();
+        emit accountCreationResumed();
+    }
 }
 
 void LoginController::onEmailChanged(mega::MegaRequest *request, mega::MegaError *e)

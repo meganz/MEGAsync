@@ -20,6 +20,4 @@ public:
     friend QDataStream& operator<<(QDataStream& out, const EphemeralCredentials& cred);
 };
 
-Q_DECLARE_METATYPE(EphemeralCredentials)
-
 #endif // EPHEMERALCREDENTIALS_H

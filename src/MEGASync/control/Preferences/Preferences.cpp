@@ -642,16 +642,7 @@ QString Preferences::getSession()
     return value;
 }
 
-void Preferences::setEphemeralSession(const QString& sid)
-{
-    mutex.lock();
-    mSettings->setValue(ephemeralSessionKey, sid);
-    setCachedValue(ephemeralSessionKey, sid);
-    //mSettings->sync();
-    mutex.unlock();
-}
-
-void Preferences::removeEphemeralSession()
+void Preferences::removeEphemeralCredentials()
 {
     mutex.lock();
     mSettings->remove(ephemeralSessionKey);
@@ -667,11 +658,6 @@ void Preferences::setEphemeralCredentials(EphemeralCredentials& cred)
     QByteArray array;
     QDataStream stream(&array, QIODevice::WriteOnly);
     stream << cred;
-    //array.replace('\0','X');
-//    QString string = QString::fromLatin1(array.toBase64());
-//    qDebug()<<string;
-//    qDebug()<<QByteArray::fromHex(string);
-    qDebug()<<array.toBase64();
     mSettings->setValue(ephemeralSessionKey, array.toBase64());
     setCachedValue(ephemeralSessionKey, array.toBase64());
     mSettings->sync();
