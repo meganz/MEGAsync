@@ -15,7 +15,7 @@ ConfirmEmailPageForm {
     Connections {
         target: loginController
 
-        onAccountConfirmed: {
+        onEmailConfirmed: {
             registerFlow.state = login;
             onboardingWindow.requestActivate();
         }

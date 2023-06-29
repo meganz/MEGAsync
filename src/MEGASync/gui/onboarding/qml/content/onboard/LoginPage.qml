@@ -131,11 +131,4 @@ LoginPageForm {
             }
         }
     }
-
-    Component.onCompleted: {
-        if(email.text.length && password.text.length)
-        {
-            loginPageRoot.loginButton.clicked();
-        }
-    }
 }

@@ -17,6 +17,7 @@ class LoginController : public QObject, public mega::MegaRequestListener
     Q_OBJECT
     Q_PROPERTY(QString email MEMBER mEmail READ getEmail NOTIFY emailChanged)
     Q_PROPERTY(QString password MEMBER mPassword READ getPassword NOTIFY passwordChanged)
+    Q_PROPERTY(bool emailConfirmed MEMBER mEmailConfirmed READ getIsEmailConfirmed NOTIFY emailConfirmed)
 
 public:
     explicit LoginController(QObject *parent = nullptr);
@@ -27,11 +28,12 @@ public:
     Q_INVOKABLE void login2FA(const QString& pin);
     Q_INVOKABLE QString getEmail() const;
     Q_INVOKABLE QString getPassword() const;
+    Q_INVOKABLE bool getIsEmailConfirmed() const;
 
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest* request, mega::MegaError* e) override;
     void onRequestUpdate(mega::MegaApi* api, mega::MegaRequest* request) override;
     void onRequestStart(mega::MegaApi *api, mega::MegaRequest *request) override;
-    void accountConfirmation();
+    void emailConfirmation(const QString& email);
 
 signals:
     void loginFinished(int errorCode);
@@ -41,7 +43,7 @@ signals:
     void changeRegistrationEmailFinished(bool success);
     void fetchingNodesProgress(double progress);
     void fetchingNodesFinished();
-    void accountConfirmed();
+    void emailConfirmed();
     void accountCreationResumed();
 
 protected:
@@ -72,6 +74,7 @@ private:
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
     QTimer *mConnectivityTimer;
     bool mFetchingNodes;
+    bool mEmailConfirmed;
     QString mEmail;
     QString mName;
     QString mLastName;
@@ -108,10 +111,10 @@ private:
     mega::MegaApi * mMegaApi;
 };
 
-class AccountConfirmationListener : public QObject, mega::MegaGlobalListener
+class EmailConfirmationListener : public QObject, mega::MegaGlobalListener
 {
 public:
-    explicit AccountConfirmationListener(LoginController* parent = nullptr);
+    explicit EmailConfirmationListener(LoginController* parent = nullptr);
 
     void onEvent(mega::MegaApi*, mega::MegaEvent* event) override;
 

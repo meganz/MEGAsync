@@ -11,6 +11,7 @@ LoginController::LoginController(QObject *parent)
     , mDelegateListener(new mega::QTMegaRequestListener(MegaSyncApp->getMegaApi(), this))
     , mPreferences(Preferences::instance())
     , mFetchingNodes(false)
+    , mEmailConfirmed(false)
 {
     mMegaApi->addRequestListener(mDelegateListener.get());
     mConnectivityTimer = new QTimer(this);
@@ -23,7 +24,7 @@ LoginController::LoginController(QObject *parent)
     {
         mMegaApi->resumeCreateAccount(credentials.sessionId.toUtf8().constData());
     }
-    new AccountConfirmationListener(this);
+    new EmailConfirmationListener(this);
 }
 
 LoginController::~LoginController()
@@ -61,6 +62,11 @@ QString LoginController::getEmail() const
 QString LoginController::getPassword() const
 {
     return mPassword;
+}
+
+bool LoginController::getIsEmailConfirmed() const
+{
+    return mEmailConfirmed;
 }
 
 void LoginController::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e)
@@ -141,10 +147,14 @@ void LoginController::onRequestStart(mega::MegaApi *api, mega::MegaRequest *requ
     }
 }
 
-void LoginController::accountConfirmation()
+void LoginController::emailConfirmation(const QString& email)
 {
-    mPreferences->removeEphemeralCredentials();
-    emit accountConfirmed();
+    if(mEmail == email)
+    {
+        mPreferences->removeEphemeralCredentials();
+        mEmailConfirmed = true;
+        emit emailConfirmed();
+    }
 }
 
 void LoginController::onLogin(mega::MegaRequest *request, mega::MegaError *e)
@@ -694,17 +704,17 @@ void LogoutController::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *re
 }
 
 
-AccountConfirmationListener::AccountConfirmationListener(LoginController* parent)
+EmailConfirmationListener::EmailConfirmationListener(LoginController* parent)
     : QObject(parent)
     , mGlobalListener(new mega::QTMegaGlobalListener(MegaSyncApp->getMegaApi(), this))
 {
     MegaSyncApp->getMegaApi()->addGlobalListener(mGlobalListener.get());
 }
 
-void AccountConfirmationListener::onEvent(mega::MegaApi *, mega::MegaEvent *event)
+void EmailConfirmationListener::onEvent(mega::MegaApi *, mega::MegaEvent *event)
 {
-    if(event->getType() == mega::MegaEvent::EVENT_ACCOUNT_CONFIRMATION)
+    if(event->getType() == mega::MegaEvent::EVENT_CONFIRM_USER_EMAIL)
     {
-        static_cast<LoginController*>(parent())->accountConfirmation();
+        static_cast<LoginController*>(parent())->emailConfirmation(QString::fromLatin1(event->getText()));
     }
 }
