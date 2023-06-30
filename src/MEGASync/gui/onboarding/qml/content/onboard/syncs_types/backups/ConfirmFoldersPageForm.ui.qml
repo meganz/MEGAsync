@@ -58,8 +58,8 @@ SyncsPage {
             MegaTextFields.TextField {
                 id: folderField
 
-                Layout.preferredWidth: parent.width + 2 * folderField.textField.focusBorderWidth
-                Layout.leftMargin: -folderField.textField.focusBorderWidth
+                Layout.preferredWidth: parent.width + 2 * folderField.sizes.focusBorderWidth
+                Layout.leftMargin: -folderField.sizes.focusBorderWidth
                 title: OnboardingStrings.backupTo
                 text: "/Backups"
                 leftIcon.source: Images.database

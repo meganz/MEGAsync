@@ -3367,12 +3367,16 @@ void MegaApplication::registerCommonQMLElements()
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/CardHorizontalButton.qml")), "Components.Buttons", 1, 0, "CardHorizontalButton");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/CardVerticalButton.qml")), "Components.Buttons", 1, 0, "CardVerticalButton");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/HelpButton.qml")), "Components.Buttons", 1, 0, "HelpButton");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/IconButton.qml")), "Components.Buttons", 1, 0, "IconButton");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/OutlineButton.qml")), "Components.Buttons", 1, 0, "OutlineButton");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/PrimaryButton.qml")), "Components.Buttons", 1, 0, "PrimaryButton");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/SecondaryButton.qml")), "Components.Buttons", 1, 0, "SecondaryButton");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/Colors.qml")), "Components.Buttons", 1, 0, "Colors");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/Icon.qml")), "Components.Buttons", 1, 0, "Icon");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/Progress.qml")), "Components.Buttons", 1, 0, "Progress");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/Sizes.qml")), "Components.Buttons", 1, 0, "Sizes");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/SmallSizes.qml")), "Components.Buttons", 1, 0, "SmallSizes");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/LargeSizes.qml")), "Components.Buttons", 1, 0, "LargeSizes");
 
     qmlRegisterModule("Components.CheckBoxes", 1, 0);
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/checkBoxes/CheckBox.qml")), "Components.CheckBoxes", 1, 0, "CheckBox");
@@ -3397,6 +3401,9 @@ void MegaApplication::registerCommonQMLElements()
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/TextField.qml")), "Components.TextFields", 1, 0, "TextField");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/TwoFA.qml")), "Components.TextFields", 1, 0, "TwoFA");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/TwoFADigit.qml")), "Components.TextFields", 1, 0, "TwoFADigit");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/Sizes.qml")), "Components.TextFields", 1, 0, "Sizes");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/SmallSizes.qml")), "Components.TextFields", 1, 0, "SmallSizes");
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/textFields/LargeSizes.qml")), "Components.TextFields", 1, 0, "LargeSizes");
 
     qmlRegisterModule("Components.Texts", 1, 0);
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/texts/HintStyle.qml")), "Components.Texts", 1, 0, "HintStyle");

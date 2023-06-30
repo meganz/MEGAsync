@@ -52,9 +52,9 @@ StackViewPage {
         MegaTextFields.EmailTextField {
             id: email
 
-            width: parent.width + 2 * email.textField.focusBorderWidth
+            width: parent.width + 2 * email.sizes.focusBorderWidth
             anchors.left: parent.left
-            anchors.leftMargin: -email.textField.focusBorderWidth
+            anchors.leftMargin: -email.sizes.focusBorderWidth
             title: OnboardingStrings.email
             text: loginController.email
         }
@@ -62,9 +62,9 @@ StackViewPage {
         MegaTextFields.PasswordTextField {
             id: password
 
-            width: parent.width + 2 * password.textField.focusBorderWidth
+            width: parent.width + 2 * password.sizes.focusBorderWidth
             anchors.left: parent.left
-            anchors.leftMargin: -password.textField.focusBorderWidth
+            anchors.leftMargin: -password.sizes.focusBorderWidth
             title: OnboardingStrings.password
             hint.icon: Images.alertTriangle
         }
@@ -87,7 +87,7 @@ StackViewPage {
 
             text: OnboardingStrings.signUp
             Layout.alignment: Qt.AlignLeft
-            Layout.leftMargin: -signUpButton.focusBorderWidth
+            Layout.leftMargin: -signUpButton.sizes.focusBorderWidth
         }
 
         MegaButtons.PrimaryButton {
@@ -95,7 +95,7 @@ StackViewPage {
 
             text: OnboardingStrings.login
             Layout.alignment: Qt.AlignRight
-            Layout.rightMargin: -loginButton.focusBorderWidth
+            Layout.rightMargin: -loginButton.sizes.focusBorderWidth
         }
     }
 }

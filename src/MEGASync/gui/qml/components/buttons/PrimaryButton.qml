@@ -3,9 +3,6 @@ import Components.Buttons 1.0 as MegaButtons
 import Common 1.0
 
 MegaButtons.Button {
-    icons.color: Styles.textInverseAccent
-    icons.disabledColor: Styles.textDisabled
-
     colors {
         background: Styles.buttonPrimary
         border: colors.background

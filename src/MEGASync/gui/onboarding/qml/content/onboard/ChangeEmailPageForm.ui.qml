@@ -51,8 +51,8 @@ StackViewPage {
             id: emailTextField
 
             title: OnboardingStrings.email
-            Layout.preferredWidth: layout.width + 2 * emailTextField.textField.focusBorderWidth
-            Layout.leftMargin: -emailTextField.textField.focusBorderWidth
+            Layout.preferredWidth: layout.width + 2 * emailTextField.sizes.focusBorderWidth
+            Layout.leftMargin: -emailTextField.sizes.focusBorderWidth
         }
     }
 
@@ -73,7 +73,7 @@ StackViewPage {
         MegaButtons.PrimaryButton {
             id: resendButton
 
-            Layout.rightMargin: -resendButton.focusBorderWidth
+            Layout.rightMargin: -resendButton.sizes.focusBorderWidth
             text: OnboardingStrings.resend
             icons.source: Images.mail
         }

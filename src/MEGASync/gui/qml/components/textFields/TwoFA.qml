@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.12
 
 // Local
 import Components.Texts 1.0 as MegaTexts
+import Components.TextFields 1.0 as MegaTextFields
 import Common 1.0
 
 // C++
@@ -33,7 +34,7 @@ ColumnLayout {
     property bool hasError: false
 
     spacing: 15
-    Layout.leftMargin: -digit1.textField.focusBorderWidth
+    Layout.leftMargin: -digit1.sizes.focusBorderWidth
 
     RowLayout {
         id: mainLayout

@@ -14,12 +14,16 @@
         <file>components/buttons/CardHorizontalButton.qml</file>
         <file>components/buttons/CardVerticalButton.qml</file>
         <file>components/buttons/HelpButton.qml</file>
+        <file>components/buttons/IconButton.qml</file>
         <file>components/buttons/OutlineButton.qml</file>
         <file>components/buttons/PrimaryButton.qml</file>
         <file>components/buttons/SecondaryButton.qml</file>
         <file>components/buttons/Colors.qml</file>
         <file>components/buttons/Icon.qml</file>
         <file>components/buttons/Progress.qml</file>
+        <file>components/buttons/Sizes.qml</file>
+        <file>components/buttons/SmallSizes.qml</file>
+        <file>components/buttons/LargeSizes.qml</file>
         <file>components/checkBoxes/CheckBox.qml</file>
         <file>components/checkBoxes/Colors.qml</file>
         <file>components/checkBoxes/Icons.qml</file>
@@ -38,10 +42,13 @@
         <file>components/textFields/Hint.qml</file>
         <file>components/textFields/LeftIcon.qml</file>
         <file>components/textFields/RightIcon.qml</file>
+        <file>components/textFields/Sizes.qml</file>
+        <file>components/textFields/SmallSizes.qml</file>
+        <file>components/textFields/LargeSizes.qml</file>
         <file>components/texts/HintText.qml</file>
         <file>components/texts/HintStyle.qml</file>
-		<file>components/texts/NotificationIcon.qml</file>
-		<file>components/texts/NotificationInfo.qml</file>
+        <file>components/texts/NotificationIcon.qml</file>
+        <file>components/texts/NotificationInfo.qml</file>
         <file>components/texts/NotificationText.qml</file>
         <file>components/texts/RichText.qml</file>
         <file>components/texts/SecondaryText.qml</file>

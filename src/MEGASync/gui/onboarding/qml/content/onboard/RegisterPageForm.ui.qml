@@ -7,6 +7,7 @@ import QtQuick.Layouts 1.12
 import Components.Buttons 1.0 as MegaButtons
 import Components.Texts 1.0 as MegaTexts
 import Components.Views 1.0 as MegaViews
+import Components.TextFields 1.0 as MegaTextFields
 import Common 1.0
 
 // Local
@@ -42,7 +43,7 @@ StackViewPage {
 
             anchors.left: parent.left
             anchors.right: parent.right
-            anchors.leftMargin: registerContent.email.textField.focusBorderWidth
+            anchors.leftMargin: registerContent.email.sizes.focusBorderWidth
             font.pixelSize: MegaTexts.Text.Size.Large
             text: OnboardingStrings.signUpTitle
         }
@@ -69,7 +70,7 @@ StackViewPage {
             id: loginButton
 
             Layout.alignment: Qt.AlignLeft
-            Layout.leftMargin: -loginButton.focusBorderWidth
+            Layout.leftMargin: -loginButton.sizes.focusBorderWidth
             text: OnboardingStrings.login
 
         }
@@ -78,7 +79,7 @@ StackViewPage {
             id: nextButton
 
             Layout.alignment: Qt.AlignRight
-            Layout.rightMargin: -nextButton.focusBorderWidth
+            Layout.rightMargin: -nextButton.sizes.focusBorderWidth
             enabled: registerContent.termsCheckBox.checked
             icons.source: Images.arrowRight
             text: OnboardingStrings.next

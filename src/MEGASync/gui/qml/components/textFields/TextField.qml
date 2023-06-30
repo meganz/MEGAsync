@@ -23,6 +23,7 @@ Rectangle {
     property RightIcon rightIcon: RightIcon {}
     property LeftIcon leftIcon: LeftIcon {}
     property Hint hint: Hint {}
+    property Sizes sizes: Sizes {}
 
     signal backPressed()
     signal pastePressed()
@@ -57,9 +58,10 @@ Rectangle {
 
         anchors {
             left: parent.left
-            leftMargin: textField.focusBorderWidth
             right: parent.right
             top: parent.top
+            leftMargin: sizes.focusBorderWidth
+            bottomMargin: sizes.titleBottomMargin
         }
     }
 
@@ -67,46 +69,34 @@ Rectangle {
         id: textField
 
         function calculatePaddingWithIcon(iconPresent) {
-            var padding = iconMargin;
+            var padding = sizes.iconMargin;
             if(iconPresent) {
-                padding += iconWidth + iconTextSeparation;
+                padding += sizes.iconWidth + sizes.iconTextSeparation;
             } else {
-                padding += focusBorderWidth;
+                padding += sizes.focusBorderWidth;
             }
             return padding;
         }
 
-        readonly property int focusBorderRadius: 11
-        readonly property int focusBorderWidth: 3
-        readonly property int borderRadius: 8
-        readonly property int borderWidth: 1
-        readonly property int textFieldRawWidth: textField.width - 2 * textField.focusBorderWidth
-        readonly property int iconMargin: 13
-        readonly property int iconWidth: 16
-        readonly property size iconSize: Qt.size(iconWidth, iconWidth)
-        readonly property int iconTextSeparation: 6
-        readonly property int verticalPadding: 8
-
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.top: titleLoader.bottom
-        anchors.topMargin: 4
 
         selectByMouse: true
         selectionColor: Styles.focus
-        height: 36 + 2 * focusBorderWidth
+        height: sizes.height + 2 * sizes.focusBorderWidth
         leftPadding: calculatePaddingWithIcon(leftIcon.source != "")
         rightPadding: calculatePaddingWithIcon(rightIcon.source != "")
-        topPadding: verticalPadding
-        bottomPadding: verticalPadding
+        topPadding: sizes.padding
+        bottomPadding: sizes.padding
         placeholderTextColor: Styles.textPlaceholder
         color: enabled ? Styles.textPrimary : Styles.textDisabled
 
         font {
-            pixelSize: 14
+            pixelSize: MegaTexts.Text.Medium
             weight: Font.Light
-            family: "Inter"
-            styleName: "Medium"
+            family: Styles.fontFamily
+            styleName: Styles.fontStyleName
         }
 
         background: Rectangle {
@@ -114,8 +104,8 @@ Rectangle {
 
             color: "transparent"
             border.color: textField.focus ? Styles.focus : "transparent"
-            border.width: textField.focusBorderWidth
-            radius: textField.focusBorderRadius
+            border.width: sizes.focusBorderWidth
+            radius: sizes.focusBorderRadius
 
             anchors {
                 left: textField.left
@@ -129,8 +119,8 @@ Rectangle {
 
                 anchors.top: focusBorder.top
                 anchors.left: focusBorder.left
-                anchors.topMargin: textField.iconMargin
-                anchors.leftMargin: textField.iconMargin
+                anchors.topMargin: sizes.iconMargin
+                anchors.leftMargin: sizes.iconMargin
                 z: 2
             }
 
@@ -152,16 +142,16 @@ Rectangle {
                     top: focusBorder.top
                     left: focusBorder.left
                     right: focusBorder.right
-                    rightMargin: textField.focusBorderWidth
-                    topMargin: textField.focusBorderWidth
-                    leftMargin: textField.focusBorderWidth
+                    rightMargin: sizes.focusBorderWidth
+                    topMargin: sizes.focusBorderWidth
+                    leftMargin: sizes.focusBorderWidth
                 }
-                width: textField.width - 2 * textField.focusBorderWidth
-                height: textField.height - 2 * textField.focusBorderWidth
+                width: textField.width - 2 * sizes.focusBorderWidth
+                height: textField.height - 2 * sizes.focusBorderWidth
                 color: Styles.pageBackground
                 border.color: getBorderColor()
-                border.width: textField.borderWidth
-                radius: textField.borderRadius
+                border.width: sizes.borderWidth
+                radius: sizes.borderRadius
             }
 
             Loader {
@@ -169,8 +159,8 @@ Rectangle {
 
                 anchors.top: focusBorder.top
                 anchors.right: focusBorder.right
-                anchors.topMargin: textField.iconMargin
-                anchors.rightMargin: textField.iconMargin
+                anchors.topMargin: sizes.iconMargin
+                anchors.rightMargin: sizes.iconMargin
                 z: 2
 
                 MouseArea {
@@ -199,8 +189,8 @@ Rectangle {
         anchors.right: parent.right
         anchors.top: textField.bottom
         anchors.topMargin: 2
-        anchors.leftMargin: textField.focusBorderWidth
-        anchors.rightMargin: textField.focusBorderWidth
+        anchors.leftMargin: sizes.focusBorderWidth
+        anchors.rightMargin: sizes.focusBorderWidth
     }
 
     Component {
@@ -235,7 +225,7 @@ Rectangle {
             visible: leftIcon.visible
             source: leftIcon.source
             color: leftIcon.color
-            sourceSize: textField.iconSize
+            sourceSize: sizes.iconSize
             z: 2
         }
     }
@@ -247,7 +237,7 @@ Rectangle {
             visible: rightIcon.visible
             source: rightIcon.source
             color: rightIcon.color
-            sourceSize: textField.iconSize
+            sourceSize: sizes.iconSize
             z: 2
         }
     }
