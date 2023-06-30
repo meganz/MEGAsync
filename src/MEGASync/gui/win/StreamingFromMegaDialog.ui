@@ -621,6 +621,9 @@ padding-left: -16px;</string>
                    <height>32</height>
                   </size>
                  </property>
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
                  <property name="styleSheet">
                   <string notr="true"/>
                  </property>

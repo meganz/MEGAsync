@@ -39,11 +39,7 @@ void Notificator::notify(Class cls, const QString &title, const QString &text, i
     case UserNotificationCenter:
     {
         MegaNotification *n = new MegaNotification();
-        if (title == tr("MEGAsync"))
-        {
-            n->setTitle(QString::fromUtf8("MEGA"));
-        }
-        else
+        if (title != MegaSyncApp->getMEGAString())
         {
             n->setTitle(title);
         }

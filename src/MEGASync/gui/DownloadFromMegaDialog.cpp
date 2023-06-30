@@ -73,11 +73,17 @@ void DownloadFromMegaDialog::onPathChanged(const QString& path)
     QTemporaryFile test(path + QDir::separator());
     if (!test.open())
     {
-        QMegaMessageBox::critical(nullptr, tr("Error"), tr("You don't have write permissions in this local folder."));
-        return;
-    }
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.parent = this;
+        msgInfo.title = QMegaMessageBox::errorTitle();
+        msgInfo.text = tr("You don't have write permissions in this local folder.");
 
-    ui->eFolderPath->setText(path);
+        QMegaMessageBox::critical(msgInfo);
+    }
+    else
+    {
+        ui->eFolderPath->setText(path);
+    }
 }
 
 void DownloadFromMegaDialog::changeEvent(QEvent *event)
@@ -103,10 +109,14 @@ void DownloadFromMegaDialog::on_bOK_clicked()
         QTemporaryFile test(qFilePath + QDir::separator());
         if (!test.open())
         {
-            QMegaMessageBox::critical(nullptr, tr("Error"), tr("You don't have write permissions in this local folder."));
-            return;
+            QMegaMessageBox::MessageBoxInfo msgInfo;
+            msgInfo.title = QMegaMessageBox::errorTitle();
+            msgInfo.text = tr("You don't have write permissions in this local folder.");
+            QMegaMessageBox::critical(msgInfo);
         }
-
-        accept();
+        else
+        {
+            accept();
+        }
     }
 }

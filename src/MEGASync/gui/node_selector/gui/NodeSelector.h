@@ -58,6 +58,7 @@ protected:
     void addBackupsView();
     int getNodeAccess(std::shared_ptr<mega::MegaNode> node);
     std::shared_ptr<mega::MegaNode> getSelectedNode();
+    void showNotFoundNodeMessageBox();
     void makeConnections(SelectTypeSPtr selectType);
 
     NodeSelectorTreeViewWidgetCloudDrive* mCloudDriveWidget;
@@ -82,7 +83,7 @@ private:
     QModelIndex getParentIncomingShareByIndex(QModelIndex idx);
     void setToggledStyle(TabItem item);
     void setAllFramesItsOnProperty();
-    virtual bool isSelectionCorrect() = 0;
+    virtual void checkSelection() = 0;
     void shortCutConnects(int ignoreThis);
     ButtonIconManager mButtonIconManager;
     QGraphicsDropShadowEffect* mShadowTab;

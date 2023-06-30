@@ -72,6 +72,7 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(LinkProcessor *linkProcessor, QWidg
         initUiAsUnlogged();
     }
 
+    mLinkProcessor->setParentHandler(this);
     connect(mLinkProcessor, &LinkProcessor::onLinkInfoAvailable, this, &ImportMegaLinksDialog::onLinkInfoAvailable);
     connect(mLinkProcessor, &LinkProcessor::onLinkInfoRequestFinish, this, &ImportMegaLinksDialog::onLinkInfoRequestFinish);
 
@@ -150,11 +151,16 @@ void ImportMegaLinksDialog::onLocalFolderSet(const QString& path)
         QTemporaryFile test(nativePath + QDir::separator());
         if (!test.open())
         {
-            QMegaMessageBox::critical(nullptr, tr("Error"), tr("You don't have write permissions in this local folder."));
-            return;
+            QMegaMessageBox::MessageBoxInfo info;
+            info.title = QMegaMessageBox::errorTitle();
+            info.text = tr("You don't have write permissions in this local folder.");
+            info.parent = this;
+            QMegaMessageBox::critical(info);
         }
-
-        ui->eLocalFolder->setText(nativePath);
+        else
+        {
+            ui->eLocalFolder->setText(nativePath);
+        }
     }
 }
 

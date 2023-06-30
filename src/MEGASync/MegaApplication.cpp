@@ -127,8 +127,15 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
         QString path = appBundlePath();
         if (path.compare(QStringLiteral("/Applications/MEGAsync.app")))
         {
-            QMessageBox::warning(nullptr, tr("Error"), QCoreApplication::translate("MegaSyncError", "You can't run MEGA Desktop App from this location. Move it into the Applications folder then run it."), QMessageBox::Ok);
-            ::exit(0);
+            QMegaMessageBox::MessageBoxInfo msgInfo;
+            msgInfo.title = QMegaMessageBox::errorTitle();
+            msgInfo.text = QCoreApplication::translate("MegaSyncError", "You can't run MEGA Desktop App from this location. Move it into the Applications folder then run it.");
+            msgInfo.buttons = QMessageBox::Ok;
+            msgInfo.finishFunc = [this](QPointer<QMessageBox>)
+            {
+                ::exit(0);
+            };
+            QMegaMessageBox::information(msgInfo);
         }
     }
 #endif
@@ -151,7 +158,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 
     if (args.contains(QLatin1String("--version")))
     {
-        QTextStream(stdout) << "MEGAsync" << " v" << Preferences::VERSION_STRING << " (" << Preferences::SDK_ID << ")" << endl;
+        QTextStream(stdout) << getMEGAString() << " v" << Preferences::VERSION_STRING << " (" << Preferences::SDK_ID << ")" << endl;
         ::exit(0);
     }
 
@@ -361,6 +368,8 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 
     connect(&transferProgressController, &BlockingStageProgressController::updateUi,
             &scanStageController, &ScanStageController::onFolderTransferUpdate);
+
+    setAttribute(Qt::AA_DisableWindowContextHelpButton);
 }
 
 MegaApplication::~MegaApplication()
@@ -457,7 +466,12 @@ void MegaApplication::initialize()
     if (preferences->error())
     {
         MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Encountered corrupt prefrences.").toUtf8().constData());
-        QMegaMessageBox::critical(nullptr, QString::fromUtf8("MEGAsync"), tr("Your config is corrupt, please start over"));
+
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.title = getMEGAString();
+        msgInfo.text = tr("Your config is corrupt, please start over");
+        msgInfo.enqueue = true;
+        QMegaMessageBox::critical(msgInfo);
     }
 
     preferences->setLastStatsRequest(0);
@@ -518,13 +532,19 @@ void MegaApplication::initialize()
         QString disablepkp = settings.value(QString::fromUtf8("disablepkp"), QString::fromUtf8("0")).toString();
         megaApi->changeApiUrl(apiURL.toUtf8(), disablepkp == QString::fromUtf8("1"));
         megaApiFolders->changeApiUrl(apiURL.toUtf8());
-        QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"), QString::fromUtf8("API URL changed to ")+ apiURL);
+
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.title = MegaSyncApp->getMEGAString();
+        msgInfo.text = QString::fromUtf8("API URL changed to ")+ apiURL;
+        msgInfo.enqueue = true;
+        QMegaMessageBox::warning(msgInfo);
 
         QString baseURL = settings.value(QString::fromUtf8("baseurl"), Preferences::BASE_URL).toString();
         Preferences::setBaseUrl(baseURL);
         if (baseURL.compare(QString::fromUtf8("https://mega.nz")))
         {
-            QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"), QString::fromUtf8("base URL changed to ") + Preferences::BASE_URL);
+            msgInfo.text = QString::fromUtf8("base URL changed to ") + Preferences::BASE_URL;
+            QMegaMessageBox::warning(msgInfo);
         }
 
         gCrashableForTesting = settings.value(QString::fromUtf8("crashable"), false).toBool();
@@ -555,7 +575,6 @@ void MegaApplication::initialize()
     connect(uploader, &MegaUploader::startingTransfers, this, &MegaApplication::startingUpload);
     connect(downloader, &MegaDownloader::startingTransfers,
             &scanStageController, &ScanStageController::startDelayedScanStage);
-    connect(downloader, &MegaDownloader::folderTransferUpdated, this, &MegaApplication::onFolderTransferUpdate);
 
     proExpirityTimer.setSingleShot(true);
     connect(&proExpirityTimer, SIGNAL(timeout()), this, SLOT(proExpirityTimedOut()));
@@ -625,7 +644,11 @@ void MegaApplication::initialize()
                     }
 
 #ifndef __APPLE__
-                    QMegaMessageBox::information(nullptr, QString::fromUtf8("MEGAsync"), tr("Thank you for your collaboration"));
+                    QMegaMessageBox::MessageBoxInfo msgInfo;
+                    msgInfo.title = MegaSyncApp->getMEGAString();
+                    msgInfo.text = tr("Thank you for your collaboration");
+                    msgInfo.enqueue = true;
+                    QMegaMessageBox::information(msgInfo);
 #endif
                 }
             });
@@ -1143,18 +1166,7 @@ void MegaApplication::start()
         if (!infoDialog)
         {
             createInfoDialog();
-
-            if (!QSystemTrayIcon::isSystemTrayAvailable())
-            {
-                if (!preferences->isOneTimeActionDone(Preferences::ONE_TIME_ACTION_NO_SYSTRAY_AVAILABLE))
-                {
-                    QMegaMessageBox::warning(nullptr, tr("MEGAsync"),
-                                         tr("Could not find a system tray to place MEGAsync tray icon. "
-                                            "MEGAsync is intended to be used with a system tray icon but it can work fine without it. "
-                                            "If you want to open the interface, just try to open MEGAsync again."));
-                    preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_NO_SYSTRAY_AVAILABLE, true);
-                }
-            }
+            checkSystemTray();
             createTrayIcon();
         }
 
@@ -1280,9 +1292,13 @@ void MegaApplication::loggedIn(bool fromWizard)
             Text::Link link(Utilities::SUPPORT_URL);
             Text::Decorator tc(&link);
             tc.process(msg);
-            QMegaMessageBox::warning(nullptr, tr("Error"), tr("Error adding %1:").arg(name)
+
+            QMegaMessageBox::MessageBoxInfo msgInfo;
+            msgInfo.title = QMegaMessageBox::errorTitle();
+            msgInfo.text = tr("Error adding %1:").arg(name)
                                      + QString::fromLatin1("\n")
-                                     + msg, QMessageBox::Ok, QMessageBox::NoButton, QMap<QMessageBox::StandardButton, QString>(), Qt::RichText);
+                    + msg;
+            QMegaMessageBox::warning(msgInfo);
         }
     });
 
@@ -1344,14 +1360,8 @@ if (!preferences->lastExecutionTime())
 
         if (!QSystemTrayIcon::isSystemTrayAvailable())
         {
-            if (!preferences->isOneTimeActionDone(Preferences::ONE_TIME_ACTION_NO_SYSTRAY_AVAILABLE))
-            {
-                QMegaMessageBox::warning(nullptr, tr("MEGAsync"),
-                                     tr("Could not find a system tray to place MEGAsync tray icon. "
-                                        "MEGAsync is intended to be used with a system tray icon but it can work fine without it. "
-                                        "If you want to open the interface, just try to open MEGAsync again."));
-                preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_NO_SYSTRAY_AVAILABLE, true);
-            }
+            checkSystemTray();
+
             if (!getenv("START_MEGASYNC_IN_BACKGROUND"))
             {
                 showInfoDialog();
@@ -1401,17 +1411,22 @@ if (!preferences->lastExecutionTime())
         // Display the message if it has been set
         if (!message.isEmpty())
         {
-            QMessageBox msgBox (QMessageBox::Warning, QCoreApplication::applicationName(), message);
-            QString buttonText(tr("Open settings"));
-            QPushButton *openPreferences = msgBox.addButton(buttonText, QMessageBox::YesRole);
-
-            msgBox.addButton(tr("Dismiss"), QMessageBox::NoRole);
-            msgBox.setDefaultButton(openPreferences);
-            msgBox.exec();
-            if (msgBox.clickedButton() == openPreferences)
+            QMegaMessageBox::MessageBoxInfo msgInfo;
+            msgInfo.title = QCoreApplication::applicationName();
+            msgInfo.text = message;
+            msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
+            QMap<QMessageBox::Button, QString> textsByButton;
+            textsByButton.insert(QMessageBox::Yes, tr("Open settings"));
+            textsByButton.insert(QMessageBox::No, tr("Dismiss"));
+            msgInfo.buttonsText = textsByButton;
+            msgInfo.defaultButton = QMessageBox::No;
+            msgInfo.finishFunc = [this, settingsTabToOpen](QPointer<QMessageBox> msg){
+                if(msg->result() == QMessageBox::Yes)
             {
                 openSettings(settingsTabToOpen);
             }
+            };
+            QMegaMessageBox::warning(msgInfo);
         }
 
         preferences->setNotifyDisabledSyncsOnLogin(false);
@@ -1535,6 +1550,25 @@ void MegaApplication::onLogout()
                       });
 }
 
+void MegaApplication::checkSystemTray()
+{
+    if (!QSystemTrayIcon::isSystemTrayAvailable())
+    {
+        if (!preferences->isOneTimeActionDone(Preferences::ONE_TIME_ACTION_NO_SYSTRAY_AVAILABLE))
+        {
+            QMegaMessageBox::MessageBoxInfo msgInfo;
+            msgInfo.title = getMEGAString();
+            msgInfo.text = tr("Could not find a system tray to place MEGAsync tray icon. "
+                              "MEGAsync is intended to be used with a system tray icon but it can work fine without it. "
+                              "If you want to open the interface, just try to open MEGAsync again.");
+            msgInfo.finishFunc = [this](QPointer<QMessageBox>){
+                preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_NO_SYSTRAY_AVAILABLE, true);
+            };
+            QMegaMessageBox::warning(msgInfo);
+        }
+    }
+}
+
 void MegaApplication::applyStorageState(int state, bool doNotAskForUserStats)
 {
     if (state == MegaApi::STORAGE_STATE_CHANGE)
@@ -1553,7 +1587,6 @@ void MegaApplication::applyStorageState(int state, bool doNotAskForUserStats)
     {
         if (storageState != appliedStorageState)
         {
-            if (!doNotAskForUserStats && previousCachedStoragestate!= MegaApi::STORAGE_STATE_UNKNOWN)
             {
                 updateUserStats(true, false, true, true, USERSTATS_TRAFFICLIGHT);
             }
@@ -1661,14 +1694,13 @@ void MegaApplication::onUploadsCheckedAndReady(QPointer<DuplicatedNodeDialog> ch
         auto data = TransferMetaDataContainer::createTransferMetaData<UploadTransferMetaData>(checkDialog->getNode()->getHandle());
         preferences->setOverStorageDismissExecution(0);
 
-        auto batch = std::shared_ptr<TransferBatch>(new TransferBatch());
+        auto batch = std::shared_ptr<TransferBatch>(new TransferBatch(data->getAppId()));
         mBlockingBatch.add(batch);
 
         EventUpdater updater(uploads.size(),20);
-        mProcessingUploadQueue = true;
 
         auto counter = 0;
-        data->setInitialPendingTransfers(uploads.size());
+        data->setInitialTransfers(uploads.size());
         foreach(auto uploadInfo, uploads)
         {
             QString filePath = uploadInfo->getLocalPath();
@@ -1694,8 +1726,6 @@ void MegaApplication::onUploadsCheckedAndReady(QPointer<DuplicatedNodeDialog> ch
             mBlockingBatch.removeBatch();
             data->remove();
         }
-
-        mProcessingUploadQueue = false;
     }
 }
 
@@ -1798,17 +1828,20 @@ void MegaApplication::tryExitApplication(bool force)
     }
     else
     {
-        QString exitMessage = tr("There is an active transfer. Exit the app?\n"
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.title = getMEGAString();
+        msgInfo.text = tr("There is an active transfer. Exit the app?\n"
                                  "Transfer will automatically resume when you re-open the app.",
                                  "",
                                  mTransfersModel->hasActiveTransfers());
-        QPointer<QMessageBox> exitDialog = new QMessageBox(QMessageBox::Question, tr("MEGAsync"), exitMessage, QMessageBox::Yes|QMessageBox::No);
-        exitDialog->setAttribute(Qt::WA_DeleteOnClose);
-        exitDialog->button(QMessageBox::Yes)->setText(tr("Exit app"));
-        exitDialog->button(QMessageBox::No)->setText(tr("Stay in app"));
-
-        DialogOpener::showDialog<QMessageBox>(exitDialog, [exitDialog, this](){
-            if (exitDialog->result() == QMessageBox::Yes)
+        msgInfo.buttons = QMessageBox::Yes|QMessageBox::No;
+        QMap<QMessageBox::Button, QString> textsByButton;
+        textsByButton.insert(QMessageBox::Yes, tr("Exit app"));
+        textsByButton.insert(QMessageBox::No, tr("Stay in app"));
+        msgInfo.buttonsText = textsByButton;
+        msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
+        {
+            if (msg->result() == QMessageBox::Yes)
             {
                 exitApplication();
             }
@@ -1816,7 +1849,8 @@ void MegaApplication::tryExitApplication(bool force)
             {
                 *testCrashPtr = 0;
             }
-        });
+        };
+        QMegaMessageBox::question(msgInfo);
     }
 }
 
@@ -3071,46 +3105,21 @@ void MegaApplication::cancelScanningStage()
     transferProgressController.stopUiUpdating();
 }
 
-void MegaApplication::updateFileTransferBatchesAndUi(const QString& nodePath, BlockingBatch &batch)
+void MegaApplication::transferBatchFinished(unsigned long long appDataId, bool fromCancellation)
 {
-    if(batch.isValid())
+    if(mBlockingBatch.isValid())
     {
-        QString message = QString::fromUtf8("updateFileTransferBatchesAndUi");
+        QString message = QString::fromUtf8("Transferbatch scanning finished");
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, message.toUtf8().constData());
 
-        batch.onScanCompleted(nodePath);
-        updateIfBlockingStageFinished(batch, false);
+        mBlockingBatch.onScanCompleted(appDataId);
+        if (mBlockingBatch.isBlockingStageFinished() || mBlockingBatch.isCancelled())
+        {
+            scanStageController.stopDelayedScanStage(fromCancellation);
+            transferProgressController.stopUiUpdating();
+            mFolderTransferListener->reset();
+        }
     }
-}
-
-void MegaApplication::updateFolderTransferBatchesAndUi(const QString& nodePath, BlockingBatch &batch, bool fromCancellation)
-{
-    if(batch.isValid())
-    {
-        QString message = QString::fromUtf8("updateFolderTransferBatchesAndUi");
-        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, message.toUtf8().constData());
-
-        batch.onScanCompleted(nodePath);
-        updateIfBlockingStageFinished(batch, fromCancellation);
-    }
-}
-
-void MegaApplication::updateIfBlockingStageFinished(BlockingBatch &batch, bool fromCancellation)
-{
-    if (batch.isBlockingStageFinished() && (batch.isCancelled() || !isQueueProcessingOngoing()))
-    {
-        scanStageController.stopDelayedScanStage(fromCancellation);
-        unblockBatch(batch);
-    }
-}
-
-void MegaApplication::unblockBatch(BlockingBatch &batch)
-{
-    if (batch.hasCancelToken())
-    {
-        mUnblockedCancelTokens.push_back(batch.getCancelToken());
-    }
-    batch.setAsUnblocked();
 }
 
 void MegaApplication::logBatchStatus(const char* tag)
@@ -3155,19 +3164,6 @@ void MegaApplication::enableTransferActions(bool enable)
     if (mBackupsMenu)
     {
         mBackupsMenu->setEnabled(enable);
-    }
-}
-
-void MegaApplication::updateFreedCancelToken(MegaTransfer* transfer)
-{
-    auto finder = [transfer](std::shared_ptr<MegaCancelToken> currentToken)
-    {
-        return (transfer->getCancelToken() == currentToken.get());
-    };
-    auto itToken = std::find_if(mUnblockedCancelTokens.begin(), mUnblockedCancelTokens.end(), finder);
-    if (itToken != mUnblockedCancelTokens.end())
-    {
-        mUnblockedCancelTokens.erase(itToken);
     }
 }
 
@@ -3307,11 +3303,6 @@ void MegaApplication::processUploads(const QStringList &uploads)
     processUploadQueue(folderUploadTarget);
 }
 
-bool MegaApplication::isQueueProcessingOngoing()
-{
-    return mProcessingUploadQueue || downloader->isQueueProcessingOngoing();
-}
-
 void MegaApplication::processUpgradeSecurityEvent()
 {
     // Get outShares paths, to show them to the user
@@ -3325,7 +3316,6 @@ void MegaApplication::processUpgradeSecurityEvent()
     }
 
     // Prepare the dialog
-    QString title = tr("Security upgrade");
     QString message = tr("Your account's security is now being upgraded. "
                         "This will happen only once. If you have seen this message for "
                         "this account before, press Cancel.");
@@ -3336,46 +3326,25 @@ void MegaApplication::processUpgradeSecurityEvent()
                   .arg(outSharesStrings.toList().join(QLatin1String(", "))));
     }
 
-    auto upgradeSecurityDialog = new QMessageBox(QMessageBox::Information, title, message,
-                                                 QMessageBox::Ok|QMessageBox::Cancel);
-
-    //    // Show dialog and:
-    //    // - upgrade security if user says OK
-    //    // - exit app if user says Cancel
-    DialogOpener::showDialog<QMessageBox>(upgradeSecurityDialog, [this, upgradeSecurityDialog](){
-
-        QPointer<MegaApplication> currentMegaApp(this);
-        if (!currentMegaApp)
+    QMegaMessageBox::MessageBoxInfo msgInfo;
+    msgInfo.title = tr("Security upgrade");
+    msgInfo.text = message;
+    msgInfo.buttons = QMessageBox::Ok|QMessageBox::Cancel;
+    msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
         {
-            return;
-        }
-
-        int button =upgradeSecurityDialog->result();
-        if (button == QMessageBox::Ok)
+        if (msg->result() == QMessageBox::Ok)
         {
-//            megaApi->upgradeSecurity(new OnFinishOneShot(megaApi, [=](const MegaError& e){
-//                if (e.getErrorCode() != MegaError::API_OK)
-//                {
-//                    QString errorTitle = tr("Error");
-//                    QString errorMessage = tr("Failed to ugrade security. Error: %1")
-//                                           .arg(tr(e.getErrorString()));
-//                    showErrorMessage(errorMessage, errorTitle);
-//                    exitApplication();
-//                }
-//            }));
+            megaApi->upgradeSecurity(new OnFinishOneShot(megaApi, [=](const MegaError& e){
+                if (e.getErrorCode() != MegaError::API_OK)
+                {
+                    QString errorMessage = tr("Failed to ugrade security. Error: %1")
+                                           .arg(tr(e.getErrorString()));
+                    showErrorMessage(errorMessage, QMegaMessageBox::errorTitle());
+                    exitApplication();
+                }
+            }));
         }
-        else if (button == QMessageBox::Cancel)
-        {
-            exitApplication();
-        }
-
-    });
-}
-
-void MegaApplication::registerCommonQMLElements()
-{
-    //Register metatypes to use them in signals/slots
-    qRegisterMetaType<QQueue<QString> >("QQueueQString");
+        else
     qRegisterMetaTypeStreamOperators<QQueue<QString> >("QQueueQString");
 
     qmlRegisterType<BackupsProxyModel>("BackupsProxyModel", 1, 0, "BackupsProxyModel");
@@ -3385,7 +3354,6 @@ void MegaApplication::registerCommonQMLElements()
 
     qmlRegisterModule("Components.Buttons", 1, 0);
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/Button.qml")), "Components.Buttons", 1, 0, "Button");
-    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/CardButton.qml")), "Components.Buttons", 1, 0, "CardButton");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/CardHorizontalButton.qml")), "Components.Buttons", 1, 0, "CardHorizontalButton");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/CardVerticalButton.qml")), "Components.Buttons", 1, 0, "CardVerticalButton");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/HelpButton.qml")), "Components.Buttons", 1, 0, "HelpButton");
@@ -3453,13 +3421,20 @@ void MegaApplication::onFolderTransferUpdate(FolderTransferUpdateEvent event)
         return;
     }
 
-    transferProgressController.update(event);
-    if (event.stage >= MegaTransfer::STAGE_TRANSFERRING_FILES)
+    //Top Level transfers has finish its scanning
+    if(event.stage >= MegaTransfer::STAGE_TRANSFERRING_FILES)
     {
-        transferProgressController.stopUiUpdating();
-        updateFolderTransferBatchesAndUi(event.transferName, mBlockingBatch, false);
-        logBatchStatus("onTransferUpdate");
+        auto appDataId = TransferMetaDataContainer::appDataToId(event.appData.c_str());
+        if(appDataId.first)
+        {
+            if(auto data = TransferMetaDataContainer::getAppDataById(appDataId.second))
+            {
+                data->topLevelFolderScanningFinished(event.filecount);
+            }
+        }
     }
+
+    transferProgressController.update(event);
 }
 
 void MegaApplication::onNotificationProcessed()
@@ -3590,7 +3565,10 @@ void MegaApplication::showInfoMessage(QString message, QString title)
     }
     else
     {
-        QMegaMessageBox::information(nullptr, title, message);
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.title = title;
+        msgInfo.text = message;
+        QMegaMessageBox::information(msgInfo);
     }
 }
 
@@ -3608,7 +3586,13 @@ void MegaApplication::showWarningMessage(QString message, QString title)
         lastTrayMessage = message;
         mOsNotifications->sendWarningNotification(title, message);
     }
-    else QMegaMessageBox::warning(nullptr, title, message);
+    else
+    {
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.title = title;
+        msgInfo.text = message;
+        QMegaMessageBox::warning(msgInfo);
+    }
 }
 
 void MegaApplication::showErrorMessage(QString message, QString title)
@@ -3642,7 +3626,10 @@ void MegaApplication::showErrorMessage(QString message, QString title)
     }
     else
     {
-        QMegaMessageBox::critical(nullptr, title, message);
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.title = title;
+        msgInfo.text = message;
+        QMegaMessageBox::critical(msgInfo);
     }
 }
 
@@ -4043,17 +4030,23 @@ void MegaApplication::checkOperatingSystem()
 
         if (isOSdeprecated)
         {
-            QMegaMessageBox::warning(nullptr, tr("MEGAsync"),
-                                 tr("Please consider updating your operating system.") + QString::fromUtf8("\n")
+            QMegaMessageBox::MessageBoxInfo msgInfo;
+            msgInfo.title = getMEGAString();
+            QString message = tr("Please consider updating your operating system.") + QString::fromUtf8("\n")
 #ifdef __APPLE__
-                                 + tr("MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.")
+                    + tr("MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.");
 #elif defined(_WIN32)
-                                 + tr("MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.")
+                    + tr("MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.");
 #else
-                                 + tr("MEGAsync will continue to work, however you might not receive new updates.")
+                    + tr("MEGAsync will continue to work, however you might not receive new updates.");
 #endif
-                                 );
+
+            msgInfo.text = message;
+            msgInfo.finishFunc = [this](QPointer<QMessageBox>)
+            {
             preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_OS_TOO_OLD, true);
+            };
+            QMegaMessageBox::warning(msgInfo);
         }
     }
 }
@@ -4540,19 +4533,10 @@ void MegaApplication::onPasteMegaLinksDialogFinish(QPointer<PasteMegaLinksDialog
                     connect(linkProcessor, &LinkProcessor::onLinkImportFinish, this, [this, linkProcessor]() mutable
                     {
                         preferences->setImportFolder(linkProcessor->getImportParentFolder());
-                        linkProcessor->deleteLater();
                     });
 
                     linkProcessor->importLinks(importDialog->getImportPath());
                 }
-                else
-                {
-                    linkProcessor->deleteLater();
-                }
-            }
-            else
-            {
-                linkProcessor->deleteLater();
             }
         });
     }
@@ -6030,25 +6014,27 @@ void MegaApplication::manageBusinessStatus(int64_t event)
         {
             if (megaApi->isMasterBusinessAccount())
             {
-                QMessageBox msgBox;
-                HighDpiResize<QMessageBox> hDpiResizer(&msgBox);
-                msgBox.setIcon(QMessageBox::Warning);
-                // Remove ifdef code for window modality when upgrade to QT 5.9. Issue seems to be fixed.
-                #ifdef __APPLE__
-                    msgBox.setWindowModality(Qt::WindowModal);
-                #endif
-                msgBox.setText(tr("Payment Failed"));
-                msgBox.setInformativeText(tr("This month's payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account."));
-                msgBox.addButton(tr("Pay Now"), QMessageBox::AcceptRole);
-                msgBox.addButton(tr("Dismiss"), QMessageBox::RejectRole);
-                msgBox.setDefaultButton(QMessageBox::Yes);
-                int ret = msgBox.exec();
-                if (ret == QMessageBox::AcceptRole)
+                QMegaMessageBox::MessageBoxInfo msgInfo;
+                msgInfo.title = getMEGAString();
+                msgInfo.text = tr("Payment Failed");
+                msgInfo.informativeText = tr("This month's payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.");
+                msgInfo.buttons = QMessageBox::Yes|QMessageBox::No;
+                msgInfo.defaultButton = QMessageBox::Yes;
+                QMap<QMessageBox::StandardButton, QString> buttonsText;
+                buttonsText.insert(QMessageBox::Yes, tr("Pay Now"));
+                buttonsText.insert(QMessageBox::No, tr("Dismiss"));
+                msgInfo.buttonsText = buttonsText;
+                msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
                 {
-                    QString url = QString::fromUtf8("mega://#repay");
-                    Utilities::getPROurlWithParameters(url);
-                    Utilities::openUrl(QUrl(url));
-                }
+                    if(msg->result() == QMessageBox::Yes)
+                    {
+                        QString url = QString::fromUtf8("mega://#repay");
+                        Utilities::getPROurlWithParameters(url);
+                        Utilities::openUrl(QUrl(url));
+                    }
+                };
+
+                QMegaMessageBox::warning(msgInfo);
             }
 
             if (preferences->logged() &&
@@ -6058,49 +6044,49 @@ void MegaApplication::manageBusinessStatus(int64_t event)
             {
                 MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("no longer BUSINESS_STATUS_EXPIRED").toUtf8().constData());
             }
+
             break;
         }
         case MegaApi::BUSINESS_STATUS_EXPIRED:
         {
-            QMessageBox msgBox;
-            HighDpiResize<QMessageBox> hDpiResizer(&msgBox);
-            msgBox.setIcon(QMessageBox::Warning);
-            // Remove ifdef code for window modality when upgrade to QT 5.9. Issue seems to be fixed.
-            #ifdef __APPLE__
-                msgBox.setWindowModality(Qt::WindowModal);
-            #endif
+            QMegaMessageBox::MessageBoxInfo msgInfo;
+            msgInfo.title = getMEGAString();
+            QMap<QMessageBox::StandardButton, QString> buttonsText;
+            buttonsText.insert(QMessageBox::No, tr("Dismiss"));
 
             if (megaApi->isMasterBusinessAccount())
             {
-                msgBox.setText(tr("Your Business account is expired"));
-                msgBox.setInformativeText(tr("It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments."));
-                msgBox.addButton(tr("Pay Now"), QMessageBox::AcceptRole);
-                msgBox.addButton(tr("Dismiss"), QMessageBox::RejectRole);
-                msgBox.setDefaultButton(QMessageBox::Yes);
-                int ret = msgBox.exec();
-                if (ret == QMessageBox::AcceptRole)
+                msgInfo.text = tr("Your Business account is expired");
+                msgInfo.informativeText = tr("It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.");
+                msgInfo.buttons = QMessageBox::Yes|QMessageBox::No;
+                buttonsText.insert(QMessageBox::Yes, tr("Pay Now"));
+                msgInfo.defaultButton = QMessageBox::Yes;
+                msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
                 {
-                    QString url = QString::fromUtf8("mega://#repay");
-                    Utilities::getPROurlWithParameters(url);
-                    Utilities::openUrl(QUrl(url));
-                }
+                    if(msg->result() == QMessageBox::Yes)
+                    {
+                        QString url = QString::fromUtf8("mega://#repay");
+                        Utilities::getPROurlWithParameters(url);
+                        Utilities::openUrl(QUrl(url));
+                    }
+                };
             }
             else
             {
-                msgBox.setText(tr("Account Suspended"));
-                msgBox.setTextFormat(Qt::RichText);
-                msgBox.setInformativeText(
-                            tr("Your account is currently [A]suspended[/A]. You can only browse your data.")
+                msgInfo.textFormat = Qt::RichText;
+                msgInfo.text = tr("Account Suspended");
+                msgInfo.informativeText = tr("Your account is currently [A]suspended[/A]. You can only browse your data.")
                                 .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<span style=\"font-weight: bold; text-decoration:none;\">"))
                                 .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>"))
                             + QString::fromUtf8("<br>") + QString::fromUtf8("<br>") +
                             tr("[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.")
                                 .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<span style=\"font-weight: bold; color:#DF4843; text-decoration:none;\">"))
-                                .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>")) + QString::fromUtf8("\n"));
-
-                msgBox.addButton(tr("Dismiss"), QMessageBox::RejectRole);
-                msgBox.exec();
+                        .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>")) + QString::fromUtf8("\n");
+                msgInfo.buttons = QMessageBox::No;
             }
+
+            msgInfo.buttonsText = buttonsText;
+            QMegaMessageBox::warning(msgInfo);
 
             break;
         }
@@ -6214,13 +6200,20 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
             }
             case MegaApi::ACCOUNT_BLOCKED_SUBUSER_DISABLED:
             {
-                QMegaMessageBox::warning(nullptr, tr("MEGAsync"), tr("Your account has been disabled by your administrator. Please contact your business account administrator for further details."));
+                QMegaMessageBox::MessageBoxInfo msgInfo;
+                msgInfo.title = getMEGAString();
+                msgInfo.text = tr("Your account has been disabled by your administrator. Please contact your business account administrator for further details.");
+                QMegaMessageBox::warning(msgInfo);
                 break;
             }
             default:
-                QMegaMessageBox::critical(nullptr, QString::fromUtf8("MEGAsync"),
-                                          QCoreApplication::translate("MegaError", event->getText()));
+            {
+                QMegaMessageBox::MessageBoxInfo msgInfo;
+                msgInfo.title = getMEGAString();
+                msgInfo.text = QCoreApplication::translate("MegaError", event->getText());
+                QMegaMessageBox::critical(msgInfo);
                 break;
+        }
         }
 
     }
@@ -6459,7 +6452,10 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     {
         if (e->getErrorCode() == MegaError::API_OK)
         {
-            QMegaMessageBox::information(nullptr, tr("Password changed"), tr("Your password has been changed."));
+            QMegaMessageBox::MessageBoxInfo msgInfo;
+            msgInfo.title =  tr("Password changed");
+            msgInfo.text =   tr("Your password has been changed.");
+            QMegaMessageBox::information(msgInfo);
         }
         break;
     }
@@ -6842,12 +6838,6 @@ void MegaApplication::onTransferStart(MegaApi *api, MegaTransfer *transfer)
         return;
     }
 
-    if(!transfer->isSyncTransfer() && !transfer->isBackupTransfer())
-    {
-        updateFileTransferBatchesAndUi(Utilities::getNodePath(transfer), mBlockingBatch);
-        logBatchStatus("onTransferStart");
-    }
-
     DeferPreferencesSyncForScope deferrer(this);
 
     if (transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
@@ -6873,18 +6863,6 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
     }
 
     DeferPreferencesSyncForScope deferrer(this);
-
-    if(!transfer->isSyncTransfer() && !transfer->isBackupTransfer())
-    {
-        if(mBlockingBatch.isValid())
-        {
-            mBlockingBatch.onTransferFinished(Utilities::getNodePath(transfer), isQueueProcessingOngoing());
-            updateIfBlockingStageFinished(mBlockingBatch, mBlockingBatch.hasCancelToken());
-            updateFreedCancelToken(transfer);
-        }
-
-        logBatchStatus("onTransferFinish");
-    }
 
     if (transfer->getState() == MegaTransfer::STATE_COMPLETED || transfer->getState() == MegaTransfer::STATE_FAILED)
     {
@@ -7119,10 +7097,12 @@ void MegaApplication::showAddSyncError(int errorCode, QString localpath, QString
 {
     if (errorCode != MegaError::API_OK)
     {
-        QMegaMessageBox::critical(nullptr, tr("Error adding sync"),
-                                  tr("This sync can't be added: %1. Reason: %2").arg(localpath)
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.title =  tr("Error adding sync");
+        msgInfo.text = tr("This sync can't be added: %1. Reason: %2").arg(localpath)
                                   .arg( errorCode > 0 ? QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(errorCode))
-                                                      : QCoreApplication::translate("MegaError", MegaError::getErrorString(errorCode))));
+                                   : QCoreApplication::translate("MegaError", MegaError::getErrorString(errorCode)));
+        QMegaMessageBox::critical(msgInfo);
     }
 }
 

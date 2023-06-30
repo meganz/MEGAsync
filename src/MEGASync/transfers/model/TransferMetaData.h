@@ -261,12 +261,13 @@ public:
 
     virtual bool finish(mega::MegaTransfer*, mega::MegaError *);
 
-    void setInitialPendingTransfers(int newTotalTransfers);
+    void setInitialTransfers(int newTotalTransfers);
     void setNotification(MegaNotification* newNotification);
     void unlinkNotification();
 
     unsigned long long getAppId() const;
     void checkAndSendNotification();
+    void checkScanningState();
     void remove();
 
     bool isNonExistData() const;
@@ -278,12 +279,14 @@ public:
     bool isEmpty() const;
 
     //For files
+    int getPendingFiles() const;
     int getTotalFiles() const;
     int getFileTransfersOK() const;
     int getFileTransfersFailed() const;
     void getFileTransferFailedTags(QList<std::shared_ptr<TransferMetaDataItem> > &files, QList<TransferMetaDataItemId>& folders) const;
     QList<TransferMetaDataItemId> getFileFailedTagsFromFolderTag(const TransferMetaDataItemId& folderId) const;
     int getFileTransfersCancelled() const;
+    int getTotaTransfersCancelled() const;
     int getNonExistentCount() const;
 
     TransferMetaDataItemId getFirstTransferIdByState(TransferData::TransferState state) const;
@@ -316,8 +319,10 @@ protected:
     virtual std::shared_ptr<TransferMetaData> createNonExistData() = 0;
     virtual bool isNonExistTransfer(mega::MegaTransfer* transfer) const = 0;
 
-    int mInitialPendingTransfers;
+    int mInitialTopLevelTransfers;
     int mInitialPendingFolderTransfersFromOtherSession;
+    int mFinishedTopLevelTransfers;
+    int mStartedTopLevelTransfers;
 
     TransferMetaDataItemsByState<TransferMetaDataItem> mFiles;
     QMap<TransferMetaDataItemId, std::shared_ptr<TransferMetaDataFolderItem>> mFolders;
@@ -328,14 +333,17 @@ protected:
     bool mCreateRootFolder;
     unsigned long long mAppId;
     bool mCreatedFromOtherSession;
+    bool mProcessCancelled;
+    int mTotalFileCount;
 
 private:
     void retryFailingFile(int tag, mega::MegaHandle nodeHandle);
     void retryFileFromFolderFailingItem(int fileTag, int folderTag, int nodeHandle);
     void retryAllPressed();
 
-    void addInitialPendingTransfer();
-    void decreaseInitialPendingTransfers(mega::MegaTransfer* transfer);
+    void addInitialPendingTopLevelTransferFromOtherSession(bool isFolder);
+    void addInitialPendingTopLevelTransfer();
+    void increaseFinishedTopLevelTransfers(mega::MegaTransfer* transfer);
 
     QPointer<MegaNotification> mNotification;
     QMetaObject::Connection mNotificationDestroyedConnection;
@@ -429,7 +437,7 @@ public:
             auto appData = appDataToId(transfer->getAppData());
             if(appData.first)
             {
-                return getAppData<TYPE>(appData.second);
+                return getAppDataById<TYPE>(appData.second);
             }
         }
 
@@ -437,11 +445,22 @@ public:
     }
 
     template <typename TYPE = TransferMetaData>
-    static std::shared_ptr<TYPE> getAppData(unsigned long long appId)
+    static std::shared_ptr<TYPE> getAppDataById(unsigned long long appId)
     {
         QMutexLocker lock(&mMutex);
         auto data = transferAppData.value(appId);
         return std::dynamic_pointer_cast<TYPE>(data);
+    }
+
+    static std::shared_ptr<TransferMetaData> getAppDataByAppData(const char* appData)
+    {
+        auto appId = appDataToId(appData);
+        if(appId.first)
+        {
+            return getAppDataById(appId.second);
+        }
+
+        return nullptr;
     }
 
     template <typename TYPE = TransferMetaData>

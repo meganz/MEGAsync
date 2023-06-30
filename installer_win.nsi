@@ -26,12 +26,6 @@ VIAddVersionKey "FileDescription" "MEGAsync"
 VIAddVersionKey "LegalCopyright" "MEGA Limited 2023"
 VIAddVersionKey "ProductName" "MEGAsync"
 
-; Version info
-VIProductVersion "4.9.5.0"
-VIAddVersionKey "FileVersion" "4.9.5.0"
-VIAddVersionKey "ProductVersion" "4.9.5.0"
-!define PRODUCT_VERSION "4.9.5"
-
 !define PRODUCT_PUBLISHER "Mega Limited"
 !define PRODUCT_WEB_SITE "http://www.mega.nz"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\MEGAsync.exe"
@@ -65,6 +59,19 @@ VIAddVersionKey "ProductVersion" "4.9.5.0"
 !define MULTIUSER_EXECUTIONLEVEL Standard
 !define MULTIUSER_EXECUTIONLEVEL_ALLUSERS
 !define MULTIUSER_INSTALLMODE_DEFAULT_CURRENTUSER
+
+; Version info: get version directly from the binary
+!getdllversion "${SRCDIR_MEGASYNC}/MEGAsync.exe" Expv_
+VIAddVersionKey "FileVersion" "${Expv_1}.${Expv_2}.${Expv_3}.${Expv_4}"
+!ifdef VERSION_SUFFIX
+VIProductVersion "${Expv_1}.${Expv_2}.${Expv_3}.${Expv_4}-${VERSION_SUFFIX}"
+VIAddVersionKey "ProductVersion" "${Expv_1}.${Expv_2}.${Expv_3}.${Expv_4}-${VERSION_SUFFIX}"
+!define PRODUCT_VERSION "${Expv_1}.${Expv_2}.${Expv_3}-${VERSION_SUFFIX}"
+!else
+VIProductVersion "${Expv_1}.${Expv_2}.${Expv_3}.${Expv_4}"
+VIAddVersionKey "ProductVersion" "${Expv_1}.${Expv_2}.${Expv_3}.${Expv_4}"
+!define PRODUCT_VERSION "${Expv_1}.${Expv_2}.${Expv_3}"
+!endif
 
 !define MEGA_DATA "mega.ini"
 !define UNINSTALLER_NAME "uninst.exe"

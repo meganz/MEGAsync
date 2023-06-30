@@ -33,35 +33,40 @@ MegaHandle FolderBinder::selectedMegaFolder()
     return selectedMegaFolderHandle;
 }
 
-bool FolderBinder::setSelectedMegaFolder(MegaHandle handle)
+void FolderBinder::setSelectedMegaFolder(MegaHandle handle)
 {
     std::unique_ptr<MegaNode> selectedFolder(megaApi->getNodeByHandle(handle));
     if (!selectedFolder)
     {
         selectedMegaFolderHandle = mega::INVALID_HANDLE;
-        return false;
     }
-
-    if (megaApi->getAccess(selectedFolder.get()) < MegaShare::ACCESS_FULL)
+    else
     {
-        selectedMegaFolderHandle = mega::INVALID_HANDLE;
-        QMegaMessageBox::warning(nullptr, tr("Error"), tr("You can not sync a shared folder without Full Access permissions"), QMessageBox::Ok);
-        return false;
+        if (megaApi->getAccess(selectedFolder.get()) < MegaShare::ACCESS_FULL)
+        {
+            selectedMegaFolderHandle = mega::INVALID_HANDLE;
+
+            QMegaMessageBox::MessageBoxInfo msgInfo;
+            msgInfo.title = QMegaMessageBox::errorTitle();
+            msgInfo.text = tr("You can not sync a shared folder without Full Access permissions");
+            QMegaMessageBox::warning(msgInfo);
+        }
+        else
+        {
+            std::unique_ptr<char[]>fPath(megaApi->getNodePath(selectedFolder.get()));
+            if (!fPath)
+            {
+                selectedMegaFolderHandle = mega::INVALID_HANDLE;
+            }
+            else
+            {
+                selectedMegaFolderHandle = handle;
+                ui->eMegaFolder->setText(QString::fromUtf8(fPath.get()));
+
+                checkSelectedSides();
+            }
+        }
     }
-
-    std::unique_ptr<const char[]> fPath(megaApi->getNodePath(selectedFolder.get()));
-    if (!fPath)
-    {
-        selectedMegaFolderHandle = mega::INVALID_HANDLE;
-        return false;
-    }
-
-    selectedMegaFolderHandle = handle;
-    ui->eMegaFolder->setText(QString::fromUtf8(fPath.get()));
-
-    checkSelectedSides();
-
-    return true;
 }
 
 QString FolderBinder::selectedLocalFolder()
