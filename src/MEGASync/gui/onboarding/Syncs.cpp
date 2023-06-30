@@ -52,9 +52,13 @@ void Syncs::addSync(const QString &localPath, mega::MegaHandle remoteHandle)
             auto rootNode = MegaSyncApp->getRootNode();
             if (!rootNode)
             {
-                QMegaMessageBox::warning(nullptr, tr("Error"), tr("Unable to get the filesystem.\n"
-                                                                  "Please, try again. If the problem persists "
-                                                                  "please contact bug@mega.co.nz"));
+                QMegaMessageBox::MessageBoxInfo msgInfo;
+                msgInfo.title = QMegaMessageBox::errorTitle();
+                msgInfo.text =  tr("Unable to get the filesystem.\n"
+                                   "Please, try again. If the problem persists "
+                                   "please contact bug@mega.co.nz");
+
+                QMegaMessageBox::warning(msgInfo);
                 mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG, "Setting isCrashed true: !rootNode (Onboarding)");
                 Preferences::instance()->setCrashed(true);
                 MegaSyncApp->rebootApplication(false);
@@ -66,14 +70,22 @@ void Syncs::addSync(const QString &localPath, mega::MegaHandle remoteHandle)
         }
     }
     else if (syncability == SyncController::CAN_SYNC
-             || (syncability == SyncController::WARN_SYNC
-                 && QMegaMessageBox::warning(nullptr, tr("Warning"), warningMessage
-                                                                         + QLatin1Char('\n')
-                                                                         + tr("Do you want to continue?"),
-                                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
-                        == QMessageBox::Yes))
+               || syncability == SyncController::WARN_SYNC)
     {
-        mSyncController->addSync(localPath, remoteHandle);
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.title = QMegaMessageBox::errorTitle();
+        msgInfo.text =  warningMessage
+                       + QLatin1Char('\n')
+                       + tr("Do you want to continue?");
+        msgInfo.buttons = QMessageBox::Yes | QMessageBox::No, QMessageBox::No;
+        msgInfo.finishFunc = [this, localPath, remoteHandle](QPointer<QMessageBox> msgBox){
+            if(msgBox->result() == QMessageBox::Yes)
+            {
+                mSyncController->addSync(localPath, remoteHandle);
+            }
+        };
+
+        QMegaMessageBox::warning(msgInfo);
     }
 }
 
@@ -86,7 +98,12 @@ void Syncs::onSyncAddRequestStatus(int errorCode, const QString &errorMsg, const
         Text::Decorator dec(&link);
         QString msg = errorMsg;
         dec.process(msg);
-        QMegaMessageBox::warning(nullptr, tr("Error adding sync"), msg, QMessageBox::Ok, QMessageBox::NoButton, QMap<QMessageBox::StandardButton, QString>(), Qt::RichText);
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.title = tr("Error adding sync");
+        msgInfo.text = msg;
+        msgInfo.textFormat = Qt::RichText;
+
+        QMegaMessageBox::warning(msgInfo);
     }
     else
     {

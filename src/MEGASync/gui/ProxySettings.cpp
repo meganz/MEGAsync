@@ -81,18 +81,7 @@ void ProxySettings::onProxyTestFinished(bool success)
 {
     if(success)
     {
-        mProgressDialog->close();
-    }
-    QMegaMessageBox::MessageBoxInfo msgInfo;
-    msgInfo.parent = this;
-    msgInfo.title =  QMegaMessageBox::errorTitle();
-    msgInfo.text =   tr("Your proxy settings are invalid or the proxy doesn't respond");
-    QMegaMessageBox::critical(msgInfo);
-}
-
-void ProxySettings::onProxyTestSuccess()
-{
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Proxy test OK");
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Proxy test OK");
 
         if (mUi->rNoProxy->isChecked())
         {
@@ -130,8 +119,11 @@ void ProxySettings::onProxyTestSuccess()
         {
             mProgressDialog->close();
         }
-        QMegaMessageBox::critical(this, tr("Error"),
-                                  tr("Your proxy settings are invalid or the proxy doesn't respond"));
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.parent = this;
+        msgInfo.title =  QMegaMessageBox::errorTitle();
+        msgInfo.text =   tr("Your proxy settings are invalid or the proxy doesn't respond");
+        QMegaMessageBox::critical(msgInfo);
     }
 }
 

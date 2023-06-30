@@ -3317,13 +3317,13 @@ void MegaApplication::processUpgradeSecurityEvent()
 
     // Prepare the dialog
     QString message = tr("Your account's security is now being upgraded. "
-                        "This will happen only once. If you have seen this message for "
-                        "this account before, press Cancel.");
+                         "This will happen only once. If you have seen this message for "
+                         "this account before, press Cancel.");
     if (!outSharesStrings.isEmpty())
     {
         message.append(QLatin1String("<br><br>"));
         message.append(tr("You are currently sharing the following folder: %1", "", outSharesStrings.size())
-                  .arg(outSharesStrings.toList().join(QLatin1String(", "))));
+                           .arg(outSharesStrings.toList().join(QLatin1String(", "))));
     }
 
     QMegaMessageBox::MessageBoxInfo msgInfo;
@@ -3331,20 +3331,30 @@ void MegaApplication::processUpgradeSecurityEvent()
     msgInfo.text = message;
     msgInfo.buttons = QMessageBox::Ok|QMessageBox::Cancel;
     msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
-        {
+    {
         if (msg->result() == QMessageBox::Ok)
         {
             megaApi->upgradeSecurity(new OnFinishOneShot(megaApi, [=](const MegaError& e){
                 if (e.getErrorCode() != MegaError::API_OK)
                 {
                     QString errorMessage = tr("Failed to ugrade security. Error: %1")
-                                           .arg(tr(e.getErrorString()));
+                                               .arg(tr(e.getErrorString()));
                     showErrorMessage(errorMessage, QMegaMessageBox::errorTitle());
                     exitApplication();
                 }
             }));
         }
         else
+        {
+            exitApplication();
+        }
+    };
+
+    QMegaMessageBox::information(msgInfo);
+}
+
+void MegaApplication::registerCommonQMLElements()
+{
     qRegisterMetaTypeStreamOperators<QQueue<QString> >("QQueueQString");
 
     qmlRegisterType<BackupsProxyModel>("BackupsProxyModel", 1, 0, "BackupsProxyModel");

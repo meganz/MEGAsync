@@ -178,21 +178,34 @@ void LoginController::onLogin(mega::MegaRequest *request, mega::MegaError *e)
         {
         case mega::MegaError::API_EINCOMPLETE:
         {
-            QMegaMessageBox::warning(nullptr, tr("Error"), tr("Please check your e-mail and click the link to confirm your account."), QMessageBox::Ok);
+            QMegaMessageBox::MessageBoxInfo msgInfo;
+            msgInfo.title = QMegaMessageBox::errorTitle();
+            msgInfo.text =  tr("Please check your e-mail and click the link to confirm your account.");
+            msgInfo.buttons = QMessageBox::Ok;
+
+            QMegaMessageBox::warning(msgInfo);
             break;
         }
         case mega::MegaError::API_ETOOMANY:
         {
-            QMegaMessageBox::warning(nullptr, tr("Error"),
-                                     tr("You have attempted to log in too many times.[BR]Please wait until %1 and try again.")
-                                         .replace(QString::fromUtf8("[BR]"), QString::fromUtf8("\n"))
-                                         .arg(QTime::currentTime().addSecs(3600).toString(QString::fromUtf8("hh:mm")))
-                                     , QMessageBox::Ok);
+            QMegaMessageBox::MessageBoxInfo msgInfo;
+            msgInfo.title = QMegaMessageBox::errorTitle();
+            msgInfo.text = tr("You have attempted to log in too many times.[BR]Please wait until %1 and try again.")
+                               .replace(QString::fromUtf8("[BR]"), QString::fromUtf8("\n"))
+                               .arg(QTime::currentTime().addSecs(3600).toString(QString::fromUtf8("hh:mm")));
+            msgInfo.buttons = QMessageBox::Ok;
+
+            QMegaMessageBox::warning(msgInfo);
             break;
         }
         case mega::MegaError::API_EBLOCKED:
         {
-            QMegaMessageBox::critical(nullptr, tr("Error"), tr("Your account has been blocked. Please contact support@mega.co.nz"));
+            QMegaMessageBox::MessageBoxInfo msgInfo;
+            msgInfo.title = QMegaMessageBox::errorTitle();
+            msgInfo.text = tr("Your account has been blocked. Please contact support@mega.co.nz");
+            msgInfo.buttons = QMessageBox::Ok;
+
+            QMegaMessageBox::critical(msgInfo);
             break;
         }
         case mega::MegaError::API_EMFAREQUIRED:
@@ -204,7 +217,12 @@ void LoginController::onLogin(mega::MegaRequest *request, mega::MegaError *e)
         default:
             if(e->getErrorCode() != mega::MegaError::API_ESSL)
             {
-                QMegaMessageBox::warning(nullptr, tr("Error"), QCoreApplication::translate("MegaError", e->getErrorString()), QMessageBox::Ok);
+                QMegaMessageBox::MessageBoxInfo msgInfo;
+                msgInfo.title = QMegaMessageBox::errorTitle();
+                msgInfo.text = QCoreApplication::translate("MegaError", e->getErrorString());
+                msgInfo.buttons = QMessageBox::Ok;
+
+                QMegaMessageBox::warning(msgInfo);
             }
             break;
         }
@@ -276,9 +294,14 @@ void LoginController::onFetchNodes(mega::MegaRequest *request, mega::MegaError *
         // TODO: check with sdk team if this case is possible
         if (!MegaSyncApp->getRootNode())
         {
-            QMegaMessageBox::warning(nullptr, tr("Error"), tr("Unable to get the filesystem.\n"
-                                                              "Please, try again. If the problem persists "
-                                                              "please contact bug@mega.co.nz"), QMessageBox::Ok);
+            QMegaMessageBox::MessageBoxInfo msgInfo;
+            msgInfo.title = QMegaMessageBox::errorTitle();
+            msgInfo.text = tr("Unable to get the filesystem.\n"
+                              "Please, try again. If the problem persists "
+                              "please contact bug@mega.co.nz");
+            msgInfo.buttons = QMessageBox::Ok;
+
+            QMegaMessageBox::warning(msgInfo);
             MegaSyncApp->rebootApplication(false);
             return;
         }
@@ -302,9 +325,13 @@ void LoginController::onLogout(mega::MegaRequest *request, mega::MegaError *e)
     //This message is shown every time the user tries to login and the SSL fails
     if(request->getParamType() == mega::MegaError::API_ESSL)
     {
-        QMegaMessageBox::critical(nullptr, QString::fromUtf8("MEGAsync"),
-                                  tr("Our SSL key can't be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.")
-                                      + QString::fromUtf8(" (Issuer: %1)").arg(QString::fromUtf8(request->getText() ? request->getText() : "Unknown")));
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.title = QMegaMessageBox::errorTitle();
+        msgInfo.text = tr("Our SSL key can't be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.")
+                       + QString::fromUtf8(" (Issuer: %1)").arg(QString::fromUtf8(request->getText() ? request->getText() : "Unknown"));
+        msgInfo.buttons = QMessageBox::Ok;
+
+        QMegaMessageBox::warning(msgInfo);
         megaApi()->localLogout();
         // TODO: to login page??
     }
@@ -619,12 +646,20 @@ void FastLoginController::onLogin(mega::MegaRequest *request, mega::MegaError *e
         }
         else if (errorCode == mega::MegaError::API_EBLOCKED)
         {
-            QMegaMessageBox::critical(nullptr, tr("MEGAsync"), tr("Your account has been blocked. Please contact support@mega.co.nz"));
+            QMegaMessageBox::MessageBoxInfo msgInfo;
+            msgInfo.title = tr("MEGAsync");
+            msgInfo.text = tr("Your account has been blocked. Please contact support@mega.co.nz");
+
+            QMegaMessageBox::critical(msgInfo);
         }
         else if (errorCode != mega::MegaError::API_ESID && errorCode != mega::MegaError::API_ESSL)
         //Invalid session or public key, already managed in TYPE_LOGOUT
         {
-            QMegaMessageBox::warning(nullptr, tr("MEGAsync"), tr("Login error: %1").arg(QCoreApplication::translate("MegaError", e->getErrorString())));
+            QMegaMessageBox::MessageBoxInfo msgInfo;
+            msgInfo.title = tr("MEGAsync");
+            msgInfo.text = tr("Login error: %1").arg(QCoreApplication::translate("MegaError", e->getErrorString()));
+
+            QMegaMessageBox::warning(msgInfo);
         }
 
         //Wrong login -> logout
@@ -672,18 +707,29 @@ void LogoutController::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *re
 
         if (errorCode == mega::MegaError::API_ESID)
         {
-            QMegaMessageBox::information(nullptr, QString::fromUtf8("MEGAsync"), tr("You have been logged out on this computer from another location"));
+            QMegaMessageBox::MessageBoxInfo msgInfo;
+            msgInfo.title = tr("MEGAsync");
+            msgInfo.text = tr("You have been logged out on this computer from another location");
+
+            QMegaMessageBox::information(msgInfo);
         }
         else if (errorCode == mega::MegaError::API_ESSL)
         {
-            QMegaMessageBox::critical(nullptr, QString::fromUtf8("MEGAsync"),
-                                      tr("Our SSL key can't be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.")
-                                          + QString::fromUtf8(" (Issuer: %1)").arg(QString::fromUtf8(request->getText() ? request->getText() : "Unknown")));
+            QMegaMessageBox::MessageBoxInfo msgInfo;
+            msgInfo.title = tr("MEGAsync");
+            msgInfo.text = tr("Our SSL key can't be verified. You could be affected by a man-in-the-middle attack or your antivirus software "
+                              "could be intercepting your communications and causing this problem. Please disable it and try again.")
+                            + QString::fromUtf8(" (Issuer: %1)").arg(QString::fromUtf8(request->getText() ? request->getText() : "Unknown"));
+
+            QMegaMessageBox::critical(msgInfo);
         }
         else if (errorCode != mega::MegaError::API_EACCESS)
         {
-            QMegaMessageBox::information(nullptr, QString::fromUtf8("MEGAsync"), tr("You have been logged out because of this error: %1")
-                                                                                     .arg(QCoreApplication::translate("MegaError", e->getErrorString())));
+            QMegaMessageBox::MessageBoxInfo msgInfo;
+            msgInfo.title = tr("MEGAsync");
+            msgInfo.text =tr("You have been logged out because of this error: %1").arg(QCoreApplication::translate("MegaError", e->getErrorString()));
+
+            QMegaMessageBox::information(msgInfo);
         }
         MegaSyncApp->unlink();
     }
