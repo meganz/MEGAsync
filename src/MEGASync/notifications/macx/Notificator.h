@@ -13,7 +13,7 @@ class MegaNotification : public MegaNotificationBase
 
 public:
     MegaNotification();
-    ~MegaNotification() = default;
+    ~MegaNotification();
 
     QStringList getActions() const override;
 };

@@ -39,11 +39,7 @@ void Notificator::notify(Class cls, const QString &title, const QString &text, i
     case UserNotificationCenter:
     {
         MegaNotification *n = new MegaNotification();
-        if (title == tr("MEGAsync"))
-        {
-            n->setTitle(QString::fromUtf8("MEGA"));
-        }
-        else
+        if (title != MegaSyncApp->getMEGAString())
         {
             n->setTitle(title);
         }
@@ -77,6 +73,11 @@ const QString& MegaNotificationBase::defaultImage = QString();
 MegaNotification::MegaNotification()
     : MegaNotificationBase()
 {
+}
+
+MegaNotification::~MegaNotification()
+{
+    NotificationHandler::instance()->hideNotification(this);
 }
 
 QStringList MegaNotification::getActions() const

@@ -602,8 +602,11 @@ void HTTPServer::externalDownloadRequest(QString &response, const HTTPRequest& r
                         long long size = Utilities::extractJSONNumber(file, QString::fromUtf8("s"));
                         long long mtime = Utilities::extractJSONNumber(file, QString::fromUtf8("ts"));
 
+                        QString crc    = Utilities::extractJSONString(file, QString::fromUtf8("c"));
+
                         MegaNode *node = megaApi->createForeignFileNode(h, key.toUtf8().constData(),
                                                          name.toUtf8().constData(), size, mtime,
+                                                         crc.isEmpty() ? nullptr : crc.toUtf8().constData(),
                                                          p, privateAuth.toUtf8().constData(),
                                                          publicAuth.toUtf8().constData(), chatAuth.isEmpty() ? NULL : chatAuth.toUtf8().constData());
                         downloadQueue.append(new WrappedNode(WrappedNode::TransferOrigin::FROM_WEBSERVER, node));

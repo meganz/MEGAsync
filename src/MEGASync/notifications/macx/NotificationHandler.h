@@ -18,6 +18,7 @@ public:
     NotificationHandler();
 
     virtual void showNotification(MegaNotification *notification) = 0;
+    virtual void hideNotification(MegaNotification *notification) = 0;
     virtual bool acceptsMultipleSelection() = 0;
 
     /** executes AppleScript */

@@ -21,7 +21,7 @@
     <message>
         <source>Transfer</source>
         <translatorcomment>Label to indicate the section of transfer used of the current account.</translatorcomment>
-        <translation>Transferências</translation>
+        <translation>Transferência</translation>
     </message>
     <message>
         <source>Of that, size taken up by file versions:</source>
@@ -183,7 +183,7 @@
     <message>
         <source>NEW</source>
         <translatorcomment>Label that indicates there is a new notification available.</translatorcomment>
-        <translation>NOVAS</translation>
+        <translation>NOVA</translation>
     </message>
     <message>
         <source>Contacts</source>
@@ -218,7 +218,7 @@
     <message>
         <source>Contact Established</source>
         <translatorcomment>Notification label that indicates the user has established a new contact relationship</translatorcomment>
-        <translation>Vocês agora são contatos</translation>
+        <translation>Agora vocês são contatos</translation>
     </message>
     <message>
         <source>Contact Blocked</source>
@@ -273,7 +273,7 @@
     <message>
         <source>[A] has been deleted/deactivated</source>
         <translatorcomment>Label to indicate that [A] has been deleted from your contacts. Placeholder will be replaced by email of user deleted</translatorcomment>
-        <translation>[A] foi eliminado ou desativado</translation>
+        <translation>A conta de [A] foi deletada ou desativada</translation>
     </message>
     <message>
         <source>[A] established you as a contact</source>
@@ -390,6 +390,16 @@
         <translatorcomment>Label to indicate a reminder about a contact request.</translatorcomment>
         <translation>Lembrete: você tem uma solicitação de contato</translation>
     </message>
+    <message>
+        <source>Shared folder updated</source>
+        <translatorcomment>Label to indicate that a shared folder was updated. CON-295</translatorcomment>
+        <translation>Pasta compartilhada atualizada</translation>
+    </message>
+    <message numerus="yes">
+        <source>[A] updated %n item</source>
+        <translatorcomment>Label to indicate that user [A] has updated %n items in shared folder. Placeholder [A] will be replaced by the email or full name of the user that made the update and %n with the number of removed items. CON-295</translatorcomment>
+        <translation><numerusform>[A] atualizou %n item</numerusform><numerusform>[A] atualizou %n itens</numerusform></translation>
+    </message>
 </context>
 <context>
     <name>BackupItemModel</name>
@@ -424,7 +434,7 @@
     <message>
         <source>If you don&apos;t want to rename the new folder, stop the backup in the [A]Backup centre[/A] for the existing folder. Then setup the backup for the new folder again.</source>
         <translatorcomment>Text instructing the user to go to the backup center to solve the backup name conflict</translatorcomment>
-        <translation>Se você não quiser renomear a nova pasta, interrompa o backup da pasta atual na [A]Central de backups[/A]. A continuação, configure o backup da nova pasta outra vez.</translation>
+        <translation>Se você não quiser renomear a nova pasta, interrompa o backup da pasta atual na [A]Central de backups[/A]. A continuação, configure novamente o backup da nova pasta.</translation>
     </message>
     <message>
         <source>Rename and backup</source>
@@ -478,7 +488,7 @@
     <message>
         <source>Backup is enabled</source>
         <translatorcomment>Checkbox tooltip that is displayed when it is checked.(Backup enabled)</translatorcomment>
-        <translation>O backup está ativado</translation>
+        <translation>O backup está ativo</translation>
     </message>
     <message>
         <source>Backup is disabled</source>
@@ -516,7 +526,7 @@
     <message>
         <source>All folders have been synced or backed up.</source>
         <translatorcomment>Label that indicates that all the folders in the system have been synced or backed up</translatorcomment>
-        <translation>Todas as pastas foram sincronizadas ou salvas no backup.</translation>
+        <translation>Todas as pastas foram sincronizadas ou salvas como backup.</translation>
     </message>
     <message>
         <source>Selected backup folders</source>
@@ -586,7 +596,7 @@
     <message numerus="yes">
         <source>Backup created</source>
         <translatorcomment>Backup successfully created dialog title</translatorcomment>
-        <translation><numerusform>Backups criado</numerusform><numerusform>Backups feitos</numerusform></translation>
+        <translation><numerusform>O Backup foi criado</numerusform><numerusform>Os Backups foram criados</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>We&apos;re backing up your folder. The time this takes depends on the files in this folder.</source>
@@ -601,12 +611,12 @@
     <message numerus="yes">
         <source>This folder wasn&apos;t backed up. Try again.</source>
         <translatorcomment>Label that indicates that there happened an error backing up a folder/folders</translatorcomment>
-        <translation><numerusform>O backup desta pasta ainda não foi feito, tente novamente.</numerusform><numerusform>O backup destas pastas ainda não foi feito, tente novamente.</numerusform></translation>
+        <translation><numerusform>Não foi possível fazer o backup desta pasta - tente novamente.</numerusform><numerusform>Não foi possível fazer o backup destas pastas - tente novamente.</numerusform></translation>
     </message>
     <message>
         <source>Folder is already selected. Select a different folder.</source>
         <translatorcomment>Warning message that indicates that the folder that the user is trying to select is already selected</translatorcomment>
-        <translation>Esta pasta já está selecionada, selecione outra pasta.</translation>
+        <translation>Esta pasta já foi selecionada - selecione outra pasta.</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
@@ -649,7 +659,7 @@
     <message>
         <source>Bandwidth</source>
         <translatorcomment>Title of the dialog to manage Bandwidth settings.</translatorcomment>
-        <translation>Banda</translation>
+        <translation>Banda larga</translation>
     </message>
     <message>
         <source>Upload rate limit</source>
@@ -664,7 +674,7 @@
     <message>
         <source>Limit to:</source>
         <translatorcomment>Radio button text to indicate the limit for transfer rate.</translatorcomment>
-        <translation>Limitar em:</translation>
+        <translation>Limitar a:</translation>
     </message>
     <message>
         <source>KB/s</source>
@@ -679,7 +689,7 @@
     <message>
         <source>(Max. 90% of available bandwidth)</source>
         <translatorcomment>Label to indicate that auto rate option will take a maximum of 90% of the available bandwidth.</translatorcomment>
-        <translation>(Máximo de 90% da largura de banda disponível)</translation>
+        <translation>(Máximo de 90% da banda larga disponível)</translation>
     </message>
     <message>
         <source>Download rate limit</source>
@@ -709,7 +719,7 @@
     <message>
         <source>Apply</source>
         <translatorcomment>Button label for apply and confirm the bandwidth changes (Windows and Linux)</translatorcomment>
-        <translation>Aplicar</translation>
+        <translation>Confirmar</translation>
     </message>
     <message>
         <source>Upload rate limit:</source>
@@ -800,7 +810,7 @@
     <message>
         <source>Describe the problem</source>
         <translatorcomment>Label to indicate the description input field of form bug report. The user will fill it with a description of the bug and any specific detail that wants to be included.</translatorcomment>
-        <translation>Descreva o problema</translation>
+        <translation>Descrição do problema</translation>
     </message>
     <message>
         <source>Attach diagnostic log files to assist with debugging</source>
@@ -825,22 +835,22 @@
     <message>
         <source>Bug report is uploading, it may take a few minutes</source>
         <translatorcomment>Label to indicate that the bug report is being uploaded to our support team.</translatorcomment>
-        <translation>O envio das informações relacionadas ao problema relatado pode demorar alguns minutos.</translation>
+        <translation>As informações relacionadas ao problema estão sendo enviadas - o envio pode demorar alguns minutos.</translation>
     </message>
     <message>
         <source>Bug report success!</source>
         <translatorcomment>Confirmation message shown when a bug report is successfully uploaded.</translatorcomment>
-        <translation>A informação sobre o problema foi enviada.</translation>
+        <translation>As informações relacionadas ao problema foram enviadas.</translation>
     </message>
     <message>
         <source>Your bug report has been submitted, a confirmation email will sent to you accordingly.</source>
         <translatorcomment>Label to inform the user that he will receive a confirmation email </translatorcomment>
-        <translation>O problema foi notificado - você receberá um e-mail de confirmação.</translation>
+        <translation>O problema foi notificado - você receberá um email de confirmação.</translation>
     </message>
     <message>
         <source>Error on submitting bug report</source>
         <translatorcomment>Error message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation>Não foi possível enviar a informação sobre o problema.</translation>
+        <translation>Não foi possível enviar as informações sobre o problema.</translation>
     </message>
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
@@ -855,12 +865,12 @@
     <message>
         <source>Are you sure you want to exit uploading?</source>
         <translatorcomment>Confirmation message shown when the user is trying to cancel the ongoing upload report.</translatorcomment>
-        <translation>Você quer cancelar a o envio da informação sobre o problema?</translation>
+        <translation>Você quer cancelar a o envio das informações sobre o problema?</translation>
     </message>
     <message>
         <source>The bug report will not be submitted if you exit uploading.</source>
         <translatorcomment>Informative message shown to the user to inform that if he exits the dialog the bug report upload will not be submitted.</translatorcomment>
-        <translation>Se você cancelar o envio, a informação não será enviada.</translation>
+        <translation>Se você cancelar o envio, as informações não serão enviadas.</translation>
     </message>
     <message>
         <source>Continue</source>
@@ -875,12 +885,12 @@
     <message>
         <source>There is an ongoing report being uploaded.</source>
         <translatorcomment>Informative message shown when user is trying to upload a bug report while there is an ongoing upload.</translatorcomment>
-        <translation>Já está sendo enviada a informação sobre outro problema.</translation>
+        <translation>As informações sobre outro problema estão sendo enviadas.</translation>
     </message>
     <message>
         <source>Please wait until the current upload is completed.</source>
         <translatorcomment>Informative message shown to the user to inform that needs to wait until the current bug report upload is completed to start a new one bug report.</translatorcomment>
-        <translation>Por favor, espere que o envio atual seja concluído.</translation>
+        <translation>Por favor, espere que o envio atual seja finalizado.</translation>
     </message>
 </context>
 <context>
@@ -979,7 +989,7 @@
     <message>
         <source>Please enter your password</source>
         <translatorcomment>Error message displayed when an empty password has been provided</translatorcomment>
-        <translation>Digite sua senha</translation>
+        <translation>Digite a sua senha</translation>
     </message>
     <message>
         <source>The entered passwords don&apos;t match</source>
@@ -1067,6 +1077,19 @@
         <translatorcomment>Checkbox to let the user attach diagnostic log files for analysis when an application crash occurs. Keep [Br] place holder.</translatorcomment>
         <translation>Anexar arquivos de log de diagnóstico para ajudar na depuração.
 Estes arquivos podem conter detalhes sobre os seus dados, como nomes de arquivos ou pastas.</translation>
+    </message>
+</context>
+<context>
+    <name>DateTimeFormatter</name>
+    <message>
+        <source>Today at %1</source>
+        <translatorcomment>Label to indicate the today time of the current alert item displayed or completed transfer. SNC-2977</translatorcomment>
+        <translation>Hoje à %1</translation>
+    </message>
+    <message>
+        <source>Yesterday at %1</source>
+        <translatorcomment>Label to indicate the yesterday time of the current alert item displayed or completed transfer. SNC-2977</translatorcomment>
+        <translation>Ontem às %1</translation>
     </message>
 </context>
 <context>
@@ -1290,6 +1313,11 @@ Estes arquivos podem conter detalhes sobre os seus dados, como nomes de arquivos
         <source>Show in MEGA</source>
         <translatorcomment>Notification button to redirect the user to remote location. It will open webclient at specific location.</translatorcomment>
         <translation>Mostrar no MEGA</translation>
+    </message>
+    <message numerus="yes">
+        <source>[A] updated %n item</source>
+        <translatorcomment>Label to indicate that user [A] has updated %n items in shared folder. Placeholder [A] will be replaced by the email or full name of the user that made the update and %n with the number of removed items. CON-295</translatorcomment>
+        <translation><numerusform>[A] atualizou %n item</numerusform><numerusform>[A] atualizou %n itens</numerusform></translation>
     </message>
 </context>
 <context>
@@ -2883,11 +2911,6 @@ As transferências continuarão automaticamente quando você abrir o aplicativo 
         <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
         <translation>O backup da pasta “%1” foi temporariamente desativado: %2</translation>
     </message>
-    <message>
-        <source>Error transferring folder: %1</source>
-        <translatorcomment>Label to indicate that has been an error during a folder transfer.  Placeholder %1 displays the reason.</translatorcomment>
-        <translation>Erro ao transferir a pasta: %1</translation>
-    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -4107,16 +4130,14 @@ Digite um nome diferente.
 <context>
     <name>Preferences</name>
     <message>
-        <source>- You can now search the stored data in your account.
-- We've improved system notifications.
+        <source>- We&apos;ve enhanced system notifications.
 - We've enhanced the UI.
 - We've fixed the detected crashes on Windows, Linux, and macOS.
 </source>
-        <translation>- Possibilidade de pesquisar os dados armazenados na sua conta.
-- Melhores notificações do sistema.
+        <translatorcomment>Changelog for v4.9.5</translatorcomment>
+        <translation>- Melhoria nas notificações do sistema.
 - Aprimoramento da interface do usuário.
-- Correção de falhas detectadas em Windows, Linux e macOS.
-</translation>
+- Correção de erros detectados em Windows, Linux e macOS.</translation>
     </message>
 </context>
 <context>
@@ -4809,11 +4830,6 @@ Você quer deletá-lo mesmo assim?</translation>
         <source>Add</source>
         <translatorcomment>Button label to add a synchronization. String as short as possible.</translatorcomment>
         <translation>Adicionar</translation>
-    </message>
-    <message>
-        <source>Auto</source>
-        <translatorcomment>Label to indicate that management of rate upload limit is automatic.</translatorcomment>
-        <translation>Automático</translation>
     </message>
     <message>
         <source>Data temporarily unavailable</source>
@@ -5516,6 +5532,22 @@ Do you want to restart MEGAsync now?</source>
         <source>Prevent the computer from going to sleep when transfers or syncs are in progress.</source>
         <translatorcomment>Sleep/Active mode: Feature description label for keeping the pc awake when there are active transfers</translatorcomment>
         <translation>Evitar que o computador entre em suspensão enquanto houver transferências ou sincronizações em andamento.</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsDialog_Bandwith</name>
+    <message>
+        <source>Auto</source>
+        <translatorcomment>Label to indicate that management of rate upload limit is automatic. SNC-3076</translatorcomment>
+        <translation>Automático</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsDialog_Proxies</name>
+    <message>
+        <source>Auto</source>
+        <translatorcomment>Label to indicate that proxy settings are on auto detec mode. SNC-3076</translatorcomment>
+        <translation>Automático</translation>
     </message>
 </context>
 <context>
@@ -6648,116 +6680,186 @@ Para obter mais cota, faça o upgrade a uma conta Pro ou espere [A] para que mai
     </message>
 </context>
 <context>
-    <name>TransferNotificationBuilderBase</name>
+    <name>TransferNotificationBuilder</name>
     <message>
-        <source>Uploaded 1 file to %1.</source>
-        <translatorcomment>Notification text that inform 1 file has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation>Foi feito o upload de 1 arquivo em %1.</translation>
-    </message>
-    <message>
-        <source>Uploaded 1 folder to %1.</source>
-        <translatorcomment>Notification text that inform 1 folder has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation>Foi feito o upload de 1 pasta em %1.</translation>
-    </message>
-    <message>
-        <source>File uploaded</source>
-        <translatorcomment>Notification title when a file has been uploaded</translatorcomment>
-        <translation>Upload de arquivo</translation>
-    </message>
-    <message>
-        <source>Folder uploaded</source>
-        <translatorcomment>Notification title when a folder has been uploaded</translatorcomment>
-        <translation>Upload de pasta</translation>
+        <source>Retry</source>
+        <translatorcomment>Notification button to retry the failed file. CON-223</translatorcomment>
+        <translation>Tentar novamente</translation>
     </message>
     <message>
         <source>Show in MEGA</source>
-        <translatorcomment>Notification button to see the file on the webclient</translatorcomment>
+        <translatorcomment>Notification button to see the file on the webclient. CON-223</translatorcomment>
         <translation>Mostrar no MEGA</translation>
     </message>
     <message>
         <source>Get link</source>
-        <translatorcomment>Notification button to get the file link</translatorcomment>
+        <translatorcomment>Notification button to get the file link. CON-223</translatorcomment>
         <translation>Obter link</translation>
     </message>
     <message>
-        <source>Downloaded 1 file to %1.</source>
-        <translatorcomment>Notification text that inform 1 file has been downloaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation>Foi feito o download de 1 arquivo em %1.</translation>
-    </message>
-    <message>
-        <source>Downloaded 1 folder to %1.</source>
-        <translatorcomment>Notification text that inform 1 folder has been downloaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation>Foi feito o download de 1 pasta em %1.</translation>
-    </message>
-    <message>
         <source>Show in folder</source>
-        <translatorcomment>Notification button to see the file on the local file explorer</translatorcomment>
+        <translatorcomment>Notification button to see the file on the local file explorer. CON-223</translatorcomment>
         <translation>Mostrar na pasta</translation>
     </message>
     <message>
         <source>Open</source>
-        <translatorcomment>Notification button to open the file</translatorcomment>
+        <translatorcomment>Notification button to open the file. CON-223</translatorcomment>
         <translation>Abrir</translation>
     </message>
-    <message>
-        <source>File downloaded</source>
-        <translatorcomment>Notification title when a file has been downloaded</translatorcomment>
-        <translation>Download de arquivo</translation>
-    </message>
-    <message>
-        <source>Folder downloaded</source>
-        <translatorcomment>Notification title when a folder has been downloaded</translatorcomment>
-        <translation>Download de pasta</translation>
-    </message>
     <message numerus="yes">
-        <source>%n upload successful</source>
-        <translatorcomment>Notification text that inform that an upload was successful. %1 is the number of uploads. This string goes always with the %n upload cancelled and/or %n upload failed strings.</translatorcomment>
-        <translation><numerusform>%n upload finalizado</numerusform><numerusform>%n uploads finalizados</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>, %n upload cancelled</source>
-        <translatorcomment>Appended text that inform that an upload was cancelled. %1 is the number of cancelled uploads. This string goes always appended to the %n upload successful</translatorcomment>
-        <translation><numerusform>, foi cancelado %n upload</numerusform><numerusform>, foram cancelados %n uploads</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>, %n upload failed</source>
-        <translatorcomment>Appended text that inform that an upload has failed. %1 is the number of failed uploads. This string goes always appended to the %n upload successful</translatorcomment>
-        <translation><numerusform>e %n upload falhou</numerusform><numerusform>e %n uploads falharam</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Uploaded %n items to %1</source>
-        <translatorcomment>Notification text that inform n items (files or folders) has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation><numerusform>Foi feito o upload de %n item em %1</numerusform><numerusform>Foi feito o upload de %n itens em %1</numerusform></translation>
+        <source>Retry failed items</source>
+        <translatorcomment>Notification button to retry failed transfers when not all the transfers failed. CON-223</translatorcomment>
+        <translation><numerusform>Tentar novamente o item com erro</numerusform><numerusform>Tentar novamente os itens com erro</numerusform></translation>
     </message>
     <message>
-        <source>Items uploaded</source>
-        <translatorcomment>Notification title when a more than one transfer (file or folders) have been uploaded</translatorcomment>
-        <translation>Upload de itens</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n download successful</source>
-        <translatorcomment>Notification text that inform that an download was successful. %1 is the number of downloads. This string goes always with the %n download cancelled and/or %n download failed strings.</translatorcomment>
-        <translation><numerusform>%n download finalizado</numerusform><numerusform>%n downloads finalizados</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>, %n download cancelled</source>
-        <translatorcomment>Appended text that inform that an download was cancelled. %1 is the number of cancelled downloads. This string goes always appended to the %n download successful</translatorcomment>
-        <translation><numerusform>, foi cancelado %n download</numerusform><numerusform>, foram cancelados %n downloads</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>, %n download failed</source>
-        <translatorcomment>Appended text that inform that an download has failed. %1 is the number of failed downloads. This string goes always appended to the %n download successful</translatorcomment>
-        <translation><numerusform>e %n download falhou</numerusform><numerusform>e %n downloads falharam</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Downloaded %n items to %1</source>
-        <translatorcomment>Notification text that inform n items (files or folders) has been downloaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation><numerusform>Foi feito o download de %n item em %1</numerusform><numerusform>Foi feito o download de %n itens em %1</numerusform></translation>
+        <source>Could not upload</source>
+        <translatorcomment>Notification title for a failed upload of files/folders. CON-223</translatorcomment>
+        <translation>Não foi possível fazer o upload</translation>
     </message>
     <message>
-        <source>Items downloaded</source>
-        <translatorcomment>Notification title when a more than one transfer (file or folders) have been downloaded</translatorcomment>
-        <translation>Download de itens</translation>
+        <source>Upload incomplete</source>
+        <translatorcomment>Notification title for a combination of completed and failed uploads. CON-223</translatorcomment>
+        <translation>Upload incompleto</translation>
+    </message>
+    <message>
+        <source>Upload complete</source>
+        <translatorcomment>Notification title for a successfully upload of files/folders. CON-223</translatorcomment>
+        <translation>Upload finalizado</translation>
+    </message>
+    <message>
+        <source>Could not download</source>
+        <translatorcomment>Notification title for a failed download of files/folders. CON-223</translatorcomment>
+        <translation>Não foi possível fazer o download</translation>
+    </message>
+    <message>
+        <source>Download incomplete</source>
+        <translatorcomment>Notification title for a combination of completed and failed downloads. CON-223</translatorcomment>
+        <translation>Download incompleto</translation>
+    </message>
+    <message>
+        <source>Download complete</source>
+        <translatorcomment>Notification title for a successfully download of files/folders. CON-223</translatorcomment>
+        <translation>Download finalizado</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n item couldn’t be uploaded to %1.</source>
+        <translatorcomment>Body text of a system notification shown when %n items could not be uploaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
+        <translation><numerusform>Não foi possível fazer o upload de %n item em %1.</numerusform><numerusform>Não foi possível fazer o upload de %n itens em %1.</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n item uploaded</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
+        First part of string for multi plural support. Full string looks like: X item uploaded, but Y item couldn’t be uploaded (X and Y will be replaced with specific numbers).</translatorcomment>
+        <translation><numerusform>Foi feito o upload de %n item</numerusform><numerusform>Foi feito o upload de %n itens</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1, but %n item couldn’t be uploaded.</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
+        Second part of string for multi plural support. Full string looks like: X item uploaded, but Y item couldn’t be uploaded (X and Y will be replaced with specific numbers).</translatorcomment>
+        <translation><numerusform>%1, mas não foi possível fazer o upload de %n item.</numerusform><numerusform>%1, mas não foi possível fazer o upload de %n itens.</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n item uploaded to %1.</source>
+        <translatorcomment>Body text of a system notification shown when %n items were uploaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
+        <translation><numerusform>Foi feito o upload de %n item em %1.</numerusform><numerusform>Foi feito o upload de %n itens em %1.</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n item downloaded</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
+        First part of string for multi plural support. Full string looks like: X item downloaded, but Y item couldn’t be downloaded (X and Y will be replaced with specific numbers).</translatorcomment>
+        <translation><numerusform>Foi feito o download de %n item</numerusform><numerusform>Foi feito o download de %n itens</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1, but %n item couldn’t be downloaded.</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
+        Second part of string for multi plural support. Full string looks like: X item downloaded, but Y item couldn’t be downloaded (X and Y will be replaced with specific numbers).</translatorcomment>
+        <translation><numerusform>%1, mas não foi possível fazer o download de %n item.</numerusform><numerusform>%1, mas não foi possível fazer o download de %n itens.</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n item couldn’t be downloaded to %1.</source>
+        <translatorcomment>Body text of a system notification shown when %n items could not be downloaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
+        <translation><numerusform>Não foi possível fazer o download de %n item em %1.</numerusform><numerusform>Não foi possível fazer o download de %n itens em %1.</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n item downloaded to %1.</source>
+        <translatorcomment>Body text of a system notification shown when %n items were downloaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
+        <translation><numerusform>Foi feito o download de %n item em %1.</numerusform><numerusform>Foi feito o download de %n itens em %1.</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n item no longer exist or was renamed.</source>
+        <translatorcomment>Body text of a system notification shown when %n items no longer exist or were renamed during an upload operation. %n will be replaced with the number of items. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
+        <translation><numerusform>%n item já não existe ou foi renomeado.</numerusform><numerusform>%n itens já não existem ou foram renomeados.</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n item no longer exist.</source>
+        <translatorcomment>Body text of a system notification shown when %n items no longer exist or were renamed during a download operation. %n will be replaced with the number of items. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
+        <translation><numerusform>%n item já não existe. </numerusform><numerusform>%n itens já não existem. </numerusform></translation>
+    </message>
+</context>
+<context>
+    <name>TransferNotificationBuilder_File</name>
+    <message>
+        <source>%1 couldn’t be uploaded to %2.</source>
+        <translatorcomment>Body text of a system notification shown when %1 file could not be uploaded to %2. %1 will be replaced with the name of the file and %2 with the remote destination path. CON-223</translatorcomment>
+        <translation>Não foi possível fazer o upload de %1 a %2.</translation>
+    </message>
+    <message>
+        <source>%1 uploaded to %2.</source>
+        <translatorcomment>Body text of a system notification shown when %1 was succesfully uploaded to %2. %1 will be replaced with the name of the file and %2 with the remote destination path. CON-223</translatorcomment>
+        <translation>Foi feito o upload de %1 a %2.</translation>
+    </message>
+    <message>
+        <source>%1 couldn’t be downloaded to %2.</source>
+        <translatorcomment>Body text of a system notification shown when %1 file could not be downloaded to %2. %1 will be replaced with the name of the file and %2 with the local destination path. CON-223</translatorcomment>
+        <translation>Não foi possível fazer o download de %1 em%2.</translation>
+    </message>
+    <message>
+        <source>%1 downloaded to %2.</source>
+        <translatorcomment>Body text of a system notification shown when %1 was succesfully downloaded to %2. %1 will be replaced with the name of the file and %2 with the local destination path. CON-223</translatorcomment>
+        <translation>Foi feito o download de %1 em %2.</translation>
+    </message>
+    <message>
+        <source>%1 no longer exists or was renamed.</source>
+        <translatorcomment>Body text of a system notification shown when %1 no longer exists or was removed during upload operation. %1 will be replaced with the name of the file. CON-223</translatorcomment>
+        <translation>%1 já não existe ou foi renomeado.</translation>
+    </message>
+    <message>
+        <source>%1 no longer exists.</source>
+        <translatorcomment>Body text of a system notification shown when %1 no longer exists during download operation. %1 will be replaced with the name of the file. CON-223</translatorcomment>
+        <translation>%1 já não existe.</translation>
+    </message>
+</context>
+<context>
+    <name>TransferNotificationBuilder_Folder</name>
+    <message>
+        <source>%1 couldn’t be uploaded to %2.</source>
+        <translatorcomment>Body text of a system notification shown when %1 folder could not be uploaded to %2. %1 will be replaced with the name of the folder and %2 with the remote destination path. CON-223</translatorcomment>
+        <translation>Não foi possível fazer o upload de %1 em %2.</translation>
+    </message>
+    <message>
+        <source>%1 uploaded to %2.</source>
+        <translatorcomment>Body text of a system notification shown when %1 was succesfully uploaded to %2. %1 will be replaced with the name of the folder and %2 with the remote destination path. CON-223</translatorcomment>
+        <translation>Foi feito o upload de %1 em %2.</translation>
+    </message>
+    <message>
+        <source>%1 couldn’t be downloaded to %2.</source>
+        <translatorcomment>Body text of a system notification shown when %1 file could not be downloaded to %2. %1 will be replaced with the name of the folder and %2 with the local destination path. CON-223</translatorcomment>
+        <translation>Não foi possível fazer o download de %1 em %2.</translation>
+    </message>
+    <message>
+        <source>%1 downloaded to %2.</source>
+        <translatorcomment>Body text of a system notification shown when %1 was succesfully downloaded to %2. %1 will be replaced with the name of the folder and %2 with the local destination path. CON-223</translatorcomment>
+        <translation>Foi feito o download de %1 em %2.</translation>
+    </message>
+    <message>
+        <source>%1 no longer exists or was renamed.</source>
+        <translatorcomment>Body text of a system notification shown when %1 no longer exists or was removed during upload operation. %1 will be replaced with the name of the folder. CON-223</translatorcomment>
+        <translation>%1 já não existe ou foi renomeado.</translation>
+    </message>
+    <message>
+        <source>%1 no longer exists.</source>
+        <translatorcomment>Body text of a system notification shown when %1 no longer exists during download operation. %1 will be replaced with the name of the folder. CON-223</translatorcomment>
+        <translation>%1 já não existe.</translation>
     </message>
 </context>
 <context>
@@ -7060,12 +7162,12 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
         <translatorcomment>Informative label about how the transfer quota limit works when user reaches over transfer situation.</translatorcomment>
-        <translation>Este limite é dinâmico e depende da quantidade de largura de banda não utilizada que temos disponíveis.</translation>
+        <translation>Este limite é dinâmico e depende da quantidade de banda larga sem usar que tivermos disponível.</translation>
     </message>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free</source>
         <translatorcomment>Warning label shown when user reaches over transfer quota situation. The user can upgrade Plan or wait %1 time until new free quota is allowed.</translatorcomment>
-        <translation>Por favor, faça o upgrade a um plano Pro para continuar imediatamente, ou aguarde %1 para continuar de forma gratuita</translation>
+        <translation>Por favor, faça o upgrade a um plano Pro para continuar imediatamente, ou espere %1 para continuar de forma gratuita</translation>
     </message>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
@@ -7159,7 +7261,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Always upload to this destination</source>
         <translatorcomment>Label to let the user select a default upload folder with a checkbox.</translatorcomment>
-        <translation>Sempre enviar para este caminho</translation>
+        <translation>Sempre fazer o upload neste destino</translation>
     </message>
     <message>
         <source>OK</source>
@@ -7318,7 +7420,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Verify your email</source>
         <translatorcomment>Label to verify a locked account. It will redirect to webclient to confirm email.</translatorcomment>
-        <translation>Confirme o seu e-mail</translation>
+        <translation>Acesse a caixa de entrada do seu email</translation>
     </message>
     <message>
         <source>Locked account</source>
@@ -7328,12 +7430,12 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
         <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
-        <translation>A sua conta foi temporariamente bloqueadaa para a sua segurança. Por favor, confirme o seu e-mail e siga os passos indicados para desbloquear a sua conta.</translation>
+        <translation>A sua conta foi temporariamente bloqueada para a sua segurança. Acesse a caixa de entrada do seu email e siga os passos indicados para desbloquear a sua conta.</translation>
     </message>
     <message>
         <source>Resend email</source>
         <translatorcomment>Button label to send email with detailed information abot how to unlock the account</translatorcomment>
-        <translation>Reenviar e-mail</translation>
+        <translation>Reenviar email</translation>
     </message>
     <message>
         <source>Verify your account</source>
@@ -7353,7 +7455,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Email sent</source>
         <translatorcomment>Informative label to indicate that an email has been send to the user in order to unlock his account.</translatorcomment>
-        <translation>E-mail enviado</translation>
+        <translation>Email enviado</translation>
     </message>
 </context>
 <context>

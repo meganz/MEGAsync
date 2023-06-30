@@ -1,3 +1,5 @@
+[[_TOC_]]
+
 # macOS instructions
 
 For MEGA Desktop App development we are targeting macOS Big Sur, although we are providing

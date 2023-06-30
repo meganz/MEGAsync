@@ -138,17 +138,9 @@ if [ ${build} -eq 1 -o ${build_cmake} -eq 1 ]; then
     fi
 
     if [ ${build_cmake} -ne 1 ]; then
-        AVCODEC_VERSION=libavcodec.58.dylib
-        AVFORMAT_VERSION=libavformat.58.dylib
-        AVUTIL_VERSION=libavutil.56.dylib
-        SWSCALE_VERSION=libswscale.5.dylib
         CARES_VERSION=libcares.2.dylib
         CURL_VERSION=libcurl.dylib
 
-        AVCODEC_PATH=${VCPKGPATH}/vcpkg/installed/${target_arch//x86_64/x64}-osx-mega/lib/$AVCODEC_VERSION
-        AVFORMAT_PATH=${VCPKGPATH}/vcpkg/installed/${target_arch//x86_64/x64}-osx-mega/lib/$AVFORMAT_VERSION
-        AVUTIL_PATH=${VCPKGPATH}/vcpkg/installed/${target_arch//x86_64/x64}-osx-mega/lib/$AVUTIL_VERSION
-        SWSCALE_PATH=${VCPKGPATH}/vcpkg/installed/${target_arch//x86_64/x64}-osx-mega/lib/$SWSCALE_VERSION
         CARES_PATH=${VCPKGPATH}/vcpkg/installed/${target_arch//x86_64/x64}-osx-mega/lib/$CARES_VERSION
         CURL_PATH=${VCPKGPATH}/vcpkg/installed/${target_arch//x86_64/x64}-osx-mega/lib/$CURL_VERSION
     fi
@@ -191,32 +183,21 @@ if [ ${build} -eq 1 -o ${build_cmake} -eq 1 ]; then
     touch ${MSYNC_PREFIX}MEGAsync.app/Contents/MacOS/MEGAclient
 
     if [ ${build_cmake} -ne 1 ]; then
-        [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$AVCODEC_VERSION ] && cp -L $AVCODEC_PATH MEGASync/MEGAsync.app/Contents/Frameworks/
-        [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$AVFORMAT_VERSION ] && cp -L $AVFORMAT_PATH MEGASync/MEGAsync.app/Contents/Frameworks/
-        [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$AVUTIL_VERSION ] && cp -L $AVUTIL_PATH MEGASync/MEGAsync.app/Contents/Frameworks/
-        [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$SWSCALE_VERSION ] && cp -L $SWSCALE_PATH MEGASync/MEGAsync.app/Contents/Frameworks/
         [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$CARES_VERSION ] && cp -L $CARES_PATH MEGASync/MEGAsync.app/Contents/Frameworks/
         [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$CURL_VERSION ] && cp -L $CURL_PATH MEGASync/MEGAsync.app/Contents/Frameworks/
 
-        if [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$AVCODEC_VERSION ]  \
-            || [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$AVFORMAT_VERSION ]  \
-            || [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$AVUTIL_VERSION ]  \
-            || [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$SWSCALE_VERSION ];
+        if [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$CARES_VERSION ]  \
+            || [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$CURL_VERSION ];
         then
-            echo "Error copying FFmpeg libs to app bundle."
+            echo "Error copying libs to app bundle."
             exit 1
         fi
     fi
 
-    MEGASYNC_VERSION=`grep "const QString Preferences::VERSION_STRING" ../src/MEGASync/control/Preferences.cpp | awk -F '"' '{print $2}'`
+    MEGASYNC_VERSION=`grep -o -E '#define VER_PRODUCTVERSION_STR\s+(.*)' ../src/MEGASync/control/Version.h | grep -oE '\d+\.\d+\.\d+'`
     /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString $MEGASYNC_VERSION" "${MSYNC_PREFIX}$APP_NAME.app/Contents/Info.plist"
 
     if [ ${build_cmake} -ne 1 ]; then
-        install_name_tool -change @loader_path/$AVCODEC_VERSION @executable_path/../Frameworks/$AVCODEC_VERSION MEGASync/MEGAsync.app/Contents/MacOS/MEGAsync
-        install_name_tool -change @loader_path/$AVFORMAT_VERSION @executable_path/../Frameworks/$AVFORMAT_VERSION MEGASync/MEGAsync.app/Contents/MacOS/MEGAsync
-        install_name_tool -change @loader_path/$AVUTIL_VERSION @executable_path/../Frameworks/$AVUTIL_VERSION MEGASync/MEGAsync.app/Contents/MacOS/MEGAsync
-        install_name_tool -change @loader_path/$SWSCALE_VERSION @executable_path/../Frameworks/$SWSCALE_VERSION MEGASync/MEGAsync.app/Contents/MacOS/MEGAsync
-
         rm -r $APP_NAME.app || :
         mv $MSYNC_PREFIX/$APP_NAME.app ./
     fi
@@ -292,66 +273,23 @@ if [ "$notarize" = "1" ]; then
 		exit 1
 	fi
 
-	rm querystatus.txt staple.txt || :
+	echo "Sending dmg for notarization (1/3)"
 
-	echo "NOTARIZATION PROCESS..."
-	echo "Getting USERNAME for notarization commands (1/7)"
+	xcrun notarytool submit $APP_NAME.dmg  --keychain-profile "AC_PASSWORD" --wait 2>&1 | tee notarylog.txt
+    echo >> notarylog.txt
 
-	AC_USERNAME=$(security find-generic-password -s AC_PASSWORD | grep  acct | cut -d '"' -f 4)
-	if [[ -z "$AC_USERNAME" ]]; then
-		echo "Error USERNAME not found for notarization process. You should add item named AC_PASSWORD with and account value matching the username to macOS keychain"
-		false
-	fi
+	xcrun stapler staple -v $APP_NAME.dmg 2>&1 | tee -a notarylog.txt
+    
+    echo "Stapling ok (2/3)"
 
-	echo "Sending dmg for notarization (2/7)"
-	xcrun altool --notarize-app -t osx -f $APP_NAME.dmg --primary-bundle-id $ID_BUNDLE -u $AC_USERNAME -p "@keychain:AC_PASSWORD" --output-format xml 2>&1 > staple.txt
-	RUUID=$(cat staple.txt | grep RequestUUID -A 1 | tail -n 1 | awk -F "[<>]" '{print $3}')
-	echo $RUUID
-	if [ ! -z "$RUUID" ] ; then
-		echo "Received UUID for notarization request. Checking state... (3/7)"
-		attempts=60
-		while [ $attempts -gt 0 ]
-		do
-			echo "Querying state of notarization..."
-			xcrun altool --notarization-info $RUUID -u $AC_USERNAME -p "@keychain:AC_PASSWORD" --output-format xml  2>&1 > querystatus.txt
-			RUUIDQUERY=$(cat querystatus.txt | grep RequestUUID -A 1 | tail -n 1 | awk -F "[<>]" '{print $3}')
-			if [[ "$RUUID" != "$RUUIDQUERY" ]]; then
-				echo "UUIDs missmatch"
-				false
-			fi
+    #Mount dmg volume to check if app bundle is notarized
+    echo "Checking signature and notarization (3/3)"
+    mkdir $MOUNTDIR || :
+    hdiutil attach $APP_NAME.dmg -mountroot $MOUNTDIR >/dev/null
+    spctl --assess -vv -a $MOUNTDIR/$APP_NAME/$APP_NAME.app
+    hdiutil detach $MOUNTDIR/$APP_NAME >/dev/null
+    rmdir $MOUNTDIR
 
-			STATUS=$(cat querystatus.txt  | grep -i ">Status<" -A 1 | tail -n 1  | awk -F "[<>]" '{print $3}')
-
-			if [[ $STATUS == "invalid" ]]; then
-				echo "INVALID status. Check file querystatus.txt for further information"
-				echo $STATUS
-				break
-			elif [[ $STATUS == "success" ]]; then
-				echo "Notarized ok. Stapling dmg file..."
-				xcrun stapler staple -v $APP_NAME.dmg
-				echo "Stapling ok"
-
-				#Mount dmg volume to check if app bundle is notarized
-				echo "Checking signature and notarization"
-				mkdir $MOUNTDIR || :
-				hdiutil attach $APP_NAME.dmg -mountroot $MOUNTDIR >/dev/null
-				spctl -v -a $MOUNTDIR/$APP_NAME/$APP_NAME.app
-				hdiutil detach $MOUNTDIR/$APP_NAME >/dev/null
-				rmdir $MOUNTDIR
-				break
-			else
-				echo $STATUS
-			fi
-
-			attempts=$((attempts - 1))
-			sleep 30
-		done
-
-		if [[ $attempts -eq 0 ]]; then
-			echo "Notarization still in process, timed out waiting for the process to end"
-			false
-		fi
-	fi
 	cd ..
     notarize_time=`expr $(date +%s) - $notarize_time_start`
 fi

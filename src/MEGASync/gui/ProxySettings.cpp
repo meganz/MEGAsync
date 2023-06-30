@@ -86,8 +86,11 @@ void ProxySettings::onProxyTestError()
     {
         mProgressDialog->close();
     }
-    QMegaMessageBox::critical(this, tr("Error"),
-                              tr("Your proxy settings are invalid or the proxy doesn't respond"));
+    QMegaMessageBox::MessageBoxInfo msgInfo;
+    msgInfo.parent = this;
+    msgInfo.title =  QMegaMessageBox::errorTitle();
+    msgInfo.text =   tr("Your proxy settings are invalid or the proxy doesn't respond");
+    QMegaMessageBox::critical(msgInfo);
 }
 
 void ProxySettings::onProxyTestSuccess()

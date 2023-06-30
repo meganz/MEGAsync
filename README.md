@@ -1,3 +1,5 @@
+[[_TOC_]]
+
 # MEGA Desktop Application
 
 Easy automated syncing and backup between your computers and your MEGA cloud drive.

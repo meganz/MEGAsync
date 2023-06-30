@@ -21,15 +21,10 @@ Build-Depends:  debhelper,
 Package: megasync
 Architecture: any
 Depends: ${shlibs:Depends}, libc-ares2, apt-transport-https, gpg
-Description: Easy automated syncing between your computers and your MEGA cloud drive
- Secure:
- Your data is encrypted end to end. Nobody can intercept it while in storage or in transit.
- Flexible:
- Sync any folder from your PC to any folder in the cloud. Sync any number of folders in parallel.
- Fast:
- Take advantage of MEGA's high-powered infrastructure and multi-connection transfers.
- Generous:
- Store up to 50 GB for free!
+Description: Get more control over your data
+  - Sync your entire MEGA Cloud or selected folders with your computer so your MEGA stays up to date with the changes you make to your data on your computer and vice versa.
+  - Back up your computer with MEGA to automatically copy data to MEGA in real time and eliminate the risk of accidental data loss.
+  - Easily add, sort, search for, prioritise, pause, and cancel your uploads and downloads using our transfer manager.
 
 Package: megasync-dbg
 Architecture: any

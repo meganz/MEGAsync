@@ -156,7 +156,7 @@ void NodeSelector::onbOkClicked()
         }
     }
 
-    isSelectionCorrect() ? accept() : reject();
+    checkSelection();
 }
 
 void NodeSelector::on_tClearSearchResultNS_clicked()
@@ -304,14 +304,19 @@ int NodeSelector::getNodeAccess(std::shared_ptr<MegaNode> node)
 std::shared_ptr<MegaNode> NodeSelector::getSelectedNode()
 {
     auto node = std::shared_ptr<MegaNode>(mMegaApi->getNodeByHandle(getSelectedNodeHandle()));
-    if (!node)
-    {
-        QMegaMessageBox::warning(nullptr, tr("Error"), tr("The item you selected has been removed. To reselect, close this window and try again."),
-                                             QMessageBox::Ok);
-    }
     return node;
 }
 
+void NodeSelector::showNotFoundNodeMessageBox()
+{
+    QMegaMessageBox::MessageBoxInfo msgInfo;
+    msgInfo.title = QMegaMessageBox::errorTitle();
+    msgInfo.text = tr("The item you selected has been removed. To reselect, close this window and try again.");
+    msgInfo.finishFunc = [this](QPointer<QMessageBox> msg){
+        reject();
+    };
+    QMegaMessageBox::warning(msgInfo);
+}
 
 void NodeSelector::makeConnections(SelectTypeSPtr selectType)
 {

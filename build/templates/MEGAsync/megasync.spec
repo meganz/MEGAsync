@@ -1,7 +1,7 @@
 Name:		megasync
 Version:	MEGASYNC_VERSION
 Release:	%(cat MEGA_BUILD_ID || echo "1").1
-Summary:	Easy automated syncing between your computers and your MEGA cloud drive
+Summary:	Get more control over your data
 License:	Freeware
 Group:		Applications/Others
 Url:		https://mega.nz
@@ -185,17 +185,11 @@ BuildRequires: ffmpeg-mega
 %endif
 
 %description
-Secure:
-Your data is encrypted end to end. Nobody can intercept it while in storage or in transit.
+- Sync your entire MEGA Cloud or selected folders with your computer so your MEGA stays up to date with the changes you make to your data on your computer and vice versa.
 
-Flexible:
-Sync any folder from your PC to any folder in the cloud. Sync any number of folders in parallel.
+- Back up your computer with MEGA to automatically copy data to MEGA in real time and eliminate the risk of accidental data loss.
 
-Fast:
-Take advantage of MEGA's high-powered infrastructure and multi-connection transfers.
-
-Generous:
-Store up to 50 GB for free!
+- Easily add, sort, search for, prioritise, pause, and cancel your uploads and downloads using our transfer manager.
 
 %prep
 %setup -q
@@ -410,6 +404,10 @@ DATA
 
     %if 0%{?sle_version} == 150400
         %define reponame openSUSE_Leap_15.4
+    %endif
+
+    %if 0%{?sle_version} == 150500
+        %define reponame openSUSE_Leap_15.5
     %endif
 
     %if 0%{?sle_version} == 0 && 0%{?suse_version} >= 1550

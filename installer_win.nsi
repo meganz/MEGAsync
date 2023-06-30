@@ -26,12 +26,6 @@ VIAddVersionKey "FileDescription" "MEGAsync"
 VIAddVersionKey "LegalCopyright" "MEGA Limited 2023"
 VIAddVersionKey "ProductName" "MEGAsync"
 
-; Version info
-VIProductVersion "4.9.4.0"
-VIAddVersionKey "FileVersion" "4.9.4.0"
-VIAddVersionKey "ProductVersion" "4.9.4.0"
-!define PRODUCT_VERSION "4.9.4"
-
 !define PRODUCT_PUBLISHER "Mega Limited"
 !define PRODUCT_WEB_SITE "http://www.mega.nz"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\MEGAsync.exe"
@@ -65,6 +59,19 @@ VIAddVersionKey "ProductVersion" "4.9.4.0"
 !define MULTIUSER_EXECUTIONLEVEL Standard
 !define MULTIUSER_EXECUTIONLEVEL_ALLUSERS
 !define MULTIUSER_INSTALLMODE_DEFAULT_CURRENTUSER
+
+; Version info: get version directly from the binary
+!getdllversion "${SRCDIR_MEGASYNC}/MEGAsync.exe" Expv_
+VIAddVersionKey "FileVersion" "${Expv_1}.${Expv_2}.${Expv_3}.${Expv_4}"
+!ifdef VERSION_SUFFIX
+VIProductVersion "${Expv_1}.${Expv_2}.${Expv_3}.${Expv_4}-${VERSION_SUFFIX}"
+VIAddVersionKey "ProductVersion" "${Expv_1}.${Expv_2}.${Expv_3}.${Expv_4}-${VERSION_SUFFIX}"
+!define PRODUCT_VERSION "${Expv_1}.${Expv_2}.${Expv_3}-${VERSION_SUFFIX}"
+!else
+VIProductVersion "${Expv_1}.${Expv_2}.${Expv_3}.${Expv_4}"
+VIAddVersionKey "ProductVersion" "${Expv_1}.${Expv_2}.${Expv_3}.${Expv_4}"
+!define PRODUCT_VERSION "${Expv_1}.${Expv_2}.${Expv_3}"
+!endif
 
 !define MEGA_DATA "mega.ini"
 !define UNINSTALLER_NAME "uninst.exe"
@@ -718,11 +725,11 @@ modeselected:
   AccessControl::GrantOnFile "$INSTDIR\MEGAupdater.exe" "$USERNAME" "GenericRead + GenericWrite"
 
 !ifdef BUILD_X64_VERSION
-  !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libcrypto-1_1-x64.dll"  "$INSTDIR\libcrypto-1_1-x64.dll"
-  !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libssl-1_1-x64.dll"  "$INSTDIR\libssl-1_1-x64.dll"
+  !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libssl-3-x64.dll"  "$INSTDIR\libssl-3-x64.dll"
+  !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libcrypto-3-x64.dll"  "$INSTDIR\libcrypto-3-x64.dll"
 !else
-  !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libcrypto-1_1.dll"  "$INSTDIR\libcrypto-1_1.dll"
-  !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libssl-1_1.dll"  "$INSTDIR\libssl-1_1.dll"
+  !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libcrypto-3.dll"  "$INSTDIR\libcrypto-3.dll"
+  !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libssl-3.dll"  "$INSTDIR\libssl-3.dll"
 !endif
 
   File "${SRCDIR_MEGASYNC}\libcurl.dll"
@@ -737,25 +744,25 @@ modeselected:
   AccessControl::SetFileOwner "$INSTDIR\qt.conf" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\qt.conf" "$USERNAME" "GenericRead + GenericWrite"
 
-  File "${SRCDIR_MEGASYNC}\avcodec-58.dll"
-  AccessControl::SetFileOwner "$INSTDIR\avcodec-58.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\avcodec-58.dll" "$USERNAME" "GenericRead + GenericWrite"
+  File "${SRCDIR_MEGASYNC}\avcodec-59.dll"
+  AccessControl::SetFileOwner "$INSTDIR\avcodec-59.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\avcodec-59.dll" "$USERNAME" "GenericRead + GenericWrite"
 
-  File "${SRCDIR_MEGASYNC}\avformat-58.dll"
-  AccessControl::SetFileOwner "$INSTDIR\avformat-58.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\avformat-58.dll" "$USERNAME" "GenericRead + GenericWrite"
+  File "${SRCDIR_MEGASYNC}\avformat-59.dll"
+  AccessControl::SetFileOwner "$INSTDIR\avformat-59.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\avformat-59.dll" "$USERNAME" "GenericRead + GenericWrite"
 
-  File "${SRCDIR_MEGASYNC}\avutil-56.dll"
-  AccessControl::SetFileOwner "$INSTDIR\avutil-56.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\avutil-56.dll" "$USERNAME" "GenericRead + GenericWrite"
+  File "${SRCDIR_MEGASYNC}\avutil-57.dll"
+  AccessControl::SetFileOwner "$INSTDIR\avutil-57.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\avutil-57.dll" "$USERNAME" "GenericRead + GenericWrite"
 
-  File "${SRCDIR_MEGASYNC}\swscale-5.dll"
-  AccessControl::SetFileOwner "$INSTDIR\swscale-5.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\swscale-5.dll" "$USERNAME" "GenericRead + GenericWrite"
+  File "${SRCDIR_MEGASYNC}\swscale-6.dll"
+  AccessControl::SetFileOwner "$INSTDIR\swscale-6.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\swscale-6.dll" "$USERNAME" "GenericRead + GenericWrite"
 
-  File "${SRCDIR_MEGASYNC}\swresample-3.dll"
-  AccessControl::SetFileOwner "$INSTDIR\swresample-3.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\swresample-3.dll" "$USERNAME" "GenericRead + GenericWrite"
+  File "${SRCDIR_MEGASYNC}\swresample-4.dll"
+  AccessControl::SetFileOwner "$INSTDIR\swresample-4.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\swresample-4.dll" "$USERNAME" "GenericRead + GenericWrite"
   
   ;remove old DLLs that we no longer use (some became static; some have later version number)
   Delete "$INSTDIR\avcodec-57.dll"
@@ -765,6 +772,18 @@ modeselected:
   Delete "$INSTDIR\swresample-2.dll"
   Delete "$INSTDIR\libsodium.dll"
   Delete "$INSTDIR\pdfium.dll"
+  Delete "$INSTDIR\avcodec-58.dll"
+  Delete "$INSTDIR\avformat-58.dll"
+  Delete "$INSTDIR\avutil-56.dll"
+  Delete "$INSTDIR\swscale-5.dll"
+  Delete "$INSTDIR\swresample-3.dll"
+
+  Delete "$INSTDIR\libcrypto-1_1-x64.dll"
+  Delete "$INSTDIR\libssl-1_1-x64.dll"
+
+  Delete "$INSTDIR\libcrypto-1_1.dll"
+  Delete "$INSTDIR\libssl-1_1.dll"
+
 
 !ifndef BUILD_UNINSTALLER  ; if building uninstaller, skip this check
   File "${SRCDIR_MEGASYNC}\${UNINSTALLER_NAME}"

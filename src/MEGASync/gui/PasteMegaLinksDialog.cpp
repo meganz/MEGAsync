@@ -41,18 +41,25 @@ void PasteMegaLinksDialog::on_bSubmit_clicked()
     links = links.toSet().toList();
     if (links.size() == 0)
     {
+        QMegaMessageBox::MessageBoxInfo info;
+        info.parent = this;
+        info.title = QMegaMessageBox::warningTitle();
+
         if (!text.trimmed().size())
         {
-            QMegaMessageBox::warning(nullptr, tr("Warning"), tr("Enter one or more MEGA file links"));
+            info.text = tr("Enter one or more MEGA file links");
         }
         else
         {
-            QMegaMessageBox::warning(nullptr, tr("Warning"), tr("Invalid MEGA Link"));
+            info.text =  tr("Invalid MEGA Link");
         }
-        return;
-    }
 
-    accept();
+        QMegaMessageBox::warning(info);
+    }
+    else
+    {
+        accept();
+    }
 }
 
 void PasteMegaLinksDialog::changeEvent(QEvent *event)

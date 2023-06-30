@@ -35,7 +35,7 @@ AttributeRequest::RequestInfo MyChatFilesFolder::fillRequestInfo()
     QSharedPointer<ParamInfo> avatarParamInfo(new ParamInfo(cameraRequestFunc, QList<int>()<<mega::MegaError::API_OK));
 
     ParamInfoMap paramInfo({{mega::MegaApi::USER_ATTR_MY_CHAT_FILES_FOLDER, avatarParamInfo}});
-    RequestInfo ret(paramInfo, QMap<int, int>({{mega::MegaUser::CHANGE_TYPE_MY_CHAT_FILES_FOLDER, mega::MegaApi::USER_ATTR_MY_CHAT_FILES_FOLDER}}));
+    RequestInfo ret(paramInfo, QMap<int64_t, int>({{mega::MegaUser::CHANGE_TYPE_MY_CHAT_FILES_FOLDER, mega::MegaApi::USER_ATTR_MY_CHAT_FILES_FOLDER}}));
     return ret;
 }
 
