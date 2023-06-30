@@ -119,7 +119,7 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
 
     QMap<int, QWidget*> mContainerByDuplicateByGroupId;
 
-    for(int index = 0; index < conflictedNames.size(); ++index)
+    for(int index = conflictedNames.size()-1; index >= 0; index--)
     {
         std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo> info(conflictedNames.at(index));
         QString conflictedName(info->mConflictedName);

@@ -297,5 +297,3 @@ void NameConflictsHeader::onActionButtonClicked(StalledIssueHeader* header)
         QMegaMessageBox::warning(msgInfo);
     }
 }
-
-

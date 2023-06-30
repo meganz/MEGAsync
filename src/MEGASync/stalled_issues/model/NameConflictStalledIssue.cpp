@@ -107,10 +107,10 @@ void NameConflictedStalledIssue::solveIssue()
 
    auto cloudConflictedNames(mCloudConflictedNames.getConflictedNames());
 
-   if(cloudConflictedNames.size() <= 1 && mLocalConflictedNames.size() <= 1)
+   auto result = checkAndSolveConflictedNamesSolved(cloudConflictedNames);
+   if(result)
    {
-       MegaSyncApp->getMegaApi()->clearStalledPath(originalStall.get());
-       mIsSolved = true;
+       checkAndSolveConflictedNamesSolved(mLocalConflictedNames);
    }
 }
 
@@ -225,7 +225,14 @@ bool NameConflictedStalledIssue::checkAndSolveConflictedNamesSolved(const QList<
         }
     }
 
-    return unsolvedItems == 0;
+    mIsSolved = unsolvedItems == 0;
+
+    if(mIsSolved)
+    {
+        MegaSyncApp->getMegaApi()->clearStalledPath(originalStall.get());
+    }
+
+    return mIsSolved;
 }
 
 bool NameConflictedStalledIssue::isSolved() const

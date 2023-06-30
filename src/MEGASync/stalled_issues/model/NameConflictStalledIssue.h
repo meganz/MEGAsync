@@ -193,18 +193,15 @@ public:
 
                     QList<mega::MegaHandle> nodesToMove;
 
-                    int counter(0);
                     foreach(auto conflictedName, conflictedNamesGroup.conflictedNames)
                     {
-                        if(counter > 0)
+                        if(conflictedName != (*(conflictedNamesGroup.conflictedNames.end()-1)))
                         {
                             conflictedName->mSolved = NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::REMOVE;
                             nodesToMove.append(conflictedName->mHandle);
 
                             // conflictedNamesGroup.conflictedNames.remove(conflictedNameTimestamp);
                         }
-
-                        counter++;
                     }
 
                     utilities->moveToSyncDebris(nodesToMove);
