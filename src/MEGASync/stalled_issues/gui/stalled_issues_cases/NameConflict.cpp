@@ -60,7 +60,7 @@ void NameDuplicatedContainer::paintEvent(QPaintEvent*)
 
     QRect textRect(5,10, width() - 5, 20);
     QFont font = painter.font();
-    font.setPointSize(14);
+    font.setPointSize(10);
     font.setItalic(true);
     font.setFamily(QLatin1String("Lato Semibold"));
     painter.setFont(font);
@@ -117,7 +117,7 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
 
     bool allSolved(true);
 
-    //QMap<int, QWidget*> mContainerByDuplicateByGroupId;
+    QMap<int, QWidget*> mContainerByDuplicateByGroupId;
 
     for(int index = 0; index < conflictedNames.size(); ++index)
     {
@@ -128,25 +128,25 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
         QVBoxLayout* titleLayout(ui->nameConflictsLayout);
 
         //For the future, in case we need to group items duplicated
-        //        bool duplicated(info->mDuplicated != NameConflictedStalledIssue::ConflictedNameInfo::DuplicatedType::NO_DUPLICATED);
-        //        if(duplicated)
-        //        {
-        //            QWidget* groupContainer = mContainerByDuplicateByGroupId[info->mDuplicatedGroupId];
+        bool duplicated(info->mDuplicated != NameConflictedStalledIssue::ConflictedNameInfo::DuplicatedType::NO_DUPLICATED);
+        if(duplicated)
+        {
+            QWidget* groupContainer = mContainerByDuplicateByGroupId[info->mDuplicatedGroupId];
 
-        //            if(!groupContainer)
-        //            {
-        //                groupContainer = new NameDuplicatedContainer(this);
-        //                QVBoxLayout* layout = new QVBoxLayout(groupContainer);
-        //                mContainerByDuplicateByGroupId.insert(info->mDuplicatedGroupId, groupContainer);
-        //                groupContainer->setLayout(layout);
-        //                layout->setContentsMargins(5,35,0,10);
+            if(!groupContainer)
+            {
+                groupContainer = new NameDuplicatedContainer(this);
+                QVBoxLayout* layout = new QVBoxLayout(groupContainer);
+                mContainerByDuplicateByGroupId.insert(info->mDuplicatedGroupId, groupContainer);
+                groupContainer->setLayout(layout);
+                layout->setContentsMargins(5,35,0,10);
 
-        //                ui->nameConflictsLayout->addWidget(groupContainer);
-        //            }
+                ui->nameConflictsLayout->addWidget(groupContainer);
+            }
 
-        //            parent = groupContainer;
-        //            titleLayout = dynamic_cast<QVBoxLayout*>(groupContainer->layout());
-        //        }
+            parent = groupContainer;
+            titleLayout = dynamic_cast<QVBoxLayout*>(groupContainer->layout());
+        }
 
         NameConflictTitle* title = new NameConflictTitle(index, conflictedName, parent);
         connect(title, &StalledIssueActionTitle::actionClicked, this, &NameConflict::onActionClicked);

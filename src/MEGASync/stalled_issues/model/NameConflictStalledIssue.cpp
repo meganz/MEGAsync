@@ -81,7 +81,8 @@ void NameConflictedStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
             }
         }
 
-        solveIssue();
+        //No auto solving for the moment
+        //solveIssue();
     }
 }
 

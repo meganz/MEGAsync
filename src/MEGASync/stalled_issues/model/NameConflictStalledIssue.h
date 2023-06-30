@@ -111,13 +111,13 @@ public:
                         info->mDuplicatedGroupId = index;
                     }
 
-                    namesByHandle.conflictedNames.insert(creationtimestamp, info);
+                    namesByHandle.conflictedNames.insertMulti(creationtimestamp, info);
                     return;
                 }
             }
 
             CloudConflictedNames newConflictedName(fingerprint, size, modifiedtimestamp);
-            newConflictedName.conflictedNames.insert(creationtimestamp,info);
+            newConflictedName.conflictedNames.insertMulti(creationtimestamp,info);
             mConflictedNames.append(newConflictedName);
         }
 
