@@ -10,7 +10,6 @@
 
 #include <memory>
 
-class mega::MegaApi;
 class Preferences;
 class LoginController : public QObject, public mega::MegaRequestListener
 {

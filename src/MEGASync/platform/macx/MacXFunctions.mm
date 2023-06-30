@@ -4,7 +4,7 @@
 #include <QCoreApplication>
 #include <QWidget>
 #include <QProcess>
-#include <Preferences.h>
+#include <Preferences/Preferences.h>
 #include <QOperatingSystemVersion>
 
 #import "platform/macx/NSPopover+MISSINGBackgroundView.h"
