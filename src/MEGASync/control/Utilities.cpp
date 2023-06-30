@@ -469,6 +469,28 @@ QString Utilities::cleanedTimeString(const QString &timeString)
     return cleanedStr;
 }
 
+unsigned long long Utilities::getNearestUnit(long long bytes)
+{
+    unsigned long long unsignedBytes = static_cast<unsigned long long>(bytes);
+    if (unsignedBytes >= TB)
+    {
+        return TB;
+    }
+    else if (unsignedBytes >= GB)
+    {
+        return GB;
+    }
+    else if (unsignedBytes >= MB)
+    {
+        return MB;
+    }
+    else if (unsignedBytes >= KB)
+    {
+        return KB;
+    }
+    return 1;
+}
+
 QIcon Utilities::getCachedPixmap(QString fileName)
 {
     return gIconCache.getDirect(fileName);
@@ -654,29 +676,29 @@ QString Utilities::getSizeString(unsigned long long bytes)
     
     if (bytes >= TB)
     {
-        return locale.toString(toDoubleInUnit(bytes, TB)) + QString::fromAscii(" ")
+        return locale.toString(toDoubleInUnit(bytes, TB)) + QString::fromLatin1(" ")
                 + QCoreApplication::translate("Utilities", "TB");
     }
 
     if (bytes >= GB)
     {
-        return locale.toString(toDoubleInUnit(bytes, GB)) + QString::fromAscii(" ")
+        return locale.toString(toDoubleInUnit(bytes, GB)) + QString::fromLatin1(" ")
                 + QCoreApplication::translate("Utilities", "GB");
     }
 
     if (bytes >= MB)
     {
-        return locale.toString(toDoubleInUnit(bytes, MB)) + QString::fromAscii(" ")
+        return locale.toString(toDoubleInUnit(bytes, MB)) + QString::fromLatin1(" ")
                 + QCoreApplication::translate("Utilities", "MB");
     }
 
     if (bytes >= KB)
     {
-        return locale.toString(toDoubleInUnit(bytes, KB)) + QString::fromAscii(" ")
+        return locale.toString(toDoubleInUnit(bytes, KB)) + QString::fromLatin1(" ")
                 + QCoreApplication::translate("Utilities", "KB");
     }
 
-    return locale.toString(toDoubleInUnit(bytes, 1)) + QString::fromAscii(" ")
+    return locale.toString(toDoubleInUnit(bytes, 1)) + QString::fromLatin1(" ")
                     + QCoreApplication::translate("Utilities", "Bytes");
 }
 
@@ -690,6 +712,13 @@ QString Utilities::getSizeString(long long bytes)
     QLocale locale(language);
     return locale.toString(bytes) + QStringLiteral(" ")
             + QCoreApplication::translate("Utilities", "Bytes");
+}
+
+int Utilities::toNearestUnit(long long bytes)
+{
+    unsigned long long nearestUnit = getNearestUnit(bytes);
+    double inNearestUnit = toDoubleInUnit(bytes, nearestUnit);
+    return static_cast<int>(inNearestUnit);
 }
 
 Utilities::ProgressSize Utilities::getProgressSizes(unsigned long long transferredBytes, unsigned long long totalBytes)
@@ -738,6 +767,20 @@ Utilities::ProgressSize Utilities::getProgressSizes(unsigned long long transferr
     }
 
     return sizes;
+}
+
+QString Utilities::createSimpleUsedString(long long usedData)
+{
+    return QCoreApplication::translate("Utilities", "%1 used", "", toNearestUnit(usedData)).arg(getSizeString(usedData));
+}
+
+QString Utilities::createCompleteUsedString(long long usedData, long long totalData, int percentage)
+{
+    return QCoreApplication::translate("Utilities", "%1 (%2%) of %3 used", "", toNearestUnit(usedData)).arg(
+                getSizeString(usedData),
+                QString::number(percentage),
+                getSizeString(totalData)
+                );
 }
 
 QString Utilities::extractJSONString(QString json, QString name)
