@@ -198,11 +198,12 @@ public:
                     {
                         if(counter > 0)
                         {
-                            auto conflictedName(conflictedNamesGroup.conflictedNames.value(conflictedNameTimestamp));
-                            if(conflictedName)
+                            auto conflictedNames(conflictedNamesGroup.conflictedNames.values(conflictedNameTimestamp));
+                            foreach(auto conflictedName, conflictedNames)
                             {
+                                conflictedName->mSolved = NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::REMOVE;
                                 nodesToMove.append(conflictedName->mHandle);
-                                conflictedNamesGroup.conflictedNames.remove(conflictedNameTimestamp);
+                               // conflictedNamesGroup.conflictedNames.remove(conflictedNameTimestamp);
                             }
                         }
 
