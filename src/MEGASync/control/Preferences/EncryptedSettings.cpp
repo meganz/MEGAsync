@@ -177,9 +177,3 @@ QString EncryptedSettings::hash(const QString key) const
     QByteArray xKeyHash = XOR(key.toUtf8(), keyHash);
     return QString::fromAscii(xKeyHash.toHex());
 }
-
-bool EncryptedSettings::event(QEvent *event)
-{
-    qDebug()<<"QSettings event type:"<<event->type();
-    return QSettings::event(event);
-}
