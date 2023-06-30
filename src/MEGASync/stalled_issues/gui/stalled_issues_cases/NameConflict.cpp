@@ -279,21 +279,31 @@ void NameConflict::onActionClicked(int actionId)
     if(auto chooseTitle = dynamic_cast<NameConflictTitle*>(sender()))
     {
         auto data = getData(mIssue);
+        auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
 
         QFileInfo info;
         auto titleFileName = chooseTitle->property(TITLE_FILENAME).toString();
         info.setFile(data->getNativePath(), titleFileName);
         QString filePath(info.filePath());
 
+        auto conflictedNames(getConflictedNames(mIssue));
+        auto conflictIndex(chooseTitle->getIndex());
+
         if(actionId == RENAME_ID)
         {
-            auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
             RenameNodeDialog* renameDialog(nullptr);
-            auto conflictIndex(chooseTitle->getIndex());
 
             if(isCloud())
             {
-                renameDialog = new RenameRemoteNodeDialog(filePath, dialog->getDialog());
+                std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(conflictedNames.at(conflictIndex)->mHandle));
+                if(node)
+                {
+                    renameDialog = new RenameRemoteNodeDialog(std::move(node), dialog->getDialog());
+                }
+                else
+                {
+                    renameDialog = new RenameRemoteNodeDialog(filePath, dialog->getDialog());
+                }
             }
             else
             {
@@ -338,21 +348,19 @@ void NameConflict::onActionClicked(int actionId)
         }
         else if(actionId == REMOVE_ID)
         {
-            auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
-
             auto isFile(false);
             QString fileName;
-            auto conflictIndex(chooseTitle->getIndex());
+            mega::MegaHandle handle(mega::INVALID_HANDLE);
 
             if(isCloud())
             {
-                auto conflictedNames(getConflictedNames(mIssue));
                 auto conflictedName(conflictedNames.at(conflictIndex));
                 if(conflictedName)
                 {
                     std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(conflictedName->mHandle));
                     if(node)
                     {
+                        handle = node->getHandle();
                         isFile = node->isFile();
                         fileName = MegaNodeNames::getNodeName(node.get());
                     }
@@ -387,7 +395,7 @@ void NameConflict::onActionClicked(int actionId)
                 }
             }
 
-            msgInfo.finishFunc = [this, data, filePath, titleFileName, conflictIndex](QMessageBox* msgBox)
+            msgInfo.finishFunc = [this, data, handle, filePath, titleFileName, conflictIndex](QMessageBox* msgBox)
             {
                 if (msgBox->result() == QDialogButtonBox::Yes)
                 {
@@ -396,7 +404,18 @@ void NameConflict::onActionClicked(int actionId)
                     if(isCloud())
                     {
                         areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveCloudConflictedNameByRemove(conflictIndex, mDelegate->getCurrentIndex());
-                        mUtilities.removeRemoteFile(filePath);
+                        if(handle != mega::INVALID_HANDLE)
+                        {
+                            std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
+                            if(node)
+                            {
+                                mUtilities.removeRemoteFile(node.get());
+                            }
+                        }
+                        else
+                        {
+                            mUtilities.removeRemoteFile(filePath);
+                        }
                     }
                     else
                     {

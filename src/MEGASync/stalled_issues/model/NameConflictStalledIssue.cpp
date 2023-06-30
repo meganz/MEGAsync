@@ -146,15 +146,20 @@ bool NameConflictedStalledIssue::solveCloudConflictedName(int conflictIndex, Nam
 {
     auto result(false);
 
-    auto conflictName = mCloudConflictedNames.getConflictedNameByIndex(conflictIndex);
-    if(conflictName)
+    auto conflictedNames(mCloudConflictedNames.getConflictedNames());
+    if(conflictedNames.size() > conflictIndex)
     {
-        conflictName->mSolved = type;
+        auto conflictName = conflictedNames.at(conflictIndex);
 
-        result = checkAndSolveConflictedNamesSolved(mCloudConflictedNames.getConflictedNames());
-        if(result)
+        if(conflictName)
         {
-            checkAndSolveConflictedNamesSolved(mLocalConflictedNames);
+            conflictName->mSolved = type;
+
+            result = checkAndSolveConflictedNamesSolved(mCloudConflictedNames.getConflictedNames());
+            if(result)
+            {
+                checkAndSolveConflictedNamesSolved(mLocalConflictedNames);
+            }
         }
     }
 
@@ -185,16 +190,20 @@ bool NameConflictedStalledIssue::solveCloudConflictedNameByRename(int conflictIn
 {
     auto result(false);
 
-    auto conflictName = mCloudConflictedNames.getConflictedNameByIndex(conflictIndex);
-    if(conflictName)
+    auto conflictedNames(mCloudConflictedNames.getConflictedNames());
+    if(conflictedNames.size() > conflictIndex)
     {
-        conflictName->mSolved = NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::RENAME;;
-        conflictName->mRenameTo = renameTo;
-
-        result = checkAndSolveConflictedNamesSolved(mCloudConflictedNames.getConflictedNames());
-        if(result)
+        auto conflictName = conflictedNames.at(conflictIndex);
+        if(conflictName)
         {
-            checkAndSolveConflictedNamesSolved(mLocalConflictedNames);
+            conflictName->mSolved = NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::RENAME;;
+            conflictName->mRenameTo = renameTo;
+
+            result = checkAndSolveConflictedNamesSolved(mCloudConflictedNames.getConflictedNames());
+            if(result)
+            {
+                checkAndSolveConflictedNamesSolved(mLocalConflictedNames);
+            }
         }
     }
 
