@@ -194,17 +194,14 @@ public:
                     QList<mega::MegaHandle> nodesToMove;
 
                     int counter(0);
-                    foreach(auto conflictedNameTimestamp, conflictedNamesGroup.conflictedNames.keys())
+                    foreach(auto conflictedName, conflictedNamesGroup.conflictedNames)
                     {
                         if(counter > 0)
                         {
-                            auto conflictedNames(conflictedNamesGroup.conflictedNames.values(conflictedNameTimestamp));
-                            foreach(auto conflictedName, conflictedNames)
-                            {
-                                conflictedName->mSolved = NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::REMOVE;
-                                nodesToMove.append(conflictedName->mHandle);
-                               // conflictedNamesGroup.conflictedNames.remove(conflictedNameTimestamp);
-                            }
+                            conflictedName->mSolved = NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::REMOVE;
+                            nodesToMove.append(conflictedName->mHandle);
+
+                            // conflictedNamesGroup.conflictedNames.remove(conflictedNameTimestamp);
                         }
 
                         counter++;
