@@ -20,19 +20,12 @@ public:
             UNSOLVED
         };
 
-        enum class DuplicatedType
-        {
-            NO_DUPLICATED,
-            KEEP,
-            REMOVABLE
-        };
-
         mega::MegaHandle mHandle;
         QString mConflictedName;
         QString mConflictedPath;
         QString mRenameTo;
         SolvedType mSolved;
-        DuplicatedType mDuplicated;
+        bool mDuplicated;
         int mDuplicatedGroupId;
         std::shared_ptr<FileFolderAttributes>  mItemAttributes;
 
@@ -44,8 +37,8 @@ public:
             :mConflictedName(fileInfo.fileName()),
               mConflictedPath(fileInfo.filePath()),
               mSolved(SolvedType::UNSOLVED),
-              mDuplicated(DuplicatedType::NO_DUPLICATED),
               mDuplicatedGroupId(-1),
+              mDuplicated(false),
               mItemAttributes(attributes)
         {}
 
@@ -69,6 +62,8 @@ public:
         QString fingerprint;
         int64_t size = -1;
         int64_t modifiedTime = -1;
+
+        bool solved = false;
 
         QMap<int64_t, std::shared_ptr<ConflictedNameInfo>> conflictedNames;
     };
@@ -103,12 +98,12 @@ public:
                         if(previousSize == 1)
                         {
                             auto firstNameByHandle(namesByHandle.conflictedNames.first());
-                            firstNameByHandle->mDuplicated = ConflictedNameInfo::DuplicatedType::KEEP;
                             firstNameByHandle->mDuplicatedGroupId = index;
+                            firstNameByHandle->mDuplicated = true;
                         }
 
-                        info->mDuplicated = ConflictedNameInfo::DuplicatedType::REMOVABLE;
                         info->mDuplicatedGroupId = index;
+                        info->mDuplicated = true;
                     }
 
                     namesByHandle.conflictedNames.insertMulti(creationtimestamp, info);
@@ -119,6 +114,26 @@ public:
             CloudConflictedNames newConflictedName(fingerprint, size, modifiedtimestamp);
             newConflictedName.conflictedNames.insertMulti(creationtimestamp,info);
             mConflictedNames.append(newConflictedName);
+        }
+
+        bool hasDuplicatedNodes() const
+        {
+            auto result(false);
+
+            if(!mDuplicatedSolved)
+            {
+                foreach(auto conflictedNames, mConflictedNames)
+                {
+                    if(!conflictedNames.solved
+                            && conflictedNames.conflictedNames.size() > 1)
+                    {
+                        result = true;
+                        break;
+                    }
+                }
+            }
+
+            return result;
         }
 
         std::shared_ptr<ConflictedNameInfo> firstNameConflict() const
@@ -181,11 +196,12 @@ public:
             return mConflictedNames.isEmpty();
         }
 
-        void removeDuplicatedNodes(int groupIndex)
+        void removeDuplicatedNodes()
         {
-            if(mConflictedNames.size() > groupIndex)
+            for(int index = 0; index < mConflictedNames.size(); ++index)
             {
-                auto& conflictedNamesGroup = mConflictedNames[groupIndex];
+                auto& conflictedNamesGroup = mConflictedNames[index];
+
                 if(conflictedNamesGroup.conflictedNames.size() > 1)
                 {
                     //The object is auto deleted when finished (as it needs to survive this issue)
@@ -199,18 +215,21 @@ public:
                         {
                             conflictedName->mSolved = NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::REMOVE;
                             nodesToMove.append(conflictedName->mHandle);
-
-                            // conflictedNamesGroup.conflictedNames.remove(conflictedNameTimestamp);
                         }
                     }
 
                     utilities->moveToSyncDebris(nodesToMove);
+
+                    conflictedNamesGroup.solved = true;
                 }
             }
+
+            mDuplicatedSolved = true;
         }
 
     private:
          QList<CloudConflictedNames> mConflictedNames;
+         bool mDuplicatedSolved = false;
     };
 
     NameConflictedStalledIssue(){}
@@ -227,6 +246,8 @@ public:
 
     bool solveCloudConflictedNameByRename(int conflictIndex, const QString& renameTo);
     bool solveLocalConflictedNameByRename(int conflictIndex, const QString& renameTo);
+
+    bool hasDuplicatedNodes() const;
 
     void updateIssue(const mega::MegaSyncStall *stallIssue) override;
 

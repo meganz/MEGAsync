@@ -60,7 +60,8 @@ void NameDuplicatedContainer::paintEvent(QPaintEvent*)
 
     QRect textRect(5,10, width() - 5, 20);
     QFont font = painter.font();
-    font.setPointSize(10);
+
+    font.setPointSize(Utilities::getDevicePixelRatio() < 2 ? 10 : 14);
     font.setItalic(true);
     font.setFamily(QLatin1String("Lato Semibold"));
     painter.setFont(font);
@@ -127,9 +128,7 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
         QWidget* parent(ui->nameConflicts);
         QVBoxLayout* titleLayout(ui->nameConflictsLayout);
 
-        //For the future, in case we need to group items duplicated
-        bool duplicated(info->mDuplicated != NameConflictedStalledIssue::ConflictedNameInfo::DuplicatedType::NO_DUPLICATED);
-        if(duplicated)
+        if(info->mDuplicated)
         {
             QWidget* groupContainer = mContainerByDuplicateByGroupId[info->mDuplicatedGroupId];
 

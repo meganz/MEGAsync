@@ -100,10 +100,7 @@ void NameConflictedStalledIssue::updateIssue(const mega::MegaSyncStall *stallIss
 
 void NameConflictedStalledIssue::solveIssue()
 {
-   for(int index = 0; index < mCloudConflictedNames.size(); ++index)
-   {
-       mCloudConflictedNames.removeDuplicatedNodes(index);
-   }
+   mCloudConflictedNames.removeDuplicatedNodes();
 
    auto cloudConflictedNames(mCloudConflictedNames.getConflictedNames());
 
@@ -112,6 +109,19 @@ void NameConflictedStalledIssue::solveIssue()
    {
        checkAndSolveConflictedNamesSolved(mLocalConflictedNames);
    }
+}
+
+bool NameConflictedStalledIssue::hasDuplicatedNodes() const
+{
+    for(int index = 0; index < mCloudConflictedNames.size(); ++index)
+    {
+        if(mCloudConflictedNames.hasDuplicatedNodes())
+        {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 const QList<std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo>>& NameConflictedStalledIssue::getNameConflictLocalData() const
