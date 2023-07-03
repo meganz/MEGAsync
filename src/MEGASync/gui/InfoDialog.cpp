@@ -524,7 +524,7 @@ void InfoDialog::setUsage()
 
             ui->wCircularQuota->setTotalValueUnknown(transferQuotaState != QuotaState::FULL
                                                         && transferQuotaState != QuotaState::OVERQUOTA);
-            usedTransferString = tr("%1 used")
+            usedTransferString = tr("%1 used", "", Utilities::toNearestUnit(usedTransfer))
                                  .arg(QString::fromUtf8("<span style='color:%1;"
                                                         "font-family: Lato;"
                                                         "text-decoration:none;'>%2</span>")

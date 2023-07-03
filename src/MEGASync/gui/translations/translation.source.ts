@@ -2106,10 +2106,13 @@ In some cases they may contain details about your data, such as file or folder n
         <translatorcomment>Label to indicate that there aren&apos;t notifications of payments</translatorcomment>
         <translation>No notifications for payments</translation>
     </message>
-    <message>
+    <message numerus="yes">
         <source>%1 used</source>
-        <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1</translatorcomment>
-        <translation>%1 used</translation>
+        <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1. SNC-3429</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>%1 used</numerusform>
+            <numerusform>%1 used</numerusform>
+        </translation>
     </message>
     <message>
         <source>Upgrade account</source>
@@ -5068,10 +5071,13 @@ Do you want to delete it anyway?</translation>
         <translatorcomment>Label to indicate that the usage data is temporarily unavailable. String as short as possible.</translatorcomment>
         <translation>Data temporarily unavailable</translation>
     </message>
-    <message>
+    <message numerus="yes">
         <source>%1 (%2%) of %3 used</source>
-        <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically.</translatorcomment>
-        <translation>%1 (%2%) of %3 used</translation>
+        <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically. SNC-3429</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>%1 (%2%) of %3 used</numerusform>
+            <numerusform>%1 (%2%) of %3 used</numerusform>
+        </translation>
     </message>
     <message>
         <source>Clear</source>
@@ -5193,10 +5199,13 @@ Do you want to delete it anyway?</translation>
         <translatorcomment>Informative text asking for confirmation when user is trying to remove all file versions of the current account.</translatorcomment>
         <translation>You are about to permanently remove all file versions. Would you like to proceed?</translation>
     </message>
-    <message>
+    <message numerus="yes">
         <source>%1 used</source>
-        <translatorcomment>Label to indicate the total amount of storage/bandwidth used by the account. Keep placeholder %1.</translatorcomment>
-        <translation>%1 used</translation>
+        <translatorcomment>Label to indicate the total amount of storage/bandwidth used by the account. Keep placeholder %1. SNC-3429</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>%1 used</numerusform>
+            <numerusform>%1 used</numerusform>
+        </translation>
     </message>
     <message>
         <source>MEGA-RECOVERYKEY</source>
