@@ -1243,16 +1243,14 @@ void SettingsDialog::updateStorageElements()
 
         if (Utilities::isBusinessAccount())
         {
-            mUi->lStorage->setText(tr("%1 used").arg(Utilities::getSizeString(usedStorage)));
+            mUi->lStorage->setText(Utilities::createSimpleUsedString(usedStorage));
         }
         else
         {
             int percentage = Utilities::partPer(usedStorage, totalStorage);
+
             mUi->pStorageQuota->setValue(std::min(percentage, mUi->pStorageQuota->maximum()));
-            mUi->lStorage->setText(tr("%1 (%2%) of %3 used").arg(
-                                      Utilities::getSizeString(usedStorage),
-                                      QString::number(percentage),
-                                      Utilities::getSizeString(totalStorage)));
+            mUi->lStorage->setText(Utilities::createCompleteUsedString(usedStorage, totalStorage, percentage));
         }
     }
 }
@@ -1272,7 +1270,7 @@ void SettingsDialog::updateBandwidthElements()
     }
     else if (Utilities::isBusinessAccount())
     {
-        mUi->lBandwidth->setText(tr("%1 used").arg(Utilities::getSizeString(usedBandwidth)));
+        mUi->lBandwidth->setText(Utilities::createSimpleUsedString(usedBandwidth));
     }
     else
     {
@@ -1285,10 +1283,7 @@ void SettingsDialog::updateBandwidthElements()
         {
             int percentage = Utilities::partPer(usedBandwidth, totalBandwidth);
             mUi->pTransferQuota->setValue(std::min(percentage, 100));
-            mUi->lBandwidth->setText(tr("%1 (%2%) of %3 used").arg(
-                                        Utilities::getSizeString(usedBandwidth),
-                                        QString::number(std::min(percentage, 100)),
-                                        Utilities::getSizeString(totalBandwidth)));
+            mUi->lBandwidth->setText(Utilities::createCompleteUsedString(usedBandwidth, std::min(percentage, 100), totalBandwidth));
         }
     }
 }

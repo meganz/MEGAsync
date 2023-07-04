@@ -31,7 +31,7 @@ void MacXSystemServiceTask::processItems(QStringList itemsSelected)
             string tmpPath(itemsSelected.at(i).toUtf8().constData());
             MegaApi::log(MegaApi::LOG_LEVEL_INFO, "MEGA service not synced node...");
             const char *fpLocal = megaApi->getFingerprint(itemsSelected.at(i).toUtf8().constData());
-            MegaNode *node = megaApi->getExportableNodeByFingerprint(fpLocal);
+            MegaNode *node = fpLocal ? megaApi->getExportableNodeByFingerprint(fpLocal) : nullptr;
             delete [] fpLocal;
 
             if(node)

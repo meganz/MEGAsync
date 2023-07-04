@@ -580,7 +580,7 @@ void DesktopNotifications::sendOverTransferNotification(const QString &title) co
 
 void DesktopNotifications::sendFinishedTransferNotification(unsigned long long appDataId) const
 {
-    auto data = TransferMetaDataContainer::getAppData(appDataId);
+    auto data = TransferMetaDataContainer::getAppDataById(appDataId);
     if (data)
     {
         mPreferences->setLastTransferNotificationTimestamp();
@@ -706,7 +706,7 @@ void DesktopNotifications::actionPressedOnDownloadFinishedTransferNotification(M
     if(notification->getData().isValid())
     {
         auto dataId = notification->getData().toULongLong();
-        auto data = TransferMetaDataContainer::getAppData<DownloadTransferMetaData>(dataId);
+        auto data = TransferMetaDataContainer::getAppDataById<DownloadTransferMetaData>(dataId);
         if(data)
         {
             switch(action)
@@ -770,7 +770,7 @@ void DesktopNotifications::actionPressedOnUploadFinishedTransferNotification(Meg
     if(notification->getData().isValid())
     {
         auto dataId = notification->getData().toULongLong();
-        auto data = TransferMetaDataContainer::getAppData(dataId);
+        auto data = TransferMetaDataContainer::getAppDataById(dataId);
         if(data)
         {
             switch(action)
