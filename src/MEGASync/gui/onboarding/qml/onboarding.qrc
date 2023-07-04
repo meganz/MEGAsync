@@ -50,6 +50,7 @@
         <file>content/onboard/ConfirmEmailPageForm.ui.qml</file>
         <file>content/onboard/ChangeEmailPage.qml</file>
         <file>content/onboard/ChangeEmailPageForm.ui.qml</file>
+        <file>content/onboard/CancelLogin.qml</file>
         <file>content/onboard/StackViewPage.qml</file>
     </qresource>
 </RCC>

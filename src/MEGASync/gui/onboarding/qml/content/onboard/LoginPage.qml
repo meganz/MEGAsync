@@ -1,6 +1,5 @@
 // System
 import QtQuick 2.12
-
 // Local
 import Onboarding 1.0
 
@@ -8,7 +7,7 @@ import Onboarding 1.0
 import Onboard 1.0
 
 LoginPageForm {
-    id: loginPageRoot
+    id: root
 
     property bool loginAttempt: false
     property bool twoFARequired: false

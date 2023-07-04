@@ -35,6 +35,7 @@ QtObject {
     readonly property url installationTypeBackups: imagesOnboardingPath + "installation_type_backups.svg"
     readonly property url key: imagesOnboardingPath + "key.svg"
     readonly property url login: imagesOnboardingPath + "login.png"
+    readonly property url warning: imagesOnboardingPath + "warning.png"
     readonly property url mega: imagesOnboardingPath + "mega.svg"
     readonly property url pc: imagesOnboardingPath + "pc.svg"
     readonly property url pcMega: imagesOnboardingPath + "pc_mega.svg"

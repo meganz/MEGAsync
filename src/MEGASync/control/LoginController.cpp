@@ -69,6 +69,18 @@ bool LoginController::getIsEmailConfirmed() const
     return mEmailConfirmed;
 }
 
+void LoginController::cancelLogin() const
+{
+    if(mMegaApi->isLoggedIn())
+    {
+        mMegaApi->logout(true, nullptr);
+    }
+    else
+    {
+        mMegaApi->localLogout();
+    }
+}
+
 void LoginController::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e)
 {
     Q_UNUSED(api)
@@ -84,7 +96,6 @@ void LoginController::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *req
             std::unique_ptr<char []> session(mMegaApi->dumpSession());
             if (session)
             {
-                qDebug()<<"SESSION:" << QString::fromUtf8(session.get());
                 mPreferences->setSession(QString::fromUtf8(session.get()));
             }
         }
@@ -214,6 +225,10 @@ void LoginController::onLogin(mega::MegaRequest *request, mega::MegaError *e)
             mEmail = QString::fromUtf8(request->getEmail());
             break;
         }
+        case mega::MegaError::API_EACCESS: //locallogout called prior to login finished
+        {
+            break;
+        }
         default:
             if(e->getErrorCode() != mega::MegaError::API_ESSL)
             {
@@ -335,6 +350,10 @@ void LoginController::onLogout(mega::MegaRequest *request, mega::MegaError *e)
         megaApi()->localLogout();
         // TODO: to login page??
     }
+    else
+    {
+        emit logout();
+    }
 }
 
 void LoginController::fetchNodes(const QString& email)
@@ -374,21 +393,21 @@ void LoginController::fetchNodes(const QString& email)
     }
     else // we will ask the SDK the email
     {
-        mMegaApi->getUserEmail(mMegaApi->getMyUserHandleBinary(),new MegaListenerFuncExecuter(true, [loadMigrateAndFetchNodes](mega::MegaApi*,  mega::MegaRequest* request, mega::MegaError* e) {
-                                  QString email;
+        megaApi()->getUserEmail(mMegaApi->getMyUserHandleBinary(),new MegaListenerFuncExecuter(true, [loadMigrateAndFetchNodes](mega::MegaApi*,  mega::MegaRequest* request, mega::MegaError* e) {
+                                   QString email;
 
                                    if (e->getErrorCode() == mega::MegaError::API_OK)
-                                  {
-                                      auto emailFromRequest = request->getEmail();
-                                      if (emailFromRequest)
-                                      {
-                                          email = QString::fromUtf8(emailFromRequest);
-                                      }
-                                  }
+                                   {
+                                       auto emailFromRequest = request->getEmail();
+                                       if (emailFromRequest)
+                                       {
+                                           email = QString::fromUtf8(emailFromRequest);
+                                       }
+                                   }
 
-                                  // in any case, proceed:
-                                  loadMigrateAndFetchNodes(email);
-                              }));
+                                   // in any case, proceed:
+                                   loadMigrateAndFetchNodes(email);
+                               }));
 
     }
 }
@@ -719,7 +738,7 @@ void LogoutController::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *re
             msgInfo.title = tr("MEGAsync");
             msgInfo.text = tr("Our SSL key can't be verified. You could be affected by a man-in-the-middle attack or your antivirus software "
                               "could be intercepting your communications and causing this problem. Please disable it and try again.")
-                            + QString::fromUtf8(" (Issuer: %1)").arg(QString::fromUtf8(request->getText() ? request->getText() : "Unknown"));
+                           + QString::fromUtf8(" (Issuer: %1)").arg(QString::fromUtf8(request->getText() ? request->getText() : "Unknown"));
 
             QMegaMessageBox::critical(msgInfo);
         }

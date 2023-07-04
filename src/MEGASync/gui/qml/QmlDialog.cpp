@@ -24,12 +24,14 @@ void QmlDialog::setLoggingIn(bool value)
     if(mLoggingIn != value)
     {
         mLoggingIn = value;
-        if(!value && mCloseClicked)
-        {
-            close();
-        }
         emit loggingInChanged();
     }
+}
+
+void QmlDialog::forceClose()
+{
+    setLoggingIn(false);
+    close();
 }
 
 bool QmlDialog::event(QEvent *evnt)
@@ -38,8 +40,7 @@ bool QmlDialog::event(QEvent *evnt)
     {
         if(mLoggingIn)
         {
-            mCloseClicked = true;
-            hide();
+            emit closingButLoggingIn();
             return true;
         }
         else

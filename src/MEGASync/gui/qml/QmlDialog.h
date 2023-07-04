@@ -14,10 +14,13 @@ public:
 
     Q_INVOKABLE bool getLoggingIn() const;
     Q_INVOKABLE void setLoggingIn(bool value);
+    Q_INVOKABLE void forceClose();
 
 signals:
     void finished();
     void loggingInChanged();
+    void closingButLoggingIn();
+
 protected:
     bool event(QEvent *) override;
 

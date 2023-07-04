@@ -19,6 +19,22 @@ Rectangle {
     readonly property string confirmEmail: "confirmEmail"
     readonly property string changeConfirmEmail: "changeConfirmEmail"
 
+    CancelLogin{
+        id: cancelLogin
+        visible: false
+        onAccepted: {
+            loginController.cancelLogin();
+        }
+    }
+
+    Connections {
+        target: onboardingWindow
+        onClosingButLoggingIn:
+        {
+            cancelLogin.visible = true;
+        }
+    }
+
     state: login
     states: [
         State {
@@ -152,6 +168,9 @@ Rectangle {
         }
         LoginController{
             id: loginController
+            onLogout: {
+                onboardingWindow.forceClose();
+            }
         }
     }
 }

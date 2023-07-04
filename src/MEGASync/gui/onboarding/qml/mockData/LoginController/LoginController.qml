@@ -4,6 +4,7 @@ Item {
     id: root
 
     property string email: "test.email@mega.co.nz"
+    property bool emailConfirmed: false
 
     signal userPassFailed
     signal twoFARequired
@@ -11,6 +12,9 @@ Item {
     signal registerFinished(bool success)
     signal twoFAFailed
     signal accountConfirmed
+    signal logout
+    signal fetchingNodesFinished
+    signal accountCreationResumed
     signal changeRegistrationEmailFinished(bool success)
     signal fetchingNodesProgress(double progress)
 

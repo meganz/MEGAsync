@@ -40,5 +40,6 @@
         <file>images/qml/password/very_weak.svg</file>
         <file>images/qml/password/weak.svg</file>
         <file>images/qml/onboarding/OKIcon.png</file>
+        <file>images/qml/onboarding/warning.png</file>
     </qresource>
 </RCC>

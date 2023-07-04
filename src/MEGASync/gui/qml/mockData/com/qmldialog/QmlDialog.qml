@@ -2,6 +2,8 @@ import QtQuick 2.0
 import QtQuick.Window 2.13
 
 Window {
+
+    signal closingButLoggingIn
     function onForgotPasswordClicked() {
         console.info("onForgotPasswordClicked()");
     }
