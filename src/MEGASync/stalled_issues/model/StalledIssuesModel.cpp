@@ -357,6 +357,11 @@ void StalledIssuesModel::unBlockUi()
     emit uiUnblocked();
 }
 
+void StalledIssuesModel::updateIndex(const QModelIndex &index)
+{
+    emit dataChanged(index, index);
+}
+
 void StalledIssuesModel::reset()
 {
     beginResetModel();

@@ -109,16 +109,8 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
     auto conflictedNames = getConflictedNames(issue);
 
     //Reset widgets
-    QLayoutItem* item;
-    while ((item = ui->nameConflictsLayout->layout()->takeAt(0)) != nullptr)
-    {
-        delete item->widget();
-        delete item;
-    }
-
+    bool firstTime(mTitlesByIndex.isEmpty());
     bool allSolved(true);
-
-    QMap<int, QWidget*> mContainerByDuplicateByGroupId;
 
     for(int index = conflictedNames.size()-1; index >= 0; index--)
     {
@@ -130,7 +122,7 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
 
         if(info->mDuplicated)
         {
-            QWidget* groupContainer = mContainerByDuplicateByGroupId[info->mDuplicatedGroupId];
+            QPointer<QWidget> groupContainer = mContainerByDuplicateByGroupId[info->mDuplicatedGroupId];
 
             if(!groupContainer)
             {
@@ -147,35 +139,46 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
             titleLayout = dynamic_cast<QVBoxLayout*>(groupContainer->layout());
         }
 
-        NameConflictTitle* title = new NameConflictTitle(index, conflictedName, parent);
-        connect(title, &StalledIssueActionTitle::actionClicked, this, &NameConflict::onActionClicked);
-        titleLayout->addWidget(title);
+        NameConflictTitle* title(nullptr);
 
-        info->mItemAttributes->requestModifiedTime(title, [title](const QDateTime& time)
+        if(firstTime)
         {
-            title->updateLastTimeModified(time);
+            title = new NameConflictTitle(index, conflictedName, parent);
+            connect(title, &StalledIssueActionTitle::actionClicked, this, &NameConflict::onActionClicked);
+            titleLayout->addWidget(title);
+            mTitlesByIndex.insert(index, title);
+        }
+        else
+        {
+            title = mTitlesByIndex.value(index);
+        }
+
+        info->mItemAttributes->requestModifiedTime(title, [this, index](const QDateTime& time)
+        {
+            mTitlesByIndex.value(index)->updateLastTimeModified(time);
         });
 
         if(isCloud())
         {
-            info->mItemAttributes->requestCreatedTime(title, [title](const QDateTime& time)
+            info->mItemAttributes->requestCreatedTime(title, [this, index](const QDateTime& time)
             {
-                title->updateCreatedTime(time);
+                mTitlesByIndex.value(index)->updateCreatedTime(time);
             });
         }
         else
         {
 #ifndef Q_OS_LINUX
-            info->mItemAttributes->requestCreatedTime(title, [title](const QDateTime& time)
+            info->mItemAttributes->requestCreatedTime(title, [this, index](const QDateTime& time)
             {
-                title->updateCreatedTime(time);
+                mTitlesByIndex.value(index)->updateCreatedTime(time);
             });
 #endif
         }
 
-        info->mItemAttributes->requestSize(title,[title](qint64 size)
+        info->mItemAttributes->requestSize(title,[this, index](qint64 size)
         {
-            title->updateSize(Utilities::getSizeString(size));
+            mTitlesByIndex.value(index)->updateSize(Utilities::getSizeString(size));
+            mDelegate->updateIndex();
         });
 
         //These items go in order
@@ -185,14 +188,14 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
         {
             auto cloudAttributes(FileFolderAttributes::convert<RemoteFileFolderAttributes>(info->mItemAttributes));
 
-            cloudAttributes->requestVersions(title,[title](int versions)
+            cloudAttributes->requestVersions(title,[this, index](int versions)
             {
-                title->updateVersionsCount(versions);
+                mTitlesByIndex.value(index)->updateVersionsCount(versions);
             });
 
-            cloudAttributes->requestUser(title, MegaSyncApp->getMegaApi()->getMyUserHandleBinary(), [title](QString user, bool showAttribute)
+            cloudAttributes->requestUser(title, MegaSyncApp->getMegaApi()->getMyUserHandleBinary(), [this, index](QString user, bool showAttribute)
             {
-                title->updateUser(user, showAttribute);
+                mTitlesByIndex.value(index)->updateUser(user, showAttribute);
             });
         }
 

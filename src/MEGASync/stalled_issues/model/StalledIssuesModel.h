@@ -74,6 +74,8 @@ public:
     void blockUi();
     void unBlockUi();
 
+    void updateIndex(const QModelIndex& index);
+
     //Methods to modify data
     bool solveLocalConflictedNameByRemove(int conflictIndex, const QModelIndex& index);
     bool solveLocalConflictedNameByRename(const QString& renameTo, int conflictIndex, const QModelIndex& index);

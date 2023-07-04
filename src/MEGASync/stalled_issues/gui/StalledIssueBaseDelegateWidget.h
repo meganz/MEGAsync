@@ -14,6 +14,7 @@ class StalledIssueBaseDelegateWidget : public QWidget
 public:
     explicit StalledIssueBaseDelegateWidget(QWidget *parent = nullptr);
 
+    void updateIndex();
     virtual void expand(bool){}
 
     void render(const QStyleOptionViewItem &option,

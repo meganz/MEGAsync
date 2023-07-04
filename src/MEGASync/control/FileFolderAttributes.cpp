@@ -299,7 +299,6 @@ RemoteFileFolderAttributes::RemoteFileFolderAttributes(const QString &filePath, 
       mHandle(mega::INVALID_HANDLE),
       mVersionCount(0)
 {
-    mListener = new mega::QTMegaRequestListener(MegaSyncApp->getMegaApi(), this);
 }
 
 RemoteFileFolderAttributes::RemoteFileFolderAttributes(mega::MegaHandle handle, QObject* parent)
@@ -307,12 +306,10 @@ RemoteFileFolderAttributes::RemoteFileFolderAttributes(mega::MegaHandle handle, 
       mHandle(handle),
       mVersionCount(0)
 {
-    mListener = new mega::QTMegaRequestListener(MegaSyncApp->getMegaApi(), this);
 }
 
 RemoteFileFolderAttributes::~RemoteFileFolderAttributes()
 {
-    delete mListener;
 }
 
 void RemoteFileFolderAttributes::requestSize(QObject* caller,std::function<void(qint64)> func)
@@ -330,7 +327,18 @@ void RemoteFileFolderAttributes::requestSize(QObject* caller,std::function<void(
             }
             else
             {
-                MegaSyncApp->getMegaApi()->getFolderInfo(node.get(),mListener);
+                MegaSyncApp->getMegaApi()->getFolderInfo(node.get(),new mega::OnFinishOneShot(MegaSyncApp->getMegaApi(),
+                                                                                              [this]
+                                                                                              (const mega::MegaError& e, const mega::MegaRequest& request)
+                {
+                    if (request.getType() == mega::MegaRequest::TYPE_FOLDER_INFO
+                            && e.getErrorCode() == mega::MegaError::API_OK)
+                    {
+                        auto folderInfo = request.getMegaFolderInfo();
+                        mSize = std::max(folderInfo->getCurrentSize(), 0LL);
+                        emit sizeReady(mSize);
+                    }
+                }));
             }
         }
     }
@@ -388,23 +396,25 @@ void RemoteFileFolderAttributes::requestUser(QObject *caller, std::function<void
                 if(auto context = requestReady(RemoteAttributeTypes::User, caller))
                 {
                     mOwner = user;
-                    MegaSyncApp->getMegaApi()->getUserEmail(user,new MegaListenerFuncExecuter(true, [this ,func, context](mega::MegaApi*,  mega::MegaRequest* request, mega::MegaError* e) {
-                        if (e->getErrorCode() == mega::MegaError::API_OK)
+                    MegaSyncApp->getMegaApi()->getUserEmail(user,new mega::OnFinishOneShot(MegaSyncApp->getMegaApi(), [this ,func, context](const mega::MegaError& e, const mega::MegaRequest& request) {
+                        if (e.getErrorCode() == mega::MegaError::API_OK)
                         {
-                            auto emailFromRequest = request->getEmail();
+                            auto emailFromRequest = request.getEmail();
                             if (emailFromRequest)
                             {
                                 mUserEmail = QString::fromUtf8(emailFromRequest);
                                 mUserFullName = UserAttributes::FullName::requestFullName(emailFromRequest);
 
-                                connect(mUserFullName.get(), &UserAttributes::FullName::fullNameReady, context, [this, func]{
-                                    func(mUserFullName->getFullName(), true);
-                                    requestFinish(RemoteAttributeTypes::User);
-                                });
-
                                 if(mUserFullName->isAttributeReady())
                                 {
                                     requestFinish(RemoteAttributeTypes::User);
+                                }
+                                else
+                                {
+                                    this->connect(mUserFullName.get(), &UserAttributes::FullName::fullNameReady, context, [this, func]{
+                                        func(mUserFullName->getFullName(), true);
+                                        requestFinish(RemoteAttributeTypes::User);
+                                    });
                                 }
                             }
                         }
@@ -443,19 +453,6 @@ void RemoteFileFolderAttributes::requestUser(QObject *caller, mega::MegaHandle c
             mUserFullName = nullptr;
             func(QString(), false);
         }
-    }
-}
-
-void RemoteFileFolderAttributes::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e)
-{
-    mega::MegaRequestListener::onRequestFinish(api, request, e);
-
-    if (request->getType() == mega::MegaRequest::TYPE_FOLDER_INFO
-            && e->getErrorCode() == mega::MegaError::API_OK)
-    {
-        auto folderInfo = request->getMegaFolderInfo();
-        mSize = std::max(folderInfo->getCurrentSize(), 0LL);
-        emit sizeReady(mSize);
     }
 }
 

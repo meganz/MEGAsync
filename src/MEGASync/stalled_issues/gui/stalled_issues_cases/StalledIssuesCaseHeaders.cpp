@@ -253,17 +253,17 @@ void NameConflictsHeader::refreshCaseUi(StalledIssueHeader* header)
 
         if(header->getData().consultData()->hasFiles() > 0 && header->getData().consultData()->hasFolders() > 0)
         {
-            header->setTitleDescriptionText(tr("These files and folders contain multiple names on one side, that would all become the same single name on the other side of the sync."
+            header->setTitleDescriptionText(tr("These items contain multiple names on one side, that would all become the same single name on the other side."
                                                "\nThis may be due to syncing to case insensitive local filesystems, or the effects of escaped characters."));
         }
         else if(header->getData().consultData()->hasFiles() > 0)
         {
-            header->setTitleDescriptionText(tr("These files contain multiple names on one side, that would all become the same single name on the other side of the sync."
+            header->setTitleDescriptionText(tr("These files contain multiple names on one side, that would all become the same single name on the other side."
                                                "\nThis may be due to syncing to case insensitive local filesystems, or the effects of escaped characters."));
         }
         else if(header->getData().consultData()->hasFolders() > 0)
         {
-            header->setTitleDescriptionText(tr("These folders contain multiple names on one side, that would all become the same single name on the other side of the sync."
+            header->setTitleDescriptionText(tr("These folders contain multiple names on one side, that would all become the same single name on the other side."
                                                "\nThis may be due to syncing to case insensitive local filesystems, or the effects of escaped characters."));
         }
 

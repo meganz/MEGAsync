@@ -68,6 +68,8 @@ private:
     std::shared_ptr<const NameConflictedStalledIssue> mIssue;
     StalledIssuesUtilities mUtilities;
     QPointer<StalledIssueBaseDelegateWidget> mDelegate;
+    QMap<int, QPointer<NameConflictTitle>> mTitlesByIndex;
+    QMap<int, QPointer<QWidget>> mContainerByDuplicateByGroupId;
 };
 
 class CloudNameConflict : public NameConflict
