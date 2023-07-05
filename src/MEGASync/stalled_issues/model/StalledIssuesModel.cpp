@@ -410,7 +410,7 @@ bool StalledIssuesModel::solveLocalConflictedNameByRemove(int conflictIndex, con
 
     if(auto nameConflict = std::dynamic_pointer_cast<NameConflictedStalledIssue>(mStalledIssues.at(potentialIndex.row())->getData()))
     {
-        return nameConflict->solveLocalConflictedName(conflictIndex, NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::REMOVE);
+        return nameConflict->solveLocalConflictedNameByRemove(conflictIndex);
     }
 
     return false;
@@ -434,7 +434,7 @@ bool StalledIssuesModel::solveCloudConflictedNameByRemove(int conflictIndex, con
 
     if(auto nameConflict = std::dynamic_pointer_cast<NameConflictedStalledIssue>(mStalledIssues.at(potentialIndex.row())->getData()))
     {
-        return nameConflict->solveCloudConflictedName(conflictIndex, NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::REMOVE);
+        return nameConflict-> solveCloudConflictedNameByRemove(conflictIndex);
     }
 
     return false;

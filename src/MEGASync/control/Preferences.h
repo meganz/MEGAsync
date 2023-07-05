@@ -173,6 +173,28 @@ public:
     static QString notificationsTypeToString(NotificationsTypes type);
     //**** END OF Notifications ****/
 
+    //**** Stalled Issues ****/
+    enum class StalledIssuesSmartModeType
+    {
+        None = 0,
+        Smart,
+        Verbose
+    };
+    StalledIssuesSmartModeType stalledIssueSmartMode();
+    void setStalledIssueSmartMode(StalledIssuesSmartModeType value);
+
+    enum class StalledIssuesLocalAndRemoteSolveType
+    {
+        None = 0,
+        LastMTime,
+        Local,
+        Remote
+    };
+    StalledIssuesLocalAndRemoteSolveType stalledIssueLocalAndRemote();
+    void setStalledIssueLocalAndRemote(StalledIssuesLocalAndRemoteSolveType value);
+
+    //**** END OF Stalled Issues ****/
+
     void setTemporalBandwidthValid(bool value);
     long long temporalBandwidth();
     void setTemporalBandwidth(long long value);
@@ -730,6 +752,15 @@ protected:
     //Only for retrocompatibility purposes
     static const QString showDeprecatedNotificationsKey;
     static const bool defaultDeprecatedNotifications;
+
+    //Stalled issues smart choice
+    static const QString stalledIssuesSmartModeKey;
+    static const StalledIssuesSmartModeType defaultStalledIssuesSmartMode;
+
+    static const QString stalledIssuesLocalAndRemoteKey;
+    static const StalledIssuesLocalAndRemoteSolveType defaultStalledIssuesLocalAndRemoteSolve;
+
+    //End of stalled issues
 
     static const bool defaultStartOnStartup;
     static const bool defaultUpdateAutomatically;

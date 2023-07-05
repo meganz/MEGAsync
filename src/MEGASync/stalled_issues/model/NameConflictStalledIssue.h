@@ -241,18 +241,20 @@ public:
     const QList<std::shared_ptr<ConflictedNameInfo>>& getNameConflictLocalData() const;
     const CloudConflictedNamesByHandle& getNameConflictCloudData() const;
 
-    bool solveLocalConflictedName(int conflictIndex, ConflictedNameInfo::SolvedType type);
-    bool solveCloudConflictedName(int conflictIndex, ConflictedNameInfo::SolvedType type);
+    bool solveLocalConflictedNameByRemove(int conflictIndex);
+    bool solveCloudConflictedNameByRemove(int conflictIndex);
 
     bool solveCloudConflictedNameByRename(int conflictIndex, const QString& renameTo);
     bool solveLocalConflictedNameByRename(int conflictIndex, const QString& renameTo);
 
-    bool hasDuplicatedNodes() const;
-
-    void updateIssue(const mega::MegaSyncStall *stallIssue) override;
+    void renameNodesAutomatically();
 
     void solveIssue();
     bool isSolved() const;
+
+    bool hasDuplicatedNodes() const;
+
+    void updateIssue(const mega::MegaSyncStall *stallIssue) override;
 
 private:
     bool checkAndSolveConflictedNamesSolved(const QList<std::shared_ptr<ConflictedNameInfo> > &conflicts);

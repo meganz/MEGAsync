@@ -33,6 +33,12 @@ public:
         return std::dynamic_pointer_cast<Type>(attributes);
     }
 
+
+
+    qint64 size() const;
+    int64_t modifiedTime() const;
+    int64_t createdTime() const;
+
 signals:
     void sizeReady(qint64);
     void modifiedTimeReady(const QDateTime&);

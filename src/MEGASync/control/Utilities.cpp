@@ -1153,6 +1153,131 @@ void Utilities::getDaysAndHoursToTimestamp(int64_t secsTimestamps, int64_t &rema
     remainDays  = remainHours / 24;
 }
 
+QString Utilities::getNonDuplicatedNodeName(MegaNode *node, MegaNode *parentNode, const QString &currentName, bool unescapeName, const QStringList& itemsBeingRenamed)
+{
+    QString newName;
+    QString nodeName;
+    QString suffix;
+
+    if(node->isFile())
+    {
+        QFileInfo fileInfo(QString::fromUtf8(node->getName()));
+
+        auto nameSplitted = Utilities::getFilenameBasenameAndSuffix(fileInfo.fileName());
+        if(nameSplitted != QPair<QString, QString>())
+        {
+            nodeName = nameSplitted.first;
+            suffix = nameSplitted.second;
+        }
+        else
+        {
+            nodeName = fileInfo.fileName();
+        }
+    }
+    else
+    {
+        nodeName = currentName;
+    }
+
+    if(unescapeName)
+    {
+        nodeName = QString::fromUtf8(MegaSyncApp->getMegaApi()->unescapeFsIncompatible(nodeName.toUtf8().constData()));
+    }
+
+    bool nameFound(false);
+    int counter(1);
+    while(!nameFound)
+    {
+        QString repeatedName = nodeName + QString(QLatin1Literal("(%1)")).arg(QString::number(counter));
+        if(node)
+        {
+            if(node->isFile() && !suffix.isEmpty())
+            {
+                repeatedName.append(suffix);
+            }
+        }
+
+        if(!itemsBeingRenamed.contains(repeatedName))
+        {
+            auto foundNode = std::shared_ptr<MegaNode>(MegaSyncApp->getMegaApi()->getChildNodeOfType(parentNode, repeatedName.toStdString().c_str(),
+                                                                                                     node->isFile() ? MegaNode::TYPE_FILE : MegaNode::TYPE_FOLDER));
+
+            if(!foundNode)
+            {
+                newName = repeatedName;
+                nameFound = true;
+            }
+        }
+
+        counter++;
+    }
+
+    return newName;
+}
+
+QString Utilities::getNonDuplicatedLocalName(const QFileInfo &currentFile, bool unescapeName)
+{
+    QString repeatedName;
+    QString suffix = currentFile.completeSuffix();
+
+    QString fileName;
+    if(unescapeName)
+    {
+        fileName = QString::fromUtf8(MegaSyncApp->getMegaApi()->unescapeFsIncompatible(currentFile.baseName().toUtf8().constData()));
+    }
+    else
+    {
+        fileName = currentFile.baseName();
+    }
+
+    QDirIterator filesIt(currentFile.path(), QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks, QDirIterator::NoIteratorFlags);
+
+    int counter(0);
+    bool notFound(true);
+    do
+    {
+        notFound = true;
+        counter++;
+
+        QString suggestedName = fileName + QString(QLatin1Literal("(%1)")).arg(QString::number(counter));
+        if(!suffix.isEmpty())
+        {
+            suggestedName += QString(QLatin1Literal(".%1")).arg(suffix);
+        }
+
+        while (filesIt.hasNext())
+        {
+            QString checkFileName;
+
+            if(unescapeName)
+            {
+                checkFileName = QString::fromUtf8(MegaSyncApp->getMegaApi()->unescapeFsIncompatible(filesIt.fileName().toUtf8().constData()));
+            }
+            else
+            {
+                checkFileName = filesIt.fileName();
+            }
+
+            if (checkFileName.compare(suggestedName, Qt::CaseSensitive) == 0)
+            {
+                notFound = false;
+                break;
+            }
+
+            filesIt.next();
+
+        }
+    } while(!notFound);
+
+    repeatedName = currentFile.baseName() + QString(QLatin1Literal("(%1)")).arg(QString::number(counter));
+    if(!suffix.isEmpty())
+    {
+        repeatedName += QString(QLatin1Literal(".%1")).arg(suffix);
+    }
+
+    return repeatedName;
+}
+
 QPair<QString, QString> Utilities::getFilenameBasenameAndSuffix(const QString& fileName)
 {
     QMimeDatabase db;

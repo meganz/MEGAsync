@@ -62,8 +62,6 @@ private slots:
     void onActionClicked(int actionId);
 
 private:
-    void removeConflictedNameWidget(QWidget *widget);
-
     Ui::NameConflict *ui;
     std::shared_ptr<const NameConflictedStalledIssue> mIssue;
     StalledIssuesUtilities mUtilities;

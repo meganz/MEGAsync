@@ -255,12 +255,6 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
     mIssue = issue;
 }
 
-void NameConflict::removeConflictedNameWidget(QWidget* widget)
-{
-    ui->nameConflictsLayout->removeWidget(widget);
-    widget->deleteLater();
-}
-
 void NameConflict::setDelegate(QPointer<StalledIssueBaseDelegateWidget> newDelegate)
 {
     mDelegate = newDelegate;
@@ -280,12 +274,12 @@ void NameConflict::onActionClicked(int actionId)
 {
     if(auto chooseTitle = dynamic_cast<NameConflictTitle*>(sender()))
     {
-        auto data = getData(mIssue);
+        auto issueData = getData(mIssue);
         auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
 
         QFileInfo info;
         auto titleFileName = chooseTitle->property(TITLE_FILENAME).toString();
-        info.setFile(data->getNativePath(), titleFileName);
+        info.setFile(issueData->getNativePath(), titleFileName);
         QString filePath(info.filePath());
 
         auto conflictedNames(getConflictedNames(mIssue));
@@ -315,7 +309,7 @@ void NameConflict::onActionClicked(int actionId)
             renameDialog->init();
 
             DialogOpener::showDialog<RenameNodeDialog>(renameDialog,
-                                                       [this, data, titleFileName, conflictIndex, renameDialog](){
+                                                       [this, issueData, titleFileName, conflictIndex, renameDialog](){
 
                 if(renameDialog->result() == QDialog::Accepted)
                 {
@@ -333,7 +327,7 @@ void NameConflict::onActionClicked(int actionId)
                     }
 
                     // Prevent this one showing again (if they Refresh) until sync has made a full fresh pass
-                    MegaSyncApp->getMegaApi()->clearStalledPath(data->original.get());
+                    MegaSyncApp->getMegaApi()->clearStalledPath(issueData->original.get());
 
                     if(areAllSolved)
                     {
@@ -397,7 +391,7 @@ void NameConflict::onActionClicked(int actionId)
                 }
             }
 
-            msgInfo.finishFunc = [this, data, handle, filePath, titleFileName, conflictIndex](QMessageBox* msgBox)
+            msgInfo.finishFunc = [this, issueData, handle, filePath, titleFileName, conflictIndex](QMessageBox* msgBox)
             {
                 if (msgBox->result() == QDialogButtonBox::Yes)
                 {
@@ -426,7 +420,7 @@ void NameConflict::onActionClicked(int actionId)
                     }
 
                     // Prevent this one showing again (if they Refresh) until sync has made a full fresh pass
-                    MegaSyncApp->getMegaApi()->clearStalledPath(data->original.get());
+                    MegaSyncApp->getMegaApi()->clearStalledPath(issueData->original.get());
 
                     if(areAllSolved)
                     {

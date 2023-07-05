@@ -81,6 +81,21 @@ void FileFolderAttributes::cancel()
     mCancelled = true;
 }
 
+int64_t FileFolderAttributes::size() const
+{
+    return mSize;
+}
+
+int64_t FileFolderAttributes::modifiedTime() const
+{
+    return mModifiedTime.toSecsSinceEpoch();
+}
+
+int64_t FileFolderAttributes::createdTime() const
+{
+    return mCreatedTime.toSecsSinceEpoch();
+}
+
 bool FileFolderAttributes::attributeNeedsUpdate(int type)
 {
     auto currentTime = QDateTime::currentMSecsSinceEpoch();

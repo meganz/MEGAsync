@@ -267,7 +267,7 @@ void NameConflictsHeader::refreshCaseUi(StalledIssueHeader* header)
                                                "\nThis may be due to syncing to case insensitive local filesystems, or the effects of escaped characters."));
         }
 
-        if(nameConflict->hasDuplicatedNodes())
+        if(!nameConflict->isSolved())
         {
             header->showAction(tr("Solve"));
         }
