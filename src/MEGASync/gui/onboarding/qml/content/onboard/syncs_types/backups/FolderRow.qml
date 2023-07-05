@@ -49,8 +49,8 @@ Rectangle {
             anchors.fill: parent
             sourceComponent: {
                 if(backupsProxyModel.selectedFilterEnabled) {
-                    if(mError !== BackupsModel.BackupErrorCode.DuplicatedName
-                            && mError !== BackupsModel.BackupErrorCode.ExistsRemote) {
+                    if(mError !== BackupsModel.DuplicatedName
+                            && mError !== BackupsModel.ExistsRemote) {
                         return confirmContent;
                     } else {
                         return conflictContent;
@@ -239,10 +239,10 @@ Rectangle {
                 error: mErrorVisible
                 hint.visible: mErrorVisible
                 hint.text: {
-                    if(mError === BackupsModel.BackupErrorCode.ExistsRemote) {
+                    if(mError === BackupsModel.ExistsRemote) {
                         return OnboardingStrings.confirmBackupErrorRemote;
                     }
-                    if(mError === BackupsModel.BackupErrorCode.DuplicatedName) {
+                    if(mError === BackupsModel.DuplicatedName) {
                         return OnboardingStrings.confirmBackupErrorDuplicated;
                     }
                     return "";
