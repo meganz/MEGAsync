@@ -1393,6 +1393,7 @@ void InfoDialog::regenerate(int blockState)
             ui->wInfoDialogIn->setVisible(true);
             adjustSize();
             show();
+            app->repositionInfoDialog();
             break;
         }
     }

@@ -3927,6 +3927,11 @@ void MegaApplication::enableFinderExt()
 }
 #endif
 
+QSystemTrayIcon *MegaApplication::getTrayIcon()
+{
+    return trayIcon;
+}
+
 void MegaApplication::openFolderPath(QString localPath)
 {
     if (!localPath.isEmpty())

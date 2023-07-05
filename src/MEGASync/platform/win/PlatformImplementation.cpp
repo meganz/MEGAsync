@@ -25,6 +25,8 @@
 #endif
 
 #include <QOperatingSystemVersion>
+#include <QScreen>
+#include <QDesktopWidget>
 
 #if _WIN32_WINNT < 0x0601
 // Windows headers don't define this for WinXP despite the documentation says that they should
@@ -1485,4 +1487,132 @@ QString PlatformImplementation::getPreparedPath(std::string *localPath)
     }
 
     return preparedPath;
+}
+
+void PlatformImplementation::calculateInfoDialogCoordinates(const QRect& rect, int* posx, int* posy)
+{
+    int xSign = 1;
+    int ySign = 1;
+    QPoint position;
+    QRect screenGeometry;
+
+    position = QCursor::pos();
+    QScreen* currentScreen = QGuiApplication::screenAt(position);
+    if (currentScreen)
+    {
+        screenGeometry = currentScreen->availableGeometry();
+
+        QString otherInfo = QString::fromUtf8("pos = [%1,%2], name = %3").arg(position.x()).arg(position.y()).arg(currentScreen->name());
+        logInfoDialogCoordinates("availableGeometry", screenGeometry, otherInfo);
+
+        if (!screenGeometry.isValid())
+        {
+            screenGeometry = currentScreen->geometry();
+            otherInfo = QString::fromUtf8("dialog rect = %1").arg(rectToString(rect));
+            logInfoDialogCoordinates("screenGeometry", screenGeometry, otherInfo);
+
+            if (screenGeometry.isValid())
+            {
+                screenGeometry.setTop(28);
+            }
+            else
+            {
+                screenGeometry = rect;
+                screenGeometry.setBottom(screenGeometry.bottom() + 4);
+                screenGeometry.setRight(screenGeometry.right() + 4);
+            }
+
+            logInfoDialogCoordinates("screenGeometry 2", screenGeometry, otherInfo);
+        }
+        else
+        {
+            if (screenGeometry.y() < 0)
+            {
+                ySign = -1;
+            }
+
+            if (screenGeometry.x() < 0)
+            {
+                xSign = -1;
+            }
+        }
+
+        QRect totalGeometry = QApplication::desktop()->screenGeometry();
+        APPBARDATA pabd;
+        pabd.cbSize = sizeof(APPBARDATA);
+        pabd.hWnd = FindWindow(L"Shell_TrayWnd", NULL);
+        //TODO: the following only takes into account the position of the tray for the main screen.
+        //Alternatively we might want to do that according to where the taskbar is for the targetted screen.
+        if (pabd.hWnd && SHAppBarMessage(ABM_GETTASKBARPOS, &pabd)
+                && pabd.rc.right != pabd.rc.left && pabd.rc.bottom != pabd.rc.top)
+        {
+            int size;
+            switch (pabd.uEdge)
+            {
+            case ABE_LEFT:
+                position = screenGeometry.bottomLeft();
+                if (totalGeometry == screenGeometry)
+                {
+                    size = pabd.rc.right - pabd.rc.left;
+                    size = size * screenGeometry.height() / (pabd.rc.bottom - pabd.rc.top);
+                    screenGeometry.setLeft(screenGeometry.left() + size);
+                }
+                break;
+            case ABE_RIGHT:
+                position = screenGeometry.bottomRight();
+                if (totalGeometry == screenGeometry)
+                {
+                    size = pabd.rc.right - pabd.rc.left;
+                    size = size * screenGeometry.height() / (pabd.rc.bottom - pabd.rc.top);
+                    screenGeometry.setRight(screenGeometry.right() - size);
+                }
+                break;
+            case ABE_TOP:
+                position = screenGeometry.topRight();
+                if (totalGeometry == screenGeometry)
+                {
+                    size = pabd.rc.bottom - pabd.rc.top;
+                    size = size * screenGeometry.width() / (pabd.rc.right - pabd.rc.left);
+                    screenGeometry.setTop(screenGeometry.top() + size);
+                }
+                break;
+            case ABE_BOTTOM:
+                position = screenGeometry.bottomRight();
+                if (totalGeometry == screenGeometry)
+                {
+                    size = pabd.rc.bottom - pabd.rc.top;
+                    size = size * screenGeometry.width() / (pabd.rc.right - pabd.rc.left);
+                    screenGeometry.setBottom(screenGeometry.bottom() - size);
+                }
+                break;
+            }
+
+            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Calculating Info Dialog coordinates. pabd.uEdge = %1, pabd.rc = %2")
+                         .arg(pabd.uEdge)
+                         .arg(QString::fromUtf8("[%1,%2,%3,%4]").arg(pabd.rc.left).arg(pabd.rc.top).arg(pabd.rc.right).arg(pabd.rc.bottom))
+                         .toUtf8().constData());
+
+        }
+
+        if (position.x() * xSign > (screenGeometry.right() / 2) * xSign)
+        {
+            *posx = screenGeometry.right() - rect.width() - 2;
+        }
+        else
+        {
+            *posx = screenGeometry.left() + 2;
+        }
+
+        if (position.y() * ySign > (screenGeometry.bottom() / 2) * ySign)
+        {
+            *posy = screenGeometry.bottom() - rect.height() - 2;
+        }
+        else
+        {
+            *posy = screenGeometry.top() + 2;
+        }
+    }
+
+    QString otherInfo = QString::fromUtf8("dialog rect = %1, posx = %2, posy = %3").arg(rectToString(rect)).arg(*posx).arg(*posy);
+    logInfoDialogCoordinates("Final", screenGeometry, otherInfo);
 }

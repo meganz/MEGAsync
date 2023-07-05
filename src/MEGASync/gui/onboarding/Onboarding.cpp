@@ -57,8 +57,10 @@ Onboarding::Onboarding(QObject *parent)
 
     qmlRegisterModule("BackupsModel", 1, 0);
     qmlRegisterModule("BackupsController", 1, 0);
-}
 
+    // Makes the Guest window transparent (macOS)
+    QQuickWindow::setDefaultAlphaBuffer(true);
+}
 
 QUrl Onboarding::getQmlUrl()
 {
