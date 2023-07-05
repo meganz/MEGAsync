@@ -1,3 +1,4 @@
+
 #include "Utilities.h"
 #include "control/Preferences.h"
 
@@ -771,16 +772,21 @@ Utilities::ProgressSize Utilities::getProgressSizes(unsigned long long transferr
 
 QString Utilities::createSimpleUsedString(long long usedData)
 {
-    return QCoreApplication::translate("Utilities", "%1 used", "", toNearestUnit(usedData)).arg(getSizeString(usedData));
+    return createSimpleUsedStringWithoutReplacement(usedData).arg(getSizeString(usedData));
+}
+
+QString Utilities::createSimpleUsedStringWithoutReplacement(long long usedData)
+{
+    return QCoreApplication::translate("Utilities", "%1 used", "", toNearestUnit(usedData));
 }
 
 QString Utilities::createCompleteUsedString(long long usedData, long long totalData, int percentage)
 {
     return QCoreApplication::translate("Utilities", "%1 (%2%) of %3 used", "", toNearestUnit(usedData)).arg(
-                getSizeString(usedData),
-                QString::number(percentage),
-                getSizeString(totalData)
-                );
+            getSizeString(usedData),
+            QString::number(percentage),
+            getSizeString(totalData)
+            );
 }
 
 QString Utilities::extractJSONString(QString json, QString name)
