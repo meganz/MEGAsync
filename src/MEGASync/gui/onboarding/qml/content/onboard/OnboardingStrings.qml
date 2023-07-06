@@ -75,6 +75,7 @@ QtObject {
     readonly property var selectiveSyncButtonDescription: qsTr("Sync specific folders in your Cloud Drive.")
     readonly property var selectiveSyncDescription: qsTr("Lorem ipsum dolor asitmet")
     readonly property var selectiveSync: qsTr("Selective Sync")
+    readonly property var setUpMEGA: qsTr("Set up MEGA")
     readonly property var signUp: qsTr("Sign up")
     readonly property var signUpTitle: qsTr("Create your [b]MEGA account[/b]")
     readonly property var storageSpace: qsTr("Storage space")

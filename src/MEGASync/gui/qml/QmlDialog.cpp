@@ -6,6 +6,8 @@
 QmlDialog::QmlDialog(QWindow *parent)
     : QQuickWindow(parent)
 {
+    setFlags(flags() | Qt::Dialog);
+    setIcon(QIcon(QString::fromUtf8("://images/app_ico.ico")));
 }
 
 QmlDialog::~QmlDialog()
