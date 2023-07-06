@@ -4,6 +4,7 @@
 #include "ConnectivityChecker.h"
 #include "Platform.h"
 #include "QMegaMessageBox.h"
+#include "DialogOpener.h"
 
 LoginController::LoginController(QObject *parent)
     : QObject{parent}
@@ -170,6 +171,7 @@ void LoginController::emailConfirmation(const QString& email)
 
 void LoginController::onLogin(mega::MegaRequest *request, mega::MegaError *e)
 {
+    QString errorMsg;
     if(e->getErrorCode() == mega::MegaError::API_OK)
     {
         MegaSyncApp->initLocalServer();
@@ -189,34 +191,19 @@ void LoginController::onLogin(mega::MegaRequest *request, mega::MegaError *e)
         {
         case mega::MegaError::API_EINCOMPLETE:
         {
-            QMegaMessageBox::MessageBoxInfo msgInfo;
-            msgInfo.title = QMegaMessageBox::errorTitle();
-            msgInfo.text =  tr("Please check your e-mail and click the link to confirm your account.");
-            msgInfo.buttons = QMessageBox::Ok;
-
-            QMegaMessageBox::warning(msgInfo);
+            errorMsg = tr("Please check your e-mail and click the link to confirm your account.");
             break;
         }
         case mega::MegaError::API_ETOOMANY:
         {
-            QMegaMessageBox::MessageBoxInfo msgInfo;
-            msgInfo.title = QMegaMessageBox::errorTitle();
-            msgInfo.text = tr("You have attempted to log in too many times.[BR]Please wait until %1 and try again.")
-                               .replace(QString::fromUtf8("[BR]"), QString::fromUtf8("\n"))
-                               .arg(QTime::currentTime().addSecs(3600).toString(QString::fromUtf8("hh:mm")));
-            msgInfo.buttons = QMessageBox::Ok;
-
-            QMegaMessageBox::warning(msgInfo);
+            errorMsg = tr("You have attempted to log in too many times.[BR]Please wait until %1 and try again.")
+                           .replace(QString::fromUtf8("[BR]"), QString::fromUtf8("\n"))
+                           .arg(QTime::currentTime().addSecs(3600).toString(QString::fromUtf8("hh:mm")));
             break;
         }
         case mega::MegaError::API_EBLOCKED:
         {
-            QMegaMessageBox::MessageBoxInfo msgInfo;
-            msgInfo.title = QMegaMessageBox::errorTitle();
-            msgInfo.text = tr("Your account has been blocked. Please contact support@mega.co.nz");
-            msgInfo.buttons = QMessageBox::Ok;
-
-            QMegaMessageBox::critical(msgInfo);
+            errorMsg = tr("Your account has been blocked. Please contact support@mega.co.nz");
             break;
         }
         case mega::MegaError::API_EMFAREQUIRED:
@@ -232,19 +219,14 @@ void LoginController::onLogin(mega::MegaRequest *request, mega::MegaError *e)
         default:
             if(e->getErrorCode() != mega::MegaError::API_ESSL)
             {
-                QMegaMessageBox::MessageBoxInfo msgInfo;
-                msgInfo.title = QMegaMessageBox::errorTitle();
-                msgInfo.text = QCoreApplication::translate("MegaError", e->getErrorString());
-                msgInfo.buttons = QMessageBox::Ok;
-
-                QMegaMessageBox::warning(msgInfo);
+                errorMsg = QCoreApplication::translate("MegaError", e->getErrorString());
             }
             break;
         }
     }
 
     MegaSyncApp->onGlobalSyncStateChanged(mMegaApi);
-    emit loginFinished(e->getErrorCode());
+    emit loginFinished(e->getErrorCode(), errorMsg);
 }
 
 void LoginController::onFetchNodesSuccess()
@@ -347,13 +329,19 @@ void LoginController::onLogout(mega::MegaRequest *request, mega::MegaError *e)
         msgInfo.buttons = QMessageBox::Ok;
 
         QMegaMessageBox::warning(msgInfo);
-        megaApi()->localLogout();
+        //megaApi()->localLogout();
         // TODO: to login page??
+    }
+    else if(request->getParamType() == mega::MegaError::API_EBLOCKED)
+    {
+        DialogOpener::closeAllDialogs();
+        emit logoutWithError();
     }
     else
     {
         emit logout();
     }
+    //MegaSyncApp->unlink(true);
 }
 
 void LoginController::fetchNodes(const QString& email)

@@ -1,7 +1,8 @@
 #include "QmlDialog.h"
+#include "MegaApplication.h"
+
 #include <QEvent>
 #include <QScreen>
-#include <QApplication>
 
 QmlDialog::QmlDialog(QWindow *parent)
     : QQuickWindow(parent)
@@ -31,6 +32,7 @@ void QmlDialog::setLoggingIn(bool value)
 void QmlDialog::forceClose()
 {
     setLoggingIn(false);
+    qDebug()<<parent();
     close();
 }
 
@@ -41,6 +43,11 @@ bool QmlDialog::event(QEvent *evnt)
         if(mLoggingIn)
         {
             emit closingButLoggingIn();
+            return true;
+        }
+        else if(!MegaSyncApp->getMegaApi()->isLoggedIn())
+        {
+            hide();
             return true;
         }
         else

@@ -19,6 +19,7 @@ class LoginController : public QObject, public mega::MegaRequestListener
     Q_PROPERTY(bool emailConfirmed MEMBER mEmailConfirmed READ getIsEmailConfirmed NOTIFY emailConfirmed)
 
 public:
+
     explicit LoginController(QObject *parent = nullptr);
     virtual ~LoginController();
     Q_INVOKABLE void login(const QString& email, const QString& password);
@@ -36,7 +37,7 @@ public:
     void emailConfirmation(const QString& email);
 
 signals:
-    void loginFinished(int errorCode);
+    void loginFinished(int errorCode, const QString& errorMsg);
     void registerFinished(bool success);
     void emailChanged();
     void changeRegistrationEmailFinished(bool success);
@@ -45,6 +46,7 @@ signals:
     void emailConfirmed();
     void accountCreationResumed();
     void logout();
+    void logoutWithError();
 
 protected:
     virtual void onLogin(mega::MegaRequest* request, mega::MegaError* e);

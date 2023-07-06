@@ -2,9 +2,12 @@
 import QtQuick 2.12
 // Local
 import Onboarding 1.0
+import ApiEnums 1.0
 
 // C++
 import Onboard 1.0
+import LoginController 1.0
+
 
 LoginPageForm {
     id: root
@@ -82,51 +85,56 @@ LoginPageForm {
         }
 
         onLoginFinished: {
+            if(errorCode !== ApiEnums.API_OK)
+            {
+                root.enabled = true;
+                loginButton.icons.busyIndicatorVisible = false;
+                state = normalStatus;
+                onboardingWindow.loggingIn = false;
+            }
+
             switch(errorCode)
             {
-                case -26: //mega::MegaError::API_EMFAREQUIRED:->2FA required
+                case ApiEnums.API_EMFAREQUIRED://-26: //mega::MegaError::API_EMFAREQUIRED:->2FA required
                 {
-                    loginButton.icons.busyIndicatorVisible = false;
                     registerFlow.state = twoFA;
                     break;
                 }
-                case -5: //mega::MegaError::API_EFAILED: ->
-                case -8: //mega::MegaError::API_EEXPIRED: -> 2FA failed
+                case ApiEnums.API_EFAILED: //mega::MegaError::API_EFAILED: ->
+                case ApiEnums.API_EEXPIRED: //mega::MegaError::API_EEXPIRED: -> 2FA failed
                 {
-
                     break;
                 }
-                case -9: //mega::MegaError::API_ENOENT: -> user or pass failed
+                case ApiEnums.API_ENOENT: //mega::MegaError::API_ENOENT: -> user or pass failed
                 {
-                    root.enabled = true;
                     email.error = true;
                     password.error = true;
                     password.hint.text = OnboardingStrings.errorLogin;
                     password.hint.visible = true;
-                    loginButton.icons.busyIndicatorVisible = false;
-                    state = normalStatus;
                     break;
                 }
-                case -13: //mega::MegaError::API_EINCOMPLETE: -> account not confirmed
+                case ApiEnums.API_EINCOMPLETE: //mega::MegaError::API_EINCOMPLETE: -> account not confirmed
                 {
                     //what to do here?
                     break;
                 }
-                case -6: //mega::MegaError::API_ETOOMANY: -> too many attempts
+                case ApiEnums.API_ETOOMANY: //mega::MegaError::API_ETOOMANY: -> too many attempts
                 {
                     //what to do here?
                     break;
                 }
-                case -16: //mega::MegaError::API_EBLOCKED: ->  blocked account
+                case ApiEnums.API_EBLOCKED: //mega::MegaError::API_EBLOCKED: ->  blocked account
                 {
                     //what to do here?
                     break;
                 }
-                case 0: //mega::MegaError::API_OK:
+                case ApiEnums.API_OK: //mega::MegaError::API_OK:
                 {
                     state = fetchNodesStatus;
                     break;
                 }
+                default:
+
             }
         }
     }

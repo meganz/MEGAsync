@@ -27,6 +27,7 @@
 #include "qml/QmlDialog.h"
 #include "qml/QmlDialogWrapper.h"
 #include "qml/QmlClipboard.h"
+#include "qml/ApiEnums.h"
 #include "onboarding/Onboarding.h"
 #include "onboarding/BackupsModel.h"
 
@@ -3361,6 +3362,7 @@ void MegaApplication::registerCommonQMLElements()
 
     qmlRegisterModule("Components.BusyIndicator", 1, 0);
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/busyIndicator/BusyIndicator.qml")), "Components.BusyIndicator", 1, 0, "BusyIndicator");
+    qmlRegisterUncreatableMetaObject(ApiEnums::staticMetaObject, "ApiEnums", 1, 0, "ApiEnums", QString::fromUtf8("Cannot create ApiEnums in QML"));
 
     qmlRegisterModule("Components.Buttons", 1, 0);
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/buttons/Button.qml")), "Components.Buttons", 1, 0, "Button");
@@ -3503,7 +3505,10 @@ void MegaApplication::unlink(bool keepLogs)
     mFetchingNodes = false;
     mQueringWhyAmIBlocked = false;
     whyamiblockedPeriodicPetition = false;
-    megaApi->logout(true, nullptr);
+    if(megaApi->isLoggedIn())
+    {
+        megaApi->logout(true, nullptr);
+    }
     megaApiFolders->setAccountAuth(nullptr);
     DialogOpener::closeAllDialogs();
     Platform::getInstance()->notifyAllSyncFoldersRemoved();

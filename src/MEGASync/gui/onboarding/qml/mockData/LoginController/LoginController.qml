@@ -34,7 +34,7 @@ Item {
         running: false;
         repeat: false;
         onTriggered: {
-            loginFinished();
+            loginFinished(0);
             fetchNodesTimer.start();
         }
     }
@@ -57,8 +57,8 @@ Item {
         }
     }
 
-    function onLoginClicked(data) {
-        console.info("onLoginClicked() -> " + JSON.stringify(data));
+    function login(user, pass) {
+        console.info("login() -> " + user + " " + pass);
 
         // Comment/Uncomment the following lines to test different scenarios
 

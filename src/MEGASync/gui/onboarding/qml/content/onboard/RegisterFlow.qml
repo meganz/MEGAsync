@@ -169,6 +169,10 @@ Rectangle {
         LoginController{
             id: loginController
             onLogout: {
+                cancelLogin.close();
+                onboardingWindow.forceClose();
+            }
+            onLogoutWithError: {
                 onboardingWindow.forceClose();
             }
         }
