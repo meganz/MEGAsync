@@ -9,7 +9,7 @@ class QMegaMessageBox : public QMessageBox
 public:
     explicit QMegaMessageBox(QWidget* parent):
         QMessageBox(parent)
-    {};
+    {}
 
     static QString warningTitle();
     static QString errorTitle();
@@ -27,6 +27,7 @@ public:
         Qt::TextFormat textFormat;
         QPixmap iconPixmap;
         bool enqueue;
+        bool ignoreCloseAll;
 
         MessageBoxInfo()
             : finishFunc(nullptr),
@@ -34,7 +35,8 @@ public:
               buttons(Ok),
               defaultButton(NoButton),
               textFormat(Qt::PlainText),
-              enqueue(false)
+              enqueue(false),
+              ignoreCloseAll(false)
         {}
     };
 

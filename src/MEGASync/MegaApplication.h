@@ -522,7 +522,6 @@ protected:
     int businessStatus = -2;
     int blockState;
     bool blockStateSet = false;
-    bool mLogoutWithError = false;
     bool whyamiblockedPeriodicPetition = false;
     friend class DeferPreferencesSyncForScope;
     std::shared_ptr<TransferQuota> mTransferQuota;
