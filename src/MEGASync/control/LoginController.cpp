@@ -329,19 +329,15 @@ void LoginController::onLogout(mega::MegaRequest *request, mega::MegaError *e)
         msgInfo.buttons = QMessageBox::Ok;
 
         QMegaMessageBox::warning(msgInfo);
-        //megaApi()->localLogout();
-        // TODO: to login page??
+        emit logoutBySdk();
     }
-    else if(request->getParamType() == mega::MegaError::API_EBLOCKED)
+    else if(request->getParamType() != mega::MegaError::API_EBLOCKED)
     {
-        DialogOpener::closeAllDialogs();
-        emit logoutWithError();
+        emit logoutByUser();
     }
-    else
-    {
-        emit logout();
-    }
-    //MegaSyncApp->unlink(true);
+    DialogOpener::closeAllDialogs();
+    MegaSyncApp->unlink(true);
+    MegaSyncApp->onLogout();
 }
 
 void LoginController::fetchNodes(const QString& email)

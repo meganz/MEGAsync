@@ -1516,7 +1516,10 @@ if (!preferences->lastExecutionTime())
 
 void MegaApplication::onLogout()
 {
-    sender()->deleteLater();
+    if(QObject* logoutController = sender())
+    {
+        logoutController->deleteLater();
+    }
 
     model->reset();
     mTransfersModel->resetModel();
@@ -6238,6 +6241,10 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
                 QMegaMessageBox::critical(msgInfo);
                 break;
         }
+        }
+        if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>())
+        {
+                emit dialog->getDialog()->wrapper()->accountBlocked();
         }
 
     }

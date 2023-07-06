@@ -15,6 +15,14 @@ LoginPageForm {
     property bool loginAttempt: false
     property bool twoFARequired: false
 
+    function setNormalStatus(){
+        root.enabled = true;
+        loginButton.icons.busyIndicatorVisible = false;
+        state = normalStatus;
+        password.text = "";
+        onboardingWindow.loggingIn = false;
+    }
+
     Keys.onEnterPressed: {
         loginButton.forceActiveFocus();
         loginButton.clicked();
@@ -66,6 +74,16 @@ LoginPageForm {
     }
 
     Connections {
+        target: Onboarding
+
+        onAccountBlocked:
+        {
+            setNormalStatus();
+            onboardingWindow.forceClose();
+        }
+    }
+
+    Connections {
         target: loginController
 
         onFetchingNodesProgress: {
@@ -84,13 +102,21 @@ LoginPageForm {
             registerFlow.state = confirmEmail;
         }
 
+        onLogoutBySdk: {
+            onboardingWindow.forceClose();
+            setNormalStatus();
+        }
+
+        onLogoutByUser: {
+            cancelLogin.close();
+            onboardingWindow.forceClose();
+            setNormalStatus();
+        }
+
         onLoginFinished: {
             if(errorCode !== ApiEnums.API_OK)
             {
-                root.enabled = true;
-                loginButton.icons.busyIndicatorVisible = false;
-                state = normalStatus;
-                onboardingWindow.loggingIn = false;
+                setNormalStatus();
             }
 
             switch(errorCode)

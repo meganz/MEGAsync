@@ -45,8 +45,8 @@ signals:
     void fetchingNodesFinished();
     void emailConfirmed();
     void accountCreationResumed();
-    void logout();
-    void logoutWithError();
+    void logoutByUser();
+    void logoutBySdk();
 
 protected:
     virtual void onLogin(mega::MegaRequest* request, mega::MegaError* e);

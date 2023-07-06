@@ -20,6 +20,9 @@ public:
 
     Q_INVOKABLE void openPreferences(bool sync) const;
 
+signals:
+    void accountBlocked();
+
 };
 
 #endif // ONBOARDING_H

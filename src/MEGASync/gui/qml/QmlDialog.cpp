@@ -32,8 +32,10 @@ void QmlDialog::setLoggingIn(bool value)
 void QmlDialog::forceClose()
 {
     setLoggingIn(false);
-    qDebug()<<parent();
-    close();
+    if(!close())
+    {
+        hide();
+    }
 }
 
 bool QmlDialog::event(QEvent *evnt)

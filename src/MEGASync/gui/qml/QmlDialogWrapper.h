@@ -24,7 +24,6 @@ public:
     virtual QUrl getQmlUrl() = 0;
     virtual QString contextName(){return QString();}
     virtual QVector<QQmlContext::PropertyPair> contextProperties() {return QVector<QQmlContext::PropertyPair>();};
-    virtual QVariant contextVariant(){return QVariant();}
 
     QQmlEngine* getEngine();
 };
