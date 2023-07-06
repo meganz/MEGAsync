@@ -3,6 +3,7 @@
 
 #include <HighDpiResize.h>
 #include <Platform.h>
+#include <QMegaMessageBox.h>
 
 #include <QDialog>
 #include <QMessageBox>
@@ -45,8 +46,12 @@ private:
         virtual void close() = 0;
         virtual bool isParent(QObject* parent) = 0;
 
+        bool ignoreCloseAllAction() const {return mIgnoreCloseAllAction;}
+        void setIgnoreCloseAllAction(bool newIgnoreCloseAllAction){mIgnoreCloseAllAction = newIgnoreCloseAllAction;}
+
     protected:
         QString mDialogClass;
+        bool mIgnoreCloseAllAction = false;
     };
 
     template <class DialogType>
@@ -140,7 +145,7 @@ public:
         }
     }
 
-    static void showMessageBox(QPointer<QMessageBox> msg, std::function<void(QPointer<QMessageBox>)> func, bool enqueue)
+    static void showMessageBox(QPointer<QMessageBox> msg, const QMegaMessageBox::MessageBoxInfo& msgInfo)
     {
         if(msg)
         {
@@ -156,16 +161,16 @@ public:
 #endif
 
             msg->setWindowModality(Qt::ApplicationModal);
-            msg->connect(msg.data(), &QMessageBox::finished, [func, msg, blocker]()
+            msg->connect(msg.data(), &QMessageBox::finished, [msgInfo, msg, blocker]()
             {
                 if(blocker)
                 {
                     blocker->deleteLater();
                 }
 
-                if(func)
+                if(msgInfo.finishFunc)
                 {
-                    func(msg);
+                    msgInfo.finishFunc(msg);
                 }
 
                 removeDialog(msg);
@@ -174,7 +179,8 @@ public:
                     auto queueMsgBox = std::dynamic_pointer_cast<DialogInfo<QMessageBox>>(mDialogsQueue.dequeue());
                     if(queueMsgBox)
                     {
-                        showDialogImpl(queueMsgBox->getDialog(), false, false);
+                        auto dialog = showDialogImpl(queueMsgBox->getDialog(), false, false);
+                        dialog->setIgnoreCloseAllAction(msgInfo.ignoreCloseAll);
                     }
                 }
             });
@@ -182,7 +188,7 @@ public:
             auto classType = QString::fromUtf8(QMessageBox::staticMetaObject.className());
             auto siblingDialogInfo = findSiblingDialogInfo<QMessageBox>(classType);
 
-            if(siblingDialogInfo && enqueue)
+            if(siblingDialogInfo && msgInfo.enqueue)
             {
                 std::shared_ptr<DialogInfo<QMessageBox>> info = std::make_shared<DialogInfo<QMessageBox>>();
                 info->setDialog(msg);
@@ -193,7 +199,8 @@ public:
             }
             else
             {
-                showDialogImpl(msg, false, false);
+                auto dialog = showDialogImpl(msg, false, false);
+                dialog->setIgnoreCloseAllAction(msgInfo.ignoreCloseAll);
             }
         }
     }
@@ -366,7 +373,10 @@ public:
     {
         foreach(auto dialogInfo, mOpenedDialogs)
         {
-            dialogInfo->close();
+            if(!dialogInfo->ignoreCloseAllAction())
+            {
+                dialogInfo->close();
+            }
         }
     }
 
@@ -385,7 +395,7 @@ private:
     }
 
     template <class DialogType>
-    static void showDialogImpl(QPointer<DialogType> dialog, bool changeWindowModality = true, bool removeSiblings = true)
+    static std::shared_ptr<DialogInfo<DialogType>> showDialogImpl(QPointer<DialogType> dialog, bool changeWindowModality = true, bool removeSiblings = true)
     {
         if(dialog)
         {
@@ -460,7 +470,11 @@ private:
             }
 
             info->raise(true);
+
+            return info;
         }
+
+        return nullptr;
     }
 
     template <class DialogType>
