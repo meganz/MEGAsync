@@ -22,6 +22,11 @@
 {
 font-size: 11px;
 }
+
+#linkList
+{
+background-color: #FFFFFF;
+}
 </string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout" stretch="1,0">

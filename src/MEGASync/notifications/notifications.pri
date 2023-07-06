@@ -2,22 +2,20 @@ DEPENDPATH += $$PWD
 INCLUDEPATH += $$PWD
 
 SOURCES += $$PWD/DesktopNotifications.cpp \
-           $$PWD/TransferNotificationBuilderBase.cpp \
+           $$PWD/TransferNotificationBuilder.cpp \
            $$PWD/NotificatorBase.cpp \
-           $$PWD/RemovedSharesNotificator.cpp
+           $$PWD/NotificationDelayer.cpp
 
 HEADERS += $$PWD/DesktopNotifications.h \
-           $$PWD/TransferNotificationBuilderBase.h  \
+           $$PWD/TransferNotificationBuilder.h  \
            $$PWD/NotificatorBase.h \
-           $$PWD/RemovedSharesNotificator.h
+           $$PWD/NotificationDelayer.h
 
 win32 {
     RESOURCES += $$PWD/../gui/Resources_win.qrc
     INCLUDEPATH += $$PWD/win
-    SOURCES += $$PWD/win/TransferNotificationBuilder.cpp \
-               $$PWD/win/Notificator.cpp
-    HEADERS += $$PWD/win/TransferNotificationBuilder.h \
-               $$PWD/win/Notificator.h
+    SOURCES += $$PWD/win/Notificator.cpp
+    HEADERS += $$PWD/win/Notificator.h
 }
 
 macx {
@@ -30,11 +28,9 @@ macx {
            $$PWD/macx/NSUserNotificationDelegate.mm \
            $$PWD/macx/UNUserNotificationDelegate.mm
 
-    SOURCES += $$PWD/macx/TransferNotificationBuilder.cpp \
-               $$PWD/macx/Notificator.cpp
+    SOURCES += $$PWD/macx/Notificator.cpp
 
-    HEADERS += $$PWD/macx/TransferNotificationBuilder.h \
-               $$PWD/macx/Notificator.h \
+    HEADERS += $$PWD/macx/Notificator.h \
                $$PWD/macx/NotificationHandler.h \
                $$PWD/macx/UNUserNotificationHandler.h \
                $$PWD/macx/NotificationDelegate.h \
@@ -48,8 +44,6 @@ macx {
 unix:!macx {
     RESOURCES += $$PWD/../gui/Resources_linux.qrc
     INCLUDEPATH += $$PWD/linux
-    SOURCES += $$PWD/linux/TransferNotificationBuilder.cpp\
-               $$PWD/linux/Notificator.cpp
-    HEADERS += $$PWD/linux/TransferNotificationBuilder.h\
-               $$PWD/linux/Notificator.h
+    SOURCES += $$PWD/linux/Notificator.cpp
+    HEADERS += $$PWD/linux/Notificator.h
 }

@@ -1,7 +1,7 @@
 Name:		megasync
 Version:	MEGASYNC_VERSION
 Release:	%(cat MEGA_BUILD_ID || echo "1").1
-Summary:	Easy automated syncing between your computers and your MEGA cloud drive
+Summary:	Get more control over your data
 License:	Freeware
 Group:		Applications/Others
 Url:		https://mega.nz
@@ -9,7 +9,7 @@ Source0:	megasync_%{version}.tar.gz
 Vendor:		MEGA Limited
 Packager:	MEGA Linux Team <linux@mega.co.nz>
 
-BuildRequires: zlib-devel, autoconf, automake, libtool, gcc-c++
+BuildRequires: zlib-devel, autoconf, automake, libtool, gcc-c++, libicu-devel
 BuildRequires: hicolor-icon-theme, unzip, wget
 BuildRequires: ffmpeg-mega
 
@@ -152,7 +152,7 @@ BuildRequires: ffmpeg-mega
     BuildRequires: libzen-devel, libmediainfo-devel
 %endif
 
-%if 0%{?fedora_version}==19 || 0%{?fedora_version}==20 || 0%{?fedora_version}==23 || 0%{?fedora_version}==24 || 0%{?centos_version} || 0%{?scientificlinux_version} || 0%{?rhel_version} || ( 0%{?suse_version} && 0%{?sle_version} < 120300)
+%if 0%{?fedora_version}==19 || 0%{?fedora_version}==20 || 0%{?fedora_version}==23 || 0%{?fedora_version}==24 || 0%{?fedora_version}==38 || 0%{?centos_version} || 0%{?scientificlinux_version} || 0%{?rhel_version} || ( 0%{?suse_version} && 0%{?sle_version} < 120300)
     %define flag_disablemediainfo %{nil}
 %endif
 
@@ -185,24 +185,18 @@ BuildRequires: ffmpeg-mega
 %endif
 
 %description
-Secure:
-Your data is encrypted end to end. Nobody can intercept it while in storage or in transit.
+- Sync your entire MEGA Cloud or selected folders with your computer so your MEGA stays up to date with the changes you make to your data on your computer and vice versa.
 
-Flexible:
-Sync any folder from your PC to any folder in the cloud. Sync any number of folders in parallel.
+- Back up your computer with MEGA to automatically copy data to MEGA in real time and eliminate the risk of accidental data loss.
 
-Fast:
-Take advantage of MEGA's high-powered infrastructure and multi-connection transfers.
-
-Generous:
-Store up to 50 GB for free!
+- Easily add, sort, search for, prioritise, pause, and cancel your uploads and downloads using our transfer manager.
 
 %prep
 %setup -q
 
 mega_build_id=`echo %{release} | sed "s/\.[^.]*$//" | sed "s/[^.]*\.//" | sed "s/[^0-9]//g"`
-sed -i -E "s/USER_AGENT([^\/]*)\/(([0-9][0-9]*\.){3})(.*)\";/USER_AGENT\1\/\2${mega_build_id}\";/g" MEGASync/control/Preferences.cpp;
-sed -i -E "s/BUILD_ID = ([0-9]*)/BUILD_ID = ${mega_build_id}/g" MEGASync/control/Preferences.cpp;
+sed -i -E "s/VER_PRODUCTVERSION_STR([[:space:]]+)\"(([0-9][0-9]*\.){3})(.*)\"/VER_PRODUCTVERSION_STR\1\"\2${mega_build_id}\"/g" MEGASync/control/Version.h
+sed -i -E "s/VER_BUILD_ID([[:space:]]+)([0-9]*)/VER_BUILD_ID\1${mega_build_id}/g" MEGASync/control/Version.h
 
 %build
 
@@ -231,7 +225,7 @@ ln -sfn libfreeimage.so.3 $PWD/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeim
     rm -fr MEGASync/mega/bindings/qt/3rdparty/include/cryptopp
 %endif
 
-%if ( 0%{?fedora_version} && 0%{?fedora_version}<=34 ) || ( 0%{?centos_version} == 600 ) || ( 0%{?centos_version} == 800 ) || ( 0%{?sle_version} && 0%{?sle_version} < 150300 )
+%if ( 0%{?fedora_version} && 0%{?fedora_version}<=35 ) || ( 0%{?centos_version} == 600 ) || ( 0%{?centos_version} == 800 ) || ( 0%{?sle_version} && 0%{?sle_version} < 150400 )
     %define extraqmake DEFINES+=MEGASYNC_DEPRECATED_OS
 %else
     %define extraqmake %{nil}
@@ -410,6 +404,10 @@ DATA
 
     %if 0%{?sle_version} == 150400
         %define reponame openSUSE_Leap_15.4
+    %endif
+
+    %if 0%{?sle_version} == 150500
+        %define reponame openSUSE_Leap_15.5
     %endif
 
     %if 0%{?sle_version} == 0 && 0%{?suse_version} >= 1550

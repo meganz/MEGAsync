@@ -130,11 +130,6 @@
         <translation>Choose</translation>
     </message>
     <message>
-        <source>Warning</source>
-        <translatorcomment>Label to indicate a waring during the process of setting a exclusion for the synchronizations.</translatorcomment>
-        <translation>Warning</translation>
-    </message>
-    <message>
         <source>Please enter a valid file name or absolute path.</source>
         <translatorcomment>Information message shown when the user selects an invalid file name or path for the exclusion</translatorcomment>
         <translation>Please enter a valid file name or absolute path.</translation>
@@ -323,7 +318,7 @@
     <message>
         <source>Your payment for the [A] plan was unsuccessful</source>
         <translatorcomment>Label to indicate that the the payment for a [A] PRO plan has failed. Placeholder will be replaced by the PRO plan name</translatorcomment>
-        <translation>Your payment for the [A] plan was unsuccessful</translation>
+        <translation>We didn’t receive your payment for the [A] plan.</translation>
     </message>
     <message>
         <source>Your publicly shared has been taken down</source>
@@ -396,6 +391,19 @@
         <translatorcomment>Label to indicate a reminder about a contact request.</translatorcomment>
         <translation>Reminder: You have a contact request</translation>
     </message>
+    <message>
+        <source>Shared folder updated</source>
+        <translatorcomment>Label to indicate that a shared folder was updated. CON-295</translatorcomment>
+        <translation>Shared folder updated</translation>
+    </message>
+    <message numerus="yes">
+        <source>[A] updated %n item</source>
+        <translatorcomment>Label to indicate that user [A] has updated %n items in shared folder. Placeholder [A] will be replaced by the email or full name of the user that made the update and %n with the number of removed items. CON-295</translatorcomment>
+        <translation>
+            <numerusform>[A] updated %n item</numerusform>
+            <numerusform>[A] updated %n items</numerusform>
+        </translation>
+    </message>
 </context>
 <context>
     <name>BackupItemModel</name>
@@ -439,7 +447,7 @@
     </message>
     <message>
         <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
-        <translatorcomment>Text informing the user that they can&amp;apos;t have duplicated backup names and instructing them to rename them</translatorcomment>
+        <translatorcomment>Text informing the user that they can&apos;t have duplicated backup names and instructing them to rename them</translatorcomment>
         <translation>You can’t back up folders with the same name. Rename them to continue with the backup. Folder names won’t change on your computer.</translation>
     </message>
 </context>
@@ -494,7 +502,7 @@
     <message>
         <source>Click menu for more Backup actions</source>
         <translatorcomment>Menu column tooltip (three dots in the table)</translatorcomment>
-        <translation>Click menu for more backup actions</translation>
+        <translation>Click on the three-dot menu for more backup actions</translation>
     </message>
 </context>
 <context>
@@ -650,6 +658,11 @@
         <translation>Want to cancel? All changes will be lost.</translation>
     </message>
     <message>
+        <source>Choose directory</source>
+        <translatorcomment>Folder selector window title text</translatorcomment>
+        <translation>Select folder</translation>
+    </message>
+    <message>
         <source>Error: %1</source>
         <translatorcomment>Placeholder will show the error message, this is being shown in a tooltip</translatorcomment>
         <translation>Error: %1</translation>
@@ -658,11 +671,6 @@
         <source>View in backup centre</source>
         <translatorcomment>Text for a button allowing the user to view the newly created backup i nthe Backup center (in the webclient)</translatorcomment>
         <translation>View in Backup centre</translation>
-    </message>
-    <message>
-        <source>Choose directory</source>
-        <translatorcomment>Folder selector window title text</translatorcomment>
-        <translation>Select folder</translation>
     </message>
 </context>
 <context>
@@ -759,7 +767,7 @@
     </message>
     <message>
         <source>Only enable this option if tranfers don&apos;t start. Under all other circumstances, using HTTP is satisfactory as MEGA already encrypts all data.</source>
-        <translatorcomment>Description label about the option Use HTTPS for transfers that don&amp;apos;t start checkbox.</translatorcomment>
+        <translatorcomment>Description label about the option Use HTTPS for transfers that don&apos;t start checkbox.</translatorcomment>
         <translation>Only enable this option if transfers don’t start. Under all other circumstances, using HTTP is satisfactory as MEGA already encrypts all data.</translation>
     </message>
 </context>
@@ -851,7 +859,7 @@
     <message>
         <source>Bug report success!</source>
         <translatorcomment>Confirmation message shown when a bug report is successfully uploaded.</translatorcomment>
-        <translation>Your issue has been reported successfully.</translation>
+        <translation>Your issue has been reported.</translation>
     </message>
     <message>
         <source>Your bug report has been submitted, a confirmation email will sent to you accordingly.</source>
@@ -867,11 +875,6 @@
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
         <translation>Your issue cannot be uploaded due to an error. Please try again later or contact our support team via [A]support@mega.nz[/A] if the problem persists.</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translatorcomment>Button label to confirm and close a message box dialog.</translatorcomment>
-        <translation>OK</translation>
     </message>
     <message>
         <source>Are you sure you want to exit uploading?</source>
@@ -993,11 +996,6 @@
         <translation>OK</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of the error dialog displayed when there is an issue related to the Change password dialog</translatorcomment>
-        <translation>Error</translation>
-    </message>
-    <message>
         <source>Please enter your password</source>
         <translatorcomment>Error message displayed when an empty password has been provided</translatorcomment>
         <translation>Please enter your password</translation>
@@ -1094,6 +1092,19 @@
         <translatorcomment>Checkbox to let the user attach diagnostic log files for analysis when an application crash occurs. Keep [Br] place holder.</translatorcomment>
         <translation>Attach diagnostic log files to assist with debugging.
 In some cases they may contain details about your data, such as file or folder names.</translation>
+    </message>
+</context>
+<context>
+    <name>DateTimeFormatter</name>
+    <message>
+        <source>Today at %1</source>
+        <translatorcomment>Label to indicate the today time of the current alert item displayed or completed transfer. SNC-2977</translatorcomment>
+        <translation>Today at %1</translation>
+    </message>
+    <message>
+        <source>Yesterday at %1</source>
+        <translatorcomment>Label to indicate the yesterday time of the current alert item displayed or completed transfer. SNC-2977</translatorcomment>
+        <translation>Yesterday at %1</translation>
     </message>
 </context>
 <context>
@@ -1322,7 +1333,15 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Show in MEGA</source>
         <translatorcomment>Notification button to redirect the user to remote location. It will open webclient at specific location.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Show in MEGA</translation>
+    </message>
+    <message numerus="yes">
+        <source>[A] updated %n item</source>
+        <translatorcomment>Label to indicate that user [A] has updated %n items in shared folder. Placeholder [A] will be replaced by the email or full name of the user that made the update and %n with the number of removed items. CON-295</translatorcomment>
+        <translation>
+            <numerusform>[A] updated %n item</numerusform>
+            <numerusform>[A] updated %n items</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -1368,11 +1387,6 @@ In some cases they may contain details about your data, such as file or folder n
         <translation>Select local folder</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of dialog if an error occurs selecting the download local folder.</translatorcomment>
-        <translation>Error</translation>
-    </message>
-    <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
         <translation>You don’t have write permissions in this local folder.</translation>
@@ -1383,17 +1397,12 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Download</source>
         <translatorcomment>Window title for download node selector</translatorcomment>
-        <translation type="unfinished">Download</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Title of the dialog</translatorcomment>
-        <translation type="unfinished">Error</translation>
+        <translation>Download</translation>
     </message>
     <message numerus="yes">
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>The item you selected has been removed. To reselect, close this window and try again.</numerusform>
             <numerusform>The items you selected have been removed. To reselect, close this window and try again.</numerusform>
         </translation>
@@ -1401,25 +1410,25 @@ In some cases they may contain details about your data, such as file or folder n
     <message numerus="yes">
         <source>You no longer have access to this item. Ask the owner to share again.</source>
         <translatorcomment>Error message shown when the user is trying to download an file or folder from an incoming share and the owner stops sharing/removes all items</translatorcomment>
-        <translation type="unfinished">
-            <numerusform>You no longer have access to this item. Ask the owner to share again.</numerusform>
-            <numerusform>You no longer have access to these items. Ask the owner to share again.</numerusform>
+        <translation>
+            <numerusform>You no longer have access to this item. Ask the person who shared it with you to share again.</numerusform>
+            <numerusform>You no longer have access to these items. Ask the person who shared them with you to share again.</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>%1 item selected</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation type="unfinished">
-            <numerusform>%1 item selected</numerusform>
-            <numerusform>%1 items selected</numerusform>
+        <translation>
+            <numerusform>%1 item selected.</numerusform>
+            <numerusform>%1 items selected.</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>%1. %2 has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%1. %2 has been removed. To reselect, close this window and try again.</numerusform>
             <numerusform>%1. %2 have been removed. To reselect, close this window and try again.</numerusform>
         </translation>
@@ -1430,7 +1439,7 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Local Disk</source>
         <translatorcomment>Default drive name shown on the low space dialog when downloading files</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Local disk</translation>
     </message>
 </context>
 <context>
@@ -1491,7 +1500,7 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>The file at this destination will be updated if the new file is different.</source>
         <translatorcomment>Text explaining the result of the file upload and update action</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>The file at this destination will be updated if the new file is different.</translation>
     </message>
 </context>
 <context>
@@ -1637,11 +1646,6 @@ In some cases they may contain details about your data, such as file or folder n
         <translation>Choose</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of the error dialog displayed when there is an error with FolderBinder dialog</translatorcomment>
-        <translation>Error</translation>
-    </message>
-    <message>
         <source>You can not sync a shared folder without Full Access permissions</source>
         <translatorcomment>Label to inform a user about the incompatibility of sync a shared folder without Full Access permissions</translatorcomment>
         <translation>You cannot sync a shared folder without full access permissions</translation>
@@ -1698,11 +1702,6 @@ In some cases they may contain details about your data, such as file or folder n
         <source>Fetching file list...</source>
         <translatorcomment>Label shown at main dialog to show the current operation. In this case fetching file information from servers.</translatorcomment>
         <translation>Fetching file list…</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Label shown to show an error</translatorcomment>
-        <translation>Error</translation>
     </message>
     <message>
         <source>Incorrect email and/or password.</source>
@@ -1879,11 +1878,6 @@ In some cases they may contain details about your data, such as file or folder n
         <translation>Choose</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of the error dialog displayed when there is an error with ImportMegaLinks dialog</translatorcomment>
-        <translation>Error</translation>
-    </message>
-    <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message shown when a user is trying to download a file to a local folder without the right permissions.</translatorcomment>
         <translation>You don’t have write permissions in this local folder.</translation>
@@ -2037,11 +2031,6 @@ In some cases they may contain details about your data, such as file or folder n
         <translation>No notifications for payments</translation>
     </message>
     <message>
-        <source>%1 used</source>
-        <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1</translatorcomment>
-        <translation>%1 used</translation>
-    </message>
-    <message>
         <source>Upgrade account</source>
         <translatorcomment>Button label to forward the user to the webclient for upgrade the current account.</translatorcomment>
         <translation>Upgrade account</translation>
@@ -2101,11 +2090,6 @@ In some cases they may contain details about your data, such as file or folder n
         </translation>
     </message>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of the dialog</translatorcomment>
-        <translation>Error</translation>
-    </message>
-    <message>
         <source>Some syncs and backups have been disabled</source>
         <translatorcomment>Warning message title shown on info dialog</translatorcomment>
         <translation>Some syncs and backups have been disabled</translation>
@@ -2138,37 +2122,37 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Transfer quota exceeded</source>
         <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
-        <translation type="unfinished">Transfer quota exceeded</translation>
+        <translation>Transfer quota exceeded</translation>
     </message>
     <message>
         <source>Your queued transfers exceed the current quota available for your IP address.</source>
         <translatorcomment>Informative label to indicate that your queued transfers exceed the current quota available for IP. Applies to free users.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Your queued transfers exceed the current quota available for your IP address.</translation>
     </message>
     <message>
         <source>Upgrade Account</source>
         <translatorcomment>Button label to upgrade the current account.</translatorcomment>
-        <translation type="unfinished">Upgrade account</translation>
+        <translation>Upgrade account</translation>
     </message>
     <message>
         <source>I will wait</source>
         <translatorcomment>Button label to dismiss (hide) overquota dialogs. Shown for free users only if they do not want to upgrade account for extra transfer quota.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>I will wait</translation>
     </message>
     <message>
         <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew.</source>
         <translatorcomment>Informative label to indicate that your queued transfers may be interrupted because the current account does not have enough transfer quota.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>You can’t continue downloading as you don’t have enough transfer quota left on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew.</translation>
     </message>
     <message>
         <source>Buy new plan</source>
         <translatorcomment>Button label for button to buy a new plan when there is not enough transfer quota in current non-free plan</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Buy new plan</translation>
     </message>
     <message>
         <source>Downloading may be interrupted as you have used 90% of your transfer quota on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew. </source>
         <translatorcomment>Message displayed in the InfoDialog when the transfer quota reaches warning stage</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Downloading may be interrupted as you have used 90% of your transfer quota on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew.</translation>
     </message>
 </context>
 <context>
@@ -2201,7 +2185,7 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Deleted or moved file</source>
         <translatorcomment>Tooltip when the file completed was removed or deleted</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Deleted or moved file</translation>
     </message>
 </context>
 <context>
@@ -2341,41 +2325,36 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Low disk space</source>
         <translatorcomment>Dialog title</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Low disk space</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translatorcomment>Button text to abort downloading the files</translatorcomment>
-        <translation type="unfinished">Cancel</translation>
+        <translation>Cancel</translation>
     </message>
     <message>
         <source>Try Again</source>
         <translatorcomment>Button text to retry downloading the files</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Try again</translation>
     </message>
     <message>
         <source>There is not enough space on %1. You need an additional %2 to download these files.</source>
         <translatorcomment>Label explaining the problem, %1 is the download target disk name. %2 is the needed size to continue with the download (the size unit depends on the quantity) </translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>There isn’t enough space on %1. You need an additional %2 to download these files.</translation>
     </message>
     <message>
         <source>Free space: %1</source>
         <translatorcomment>Label informing about the local disk free space</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Free space: %1</translation>
     </message>
     <message>
         <source>Total size: %1</source>
         <translatorcomment>Label informing about the total local disk space</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Total size: %1</translation>
     </message>
 </context>
 <context>
     <name>MegaApplication</name>
-    <message>
-        <source>MEGAsync</source>
-        <translatorcomment>Title of error dialog displayed when the account is blocked</translatorcomment>
-        <translation>MEGA</translation>
-    </message>
     <message>
         <source>Logging in</source>
         <translatorcomment>Label of tray icon showing a Logging in state. Keep capital letters.</translatorcomment>
@@ -2488,11 +2467,6 @@ https://mega.co.nz/#sync</source>
         <translation>No update available at this time</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translatorcomment>Label to indicate an error. Keep capital letter.</translatorcomment>
-        <translation>Error</translation>
-    </message>
-    <message>
         <source>Starting</source>
         <translatorcomment>Label of tray icon to indicate that MEGAsync is starting.</translatorcomment>
         <translation>Starting</translation>
@@ -2522,11 +2496,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Your config is corrupt, please start over</source>
         <translatorcomment>Message displayed when an error occurs loading configurations from Settings file.</translatorcomment>
         <translation>Your config is corrupted, please start over</translation>
-    </message>
-    <message>
-        <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
-        <translatorcomment>Notification message launched when a connectivity problem occurs.</translatorcomment>
-        <translation>The app is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
@@ -2871,7 +2840,7 @@ Transfers will automatically resume when you re-open the app.</numerusform>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been disabled. Reason: %2</source>
-        <translatorcomment>Notification message launched when a backup is disabled. Keep &amp;quot;%1&amp;quot; code because is filled with the name of the backup at runtime and %2 with the reason of the error.</translatorcomment>
+        <translatorcomment>Notification message launched when a backup is disabled. Keep &quot;%1&quot; code because is filled with the name of the backup at runtime and %2 with the reason of the error.</translatorcomment>
         <translation>Your backup ”%1“ has been disabled. Reason: %2</translation>
     </message>
     <message>
@@ -2900,62 +2869,72 @@ Transfers will automatically resume when you re-open the app.</numerusform>
     <message>
         <source>Some syncs and backups have been disabled. Go to settings to enable them again.</source>
         <translatorcomment>Warning message shown when some backups and syncs are disabled. Tell the userto go to settings to solve the issue.</translatorcomment>
-        <translation type="unfinished">Some syncs and backups have been disabled. Go to Settings to enable them again.</translation>
+        <translation>Some syncs and backups have been disabled. Go to Settings to enable them again.</translation>
     </message>
     <message>
         <source>One or more backups have been disabled. Go to settings to enable them again.</source>
         <translatorcomment>Warning message shown when some backups are disabled. Tell the userto go to settings to solve the issue.</translatorcomment>
-        <translation type="unfinished">One or more backups have been disabled. Go to Settings to enable them again.</translation>
+        <translation>One or more backups have been disabled. Go to Settings to enable them again.</translation>
     </message>
     <message>
         <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
         <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again.</translatorcomment>
-        <translation type="unfinished">One or more syncs have been disabled. Go to Settings to re-enable them.</translation>
+        <translation>One or more syncs have been disabled. Go to Settings to enable them again.</translation>
     </message>
     <message>
         <source>Open settings</source>
         <translatorcomment>Button label to open MEGAsync settings dialog.</translatorcomment>
-        <translation type="unfinished">Open Settings</translation>
+        <translation>Open Settings</translation>
     </message>
     <message>
         <source>Settings</source>
         <translatorcomment>This is the string used to refer to settings.</translatorcomment>
-        <translation type="unfinished">Settings</translation>
+        <translation>Settings</translation>
     </message>
     <message>
         <source>Your syncs and backups have been disabled: %1</source>
         <translatorcomment>Warning message shown when all the syncs and backups have been disabled. The placeholder %1 shows the reason;</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Your syncs and backups have been disabled: %1</translation>
     </message>
     <message>
         <source>Your backups have been disabled: %1</source>
         <translatorcomment>Warning message shown when all the backups have been disabled. The placeholder %1 shows the reason;</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Your backups have been disabled: %1</translation>
     </message>
     <message>
         <source>Your syncs have been disabled: %1</source>
         <translatorcomment>Warning message shown when  all the syncs have been disabled. The placeholder %1 shows the reason;</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Your syncs have been disabled: %1</translation>
     </message>
     <message>
         <source>Error getting link: %1</source>
         <translatorcomment>Notification message launched when an error occurs getting a public link for a file/folder. Placeholder %1 displays the reason.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Error getting link: %1</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been temporarily disabled: %2</source>
         <translatorcomment>Warning message shown when a sync is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Your sync “%1” has been temporarily disabled: %2</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; has been temporarily disabled: %2</source>
         <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Your backup “%1” has been temporarily disabled: %2</translation>
     </message>
     <message>
-        <source>Error transferring folder: %1</source>
-        <translatorcomment>Label to indicate that has been an error during a folder transfer.  Placeholder %1 displays the reason.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <source>Warning</source>
+        <translatorcomment>Title for dialogs with warning messages. SNC-3299</translatorcomment>
+        <translation type="unfinished">Warning</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translatorcomment>Title for dialogs with error messages. SNC-3299</translatorcomment>
+        <translation type="unfinished">Error</translation>
+    </message>
+    <message>
+        <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
+        <translatorcomment>Notification message launched when a connectivity problem occurs.</translatorcomment>
+        <translation>The app is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</translation>
     </message>
 </context>
 <context>
@@ -3386,11 +3365,6 @@ Transfers will automatically resume when you re-open the app.</numerusform>
         <translation>Open in MEGA</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translatorcomment>Error messagebox title</translatorcomment>
-        <translation>Error</translation>
-    </message>
-    <message>
         <source>Error opening file</source>
         <translatorcomment>Text on an error messagebox because a local file could not be opened</translatorcomment>
         <translation>File can’t be opened. Check that the file in your local drive hasn’t been deleted or moved.</translation>
@@ -3550,6 +3524,14 @@ Your selected incomplete sync transfers won’t be cancelled. All the other sele
     </message>
 </context>
 <context>
+    <name>MultiQFileDialog</name>
+    <message>
+        <source>Too many items selected. To continue, deselect some or select the parent folder instead.</source>
+        <translatorcomment>Message displayed as a tooltip on the OK button when there are too many items selected. See CON-326.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>NewFolderDialog</name>
     <message>
         <source>Enter the new folder name</source>
@@ -3589,11 +3571,6 @@ Enter a different name.</translation>
 <context>
     <name>NodeSelector</name>
     <message>
-        <source>Error</source>
-        <translatorcomment>Label to indicate an Error</translatorcomment>
-        <translation>Error</translation>
-    </message>
-    <message>
         <source>Select a MEGA folder</source>
         <translatorcomment>Node selector dialog title</translatorcomment>
         <translation>Select a MEGA folder</translation>
@@ -3601,27 +3578,27 @@ Enter a different name.</translation>
     <message>
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
-        <translation type="unfinished">The item you selected has been removed. To reselect, close this window and try again.</translation>
+        <translation>The item you selected has been removed. To reselect, close this window and try again.</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Button text to navigate to cloud drive section</translatorcomment>
-        <translation type="unfinished">Cloud drive</translation>
+        <translation>Cloud drive</translation>
     </message>
     <message>
         <source>Backups</source>
         <translatorcomment>Button text to navigate to backups section</translatorcomment>
-        <translation type="unfinished">Backups</translation>
+        <translation>Backups</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Button text to navigate to incoming shares section</translatorcomment>
-        <translation type="unfinished">Incoming shares</translation>
+        <translation>Incoming shares</translation>
     </message>
     <message>
         <source>Search</source>
         <translatorcomment>Search button header</translatorcomment>
-        <translation type="unfinished">Search</translation>
+        <translation>Search</translation>
     </message>
 </context>
 <context>
@@ -3665,30 +3642,6 @@ Enter a different name.</translation>
         <source>Sort by name</source>
         <translatorcomment>Node name column title tooltip. Sorts the order of the column by date.</translatorcomment>
         <translation>Sort by name</translation>
-    </message>
-    <message numerus="yes">
-        <source>Today at %1</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened today. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation>
-            <numerusform>Today at %1</numerusform>
-            <numerusform>Today at %1</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>Yesterday at %1</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was happened yesterday. %1 represents the hour. Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation>
-            <numerusform>Yesterday at %1</numerusform>
-            <numerusform>Yesterday at %1</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>%1 at %2</source>
-        <translatorcomment>Text that appears on &quot;Recently Used&quot; column if the last change was previously to yesterday. %1 represents the date (day month and year), while %2 represents the hour). Plural form is based on the hours, counted from 0 to 23.</translatorcomment>
-        <translation>
-            <numerusform>%1 at %2</numerusform>
-            <numerusform>%1 at %2</numerusform>
-        </translation>
     </message>
 </context>
 <context>
@@ -3739,27 +3692,27 @@ Enter a different name.</translation>
     <message>
         <source>Cloud drive</source>
         <translatorcomment>Button to filter search results from cloud drive</translatorcomment>
-        <translation type="unfinished">Cloud drive</translation>
+        <translation>Cloud drive</translation>
     </message>
     <message>
         <source>Backups</source>
         <translatorcomment>Button to filter search results from backups</translatorcomment>
-        <translation type="unfinished">Backups</translation>
+        <translation>Backups</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Button to filter search results from incoming shares</translatorcomment>
-        <translation type="unfinished">Incoming shares</translation>
+        <translation>Incoming shares</translation>
     </message>
     <message>
         <source>No results for:</source>
         <translatorcomment>Label indicating that there are no results for the current search, searched text will be following this label.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>No results for:</translation>
     </message>
     <message>
         <source>Ok</source>
         <translatorcomment>Button text to accept and close the dialog</translatorcomment>
-        <translation type="unfinished">OK</translation>
+        <translation>OK</translation>
     </message>
 </context>
 <context>
@@ -3767,7 +3720,7 @@ Enter a different name.</translation>
     <message>
         <source>Searching:</source>
         <translatorcomment>Label indicating the current search, searched text will be following this label.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Searching:</translation>
     </message>
 </context>
 <context>
@@ -3850,25 +3803,17 @@ Enter a different name.</translation>
     <message>
         <source>Uploads and downloads</source>
         <translatorcomment>Notification category for completed transfers notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Uploads and downloads</translation>
     </message>
     <message>
         <source>Completed uploads and downloads</source>
         <translatorcomment>Title of a checkbox for disconnectig completed transfer notifications</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Completed uploads and downloads</translation>
     </message>
     <message>
         <source>Uploads and downloads:</source>
         <translatorcomment>Notification category for completed transfers notifications (macx)</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Notificator</name>
-    <message>
-        <source>MEGAsync</source>
-        <translatorcomment>Product name.</translatorcomment>
-        <translation>MEGA</translation>
+        <translation>Uploads and downloads:</translation>
     </message>
 </context>
 <context>
@@ -3887,7 +3832,7 @@ Enter a different name.</translation>
     <message>
         <source>Storage full</source>
         <translatorcomment>Label to indicate the full storage for the current account is full.</translatorcomment>
-        <translation>Storage Full</translation>
+        <translation>Storage full</translation>
     </message>
     <message>
         <source>You have exceeded the available storage space for your account. You can add syncs but they will remain disabled until there is enough space on your account.</source>
@@ -4017,11 +3962,6 @@ Enter a different name.</translation>
         <translation>Cancel</translation>
     </message>
     <message>
-        <source>Warning</source>
-        <translatorcomment>Label displayed for a Warning message. Keep capital letter.</translatorcomment>
-        <translation>Warning</translation>
-    </message>
-    <message>
         <source>Enter one or more MEGA file links</source>
         <translatorcomment>Message displayed when a user tries to import some links but the field is empty.</translatorcomment>
         <translation>Enter one or more MEGA links</translation>
@@ -4138,7 +4078,7 @@ Enter a different name.</translation>
     <message>
         <source>With our end-to-end encryption, the way your team works has never been more secure and private.</source>
         <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of business plan.</translatorcomment>
-        <translation>With our end-to-end encryption, the way your team works has never been more secure and private.</translation>
+        <translation>With our zero-knowledge encryption, the way your team works has never been more secure and private.</translation>
     </message>
     <message>
         <source>Get started with secure file storage.</source>
@@ -4166,12 +4106,12 @@ Enter a different name.</translation>
     <message>
         <source>[A] storage</source>
         <translatorcomment>Label to indicate the specific storage of a pro plan. [A] is a placeholder for the value of the storage, it must be kept in the translated strings.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[A] storage</translation>
     </message>
     <message>
         <source>[A] transfer</source>
         <translatorcomment>Label to indicate the specific transfer quota of a pro plan. [A] is a placeholder for the value of the transfer quota, it must be kept in the translated strings.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[A] transfer</translation>
     </message>
 </context>
 <context>
@@ -4179,38 +4119,38 @@ Enter a different name.</translation>
     <message>
         <source>Show in folder</source>
         <translatorcomment>Label to indicate the &quot;Show in folder&quot; option to open local folder of a sync (Linux)</translatorcomment>
-        <translation type="unfinished">Show in folder</translation>
+        <translation>Show in folder</translation>
     </message>
     <message>
         <source>Exit</source>
         <translatorcomment>Label displayed on actions exiting Desktop application when on Windows or Linux</translatorcomment>
-        <translation type="unfinished">Exit</translation>
+        <translation>Exit</translation>
     </message>
     <message>
         <source>Show in Finder</source>
         <translatorcomment>Label to indicate the &quot;Show in Finder&quot; option to open local folder of a sync (macOS). Keep Finder name as it is the app name of file explorer on macOS.</translatorcomment>
-        <translation type="unfinished">Show in Finder</translation>
+        <translation>Show in Finder</translation>
     </message>
     <message>
         <source>Quit</source>
         <translatorcomment>Label displayed on actions exiting Desktop application when on Mac</translatorcomment>
-        <translation type="unfinished">Quit</translation>
+        <translation>Quit</translation>
     </message>
     <message>
         <source>Show in Explorer</source>
         <translatorcomment>Label to indicate the &quot;Show in Explorer&quot; option to open local folder of a sync (Windows). Keep Explorer name as it is the app name of file explorer on Windows.</translatorcomment>
-        <translation type="unfinished">Show in Explorer</translation>
+        <translation>Show in File Explorer</translation>
     </message>
 </context>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Security upgraded.
-- Detected crashes on Windows, Linux, and macOS fixed.
+        <source>- You can now search the stored data in your account.
+- We&apos;ve improved system notifications.
+- We&apos;ve enhanced the UI.
+- We&apos;ve fixed the detected crashes on Windows, Linux, and macOS.
 </source>
-        <translatorcomment>Changelog for v4.8.8</translatorcomment>
-        <translation>- Upgraded security
-- Fixed detected crashes on Windows, Linux, and macOS</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4294,11 +4234,6 @@ Enter a different name.</translation>
         <source>Update</source>
         <translatorcomment>Button text for Update option. (macOS)</translatorcomment>
         <translation>Update</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Title of warning message shown when there is any error while testing the proxy settings.</translatorcomment>
-        <translation>Error</translation>
     </message>
     <message>
         <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
@@ -4850,7 +4785,7 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Search</source>
         <translatorcomment>Placeholder for a search box</translatorcomment>
-        <translation type="unfinished">Search</translation>
+        <translation>Search</translation>
     </message>
 </context>
 <context>
@@ -4911,29 +4846,9 @@ Do you want to delete it anyway?</translation>
         <translation>Add</translation>
     </message>
     <message>
-        <source>Auto</source>
-        <translatorcomment>Label to indicate that management of rate upload limit is automatic.</translatorcomment>
-        <translation>Auto</translation>
-    </message>
-    <message>
         <source>Data temporarily unavailable</source>
         <translatorcomment>Label to indicate that the usage data is temporarily unavailable. String as short as possible.</translatorcomment>
         <translation>Data temporarily unavailable</translation>
-    </message>
-    <message>
-        <source>%1 (%2%) of %3 used</source>
-        <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically.</translatorcomment>
-        <translation>%1 (%2%) of %3 used</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translatorcomment>Title label for Warning message box. Keep capital letter.</translatorcomment>
-        <translation>Warning</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Title label for an Error message box. Keep capital letter.</translatorcomment>
-        <translation>Error</translation>
     </message>
     <message>
         <source>Clear</source>
@@ -5071,11 +4986,6 @@ Do you want to restart MEGAsync now?</source>
         <source>You are about to permanently remove all file versions. Would you like to proceed?</source>
         <translatorcomment>Informative text asking for confirmation when user is trying to remove all file versions of the current account.</translatorcomment>
         <translation>You are about to permanently remove all file versions. Would you like to proceed?</translation>
-    </message>
-    <message>
-        <source>%1 used</source>
-        <translatorcomment>Label to indicate the total amount of storage/bandwidth used by the account. Keep placeholder %1.</translatorcomment>
-        <translation>%1 used</translation>
     </message>
     <message>
         <source>MEGA-RECOVERYKEY</source>
@@ -5330,7 +5240,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Enable Windows Explorer integration</source>
         <translatorcomment>Checkbox label displayed on Windows, allowing the user to enable / disable the Windows Explorer integration.</translatorcomment>
-        <translation>Enable Windows Explorer integration</translation>
+        <translation>Enable Windows File Explorer integration</translation>
     </message>
     <message>
         <source>B</source>
@@ -5625,6 +5535,22 @@ Do you want to restart MEGAsync now?</source>
     </message>
 </context>
 <context>
+    <name>SettingsDialog_Bandwith</name>
+    <message>
+        <source>Auto</source>
+        <translatorcomment>Label to indicate that management of rate upload limit is automatic. SNC-3076</translatorcomment>
+        <translation>Auto</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsDialog_Proxies</name>
+    <message>
+        <source>Auto</source>
+        <translatorcomment>Label to indicate that proxy settings are on auto detec mode. SNC-3076</translatorcomment>
+        <translation>Auto</translation>
+    </message>
+</context>
+<context>
     <name>SetupWizard</name>
     <message>
         <source>Create a new MEGA account</source>
@@ -5702,11 +5628,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Cancel</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translatorcomment>Label of error.</translatorcomment>
-        <translation>Error</translation>
-    </message>
-    <message>
         <source>User already exists</source>
         <translatorcomment>Message displayed when a user is trying to create an account with the name of an existing user.</translatorcomment>
         <translation>User already exists</translation>
@@ -5772,11 +5693,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Creating account…</translation>
     </message>
     <message>
-        <source>Warning</source>
-        <translatorcomment>Label warning.</translatorcomment>
-        <translation>Warning</translation>
-    </message>
-    <message>
         <source>Please, select a local folder</source>
         <translatorcomment>Label displayed when the user has not select a local folder.</translatorcomment>
         <translation>Please select a local folder</translation>
@@ -5826,11 +5742,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an account has been blocked.</translatorcomment>
         <translation>Your account has been blocked. Please contact support@mega.nz</translation>
-    </message>
-    <message>
-        <source>MEGAsync</source>
-        <translatorcomment>Title of the dialog displayed when trying to cancel the wizard</translatorcomment>
-        <translation>MEGA</translation>
     </message>
     <message>
         <source>Are you sure you want to cancel this wizard and undo all changes?</source>
@@ -5885,7 +5796,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>When you finish this assistant, you will be able to sync additional folders using the settings dialog</source>
         <translatorcomment>Label to inform the user about the possibility to add new synchronizations through settings dialog once the initial setup wizard is at final stage</translatorcomment>
-        <translation>When you finish this assistant, you will be able to sync additional folders using the Settings dialog</translation>
+        <translation>When you finish this assistant, you will be able to sync additional folders using the settings dialog</translation>
     </message>
     <message>
         <source>First name:</source>
@@ -6083,14 +5994,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
 <context>
     <name>StreamNodeSelector</name>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of the dialog</translatorcomment>
-        <translation type="unfinished">Error</translation>
-    </message>
-    <message>
         <source>Only files can be used for streaming.</source>
         <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
-        <translation type="unfinished">Only files can be used for streaming.</translation>
+        <translation>You can’t stream folders. Select a file to stream.</translation>
     </message>
 </context>
 <context>
@@ -6149,11 +6055,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Are you sure that you want to stop the streaming?</source>
         <translatorcomment>Warning message shown when the dialog to stream files from MEGA is going to be closed and there is a file selected for streaming</translatorcomment>
         <translation>Are you sure that you want to stop the streaming?</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Title for dialogs with error messages</translatorcomment>
-        <translation>Error</translation>
     </message>
     <message>
         <source>File not found</source>
@@ -6390,25 +6291,15 @@ To continue, select a different folder.</translation>
 <context>
     <name>SyncNodeSelector</name>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of the dialog</translatorcomment>
-        <translation type="unfinished">Error</translation>
-    </message>
-    <message>
         <source>You need Full access right to be able to sync the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying sync a non compatible folder</translatorcomment>
-        <translation type="unfinished">You need Full access rights to be able to sync the selected folder.</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translatorcomment>Title of the dialog</translatorcomment>
-        <translation type="unfinished">Warning</translation>
+        <translation>To sync this folder, you need to have full-access permission to it.</translation>
     </message>
     <message>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
-        <translation type="unfinished">Invalid folder for synchronization. Please ensure that you don’t use characters like “\”, “/” or “:” in your folder names.</translation>
+        <translation>Cannot sync folder. Make sure you don’t use “\”, “/” or “:” in folder names.</translation>
     </message>
 </context>
 <context>
@@ -6429,17 +6320,17 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Sync is enabled</source>
         <translatorcomment>Checkbox tooltip that is displayed when it is checked.(sync enabled)</translatorcomment>
-        <translation type="unfinished">Sync is enabled</translation>
+        <translation>Sync is enabled</translation>
     </message>
     <message>
         <source>Sync is disabled</source>
         <translatorcomment>Checkbox tooltip that is displayed when it is unchecked.(sync disabled)</translatorcomment>
-        <translation type="unfinished">Sync is disabled</translation>
+        <translation>Sync is disabled</translation>
     </message>
     <message>
         <source>Click menu for more Sync actions</source>
         <translatorcomment>Menu column tooltip (three dots in the table)</translatorcomment>
-        <translation type="unfinished">Click menu for more sync actions</translation>
+        <translation>Click on the three-dot menu for more sync actions</translation>
     </message>
 </context>
 <context>
@@ -6766,140 +6657,219 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     </message>
 </context>
 <context>
-    <name>TransferNotificationBuilderBase</name>
+    <name>TransferNotificationBuilder</name>
     <message>
-        <source>Uploaded 1 file to %1.</source>
-        <translatorcomment>Notification text that inform 1 file has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Uploaded 1 folder to %1.</source>
-        <translatorcomment>Notification text that inform 1 folder has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>File uploaded</source>
-        <translatorcomment>Notification title when a file has been uploaded</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Folder uploaded</source>
-        <translatorcomment>Notification title when a folder has been uploaded</translatorcomment>
-        <translation type="unfinished"></translation>
+        <source>Retry</source>
+        <translatorcomment>Notification button to retry the failed file. CON-223</translatorcomment>
+        <translation>Retry</translation>
     </message>
     <message>
         <source>Show in MEGA</source>
-        <translatorcomment>Notification button to see the file on the webclient</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Notification button to see the file on the webclient. CON-223</translatorcomment>
+        <translation>Show in MEGA</translation>
     </message>
     <message>
         <source>Get link</source>
-        <translatorcomment>Notification button to get the file link</translatorcomment>
-        <translation type="unfinished">Get link</translation>
-    </message>
-    <message>
-        <source>Downloaded 1 file to %1.</source>
-        <translatorcomment>Notification text that inform 1 file has been downloaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Downloaded 1 folder to %1.</source>
-        <translatorcomment>Notification text that inform 1 folder has been downloaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Notification button to get the file link. CON-223</translatorcomment>
+        <translation>Get link</translation>
     </message>
     <message>
         <source>Show in folder</source>
-        <translatorcomment>Notification button to see the file on the local file explorer</translatorcomment>
-        <translation type="unfinished">Show in folder</translation>
+        <translatorcomment>Notification button to see the file on the local file explorer. CON-223</translatorcomment>
+        <translation>Show in folder</translation>
     </message>
     <message>
         <source>Open</source>
-        <translatorcomment>Notification button to open the file</translatorcomment>
-        <translation type="unfinished">Open</translation>
-    </message>
-    <message>
-        <source>File downloaded</source>
-        <translatorcomment>Notification title when a file has been downloaded</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Folder downloaded</source>
-        <translatorcomment>Notification title when a folder has been downloaded</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Notification button to open the file. CON-223</translatorcomment>
+        <translation>Open</translation>
     </message>
     <message numerus="yes">
-        <source>%n upload successful</source>
-        <translatorcomment>Notification text that inform that an upload was successful. %1 is the number of uploads. This string goes always with the %n upload cancelled and/or %n upload failed strings.</translatorcomment>
-        <translation type="unfinished">
-            <numerusform>%n upload successful</numerusform>
-            <numerusform>%n uploads successful</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>, %n upload cancelled</source>
-        <translatorcomment>Appended text that inform that an upload was cancelled. %1 is the number of cancelled uploads. This string goes always appended to the %n upload successful</translatorcomment>
-        <translation type="unfinished">
-            <numerusform>, %n upload cancelled</numerusform>
-            <numerusform>, %n uploads cancelled</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>, %n upload failed</source>
-        <translatorcomment>Appended text that inform that an upload has failed. %1 is the number of failed uploads. This string goes always appended to the %n upload successful</translatorcomment>
-        <translation type="unfinished">
-            <numerusform>, %n upload failed</numerusform>
-            <numerusform>, %n uploads failed</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>Uploaded %n items to %1</source>
-        <translatorcomment>Notification text that inform n items (files or folders) has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation type="unfinished">
-            <numerusform>Uploaded %n item to %1</numerusform>
-            <numerusform>Uploaded %n items to %1</numerusform>
+        <source>Retry failed items</source>
+        <translatorcomment>Notification button to retry failed transfers when not all the transfers failed. CON-223</translatorcomment>
+        <translation>
+            <numerusform>Retry failed item</numerusform>
+            <numerusform>Retry failed items</numerusform>
         </translation>
     </message>
     <message>
-        <source>Items uploaded</source>
-        <translatorcomment>Notification title when a more than one transfer (file or folders) have been uploaded</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n download successful</source>
-        <translatorcomment>Notification text that inform that an download was successful. %1 is the number of downloads. This string goes always with the %n download cancelled and/or %n download failed strings.</translatorcomment>
-        <translation type="unfinished">
-            <numerusform>%n download successful</numerusform>
-            <numerusform>%n downloads successful</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>, %n download cancelled</source>
-        <translatorcomment>Appended text that inform that an download was cancelled. %1 is the number of cancelled downloads. This string goes always appended to the %n download successful</translatorcomment>
-        <translation type="unfinished">
-            <numerusform>, %n download cancelled</numerusform>
-            <numerusform>, %n downloads cancelled</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>, %n download failed</source>
-        <translatorcomment>Appended text that inform that an download has failed. %1 is the number of failed downloads. This string goes always appended to the %n download successful</translatorcomment>
-        <translation type="unfinished">
-            <numerusform>, %n download failed</numerusform>
-            <numerusform>, %n downloads failed</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>Downloaded %n items to %1</source>
-        <translatorcomment>Notification text that inform n items (files or folders) has been downloaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation type="unfinished">
-            <numerusform>Downloaded %n item to %1</numerusform>
-            <numerusform>Downloaded %n items to %1</numerusform>
-        </translation>
+        <source>Could not upload</source>
+        <translatorcomment>Notification title for a failed upload of files/folders. CON-223</translatorcomment>
+        <translation>Could not upload</translation>
     </message>
     <message>
-        <source>Items downloaded</source>
-        <translatorcomment>Notification title when a more than one transfer (file or folders) have been downloaded</translatorcomment>
-        <translation type="unfinished"></translation>
+        <source>Upload incomplete</source>
+        <translatorcomment>Notification title for a combination of completed and failed uploads. CON-223</translatorcomment>
+        <translation>Upload incomplete</translation>
+    </message>
+    <message>
+        <source>Upload complete</source>
+        <translatorcomment>Notification title for a successfully upload of files/folders. CON-223</translatorcomment>
+        <translation>Upload complete</translation>
+    </message>
+    <message>
+        <source>Could not download</source>
+        <translatorcomment>Notification title for a failed download of files/folders. CON-223</translatorcomment>
+        <translation>Could not download</translation>
+    </message>
+    <message>
+        <source>Download incomplete</source>
+        <translatorcomment>Notification title for a combination of completed and failed downloads. CON-223</translatorcomment>
+        <translation>Download incomplete</translation>
+    </message>
+    <message>
+        <source>Download complete</source>
+        <translatorcomment>Notification title for a successfully download of files/folders. CON-223</translatorcomment>
+        <translation>Download complete</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n item couldn’t be uploaded to %1.</source>
+        <translatorcomment>Body text of a system notification shown when %n items could not be uploaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
+        <translation>
+            <numerusform>%n item couldn’t be uploaded to %1.</numerusform>
+            <numerusform>%n items couldn’t be uploaded to %1.</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n item uploaded</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
+        First part of string for multi plural support. Full string looks like: X item uploaded, but Y item couldn’t be uploaded (X and Y will be replaced with specific numbers).</translatorcomment>
+        <translation>
+            <numerusform>%n item uploaded</numerusform>
+            <numerusform>%n items uploaded</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%1, but %n item couldn’t be uploaded.</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
+        Second part of string for multi plural support. Full string looks like: X item uploaded, but Y item couldn’t be uploaded (X and Y will be replaced with specific numbers).</translatorcomment>
+        <translation>
+            <numerusform>%1, but %n item couldn’t be uploaded.</numerusform>
+            <numerusform>%1, but %n items couldn’t be uploaded.</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n item uploaded to %1.</source>
+        <translatorcomment>Body text of a system notification shown when %n items were uploaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
+        <translation>
+            <numerusform>%n item uploaded to %1.</numerusform>
+            <numerusform>%n items uploaded to %1.</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n item downloaded</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
+        First part of string for multi plural support. Full string looks like: X item downloaded, but Y item couldn’t be downloaded (X and Y will be replaced with specific numbers).</translatorcomment>
+        <translation>
+            <numerusform>%n item downloaded</numerusform>
+            <numerusform>%n items downloaded</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%1, but %n item couldn’t be downloaded.</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
+        Second part of string for multi plural support. Full string looks like: X item downloaded, but Y item couldn’t be downloaded (X and Y will be replaced with specific numbers).</translatorcomment>
+        <translation>
+            <numerusform>%1, but %n item couldn’t be downloaded.</numerusform>
+            <numerusform>%1, but %n items couldn’t be downloaded.</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n item couldn’t be downloaded to %1.</source>
+        <translatorcomment>Body text of a system notification shown when %n items could not be downloaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
+        <translation>
+            <numerusform>%n item couldn’t be downloaded to %1.</numerusform>
+            <numerusform>%n items couldn’t be downloaded to %1.</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n item downloaded to %1.</source>
+        <translatorcomment>Body text of a system notification shown when %n items were downloaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
+        <translation>
+            <numerusform>%n item downloaded to %1.</numerusform>
+            <numerusform>%n items downloaded to %1.</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n item no longer exist or was renamed.</source>
+        <translatorcomment>Body text of a system notification shown when %n items no longer exist or were renamed during an upload operation. %n will be replaced with the number of items. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
+        <translation>
+            <numerusform>%n item no longer exist or was renamed.</numerusform>
+            <numerusform>%n items no longer exist or were renamed.</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n item no longer exist.</source>
+        <translatorcomment>Body text of a system notification shown when %n items no longer exist or were renamed during a download operation. %n will be replaced with the number of items. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
+        <translation>
+            <numerusform>%n item no longer exist.</numerusform>
+            <numerusform>%n items no longer exist.</numerusform>
+        </translation>
+    </message>
+</context>
+<context>
+    <name>TransferNotificationBuilder_File</name>
+    <message>
+        <source>%1 couldn’t be uploaded to %2.</source>
+        <translatorcomment>Body text of a system notification shown when %1 file could not be uploaded to %2. %1 will be replaced with the name of the file and %2 with the remote destination path. CON-223</translatorcomment>
+        <translation>%1 couldn’t be uploaded to %2.</translation>
+    </message>
+    <message>
+        <source>%1 uploaded to %2.</source>
+        <translatorcomment>Body text of a system notification shown when %1 was succesfully uploaded to %2. %1 will be replaced with the name of the file and %2 with the remote destination path. CON-223</translatorcomment>
+        <translation>%1 uploaded to %2.</translation>
+    </message>
+    <message>
+        <source>%1 couldn’t be downloaded to %2.</source>
+        <translatorcomment>Body text of a system notification shown when %1 file could not be downloaded to %2. %1 will be replaced with the name of the file and %2 with the local destination path. CON-223</translatorcomment>
+        <translation>%1 couldn’t be downloaded to %2.</translation>
+    </message>
+    <message>
+        <source>%1 downloaded to %2.</source>
+        <translatorcomment>Body text of a system notification shown when %1 was succesfully downloaded to %2. %1 will be replaced with the name of the file and %2 with the local destination path. CON-223</translatorcomment>
+        <translation>%1 downloaded to %2.</translation>
+    </message>
+    <message>
+        <source>%1 no longer exists or was renamed.</source>
+        <translatorcomment>Body text of a system notification shown when %1 no longer exists or was removed during upload operation. %1 will be replaced with the name of the file. CON-223</translatorcomment>
+        <translation>%1 no longer exists or was renamed.</translation>
+    </message>
+    <message>
+        <source>%1 no longer exists.</source>
+        <translatorcomment>Body text of a system notification shown when %1 no longer exists during download operation. %1 will be replaced with the name of the file. CON-223</translatorcomment>
+        <translation>%1 no longer exists.</translation>
+    </message>
+</context>
+<context>
+    <name>TransferNotificationBuilder_Folder</name>
+    <message>
+        <source>%1 couldn’t be uploaded to %2.</source>
+        <translatorcomment>Body text of a system notification shown when %1 folder could not be uploaded to %2. %1 will be replaced with the name of the folder and %2 with the remote destination path. CON-223</translatorcomment>
+        <translation>%1 couldn’t be uploaded to %2.</translation>
+    </message>
+    <message>
+        <source>%1 uploaded to %2.</source>
+        <translatorcomment>Body text of a system notification shown when %1 was succesfully uploaded to %2. %1 will be replaced with the name of the folder and %2 with the remote destination path. CON-223</translatorcomment>
+        <translation>%1 uploaded to %2.</translation>
+    </message>
+    <message>
+        <source>%1 couldn’t be downloaded to %2.</source>
+        <translatorcomment>Body text of a system notification shown when %1 file could not be downloaded to %2. %1 will be replaced with the name of the folder and %2 with the local destination path. CON-223</translatorcomment>
+        <translation>%1 couldn’t be downloaded to %2.</translation>
+    </message>
+    <message>
+        <source>%1 downloaded to %2.</source>
+        <translatorcomment>Body text of a system notification shown when %1 was succesfully downloaded to %2. %1 will be replaced with the name of the folder and %2 with the local destination path. CON-223</translatorcomment>
+        <translation>%1 downloaded to %2.</translation>
+    </message>
+    <message>
+        <source>%1 no longer exists or was renamed.</source>
+        <translatorcomment>Body text of a system notification shown when %1 no longer exists or was removed during upload operation. %1 will be replaced with the name of the folder. CON-223</translatorcomment>
+        <translation>%1 no longer exists or was renamed.</translation>
+    </message>
+    <message>
+        <source>%1 no longer exists.</source>
+        <translatorcomment>Body text of a system notification shown when %1 no longer exists during download operation. %1 will be replaced with the name of the folder. CON-223</translatorcomment>
+        <translation>%1 no longer exists.</translation>
     </message>
 </context>
 <context>
@@ -6926,12 +6896,12 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
         <source>Sync transfers cannot be cancelled individually.
 Please delete the folder sync from settings to cancel them.</source>
         <translatorcomment>Message displayed when the user is trying to cancel a sync transfer.</translatorcomment>
-        <translation type="unfinished">Sync transfers can’t be cancelled. To remove the sync, go to Settings in the desktop app and delete the synced folder.</translation>
+        <translation>Sync transfers can’t be cancelled. To remove the sync, go to Settings in the desktop app and delete the synced folder.</translation>
     </message>
     <message>
         <source>Open settings</source>
         <translatorcomment>Button label to open the Settings dialog</translatorcomment>
-        <translation type="unfinished">Open Settings</translation>
+        <translation>Open Settings</translation>
     </message>
 </context>
 <context>
@@ -7271,14 +7241,9 @@ Please delete the folder sync from settings to cancel them.</source>
 <context>
     <name>UploadNodeSelector</name>
     <message>
-        <source>Error</source>
-        <translatorcomment>Title of the dialog</translatorcomment>
-        <translation type="unfinished">Error</translation>
-    </message>
-    <message>
         <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying upload files to a non compatible folder</translatorcomment>
-        <translation type="unfinished">You need Read and Write or Full access rights to be able to upload to the selected folder.</translation>
+        <translation>To upload this folder, you need to have read and write or full-access permissions to it.</translation>
     </message>
 </context>
 <context>
@@ -7430,37 +7395,53 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>[DAYS] [HOURS]</source>
         <translatorcomment>String used to control formatting of time intervals. [DAYS] will be replaced by the days count and [HOURS] by the hours. This is used for example in the Time remaining column of Transfer Manager.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[DAYS] [HOURS]</translation>
     </message>
     <message>
         <source>[HOURS] [MINUTES]</source>
         <translatorcomment>String used to control formatting of time intervals. [HOURS] will be replaced by the hours count and [MINUTES] by the minutes. This is used for example in the Time remaining column of Transfer Manager.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[HOURS] [MINUTES]</translation>
     </message>
     <message>
         <source>[MINUTES] [SECONDS]</source>
         <translatorcomment>String used to control formatting of time intervals. [MINUTES] will be replaced by the minutes count and [SECONDS] by the seconds. This is used for example in the Time remaining column of Transfer Manager.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[MINUTES] [SECONDS]</translation>
     </message>
     <message>
         <source>%1 [A]d[/A]</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [DAYS] [HOURS] string, replacing the [DAYS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the days. The space needs to be non-breaking.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1&#xa0;[A]d[/A]</translation>
     </message>
     <message>
         <source>%1 [A]h[/A]</source>
         <translatorcomment>String controlling the formatting of the hour count for time intervals. It is used in [DAYS] [HOURS] and [HOURS] [MINUTES] strings, replacing the [HOURS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the hours. The space needs to be non-breaking.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1&#xa0;[A]h[/A]</translation>
     </message>
     <message>
         <source>%1 [A]m[/A]</source>
         <translatorcomment>String controlling the formatting of the minute count for time intervals. It is used in [HOURS] [MINUTES] and [MINUTES] [SECONDS] strings, replacing the [MINUTES] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the minutes. The space needs to be non-breaking.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1&#xa0;[A]m[/A]</translation>
     </message>
     <message>
         <source>%1 [A]s[/A]</source>
         <translatorcomment>String controlling the formatting of the seconds count for time intervals. It is used in the [MINUTES] [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the seconds. The space needs to be non-breaking.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1&#xa0;[A]s[/A]</translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 used</source>
+        <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1. SNC-3429</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>%1 used</numerusform>
+            <numerusform>%1 used</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 (%2%) of %3 used</source>
+        <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically. SNC-3429</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>%1 (%2%) of %3 used</numerusform>
+            <numerusform>%1 (%2%) of %3 used</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -7478,7 +7459,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Verify your email</source>
         <translatorcomment>Label to verify a locked account. It will redirect to webclient to confirm email.</translatorcomment>
-        <translation>Verify your email</translation>
+        <translation>Check your email inbox</translation>
     </message>
     <message>
         <source>Locked account</source>
@@ -7488,7 +7469,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
         <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
-        <translation>Your account has been temporarily locked for your safety. Please verify your email and follow its steps to unlock your account.</translation>
+        <translation>Your account has been temporarily locked for your safety. Please check your email and follow its steps to unlock your account.</translation>
     </message>
     <message>
         <source>Resend email</source>

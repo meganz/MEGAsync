@@ -3,9 +3,13 @@ Section: gnome
 Priority: optional
 Maintainer: MEGA Linux Team <linux@mega.co.nz>
 Homepage: https://mega.nz/#sync
-Build-Depends: debhelper, libqt4-dev, intltool, libglib2.0-0
+Build-Depends: debhelper, cmake, libkf5kio-dev, libglib2.0-0, qttools5-dev
 
 Package: dolphin-megasync
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, megasync
-Description: Extension for KDE based file managers to interact with Megasync
+Description: MEGA Desktop App plugin for Dolphin
+  - Easily see and track your sync statuses.
+  - Send files and folders to MEGA.
+  - Share your synced files and folders with anyone by creating links.
+  - View files in MEGA's browser (webclient).

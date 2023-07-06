@@ -17,9 +17,32 @@
    <string notr="true">QToolButton
 {
 border:none;
+}
+
+#Container
+{
+background-color: #FFFFFF;
 }</string>
   </property>
   <layout class="QVBoxLayout" name="NodeSelectorWidgetLayout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QWidget" name="Container" native="true">
+     <layout class="QVBoxLayout" name="verticalLayout_4">
    <property name="spacing">
     <number>12</number>
    </property>
@@ -35,6 +58,13 @@ border:none;
    <property name="bottomMargin">
     <number>23</number>
    </property>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+       </layout>
+      </item>
    <item>
     <layout class="QGridLayout" name="gridLayout">
      <property name="topMargin">
@@ -848,11 +878,6 @@ font-weight: 400;
      </widget>
     </widget>
    </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_3">
-     <property name="topMargin">
-      <number>0</number>
-     </property>
      <item>
       <widget class="QCheckBox" name="cbAlwaysUploadToLocation">
        <property name="text">
@@ -860,8 +885,6 @@ font-weight: 400;
        </property>
       </widget>
      </item>
-    </layout>
-   </item>
    <item>
     <widget class="QWidget" name="bLayout" native="true">
      <property name="maximumSize">
@@ -1011,6 +1034,9 @@ color:#FFFFFF;
       </item>
      </layout>
     </widget>
+   </item>
+  </layout>
+ </widget>
    </item>
   </layout>
  </widget>

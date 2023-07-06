@@ -15,17 +15,19 @@ HEADERS += MEGAShellExt.h \
 CONFIG += link_pkgconfig
 PKGCONFIG += libnemo-extension
 
-# library
-target.path = $$system(pkg-config libnemo-extension --variable=extensiondir)
-INSTALLS += target
-
-QMAKE_CLEAN += $(TARGET) lib$${TARGET}.so lib$${TARGET}.so.1 lib$${TARGET}.so.1.0
-
 # get env variable
 DESKTOP_DESTDIR = $$(DESKTOP_DESTDIR)
 isEmpty(DESKTOP_DESTDIR) {
     DESKTOP_DESTDIR = /usr
 }
+
+
+# library
+EXTENSIONS_PATH = $$system(pkg-config libnemo-extension --variable=extensiondir | sed \"s@/usr@@\")
+target.path = $${DESKTOP_DESTDIR}$${EXTENSIONS_PATH}
+INSTALLS += target
+
+QMAKE_CLEAN += $(TARGET) lib$${TARGET}.so lib$${TARGET}.so.1 lib$${TARGET}.so.1.0
 
 HICOLOR = $$DESKTOP_DESTDIR/share/icons/hicolor
 

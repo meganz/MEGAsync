@@ -7,7 +7,6 @@
 #include "Preferences.h"
 #include "MegaApplication.h"
 #include "QMegaMessageBox.h"
-#include "DateTimeFormatter.h"
 
 #include <QMouseEvent>
 #include <QPainterPath>
@@ -202,7 +201,7 @@ void TransferManagerDelegateWidget::updateTransferState()
             {
                 mPauseResumeTransferDefaultIconName.clear();
                 mUi->sStatus->setCurrentWidget(mUi->pFailed);
-                mUi->tItemRetry->setVisible(!getData()->mTemporaryError);
+                mUi->tItemRetry->setVisible(getData()->canBeRetried());
                 mUi->tItemRetry->setText(getState(TRANSFER_STATES::STATE_RETRY));
                 mUi->tItemRetry->setToolTip(getState(TRANSFER_STATES::STATE_RETRY));
                 mUi->wProgressBar->setVisible(false);
@@ -212,7 +211,9 @@ void TransferManagerDelegateWidget::updateTransferState()
                 showTPauseResume = false;
             }
 
-            timeString = getData()->getFormattedFinishedTime();
+            auto dateTime = getData()->getFinishedDateTime();
+            timeString = MegaSyncApp->getFormattedDateByCurrentLanguage(dateTime, QLocale::FormatType::ShortFormat);
+
             timeTooltip = getData()->getFullFormattedFinishedTime();
             speedString = QString::fromUtf8("…");
 
@@ -255,10 +256,8 @@ void TransferManagerDelegateWidget::updateTransferState()
                 mUi->sStatus->setCurrentWidget(mUi->pActive);
             }
             speedString = Utilities::getSizeString(getData()->mSpeed) + QLatin1Literal("/s");
-            QDateTime time = QDateTime::currentDateTime();
-            auto seconds = getData()->getSecondsSinceFinished();
-            time = time.addSecs(seconds);
-            timeString = MegaSyncApp->getFormattedDateByCurrentLanguage(time, QLocale::FormatType::ShortFormat);
+            auto dateTime = getData()->getFinishedDateTime();
+            timeString = MegaSyncApp->getFormattedDateByCurrentLanguage(dateTime, QLocale::FormatType::ShortFormat);
 
             timeTooltip = getData()->getFullFormattedFinishedTime();
             break;
@@ -370,6 +369,7 @@ void TransferManagerDelegateWidget::adjustFileName()
                                 .elidedText(getData()->mFilename, Qt::ElideMiddle,
                                            getNameAvailableSize(mUi->wTransferName, mUi->lSyncIcon, mUi->nameSpacer)));
     mUi->lTransferName->adjustSize();
+    mUi->lTransferName->parentWidget()->layout()->activate();
 }
 
 TransferBaseDelegateWidget::ActionHoverType TransferManagerDelegateWidget::mouseHoverTransfer(bool isHover, const QPoint &pos)

@@ -24,6 +24,8 @@ using namespace WinToastLib;
 
 using namespace mega;
 
+const QString& MegaNotificationBase::defaultImage = QString();
+
 Notificator::Notificator(const QString &programName, QSystemTrayIcon *trayicon, QObject *parent) :
     NotificatorBase(programName, trayicon, parent)
 {
@@ -46,11 +48,7 @@ void Notificator::notifySystray(Class cls, const QString &title, const QString &
     if (!forceQt && WinToast::instance()->isCompatible())
     {
         MegaNotification *n = new MegaNotification();
-        if (title == tr("MEGAsync"))
-        {
-            n->setTitle(QString::fromUtf8("MEGA"));
-        }
-        else
+        if (title != MegaSyncApp->getMEGAString())
         {
             n->setTitle(title);
         }
@@ -86,7 +84,7 @@ void Notificator::notifySystray(MegaNotificationBase *notification)
         return;
     }
 
-    connect(notification, SIGNAL(failed()), this, SLOT(onModernNotificationFailed()), Qt::QueuedConnection);
+    connect(notification, &MegaNotificationBase::failed, this, &Notificator::onModernNotificationFailed);
 
     WinToastTemplate templ(WinToastTemplate::ImageAndText02);
     templ.setTextField((LPCWSTR)notification->getTitle().utf16(), WinToastTemplate::FirstLine);

@@ -9,7 +9,7 @@
 #include <QMenu>
 
 NodeSelectorTreeView::NodeSelectorTreeView(QWidget* parent) :
-    QTreeView(parent),
+    LoadingSceneView<NodeSelectorLoadingDelegate, QTreeView>(parent),
     mMegaApi(MegaSyncApp->getMegaApi())
 {
     installEventFilter(this);
@@ -54,11 +54,6 @@ void NodeSelectorTreeView::setModel(QAbstractItemModel *model)
 #if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
     connect(selectionModel(), &QItemSelectionModel::currentRowChanged, this, &NodeSelectorTreeView::onCurrentRowChanged);
 #endif
-}
-
-bool NodeSelectorTreeView::viewportEvent(QEvent *event)
-{
-    return signalsBlocked() ? true : QTreeView::viewportEvent(event);
 }
 
 void NodeSelectorTreeView::drawBranches(QPainter *painter, const QRect &rect, const QModelIndex &index) const
@@ -139,15 +134,40 @@ void NodeSelectorTreeView::keyPressEvent(QKeyEvent *event)
 
     QModelIndexList selectedRows = selectionModel()->selectedRows();
 
-    static QModelIndex rootIndex = proxyModel()->getIndexFromNode(MegaSyncApp->getRootNode());
+    static QModelIndex cdRootIndex = proxyModel()->getIndexFromNode(MegaSyncApp->getRootNode());
     static QList<int> bannedFromRootKeyList = QList<int>() << Qt::Key_Left << Qt::Key_Right
                                                      << Qt::Key_Plus << Qt::Key_Minus;
 
-    if(!bannedFromRootKeyList.contains(event->key()) || !selectedRows.contains(rootIndex))
+    if(!bannedFromRootKeyList.contains(event->key()) || !selectedRows.contains(cdRootIndex))
     {
         if(event->key() == Qt::Key_F2)
         {
             renameNode();
+        }
+        else if(event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return)
+        {
+            if(!selectedRows.isEmpty())
+            {
+                if(selectedRows.first() == rootIndex() || selectedRows.size() > 1)
+                {
+                    emit nodeSelected();
+                }
+                else
+                {
+                    auto node = std::unique_ptr<MegaNode>(mMegaApi->getNodeByHandle(getSelectedNodeHandle()));
+                    if(node)
+                    {
+                        if(node->isFolder())
+                        {
+                            doubleClicked(selectedRows.first());
+                        }
+                        else
+                        {
+                            emit nodeSelected();
+                        }
+                    }
+                }
+            }
         }
 
         QTreeView::keyPressEvent(event);

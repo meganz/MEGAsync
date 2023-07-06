@@ -1,72 +1,94 @@
 #include "QMegaMessageBox.h"
-#include "HighDpiResize.h"
 #include <QDialogButtonBox>
+#include <QPushButton>
+#include <QDebug>
 
-QMessageBox::StandardButton QMegaMessageBox::information(QWidget *parent, const QString &title,
-    const QString &text, QMessageBox::StandardButtons buttons,
-                                  QMessageBox::StandardButton defaultButton, QMap<StandardButton, QString> textByButton, Qt::TextFormat format)
+#include "DialogOpener.h"
+
+QString QMegaMessageBox::warningTitle()
 {
-    return showNewMessageBox(parent, Information, title, text, buttons, defaultButton, textByButton, format);
+    return QCoreApplication::translate("MegaApplication", "Warning");
 }
 
-QMessageBox::StandardButton QMegaMessageBox::warning(QWidget *parent, const QString &title,
-    const QString &text, QMessageBox::StandardButtons buttons,
-                                  QMessageBox::StandardButton defaultButton, QMap<StandardButton, QString> textByButton, Qt::TextFormat format)
+QString QMegaMessageBox::errorTitle()
 {
-    return showNewMessageBox(parent, Warning, title, text, buttons, defaultButton, textByButton, format);
+    return QCoreApplication::translate("MegaApplication", "Error");
 }
 
-QMessageBox::StandardButton QMegaMessageBox::question(QWidget *parent, const QString &title,
-    const QString &text, QMessageBox::StandardButtons buttons,
-                                  QMessageBox::StandardButton defaultButton, QMap<StandardButton, QString> textByButton, Qt::TextFormat format)
+void QMegaMessageBox::information(const MessageBoxInfo& info)
 {
-    return showNewMessageBox(parent, Question, title, text, buttons, defaultButton, textByButton, format);
+    return showNewMessageBox(Information, info);
 }
 
-QMessageBox::StandardButton QMegaMessageBox::critical(QWidget *parent, const QString &title,
-    const QString &text,  QMessageBox::StandardButtons buttons,
-                                  QMessageBox::StandardButton defaultButton, QMap<StandardButton, QString> textByButton, Qt::TextFormat format)
+void QMegaMessageBox::warning(const MessageBoxInfo& info)
 {
-    return showNewMessageBox(parent, Critical, title, text, buttons, defaultButton, textByButton, format);
+    return showNewMessageBox(Warning, info);
 }
 
-QMessageBox::StandardButton QMegaMessageBox::showNewMessageBox(QWidget *parent, QMessageBox::Icon icon,
-    const QString &title, const QString &text, QMessageBox::StandardButtons buttons, QMessageBox::StandardButton defaultButton, QMap<QMessageBox::StandardButton, QString> textByButton, Qt::TextFormat format)
+void QMegaMessageBox::question(const MessageBoxInfo& info)
 {
-    QMessageBox msgBox(icon, title, text, QMessageBox::NoButton, parent);
-    msgBox.setTextFormat(format);
-    HighDpiResize hDpiResizer(&msgBox);
+    return showNewMessageBox(Question, info);
+}
 
-    QDialogButtonBox *buttonBox = msgBox.findChild<QDialogButtonBox*>();
+void QMegaMessageBox::critical(const MessageBoxInfo& info)
+{
+    return showNewMessageBox(Critical, info);
+}
+
+bool QMegaMessageBox::event(QEvent *event)
+{
+    if(event->type() == QEvent::LanguageChange)
+    {
+        event->ignore();
+        return true;
+    }
+
+    return QMessageBox::event(event);
+}
+
+void QMegaMessageBox::showNewMessageBox(Icon icon, const MessageBoxInfo& info)
+{
+    QMessageBox* msgBox = new QMegaMessageBox(info.parent);
+
+    msgBox->setIcon(icon);
+    msgBox->setWindowTitle(info.title);
+    msgBox->setText(info.text);
+    msgBox->setInformativeText(info.informativeText);
+    msgBox->setTextFormat(info.textFormat);
+    msgBox->setTextInteractionFlags(Qt::NoTextInteraction | Qt::LinksAccessibleByMouse);
+
+    QDialogButtonBox *buttonBox = msgBox->findChild<QDialogButtonBox*>();
     Q_ASSERT(buttonBox != 0);
 
-    uint mask = QMessageBox::FirstButton;
-    while (mask <= QMessageBox::LastButton) {
-     uint sb = buttons & mask;
+    uint mask = FirstButton;
+    while (mask <= LastButton) {
+     uint sb = info.buttons & mask;
      mask <<= 1;
      if (!sb)
          continue;
-     QMessageBox::StandardButton buttonType = static_cast<QMessageBox::StandardButton>(sb);
-     QPushButton *button = msgBox.addButton(buttonType);
+     StandardButton buttonType = static_cast<StandardButton>(sb);
+     QPushButton *button = msgBox->addButton(buttonType);
 
      //Change button text if needed
-     if(textByButton.contains(buttonType))
+     if(info.buttonsText.contains(buttonType))
      {
-         msgBox.setButtonText(buttonType, textByButton.value((QMessageBox::StandardButton)sb));
+         button->setText(info.buttonsText.value((StandardButton)sb));
      }
 
      // Choose the first accept role as the default
-     if (msgBox.defaultButton())
+     if (msgBox->defaultButton())
          continue;
-     if ((defaultButton == QMessageBox::NoButton && buttonBox && buttonBox->buttonRole((QAbstractButton*)button) == QDialogButtonBox::AcceptRole)
-             || (defaultButton != QMessageBox::NoButton && sb == uint(defaultButton)))
+     if ((info.defaultButton == NoButton && buttonBox && buttonBox->buttonRole((QAbstractButton*)button) == QDialogButtonBox::AcceptRole)
+             || (info.defaultButton != NoButton && sb == uint(info.defaultButton)))
      {
-         msgBox.setDefaultButton(button);
+         msgBox->setDefaultButton(button);
      }
     }
-    if (msgBox.exec() == -1)
+
+    if(!info.iconPixmap.isNull())
     {
-        return QMessageBox::Cancel;
+        msgBox->setIconPixmap(info.iconPixmap);
     }
-    return msgBox.standardButton(msgBox.clickedButton());
+
+    DialogOpener::showMessageBox(msgBox, info);
 }

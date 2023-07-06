@@ -13,6 +13,10 @@
 #include <QHeaderView>
 #include <QScrollBar>
 #include <QDateTime>
+#include <QEvent>
+
+template <class DelegateWidget, class ViewType>
+class LoadingSceneView;
 
 class LoadingSceneDelegateBase : public QStyledItemDelegate
 {
@@ -231,7 +235,7 @@ private:
     virtual void hideLoadingScene() = 0;
 };
 
-template <class DelegateWidget>
+template <class DelegateWidget, class ViewType>
 class ViewLoadingScene : public ViewLoadingSceneBase
 {
     const uint8_t MAX_LOADING_ROWS = 20;
@@ -269,7 +273,7 @@ public:
         return mLoadingViewSet;
     }
 
-    inline void setView(QAbstractItemView* view)
+    inline void setView(LoadingSceneView<DelegateWidget, ViewType>* view)
     {
         mView = view;
         mViewDelegate = view->itemDelegate();
@@ -304,7 +308,7 @@ public:
 
         if(!mLoadingModel)
         {
-            mLoadingView = new QTreeView();
+            mLoadingView = new ViewType();
             mLoadingView->setObjectName(QString::fromStdString("Loading View"));
             mLoadingView->setContentsMargins(mView->contentsMargins());
             mLoadingView->setStyleSheet(mView->styleSheet());
@@ -340,6 +344,10 @@ public:
         }
         else
         {
+            mView->blockSignals(false);
+            mView->header()->blockSignals(false);
+            mView->setViewPortEventsBlocked(false);
+
             auto delay = std::max(0ll, MIN_TIME_DISPLAYING_VIEW - (QDateTime::currentMSecsSinceEpoch()
                                                 - mStartTime));
             delay > 0 ? mDelayTimerToHide.start(delay) : hideLoadingScene();
@@ -352,9 +360,14 @@ public:
         emit sceneVisibilityChange(false);
 
         mLoadingModel->setRowCount(0);
-        mLoadingView->hide();
-        mView->show();
         mViewLayout->replaceWidget(mLoadingView, mView);
+        mLoadingView->hide();
+        if(mWasFocused)
+        {
+            mView->setFocus();
+        }
+        mView->show();
+        mView->viewport()->update();
         mLoadingDelegate->setLoading(false);
     }
 
@@ -365,6 +378,7 @@ private:
 
         if(mView->isVisible())
         {
+            mWasFocused = mView->hasFocus();
             int delegateHeight(mLoadingDelegate->sizeHint(QStyleOptionViewItem(), QModelIndex()).height());
 
             mView->updateGeometry();
@@ -391,9 +405,12 @@ private:
             mLoadingModel->appendRow(new QStandardItem());
         }
 
-        mView->hide();
-        mLoadingView->show();
+        mView->setViewPortEventsBlocked(true);
         mViewLayout->replaceWidget(mView, mLoadingView);
+        mLoadingView->show();
+        mView->hide();
+        mView->blockSignals(true);
+        mView->header()->blockSignals(true);
         mStartTime = QDateTime::currentMSecsSinceEpoch();
         mLoadingDelegate->setLoading(true);
 
@@ -402,7 +419,7 @@ private:
     }
 
     QAbstractItemDelegate* mViewDelegate;
-    QAbstractItemView* mView;
+    LoadingSceneView<DelegateWidget, ViewType>* mView;
     QPointer<QAbstractItemModel> mViewModel;
     QAbstractItemModel* mPotentialSourceModel;
     QPointer<QTreeView> mLoadingView;
@@ -411,6 +428,43 @@ private:
     QLayout* mViewLayout;
     qint64 mStartTime;
     bool mLoadingViewSet;
+    bool mWasFocused;
+};
+
+template<class DelegateWidget, class ViewType>
+class LoadingSceneView : public ViewType
+{
+public:
+    LoadingSceneView(QWidget* parent): ViewType(parent)
+    {
+        mLoadingView.setView(this);
+    }
+
+    void setViewPortEventsBlocked(bool newViewPortEventsBlocked)
+    {
+        mViewPortEventsBlocked = newViewPortEventsBlocked;
+    }
+
+    ViewLoadingScene<DelegateWidget, ViewType>& loadingView()
+    {
+        return mLoadingView;
+    }
+
+protected:
+    bool viewportEvent(QEvent *event) override
+    {
+        if(mViewPortEventsBlocked)
+        {
+            event->accept();
+            return true;
+        }
+
+        return ViewType::viewportEvent(event);
+    }
+
+private:
+    bool mViewPortEventsBlocked = false;
+    ViewLoadingScene<DelegateWidget, ViewType> mLoadingView;
 };
 
 #endif // VIEWLOADINGSCENE_H

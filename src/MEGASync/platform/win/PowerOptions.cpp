@@ -7,7 +7,7 @@
 #include <WinBase.h>
 #include <powersetting.h>
 
-class PowerOptionsImpl : public QObject
+class PowerOptionsImpl
 {
 public:
     PowerOptionsImpl()
@@ -44,7 +44,6 @@ public:
         return result;
     }
 
-public slots:
     bool onKeepPCAwake()
     {
         bool keepAwake(false);
@@ -122,11 +121,14 @@ private:
     DWORD mDefaultRequestACTimeout;
 };
 
-std::unique_ptr<PowerOptionsImpl> PowerOptions::mPowerOptionsImpl = mega::make_unique<PowerOptionsImpl>();
+std::unique_ptr<PowerOptionsImpl> PowerOptions::mPowerOptionsImpl = nullptr;
 
 PowerOptions::PowerOptions()
 {
-
+    if(!mPowerOptionsImpl)
+    {
+        mPowerOptionsImpl = mega::make_unique<PowerOptionsImpl>();
+    }
 }
 
 PowerOptions::~PowerOptions()

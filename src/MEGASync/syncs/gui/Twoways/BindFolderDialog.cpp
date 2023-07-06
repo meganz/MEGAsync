@@ -15,6 +15,9 @@ BindFolderDialog::BindFolderDialog(MegaApplication* _app, QWidget *parent) :
     ui->setupUi(this);
 
     ui->bOK->setDefault(true);
+
+    connect(ui->wBinder, &FolderBinder::selectionDone, this, &BindFolderDialog::allSelectionsDone);
+    setFocusProxy(ui->bOK);
 }
 
 BindFolderDialog::~BindFolderDialog()
@@ -51,7 +54,11 @@ void BindFolderDialog::on_bOK_clicked()
     std::shared_ptr<MegaNode> node {megaApi->getNodeByHandle(handle)};
     if (!localFolderPath.length() || !node)
     {
-        QMegaMessageBox::warning(nullptr, QString(), tr("Please select a local folder and a MEGA folder"), QMessageBox::Ok);
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.title = MegaSyncApp->getMEGAString();
+        msgInfo.parent = this;
+        msgInfo.text = tr("Please select a local folder and a MEGA folder");
+        QMegaMessageBox::warning(msgInfo);
         return;
     }
 
@@ -75,25 +82,54 @@ void BindFolderDialog::on_bOK_clicked()
         syncability = std::max(SyncController::isRemoteFolderSyncable(node, warningMessage), syncability);
     }
 
-    // Display warning if needed
-    if (syncability == SyncController::CANT_SYNC)
+    auto finishFunc = [this, localFolderPath](QPointer<QMessageBox> msg){
+        if(!msg || msg->result() == QMessageBox::Yes)
+        {
+            mSyncName = SyncController::getSyncNameFromPath(localFolderPath);
+            accept();
+        }
+    };
+
+    if (syncability == SyncController::CAN_SYNC)
     {
-        QMegaMessageBox::warning(nullptr, QString(), warningMessage, QMessageBox::Ok);
-        return;
+        finishFunc(nullptr);
     }
-    else if (syncability == SyncController::WARN_SYNC
-             && (QMegaMessageBox::warning(nullptr, QString(), warningMessage
-                                         + QLatin1Char('\n')
-                                         + tr("Do you want to continue?"),
-                                         QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
-             == QMessageBox::No))
+    else
     {
-        return;
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.title = MegaSyncApp->getMEGAString();
+        msgInfo.parent = this;
+        msgInfo.text = warningMessage;
+
+        if (syncability == SyncController::WARN_SYNC)
+        {
+            msgInfo.text += QLatin1Char('\n') + tr("Do you want to continue?");
+            msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
+            msgInfo.defaultButton = QMessageBox::No;
+            msgInfo.finishFunc = finishFunc;
+        }
+        QMegaMessageBox::warning(msgInfo);
+    }
+}
+
+void BindFolderDialog::allSelectionsDone()
+{
+    ui->bOK->setFocus();
+}
+
+bool BindFolderDialog::focusNextPrevChild(bool next)
+{
+#ifdef Q_OS_MACOS
+    if(next && ui->bOK->hasFocus())
+#else
+    if(next && ui->bCancel->hasFocus())
+#endif
+    {
+        ui->wBinder->setFocus();
+        return true;
     }
 
-    mSyncName = SyncController::getSyncNameFromPath(localFolderPath);
-
-    accept();
+    return QDialog::focusNextPrevChild(next);
 }
 
 void BindFolderDialog::changeEvent(QEvent *event)

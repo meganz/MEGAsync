@@ -1,4 +1,3 @@
-
 #ifndef _MEGA_SYNC_PLUGIN_H_
 #define _MEGA_SYNC_PLUGIN_H_
 
@@ -7,6 +6,7 @@
 #else
 #include <KIOWidgets/kabstractfileitemactionplugin.h>
 #endif
+#include <kactionmenu.h>
 #include <QLocalSocket>
 
 class MEGASyncPlugin: public KAbstractFileItemActionPlugin
@@ -32,6 +32,9 @@ private slots:
     void viewOnMega();
     void viewPreviousVersions();
     QString getString(int type, int numFiles,int numFolders);
+
+private:
+    QAction* createChildAction(KActionMenu* menu, int type, int numFiles=0, int numFolders=0);
 };
 
 #endif

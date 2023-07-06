@@ -16,7 +16,7 @@
 
 #include <unistd.h>
 
-class PowerOptionsImpl : public QObject
+class PowerOptionsImpl
 {
     const int MAX_SERVICES = 2;
     const uint INHIBIT_SUSPEND_GNOME = 4;
@@ -59,7 +59,6 @@ public:
         return result;
     }
 
-public slots:
     bool onKeepPCAwake()
     {
         bool result(false);
@@ -114,7 +113,7 @@ private:
 
         QDBusInterface sessionManagerInterface(
                     GNOME_SERVICE, GNOME_PATH,
-                    GNOME_SERVICE, bus, this);
+                    GNOME_SERVICE, bus);
         if (sessionManagerInterface.isValid())
         {
             //By default 0
@@ -159,7 +158,7 @@ private:
 
         QDBusInterface screenSaverInterface(
                     FREEDESKTOP_SCREENSAVER_SERVICE, FREEDESKTOP_SCREENSAVER_PATH,
-                    FREEDESKTOP_SCREENSAVER_SERVICE, bus, this);
+                    FREEDESKTOP_SCREENSAVER_SERVICE, bus);
         if (screenSaverInterface.isValid())
         {
             result = runForFreeDesktop(screenSaverInterface);
@@ -176,7 +175,7 @@ private:
 
         QDBusInterface powerManagementInterface(
                     FREEDESKTOP_POWERMANAGEMENT_SERVICE, FREEDESKTOP_POWERMANAGEMENT_PATH,
-                    FREEDESKTOP_POWERMANAGEMENT_SERVICE, bus, this);
+                    FREEDESKTOP_POWERMANAGEMENT_SERVICE, bus);
         if (powerManagementInterface.isValid())
         {
             result = runForFreeDesktop(powerManagementInterface);
@@ -229,7 +228,7 @@ private:
 
         QDBusInterface systemDInterface(
                     FREEDESKTOP_SYSTEMD_SERVICE, FREEDESKTOP_SYSTEMD_PATH,
-                    FREEDESKTOP_SYSTEMD_IFACE, bus, this);
+                    FREEDESKTOP_SYSTEMD_IFACE, bus);
         if (systemDInterface.isValid())
         {
             if(mKeepPCAwakeState)
@@ -270,11 +269,11 @@ private:
     {
         if(reply.isValid())
         {
-            mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG, QString(QLatin1String("Service %1. Sleep settings: %1 sleep mode OK.")).arg(service, operation).toUtf8().constData());
+            mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG, QString(QLatin1String("Service %1. Sleep settings: %2 sleep mode OK.")).arg(service, operation).toUtf8().constData());
         }
         else
         {
-            mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG, QString(QLatin1String("Service %1. Sleep settings: %1 sleep mode failed: %2")).arg(service, operation, reply.error().message()).toUtf8().constData());
+            mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG, QString(QLatin1String("Service %1. Sleep settings: %2 sleep mode failed: %3")).arg(service, operation, reply.error().message()).toUtf8().constData());
         }
     }
 #endif
@@ -287,10 +286,15 @@ private:
 
 // CLASS POWEROPTIONS
 
-std::unique_ptr<PowerOptionsImpl> PowerOptions::mPowerOptionsImpl = mega::make_unique<PowerOptionsImpl>();
+std::unique_ptr<PowerOptionsImpl> PowerOptions::mPowerOptionsImpl = nullptr;
 
 PowerOptions::PowerOptions()
-{}
+{
+    if(!mPowerOptionsImpl)
+    {
+        mPowerOptionsImpl = mega::make_unique<PowerOptionsImpl>();
+    }
+}
 
 PowerOptions::~PowerOptions()
 {}

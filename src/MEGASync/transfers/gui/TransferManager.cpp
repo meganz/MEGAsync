@@ -727,7 +727,6 @@ void TransferManager::onTransfersDataUpdated()
     refreshFileTypesStats();
     refreshSearchStats();
     refreshStateStats();
-    checkActionAndMediaVisibility();
     refreshView();
 }
 
@@ -1121,7 +1120,7 @@ void TransferManager::onFileTypeButtonClicked(TransfersWidget::TM_TAB tab, Utili
 
 void TransferManager::on_bOpenLinks_clicked()
 {
-    MegaSyncApp->importLinksFromWidget(this);
+    MegaSyncApp->importLinks();
 }
 
 void TransferManager::on_tCogWheel_clicked()
@@ -1131,12 +1130,12 @@ void TransferManager::on_tCogWheel_clicked()
 
 void TransferManager::on_bDownload_clicked()
 {
-    MegaSyncApp->downloadActionClickedFromWidget(this);
+    MegaSyncApp->downloadActionClicked();
 }
 
 void TransferManager::on_bUpload_clicked()
 {
-    MegaSyncApp->uploadActionClickedFromWidget(this);
+    MegaSyncApp->uploadActionClicked();
 }
 
 void TransferManager::on_leSearchField_returnPressed()
@@ -1216,9 +1215,6 @@ void TransferManager::toggleTab(TransfersWidget::TM_TAB newTab)
             }
         }
 
-        //In case the media group // actions buttons must be hidden
-        checkActionAndMediaVisibility();
-
         // Set current header widget: search or not
         if (newTab == TransfersWidget::SEARCH_TAB)
         {
@@ -1253,6 +1249,9 @@ void TransferManager::refreshView()
 
             updateTransferWidget(widgetToShow);
         }
+
+        //In case the media group // actions buttons must be hidden
+        checkActionAndMediaVisibility();
     }
 }
 
@@ -1262,15 +1261,16 @@ void TransferManager::checkActionAndMediaVisibility()
     auto allTransfers = mTransfersCount.pendingDownloads + mTransfersCount.pendingUploads;
     auto failedTransfers = mTransfersCount.totalFailedTransfers();
 
-    // Show "Clear All/Completed" if there are any completed transfers
-    // (only for completed tab and individual media tabs)
+    // Show "Retry all" if there are any completed transfers
+    // (only for failed tag)
     if (mUi->wTransfers->getCurrentTab() == TransfersWidget::FAILED_TAB && failedTransfers > 0)
     {
-        mUi->tActionButton->show();
+        auto proxy (mUi->wTransfers->getProxyModel());
+        mUi->tActionButton->setVisible(!proxy->areAllFailsPermanent());
     }
     else
     {
-        mUi->tActionButton->hide();
+        mUi->tActionButton->setVisible(false);
     }
 
     // Hide Media groupbox if no transfers (active or finished)

@@ -1,54 +1,58 @@
 #ifndef QMEGAMESSAGEBOX_H
 #define QMEGAMESSAGEBOX_H
 
-#include "qmessagebox.h"
+#include <QMessageBox>
 #include <QMap>
 
-class QMegaMessageBox : QMessageBox
+class QMegaMessageBox : public QMessageBox
 {
 public:
-    explicit QMegaMessageBox(QWidget *parent = 0) : QMessageBox(parent) {};
+    explicit QMegaMessageBox(QWidget* parent):
+        QMessageBox(parent)
+    {}
 
-    static QMessageBox::StandardButton information(QWidget *parent,
-                                                   const QString &title,
-                                                   const QString &text, QMessageBox::StandardButtons buttons = Ok,
-                                                   QMessageBox::StandardButton defaultButton = NoButton,
-                                                   QMap<QMessageBox::StandardButton, QString> textByButton = QMap<QMessageBox::StandardButton, QString>(),
-                                                   Qt::TextFormat format = Qt::TextFormat::PlainText);
+    static QString warningTitle();
+    static QString errorTitle();
 
-    static QMessageBox::StandardButton warning(QWidget *parent,
-                                               const QString &title,
-                                               const QString &text,
-                                               QMessageBox::StandardButtons buttons = Ok,
-                                               QMessageBox::StandardButton defaultButton = NoButton,
-                                               QMap<QMessageBox::StandardButton, QString> textByButton = QMap<QMessageBox::StandardButton, QString>(),
-                                               Qt::TextFormat format = Qt::TextFormat::PlainText);
+    struct MessageBoxInfo
+    {
+        std::function<void(QPointer<QMessageBox>)> finishFunc;
+        QWidget* parent;
+        QString title;
+        QString text;
+        QString informativeText;
+        StandardButtons buttons;
+        StandardButton defaultButton;
+        QMap<StandardButton, QString> buttonsText;
+        Qt::TextFormat textFormat;
+        QPixmap iconPixmap;
+        bool enqueue;
+        bool ignoreCloseAll;
 
-    static QMessageBox::StandardButton question(QWidget *parent,
-                                                const QString &title,
-                                                const QString &text,
-                                                QMessageBox::StandardButtons buttons = Ok,
-                                                QMessageBox::StandardButton defaultButton = NoButton,
-                                                QMap<QMessageBox::StandardButton, QString> textByButton = QMap<QMessageBox::StandardButton, QString>(),
-                                                Qt::TextFormat format = Qt::TextFormat::PlainText);
+        MessageBoxInfo()
+            : finishFunc(nullptr),
+              parent(nullptr),
+              buttons(Ok),
+              defaultButton(NoButton),
+              textFormat(Qt::PlainText),
+              enqueue(false),
+              ignoreCloseAll(false)
+        {}
+    };
 
-    static QMessageBox::StandardButton critical(QWidget *parent,
-                                                const QString &title,
-                                                const QString &text,
-                                                QMessageBox::StandardButtons buttons = Ok,
-                                                QMessageBox::StandardButton defaultButton = NoButton,
-                                                QMap<QMessageBox::StandardButton, QString> textByButton = QMap<QMessageBox::StandardButton, QString>(),
-                                                Qt::TextFormat format = Qt::TextFormat::PlainText);
+    static void information(const MessageBoxInfo& info);
+
+    static void warning(const MessageBoxInfo& info);
+
+    static void question(const MessageBoxInfo& info);
+
+    static void critical(const MessageBoxInfo& info);
+
+protected:
+    bool event(QEvent *event) override;
 
 private:
-    static QMessageBox::StandardButton showNewMessageBox(QWidget *parent,
-                                                         QMessageBox::Icon icon,
-                                                         const QString& title,
-                                                         const QString& text,
-                                                         QMessageBox::StandardButtons buttons,
-                                                         QMessageBox::StandardButton defaultButton,
-                                                         QMap<QMessageBox::StandardButton, QString> textByButton = QMap<QMessageBox::StandardButton, QString>(),
-                                                         Qt::TextFormat format = Qt::TextFormat::PlainText);
+    static void showNewMessageBox(Icon icon, const MessageBoxInfo& info);
 };
 
 #endif // QMEGAMESSAGEBOX_H

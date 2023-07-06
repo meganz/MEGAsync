@@ -17,9 +17,32 @@
    <string notr="true">QToolButton
 {
 border:none;
+}
+
+#Container
+{
+background-color: #FFFFFF;
 }</string>
   </property>
   <layout class="QVBoxLayout" name="NodeSelectorWidgetLayout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QWidget" name="Container" native="true">
+     <layout class="QVBoxLayout" name="verticalLayout_4">
    <property name="spacing">
     <number>12</number>
    </property>
@@ -409,7 +432,7 @@ QToolButton:pressed
            <bool>true</bool>
           </property>
           <attribute name="buttonGroup">
-           <string notr="true">searchFilterButtonGroup</string>
+            <string notr="true">searchFilterButtonGroup</string>
           </attribute>
          </widget>
         </item>
@@ -491,7 +514,7 @@ QToolButton:pressed
            <bool>true</bool>
           </property>
           <attribute name="buttonGroup">
-           <string notr="true">searchFilterButtonGroup</string>
+            <string notr="true">searchFilterButtonGroup</string>
           </attribute>
          </widget>
         </item>
@@ -1002,6 +1025,9 @@ color:#FFFFFF;
       </item>
      </layout>
     </widget>
+   </item>
+  </layout>
+ </widget>
    </item>
   </layout>
  </widget>

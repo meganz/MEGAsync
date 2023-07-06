@@ -18,6 +18,8 @@ FolderBinder::FolderBinder(QWidget *parent) :
     ui->setupUi(this);
     app = (MegaApplication *)qApp;
     megaApi = app->getMegaApi();
+
+    setFocusProxy(ui->bLocalFolder);
 }
 
 FolderBinder::~FolderBinder()
@@ -30,37 +32,40 @@ MegaHandle FolderBinder::selectedMegaFolder()
     return selectedMegaFolderHandle;
 }
 
-bool FolderBinder::setSelectedMegaFolder(MegaHandle handle)
+void FolderBinder::setSelectedMegaFolder(MegaHandle handle)
 {
-    MegaNode *selectedFolder = megaApi->getNodeByHandle(handle);
+    std::unique_ptr<MegaNode> selectedFolder(megaApi->getNodeByHandle(handle));
     if (!selectedFolder)
     {
         selectedMegaFolderHandle = mega::INVALID_HANDLE;
-        return false;
     }
-
-    if (megaApi->getAccess(selectedFolder) < MegaShare::ACCESS_FULL)
+    else
     {
-        selectedMegaFolderHandle = mega::INVALID_HANDLE;
-        delete selectedFolder;
-        QMegaMessageBox::warning(nullptr, tr("Error"), tr("You can not sync a shared folder without Full Access permissions"), QMessageBox::Ok);
-        return false;
+        if (megaApi->getAccess(selectedFolder.get()) < MegaShare::ACCESS_FULL)
+        {
+            selectedMegaFolderHandle = mega::INVALID_HANDLE;
+
+            QMegaMessageBox::MessageBoxInfo msgInfo;
+            msgInfo.title = QMegaMessageBox::errorTitle();
+            msgInfo.text = tr("You can not sync a shared folder without Full Access permissions");
+            QMegaMessageBox::warning(msgInfo);
+        }
+        else
+        {
+            std::unique_ptr<char[]>fPath(megaApi->getNodePath(selectedFolder.get()));
+            if (!fPath)
+            {
+                selectedMegaFolderHandle = mega::INVALID_HANDLE;
+            }
+            else
+            {
+                selectedMegaFolderHandle = handle;
+                ui->eMegaFolder->setText(QString::fromUtf8(fPath.get()));
+
+                checkSelectedSides();
+            }
+        }
     }
-
-    const char *fPath = megaApi->getNodePath(selectedFolder);
-    if (!fPath)
-    {
-        selectedMegaFolderHandle = mega::INVALID_HANDLE;
-        delete selectedFolder;
-        return false;
-    }
-
-    selectedMegaFolderHandle = handle;
-    ui->eMegaFolder->setText(QString::fromUtf8(fPath));
-
-    delete selectedFolder;
-    delete [] fPath;
-    return true;
 }
 
 QString FolderBinder::selectedLocalFolder()
@@ -97,6 +102,24 @@ void FolderBinder::onLocalFolderSet(const QString& path)
     {
         auto nativePath = QDir::toNativeSeparators(path);
         ui->eLocalFolder->setText(nativePath);
+
+        checkSelectedSides();
+    }
+}
+
+void FolderBinder::checkSelectedSides()
+{
+    if(ui->eLocalFolder->text().isEmpty())
+    {
+        ui->bLocalFolder->setFocus();
+    }
+    else if(ui->eMegaFolder->text().isEmpty())
+    {
+        ui->bMegaFolder->setFocus();
+    }
+    else
+    {
+        emit selectionDone();
     }
 }
 
@@ -123,4 +146,11 @@ void FolderBinder::changeEvent(QEvent *event)
         ui->retranslateUi(this);
     }
     QWidget::changeEvent(event);
+}
+
+void FolderBinder::showEvent(QShowEvent *event)
+{
+    checkSelectedSides();
+
+    QWidget::showEvent(event);
 }

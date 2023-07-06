@@ -36,7 +36,7 @@ using namespace mega;
 
 // https://wiki.ubuntu.com/NotificationDevelopmentGuidelines recommends at least 128
 const int FREEDESKTOP_NOTIFICATION_ICON_SIZE = 128;
-const QString& MegaNotification::defaultImage = QString::fromUtf8("://images/app_128.png");
+const QString& MegaNotificationBase::defaultImage = QString::fromUtf8("://images/app_128.png");
 
 
 Notificator::Notificator(const QString &programName, QSystemTrayIcon *trayicon, QObject *parent) :
@@ -224,6 +224,14 @@ void Notificator::notifyDBus(Class cls, const QString &title, const QString &tex
 
     if(dbussSupportsActions && notification)
     {
+        connect(notification, &QObject::destroyed, this, [this, notification](){
+            if (mMode == Freedesktop && dbussSupportsActions)
+            {
+                uint32_t id = static_cast<uint32_t>(notification->getId());
+                interface->call(QDBus::NoBlock, QString::fromUtf8("CloseNotification"),id);
+            }
+        });
+
         // fire with callback to gather ID
         interface->callWithCallback(QString::fromUtf8("Notify"), args, notification,
                                     SLOT(dBusNotificationSentCallback(QDBusMessage)), SLOT(dbusNotificationSentErrorCallback(QDBusError)));
@@ -281,9 +289,6 @@ void Notificator::notify(MegaNotification *notification)
 ///
 MegaNotification::MegaNotification()
     : MegaNotificationBase()
-#ifdef USE_DBUS
-    , dbusId(-1)
-#endif
 {
     image = QIcon(defaultImage);
 }
@@ -293,12 +298,12 @@ void MegaNotification::dBusNotificationSentCallback(QDBusMessage dbusMssage)
 {
     if (dbusMssage.arguments().size())
     {
-        dbusId = dbusMssage.arguments().at(0).toInt();
-        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Notification sent to DBUS. Id = %1").arg(dbusId).toUtf8().constData());
+        mId = dbusMssage.arguments().at(0).toUInt();
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Notification sent to DBUS. Id = %1").arg(mId).toUtf8().constData());
     }
     else
     {
-        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Notification sent to DBUS: missing id").arg(dbusId).toUtf8().constData());
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Notification sent to DBUS: missing id").toUtf8().constData());
         assert(false && "QDBusMessage missing id");
     }
 }
@@ -315,9 +320,9 @@ void MegaNotification::dbusNotificationSentErrorCallback(QDBusError error)
 
 void MegaNotification::dBusNotificationCallback(QDBusMessage dbusMssage)
 {
-    if (dbusMssage.arguments().size() && dbusId != dbusMssage.arguments().at(0).toInt() )
+    if (dbusMssage.arguments().size() && mId != dbusMssage.arguments().at(0).toUInt())
     {
-        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Received notification corresponding to another notification. current = %1. Received = %1").arg(dbusId).arg(dbusMssage.member()).toUtf8().constData());
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Received notification corresponding to another notification. current = %1. Received = %1").arg(mId).arg(dbusMssage.member()).toUtf8().constData());
         return;
     }
     else if (!dbusMssage.arguments().size())

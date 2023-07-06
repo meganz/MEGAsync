@@ -1,3 +1,5 @@
+[[_TOC_]]
+
 # macOS instructions
 
 For MEGA Desktop App development we are targeting macOS Big Sur, although we are providing
@@ -30,44 +32,54 @@ fine), so run the following command:
 $ sudo "/Applications/CMake.app/Contents/bin/cmake-gui" --install
 ```
 
-## YASM (latest version from upstream)
+## NASM
 
-Download and install YASM which is required to build ffmpeg dependency.
+Download and install NASM which is required to build ffmpeg dependency.
 Follow these steps:
 ```
-$ git clone https://github.com/yasm/yasm/
-$ cd yasm
-$ cmake .
-$ cmake --build . 
-$ sudo cmake --install
+# Get autoconf and automake, build them and install them in a local folder
+$ curl -O -L https://ftpmirror.gnu.org/gnu/autoconf/autoconf-2.71.tar.xz
+$ curl -O -L https://ftpmirror.gnu.org/gnu/automake/automake-1.16.5.tar.xz
+$ tar xzf autoconf-2.71.tar.xz
+$ tar xzf automake-1.16.5.tar.xz
+$ mkdir bin_dest
+$ export PATH=$PATH:$PWD/bin_dest/bin
+$ cd autoconf-2.71
+$ ./configure --prefix=$PWD/../bin_dest
+$ make install
+$ cd ..
+$ cd automake-1.16.5
+$ ./configure --prefix=$PWD/../bin_dest
+$ make install
+$ autoconf --version
+$ automake --version
+
+# Get, build and install nasm in the system
+$ curl -O -L https://www.nasm.us/pub/nasm/releasebuilds/2.16.01/nasm-2.16.01.tar.xz
+$ tar xzf nasm-2.16.01.tar.xz
+$ cd nasm-2.16.01
+$ ./configure
+$ make
+$ sudo make install
+$ nasm --version
+# Clean up
+$ cd ..
+$ rm -rf autoconf*
+$ rm -rf automake*
+$ rm -r nasm*
+$ rm -r bin_dest
 ```
 
 # Third-Party dependencies
 
-## Qt SDK (5.12.11)
+## Qt SDK (5.12.12)
 
 Install Qt Open Source and Qt Creator using the Qt Online Installer from:
 https://www.qt.io/download-qt-installer
 
 You will have to create an account, even if you only install the Community Editions.
-Install Qt 5.12.11 for macOS; only macOS components are needed during installation.
+Install Qt 5.12.12 for macOS; only macOS components are needed during installation.
 A good installation path is `~/Qt`.
-
-## VCPKG
-
-Along with Qt, MEGA Desktop and the MEGA SDK require another dozen or more
-3rdParty libraries to cover all the functionality exposed to our users. We are
-using Microsoft's VCPKG C++ Library Manager for managing our dependencies and we
-employ it automagically from our CMake scripts. You don't have to install it
-manually.
-
-A notable exception from this rule, is the PDFIUM library, which is used to
-create thumbnails for PDF documents. This library is not available in VCPKG for
-the moment, thus we are using a patched version from upstream Chromium Depot
-Tools for the moment. Download our pre-built version from:
-https://mega.nz/file/M1JCRCRa#Ne5sbVD2yZaCt9ijcCaKXs3m_ayfrw0ZovJMdERXRlU
-
-Start decompressing the zip archive as you proceed to the next step.
 
 # Get the source
 
@@ -87,19 +99,13 @@ proceed to build those, the SDK and MEGA Desktop in that order, via CMake.
 
 ```
 $ cd ~/mega/desktop/contrib/cmake
-$ cmake -DEXTRA_ARGS="-DCMAKE_PREFIX_PATH=~/Qt/5.12.11/clang_64" -DTARGET=MEGAsync -DTRIPLET=x64-osx-mega -P build_from_scratch.cmake
+$ cmake -DEXTRA_ARGS="-DCMAKE_PREFIX_PATH=~/Qt/5.12.12/clang_64" -DTARGET=MEGAsync -DTRIPLET=x64-osx-mega -P build_from_scratch.cmake
 ```
-
-In a short while, but before the build stops because of missing PDFIUM library, you should
-notice `~/mega/3rdparty_desktop/vcpkg` directory being created. You can start copying
-the extracted pdfium subdirectory to the vcpkg directory.
-
-In case the build fails anyway, just run the cmake command again, once pdfium is copied.
 
 # Development using Qt Creator
 
 Now you can open open `src/MEGASync/MEGASync.pro` to start editing and building. Set it up
-as any other Qt QMake based project, using the Qt 5.12.11 kit you installed and set
+as any other Qt QMake based project, using the Qt 5.12.12 kit you installed and set
 matching target architecture.
 
 When building using the QMake project, both the application and the SDK are
@@ -113,5 +119,5 @@ go to Tools -> External -> Linguist and click on Release Translations action.
 You can achieve the same, from the command-line:
 ```
 $ cd ~/mega/desktop/src
-$ ~/Qt/5.12.11/clang_64/bin/lrelease MEGASync/MEGASync.pro
+$ ~/Qt/5.12.12/clang_64/bin/lrelease MEGASync/MEGASync.pro
 ```

@@ -251,6 +251,7 @@ int QAlertsModel::checkAlertType(int alertType) const
             case MegaUserAlert::TYPE_DELETEDSHARE:
             case MegaUserAlert::TYPE_NEWSHAREDNODES:
             case MegaUserAlert::TYPE_REMOVEDSHAREDNODES:
+            case MegaUserAlert::TYPE_UPDATEDSHAREDNODES:
                 return ALERT_SHARES;
 
             case MegaUserAlert::TYPE_PAYMENT_SUCCEEDED:

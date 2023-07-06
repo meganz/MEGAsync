@@ -23,6 +23,7 @@
 #include "QMegaMessageBox.h"
 #include "TextDecorator.h"
 #include "DialogOpener.h"
+#include "syncs/gui/Twoways/BindFolderDialog.h"
 
 #ifdef _WIN32    
 #include <chrono>
@@ -516,7 +517,7 @@ void InfoDialog::setUsage()
 
             ui->wCircularQuota->setTotalValueUnknown(transferQuotaState != QuotaState::FULL
                                                         && transferQuotaState != QuotaState::OVERQUOTA);
-            usedTransferString = tr("%1 used")
+                usedTransferString = Utilities::createSimpleUsedStringWithoutReplacement(usedTransfer)
                                  .arg(QString::fromUtf8("<span style='color:%1;"
                                                         "font-family: Lato;"
                                                         "text-decoration:none;'>%2</span>")
@@ -1904,9 +1905,14 @@ void InfoDialog::setupSyncController()
                 Text::Link link(Utilities::SUPPORT_URL);
                 Text::Decorator tc(&link);
                 tc.process(msg);
-                QMegaMessageBox::warning(nullptr, tr("Error"), tr("Error adding %1:").arg(name)
-                                         + QString::fromLatin1("\n")
-                                         + msg, QMessageBox::Ok, QMessageBox::NoButton, QMap<QMessageBox::StandardButton, QString>(), Qt::RichText);
+
+                QMegaMessageBox::MessageBoxInfo info;
+                info.title = QMegaMessageBox::errorTitle();
+                info.text = tr("Error adding %1:").arg(name)
+                        + QString::fromLatin1("\n")
+                        + msg;
+
+                QMegaMessageBox::warning(info);
             }
         });
     }
