@@ -8,11 +8,11 @@
 
 LoginController::LoginController(QObject *parent)
     : QObject{parent}
-    , mMegaApi(MegaSyncApp->getMegaApi())
-    , mDelegateListener(new mega::QTMegaRequestListener(MegaSyncApp->getMegaApi(), this))
-    , mPreferences(Preferences::instance())
-    , mFetchingNodes(false)
-    , mEmailConfirmed(false)
+      , mMegaApi(MegaSyncApp->getMegaApi())
+      , mDelegateListener(new mega::QTMegaRequestListener(MegaSyncApp->getMegaApi(), this))
+      , mPreferences(Preferences::instance())
+      , mFetchingNodes(false)
+      , mEmailConfirmed(false)
 {
     mMegaApi->addRequestListener(mDelegateListener.get());
     mConnectivityTimer = new QTimer(this);
@@ -38,10 +38,10 @@ void LoginController::login(const QString &email, const QString &password)
 }
 
 void LoginController::createAccount(const QString &email, const QString &password,
-                                    const QString &name, const QString &lastName)
+                                const QString &name, const QString &lastName)
 {
     mMegaApi->createAccount(email.toUtf8().constData(), password.toUtf8().constData(),
-                            name.toUtf8().constData(), lastName.toUtf8().constData());
+                             name.toUtf8().constData(), lastName.toUtf8().constData());
 }
 
 void LoginController::changeRegistrationEmail(const QString &email)
@@ -92,54 +92,54 @@ void LoginController::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *req
     Q_UNUSED(api)
     switch(request->getType())
     {
-    case mega::MegaRequest::TYPE_LOGIN:
-    {
-        mConnectivityTimer->stop();
-        MegaSyncApp->initLocalServer();
-
-        if(e->getErrorCode() == mega::MegaError::API_OK)
+        case mega::MegaRequest::TYPE_LOGIN:
         {
-            std::unique_ptr<char []> session(mMegaApi->dumpSession());
-            if (session)
+            mConnectivityTimer->stop();
+            MegaSyncApp->initLocalServer();
+
+            if(e->getErrorCode() == mega::MegaError::API_OK)
             {
-                mPreferences->setSession(QString::fromUtf8(session.get()));
+                std::unique_ptr<char []> session(mMegaApi->dumpSession());
+                if (session)
+                {
+                    mPreferences->setSession(QString::fromUtf8(session.get()));
+                }
             }
-        }
 
-        onLogin(request, e);
-        break;
-    }
-    case mega::MegaRequest::TYPE_LOGOUT:
-    {
-        onLogout(request, e);
-        break;
-    }
-    case mega::MegaRequest::TYPE_CREATE_ACCOUNT:
-    {
-        if(request->getParamType() == mega::MegaApi::RESUME_ACCOUNT)
-        {
-            onAccountCreationResume(request, e);
+            onLogin(request, e);
+            break;
         }
-        else if(request->getParamType() == mega::MegaApi::CANCEL_ACCOUNT)
+        case mega::MegaRequest::TYPE_LOGOUT:
         {
-            onAccountCreationCancel(request, e);
+            onLogout(request, e);
+            break;
         }
-        else
+        case mega::MegaRequest::TYPE_CREATE_ACCOUNT:
         {
-            onAccountCreation(request, e);
+            if(request->getParamType() == mega::MegaApi::RESUME_ACCOUNT)
+            {
+                onAccountCreationResume(request, e);
+            }
+            else if(request->getParamType() == mega::MegaApi::CANCEL_ACCOUNT)
+            {
+                onAccountCreationCancel(request, e);
+            }
+            else
+            {
+                onAccountCreation(request, e);
+            }
+            break;
         }
-        break;
-    }
-    case mega::MegaRequest::TYPE_SEND_SIGNUP_LINK:
-    {
-        onEmailChanged(request, e);
-        break;
-    }
-    case mega::MegaRequest::TYPE_FETCH_NODES:
-    {
-        onFetchNodes(request, e);
-        break;
-    }
+        case mega::MegaRequest::TYPE_SEND_SIGNUP_LINK:
+        {
+            onEmailChanged(request, e);
+            break;
+        }
+        case mega::MegaRequest::TYPE_FETCH_NODES:
+        {
+            onFetchNodes(request, e);
+            break;
+        }
     }
 }
 
@@ -198,33 +198,33 @@ void LoginController::onLogin(mega::MegaRequest *request, mega::MegaError *e)
         mPreferences->setAccountStateInGeneral(Preferences::STATE_LOGGED_FAILED);
         switch(e->getErrorCode())
         {
-        case mega::MegaError::API_EINCOMPLETE:
-        {
-            errorMsg = tr("Please check your e-mail and click the link to confirm your account.");
-            break;
-        }
-        case mega::MegaError::API_ETOOMANY:
-        {
-            errorMsg = tr("You have attempted to log in too many times.[BR]Please wait until %1 and try again.")
-                           .replace(QString::fromUtf8("[BR]"), QString::fromUtf8("\n"))
-                           .arg(QTime::currentTime().addSecs(3600).toString(QString::fromUtf8("hh:mm")));
-            break;
-        }
-        case mega::MegaError::API_EMFAREQUIRED:
-        {
-            mPassword = QString::fromUtf8(request->getPassword());
-            mEmail = QString::fromUtf8(request->getEmail());
-            break;
-        }
-        case mega::MegaError::API_EACCESS: //locallogout called prior to login finished
-        {
-            break;
-        }
-        default:
-        {
-            errorMsg = QCoreApplication::translate("MegaError", e->getErrorString());
-            break;
-        }
+            case mega::MegaError::API_EINCOMPLETE:
+            {
+                errorMsg = tr("Please check your e-mail and click the link to confirm your account.");
+                break;
+            }
+            case mega::MegaError::API_ETOOMANY:
+            {
+                errorMsg = tr("You have attempted to log in too many times.[BR]Please wait until %1 and try again.")
+                               .replace(QString::fromUtf8("[BR]"), QString::fromUtf8("\n"))
+                               .arg(QTime::currentTime().addSecs(3600).toString(QString::fromUtf8("hh:mm")));
+                break;
+            }
+            case mega::MegaError::API_EMFAREQUIRED:
+            {
+                mPassword = QString::fromUtf8(request->getPassword());
+                mEmail = QString::fromUtf8(request->getEmail());
+                break;
+            }
+            case mega::MegaError::API_EACCESS: //locallogout called prior to login finished
+            {
+                break;
+            }
+            default:
+            {
+                errorMsg = QCoreApplication::translate("MegaError", e->getErrorString());
+                break;
+            }
         }
     }
 
@@ -236,7 +236,7 @@ void LoginController::onFetchNodesSuccess()
 {
     std::unique_ptr<char[]> email(mMegaApi->getMyEmail());
 
-    // We will proceed with a new login
+           // We will proceed with a new login
     mPreferences->setEmailAndGeneralSettings(QString::fromUtf8(email.get()));
     SyncInfo::instance()->rewriteSyncSettings(); //write sync settings into user's preferences
 
@@ -291,14 +291,14 @@ void LoginController::onFetchNodes(mega::MegaRequest *request, mega::MegaError *
         mPreferences->setAccountStateInGeneral(Preferences::STATE_FETCHNODES_OK);
         mPreferences->setNeedsFetchNodesInGeneral(false);
 
-        // TODO: check with sdk team if this case is possible
+               // TODO: check with sdk team if this case is possible
         if (!MegaSyncApp->getRootNode())
         {
             QMegaMessageBox::MessageBoxInfo msgInfo;
             msgInfo.title = QMegaMessageBox::errorTitle();
             msgInfo.text = tr("Unable to get the filesystem.\n"
-                              "Please, try again. If the problem persists "
-                              "please contact bug@mega.co.nz");
+                               "Please, try again. If the problem persists "
+                               "please contact bug@mega.co.nz");
             msgInfo.buttons = QMessageBox::Ok;
 
             QMegaMessageBox::warning(msgInfo);
@@ -314,7 +314,7 @@ void LoginController::onFetchNodes(mega::MegaRequest *request, mega::MegaError *
         mPreferences->setAccountStateInGeneral(Preferences::STATE_FETCHNODES_FAILED);
         mPreferences->setNeedsFetchNodesInGeneral(true);
         mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error fetching nodes: %1")
-                                                               .arg(QString::fromUtf8(e->getErrorString())).toUtf8().constData());
+                                                                .arg(QString::fromUtf8(e->getErrorString())).toUtf8().constData());
     }
 }
 
@@ -333,7 +333,7 @@ void LoginController::onLogout(mega::MegaRequest *request, mega::MegaError *e)
 {
     Q_UNUSED(e)
 
-    //This message is shown every time the user tries to login and the SSL fails
+           //This message is shown every time the user tries to login and the SSL fails
     if(request->getParamType() == mega::MegaError::API_ESSL)
     {
         QMegaMessageBox::MessageBoxInfo msgInfo;
@@ -359,17 +359,17 @@ void LoginController::fetchNodes(const QString& email)
     assert(!mFetchingNodes);
     mFetchingNodes = true;
 
-    // We need to load exclusions and migrate sync configurations from MEGAsync held cache, to SDK's
-    // prior fetching nodes (when the SDK will resume syncing)
+           // We need to load exclusions and migrate sync configurations from MEGAsync held cache, to SDK's
+           // prior fetching nodes (when the SDK will resume syncing)
 
-    // If we are loging into a new session of an account previously used in MEGAsync,
-    // we will use the previous configurations stored in that user mPreferences
-    // However, there is a case in which we are not able to do so at this point:
-    // we don't know the user email.
-    // That should only happen when trying to resume a session (using the session id stored in general mPreferences)
-    // that didn't complete a fetch nodes (i.e. does not have mPreferences logged).
-    // that can happen for blocked accounts.
-    // Fortunately, the SDK can help us get the email of the session
+           // If we are loging into a new session of an account previously used in MEGAsync,
+           // we will use the previous configurations stored in that user mPreferences
+           // However, there is a case in which we are not able to do so at this point:
+           // we don't know the user email.
+           // That should only happen when trying to resume a session (using the session id stored in general mPreferences)
+           // that didn't complete a fetch nodes (i.e. does not have mPreferences logged).
+           // that can happen for blocked accounts.
+           // Fortunately, the SDK can help us get the email of the session
     bool needFindingOutEmail = !mPreferences->logged() && email.isEmpty();
 
     auto loadMigrateAndFetchNodes = [this](const QString &email)
@@ -392,20 +392,20 @@ void LoginController::fetchNodes(const QString& email)
     else // we will ask the SDK the email
     {
         megaApi()->getUserEmail(mMegaApi->getMyUserHandleBinary(),new MegaListenerFuncExecuter(true, [loadMigrateAndFetchNodes](mega::MegaApi*,  mega::MegaRequest* request, mega::MegaError* e) {
-                                   QString email;
+                                      QString email;
 
-                                   if (e->getErrorCode() == mega::MegaError::API_OK)
-                                   {
-                                       auto emailFromRequest = request->getEmail();
-                                       if (emailFromRequest)
-                                       {
-                                           email = QString::fromUtf8(emailFromRequest);
-                                       }
-                                   }
+                                      if (e->getErrorCode() == mega::MegaError::API_OK)
+                                      {
+                                          auto emailFromRequest = request->getEmail();
+                                          if (emailFromRequest)
+                                          {
+                                              email = QString::fromUtf8(emailFromRequest);
+                                          }
+                                      }
 
-                                   // in any case, proceed:
-                                   loadMigrateAndFetchNodes(email);
-                               }));
+                                             // in any case, proceed:
+                                      loadMigrateAndFetchNodes(email);
+                                  }));
 
     }
 }
@@ -443,30 +443,30 @@ void LoginController::migrateSyncConfToSdk(const QString& email)
     foreach(SyncData osd, oldCachedSyncs)
     {
         mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Copying sync data to SDK cache: %1. Name: %2")
-                                                               .arg(osd.mLocalFolder).arg(osd.mName).toUtf8().constData());
+                                                                .arg(osd.mLocalFolder).arg(osd.mName).toUtf8().constData());
 
         megaApi()->copySyncDataToCache(osd.mLocalFolder.toUtf8().constData(), osd.mName.toUtf8().constData(),
-                                       osd.mMegaHandle, osd.mMegaFolder.toUtf8().constData(),
-                                       osd.mLocalfp, osd.mEnabled, osd.mTemporarilyDisabled,
-                                       new MegaListenerFuncExecuter(true, [this, osd, oldCacheSyncsCount, needsMigratingFromOldSession, email](mega::MegaApi*,  mega::MegaRequest* request, mega::MegaError* e)
-                                                                    {
-                                                                        if (e->getErrorCode() == mega::MegaError::API_OK)
-                                                                        {
-                                                                            //preload the model with the restored configuration: that includes info that the SDK does not handle (e.g: syncID)
-                                                                            SyncInfo::instance()->pickInfoFromOldSync(osd, request->getParentHandle(), needsMigratingFromOldSession);
-                                                                            mPreferences->removeOldCachedSync(osd.mPos, email);
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Failed to copy sync %1: %2").arg(osd.mLocalFolder).arg(QString::fromUtf8(e->getErrorString())).toUtf8().constData());
-                                                                        }
+                                         osd.mMegaHandle, osd.mMegaFolder.toUtf8().constData(),
+                                         osd.mLocalfp, osd.mEnabled, osd.mTemporarilyDisabled,
+                                         new MegaListenerFuncExecuter(true, [this, osd, oldCacheSyncsCount, needsMigratingFromOldSession, email](mega::MegaApi*,  mega::MegaRequest* request, mega::MegaError* e)
+                                                                       {
+                                                                           if (e->getErrorCode() == mega::MegaError::API_OK)
+                                                                           {
+                                                                               //preload the model with the restored configuration: that includes info that the SDK does not handle (e.g: syncID)
+                                                                               SyncInfo::instance()->pickInfoFromOldSync(osd, request->getParentHandle(), needsMigratingFromOldSession);
+                                                                               mPreferences->removeOldCachedSync(osd.mPos, email);
+                                                                           }
+                                                                           else
+                                                                           {
+                                                                               mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Failed to copy sync %1: %2").arg(osd.mLocalFolder).arg(QString::fromUtf8(e->getErrorString())).toUtf8().constData());
+                                                                           }
 
-                                                                        --*oldCacheSyncsCount;
-                                                                        if (*oldCacheSyncsCount == 0)//All syncs copied to sdk, proceed with fetchnodes
-                                                                        {
-                                                                            megaApi()->fetchNodes();
-                                                                        }
-                                                                    }));
+                                                                           --*oldCacheSyncsCount;
+                                                                           if (*oldCacheSyncsCount == 0)//All syncs copied to sdk, proceed with fetchnodes
+                                                                           {
+                                                                               megaApi()->fetchNodes();
+                                                                           }
+                                                                       }));
     }
 
     if (*oldCacheSyncsCount == 0)//No syncs to be copied to sdk, proceed with fetchnodes
@@ -479,7 +479,7 @@ void LoginController::loadSyncExclusionRules(const QString& email)
 {
     assert(mPreferences->logged() || !email.isEmpty());
 
-    // if not logged in & email provided, read old syncs from that user and load new-cache sync from prev session
+           // if not logged in & email provided, read old syncs from that user and load new-cache sync from prev session
     bool temporarilyLoggedPrefs = false;
     if (!mPreferences->logged() && !email.isEmpty())
     {
@@ -490,7 +490,7 @@ void LoginController::loadSyncExclusionRules(const QString& email)
         }
 
         mPreferences->loadExcludedSyncNames(); //to attend the corner case:
-            // comming from old versions that didn't include some defaults
+                                                // comming from old versions that didn't include some defaults
 
     }
     assert(mPreferences->logged()); //At this point mPreferences should be logged, just because you enterUser() or it was already logged
@@ -556,12 +556,12 @@ void LoginController::runConnectivityCheck()
         int proxyProtocol = mPreferences->proxyProtocol();
         switch (proxyProtocol)
         {
-        case Preferences::PROXY_PROTOCOL_SOCKS5H:
-            proxy.setType(QNetworkProxy::Socks5Proxy);
-            break;
-        default:
-            proxy.setType(QNetworkProxy::HttpProxy);
-            break;
+            case Preferences::PROXY_PROTOCOL_SOCKS5H:
+                proxy.setType(QNetworkProxy::Socks5Proxy);
+                break;
+            default:
+                proxy.setType(QNetworkProxy::HttpProxy);
+                break;
         }
 
         proxy.setHostName(mPreferences->proxyServer());
@@ -606,7 +606,7 @@ void LoginController::runConnectivityCheck()
     connectivityChecker->setTimeout(Preferences::PROXY_TEST_TIMEOUT_MS);
 
     connect(connectivityChecker, &ConnectivityChecker::testFinished, this,
-            &LoginController::onConnectivityCheckFinished, Qt::UniqueConnection);
+             &LoginController::onConnectivityCheckFinished, Qt::UniqueConnection);
 
     connectivityChecker->startCheck();
     mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO, "Running connectivity test...");
@@ -623,8 +623,8 @@ void LoginController::onConnectivityCheckFinished(bool success)
     else
     {
         MegaSyncApp->showErrorMessage(tr("MEGAsync is unable to connect. Please check your "
-                                         "Internet connectivity and local firewall configuration. "
-                                         "Note that most antivirus software includes a firewall."));
+                                           "Internet connectivity and local firewall configuration. "
+                                           "Note that most antivirus software includes a firewall."));
     }
 }
 
@@ -680,7 +680,7 @@ void FastLoginController::onLogin(mega::MegaRequest *request, mega::MegaError *e
             QMegaMessageBox::warning(msgInfo);
         }
 
-        //Wrong login -> logout
+               //Wrong login -> logout
         MegaSyncApp->unlink(true);
         MegaSyncApp->onGlobalSyncStateChanged(megaApi());
     }
@@ -693,8 +693,8 @@ void FastLoginController::onFetchNodesSuccess()
 
 LogoutController::LogoutController(QObject *parent)
     : QObject(parent)
-    , mMegaApi(MegaSyncApp->getMegaApi())
-    , mDelegateListener(new mega::QTMegaRequestListener(MegaSyncApp->getMegaApi(), this))
+      , mMegaApi(MegaSyncApp->getMegaApi())
+      , mDelegateListener(new mega::QTMegaRequestListener(MegaSyncApp->getMegaApi(), this))
 {
     mMegaApi->addRequestListener(mDelegateListener.get());
 }
@@ -714,11 +714,11 @@ void LogoutController::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *re
             //Typical case: Connecting from a public wifi when the wifi sends you to a landing page
             //SDK cannot connect through SSL securely and asks MEGA Desktop to log out
 
-            //In previous versions, the user was asked to continue with a warning about a MITM risk.
-            //One of the options was disabling the public key pinning to continue working as usual
-            //This option was to risky and the solution taken was silently retry reconnection
+                   //In previous versions, the user was asked to continue with a warning about a MITM risk.
+                   //One of the options was disabling the public key pinning to continue working as usual
+                   //This option was to risky and the solution taken was silently retry reconnection
 
-            // Retry while enforcing key pinning silently
+                   // Retry while enforcing key pinning silently
             mMegaApi->retryPendingConnections();
             return;
         }
@@ -736,7 +736,7 @@ void LogoutController::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *re
             QMegaMessageBox::MessageBoxInfo msgInfo;
             msgInfo.title = tr("MEGAsync");
             msgInfo.text = tr("Our SSL key can't be verified. You could be affected by a man-in-the-middle attack or your antivirus software "
-                              "could be intercepting your communications and causing this problem. Please disable it and try again.")
+                               "could be intercepting your communications and causing this problem. Please disable it and try again.")
                            + QString::fromUtf8(" (Issuer: %1)").arg(QString::fromUtf8(request->getText() ? request->getText() : "Unknown"));
 
             QMegaMessageBox::critical(msgInfo);
@@ -752,7 +752,7 @@ void LogoutController::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *re
         MegaSyncApp->unlink();
     }
 
-    //Check for any sync disabled by logout to warn user on next login with user&password
+           //Check for any sync disabled by logout to warn user on next login with user&password
     const auto syncSettings (SyncInfo::instance()->getAllSyncSettings());
     auto isErrorLoggedOut = [](std::shared_ptr<SyncSettings> s) {return s->getError() == mega::MegaSync::LOGGED_OUT;};
     if (std::any_of(syncSettings.cbegin(), syncSettings.cend(), isErrorLoggedOut))
@@ -765,7 +765,7 @@ void LogoutController::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *re
 
 EmailConfirmationListener::EmailConfirmationListener(LoginController* parent)
     : QObject(parent)
-    , mGlobalListener(new mega::QTMegaGlobalListener(MegaSyncApp->getMegaApi(), this))
+      , mGlobalListener(new mega::QTMegaGlobalListener(MegaSyncApp->getMegaApi(), this))
 {
     MegaSyncApp->getMegaApi()->addGlobalListener(mGlobalListener.get());
 }
