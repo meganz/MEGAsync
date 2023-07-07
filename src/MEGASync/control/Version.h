@@ -28,7 +28,7 @@
 //"- item n\n"
 //)
 #define VER_CHANGES_NOTES  QT_TRANSLATE_NOOP("Preferences",                                        \
-"- New management of display of error messages.\n"                                                         \
+"- New management of display of error messages.\n"                                                 \
 "- We've enhanced the UI.\n"                                                                       \
 "- We've fixed the detected crashes on Windows, Linux, and macOS.\n"                               \
 )
