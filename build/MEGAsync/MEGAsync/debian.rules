@@ -18,8 +18,8 @@ MEGA_BUILD_ID := $(shell cat MEGA_BUILD_ID || echo "1")
 build: build-stamp
 build-stamp:
 	dh_testdir
-	sed -i -E "s/USER_AGENT([^\/]*)\/(([0-9][0-9]*\.){3})(.*)\";/USER_AGENT\1\/\2$(MEGA_BUILD_ID)\";/g" MEGASync/control/Preferences.cpp
-	sed -i -E "s/BUILD_ID = ([0-9]*)/BUILD_ID = $(MEGA_BUILD_ID)/g" MEGASync/control/Preferences.cpp
+	sed -i -E "s/VER_PRODUCTVERSION_STR([[:space:]]+)\"(([0-9][0-9]*\.){3})(.*)\"/VER_PRODUCTVERSION_STR\1\"\2$(MEGA_BUILD_ID)\"/g" MEGASync/control/Version.h
+	sed -i -E "s/VER_BUILD_ID([[:space:]]+)([0-9]*)/VER_BUILD_ID\1$(MEGA_BUILD_ID)/g" MEGASync/control/Version.h
 	sed -i -E "0,/megasync \(([0-9.]*)[^\)]*\)/s//megasync \(\1-$(MEGA_BUILD_ID).1)/" debian.changelog || :
 	./configure -g $(FCRYPTOPP) $(FMEDIAINFO)
 
