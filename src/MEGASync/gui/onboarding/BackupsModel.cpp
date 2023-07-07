@@ -68,7 +68,6 @@ BackupsModel::BackupsModel(QObject* parent)
 
     MegaSyncApp->qmlEngine()->rootContext()->setContextProperty(QString::fromUtf8("BackupsModel"), this);
     MegaSyncApp->qmlEngine()->rootContext()->setContextProperty(QString::fromUtf8("BackupsController"), mBackupsController);
-    qmlRegisterUncreatableType<BackupsModel>("BackupsModel", 1, 0, "BackupErrorCode", QString::fromUtf8("Cannot create WarningLevel in QML"));
 }
 
 QHash<int, QByteArray> BackupsModel::roleNames() const

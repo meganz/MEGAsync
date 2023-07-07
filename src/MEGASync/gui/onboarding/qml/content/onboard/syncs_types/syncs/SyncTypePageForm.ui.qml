@@ -47,7 +47,7 @@ SyncsPage {
                 SyncTypeButton {
                     id: fullSyncButton
 
-                    title: OnboardingStrings.fullSyncTitle
+                    title: OnboardingStrings.fullSync
                     syncType: SyncsType.SyncTypes.FullSync
                     description: OnboardingStrings.fullSyncButtonDescription
                     imageSource: Images.fullSync
@@ -57,7 +57,7 @@ SyncsPage {
                 SyncTypeButton {
                     id: backupsButton
 
-                    title: OnboardingStrings.selectiveSyncTitle
+                    title: OnboardingStrings.selectiveSync
                     syncType: SyncsType.SyncTypes.SelectiveSync
                     description: OnboardingStrings.selectiveSyncButtonDescription
                     imageSource: Images.selectiveSync

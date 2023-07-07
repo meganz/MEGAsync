@@ -8,170 +8,155 @@ import Components.Texts 1.0 as MegaTexts
 import Components.Images 1.0 as MegaImages
 
 Item {
+    id: root
 
     enum ToStates {
         Disabled = 0,
         Current = 1,
-        Done = 2,
-        DoneConfirm = 3,
-        DoneLight = 4
+        CurrentSubstep = 2,
+        Done = 3
     }
 
-    property string title: ""
+    property int number: 0
+    property string text: ""
     property int toState: Step.ToStates.Disabled
 
-    readonly property int diameter: 22
-    readonly property int borderWidth: 8
-    readonly property int contentWidth: 18
-    readonly property size doneImageSize: Qt.size(10, 7.5)
-
-    width: mainLayout.width
-    height: diameter
-
     onToStateChanged: {
-        mainLayout.state = mainLayout.statesMap.get(toState);
+        stepContent.state = stepContent.statesMap.get(toState);
     }
 
-    RowLayout {
-        id: mainLayout
+    height: stepContent.height
+    width: stepContent.width
+    Layout.preferredWidth: stepContent.width
+    Layout.preferredHeight: stepContent.height
+
+    Rectangle {
+        id: stepContent
 
         readonly property string stateDisabled: "DISABLED"
         readonly property string stateCurrent: "CURRENT"
+        readonly property string stateCurrentSubstep: "SUBSTEP"
         readonly property string stateDone: "DONE"
-        readonly property string stateDoneConfirm: "DONE_CONFIRM"
-        readonly property string stateDoneLight: "DONE_LIGHT"
 
         property var statesMap: new Map([
             [Step.ToStates.Disabled, stateDisabled],
             [Step.ToStates.Current, stateCurrent],
-            [Step.ToStates.Done, stateDone],
-            [Step.ToStates.DoneConfirm, stateDoneConfirm],
-            [Step.ToStates.DoneLight, stateDoneLight]
+            [Step.ToStates.CurrentSubstep, stateCurrentSubstep],
+            [Step.ToStates.Done, stateDone]
         ])
 
-        spacing: borderWidth
         state: stateDisabled
         states: [
             State {
-                name: mainLayout.stateDisabled
-                PropertyChanges { target: circleBorder; color: Styles.buttonSecondaryPressed }
+                name: stepContent.stateDisabled
+                PropertyChanges { target: stepContent; color: "transparent"; }
                 PropertyChanges {
-                    target: circleContent
-                    width: contentWidth
-                    height: contentWidth
-                    radius: contentWidth
+                    target: stepCircle;
+                    color: "transparent";
+                    border.width: 2;
+                    border.color: Styles.iconButtonDisabled;
                 }
-                PropertyChanges { target: circleInside; visible: true }
-                PropertyChanges { target: stepTitle; color: Styles.buttonSecondaryPressed }
-                PropertyChanges { target: checkImage; visible: false }
+                PropertyChanges { target: stepCircleImage; visible: false; }
+                PropertyChanges { target: stepCircleText; color: Styles.iconButtonDisabled; }
+                PropertyChanges { target: stepText; color: Styles.iconButtonDisabled; }
             },
             State {
-                name: mainLayout.stateCurrent
-                PropertyChanges { target: circleBorder; color: Styles.buttonPrimaryPressed }
+                name: stepContent.stateCurrent
+                PropertyChanges { target: stepContent; color: Styles.iconButtonPressedBackground; }
                 PropertyChanges {
-                    target: circleContent
-                    width: borderWidth
-                    height: borderWidth
-                    radius: borderWidth
+                    target: stepCircle;
+                    color: Styles.iconButton;
+                    border.width: 0;
                 }
-                PropertyChanges { target: circleInside; visible: false }
-                PropertyChanges { target: stepTitle; color: Styles.textPrimary }
-                PropertyChanges { target: checkImage; visible: false }
+                PropertyChanges { target: stepCircleImage; visible: false; }
+                PropertyChanges { target: stepCircleText; color: "white"/*Styles.textInverseAccent;*/ }
+                PropertyChanges { target: stepText; color: Styles.iconButton; }
             },
             State {
-                name: mainLayout.stateDone
-                PropertyChanges { target: circleBorder; color: Styles.buttonPrimaryPressed }
-                PropertyChanges { target: circleContent; visible: false }
-                PropertyChanges { target: circleInside; visible: false }
-                PropertyChanges { target: stepTitle; color: Styles.textSecondary }
+                name: stepContent.stateCurrentSubstep
+                PropertyChanges { target: stepContent; color: "transparent"; }
                 PropertyChanges {
-                    target: checkImage
-                    visible: true
-                    color: Styles.pageBackground
+                    target: stepCircle;
+                    color: Styles.iconButton;
+                    border.width: 0;
                 }
+                PropertyChanges { target: stepCircleImage; visible: false; }
+                PropertyChanges { target: stepCircleText; color: Styles.textInverseAccent; }
+                PropertyChanges { target: stepText; color: Styles.iconButton; }
             },
             State {
-                name: mainLayout.stateDoneConfirm
-                PropertyChanges { target: circleBorder; color: Styles.buttonPrimaryPressed }
+                name: stepContent.stateDone
+                PropertyChanges { target: stepContent; color: "transparent"; }
                 PropertyChanges {
-                    target: circleContent
-                    width: contentWidth
-                    height: contentWidth
-                    radius: contentWidth
-                    visible: true;
-                    color: Styles.pageBackground
+                    target: stepCircle;
+                    color: Styles.supportSuccess;
+                    border.width: 0;
                 }
-                PropertyChanges { target: circleInside; visible: true; color: Styles.buttonPrimaryPressed }
-                PropertyChanges { target: stepTitle; color: Styles.textSecondary }
-                PropertyChanges { target: checkImage; visible: false }
-            },
-            State {
-                name: mainLayout.stateDoneLight
-                PropertyChanges { target: circleBorder; color: Styles.buttonPrimaryPressed; }
+                PropertyChanges { target: stepCircleImage; visible: true; }
                 PropertyChanges {
-                    target: circleContent
-                    width: contentWidth
-                    height: contentWidth
-                    radius: contentWidth
-                    visible: true;
-                    color: Styles.pageBackground
+                    target: stepCircleText;
+                    color: Styles.textInverseAccent;
+                    visible: false;
                 }
-                PropertyChanges { target: circleInside; visible: false }
-                PropertyChanges { target: stepTitle; color: Styles.textSecondary }
-                PropertyChanges {
-                    target: checkImage
-                    visible: true
-                    color: Styles.buttonPrimaryPressed
-                }
+                PropertyChanges { target: stepText; color: Styles.iconButton; }
             }
         ]
 
-        Rectangle {
-            id: circleBorder
+        radius: 16
+        color: Styles.iconButtonPressedBackground
+        height: 32
+        width: content.width + 17
+        Layout.preferredWidth: width
+        Layout.preferredHeight: height
 
-            color: Styles.buttonSecondaryPressed
-            Layout.preferredWidth: diameter
-            Layout.preferredHeight: diameter
-            radius: diameter
+        RowLayout {
+            id: content
+
+            anchors.top: parent.top
+            anchors.left: parent.left
+            anchors.bottom: parent.bottom
+            anchors.leftMargin: 5
+            anchors.topMargin: 5
+            anchors.bottomMargin: 5
+            anchors.rightMargin: 12
+            spacing: 8
 
             Rectangle {
-                id: circleContent
+                id: stepCircle
 
-                color: Styles.pageBackground
-                width: borderWidth
-                height: borderWidth
-                radius: borderWidth
-                anchors.centerIn: parent
+                radius: width / 2
+                width: 22
+                height: width
+                color: Styles.iconButton
 
-                Rectangle {
-                    id: circleInside
+                MegaTexts.Text {
+                    id: stepCircleText
 
-                    color: Styles.buttonSecondaryPressed
-                    visible: false
-                    width: borderWidth
-                    height: borderWidth
-                    radius: borderWidth
                     anchors.centerIn: parent
+                    text: number.toString()
+                    color: Styles.textInverseAccent
+                    font.bold: true
+                }
+
+                MegaImages.SvgImage {
+                    id: stepCircleImage
+
+                    anchors.centerIn: parent
+                    source: Images.check
+                    sourceSize: Qt.size(10, 7.5)
+                    color: Styles.textInverseAccent
+                    visible: false
                 }
             }
 
-            MegaImages.SvgImage {
-                id: checkImage
+            MegaTexts.Text {
+                id: stepText
 
-                visible: false
-                anchors.centerIn: parent
-                sourceSize: doneImageSize
-                source: Images.check
-                color: Styles.pageBackground
+                text: root.text
+                color: Styles.iconButton
+                font.weight: Font.DemiBold
             }
         }
-
-        MegaTexts.Text {
-            id: stepTitle
-
-            text: title
-        }
-
     }
 
 }

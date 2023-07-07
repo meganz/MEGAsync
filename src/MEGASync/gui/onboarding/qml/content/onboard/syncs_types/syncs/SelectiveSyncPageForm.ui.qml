@@ -33,7 +33,7 @@ SyncsPage {
 
         Header {
             Layout.preferredWidth: parent.width
-            title: OnboardingStrings.selectiveSyncTitle
+            title: OnboardingStrings.selectiveSync
             description: OnboardingStrings.selectiveSyncDescription
         }
 

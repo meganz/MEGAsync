@@ -3,6 +3,7 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12
 
 // Local
+import Onboard 1.0
 import Onboard.Syncs_types.Left_panel 1.0
 
 // C++
@@ -22,8 +23,10 @@ StackView {
                 script: backupsFlow.replace(selectBackupFoldersPage);
             }
             PropertyChanges {
-                target: stepPanel
-                state: stepPanel.stepBackupsSelectFolders
+                target: stepPanel;
+                state: stepPanel.step3;
+                step3Text: OnboardingStrings.backupSelectFolders;
+                step4Text: OnboardingStrings.confirm;
             }
         },
         State {
@@ -32,8 +35,10 @@ StackView {
                 script: backupsFlow.replace(confirmBackupFoldersPage);
             }
             PropertyChanges {
-                target: stepPanel
-                state: stepPanel.stepBackupsConfirm
+                target: stepPanel;
+                state: stepPanel.step4;
+                step3Text: OnboardingStrings.backupSelectFolders;
+                step4Text: OnboardingStrings.backupConfirm;
             }
         }
     ]
