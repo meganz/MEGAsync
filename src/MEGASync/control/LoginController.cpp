@@ -542,7 +542,8 @@ void LoginController::loadSyncExclusionRules(const QString& email)
 
 long long LoginController::computeExclusionSizeLimit(const long long sizeLimitValue, const int unit)
 {
-    const double sizeLimitPower = pow(static_cast<double>(1024), static_cast<double>(unit));
+    const double bytesPerKb = 1024;
+    const double sizeLimitPower = pow(bytesPerKb, static_cast<double>(unit));
     return sizeLimitValue * static_cast<long long>(sizeLimitPower);
 }
 
