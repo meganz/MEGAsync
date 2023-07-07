@@ -3056,7 +3056,7 @@ Các phiên truyền tải sẽ được tự động tiếp tục khi bạn m�
     <message>
         <source>Upload produces recursivity</source>
         <translatorcomment>Error label to indicate a situation of recursivity during uploads</translatorcomment>
-        <translation>Truyền tải bị thất bại do cấu trúc đệ quy của thư mục</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
@@ -4293,12 +4293,12 @@ Nhập một tên khác.</translation>
     <message>
         <source>Parent Directory</source>
         <translatorcomment>Button to move to the parent directory</translatorcomment>
-        <translation>Danh mục chủ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Go to the parent directory</source>
         <translatorcomment>Parent directory button message used by assistive technologies (such as screen readers)</translatorcomment>
-        <translation>Đi đến danh mục chủ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Alt+Up</source>
@@ -4358,7 +4358,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>Find Directory</source>
         <translatorcomment>Window title when opening a directory</translatorcomment>
-        <translation>Tìm danh mục</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Open</source>
@@ -4373,7 +4373,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>Directory:</source>
         <translatorcomment>Selected directory text box label when choosing a directory</translatorcomment>
-        <translation>Danh mục:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>All Files (*)</source>
@@ -4393,7 +4393,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>Directories</source>
         <translatorcomment>Name of the option for showing only directories</translatorcomment>
-        <translation>Danh mục</translation>
+        <translation>Thư mục</translation>
     </message>
     <message>
         <source>New Folder</source>
@@ -4408,7 +4408,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>Could not delete directory.</source>
         <translatorcomment>Info message shown when failing deleting a directory</translatorcomment>
-        <translation>Không xóa được danh mục.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Recent Places</source>
@@ -4515,9 +4515,7 @@ Nhập một tên khác.</translation>
 Directory not found.
 Please verify the correct directory name was given.</source>
         <translatorcomment>Warning message when the directory name to open is incorrect</translatorcomment>
-        <translation>%1
-Danh mục không tìm thấy.
-Xin kiểm tra xem tên của danh mục có chính xác.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>%1 already exists.

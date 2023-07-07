@@ -3059,7 +3059,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Upload produces recursivity</source>
         <translatorcomment>Error label to indicate a situation of recursivity during uploads</translatorcomment>
-        <translation>Передача не удалась из-за рекурсивной структуры директорий</translation>
+        <translation>Передача не удалась из-за рекурсивной структуры папок</translation>
     </message>
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
@@ -4297,12 +4297,12 @@ Enter a different name</source>
     <message>
         <source>Parent Directory</source>
         <translatorcomment>Button to move to the parent directory</translatorcomment>
-        <translation>Родительский каталог</translation>
+        <translation>Родительская папка</translation>
     </message>
     <message>
         <source>Go to the parent directory</source>
         <translatorcomment>Parent directory button message used by assistive technologies (such as screen readers)</translatorcomment>
-        <translation>Перейти в родительский каталог</translation>
+        <translation>Перейти в родительскую папку</translation>
     </message>
     <message>
         <source>Alt+Up</source>
@@ -4362,7 +4362,7 @@ Enter a different name</source>
     <message>
         <source>Find Directory</source>
         <translatorcomment>Window title when opening a directory</translatorcomment>
-        <translation>Найти каталог</translation>
+        <translation>Найти папку</translation>
     </message>
     <message>
         <source>Open</source>
@@ -4377,7 +4377,7 @@ Enter a different name</source>
     <message>
         <source>Directory:</source>
         <translatorcomment>Selected directory text box label when choosing a directory</translatorcomment>
-        <translation>Каталог:</translation>
+        <translation>Папка:</translation>
     </message>
     <message>
         <source>All Files (*)</source>
@@ -4397,7 +4397,7 @@ Enter a different name</source>
     <message>
         <source>Directories</source>
         <translatorcomment>Name of the option for showing only directories</translatorcomment>
-        <translation>Каталоги</translation>
+        <translation>Папки</translation>
     </message>
     <message>
         <source>New Folder</source>
@@ -4412,7 +4412,7 @@ Enter a different name</source>
     <message>
         <source>Could not delete directory.</source>
         <translatorcomment>Info message shown when failing deleting a directory</translatorcomment>
-        <translation>Не удалось удалить каталог.</translation>
+        <translation>Не удалось удалить папку.</translation>
     </message>
     <message>
         <source>Recent Places</source>
@@ -4520,8 +4520,8 @@ Directory not found.
 Please verify the correct directory name was given.</source>
         <translatorcomment>Warning message when the directory name to open is incorrect</translatorcomment>
         <translation>%1
-Каталог не найден.
-Пожалуйста, проверьте правильность имени файла.</translation>
+Папка не найдена.
+Пожалуйста, убедитесь, что указано правильное название папки.</translation>
     </message>
     <message>
         <source>%1 already exists.

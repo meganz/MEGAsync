@@ -3059,7 +3059,7 @@ Transfery zostaną automatycznie wznowione po ponownym otwarciu aplikacji.</nume
     <message>
         <source>Upload produces recursivity</source>
         <translatorcomment>Error label to indicate a situation of recursivity during uploads</translatorcomment>
-        <translation>Przesyłanie nie powiodło się z powodu rekurencyjnej struktury katalogów</translation>
+        <translation>Transfer nie powiódł się z powodu rekursywnej struktury katalogów</translation>
     </message>
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
@@ -4297,12 +4297,12 @@ Wprowadź inną nazwę.</translation>
     <message>
         <source>Parent Directory</source>
         <translatorcomment>Button to move to the parent directory</translatorcomment>
-        <translation>Główny katalog</translation>
+        <translation>Katalog nadrzędny</translation>
     </message>
     <message>
         <source>Go to the parent directory</source>
         <translatorcomment>Parent directory button message used by assistive technologies (such as screen readers)</translatorcomment>
-        <translation>Przejdź do głównego katalogu</translation>
+        <translation>Przejdź do katalogu nadrzędnego</translation>
     </message>
     <message>
         <source>Alt+Up</source>
@@ -4521,7 +4521,7 @@ Please verify the correct directory name was given.</source>
         <translatorcomment>Warning message when the directory name to open is incorrect</translatorcomment>
         <translation>%1
 Nie znaleziono katalogu.
-Sprawdź, czy podano poprawną nazwę katalogu.</translation>
+Sprawdź, czy podano prawidłową nazwę katalogu.</translation>
     </message>
     <message>
         <source>%1 already exists.

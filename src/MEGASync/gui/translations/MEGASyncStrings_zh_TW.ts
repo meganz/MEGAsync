@@ -3056,7 +3056,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Upload produces recursivity</source>
         <translatorcomment>Error label to indicate a situation of recursivity during uploads</translatorcomment>
-        <translation>由於遞迴目錄結構，所以傳輸失敗</translation>
+        <translation>傳輸失敗，遞迴資料夾結構錯誤</translation>
     </message>
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
@@ -4294,12 +4294,12 @@ Enter a different name</source>
     <message>
         <source>Parent Directory</source>
         <translatorcomment>Button to move to the parent directory</translatorcomment>
-        <translation>上層目錄</translation>
+        <translation>父資料夾</translation>
     </message>
     <message>
         <source>Go to the parent directory</source>
         <translatorcomment>Parent directory button message used by assistive technologies (such as screen readers)</translatorcomment>
-        <translation>到上層目錄</translation>
+        <translation>前往父資料夾</translation>
     </message>
     <message>
         <source>Alt+Up</source>
@@ -4359,7 +4359,7 @@ Enter a different name</source>
     <message>
         <source>Find Directory</source>
         <translatorcomment>Window title when opening a directory</translatorcomment>
-        <translation>尋找目錄</translation>
+        <translation>尋找資料夾</translation>
     </message>
     <message>
         <source>Open</source>
@@ -4374,7 +4374,7 @@ Enter a different name</source>
     <message>
         <source>Directory:</source>
         <translatorcomment>Selected directory text box label when choosing a directory</translatorcomment>
-        <translation>目錄：</translation>
+        <translation>資料夾：</translation>
     </message>
     <message>
         <source>All Files (*)</source>
@@ -4394,7 +4394,7 @@ Enter a different name</source>
     <message>
         <source>Directories</source>
         <translatorcomment>Name of the option for showing only directories</translatorcomment>
-        <translation>目錄</translation>
+        <translation>資料夾</translation>
     </message>
     <message>
         <source>New Folder</source>
@@ -4409,7 +4409,7 @@ Enter a different name</source>
     <message>
         <source>Could not delete directory.</source>
         <translatorcomment>Info message shown when failing deleting a directory</translatorcomment>
-        <translation>無法刪除目錄。</translation>
+        <translation>無法刪除資料夾。</translation>
     </message>
     <message>
         <source>Recent Places</source>
@@ -4517,8 +4517,8 @@ Directory not found.
 Please verify the correct directory name was given.</source>
         <translatorcomment>Warning message when the directory name to open is incorrect</translatorcomment>
         <translation>%1
-找不到目錄。
-請核對正確的目錄名稱。</translation>
+未找到資料夾。
+請確認是否提供正確的目錄名稱。</translation>
     </message>
     <message>
         <source>%1 already exists.

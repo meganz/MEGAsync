@@ -4296,12 +4296,12 @@ Introduzca un nombre diferente.</translation>
     <message>
         <source>Parent Directory</source>
         <translatorcomment>Button to move to the parent directory</translatorcomment>
-        <translation>Directorio superior</translation>
+        <translation>Carpeta superior</translation>
     </message>
     <message>
         <source>Go to the parent directory</source>
         <translatorcomment>Parent directory button message used by assistive technologies (such as screen readers)</translatorcomment>
-        <translation>Ir al directorio superior</translation>
+        <translation>Ir a la carpeta superior</translation>
     </message>
     <message>
         <source>Alt+Up</source>
@@ -4361,7 +4361,7 @@ Introduzca un nombre diferente.</translation>
     <message>
         <source>Find Directory</source>
         <translatorcomment>Window title when opening a directory</translatorcomment>
-        <translation>Buscar directorio</translation>
+        <translation>Buscar carpeta</translation>
     </message>
     <message>
         <source>Open</source>
@@ -4376,7 +4376,7 @@ Introduzca un nombre diferente.</translation>
     <message>
         <source>Directory:</source>
         <translatorcomment>Selected directory text box label when choosing a directory</translatorcomment>
-        <translation>Directorio:</translation>
+        <translation>Carpeta:</translation>
     </message>
     <message>
         <source>All Files (*)</source>
@@ -4396,7 +4396,7 @@ Introduzca un nombre diferente.</translation>
     <message>
         <source>Directories</source>
         <translatorcomment>Name of the option for showing only directories</translatorcomment>
-        <translation>Directorios</translation>
+        <translation>Carpetas</translation>
     </message>
     <message>
         <source>New Folder</source>
@@ -4411,7 +4411,7 @@ Introduzca un nombre diferente.</translation>
     <message>
         <source>Could not delete directory.</source>
         <translatorcomment>Info message shown when failing deleting a directory</translatorcomment>
-        <translation>No fue posible borrar el directorio.</translation>
+        <translation>No se ha podido eliminar la carpeta.</translation>
     </message>
     <message>
         <source>Recent Places</source>
@@ -4519,8 +4519,8 @@ Directory not found.
 Please verify the correct directory name was given.</source>
         <translatorcomment>Warning message when the directory name to open is incorrect</translatorcomment>
         <translation>%1
-Directorio no encontrado.
-Por favor, verifique que el nombre del directorio es correcto.</translation>
+Carpeta no encontrada.
+Asegúrate de que el nombre de la carpeta sea el correcto.</translation>
     </message>
     <message>
         <source>%1 already exists.
@@ -4536,7 +4536,7 @@ Please verify the correct file name was given.</source>
         <translatorcomment>Warning message when the file name to open is incorrect</translatorcomment>
         <translation>%1
 Archivo no encontrado.
-Comprueba que el nombre del archivo es correcto.</translation>
+Asegúrate de que el nombre del archivo sea el correcto.</translation>
     </message>
     <message>
         <source>&apos;%1&apos; is write protected.

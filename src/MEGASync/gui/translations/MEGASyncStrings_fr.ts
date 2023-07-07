@@ -3077,7 +3077,7 @@ Les transferts reprendront automatiquement quand vous rouvrirez l’appli.</nume
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
-        <translation>Le compte a été résilié à la suite d’un non-respect des Conditions générales d’utilisation de MEGA, tel qu’une violation des droits d’autrui, un partage ou une importation de données illégales, ou un abus du système.</translation>
+        <translation>Le compte a été résilié à la suite d’un non-respect des Conditions générales d’utilisation de MEGA, telle qu’une violation des droits d’autrui, un partage ou une importation de données illégales, ou un abus du système.</translation>
     </message>
 </context>
 <context>
@@ -4296,12 +4296,12 @@ Saisissez un nom différent.</translation>
     <message>
         <source>Parent Directory</source>
         <translatorcomment>Button to move to the parent directory</translatorcomment>
-        <translation>Répertoire parent</translation>
+        <translation>Dossier parent</translation>
     </message>
     <message>
         <source>Go to the parent directory</source>
         <translatorcomment>Parent directory button message used by assistive technologies (such as screen readers)</translatorcomment>
-        <translation>Accéder au répertoire parent</translation>
+        <translation>Accéder au dossier parent</translation>
     </message>
     <message>
         <source>Alt+Up</source>
@@ -4361,7 +4361,7 @@ Saisissez un nom différent.</translation>
     <message>
         <source>Find Directory</source>
         <translatorcomment>Window title when opening a directory</translatorcomment>
-        <translation>Trouver un répertoire</translation>
+        <translation>Trouver un dossier</translation>
     </message>
     <message>
         <source>Open</source>
@@ -4376,7 +4376,7 @@ Saisissez un nom différent.</translation>
     <message>
         <source>Directory:</source>
         <translatorcomment>Selected directory text box label when choosing a directory</translatorcomment>
-        <translation>Répertoire&#xa0;:</translation>
+        <translation>Dossier&#xa0;:</translation>
     </message>
     <message>
         <source>All Files (*)</source>
@@ -4396,7 +4396,7 @@ Saisissez un nom différent.</translation>
     <message>
         <source>Directories</source>
         <translatorcomment>Name of the option for showing only directories</translatorcomment>
-        <translation>Répertoires</translation>
+        <translation>Dossiers</translation>
     </message>
     <message>
         <source>New Folder</source>
@@ -4411,7 +4411,7 @@ Saisissez un nom différent.</translation>
     <message>
         <source>Could not delete directory.</source>
         <translatorcomment>Info message shown when failing deleting a directory</translatorcomment>
-        <translation>Impossible de supprimer le répertoire.</translation>
+        <translation>Impossible de supprimer le dossier.</translation>
     </message>
     <message>
         <source>Recent Places</source>
@@ -4519,7 +4519,7 @@ Directory not found.
 Please verify the correct directory name was given.</source>
         <translatorcomment>Warning message when the directory name to open is incorrect</translatorcomment>
         <translation>%1
-Le répertoire est introuvable.
+Le dossier est introuvable.
 Veuillez confirmer que le bon nom de répertoire a été donné.</translation>
     </message>
     <message>

@@ -3057,7 +3057,7 @@ Transfers will automatically resume when you re-open the app.</numerusform></tra
     <message>
         <source>Upload produces recursivity</source>
         <translatorcomment>Error label to indicate a situation of recursivity during uploads</translatorcomment>
-        <translation>Transfer failed due to a recursive directory structure</translation>
+        <translation>Transfer failed due to a recursive folder structure</translation>
     </message>
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
@@ -4295,12 +4295,12 @@ Enter a different name.</translation>
     <message>
         <source>Parent Directory</source>
         <translatorcomment>Button to move to the parent directory</translatorcomment>
-        <translation>Parent directory</translation>
+        <translation>Parent folder</translation>
     </message>
     <message>
         <source>Go to the parent directory</source>
         <translatorcomment>Parent directory button message used by assistive technologies (such as screen readers)</translatorcomment>
-        <translation>Go to the parent directory</translation>
+        <translation>Go to the parent folder</translation>
     </message>
     <message>
         <source>Alt+Up</source>
@@ -4360,7 +4360,7 @@ Enter a different name.</translation>
     <message>
         <source>Find Directory</source>
         <translatorcomment>Window title when opening a directory</translatorcomment>
-        <translation>Find directory</translation>
+        <translation>Find folder</translation>
     </message>
     <message>
         <source>Open</source>
@@ -4375,7 +4375,7 @@ Enter a different name.</translation>
     <message>
         <source>Directory:</source>
         <translatorcomment>Selected directory text box label when choosing a directory</translatorcomment>
-        <translation>Directory:</translation>
+        <translation>Folder:</translation>
     </message>
     <message>
         <source>All Files (*)</source>
@@ -4395,7 +4395,7 @@ Enter a different name.</translation>
     <message>
         <source>Directories</source>
         <translatorcomment>Name of the option for showing only directories</translatorcomment>
-        <translation>Directories</translation>
+        <translation>Folders</translation>
     </message>
     <message>
         <source>New Folder</source>
@@ -4410,7 +4410,7 @@ Enter a different name.</translation>
     <message>
         <source>Could not delete directory.</source>
         <translatorcomment>Info message shown when failing deleting a directory</translatorcomment>
-        <translation>Could not delete directory.</translation>
+        <translation>Could not delete folder.</translation>
     </message>
     <message>
         <source>Recent Places</source>
@@ -4518,7 +4518,7 @@ Directory not found.
 Please verify the correct directory name was given.</source>
         <translatorcomment>Warning message when the directory name to open is incorrect</translatorcomment>
         <translation>%1
-Directory not found.
+Folder not found.
 Please verify the correct directory name was given.</translation>
     </message>
     <message>

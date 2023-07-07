@@ -3054,7 +3054,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Upload produces recursivity</source>
         <translatorcomment>Error label to indicate a situation of recursivity during uploads</translatorcomment>
-        <translation>転送は再帰的なディレクトリ構造が原因で失敗しました</translation>
+        <translation>転送は再帰的なフォルダ構造が原因で失敗しました</translation>
     </message>
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
@@ -4291,12 +4291,12 @@ Enter a different name</source>
     <message>
         <source>Parent Directory</source>
         <translatorcomment>Button to move to the parent directory</translatorcomment>
-        <translation>親ディレクトリ</translation>
+        <translation>親フォルダ</translation>
     </message>
     <message>
         <source>Go to the parent directory</source>
         <translatorcomment>Parent directory button message used by assistive technologies (such as screen readers)</translatorcomment>
-        <translation>親ディレクトリに移動</translation>
+        <translation>親フォルダに移動する</translation>
     </message>
     <message>
         <source>Alt+Up</source>
@@ -4356,7 +4356,7 @@ Enter a different name</source>
     <message>
         <source>Find Directory</source>
         <translatorcomment>Window title when opening a directory</translatorcomment>
-        <translation>ディレクトリを検索</translation>
+        <translation>フォルダの検索</translation>
     </message>
     <message>
         <source>Open</source>
@@ -4371,7 +4371,7 @@ Enter a different name</source>
     <message>
         <source>Directory:</source>
         <translatorcomment>Selected directory text box label when choosing a directory</translatorcomment>
-        <translation>ディレクトリ：</translation>
+        <translation>フォルダ：</translation>
     </message>
     <message>
         <source>All Files (*)</source>
@@ -4391,7 +4391,7 @@ Enter a different name</source>
     <message>
         <source>Directories</source>
         <translatorcomment>Name of the option for showing only directories</translatorcomment>
-        <translation>ディレクトリ</translation>
+        <translation>フォルダ</translation>
     </message>
     <message>
         <source>New Folder</source>
@@ -4406,7 +4406,7 @@ Enter a different name</source>
     <message>
         <source>Could not delete directory.</source>
         <translatorcomment>Info message shown when failing deleting a directory</translatorcomment>
-        <translation>ディレクトリを削除できませんでした。</translation>
+        <translation>フォルダを削除できませんでした。</translation>
     </message>
     <message>
         <source>Recent Places</source>
@@ -4514,8 +4514,8 @@ Directory not found.
 Please verify the correct directory name was given.</source>
         <translatorcomment>Warning message when the directory name to open is incorrect</translatorcomment>
         <translation>%1
-ディレクトリが見つかりません。
-正しいディレクトリ名が指定されていることを確認してください。</translation>
+フォルダが見つかりません。
+正しいディレクトリ名が指定されたことをご確認ください。</translation>
     </message>
     <message>
         <source>%1 already exists.

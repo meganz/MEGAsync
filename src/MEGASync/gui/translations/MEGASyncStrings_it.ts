@@ -3056,7 +3056,7 @@ I trasferimenti riprenderanno automaticamente quando riaprirai l&apos;app.</nume
     <message>
         <source>Upload produces recursivity</source>
         <translatorcomment>Error label to indicate a situation of recursivity during uploads</translatorcomment>
-        <translation>Il trasferimento è fallito a causa di una struttura ricorsiva della directory</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
@@ -4293,12 +4293,12 @@ Inserisci un nome differente.</translation>
     <message>
         <source>Parent Directory</source>
         <translatorcomment>Button to move to the parent directory</translatorcomment>
-        <translation>Torna indietro</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Go to the parent directory</source>
         <translatorcomment>Parent directory button message used by assistive technologies (such as screen readers)</translatorcomment>
-        <translation>Torna alla cartella precedente</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Alt+Up</source>
@@ -4358,7 +4358,7 @@ Inserisci un nome differente.</translation>
     <message>
         <source>Find Directory</source>
         <translatorcomment>Window title when opening a directory</translatorcomment>
-        <translation>Trova directory</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Open</source>
@@ -4373,7 +4373,7 @@ Inserisci un nome differente.</translation>
     <message>
         <source>Directory:</source>
         <translatorcomment>Selected directory text box label when choosing a directory</translatorcomment>
-        <translation>Directory:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>All Files (*)</source>
@@ -4393,7 +4393,7 @@ Inserisci un nome differente.</translation>
     <message>
         <source>Directories</source>
         <translatorcomment>Name of the option for showing only directories</translatorcomment>
-        <translation>Più directory</translation>
+        <translation>Cartelle</translation>
     </message>
     <message>
         <source>New Folder</source>
@@ -4408,7 +4408,7 @@ Inserisci un nome differente.</translation>
     <message>
         <source>Could not delete directory.</source>
         <translatorcomment>Info message shown when failing deleting a directory</translatorcomment>
-        <translation>Non ho potuto eliminare la directory.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Recent Places</source>
@@ -4515,9 +4515,7 @@ Inserisci un nome differente.</translation>
 Directory not found.
 Please verify the correct directory name was given.</source>
         <translatorcomment>Warning message when the directory name to open is incorrect</translatorcomment>
-        <translation>%1
-Directory non trovata.
-Per favore, verifica di aver inserito la directory giusta.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>%1 already exists.

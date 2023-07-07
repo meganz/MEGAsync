@@ -2496,12 +2496,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Ihr Sync &#8220;%1&#8221; wurde deaktiviert, weil der MEGA-Ordner nicht gefunden wurde</translation>
+        <translation>Ihr Sync „%1“ wurde deaktiviert, da der Remote-Ordner nicht existiert</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation>Ihr Sync &#8220;%1&#8221; wurde deaktiviert, da der lokale Ordner nicht existiert.</translation>
+        <translation>Ihr Sync „%1“ wurde deaktiviert, da der lokale Ordner nicht existiert.</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -3057,7 +3057,7 @@ Die Transfers werden automatisch fortgesetzt, wenn Sie die App erneut öffnen.</
     <message>
         <source>Upload produces recursivity</source>
         <translatorcomment>Error label to indicate a situation of recursivity during uploads</translatorcomment>
-        <translation>Transfer wegen Verzeichnisrekursion fehlgeschlagen</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
@@ -3077,7 +3077,7 @@ Die Transfers werden automatisch fortgesetzt, wenn Sie die App erneut öffnen.</
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
-        <translation>Der Account wurde wegen Verletzung der MEGA-Nutzungsbedingungen (Verletzung der Rechte Dritter, Import oder Verteilung illegaler Dateien oder Systemmissbrauch) geschlossen.</translation>
+        <translation>Der Account wurde wegen Verletzung der MEGA-Nutzungsbedingungen (zum Beispiel Verletzung der Rechte Dritter, Import oder Freigabe illegaler Dateien oder Systemmissbrauch) geschlossen.</translation>
     </message>
 </context>
 <context>
@@ -3347,7 +3347,7 @@ Die Transfers werden automatisch fortgesetzt, wenn Sie die App erneut öffnen.</
     <message>
         <source>Error opening file</source>
         <translatorcomment>Text on an error messagebox because a local file could not be opened</translatorcomment>
-        <translation>Fehler beim Öffnen der Datei</translation>
+        <translation>Die Datei kann nicht geöffnet werden. Wurde die Datei auf Ihrem lokalen Laufwerk gelöscht oder verschoben?</translation>
     </message>
     <message numerus="yes">
         <source>Pause transfer</source>
@@ -3555,7 +3555,7 @@ Bitte geben Sie einen anderen Namen ein.</translation>
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Button text to navigate to incoming shares section</translatorcomment>
-        <translation>An Sie freigegebene Ordner</translation>
+        <translation>Erhaltene Freigaben</translation>
     </message>
     <message>
         <source>Search</source>
@@ -3679,7 +3679,7 @@ Bitte geben Sie einen anderen Namen ein.</translation>
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Button to filter search results from incoming shares</translatorcomment>
-        <translation>An Sie freigegebene Ordner</translation>
+        <translation>Erhaltene Freigaben</translation>
     </message>
     <message>
         <source>No results for:</source>
@@ -3814,7 +3814,7 @@ Bitte geben Sie einen anderen Namen ein.</translation>
     <message>
         <source>Storage full</source>
         <translatorcomment>Label to indicate the full storage for the current account is full.</translatorcomment>
-        <translation>Speicherplatz erschöpft</translation>
+        <translation>Speicher voll</translation>
     </message>
     <message>
         <source>You have exceeded the available storage space for your account. You can add syncs but they will remain disabled until there is enough space on your account.</source>
@@ -4295,12 +4295,12 @@ Bitte geben Sie einen anderen Namen ein.</translation>
     <message>
         <source>Parent Directory</source>
         <translatorcomment>Button to move to the parent directory</translatorcomment>
-        <translation>Nach oben</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Go to the parent directory</source>
         <translatorcomment>Parent directory button message used by assistive technologies (such as screen readers)</translatorcomment>
-        <translation>Zum übergeordneten Verzeichnis</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Alt+Up</source>
@@ -4360,7 +4360,7 @@ Bitte geben Sie einen anderen Namen ein.</translation>
     <message>
         <source>Find Directory</source>
         <translatorcomment>Window title when opening a directory</translatorcomment>
-        <translation>Verzeichnis finden</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Open</source>
@@ -4375,7 +4375,7 @@ Bitte geben Sie einen anderen Namen ein.</translation>
     <message>
         <source>Directory:</source>
         <translatorcomment>Selected directory text box label when choosing a directory</translatorcomment>
-        <translation>Verzeichnis:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>All Files (*)</source>
@@ -4395,7 +4395,7 @@ Bitte geben Sie einen anderen Namen ein.</translation>
     <message>
         <source>Directories</source>
         <translatorcomment>Name of the option for showing only directories</translatorcomment>
-        <translation>Verzeichnisse</translation>
+        <translation>Ordner</translation>
     </message>
     <message>
         <source>New Folder</source>
@@ -4410,7 +4410,7 @@ Bitte geben Sie einen anderen Namen ein.</translation>
     <message>
         <source>Could not delete directory.</source>
         <translatorcomment>Info message shown when failing deleting a directory</translatorcomment>
-        <translation>Verzeichnis konnte nicht gelöscht werden.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Recent Places</source>
@@ -4517,9 +4517,7 @@ Bitte geben Sie einen anderen Namen ein.</translation>
 Directory not found.
 Please verify the correct directory name was given.</source>
         <translatorcomment>Warning message when the directory name to open is incorrect</translatorcomment>
-        <translation>%1
-Verzeichnis nicht gefunden.
-Bitte überprüfen Sie, ob der richtige Verzeichnisname angegeben wurde.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>%1 already exists.
@@ -4890,7 +4888,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message displayed when a user is trying to download a file to a folder without write permissions.</translatorcomment>
-        <translation>Sie haben keine Schreibrechte in diesem Pfad.</translation>
+        <translation>Sie haben keine Schreibrechte für diesen lokalen Ordner.</translation>
     </message>
     <message>
         <source>Export Master key</source>
@@ -5445,7 +5443,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Are you sure?</source>
         <translatorcomment>Warning message second part asking if you are sure about continuing with the logout.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Möchten Sie sich abmelden?</translation>
     </message>
     <message>
         <source>Error adding sync</source>
@@ -6173,7 +6171,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You can&apos;t backup this folder as it contains synced folders.</source>
         <translatorcomment>Warning message indicating that the selected folder for sync contains synced folders, ence it can not be synced.</translatorcomment>
-        <translation>Sie können diesen Ordner nicht sichern, da er bereits synchronisierte Ordner enthält.</translation>
+        <translation>Sie können diesen Ordner nicht sichern, da er synchronisierte Ordner enthält.</translation>
     </message>
     <message>
         <source>You can&apos;t sync folders that contain synced folders.</source>
@@ -6188,7 +6186,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Warning message indicating that the user doesn´t have write permissions on that folder</translatorcomment>
-        <translation>Sie haben keine Schreibrechte in diesem Pfad.</translation>
+        <translation>Sie haben keine Schreibrechte für diesen lokalen Ordner.</translation>
     </message>
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
@@ -6885,7 +6883,7 @@ Um mehr Transfervolumen zu erhalten, upgraden Sie zu einem Pro-Account oder wart
         <source>Sync transfers cannot be cancelled individually.
 Please delete the folder sync from settings to cancel them.</source>
         <translatorcomment>Message displayed when the user is trying to cancel a sync transfer.</translatorcomment>
-        <translation>Synchronisierungstransfers können nicht einzeln abgebrochen werden. Löschen Sie die Ordner-Synchronisierung in den Einstellungen, um die Transfers abzubrechen.</translation>
+        <translation>Synchronisierungstransfers können nicht einzeln abgebrochen werden. Um die Synchronisierung zu entfernen, löschen Sie den synchronisierten Ordner in den Einstellungen der Desktop-App.</translation>
     </message>
     <message>
         <source>Open settings</source>

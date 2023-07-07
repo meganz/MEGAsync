@@ -3057,7 +3057,7 @@ As transferências continuarão automaticamente quando você abrir o aplicativo 
     <message>
         <source>Upload produces recursivity</source>
         <translatorcomment>Error label to indicate a situation of recursivity during uploads</translatorcomment>
-        <translation>Não foi possível fazer a transferência devido a uma estrutura de diretório recursiva</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
@@ -4296,12 +4296,12 @@ Digite um nome diferente.
     <message>
         <source>Parent Directory</source>
         <translatorcomment>Button to move to the parent directory</translatorcomment>
-        <translation>Diretório principal</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Go to the parent directory</source>
         <translatorcomment>Parent directory button message used by assistive technologies (such as screen readers)</translatorcomment>
-        <translation>Acessar o diretório principal</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Alt+Up</source>
@@ -4361,7 +4361,7 @@ Digite um nome diferente.
     <message>
         <source>Find Directory</source>
         <translatorcomment>Window title when opening a directory</translatorcomment>
-        <translation>Encontrar diretório</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Open</source>
@@ -4376,7 +4376,7 @@ Digite um nome diferente.
     <message>
         <source>Directory:</source>
         <translatorcomment>Selected directory text box label when choosing a directory</translatorcomment>
-        <translation>Diretório:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>All Files (*)</source>
@@ -4396,7 +4396,7 @@ Digite um nome diferente.
     <message>
         <source>Directories</source>
         <translatorcomment>Name of the option for showing only directories</translatorcomment>
-        <translation>Diretórios</translation>
+        <translation>Pastas</translation>
     </message>
     <message>
         <source>New Folder</source>
@@ -4411,7 +4411,7 @@ Digite um nome diferente.
     <message>
         <source>Could not delete directory.</source>
         <translatorcomment>Info message shown when failing deleting a directory</translatorcomment>
-        <translation>Não foi possível deletar o diretório.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Recent Places</source>
@@ -4518,9 +4518,7 @@ Digite um nome diferente.
 Directory not found.
 Please verify the correct directory name was given.</source>
         <translatorcomment>Warning message when the directory name to open is incorrect</translatorcomment>
-        <translation>%1
-Diretório não encontrado.
- Verifique se o nome do diretório foi indicado corretamente.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>%1 already exists.

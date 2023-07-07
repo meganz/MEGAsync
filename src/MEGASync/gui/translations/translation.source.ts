@@ -2467,6 +2467,11 @@ https://mega.co.nz/#sync</source>
         <translation>No update available at this time</translation>
     </message>
     <message>
+        <source>Error</source>
+        <translatorcomment>Title for dialogs with error messages. SNC-3299</translatorcomment>
+        <translation>Error</translation>
+    </message>
+    <message>
         <source>Starting</source>
         <translatorcomment>Label of tray icon to indicate that MEGAsync is starting.</translatorcomment>
         <translation>Starting</translation>
@@ -2496,6 +2501,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Your config is corrupt, please start over</source>
         <translatorcomment>Message displayed when an error occurs loading configurations from Settings file.</translatorcomment>
         <translation>Your config is corrupted, please start over</translation>
+    </message>
+    <message>
+        <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
+        <translatorcomment>Notification message launched when a connectivity problem occurs.</translatorcomment>
+        <translation>The app is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
@@ -2926,16 +2936,6 @@ Transfers will automatically resume when you re-open the app.</numerusform>
         <translatorcomment>Title for dialogs with warning messages. SNC-3299</translatorcomment>
         <translation type="unfinished">Warning</translation>
     </message>
-    <message>
-        <source>Error</source>
-        <translatorcomment>Title for dialogs with error messages. SNC-3299</translatorcomment>
-        <translation type="unfinished">Error</translation>
-    </message>
-    <message>
-        <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
-        <translatorcomment>Notification message launched when a connectivity problem occurs.</translatorcomment>
-        <translation>The app is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</translation>
-    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -3082,7 +3082,7 @@ Transfers will automatically resume when you re-open the app.</numerusform>
     <message>
         <source>Upload produces recursivity</source>
         <translatorcomment>Error label to indicate a situation of recursivity during uploads</translatorcomment>
-        <translation>Transfer failed due to a recursive directory structure</translation>
+        <translation>Transfer failed due to a recursive folder structure</translation>
     </message>
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
@@ -4145,12 +4145,14 @@ Enter a different name.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- You can now search the stored data in your account.
-- We&apos;ve improved system notifications.
+        <source>- We&apos;ve enhanced system notifications.
 - We&apos;ve enhanced the UI.
 - We&apos;ve fixed the detected crashes on Windows, Linux, and macOS.
 </source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Changelog for v4.9.5</translatorcomment>
+        <translation>- We’ve enhanced system notifications.
+- We&apos;ve enhanced the UI.
+- We&apos;ve fixed the detected crashes on Windows, Linux, and macOS.</translation>
     </message>
 </context>
 <context>
@@ -4304,12 +4306,12 @@ Enter a different name.</translation>
     <message>
         <source>Parent Directory</source>
         <translatorcomment>Button to move to the parent directory</translatorcomment>
-        <translation>Parent directory</translation>
+        <translation>Parent folder</translation>
     </message>
     <message>
         <source>Go to the parent directory</source>
         <translatorcomment>Parent directory button message used by assistive technologies (such as screen readers)</translatorcomment>
-        <translation>Go to the parent directory</translation>
+        <translation>Go to the parent folder</translation>
     </message>
     <message>
         <source>Alt+Up</source>
@@ -4369,7 +4371,7 @@ Enter a different name.</translation>
     <message>
         <source>Find Directory</source>
         <translatorcomment>Window title when opening a directory</translatorcomment>
-        <translation>Find directory</translation>
+        <translation>Find folder</translation>
     </message>
     <message>
         <source>Open</source>
@@ -4384,7 +4386,7 @@ Enter a different name.</translation>
     <message>
         <source>Directory:</source>
         <translatorcomment>Selected directory text box label when choosing a directory</translatorcomment>
-        <translation>Directory:</translation>
+        <translation>Folder:</translation>
     </message>
     <message>
         <source>All Files (*)</source>
@@ -4404,7 +4406,7 @@ Enter a different name.</translation>
     <message>
         <source>Directories</source>
         <translatorcomment>Name of the option for showing only directories</translatorcomment>
-        <translation>Directories</translation>
+        <translation>Folders</translation>
     </message>
     <message>
         <source>New Folder</source>
@@ -4419,7 +4421,7 @@ Enter a different name.</translation>
     <message>
         <source>Could not delete directory.</source>
         <translatorcomment>Info message shown when failing deleting a directory</translatorcomment>
-        <translation>Could not delete directory.</translation>
+        <translation>Could not delete folder.</translation>
     </message>
     <message>
         <source>Recent Places</source>
@@ -4527,7 +4529,7 @@ Directory not found.
 Please verify the correct directory name was given.</source>
         <translatorcomment>Warning message when the directory name to open is incorrect</translatorcomment>
         <translation>%1
-Directory not found.
+Folder not found.
 Please verify the correct directory name was given.</translation>
     </message>
     <message>
