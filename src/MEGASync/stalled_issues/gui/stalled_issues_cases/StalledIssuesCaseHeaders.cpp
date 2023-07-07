@@ -290,14 +290,24 @@ void NameConflictsHeader::onActionButtonClicked(StalledIssueHeader* header)
         msgInfo.textFormat = Qt::RichText;
         msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
 
-        msgInfo.text = tr("Are you sure you want to solve the issue?");
-        msgInfo.informativeText = tr("This action will delete the duplicate files.");
+        auto selection = dialog->getDialog()->getSelection();
 
-        msgInfo.finishFunc = [this, header, nameConflict](QMessageBox* msgBox)
+        if(selection.size() <= 1)
+        {
+            msgInfo.text = tr("Are you sure you want to solve all the similar issues?");
+        }
+        else
+        {
+            msgInfo.text = tr("Are you sure you want to solve the selected similar issues?");
+        }
+
+        msgInfo.informativeText = tr("This action will delete the duplicate files and rename the rest of names.");
+
+        msgInfo.finishFunc = [this, selection, header, nameConflict](QMessageBox* msgBox)
         {
             if(msgBox->result() == QDialogButtonBox::Ok)
             {
-                MegaSyncApp->getStalledIssuesModel()->solveDuplicatedIssues(header->getCurrentIndex());
+                MegaSyncApp->getStalledIssuesModel()->solveNameConflictIssues(selection);
             }
         };
 

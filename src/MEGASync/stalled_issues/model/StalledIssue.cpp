@@ -384,6 +384,11 @@ void StalledIssue::setIsSolved(bool isCloud)
     }
 }
 
+void StalledIssue::solveIssue(bool autoresolve)
+{
+
+}
+
 bool StalledIssue::canBeIgnored() const
 {
     return !mIgnoredPaths.isEmpty();

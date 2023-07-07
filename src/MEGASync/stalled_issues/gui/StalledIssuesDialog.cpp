@@ -61,6 +61,28 @@ StalledIssuesDialog::~StalledIssuesDialog()
     delete ui;
 }
 
+QModelIndexList StalledIssuesDialog::getSelection() const
+{
+    QModelIndexList list;
+
+    auto selectedIndexes = ui->stalledIssuesTree->selectionModel()->selectedIndexes();
+    foreach(auto index, selectedIndexes)
+    {
+        //Just in case, but children is never selected
+        if(!index.parent().isValid())
+        {
+            list.append(mProxyModel->mapToSource(index));
+        }
+    }
+
+    return list;
+}
+
+void StalledIssuesDialog::updateView()
+{
+    ui->stalledIssuesTree->update();
+}
+
 bool StalledIssuesDialog::eventFilter(QObject* obj, QEvent* event)
 {
     return QDialog::eventFilter(obj, event);

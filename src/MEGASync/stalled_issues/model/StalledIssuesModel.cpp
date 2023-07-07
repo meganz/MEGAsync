@@ -3,6 +3,7 @@
 #include "MegaApplication.h"
 #include <StalledIssuesDelegateWidgetsCache.h>
 #include <NameConflictStalledIssue.h>
+#include <LocalOrRemoteUserMustChooseStalledIssue.h>
 
 #include "ThreadPool.h"
 #include "mega/types.h"
@@ -26,20 +27,34 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest *r
             for (size_t i = 0; i < stalls->size(); ++i)
             {
                 auto stall = stalls->get(i);
+                std::shared_ptr<StalledIssueVariant> variant;
+
 
                 if(stall->reason() == mega::MegaSyncStall::SyncStallReason::NamesWouldClashWhenSynced)
                 {
                     auto d = std::make_shared<NameConflictedStalledIssue>(stall);
-                    auto variant = std::make_shared<StalledIssueVariant>(d);
-                    if(!d->isSolved())
-                    {
-                        mCacheStalledIssues.stalledIssues.append(variant);
-                    }
+                    variant = std::make_shared<StalledIssueVariant>(d);
+                }
+                else if(stall->reason() == mega::MegaSyncStall::SyncStallReason::LocalAndRemoteChangedSinceLastSyncedState_userMustChoose
+                        || stall->reason() == mega::MegaSyncStall::SyncStallReason::LocalAndRemotePreviouslyUnsyncedDiffer_userMustChoose)
+                {
+                    auto d = std::make_shared<LocalOrRemoteUserMustChooseStalledIssue>(stall);
+                    variant = std::make_shared<StalledIssueVariant>(d);
                 }
                 else
                 {
                     auto d = std::make_shared<StalledIssue>(stall);
-                    auto variant = std::make_shared<StalledIssueVariant>(d);
+                    variant = std::make_shared<StalledIssueVariant>(d);
+                }
+
+                //No auto solving for the moment
+                if(Preferences::instance()->stalledIssueSmartMode() == Preferences::StalledIssuesSmartModeType::Smart)
+                {
+                    //variant->getData()->solveIssue(true);
+                }
+
+                if(!variant->consultData()->isSolved())
+                {
                     mCacheStalledIssues.stalledIssues.append(variant);
                 }
             }
@@ -94,6 +109,7 @@ void StalledIssuesModel::onProcessStalledIssues(StalledIssuesReceiver::StalledIs
     mThreadPool->push([this, issuesReceived]()
     {
         mModelMutex.lock();
+
         blockSignals(true);
 
         auto totalRows = rowCount(QModelIndex());
@@ -378,17 +394,7 @@ void StalledIssuesModel::reset()
 QModelIndex StalledIssuesModel::getSolveIssueIndex(const QModelIndex &index)
 {
     auto indexParent(index.parent());
-    auto potentialIndex(indexParent.isValid() ? indexParent : index);
-
-    if(potentialIndex.model() != this)
-    {
-        if(auto proxyIndex = dynamic_cast<const QSortFilterProxyModel*>(index.model()))
-        {
-            potentialIndex = proxyIndex->mapToSource(potentialIndex);
-        }
-    }
-
-    return potentialIndex;
+    return indexParent.isValid() ? indexParent : index;
 }
 
 int StalledIssuesModel::getCountByFilterCriterion(StalledIssueFilterCriterion criterion)
@@ -459,12 +465,51 @@ void StalledIssuesModel::solveIssue(bool isCloud, const QModelIndex &index)
     mStalledIssues.at(potentialIndex.row())->getData()->setIsSolved(isCloud);
 }
 
-void StalledIssuesModel::solveDuplicatedIssues(const QModelIndex &index)
+void StalledIssuesModel::solveNameConflictIssues(const QModelIndexList &list)
 {
-    auto potentialIndex = getSolveIssueIndex(index);
-
-    if(auto nameConflict = std::dynamic_pointer_cast<NameConflictedStalledIssue>(mStalledIssues.at(potentialIndex.row())->getData()))
+    if(list.isEmpty())
     {
-        nameConflict->solveIssue();
+        blockUi();
+
+        mThreadPool->push([this]()
+        {
+            for(int row = 0; row < rowCount(QModelIndex()); ++row)
+            {
+                if(mThreadPool->isThreadInterrupted())
+                {
+                    return;
+                }
+
+                auto item = mStalledIssues.at(row);
+                if(item->consultData()->getReason() == mega::MegaSyncStall::SyncStallReason::NamesWouldClashWhenSynced)
+                {
+                    if(auto nameConflict = std::dynamic_pointer_cast<NameConflictedStalledIssue>(item->getData()))
+                    {
+                        nameConflict->solveIssue(false);
+                    }
+                }
+            }
+
+            unBlockUi();
+        });
+    }
+    else
+    {
+        blockUi();
+
+        mThreadPool->push([this, list]()
+        {
+            foreach(auto index, list)
+            {
+                auto potentialIndex = getSolveIssueIndex(index);
+
+                if(auto nameConflict = std::dynamic_pointer_cast<NameConflictedStalledIssue>(mStalledIssues.at(potentialIndex.row())->getData()))
+                {
+                    nameConflict->solveIssue(false);
+                }
+            }
+
+            unBlockUi();
+        });
     }
 }

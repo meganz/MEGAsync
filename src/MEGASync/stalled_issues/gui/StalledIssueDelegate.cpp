@@ -8,7 +8,18 @@
 
 #include <QPainter>
 #include <QMouseEvent>
+#include <QDebug>
 #include <QElapsedTimer>
+
+const QColor HOVER_COLOR = QColor("#FAFAFA");
+const QColor SELECTED_BORDER_COLOR = QColor("#E9E9E9");
+const float LEFT_MARGIN = 4.0;
+const float RIGHT_MARGIN = 6.0;
+const float RECT_BORDERS_MARGIN = 20.0;
+const float BOTTON_MARGIN = 6.0;
+const float TOP_MARGIN = 2.0;
+const float CORNER_RADIUS = 10.0;
+const int PEN_WIDTH = 2;
 
 StalledIssueDelegate::StalledIssueDelegate(StalledIssuesProxyModel* proxyModel,  StalledIssuesView *view)
     :QStyledItemDelegate(view),
@@ -64,9 +75,137 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
 
         auto pos (option.rect.topLeft());
 
-        QColor rowColor = getRowColor(index.parent().isValid() ? index.parent() : index);
+        auto rowColor = Qt::white;
         auto backgroundRect = isExpanded ? option.rect : option.rect.adjusted(0,0,0,-1);
+
+        QStyle::State parentState = option.state;
+
+        auto detectRelativeHover =   [this, index, &parentState](){
+            QPoint cursorPos = QCursor::pos();
+            auto viewPos = mView->mapFromGlobal(cursorPos);
+            if(viewPos.y() >= 0 && mView->isActiveWindow())
+            {
+                auto hoverIndex = mView->indexAt(viewPos);
+                if(hoverIndex.isValid() && (index.parent() == hoverIndex ||
+                                            index == hoverIndex.parent() ||
+                                            index == hoverIndex))
+                {
+                    parentState |= QStyle::State_MouseOver;
+                }
+            }
+        };
+
+        bool isHoverOrSelected((parentState & QStyle::State_MouseOver) && (parentState & QStyle::State_Selected));
+
+        if(index.parent().isValid())
+        {
+            if(mView->selectionModel()->isSelected(index.parent()))
+            {
+                parentState|= QStyle::State_Selected;
+            }
+
+            detectRelativeHover();
+            if(isHoverOrSelected != mMouseHoverOrSelectedLastState.value(index, false))
+            {
+                mView->update(index.parent());
+                qApp->processEvents();
+            }
+        }
+        else
+        {
+            detectRelativeHover();
+            if(isHoverOrSelected != mMouseHoverOrSelectedLastState.value(index, false))
+            {
+                mView->update(index.child(0,0));
+            }
+        }
+
+        mMouseHoverOrSelectedLastState.insert(index, isHoverOrSelected);
+
+        QColor fillColor;
+        QPen pen;
+        QPainterPath path;
+
+        if(parentState & (QStyle::State_MouseOver | QStyle::State_Selected))
+        {
+            path.setFillRule( Qt::WindingFill );
+            path.addRoundedRect(QRectF(option.rect.x() + LEFT_MARGIN,
+                                       option.rect.y() + TOP_MARGIN,
+                                       option.rect.width() - RIGHT_MARGIN,
+                                       option.rect.height() - BOTTON_MARGIN), CORNER_RADIUS, CORNER_RADIUS);
+
+            if(index.parent().isValid())
+            {
+                path.addRect(QRectF(option.rect.x() + LEFT_MARGIN,
+                                    option.rect.y(),
+                                    option.rect.width() - RIGHT_MARGIN,
+                                    RECT_BORDERS_MARGIN)); // Bottom corners not rounded
+            }
+            else if(isExpanded)
+            {
+                path.addRect(QRectF(option.rect.x() + LEFT_MARGIN,
+                                    option.rect.y() + RECT_BORDERS_MARGIN,
+                                    option.rect.width() - RIGHT_MARGIN,
+                                    option.rect.height() - RECT_BORDERS_MARGIN)); // Bottom corners not rounded
+            }
+
+            if(parentState & QStyle::State_MouseOver && parentState & QStyle::State_Selected)
+            {
+                pen.setColor(SELECTED_BORDER_COLOR);
+                pen.setWidth(PEN_WIDTH);
+                fillColor = HOVER_COLOR;
+            }
+            else
+            {
+                if(parentState & QStyle::State_MouseOver)
+                {
+                    pen.setColor(HOVER_COLOR);
+                    fillColor = HOVER_COLOR;
+                }
+                else if (parentState & QStyle::State_Selected)
+                {
+                    pen.setColor(SELECTED_BORDER_COLOR);
+                    pen.setWidth(PEN_WIDTH);
+                    fillColor = Qt::white;
+                }
+            }
+
+            if(pen != QPen())
+            {
+                painter->setPen(pen);
+            }
+        }
+
         painter->fillRect(backgroundRect, rowColor);
+        if(!path.isEmpty())
+        {
+            painter->fillPath(path.simplified(), fillColor);
+            painter->drawPath(path.simplified());
+        }
+
+        //REMOVE SEPARATION LINE WHEN EXPANDED
+        if(parentState & (QStyle::State_MouseOver | QStyle::State_Selected))
+        {
+            QRectF collision;
+
+            if(index.parent().isValid())
+            {
+                collision = QRectF(option.rect.x() + LEFT_MARGIN + PEN_WIDTH/2 /* next pixel*/,
+                                   option.rect.y() - PEN_WIDTH/2,
+                                   option.rect.x() + option.rect.width() - RIGHT_MARGIN - PEN_WIDTH,
+                                   PEN_WIDTH);
+
+            }
+            else if(isExpanded)
+            {
+                collision = QRectF(option.rect.x() + LEFT_MARGIN + PEN_WIDTH/2 /* next pixel*/,
+                                   option.rect.y() + option.rect.height() - PEN_WIDTH/2,
+                                   option.rect.x() + option.rect.width() - RIGHT_MARGIN - PEN_WIDTH,
+                                   PEN_WIDTH);
+            }
+
+            painter->fillRect(collision, fillColor);
+        }
 
         painter->save();
         painter->translate(pos);
@@ -176,7 +315,8 @@ bool StalledIssueDelegate::eventFilter(QObject *object, QEvent *event)
     {
         if(auto mouseButtonEvent = dynamic_cast<QMouseEvent*>(event))
         {
-            if(mouseButtonEvent->button() == Qt::LeftButton)
+            if(mouseButtonEvent->button() == Qt::LeftButton
+                    && mouseButtonEvent->modifiers() == Qt::KeyboardModifier::NoModifier)
             {
                 auto viewPos = mView->mapFromGlobal(mouseButtonEvent->globalPos());
                 auto index = mView->indexAt(viewPos);
@@ -226,8 +366,6 @@ void StalledIssueDelegate::onHoverEnter(const QModelIndex &index)
     {
         onHoverLeave(index);
 
-
-        mView->setCurrentIndex(index);
         mView->edit(index);
     }
 }

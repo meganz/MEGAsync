@@ -438,10 +438,11 @@ set (MOC_INPUT
 
     ${MEGAsyncDir}/stalled_issues/model/StalledIssue.h
     ${MEGAsyncDir}/stalled_issues/model/NameConflictStalledIssue.h
+	
     ${MEGAsyncDir}/stalled_issues/model/StalledIssuesModel.h
     ${MEGAsyncDir}/stalled_issues/model/StalledIssuesProxyModel.h
     ${MEGAsyncDir}/stalled_issues/model/StalledIssuesUtilities.h
-
+    ${MEGAsyncDir}/stalled_issues/model/LocalOrRemoteUserMustChooseStalledIssue.h
     ${MEGAsyncDir}/stalled_issues/gui/StalledIssueChooseWidget.h
 	${MEGAsyncDir}/stalled_issues/gui/StalledIssueChooseTitle.h
 	${MEGAsyncDir}/stalled_issues/gui/StalledIssueActionTitle.h
@@ -638,6 +639,7 @@ set (SRCS
 
     ${MEGAsyncDir}/stalled_issues/model/StalledIssue.cpp
     ${MEGAsyncDir}/stalled_issues/model/NameConflictStalledIssue.cpp
+	${MEGAsyncDir}/stalled_issues/model/LocalOrRemoteUserMustChooseStalledIssue.cpp
     ${MEGAsyncDir}/stalled_issues/model/StalledIssuesModel.cpp
     ${MEGAsyncDir}/stalled_issues/model/StalledIssuesProxyModel.cpp
     ${MEGAsyncDir}/stalled_issues/model/StalledIssuesUtilities.cpp

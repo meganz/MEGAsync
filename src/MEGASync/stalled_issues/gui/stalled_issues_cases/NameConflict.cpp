@@ -178,7 +178,6 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
         info->mItemAttributes->requestSize(title,[this, index](qint64 size)
         {
             mTitlesByIndex.value(index)->updateSize(Utilities::getSizeString(size));
-            mDelegate->updateIndex();
         });
 
         //These items go in order

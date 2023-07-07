@@ -7,8 +7,11 @@
 #include <Preferences.h>
 
 #include "Utilities.h"
+#include <DialogOpener.h>
+#include <StalledIssuesDialog.h>
 
 #include <QFile>
+#include <QMouseEvent>
 
 const int StalledIssueHeader::ARROW_INDENT = 6 + 16; //Left margin + arrow;
 const int StalledIssueHeader::ICON_INDENT = 8 + 48; // fileIcon + spacer;
@@ -144,7 +147,12 @@ void StalledIssueHeader::on_actionButton_clicked()
 {
     if(mHeaderCase)
     {
+        QApplication::postEvent(this, new QMouseEvent(QEvent::MouseButtonPress, QPointF(), Qt::LeftButton, Qt::NoButton, Qt::KeyboardModifier::NoModifier));
+        qApp->processEvents();
         mHeaderCase->onActionButtonClicked(this);
+
+        auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
+        dialog->getDialog()->updateView();
     }
 }
 

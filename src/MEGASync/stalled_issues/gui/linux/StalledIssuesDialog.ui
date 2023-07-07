@@ -475,6 +475,9 @@ QMenu::item:default
          <property name="alternatingRowColors">
           <bool>false</bool>
          </property>
+         <property name="selectionMode">
+          <enum>QAbstractItemView::ExtendedSelection</enum>
+         </property>
          <property name="verticalScrollMode">
           <enum>QAbstractItemView::ScrollPerPixel</enum>
          </property>

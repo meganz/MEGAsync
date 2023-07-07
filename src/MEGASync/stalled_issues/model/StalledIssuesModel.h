@@ -85,7 +85,7 @@ public:
 
     void solveIssue(bool isCloud, const QModelIndex& index);
 
-    void solveDuplicatedIssues(const QModelIndex& index);
+    void solveNameConflictIssues(const QModelIndexList& list);
 
 signals:
     void stalledIssuesReceived(bool state);

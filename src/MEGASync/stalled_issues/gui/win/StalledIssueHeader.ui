@@ -64,6 +64,16 @@
    border: 1px solid rgba(0,0,0,0.15);
    padding-left: 16px;
    padding-right: 16px;
+}
+
+#actionButton:hover:enabled, #ignoreFileButton::hover:enabled
+{
+    background-color: #E2E2E2;
+}
+
+#actionButton:pressed:enabled, #ignoreFileButton::pressed:enabled
+{
+    background-color: #C9C9C9;
 }</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="1,0">

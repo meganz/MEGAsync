@@ -25,6 +25,9 @@ public:
     explicit StalledIssuesDialog(QWidget *parent = nullptr);
     ~StalledIssuesDialog();
 
+    QModelIndexList getSelection() const;
+    void updateView();
+
 protected:
     bool eventFilter(QObject *, QEvent *) override;
 

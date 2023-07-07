@@ -234,6 +234,7 @@ public:
 
     bool isSolved() const;
     void setIsSolved(bool isCloud);
+    virtual void solveIssue(bool autoresolve);
 
     bool canBeIgnored() const;
     QStringList getIgnoredFiles() const;
@@ -322,6 +323,7 @@ public:
 
 private:
     friend class StalledIssuesModel;
+    friend class StalledIssuesReceiver;
 
     const std::shared_ptr<StalledIssue> &getData() const
     {

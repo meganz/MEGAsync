@@ -80,12 +80,6 @@ void NameConflictedStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
                 }
             }
         }
-
-        //No auto solving for the moment
-        //        if(Preferences::instance()->stalledIssueSmartMode() == Preferences::StalledIssuesSmartModeType::Smart)
-        //        {
-        //            solveIssue();
-        //        }
     }
 }
 
@@ -322,7 +316,6 @@ void NameConflictedStalledIssue::renameLocalItemsAutomatically(const QList<std::
     }
 }
 
-
 bool NameConflictedStalledIssue::solveCloudConflictedNameByRename(int conflictIndex, const QString &renameTo)
 {
     auto result(false);
@@ -381,7 +374,7 @@ bool NameConflictedStalledIssue::checkAndSolveConflictedNamesSolved(const QList<
     return mIsSolved;
 }
 
-void NameConflictedStalledIssue::solveIssue()
+void NameConflictedStalledIssue::solveIssue(bool autosolve)
 {
    mCloudConflictedNames.removeDuplicatedNodes();
    renameNodesAutomatically();
