@@ -6,16 +6,11 @@ QtObject {
     enum Types {
         None = 0,
         Sync = 1,
-        Backup = 2
-    }
-
-    enum SyncTypes {
-        NoSync = 0,
-        FullSync = 1,
-        SelectiveSync = 2
+        SelectiveSync = 2,
+        FullSync = 3,
+        Backup = 4
     }
 
     property int type: SyncsType.Types.Sync
-    property int subType: SyncsType.SyncTypes.FullSync
 
 }

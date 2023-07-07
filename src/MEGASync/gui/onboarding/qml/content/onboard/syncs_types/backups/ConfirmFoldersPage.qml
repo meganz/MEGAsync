@@ -50,7 +50,7 @@ ConfirmFoldersPageForm {
         onBackupsCreationFinished: {
             root.enabled = true;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = false;
-            syncsFlow.state = syncsFlow.finalState;
+            syncsPanel.state = syncsPanel.finalState;
         }
     }
 

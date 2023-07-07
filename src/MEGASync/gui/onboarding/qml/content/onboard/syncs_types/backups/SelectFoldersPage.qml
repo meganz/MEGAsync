@@ -17,7 +17,7 @@ SelectFoldersPageForm {
     footerButtons {
 
         rightSecondary.onClicked: {
-            syncsFlow.state = syncType;
+            syncsPanel.state = syncType;
         }
 
         rightPrimary {

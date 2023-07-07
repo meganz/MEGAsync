@@ -136,6 +136,8 @@ Item {
                     text: number.toString()
                     color: Styles.textInverseAccent
                     font.bold: true
+                    lineHeight: 16
+                    lineHeightMode: Text.FixedHeight
                 }
 
                 MegaImages.SvgImage {

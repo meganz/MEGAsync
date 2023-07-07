@@ -13,7 +13,7 @@ ComputerNamePageForm {
     footerButtons.rightPrimary.onClicked: {
         changingDeviceName = Onboarding.setDeviceName(computerNameTextField.text);
         if(!changingDeviceName) {
-            syncsFlow.state = syncType;
+            syncsPanel.state = syncType;
             return;
         }
         computerNameTextField.textField.enabled = false;
@@ -26,7 +26,7 @@ ComputerNamePageForm {
             computerNameTextField.text = deviceName;
             computerNameTextField.textField.enabled = true;
             if(changingDeviceName) {
-                syncsFlow.state = syncType;
+                syncsPanel.state = syncType;
             }
         }
     }

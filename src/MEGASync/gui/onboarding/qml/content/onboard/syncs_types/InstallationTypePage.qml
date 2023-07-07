@@ -3,16 +3,16 @@ InstallationTypePageForm {
     footerButtons {
 
         rightSecondary.onClicked: {
-            syncsFlow.state = computerName;
+            syncsPanel.state = computerName;
         }
 
         rightPrimary.onClicked: {
             switch(buttonGroup.checkedButton.type) {
-                case SyncsType.Sync:
-                    syncsFlow.state = syncs;
+                case SyncsType.Types.Sync:
+                    syncsPanel.state = syncs;
                     break;
-                case SyncsType.Backup:
-                    syncsFlow.state = backupsFlow;
+                case SyncsType.Types.Backup:
+                    syncsPanel.state = backupsFlow;
                     break;
                 default:
                     console.error("Button type does not exist -> "

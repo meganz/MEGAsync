@@ -10,7 +10,7 @@ SelectiveSyncPageForm {
     footerButtons {
 
         rightSecondary.onClicked: {
-            syncsFlow.state = syncs;
+            syncsPanel.state = syncs;
         }
 
         rightPrimary.onClicked: {
@@ -28,7 +28,7 @@ SelectiveSyncPageForm {
         onSyncSetupSuccess: {
             root.enabled = true;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = false;
-            syncsFlow.state = finalState;
+            syncsPanel.state = finalState;
             localFolderChooser.reset();
             remoteFolderChooser.reset();
         }

@@ -12,50 +12,83 @@ import Components.Buttons 1.0 as MegaButtons
 // C++
 import Onboard 1.0
 
-Rectangle {
+SyncsPage {
+    id: finalPageRoot
 
     property alias buttonGroup: buttonGroup
-    property alias preferencesButton: preferencesButton
-    property alias doneButton: doneButton
 
-    property string title: "Your Sync is set up!"
-    property string description: "Lorem ipsum dolor a text that congratulates the user and suggests other options to choose below. Use two lines at most. In this case we offer syncs as an option again."
+    readonly property string stateFullSync: "FULL"
+    readonly property string stateSelectiveSync: "SELECTIVE"
+    readonly property string stateBackup: "BACKUP"
 
-    color: Styles.surface1
+    property string title
+    property string description
+
+    footerButtons {
+        leftSecondary.visible: false
+        rightSecondary.text: OnboardingStrings.openInSettings
+        rightPrimary {
+            text: OnboardingStrings.done
+            icons: MegaButtons.Icon {}
+        }
+    }
+
+    states: [
+        State {
+            name: finalPageRoot.stateFullSync
+            PropertyChanges { target: titleItem; text: OnboardingStrings.finalStepSyncTitle; }
+            PropertyChanges { target: descriptionItem; text: OnboardingStrings.finalStepSync; }
+        },
+        State {
+            name: finalPageRoot.stateSelectiveSync
+            PropertyChanges { target: titleItem; text: OnboardingStrings.finalStepSyncTitle; }
+            PropertyChanges { target: descriptionItem; text: OnboardingStrings.finalStepSync; }
+        },
+        State {
+            name: finalPageRoot.stateBackup
+            PropertyChanges { target: titleItem; text: OnboardingStrings.finalStepBackupTitle; }
+            PropertyChanges { target: descriptionItem; text: OnboardingStrings.finalStepBackup; }
+        }
+    ]
 
     ColumnLayout {
-        anchors.fill: parent
 
-        MegaImages.SvgImage {
-            source: Images.okIcon
-            Layout.topMargin: 30
-            Layout.alignment: Qt.AlignHCenter
+        anchors {
+            top: parent.top
+            left: parent.left
+            right: parent.right
         }
 
         MegaTexts.Text {
-            text: title
-            Layout.topMargin: 15
-            font.pixelSize: MegaTexts.Text.Size.Large
+            id: titleItem
+
             Layout.preferredWidth: parent.width
+            text: title
+            font.pixelSize: MegaTexts.Text.Size.Large
             font.weight: Font.Bold
-            horizontalAlignment: Text.AlignHCenter
         }
 
         MegaTexts.Text {
+            id: descriptionItem
+
+            Layout.preferredWidth: parent.width
+            Layout.topMargin: 8
             text: description
-            Layout.topMargin: 5
-            //Layout.preferredHeight: 40
-            Layout.alignment: Qt.AlignHCenter
-            Layout.preferredWidth: 712
-            horizontalAlignment: Text.AlignHCenter
             font.pixelSize: MegaTexts.Text.Size.Medium
             font.weight: Font.Light
         }
 
+        MegaTexts.Text {
+            Layout.preferredWidth: parent.width
+            Layout.topMargin: 36
+            text: OnboardingStrings.finalStepQuestion
+            font.pixelSize: MegaTexts.Text.Size.MediumLarge
+            font.weight: Font.DemiBold
+        }
+
         Rectangle {
-            Layout.alignment: Qt.AlignHCenter
-            Layout.preferredHeight: 208
-            Layout.preferredWidth: 712
+            Layout.preferredWidth: parent.width
+            Layout.topMargin: 24
             color: "transparent"
 
             ButtonGroup {
@@ -63,7 +96,7 @@ Rectangle {
             }
 
             RowLayout {
-                spacing: 11
+                spacing: 12
                 anchors.fill: parent
 
                 SyncsVerticalButton {
@@ -75,11 +108,17 @@ Rectangle {
                     ButtonGroup.group: buttonGroup
                     type: SyncsType.Sync
                     checkable: false
-                    width: 346
-                    height: 148
-                    Layout.preferredWidth: 346
-                    Layout.preferredHeight: 148
-                    imageSourceSize: Qt.size(40, 40)
+                    width: (finalPageRoot.state === finalPageRoot.stateFullSync)
+                           ? parent.width
+                           : (parent.width - parent.spacing) / 2
+                    height: (finalPageRoot.state === finalPageRoot.stateFullSync)
+                            ? 148
+                            : 170
+                    Layout.preferredWidth: width
+                    Layout.preferredHeight: height
+                    imageSourceSize: Qt.size(32, 32)
+                    contentMargin: 24
+                    contentSpacing: 8
                 }
 
                 SyncsVerticalButton {
@@ -91,32 +130,17 @@ Rectangle {
                     ButtonGroup.group: buttonGroup
                     type: SyncsType.Backup
                     checkable: false
-                    width: 346
-                    height: 148
-                    Layout.preferredWidth: 346
-                    Layout.preferredHeight: 148
-                    imageSourceSize: Qt.size(40, 40)
+                    width: (parent.width - parent.spacing) / 2
+                    height: 170
+                    Layout.preferredWidth: width
+                    Layout.preferredHeight: height
+                    imageSourceSize: Qt.size(32, 32)
+                    visible: finalPageRoot.state !== finalPageRoot.stateFullSync
+                    contentMargin: 24
+                    contentSpacing: 8
                 }
             }
         }
-
-        RowLayout {
-            spacing: 8
-            Layout.rightMargin: 32
-            Layout.bottomMargin: 24
-            Layout.alignment: Qt.AlignBottom | Qt.AlignRight
-
-            MegaButtons.OutlineButton {
-                id: preferencesButton
-
-                text: OnboardingStrings.openInPreferences
-            }
-
-            MegaButtons.PrimaryButton {
-                id: doneButton
-
-                text: OnboardingStrings.done
-            }
-        }
     }
+
 }

@@ -10,7 +10,7 @@ FullSyncPageForm {
     footerButtons {
 
         rightSecondary.onClicked: {
-            syncsFlow.state = syncs;
+            syncsPanel.state = syncs;
         }
 
         rightPrimary.onClicked: {
@@ -26,7 +26,7 @@ FullSyncPageForm {
         onSyncSetupSuccess: {
             root.enabled = true;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = false;
-            syncsFlow.state = finalState;
+            syncsPanel.state = finalState;
             localFolderChooser.reset();
         }
     }
