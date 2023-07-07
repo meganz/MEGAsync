@@ -177,15 +177,13 @@ StackView {
                 right: parent.right
                 top: parent.top
                 bottom: parent.bottom
+                margins: contentMargin
             }
 
             Component {
                 id: computerNamePage
 
-                ComputerNamePage {
-                    Layout.fillHeight: true
-                    Layout.fillWidth: true
-                }
+                ComputerNamePage {}
             }
 
             Component {

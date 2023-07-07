@@ -19,16 +19,11 @@ RowLayout {
     property alias previousButton: previousButton
     property alias nextButton: nextButton
 
-    readonly property int horizontalMargin: 32
-    readonly property int verticalMargin: 32
-
     width: parent.width
 
     MegaButtons.SecondaryButton {
         id: notNowButton
 
-        Layout.leftMargin: horizontalMargin
-        Layout.bottomMargin: verticalMargin
         text: OnboardingStrings.notNow
         onClicked: {
             Onboarding.exitLoggedIn();
@@ -37,8 +32,6 @@ RowLayout {
 
     RowLayout {
         Layout.alignment: Qt.AlignRight
-        Layout.rightMargin: horizontalMargin
-        Layout.bottomMargin: verticalMargin
 
         MegaButtons.OutlineButton {
             id: previousButton

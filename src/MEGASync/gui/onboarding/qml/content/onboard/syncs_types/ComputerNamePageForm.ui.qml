@@ -23,11 +23,11 @@ SyncsPage {
             top: parent.top
             left: parent.left
             right: parent.right
-            margins: contentMargin
         }
         spacing: 12
 
         Header {
+            Layout.preferredWidth: parent.width
             title: OnboardingStrings.computerNameTitle
             description: OnboardingStrings.computerNameDescription
         }
