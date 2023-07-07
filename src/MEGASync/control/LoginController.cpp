@@ -210,11 +210,6 @@ void LoginController::onLogin(mega::MegaRequest *request, mega::MegaError *e)
                            .arg(QTime::currentTime().addSecs(3600).toString(QString::fromUtf8("hh:mm")));
             break;
         }
-        case mega::MegaError::API_EBLOCKED:
-        {
-            errorMsg = tr("Your account has been blocked. Please contact support@mega.co.nz");
-            break;
-        }
         case mega::MegaError::API_EMFAREQUIRED:
         {
             mPassword = QString::fromUtf8(request->getPassword());
@@ -226,11 +221,10 @@ void LoginController::onLogin(mega::MegaRequest *request, mega::MegaError *e)
             break;
         }
         default:
-            if(e->getErrorCode() != mega::MegaError::API_ESSL)
-            {
-                errorMsg = QCoreApplication::translate("MegaError", e->getErrorString());
-            }
+        {
+            errorMsg = QCoreApplication::translate("MegaError", e->getErrorString());
             break;
+        }
         }
     }
 
