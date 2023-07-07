@@ -95,9 +95,9 @@ Item {
         }
     }
 
-    function onRegisterClicked(data) {
+    function createAccount(email, pass, name, lastname) {
         registerTimer.start();
-        console.info("onRegisterClicked() -> " + JSON.stringify(data));
+        console.info("onRegisterClicked() -> " + email + " " + pass + " " + name + " " + lastname);
     }
 
     function onTwoFARequested(key) {

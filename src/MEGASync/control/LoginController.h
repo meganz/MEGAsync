@@ -30,6 +30,7 @@ public:
     Q_INVOKABLE QString getPassword() const;
     Q_INVOKABLE bool getIsEmailConfirmed() const;
     Q_INVOKABLE void cancelLogin() const;
+    Q_INVOKABLE void cancelCreateAccount() const;
 
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest* request, mega::MegaError* e) override;
     void onRequestUpdate(mega::MegaApi* api, mega::MegaRequest* request) override;
@@ -47,6 +48,7 @@ signals:
     void accountCreationResumed();
     void logoutByUser();
     void logoutBySdk();
+    void accountCreateCancelled();
 
 protected:
     virtual void onLogin(mega::MegaRequest* request, mega::MegaError* e);
@@ -55,6 +57,7 @@ protected:
     void onAccountCreationResume(mega::MegaRequest* request, mega::MegaError* e);
     void onEmailChanged(mega::MegaRequest* request, mega::MegaError* e);
     void onFetchNodes(mega::MegaRequest* request, mega::MegaError* e);
+    void onAccountCreationCancel(mega::MegaRequest* request, mega::MegaError* e);
 
     void onLogout(mega::MegaRequest* request, mega::MegaError* e);
     void fetchNodes(const QString& email = QString());

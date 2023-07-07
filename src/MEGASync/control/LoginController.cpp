@@ -82,6 +82,11 @@ void LoginController::cancelLogin() const
     }
 }
 
+void LoginController::cancelCreateAccount() const
+{
+    mMegaApi->cancelCreateAccount();
+}
+
 void LoginController::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e)
 {
     Q_UNUSED(api)
@@ -114,6 +119,10 @@ void LoginController::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *req
         if(request->getParamType() == mega::MegaApi::RESUME_ACCOUNT)
         {
             onAccountCreationResume(request, e);
+        }
+        else if(request->getParamType() == mega::MegaApi::CANCEL_ACCOUNT)
+        {
+            onAccountCreationCancel(request, e);
         }
         else
         {
@@ -313,6 +322,17 @@ void LoginController::onFetchNodes(mega::MegaRequest *request, mega::MegaError *
         mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error fetching nodes: %1")
                                                                .arg(QString::fromUtf8(e->getErrorString())).toUtf8().constData());
     }
+}
+
+void LoginController::onAccountCreationCancel(mega::MegaRequest *request, mega::MegaError *e)
+{
+    Q_UNUSED(request)
+    Q_UNUSED(e)
+    mPreferences->removeEphemeralCredentials();
+    mEmail = QString();
+    mPassword = QString();
+    emit emailChanged();
+    emit accountCreateCancelled();
 }
 
 void LoginController::onLogout(mega::MegaRequest *request, mega::MegaError *e)

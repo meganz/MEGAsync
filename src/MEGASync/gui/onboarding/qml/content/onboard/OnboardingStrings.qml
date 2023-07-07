@@ -105,5 +105,6 @@ QtObject {
     readonly property var cancelLoginBodyText: qsTr("Closing this window will stop you logging in.")
     readonly property var cancelLoginPrimaryButton: qsTr("Stop Loggin in")
     readonly property var cancelLoginSecondaryButton: qsTr("Don’t stop")
+    readonly property var cancelAccount: qsTr("Cancel account")
 
 }
