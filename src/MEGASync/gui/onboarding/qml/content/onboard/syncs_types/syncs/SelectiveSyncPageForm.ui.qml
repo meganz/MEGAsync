@@ -15,7 +15,7 @@ SyncsPage {
     property alias localFolderChooser: localFolderChooser
     property alias remoteFolderChooser: remoteFolderChooser
 
-    footerButtons.nextButton {
+    footerButtons.rightPrimary {
         enabled: localFolderChooser.isValid && remoteFolderChooser.isValid
         text: OnboardingStrings.sync
         icons.source: Images.sync

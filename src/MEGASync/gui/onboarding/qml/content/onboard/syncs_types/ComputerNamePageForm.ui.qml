@@ -15,7 +15,7 @@ SyncsPage {
 
     property alias computerNameTextField: computerNameTextField
 
-    footerButtons.previousButton.visible: false
+    footerButtons.rightSecondary.visible: false
 
     ColumnLayout {
 

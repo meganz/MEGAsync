@@ -5,11 +5,11 @@ SyncTypePageForm {
 
     footerButtons {
 
-        previousButton.onClicked: {
+        rightSecondary.onClicked: {
             syncsFlow.state = syncType;
         }
 
-        nextButton.onClicked: {
+        rightPrimary.onClicked: {
             switch(buttonGroup.checkedButton.syncType) {
                 case SyncsType.FullSync:
                     syncsFlow.state = fullSync;
@@ -27,7 +27,7 @@ SyncTypePageForm {
 
     buttonGroup.onCheckStateChanged: {
         if(buttonGroup.checkedButton != null) {
-            footerButtons.nextButton.enabled = true;
+            footerButtons.rightPrimary.enabled = true;
         }
     }
 

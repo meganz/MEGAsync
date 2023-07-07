@@ -9,13 +9,13 @@ FullSyncPageForm {
 
     footerButtons {
 
-        previousButton.onClicked: {
+        rightSecondary.onClicked: {
             syncsFlow.state = syncs;
         }
 
-        nextButton.onClicked: {
+        rightPrimary.onClicked: {
             root.enabled = false;
-            footerButtons.nextButton.icons.busyIndicatorVisible = true;
+            footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
             Onboarding.addSync(localFolderChooser.getSyncData());
         }
     }
@@ -25,7 +25,7 @@ FullSyncPageForm {
 
         onSyncSetupSuccess: {
             root.enabled = true;
-            footerButtons.nextButton.icons.busyIndicatorVisible = false;
+            footerButtons.rightPrimary.icons.busyIndicatorVisible = false;
             syncsFlow.state = finalState;
             localFolderChooser.reset();
         }

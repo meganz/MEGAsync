@@ -15,11 +15,12 @@ import BackupsModel 1.0
 SelectFoldersPageForm {
 
     footerButtons {
-        previousButton.onClicked: {
+
+        rightSecondary.onClicked: {
             syncsFlow.state = syncType;
         }
 
-        nextButton {
+        rightPrimary {
             enabled: BackupsModel.mCheckAllState !== Qt.Unchecked
             onClicked: {
                 BackupsModel.checkBackups();

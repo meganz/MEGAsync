@@ -10,7 +10,7 @@ ComputerNamePageForm {
 
     property bool changingDeviceName: false
 
-    footerButtons.nextButton.onClicked: {
+    footerButtons.rightPrimary.onClicked: {
         changingDeviceName = Onboarding.setDeviceName(computerNameTextField.text);
         if(!changingDeviceName) {
             syncsFlow.state = syncType;

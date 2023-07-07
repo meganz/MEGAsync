@@ -15,14 +15,12 @@ import Onboarding 1.0
 
 RowLayout {
 
-    property alias notNowButton: notNowButton
-    property alias previousButton: previousButton
-    property alias nextButton: nextButton
-
-    width: parent.width
+    property alias leftSecondary: leftSecondary
+    property alias rightSecondary: rightSecondary
+    property alias rightPrimary: rightPrimary
 
     MegaButtons.SecondaryButton {
-        id: notNowButton
+        id: leftSecondary
 
         text: OnboardingStrings.notNow
         onClicked: {
@@ -34,13 +32,13 @@ RowLayout {
         Layout.alignment: Qt.AlignRight
 
         MegaButtons.OutlineButton {
-            id: previousButton
+            id: rightSecondary
 
             text: OnboardingStrings.previous
         }
 
         MegaButtons.PrimaryButton {
-            id: nextButton
+            id: rightPrimary
 
             text: OnboardingStrings.next
             icons.source: Images.arrowRight

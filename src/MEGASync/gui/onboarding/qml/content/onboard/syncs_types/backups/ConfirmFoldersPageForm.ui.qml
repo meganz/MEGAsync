@@ -20,7 +20,7 @@ SyncsPage {
 
     property alias folderField: folderField
 
-    footerButtons.nextButton {
+    footerButtons.rightPrimary {
         text: OnboardingStrings.backup
         icons.source: Images.cloud
         enabled: !BackupsModel.mExistConflicts

@@ -13,7 +13,7 @@ SyncsPage {
 
     property alias buttonGroup: buttonGroup
 
-    footerButtons.nextButton.enabled: false
+    footerButtons.rightPrimary.enabled: false
 
     ColumnLayout {
 

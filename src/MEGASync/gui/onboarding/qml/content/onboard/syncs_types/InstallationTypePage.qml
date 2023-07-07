@@ -2,11 +2,11 @@ InstallationTypePageForm {
 
     footerButtons {
 
-        previousButton.onClicked: {
+        rightSecondary.onClicked: {
             syncsFlow.state = computerName;
         }
 
-        nextButton.onClicked: {
+        rightPrimary.onClicked: {
             switch(buttonGroup.checkedButton.type) {
                 case SyncsType.Sync:
                     syncsFlow.state = syncs;
@@ -24,7 +24,7 @@ InstallationTypePageForm {
 
     buttonGroup.onCheckStateChanged: {
         if(buttonGroup.checkedButton != null) {
-            footerButtons.nextButton.enabled = true;
+            footerButtons.rightPrimary.enabled = true;
         }
     }
 

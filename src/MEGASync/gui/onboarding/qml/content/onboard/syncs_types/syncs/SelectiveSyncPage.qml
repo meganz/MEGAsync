@@ -9,15 +9,15 @@ SelectiveSyncPageForm {
 
     footerButtons {
 
-        previousButton.onClicked: {
+        rightSecondary.onClicked: {
             syncsFlow.state = syncs;
         }
 
-        nextButton.onClicked: {
+        rightPrimary.onClicked: {
             root.enabled = false;
             localFolderChooser.folderField.hint.visible = false;
             localFolderChooser.folderField.error = false;
-            footerButtons.nextButton.icons.busyIndicatorVisible = true;
+            footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
             Onboarding.addSync(localFolderChooser.getSyncData(), remoteFolderChooser.getSyncData());
         }
     }
@@ -27,7 +27,7 @@ SelectiveSyncPageForm {
 
         onSyncSetupSuccess: {
             root.enabled = true;
-            footerButtons.nextButton.icons.busyIndicatorVisible = false;
+            footerButtons.rightPrimary.icons.busyIndicatorVisible = false;
             syncsFlow.state = finalState;
             localFolderChooser.reset();
             remoteFolderChooser.reset();
@@ -35,7 +35,7 @@ SelectiveSyncPageForm {
 
         onCantSync: {
             root.enabled = true;
-            footerButtons.nextButton.icons.busyIndicatorVisible = false;
+            footerButtons.rightPrimary.icons.busyIndicatorVisible = false;
             console.log(message);
             localFolderChooser.folderField.error = true;
             localFolderChooser.folderField.hint.text = message;
