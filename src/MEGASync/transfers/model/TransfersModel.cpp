@@ -1340,13 +1340,13 @@ std::unique_ptr<MegaNode> TransfersModel::getNodeToOpenByRow(int row)
 
     if (d->getState() == TransferData::TRANSFER_FAILED)
     {
-        auto transfer = mMegaApi->getTransferByTag(d->mTag);
-        if(transfer)
+        if(d->mFailedTransfer)
         {
-            node.reset(transfer->getPublicMegaNode());
+            node.reset(d->mFailedTransfer->getPublicMegaNode());
         }
     }
-    else if(d->mNodeHandle)
+
+    if(!node && d->mNodeHandle != mega::INVALID_HANDLE)
     {
         node.reset(mMegaApi->getNodeByHandle(d->mNodeHandle));
     }

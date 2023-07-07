@@ -90,5 +90,5 @@ void QMegaMessageBox::showNewMessageBox(Icon icon, const MessageBoxInfo& info)
         msgBox->setIconPixmap(info.iconPixmap);
     }
 
-    DialogOpener::showMessageBox(msgBox, info.finishFunc, info.enqueue);
+    DialogOpener::showMessageBox(msgBox, info);
 }

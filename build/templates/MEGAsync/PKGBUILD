@@ -48,8 +48,8 @@ validpgpkeys=()
 
 prepare() {
 	cd "$pkgname-$pkgver"
-	sed -i -E "s/USER_AGENT([^\/]*)\/(([0-9][0-9]*\.){3})(.*)\";/USER_AGENT\1\/\2${pkgrel}\";/g" MEGASync/control/Preferences.cpp
-	sed -i -E "s/BUILD_ID = ([0-9]*)/BUILD_ID = ${pkgrel}/g" MEGASync/control/Preferences.cpp
+	sed -i -E "s/VER_PRODUCTVERSION_STR([[:space:]]+)\"(([0-9][0-9]*\.){3})(.*)\"/VER_PRODUCTVERSION_STR\1\"\2${pkgrel}\"/g" MEGASync/control/Version.h
+	sed -i -E "s/VER_BUILD_ID([[:space:]]+)([0-9]*)/VER_BUILD_ID\1${pkgrel}/g" MEGASync/control/Version.h
 }
 
 build() {

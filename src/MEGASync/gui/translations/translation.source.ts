@@ -2031,11 +2031,6 @@ In some cases they may contain details about your data, such as file or folder n
         <translation>No notifications for payments</translation>
     </message>
     <message>
-        <source>%1 used</source>
-        <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1</translatorcomment>
-        <translation>%1 used</translation>
-    </message>
-    <message>
         <source>Upgrade account</source>
         <translatorcomment>Button label to forward the user to the webclient for upgrade the current account.</translatorcomment>
         <translation>Upgrade account</translation>
@@ -2928,12 +2923,12 @@ Transfers will automatically resume when you re-open the app.</numerusform>
     </message>
     <message>
         <source>Warning</source>
-        <translatorcomment>Title for dialogs with warning messages. SNC-</translatorcomment>
+        <translatorcomment>Title for dialogs with warning messages. SNC-3299</translatorcomment>
         <translation type="unfinished">Warning</translation>
     </message>
     <message>
         <source>Error</source>
-        <translatorcomment>Title for dialogs with error messages. SNC-</translatorcomment>
+        <translatorcomment>Title for dialogs with error messages. SNC-3299</translatorcomment>
         <translation type="unfinished">Error</translation>
     </message>
     <message>
@@ -4856,11 +4851,6 @@ Do you want to delete it anyway?</translation>
         <translation>Data temporarily unavailable</translation>
     </message>
     <message>
-        <source>%1 (%2%) of %3 used</source>
-        <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically.</translatorcomment>
-        <translation>%1 (%2%) of %3 used</translation>
-    </message>
-    <message>
         <source>Clear</source>
         <translatorcomment>Label for button to let the user clear the debris or file versions cache. Keep capital letter.</translatorcomment>
         <translation>Clear</translation>
@@ -4996,11 +4986,6 @@ Do you want to restart MEGAsync now?</source>
         <source>You are about to permanently remove all file versions. Would you like to proceed?</source>
         <translatorcomment>Informative text asking for confirmation when user is trying to remove all file versions of the current account.</translatorcomment>
         <translation>You are about to permanently remove all file versions. Would you like to proceed?</translation>
-    </message>
-    <message>
-        <source>%1 used</source>
-        <translatorcomment>Label to indicate the total amount of storage/bandwidth used by the account. Keep placeholder %1.</translatorcomment>
-        <translation>%1 used</translation>
     </message>
     <message>
         <source>MEGA-RECOVERYKEY</source>
@@ -7441,6 +7426,22 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>%1 [A]s[/A]</source>
         <translatorcomment>String controlling the formatting of the seconds count for time intervals. It is used in the [MINUTES] [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the seconds. The space needs to be non-breaking.</translatorcomment>
         <translation>%1&#xa0;[A]s[/A]</translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 used</source>
+        <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1. SNC-3429</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>%1 used</numerusform>
+            <numerusform>%1 used</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 (%2%) of %3 used</source>
+        <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically. SNC-3429</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>%1 (%2%) of %3 used</numerusform>
+            <numerusform>%1 (%2%) of %3 used</numerusform>
+        </translation>
     </message>
 </context>
 <context>
