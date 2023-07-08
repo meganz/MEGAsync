@@ -39,6 +39,7 @@ StalledIssueActionTitle::StalledIssueActionTitle(QWidget *parent) :
     ui->titleLabel->installEventFilter(this);
 
     ui->backgroundWidget->setProperty(DISABLE_BACKGROUND, false);
+    setSolved(false);
 }
 
 StalledIssueActionTitle::~StalledIssueActionTitle()
@@ -72,7 +73,9 @@ void StalledIssueActionTitle::addActionButton(const QIcon& icon,const QString &t
     button->setCursor(Qt::PointingHandCursor);
     connect(button, &QPushButton::clicked, this, [this]()
     {
-       emit actionClicked(sender()->property(BUTTON_ID).toInt());
+        QApplication::postEvent(this, new QMouseEvent(QEvent::MouseButtonPress, QPointF(), Qt::LeftButton, Qt::NoButton, Qt::KeyboardModifier::NoModifier));
+        qApp->processEvents();
+        emit actionClicked(sender()->property(BUTTON_ID).toInt());
     });
 
     ui->actionLayout->addWidget(button);

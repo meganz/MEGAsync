@@ -6,6 +6,7 @@
 #include "StalledIssuesProxyModel.h"
 #include "StalledIssueDelegate.h"
 #include "StalledIssuesProxyModel.h"
+#include "StalledIssue.h"
 
 #include "Utilities.h"
 
@@ -61,7 +62,16 @@ StalledIssuesDialog::~StalledIssuesDialog()
     delete ui;
 }
 
-QModelIndexList StalledIssuesDialog::getSelection() const
+QModelIndexList StalledIssuesDialog::getSelection(QList<mega::MegaSyncStall::SyncStallReason> reasons) const
+{
+    auto checkerFunc = [reasons](const std::shared_ptr<const StalledIssue> check) -> bool{
+        return reasons.contains(check->getReason());
+    };
+
+    return getSelection(checkerFunc);
+}
+
+QModelIndexList StalledIssuesDialog::getSelection(std::function<bool (const std::shared_ptr<const StalledIssue>)> checker) const
 {
     QModelIndexList list;
 
@@ -71,7 +81,15 @@ QModelIndexList StalledIssuesDialog::getSelection() const
         //Just in case, but children is never selected
         if(!index.parent().isValid())
         {
-            list.append(mProxyModel->mapToSource(index));
+            QModelIndex sourceIndex = mProxyModel->mapToSource(index);
+            if(sourceIndex.isValid())
+            {
+                auto stalledIssueItem (qvariant_cast<StalledIssueVariant>(sourceIndex.data(Qt::DisplayRole)));
+                if(checker(stalledIssueItem.consultData()))
+                {
+                    list.append(sourceIndex);
+                }
+            }
         }
     }
 
@@ -158,7 +176,7 @@ void StalledIssuesDialog::onLoadingSceneChanged(bool state)
     }
 }
 
-void StalledIssuesDialog::onGlobalSyncStateChanged(bool state)
+void StalledIssuesDialog::onGlobalSyncStateChanged(bool)
 {
     //For the future, detect if the stalled issues have been removed remotely to close the dialog
 }

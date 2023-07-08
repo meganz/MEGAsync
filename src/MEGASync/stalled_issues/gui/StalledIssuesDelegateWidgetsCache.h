@@ -19,8 +19,8 @@ class StalledIssuesDelegateWidgetsCache
 public:
     StalledIssuesDelegateWidgetsCache();
 
-    StalledIssueHeader* getStalledIssueHeaderWidget(const QModelIndex& index, QWidget *parent, const StalledIssueVariant &issue, bool isEditor) const;
-    StalledIssueBaseDelegateWidget* getStalledIssueInfoWidget(const QModelIndex& index, QWidget *parent, const StalledIssueVariant &issue, bool isEditor) const;
+    StalledIssueHeader* getStalledIssueHeaderWidget(const QModelIndex& index, QWidget *parent, const StalledIssueVariant &issue) const;
+    StalledIssueBaseDelegateWidget* getStalledIssueInfoWidget(const QModelIndex& index, QWidget *parent, const StalledIssueVariant &issue) const;
 
     static bool adaptativeHeight(mega::MegaSyncStall::SyncStallReason reason);
 

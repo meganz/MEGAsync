@@ -18,4 +18,9 @@ void StalledIssuesView::mousePressEvent(QMouseEvent *event)
         QItemSelectionModel::SelectionFlags command = selectionCommand(index, event);
         selectionModel()->select(index, command);
     }
+    else
+    {
+        QItemSelectionModel::SelectionFlags command = selectionCommand(index.parent(), event);
+        selectionModel()->select(index.parent(), command);
+    }
 }

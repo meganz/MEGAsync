@@ -31,7 +31,7 @@ void MegaUploader::upload(QString path, const QString& nodeName, std::shared_ptr
     QString currentPath = QDir::toNativeSeparators(info.absoluteFilePath());
     QString msg = QString::fromLatin1("Starting upload : '%1' - '%2' - '%3'").arg(info.fileName(), currentPath).arg(appDataID);
     megaApi->log(MegaApi::LOG_LEVEL_DEBUG, msg.toUtf8().constData());
-    startUpload(currentPath, nodeName, appDataID, parent.get(), transferBatch->getCancelTokenPtr());
+    startUpload(currentPath, nodeName, appDataID, parent.get(), transferBatch ? transferBatch->getCancelTokenPtr() : nullptr);
 
     emit startingTransfers();
 }
@@ -49,8 +49,8 @@ void MegaUploader::startUpload(const QString& localPath, const QString &nodeName
         fileName = fileNameArray.constData();
     }
 
-    QByteArray appData = (QString::number(appDataID) + QString::fromUtf8("*")).toUtf8();
+    QByteArray appData = appDataID >= 0 ? (QString::number(appDataID) + QString::fromUtf8("*")).toUtf8() : QByteArray();
     const int64_t mtime = ::mega::MegaApi::INVALID_CUSTOM_MOD_TIME;
     const bool isSrcTemporary = false;
-    megaApi->startUpload(localPathArray.constData(), parent, fileName, mtime, appData.constData(), isSrcTemporary, startFirst, cancelToken, mFolderTransferListener.get());
+    megaApi->startUpload(localPathArray.constData(), parent, fileName, mtime, appData.isEmpty() ? nullptr : appData.constData(), isSrcTemporary, startFirst, cancelToken, mFolderTransferListener.get());
 }

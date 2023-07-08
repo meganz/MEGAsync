@@ -25,7 +25,9 @@ public:
     explicit StalledIssuesDialog(QWidget *parent = nullptr);
     ~StalledIssuesDialog();
 
-    QModelIndexList getSelection() const;
+    QModelIndexList getSelection(QList<mega::MegaSyncStall::SyncStallReason> reasons) const;
+    QModelIndexList getSelection(std::function<bool (const std::shared_ptr<const StalledIssue>)> checker) const;
+
     void updateView();
 
 protected:
@@ -35,7 +37,7 @@ private slots:
     void on_doneButton_clicked();
     void on_updateButton_clicked();
     void checkIfViewIsEmpty();
-    void onGlobalSyncStateChanged(bool state);
+    void onGlobalSyncStateChanged(bool);
 
     void toggleTab(StalledIssueFilterCriterion filterCriterion);
 

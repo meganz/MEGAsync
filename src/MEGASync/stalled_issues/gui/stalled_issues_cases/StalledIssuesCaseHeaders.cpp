@@ -233,7 +233,7 @@ NameConflictsHeader::NameConflictsHeader(StalledIssueHeader* header)
 
 void NameConflictsHeader::refreshCaseUi(StalledIssueHeader* header)
 {
-    if(auto nameConflict = std::dynamic_pointer_cast<const NameConflictedStalledIssue>(header->getData().consultData()))
+    if(auto nameConflict = header->getData().convert<NameConflictedStalledIssue>())
     {
         auto cloudData = nameConflict->getNameConflictCloudData();
         if(cloudData.firstNameConflict())
@@ -280,7 +280,7 @@ void NameConflictsHeader::refreshCaseUi(StalledIssueHeader* header)
 
 void NameConflictsHeader::onActionButtonClicked(StalledIssueHeader* header)
 {
-    if(auto nameConflict = std::dynamic_pointer_cast<const NameConflictedStalledIssue>(header->getData().consultData()))
+    if(auto nameConflict = header->getData().convert<NameConflictedStalledIssue>())
     {
         auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
 
@@ -289,18 +289,24 @@ void NameConflictsHeader::onActionButtonClicked(StalledIssueHeader* header)
         msgInfo.title = MegaSyncApp->getMEGAString();
         msgInfo.textFormat = Qt::RichText;
         msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
+        QMap<QMessageBox::Button, QString> textsByButton;
+        textsByButton.insert(QMessageBox::No, tr("Cancel"));
 
-        auto selection = dialog->getDialog()->getSelection();
+        auto selection = dialog->getDialog()->getSelection(QList<mega::MegaSyncStall::SyncStallReason>() << mega::MegaSyncStall::NamesWouldClashWhenSynced);
 
         if(selection.size() <= 1)
         {
-            msgInfo.text = tr("Are you sure you want to solve all the similar issues?");
+            msgInfo.buttons |= QMessageBox::Yes;
+            textsByButton.insert(QMessageBox::Yes, tr("Apply to all similar issues"));
+            textsByButton.insert(QMessageBox::Ok, tr("Apply to selected issue"));
         }
         else
         {
-            msgInfo.text = tr("Are you sure you want to solve the selected similar issues?");
+            textsByButton.insert(QMessageBox::Ok, tr("Apply to selected issues (%1)").arg(selection.size()));
         }
 
+        msgInfo.buttonsText = textsByButton;
+        msgInfo.text = tr("Are you sure you want to solve the issue?");
         msgInfo.informativeText = tr("This action will delete the duplicate files and rename the rest of names.");
 
         msgInfo.finishFunc = [this, selection, header, nameConflict](QMessageBox* msgBox)
@@ -308,6 +314,10 @@ void NameConflictsHeader::onActionButtonClicked(StalledIssueHeader* header)
             if(msgBox->result() == QDialogButtonBox::Ok)
             {
                 MegaSyncApp->getStalledIssuesModel()->solveNameConflictIssues(selection);
+            }
+            else if(msgBox->result() == QDialogButtonBox::Yes)
+            {
+                MegaSyncApp->getStalledIssuesModel()->solveNameConflictIssues(QModelIndexList());
             }
         };
 

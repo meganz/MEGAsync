@@ -8,8 +8,7 @@
 #include <QFile>
 
 StalledIssueBaseDelegateWidget::StalledIssueBaseDelegateWidget(QWidget *parent)
-    : QWidget(parent),
-      mIsSolved(false)
+    : QWidget(parent)
 {
 }
 

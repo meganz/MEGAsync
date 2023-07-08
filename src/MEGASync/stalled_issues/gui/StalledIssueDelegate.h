@@ -22,6 +22,7 @@ public:
     ~StalledIssueDelegate() = default;
     QSize sizeHint(const QStyleOptionViewItem&option, const QModelIndex&index) const;
     void resetCache();
+    void updateEditor();
 
 protected:
     void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
@@ -32,6 +33,7 @@ protected:
     bool eventFilter(QObject *object, QEvent *event) override;
     void destroyEditor(QWidget *, const QModelIndex &) const override;
 
+
 protected slots:
     void onHoverEnter(const QModelIndex& index);
     void onHoverLeave(const QModelIndex&);
@@ -40,7 +42,7 @@ private:
     QColor getRowColor(const QModelIndex& index) const;
     QModelIndex getEditorCurrentIndex() const;
 
-    StalledIssueBaseDelegateWidget *getStalledIssueItemWidget(const QModelIndex &index, const StalledIssueVariant &data, bool isEditor) const;
+    StalledIssueBaseDelegateWidget *getStalledIssueItemWidget(const QModelIndex &index, const StalledIssueVariant &data) const;
 
     StalledIssuesView* mView;
     StalledIssuesProxyModel* mProxyModel;

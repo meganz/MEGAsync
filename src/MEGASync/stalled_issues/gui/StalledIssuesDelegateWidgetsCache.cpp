@@ -38,7 +38,7 @@ int StalledIssuesDelegateWidgetsCache::getMaxCacheRow(int row) const
     return row % nbRowsMaxInView;
 }
 
-StalledIssueHeader *StalledIssuesDelegateWidgetsCache::getStalledIssueHeaderWidget(const QModelIndex &index, QWidget *parent, const StalledIssueVariant &issue, bool isEditor) const
+StalledIssueHeader *StalledIssuesDelegateWidgetsCache::getStalledIssueHeaderWidget(const QModelIndex &index, QWidget *parent, const StalledIssueVariant &issue) const
 {
     auto row = getMaxCacheRow(index.row());
     auto& header = mStalledIssueHeaderWidgets[row];
@@ -48,11 +48,6 @@ StalledIssueHeader *StalledIssuesDelegateWidgetsCache::getStalledIssueHeaderWidg
         header = new StalledIssueHeader(parent);
         header->hide();
     }
-    //We don´t need to update it if is an editor and exists
-    else if(isEditor)
-    {
-        return header;
-    }
 
     createHeaderCaseWidget(header, issue);
     header->updateUi(index, issue);
@@ -60,19 +55,13 @@ StalledIssueHeader *StalledIssuesDelegateWidgetsCache::getStalledIssueHeaderWidg
     return header;
 }
 
-StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::getStalledIssueInfoWidget(const QModelIndex &index, QWidget *parent, const StalledIssueVariant &issue, bool isEditor) const
+StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::getStalledIssueInfoWidget(const QModelIndex &index, QWidget *parent, const StalledIssueVariant &issue) const
 {
     auto row = getMaxCacheRow(index.parent().row());
 
     auto reason = issue.consultData()->getReason();
     auto& itemsByRowMap = mStalledIssueWidgets[toInt(reason)];
     auto& item = itemsByRowMap[row];
-
-    //We don´t need to update it if is an editor and exists
-    if(item && isEditor)
-    {
-        return item;
-    }
 
     if(item && item->getData().consultData()->getReason() == issue.consultData()->getReason())
     {

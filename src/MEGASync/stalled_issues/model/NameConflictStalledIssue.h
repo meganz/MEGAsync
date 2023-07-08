@@ -249,8 +249,7 @@ public:
 
     void renameNodesAutomatically();
 
-    void solveIssue(bool autosolve) override;
-    bool isSolved() const;
+    void solveIssue(bool) override;
 
     bool hasDuplicatedNodes() const;
 
@@ -263,7 +262,6 @@ private:
 
     CloudConflictedNamesByHandle mCloudConflictedNames;
     QList<std::shared_ptr<ConflictedNameInfo>> mLocalConflictedNames;
-    mutable bool mIsSolved = false;
 };
 
 Q_DECLARE_METATYPE(NameConflictedStalledIssue)

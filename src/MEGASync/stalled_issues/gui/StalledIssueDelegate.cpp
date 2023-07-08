@@ -45,7 +45,7 @@ QSize StalledIssueDelegate::sizeHint(const QStyleOptionViewItem& option, const Q
     if(adaptativeHeight)
     {
         auto stalledIssueItem (qvariant_cast<StalledIssueVariant>(index.data(Qt::DisplayRole)));
-        StalledIssueBaseDelegateWidget* w (getStalledIssueItemWidget(index, stalledIssueItem, false));
+        StalledIssueBaseDelegateWidget* w (getStalledIssueItemWidget(index, stalledIssueItem));
         if(w)
         {
             return w->sizeHint();
@@ -62,6 +62,7 @@ QSize StalledIssueDelegate::sizeHint(const QStyleOptionViewItem& option, const Q
 void StalledIssueDelegate::resetCache()
 {
     mCacheManager.reset();
+    mMouseHoverOrSelectedLastState.clear();
 }
 
 void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -95,32 +96,24 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
             }
         };
 
-        bool isHoverOrSelected((parentState & QStyle::State_MouseOver) && (parentState & QStyle::State_Selected));
-
         if(index.parent().isValid())
         {
             if(mView->selectionModel()->isSelected(index.parent()))
             {
                 parentState|= QStyle::State_Selected;
             }
-
-            detectRelativeHover();
-            if(isHoverOrSelected != mMouseHoverOrSelectedLastState.value(index, false))
-            {
-                mView->update(index.parent());
-                qApp->processEvents();
-            }
         }
-        else
+
+        detectRelativeHover();
+
+        //The selected/hover state has changed
+        bool isHoverOrSelected((parentState & QStyle::State_MouseOver) && (parentState & QStyle::State_Selected));
+        if(isHoverOrSelected != mMouseHoverOrSelectedLastState.value(index, false))
         {
-            detectRelativeHover();
-            if(isHoverOrSelected != mMouseHoverOrSelectedLastState.value(index, false))
-            {
-                mView->update(index.child(0,0));
-            }
-        }
+            mView->update(index.parent().isValid() ? index.parent() : index.child(0,0));
 
-        mMouseHoverOrSelectedLastState.insert(index, isHoverOrSelected);
+            mMouseHoverOrSelectedLastState.insert(index, isHoverOrSelected);
+        }
 
         QColor fillColor;
         QPen pen;
@@ -217,7 +210,7 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
         if(renderDelegate)
         {
             auto stalledIssueItem (qvariant_cast<StalledIssueVariant>(index.data(Qt::DisplayRole)));
-            StalledIssueBaseDelegateWidget* w (getStalledIssueItemWidget(index, stalledIssueItem, false));
+            StalledIssueBaseDelegateWidget* w (getStalledIssueItemWidget(index, stalledIssueItem));
             if(!w)
             {
                 return;
@@ -275,7 +268,7 @@ QWidget *StalledIssueDelegate::createEditor(QWidget*, const QStyleOptionViewItem
 
     if(stalledIssueItem.consultData())
     {
-        mEditor = getStalledIssueItemWidget(index, stalledIssueItem, true);
+        mEditor = getStalledIssueItemWidget(index, stalledIssueItem);
         mEditor->setGeometry(option.rect);
         mEditor->update();
     }
@@ -358,6 +351,16 @@ void StalledIssueDelegate::destroyEditor(QWidget*, const QModelIndex&) const
     //Do not destroy it the editor, as it is also used to paint the row and it is saved in a cache
 }
 
+void StalledIssueDelegate::updateEditor()
+{
+    if(mEditor)
+    {
+        QModelIndex editorCurrentIndex(getEditorCurrentIndex());
+        auto stalledIssueItem (qvariant_cast<StalledIssueVariant>(editorCurrentIndex.data(Qt::DisplayRole)));
+        mEditor->updateUi(editorCurrentIndex, stalledIssueItem);
+    }
+}
+
 void StalledIssueDelegate::onHoverEnter(const QModelIndex &index)
 {
     QModelIndex editorCurrentIndex(getEditorCurrentIndex());
@@ -415,7 +418,7 @@ QModelIndex StalledIssueDelegate::getEditorCurrentIndex() const
     return QModelIndex();
 }
 
-StalledIssueBaseDelegateWidget *StalledIssueDelegate::getStalledIssueItemWidget(const QModelIndex &index, const StalledIssueVariant& data, bool isEditor) const
+StalledIssueBaseDelegateWidget *StalledIssueDelegate::getStalledIssueItemWidget(const QModelIndex &index, const StalledIssueVariant& data) const
 {
     StalledIssueBaseDelegateWidget* item(nullptr);
 
@@ -428,11 +431,11 @@ StalledIssueBaseDelegateWidget *StalledIssueDelegate::getStalledIssueItemWidget(
 
     if(finalIndex.parent().isValid())
     {
-        item = mCacheManager.getStalledIssueInfoWidget(finalIndex,mView->viewport(), data, isEditor);
+        item = mCacheManager.getStalledIssueInfoWidget(finalIndex,mView->viewport(), data);
     }
     else
     {
-        item = mCacheManager.getStalledIssueHeaderWidget(finalIndex,mView->viewport(), data, isEditor);
+        item = mCacheManager.getStalledIssueHeaderWidget(finalIndex,mView->viewport(), data);
     }
 
     return item;

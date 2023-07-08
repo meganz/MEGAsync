@@ -104,10 +104,7 @@ StalledIssuesUtilities::StalledIssuesUtilities()
 
 void StalledIssuesUtilities::ignoreFile(const QString &path)
 {
-    connect(&mIgnoreWatcher, &QFutureWatcher<void>::finished,
-            this, &StalledIssuesUtilities::onIgnoreFileFinished);
-
-    QFuture<void> addToIgnore = QtConcurrent::run([path]()
+    QtConcurrent::run([this, path]()
     {
         QFileInfo tempFile(path);
         QDir ignoreDir(tempFile.path());
@@ -117,17 +114,17 @@ void StalledIssuesUtilities::ignoreFile(const QString &path)
             QFile ignore(ignoreDir.path() + QDir::separator() + QString::fromUtf8(".megaignore"));
             if(ignore.exists())
             {
+                mIgnoreMutex.lockForWrite();
                 ignore.open(QFile::Append | QFile::Text);
 
                 QTextStream streamIn(&ignore);
                 streamIn.setCodec("UTF-8");
 
-                streamIn << QChar((int)'\n');
+                QString line(QString::fromLatin1("\n-:%1").arg(ignoreDir.relativeFilePath(path)));
+                streamIn << line;
 
-                streamIn << QString::fromUtf8("-:");
-
-                streamIn << ignoreDir.relativeFilePath(path);
                 ignore.close();
+                mIgnoreMutex.unlock();
 
                 break;
             }
@@ -137,16 +134,9 @@ void StalledIssuesUtilities::ignoreFile(const QString &path)
                 break;
             }
         }
+
+        emit actionFinished();
     });
-
-    mIgnoreWatcher.setFuture(addToIgnore);
-}
-
-void StalledIssuesUtilities::onIgnoreFileFinished()
-{
-    emit actionFinished();
-    disconnect(&mIgnoreWatcher, &QFutureWatcher<void>::finished,
-               this, &StalledIssuesUtilities::onIgnoreFileFinished);
 }
 
 void StalledIssuesUtilities::removeRemoteFile(const QString& path)

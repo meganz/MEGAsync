@@ -2,6 +2,7 @@
 #define STALLEDISSUECHOOSEWIDGET_H
 
 #include "StalledIssueBaseDelegateWidget.h"
+#include "LocalOrRemoteUserMustChooseStalledIssue.h"
 
 #include <QWidget>
 #include <QGraphicsOpacityEffect>
@@ -19,10 +20,8 @@ public:
     explicit StalledIssueChooseWidget(QWidget *parent = nullptr);
     virtual ~StalledIssueChooseWidget();
 
-    void updateUi(StalledIssueDataPtr data);
+    void updateUi(StalledIssueDataPtr data, LocalOrRemoteUserMustChooseStalledIssue::ChosenSide side);
     const StalledIssueDataPtr& data();
-
-    void setIssueSolved(bool newIssueSolved);
 
 signals:
     void chooseButtonClicked(int id);
@@ -36,11 +35,9 @@ private slots:
     void onActionClicked(int button_id);
 
 private:
-    void setDisabled(bool solved);
+    void setSolved();
 
     StalledIssueDataPtr mData;
-    bool mIsSolved;
-    bool mPreviousSolveState;
     QPointer<QGraphicsOpacityEffect> mDisableEffect;
 };
 
@@ -54,7 +51,7 @@ public:
     ~LocalStalledIssueChooseWidget() = default;
 
     QString movedToBinText() const override;
-    void updateUi(LocalStalledIssueDataPtr localData);
+    void updateUi(LocalStalledIssueDataPtr localData, LocalOrRemoteUserMustChooseStalledIssue::ChosenSide side);
 };
 
 class CloudStalledIssueChooseWidget : public StalledIssueChooseWidget
@@ -67,7 +64,7 @@ public:
     ~CloudStalledIssueChooseWidget() = default;
 
     QString movedToBinText() const override;
-    void updateUi(CloudStalledIssueDataPtr cloudData);
+    void updateUi(CloudStalledIssueDataPtr cloudData, LocalOrRemoteUserMustChooseStalledIssue::ChosenSide side);
 };
 
 #endif // STALLEDISSUECHOOSEWIDGET_H

@@ -167,7 +167,7 @@ bool NameConflictedStalledIssue::solveLocalConflictedNameByRename(int conflictIn
     if(mLocalConflictedNames.size() > conflictIndex)
     {
         auto& conflictName = mLocalConflictedNames[conflictIndex];
-        conflictName->mSolved = NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::RENAME;;
+        conflictName->mSolved = NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::RENAME;
         conflictName->mRenameTo = renameTo;
 
         result = checkAndSolveConflictedNamesSolved(mLocalConflictedNames);
@@ -364,17 +364,16 @@ bool NameConflictedStalledIssue::checkAndSolveConflictedNamesSolved(const QList<
         }
     }
 
-    mIsSolved = unsolvedItems == 0;
-
-    if(mIsSolved)
+    if(!mIsSolved && unsolvedItems == 0)
     {
+        mIsSolved = true;
         MegaSyncApp->getMegaApi()->clearStalledPath(originalStall.get());
     }
 
     return mIsSolved;
 }
 
-void NameConflictedStalledIssue::solveIssue(bool autosolve)
+void NameConflictedStalledIssue::solveIssue(bool)
 {
    mCloudConflictedNames.removeDuplicatedNodes();
    renameNodesAutomatically();
@@ -386,10 +385,5 @@ void NameConflictedStalledIssue::solveIssue(bool autosolve)
    {
        checkAndSolveConflictedNamesSolved(mLocalConflictedNames);
    }
-}
-
-bool NameConflictedStalledIssue::isSolved() const
-{
-    return mIsSolved;
 }
 

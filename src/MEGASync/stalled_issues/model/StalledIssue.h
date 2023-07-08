@@ -53,10 +53,9 @@ public:
 
     QString getFileName() const;
 
-    virtual bool isEqual(const mega::MegaSyncStall*) const {return false;}
+    const std::shared_ptr<const FileFolderAttributes> getAttributes() const {return mAttributes;}
 
-    bool isSolved() const;
-    void setIsSolved(bool newIsSolved);
+    virtual bool isEqual(const mega::MegaSyncStall*) const {return false;}
 
     void checkTrailingSpaces(QString& name) const;
 
@@ -77,8 +76,6 @@ protected:
 
     Path mMovePath;
     Path mPath;
-
-    bool mIsSolved;
 
     std::shared_ptr<FileFolderAttributes> mAttributes;
 };
@@ -233,7 +230,7 @@ public:
     virtual void updateIssue(const mega::MegaSyncStall *stallIssue);
 
     bool isSolved() const;
-    void setIsSolved(bool isCloud);
+    void setIsSolved();
     virtual void solveIssue(bool autoresolve);
 
     bool canBeIgnored() const;
@@ -241,6 +238,7 @@ public:
 
     bool mDetectedMEGASide = false;
 
+    bool isFile() const;
     uint8_t hasFiles() const;
     uint8_t hasFolders() const;
 
@@ -271,7 +269,7 @@ protected:
 
     std::shared_ptr<mega::MegaSyncStall> originalStall;
     mega::MegaSyncStall::SyncStallReason mReason = mega::MegaSyncStall::SyncStallReason::NoReason;
-    bool mIsSolved = false;
+    mutable bool mIsSolved = false;
     uint8_t mFiles = 0;
     uint8_t mFolders = 0;
     QStringList mIgnoredPaths;
@@ -321,6 +319,12 @@ public:
         mData->setDelegateSize(newDelegateSize, type);
     }
 
+    template <class Type>
+    const std::shared_ptr<const Type> convert() const
+    {
+        return std::dynamic_pointer_cast<Type>(mData);
+    }
+
 private:
     friend class StalledIssuesModel;
     friend class StalledIssuesReceiver;
@@ -328,6 +332,12 @@ private:
     const std::shared_ptr<StalledIssue> &getData() const
     {
         return mData;
+    }
+
+    template <class Type>
+    std::shared_ptr<Type> convert()
+    {
+        return std::dynamic_pointer_cast<Type>(mData);
     }
 
    std::shared_ptr<StalledIssue> mData;

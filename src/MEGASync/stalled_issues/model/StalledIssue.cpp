@@ -5,7 +5,6 @@
 
 StalledIssueData::StalledIssueData(std::unique_ptr<mega::MegaSyncStall> originalstall)
     : original(std::move(originalstall))
-    , mIsSolved(false)
 {
     qRegisterMetaType<StalledIssueDataPtr>("StalledIssueDataPtr");
     qRegisterMetaType<StalledIssuesDataList>("StalledIssuesDataList");
@@ -126,16 +125,6 @@ QString StalledIssueData::getFileName() const
     checkTrailingSpaces(fileName);
 
     return fileName;
-}
-
-bool StalledIssueData::isSolved() const
-{
-    return mIsSolved;
-}
-
-void StalledIssueData::setIsSolved(bool newIsSolved)
-{
-    mIsSolved = newIsSolved;
 }
 
 void StalledIssueData::checkTrailingSpaces(QString &name) const
@@ -370,23 +359,13 @@ bool StalledIssue::isSolved() const
     return mIsSolved;
 }
 
-void StalledIssue::setIsSolved(bool isCloud)
+void StalledIssue::setIsSolved()
 {
     mIsSolved = true;
-
-    if(!isCloud && consultLocalData())
-    {
-        getLocalData()->setIsSolved(true);
-    }
-    else if(isCloud && consultCloudData())
-    {
-        getCloudData()->setIsSolved(true);
-    }
 }
 
-void StalledIssue::solveIssue(bool autoresolve)
+void StalledIssue::solveIssue(bool)
 {
-
 }
 
 bool StalledIssue::canBeIgnored() const
@@ -397,6 +376,11 @@ bool StalledIssue::canBeIgnored() const
 QStringList StalledIssue::getIgnoredFiles() const
 {
     return mIgnoredPaths;
+}
+
+bool StalledIssue::isFile() const
+{
+    return mFiles > 0 && mFolders == 0;
 }
 
 const LocalStalledIssueDataPtr StalledIssue::consultLocalData() const

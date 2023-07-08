@@ -834,6 +834,30 @@ bool TransfersModel::areAllPaused() const
     return mAreAllPaused;
 }
 
+const QExplicitlySharedDataPointer<const TransferData> TransfersModel::getUploadTransferByInfo(const UploadTransferInfo &info) const
+{
+    QExplicitlySharedDataPointer<const TransferData> foundTransfer;
+
+    mDataMutex.lockForRead();
+    for(int row = 0; row < rowCount(); ++row)
+    {
+        auto transfer = getTransfer(row);
+        if(transfer && transfer->isUpload())
+        {
+            if(transfer->mFilename.compare(info.filename, Qt::CaseSensitive) == 0 &&
+               transfer->mParentHandle == info.parentHandle &&
+               transfer->path() == info.localPath)
+            {
+                foundTransfer = transfer;
+                break;
+            }
+        }
+    }
+    mDataMutex.unlock();
+
+    return foundTransfer;
+}
+
 bool TransfersModel::hasChildren(const QModelIndex& parent) const
 {
     if (parent == DEFAULT_IDX)

@@ -36,7 +36,6 @@ signals:
 
 protected:
     StalledIssuesUtilities mUtilities;
-    bool mIsSolved;
 
 private:
     virtual void refreshUi() = 0;

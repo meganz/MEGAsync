@@ -9,6 +9,7 @@
 #include "Utilities.h"
 #include <DialogOpener.h>
 #include <StalledIssuesDialog.h>
+#include <QMegaMessageBox.h>
 
 #include <QFile>
 #include <QMouseEvent>
@@ -158,20 +159,50 @@ void StalledIssueHeader::on_actionButton_clicked()
 
 void StalledIssueHeader::on_ignoreFileButton_clicked()
 {
-    auto info = getData().consultData();
-    if(info)
+    auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
+
+    auto canBeIgnoredChecker = [](const std::shared_ptr<const StalledIssue> issue){
+        return issue->canBeIgnored();
+    };
+
+    QMegaMessageBox::MessageBoxInfo msgInfo;
+    msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
+    msgInfo.title = MegaSyncApp->getMEGAString();
+    msgInfo.textFormat = Qt::RichText;
+    msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
+    QMap<QMessageBox::Button, QString> textsByButton;
+    textsByButton.insert(QMessageBox::No, tr("Cancel"));
+
+    auto selection = dialog->getDialog()->getSelection(canBeIgnoredChecker);
+
+    if(selection.size() <= 1)
     {
-        auto ignoredFiles = info->getIgnoredFiles();
-
-        foreach(auto file, ignoredFiles)
-        {
-            mUtilities.ignoreFile(file);
-        }
-
-        MegaSyncApp->getStalledIssuesModel()->solveIssue(false,getCurrentIndex());
-        mIsSolved = true;
-        refreshUi();
+        msgInfo.buttons |= QMessageBox::Yes;
+        textsByButton.insert(QMessageBox::Yes, tr("Apply to all similar issues"));
+        textsByButton.insert(QMessageBox::Ok, tr("Apply to selected issue"));
     }
+    else
+    {
+        textsByButton.insert(QMessageBox::Ok, tr("Apply to selected issues (%1)").arg(selection.size()));
+    }
+
+    msgInfo.buttonsText = textsByButton;
+    msgInfo.text = tr("Are you sure you want to ignore this issue?");
+    msgInfo.informativeText = tr("This action will ignore this issue and it will not be synced.");
+
+    msgInfo.finishFunc = [this, selection](QMessageBox* msgBox)
+    {
+        if(msgBox->result() == QDialogButtonBox::Ok)
+        {
+            MegaSyncApp->getStalledIssuesModel()->ignoreItems(selection);
+        }
+        else if(msgBox->result() == QDialogButtonBox::Yes)
+        {
+            MegaSyncApp->getStalledIssuesModel()->ignoreItems(QModelIndexList());
+        }
+    };
+
+    QMegaMessageBox::warning(msgInfo);
 }
 
 bool StalledIssueHeader::eventFilter(QObject *watched, QEvent *event)

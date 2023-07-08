@@ -29,7 +29,6 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest *r
                 auto stall = stalls->get(i);
                 std::shared_ptr<StalledIssueVariant> variant;
 
-
                 if(stall->reason() == mega::MegaSyncStall::SyncStallReason::NamesWouldClashWhenSynced)
                 {
                     auto d = std::make_shared<NameConflictedStalledIssue>(stall);
@@ -414,7 +413,7 @@ bool StalledIssuesModel::solveLocalConflictedNameByRemove(int conflictIndex, con
 {
     auto potentialIndex = getSolveIssueIndex(index);
 
-    if(auto nameConflict = std::dynamic_pointer_cast<NameConflictedStalledIssue>(mStalledIssues.at(potentialIndex.row())->getData()))
+    if(auto nameConflict = mStalledIssues.at(potentialIndex.row())->getData().convert<NameConflictedStalledIssue>())
     {
         return nameConflict->solveLocalConflictedNameByRemove(conflictIndex);
     }
@@ -426,7 +425,7 @@ bool StalledIssuesModel::solveLocalConflictedNameByRename(const QString &renameT
 {
     auto potentialIndex = getSolveIssueIndex(index);
 
-    if(auto nameConflict = std::dynamic_pointer_cast<NameConflictedStalledIssue>(mStalledIssues.at(potentialIndex.row())->getData()))
+    if(auto nameConflict = mStalledIssues.at(potentialIndex.row())->getData().convert<NameConflictedStalledIssue>())
     {
         return nameConflict->solveLocalConflictedNameByRename(conflictIndex, renameTo);
     }
@@ -438,7 +437,7 @@ bool StalledIssuesModel::solveCloudConflictedNameByRemove(int conflictIndex, con
 {
     auto potentialIndex = getSolveIssueIndex(index);
 
-    if(auto nameConflict = std::dynamic_pointer_cast<NameConflictedStalledIssue>(mStalledIssues.at(potentialIndex.row())->getData()))
+    if(auto nameConflict = mStalledIssues.at(potentialIndex.row())->getData().convert<NameConflictedStalledIssue>())
     {
         return nameConflict-> solveCloudConflictedNameByRemove(conflictIndex);
     }
@@ -450,7 +449,7 @@ bool StalledIssuesModel::solveCloudConflictedNameByRename(const QString& renameT
 {
     auto potentialIndex = getSolveIssueIndex(index);
 
-    if(auto nameConflict = std::dynamic_pointer_cast<NameConflictedStalledIssue>(mStalledIssues.at(potentialIndex.row())->getData()))
+    if(auto nameConflict = mStalledIssues.at(potentialIndex.row())->getData().convert<NameConflictedStalledIssue>())
     {
         return nameConflict->solveCloudConflictedNameByRename(conflictIndex, renameTo);
     }
@@ -458,11 +457,112 @@ bool StalledIssuesModel::solveCloudConflictedNameByRename(const QString& renameT
     return false;
 }
 
-void StalledIssuesModel::solveIssue(bool isCloud, const QModelIndex &index)
+void StalledIssuesModel::chooseSide(bool remote, const QModelIndexList &list)
 {
-    auto potentialIndex = getSolveIssueIndex(index);
+    auto resolveIssue = [this, remote](int row)
+    {
+        auto item = mStalledIssues.at(row);
+        if(item->consultData()->getReason() == mega::MegaSyncStall::SyncStallReason::LocalAndRemoteChangedSinceLastSyncedState_userMustChoose ||
+           item->consultData()->getReason() == mega::MegaSyncStall::SyncStallReason::LocalAndRemotePreviouslyUnsyncedDiffer_userMustChoose)
+        {
+            if(auto issue = item->convert<LocalOrRemoteUserMustChooseStalledIssue>())
+            {
+                remote ? issue->chooseRemoteSide() : issue->chooseLocalSide();
+            }
+        }
+    };
 
-    mStalledIssues.at(potentialIndex.row())->getData()->setIsSolved(isCloud);
+    if(list.isEmpty())
+    {
+        blockUi();
+
+        mThreadPool->push([this, resolveIssue]()
+        {
+            for(int row = 0; row < rowCount(QModelIndex()); ++row)
+            {
+                if(mThreadPool->isThreadInterrupted())
+                {
+                    return;
+                }
+
+                resolveIssue(row);
+            }
+
+            unBlockUi();
+        });
+    }
+    else
+    {
+        blockUi();
+
+        mThreadPool->push([this, resolveIssue, list]()
+        {
+            foreach(auto index, list)
+            {
+                if(mThreadPool->isThreadInterrupted())
+                {
+                    return;
+                }
+
+                resolveIssue(index.row());
+            }
+
+            unBlockUi();
+        });
+    }
+}
+
+void StalledIssuesModel::ignoreItems(const QModelIndexList &list)
+{
+    auto resolveIssue = [this](int row)
+    {
+        auto item = mStalledIssues.at(row);
+        if(item->getData()->canBeIgnored())
+        {
+            auto ignoredFiles = item->getData()->getIgnoredFiles();
+
+            foreach(auto file, ignoredFiles)
+            {
+                mUtilities.ignoreFile(file);
+            }
+
+            item->getData()->setIsSolved();
+        }
+    };
+
+    if(list.isEmpty())
+    {
+        blockUi();
+
+        mThreadPool->push([this, resolveIssue]()
+        {
+            for(int row = 0; row < rowCount(QModelIndex()); ++row)
+            {
+                if(mThreadPool->isThreadInterrupted())
+                {
+                    return;
+                }
+
+                resolveIssue(row);
+            }
+
+            unBlockUi();
+        });
+    }
+    else
+    {
+        blockUi();
+
+        mThreadPool->push([this, resolveIssue, list]()
+        {
+            foreach(auto index, list)
+            {
+                resolveIssue(index.row());
+            }
+
+            unBlockUi();
+        });
+    }
 }
 
 void StalledIssuesModel::solveNameConflictIssues(const QModelIndexList &list)
@@ -483,7 +583,7 @@ void StalledIssuesModel::solveNameConflictIssues(const QModelIndexList &list)
                 auto item = mStalledIssues.at(row);
                 if(item->consultData()->getReason() == mega::MegaSyncStall::SyncStallReason::NamesWouldClashWhenSynced)
                 {
-                    if(auto nameConflict = std::dynamic_pointer_cast<NameConflictedStalledIssue>(item->getData()))
+                    if(auto nameConflict = item->getData().convert<NameConflictedStalledIssue>())
                     {
                         nameConflict->solveIssue(false);
                     }
@@ -503,7 +603,7 @@ void StalledIssuesModel::solveNameConflictIssues(const QModelIndexList &list)
             {
                 auto potentialIndex = getSolveIssueIndex(index);
 
-                if(auto nameConflict = std::dynamic_pointer_cast<NameConflictedStalledIssue>(mStalledIssues.at(potentialIndex.row())->getData()))
+                if(auto nameConflict = mStalledIssues.at(potentialIndex.row())->getData().convert<NameConflictedStalledIssue>())
                 {
                     nameConflict->solveIssue(false);
                 }
