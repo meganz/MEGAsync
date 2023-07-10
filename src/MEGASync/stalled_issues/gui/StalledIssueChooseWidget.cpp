@@ -166,6 +166,18 @@ void LocalStalledIssueChooseWidget::updateExtraInfo(LocalStalledIssueDataPtr loc
     localData->getFileFolderAttributes()->requestSize(this, [this](qint64 size){
         ui->name->updateSize(size);
     });
+
+    if(ui->name->showRawInfo())
+    {
+        localData->getFileFolderAttributes()->requestFingerprint(this, [this](const QString& fp)
+        {
+            ui->name->updateFingerprint(fp);
+        });
+    }
+    else
+    {
+        ui->name->updateFingerprint(QString());
+    }
 }
 
 //CLOUD

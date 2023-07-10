@@ -351,7 +351,7 @@ void StalledIssueActionTitle::updateFingerprint(const QString& fp)
 
     if(rawValues)
     {
-        QString fpText = fp.isEmpty() ? tr("Loading fingerprint") : fp;
+        QString fpText = fp.isEmpty() ? tr("-") : fp;
 
         auto& fpLabel = mUpdateLabels[AttributeType::Fingerprint];
         if(!fpLabel)

@@ -238,9 +238,25 @@ void NameConflictedStalledIssue::renameCloudNodesAutomatically(const QList<std::
                 == NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::UNSOLVED)
         {
             auto localConflictedName = std::find_if(localConflictedNames.begin(), localConflictedNames.end(), [cloudConflictedName](const std::shared_ptr<ConflictedNameInfo>& check){
-                return check->mItemAttributes->fingerprint().compare(cloudConflictedName->mItemAttributes->fingerprint()) == 0;
-//                return check->getUnescapeConflictedName().compare(cloudConflictedName->getUnescapeConflictedName(), Qt::CaseSensitive) == 0 && check->mSolved
-//                        == NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::UNSOLVED;
+
+                if(check->mSolved
+                   == NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::UNSOLVED)
+                {
+                    auto fp1(check->mItemAttributes->fingerprint());
+                    auto fp2(cloudConflictedName->mItemAttributes->fingerprint());
+                    if(fp1.isEmpty() && fp2.isEmpty())
+                    {
+                        return fp1.compare(fp2) == 0;
+                    }
+                    else
+                    {
+                        return check->getUnescapeConflictedName().compare(cloudConflictedName->getUnescapeConflictedName(), Qt::CaseSensitive) == 0;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
             });
 
             if(counter == 0 && ignoreLastModifiedName)
@@ -300,12 +316,28 @@ void NameConflictedStalledIssue::renameLocalItemsAutomatically(const QList<std::
     foreach(auto& localConflictedName, localConflictedNames)
     {
         if(localConflictedName->mSolved
-                == NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::UNSOLVED)
+           == NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::UNSOLVED)
         {
             auto cloudConflictedName = std::find_if(cloudConflictedNames.begin(), cloudConflictedNames.end(), [localConflictedName](const std::shared_ptr<ConflictedNameInfo>& check){
-                return check->mItemAttributes->fingerprint().compare(localConflictedName->mItemAttributes->fingerprint()) == 0;
-                //                return check->getUnescapeConflictedName().compare(localConflictedName->getUnescapeConflictedName(), Qt::CaseSensitive) == 0 && check->mSolved
-                //                        == NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::UNSOLVED;
+
+                if(check->mSolved
+                   == NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::UNSOLVED)
+                {
+                    auto fp1(check->mItemAttributes->fingerprint());
+                    auto fp2(localConflictedName->mItemAttributes->fingerprint());
+                    if(fp1.isEmpty() && fp2.isEmpty())
+                    {
+                        return fp1.compare(fp2) == 0;
+                    }
+                    else
+                    {
+                        return check->getUnescapeConflictedName().compare(localConflictedName->getUnescapeConflictedName(), Qt::CaseSensitive) == 0;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
             });
 
             if(counter == 0 && ignoreLastModifiedName)
