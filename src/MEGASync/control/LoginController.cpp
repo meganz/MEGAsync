@@ -396,7 +396,7 @@ void LoginController::fetchNodes(const QString& email)
     {
         if (!mPreferences->logged() && email.isEmpty()) // I still couldn't get the the email: won't be able to access user settings
         {
-            megaApi()->fetchNodes();
+            mMegaApi->fetchNodes();
         }
         else
         {
@@ -411,7 +411,7 @@ void LoginController::fetchNodes(const QString& email)
     }
     else // we will ask the SDK the email
     {
-        megaApi()->getUserEmail(mMegaApi->getMyUserHandleBinary(),new MegaListenerFuncExecuter(true, [loadMigrateAndFetchNodes](mega::MegaApi*,  mega::MegaRequest* request, mega::MegaError* e) {
+        mMegaApi->getUserEmail(mMegaApi->getMyUserHandleBinary(),new MegaListenerFuncExecuter(true, [loadMigrateAndFetchNodes](mega::MegaApi*,  mega::MegaRequest* request, mega::MegaError* e) {
                                       QString email;
 
                                       if (e->getErrorCode() == mega::MegaError::API_OK)
@@ -457,7 +457,7 @@ void LoginController::migrateSyncConfToSdk(const QString& email)
             cachedStorageState = 999;
         }
 
-        megaApi()->copyCachedStatus(cachedStorageState, cachedBlockedState, cachedBusinessState);
+        mMegaApi->copyCachedStatus(cachedStorageState, cachedBlockedState, cachedBusinessState);
     }
 
     foreach(SyncData osd, oldCachedSyncs)
@@ -465,7 +465,7 @@ void LoginController::migrateSyncConfToSdk(const QString& email)
         mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Copying sync data to SDK cache: %1. Name: %2")
                                                                 .arg(osd.mLocalFolder).arg(osd.mName).toUtf8().constData());
 
-        megaApi()->copySyncDataToCache(osd.mLocalFolder.toUtf8().constData(), osd.mName.toUtf8().constData(),
+        mMegaApi->copySyncDataToCache(osd.mLocalFolder.toUtf8().constData(), osd.mName.toUtf8().constData(),
                                          osd.mMegaHandle, osd.mMegaFolder.toUtf8().constData(),
                                          osd.mLocalfp, osd.mEnabled, osd.mTemporarilyDisabled,
                                          new MegaListenerFuncExecuter(true, [this, osd, oldCacheSyncsCount, needsMigratingFromOldSession, email](mega::MegaApi*,  mega::MegaRequest* request, mega::MegaError* e)
@@ -484,14 +484,14 @@ void LoginController::migrateSyncConfToSdk(const QString& email)
                                                                            --*oldCacheSyncsCount;
                                                                            if (*oldCacheSyncsCount == 0)//All syncs copied to sdk, proceed with fetchnodes
                                                                            {
-                                                                               megaApi()->fetchNodes();
+                                                                               mMegaApi->fetchNodes();
                                                                            }
                                                                        }));
     }
 
     if (*oldCacheSyncsCount == 0)//No syncs to be copied to sdk, proceed with fetchnodes
     {
-        megaApi()->fetchNodes();
+        mMegaApi->fetchNodes();
     }
 }
 
@@ -526,7 +526,7 @@ void LoginController::loadSyncExclusionRules(const QString& email)
     {
         vExclusions.push_back(exclusions[i].toUtf8().constData());
     }
-    megaApi()->setExcludedNames(&vExclusions);
+    mMegaApi->setExcludedNames(&vExclusions);
 
     QStringList exclusionPaths = mPreferences->getExcludedSyncPaths();
     std::vector<std::string> vExclusionPaths;
@@ -534,24 +534,24 @@ void LoginController::loadSyncExclusionRules(const QString& email)
     {
         vExclusionPaths.push_back(exclusionPaths[i].toUtf8().constData());
     }
-    megaApi()->setExcludedPaths(&vExclusionPaths);
+    mMegaApi->setExcludedPaths(&vExclusionPaths);
 
     if (mPreferences->lowerSizeLimit())
     {
-        megaApi()->setExclusionLowerSizeLimit(computeExclusionSizeLimit(mPreferences->lowerSizeLimitValue(), mPreferences->lowerSizeLimitUnit()));
+        mMegaApi->setExclusionLowerSizeLimit(computeExclusionSizeLimit(mPreferences->lowerSizeLimitValue(), mPreferences->lowerSizeLimitUnit()));
     }
     else
     {
-        megaApi()->setExclusionLowerSizeLimit(0);
+        mMegaApi->setExclusionLowerSizeLimit(0);
     }
 
     if (mPreferences->upperSizeLimit())
     {
-        megaApi()->setExclusionUpperSizeLimit(computeExclusionSizeLimit(mPreferences->upperSizeLimitValue(), mPreferences->upperSizeLimitUnit()));
+        mMegaApi->setExclusionUpperSizeLimit(computeExclusionSizeLimit(mPreferences->upperSizeLimitValue(), mPreferences->upperSizeLimitUnit()));
     }
     else
     {
-        megaApi()->setExclusionUpperSizeLimit(0);
+        mMegaApi->setExclusionUpperSizeLimit(0);
     }
 
     if (temporarilyLoggedPrefs)
@@ -594,7 +594,7 @@ void LoginController::runConnectivityCheck()
     }
     else if (mPreferences->proxyType() == mega::MegaProxy::PROXY_AUTO)
     {
-        std::unique_ptr<mega::MegaProxy> autoProxy(megaApi()->getAutoProxySettings());
+        std::unique_ptr<mega::MegaProxy> autoProxy(mMegaApi->getAutoProxySettings());
         if (autoProxy && autoProxy->getProxyType() == mega::MegaProxy::PROXY_CUSTOM)
         {
             std::string sProxyURL = autoProxy->getProxyURL();
@@ -658,7 +658,7 @@ bool FastLoginController::fastLogin()
     QString session = mPreferences->getSession();
     if(session.size())
     {
-        megaApi()->fastLogin(session.toUtf8().constData());
+        mMegaApi->fastLogin(session.toUtf8().constData());
         return true;
     }
     return false;
@@ -693,7 +693,7 @@ void FastLoginController::onLogin(mega::MegaRequest *request, mega::MegaError *e
 
                //Wrong login -> logout
         MegaSyncApp->unlink(true);
-        MegaSyncApp->onGlobalSyncStateChanged(megaApi());
+        MegaSyncApp->onGlobalSyncStateChanged(mMegaApi);
     }
 }
 

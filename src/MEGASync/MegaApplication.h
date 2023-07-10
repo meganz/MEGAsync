@@ -444,7 +444,6 @@ protected:
     std::shared_ptr<mega::MegaNode> mRootNode;
     std::shared_ptr<mega::MegaNode> mVaultNode;
     std::shared_ptr<mega::MegaNode> mRubbishNode;
-    bool mFetchingNodes = false;
     bool mQueringWhyAmIBlocked = false;
     bool queuedUserStats[3];
     int queuedStorageUserStatsReason;

@@ -338,7 +338,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     nUnviewedTransfers = 0;
     completedTabActive = false;
     nodescurrent = false;
-    mFetchingNodes = false;
     mQueringWhyAmIBlocked = false;
     whyamiblockedPeriodicPetition = false;
     getUserDataRequestReady = false;
@@ -1053,7 +1052,6 @@ void MegaApplication::start()
     paused = false;
     nodescurrent = false;
     getUserDataRequestReady = false;
-    mFetchingNodes = false;
     mQueringWhyAmIBlocked = false;
     whyamiblockedPeriodicPetition = false;
     storageState = MegaApi::STORAGE_STATE_UNKNOWN;
@@ -3505,7 +3503,6 @@ void MegaApplication::unlink(bool keepLogs)
     mRootNode.reset();
     mRubbishNode.reset();
     mVaultNode.reset();
-    mFetchingNodes = false;
     mQueringWhyAmIBlocked = false;
     whyamiblockedPeriodicPetition = false;
     if(megaApi->isLoggedIn())
@@ -6501,7 +6498,8 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         if (pro)      inflightUserStats[2] = false;
 
         // We need to be both logged AND have fetched the nodes to continue
-        if (mFetchingNodes || !preferences->logged())
+        if (preferences->accountStateInGeneral() != Preferences::STATE_FETCHNODES_OK
+            || !preferences->logged())
         {
             break;
         }

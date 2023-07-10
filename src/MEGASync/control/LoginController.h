@@ -63,8 +63,7 @@ protected:
     void onLogout(mega::MegaRequest* request, mega::MegaError* e);
     void fetchNodes(const QString& email = QString());
 
-    mega::MegaApi* megaApi() {return mMegaApi;}
-
+    mega::MegaApi * mMegaApi;
     std::shared_ptr<Preferences> mPreferences;
 
 private slots:
@@ -76,7 +75,6 @@ private:
     void migrateSyncConfToSdk(const QString& email);
     void loadSyncExclusionRules(const QString& email);
 
-    mega::MegaApi * mMegaApi;
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
     QTimer *mConnectivityTimer;
     bool mFetchingNodes;
