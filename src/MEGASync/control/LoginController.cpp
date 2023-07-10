@@ -140,6 +140,11 @@ void LoginController::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *req
             onFetchNodes(request, e);
             break;
         }
+        case mega::MegaRequest::TYPE_WHY_AM_I_BLOCKED:
+        {
+            onWhyAmIBlocked(request, e);
+            break;
+        }
     }
 }
 
@@ -315,6 +320,21 @@ void LoginController::onFetchNodes(mega::MegaRequest *request, mega::MegaError *
         mPreferences->setNeedsFetchNodesInGeneral(true);
         mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error fetching nodes: %1")
                                                                 .arg(QString::fromUtf8(e->getErrorString())).toUtf8().constData());
+    }
+}
+
+void LoginController::onWhyAmIBlocked(mega::MegaRequest *request, mega::MegaError *e)
+{
+    if (e->getErrorCode() == mega::MegaError::API_OK
+        && request->getNumber() == mega::MegaApi::ACCOUNT_NOT_BLOCKED)
+    {
+        // if we received a block before nodes were fetch,
+        // we want to try again now that we are no longer blocked
+        if (!mFetchingNodes && !MegaSyncApp->getRootNode())
+        {
+            fetchNodes();
+            //show fetchnodes page in new guestwidget
+        }
     }
 }
 
@@ -574,7 +594,7 @@ void LoginController::runConnectivityCheck()
     }
     else if (mPreferences->proxyType() == mega::MegaProxy::PROXY_AUTO)
     {
-        mega::MegaProxy* autoProxy = megaApi()->getAutoProxySettings();
+        std::unique_ptr<mega::MegaProxy> autoProxy(megaApi()->getAutoProxySettings());
         if (autoProxy && autoProxy->getProxyType() == mega::MegaProxy::PROXY_CUSTOM)
         {
             std::string sProxyURL = autoProxy->getProxyURL();
@@ -597,7 +617,6 @@ void LoginController::runConnectivityCheck()
                 proxy.setPort(quint16(arguments[1].toInt()));
             }
         }
-        delete autoProxy;
     }
 
     ConnectivityChecker *connectivityChecker = new ConnectivityChecker(Preferences::PROXY_TEST_URL);
@@ -661,14 +680,6 @@ void FastLoginController::onLogin(mega::MegaRequest *request, mega::MegaError *e
                 fetchNodes();
                 return;
             }
-        }
-        else if (errorCode == mega::MegaError::API_EBLOCKED)
-        {
-            QMegaMessageBox::MessageBoxInfo msgInfo;
-            msgInfo.title = tr("MEGAsync");
-            msgInfo.text = tr("Your account has been blocked. Please contact support@mega.co.nz");
-
-            QMegaMessageBox::critical(msgInfo);
         }
         else if (errorCode != mega::MegaError::API_ESID && errorCode != mega::MegaError::API_ESSL)
         //Invalid session or public key, already managed in TYPE_LOGOUT

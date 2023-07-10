@@ -57,6 +57,7 @@ protected:
     void onAccountCreationResume(mega::MegaRequest* request, mega::MegaError* e);
     void onEmailChanged(mega::MegaRequest* request, mega::MegaError* e);
     void onFetchNodes(mega::MegaRequest* request, mega::MegaError* e);
+    void onWhyAmIBlocked(mega::MegaRequest* request, mega::MegaError* e);
     void onAccountCreationCancel(mega::MegaRequest* request, mega::MegaError* e);
 
     void onLogout(mega::MegaRequest* request, mega::MegaError* e);

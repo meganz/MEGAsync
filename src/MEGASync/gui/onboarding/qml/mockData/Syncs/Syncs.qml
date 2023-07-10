@@ -2,6 +2,7 @@ import QtQuick 2.0
 
 Item {
     id: root
+
     signal cantSync
     signal syncSetupSuccess
 

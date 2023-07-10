@@ -1528,30 +1528,30 @@ void MegaApplication::onLogout()
     // due to threadifing processing.
     // Eg: transfers added to data model after a logout
     mThreadPool->push([this]()
-                      {
-                          Utilities::queueFunctionInAppThread([this]()
-                          {
-                              if (preferences)
-                              {
-                                  if (preferences->logged())
-                                  {
-                                      clearUserAttributes();
-                                      preferences->unlink();
-                                      removeAllFinishedTransfers();
-                                      clearViewedTransfers();
-                                      preferences->setFirstStartDone();
-                                  }
-                                  else
-                                  {
-                                      preferences->resetGlobalSettings();
-                                  }
+    {
+        Utilities::queueFunctionInAppThread([this]()
+        {
+            if (preferences)
+            {
+                if (preferences->logged())
+                {
+                    clearUserAttributes();
+                    preferences->unlink();
+                    removeAllFinishedTransfers();
+                    clearViewedTransfers();
+                    preferences->setFirstStartDone();
+                }
+                else
+                {
+                    preferences->resetGlobalSettings();
+                }
 
-                                  DialogOpener::closeAllDialogs();
-                                  start();
-                                  periodicTasks();
-                              }
-                          });
-                      });
+                DialogOpener::closeAllDialogs();
+                start();
+                periodicTasks();
+            }
+        });
+    });
 }
 
 void MegaApplication::checkSystemTray()
