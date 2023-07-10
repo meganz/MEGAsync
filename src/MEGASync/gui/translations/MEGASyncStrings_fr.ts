@@ -4520,7 +4520,7 @@ Please verify the correct directory name was given.</source>
         <translatorcomment>Warning message when the directory name to open is incorrect</translatorcomment>
         <translation>%1
 Le dossier est introuvable.
-Veuillez confirmer que le bon nom de répertoire a été donné.</translation>
+Veuillez confirmer que le bon nom de dossier a été donné.</translation>
     </message>
     <message>
         <source>%1 already exists.

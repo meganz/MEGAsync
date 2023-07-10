@@ -4519,7 +4519,7 @@ Please verify the correct directory name was given.</source>
         <translatorcomment>Warning message when the directory name to open is incorrect</translatorcomment>
         <translation>%1
 Folder not found.
-Please verify the correct directory name was given.</translation>
+Please verify the correct folder name was given.</translation>
     </message>
     <message>
         <source>%1 already exists.

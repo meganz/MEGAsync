@@ -4516,9 +4516,7 @@ Enter a different name</source>
 Directory not found.
 Please verify the correct directory name was given.</source>
         <translatorcomment>Warning message when the directory name to open is incorrect</translatorcomment>
-        <translation>%1
-未找到資料夾。
-請確認是否提供正確的目錄名稱。</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>%1 already exists.

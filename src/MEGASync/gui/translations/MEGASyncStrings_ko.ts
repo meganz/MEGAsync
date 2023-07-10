@@ -795,7 +795,7 @@
     <message>
         <source>Bug report</source>
         <translatorcomment>Title of the dialog used to send bug reports to support team.</translatorcomment>
-        <translation>문제 보고</translation>
+        <translation>문제 신고</translation>
     </message>
     <message>
         <source>Please clearly describe the issue you encountered. The more details, the easier for us to resolve. Your submission will be reviewed by our development team.</source>
@@ -1050,7 +1050,7 @@
     <message>
         <source>Error report</source>
         <translatorcomment>Title of the dialog displayed when an crash report occurred.</translatorcomment>
-        <translation>오류 보고</translation>
+        <translation>오류 신고</translation>
     </message>
     <message>
         <source>MEGAsync has detected a problem. These are the details:</source>
@@ -1252,7 +1252,7 @@
     <message>
         <source>Please resolve your payment issue to avoid suspension of your account.</source>
         <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
-        <translation>비즈니스 계정의 보류를 피하려면 결제 문제를 최대한 빨리 해결하세요</translation>
+        <translation>비즈니스 계정의 정지를 피하려면 결제 문제를 최대한 빨리 해결하세요</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -3057,7 +3057,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Upload produces recursivity</source>
         <translatorcomment>Error label to indicate a situation of recursivity during uploads</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>재귀적 폴더 구조로 인하여 전송 실패</translation>
     </message>
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
@@ -4297,12 +4297,12 @@ Enter a different name</source>
     <message>
         <source>Parent Directory</source>
         <translatorcomment>Button to move to the parent directory</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>부모 폴더</translation>
     </message>
     <message>
         <source>Go to the parent directory</source>
         <translatorcomment>Parent directory button message used by assistive technologies (such as screen readers)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>부모 폴더로 가기</translation>
     </message>
     <message>
         <source>Alt+Up</source>
@@ -4362,7 +4362,7 @@ Enter a different name</source>
     <message>
         <source>Find Directory</source>
         <translatorcomment>Window title when opening a directory</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>폴더 찾기</translation>
     </message>
     <message>
         <source>Open</source>
@@ -4377,7 +4377,7 @@ Enter a different name</source>
     <message>
         <source>Directory:</source>
         <translatorcomment>Selected directory text box label when choosing a directory</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>폴더:</translation>
     </message>
     <message>
         <source>All Files (*)</source>
@@ -4412,7 +4412,7 @@ Enter a different name</source>
     <message>
         <source>Could not delete directory.</source>
         <translatorcomment>Info message shown when failing deleting a directory</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>폴더를 삭제할 수 없습니다.</translation>
     </message>
     <message>
         <source>Recent Places</source>
@@ -4519,7 +4519,9 @@ Enter a different name</source>
 Directory not found.
 Please verify the correct directory name was given.</source>
         <translatorcomment>Warning message when the directory name to open is incorrect</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1
+폴더를 찾지 못하였습니다.
+올바른 폴더 이름을 입력했는지 확인하세요.</translation>
     </message>
     <message>
         <source>%1 already exists.
@@ -5075,7 +5077,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Report Issue</source>
         <translatorcomment>Button label used to submit bug reports to MEGA.</translatorcomment>
-        <translation>문제 보고</translation>
+        <translation>문제 신고</translation>
     </message>
     <message>
         <source>My Account</source>
@@ -5195,7 +5197,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Issue report:</source>
         <translatorcomment>Label for Issue reporting in General pane.(macOS)</translatorcomment>
-        <translation>문제 보고:</translation>
+        <translation>문제 신고:</translation>
     </message>
     <message>
         <source>Storage space:</source>
@@ -5320,7 +5322,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Issue report</source>
         <translatorcomment>Section title label for Issue reporting in General pane.</translatorcomment>
-        <translation>문제 보고</translation>
+        <translation>문제 신고</translation>
     </message>
     <message>
         <source>Choose which files or folders you want to exclude from synchronisation.</source>

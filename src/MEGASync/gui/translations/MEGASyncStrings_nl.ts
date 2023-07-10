@@ -3057,7 +3057,7 @@ Overdrachten worden automatisch hervat wanneer u de applicatie heropend.</numeru
     <message>
         <source>Upload produces recursivity</source>
         <translatorcomment>Error label to indicate a situation of recursivity during uploads</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Overdracht is mislukt vanwege een recursieve mapstructuur</translation>
     </message>
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
@@ -4295,12 +4295,12 @@ Voer een andere naam in.</translation>
     <message>
         <source>Parent Directory</source>
         <translatorcomment>Button to move to the parent directory</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Hoofdmap</translation>
     </message>
     <message>
         <source>Go to the parent directory</source>
         <translatorcomment>Parent directory button message used by assistive technologies (such as screen readers)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ga naar de hoofdmap</translation>
     </message>
     <message>
         <source>Alt+Up</source>
@@ -4360,7 +4360,7 @@ Voer een andere naam in.</translation>
     <message>
         <source>Find Directory</source>
         <translatorcomment>Window title when opening a directory</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Zoek map</translation>
     </message>
     <message>
         <source>Open</source>
@@ -4375,7 +4375,7 @@ Voer een andere naam in.</translation>
     <message>
         <source>Directory:</source>
         <translatorcomment>Selected directory text box label when choosing a directory</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Map:</translation>
     </message>
     <message>
         <source>All Files (*)</source>
@@ -4410,7 +4410,7 @@ Voer een andere naam in.</translation>
     <message>
         <source>Could not delete directory.</source>
         <translatorcomment>Info message shown when failing deleting a directory</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Kon map niet verwijderen.</translation>
     </message>
     <message>
         <source>Recent Places</source>
@@ -4517,7 +4517,9 @@ Voer een andere naam in.</translation>
 Directory not found.
 Please verify the correct directory name was given.</source>
         <translatorcomment>Warning message when the directory name to open is incorrect</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1
+Map niet gevonden
+Controleer of de juiste mapnaam is opgegeven.</translation>
     </message>
     <message>
         <source>%1 already exists.

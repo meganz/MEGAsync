@@ -4518,7 +4518,7 @@ Please verify the correct directory name was given.</source>
         <translatorcomment>Warning message when the directory name to open is incorrect</translatorcomment>
         <translation>%1
 未找到文件夹。
-请确认是否提供了正确的目录名称。</translation>
+请验证所提供的文件夹名称是否正确。</translation>
     </message>
     <message>
         <source>%1 already exists.

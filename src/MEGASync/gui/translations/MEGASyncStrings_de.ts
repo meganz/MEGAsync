@@ -3057,7 +3057,7 @@ Die Transfers werden automatisch fortgesetzt, wenn Sie die App erneut öffnen.</
     <message>
         <source>Upload produces recursivity</source>
         <translatorcomment>Error label to indicate a situation of recursivity during uploads</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Transfer wegen rekursiver Ordnerstruktur fehlgeschlagen</translation>
     </message>
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
@@ -4295,12 +4295,12 @@ Bitte geben Sie einen anderen Namen ein.</translation>
     <message>
         <source>Parent Directory</source>
         <translatorcomment>Button to move to the parent directory</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Übergeordneter Ordner</translation>
     </message>
     <message>
         <source>Go to the parent directory</source>
         <translatorcomment>Parent directory button message used by assistive technologies (such as screen readers)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Zum übergeordneten Ordner</translation>
     </message>
     <message>
         <source>Alt+Up</source>
@@ -4360,7 +4360,7 @@ Bitte geben Sie einen anderen Namen ein.</translation>
     <message>
         <source>Find Directory</source>
         <translatorcomment>Window title when opening a directory</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ordner suchen</translation>
     </message>
     <message>
         <source>Open</source>
@@ -4375,7 +4375,7 @@ Bitte geben Sie einen anderen Namen ein.</translation>
     <message>
         <source>Directory:</source>
         <translatorcomment>Selected directory text box label when choosing a directory</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ordner:</translation>
     </message>
     <message>
         <source>All Files (*)</source>
@@ -4410,7 +4410,7 @@ Bitte geben Sie einen anderen Namen ein.</translation>
     <message>
         <source>Could not delete directory.</source>
         <translatorcomment>Info message shown when failing deleting a directory</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ordner konnte nicht gelöscht werden.</translation>
     </message>
     <message>
         <source>Recent Places</source>

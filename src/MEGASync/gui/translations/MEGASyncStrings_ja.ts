@@ -4515,7 +4515,7 @@ Please verify the correct directory name was given.</source>
         <translatorcomment>Warning message when the directory name to open is incorrect</translatorcomment>
         <translation>%1
 フォルダが見つかりません。
-正しいディレクトリ名が指定されたことをご確認ください。</translation>
+正しいフォルダ名が指定されていることをご確認ください。</translation>
     </message>
     <message>
         <source>%1 already exists.
