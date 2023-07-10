@@ -4148,7 +4148,9 @@ Enter a different name.</translation>
         <source>- UI enhancements.
 - Detected crash fixes on Windows, Linux, and macOS.
 </source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Changelog for v4.9.6 version</translatorcomment>
+        <translation type="unfinished">- UI enhancements.
+- Detected crash fixes on Windows, Linux, and macOS.</translation>
     </message>
 </context>
 <context>
