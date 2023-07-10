@@ -6786,14 +6786,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         if (e->getErrorCode() == MegaError::API_OK
                 && request->getNumber() == MegaApi::ACCOUNT_NOT_BLOCKED)
         {
-            // if we received a block before nodes were fetch,
-            // we want to try again now that we are no longer blocked
-            if (!mFetchingNodes && !getRootNode())
-            {
-                //fetchNodes(); //TODO: FIX THIS
-                emit fetchNodesAfterBlock(); //so that guest widget notice and loads fetch noding page
-            }
-
             blockState = MegaApi::ACCOUNT_NOT_BLOCKED;
             emit unblocked();
             blockStateSet = true;
