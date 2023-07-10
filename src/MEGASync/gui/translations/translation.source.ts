@@ -4145,14 +4145,10 @@ Enter a different name.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- We&apos;ve enhanced system notifications.
-- We&apos;ve enhanced the UI.
-- We&apos;ve fixed the detected crashes on Windows, Linux, and macOS.
+        <source>- UI enhancements.
+- Detected crash fixes on Windows, Linux, and macOS.
 </source>
-        <translatorcomment>Changelog for v4.9.5</translatorcomment>
-        <translation>- We’ve enhanced system notifications.
-- We&apos;ve enhanced the UI.
-- We&apos;ve fixed the detected crashes on Windows, Linux, and macOS.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4530,7 +4526,7 @@ Please verify the correct directory name was given.</source>
         <translatorcomment>Warning message when the directory name to open is incorrect</translatorcomment>
         <translation>%1
 Folder not found.
-Please verify the correct directory name was given.</translation>
+Please verify the correct folder name was given.</translation>
     </message>
     <message>
         <source>%1 already exists.
