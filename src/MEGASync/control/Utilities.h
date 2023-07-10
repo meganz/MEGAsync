@@ -350,7 +350,7 @@ public:
 #endif
 
     static QString getNonDuplicatedNodeName(mega::MegaNode* node, mega::MegaNode* parentNode, const QString& currentName, bool unescapeName, const QStringList &itemsBeingRenamed);
-    static QString getNonDuplicatedLocalName(const QFileInfo& currentFile, bool unescapeName = false);
+    static QString getNonDuplicatedLocalName(const QFileInfo& currentFile, bool unescapeName, const QStringList &itemsBeingRenamed);
     static QPair<QString, QString> getFilenameBasenameAndSuffix(const QString& fileName);
 
     //get mega transfer nodepath

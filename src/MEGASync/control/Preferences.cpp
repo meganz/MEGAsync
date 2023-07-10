@@ -291,10 +291,8 @@ const bool Preferences::defaultDeprecatedNotifications      = true;
 const QString Preferences::showDeprecatedNotificationsKey   = QString::fromAscii("showNotifications");
 
 //Stalled Issues
-const Preferences::StalledIssuesSmartModeType Preferences::defaultStalledIssuesSmartMode = Preferences::StalledIssuesSmartModeType::None;
-const QString Preferences::stalledIssuesSmartModeKey   = QString::fromAscii("stalledIssuesSmartMode");
-const Preferences::StalledIssuesLocalAndRemoteSolveType Preferences::defaultStalledIssuesLocalAndRemoteSolve = Preferences::StalledIssuesLocalAndRemoteSolveType::None;
-const QString Preferences::stalledIssuesLocalAndRemoteKey   = QString::fromAscii("stalledIssuesLocalAndRemoteKey");
+const Preferences::StalledIssuesModeType Preferences::defaultStalledIssuesMode = Preferences::StalledIssuesModeType::None;
+const QString Preferences::stalledIssuesModeKey   = QString::fromAscii("stalledIssuesSmartMode");
 //End of Stalled Issues
 
 const QString Preferences::accountTypeKey           = QString::fromAscii("accountType");
@@ -1370,26 +1368,15 @@ QString Preferences::notificationsTypeToString(NotificationsTypes type)
 
 /************ STALLED ISSUES **********************************/
 
-Preferences::StalledIssuesSmartModeType Preferences::stalledIssueSmartMode()
+Preferences::StalledIssuesModeType Preferences::stalledIssueMode()
 {
-    auto value = getValueConcurrent<int>(stalledIssuesSmartModeKey, static_cast<int>(defaultStalledIssuesSmartMode));
-    return static_cast<StalledIssuesSmartModeType>(value);
+    auto value = getValueConcurrent<int>(stalledIssuesModeKey, static_cast<int>(defaultStalledIssuesMode));
+    return static_cast<StalledIssuesModeType>(value);
 }
 
-void Preferences::setStalledIssueSmartMode(StalledIssuesSmartModeType value)
+void Preferences::setStalledIssueMode(StalledIssuesModeType value)
 {
-    setValueAndSyncConcurrent(stalledIssuesSmartModeKey, static_cast<int>(value));
-}
-
-Preferences::StalledIssuesLocalAndRemoteSolveType Preferences::stalledIssueLocalAndRemote()
-{
-    auto value = getValueConcurrent<int>(stalledIssuesSmartModeKey, static_cast<int>(defaultStalledIssuesSmartMode));
-    return static_cast<StalledIssuesLocalAndRemoteSolveType>(value);
-}
-
-void Preferences::setStalledIssueLocalAndRemote(StalledIssuesLocalAndRemoteSolveType value)
-{
-    setValueAndSyncConcurrent(stalledIssuesLocalAndRemoteKey, static_cast<int>(value));
+    setValueAndSyncConcurrent(stalledIssuesModeKey, static_cast<int>(value));
 }
 
 /************ END OF NOTIFICATIONS GETTERS/SETTERS ************/

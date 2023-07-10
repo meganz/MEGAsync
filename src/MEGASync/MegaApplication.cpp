@@ -719,13 +719,6 @@ void MegaApplication::initialize()
     mStalledIssuesModel = new StalledIssuesModel(this);
     connect(Platform::getInstance()->getShellNotifier().get(), &AbstractShellNotifier::shellNotificationProcessed,
             this, &MegaApplication::onNotificationProcessed);
-
-    //TEMPORARY
-    if(Preferences::instance()->stalledIssueSmartMode() == Preferences::StalledIssuesSmartModeType::None)
-    {
-        //SHOW DIALOG TO SELECT SMART OR VERBOSE
-        Preferences::instance()->setStalledIssueSmartMode(Preferences::StalledIssuesSmartModeType::Smart);
-    }
 }
 
 QString MegaApplication::applicationFilePath()

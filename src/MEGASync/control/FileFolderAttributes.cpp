@@ -76,6 +76,20 @@ void FileFolderAttributes::requestCreatedTime(QObject* caller, std::function<voi
     }
 }
 
+void FileFolderAttributes::requestFingerprint(QObject *caller, std::function<void (const QString &)> func)
+{
+    if(auto context = requestReady(AttributeTypes::Fingerprint, caller))
+    {
+        connect(this, &FileFolderAttributes::fingerprintReady, context, [this, func](const QString& fp){
+            if(func)
+            {
+                func(fp);
+                requestFinish(AttributeTypes::Fingerprint);
+            }
+        });
+    }
+}
+
 void FileFolderAttributes::cancel()
 {
     mCancelled = true;
@@ -94,6 +108,11 @@ int64_t FileFolderAttributes::modifiedTime() const
 int64_t FileFolderAttributes::createdTime() const
 {
     return mCreatedTime.toSecsSinceEpoch();
+}
+
+const QString &FileFolderAttributes::fingerprint() const
+{
+    return mFp;
 }
 
 bool FileFolderAttributes::attributeNeedsUpdate(int type)
@@ -156,7 +175,6 @@ void LocalFileFolderAttributes::requestSize(QObject* caller,std::function<void(q
         QFileInfo fileInfo(mPath);
         if(fileInfo.exists())
         {
-
             if(fileInfo.isFile())
             {
                 mSize = fileInfo.size();
@@ -264,6 +282,28 @@ void LocalFileFolderAttributes::requestCreatedTime(QObject* caller,std::function
     }
 
     emit createdTimeReady(mCreatedTime);
+}
+
+void LocalFileFolderAttributes::requestFingerprint(QObject *caller, std::function<void (const QString &)> func)
+{
+    FileFolderAttributes::requestFingerprint(caller,func);
+
+    if(!mPath.isEmpty())
+    {
+        QFileInfo fileInfo(mPath);
+
+        if(fileInfo.exists())
+        {
+            if(fileInfo.isFile())
+            {
+                std::unique_ptr<char[]> fp(MegaSyncApp->getMegaApi()->getFingerprint(QDir::toNativeSeparators(fileInfo.filePath()).toUtf8().constData()));
+                mFp = QString::fromUtf8(fp.get());
+            }
+
+        }
+
+        emit fingerprintReady(mFp);
+    }
 }
 
 QDateTime LocalFileFolderAttributes::calculateModifiedTime()
@@ -395,6 +435,20 @@ void RemoteFileFolderAttributes::requestCreatedTime(QObject* caller,std::functio
     }
 
     emit createdTimeReady(mCreatedTime);
+}
+
+void RemoteFileFolderAttributes::requestFingerprint(QObject *caller, std::function<void (const QString &)> func)
+{
+    FileFolderAttributes::requestFingerprint(caller, func);
+
+    std::unique_ptr<mega::MegaNode> node = getNode();
+    if(node)
+    {
+        const char* fp(node->getFingerprint());
+        mFp = QString::fromUtf8(node->getFingerprint());
+    }
+
+    emit fingerprintReady(mFp);
 }
 
 void RemoteFileFolderAttributes::requestUser(QObject *caller, std::function<void (QString, bool)> func)

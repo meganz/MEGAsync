@@ -54,6 +54,7 @@ public:
     QString getFileName() const;
 
     const std::shared_ptr<const FileFolderAttributes> getAttributes() const {return mAttributes;}
+    std::shared_ptr<FileFolderAttributes> getAttributes() {return mAttributes;}
 
     virtual bool isEqual(const mega::MegaSyncStall*) const {return false;}
 

@@ -115,7 +115,7 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
     for(int index = conflictedNames.size()-1; index >= 0; index--)
     {
         std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo> info(conflictedNames.at(index));
-        QString conflictedName(info->mConflictedName);
+        QString conflictedName(info->getConflictedName());
 
         QWidget* parent(ui->nameConflicts);
         QVBoxLayout* titleLayout(ui->nameConflictsLayout);
@@ -144,6 +144,7 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
         if(firstTime)
         {
             title = new NameConflictTitle(index, conflictedName, parent);
+            connect(title, &StalledIssueActionTitle::rawInfoCheckToggled, this, &NameConflict::onRawInfoChecked);
             connect(title, &StalledIssueActionTitle::actionClicked, this, &NameConflict::onActionClicked);
             titleLayout->addWidget(title);
             mTitlesByIndex.insert(index, title);
@@ -153,50 +154,7 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
             title = mTitlesByIndex.value(index);
         }
 
-        info->mItemAttributes->requestModifiedTime(title, [this, index](const QDateTime& time)
-        {
-            mTitlesByIndex.value(index)->updateLastTimeModified(time);
-        });
-
-        if(isCloud())
-        {
-            info->mItemAttributes->requestCreatedTime(title, [this, index](const QDateTime& time)
-            {
-                mTitlesByIndex.value(index)->updateCreatedTime(time);
-            });
-        }
-        else
-        {
-#ifndef Q_OS_LINUX
-            info->mItemAttributes->requestCreatedTime(title, [this, index](const QDateTime& time)
-            {
-                mTitlesByIndex.value(index)->updateCreatedTime(time);
-            });
-#endif
-        }
-
-        info->mItemAttributes->requestSize(title,[this, index](qint64 size)
-        {
-            mTitlesByIndex.value(index)->updateSize(Utilities::getSizeString(size));
-        });
-
-        //These items go in order
-        //Modified time -- created time -- size
-        //User
-        if(isCloud())
-        {
-            auto cloudAttributes(FileFolderAttributes::convert<RemoteFileFolderAttributes>(info->mItemAttributes));
-
-            cloudAttributes->requestVersions(title,[this, index](int versions)
-            {
-                mTitlesByIndex.value(index)->updateVersionsCount(versions);
-            });
-
-            cloudAttributes->requestUser(title, MegaSyncApp->getMegaApi()->getMyUserHandleBinary(), [this, index](QString user, bool showAttribute)
-            {
-                mTitlesByIndex.value(index)->updateUser(user, showAttribute);
-            });
-        }
+        updateTitleExtraInfo(title, info);
 
         nameData->checkTrailingSpaces(conflictedName);
         if(isCloud())
@@ -253,6 +211,82 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
 
     mIssue = issue;
 }
+
+void NameConflict::onRawInfoChecked()
+{
+    auto title = dynamic_cast<NameConflictTitle*>(sender());
+    if(title)
+    {
+        //Fill conflict names
+        auto conflictedNames = getConflictedNames(mIssue);
+        std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo> info(conflictedNames.at(title->getIndex()));
+        updateTitleExtraInfo(title, info);
+        update();
+    }
+}
+
+void NameConflict::updateTitleExtraInfo(NameConflictTitle* title, std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo> info)
+{
+    auto index = title->getIndex();
+
+    if(title->showRawInfo())
+    {
+        info->mItemAttributes->requestFingerprint(title, [this, index](const QString& fp)
+        {
+            mTitlesByIndex.value(index)->updateFingerprint(fp);
+        });
+    }
+    else
+    {
+        title->updateFingerprint(QString());
+    }
+
+    info->mItemAttributes->requestModifiedTime(title, [this, index](const QDateTime& time)
+    {
+        mTitlesByIndex.value(index)->updateLastTimeModified(time);
+    });
+
+    if(isCloud())
+    {
+        info->mItemAttributes->requestCreatedTime(title, [this, index](const QDateTime& time)
+        {
+            mTitlesByIndex.value(index)->updateCreatedTime(time);
+        });
+    }
+    else
+    {
+#ifndef Q_OS_LINUX
+        info->mItemAttributes->requestCreatedTime(title, [this, index](const QDateTime& time)
+        {
+            mTitlesByIndex.value(index)->updateCreatedTime(time);
+        });
+#endif
+    }
+
+    info->mItemAttributes->requestSize(title,[this, index](qint64 size)
+    {
+        mTitlesByIndex.value(index)->updateSize(size);
+    });
+
+    //These items go in order
+    //Modified time -- created time -- size
+    //User
+    if(isCloud())
+    {
+        auto cloudAttributes(FileFolderAttributes::convert<RemoteFileFolderAttributes>(info->mItemAttributes));
+
+        cloudAttributes->requestVersions(title,[this, index](int versions)
+        {
+            mTitlesByIndex.value(index)->updateVersionsCount(versions);
+        });
+
+        cloudAttributes->requestUser(title, MegaSyncApp->getMegaApi()->getMyUserHandleBinary(), [this, index](QString user, bool showAttribute)
+        {
+            mTitlesByIndex.value(index)->updateUser(user, showAttribute);
+        });
+    }
+}
+
 
 void NameConflict::setDelegate(QPointer<StalledIssueBaseDelegateWidget> newDelegate)
 {

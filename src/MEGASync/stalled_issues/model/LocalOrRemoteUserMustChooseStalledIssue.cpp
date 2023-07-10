@@ -14,11 +14,27 @@ LocalOrRemoteUserMustChooseStalledIssue::LocalOrRemoteUserMustChooseStalledIssue
 
 void LocalOrRemoteUserMustChooseStalledIssue::solveIssue(bool)
 {
-    if(isFile() &&
-       consultLocalData()->getAttributes()->size() == consultCloudData()->getAttributes()->size() &&
-       consultLocalData()->getFileName().compare(consultCloudData()->getFileName(), Qt::CaseSensitive))
+    if(isFile())
     {
-        chooseLocalSide();
+        const char* localFingerPrint(MegaSyncApp->getMegaApi()->getFingerprint(consultLocalData()->getNativeFilePath().toUtf8().constData()));
+        const char* cloudFingerPrint(consultCloudData()->getNode()->getFingerprint());
+
+        if(std::strcmp(localFingerPrint, cloudFingerPrint) == 0)
+        {
+            getLocalData()->getAttributes()->requestSize(nullptr, nullptr);
+            getCloudData()->getAttributes()->requestSize(nullptr, nullptr);
+
+            if(consultLocalData()->getAttributes()->size() == consultCloudData()->getAttributes()->size())
+            {
+                //Check names
+                auto localName(QString::fromUtf8(MegaSyncApp->getMegaApi()->unescapeFsIncompatible(consultLocalData()->getFileName().toUtf8().constData())));
+                auto cloudName(QString::fromUtf8(MegaSyncApp->getMegaApi()->unescapeFsIncompatible(consultCloudData()->getFileName().toUtf8().constData())));
+                if(localName.compare(cloudName, Qt::CaseSensitive) == 0)
+                {
+                    chooseLocalSide();
+                }
+            }
+        }
     }
 }
 

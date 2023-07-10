@@ -177,9 +177,11 @@ void StalledIssueHeader::on_ignoreFileButton_clicked()
 
     if(selection.size() <= 1)
     {
+        auto allSimilarIssues = MegaSyncApp->getStalledIssuesModel()->getIssues(canBeIgnoredChecker);
+
         msgInfo.buttons |= QMessageBox::Yes;
-        textsByButton.insert(QMessageBox::Yes, tr("Apply to all similar issues"));
-        textsByButton.insert(QMessageBox::Ok, tr("Apply to selected issue"));
+        textsByButton.insert(QMessageBox::Yes, tr("Apply to all similar issues (%1)").arg(allSimilarIssues.size()));
+        textsByButton.insert(QMessageBox::Ok, tr("Apply only to this issue"));
     }
     else
     {

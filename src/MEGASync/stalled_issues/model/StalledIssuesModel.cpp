@@ -47,9 +47,9 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest *r
                 }
 
                 //No auto solving for the moment
-                if(Preferences::instance()->stalledIssueSmartMode() == Preferences::StalledIssuesSmartModeType::Smart)
+                if(Preferences::instance()->stalledIssueMode() == Preferences::StalledIssuesModeType::Smart)
                 {
-                    //variant->getData()->solveIssue(true);
+                    variant->getData()->solveIssue(true);
                 }
 
                 if(!variant->consultData()->isSolved())
@@ -377,6 +377,31 @@ void StalledIssuesModel::updateIndex(const QModelIndex &index)
     emit dataChanged(index, index);
 }
 
+StalledIssuesVariantList StalledIssuesModel::getIssuesByReason(QList<mega::MegaSyncStall::SyncStallReason> reasons)
+{
+    auto checkerFunc = [reasons](const std::shared_ptr<const StalledIssue> check) -> bool{
+        return reasons.contains(check->getReason());
+    };
+
+    return getIssues(checkerFunc);
+}
+
+StalledIssuesVariantList StalledIssuesModel::getIssues(std::function<bool (const std::shared_ptr<const StalledIssue>)> checker)
+{
+    StalledIssuesVariantList list;
+
+    for(int row = 0; row < rowCount(QModelIndex()); ++row)
+    {
+        auto issue(mStalledIssues.at(row));
+        if(issue && checker(issue->consultData()))
+        {
+            list.append(issue);
+        }
+    }
+
+    return list;
+}
+
 void StalledIssuesModel::reset()
 {
     beginResetModel();
@@ -413,7 +438,7 @@ bool StalledIssuesModel::solveLocalConflictedNameByRemove(int conflictIndex, con
 {
     auto potentialIndex = getSolveIssueIndex(index);
 
-    if(auto nameConflict = mStalledIssues.at(potentialIndex.row())->getData().convert<NameConflictedStalledIssue>())
+    if(auto nameConflict = mStalledIssues.at(potentialIndex.row())->convert<NameConflictedStalledIssue>())
     {
         return nameConflict->solveLocalConflictedNameByRemove(conflictIndex);
     }
@@ -425,7 +450,7 @@ bool StalledIssuesModel::solveLocalConflictedNameByRename(const QString &renameT
 {
     auto potentialIndex = getSolveIssueIndex(index);
 
-    if(auto nameConflict = mStalledIssues.at(potentialIndex.row())->getData().convert<NameConflictedStalledIssue>())
+    if(auto nameConflict = mStalledIssues.at(potentialIndex.row())->convert<NameConflictedStalledIssue>())
     {
         return nameConflict->solveLocalConflictedNameByRename(conflictIndex, renameTo);
     }
@@ -437,7 +462,7 @@ bool StalledIssuesModel::solveCloudConflictedNameByRemove(int conflictIndex, con
 {
     auto potentialIndex = getSolveIssueIndex(index);
 
-    if(auto nameConflict = mStalledIssues.at(potentialIndex.row())->getData().convert<NameConflictedStalledIssue>())
+    if(auto nameConflict = mStalledIssues.at(potentialIndex.row())->convert<NameConflictedStalledIssue>())
     {
         return nameConflict-> solveCloudConflictedNameByRemove(conflictIndex);
     }
@@ -449,7 +474,7 @@ bool StalledIssuesModel::solveCloudConflictedNameByRename(const QString& renameT
 {
     auto potentialIndex = getSolveIssueIndex(index);
 
-    if(auto nameConflict = mStalledIssues.at(potentialIndex.row())->getData().convert<NameConflictedStalledIssue>())
+    if(auto nameConflict = mStalledIssues.at(potentialIndex.row())->convert<NameConflictedStalledIssue>())
     {
         return nameConflict->solveCloudConflictedNameByRename(conflictIndex, renameTo);
     }
@@ -583,7 +608,7 @@ void StalledIssuesModel::solveNameConflictIssues(const QModelIndexList &list)
                 auto item = mStalledIssues.at(row);
                 if(item->consultData()->getReason() == mega::MegaSyncStall::SyncStallReason::NamesWouldClashWhenSynced)
                 {
-                    if(auto nameConflict = item->getData().convert<NameConflictedStalledIssue>())
+                    if(auto nameConflict = item->convert<NameConflictedStalledIssue>())
                     {
                         nameConflict->solveIssue(false);
                     }
@@ -603,7 +628,7 @@ void StalledIssuesModel::solveNameConflictIssues(const QModelIndexList &list)
             {
                 auto potentialIndex = getSolveIssueIndex(index);
 
-                if(auto nameConflict = mStalledIssues.at(potentialIndex.row())->getData().convert<NameConflictedStalledIssue>())
+                if(auto nameConflict = mStalledIssues.at(potentialIndex.row())->convert<NameConflictedStalledIssue>())
                 {
                     nameConflict->solveIssue(false);
                 }

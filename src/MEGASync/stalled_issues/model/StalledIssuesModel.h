@@ -77,6 +77,10 @@ public:
 
     void updateIndex(const QModelIndex& index);
 
+    StalledIssuesVariantList getIssuesByReason(QList<mega::MegaSyncStall::SyncStallReason> reasons);
+    StalledIssuesVariantList getIssues(std::function<bool (const std::shared_ptr<const StalledIssue>)> checker);
+
+    //SOLVE PROBLEMS
     //Name conflicts
     bool solveLocalConflictedNameByRemove(int conflictIndex, const QModelIndex& index);
     bool solveLocalConflictedNameByRename(const QString& renameTo, int conflictIndex, const QModelIndex& index);

@@ -60,8 +60,11 @@ protected:
 
 private slots:
     void onActionClicked(int actionId);
+    void onRawInfoChecked();
 
 private:
+    void updateTitleExtraInfo(NameConflictTitle* title, std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo> info);
+
     Ui::NameConflict *ui;
     std::shared_ptr<const NameConflictedStalledIssue> mIssue;
     StalledIssuesUtilities mUtilities;

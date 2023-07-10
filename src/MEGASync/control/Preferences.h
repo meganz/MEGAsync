@@ -174,24 +174,14 @@ public:
     //**** END OF Notifications ****/
 
     //**** Stalled Issues ****/
-    enum class StalledIssuesSmartModeType
+    enum class StalledIssuesModeType
     {
         None = 0,
         Smart,
         Verbose
     };
-    StalledIssuesSmartModeType stalledIssueSmartMode();
-    void setStalledIssueSmartMode(StalledIssuesSmartModeType value);
-
-    enum class StalledIssuesLocalAndRemoteSolveType
-    {
-        None = 0,
-        LastMTime,
-        Local,
-        Remote
-    };
-    StalledIssuesLocalAndRemoteSolveType stalledIssueLocalAndRemote();
-    void setStalledIssueLocalAndRemote(StalledIssuesLocalAndRemoteSolveType value);
+    StalledIssuesModeType stalledIssueMode();
+    void setStalledIssueMode(StalledIssuesModeType value);
 
     //**** END OF Stalled Issues ****/
 
@@ -754,11 +744,8 @@ protected:
     static const bool defaultDeprecatedNotifications;
 
     //Stalled issues smart choice
-    static const QString stalledIssuesSmartModeKey;
-    static const StalledIssuesSmartModeType defaultStalledIssuesSmartMode;
-
-    static const QString stalledIssuesLocalAndRemoteKey;
-    static const StalledIssuesLocalAndRemoteSolveType defaultStalledIssuesLocalAndRemoteSolve;
+    static const QString stalledIssuesModeKey;
+    static const StalledIssuesModeType defaultStalledIssuesMode;
 
     //End of stalled issues
 

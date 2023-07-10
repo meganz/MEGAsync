@@ -53,9 +53,13 @@ void StalledIssueBaseDelegateWidget::reset()
 QSize StalledIssueBaseDelegateWidget::sizeHint() const
 {
     StalledIssue::SizeType sizeType = isHeader() ? StalledIssue::Header : StalledIssue::Body;
-    if(mData.getDelegateSize(sizeType).isValid())
+
+    if(isHeader())
     {
-        return mData.getDelegateSize(sizeType);
+        if(mData.getDelegateSize(sizeType).isValid())
+        {
+            return mData.getDelegateSize(sizeType);
+        }
     }
 
     auto size = QWidget::sizeHint();

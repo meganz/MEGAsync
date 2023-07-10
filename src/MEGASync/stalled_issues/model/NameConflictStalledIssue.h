@@ -21,24 +21,40 @@ public:
         };
 
         mega::MegaHandle mHandle;
-        QString mConflictedName;
+        QString getUnescapeConflictedName()
+        {
+            if(mUnescapedConflictedName.isEmpty())
+            {
+                mUnescapedConflictedName = QString::fromUtf8(MegaSyncApp->getMegaApi()->unescapeFsIncompatible(getConflictedName().toUtf8().constData()));
+            }
+
+            return mUnescapedConflictedName;
+        }
+
+        QString getConflictedName()
+        {
+            return mConflictedName;
+        }
+
         QString mConflictedPath;
         QString mRenameTo;
         SolvedType mSolved;
         bool mDuplicated;
         int mDuplicatedGroupId;
+        bool mIsFile;
         std::shared_ptr<FileFolderAttributes>  mItemAttributes;
 
         ConflictedNameInfo()
             : mSolved(SolvedType::UNSOLVED)
         {}
 
-        ConflictedNameInfo(const QFileInfo& fileInfo, std::shared_ptr<FileFolderAttributes> attributes)
-            :mConflictedName(fileInfo.fileName()),
+        ConflictedNameInfo(const QFileInfo& fileInfo, bool isFile, std::shared_ptr<FileFolderAttributes> attributes)
+            : mConflictedName(fileInfo.fileName()),
               mConflictedPath(fileInfo.filePath()),
               mSolved(SolvedType::UNSOLVED),
               mDuplicatedGroupId(-1),
               mDuplicated(false),
+              mIsFile(isFile),
               mItemAttributes(attributes)
         {}
 
@@ -47,6 +63,10 @@ public:
             return mConflictedName == data.mConflictedName;
         }
         bool isSolved() const {return mSolved != SolvedType::UNSOLVED;}
+
+    private:
+        QString mConflictedName;
+        QString mUnescapedConflictedName;
     };
 
     class CloudConflictedNames
@@ -257,8 +277,14 @@ public:
 
 private:
     bool checkAndSolveConflictedNamesSolved(const QList<std::shared_ptr<ConflictedNameInfo>>& conflicts);
-    void renameCloudNodesAutomatically(const QList<std::shared_ptr<ConflictedNameInfo>>& cloudConflictedNames);
-    void renameLocalItemsAutomatically(const QList<std::shared_ptr<ConflictedNameInfo>>& cloudConflictedNames);
+    void renameCloudNodesAutomatically(const QList<std::shared_ptr<ConflictedNameInfo>>& cloudConflictedNames,
+                                       const QList<std::shared_ptr<ConflictedNameInfo>>& localConflictedNames,
+                                       bool ignoreLastModifiedName,
+                                       QStringList &cloudItemsBeingRenamed);
+    void renameLocalItemsAutomatically(const QList<std::shared_ptr<ConflictedNameInfo>>& cloudConflictedNames,
+                                       const QList<std::shared_ptr<ConflictedNameInfo>>& localConflictedNames,
+                                       bool ignoreLastModifiedName,
+                                       QStringList &cloudItemsBeingRenamed);
 
     CloudConflictedNamesByHandle mCloudConflictedNames;
     QList<std::shared_ptr<ConflictedNameInfo>> mLocalConflictedNames;

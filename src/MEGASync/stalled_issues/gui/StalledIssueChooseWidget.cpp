@@ -17,6 +17,7 @@ StalledIssueChooseWidget::StalledIssueChooseWidget(QWidget *parent) :
     ui->setupUi(this);
 
     ui->name->removeBackgroundColor();
+    connect(ui->name, &StalledIssueActionTitle::rawInfoCheckToggled, this, &StalledIssueChooseWidget::onRawInfoToggled);
 
     ui->path->setIndent(StalledIssueHeader::GROUPBOX_CONTENTS_INDENT);
     ui->path->hideLocalOrRemoteTitle();
@@ -140,6 +141,18 @@ QString LocalStalledIssueChooseWidget::movedToBinText() const
 void LocalStalledIssueChooseWidget::updateUi(LocalStalledIssueDataPtr localData,
                                              LocalOrRemoteUserMustChooseStalledIssue::ChosenSide side)
 {
+   updateExtraInfo(localData);
+
+    StalledIssueChooseWidget::updateUi(localData,side);
+}
+
+void LocalStalledIssueChooseWidget::onRawInfoToggled()
+{
+    updateExtraInfo(mData->convert<LocalStalledIssueData>());
+}
+
+void LocalStalledIssueChooseWidget::updateExtraInfo(LocalStalledIssueDataPtr localData)
+{
     localData->getFileFolderAttributes()->requestModifiedTime(this, [this](const QDateTime& time){
         ui->name->updateLastTimeModified(time);
     });
@@ -151,10 +164,8 @@ void LocalStalledIssueChooseWidget::updateUi(LocalStalledIssueDataPtr localData,
 #endif
 
     localData->getFileFolderAttributes()->requestSize(this, [this](qint64 size){
-        ui->name->updateSize(Utilities::getSizeString(size));
+        ui->name->updateSize(size);
     });
-
-    StalledIssueChooseWidget::updateUi(localData,side);
 }
 
 //CLOUD
@@ -165,6 +176,18 @@ QString CloudStalledIssueChooseWidget::movedToBinText() const
 
 void CloudStalledIssueChooseWidget::updateUi(CloudStalledIssueDataPtr cloudData,
                                              LocalOrRemoteUserMustChooseStalledIssue::ChosenSide side)
+{
+    updateExtraInfo(cloudData);
+
+    StalledIssueChooseWidget::updateUi(cloudData, side);
+}
+
+void CloudStalledIssueChooseWidget::onRawInfoToggled()
+{
+    updateExtraInfo(mData->convert<CloudStalledIssueData>());
+}
+
+void CloudStalledIssueChooseWidget::updateExtraInfo(CloudStalledIssueDataPtr cloudData)
 {
     auto node = cloudData->getNode();
     if(node)
@@ -178,8 +201,20 @@ void CloudStalledIssueChooseWidget::updateUi(CloudStalledIssueDataPtr cloudData,
         });
 
         cloudData->getFileFolderAttributes()->requestSize(this, [this](qint64 size){
-            ui->name->updateSize(Utilities::getSizeString(size));
+            ui->name->updateSize(size);
         });
+
+        if(ui->name->showRawInfo())
+        {
+            cloudData->getFileFolderAttributes()->requestFingerprint(this, [this](const QString& fp)
+            {
+                ui->name->updateFingerprint(fp);
+            });
+        }
+        else
+        {
+            ui->name->updateFingerprint(QString());
+        }
 
         cloudData->getFileFolderAttributes()->requestVersions(this, [this](int versions){
                 ui->name->updateVersionsCount(versions);
@@ -189,6 +224,4 @@ void CloudStalledIssueChooseWidget::updateUi(CloudStalledIssueDataPtr cloudData,
             ui->name->updateUser(user, show);
         });
     }
-
-    StalledIssueChooseWidget::updateUi(cloudData, side);
 }

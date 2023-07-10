@@ -1188,23 +1188,23 @@ QString Utilities::getNonDuplicatedNodeName(MegaNode *node, MegaNode *parentNode
     int counter(1);
     while(!nameFound)
     {
-        QString repeatedName = nodeName + QString(QLatin1Literal("(%1)")).arg(QString::number(counter));
+        QString suggestedName = nodeName + QString(QLatin1Literal("(%1)")).arg(QString::number(counter));
         if(node)
         {
             if(node->isFile() && !suffix.isEmpty())
             {
-                repeatedName.append(suffix);
+                suggestedName.append(suffix);
             }
         }
 
-        if(!itemsBeingRenamed.contains(repeatedName))
+        if(!itemsBeingRenamed.contains(suggestedName))
         {
-            auto foundNode = std::shared_ptr<MegaNode>(MegaSyncApp->getMegaApi()->getChildNodeOfType(parentNode, repeatedName.toStdString().c_str(),
+            auto foundNode = std::shared_ptr<MegaNode>(MegaSyncApp->getMegaApi()->getChildNodeOfType(parentNode, suggestedName.toStdString().c_str(),
                                                                                                      node->isFile() ? MegaNode::TYPE_FILE : MegaNode::TYPE_FOLDER));
 
             if(!foundNode)
             {
-                newName = repeatedName;
+                newName = suggestedName;
                 nameFound = true;
             }
         }
@@ -1215,7 +1215,7 @@ QString Utilities::getNonDuplicatedNodeName(MegaNode *node, MegaNode *parentNode
     return newName;
 }
 
-QString Utilities::getNonDuplicatedLocalName(const QFileInfo &currentFile, bool unescapeName)
+QString Utilities::getNonDuplicatedLocalName(const QFileInfo &currentFile, bool unescapeName, const QStringList& itemsBeingRenamed)
 {
     QString repeatedName;
     QString suffix = currentFile.completeSuffix();
@@ -1230,7 +1230,7 @@ QString Utilities::getNonDuplicatedLocalName(const QFileInfo &currentFile, bool 
         fileName = currentFile.baseName();
     }
 
-    QDirIterator filesIt(currentFile.path(), QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks, QDirIterator::NoIteratorFlags);
+    QDirIterator filesIt(currentFile.path(), QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot | QDir::NoSymLinks, QDirIterator::NoIteratorFlags);
 
     int counter(0);
     bool notFound(true);
@@ -1245,28 +1245,31 @@ QString Utilities::getNonDuplicatedLocalName(const QFileInfo &currentFile, bool 
             suggestedName += QString(QLatin1Literal(".%1")).arg(suffix);
         }
 
-        while (filesIt.hasNext())
+        if(!itemsBeingRenamed.contains(suggestedName))
         {
-            QString checkFileName;
-
-            if(unescapeName)
+            while (filesIt.hasNext())
             {
-                checkFileName = QString::fromUtf8(MegaSyncApp->getMegaApi()->unescapeFsIncompatible(filesIt.fileName().toUtf8().constData()));
-            }
-            else
-            {
-                checkFileName = filesIt.fileName();
-            }
+                QString checkFileName;
 
-            if (checkFileName.compare(suggestedName, Qt::CaseSensitive) == 0)
-            {
-                notFound = false;
-                break;
+                if(unescapeName)
+                {
+                    checkFileName = QString::fromUtf8(MegaSyncApp->getMegaApi()->unescapeFsIncompatible(filesIt.fileName().toUtf8().constData()));
+                }
+                else
+                {
+                    checkFileName = filesIt.fileName();
+                }
+
+                if (checkFileName.compare(suggestedName, Qt::CaseInsensitive) == 0)
+                {
+                    notFound = false;
+                    break;
+                }
+
+                filesIt.next();
             }
-
-            filesIt.next();
-
         }
+
     } while(!notFound);
 
     repeatedName = currentFile.baseName() + QString(QLatin1Literal("(%1)")).arg(QString::number(counter));

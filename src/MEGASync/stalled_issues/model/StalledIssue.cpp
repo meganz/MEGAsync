@@ -145,7 +145,7 @@ std::shared_ptr<mega::MegaNode> CloudStalledIssueData::getNode() const
         return mRemoteNode;
     }
 
-    auto newNode = std::shared_ptr<mega::MegaNode>(MegaSyncApp->getMegaApi()->getNodeByPath(mPath.path.toUtf8().constData()));
+    auto newNode = std::shared_ptr<mega::MegaNode>(MegaSyncApp->getMegaApi()->getNodeByHandle(mPathHandle));
     if(!newNode)
     {
         return mRemoteNode;

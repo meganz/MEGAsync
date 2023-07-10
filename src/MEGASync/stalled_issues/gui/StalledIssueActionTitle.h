@@ -41,24 +41,29 @@ public:
     void setPath(const QString &newPath);
     void setHandle(mega::MegaHandle handle);
 
+    bool showRawInfo() const;
+
     void updateLastTimeModified(const QDateTime &time);
     void updateCreatedTime(const QDateTime &time);
     void updateUser(const QString& user, bool show);
     void updateVersionsCount(int versions);
-    void updateSize(const QString &size);
+    void updateSize(int64_t size);
+    void updateFingerprint(const QString &fp);
 
     enum class AttributeType
     {
-        LastModified,
+        LastModified = 0,
         CreatedTime,
         Size,
         User,
-        Versions
+        Versions,
+        Fingerprint
     };
     void hideAttribute(AttributeType type);
 
 signals:
     void actionClicked(int id);
+    void rawInfoCheckToggled(bool state);
 
 protected:
     Ui::StalledIssueActionTitle *ui;
@@ -71,6 +76,7 @@ protected:
 private:
     void showAttribute(AttributeType type);
     void updateLabel(QLabel* label, const QString& text);
+    void updateExtraInfoLayout();
 
     QMap<AttributeType, QPointer<QLabel>> mUpdateLabels;
 };

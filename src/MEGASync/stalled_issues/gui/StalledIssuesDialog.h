@@ -4,6 +4,7 @@
 #include "MegaDelegateHoverManager.h"
 #include "StalledIssue.h"
 #include "StalledIssueLoadingItem.h"
+#include "Preferences.h"
 
 #include <ViewLoadingScene.h>
 
@@ -48,12 +49,18 @@ private slots:
     void onModelFiltered();
     void onLoadingSceneChanged(bool state);
 
+    void showModeSelector();
+
 private:
+    void showView(bool update);
+
     Ui::StalledIssuesDialog *ui;
     MegaDelegateHoverManager mViewHoverManager;
     StalledIssueFilterCriterion mCurrentTab;
     StalledIssuesProxyModel* mProxyModel;
     StalledIssueDelegate* mDelegate;
+
+    Preferences::StalledIssuesModeType mModeSelected = Preferences::StalledIssuesModeType::None;
 };
 
 #endif // STALLEDISSUESDIALOG_H
