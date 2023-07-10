@@ -92,10 +92,17 @@ LoginPageForm {
         }
 
         onFetchingNodesFinished: {
-            loginButton.icons.busyIndicatorVisible = false;
-            state = normalStatus;
-            onboardingFlow.state = syncs;
             onboardingWindow.loggingIn = false;
+            if(firstTime)
+            {
+                loginButton.icons.busyIndicatorVisible = false;
+                state = normalStatus;
+                onboardingFlow.state = syncs;
+            }
+            else
+            {
+                onboardingWindow.close();
+            }
         }
 
         onAccountCreationResumed: {

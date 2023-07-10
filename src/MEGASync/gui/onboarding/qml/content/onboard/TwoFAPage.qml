@@ -22,9 +22,16 @@ TwoFAPageForm {
         }
 
         onFetchingNodesFinished: {
-            loginButton.icons.busyIndicatorVisible = false;
-            onboardingFlow.state = syncs;
             onboardingWindow.loggingIn = false;
+            if(firstTime)
+            {
+                loginButton.icons.busyIndicatorVisible = false;
+                onboardingFlow.state = syncs;
+            }
+            else
+            {
+                onboardingWindow.close();
+            }
         }
 
         onLoginFinished: {

@@ -43,7 +43,7 @@ signals:
     void emailChanged();
     void changeRegistrationEmailFinished(bool success);
     void fetchingNodesProgress(double progress);
-    void fetchingNodesFinished();
+    void fetchingNodesFinished(bool firstTime);
     void emailConfirmed();
     void accountCreationResumed();
     void logoutByUser();
@@ -52,7 +52,7 @@ signals:
 
 protected:
     virtual void onLogin(mega::MegaRequest* request, mega::MegaError* e);
-    virtual void onFetchNodesSuccess();
+    virtual void onFetchNodesSuccess(bool& firstTime);
     void onAccountCreation(mega::MegaRequest* request, mega::MegaError* e);
     void onAccountCreationResume(mega::MegaRequest* request, mega::MegaError* e);
     void onEmailChanged(mega::MegaRequest* request, mega::MegaError* e);
@@ -95,7 +95,7 @@ public:
 
 protected:
     void onLogin(mega::MegaRequest* request, mega::MegaError* e) override;
-    void onFetchNodesSuccess() override;
+    void onFetchNodesSuccess(bool& firstTime) override;
 
 };
 

@@ -667,10 +667,9 @@ void Preferences::setEphemeralCredentials(EphemeralCredentials& cred)
 EphemeralCredentials Preferences::getEphemeralCredentials()
 {
     mutex.lock();
-    QString string = getValue<QString>(ephemeralSessionKey);
-    QByteArray base64 = string.toLatin1();
-    QByteArray array = QByteArray::fromBase64(base64);
-    QDataStream stream(&array, QIODevice::ReadOnly);
+    QByteArray array = getValue<QByteArray>(ephemeralSessionKey);
+    QByteArray base64 = QByteArray::fromBase64(array);
+    QDataStream stream(&base64, QIODevice::ReadOnly);
     EphemeralCredentials cred;
     stream >> cred;
 
