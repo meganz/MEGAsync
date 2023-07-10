@@ -5,17 +5,17 @@ SyncTypePageForm {
 
     footerButtons {
 
-        previousButton.onClicked: {
-            mainFlow.state = syncType;
+        rightSecondary.onClicked: {
+            syncsPanel.state = syncType;
         }
 
-        nextButton.onClicked: {
-            switch(buttonGroup.checkedButton.syncType) {
-                case SyncsType.FullSync:
-                    syncsFlow.state = fullSync;
+        rightPrimary.onClicked: {
+            switch(buttonGroup.checkedButton.type) {
+                case SyncsType.Types.FullSync:
+                    syncsPanel.state = fullSync;
                     break;
-                case SyncsType.SelectiveSync:
-                    syncsFlow.state = selectiveSync;
+                case SyncsType.Types.SelectiveSync:
+                    syncsPanel.state = selectiveSync;
                     break;
                 default:
                     console.error("Button type does not exist -> "
@@ -27,7 +27,7 @@ SyncTypePageForm {
 
     buttonGroup.onCheckStateChanged: {
         if(buttonGroup.checkedButton != null) {
-            footerButtons.nextButton.enabled = true;
+            footerButtons.rightPrimary.enabled = true;
         }
     }
 

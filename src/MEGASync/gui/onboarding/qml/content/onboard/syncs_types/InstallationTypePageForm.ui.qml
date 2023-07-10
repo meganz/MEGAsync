@@ -13,7 +13,7 @@ SyncsPage {
 
     property alias buttonGroup: buttonGroup
 
-    footerButtons.nextButton.enabled: false
+    footerButtons.rightPrimary.enabled: false
 
     ColumnLayout {
 
@@ -21,7 +21,6 @@ SyncsPage {
             top: parent.top
             left: parent.left
             right: parent.right
-            margins: contentMargin
         }
         spacing: 24
 
@@ -43,7 +42,7 @@ SyncsPage {
                 title: OnboardingStrings.sync
                 description: OnboardingStrings.syncButtonDescription
                 imageSource: Images.sync
-                type: SyncsType.Sync
+                type: SyncsType.Types.Sync
                 ButtonGroup.group: buttonGroup
             }
 

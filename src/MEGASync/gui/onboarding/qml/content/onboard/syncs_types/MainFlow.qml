@@ -15,8 +15,8 @@ import Onboard.Syncs_types.Backups 1.0
 // C++
 import BackupsProxyModel 1.0
 
-StackView {
-    id: mainFlow
+Rectangle {
+    id: syncsPanel
 
     readonly property string computerName: "computerName"
     readonly property string syncType: "syncType"
@@ -31,11 +31,10 @@ StackView {
     readonly property int contentHeight: 464
     readonly property int lineWidth: 2
 
-    property int lastTypeSelected: SyncsType.Types.None
+    property int typeSelected: SyncsType.Types.None
 
+    color: Styles.surface1
     state: computerName
-    initialItem: syncsPanel
-
     states: [
         State {
             name: computerName
@@ -60,13 +59,7 @@ StackView {
         State {
             name: syncs
             StateChangeScript {
-                script: {
-                    lastTypeSelected = SyncsType.Types.Sync;
-                    rightPanel.replace(syncsFlowPage);
-                    if(mainFlow.currentItem != syncsPanel) {
-                        mainFlow.replace(syncsPanel);
-                    }
-                }
+                script: rightPanel.replace(syncPage);
             }
             PropertyChanges {
                 target: stepPanel;
@@ -78,7 +71,10 @@ StackView {
         State {
             name: selectiveSync
             StateChangeScript {
-                script: rightPanel.replace(selectiveSyncPage);
+                script: {
+                    typeSelected = SyncsType.Types.SelectiveSync;
+                    rightPanel.replace(selectiveSyncPage);
+                }
             }
             PropertyChanges {
                 target: stepPanel;
@@ -90,7 +86,10 @@ StackView {
         State {
             name: fullSync
             StateChangeScript {
-                script: rightPanel.replace(fullSyncPage);
+                script: {
+                    typeSelected = SyncsType.Types.FullSync;
+                    rightPanel.replace(fullSyncPage);
+                }
             }
             PropertyChanges {
                 target: stepPanel;
@@ -103,108 +102,104 @@ StackView {
             name: backupsFlow
             StateChangeScript {
                 script: {
-                    lastTypeSelected = SyncsType.Types.Backup;
-                    if(mainFlow.currentItem != syncsPanel) {
-                        mainFlow.replace(syncsPanel);
-                    }
+                    typeSelected = SyncsType.Types.Backup;
                     rightPanel.replace(backupsFlowPage);
                 }
             }
             PropertyChanges {
                 target: stepPanel;
                 state: stepPanel.step3;
+                step3Text: OnboardingStrings.backupSelectFolders;
+                step4Text: OnboardingStrings.backupConfirm;
             }
         },
         State {
             name: finalState
             StateChangeScript {
-                script: mainFlow.replace(finalPage);
+                script: rightPanel.replace(finalPage);
+            }
+            PropertyChanges {
+                target: stepPanel;
+                state: stepPanel.stepAllDone;
+                step3Text: typeSelected === SyncsType.Types.Backup
+                           ? OnboardingStrings.backupSelectFolders
+                           : OnboardingStrings.syncChooseType;
+                step4Text: typeSelected === SyncsType.Types.Backup
+                           ? OnboardingStrings.backupConfirm
+                           : OnboardingStrings.syncSetUp;
             }
         }
     ]
 
-    Component {
-        id: finalPage
+    Rectangle {
+        id: leftPanel
 
-        ResumePage {
-            visible: false
+        width: stepPanelWidth + lineWidth
+        height: parent.height
+        color: Styles.surface1
+        z: 2
+
+        StepPanel {
+            id: stepPanel
+
+            anchors.fill: parent
+            anchors.topMargin: contentMargin
+            anchors.bottomMargin: contentMargin
+            anchors.leftMargin: contentMargin
+        }
+
+        Rectangle {
+            id: separatorLine
+
+            width: lineWidth
+            radius: lineWidth
+            color: Styles.borderDisabled
+            height: contentHeight
+            anchors.left: leftPanel.right
+            anchors.top: parent.top
+            anchors.topMargin: contentMargin
         }
     }
 
-    Rectangle {
-        id: syncsPanel
+    StackView {
+        id: rightPanel
 
-        width: mainFlow.width
-        height: mainFlow.height
-        visible: false
-        color: Styles.surface1
-
-        Rectangle {
-            id: leftPanel
-
-            width: stepPanelWidth + lineWidth
-            height: parent.height
-            color: Styles.surface1
-            z: 2
-
-            StepPanel {
-                id: stepPanel
-
-                anchors.fill: parent
-                anchors.topMargin: contentMargin
-                anchors.bottomMargin: contentMargin
-                anchors.leftMargin: contentMargin
-            }
-
-            Rectangle {
-                id: separatorLine
-
-                width: lineWidth
-                radius: lineWidth
-                color: Styles.borderDisabled
-                height: contentHeight
-                anchors.left: leftPanel.right
-                anchors.top: parent.top
-                anchors.topMargin: contentMargin
-            }
+        anchors {
+            left: leftPanel.right
+            right: parent.right
+            top: parent.top
+            bottom: parent.bottom
+            margins: contentMargin
         }
 
-        StackView {
-            id: rightPanel
+        Component {
+            id: computerNamePage
 
-            anchors {
-                left: leftPanel.right
-                right: parent.right
-                top: parent.top
-                bottom: parent.bottom
-            }
+            ComputerNamePage {}
+        }
 
-            Component {
-                id: computerNamePage
+        Component {
+            id: installationTypePage
 
-                ComputerNamePage {
-                    Layout.fillHeight: true
-                    Layout.fillWidth: true
-                }
-            }
+            InstallationTypePage {}
+        }
 
-            Component {
-                id: installationTypePage
+        Component {
+            id: syncPage
 
-                InstallationTypePage {}
-            }
+            SyncTypePage {}
+        }
 
-            Component {
-                id: syncsFlowPage
+        Component {
+            id: syncsFlowPage
 
-                SyncsFlow {}
-            }
+            SyncsFlow {}
+        }
 
-            Component{
-                id: backupsFlowPage
+        Component {
+            id: finalPage
 
-                BackupsFlow {}
-            }
+            ResumePage {}
         }
     }
 }

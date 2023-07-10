@@ -7,7 +7,6 @@ import Components.Buttons 1.0 as MegaButtons
 MegaButtons.CardVerticalButton {
 
     property alias type: syncsType.type
-    property alias syncType: syncsType.subType
     property SyncsType syncs: SyncsType { id: syncsType }
 
     Layout.preferredWidth: 230

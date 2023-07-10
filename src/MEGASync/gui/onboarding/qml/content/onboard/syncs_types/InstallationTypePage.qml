@@ -2,17 +2,17 @@ InstallationTypePageForm {
 
     footerButtons {
 
-        previousButton.onClicked: {
-            mainFlow.state = computerName;
+        rightSecondary.onClicked: {
+            syncsPanel.state = computerName;
         }
 
-        nextButton.onClicked: {
+        rightPrimary.onClicked: {
             switch(buttonGroup.checkedButton.type) {
-                case SyncsType.Sync:
-                    mainFlow.state = syncs;
+                case SyncsType.Types.Sync:
+                    syncsPanel.state = syncs;
                     break;
-                case SyncsType.Backup:
-                    mainFlow.state = backupsFlow;
+                case SyncsType.Types.Backup:
+                    syncsPanel.state = backupsFlow;
                     break;
                 default:
                     console.error("Button type does not exist -> "
@@ -24,7 +24,7 @@ InstallationTypePageForm {
 
     buttonGroup.onCheckStateChanged: {
         if(buttonGroup.checkedButton != null) {
-            footerButtons.nextButton.enabled = true;
+            footerButtons.rightPrimary.enabled = true;
         }
     }
 

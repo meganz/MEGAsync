@@ -10,6 +10,10 @@ import Components.Images 1.0 as MegaImages
 CardButton {
     id: button
 
+    property int textHorizontalExtraMargin: 0
+    property int contentMargin: 12
+    property int contentSpacing: 24
+
     contentComponent: Component {
 
         Column {
@@ -18,11 +22,10 @@ CardButton {
             readonly property int textSpacing: 8
             readonly property int textTopHeight: 24
             readonly property int textBottomHeight: 64
-            readonly property int textHorizontalMargin: 8
 
             anchors.fill: parent
-            anchors.margins: 16
-            spacing: 8
+            anchors.margins: contentMargin
+            spacing: contentSpacing
 
             MegaImages.SvgImage {
 //                color: button.checked || button.hovered
@@ -32,27 +35,34 @@ CardButton {
                 sourceSize: imageSourceSize
             }
 
-            MegaTexts.Text {
-                text: title
-                height: main.textTopHeight
+            Column {
+                spacing: textSpacing
                 anchors.left: parent.left
                 anchors.right: parent.right
-                anchors.leftMargin: main.textHorizontalMargin
-                anchors.rightMargin: main.textHorizontalMargin
-                font.pixelSize: MegaTexts.Text.Size.MediumLarge
-                font.weight: Font.Bold
-            }
 
-            MegaTexts.Text {
-                text: description
-                height: main.textBottomHeight
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.leftMargin: main.textHorizontalMargin
-                anchors.rightMargin: main.textHorizontalMargin
-                font.pixelSize: MegaTexts.Text.Size.Small
-                font.weight: Font.Light
-                color: Styles.textSecondary
+                MegaTexts.Text {
+                    text: title
+                    height: main.textTopHeight
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.topMargin: 24
+                    anchors.leftMargin: button.textHorizontalExtraMargin
+                    anchors.rightMargin: button.textHorizontalExtraMargin
+                    font.pixelSize: MegaTexts.Text.Size.MediumLarge
+                    font.weight: Font.Bold
+                }
+
+                MegaTexts.Text {
+                    text: description
+                    height: main.textBottomHeight
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.leftMargin: button.textHorizontalExtraMargin
+                    anchors.rightMargin: button.textHorizontalExtraMargin
+                    font.pixelSize: MegaTexts.Text.Size.Small
+                    font.weight: Font.Light
+                    color: Styles.textSecondary
+                }
             }
         }
     }

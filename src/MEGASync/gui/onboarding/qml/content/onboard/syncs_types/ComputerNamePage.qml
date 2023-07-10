@@ -6,11 +6,9 @@ import ComputerName 1.0
 
 ComputerNamePageForm {
 
-    property bool changingDeviceName: false
-
-    footerButtons.nextButton.onClicked: {
+    footerButtons.rightPrimary.onClicked: {
         if(!computerName.setDeviceName(computerNameTextField.text)) {
-            mainFlow.state = syncType;
+            syncsPanel.state = syncType;
             return;
         }
     }
@@ -19,7 +17,7 @@ ComputerNamePageForm {
         id: computerName
 
         onDeviceNameSet: {
-                mainFlow.state = syncType;
+                syncsPanel.state = syncType;
         }
     }
 }

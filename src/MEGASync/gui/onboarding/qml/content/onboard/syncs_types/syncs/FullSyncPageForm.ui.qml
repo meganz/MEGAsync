@@ -14,7 +14,7 @@ SyncsPage {
 
     property alias localFolderChooser: localFolderChooser
 
-    footerButtons.nextButton {
+    footerButtons.rightPrimary {
         enabled: localFolderChooser.isValid
         text: OnboardingStrings.sync
         icons.source: Images.sync
@@ -26,7 +26,6 @@ SyncsPage {
             top: parent.top
             left: parent.left
             right: parent.right
-            margins: contentMargin
         }
         spacing: 32
 

@@ -18,15 +18,15 @@ ConfirmFoldersPageForm {
 
     footerButtons {
 
-        previousButton.onClicked: {
+        rightSecondary.onClicked: {
             backupsProxyModel.selectedFilterEnabled = false;
             backupsFlow.state = backupsFlow.selectBackup;
         }
 
-        nextButton.onClicked: {
+        rightPrimary.onClicked: {
             success = false;
             root.enabled = false;
-            footerButtons.nextButton.icons.busyIndicatorVisible = true;
+            footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
             backupsProxyModel.createBackups();
         }
     }
@@ -49,8 +49,8 @@ ConfirmFoldersPageForm {
 
         onBackupsCreationFinished: {
             root.enabled = true;
-            footerButtons.nextButton.icons.busyIndicatorVisible = false;
-            syncsFlow.state = syncsFlow.finalState;
+            footerButtons.rightPrimary.icons.busyIndicatorVisible = false;
+            syncsPanel.state = syncsPanel.finalState;
         }
     }
 

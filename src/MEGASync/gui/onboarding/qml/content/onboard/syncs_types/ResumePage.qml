@@ -1,3 +1,6 @@
+// System
+import QtQuick 2.12
+
 // C++
 import Onboarding 1.0
 
@@ -8,10 +11,10 @@ ResumePageForm {
     buttonGroup.onClicked: {
         switch(button.type) {
             case SyncsType.Sync:
-                mainFlow.state = syncs;
+                syncsPanel.state = syncs;
                 break;
             case SyncsType.Backup:
-                mainFlow.state = backupsFlow;
+                syncsPanel.state = backupsFlow;
                 break;
             default:
                 console.error("Button type does not exist -> " + button.type);
@@ -19,11 +22,32 @@ ResumePageForm {
         }
     }
 
-    preferencesButton.onClicked: {
-        Onboarding.openPreferences(lastTypeSelected === SyncsType.Types.Sync);
+    footerButtons {
+
+        rightSecondary.onClicked: {
+            Onboarding.openPreferences(typeSelected === SyncsType.Types.SelectiveSync
+                                       || typeSelected === SyncsType.Types.FullSync);
+        }
+
+        rightPrimary.onClicked: {
+            Onboarding.exitLoggedIn();
+        }
     }
 
-    doneButton.onClicked: {
-        onboardingWindow.close();
+    Component.onCompleted: {
+        switch(typeSelected) {
+            case SyncsType.Types.SelectiveSync:
+                state = stateSelectiveSync;
+                break;
+            case SyncsType.Types.FullSync:
+                state = stateFullSync;
+                break;
+            case SyncsType.Types.Backup:
+                state = stateBackup;
+                break;
+            default:
+                console.warn("ResumePage: typeSelected does not exist -> " + typeSelected);
+                break;
+        }
     }
 }

@@ -9,13 +9,13 @@ FullSyncPageForm {
 
     footerButtons {
 
-        previousButton.onClicked: {
-            syncsFlow.state = syncType;
+        rightSecondary.onClicked: {
+            syncsPanel.state = syncs;
         }
 
-        nextButton.onClicked: {
+        rightPrimary.onClicked: {
             root.enabled = false;
-            footerButtons.nextButton.icons.busyIndicatorVisible = true;
+            footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
             syncsCpp.addSync(localFolderChooser.getSyncData());
         }
     }
@@ -25,8 +25,8 @@ FullSyncPageForm {
 
         onSyncSetupSuccess: {
             root.enabled = true;
-            footerButtons.nextButton.icons.busyIndicatorVisible = false;
-            mainFlow.state = finalState;
+            footerButtons.rightPrimary.icons.busyIndicatorVisible = false;
+            syncsPanel.state = finalState;
             localFolderChooser.reset();
         }
 

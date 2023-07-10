@@ -10,8 +10,6 @@ Rectangle {
 
     property alias footerButtons: footerButtons
 
-    readonly property int contentMargin: 32
-
     color: Styles.surface1
 
     Footer {
@@ -20,6 +18,7 @@ Rectangle {
         anchors {
             bottom: parent.bottom
             right: parent.right
+            left: parent.left
         }
     }
 }

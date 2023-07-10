@@ -15,20 +15,13 @@ import Onboarding 1.0
 
 RowLayout {
 
-    property alias notNowButton: notNowButton
-    property alias previousButton: previousButton
-    property alias nextButton: nextButton
-
-    readonly property int horizontalMargin: 32
-    readonly property int verticalMargin: 32
-
-    width: parent.width
+    property alias leftSecondary: leftSecondary
+    property alias rightSecondary: rightSecondary
+    property alias rightPrimary: rightPrimary
 
     MegaButtons.SecondaryButton {
-        id: notNowButton
+        id: leftSecondary
 
-        Layout.leftMargin: horizontalMargin
-        Layout.bottomMargin: verticalMargin
         text: OnboardingStrings.notNow
         onClicked: {
             onboardingWindow.close();
@@ -37,17 +30,15 @@ RowLayout {
 
     RowLayout {
         Layout.alignment: Qt.AlignRight
-        Layout.rightMargin: horizontalMargin
-        Layout.bottomMargin: verticalMargin
 
         MegaButtons.OutlineButton {
-            id: previousButton
+            id: rightSecondary
 
             text: OnboardingStrings.previous
         }
 
         MegaButtons.PrimaryButton {
-            id: nextButton
+            id: rightPrimary
 
             text: OnboardingStrings.next
             icons.source: Images.arrowRight

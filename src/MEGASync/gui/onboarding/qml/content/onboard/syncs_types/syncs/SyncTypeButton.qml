@@ -8,9 +8,9 @@ import Onboard.Syncs_types 1.0
 SyncsVerticalButton {
     id: fullSyncButton
 
-    Layout.preferredWidth: 240
-    Layout.preferredHeight: 220
-    width: 240
-    height: 220
+    Layout.preferredWidth: width
+    Layout.preferredHeight: height
+    width: 196
+    height: 224
     imageSourceSize: Qt.size(172, 100)
 }

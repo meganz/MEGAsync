@@ -13,7 +13,7 @@ import Onboard.Syncs_types 1.0
 SyncsPage {
     property alias buttonGroup: buttonGroup
 
-    footerButtons.nextButton.enabled: false
+    footerButtons.rightPrimary.enabled: false
 
     ColumnLayout {
 
@@ -21,7 +21,6 @@ SyncsPage {
             top: parent.top
             left: parent.left
             right: parent.right
-            margins: contentMargin
         }
         spacing: 32
 
@@ -48,20 +47,24 @@ SyncsPage {
                     id: fullSyncButton
 
                     title: OnboardingStrings.fullSync
-                    syncType: SyncsType.SyncTypes.FullSync
+                    type: SyncsType.Types.FullSync
                     description: OnboardingStrings.fullSyncButtonDescription
                     imageSource: Images.fullSync
+                    imageSourceSize: Qt.size(172, 100)
                     ButtonGroup.group: buttonGroup
+                    textHorizontalExtraMargin: 4
                 }
 
                 SyncTypeButton {
                     id: backupsButton
 
                     title: OnboardingStrings.selectiveSync
-                    syncType: SyncsType.SyncTypes.SelectiveSync
+                    type: SyncsType.Types.SelectiveSync
                     description: OnboardingStrings.selectiveSyncButtonDescription
                     imageSource: Images.selectiveSync
+                    imageSourceSize: Qt.size(172, 100)
                     ButtonGroup.group: buttonGroup
+                    textHorizontalExtraMargin: 4
                 }
             }
         }

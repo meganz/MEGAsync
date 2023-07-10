@@ -50,4 +50,8 @@ Item {
     function openPreferences(sync) {
         console.info("openPreferences() -> " + sync);
     }
+
+    function exitLoggedIn() {
+        console.info("exitLoggedIn()");
+    }
 }

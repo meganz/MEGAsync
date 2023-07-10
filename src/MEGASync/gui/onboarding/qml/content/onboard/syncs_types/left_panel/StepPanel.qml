@@ -19,6 +19,7 @@ Rectangle {
     readonly property string step4: "STEP4"
     readonly property string step4Warning: "STEP4_WARNING"
     readonly property string step4Error: "STEP4_ERROR"
+    readonly property string stepAllDone: "ALL_DONE"
 
     readonly property int lineLeftMargin: 15
     readonly property int subStepLeftMargin: 4
@@ -165,6 +166,41 @@ Rectangle {
             PropertyChanges {
                 target: step4_content;
                 toState: SubStep.ToStates.Current;
+                visible: true;
+            }
+        },
+        State {
+            name: stepAllDone
+            PropertyChanges {
+                target: step1_computerName;
+                toState: Step.ToStates.Done;
+            }
+            PropertyChanges {
+                target: step2_line;
+                color: Styles.iconButton;
+            }
+            PropertyChanges {
+                target: step2_installationType;
+                toState: Step.ToStates.Done;
+            }
+            PropertyChanges {
+                target: step3_line;
+                color: Styles.iconButton;
+                visible: true;
+            }
+            PropertyChanges {
+                target: step3_content;
+                toState: SubStep.ToStates.Done;
+                visible: true;
+            }
+            PropertyChanges {
+                target: step4_line;
+                color: Styles.iconButton;
+                visible: true;
+            }
+            PropertyChanges {
+                target: step4_content;
+                toState: SubStep.ToStates.Done;
                 visible: true;
             }
         }

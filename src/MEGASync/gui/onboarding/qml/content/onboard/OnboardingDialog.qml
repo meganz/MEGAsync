@@ -6,6 +6,7 @@ import QtQuick.Layouts 1.12
 import QtQuick.Window 2.12
 
 // Local
+import Onboard 1.0
 import Onboard.Syncs_types 1.0
 import Onboard.Syncs_types.Syncs 1.0
 
@@ -15,8 +16,8 @@ import Onboarding 1.0
 
 Cpp.QmlDialog {
     id: onboardingWindow
-    objectName: "app1"
-    title: "Set up MEGA"
+
+    title: OnboardingStrings.setUpMEGA
     visible: true
     modality: Qt.NonModal
     width: 800
@@ -32,6 +33,3 @@ Cpp.QmlDialog {
         anchors.fill: parent
     }
 }
-
-
-

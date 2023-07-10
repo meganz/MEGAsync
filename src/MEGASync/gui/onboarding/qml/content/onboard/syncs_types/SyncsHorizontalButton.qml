@@ -8,6 +8,7 @@ MegaButtons.CardHorizontalButton {
 
     property alias type: syncsType.type
     property SyncsType syncs: SyncsType { id: syncsType }
+
 }
 
 

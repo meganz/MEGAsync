@@ -1,9 +1,11 @@
 import QtQuick 2.0
-import QtQuick.Window 2.13
+import QtQuick.Window 2.12
 
 Window {
 
     signal closingButLoggingIn
+    flags: Qt.Dialog
+
     function onForgotPasswordClicked() {
         console.info("onForgotPasswordClicked()");
     }
