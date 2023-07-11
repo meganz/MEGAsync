@@ -38,6 +38,12 @@ void NameConflictedStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
             mLocalConflictedNames.append(info);
 
             setIsFile(localPath.filePath(), true);
+
+            //Use for autosolve
+            if(localPath.isFile())
+            {
+                info->mItemAttributes->requestModifiedTime(nullptr, nullptr);
+            }
         }
     }
 
@@ -70,6 +76,9 @@ void NameConflictedStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
 
                 if(node->isFile())
                 {
+                    //Use for autosolve
+                    info->mItemAttributes->requestModifiedTime(nullptr, nullptr);
+
                     mCloudConflictedNames.addFileConflictedName(node->getModificationTime(), node->getSize(), node->getCreationTime(), QString::fromUtf8(node->getFingerprint()), info);
                     mFiles++;
                 }

@@ -139,7 +139,7 @@ void FileFolderAttributes::requestFinish(int type)
 
 QObject *FileFolderAttributes::requestReady(int type, QObject *caller)
 {
-    if(!mRequests.contains(type))
+    if(caller && !mRequests.contains(type))
     {
         QObject* contextObject = new QObject(caller);
         mRequests.insert(type, contextObject);

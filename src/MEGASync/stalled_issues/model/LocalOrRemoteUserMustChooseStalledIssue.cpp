@@ -16,8 +16,8 @@ void LocalOrRemoteUserMustChooseStalledIssue::solveIssue(bool)
 {
     if(isFile())
     {
-        const char* localFingerPrint(MegaSyncApp->getMegaApi()->getFingerprint(consultLocalData()->getNativeFilePath().toUtf8().constData()));
-        const char* cloudFingerPrint(consultCloudData()->getNode()->getFingerprint());
+        //const char* localFingerPrint(MegaSyncApp->getMegaApi()->getFingerprint(consultLocalData()->getNativeFilePath().toUtf8().constData()));
+        //const char* cloudFingerPrint(consultCloudData()->getNode()->getFingerprint());
 
         //if(std::strcmp(localFingerPrint, cloudFingerPrint) == 0)
         {
