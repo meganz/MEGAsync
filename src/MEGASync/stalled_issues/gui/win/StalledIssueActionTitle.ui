@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>141</width>
-    <height>78</height>
+    <height>58</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -159,7 +159,7 @@ QPushButton[main=true]
              <number>0</number>
             </property>
             <property name="rightMargin">
-             <number>0</number>
+             <number>5</number>
             </property>
             <property name="bottomMargin">
              <number>0</number>
@@ -327,7 +327,7 @@ QPushButton[main=true]
            <property name="minimumSize">
             <size>
              <width>0</width>
-             <height>20</height>
+             <height>0</height>
             </size>
            </property>
            <layout class="QVBoxLayout" name="extraInfoLayout">

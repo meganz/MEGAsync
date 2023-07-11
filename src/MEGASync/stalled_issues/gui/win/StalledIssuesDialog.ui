@@ -112,7 +112,7 @@ background-color: #f0f0f0;
 }</string>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="ModeSelector">
       <property name="styleSheet">

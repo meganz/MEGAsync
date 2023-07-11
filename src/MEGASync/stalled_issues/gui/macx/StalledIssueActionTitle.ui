@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>111</width>
-    <height>40</height>
+    <width>141</width>
+    <height>58</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -53,6 +53,14 @@
     font-family: Lato;
     font-size: 13px;
     font-weight: 700;
+    line-height: 16px;
+    color: #333333;
+}
+
+#rawInfoCheck
+{
+	font-family: Lato;
+    font-size: 12px;
     line-height: 16px;
     color: #333333;
 }
@@ -286,6 +294,34 @@ QPushButton[main=true]
                 <number>0</number>
                </property>
               </layout>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QWidget" name="checkContainer" native="true">
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="leftMargin">
+             <number>36</number>
+            </property>
+            <property name="topMargin">
+             <number>3</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>3</number>
+            </property>
+            <item>
+             <widget class="QCheckBox" name="rawInfoCheck">
+              <property name="text">
+               <string>Show raw info</string>
+              </property>
              </widget>
             </item>
            </layout>
