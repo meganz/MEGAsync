@@ -777,6 +777,18 @@ void SettingsDialog::animateSettingPage(int endValue, int duration)
     mAnimationGroup->start();
 }
 
+void SettingsDialog::closeMenus()
+{
+    auto menus = findChildren<QMenu*>();
+    foreach(auto& menu, menus)
+    {
+        if(dynamic_cast<QAbstractItemView*>(menu->parentWidget()))
+        {
+            menu->close();
+        }
+    }
+}
+
 void SettingsDialog::closeEvent(QCloseEvent *event)
 {
     closeMenus();
@@ -2285,18 +2297,6 @@ void SettingsDialog::restartApp()
 void SettingsDialog::onShellNotificationsProcessed()
 {
     mUi->cOverlayIcons->setEnabled(true);
-}
-
-void SettingsDialog::closeMenus()
-{
-    auto menus = findChildren<QMenu*>();
-    foreach(auto& menu, menus)
-    {
-        if(dynamic_cast<QAbstractItemView*>(menu->parentWidget()))
-        {
-            menu->close();
-        }
-    }
 }
 
 void SettingsDialog::on_bRestart_clicked()
