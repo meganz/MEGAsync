@@ -244,7 +244,7 @@ void NameConflictedStalledIssue::renameCloudNodesAutomatically(const QList<std::
                 {
                     auto fp1(check->mItemAttributes->fingerprint());
                     auto fp2(cloudConflictedName->mItemAttributes->fingerprint());
-                    if(fp1.isEmpty() && fp2.isEmpty())
+                    if(!fp1.isEmpty() && !fp2.isEmpty())
                     {
                         return fp1.compare(fp2) == 0;
                     }
@@ -325,7 +325,7 @@ void NameConflictedStalledIssue::renameLocalItemsAutomatically(const QList<std::
                 {
                     auto fp1(check->mItemAttributes->fingerprint());
                     auto fp2(localConflictedName->mItemAttributes->fingerprint());
-                    if(fp1.isEmpty() && fp2.isEmpty())
+                    if(!fp1.isEmpty() && !fp2.isEmpty())
                     {
                         return fp1.compare(fp2) == 0;
                     }
