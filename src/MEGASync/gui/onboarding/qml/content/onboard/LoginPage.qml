@@ -13,7 +13,6 @@ LoginPageForm {
     id: root
 
     property bool loginAttempt: false
-    property bool twoFARequired: false
 
     function setNormalStatus(){
         root.enabled = true;

@@ -5,23 +5,24 @@ Window {
 
     property bool loggingIn: true
 
+    signal closingButLoggingIn
+
     function onForgotPasswordClicked() {
-        console.info("mockup QmlDialog::onForgotPasswordClicked()");
+        console.debug("mockup QmlDialog::onForgotPasswordClicked()");
     }
 
     function onLoginClicked(data) {
-        console.info("mockup QmlDialog::onLoginClicked() -> " + JSON.stringify(data));
+        console.debug("mockup QmlDialog::onLoginClicked() -> "
+                      + JSON.stringify(data));
     }
 
     function accept() {
-        console.log("mockup QmlDialog::accept()");
+        console.debug("mockup QmlDialog::accept()");
     }
 
     function reject() {
-        console.log("mockup QmlDialog::reject()");
+        console.debug("mockup QmlDialog::reject()");
     }
-
-    signal closingButLoggingIn
 
     flags: Qt.Dialog
 }

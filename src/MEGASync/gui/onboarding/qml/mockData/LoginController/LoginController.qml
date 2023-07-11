@@ -5,75 +5,55 @@ import ApiEnums 1.0
 Item {
     id: root
 
-    function changeRegistrationEmail(newEmail) {
-        console.info("mockup LoginController::changeRegistrationEmail(newEmail): " + newEmail);
-        changeEmailTimer.start();
-    }
+    // C++
+    property string email: "test.email@mega.co.nz"
+    property string password: "insecure"
+    property bool emailConfirmed: false
 
-    function onExitLoggedInClicked() {
-        console.info("mockup LoginController::onExitLoggedInClicked()");
-        exitLoggedInFinished();
-    }
+    // Mockup
+    property bool require2FA: true
 
-    function getComputerName() {
-        console.info("mockup LoginController::getComputerName()");
-        return "My PC name";
-    }
-
-    function onForgotPasswordClicked() {
-        console.info("mockup LoginController::onForgotPasswordClicked()");
-        return "https://mega.nz/recovery";
-    }
+    signal loginFinished(int errorCode, string errorMsg)
+    signal registerFinished(bool success)
+    signal changeRegistrationEmailFinished(bool success)
+    signal fetchingNodesProgress(double progress)
+    signal fetchingNodesFinished(bool firstTime)
+    signal accountCreationResumed
+    signal logoutByUser
+    signal logoutBySdk
+    signal accountCreateCancelled
 
     function login(user, pass) {
-        console.info("mockup LoginController::login() -> " + user + " " + pass);
-
-        // Comment/Uncomment the following lines to test different scenarios
-
-        // Login OK
+        console.debug("mockup LoginController::login() : user -> " + user);
         loginTimer.start();
-
-        // Login failed
-        //userPassFailed();
-
-        // 2FA activated
-        //twoFARequired();
     }
 
     function createAccount(email, pass, name, lastname) {
+        console.debug("mockup LoginController::onRegisterClicked() -> "
+                      + email + " : " + name + " : " + lastname);
         registerTimer.start();
-        console.info("mockup LoginController::onRegisterClicked() -> "
-                     + email + " " + pass + " " + name + " " + lastname);
     }
 
-    function onTwoFARequested(key) {
-        console.info("mockup LoginController::onTwoFARequested() -> key: " + key);
-
-        // Comment/Uncomment the following lines to test different scenarios
-
-        // Login OK
-        loginFinished(ApiEnums.API_OK, "");
-
-        // Login failed
-        //loginFinished(ApiEnums.API_EEXPIRED, "");
+    function changeRegistrationEmail(email) {
+        console.debug("mockup LoginController::changeRegistrationEmail() : email -> "
+                      + email);
+        changeEmailTimer.start();
     }
 
-    property string email: "test.email@mega.co.nz"
-    property bool emailConfirmed: false
+    function login2FA(pin) {
+        console.debug("mockup LoginController::login2FA() : pin -> " + pin);
+        require2FA = false;
+        loginTimer.start();
+    }
 
-    signal userPassFailed
-    signal twoFARequired
-    signal loginFinished(int errorCode, string errorMsg)
-    signal registerFinished(bool success)
-    signal accountConfirmed
-    signal logout
-    signal fetchingNodesFinished(bool firstTime)
-    signal accountCreationResumed
-    signal changeRegistrationEmailFinished(bool success)
-    signal fetchingNodesProgress(double progress)
-    signal logoutByUser
-    signal logoutBySdk
-    signal accountBlocked
+    function cancelLogin() {
+        console.debug("mockup LoginController::cancelLogin()");
+    }
+
+    function cancelCreateAccount() {
+        console.debug("mockup LoginController::cancelCreateAccount()");
+        accountCreateCancelled();
+    }
 
     Timer {
         id: loginTimer
@@ -82,24 +62,26 @@ Item {
         running: false;
         repeat: false;
         onTriggered: {
-            loginFinished(ApiEnums.API_OK, "");
-            fetchNodesTimer.start();
+            if(require2FA) {
+                loginFinished(ApiEnums.API_EMFAREQUIRED, "");
+            } else {
+                loginFinished(ApiEnums.API_OK, "");
+                fetchNodesTimer.start();
+            }
         }
     }
 
     Timer {
         id: fetchNodesTimer
+
         interval: 2000;
         running: false;
         repeat: false;
         triggeredOnStart: true
         onTriggered: {
-            if(running)
-            {
+            if(running) {
                 fetchingNodesProgress(0.5);
-            }
-            else
-            {
+            } else {
                 fetchingNodesProgress(1);
                 fetchingNodesFinished(true);
             }
@@ -125,7 +107,7 @@ Item {
         running: false;
         repeat: false;
         onTriggered: {
-            accountConfirmed();
+            emailConfirmed = true;
         }
     }
 

@@ -6,18 +6,17 @@ QtObject {
     /**
      * @brief Declaration of API error codes.
      */
-    enum MegaError
-    {
-        API_OK = 0,                     ///< Everything OK
-        API_EINTERNAL,             ///< Internal error.
-        API_EARGS,                 ///< Bad arguments.
-        API_EAGAIN,                ///< Request failed, retry with exponential back-off.
-        API_ERATELIMIT,            ///< Too many requests, slow down.
-        API_EFAILED,               ///< Request failed permanently.
-        API_ETOOMANY,              ///< Too many requests for this resource.
-        API_ERANGE,                ///< Resource access out of range.
-        API_EEXPIRED,              ///< Resource expired.
-        API_ENOENT,                ///< Resource does not exist.
+    enum MegaError {
+        API_OK = 0,               ///< Everything OK
+        API_EINTERNAL,            ///< Internal error.
+        API_EARGS,                ///< Bad arguments.
+        API_EAGAIN,               ///< Request failed, retry with exponential back-off.
+        API_ERATELIMIT,           ///< Too many requests, slow down.
+        API_EFAILED,              ///< Request failed permanently.
+        API_ETOOMANY,             ///< Too many requests for this resource.
+        API_ERANGE,               ///< Resource access out of range.
+        API_EEXPIRED,             ///< Resource expired.
+        API_ENOENT,               ///< Resource does not exist.
         API_ECIRCULAR,            ///< Circular linkage.
         API_EACCESS,              ///< Access denied.
         API_EEXIST,               ///< Resource already exists.

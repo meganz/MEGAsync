@@ -6,6 +6,11 @@ Item {
     signal cantSync
     signal syncSetupSuccess
 
+    function addSync(localPath , remoteHandle) {
+        console.info("addSync()" + " localPath:" + localPath + " remoteHandle:" + remoteHandle)
+        addSyncTimer.start();
+    }
+
     Timer {
         id: addSyncTimer
 
@@ -17,8 +22,4 @@ Item {
         }
     }
 
-    function addSync(localPath , remoteHandle) {
-        console.info("addSync()" + " localPath:" + localPath + " remoteHandle:" + remoteHandle)
-        addSyncTimer.start();
-    }
 }

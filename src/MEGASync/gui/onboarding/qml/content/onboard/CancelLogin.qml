@@ -23,6 +23,7 @@ Window {
 
     RowLayout{
         id: rowLayout
+
         anchors {
             left: parent.left
             top: parent.top
@@ -32,51 +33,57 @@ Window {
         width: 464
         height: 100
         spacing: 24
-    Image {
-        source: Images.warning
-    }
-    ColumnLayout {
-        spacing: 8
-        MegaTexts.Text{
-            font.pixelSize: MegaTexts.Text.Size.MediumLarge
-            font.weight: Font.DemiBold
-            text: OnboardingStrings.cancelLoginTitle
-            lineHeightMode: Text.FixedHeight
-            lineHeight: 24
+
+        Image {
+            source: Images.warning
         }
-        MegaTexts.Text{
-            font.pixelSize: MegaTexts.Text.Size.Normal
-            text: OnboardingStrings.cancelLoginBodyText
-            Layout.preferredWidth: 340
-            lineHeightMode: Text.FixedHeight
-            lineHeight: 18
+
+        ColumnLayout {
+            spacing: 8
+
+            MegaTexts.Text {
+                font.pixelSize: MegaTexts.Text.Size.MediumLarge
+                font.weight: Font.DemiBold
+                text: OnboardingStrings.cancelLoginTitle
+                lineHeightMode: Text.FixedHeight
+                lineHeight: 24
+            }
+
+            MegaTexts.Text {
+                font.pixelSize: MegaTexts.Text.Size.Normal
+                text: OnboardingStrings.cancelLoginBodyText
+                Layout.preferredWidth: 340
+                lineHeightMode: Text.FixedHeight
+                lineHeight: 18
+            }
+
         }
     }
-    }
+
     RowLayout{
 
         anchors {
             right: parent.right
             bottom: parent.bottom
-            top:rowLayout.bottom
+            top: rowLayout.bottom
             rightMargin: 48
             bottomMargin: 48
             topMargin: 24
         }
-
         spacing: 8
+
         MegaButtons.OutlineButton {
             text: OnboardingStrings.cancelLoginSecondaryButton
             onClicked: {
                 dialog.close();
             }
         }
+
         MegaButtons.PrimaryButton {
             text: OnboardingStrings.cancelLoginPrimaryButton
             onClicked: {
                 dialog.accepted();
             }
         }
-
     }
 }

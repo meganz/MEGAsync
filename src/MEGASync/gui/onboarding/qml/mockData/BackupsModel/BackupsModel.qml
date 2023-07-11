@@ -10,30 +10,31 @@ ListModel {
         ExistsRemote = 2
     }
 
-    function insertFolder(folder) {
-        console.log("mockup BackupsModel -> insertFolder() : folder -> " + folder);
-    }
-
-    function checkBackups() {
-        console.log("mockup BackupsModel -> checkBackups()");
-    }
-
-    function renameBackup(folder, name) {
-        console.log("mockup BackupsModel -> renameBackup() : folder -> " + folder + " : name -> " + name);
-    }
-
-    function remove(folder) {
-        console.log("mockup BackupsModel -> remove() : folder -> " + folder);
-    }
+    property string mTotalSize: "24.7 MB"
+    property int mCheckAllState: Qt.Unchecked
+    property bool mExistConflicts: false
+    property string mConflictsNotificationText: ""
 
     signal backupsCreationFinished()
     signal checkAllStateChanged()
     signal existConfilctsChanged()
 
-    property string mTotalSize: "24.7 MB"
-    property int mCheckAllState: Qt.Unchecked
-    property bool mExistConflicts: false
-    property string mConflictsNotificationText: ""
+    function insertFolder(folder) {
+        console.debug("mockup BackupsModel::insertFolder() : folder -> " + folder);
+    }
+
+    function checkBackups() {
+        console.debug("mockup BackupsModel::checkBackups()");
+    }
+
+    function renameBackup(folder, name) {
+        console.debug("mockup BackupsModel::renameBackup() : folder -> "
+                    + folder + " : name -> " + name);
+    }
+
+    function remove(folder) {
+        console.debug("mockup BackupsModel::remove(folder) : folder -> " + folder);
+    }
 
     ListElement {
         mName: "Desktop"
@@ -46,6 +47,7 @@ ListModel {
         mError: 0
         mErrorVisible: false
     }
+
     ListElement {
         mName: "Documents"
         toolTip: "C:\\Users\\mega\\Documents"
@@ -57,6 +59,7 @@ ListModel {
         mError: 0
         mErrorVisible: false
     }
+
     ListElement {
         mName: "Music"
         toolTip: "C:\\Users\\mega\\Music"
@@ -68,6 +71,7 @@ ListModel {
         mError: 0
         mErrorVisible: false
     }
+
     ListElement {
         mName: "Images"
         toolTip: "C:\\Users\\mega\\Images"

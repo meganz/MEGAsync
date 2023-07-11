@@ -19,22 +19,7 @@ Rectangle {
     readonly property string confirmEmail: "confirmEmail"
     readonly property string changeConfirmEmail: "changeConfirmEmail"
 
-    CancelLogin{
-        id: cancelLogin
-        visible: false
-        onAccepted: {
-            loginController.cancelLogin();
-        }
-    }
-
-    Connections {
-        target: onboardingWindow
-        onClosingButLoggingIn:
-        {
-            cancelLogin.visible = true;
-        }
-    }
-
+    color: Styles.surface1
     state: login
     states: [
         State {
@@ -69,7 +54,21 @@ Rectangle {
         }
     ]
 
-    color: Styles.surface1
+    CancelLogin {
+        id: cancelLogin
+
+        visible: false
+        onAccepted: {
+            loginController.cancelLogin();
+        }
+    }
+
+    Connections {
+        target: onboardingWindow
+        onClosingButLoggingIn: {
+            cancelLogin.visible = true;
+        }
+    }
 
     Image {
         id: leftImage

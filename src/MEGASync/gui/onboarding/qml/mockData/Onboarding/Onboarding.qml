@@ -6,6 +6,14 @@ import Components.TextFields 1.0 as MegaTextFields
 
 Item {
 
+    property string email: "test.email@mega.co.nz"
+
+    signal exitLoggedInFinished
+    signal backupsUpdated(string path, int errorCode, bool finished)
+    signal backupConflict(string folder, bool isNew)
+    signal deviceNameReady
+    signal accountBlocked
+
     function addBackups(backupDirs) {
         console.info("addBackups() => " + JSON.stringify(backupDirs));
         backupTimer.start();
@@ -35,14 +43,6 @@ Item {
         console.info("onExitLoggedInClicked()");
         exitLoggedInFinished();
     }
-
-    property string email: "test.email@mega.co.nz"
-
-    signal exitLoggedInFinished
-    signal backupsUpdated(string path, int errorCode, bool finished)
-    signal backupConflict(string folder, bool isNew)
-    signal deviceNameReady
-    signal accountBlocked
 
     Timer {
         id: backupTimer

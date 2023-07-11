@@ -4,17 +4,19 @@ import Onboard 1.0
 Item {
     id: root
 
+    property string deviceName: OnboardingStrings.myComputer
+
     signal deviceNameSet
-    property string deviceName: OnboardingStrings.myComputer;
 
     function getDeviceName() {
-        console.info("getComputerName()");
+        console.debug("mockup ComputerName::getComputerName()");
         return "My PC name";
     }
 
     function setDeviceName(deviceName) {
-        console.info("setDeviceName(deviceName)" + deviceName)
+        console.debug("mockup ComputerName::setDeviceName() : deviceName -> " + deviceName);
         deviceNameSet();
         return false;
     }
+
 }

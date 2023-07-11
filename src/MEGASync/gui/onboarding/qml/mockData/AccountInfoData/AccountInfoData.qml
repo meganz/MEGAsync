@@ -1,6 +1,7 @@
 import QtQuick 2.0
 
 Item {
+
     enum AccountType {
         ACCOUNT_TYPE_FREE = 0,
         ACCOUNT_TYPE_PROI = 1,
@@ -11,14 +12,15 @@ Item {
         ACCOUNT_TYPE_PRO_FLEXI = 101
     }
 
-    function aboutToBeDestroyed() {
-    }
-
-    signal accountDetailsChanged
-
     property int type: AccountInfoData.AccountType.ACCOUNT_TYPE_PROII
     property string usedStorage: "24.3 MB"
     property string totalStorage: "25 GB"
+
+    signal accountDetailsChanged
+
+    function aboutToBeDestroyed() {
+        console.debug("mockup AccountInfoData::aboutToBeDestroyed()");
+    }
 
     Component.onCompleted: {
         // Simulate the arrival of the API request
