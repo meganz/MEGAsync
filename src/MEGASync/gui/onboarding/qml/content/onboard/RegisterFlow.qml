@@ -166,7 +166,8 @@ Rectangle {
 
             ChangeEmailPage {}
         }
-        LoginController{
+
+        LoginController {
             id: loginController
         }
     }

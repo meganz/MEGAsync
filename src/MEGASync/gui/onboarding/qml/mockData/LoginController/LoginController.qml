@@ -1,31 +1,79 @@
 import QtQuick 2.0
 
+import ApiEnums 1.0
+
 Item {
     id: root
+
+    function changeRegistrationEmail(newEmail) {
+        console.info("mockup LoginController::changeRegistrationEmail(newEmail): " + newEmail);
+        changeEmailTimer.start();
+    }
+
+    function onExitLoggedInClicked() {
+        console.info("mockup LoginController::onExitLoggedInClicked()");
+        exitLoggedInFinished();
+    }
+
+    function getComputerName() {
+        console.info("mockup LoginController::getComputerName()");
+        return "My PC name";
+    }
+
+    function onForgotPasswordClicked() {
+        console.info("mockup LoginController::onForgotPasswordClicked()");
+        return "https://mega.nz/recovery";
+    }
+
+    function login(user, pass) {
+        console.info("mockup LoginController::login() -> " + user + " " + pass);
+
+        // Comment/Uncomment the following lines to test different scenarios
+
+        // Login OK
+        loginTimer.start();
+
+        // Login failed
+        //userPassFailed();
+
+        // 2FA activated
+        //twoFARequired();
+    }
+
+    function createAccount(email, pass, name, lastname) {
+        registerTimer.start();
+        console.info("mockup LoginController::onRegisterClicked() -> "
+                     + email + " " + pass + " " + name + " " + lastname);
+    }
+
+    function onTwoFARequested(key) {
+        console.info("mockup LoginController::onTwoFARequested() -> key: " + key);
+
+        // Comment/Uncomment the following lines to test different scenarios
+
+        // Login OK
+        loginFinished(ApiEnums.API_OK, "");
+
+        // Login failed
+        //loginFinished(ApiEnums.API_EEXPIRED, "");
+    }
 
     property string email: "test.email@mega.co.nz"
     property bool emailConfirmed: false
 
     signal userPassFailed
     signal twoFARequired
-    signal loginFinished
+    signal loginFinished(int errorCode, string errorMsg)
     signal registerFinished(bool success)
-    signal twoFAFailed
     signal accountConfirmed
     signal logout
-    signal fetchingNodesFinished
+    signal fetchingNodesFinished(bool firstTime)
     signal accountCreationResumed
     signal changeRegistrationEmailFinished(bool success)
     signal fetchingNodesProgress(double progress)
-
-    function onForgotPasswordClicked() {
-        console.info("onForgotPasswordClicked()");
-        return "https://mega.nz/recovery";
-    }
-
-    function getEmail() {
-        return email;
-    }
+    signal logoutByUser
+    signal logoutBySdk
+    signal accountBlocked
 
     Timer {
         id: loginTimer
@@ -34,7 +82,7 @@ Item {
         running: false;
         repeat: false;
         onTriggered: {
-            loginFinished(0);
+            loginFinished(ApiEnums.API_OK, "");
             fetchNodesTimer.start();
         }
     }
@@ -53,23 +101,9 @@ Item {
             else
             {
                 fetchingNodesProgress(1);
+                fetchingNodesFinished(true);
             }
         }
-    }
-
-    function login(user, pass) {
-        console.info("login() -> " + user + " " + pass);
-
-        // Comment/Uncomment the following lines to test different scenarios
-
-        // Login OK
-        loginTimer.start();
-
-        // Login failed
-        //userPassFailed();
-
-        // 2FA activated
-        //twoFARequired();
     }
 
     Timer {
@@ -95,23 +129,6 @@ Item {
         }
     }
 
-    function createAccount(email, pass, name, lastname) {
-        registerTimer.start();
-        console.info("onRegisterClicked() -> " + email + " " + pass + " " + name + " " + lastname);
-    }
-
-    function onTwoFARequested(key) {
-        console.info("onTwoFARequested() -> key: " + key);
-
-        // Comment/Uncomment the following lines to test different scenarios
-
-        // Login OK
-        loginFinished();
-
-        // Login failed
-        //twoFAFailed();
-    }
-
     Timer {
         id: changeEmailTimer
 
@@ -123,18 +140,4 @@ Item {
         }
     }
 
-    function changeRegistrationEmail(newEmail) {
-        console.info("changeRegistrationEmail(newEmail):" + newEmail);
-        changeEmailTimer.start();
-    }
-
-    function onExitLoggedInClicked() {
-        console.info("onExitLoggedInClicked()");
-        exitLoggedInFinished();
-    }
-
-    function getComputerName() {
-        console.info("getComputerName()");
-        return "My PC name";
-    }
 }

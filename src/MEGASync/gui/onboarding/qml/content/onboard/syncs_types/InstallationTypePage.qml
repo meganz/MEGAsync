@@ -9,7 +9,7 @@ InstallationTypePageForm {
         rightPrimary.onClicked: {
             switch(buttonGroup.checkedButton.type) {
                 case SyncsType.Types.Sync:
-                    syncsPanel.state = syncs;
+                    syncsPanel.state = syncsFlow;
                     break;
                 case SyncsType.Types.Backup:
                     syncsPanel.state = backupsFlow;

@@ -11,7 +11,7 @@ ResumePageForm {
     buttonGroup.onClicked: {
         switch(button.type) {
             case SyncsType.Sync:
-                syncsPanel.state = syncs;
+                syncsPanel.state = syncsFlow;
                 break;
             case SyncsType.Backup:
                 syncsPanel.state = backupsFlow;

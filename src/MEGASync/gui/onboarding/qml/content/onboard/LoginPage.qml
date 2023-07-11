@@ -1,13 +1,13 @@
 // System
 import QtQuick 2.12
+
 // Local
-import Onboarding 1.0
-import ApiEnums 1.0
+import Onboard 1.0
 
 // C++
-import Onboard 1.0
+import Onboarding 1.0
 import LoginController 1.0
-
+import ApiEnums 1.0
 
 LoginPageForm {
     id: root
@@ -87,11 +87,11 @@ LoginPageForm {
         target: loginController
 
         onFetchingNodesProgress: {
-            console.log("LOGIN PAGE progress:"+progress)
+            console.log("LOGIN PAGE progress: " + progress);
             loginButton.progress.value = progress;
         }
 
-        onFetchingNodesFinished: {
+        onFetchingNodesFinished: (firstTime) => {
             onboardingWindow.loggingIn = false;
             if(firstTime)
             {
@@ -120,7 +120,7 @@ LoginPageForm {
             setNormalStatus();
         }
 
-        onLoginFinished: {
+        onLoginFinished: (errorCode, errorMsg) => {
             if(errorCode !== ApiEnums.API_OK)
             {
                 setNormalStatus();

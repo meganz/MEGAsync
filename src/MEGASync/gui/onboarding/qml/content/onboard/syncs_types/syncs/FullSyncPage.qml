@@ -10,7 +10,7 @@ FullSyncPageForm {
     footerButtons {
 
         rightSecondary.onClicked: {
-            syncsPanel.state = syncs;
+            syncsFlow.state = syncType;
         }
 
         rightPrimary.onClicked: {

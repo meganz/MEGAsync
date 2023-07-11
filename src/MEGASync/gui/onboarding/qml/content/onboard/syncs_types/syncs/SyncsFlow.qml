@@ -3,6 +3,8 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12
 
 // Local
+import Onboard 1.0
+import Onboard.Syncs_types 1.0
 import Onboard.Syncs_types.Left_panel 1.0
 
 // C++
@@ -10,7 +12,6 @@ import BackupsProxyModel 1.0
 
 StackView {
     id: syncsFlow
-
 
     readonly property string syncType: "syncType"
     readonly property string fullSync: "full"
@@ -24,25 +25,41 @@ StackView {
             StateChangeScript {
                 script: syncsFlow.replace(syncPage);
             }
+            PropertyChanges {
+                target: stepPanel;
+                state: stepPanel.step3;
+                step3Text: OnboardingStrings.syncChooseType;
+                step4Text: OnboardingStrings.confirm;
+            }
         },
         State {
             name: fullSync
             StateChangeScript {
-                script: syncsFlow.replace(fullSyncPage);
+                script: {
+                    typeSelected = SyncsType.Types.FullSync;
+                    syncsFlow.replace(fullSyncPage);
+                }
             }
             PropertyChanges {
-                target: stepPanel
-                state: stepPanel.stepSyncFolder
+                target: stepPanel;
+                state: stepPanel.step4;
+                step3Text: OnboardingStrings.syncChooseType;
+                step4Text: OnboardingStrings.fullSync;
             }
         },
         State {
             name: selectiveSync
             StateChangeScript {
-                script: syncsFlow.replace(selectiveSyncPage);
+                script: {
+                    typeSelected = SyncsType.Types.SelectiveSync;
+                    syncsFlow.replace(selectiveSyncPage);
+                }
             }
             PropertyChanges {
-                target: stepPanel
-                state: stepPanel.stepSyncFolder
+                target: stepPanel;
+                state: stepPanel.step4;
+                step3Text: OnboardingStrings.syncChooseType;
+                step4Text: OnboardingStrings.selectiveSync;
             }
         }
     ]

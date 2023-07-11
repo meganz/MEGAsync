@@ -6,30 +6,6 @@ import Components.TextFields 1.0 as MegaTextFields
 
 Item {
 
-    property string email: "test.email@mega.co.nz"
-
-    signal exitLoggedInFinished
-    signal backupsUpdated(string path, int errorCode, bool finished)
-    signal backupConflict(string folder, bool isNew)
-    signal deviceNameReady
-
-
-    function onExitLoggedInClicked() {
-        console.info("onExitLoggedInClicked()");
-        exitLoggedInFinished();
-    }
-
-    Timer {
-        id: backupTimer
-
-        interval: 2000;
-        running: false;
-        repeat: false;
-        onTriggered: {
-            backupsUpdated("C:\\Users\\mega\\Documents", 0, true);
-        }
-    }
-
     function addBackups(backupDirs) {
         console.info("addBackups() => " + JSON.stringify(backupDirs));
         backupTimer.start();
@@ -54,4 +30,29 @@ Item {
     function exitLoggedIn() {
         console.info("exitLoggedIn()");
     }
+
+    function onExitLoggedInClicked() {
+        console.info("onExitLoggedInClicked()");
+        exitLoggedInFinished();
+    }
+
+    property string email: "test.email@mega.co.nz"
+
+    signal exitLoggedInFinished
+    signal backupsUpdated(string path, int errorCode, bool finished)
+    signal backupConflict(string folder, bool isNew)
+    signal deviceNameReady
+    signal accountBlocked
+
+    Timer {
+        id: backupTimer
+
+        interval: 2000;
+        running: false;
+        repeat: false;
+        onTriggered: {
+            backupsUpdated("C:\\Users\\mega\\Documents", 0, true);
+        }
+    }
+
 }
