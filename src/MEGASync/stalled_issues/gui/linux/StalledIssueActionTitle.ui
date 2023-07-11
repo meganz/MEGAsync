@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>141</width>
+    <width>156</width>
     <height>58</height>
    </rect>
   </property>
@@ -42,14 +42,6 @@
 }
 
 #extraInfoContainer QLabel
-{
-	font-family: Lato;
-    font-size: 12px;
-    line-height: 16px;
-    color: #333333;
-}
-
-#rawInfoCheck
 {
 	font-family: Lato;
     font-size: 12px;
@@ -308,6 +300,21 @@ QPushButton[main=true]
          </item>
          <item>
           <widget class="QWidget" name="checkContainer" native="true">
+           <property name="styleSheet">
+            <string notr="true">
+#rawInfoCheck
+{
+	font-family: Lato;
+    font-size: 12px;
+    line-height: 16px;
+    color: #333333;
+}
+
+QCheckBox::indicator::unchecked
+{
+    background-color: #FFFFFF;
+} </string>
+           </property>
            <layout class="QVBoxLayout" name="verticalLayout_3">
             <property name="leftMargin">
              <number>36</number>

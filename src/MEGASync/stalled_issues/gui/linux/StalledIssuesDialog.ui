@@ -228,7 +228,7 @@ background-color: #f0f0f0;
               </spacer>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton">
+              <widget class="QPushButton" name="ModeSelectorButton">
                <property name="minimumSize">
                 <size>
                  <width>24</width>

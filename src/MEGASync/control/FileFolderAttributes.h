@@ -36,7 +36,7 @@ public:
 
 
 
-    qint64 size() const;
+    int64_t size() const;
     int64_t modifiedTime() const;
     int64_t createdTime() const;
     const QString& fingerprint() const;

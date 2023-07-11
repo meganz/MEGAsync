@@ -325,7 +325,7 @@ void StalledIssueActionTitle::updateSize(int64_t size)
     QString sizeText;
     if(size >= 0)
     {
-        sizeText = rawValues ? QString::number(size) : Utilities::getSizeString(size);
+        sizeText = rawValues ? QString::number(size) : Utilities::getSizeString(static_cast<long long>(size));
     }
     else
     {
