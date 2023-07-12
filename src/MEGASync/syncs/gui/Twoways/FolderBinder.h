@@ -24,7 +24,7 @@ public:
     ~FolderBinder();
 
     mega::MegaHandle selectedMegaFolder();
-    bool setSelectedMegaFolder(mega::MegaHandle handle);
+    void setSelectedMegaFolder(mega::MegaHandle handle);
     QString selectedLocalFolder();
 
 signals:

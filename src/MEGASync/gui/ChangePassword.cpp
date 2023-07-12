@@ -49,9 +49,11 @@ void ChangePassword::onRequestFinish(mega::MegaApi* api, mega::MegaRequest* req,
             }
             else
             {
-                QMegaMessageBox::critical(this, tr("Error"),
-                                          QCoreApplication::translate("MegaError",
-                                                                      e->getErrorString()));
+                QMegaMessageBox::MessageBoxInfo info;
+                info.title = QMegaMessageBox::errorTitle();
+                info.text = QCoreApplication::translate("MegaError", e->getErrorString());
+                info.parent = this;
+                QMegaMessageBox::critical(info);
             }
             break;
         }
@@ -70,15 +72,23 @@ void ChangePassword::onRequestFinish(mega::MegaApi* api, mega::MegaRequest* req,
             else if (e->getErrorCode() == MegaError::API_ETOOMANY)
             {
                 mUi->bOk->setEnabled(true);
-                QMegaMessageBox::critical(nullptr, tr("Error"),
-                                          tr("Too many requests. Please wait."));
+
+                QMegaMessageBox::MessageBoxInfo info;
+                info.title = QMegaMessageBox::errorTitle();
+                info.text = tr("Too many requests. Please wait.");
+                info.parent = this;
+                QMegaMessageBox::critical(info);
             }
             else
             {
                 mUi->bOk->setEnabled(true);
-                QMegaMessageBox::critical(this, tr("Error"),
-                                          QCoreApplication::translate("MegaError",
-                                                                      e->getErrorString()));
+
+                QMegaMessageBox::MessageBoxInfo info;
+                info.title = QMegaMessageBox::errorTitle();
+                info.text = QCoreApplication::translate("MegaError",e->getErrorString());
+                info.parent = this;
+
+                QMegaMessageBox::critical(info);
             }
             break;
         }
@@ -121,40 +131,46 @@ void ChangePassword::on_bOk_clicked()
     const bool passwordIsWeak{mMegaApi->getPasswordStrength(newPassword().toUtf8().constData())
                 == MegaApi::PASSWORD_STRENGTH_VERYWEAK};
 
+    QMegaMessageBox::MessageBoxInfo info;
+    info.title = QMegaMessageBox::errorTitle();
+    info.parent = this;
+
     if (fieldIsEmpty)
     {
-        QMegaMessageBox::warning(this, tr("Error"), tr("Please enter your password"));
-        return;
+        info.text = tr("Please enter your password");
+        QMegaMessageBox::warning(info);
     }
     else if (!passwordsAreEqual)
     {
-        QMegaMessageBox::warning(this, tr("Error"), tr("The entered passwords don't match"));
-        return;
+        info.text = tr("The entered passwords don't match");
+        QMegaMessageBox::warning(info);
     }
     else if (newAndOldPasswordsAreTheSame)
     {
-        QMegaMessageBox::warning(this, tr("Error"), tr("You have entered your current password,"
-                                                       " please enter a new password."));
-        return;
+        info.text = tr("You have entered your current password,"
+                       " please enter a new password.");
+        QMegaMessageBox::warning(info);
     }
     else if (passwordIsWeak)
     {
-        QMegaMessageBox::warning(this, tr("Error"), tr("Please, enter a stronger password"));
-        return;
-    }
-
-    mUi->bOk->setEnabled(false);
-
-    char* email = mMegaApi->getMyEmail();
-    if (email)
-    {
-        mMegaApi->multiFactorAuthCheck(email, mDelegateListener);
-        delete [] email;
+        info.text = tr("Please, enter a stronger password");
+        QMegaMessageBox::warning(info);
     }
     else
     {
-        mMegaApi->multiFactorAuthCheck(Preferences::instance()->email().toUtf8().constData(),
-                                       mDelegateListener);
+        mUi->bOk->setEnabled(false);
+
+        char* email = mMegaApi->getMyEmail();
+        if (email)
+        {
+            mMegaApi->multiFactorAuthCheck(email, mDelegateListener);
+            delete [] email;
+        }
+        else
+        {
+            mMegaApi->multiFactorAuthCheck(Preferences::instance()->email().toUtf8().constData(),
+                                           mDelegateListener);
+        }
     }
 }
 

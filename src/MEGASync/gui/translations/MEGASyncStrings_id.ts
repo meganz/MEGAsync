@@ -390,6 +390,16 @@
         <translatorcomment>Label to indicate a reminder about a contact request.</translatorcomment>
         <translation>Peringatan: anda memiliki permintaan kontak</translation>
     </message>
+    <message>
+        <source>Shared folder updated</source>
+        <translatorcomment>Label to indicate that a shared folder was updated. CON-295</translatorcomment>
+        <translation>Folder bersama diperbarui</translation>
+    </message>
+    <message numerus="yes">
+        <source>[A] updated %n item</source>
+        <translatorcomment>Label to indicate that user [A] has updated %n items in shared folder. Placeholder [A] will be replaced by the email or full name of the user that made the update and %n with the number of removed items. CON-295</translatorcomment>
+        <translation><numerusform>[A] memperbarui %n item</numerusform></translation>
+    </message>
 </context>
 <context>
     <name>BackupItemModel</name>
@@ -1070,6 +1080,19 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
     </message>
 </context>
 <context>
+    <name>DateTimeFormatter</name>
+    <message>
+        <source>Today at %1</source>
+        <translatorcomment>Label to indicate the today time of the current alert item displayed or completed transfer. SNC-2977</translatorcomment>
+        <translation>Hari ini jam %1</translation>
+    </message>
+    <message>
+        <source>Yesterday at %1</source>
+        <translatorcomment>Label to indicate the yesterday time of the current alert item displayed or completed transfer. SNC-2977</translatorcomment>
+        <translation>Kemarin jam %1</translation>
+    </message>
+</context>
+<context>
     <name>DesktopNotifications</name>
     <message>
         <source>[A] has left the shared folder</source>
@@ -1290,6 +1313,11 @@ Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti na
         <source>Show in MEGA</source>
         <translatorcomment>Notification button to redirect the user to remote location. It will open webclient at specific location.</translatorcomment>
         <translation>Tampilkan di MEGA</translation>
+    </message>
+    <message numerus="yes">
+        <source>[A] updated %n item</source>
+        <translatorcomment>Label to indicate that user [A] has updated %n items in shared folder. Placeholder [A] will be replaced by the email or full name of the user that made the update and %n with the number of removed items. CON-295</translatorcomment>
+        <translation><numerusform>[A] memperbarui %n item</numerusform></translation>
     </message>
 </context>
 <context>
@@ -2882,11 +2910,6 @@ Transfer akan dilanjutkan secara otomatis saat anda membuka kembali aplikasi.</n
         <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
         <translation>Cadangan anda “%1” telah dinonaktifkan sementara: %2</translation>
     </message>
-    <message>
-        <source>Error transferring folder: %1</source>
-        <translatorcomment>Label to indicate that has been an error during a folder transfer.  Placeholder %1 displays the reason.</translatorcomment>
-        <translation>Kesalahan mentransfer folder: %1</translation>
-    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -3265,7 +3288,7 @@ Transfer akan dilanjutkan secara otomatis saat anda membuka kembali aplikasi.</n
     <message>
         <source>Account expired (business or Pro Flexi)</source>
         <translatorcomment>Label to show that the current account (either business or Pro Flexi) is expired during a SDK operation.</translatorcomment>
-        <translation>Akun Bisnis anda telah kedaluwarsa</translation>
+        <translation>Akun dinonaktifkan</translation>
     </message>
 </context>
 <context>
@@ -4105,16 +4128,14 @@ Masukkan nama yang berbeda.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- You can now search the stored data in your account.
-- We've improved system notifications.
+        <source>- We&apos;ve enhanced system notifications.
 - We've enhanced the UI.
 - We've fixed the detected crashes on Windows, Linux, and macOS.
 </source>
-        <translation>- Anda sekarang dapat mencari data yang tersimpan di akun anda.
-- Kami telah meningkatkan sistem notifikasi.
+        <translatorcomment>Changelog for v4.9.5</translatorcomment>
+        <translation>- Kami telah meningkatkan notifikasi sistem.
 - Kami telah meningkatkan UI.
-- Kami telah memperbaiki kerusakan yang terdeteksi di Windows, Linux, dan macOS.
-</translation>
+- Kami telah memperbaiki kerusakan yang terdeteksi di Windows, Linux, dan macOS.</translation>
     </message>
 </context>
 <context>
@@ -4809,11 +4830,6 @@ Apakah anda tetap ingin menghapusnya?</translation>
         <translation>Tambah</translation>
     </message>
     <message>
-        <source>Auto</source>
-        <translatorcomment>Label to indicate that management of rate upload limit is automatic.</translatorcomment>
-        <translation>Otomatis</translation>
-    </message>
-    <message>
         <source>Data temporarily unavailable</source>
         <translatorcomment>Label to indicate that the usage data is temporarily unavailable. String as short as possible.</translatorcomment>
         <translation>Data sementara tidak tersedia</translation>
@@ -5253,7 +5269,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Install Update</source>
         <translatorcomment>Button label text shown in General pane when there is an update available. Keep as short as possible.</translatorcomment>
-        <translation>Install update</translation>
+        <translation>Pasang pembaruan</translation>
     </message>
     <message>
         <source>Free</source>
@@ -5514,6 +5530,22 @@ Do you want to restart MEGAsync now?</source>
         <source>Prevent the computer from going to sleep when transfers or syncs are in progress.</source>
         <translatorcomment>Sleep/Active mode: Feature description label for keeping the pc awake when there are active transfers</translatorcomment>
         <translation>Mencegah komputer dari tidur saat transfer atau sinkronisasi sedang berlangsung.</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsDialog_Bandwith</name>
+    <message>
+        <source>Auto</source>
+        <translatorcomment>Label to indicate that management of rate upload limit is automatic. SNC-3076</translatorcomment>
+        <translation>Otomatis</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsDialog_Proxies</name>
+    <message>
+        <source>Auto</source>
+        <translatorcomment>Label to indicate that proxy settings are on auto detec mode. SNC-3076</translatorcomment>
+        <translation>Otomatis</translation>
     </message>
 </context>
 <context>
@@ -5999,7 +6031,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Public link</source>
         <translatorcomment>Text of the button to select a file from a public link for streaming</translatorcomment>
-        <translation>Link / Tautan untuk umum</translation>
+        <translation>Tautan publik</translation>
     </message>
     <message>
         <source>File info:</source>
@@ -6646,116 +6678,186 @@ Untuk mendapatkan lebih banyak kuota, upgrade ke akun Pro atau tunggu [A] hingga
     </message>
 </context>
 <context>
-    <name>TransferNotificationBuilderBase</name>
+    <name>TransferNotificationBuilder</name>
     <message>
-        <source>Uploaded 1 file to %1.</source>
-        <translatorcomment>Notification text that inform 1 file has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation>Mengunggah 1 file ke %1.</translation>
-    </message>
-    <message>
-        <source>Uploaded 1 folder to %1.</source>
-        <translatorcomment>Notification text that inform 1 folder has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation>Mengunggah 1 folder ke %1.</translation>
-    </message>
-    <message>
-        <source>File uploaded</source>
-        <translatorcomment>Notification title when a file has been uploaded</translatorcomment>
-        <translation>Berkas diunggah</translation>
-    </message>
-    <message>
-        <source>Folder uploaded</source>
-        <translatorcomment>Notification title when a folder has been uploaded</translatorcomment>
-        <translation>Folder diunggah</translation>
+        <source>Retry</source>
+        <translatorcomment>Notification button to retry the failed file. CON-223</translatorcomment>
+        <translation>Coba kembali</translation>
     </message>
     <message>
         <source>Show in MEGA</source>
-        <translatorcomment>Notification button to see the file on the webclient</translatorcomment>
+        <translatorcomment>Notification button to see the file on the webclient. CON-223</translatorcomment>
         <translation>Tampilkan di MEGA</translation>
     </message>
     <message>
         <source>Get link</source>
-        <translatorcomment>Notification button to get the file link</translatorcomment>
+        <translatorcomment>Notification button to get the file link. CON-223</translatorcomment>
         <translation>Dapatkan tautan</translation>
     </message>
     <message>
-        <source>Downloaded 1 file to %1.</source>
-        <translatorcomment>Notification text that inform 1 file has been downloaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation>Mengunduh 1 file ke %1.</translation>
-    </message>
-    <message>
-        <source>Downloaded 1 folder to %1.</source>
-        <translatorcomment>Notification text that inform 1 folder has been downloaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation>Mengunduh 1 folder ke %1.</translation>
-    </message>
-    <message>
         <source>Show in folder</source>
-        <translatorcomment>Notification button to see the file on the local file explorer</translatorcomment>
+        <translatorcomment>Notification button to see the file on the local file explorer. CON-223</translatorcomment>
         <translation>Tampilkan di dalam folder</translation>
     </message>
     <message>
         <source>Open</source>
-        <translatorcomment>Notification button to open the file</translatorcomment>
+        <translatorcomment>Notification button to open the file. CON-223</translatorcomment>
         <translation>Buka</translation>
     </message>
-    <message>
-        <source>File downloaded</source>
-        <translatorcomment>Notification title when a file has been downloaded</translatorcomment>
-        <translation>Berkas diunduh</translation>
-    </message>
-    <message>
-        <source>Folder downloaded</source>
-        <translatorcomment>Notification title when a folder has been downloaded</translatorcomment>
-        <translation>Folder diunduh</translation>
-    </message>
     <message numerus="yes">
-        <source>%n upload successful</source>
-        <translatorcomment>Notification text that inform that an upload was successful. %1 is the number of uploads. This string goes always with the %n upload cancelled and/or %n upload failed strings.</translatorcomment>
-        <translation><numerusform>%n unggahan selesai </numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>, %n upload cancelled</source>
-        <translatorcomment>Appended text that inform that an upload was cancelled. %1 is the number of cancelled uploads. This string goes always appended to the %n upload successful</translatorcomment>
-        <translation><numerusform>, %n unggahan dibatalkan </numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>, %n upload failed</source>
-        <translatorcomment>Appended text that inform that an upload has failed. %1 is the number of failed uploads. This string goes always appended to the %n upload successful</translatorcomment>
-        <translation><numerusform>, %n unggahan gagal </numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Uploaded %n items to %1</source>
-        <translatorcomment>Notification text that inform n items (files or folders) has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation><numerusform>Mengunggah %n barang ke %1</numerusform></translation>
+        <source>Retry failed items</source>
+        <translatorcomment>Notification button to retry failed transfers when not all the transfers failed. CON-223</translatorcomment>
+        <translation><numerusform>Coba lagi item yang gagal</numerusform></translation>
     </message>
     <message>
-        <source>Items uploaded</source>
-        <translatorcomment>Notification title when a more than one transfer (file or folders) have been uploaded</translatorcomment>
-        <translation>Item diunggah</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n download successful</source>
-        <translatorcomment>Notification text that inform that an download was successful. %1 is the number of downloads. This string goes always with the %n download cancelled and/or %n download failed strings.</translatorcomment>
-        <translation><numerusform>%n unduhan selesai</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>, %n download cancelled</source>
-        <translatorcomment>Appended text that inform that an download was cancelled. %1 is the number of cancelled downloads. This string goes always appended to the %n download successful</translatorcomment>
-        <translation><numerusform>, %n unduhan dibatalkan</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>, %n download failed</source>
-        <translatorcomment>Appended text that inform that an download has failed. %1 is the number of failed downloads. This string goes always appended to the %n download successful</translatorcomment>
-        <translation><numerusform>, %n unduhan gagal</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Downloaded %n items to %1</source>
-        <translatorcomment>Notification text that inform n items (files or folders) has been downloaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation><numerusform>Mengunduh %n barang ke %1</numerusform></translation>
+        <source>Could not upload</source>
+        <translatorcomment>Notification title for a failed upload of files/folders. CON-223</translatorcomment>
+        <translation>Tidak dapat mengunggah</translation>
     </message>
     <message>
-        <source>Items downloaded</source>
-        <translatorcomment>Notification title when a more than one transfer (file or folders) have been downloaded</translatorcomment>
-        <translation>Barang diunduh</translation>
+        <source>Upload incomplete</source>
+        <translatorcomment>Notification title for a combination of completed and failed uploads. CON-223</translatorcomment>
+        <translation>Unggahan tidak selesai</translation>
+    </message>
+    <message>
+        <source>Upload complete</source>
+        <translatorcomment>Notification title for a successfully upload of files/folders. CON-223</translatorcomment>
+        <translation>Unggahan selesai</translation>
+    </message>
+    <message>
+        <source>Could not download</source>
+        <translatorcomment>Notification title for a failed download of files/folders. CON-223</translatorcomment>
+        <translation>Tidak dapat mengunduh</translation>
+    </message>
+    <message>
+        <source>Download incomplete</source>
+        <translatorcomment>Notification title for a combination of completed and failed downloads. CON-223</translatorcomment>
+        <translation>Unduhan tidak selesai</translation>
+    </message>
+    <message>
+        <source>Download complete</source>
+        <translatorcomment>Notification title for a successfully download of files/folders. CON-223</translatorcomment>
+        <translation>Unduhan selesai</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n item couldn’t be uploaded to %1.</source>
+        <translatorcomment>Body text of a system notification shown when %n items could not be uploaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
+        <translation><numerusform>%n item tidak dapat diunggah ke %1.</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n item uploaded</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
+        First part of string for multi plural support. Full string looks like: X item uploaded, but Y item couldn’t be uploaded (X and Y will be replaced with specific numbers).</translatorcomment>
+        <translation><numerusform>%n item diunggah </numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1, but %n item couldn’t be uploaded.</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
+        Second part of string for multi plural support. Full string looks like: X item uploaded, but Y item couldn’t be uploaded (X and Y will be replaced with specific numbers).</translatorcomment>
+        <translation><numerusform>%1, tapi %n item tidak dapat diunggah. </numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n item uploaded to %1.</source>
+        <translatorcomment>Body text of a system notification shown when %n items were uploaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
+        <translation><numerusform>%n item diunggah ke %1.</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n item downloaded</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
+        First part of string for multi plural support. Full string looks like: X item downloaded, but Y item couldn’t be downloaded (X and Y will be replaced with specific numbers).</translatorcomment>
+        <translation><numerusform>%n item diunduh </numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1, but %n item couldn’t be downloaded.</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
+        Second part of string for multi plural support. Full string looks like: X item downloaded, but Y item couldn’t be downloaded (X and Y will be replaced with specific numbers).</translatorcomment>
+        <translation><numerusform>%1, tapi %n item tidak dapat diunduh. </numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n item couldn’t be downloaded to %1.</source>
+        <translatorcomment>Body text of a system notification shown when %n items could not be downloaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
+        <translation><numerusform>%n item tidak dapat diunduh %1.</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n item downloaded to %1.</source>
+        <translatorcomment>Body text of a system notification shown when %n items were downloaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
+        <translation><numerusform>%n item diunduh ke %1.</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n item no longer exist or was renamed.</source>
+        <translatorcomment>Body text of a system notification shown when %n items no longer exist or were renamed during an upload operation. %n will be replaced with the number of items. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
+        <translation><numerusform>%n item tidak ada lagi atau diganti namanya. </numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n item no longer exist.</source>
+        <translatorcomment>Body text of a system notification shown when %n items no longer exist or were renamed during a download operation. %n will be replaced with the number of items. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
+        <translation><numerusform>%n barang sudah tidak ada. </numerusform></translation>
+    </message>
+</context>
+<context>
+    <name>TransferNotificationBuilder_File</name>
+    <message>
+        <source>%1 couldn’t be uploaded to %2.</source>
+        <translatorcomment>Body text of a system notification shown when %1 file could not be uploaded to %2. %1 will be replaced with the name of the file and %2 with the remote destination path. CON-223</translatorcomment>
+        <translation>%1 tidak dapat diunggah ke %2.</translation>
+    </message>
+    <message>
+        <source>%1 uploaded to %2.</source>
+        <translatorcomment>Body text of a system notification shown when %1 was succesfully uploaded to %2. %1 will be replaced with the name of the file and %2 with the remote destination path. CON-223</translatorcomment>
+        <translation>%1 diunggah ke %2.</translation>
+    </message>
+    <message>
+        <source>%1 couldn’t be downloaded to %2.</source>
+        <translatorcomment>Body text of a system notification shown when %1 file could not be downloaded to %2. %1 will be replaced with the name of the file and %2 with the local destination path. CON-223</translatorcomment>
+        <translation>%1 tidak dapat diunduh ke %2.</translation>
+    </message>
+    <message>
+        <source>%1 downloaded to %2.</source>
+        <translatorcomment>Body text of a system notification shown when %1 was succesfully downloaded to %2. %1 will be replaced with the name of the file and %2 with the local destination path. CON-223</translatorcomment>
+        <translation>%1 diunduh ke %2.</translation>
+    </message>
+    <message>
+        <source>%1 no longer exists or was renamed.</source>
+        <translatorcomment>Body text of a system notification shown when %1 no longer exists or was removed during upload operation. %1 will be replaced with the name of the file. CON-223</translatorcomment>
+        <translation>%1 sudah tidak ada atau diganti namanya. </translation>
+    </message>
+    <message>
+        <source>%1 no longer exists.</source>
+        <translatorcomment>Body text of a system notification shown when %1 no longer exists during download operation. %1 will be replaced with the name of the file. CON-223</translatorcomment>
+        <translation>%1 tidak ada lagi. </translation>
+    </message>
+</context>
+<context>
+    <name>TransferNotificationBuilder_Folder</name>
+    <message>
+        <source>%1 couldn’t be uploaded to %2.</source>
+        <translatorcomment>Body text of a system notification shown when %1 folder could not be uploaded to %2. %1 will be replaced with the name of the folder and %2 with the remote destination path. CON-223</translatorcomment>
+        <translation>%1 tidak dapat diunggah ke %2.</translation>
+    </message>
+    <message>
+        <source>%1 uploaded to %2.</source>
+        <translatorcomment>Body text of a system notification shown when %1 was succesfully uploaded to %2. %1 will be replaced with the name of the folder and %2 with the remote destination path. CON-223</translatorcomment>
+        <translation>%1 diunggah ke %2.</translation>
+    </message>
+    <message>
+        <source>%1 couldn’t be downloaded to %2.</source>
+        <translatorcomment>Body text of a system notification shown when %1 file could not be downloaded to %2. %1 will be replaced with the name of the folder and %2 with the local destination path. CON-223</translatorcomment>
+        <translation>%1 tidak dapat diunduh ke %2.</translation>
+    </message>
+    <message>
+        <source>%1 downloaded to %2.</source>
+        <translatorcomment>Body text of a system notification shown when %1 was succesfully downloaded to %2. %1 will be replaced with the name of the folder and %2 with the local destination path. CON-223</translatorcomment>
+        <translation>%1 diunduh ke %2.</translation>
+    </message>
+    <message>
+        <source>%1 no longer exists or was renamed.</source>
+        <translatorcomment>Body text of a system notification shown when %1 no longer exists or was removed during upload operation. %1 will be replaced with the name of the folder. CON-223</translatorcomment>
+        <translation>%1 sudah tidak ada atau diganti namanya. </translation>
+    </message>
+    <message>
+        <source>%1 no longer exists.</source>
+        <translatorcomment>Body text of a system notification shown when %1 no longer exists during download operation. %1 will be replaced with the name of the folder. CON-223</translatorcomment>
+        <translation>%1 tidak ada lagi. </translation>
     </message>
 </context>
 <context>
@@ -7317,7 +7419,7 @@ Harap hapus sinkronisasi folder dari pengaturan untuk membatalkannya.</translati
     <message>
         <source>Verify your email</source>
         <translatorcomment>Label to verify a locked account. It will redirect to webclient to confirm email.</translatorcomment>
-        <translation>Verifikasi email anda</translation>
+        <translation>Periksa kotak masuk email anda</translation>
     </message>
     <message>
         <source>Locked account</source>
@@ -7327,7 +7429,7 @@ Harap hapus sinkronisasi folder dari pengaturan untuk membatalkannya.</translati
     <message>
         <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
         <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
-        <translation>Akun anda telah dikunci sementara untuk keselamatan anda. Harap verifikasi email anda dan ikuti langkah-langkahnya untuk membuka akun anda kembali.</translation>
+        <translation>Akun anda telah dikunci sementara untuk keamanan anda. Silakan periksa email anda dan ikuti langkah-langkahnya untuk membuka kunci akun anda.</translation>
     </message>
     <message>
         <source>Resend email</source>

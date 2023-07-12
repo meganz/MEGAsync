@@ -26,29 +26,20 @@ bool TransferMetaDataItemId::operator==(const TransferMetaDataItemId& item) cons
 
 bool TransferMetaDataItemId::operator<(const TransferMetaDataItemId &item) const
 {
-    if(tag > 0 && item.tag > 0)
-    {
-        return tag < item.tag;
-    }
-    else if(handle != mega::INVALID_HANDLE && item.handle != mega::INVALID_HANDLE)
-    {
-        return handle > item.handle;
-    }
-
-    return false;
+    return tag < item.tag;
 }
 
 /////////////////////////////////
 
 TransferMetaData::TransferMetaData(int direction, unsigned long long id)
-    : mInitialPendingTransfers(-1), mInitialPendingFolderTransfersFromOtherSession(0), mTransferDirection(direction), mCreateRootFolder(false),
-      mAppId(id), mCreatedFromOtherSession(false), mNotification(nullptr), mNonExistsFailAppId(0)
+    : mInitialTopLevelTransfers(-1), mInitialPendingFolderTransfersFromOtherSession(0), mFinishedTopLevelTransfers(0), mStartedTopLevelTransfers(0), mTransferDirection(direction), mCreateRootFolder(false),
+      mAppId(id), mCreatedFromOtherSession(false), mProcessCancelled(false),mTotalFileCount(0), mNotification(nullptr), mNonExistsFailAppId(0)
 {
 }
 
 TransferMetaData::TransferMetaData()
-    : mInitialPendingTransfers(-1), mInitialPendingFolderTransfersFromOtherSession(0), mTransferDirection(-1), mCreateRootFolder(false),
-      mAppId(0), mCreatedFromOtherSession(false), mNotification(nullptr), mNonExistsFailAppId(0)
+    : mInitialTopLevelTransfers(-1), mInitialPendingFolderTransfersFromOtherSession(0), mFinishedTopLevelTransfers(0), mStartedTopLevelTransfers(0), mTransferDirection(-1), mCreateRootFolder(false),
+      mAppId(0), mCreatedFromOtherSession(false), mProcessCancelled(false), mTotalFileCount(0), mNotification(nullptr), mNonExistsFailAppId(0)
 {
 }
 
@@ -135,11 +126,12 @@ bool TransferMetaData::finish(mega::MegaTransfer *transfer, mega::MegaError* e)
                 state = TransferData::TRANSFER_COMPLETED;
             }
 
+            auto isEmptyFolder(value->files.size() == 0);
 
             if(!nonExistError(transfer, e))
             {
                 //The folder has finished but it is empty, so it is added to the empty folders list
-                if(value->files.size() == 0)
+                if(isEmptyFolder)
                 {
                     mEmptyFolders.insertItem(state, value);
                 }
@@ -151,10 +143,10 @@ bool TransferMetaData::finish(mega::MegaTransfer *transfer, mega::MegaError* e)
             }
             else
             {
-                auto nonExistData = TransferMetaDataContainer::getAppData(mNonExistsFailAppId);
+                auto nonExistData = TransferMetaDataContainer::getAppDataById(mNonExistsFailAppId);
                 if(nonExistData)
                 {
-                    if(value->files.size() == 0)
+                    if(isEmptyFolder)
                     {
                         value->state = TransferData::TRANSFER_FAILED;
                         nonExistData->mEmptyFolders.nonExistFailedTransfers.insert(id, value);
@@ -164,6 +156,14 @@ bool TransferMetaData::finish(mega::MegaTransfer *transfer, mega::MegaError* e)
                         nonExistData->mFolders.insert(id, value);
                     }
                 }
+            }
+
+            //For empty folders, the finish and the start is at the same time
+            if(isEmptyFolder)
+            {
+                QString message = QString::fromUtf8("Folder Controller: Empty folder started. Name: %1").arg(QString::fromUtf8(transfer->getFileName()));
+                mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG, message.toUtf8().constData());
+                mStartedTopLevelTransfers++;
             }
         }
     }
@@ -201,7 +201,7 @@ bool TransferMetaData::finish(mega::MegaTransfer *transfer, mega::MegaError* e)
             }
             else
             {
-                auto nonExistData = TransferMetaDataContainer::getAppData(mNonExistsFailAppId);
+                auto nonExistData = TransferMetaDataContainer::getAppDataById(mNonExistsFailAppId);
                 if(nonExistData)
                 {
                     item->state = TransferData::TRANSFER_FAILED;
@@ -211,40 +211,58 @@ bool TransferMetaData::finish(mega::MegaTransfer *transfer, mega::MegaError* e)
         }
     }
 
-    decreaseInitialPendingTransfers(transfer);
+    increaseFinishedTopLevelTransfers(transfer);
 
     checkAndSendNotification();
+    checkScanningState();
 
     return false;
 }
 
-void TransferMetaData::addInitialPendingTransfer()
+void TransferMetaData::addInitialPendingTopLevelTransferFromOtherSession(bool isFolder)
 {
-    //It is init with -1
-    if(mInitialPendingTransfers < 0)
+    if(mCreatedFromOtherSession)
     {
-        mInitialPendingTransfers = 1;
-    }
-    else
-    {
-        mInitialPendingTransfers++;
+        if(isFolder)
+        {
+            mInitialPendingFolderTransfersFromOtherSession++;
+
+            QString message = QString::fromUtf8("Folder Controller: Started folder from transfers started on other session.");
+            mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG, message.toUtf8().constData());
+            mStartedTopLevelTransfers++;
+        }
+
+        addInitialPendingTopLevelTransfer();
     }
 }
 
-void TransferMetaData::decreaseInitialPendingTransfers(mega::MegaTransfer *transfer)
+void TransferMetaData::addInitialPendingTopLevelTransfer()
 {
-    //Reduce it only for top level transfers, as the initialPendingTransfers only counts files and folders (not files in folders)
-    if(transfer->getFolderTransferTag() <= 0 && mInitialPendingTransfers > 0)
+    //It is init with -1
+    if(mInitialTopLevelTransfers < 0)
     {
-        mInitialPendingTransfers--;
+        mInitialTopLevelTransfers = 1;
+    }
+    else
+    {
+        mInitialTopLevelTransfers++;
+    }
+}
+
+void TransferMetaData::increaseFinishedTopLevelTransfers(mega::MegaTransfer *transfer)
+{
+    //Increase it only for top level transfers, as the initialPendingTransfers only counts nested files and folders (not files in folders)
+    if(transfer->getFolderTransferTag() <= 0 && mFinishedTopLevelTransfers <= mInitialTopLevelTransfers)
+    {
+        mFinishedTopLevelTransfers++;
     }
     //If the transfermetadata has been created from other session from a folder download/upload
-    //Reduce the mInitialPendingTransfers (which will be maximum 1, the folder) when all the files have finished
+    //Increase the mFinishedTopLevelTransfers (which will be maximum 1, the folder) when all the nested files have finished
     else if(mCreatedFromOtherSession && mFiles.pendingTransfers.isEmpty())
     {
         if(transfer->getFolderTransferTag() > 0)
         {
-            mInitialPendingTransfers -= mInitialPendingFolderTransfersFromOtherSession;
+            mFinishedTopLevelTransfers += mInitialPendingFolderTransfersFromOtherSession;
         }
     }
 }
@@ -262,6 +280,11 @@ bool TransferMetaData::isSingleTransfer() const
 int TransferMetaData::getTotalFiles() const
 {
     return mFiles.size();
+}
+
+int TransferMetaData::getPendingFiles() const
+{
+    return mFiles.pendingTransfers.size() + mEmptyFolders.pendingTransfers.size();
 }
 
 int TransferMetaData::getTotalEmptyFolders() const
@@ -334,6 +357,16 @@ int TransferMetaData::getFileTransfersCancelled() const
     return mFiles.cancelledTransfers.size();
 }
 
+int TransferMetaData::getTotaTransfersCancelled() const
+{
+    return mFiles.cancelledTransfers.size() + mEmptyFolders.cancelledTransfers.size();
+}
+
+int TransferMetaData::getNonExistentCount() const
+{
+    return mFiles.nonExistFailedTransfers.size();
+}
+
 TransferMetaDataItemId TransferMetaData::getFirstTransferIdByState(TransferData::TransferState state) const
 {
     TransferMetaDataItemId id = mFiles.getFirstTransferIdByState(state);
@@ -388,11 +421,16 @@ void TransferMetaData::addFile(int tag)
     TransferMetaDataItemId id(tag, mega::INVALID_HANDLE);
     auto fileItem = std::make_shared<TransferMetaDataItem>(id);
     mFiles.pendingTransfers.insert(id, fileItem);
+    mTotalFileCount++;
 
-    if(mCreatedFromOtherSession)
+    if(mStartedTopLevelTransfers <= mInitialTopLevelTransfers)
     {
-        addInitialPendingTransfer();
+        QString message = QString::fromUtf8("Folder Controller: Started file.");
+        mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG, message.toUtf8().constData());
+        mStartedTopLevelTransfers++;
     }
+
+    addInitialPendingTopLevelTransferFromOtherSession(false);
 }
 
 void TransferMetaData::addFileFromFolder(int folderTag, int fileTag)
@@ -409,19 +447,30 @@ void TransferMetaData::addFileFromFolder(int folderTag, int fileTag)
         folderItem = std::make_shared<TransferMetaDataFolderItem>(folderId);
         mFolders.insert(folderId,folderItem);
 
-        if(mCreatedFromOtherSession)
-        {
-            mInitialPendingFolderTransfersFromOtherSession++;
-            addInitialPendingTransfer();
-        }
+        addInitialPendingTopLevelTransferFromOtherSession(true);
     }
 
     folderItem->files.pendingTransfers.insert(fileId, fileItem);
 }
 
+void TransferMetaData::topLevelFolderScanningFinished(int filecount)
+{
+    mTotalFileCount += filecount;
+    QString message = QString::fromUtf8("Folder Controller: Folder scanning finished. Containing %1 files").arg(filecount);
+    mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG, message.toUtf8().constData());
+    mStartedTopLevelTransfers++;
+    checkScanningState();
+}
+
+void TransferMetaData::processCancelled()
+{
+    mProcessCancelled = true;
+    checkScanningState();
+}
+
 void TransferMetaData::checkAndSendNotification()
 {
-    if (mInitialPendingTransfers == 0 && mFiles.pendingTransfers.isEmpty())
+    if (mFinishedTopLevelTransfers == mInitialTopLevelTransfers && mFiles.pendingTransfers.isEmpty())
     {
         //If all the transfers have been cancelled, do not show any notification
         if (Preferences::instance()->isNotificationEnabled(Preferences::NotificationsTypes::COMPLETED_UPLOADS_DOWNLOADS))
@@ -429,7 +478,7 @@ void TransferMetaData::checkAndSendNotification()
             std::shared_ptr<TransferMetaData> nonExistData(nullptr);
             if(mNonExistsFailAppId != 0)
             {
-                nonExistData = TransferMetaDataContainer::getAppData(mNonExistsFailAppId);
+                nonExistData = TransferMetaDataContainer::getAppDataById(mNonExistsFailAppId);
             }
 
             QList<unsigned long long> appIds;
@@ -485,6 +534,24 @@ void TransferMetaData::checkAndSendNotification()
     }
 }
 
+void TransferMetaData::checkScanningState()
+{
+    //Only for Top Level transfers
+    if(mInitialTopLevelTransfers > 0 &&
+            ((!mProcessCancelled && ((mTotalFileCount == mFiles.size() && mStartedTopLevelTransfers == mInitialTopLevelTransfers)))
+            || (mProcessCancelled && mFiles.pendingTransfers.isEmpty())))
+    {
+        //This method is called from the transfer model secondary thread
+        auto id = getAppId();
+        auto transfersCancelled = mProcessCancelled;
+
+        Utilities::queueFunctionInAppThread([id, transfersCancelled]()
+        {
+            MegaSyncApp->transferBatchFinished(id, transfersCancelled);
+        });
+    }
+}
+
 bool TransferMetaData::isDownload() const
 {
     return mTransferDirection != mega::MegaTransfer::TYPE_UPLOAD;
@@ -518,9 +585,9 @@ unsigned long long TransferMetaData::getAppId() const
     return mAppId;
 }
 
-void TransferMetaData::setInitialPendingTransfers(int newInitialPendingTransfers)
+void TransferMetaData::setInitialTransfers(int newInitialPendingTransfers)
 {
-    mInitialPendingTransfers = newInitialPendingTransfers;
+    mInitialTopLevelTransfers = newInitialPendingTransfers;
 }
 
 void TransferMetaData::setNotification(MegaNotification* newNotification)
@@ -532,7 +599,7 @@ void TransferMetaData::setNotification(MegaNotification* newNotification)
     mNotification = newNotification;
     mNotificationDestroyedConnection = MegaNotification::connect(newNotification, &MegaNotification::destroyed, [newNotification](){
         auto appDataId(newNotification->getData().toULongLong());
-        auto data = TransferMetaDataContainer::getAppData(appDataId);
+        auto data = TransferMetaDataContainer::getAppDataById(appDataId);
         if(data && data->isNonExistData())
         {
             //Also remove the source TransferMetaData
@@ -567,10 +634,13 @@ void TransferMetaData::start(mega::MegaTransfer *transfer)
             {
                 addFileFromFolder(transfer->getFolderTransferTag(), transfer->getTag());
             }
+            //Top Level files
             else
             {
                 addFile(transfer->getTag());
             }
+
+            checkScanningState();
         }
     }
 }
@@ -578,8 +648,6 @@ void TransferMetaData::start(mega::MegaTransfer *transfer)
 void TransferMetaData::retryFileFromFolderFailingItem(int fileTag, int folderTag, int nodeHandle)
 {
     TransferMetaDataItemId fileId(fileTag, nodeHandle);
-
-
 
     auto removed = mFiles.failedTransfers.remove(fileId);
     removed += mFiles.nonExistFailedTransfers.remove(fileId);
@@ -592,7 +660,7 @@ void TransferMetaData::retryFileFromFolderFailingItem(int fileTag, int folderTag
             mFolders.remove(folderId);
         }
 
-        addInitialPendingTransfer();
+        addInitialPendingTopLevelTransfer();
     }
 }
 
@@ -612,11 +680,11 @@ void TransferMetaData::retryFailingFile(int tag, mega::MegaHandle nodeHandle)
         {
             if(mNotification)
             {
-                mNotification->deleteLater();
+                unlinkNotification();
             }
         }
 
-        addInitialPendingTransfer();
+        addInitialPendingTopLevelTransfer();
     }
 }
 
@@ -627,7 +695,7 @@ void TransferMetaData::retryAllPressed()
 
     if(mNotification)
     {
-        mNotification->deleteLater();
+        unlinkNotification();
     }
 }
 
@@ -654,7 +722,7 @@ void DownloadTransferMetaData::start(mega::MegaTransfer *transfer)
 
 void DownloadTransferMetaData::updateForeignDir(const mega::MegaHandle&)
 {
-    mInitialPendingTransfers--;
+    mFinishedTopLevelTransfers++;
 
     // Update pending transfers in metadata, and notify if this was the last.
     checkAndSendNotification();
@@ -897,7 +965,7 @@ bool TransferMetaDataContainer::start(mega::MegaTransfer *transfer)
         //TOP LEVEL
         if(idResult.first)
         {
-            auto data = getAppData(idResult.second);
+            auto data = getAppDataById(idResult.second);
 
             if(!data)
             {
@@ -943,8 +1011,8 @@ bool TransferMetaDataContainer::start(mega::MegaTransfer *transfer)
 void TransferMetaDataContainer::retryTransfer(mega::MegaTransfer *transfer, unsigned long long appDataId)
 {
     if(appDataId > 0)
-        {
-        auto data = TransferMetaDataContainer::getAppData(appDataId);
+    {
+        auto data = TransferMetaDataContainer::getAppDataById(appDataId);
         if(data)
         {
             if(!transfer->isFolderTransfer())
@@ -955,7 +1023,7 @@ void TransferMetaDataContainer::retryTransfer(mega::MegaTransfer *transfer, unsi
 
             if(data->mNonExistsFailAppId != 0)
             {
-                auto nonExistData = TransferMetaDataContainer::getAppData(data->mNonExistsFailAppId);
+                auto nonExistData = TransferMetaDataContainer::getAppDataById(data->mNonExistsFailAppId);
                 if(nonExistData)
                 {
                     {
@@ -985,7 +1053,7 @@ void TransferMetaDataContainer::retryTransfer(mega::MegaTransfer *transfer, unsi
 
             if(data->mNonExistsFailAppId != 0)
             {
-                auto nonExistData = TransferMetaDataContainer::getAppData(data->mNonExistsFailAppId);
+                auto nonExistData = TransferMetaDataContainer::getAppDataById(data->mNonExistsFailAppId);
                 if(nonExistData)
                 {
                     {
@@ -1012,7 +1080,7 @@ bool TransferMetaDataContainer::addAppData(unsigned long long appId, std::shared
 
 void TransferMetaDataContainer::removeAppData(unsigned long long appId)
 {
-    auto data = TransferMetaDataContainer::getAppData(appId);
+    auto data = TransferMetaDataContainer::getAppDataById(appId);
     if(data)
     {
         QMutexLocker lock(&mMutex);
@@ -1037,7 +1105,7 @@ bool TransferMetaDataContainer::finishFromFolderTransfer(mega::MegaTransfer *tra
 
 void TransferMetaDataContainer::finish(unsigned long long appId, mega::MegaTransfer *transfer, mega::MegaError *e)
 {
-    auto data = getAppData(appId);
+    auto data = getAppDataById(appId);
 
     if(data)
     {

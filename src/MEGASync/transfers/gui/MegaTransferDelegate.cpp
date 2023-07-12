@@ -12,7 +12,6 @@
 
 #include <QPainter>
 #include <QEvent>
-#include <QMessageBox>
 #include <QToolTip>
 #include <QSortFilterProxyModel>
 #include <QScrollBar>

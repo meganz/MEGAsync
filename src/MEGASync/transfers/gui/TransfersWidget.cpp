@@ -30,6 +30,7 @@ TransfersWidget::TransfersWidget(QWidget* parent) :
     //Align header pause/cancel buttons to view pause/cancel button
     connect(ui->tvTransfers, &MegaTransferView::verticalScrollBarVisibilityChanged, this, &TransfersWidget::onVerticalScrollBarVisibilityChanged);
     connect(ui->tvTransfers, &MegaTransferView::pauseResumeTransfersByContextMenu, this, &TransfersWidget::onPauseResumeTransfer);
+    connect(ui->tvTransfers, &MegaTransferView::allCancelled, this, &TransfersWidget::changeToAllTransfersTab);
 
     connect(mModel, &TransfersModel::transfersProcessChanged, this, &TransfersWidget::onCheckPauseResumeButton);
     connect(mModel, &TransfersModel::transfersProcessChanged, this, &TransfersWidget::onCheckCancelClearButton);
@@ -105,10 +106,7 @@ void TransfersWidget::on_tCancelClearVisible_clicked()
 {
     if(getCurrentTab() == TransfersWidget::ALL_TRANSFERS_TAB)
     {
-        if(ui->tvTransfers->onCancelAllTransfers())
-        {
-            emit changeToAllTransfersTab();
-        }
+        ui->tvTransfers->onCancelAllTransfers();
     }
     else if(getCurrentTab() == TransfersWidget::COMPLETED_TAB)
     {
@@ -523,18 +521,20 @@ void TransfersWidget::onCancelClearButtonPressedOnDelegate()
 
     auto info = ui->tvTransfers->getSelectedCancelOrClearInfo();
 
-    QPointer<TransfersWidget> dialog = QPointer<TransfersWidget>(this);
-
-    if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             info.actionText,
-                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No, info.buttonsText)
-            != QMessageBox::Yes
-            || !dialog)
-    {
-        return;
-    }
-
-    getModel()->cancelAndClearTransfers(sourceSelectionIndexes, this);
+    QMegaMessageBox::MessageBoxInfo msgInfo;
+    msgInfo.parent = this;
+    msgInfo.title = MegaSyncApp->getMEGAString();
+    msgInfo.text = info.actionText;
+    msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
+    msgInfo.defaultButton = QMessageBox::No;
+    msgInfo.buttonsText = info.buttonsText;
+    msgInfo.finishFunc = [this, sourceSelectionIndexes](QPointer<QMessageBox> msg){
+        if(msg->result() == QMessageBox::Yes)
+        {
+            getModel()->cancelAndClearTransfers(sourceSelectionIndexes, this);
+        }
+    };
+    QMegaMessageBox::warning(msgInfo);
 }
 
 void TransfersWidget::onRetryButtonPressedOnDelegate()

@@ -33,7 +33,7 @@ private:
     void startUpload(const QString& localPath, const QString& nodeName, unsigned long long appDataID, mega::MegaNode* parent, mega::MegaCancelToken* cancelToken);
 
     mega::MegaApi *megaApi;
-    std::shared_ptr<FolderTransferListener> listener;
+    std::shared_ptr<FolderTransferListener> mFolderTransferListener;
 };
 
 #endif // MEGAUPLOADER_H

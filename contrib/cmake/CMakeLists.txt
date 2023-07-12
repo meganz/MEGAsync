@@ -277,6 +277,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/control/TextDecorator.h
     ${MEGAsyncDir}/control/TransferBatch.h
     ${MEGAsyncDir}/control/DialogOpener.h
+    ${MEGAsyncDir}/control/Version.h
 
     ${MEGAsyncDir}/gui/AlertItem.h
     ${MEGAsyncDir}/gui/AlertFilterType.h
@@ -890,7 +891,7 @@ if (CMAKE_HOST_APPLE)
             )
 
     execute_process(
-        COMMAND bash "-c" "grep \"const QString Preferences::VERSION_STRING\" ${MEGAsyncDir}/control/Preferences.cpp | awk -F '\"' '{print $2}'"
+        COMMAND bash "-c" "grep \"#define VER_PRODUCTVERSION_STR\" ${MEGAsyncDir}/control/Version.h | awk -F '\"' '{split($2, a, \".\"); print a[1]\".\"a[2]\".\"a[3]}'"
         OUTPUT_VARIABLE MEGASYNC_VERSION
         OUTPUT_STRIP_TRAILING_WHITESPACE)
 

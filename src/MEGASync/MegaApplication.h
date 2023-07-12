@@ -142,11 +142,13 @@ public:
     mega::MegaApi *getMegaApiFolders() { return megaApiFolders; }
     std::unique_ptr<mega::MegaApiLock> megaApiLock;
 
+    QString getMEGAString(){return QLatin1String("MEGA");}
+
     void cleanLocalCaches(bool all = false);
-    void showInfoMessage(QString message, QString title = tr("MEGAsync"));
-    void showWarningMessage(QString message, QString title = tr("MEGAsync"));
-    void showErrorMessage(QString message, QString title = tr("MEGAsync"));
-    void showNotificationMessage(QString message, QString title = tr("MEGAsync"));
+    void showInfoMessage(QString message, QString title = MegaSyncApp->getMEGAString());
+    void showWarningMessage(QString message, QString title = MegaSyncApp->getMEGAString());
+    void showErrorMessage(QString message, QString title = MegaSyncApp->getMEGAString());
+    void showNotificationMessage(QString message, QString title = MegaSyncApp->getMEGAString());
     void setUploadLimit(int limit);
     void setMaxUploadSpeed(int limit);
     void setMaxDownloadSpeed(int limit);
@@ -318,6 +320,7 @@ public slots:
     int getPrevVersion();
     void onDismissStorageOverquota(bool overStorage);
     void showNotificationFinishedTransfers(unsigned long long appDataId);
+    void transferBatchFinished(unsigned long long appDataId, bool fromCancellation);
     void renewLocalSSLcert();
     void onHttpServerConnectionError();
     void onGlobalSyncStateChangedTimeout();
@@ -446,7 +449,6 @@ protected:
     QQueue<QString> uploadQueue;
     QQueue<WrappedNode *> downloadQueue;
     BlockingBatch mBlockingBatch;
-    std::vector<std::shared_ptr<mega::MegaCancelToken>> mUnblockedCancelTokens;
 
     ThreadPool* mThreadPool;
     std::shared_ptr<mega::MegaNode> mRootNode;
@@ -576,19 +578,11 @@ private:
 
     void updateTransferNodesStage(mega::MegaTransfer* transfer);
 
-    void updateFileTransferBatchesAndUi(const QString &nodePath, BlockingBatch& batch);
-    void updateFolderTransferBatchesAndUi(const QString &nodePath, BlockingBatch& batch, bool fromCancellation);
-    void updateIfBlockingStageFinished(BlockingBatch &batch, bool fromCancellation);
-    void unblockBatch(BlockingBatch &batch);
-
     void logBatchStatus(const char* tag);
 
     void enableTransferActions(bool enable);
 
-    void updateFreedCancelToken(mega::MegaTransfer* transfer);
-
     bool noUploadedStarted = true;
-    bool mProcessingUploadQueue = false;
     int mProcessingShellNotifications = 0;
 
     void ConnectServerSignals(HTTPServer* server);
@@ -604,6 +598,8 @@ private:
 
     QString getDefaultUploadPath();
 
+    void checkSystemTray();
+
     struct NodeCount
     {
         int files;
@@ -617,8 +613,6 @@ private:
     void processUploads(const QStringList& uploads);
 
     void updateMetadata(TransferMetaData* data, const QString& filePath);
-
-    bool isQueueProcessingOngoing();
 
     template <class Func>
     void recreateMenuAction(MenuItemAction** action, const QString& actionName,

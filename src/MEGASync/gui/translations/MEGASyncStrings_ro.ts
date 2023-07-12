@@ -390,6 +390,16 @@
         <translatorcomment>Label to indicate a reminder about a contact request.</translatorcomment>
         <translation>Memento: Ai o cerere de contact</translation>
     </message>
+    <message>
+        <source>Shared folder updated</source>
+        <translatorcomment>Label to indicate that a shared folder was updated. CON-295</translatorcomment>
+        <translation>Folder partajat actualizat</translation>
+    </message>
+    <message numerus="yes">
+        <source>[A] updated %n item</source>
+        <translatorcomment>Label to indicate that user [A] has updated %n items in shared folder. Placeholder [A] will be replaced by the email or full name of the user that made the update and %n with the number of removed items. CON-295</translatorcomment>
+        <translation><numerusform>[A] a actualizat %n articol</numerusform><numerusform>[A] a actualizat %n articole</numerusform><numerusform>[A] a actualizat %n de articole</numerusform></translation>
+    </message>
 </context>
 <context>
     <name>BackupItemModel</name>
@@ -1070,6 +1080,19 @@
     </message>
 </context>
 <context>
+    <name>DateTimeFormatter</name>
+    <message>
+        <source>Today at %1</source>
+        <translatorcomment>Label to indicate the today time of the current alert item displayed or completed transfer. SNC-2977</translatorcomment>
+        <translation>Astăzi la %1</translation>
+    </message>
+    <message>
+        <source>Yesterday at %1</source>
+        <translatorcomment>Label to indicate the yesterday time of the current alert item displayed or completed transfer. SNC-2977</translatorcomment>
+        <translation>Ieri la %1</translation>
+    </message>
+</context>
+<context>
     <name>DesktopNotifications</name>
     <message>
         <source>[A] has left the shared folder</source>
@@ -1290,6 +1313,11 @@
         <source>Show in MEGA</source>
         <translatorcomment>Notification button to redirect the user to remote location. It will open webclient at specific location.</translatorcomment>
         <translation>Afișează în MEGA</translation>
+    </message>
+    <message numerus="yes">
+        <source>[A] updated %n item</source>
+        <translatorcomment>Label to indicate that user [A] has updated %n items in shared folder. Placeholder [A] will be replaced by the email or full name of the user that made the update and %n with the number of removed items. CON-295</translatorcomment>
+        <translation><numerusform>[A] a actualizat %n articol</numerusform><numerusform>[A] a actualizat %n articole</numerusform><numerusform>[A] a actualizat %n de articole</numerusform></translation>
     </message>
 </context>
 <context>
@@ -2884,11 +2912,6 @@ Transferurile se vor relua automat când redeschizi aplicația.</numerusform></t
         <translatorcomment>Warning message shown when a backup is being temporary disabled. Placeholder %1 displays backup name and %2 the reason</translatorcomment>
         <translation>Backupul „%1” ți-a fost dezactivat temporar: %2</translation>
     </message>
-    <message>
-        <source>Error transferring folder: %1</source>
-        <translatorcomment>Label to indicate that has been an error during a folder transfer.  Placeholder %1 displays the reason.</translatorcomment>
-        <translation>Eroare la transferarea folderului: %1</translation>
-    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -4107,16 +4130,14 @@ Introdu un alt nume.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- You can now search the stored data in your account.
-- We've improved system notifications.
+        <source>- We&apos;ve enhanced system notifications.
 - We've enhanced the UI.
 - We've fixed the detected crashes on Windows, Linux, and macOS.
 </source>
-        <translation>- Acum poți căuta datele stocate în contul tău.
-- Am îmbunătățit notificările de sistem.
+        <translatorcomment>Changelog for v4.9.5</translatorcomment>
+        <translation>- Am îmbunătățit notificările de sistem.
 - Am îmbunătățit interfața de utilizator.
-- Am remediat defecțiunile detectate pe Windows, Linux și macOS.
-</translation>
+- Am remediat defecțiunile detectate pe Windows, Linux și macOS.</translation>
     </message>
 </context>
 <context>
@@ -4809,11 +4830,6 @@ Vrei să îl ștergi oricum?</translation>
         <source>Add</source>
         <translatorcomment>Button label to add a synchronization. String as short as possible.</translatorcomment>
         <translation>Adaugă</translation>
-    </message>
-    <message>
-        <source>Auto</source>
-        <translatorcomment>Label to indicate that management of rate upload limit is automatic.</translatorcomment>
-        <translation>Automată</translation>
     </message>
     <message>
         <source>Data temporarily unavailable</source>
@@ -5516,6 +5532,22 @@ Do you want to restart MEGAsync now?</source>
         <source>Prevent the computer from going to sleep when transfers or syncs are in progress.</source>
         <translatorcomment>Sleep/Active mode: Feature description label for keeping the pc awake when there are active transfers</translatorcomment>
         <translation>Împiedică calculatorul să intre în repaus atunci când transferurile și sincronizările sunt în curs.</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsDialog_Bandwith</name>
+    <message>
+        <source>Auto</source>
+        <translatorcomment>Label to indicate that management of rate upload limit is automatic. SNC-3076</translatorcomment>
+        <translation>Automată</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsDialog_Proxies</name>
+    <message>
+        <source>Auto</source>
+        <translatorcomment>Label to indicate that proxy settings are on auto detec mode. SNC-3076</translatorcomment>
+        <translation>Automate</translation>
     </message>
 </context>
 <context>
@@ -6648,116 +6680,186 @@ Pentru a obține mai multă cotă, fă upgrade la un cont Pro sau așteaptă [A]
     </message>
 </context>
 <context>
-    <name>TransferNotificationBuilderBase</name>
+    <name>TransferNotificationBuilder</name>
     <message>
-        <source>Uploaded 1 file to %1.</source>
-        <translatorcomment>Notification text that inform 1 file has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation>1 fișier a fost încărcat în %1.</translation>
-    </message>
-    <message>
-        <source>Uploaded 1 folder to %1.</source>
-        <translatorcomment>Notification text that inform 1 folder has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation>1 folder a fost încărcat în %1.</translation>
-    </message>
-    <message>
-        <source>File uploaded</source>
-        <translatorcomment>Notification title when a file has been uploaded</translatorcomment>
-        <translation>Fișier încărcat</translation>
-    </message>
-    <message>
-        <source>Folder uploaded</source>
-        <translatorcomment>Notification title when a folder has been uploaded</translatorcomment>
-        <translation>Folder încărcat</translation>
+        <source>Retry</source>
+        <translatorcomment>Notification button to retry the failed file. CON-223</translatorcomment>
+        <translation>Reîncearcă</translation>
     </message>
     <message>
         <source>Show in MEGA</source>
-        <translatorcomment>Notification button to see the file on the webclient</translatorcomment>
+        <translatorcomment>Notification button to see the file on the webclient. CON-223</translatorcomment>
         <translation>Afișează în MEGA</translation>
     </message>
     <message>
         <source>Get link</source>
-        <translatorcomment>Notification button to get the file link</translatorcomment>
+        <translatorcomment>Notification button to get the file link. CON-223</translatorcomment>
         <translation>Obține linkul</translation>
     </message>
     <message>
-        <source>Downloaded 1 file to %1.</source>
-        <translatorcomment>Notification text that inform 1 file has been downloaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation>1 fișier a fost descărcat în %1.</translation>
-    </message>
-    <message>
-        <source>Downloaded 1 folder to %1.</source>
-        <translatorcomment>Notification text that inform 1 folder has been downloaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation>1 folder a fost descărcat în %1.</translation>
-    </message>
-    <message>
         <source>Show in folder</source>
-        <translatorcomment>Notification button to see the file on the local file explorer</translatorcomment>
+        <translatorcomment>Notification button to see the file on the local file explorer. CON-223</translatorcomment>
         <translation>Afișează în folder</translation>
     </message>
     <message>
         <source>Open</source>
-        <translatorcomment>Notification button to open the file</translatorcomment>
+        <translatorcomment>Notification button to open the file. CON-223</translatorcomment>
         <translation>Deschide</translation>
     </message>
-    <message>
-        <source>File downloaded</source>
-        <translatorcomment>Notification title when a file has been downloaded</translatorcomment>
-        <translation>Fișier descărcat</translation>
-    </message>
-    <message>
-        <source>Folder downloaded</source>
-        <translatorcomment>Notification title when a folder has been downloaded</translatorcomment>
-        <translation>Folder descărcat</translation>
-    </message>
     <message numerus="yes">
-        <source>%n upload successful</source>
-        <translatorcomment>Notification text that inform that an upload was successful. %1 is the number of uploads. This string goes always with the %n upload cancelled and/or %n upload failed strings.</translatorcomment>
-        <translation><numerusform>%n încărcare finalizată</numerusform><numerusform>%n încărcări finalizate</numerusform><numerusform>%n de încărcări finalizate</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>, %n upload cancelled</source>
-        <translatorcomment>Appended text that inform that an upload was cancelled. %1 is the number of cancelled uploads. This string goes always appended to the %n upload successful</translatorcomment>
-        <translation><numerusform>, %n încărcare anulată</numerusform><numerusform>, %n încărcări anulate</numerusform><numerusform>, %n de încărcări anulate</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>, %n upload failed</source>
-        <translatorcomment>Appended text that inform that an upload has failed. %1 is the number of failed uploads. This string goes always appended to the %n upload successful</translatorcomment>
-        <translation><numerusform>, %n încărcare eșuată</numerusform><numerusform>, %n încărcări eșuate</numerusform><numerusform>, %n de încărcări eșuate</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Uploaded %n items to %1</source>
-        <translatorcomment>Notification text that inform n items (files or folders) has been uploaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation><numerusform>%n element a fost încărcat în %1</numerusform><numerusform>%n elemente au fost încărcate în %1</numerusform><numerusform>%n de elemente au fost încărcate în %1</numerusform></translation>
+        <source>Retry failed items</source>
+        <translatorcomment>Notification button to retry failed transfers when not all the transfers failed. CON-223</translatorcomment>
+        <translation><numerusform>Reîncercați elementul eșuat</numerusform><numerusform>Reîncercați elementele eșuate</numerusform><numerusform>Reîncercați elementele eșuate</numerusform></translation>
     </message>
     <message>
-        <source>Items uploaded</source>
-        <translatorcomment>Notification title when a more than one transfer (file or folders) have been uploaded</translatorcomment>
-        <translation>Elemente încărcate</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n download successful</source>
-        <translatorcomment>Notification text that inform that an download was successful. %1 is the number of downloads. This string goes always with the %n download cancelled and/or %n download failed strings.</translatorcomment>
-        <translation><numerusform>%n descărcare finalizată</numerusform><numerusform>%n descărcări finalizate</numerusform><numerusform>%n de descărcări finalizate</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>, %n download cancelled</source>
-        <translatorcomment>Appended text that inform that an download was cancelled. %1 is the number of cancelled downloads. This string goes always appended to the %n download successful</translatorcomment>
-        <translation><numerusform>, %n descărcare anulată</numerusform><numerusform>, %n descărcări anulate</numerusform><numerusform>, %n de descărcări anulate</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>, %n download failed</source>
-        <translatorcomment>Appended text that inform that an download has failed. %1 is the number of failed downloads. This string goes always appended to the %n download successful</translatorcomment>
-        <translation><numerusform>, %n descărcare eșuată</numerusform><numerusform>, %n descărcări eșuate</numerusform><numerusform>, %n de descărcări eșuate</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Downloaded %n items to %1</source>
-        <translatorcomment>Notification text that inform n items (files or folders) has been downloaded to a folder. The place holder is the target folder name.</translatorcomment>
-        <translation><numerusform>%n element a fost descărcat în %1</numerusform><numerusform>%n elemente au fost descărcate în %1</numerusform><numerusform>%n de elemente au fost descărcate în %1</numerusform></translation>
+        <source>Could not upload</source>
+        <translatorcomment>Notification title for a failed upload of files/folders. CON-223</translatorcomment>
+        <translation>Nu s-a putut încărca</translation>
     </message>
     <message>
-        <source>Items downloaded</source>
-        <translatorcomment>Notification title when a more than one transfer (file or folders) have been downloaded</translatorcomment>
-        <translation>Elemente descărcate</translation>
+        <source>Upload incomplete</source>
+        <translatorcomment>Notification title for a combination of completed and failed uploads. CON-223</translatorcomment>
+        <translation>Încărcarea este incompletă</translation>
+    </message>
+    <message>
+        <source>Upload complete</source>
+        <translatorcomment>Notification title for a successfully upload of files/folders. CON-223</translatorcomment>
+        <translation>Încărcarea este finalizată</translation>
+    </message>
+    <message>
+        <source>Could not download</source>
+        <translatorcomment>Notification title for a failed download of files/folders. CON-223</translatorcomment>
+        <translation>Nu s-a putut descărca</translation>
+    </message>
+    <message>
+        <source>Download incomplete</source>
+        <translatorcomment>Notification title for a combination of completed and failed downloads. CON-223</translatorcomment>
+        <translation>Descărcarea este incompletă</translation>
+    </message>
+    <message>
+        <source>Download complete</source>
+        <translatorcomment>Notification title for a successfully download of files/folders. CON-223</translatorcomment>
+        <translation>Descărcarea este completă</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n item couldn’t be uploaded to %1.</source>
+        <translatorcomment>Body text of a system notification shown when %n items could not be uploaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
+        <translation><numerusform>%n articol nu a putut fi încărcat în %1.</numerusform><numerusform>%n articole nu au putut fi încărcate în %1.</numerusform><numerusform>%n de articole nu au putut fi încărcate în %1.</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n item uploaded</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
+        First part of string for multi plural support. Full string looks like: X item uploaded, but Y item couldn’t be uploaded (X and Y will be replaced with specific numbers).</translatorcomment>
+        <translation><numerusform>%n articol este încărcat</numerusform><numerusform>%n articole sunt încărcate</numerusform><numerusform>%n de articole sunt încărcate</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1, but %n item couldn’t be uploaded.</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
+        Second part of string for multi plural support. Full string looks like: X item uploaded, but Y item couldn’t be uploaded (X and Y will be replaced with specific numbers).</translatorcomment>
+        <translation><numerusform>%1, dar %n articol nu a putut fi încărcat.</numerusform><numerusform>%1, dar %n articole nu au putut fi încărcate.</numerusform><numerusform>%1, dar %n de articole nu au putut fi încărcate.</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n item uploaded to %1.</source>
+        <translatorcomment>Body text of a system notification shown when %n items were uploaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
+        <translation><numerusform>%n articol este încărcat în %1.</numerusform><numerusform>%n articole sunt încărcate în %1.</numerusform><numerusform>%n de articole sunt încărcate în %1.</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n item downloaded</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
+        First part of string for multi plural support. Full string looks like: X item downloaded, but Y item couldn’t be downloaded (X and Y will be replaced with specific numbers).</translatorcomment>
+        <translation><numerusform>1 articol este descărcat</numerusform><numerusform>%n articole sunt descărcate</numerusform><numerusform>%n de articole sunt descărcate</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1, but %n item couldn’t be downloaded.</source>
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
+        Second part of string for multi plural support. Full string looks like: X item downloaded, but Y item couldn’t be downloaded (X and Y will be replaced with specific numbers).</translatorcomment>
+        <translation><numerusform>%1, dar %n articol nu a putut fi descărcat.</numerusform><numerusform>%1, dar %n articole nu au putut fi descărcate.</numerusform><numerusform>%1, dar %n de articole nu au putut fi descărcate.</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n item couldn’t be downloaded to %1.</source>
+        <translatorcomment>Body text of a system notification shown when %n items could not be downloaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
+        <translation><numerusform>%n articol nu a putut fi descărcat în %1.</numerusform><numerusform>%n articole nu au putut fi descărcate în %1.</numerusform><numerusform>%n de articole nu au putut fi descărcate în %1.</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n item downloaded to %1.</source>
+        <translatorcomment>Body text of a system notification shown when %n items were downloaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
+        <translation><numerusform>%n articol este descărcat în %1.</numerusform><numerusform>%n articole sunt descărcate în %1.</numerusform><numerusform>%n de articole sunt descărcate în %1.</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n item no longer exist or was renamed.</source>
+        <translatorcomment>Body text of a system notification shown when %n items no longer exist or were renamed during an upload operation. %n will be replaced with the number of items. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
+        <translation><numerusform>%n articol nu mai există sau a fost redenumit.</numerusform><numerusform>%n articole nu mai există sau au fost redenumite.</numerusform><numerusform>%n de articole nu mai există sau au fost redenumite.</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n item no longer exist.</source>
+        <translatorcomment>Body text of a system notification shown when %n items no longer exist or were renamed during a download operation. %n will be replaced with the number of items. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
+        <translation><numerusform>%n articol nu mai există.</numerusform><numerusform>%n articole nu mai există.</numerusform><numerusform>%n de articole nu mai există.</numerusform></translation>
+    </message>
+</context>
+<context>
+    <name>TransferNotificationBuilder_File</name>
+    <message>
+        <source>%1 couldn’t be uploaded to %2.</source>
+        <translatorcomment>Body text of a system notification shown when %1 file could not be uploaded to %2. %1 will be replaced with the name of the file and %2 with the remote destination path. CON-223</translatorcomment>
+        <translation>%1 nu a putut fi încărcat în %2</translation>
+    </message>
+    <message>
+        <source>%1 uploaded to %2.</source>
+        <translatorcomment>Body text of a system notification shown when %1 was succesfully uploaded to %2. %1 will be replaced with the name of the file and %2 with the remote destination path. CON-223</translatorcomment>
+        <translation>%1 a fost încărcat în %2.</translation>
+    </message>
+    <message>
+        <source>%1 couldn’t be downloaded to %2.</source>
+        <translatorcomment>Body text of a system notification shown when %1 file could not be downloaded to %2. %1 will be replaced with the name of the file and %2 with the local destination path. CON-223</translatorcomment>
+        <translation>%1 nu a putut fi descărcat în %2.</translation>
+    </message>
+    <message>
+        <source>%1 downloaded to %2.</source>
+        <translatorcomment>Body text of a system notification shown when %1 was succesfully downloaded to %2. %1 will be replaced with the name of the file and %2 with the local destination path. CON-223</translatorcomment>
+        <translation>%1 a fost descărcat în %2.</translation>
+    </message>
+    <message>
+        <source>%1 no longer exists or was renamed.</source>
+        <translatorcomment>Body text of a system notification shown when %1 no longer exists or was removed during upload operation. %1 will be replaced with the name of the file. CON-223</translatorcomment>
+        <translation>%1 nu mai există sau a fost redenumit.</translation>
+    </message>
+    <message>
+        <source>%1 no longer exists.</source>
+        <translatorcomment>Body text of a system notification shown when %1 no longer exists during download operation. %1 will be replaced with the name of the file. CON-223</translatorcomment>
+        <translation>%1 nu mai există.</translation>
+    </message>
+</context>
+<context>
+    <name>TransferNotificationBuilder_Folder</name>
+    <message>
+        <source>%1 couldn’t be uploaded to %2.</source>
+        <translatorcomment>Body text of a system notification shown when %1 folder could not be uploaded to %2. %1 will be replaced with the name of the folder and %2 with the remote destination path. CON-223</translatorcomment>
+        <translation>%1 nu a putut fi încărcat în %2.</translation>
+    </message>
+    <message>
+        <source>%1 uploaded to %2.</source>
+        <translatorcomment>Body text of a system notification shown when %1 was succesfully uploaded to %2. %1 will be replaced with the name of the folder and %2 with the remote destination path. CON-223</translatorcomment>
+        <translation>%1 a fost încărcat în %2.</translation>
+    </message>
+    <message>
+        <source>%1 couldn’t be downloaded to %2.</source>
+        <translatorcomment>Body text of a system notification shown when %1 file could not be downloaded to %2. %1 will be replaced with the name of the folder and %2 with the local destination path. CON-223</translatorcomment>
+        <translation>%1 nu a putut fi descărcat în %2.</translation>
+    </message>
+    <message>
+        <source>%1 downloaded to %2.</source>
+        <translatorcomment>Body text of a system notification shown when %1 was succesfully downloaded to %2. %1 will be replaced with the name of the folder and %2 with the local destination path. CON-223</translatorcomment>
+        <translation>%1 a fost descărcat în %2.</translation>
+    </message>
+    <message>
+        <source>%1 no longer exists or was renamed.</source>
+        <translatorcomment>Body text of a system notification shown when %1 no longer exists or was removed during upload operation. %1 will be replaced with the name of the folder. CON-223</translatorcomment>
+        <translation>%1 nu mai există sau a fost redenumit.</translation>
+    </message>
+    <message>
+        <source>%1 no longer exists.</source>
+        <translatorcomment>Body text of a system notification shown when %1 no longer exists during download operation. %1 will be replaced with the name of the folder. CON-223</translatorcomment>
+        <translation>%1 nu mai există.</translation>
     </message>
 </context>
 <context>
@@ -7318,7 +7420,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Verify your email</source>
         <translatorcomment>Label to verify a locked account. It will redirect to webclient to confirm email.</translatorcomment>
-        <translation>Verifică-ți e-mailul</translation>
+        <translation>Verifică căsuța de e-mail</translation>
     </message>
     <message>
         <source>Locked account</source>
@@ -7328,7 +7430,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
         <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
-        <translation>Contul tău a fost blocat temporar pentru siguranța ta. Te rugăm să-ți verifici e-mailul și urmează pașii pentru a debloca contul.</translation>
+        <translation>Contul tău a fost blocat temporar pentru siguranța ta. Te rugăm să-ți verifici e-mail și să urmezi pașii pentru a debloca contul.</translation>
     </message>
     <message>
         <source>Resend email</source>

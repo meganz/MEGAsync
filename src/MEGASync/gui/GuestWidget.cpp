@@ -179,6 +179,9 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
 
             if (loggingStarted)
             {
+                QMegaMessageBox::MessageBoxInfo info;
+                info.title = QMegaMessageBox::errorTitle();
+
                 preferences->setAccountStateInGeneral(Preferences::STATE_LOGGED_FAILED);
                 if (error->getErrorCode() == MegaError::API_ENOENT)
                 {
@@ -191,19 +194,20 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 }
                 else if (error->getErrorCode() == MegaError::API_EINCOMPLETE)
                 {
-                    QMegaMessageBox::warning(nullptr, tr("Error"), tr("Please check your e-mail and click the link to confirm your account."), QMessageBox::Ok);
+                    info.text = tr("Please check your e-mail and click the link to confirm your account.");
+                    QMegaMessageBox::warning(info);
                 }
                 else if (error->getErrorCode() == MegaError::API_ETOOMANY)
                 {
-                    QMegaMessageBox::warning(nullptr, tr("Error"),
-                                             tr("You have attempted to log in too many times.[BR]Please wait until %1 and try again.")
-                                             .replace(QString::fromUtf8("[BR]"), QString::fromUtf8("\n"))
-                                             .arg(QTime::currentTime().addSecs(3600).toString(QString::fromUtf8("hh:mm")))
-                                             , QMessageBox::Ok);
+                    info.text = tr("You have attempted to log in too many times.[BR]Please wait until %1 and try again.")
+                            .replace(QString::fromUtf8("[BR]"), QString::fromUtf8("\n"))
+                            .arg(QTime::currentTime().addSecs(3600).toString(QString::fromUtf8("hh:mm")));
+                    QMegaMessageBox::warning(info);
                 }
                 else if (error->getErrorCode() == MegaError::API_EBLOCKED)
                 {
-                    QMegaMessageBox::critical(nullptr, tr("Error"), tr("Your account has been blocked. Please contact support@mega.co.nz"));
+                    info.text = tr("Your account has been blocked. Please contact support@mega.co.nz");
+                    QMegaMessageBox::critical(info);
                 }
                 else if (error->getErrorCode() == MegaError::API_EFAILED || error->getErrorCode() == MegaError::API_EEXPIRED)
                 {
@@ -214,7 +218,8 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 //Do not show this error if the SSL Secure connection has failed
                 else if (error->getErrorCode() != MegaError::API_ESSL && !mSSLSecureConnectionFailed)
                 {
-                    QMegaMessageBox::warning(nullptr, tr("Error"), QCoreApplication::translate("MegaError", error->getErrorString()), QMessageBox::Ok);
+                    info.text = QCoreApplication::translate("MegaError", error->getErrorString());
+                    QMegaMessageBox::warning(info);
                 }
 
                 loggingStarted = false;
@@ -396,9 +401,12 @@ void GuestWidget::showLogin2FaError() const
 
 void GuestWidget::showSSLSecureConnectionErrorMessage(MegaRequest *request) const
 {
-    QMegaMessageBox::critical(nullptr, QString::fromUtf8("MEGAsync"),
-                          tr("Our SSL key can't be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.")
-                           + QString::fromUtf8(" (Issuer: %1)").arg(QString::fromUtf8(request->getText() ? request->getText() : "Unknown")));
+    QMegaMessageBox::MessageBoxInfo info;
+    info.title = MegaSyncApp->getMEGAString();
+    info.text = tr("Our SSL key can't be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.")
+            + QString::fromUtf8(" (Issuer: %1)").arg(QString::fromUtf8(request->getText() ? request->getText() : "Unknown"));
+
+    QMegaMessageBox::critical(info);
 }
 
 void GuestWidget::hideLoginError()

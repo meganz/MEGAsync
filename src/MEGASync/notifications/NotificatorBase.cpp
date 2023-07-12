@@ -24,8 +24,8 @@ using namespace mega;
 
 MegaNotificationBase::MegaNotificationBase()
 {
-    mTitle = QString::fromUtf8("MEGA");
-    mText = QString::fromUtf8("MEGAsync");
+    mTitle = MegaSyncApp->getMEGAString();
+    mText = MegaSyncApp->getMEGAString();
     mExpirationTime = 10000;
     mStyle = -1;
     mType = NotificatorBase::Information;
@@ -210,18 +210,24 @@ void NotificatorBase::notify(Class cls, const QString &title, const QString &tex
 {
     switch(mMode)
     {
-    case QSystemTray:
-        notifySystray(cls, title, text, millisTimeout);
-        break;
-    default:
-        switch(cls) // Set icon based on class
+        case QSystemTray:
+            notifySystray(cls, title, text, millisTimeout);
+            break;
+        default:
         {
-        case Information: QMegaMessageBox::information(nullptr, title, text, QMessageBox::Ok); break;
-        case Warning: QMegaMessageBox::warning(nullptr, title, text, QMessageBox::Ok); break;
-        case Critical: QMegaMessageBox::critical(nullptr, title, text, QMessageBox::Ok); break;
-        }
+            QMegaMessageBox::MessageBoxInfo info;
+            info.title = title;
+            info.text = text;
 
-        break;
+            switch(cls) // Set icon based on class
+            {
+                case Information: QMegaMessageBox::information(info); break;
+                case Warning: QMegaMessageBox::warning(info); break;
+                case Critical: QMegaMessageBox::critical(info); break;
+            }
+
+            break;
+        }
     }
 }
 

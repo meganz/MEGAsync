@@ -3,12 +3,15 @@
 
 #include <HighDpiResize.h>
 #include <Platform.h>
+#include <QMegaMessageBox.h>
 
 #include <QDialog>
+#include <QMessageBox>
 #include <QPointer>
 #include <functional>
 #include <memory>
 #include <QMap>
+#include <QQueue>
 #include <QApplication>
 
 #ifdef Q_OS_WINDOWS
@@ -43,8 +46,12 @@ private:
         virtual void close() = 0;
         virtual bool isParent(QObject* parent) = 0;
 
+        bool ignoreCloseAllAction() const {return mIgnoreCloseAllAction;}
+        void setIgnoreCloseAllAction(bool newIgnoreCloseAllAction){mIgnoreCloseAllAction = newIgnoreCloseAllAction;}
+
     protected:
         QString mDialogClass;
+        bool mIgnoreCloseAllAction = false;
     };
 
     template <class DialogType>
@@ -138,6 +145,66 @@ public:
         }
     }
 
+    static void showMessageBox(QPointer<QMessageBox> msg, const QMegaMessageBox::MessageBoxInfo& msgInfo)
+    {
+        if(msg)
+        {
+            DialogBlocker* blocker(nullptr);
+
+#ifdef Q_OS_MACOS
+            //If the message box is not WindowModal, the parent is not greyed out.
+            //So, we use a dummy dialog WindowModal
+            if(msg->parent())
+            {
+                blocker = new DialogBlocker(msg->parentWidget());
+            }
+#endif
+
+            msg->setWindowModality(Qt::ApplicationModal);
+            msg->connect(msg.data(), &QMessageBox::finished, [msgInfo, msg, blocker]()
+            {
+                if(blocker)
+                {
+                    blocker->deleteLater();
+                }
+
+                if(msgInfo.finishFunc)
+                {
+                    msgInfo.finishFunc(msg);
+                }
+
+                removeDialog(msg);
+                if(!mDialogsQueue.isEmpty())
+                {
+                    auto queueMsgBox = std::dynamic_pointer_cast<DialogInfo<QMessageBox>>(mDialogsQueue.dequeue());
+                    if(queueMsgBox)
+                    {
+                        auto dialog = showDialogImpl(queueMsgBox->getDialog(), false, false);
+                        dialog->setIgnoreCloseAllAction(msgInfo.ignoreCloseAll);
+                    }
+                }
+            });
+
+            auto classType = QString::fromUtf8(QMessageBox::staticMetaObject.className());
+            auto siblingDialogInfo = findSiblingDialogInfo<QMessageBox>(classType);
+
+            if(siblingDialogInfo && msgInfo.enqueue)
+            {
+                std::shared_ptr<DialogInfo<QMessageBox>> info = std::make_shared<DialogInfo<QMessageBox>>();
+                info->setDialog(msg);
+                info->setDialogClass(classType);
+                mDialogsQueue.enqueue(info);
+
+                info->raise();
+            }
+            else
+            {
+                auto dialog = showDialogImpl(msg, false, false);
+                dialog->setIgnoreCloseAllAction(msgInfo.ignoreCloseAll);
+            }
+        }
+    }
+    
     template <class ParentType>
     static void closeDialogsByParentClass()
     {
@@ -190,11 +257,11 @@ public:
         if(dialog)
         {
             dialog->connect(dialog.data(), &DialogType::finished, [func, dialog](){
+                removeDialog(dialog);
                 if(func)
                 {
                     func();
                 }
-                removeDialog(dialog);
             });
             showDialogImpl(dialog);
         }
@@ -306,12 +373,16 @@ public:
     {
         foreach(auto dialogInfo, mOpenedDialogs)
         {
-            dialogInfo->close();
+            if(!dialogInfo->ignoreCloseAllAction())
+            {
+                dialogInfo->close();
+            }
         }
     }
 
 private:
     static QList<std::shared_ptr<DialogInfoBase>> mOpenedDialogs;
+    static QQueue<std::shared_ptr<DialogInfoBase>> mDialogsQueue;
     static QMap<QString, GeometryInfo> mSavedGeometries;
 
     template <class DialogType>
@@ -324,7 +395,7 @@ private:
     }
 
     template <class DialogType>
-    static void showDialogImpl(QPointer<DialogType> dialog, bool changeWindowModality = true)
+    static std::shared_ptr<DialogInfo<DialogType>> showDialogImpl(QPointer<DialogType> dialog, bool changeWindowModality = true, bool removeSiblings = true)
     {
         if(dialog)
         {
@@ -333,7 +404,7 @@ private:
 
             if(info)
             {
-                if(info->getDialog() != dialog)
+                if(removeSiblings && info->getDialog() != dialog)
                 {
                     QRect siblingGeometry = info->getDialog()->geometry();
                     bool siblingIsMaximized = info->getDialog()->isMaximized();
@@ -360,7 +431,6 @@ private:
                 info->setDialog(dialog);
                 info->setDialogClass(classType);
                 mOpenedDialogs.append(info);
-                dialog->setWindowFlags(dialog->windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
                 initDialog(dialog);
             }
@@ -400,7 +470,11 @@ private:
             }
 
             info->raise(true);
+
+            return info;
         }
+
+        return nullptr;
     }
 
     template <class DialogType>
@@ -460,6 +534,5 @@ private:
         return nullptr;
     }
 };
-
 
 #endif // DIALOGOPENER_H

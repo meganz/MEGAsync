@@ -195,8 +195,8 @@ BuildRequires: ffmpeg-mega
 %setup -q
 
 mega_build_id=`echo %{release} | sed "s/\.[^.]*$//" | sed "s/[^.]*\.//" | sed "s/[^0-9]//g"`
-sed -i -E "s/USER_AGENT([^\/]*)\/(([0-9][0-9]*\.){3})(.*)\";/USER_AGENT\1\/\2${mega_build_id}\";/g" MEGASync/control/Preferences.cpp;
-sed -i -E "s/BUILD_ID = ([0-9]*)/BUILD_ID = ${mega_build_id}/g" MEGASync/control/Preferences.cpp;
+sed -i -E "s/VER_PRODUCTVERSION_STR([[:space:]]+)\"(([0-9][0-9]*\.){3})(.*)\"/VER_PRODUCTVERSION_STR\1\"\2${mega_build_id}\"/g" MEGASync/control/Version.h
+sed -i -E "s/VER_BUILD_ID([[:space:]]+)([0-9]*)/VER_BUILD_ID\1${mega_build_id}/g" MEGASync/control/Version.h
 
 %build
 
@@ -404,6 +404,10 @@ DATA
 
     %if 0%{?sle_version} == 150400
         %define reponame openSUSE_Leap_15.4
+    %endif
+
+    %if 0%{?sle_version} == 150500
+        %define reponame openSUSE_Leap_15.5
     %endif
 
     %if 0%{?sle_version} == 0 && 0%{?suse_version} >= 1550
