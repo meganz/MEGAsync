@@ -132,7 +132,7 @@ QMap<QMessageBox::StandardButton, QString> MegaTransferView::getCancelDialogButt
 
 QMap<QMessageBox::StandardButton, QString> MegaTransferView::getClearDialogButtons()
 {
-    return  QMap<QMessageBox::StandardButton, QString>{{QMessageBox::Yes,tr("Clear", "ConfirmDialog")}, {QMessageBox::No, tr("Don't clear")}};
+    return  QMap<QMessageBox::StandardButton, QString>{{QMessageBox::Yes,tr("Clear")}, {QMessageBox::No, tr("Don't clear")}};
 }
 
 QString MegaTransferView::errorOpeningFileText()
@@ -909,7 +909,7 @@ QMenu* MegaTransferView::createContextMenu()
     }
     else if(actionFlag & EnableAction::CLEAR)
     {
-        auto clearAction = new MenuItemAction(tr("Clear", "ContextMenu"), QIcon(QLatin1String(":/images/transfer_manager/context_menu/ico_clear.png")), contextMenu);
+        auto clearAction = new MenuItemAction(tr("Clear"), QIcon(QLatin1String(":/images/transfer_manager/context_menu/ico_clear.png")), contextMenu);
         connect(clearAction, &QAction::triggered,
                 this, &MegaTransferView::clearSelectedClicked);
 

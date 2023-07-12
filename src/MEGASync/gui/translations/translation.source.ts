@@ -3519,13 +3519,8 @@ Your selected incomplete sync transfers won’t be cancelled. All the other sele
     </message>
     <message>
         <source>Clear</source>
-        <comment>Dialog button to do the proposed actions (clear the transfers). See CON-188.</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <comment>Label of context menu option to clear selected transfer item of completed view</comment>
-        <translation>Clear</translation>
+        <comment>Dialog button to do the proposed actions (clear the transfers) or label of context menu option to clear selected transfer item. See CON-188.</comment>
+        <translation type="unfinished">Clear</translation>
     </message>
 </context>
 <context>
@@ -4150,8 +4145,7 @@ Enter a different name.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- You can now search the stored data in your account.
-- We&apos;ve improved system notifications.
+        <source>- We&apos;ve enhanced system notifications.
 - We&apos;ve enhanced the UI.
 - We&apos;ve fixed the detected crashes on Windows, Linux, and macOS.
 </source>
