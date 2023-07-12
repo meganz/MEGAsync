@@ -301,6 +301,16 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 InfoDialog::~InfoDialog()
 {
     removeEventFilter(this);
+    auto menuIt (mSyncsMenus.constKeyValueBegin());
+//    while (menuIt != mSyncsMenus.constKeyValueEnd())
+//    {
+//        auto menu (menuIt.base().value());
+//        if (menu)
+//        {
+//            menu->deleteLater();
+//        }
+//        ++menuIt;
+//    }
     delete ui;
     delete gWidget;
     delete animation;
@@ -1182,9 +1192,23 @@ void InfoDialog::showSyncsMenu(QPushButton* b, mega::MegaSync::SyncType type)
 
 SyncsMenu* InfoDialog::createSyncMenu(mega::MegaSync::SyncType type, bool isEnabled)
 {
-    SyncsMenu* menu = new SyncsMenu(type, this);
-    connect(menu, &SyncsMenu::addSync, this, &InfoDialog::onAddSync);
-    menu->setEnabled(isEnabled);
+    SyncsMenu* menu (nullptr);
+
+    switch (type)
+    {
+    case MegaSync::TYPE_TWOWAY:
+        menu = new TwoWaySyncsMenu(this);
+        break;
+    case MegaSync::TYPE_BACKUP:
+        menu = new BackupSyncsMenu(this);
+        break;
+    }
+
+    if (menu)
+    {
+        connect(menu, &SyncsMenu::addSync, this, &InfoDialog::onAddSync);
+        menu->setEnabled(isEnabled);
+    }
     return menu;
 }
 

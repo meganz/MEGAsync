@@ -8,6 +8,8 @@
 
 class MenuItemAction : public QWidgetAction
 {
+    Q_OBJECT
+
 public:
     MenuItemAction(const QString& title, const QString& value,
                    const QIcon& icon, const QIcon& hoverIcon, bool manageHoverStates = false,

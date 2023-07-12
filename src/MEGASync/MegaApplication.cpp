@@ -2256,6 +2256,8 @@ void MegaApplication::cleanAll()
 #ifdef _WIN32
     deleteMenu(windowsMenu);
 #endif
+    delete mSyncs2waysMenu;
+    delete mBackupsMenu;
 
     // Ensure that there aren't objects deleted with deleteLater()
     // that may try to access megaApi after
@@ -6153,7 +6155,7 @@ void MegaApplication::createInfoDialogMenus()
     bool previousEnabledState = true;
     if (!mSyncs2waysMenu)
     {
-        mSyncs2waysMenu = new SyncsMenu(MegaSync::TYPE_TWOWAY, infoDialog);
+        mSyncs2waysMenu = new TwoWaySyncsMenu(infoDialog);
         connect(mSyncs2waysMenu.data(), &SyncsMenu::addSync,
                 infoDialog.data(), &InfoDialog::onAddSync);
         mSyncs2waysMenu->setEnabled(exitAction->isEnabled());
@@ -6161,7 +6163,7 @@ void MegaApplication::createInfoDialogMenus()
 
     if (!mBackupsMenu)
     {
-        mBackupsMenu = new SyncsMenu(MegaSync::TYPE_BACKUP, infoDialog);
+        mBackupsMenu = new BackupSyncsMenu(infoDialog);
         connect(mBackupsMenu.data(), &SyncsMenu::addSync,
                 infoDialog.data(), &InfoDialog::onAddSync);
         mBackupsMenu->setEnabled(exitAction->isEnabled());
@@ -6206,8 +6208,8 @@ void MegaApplication::createInfoDialogMenus()
 
     infoDialogMenu->addAction(myCloudAction);
     infoDialogMenu->addSeparator();
-    infoDialogMenu->addAction(mSyncs2waysMenu->getAction().get());
-    infoDialogMenu->addAction(mBackupsMenu->getAction().get());
+    infoDialogMenu->addAction(mSyncs2waysMenu->getAction());
+    infoDialogMenu->addAction(mBackupsMenu->getAction());
     infoDialogMenu->addAction(importLinksAction);
     infoDialogMenu->addAction(uploadAction);
     infoDialogMenu->addAction(downloadAction);
