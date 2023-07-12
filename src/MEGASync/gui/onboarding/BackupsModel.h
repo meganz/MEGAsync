@@ -11,7 +11,6 @@ struct BackupFolder
 {
     // Front (with role)
     QString mName;
-    QString mTooltip;
     QString mFolder;
     QString mSize;
     bool mSelected;
@@ -57,7 +56,9 @@ public:
     {
         None = 0,
         DuplicatedName = 1,
-        ExistsRemote = 2
+        ExistsRemote = 2,
+        SyncConflict = 3,
+        PathRelation = 4
     };
     Q_ENUM(BackupErrorCode)
 
@@ -89,9 +90,11 @@ public slots:
 
     void checkBackups();
 
-    bool renameBackup(const QString& folder, const QString& name);
+    int renameBackup(const QString& folder, const QString& name);
 
     void remove(const QString& folder);
+
+    void changeBackup(const QString& oldFolder, const QString& newFolder);
 
 signals:
 
@@ -100,6 +103,8 @@ signals:
     void checkAllStateChanged();
 
     void existConflictsChanged();
+
+    void noneSelected();
 
 private:
 
@@ -122,9 +127,6 @@ private:
     bool isLocalFolderSyncable(const QString& inputPath);
 
     bool selectIfExistsInsertion(const QString& inputPath);
-
-    QString getToolTipErrorText(const QString& folder,
-                                const QString& existingPath) const;
 
     bool folderContainsOther(const QString& folder,
                              const QString& other) const;
@@ -152,14 +154,18 @@ private:
 
     void setAllSelected(bool selected);
 
-    void reviewOtherBackupErrors(const QString& name);
-
     void checkRemoteDuplicatedBackups(const QSet<QString>& candidateSet);
 
     void checkDuplicatedBackupNames(const QSet<QString>& candidateSet,
                                     const QStringList& candidateList);
 
     void reviewConflicts();
+
+    void changeConflictsNotificationText(const QString& text);
+
+    bool existOtherRelatedFolder(const int currentIndex);
+
+    bool existsFolder(const QString& inputPath);
 
 private slots:
 

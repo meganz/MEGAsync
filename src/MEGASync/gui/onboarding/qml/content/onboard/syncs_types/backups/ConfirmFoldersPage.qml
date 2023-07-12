@@ -10,6 +10,7 @@ import Onboard 1.0
 // C++
 import Onboarding 1.0
 import BackupsController 1.0
+import BackupsModel 1.0
 
 ConfirmFoldersPageForm {
     id: root
@@ -41,6 +42,14 @@ ConfirmFoldersPageForm {
         onDeviceNameReady: (deviceName) => {
             folderField.textField.text = "/" + deviceName;
             folderField.enabled = true;
+        }
+    }
+
+    Connections {
+        target: BackupsModel
+
+        onNoneSelected: {
+            footerButtons.rightSecondary.clicked();
         }
     }
 

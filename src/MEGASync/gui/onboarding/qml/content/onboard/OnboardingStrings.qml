@@ -25,6 +25,7 @@ QtObject {
     readonly property var backupTo: qsTr("Backup to:")
     readonly property var cancel: qsTr("Cancel")
     readonly property var change: qsTr("Change")
+    readonly property var changeFolder: qsTr("Change folder")
     readonly property var changeEmailBodyText: qsTr("Please enter your new email address. Lorem ipsum dolor explaining that the old email will be substituted.")
     readonly property var changeEmailTitle: qsTr("User another email")
     readonly property var computerName: qsTr("Computer name")
