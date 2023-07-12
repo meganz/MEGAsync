@@ -79,12 +79,6 @@ public:
 
 signals:
     void userActivity();
-#ifdef Q_OS_MACOS
-    // Due to issues with QT and window manager on macOS, menus are not closing when
-    // you close settings dialog using close toolbar button. To fix it, emit a signal when about to close
-    // and force to close the sync menu (if visible)
-    void closeMenus();
-#endif
 
 public slots:
     // Network
@@ -193,6 +187,12 @@ protected:
 
 private slots:
     void onShellNotificationsProcessed();
+#ifdef Q_OS_MACOS
+    // Due to issues with QT and window manager on macOS, menus are not closing when
+    // you close settings dialog using close toolbar button. To fix it, emit a signal when about to close
+    // and force to close the sync menu (if visible)
+    void closeMenus();
+#endif
 
 private:
     void connectSyncHandlers();
