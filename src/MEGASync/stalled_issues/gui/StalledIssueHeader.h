@@ -53,7 +53,7 @@ protected:
     QString fileName();
 
 protected slots:
-    virtual void on_actionButton_clicked(){}
+    virtual void on_actionButton_clicked();
     virtual void on_ignoreFileButton_clicked();
 
 private:

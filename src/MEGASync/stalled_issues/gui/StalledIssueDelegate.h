@@ -30,16 +30,17 @@ protected:
     void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &) const override;
     bool event(QEvent *event) override;
     bool eventFilter(QObject *object, QEvent *event) override;
+    void destroyEditor(QWidget *, const QModelIndex &) const override;
 
 protected slots:
     void onHoverEnter(const QModelIndex& index);
+    void onHoverLeave(const QModelIndex&);
 
 private:
     QColor getRowColor(const QModelIndex& index) const;
     QModelIndex getEditorCurrentIndex() const;
 
-    StalledIssueBaseDelegateWidget *getStalledIssueItemWidget(const QModelIndex &index, const StalledIssueVariant &data) const;
-    StalledIssueBaseDelegateWidget *getNonCacheStalledIssueItemWidget(const QModelIndex &index, QWidget *parent, const StalledIssueVariant& data) const;
+    StalledIssueBaseDelegateWidget *getStalledIssueItemWidget(const QModelIndex &index, const StalledIssueVariant &data, bool isEditor) const;
 
     StalledIssuesView* mView;
     StalledIssuesProxyModel* mProxyModel;

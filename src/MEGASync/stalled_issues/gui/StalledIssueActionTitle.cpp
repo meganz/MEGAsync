@@ -19,6 +19,7 @@ const char* DISCARDED = "discarded";
 const char* DISABLE_BACKGROUND = "disable_background";
 const char* MESSAGE_TEXT = "message_text";
 const char* EXTRAINFO_INFO = "extrainfo_info";
+const char* EXTRAINFO_SIZE = "extrainfo_size";
 
 #include <QGraphicsOpacityEffect>
 
@@ -120,7 +121,8 @@ void StalledIssueActionTitle::showIcon()
 
     if(mIsCloud)
     {
-        std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(mPath.toUtf8().constData()));
+        std::unique_ptr<mega::MegaNode> node(mHandle != mega::INVALID_HANDLE ? MegaSyncApp->getMegaApi()->getNodeByHandle(mHandle)
+                                                                             : MegaSyncApp->getMegaApi()->getNodeByPath(mPath.toUtf8().constData()));
         fileTypeIcon = StalledIssuesUtilities::getRemoteFileIcon(node.get(), fileInfo, false);
     }
     else
@@ -193,7 +195,7 @@ QLabel* StalledIssueActionTitle::addExtraInfo(const QString &title, const QStrin
     return infoLabel;
 }
 
-void StalledIssueActionTitle::setDisabled(bool state)
+void StalledIssueActionTitle::setSolved(bool state)
 {
     ui->backgroundWidget->setProperty(DISCARDED,state);
     setStyleSheet(styleSheet());
@@ -211,6 +213,11 @@ void StalledIssueActionTitle::setDisabled(bool state)
         effect->setOpacity(0.30);
         ui->extraInfoContainer->setGraphicsEffect(effect);
     }
+}
+
+bool StalledIssueActionTitle::isSolved() const
+{
+    return ui->backgroundWidget->property(DISCARDED).toBool();
 }
 
 void StalledIssueActionTitle::setIsCloud(bool state)
@@ -248,7 +255,7 @@ bool StalledIssueActionTitle::eventFilter(QObject *watched, QEvent *event)
                         if(label != childLabels.last())
                         {
                             auto size = label->fontMetrics().width(label->property(MESSAGE_TEXT).toString());
-                            SizeAvailable -= (size + 30);
+                            SizeAvailable -= (size + 25);
                         }
                         else
                         {
@@ -264,7 +271,8 @@ bool StalledIssueActionTitle::eventFilter(QObject *watched, QEvent *event)
 
                 if(infoLabel && SizeAvailable > 0)
                 {
-                    auto elidedText = infoLabel->fontMetrics().elidedText(infoLabel->property(MESSAGE_TEXT).toString(), Qt::ElideMiddle, SizeAvailable );
+                    infoLabel->setProperty(EXTRAINFO_SIZE, SizeAvailable);
+                    auto elidedText = infoLabel->fontMetrics().elidedText(infoLabel->property(MESSAGE_TEXT).toString(), Qt::ElideMiddle, SizeAvailable);
                     infoLabel->setText(elidedText);
                 }
             }
@@ -405,11 +413,25 @@ void StalledIssueActionTitle::showAttribute(AttributeType type)
 
 void StalledIssueActionTitle::updateLabel(QLabel *label, const QString &text)
 {
-    label->setText(text);
+    if(label->property(EXTRAINFO_SIZE).isValid())
+    {
+        auto elidedText = label->fontMetrics().elidedText(text, Qt::ElideMiddle, label->property(EXTRAINFO_SIZE).toInt());
+        label->setText(elidedText);
+    }
+    else
+    {
+        label->setText(text);
+    }
+
     label->setProperty(MESSAGE_TEXT, text);
 }
 
 void StalledIssueActionTitle::setPath(const QString &newPath)
 {
     mPath = newPath;
+}
+
+void StalledIssueActionTitle::setHandle(mega::MegaHandle handle)
+{
+    mHandle = handle;
 }

@@ -299,7 +299,11 @@ void SyncSettingsUIBase::initTable()
 
 void SyncSettingsUIBase::showOpenMegaIgnoreError()
 {
-    QMegaMessageBox::warning(nullptr, tr("Error"), tr("Error opening megaignore file"), QMessageBox::Ok);
+    QMegaMessageBox::MessageBoxInfo msgInfo;
+    msgInfo.parent = this;
+    msgInfo.title = QMegaMessageBox::errorTitle();
+    msgInfo.text = tr("Error opening megaignore file");
+    QMegaMessageBox::warning(msgInfo);
 }
 
 void SyncSettingsUIBase::rescanQuick(std::shared_ptr<SyncSettings> sync)

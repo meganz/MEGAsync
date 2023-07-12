@@ -4,6 +4,7 @@
 #include <QOperatingSystemVersion>
 
 QList<std::shared_ptr<DialogOpener::DialogInfoBase>> DialogOpener::mOpenedDialogs = QList<std::shared_ptr<DialogOpener::DialogInfoBase>>();
+QQueue<std::shared_ptr<DialogOpener::DialogInfoBase>> DialogOpener::mDialogsQueue = QQueue<std::shared_ptr<DialogOpener::DialogInfoBase>>();
 QMap<QString, DialogOpener::GeometryInfo> DialogOpener::mSavedGeometries = QMap<QString, DialogOpener::GeometryInfo>();
 
 
@@ -34,9 +35,7 @@ DialogBlocker::DialogBlocker(QWidget *parent)
 {
     setAttribute(Qt::WA_DeleteOnClose);
     setGeometry(QRect(1,1,1,1));
-    setModal(true);
     open();
-    qApp->processEvents();
 }
 
 DialogBlocker::~DialogBlocker()

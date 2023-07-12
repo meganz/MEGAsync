@@ -9,6 +9,8 @@
 using namespace mega;
 
 LinkProcessor::LinkProcessor(QStringList linkList, MegaApi *megaApi, MegaApi *megaApiFolders)
+    : mParentHandler(nullptr),
+      mRequestCounter(0)
 {
     this->megaApi = megaApi;
     this->megaApiFolders = megaApiFolders;
@@ -86,9 +88,8 @@ void LinkProcessor::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* e
     }
     else if (request->getType() == MegaRequest::TYPE_CREATE_FOLDER)
     {
-        MegaNode *n = megaApi->getNodeByHandle(request->getNodeHandle());
-        importLinks(n);
-        delete n;
+        std::unique_ptr<MegaNode>n(megaApi->getNodeByHandle(request->getNodeHandle()));
+        importLinks(n.get());
     }
     else if (request->getType() == MegaRequest::TYPE_COPY)
     {
@@ -111,6 +112,7 @@ void LinkProcessor::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* e
     {
         if (e->getErrorCode() == MegaError::API_OK)
         {
+            mRequestCounter++;
             megaApiFolders->fetchNodes(this);
         }
         else
@@ -133,7 +135,7 @@ void LinkProcessor::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* e
     {
         if (e->getErrorCode() == MegaError::API_OK)
         {
-            MegaNode *rootNode = NULL;
+            std::unique_ptr<MegaNode> rootNode(nullptr);
             QString currentStr = linkList[currentIndex];
             QString splitSeparator;
 
@@ -158,18 +160,17 @@ void LinkProcessor::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* e
 
             if (splitSeparator.isEmpty())
             {
-                rootNode = megaApiFolders->getRootNode();
+                rootNode.reset(megaApiFolders->getRootNode());
             }
             else
             {
                 QStringList linkparts = currentStr.split(splitSeparator, QString::KeepEmptyParts);
                 MegaHandle handle = MegaApi::base64ToHandle(linkparts.last().toUtf8().constData());
-                rootNode = megaApiFolders->getNodeByHandle(handle);
+                rootNode.reset(megaApiFolders->getNodeByHandle(handle));
             }
 
             Preferences::instance()->setLastPublicHandle(request->getNodeHandle(), MegaApi::AFFILIATE_TYPE_FILE_FOLDER);
-            mLinkNode[currentIndex] = std::shared_ptr<mega::MegaNode>(megaApiFolders->authorizeNode(rootNode));
-            delete rootNode;
+            mLinkNode[currentIndex] = std::shared_ptr<mega::MegaNode>(megaApiFolders->authorizeNode(rootNode.get()));
         }
         else
         {
@@ -187,6 +188,13 @@ void LinkProcessor::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* e
         {
             requestLinkInfo();
         }
+    }
+
+    mRequestCounter--;
+
+    if(!mParentHandler && mRequestCounter == 0)
+    {
+        deleteLater();
     }
 }
 
@@ -206,21 +214,23 @@ void LinkProcessor::requestLinkInfo()
         {
             megaApiFolders->setAccountAuth(authToken.get());
         }
+
+        mRequestCounter++;
         megaApiFolders->loginToFolder(link.toUtf8().constData(), delegateListener);
     }
     else
     {
+        mRequestCounter++;
         megaApi->getPublicNode(link.toUtf8().constData(), delegateListener);
     }
 }
 
 void LinkProcessor::importLinks(QString megaPath)
 {
-    MegaNode *node = megaApi->getNodeByPath(megaPath.toUtf8().constData());
+    std::unique_ptr<MegaNode>node(megaApi->getNodeByPath(megaPath.toUtf8().constData()));
     if (node)
     {
-        importLinks(node);
-        delete node;
+        importLinks(node.get());
     }
     else
     {
@@ -231,18 +241,19 @@ void LinkProcessor::importLinks(QString megaPath)
             return;
         }
 
+        mRequestCounter++;
         megaApi->createFolder("MEGAsync Imports", rootNode.get(), delegateListener);
     }
 }
 
-void LinkProcessor::importLinks(MegaNode *node)
+void LinkProcessor::importLinks(MegaNode* node)
 {
     if (!node)
     {
         return;
     }
 
-    MegaNodeList *children = megaApi->getChildren(node);
+    std::unique_ptr<MegaNodeList> children(megaApi->getChildren(node));
     importParentFolder = node->getHandle();
 
     for (int i = 0; i < linkList.size(); i++)
@@ -272,6 +283,7 @@ void LinkProcessor::importLinks(MegaNode *node)
             if (!dupplicate)
             {
                 remainingNodes++;
+                mRequestCounter++;
                 megaApi->copyNode(mLinkNode[i].get(), node, delegateListener);
             }
         }
@@ -281,8 +293,6 @@ void LinkProcessor::importLinks(MegaNode *node)
     {
         emit onLinkImportFinish();
     }
-
-    delete children;
 }
 
 MegaHandle LinkProcessor::getImportParentFolder()
@@ -332,6 +342,18 @@ bool LinkProcessor::atLeastOneLinkValidAndSelected() const
         }
     }
     return false;
+}
+
+void LinkProcessor::setParentHandler(QObject *parent)
+{
+    connect(parent, &QObject::destroyed, this, [this](){
+        if(mRequestCounter == 0)
+        {
+            deleteLater();
+        }
+    });
+
+    mParentHandler = parent;
 }
 
 void LinkProcessor::startDownload(mega::MegaNode* linkNode, const QString &localPath)

@@ -74,14 +74,18 @@ public:
     void blockUi();
     void unBlockUi();
 
-    //Methods to modify data
-    bool solveLocalConflictedNameByRemove(const QString& name, int conflictIndex, const QModelIndex& index);
-    bool solveLocalConflictedNameByRename(const QString& name, const QString& renameTo, int conflictIndex, const QModelIndex& index);
+    void updateIndex(const QModelIndex& index);
 
-    bool solveCloudConflictedNameByRemove(const QString& name, int conflictIndex, const QModelIndex& index);
-    bool solveCloudConflictedNameByRename(const QString& name, const QString &renameTo, int conflictIndex, const QModelIndex& index);
+    //Methods to modify data
+    bool solveLocalConflictedNameByRemove(int conflictIndex, const QModelIndex& index);
+    bool solveLocalConflictedNameByRename(const QString& renameTo, int conflictIndex, const QModelIndex& index);
+
+    bool solveCloudConflictedNameByRemove(int conflictIndex, const QModelIndex& index);
+    bool solveCloudConflictedNameByRename(const QString &renameTo, int conflictIndex, const QModelIndex& index);
 
     void solveIssue(bool isCloud, const QModelIndex& index);
+
+    void solveDuplicatedIssues(const QModelIndex& index);
 
 signals:
     void stalledIssuesReceived(bool state);

@@ -13,6 +13,14 @@ StalledIssueBaseDelegateWidget::StalledIssueBaseDelegateWidget(QWidget *parent)
 {
 }
 
+void StalledIssueBaseDelegateWidget::updateIndex()
+{
+    if(auto view = dynamic_cast<QWidget*>(parent()))
+    {
+        view->update();
+    }
+}
+
 void StalledIssueBaseDelegateWidget::render(const QStyleOptionViewItem &,
             QPainter *painter,
             const QRegion &sourceRegion)

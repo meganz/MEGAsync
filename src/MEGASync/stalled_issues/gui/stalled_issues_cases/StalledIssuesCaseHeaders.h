@@ -13,6 +13,7 @@ public:
     ~StalledIssueHeaderCase() = default;
 
     virtual void refreshCaseUi(StalledIssueHeader* header) = 0;
+    virtual void onActionButtonClicked(StalledIssueHeader* header){}
 };
 
 //DefaultHeader failed
@@ -178,6 +179,7 @@ class NameConflictsHeader : public StalledIssueHeaderCase
 
 public:
     NameConflictsHeader(StalledIssueHeader* header);
+    void onActionButtonClicked(StalledIssueHeader* header) override;
 
 protected slots:
     void refreshCaseUi(StalledIssueHeader* header) override;

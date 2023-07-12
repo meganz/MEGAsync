@@ -179,6 +179,16 @@ bool CloudStalledIssueData::isEqual(const mega::MegaSyncStall* stall) const
     return (sourcePath.compare(mPath.path) == 0 || targetPath.compare(mMovePath.path) == 0);
 }
 
+mega::MegaHandle CloudStalledIssueData::getPathHandle() const
+{
+    return mPathHandle;
+}
+
+mega::MegaHandle CloudStalledIssueData::getMovePathHandle() const
+{
+    return mMovePathHandle;
+}
+
 //LOCAL
 bool LocalStalledIssueData::isEqual(const mega::MegaSyncStall* stall) const
 {
@@ -274,6 +284,7 @@ void StalledIssue::fillIssue(const mega::MegaSyncStall *stall)
     {
         initCloudIssue(stall);
         getCloudData()->mPath.path = cloudSourcePath;
+        getCloudData()->mPathHandle = stall->cloudNodeHandle(0);
         getCloudData()->mPath.mPathProblem = cloudSourcePathProblem;
 
         if(stall->couldSuggestIgnoreThisPath(true, 0))
@@ -288,6 +299,7 @@ void StalledIssue::fillIssue(const mega::MegaSyncStall *stall)
     {
         initCloudIssue(stall);
         getCloudData()->mMovePath.path = cloudTargetPath;
+        getCloudData()->mMovePathHandle = stall->cloudNodeHandle(1);
         getCloudData()->mMovePath.mPathProblem = cloudTargetPathProblem;
 
         if(stall->couldSuggestIgnoreThisPath(true, 1))

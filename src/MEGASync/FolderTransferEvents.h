@@ -11,6 +11,7 @@ struct FolderTransferUpdateEvent
     uint32_t createdfoldercount;
     uint32_t filecount;
     QString transferName;
+    std::string appData;
 };
 
 #endif // FOLDERTRANSFEREVENT_H

@@ -58,7 +58,7 @@ protected:
     bool attributeNeedsUpdate(int type);
     QObject* requestReady(int type, QObject* caller);
     void requestFinish(int type);
-    QMap<int, QObject*> mRequests;
+    QMap<int, QPointer<QObject>> mRequests;
     QMap<int, int64_t> mRequestTimestamps;
 };
 
@@ -88,7 +88,7 @@ private:
     bool mIsEmpty;
 };
 
-class RemoteFileFolderAttributes : public FileFolderAttributes, public mega::MegaRequestListener
+class RemoteFileFolderAttributes : public FileFolderAttributes
 {
     Q_OBJECT
 
@@ -105,8 +105,6 @@ public:
     void requestUser(QObject* caller, mega::MegaHandle currentUser, std::function<void(QString, bool)> func);
     void requestVersions(QObject*, std::function<void(int)> func);
 
-    void onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e) override;
-
 private:
     enum class Version
     {
@@ -116,7 +114,6 @@ private:
 
     std::unique_ptr<mega::MegaNode> getNode(Version type = Version::Last) const;
 
-    mega::QTMegaRequestListener* mListener;
     QString mFilePath;
     mega::MegaHandle mHandle;
 

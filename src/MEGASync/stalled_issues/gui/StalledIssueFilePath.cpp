@@ -4,6 +4,8 @@
 #include "Utilities.h"
 #include "Platform.h"
 #include "QMegaMessageBox.h"
+#include <DialogOpener.h>
+#include <StalledIssuesDialog.h>
 
 #include <QPainter>
 #include <QPoint>
@@ -49,9 +51,9 @@ void StalledIssueFilePath::setIndent(int indent)
     ui->gridLayout->invalidate();
 }
 
-void StalledIssueFilePath::updateUi(StalledIssueDataPtr data)
+void StalledIssueFilePath::updateUi(StalledIssueDataPtr newData)
 {
-    mData = data;
+    mData = newData;
 
     if(mData->isCloud())
     {
@@ -123,7 +125,7 @@ void StalledIssueFilePath::fillFilePath()
     }
 }
 
-QString StalledIssueFilePath::getFilePath()
+QString StalledIssueFilePath::getFilePath() const
 {
     auto filePath = mShowFullPath? mData->getNativeFilePath() : mData->getNativePath();
     mData->checkTrailingSpaces(filePath);
@@ -155,9 +157,67 @@ void StalledIssueFilePath::fillMoveFilePath()
     }
 }
 
-QString StalledIssueFilePath::getMoveFilePath()
+QString StalledIssueFilePath::getMoveFilePath() const
 {
     return mShowFullPath? mData->getNativeMoveFilePath() : mData->getNativeMovePath();
+}
+
+std::unique_ptr<mega::MegaNode> StalledIssueFilePath::getHandle() const
+{
+    if(auto cloudIssue = mData->convert<CloudStalledIssueData>())
+    {
+        if(cloudIssue->getPathHandle() != mega::INVALID_HANDLE)
+        {
+            std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(cloudIssue->getPathHandle()));
+            if(node)
+            {
+                if(mShowFullPath)
+                {
+                    return node;
+                }
+                else
+                {
+                    std::unique_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getNodeByHandle(node->getParentHandle()));
+                    return parentNode;
+                }
+            }
+        }
+
+        QFileInfo fileInfo(getFilePath());
+        std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(fileInfo.filePath().toUtf8().constData()));
+        return node;
+    }
+
+    return nullptr;
+}
+
+std::unique_ptr<mega::MegaNode> StalledIssueFilePath::getMoveHandle() const
+{
+    if(auto cloudIssue = mData->convert<CloudStalledIssueData>())
+    {
+        if(cloudIssue->getPathHandle() != mega::INVALID_HANDLE)
+        {
+            std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(cloudIssue->getMovePathHandle()));
+            if(node)
+            {
+                if(mShowFullPath)
+                {
+                    return node;
+                }
+                else
+                {
+                    std::unique_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getNodeByHandle(node->getParentHandle()));
+                    return parentNode;
+                }
+            }
+        }
+
+        QFileInfo fileInfo(getMoveFilePath());
+        std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(fileInfo.filePath().toUtf8().constData()));
+        return node;
+    }
+
+    return nullptr;
 }
 
 void StalledIssueFilePath::updateFileIcons()
@@ -169,7 +229,7 @@ void StalledIssueFilePath::updateFileIcons()
     auto hasProblem(mData->getPath().mPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem);
     if(mData->isCloud())
     {
-        std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(fileInfo.filePath().toUtf8().constData()));
+        auto node(getHandle());
         fileTypeIcon = StalledIssuesUtilities::getRemoteFileIcon(node.get(), fileInfo, hasProblem);
         if(!node)
         {
@@ -194,7 +254,7 @@ void StalledIssueFilePath::updateMoveFileIcons()
 
     if(mData->isCloud())
     {
-        std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(fileInfo.filePath().toUtf8().constData()));
+        auto node(getMoveHandle());
         fileTypeIcon = StalledIssuesUtilities::getRemoteFileIcon(node.get(), fileInfo, hasProblem);
         if(!node)
         {
@@ -309,6 +369,8 @@ void StalledIssueFilePath::showHoverAction(QEvent::Type type, QWidget *actionWid
     }
     else if(type == QEvent::MouseButtonRelease)
     {
+        auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
+
         if(mData->isCloud())
         {
             mega::MegaNode* node (MegaSyncApp->getMegaApi()->getNodeByPath(path.toUtf8().constData()));
@@ -322,7 +384,11 @@ void StalledIssueFilePath::showHoverAction(QEvent::Type type, QWidget *actionWid
             }
             else
             {
-                QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"), QString::fromUtf8("Node %1 does not exist.").arg(path));
+                QMegaMessageBox::MessageBoxInfo msgInfo;
+                msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
+                msgInfo.title = QMegaMessageBox::warningTitle();
+                msgInfo.text = QString::fromUtf8("Node %1 does not exist.").arg(path);
+                QMegaMessageBox::warning(msgInfo);
             }
         }
         else
@@ -337,7 +403,11 @@ void StalledIssueFilePath::showHoverAction(QEvent::Type type, QWidget *actionWid
             }
             else
             {
-                QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"), QString::fromUtf8("Path %1 does not exist.").arg(path));
+                QMegaMessageBox::MessageBoxInfo msgInfo;
+                msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
+                msgInfo.title = QMegaMessageBox::warningTitle();
+                msgInfo.text =  QString::fromUtf8("Path %1 does not exist.").arg(path);
+                QMegaMessageBox::warning(msgInfo);
             }
         }
     }

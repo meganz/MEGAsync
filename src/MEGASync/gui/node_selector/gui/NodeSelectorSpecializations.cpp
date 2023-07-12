@@ -18,21 +18,32 @@ UploadNodeSelector::UploadNodeSelector(QWidget *parent) : NodeSelector(parent)
     makeConnections(selectType);
 }
 
-bool UploadNodeSelector::isSelectionCorrect()
+void UploadNodeSelector::checkSelection()
 {
-    bool ret = false;
     auto node = getSelectedNode();
     if(node)
     {
-        ret = true;
         int access = getNodeAccess(node);
         if (access < mega::MegaShare::ACCESS_READWRITE)
         {
-            QMegaMessageBox::warning(nullptr, tr("Error"), tr("You need Read & Write or Full access rights to be able to upload to the selected folder."), QMessageBox::Ok);
-            ret = false;
+            QMegaMessageBox::MessageBoxInfo msgInfo;
+            msgInfo.parent = this;
+            msgInfo.title = QMegaMessageBox::errorTitle();
+            msgInfo.text = tr("You need Read & Write or Full access rights to be able to upload to the selected folder.");
+            msgInfo.finishFunc = [this](QPointer<QMessageBox> msg){
+                reject();
+            };
+            QMegaMessageBox::warning(msgInfo);
+        }
+        else
+        {
+            accept();
         }
     }
-    return ret;
+    else
+    {
+        showNotFoundNodeMessageBox();
+    }
 }
 
 DownloadNodeSelector::DownloadNodeSelector(QWidget *parent) : NodeSelector(parent)
@@ -51,9 +62,8 @@ DownloadNodeSelector::DownloadNodeSelector(QWidget *parent) : NodeSelector(paren
     makeConnections(selectType);
 }
 
-bool DownloadNodeSelector::isSelectionCorrect()
+void DownloadNodeSelector::checkSelection()
 {
-    bool ret(true);
     QList<mega::MegaHandle> nodes = getMultiSelectionNodeHandle();
     int wrongNodes(0);
     foreach(auto& nodeHandle, nodes)
@@ -65,26 +75,36 @@ bool DownloadNodeSelector::isSelectionCorrect()
         }
     }
 
+    QMegaMessageBox::MessageBoxInfo msgInfo;
+    msgInfo.parent = this;
+    msgInfo.title = QMegaMessageBox::errorTitle();
+    msgInfo.finishFunc = [this](QPointer<QMessageBox> msg){
+        reject();
+    };
+
     if(wrongNodes == nodes.size())
     {
-        ret = false;
         if(ui->stackedWidget->currentIndex() == CLOUD_DRIVE)
         {
-            QMegaMessageBox::warning(nullptr, tr("Error"), tr("The item you selected has been removed. To reselect, close this window and try again.", "", wrongNodes), QMessageBox::Ok);
+            msgInfo.text = tr("The item you selected has been removed. To reselect, close this window and try again.", "", wrongNodes);
+            QMegaMessageBox::warning(msgInfo);
         }
         else
         {
-            QMegaMessageBox::warning(nullptr, tr("Error"), tr("You no longer have access to this item. Ask the owner to share again.", "", wrongNodes), QMessageBox::Ok);
+            msgInfo.text = tr("You no longer have access to this item. Ask the owner to share again.", "", wrongNodes);
+            QMegaMessageBox::warning(msgInfo);
         }
     }
     else if(wrongNodes > 0)
     {
-        ret = false;
         QString warningMsg1 = tr("%1 item selected", "", nodes.size()).arg(nodes.size());
-        QString warningMsg = tr("%1. %2 has been removed. To reselect, close this window and try again.", "", wrongNodes).arg(warningMsg1).arg(wrongNodes);
-        QMegaMessageBox::warning(nullptr, tr("Error"), warningMsg, QMessageBox::Ok);
+        msgInfo.text = tr("%1. %2 has been removed. To reselect, close this window and try again.", "", wrongNodes).arg(warningMsg1).arg(wrongNodes);
+        QMegaMessageBox::warning(msgInfo);
     }
-    return ret;
+    else
+    {
+        accept();
+    }
 }
 
 SyncNodeSelector::SyncNodeSelector(QWidget *parent) : NodeSelector(parent)
@@ -100,34 +120,44 @@ SyncNodeSelector::SyncNodeSelector(QWidget *parent) : NodeSelector(parent)
     makeConnections(selectType);
 }
 
-bool SyncNodeSelector::isSelectionCorrect()
+void SyncNodeSelector::checkSelection()
 {
     auto node = getSelectedNode();
-    bool ret = false;
     if(node)
     {
-        ret = true;
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.parent = this;
+        msgInfo.title = QMegaMessageBox::errorTitle();
+        msgInfo.finishFunc = [this](QPointer<QMessageBox> msg){
+            reject();
+        };
+
         int access = getNodeAccess(node);
         if (access < mega::MegaShare::ACCESS_FULL)
         {
-            QMegaMessageBox::warning(nullptr, tr("Error"), tr("You need Full access right to be able to sync the selected folder."), QMessageBox::Ok);
-            ret = false;
+            msgInfo.text = tr("You need Full access right to be able to sync the selected folder.");
+            QMegaMessageBox::warning(msgInfo);
         }
         else
         {
-            const char* path = mMegaApi->getNodePath(node.get());
-            auto check = std::unique_ptr<mega::MegaNode>(mMegaApi->getNodeByPath(path));
-            delete [] path;
+            std::unique_ptr<char[]>path(mMegaApi->getNodePath(node.get()));
+            auto check = std::unique_ptr<mega::MegaNode>(mMegaApi->getNodeByPath(path.get()));
             if (!check)
             {
-                QMegaMessageBox::warning(nullptr, tr("Warning"), tr("Invalid folder for synchronization.\n"
-                                                                    "Please, ensure that you don't use characters like '\\' '/' or ':' in your folder names."),
-                                         QMessageBox::Ok);
-                ret = false;
+                msgInfo.text = tr("Invalid folder for synchronization.\n"
+                                  "Please, ensure that you don't use characters like '\\' '/' or ':' in your folder names.");
+                QMegaMessageBox::warning(msgInfo);
+            }
+            else
+            {
+                accept();
             }
         }
     }
-    return ret;
+    else
+    {
+        showNotFoundNodeMessageBox();
+    }
 }
 
 StreamNodeSelector::StreamNodeSelector(QWidget *parent) : NodeSelector(parent)
@@ -145,19 +175,31 @@ StreamNodeSelector::StreamNodeSelector(QWidget *parent) : NodeSelector(parent)
     makeConnections(selectType);
 }
 
-bool StreamNodeSelector::isSelectionCorrect()
+void StreamNodeSelector::checkSelection()
 {
     auto node = getSelectedNode();
-    bool ret = false;
     if(node)
     {
-        ret = true;
         if (node->isFolder())
         {
-            QMegaMessageBox::warning(nullptr, tr("Error"), tr("Only files can be used for streaming."), QMessageBox::Ok);
-            ret = false;
+            QMegaMessageBox::MessageBoxInfo msgInfo;
+            msgInfo.parent = this;
+            msgInfo.title = QMegaMessageBox::errorTitle();
+            msgInfo.text = tr("Only files can be used for streaming.");
+            msgInfo.finishFunc = [this](QPointer<QMessageBox>)
+            {
+                reject();
+            };
+            QMegaMessageBox::warning(msgInfo);
+        }
+        else
+        {
+            accept();
         }
     }
-    return ret;
+    else
+    {
+        showNotFoundNodeMessageBox();
+    }
 }
 

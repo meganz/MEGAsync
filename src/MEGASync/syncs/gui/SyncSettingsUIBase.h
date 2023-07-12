@@ -95,9 +95,14 @@ public:
             QString messageBoxTitle(tr("%1 operation failed").arg(typeString()));
             auto it = messageBoxTitle.begin();
             (*it) = it->toUpper();
-            QMegaMessageBox::critical(this,messageBoxTitle,
-                                          tr("Operation on %1 '%2' failed. Reason: %3")
-                                          .arg(typeString(), sync->name(), QCoreApplication::translate("MegaSyncError", mega::MegaSync::getMegaSyncErrorCode(sync->getError()))));
+            QMegaMessageBox::MessageBoxInfo msgInfo;
+            msgInfo.parent = this;
+            msgInfo.title = messageBoxTitle;
+            msgInfo.text = tr("Operation on %1 '%2' failed. Reason: %3")
+                    .arg(typeString(), sync->name(),
+                         QCoreApplication::translate("MegaSyncError", mega::MegaSync::getMegaSyncErrorCode(sync->getError())));
+            msgInfo.textFormat = Qt::RichText;
+            QMegaMessageBox::critical(msgInfo);
         });
 
         connect(mSyncController, &SyncController::syncAddStatus, this, [this](int errorCode, const QString errorMsg)
@@ -109,16 +114,27 @@ public:
                 Text::Decorator dec(&link);
                 QString msg = errorMsg;
                 dec.process(msg);
-                QMegaMessageBox::warning(this, tr("Error adding %1").arg(typeString()), msg, QMessageBox::Ok, QMessageBox::NoButton, QMap<QMessageBox::StandardButton, QString>(), Qt::RichText);
+
+                QMegaMessageBox::MessageBoxInfo msgInfo;
+                msgInfo.parent = this;
+                msgInfo.title = tr("Error adding %1").arg(typeString());
+                msgInfo.text = msg;
+                msgInfo.textFormat = Qt::RichText;
+                QMegaMessageBox::warning(msgInfo);
             }
         });
 
         connect(mSyncController, &SyncController::syncRemoveError, this, [this](std::shared_ptr<mega::MegaError> err)
         {
             onSavingSyncsCompleted(SAVING_FINISHED);
-            QMegaMessageBox::warning(nullptr, tr("Error removing %1").arg(typeString()),
-                                      tr("Your %1 can't be removed. Reason: %2")
-                                      .arg(typeString(), QCoreApplication::translate("MegaError", err->getErrorString())));
+
+            QMegaMessageBox::MessageBoxInfo msgInfo;
+            msgInfo.parent = this;
+            msgInfo.title = tr("Error removing %1").arg(typeString());
+            msgInfo.text =                                       tr("Your %1 can't be removed. Reason: %2")
+                    .arg(typeString(), QCoreApplication::translate("MegaError", err->getErrorString()));
+            msgInfo.textFormat = Qt::RichText;
+            QMegaMessageBox::warning(msgInfo);
         });
 
         setDisabledSyncsText();

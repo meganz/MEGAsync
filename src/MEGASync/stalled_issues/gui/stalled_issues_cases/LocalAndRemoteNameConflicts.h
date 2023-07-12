@@ -15,10 +15,8 @@ class LocalAndRemoteNameConflicts : public StalledIssueBaseDelegateWidget
 
     Q_OBJECT
 
-    std::shared_ptr<mega::MegaSyncStall> originalStall;
-
 public:
-    explicit LocalAndRemoteNameConflicts(std::shared_ptr<mega::MegaSyncStall> originalstall, QWidget *parent = nullptr);
+    explicit LocalAndRemoteNameConflicts(QWidget *parent = nullptr);
     ~LocalAndRemoteNameConflicts();
 
 public slots:

@@ -40,6 +40,15 @@ void StalledIssueChooseWidget::updateUi(StalledIssueDataPtr data)
     ui->chooseTitle->showIcon();
 
     ui->name->setTitle(fileName);
+    if(data->isCloud())
+    {
+        auto cloudData = data->convert<CloudStalledIssueData>();
+        if(cloudData)
+        {
+            ui->name->setHandle(cloudData->getPathHandle());
+        }
+    }
+
     ui->name->setPath(data->getNativeFilePath());
     ui->name->setIsCloud(data->isCloud());
     ui->name->showIcon();
@@ -95,8 +104,8 @@ void StalledIssueChooseWidget::setDisabled(bool solved)
 {
     bool isDisabled(mIsSolved && !solved);
 
-    ui->chooseTitle->setDisabled(isDisabled);
-    ui->name->setDisabled(isDisabled);
+    ui->chooseTitle->setSolved(isDisabled);
+    ui->name->setSolved(isDisabled);
 
     if(isDisabled && !ui->pathContainer->graphicsEffect())
     {

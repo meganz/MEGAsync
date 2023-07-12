@@ -57,21 +57,37 @@ void AddBackupDialog::on_changeButton_clicked()
             QString warningMessage;
             auto syncability (SyncController::isLocalFolderSyncable(candidateDir, mega::MegaSync::TYPE_BACKUP, warningMessage));
 
-            if (syncability == SyncController::CANT_SYNC)
+            auto finishFunc = [this, folderPath, candidateDir](QPointer<QMessageBox> msg){
+                if(!msg || msg->result() == QMessageBox::Yes)
+                {
+                    mSelectedFolder = candidateDir;
+                    mUi->folderLineEdit->setText(folderPath);
+                    mUi->addButton->setEnabled(true);
+                }
+            };
+
+            if (syncability == SyncController::CAN_SYNC)
             {
-                QMegaMessageBox::warning(nullptr, QString(), warningMessage, QMessageBox::Ok);
+                finishFunc(nullptr);
             }
-            else if (syncability == SyncController::CAN_SYNC
-                     || (syncability == SyncController::WARN_SYNC
-                         && QMegaMessageBox::warning(nullptr, QString(), warningMessage
-                                                     + QLatin1Char('/')
-                                                     + tr("Do you want to continue?"),
-                                                     QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
-                         == QMessageBox::Yes))
+            else
             {
-                mSelectedFolder = candidateDir;
-                mUi->folderLineEdit->setText(folderPath);
-                mUi->addButton->setEnabled(true);
+                QMegaMessageBox::MessageBoxInfo msgInfo;
+                msgInfo.title = MegaSyncApp->getMEGAString();
+                msgInfo.text = warningMessage;
+
+                if (syncability == SyncController::WARN_SYNC)
+                {
+                    msgInfo.text += QLatin1Char('/') + tr("Do you want to continue?");
+                    msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
+                    msgInfo.defaultButton = QMessageBox::No;
+                    msgInfo.finishFunc = finishFunc;
+                    QMegaMessageBox::question(msgInfo);
+                }
+                else
+                {
+                    QMegaMessageBox::warning(msgInfo);
+                }
             }
         }
     };

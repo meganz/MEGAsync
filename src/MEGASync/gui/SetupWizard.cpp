@@ -236,7 +236,10 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 MegaNode *node = megaApi->getNodeByPath("/MEGAsync");
                 if (!node)
                 {
-                    QMegaMessageBox::warning(nullptr, tr("Error"), tr("MEGA folder doesn't exist"), QMessageBox::Ok);
+                    QMegaMessageBox::MessageBoxInfo msgInfo;
+                    msgInfo.title = QMegaMessageBox::errorTitle();
+                    msgInfo.text = tr("MEGA folder doesn't exist");
+                    QMegaMessageBox::warning(msgInfo);
                 }
                 else
                 {
@@ -244,13 +247,14 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                     page_welcome();
                     delete node;
                 }
-                break;
             }
-
-            if (error->getErrorCode() != MegaError::API_ESSL
+            else if (error->getErrorCode() != MegaError::API_ESSL
                     && error->getErrorCode() != MegaError::API_ESID)
             {
-                QMegaMessageBox::warning(nullptr, tr("Error"),  QCoreApplication::translate("MegaError", error->getErrorString()), QMessageBox::Ok);
+                QMegaMessageBox::MessageBoxInfo msgInfo;
+                msgInfo.title = QMegaMessageBox::errorTitle();
+                msgInfo.text = QCoreApplication::translate("MegaError", error->getErrorString());
+                QMegaMessageBox::warning(msgInfo);
             }
 
             break;
@@ -545,11 +549,17 @@ void SetupWizard::on_bNext_clicked()
                 if (!rootNode)
                 {
                     page_login();
-                    QMegaMessageBox::warning(nullptr, tr("Error"), tr("Unable to get the filesystem.\n"
-                                                                      "Please, try again. If the problem persists "
-                                                                      "please contact bug@mega.co.nz"));
-                    done(QDialog::Rejected);
-                    app->rebootApplication(false);
+                    QMegaMessageBox::MessageBoxInfo msgInfo;
+                    msgInfo.title = QMegaMessageBox::errorTitle();
+                    msgInfo.parent = this;
+                    msgInfo.text = tr("Unable to get the filesystem.\n"
+                                      "Please, try again. If the problem persists "
+                                      "please contact bug@mega.co.nz");
+                    msgInfo.finishFunc = [this](QPointer<QMessageBox> msg){
+                        done(QDialog::Rejected);
+                        app->rebootApplication(false);
+                    };
+                    QMegaMessageBox::warning(msgInfo);
                 }
                 else
                 {
@@ -563,19 +573,40 @@ void SetupWizard::on_bNext_clicked()
             }
             else
             {
-                QMegaMessageBox::warning(nullptr, tr("Warning"), warningMessage, QMessageBox::Ok);
+                QMegaMessageBox::MessageBoxInfo msgInfo;
+                msgInfo.title = QMegaMessageBox::warningTitle();
+                msgInfo.text = warningMessage;
+                msgInfo.parent = this;
+                QMegaMessageBox::warning(msgInfo);
             }
         }
         else if (syncability == SyncController::CAN_SYNC
-                 || (syncability == SyncController::WARN_SYNC
-                     && QMegaMessageBox::warning(nullptr, tr("Warning"), warningMessage
-                                                 + QLatin1Char('\n')
-                                                 + tr("Do you want to continue?"),
-                                                 QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
-                     == QMessageBox::Yes))
+                 || syncability == SyncController::WARN_SYNC)
         {
-            selectedMegaFolderHandle = node->getHandle();
-            page_welcome();
+            auto finishFunc = [this, node](QPointer<QMessageBox> msg){
+                if(!msg || msg->result() == QMessageBox::Yes)
+                {
+                    selectedMegaFolderHandle = node->getHandle();
+                    page_welcome();
+                }
+            };
+
+            if(syncability == SyncController::WARN_SYNC)
+            {
+                QMegaMessageBox::MessageBoxInfo msgInfo;
+                msgInfo.parent = this;
+                msgInfo.text = warningMessage
+                        + QLatin1Char('\n')
+                        + tr("Do you want to continue?");
+                msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
+                msgInfo.defaultButton = QMessageBox::No;
+                msgInfo.finishFunc = finishFunc;
+                QMegaMessageBox::warning(msgInfo);
+            }
+            else
+            {
+                finishFunc(nullptr);
+            }
         }
     }
 }
@@ -608,19 +639,27 @@ void SetupWizard::on_bCancel_clicked()
         if (!rootNode)
         {
             page_login();
-            QMegaMessageBox::warning(nullptr, tr("Error"), tr("Unable to get the filesystem.\n"
-                                "Please, try again. If the problem persists "
-                                "please contact bug@mega.co.nz"));
 
-            done(QDialog::Rejected);
-            app->rebootApplication(false);
-            return;
+            QMegaMessageBox::MessageBoxInfo msgInfo;
+            msgInfo.title = QMegaMessageBox::errorTitle();
+            msgInfo.text = tr("Unable to get the filesystem.\n"
+                              "Please, try again. If the problem persists "
+                              "please contact bug@mega.co.nz");
+            msgInfo.parent = this;
+            msgInfo.finishFunc = [this](QPointer<QMessageBox>)
+            {
+                done(QDialog::Rejected);
+                app->rebootApplication(false);
+            };
+            QMegaMessageBox::warning(msgInfo);
         }
-
-        QString localPath (QDir::toNativeSeparators(QDir(ui->eLocalFolder->text()).canonicalPath()));
-        QString syncName (SyncController::getSyncNameFromPath(localPath));
-        mPreconfiguredSyncs.append(PreConfiguredSync(localPath, selectedMegaFolderHandle, syncName));
-        done(QDialog::Accepted);
+        else
+        {
+            QString localPath (QDir::toNativeSeparators(QDir(ui->eLocalFolder->text()).canonicalPath()));
+            QString syncName (SyncController::getSyncNameFromPath(localPath));
+            mPreconfiguredSyncs.append(PreConfiguredSync(localPath, selectedMegaFolderHandle, syncName));
+            done(QDialog::Accepted);
+        }
     }
     else
     {
@@ -630,24 +669,33 @@ void SetupWizard::on_bCancel_clicked()
             return;
         }
 
-        auto button = QMegaMessageBox::question(this, tr("MEGAsync"), tr("Are you sure you want to cancel this wizard and undo all changes?"), QMessageBox::Yes|QMessageBox::No, QMessageBox::No);
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.title = MegaSyncApp->getMEGAString();
+        msgInfo.parent = this;
+        msgInfo.text = tr("Are you sure you want to cancel this wizard and undo all changes?");
+        msgInfo.buttons = QMessageBox::Yes|QMessageBox::No;
+        msgInfo.defaultButton = QMessageBox::No;
 
-        if (button == QMessageBox::Yes)
-        {
-            loggingStarted = false;
+        msgInfo.finishFunc = [this](QPointer<QMessageBox> msg){
+            if (msg->result() == QMessageBox::Yes)
+            {
+                loggingStarted = false;
 
-            if (megaApi->isLoggedIn())
-            {
-                closing = true;
-                megaApi->logout(true, nullptr);
-                page_logout();
+                if (megaApi->isLoggedIn())
+                {
+                    closing = true;
+                    megaApi->logout(true, nullptr);
+                    page_logout();
+                }
+                else
+                {
+                    megaApi->localLogout();
+                    done(QDialog::Rejected);
+                }
             }
-            else
-            {
-                megaApi->localLogout();
-                done(QDialog::Rejected);
-            }
-        }
+        };
+
+        QMegaMessageBox::question(msgInfo);
     }
 }
 
@@ -852,35 +900,44 @@ void SetupWizard::closeEvent(QCloseEvent *event)
         return;
     }
 
-    if (closing)
-    {
+    auto localLogout = [this](){
         megaApi->localLogout();
         done(QDialog::Rejected);
-        return;
-    }
+    };
 
-    if (closeBlocked)
+    if (closing)
     {
-        event->ignore();
+        localLogout();
         return;
     }
 
     event->ignore();
-    auto button = QMegaMessageBox::question(this, tr("MEGAsync"),tr("Are you sure you want to cancel this wizard and undo all changes?"),QMessageBox::Yes|QMessageBox::No, QMessageBox::No);
 
-    if (button == QMessageBox::Yes)
+    if (!closeBlocked)
     {
-        if (megaApi->isLoggedIn())
-        {
-            closing = true;
-            megaApi->logout(true, nullptr);
-            page_logout();
-        }
-        else
-        {
-            megaApi->localLogout();
-            done(QDialog::Rejected);
-        }
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.title = MegaSyncApp->getMEGAString();
+        msgInfo.parent = this;
+        msgInfo.text = tr("Are you sure you want to cancel this wizard and undo all changes?");
+        msgInfo.buttons = QMessageBox::Yes|QMessageBox::No;
+        msgInfo.defaultButton = QMessageBox::No;
+        msgInfo.finishFunc = [this, localLogout](QPointer<QMessageBox> msg){
+            if(msg->result() == QMessageBox::Yes)
+            {
+                if (megaApi->isLoggedIn())
+                {
+                    closing = true;
+                    megaApi->logout(true, nullptr);
+                    page_logout();
+                }
+                else
+                {
+                    localLogout();
+                }
+            }
+        };
+
+        QMegaMessageBox::question(msgInfo);
     }
 }
 
