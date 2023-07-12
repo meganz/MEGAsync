@@ -396,7 +396,7 @@ StalledIssuesVariantList StalledIssuesModel::getIssues(std::function<bool (const
     for(int row = 0; row < rowCount(QModelIndex()); ++row)
     {
         auto issue(mStalledIssues.at(row));
-        if(issue && checker(issue->consultData()))
+        if(issue && !issue->consultData()->isSolved() && checker(issue->consultData()))
         {
             list.append(issue);
         }

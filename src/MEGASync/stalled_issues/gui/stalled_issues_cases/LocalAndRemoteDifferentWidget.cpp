@@ -87,9 +87,16 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
     {
         auto allSimilarIssues = MegaSyncApp->getStalledIssuesModel()->getIssuesByReason(reasons);
 
-        msgInfo.buttons |= QMessageBox::Yes;
-        textsByButton.insert(QMessageBox::Yes, tr("Apply to all similar issues (%1)").arg(allSimilarIssues.size()));
-        textsByButton.insert(QMessageBox::Ok, tr("Apply only to this issue"));
+        if(allSimilarIssues.size() != selection.size())
+        {
+            msgInfo.buttons |= QMessageBox::Yes;
+            textsByButton.insert(QMessageBox::Yes, tr("Apply to all similar issues (%1)").arg(allSimilarIssues.size()));
+            textsByButton.insert(QMessageBox::Ok, tr("Apply to selected issue"));
+        }
+        else
+        {
+            textsByButton.insert(QMessageBox::Ok, tr("Ok"));
+        }
     }
     else
     {
@@ -148,14 +155,25 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
     QMap<QMessageBox::Button, QString> textsByButton;
     textsByButton.insert(QMessageBox::No, tr("Cancel"));
 
-    auto selection = dialog->getDialog()->getSelection(QList<mega::MegaSyncStall::SyncStallReason>() << mega::MegaSyncStall::LocalAndRemoteChangedSinceLastSyncedState_userMustChoose
-                                                       << mega::MegaSyncStall::LocalAndRemotePreviouslyUnsyncedDiffer_userMustChoose);
+    auto reasons(QList<mega::MegaSyncStall::SyncStallReason>() << mega::MegaSyncStall::LocalAndRemoteChangedSinceLastSyncedState_userMustChoose
+                     << mega::MegaSyncStall::LocalAndRemotePreviouslyUnsyncedDiffer_userMustChoose);
+    auto selection = dialog->getDialog()->getSelection(reasons);
 
     if(selection.size() <= 1)
     {
-        msgInfo.buttons |= QMessageBox::Yes;
-        textsByButton.insert(QMessageBox::Yes, tr("Apply to all similar issues"));
-        textsByButton.insert(QMessageBox::Ok, tr("Apply to selected issue"));
+        auto allSimilarIssues = MegaSyncApp->getStalledIssuesModel()->getIssuesByReason(reasons);
+
+        if(allSimilarIssues.size() != selection.size())
+        {
+            msgInfo.buttons |= QMessageBox::Yes;
+            textsByButton.insert(QMessageBox::Yes, tr("Apply to all similar issues (%1)").arg(allSimilarIssues.size()));
+            textsByButton.insert(QMessageBox::Ok, tr("Apply to selected issue"));
+        }
+        else
+        {
+            textsByButton.insert(QMessageBox::Ok, tr("Ok"));
+        }
+
     }
     else
     {

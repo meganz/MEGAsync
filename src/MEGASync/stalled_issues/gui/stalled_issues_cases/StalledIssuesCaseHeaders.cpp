@@ -291,10 +291,16 @@ void LocalAndRemoteActionButtonClicked::actionClicked(StalledIssueHeader *header
         {
             auto allSimilarIssues = MegaSyncApp->getStalledIssuesModel()->getIssuesByReason(reasons);
 
-            msgInfo.buttons |= QMessageBox::Yes;
-            textsByButton.insert(QMessageBox::Yes, tr("Apply to all similar issues (%1)").arg(allSimilarIssues.size()));
-
-            textsByButton.insert(QMessageBox::Ok, tr("Apply only to this issue"));
+            if(allSimilarIssues.size() != selection.size())
+            {
+                msgInfo.buttons |= QMessageBox::Yes;
+                textsByButton.insert(QMessageBox::Yes, tr("Apply to all similar issues (%1)").arg(allSimilarIssues.size()));
+                textsByButton.insert(QMessageBox::Ok, tr("Apply only to this issue"));
+            }
+            else
+            {
+                textsByButton.insert(QMessageBox::Ok, tr("Ok"));
+            }
         }
         else
         {
@@ -396,10 +402,16 @@ void NameConflictsHeader::onActionButtonClicked(StalledIssueHeader* header)
         {
             auto allSimilarIssues = MegaSyncApp->getStalledIssuesModel()->getIssuesByReason(reasons);
 
-            msgInfo.buttons |= QMessageBox::Yes;
-            textsByButton.insert(QMessageBox::Yes, tr("Apply to all similar issues (%1)").arg(allSimilarIssues.size()));
-
-            textsByButton.insert(QMessageBox::Ok, tr("Apply only to this issue"));
+            if(allSimilarIssues.size() != selection.size())
+            {
+                msgInfo.buttons |= QMessageBox::Yes;
+                textsByButton.insert(QMessageBox::Yes, tr("Apply to all similar issues (%1)").arg(allSimilarIssues.size()));
+                textsByButton.insert(QMessageBox::Ok, tr("Apply only to this issue"));
+            }
+            else
+            {
+                textsByButton.insert(QMessageBox::Ok, tr("Ok"));
+            }
         }
         else
         {
