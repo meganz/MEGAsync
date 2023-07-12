@@ -232,7 +232,7 @@ public:
 
     bool isSolved() const;
     void setIsSolved();
-    virtual void solveIssue(bool autoresolve);
+    virtual bool solveIssue(bool autoresolve);
 
     bool canBeIgnored() const;
     QStringList getIgnoredFiles() const;
@@ -254,6 +254,9 @@ public:
 
     const std::shared_ptr<mega::MegaSyncStall> &getOriginalStall() const;
 
+    virtual void fillIssue(const mega::MegaSyncStall *stall);
+    virtual void endFillingIssue();
+
 protected:
     bool initLocalIssue(const mega::MegaSyncStall *stallIssue);
     const QExplicitlySharedDataPointer<LocalStalledIssueData>& getLocalData() const;
@@ -264,9 +267,6 @@ protected:
     QExplicitlySharedDataPointer<CloudStalledIssueData> mCloudData;
 
     void setIsFile(const QString& path, bool isLocal);
-
-    virtual void fillIssue(const mega::MegaSyncStall *stall);
-    void endFillingIssue();
 
     std::shared_ptr<mega::MegaSyncStall> originalStall;
     mega::MegaSyncStall::SyncStallReason mReason = mega::MegaSyncStall::SyncStallReason::NoReason;

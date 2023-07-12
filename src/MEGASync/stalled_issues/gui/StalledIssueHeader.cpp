@@ -59,14 +59,7 @@ void StalledIssueHeader::issueIgnored()
 {
     ui->ignoreFileButton->hide();
     QIcon icon(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
-    showMessage(tr("Ignored"), icon.pixmap(24,24));
-
-    if(!ui->titleContainer->graphicsEffect())
-    {
-        auto fileNameEffect = new QGraphicsOpacityEffect(this);
-        fileNameEffect->setOpacity(0.30);
-        ui->titleContainer->setGraphicsEffect(fileNameEffect);
-    }
+    showSolvedMessage(tr("Ignored"));
 }
 
 void StalledIssueHeader::clearLabels()
@@ -97,6 +90,19 @@ void StalledIssueHeader::showMessage(const QString &message, const QPixmap& pixm
     if(!pixmap.isNull())
     {
         ui->actionMessageIcon->setPixmap(pixmap);
+    }
+}
+
+void StalledIssueHeader::showSolvedMessage(const QString& customMessage)
+{
+    QIcon icon(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
+    showMessage(customMessage.isEmpty() ? tr("Solved") : customMessage, icon.pixmap(24,24));
+
+    if(!ui->titleContainer->graphicsEffect())
+    {
+        auto fileNameEffect = new QGraphicsOpacityEffect(this);
+        fileNameEffect->setOpacity(0.30);
+        ui->titleContainer->setGraphicsEffect(fileNameEffect);
     }
 }
 
@@ -216,7 +222,8 @@ bool StalledIssueHeader::eventFilter(QObject *watched, QEvent *event)
             auto filename = ui->fileNameTitle->property(FILENAME_PROPERTY).toString();
 
             auto blankSpaces = ui->errorTitleTextContainer->layout()->spacing() * 2 + ui->errorTitleTextContainer->contentsMargins().right() + ui->errorTitleTextContainer->contentsMargins().left();
-            auto availableWidth = ui->errorTitleTextContainer->width() - ui->rightTitleText->width() - ui->leftTitleText->width() - ui->fileTypeIcon->width() - blankSpaces;
+            auto availableWidth = ui->errorTitleTextContainer->width() - ui->rightTitleText->width() - ui->leftTitleText->width() - ui->fileTypeIcon->width() - blankSpaces -50;
+
             auto elidedText = ui->fileNameTitle->fontMetrics().elidedText(filename,Qt::ElideMiddle, availableWidth);
             ui->fileNameTitle->setText(elidedText);
         }

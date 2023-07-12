@@ -196,9 +196,7 @@ bool LocalStalledIssueData::isEqual(const mega::MegaSyncStall* stall) const
 ///
 StalledIssue::StalledIssue(const mega::MegaSyncStall *stallIssue)
 {
-    fillIssue(stallIssue);
     originalStall.reset(stallIssue->copy());
-    endFillingIssue();
 }
 
 bool StalledIssue::initLocalIssue(const mega::MegaSyncStall *stallIssue)
@@ -364,8 +362,9 @@ void StalledIssue::setIsSolved()
     mIsSolved = true;
 }
 
-void StalledIssue::solveIssue(bool)
+bool StalledIssue::solveIssue(bool)
 {
+    return false;
 }
 
 bool StalledIssue::canBeIgnored() const

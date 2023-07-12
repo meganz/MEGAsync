@@ -36,6 +36,7 @@ public:
     void hideAction();
 
     void showMessage(const QString& message, const QPixmap &pixmap);
+    void showSolvedMessage(const QString& customMessage = QString());
 
     void setLeftTitleText(const QString& text);
     void addFileName(bool preferCloud = false);

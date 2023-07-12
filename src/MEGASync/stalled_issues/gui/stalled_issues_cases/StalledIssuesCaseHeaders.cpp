@@ -10,6 +10,7 @@
 #include <QMegaMessageBox.h>
 #include <DialogOpener.h>
 #include <StalledIssuesDialog.h>
+#include <LocalOrRemoteUserMustChooseStalledIssue.h>
 
 #ifdef _WIN32
     #include "minwindef.h"
@@ -205,11 +206,33 @@ LocalAndRemotePreviouslyUnsyncedDifferHeader::LocalAndRemotePreviouslyUnsyncedDi
 {
 }
 
+void LocalAndRemotePreviouslyUnsyncedDifferHeader::onActionButtonClicked(StalledIssueHeader *header)
+{
+    LocalAndRemoteActionButtonClicked::actionClicked(header);
+}
+
 void LocalAndRemotePreviouslyUnsyncedDifferHeader::refreshCaseUi(StalledIssueHeader* header)
 {
     header->setLeftTitleText(tr("Can´t sync"));
     header->addFileName();
     header->setTitleDescriptionText(tr("This file has conflicting copies"));
+
+    if(auto conflict = header->getData().convert<LocalOrRemoteUserMustChooseStalledIssue>())
+    {
+        if(conflict->isSolvable() && !conflict->isSolved())
+        {
+            header->showAction(tr("Solve"));
+        }
+        else
+        {
+            header->hideAction();
+        }
+
+        if(conflict->isSolved())
+        {
+            header->showSolvedMessage();
+        }
+    }
 }
 
 //Local and remote previously synced differ
@@ -218,11 +241,84 @@ LocalAndRemoteChangedSinceLastSyncedStateHeader::LocalAndRemoteChangedSinceLastS
 {
 }
 
+void LocalAndRemoteChangedSinceLastSyncedStateHeader::onActionButtonClicked(StalledIssueHeader *header)
+{
+    LocalAndRemoteActionButtonClicked::actionClicked(header);
+}
+
 void LocalAndRemoteChangedSinceLastSyncedStateHeader::refreshCaseUi(StalledIssueHeader* header)
 {
     header->setLeftTitleText(tr("Can´t sync"));
     header->addFileName();
     header->setTitleDescriptionText(tr("This file has been changed both in MEGA and locally since it it was last synced."));
+
+    if(auto conflict = header->getData().convert<LocalOrRemoteUserMustChooseStalledIssue>())
+    {
+        if(conflict->isSolvable() && !conflict->isSolved())
+        {
+            header->showAction(tr("Solve"));
+        }
+        else
+        {
+            header->hideAction();
+        }
+
+        if(conflict->isSolved())
+        {
+            header->showSolvedMessage();
+        }
+    }
+}
+
+void LocalAndRemoteActionButtonClicked::actionClicked(StalledIssueHeader *header)
+{
+    if(auto conflict = header->getData().convert<LocalOrRemoteUserMustChooseStalledIssue>())
+    {
+        auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
+
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
+        msgInfo.title = MegaSyncApp->getMEGAString();
+        msgInfo.textFormat = Qt::RichText;
+        msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
+        QMap<QMessageBox::Button, QString> textsByButton;
+        textsByButton.insert(QMessageBox::No, tr("Cancel"));
+
+        auto reasons(QList<mega::MegaSyncStall::SyncStallReason>() << mega::MegaSyncStall::NamesWouldClashWhenSynced);
+        auto selection = dialog->getDialog()->getSelection(reasons);
+
+        if(selection.size() <= 1)
+        {
+            auto allSimilarIssues = MegaSyncApp->getStalledIssuesModel()->getIssuesByReason(reasons);
+
+            msgInfo.buttons |= QMessageBox::Yes;
+            textsByButton.insert(QMessageBox::Yes, tr("Apply to all similar issues (%1)").arg(allSimilarIssues.size()));
+
+            textsByButton.insert(QMessageBox::Ok, tr("Apply only to this issue"));
+        }
+        else
+        {
+            textsByButton.insert(QMessageBox::Ok, tr("Apply to selected issues (%1)").arg(selection.size()));
+        }
+
+        msgInfo.buttonsText = textsByButton;
+        msgInfo.text = tr("Are you sure you want to solve the issue?");
+        msgInfo.informativeText = tr("This action will choose the local side if they are duplicated");
+
+        msgInfo.finishFunc = [selection, header, conflict](QMessageBox* msgBox)
+        {
+            if(msgBox->result() == QDialogButtonBox::Ok)
+            {
+                MegaSyncApp->getStalledIssuesModel()->solveSideConflict(selection);
+            }
+            else if(msgBox->result() == QDialogButtonBox::Yes)
+            {
+                MegaSyncApp->getStalledIssuesModel()->solveSideConflict(QModelIndexList());
+            }
+        };
+
+        QMegaMessageBox::warning(msgInfo);
+    }
 }
 
 //Name Conflicts
@@ -273,6 +369,7 @@ void NameConflictsHeader::refreshCaseUi(StalledIssueHeader* header)
         }
         else
         {
+            header->showSolvedMessage();
             header->hideAction();
         }
     }

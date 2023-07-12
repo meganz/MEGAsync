@@ -10,15 +10,13 @@ NameConflictedStalledIssue::NameConflictedStalledIssue(const NameConflictedStall
 }
 
 NameConflictedStalledIssue::NameConflictedStalledIssue(const mega::MegaSyncStall *stallIssue)
-    : StalledIssue()
+    : StalledIssue(stallIssue)
 {
-    mReason = stallIssue->reason();
-    fillIssue(stallIssue);
-    endFillingIssue();
 }
 
 void NameConflictedStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
 {
+    mReason = stall->reason();
     auto localConflictNames = stall->pathCount(false);
 
     if(localConflictNames > 0)
@@ -453,7 +451,7 @@ bool NameConflictedStalledIssue::checkAndSolveConflictedNamesSolved(const QList<
     return mIsSolved;
 }
 
-void NameConflictedStalledIssue::solveIssue(bool)
+bool NameConflictedStalledIssue::solveIssue(bool autoSolve)
 {
    mCloudConflictedNames.removeDuplicatedNodes();
    renameNodesAutomatically();
@@ -465,5 +463,7 @@ void NameConflictedStalledIssue::solveIssue(bool)
    {
        checkAndSolveConflictedNamesSolved(mLocalConflictedNames);
    }
+
+   return true;
 }
 

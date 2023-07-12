@@ -46,6 +46,9 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest *r
                     variant = std::make_shared<StalledIssueVariant>(d);
                 }
 
+                variant->getData()->fillIssue(stall);
+                variant->getData()->endFillingIssue();
+
                 //No auto solving for the moment
                 if(Preferences::instance()->stalledIssueMode() == Preferences::StalledIssuesModeType::Smart)
                 {
@@ -530,6 +533,56 @@ void StalledIssuesModel::chooseSide(bool remote, const QModelIndexList &list)
                 }
 
                 resolveIssue(index.row());
+            }
+
+            unBlockUi();
+        });
+    }
+}
+
+void StalledIssuesModel::solveSideConflict(const QModelIndexList &list)
+{
+    if(list.isEmpty())
+    {
+        blockUi();
+
+        mThreadPool->push([this]()
+        {
+            for(int row = 0; row < rowCount(QModelIndex()); ++row)
+            {
+                if(mThreadPool->isThreadInterrupted())
+                {
+                    return;
+                }
+
+                auto item = mStalledIssues.at(row)->convert<LocalOrRemoteUserMustChooseStalledIssue>();
+                if(item)
+                {
+                    item->solveIssue(false);
+                }
+            }
+
+            unBlockUi();
+        });
+    }
+    else
+    {
+        blockUi();
+
+        mThreadPool->push([this, list]()
+        {
+            foreach(auto index, list)
+            {
+                if(mThreadPool->isThreadInterrupted())
+                {
+                    return;
+                }
+
+                auto item = mStalledIssues.at(index.row())->convert<LocalOrRemoteUserMustChooseStalledIssue>();
+                if(item)
+                {
+                    item->solveIssue(false);
+                }
             }
 
             unBlockUi();

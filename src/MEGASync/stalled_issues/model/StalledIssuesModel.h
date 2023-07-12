@@ -92,6 +92,7 @@ public:
 
     //LocalOrRemoteConflicts
     void chooseSide(bool remote, const QModelIndexList& list);
+    void solveSideConflict(const QModelIndexList& list);
 
     //IgnoreConflicts
     void ignoreItems(const QModelIndexList& list);
