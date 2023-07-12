@@ -85,7 +85,7 @@ StalledIssuesDialog::~StalledIssuesDialog()
 QModelIndexList StalledIssuesDialog::getSelection(QList<mega::MegaSyncStall::SyncStallReason> reasons) const
 {
     auto checkerFunc = [reasons](const std::shared_ptr<const StalledIssue> check) -> bool{
-        return reasons.contains(check->getReason());
+        return !check->isSolved() && reasons.contains(check->getReason());
     };
 
     return getSelection(checkerFunc);
@@ -105,7 +105,7 @@ QModelIndexList StalledIssuesDialog::getSelection(std::function<bool (const std:
             if(sourceIndex.isValid())
             {
                 auto stalledIssueItem (qvariant_cast<StalledIssueVariant>(sourceIndex.data(Qt::DisplayRole)));
-                if(checker(stalledIssueItem.consultData()))
+                if(stalledIssueItem.consultData()->isSolved() && checker(stalledIssueItem.consultData()))
                 {
                     list.append(sourceIndex);
                 }
