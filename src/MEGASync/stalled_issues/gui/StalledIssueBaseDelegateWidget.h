@@ -6,13 +6,14 @@
 
 #include <QWidget>
 #include <QStyleOptionViewItem>
+#include <QStyledItemDelegate>
 
 
 class StalledIssueBaseDelegateWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit StalledIssueBaseDelegateWidget(QWidget *parent = nullptr);
+    explicit StalledIssueBaseDelegateWidget(QWidget *parent);
 
     void updateIndex();
     virtual void expand(bool){}
@@ -31,11 +32,18 @@ public:
 
     bool isHeader() const;
 
+    void setDelegate(QStyledItemDelegate *newDelegate);
+
+    void updateSizeHint();
+
 signals:
     void editorKeepStateChanged(bool state);
 
 protected:
     StalledIssuesUtilities mUtilities;
+    QStyledItemDelegate* mDelegate;
+
+    void resizeEvent(QResizeEvent *event) override;
 
 private:
     virtual void refreshUi() = 0;

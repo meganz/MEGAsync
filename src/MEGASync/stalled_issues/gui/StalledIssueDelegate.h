@@ -22,7 +22,6 @@ public:
     ~StalledIssueDelegate() = default;
     QSize sizeHint(const QStyleOptionViewItem&option, const QModelIndex&index) const;
     void resetCache();
-    void updateEditor();
 
 protected:
     void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;

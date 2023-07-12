@@ -25,6 +25,7 @@ StalledIssueDelegate::StalledIssueDelegate(StalledIssuesProxyModel* proxyModel, 
     :QStyledItemDelegate(view),
      mView(view),
      mProxyModel (proxyModel),
+     mCacheManager(this),
      mEditor(nullptr)
 {
     mSourceModel = qobject_cast<StalledIssuesModel*>(
@@ -326,15 +327,21 @@ bool StalledIssueDelegate::eventFilter(QObject *object, QEvent *event)
                             mEditor->expand(!currentState);
                         }
 
+                        auto childIndex = index.child(0,0);
                         //If it is going to be expanded
                         if(!currentState)
                         {
-                            auto childIndex = index.child(0,0);
                             if(childIndex.isValid())
                             {
                                 mView->scrollTo(childIndex);
                             }
                         }
+
+                        //As soon as the child is expanded,
+                        //update the size as it may be the first time the widget is shown and it is outdated
+                        QTimer::singleShot(0,[this, childIndex](){
+                        sizeHintChanged(childIndex);
+                        });
 
                         return true;
                     }
@@ -349,16 +356,6 @@ bool StalledIssueDelegate::eventFilter(QObject *object, QEvent *event)
 void StalledIssueDelegate::destroyEditor(QWidget*, const QModelIndex&) const
 {
     //Do not destroy it the editor, as it is also used to paint the row and it is saved in a cache
-}
-
-void StalledIssueDelegate::updateEditor()
-{
-    if(mEditor)
-    {
-        QModelIndex editorCurrentIndex(getEditorCurrentIndex());
-        auto stalledIssueItem (qvariant_cast<StalledIssueVariant>(editorCurrentIndex.data(Qt::DisplayRole)));
-        mEditor->updateUi(editorCurrentIndex, stalledIssueItem);
-    }
 }
 
 void StalledIssueDelegate::onHoverEnter(const QModelIndex &index)

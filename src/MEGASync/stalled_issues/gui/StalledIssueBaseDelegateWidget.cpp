@@ -8,7 +8,8 @@
 #include <QFile>
 
 StalledIssueBaseDelegateWidget::StalledIssueBaseDelegateWidget(QWidget *parent)
-    : QWidget(parent)
+    : QWidget(parent),
+      mDelegate(nullptr)
 {
 }
 
@@ -54,21 +55,54 @@ QSize StalledIssueBaseDelegateWidget::sizeHint() const
 {
     StalledIssue::SizeType sizeType = isHeader() ? StalledIssue::Header : StalledIssue::Body;
 
+    QSize size;
+
     if(isHeader())
     {
         if(mData.getDelegateSize(sizeType).isValid())
         {
-            return mData.getDelegateSize(sizeType);
+            size = mData.getDelegateSize(sizeType);
         }
     }
 
-    auto size = QWidget::sizeHint();
-    mData.setDelegateSize(size, sizeType);
+    if(!size.isValid())
+    {
+        size = QWidget::sizeHint();
+
+        if(isHeader())
+        {
+            mData.setDelegateSize(size, sizeType);
+        }
+    }
 
     return size;
 }
 
 bool StalledIssueBaseDelegateWidget::isHeader() const
 {
-    return mCurrentIndex.isValid() && mCurrentIndex.parent().isValid();
+    return mCurrentIndex.isValid() && !mCurrentIndex.parent().isValid();
+}
+
+void StalledIssueBaseDelegateWidget::resizeEvent(QResizeEvent *event)
+{
+    if(mDelegate)
+    {
+        auto currentSize(event->size());
+        auto realSize(QWidget::sizeHint());
+
+        if(currentSize.height() != realSize.height())
+        {
+            updateSizeHint();
+        }
+    }
+}
+
+void StalledIssueBaseDelegateWidget::setDelegate(QStyledItemDelegate *newDelegate)
+{
+    mDelegate = newDelegate;
+}
+
+void StalledIssueBaseDelegateWidget::updateSizeHint()
+{
+    mDelegate->sizeHintChanged(getCurrentIndex());
 }

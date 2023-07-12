@@ -221,7 +221,9 @@ void NameConflict::onRawInfoChecked()
         auto conflictedNames = getConflictedNames(mIssue);
         std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo> info(conflictedNames.at(title->getIndex()));
         updateTitleExtraInfo(title, info);
-        update();
+        //To let the view know that it may change
+
+        mDelegateWidget->updateSizeHint();
     }
 }
 
@@ -290,7 +292,7 @@ void NameConflict::updateTitleExtraInfo(NameConflictTitle* title, std::shared_pt
 
 void NameConflict::setDelegate(QPointer<StalledIssueBaseDelegateWidget> newDelegate)
 {
-    mDelegate = newDelegate;
+    mDelegateWidget = newDelegate;
 }
 
 void NameConflict::setDisabled()
@@ -352,11 +354,11 @@ void NameConflict::onActionClicked(int actionId)
 
                     if(isCloud())
                     {
-                        areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveCloudConflictedNameByRename(newName, conflictIndex, mDelegate->getCurrentIndex());
+                        areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveCloudConflictedNameByRename(newName, conflictIndex, mDelegateWidget->getCurrentIndex());
                     }
                     else
                     {
-                        areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveLocalConflictedNameByRename(newName, conflictIndex, mDelegate->getCurrentIndex());
+                        areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveLocalConflictedNameByRename(newName, conflictIndex, mDelegateWidget->getCurrentIndex());
                     }
 
                     // Prevent this one showing again (if they Refresh) until sync has made a full fresh pass
@@ -368,7 +370,7 @@ void NameConflict::onActionClicked(int actionId)
                     }
 
                     //Now, close the editor because the action has been finished
-                    if(mDelegate)
+                    if(mDelegateWidget)
                     {
                         emit refreshUi();
                     }
@@ -432,7 +434,7 @@ void NameConflict::onActionClicked(int actionId)
 
                     if(isCloud())
                     {
-                        areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveCloudConflictedNameByRemove(conflictIndex, mDelegate->getCurrentIndex());
+                        areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveCloudConflictedNameByRemove(conflictIndex, mDelegateWidget->getCurrentIndex());
                         if(handle != mega::INVALID_HANDLE)
                         {
                             std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
@@ -448,7 +450,7 @@ void NameConflict::onActionClicked(int actionId)
                     }
                     else
                     {
-                        areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveLocalConflictedNameByRemove(conflictIndex, mDelegate->getCurrentIndex());
+                        areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveLocalConflictedNameByRemove(conflictIndex, mDelegateWidget->getCurrentIndex());
                         mUtilities.removeLocalFile(QDir::toNativeSeparators(filePath));
                     }
 
@@ -461,7 +463,7 @@ void NameConflict::onActionClicked(int actionId)
                     }
 
                     //Now, close the editor because the action has been finished
-                    if(mDelegate)
+                    if(mDelegateWidget)
                     {
                         emit refreshUi();
                     }

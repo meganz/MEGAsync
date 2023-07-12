@@ -20,9 +20,6 @@ StalledIssueFilePath::StalledIssueFilePath(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ui->filePathAction->hide();
-    ui->moveFilePathAction->hide();
-
     ui->file->hide();
     ui->moveFile->hide();
 
@@ -33,9 +30,7 @@ StalledIssueFilePath::StalledIssueFilePath(QWidget *parent) :
     ui->filePathContainer->installEventFilter(this);
     ui->moveFilePathContainer->installEventFilter(this);
 
-    auto openIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/ic-open-outside.png"));
-    ui->filePathAction->setPixmap(openIcon.pixmap(ui->filePathAction->size()));
-    ui->moveFilePathAction->setPixmap(openIcon.pixmap(ui->moveFilePathAction->size()));
+    mOpenIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/ic-open-outside.png"));
 
     connect(ui->helpIcon, &QPushButton::clicked, this, &StalledIssueFilePath::onHelpIconClicked);
 }
@@ -96,12 +91,11 @@ void StalledIssueFilePath::fillFilePath()
         auto filePath = getFilePath();
         if(!filePath.isEmpty())
         {
-            ui->filePath->installEventFilter(this);
-            ui->filePath->setText(filePath);
+            ui->filePathEdit->setText(filePath);
         }
         else
         {
-            ui->filePath->setText(QString::fromUtf8("-"));
+            ui->filePathEdit->setText(QString::fromUtf8("-"));
         }
 
         auto hasProblem(mData->getPath().mPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem);
@@ -141,12 +135,11 @@ void StalledIssueFilePath::fillMoveFilePath()
         auto filePath = getMoveFilePath();
         if(!filePath.isEmpty())
         {
-            ui->moveFilePath->installEventFilter(this);
-            ui->moveFilePath->setText(filePath);
+            ui->moveFilePathEdit->setText(filePath);
         }
         else
         {
-            ui->moveFilePath->setText(QString::fromUtf8("-"));
+            ui->moveFilePathEdit->setText(QString::fromUtf8("-"));
         }
 
         auto hasProblem(mData->getMovePath().mPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem);
@@ -286,7 +279,7 @@ bool StalledIssueFilePath::eventFilter(QObject *watched, QEvent *event)
     {
         if(mData)
         {
-            if(watched == ui->filePath || watched == ui->moveFilePath)
+            /*if(watched == ui->filePath || watched == ui->moveFilePath)
             {
                 auto label = dynamic_cast<QLabel*>(watched);
                 if(label)
@@ -308,7 +301,7 @@ bool StalledIssueFilePath::eventFilter(QObject *watched, QEvent *event)
                     }
                 }
             }
-            else if(watched == ui->lines)
+            else*/ if(watched == ui->lines)
             {
                 auto hasProblem(mData->getPath().mPathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem);
                 if(hasProblem)
@@ -347,23 +340,28 @@ bool StalledIssueFilePath::eventFilter(QObject *watched, QEvent *event)
     return QWidget::eventFilter(watched, event);
 }
 
+void StalledIssueFilePath::resizeEvent(QResizeEvent *event)
+{
+    QWidget::resizeEvent(event);
+}
+
 void StalledIssueFilePath::onHelpIconClicked()
 {
     auto helpLink = QUrl(getHelpLink(mData->getPath().mPathProblem));
     Utilities::openUrl(helpLink);
 }
 
-void StalledIssueFilePath::showHoverAction(QEvent::Type type, QWidget *actionWidget, const QString& path)
+void StalledIssueFilePath::showHoverAction(QEvent::Type type, QLabel *actionWidget, const QString& path)
 {
     if(type == QEvent::Enter)
     {
-        actionWidget->show();
+        actionWidget->setPixmap(mOpenIcon.pixmap(actionWidget->size()));
         actionWidget->parent()->setProperty(ITS_HOVER, true);
         setStyleSheet(styleSheet());
     }
     else if(type == QEvent::Leave)
     {
-        actionWidget->hide();
+        actionWidget->setPixmap(QPixmap());
         actionWidget->parent()->setProperty(ITS_HOVER, false);
         setStyleSheet(styleSheet());
     }

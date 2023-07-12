@@ -59,6 +59,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/SwitchButton.cpp \
     $$PWD/GuiUtilities.cpp \
     $$PWD/CancelConfirmWidget.cpp \
+    $$PWD/WordWrapLabel.cpp \
     $$PWD/NodeNameSetterDialog/NodeNameSetterDialog.cpp \
     $$PWD/NodeNameSetterDialog/NewFolderDialog.cpp \
     $$PWD/NodeNameSetterDialog/RenameNodeDialog.cpp \   
@@ -138,6 +139,7 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/SwitchButton.h \
     $$PWD/GuiUtilities.h \
     $$PWD/CancelConfirmWidget.h \
+    $$PWD/WordWrapLabel.h \
     $$PWD/NodeNameSetterDialog/NodeNameSetterDialog.h \
     $$PWD/NodeNameSetterDialog/NewFolderDialog.h \
     $$PWD/NodeNameSetterDialog/RenameNodeDialog.h \

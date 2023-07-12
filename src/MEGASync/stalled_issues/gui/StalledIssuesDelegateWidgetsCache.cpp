@@ -9,7 +9,8 @@
 
 #include "Utilities.h"
 
-StalledIssuesDelegateWidgetsCache::StalledIssuesDelegateWidgetsCache()
+StalledIssuesDelegateWidgetsCache::StalledIssuesDelegateWidgetsCache(QStyledItemDelegate *delegate)
+    : mDelegate(delegate)
 {}
 
 void StalledIssuesDelegateWidgetsCache::setProxyModel(StalledIssuesProxyModel *proxyModel)
@@ -46,6 +47,7 @@ StalledIssueHeader *StalledIssuesDelegateWidgetsCache::getStalledIssueHeaderWidg
     if(!header)
     {
         header = new StalledIssueHeader(parent);
+        header->setDelegate(mDelegate);
         header->hide();
     }
 
@@ -75,6 +77,7 @@ StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::getStalledIss
         }
 
         item = createBodyWidget(index, parent, issue);
+        item->setDelegate(mDelegate);
         item->setAttribute(Qt::WA_WState_ExplicitShowHide, false);
         item->setAttribute(Qt::WA_WState_Hidden , true);
 

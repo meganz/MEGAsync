@@ -434,6 +434,11 @@ void StalledIssueActionTitle::hideAttribute(AttributeType type)
             auto labelIndex = layout->indexOf(updateLabel);
             layout->itemAt(labelIndex)->widget()->hide();
             layout->itemAt(labelIndex-1)->widget()->hide();
+
+            if(layout->count() == 2)
+            {
+                updateLabel->parentWidget()->hide();
+            }
         }
     }
 }
@@ -446,6 +451,11 @@ void StalledIssueActionTitle::showAttribute(AttributeType type)
         auto layout = dynamic_cast<QHBoxLayout*>(updateLabel->parentWidget()->layout());
         if(layout)
         {
+            if(layout->count() == 2)
+            {
+                updateLabel->parentWidget()->show();
+            }
+
             auto labelIndex = layout->indexOf(updateLabel);
             layout->itemAt(labelIndex)->widget()->show();
             layout->itemAt(labelIndex-1)->widget()->show();

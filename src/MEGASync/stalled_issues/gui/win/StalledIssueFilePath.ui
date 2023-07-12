@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>115</width>
-    <height>169</height>
+    <width>357</width>
+    <height>259</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -52,7 +52,23 @@
     color: #FFFFFF;
 }
 
+#moveFilePathContainer[hasProblem=true] QTextEdit, #filePathContainer[hasProblem=true] QTextEdit
+{
+    font-family: Lato Regular;
+    font-size: 12px;
+    line-height: 20px;
+    color: #FFFFFF;
+}
+
 #moveFilePathContainer[hasProblem=false] QLabel, #filePathContainer[hasProblem=false] QLabel
+{
+    font-family: Lato;
+    font-size: 12px;
+    line-height: 20px;
+    color: #333333;
+}
+
+#moveFilePathContainer[hasProblem=false] QTextEdit, #filePathContainer[hasProblem=false] QTextEdit
 {
     font-family: Lato;
     font-size: 12px;
@@ -248,7 +264,7 @@ QPushButton
         <property name="itsHover" stdset="0">
          <bool>false</bool>
         </property>
-        <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0">
+        <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,1,0">
          <property name="spacing">
           <number>6</number>
          </property>
@@ -293,15 +309,24 @@ QPushButton
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="filePath">
+          <widget class="WordWrapLabel" name="filePathEdit">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
-           <property name="text">
-            <string/>
+           <property name="frameShape">
+            <enum>QFrame::NoFrame</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Plain</enum>
+           </property>
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+           <property name="textInteractionFlags">
+            <set>Qt::NoTextInteraction</set>
            </property>
           </widget>
          </item>
@@ -633,7 +658,7 @@ QPushButton
         <property name="itsHover" stdset="0">
          <bool>false</bool>
         </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,1,0,0">
+        <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,1,0">
          <property name="spacing">
           <number>6</number>
          </property>
@@ -678,30 +703,14 @@ QPushButton
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="moveFilePath">
+          <widget class="WordWrapLabel" name="moveFilePathEdit">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
-           <property name="text">
-            <string/>
-           </property>
           </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_2">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>0</width>
-             <height>0</height>
-            </size>
-           </property>
-          </spacer>
          </item>
          <item>
           <widget class="QLabel" name="moveFilePathAction">
@@ -917,6 +926,13 @@ QPushButton
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>WordWrapLabel</class>
+   <extends>QTextEdit</extends>
+   <header>WordWrapLabel.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../../../gui/Resources_win.qrc"/>
  </resources>

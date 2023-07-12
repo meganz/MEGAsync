@@ -68,7 +68,7 @@ private:
     Ui::NameConflict *ui;
     std::shared_ptr<const NameConflictedStalledIssue> mIssue;
     StalledIssuesUtilities mUtilities;
-    QPointer<StalledIssueBaseDelegateWidget> mDelegate;
+    QPointer<StalledIssueBaseDelegateWidget> mDelegateWidget;
     QMap<int, QPointer<NameConflictTitle>> mTitlesByIndex;
     QMap<int, QPointer<QWidget>> mContainerByDuplicateByGroupId;
 };
