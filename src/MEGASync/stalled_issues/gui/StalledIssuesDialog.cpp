@@ -235,6 +235,7 @@ void StalledIssuesDialog::showModeSelector()
         }
 
         ui->SelectButton->setEnabled(true);
+        mModeSelected = mode;
     }
     else
     {
