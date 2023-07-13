@@ -9,15 +9,15 @@
 LoginController::LoginController(QObject *parent)
     : QObject{parent}
       , mMegaApi(MegaSyncApp->getMegaApi())
-      , mDelegateListener(new mega::QTMegaRequestListener(MegaSyncApp->getMegaApi(), this))
       , mPreferences(Preferences::instance())
+      , mDelegateListener(new mega::QTMegaRequestListener(MegaSyncApp->getMegaApi(), this))
       , mFetchingNodes(false)
       , mEmailConfirmed(false)
 {
     mMegaApi->addRequestListener(mDelegateListener.get());
     mConnectivityTimer = new QTimer(this);
     mConnectivityTimer->setSingleShot(true);
-    mConnectivityTimer->setInterval(Preferences::MAX_LOGIN_TIME_MS);
+    mConnectivityTimer->setInterval(static_cast<int>(Preferences::MAX_LOGIN_TIME_MS));
     connect(mConnectivityTimer, &QTimer::timeout, this, &LoginController::runConnectivityCheck);
 
     EphemeralCredentials credentials = mPreferences->getEphemeralCredentials();
