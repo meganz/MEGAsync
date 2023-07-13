@@ -127,12 +127,12 @@ QString MegaTransferView::cancelAndClearActionText(int count)
 
 QMap<QMessageBox::StandardButton, QString> MegaTransferView::getCancelDialogButtons()
 {
-    return  QMap<QMessageBox::StandardButton, QString>{{QMessageBox::Yes, tr("Yes, cancel")}, {QMessageBox::No, tr("No, continue")}};
+    return  QMap<QMessageBox::StandardButton, QString>{{QMessageBox::Yes, tr("Cancel")}, {QMessageBox::No, tr("Don't cancel")}};
 }
 
 QMap<QMessageBox::StandardButton, QString> MegaTransferView::getClearDialogButtons()
 {
-    return  QMap<QMessageBox::StandardButton, QString>{{QMessageBox::Yes,tr("Yes, clear")}, {QMessageBox::No, tr("No, continue")}};
+    return  QMap<QMessageBox::StandardButton, QString>{{QMessageBox::Yes,tr("Clear")}, {QMessageBox::No, tr("Don't clear")}};
 }
 
 QString MegaTransferView::errorOpeningFileText()
