@@ -45,7 +45,6 @@ Qml.ToolTip {
 
             text: root.text
             color: Styles.textInverse
-            Layout.leftMargin: 4
             // TODO: Get dialog sizes 800/560 by other way (com.qmldialog.QmlDialog) ???
             Layout.maximumWidth: 800 - leftIconLoader.width - 2 * root.padding
             Layout.maximumHeight: 560 - 2 * root.padding

@@ -16,7 +16,7 @@ Rectangle {
     property string text: ""
 
     property HintStyle styles: HintStyle {}
-
+    property int textSize: Text.Size.Normal
 
     height: visible ? titleLoader.height + textLoader.height : 0
     color: "transparent"
@@ -98,6 +98,7 @@ Rectangle {
             opacity: enabled ? 1.0 : 0.2
             font.bold: true
             font.weight: Font.Light
+            font.pixelSize: textSize
         }
     }
 
@@ -109,6 +110,7 @@ Rectangle {
             color: styles.textColor
             opacity: enabled ? 1.0 : 0.2
             font.weight: Font.Light
+            font.pixelSize: textSize
         }
     }
 }

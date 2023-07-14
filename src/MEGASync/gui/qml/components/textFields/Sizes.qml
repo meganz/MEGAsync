@@ -1,6 +1,9 @@
 // System
 import QtQuick 2.12
 
+// Local
+import Components.Texts 1.0 as MegaTexts
+
 QtObject {
 
     // Medium sizes
@@ -15,5 +18,6 @@ QtObject {
     property int focusBorderWidth: 3
     property int borderRadius: 8
     property int borderWidth: 1
+    property int hintTextSize: MegaTexts.Text.Size.Normal
 
 }
