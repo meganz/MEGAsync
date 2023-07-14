@@ -21,6 +21,8 @@ class MegaNotificationBase : public QObject
     Q_OBJECT
 
 public:
+    static const QString& defaultImage;
+
     enum class CloseReason {
         Unknown = 0,
         UserAction,
@@ -123,7 +125,7 @@ protected:
     QString mProgramName;
     Mode mMode;
     QSystemTrayIcon *mTrayIcon;
-    MegaNotificationBase* mCurrentNotification;
+    QPointer<MegaNotificationBase> mCurrentNotification;
 
     virtual void notifySystray(Class cls, const QString &title, const QString &text, int millisTimeout, bool forceQt = false);
     virtual void notifySystray(MegaNotificationBase *notification);

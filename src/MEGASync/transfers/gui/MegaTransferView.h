@@ -2,6 +2,7 @@
 #define MEGATRANSFERVIEW_H
 
 #include "TransfersWidget.h"
+#include "ViewLoadingScene.h"
 
 #include <QGraphicsEffect>
 #include <QTreeView>
@@ -10,7 +11,7 @@
 #include <QFutureWatcher>
 #include <QMessageBox>
 
-class MegaTransferView : public QTreeView
+class MegaTransferView : public LoadingSceneView<TransferManagerLoadingItem, QTreeView>
 {
     Q_OBJECT
 
@@ -34,7 +35,7 @@ public:
     void enableContextMenu();
 
     void onPauseResumeVisibleRows(bool isPaused);
-    bool onCancelAllTransfers();
+    void onCancelAllTransfers();
     void onClearAllTransfers();
     void onCancelAndClearVisibleTransfers();
     void onClearVisibleTransfers();
@@ -71,6 +72,8 @@ public:
     static QMap<QMessageBox::StandardButton, QString> getCancelDialogButtons();
     static QMap<QMessageBox::StandardButton, QString> getClearDialogButtons();
 
+    static QString errorOpeningFileText();
+
 public slots:
     void onPauseResumeSelection(bool pauseState);
     void onCancelVisibleTransfers();
@@ -81,6 +84,7 @@ public slots:
 signals:
     void verticalScrollBarVisibilityChanged(bool status);
     void pauseResumeTransfersByContextMenu(bool pause);
+    void allCancelled();
 
 protected:
     virtual void mouseReleaseEvent(QMouseEvent* event) override;

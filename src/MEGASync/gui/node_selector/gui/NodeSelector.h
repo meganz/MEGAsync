@@ -3,7 +3,7 @@
 
 #include "ButtonIconManager.h"
 #include "NodeNameSetterDialog/NewFolderDialog.h"
-#include "NodeSelectorTreeViewWidget.h"
+#include "gui/node_selector/gui/NodeSelectorTreeViewWidget.h"
 
 #include <QDialog>
 #include <QItemSelection>
@@ -41,7 +41,6 @@ public:
     };
     Q_ENUM(TabItem)
 
-    static const int LABEL_ELIDE_MARGIN;
     explicit NodeSelector(QWidget *parent = 0);
 
     ~NodeSelector();
@@ -59,6 +58,7 @@ protected:
     void addBackupsView();
     int getNodeAccess(std::shared_ptr<mega::MegaNode> node);
     std::shared_ptr<mega::MegaNode> getSelectedNode();
+    void showNotFoundNodeMessageBox();
     void makeConnections(SelectTypeSPtr selectType);
 
     NodeSelectorTreeViewWidgetCloudDrive* mCloudDriveWidget;
@@ -77,13 +77,13 @@ private slots:
     void onOptionSelected(int index);
     void updateNodeSelectorTabs();
     void onSearch(const QString& text);
-    void on_tClearSearchResult_clicked();
+    void on_tClearSearchResultNS_clicked();
 
 private:
     QModelIndex getParentIncomingShareByIndex(QModelIndex idx);
     void setToggledStyle(TabItem item);
     void setAllFramesItsOnProperty();
-    virtual bool isSelectionCorrect() = 0;
+    virtual void checkSelection() = 0;
     void shortCutConnects(int ignoreThis);
     ButtonIconManager mButtonIconManager;
     QGraphicsDropShadowEffect* mShadowTab;

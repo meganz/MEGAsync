@@ -4,6 +4,7 @@
 #include "UserAttributesRequests/MyBackupsHandle.h"
 #include "Utilities.h"
 #include "Platform.h"
+#include "DialogOpener.h"
 
 #include "QMegaMessageBox.h"
 
@@ -56,21 +57,37 @@ void AddBackupDialog::on_changeButton_clicked()
             QString warningMessage;
             auto syncability (SyncController::isLocalFolderSyncable(candidateDir, mega::MegaSync::TYPE_BACKUP, warningMessage));
 
-            if (syncability == SyncController::CANT_SYNC)
+            auto finishFunc = [this, folderPath, candidateDir](QPointer<QMessageBox> msg){
+                if(!msg || msg->result() == QMessageBox::Yes)
+                {
+                    mSelectedFolder = candidateDir;
+                    mUi->folderLineEdit->setText(folderPath);
+                    mUi->addButton->setEnabled(true);
+                }
+            };
+
+            if (syncability == SyncController::CAN_SYNC)
             {
-                QMegaMessageBox::warning(nullptr, QString(), warningMessage, QMessageBox::Ok);
+                finishFunc(nullptr);
             }
-            else if (syncability == SyncController::CAN_SYNC
-                     || (syncability == SyncController::WARN_SYNC
-                         && QMegaMessageBox::warning(nullptr, QString(), warningMessage
-                                                     + QLatin1Char('/')
-                                                     + tr("Do you want to continue?"),
-                                                     QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
-                         == QMessageBox::Yes))
+            else
             {
-                mSelectedFolder = candidateDir;
-                mUi->folderLineEdit->setText(folderPath);
-                mUi->addButton->setEnabled(true);
+                QMegaMessageBox::MessageBoxInfo msgInfo;
+                msgInfo.title = MegaSyncApp->getMEGAString();
+                msgInfo.text = warningMessage;
+
+                if (syncability == SyncController::WARN_SYNC)
+                {
+                    msgInfo.text += QLatin1Char('/') + tr("Do you want to continue?");
+                    msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
+                    msgInfo.defaultButton = QMessageBox::No;
+                    msgInfo.finishFunc = finishFunc;
+                    QMegaMessageBox::question(msgInfo);
+                }
+                else
+                {
+                    QMegaMessageBox::warning(msgInfo);
+                }
             }
         }
     };
@@ -100,8 +117,7 @@ void AddBackupDialog::checkNameConflict()
     if(!BackupNameConflictDialog::backupNamesValid(pathList))
     {
         BackupNameConflictDialog* conflictDialog = new BackupNameConflictDialog(pathList, this);
-        connect(conflictDialog, &BackupNameConflictDialog::accepted,
-                this, &AddBackupDialog::onConflictSolved);
+        DialogOpener::showDialog<BackupNameConflictDialog>(conflictDialog, this, &AddBackupDialog::onConflictSolved);
     }
     else
     {
@@ -109,13 +125,15 @@ void AddBackupDialog::checkNameConflict()
     }
 }
 
-void AddBackupDialog::onConflictSolved()
+void AddBackupDialog::onConflictSolved(QPointer<BackupNameConflictDialog> dialog)
 {
-    auto conflictDialog = qobject_cast<BackupNameConflictDialog*>(sender());
-    QMap<QString, QString> changes = conflictDialog->getChanges();
-    for(auto it = changes.cbegin(); it!=changes.cend(); ++it)
+    if(dialog->result() == QDialog::Accepted)
     {
-        mBackupName = it.value();
+        QMap<QString, QString> changes = dialog->getChanges();
+        for(auto it = changes.cbegin(); it!=changes.cend(); ++it)
+        {
+            mBackupName = it.value();
+        }
+        accept();
     }
-    accept();
 }

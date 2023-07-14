@@ -9,7 +9,7 @@
 
 using namespace mega;
 
-class PowerOptionsImpl : public QObject
+class PowerOptionsImpl
 {
 public:
     PowerOptionsImpl()
@@ -41,9 +41,6 @@ private:
     bool unRegisterForSleepWakeNotifications();
     static void systemPowerEventCallback(void *ref_con, io_service_t service, natural_t message_type, void *message_argument);
     void onHandlePowerChange(natural_t messageType, void* messageArgument);
-
-public slots:
-    bool onKeepPCAwake();
 
 private:
     bool mKeepPCAwayState;
@@ -136,10 +133,15 @@ void PowerOptionsImpl::onHandlePowerChange(natural_t messageType, void *messageA
     }
 }
 
+std::unique_ptr<PowerOptionsImpl> PowerOptions::mPowerOptionsImpl = nullptr;
 
-std::unique_ptr<PowerOptionsImpl> PowerOptions::mPowerOptionsImpl = mega::make_unique<PowerOptionsImpl>();
-
-PowerOptions::PowerOptions(){}
+PowerOptions::PowerOptions()
+{
+    if(!mPowerOptionsImpl)
+    {
+        mPowerOptionsImpl = mega::make_unique<PowerOptionsImpl>();
+    }
+}
 
 PowerOptions::~PowerOptions(){}
 

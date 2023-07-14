@@ -2,7 +2,7 @@
 NJOBS := $(shell echo ${DEB_BUILD_OPTIONS} | sed -rn 's/.*parallel=([0-9]*).*/\1/p')
 FMEDIAINFO := $(shell dpkg -l | grep mediainfo >/dev/null && echo "-i" || echo " ")
 FCRYPTOPP := $(shell cat /etc/issue | grep "Ubuntu 1[4-8]\|Ubuntu 19.04\|Debian.* [8]" >/dev/null && echo "" || echo "-q")
-DPKGXZ := $(shell cat /etc/issue | grep "Ubuntu 22\|Jammy Jellyfish\|Ubuntu 21.10" >/dev/null && echo "-- -Zxz" || echo "")
+DPKGXZ := $(shell cat /etc/issue | grep "Ubuntu 23\|Lunar Lobster\|Ubuntu 22\|Jammy Jellyfish\|Ubuntu 21.10" >/dev/null && echo "-- -Zxz" || echo "")
 EXTRAQMAKE := $(shell cat /etc/issue | grep "Ubuntu 1[2345679]\|Ubuntu 18.10\|Ubuntu 20.10\|Ubuntu 21\|Debian.* [789]" >/dev/null && echo "DEFINES+=MEGASYNC_DEPRECATED_OS" || echo "")
 FULLREQS := $(shell cat /etc/issue | grep "Ubuntu 12.04" >/dev/null && echo "" || echo '"CONFIG += FULLREQUIREMENTS"')
 INSTALL3RD := $(shell dpkg --print-architecture | grep -i "i386\|arm" >/dev/null && echo "" || echo 'install3rd')
@@ -18,8 +18,8 @@ MEGA_BUILD_ID := $(shell cat MEGA_BUILD_ID || echo "1")
 build: build-stamp
 build-stamp:
 	dh_testdir
-	sed -i -E "s/USER_AGENT([^\/]*)\/(([0-9][0-9]*\.){3})(.*)\";/USER_AGENT\1\/\2$(MEGA_BUILD_ID)\";/g" MEGASync/control/Preferences.cpp
-	sed -i -E "s/BUILD_ID = ([0-9]*)/BUILD_ID = $(MEGA_BUILD_ID)/g" MEGASync/control/Preferences.cpp
+	sed -i -E "s/VER_PRODUCTVERSION_STR([[:space:]]+)\"(([0-9][0-9]*\.){3})(.*)\"/VER_PRODUCTVERSION_STR\1\"\2$(MEGA_BUILD_ID)\"/g" MEGASync/control/Version.h
+	sed -i -E "s/VER_BUILD_ID([[:space:]]+)([0-9]*)/VER_BUILD_ID\1$(MEGA_BUILD_ID)/g" MEGASync/control/Version.h
 	sed -i -E "0,/megasync \(([0-9.]*)[^\)]*\)/s//megasync \(\1-$(MEGA_BUILD_ID).1)/" debian.changelog || :
 	./configure -g $(FCRYPTOPP) $(FMEDIAINFO)
 

@@ -3,6 +3,7 @@
 
 #include <TransfersModel.h>
 #include <Preferences.h>
+#include <QMegaMessageBox.h>
 
 #include <QCloseEvent>
 #include <QRegExp>
@@ -143,19 +144,23 @@ void BugReportDialog::onRequestFinish(MegaApi*, MegaRequest* request, MegaError*
 
             if (e->getErrorCode() == MegaError::API_OK)
             {
-                QMessageBox* msgBox = new QMessageBox();
-                msgBox->setWindowTitle(tr("Bug report"));
-                msgBox->setIcon(QMessageBox::Information);
-                msgBox->setText(tr("Bug report success!"));
-                msgBox->setTextFormat(Qt::RichText);
-                msgBox->setIconPixmap(QPixmap(Utilities::getDevicePixelRatio() < 2 ? QString::fromUtf8(":/images/bug_report_success.png")
-                                                                                  : QString::fromUtf8(":/images/bug_report_success@2x.png")));
-                msgBox->setInformativeText(tr("Your bug report has been submitted, a confirmation email will sent to you accordingly."));
-                msgBox->addButton(tr("Ok"), QMessageBox::AcceptRole);
+                QMegaMessageBox::MessageBoxInfo msgInfo;
+                msgInfo.parent = this;
+                msgInfo.title = tr("Bug report");
+                msgInfo.text = tr("Bug report success!");
+                msgInfo.informativeText = tr("Your bug report has been submitted, a confirmation email will sent to you accordingly.");
+                msgInfo.textFormat = Qt::RichText;
+                msgInfo.buttons = QMessageBox::Ok;
+                msgInfo.iconPixmap = QPixmap(Utilities::getDevicePixelRatio() < 2 ? QString::fromUtf8(":/images/bug_report_success.png")
+                                                                            : QString::fromUtf8(":/images/bug_report_success@2x.png"));
+                msgInfo.finishFunc = [this](QPointer<QMessageBox>)
+                {
+                    QTimer::singleShot(0, this, [this](){
+                        accept();
+                    });
+                };
 
-                DialogOpener::showDialog<QMessageBox>(msgBox, [this](){
-                    close();
-                });
+                QMegaMessageBox::information(msgInfo);
             }
             else
             {
@@ -176,34 +181,38 @@ void BugReportDialog::showErrorMessage()
         return;
     }
 
-    QMessageBox* msgBox = new QMessageBox();
-    msgBox->setWindowTitle(tr("Bug report"));
-    msgBox->setText(tr("Error on submitting bug report"));
-    msgBox->setTextFormat(Qt::RichText);
-    msgBox->addButton(tr("Ok"), QMessageBox::AcceptRole);
+    errorShown = true;
+
+    QMegaMessageBox::MessageBoxInfo msgInfo;
+    msgInfo.parent = this;
+    msgInfo.title = tr("Bug report");
+    msgInfo.text = tr("Error on submitting bug report");
+    msgInfo.textFormat = Qt::RichText;
+    msgInfo.buttons = QMessageBox::Ok;
+    msgInfo.finishFunc = [this](QPointer<QMessageBox>)
+    {
+        preparing = false;
+        errorShown = false;
+    };
+
 
     if (mTransferFinished && mTransferError == MegaError::API_EEXIST)
     {
-        msgBox->setIcon(QMessageBox::Information);
-        msgBox->setInformativeText(tr("There is an ongoing report being uploaded.")
+        msgInfo.informativeText = tr("There is an ongoing report being uploaded.")
                                   + QString::fromUtf8("<br>") +
-                                  tr("Please wait until the current upload is completed."));
+                                  tr("Please wait until the current upload is completed.");
+        QMegaMessageBox::information(msgInfo);
     }
     else
     {
-        msgBox->setIcon(QMessageBox::Warning);
-        msgBox->setInformativeText(
+        msgInfo.informativeText =
                     tr("Bug report can't be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]")
                         .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<span style=\"font-weight: bold; text-decoration:none;\">"))
                         .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>"))
-                         + QString::fromAscii("\n"));
-    }
+                         + QString::fromAscii("\n");
 
-    errorShown = true;
-    DialogOpener::showDialog<QMessageBox>(msgBox, [this](){
-        errorShown = false;
-        close();
-    });
+        QMegaMessageBox::warning(msgInfo);
+    }
 }
 
 void BugReportDialog::postUpload()
@@ -311,30 +320,34 @@ void BugReportDialog::cancelSendReport()
         return;
     }
 
-    MegaSyncApp->getTransfersModel()->pauseResumeTransferByTag(currentTransfer, true);
-
-    QMessageBox* msgBox = new QMessageBox();
-    msgBox->setIcon(QMessageBox::Warning);
-    msgBox->setWindowTitle(tr("Bug report"));
-    msgBox->setText(tr("Are you sure you want to exit uploading?"));
-    msgBox->setTextFormat(Qt::RichText);
-    msgBox->setInformativeText(tr("The bug report will not be submitted if you exit uploading."));
-
-    msgBox->addButton(tr("Continue"), QMessageBox::AcceptRole);
-    msgBox->addButton(tr("Yes"), QMessageBox::RejectRole);
-
     warningShown = true;
-    DialogOpener::showDialog<QMessageBox>(msgBox, [this, msgBox]{
-        int ret = msgBox->result();
 
-        if (ret == QMessageBox::RejectRole)
+    MegaSyncApp->getTransfersModel()->pauseResumeTransferByTag(currentTransfer, true);
+    if(mSendProgress)
+    {
+        mSendProgress->close();
+    }
+
+    QMegaMessageBox::MessageBoxInfo msgInfo;
+    msgInfo.parent = this;
+    msgInfo.title = tr("Bug report");
+    msgInfo.text = tr("Are you sure you want to exit uploading?");
+    msgInfo.informativeText = tr("The bug report will not be submitted if you exit uploading.");
+    msgInfo.textFormat = Qt::RichText;
+    msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
+    QMap<QMessageBox::Button, QString> textsByButton;
+    textsByButton.insert(QMessageBox::Yes, tr("Continue"));
+    textsByButton.insert(QMessageBox::No, tr("Yes"));
+    msgInfo.buttonsText = textsByButton;
+    msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
+    {
+        if (msg->result() == QMessageBox::No)
         {
             cancelCurrentReportUpload();
             preparing = false;
             warningShown = false;
-            reject();
         }
-        else if (ret == QMessageBox::AcceptRole)
+        else
         {
             warningShown = false;
             if (mTransferFinished)
@@ -347,7 +360,10 @@ void BugReportDialog::cancelSendReport()
                 mSendProgress->setValue(lastpermil);
                 MegaSyncApp->getTransfersModel()->pauseResumeTransferByTag(currentTransfer,false);
             }
-        }});
+        }
+    };
+
+    QMegaMessageBox::warning(msgInfo);
 }
 
 void BugReportDialog::onDescriptionChanged()

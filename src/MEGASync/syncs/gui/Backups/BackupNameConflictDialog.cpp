@@ -20,7 +20,8 @@ BackupNameConflictDialog::BackupNameConflictDialog(const QStringList& candidateP
 {
     foreach(auto& path, candidatePaths)
     {
-        mBackupNames.insert(path, SyncController::getSyncNameFromPath(path));
+        QString syncNameFromPath = SyncController::getSyncNameFromPath(path); //TODO: SNC-3324
+        mBackupNames.insert(path, syncNameFromPath.remove(Utilities::FORBIDDEN_CHARS_RX));
     }
     ui->setupUi(this);
 
@@ -73,7 +74,8 @@ bool BackupNameConflictDialog::backupNamesValid(QStringList candidatePaths)
     while (areValid && pathIt != candidatePaths.cend())
     {
         auto name = SyncController::getSyncNameFromPath(*pathIt);
-        areValid = Utilities::isNodeNameValid(name);
+        name.remove(Utilities::FORBIDDEN_CHARS_RX);
+        //areValid = Utilities::isNodeNameValid(name); //TODO: SNC-3324
         if (areValid)
         {
             candidatesNames.insert(name);

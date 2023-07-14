@@ -19,6 +19,8 @@ elif [[ $distro = "Raspbian GNU/Linux 9"* ]]; then
 elif [[ $distro = "Raspbian GNU/Linux 8"* ]]; then
     str="Raspbian_8.0"
 # Ubuntu
+elif [[ $ver = "23.04" ]]; then
+    str="xUbuntu_23.04"
 elif [[ $ver = "22.10" ]]; then
     str="xUbuntu_22.10"
 elif [[ $ver = "22.04" ]]; then
@@ -74,6 +76,8 @@ elif [[ $ver == 10* ]]; then
     str="Debian_10.0"
 elif [[ $ver == 11* ]]; then
     str="Debian_11"
+elif [[ $ver == 12* ]]; then
+    str="Debian_12"
 elif [[ $ver = "testing" ]]; then
     str="Debian_testing"
 # Elementary OS Luna uses 12.04

@@ -35,11 +35,8 @@ void DownloadQueueController::startAvailableSpaceChecking()
         }
         else
         {
-            if(!node->isForeign())
-            {
-                mFolderCountPendingSizeComputation++;
-                mMegaApi->getFolderInfo(node, mListener.get());
-            }
+            mFolderCountPendingSizeComputation++;
+            mMegaApi->getFolderInfo(node, mListener.get());
         }
 
         return partialSum;
@@ -87,11 +84,14 @@ WrappedNode *DownloadQueueController::dequeueDownloadQueue()
 
 void DownloadQueueController::onRequestFinish(MegaApi*, MegaRequest *request, MegaError *e)
 {
-    if (request->getType() == mega::MegaRequest::TYPE_FOLDER_INFO
-            && e->getErrorCode() == mega::MegaError::API_OK)
+    if (request->getType() == mega::MegaRequest::TYPE_FOLDER_INFO)
     {
-        auto folderInfo = request->getMegaFolderInfo();
-        mTotalQueueDiskSize += folderInfo->getCurrentSize();
+        if(e->getErrorCode() == mega::MegaError::API_OK)
+        {
+            auto folderInfo = request->getMegaFolderInfo();
+            mTotalQueueDiskSize += folderInfo->getCurrentSize();
+        }
+
         --mFolderCountPendingSizeComputation;
         if (mFolderCountPendingSizeComputation <= 0)
         {
@@ -118,7 +118,11 @@ bool DownloadQueueController::hasEnoughSpaceForDownloads()
     if (!mCurrentTargetPath.isEmpty())
     {
         QStorageInfo destinationDrive(mCurrentTargetPath);
-        return (mTotalQueueDiskSize < destinationDrive.bytesAvailable());
+        // bytesAvailable() is valid only if isReady().
+        // Network paths in Windows such as \\<ip>\<dir> are not handled by QStorageInfo,
+        // so we can't get available space this way. For now, allow download if we can't check
+        // available space.
+        return (!destinationDrive.isReady() || mTotalQueueDiskSize < destinationDrive.bytesAvailable());
     }
     return true;
 }

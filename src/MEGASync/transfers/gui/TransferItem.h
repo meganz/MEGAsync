@@ -63,7 +63,7 @@ public:
     ~TransferData(){}
 
     TransferData(TransferData const* dr) :
-        mType(dr->mType), mErrorCode(dr->mErrorCode), mTag(dr->mTag),
+        mType(dr->mType), mErrorCode(dr->mErrorCode), mTag(dr->mTag), mFolderTransferTag(dr->mFolderTransferTag),
         mErrorValue(dr->mErrorValue), mTemporaryError(dr->mTemporaryError),
         mRemainingTime(dr->mRemainingTime),
         mTotalSize(dr->mTotalSize), mPriority(dr->mPriority), mSpeed(dr->mSpeed),
@@ -84,9 +84,12 @@ public:
     bool ignoreUpdate(const TransferState &state);
     void resetIgnoreUpdateUntilSameState();
 
+    static TransferData::TransferState convertState(int state);
+
     TransferTypes                       mType;
     int                                 mErrorCode = 0;
     int                                 mTag = 0;
+    int                                 mFolderTransferTag = 0;
     long long                           mErrorValue = 0;
     bool                                mTemporaryError = false;
     int64_t                             mRemainingTime = 0;
@@ -128,9 +131,11 @@ public:
     bool isCompleted() const;
     bool isCompleting() const;
     bool isFailed() const;
+    bool canBeRetried() const;
     bool isCancelled() const;
     int64_t getRawFinishedTime() const;
     int64_t getSecondsSinceFinished() const;
+    QDateTime getFinishedDateTime() const;
     QString getFormattedFinishedTime() const;
     QString getFullFormattedFinishedTime() const;
 
@@ -139,7 +144,7 @@ private:
     int64_t         mFinishedTime = 0;
     TransferState   mState = TransferState::TRANSFER_NONE;
     TransferState   mPreviousState = TransferState::TRANSFER_NONE;
-    bool            mIgnorePauseQueueState;
+    bool            mIgnorePauseQueueState = false;
 
 };
 Q_DECLARE_TYPEINFO(TransferData, Q_MOVABLE_TYPE);

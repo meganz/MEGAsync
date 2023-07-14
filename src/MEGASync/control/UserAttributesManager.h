@@ -39,9 +39,9 @@ public:
         };
 
         QMap<int, QSharedPointer<ParamInfo>> mParamInfo; //key: params available for this request
-        QMap<int, int> mChangedTypes;
+        QMap<int64_t, int> mChangedTypes;
 
-        RequestInfo(QMap<int, QSharedPointer<ParamInfo>> pInfo, QMap<int, int> cTypes)
+        RequestInfo(QMap<int, QSharedPointer<ParamInfo>> pInfo, QMap<int64_t, int> cTypes)
             : mParamInfo(pInfo)
             , mChangedTypes(cTypes)
         {
@@ -50,7 +50,7 @@ public:
     typedef AttributeRequest::RequestInfo::ParamInfo ParamInfo;
     typedef QMap<int, QSharedPointer<ParamInfo>> ParamInfoMap;
 
-    AttributeRequest(const QString& userEmail) : mUserEmail(userEmail), mRequestInfo(QMap<int, QSharedPointer<ParamInfo>>(), QMap<int, int>()){}
+    AttributeRequest(const QString& userEmail) : mUserEmail(userEmail), mRequestInfo(QMap<int, QSharedPointer<ParamInfo>>(), QMap<int64_t, int>()){}
 
     virtual void onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e) = 0;
     virtual void requestAttribute()= 0;

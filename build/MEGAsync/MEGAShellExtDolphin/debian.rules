@@ -1,24 +1,15 @@
 #!/usr/bin/make -f
 
 MEGA_BUILD_ID := $(shell cat MEGA_BUILD_ID || echo "1")
+DPKGXZ := $(shell cat /etc/issue | grep "Ubuntu 23\|Lunar Lobster\|Ubuntu 22\|Jammy Jellyfish\|Ubuntu 21.10" >/dev/null && echo "-- -Zxz" || echo "")
 
 build: build-stamp
 build-stamp:
 	dh_testdir
 	sed -i -E "0,/dolphin-megasync \(([0-9.]*)[^\)]*\)/s//dolphin-megasync \(\1-$(MEGA_BUILD_ID).1)/" debian.changelog || :
-	if ! grep "Ubuntu 1[8-9]" /etc/issue && ! grep "Debian GNU/Linux 10" /etc/issue; then cmake -DCMAKE_INSTALL_PREFIX="`kde4-config --prefix`" .; fi
-	if ! grep "Ubuntu 1[8-9]" /etc/issue && ! grep "Debian GNU/Linux 10" /etc/issue; then make; fi
+	cmake -DCMAKE_INSTALL_PREFIX="`qtpaths --install-prefix`" -DPLUGIN_INSTALL_DIR="`qtpaths --plugin-dir`" .
+	make
 	touch build-stamp
-
-build2:
-	if grep "Ubuntu 17.10" /etc/issue || grep "Ubuntu 1[8-9]" /etc/issue || grep "Debian GNU/Linux 10" /etc/issue; then rm megasync-plugin.moc;  fi
-	if which kf5-config >/dev/null; then dh_testdir;  rm -r CMakeFiles; rm CMakeLists.txt; mv CMakeLists_kde5.txt CMakeLists.txt; cmake -DCMAKE_INSTALL_PREFIX="`kf5-config --prefix`" -DPLUGIN_INSTALL_DIR=`kf5-config --qt-plugins` .; make; touch build-stamp; fi
-
-install2: build2
-	#fix issue with compilation of megasync-plugin-overlay.cpp lacking of symbols: replace with a precompiled library
-	if grep "Ubuntu 17.10" /etc/issue || grep "Ubuntu 1[8-9]" /etc/issue || grep "Debian GNU/Linux 10" /etc/issue; then cp megasyncdolphinoverlayplugin.so_ub1710 `find . -name megasyncdolphinoverlayplugin.so`; fi
-	if which kf5-config >/dev/null; then dh_auto_install --destdir=debian/dolphin-megasync; fi
-
 
 clean:
 	dh_testdir
@@ -29,7 +20,7 @@ install: build
 	dh_auto_install --destdir=debian/dolphin-megasync
 
 # Build architecture-independent files here.
-binary-indep: build install build2 install2
+binary-indep: build install
 
 # Build architecture-dependent files here.
 binary-arch: build install
@@ -59,7 +50,7 @@ binary-arch: build install
 #	dh_shlibdeps
 	dh_gencontrol
 	dh_md5sums
-	dh_builddeb
+	dh_builddeb $(DPKGXZ)
 
 binary: binary-indep binary-arch
 .PHONY: build clean binary-indep binary-arch binary install

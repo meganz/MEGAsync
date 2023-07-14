@@ -1,3 +1,5 @@
+[[_TOC_]]
+
 # Linux instructions
 
 For MEGA Desktop App development we are targeting Ubuntu LTS, although we are providing

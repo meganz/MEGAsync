@@ -244,7 +244,7 @@ TransferBaseDelegateWidget::ActionHoverType InfoDialogTransferDelegateWidget::mo
         {
             if (getData()->mErrorCode < 0)
             {
-                if (!getData()->isSyncTransfer())
+                if (getData()->canBeRetried())
                 {
                     bool in = isMouseHoverInAction(mUi->lActionTransfer, pos);
                     mUi->lActionTransfer->setToolTip(tr("Retry"));
@@ -255,7 +255,11 @@ TransferBaseDelegateWidget::ActionHoverType InfoDialogTransferDelegateWidget::mo
                 {
                     update = setActionTransferIcon(mUi->lActionTransfer,
                                                    QString::fromAscii("://images/error.png"));
-                    mUi->lActionTransfer->setToolTip(tr("Failed: %1").arg(QString::fromStdString(getData()->mFailedTransfer->getLastError().getErrorString())));
+                    //Double check that the mFailedTransfer is OK
+                    if(getData()->isFailed())
+                    {
+                        mUi->lActionTransfer->setToolTip(tr("Failed: %1").arg(QString::fromStdString(getData()->mFailedTransfer->getLastError().getErrorString())));
+                    }
 
                     if(update)
                     {
@@ -419,7 +423,7 @@ void InfoDialogTransferDelegateWidget::on_lActionTransfer_clicked()
 {
     if (getData()->mErrorCode < 0)
     {
-        if (!getData()->isSyncTransfer())
+        if (getData()->canBeRetried())
         {
             //Base implementation
             onRetryTransfer();

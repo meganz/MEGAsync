@@ -122,9 +122,9 @@ void TransfersManagerSortFilterProxyModel::invalidateModel()
     emit layoutAboutToBeChanged();
     QFuture<void> filtered = QtConcurrent::run([this](){
         startProcessingInOtherThread();
-#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
+
         invalidate();
-#else
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
         invalidateFilter();
 #endif
         if(sortOrder() == mSortOrder)
@@ -219,6 +219,7 @@ void TransfersManagerSortFilterProxyModel::resetTransfersStateCounters()
     mPausedTransfers.clear();
     mCompletedTransfers.clear();
     mFailedTransfers.clear();
+    mPermanentFailedTransfers.clear();
 }
 
 TransferBaseDelegateWidget *TransfersManagerSortFilterProxyModel::createTransferManagerItem(QWidget*)
@@ -335,6 +336,10 @@ bool TransfersManagerSortFilterProxyModel::filterAcceptsRow(int sourceRow, const
         if(accept && d->isFailed())
         {
             mFailedTransfers.insert(d->mTag);
+            if(!d->canBeRetried())
+            {
+                mPermanentFailedTransfers.insert(d->mTag);
+            }
         }
         else
         {
@@ -475,6 +480,7 @@ void TransfersManagerSortFilterProxyModel::removeCompletedTransferFromCounter(Tr
 void TransfersManagerSortFilterProxyModel::removeFailedTransferFromCounter(TransferTag tag) const
 {
     mFailedTransfers.remove(tag);
+    mPermanentFailedTransfers.remove(tag);
 }
 
 void TransfersManagerSortFilterProxyModel::removeCompletingTransferFromCounter(TransferTag tag) const
@@ -536,6 +542,11 @@ bool TransfersManagerSortFilterProxyModel::dropMimeData(const QMimeData *data, Q
                 sourceM->ignoreMoveRowsSignal(false);
             }
         }
+
+#ifdef Q_OS_LINUX
+        //Only Linux needs to reset the mimedata, the other OS remove it
+        mInternalMoveMimeData = nullptr;
+#endif
     }
 
     return false;
@@ -589,6 +600,11 @@ bool TransfersManagerSortFilterProxyModel::isAnyActive() const
 bool TransfersManagerSortFilterProxyModel::isAnyFailed() const
 {
     return !mFailedTransfers.isEmpty();
+}
+
+bool TransfersManagerSortFilterProxyModel::areAllFailsPermanent() const
+{
+    return mFailedTransfers.size() == mPermanentFailedTransfers.size();
 }
 
 bool TransfersManagerSortFilterProxyModel::isEmpty() const

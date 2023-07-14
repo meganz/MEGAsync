@@ -84,8 +84,8 @@ void NodeRequester::search(const QString &text, NodeSelectorModelItemSearch::Typ
         QMutexLocker a(&mSearchMutex);
         QMutexLocker d(&mDataMutex);
         qDeleteAll(mRootItems);
+        mRootItems.clear();
     }
-    mRootItems.clear();
     mSearchCanceled = false;
     mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
 
@@ -106,7 +106,8 @@ void NodeRequester::search(const QString &text, NodeSelectorModelItemSearch::Typ
         }
         else if(mSyncSetupMode)
         {
-            if(megaApi->getAccess(node) != mega::MegaShare::ACCESS_FULL)
+            int access = megaApi->getAccess(node);
+            if(access != mega::MegaShare::ACCESS_FULL && access != mega::MegaShare::ACCESS_OWNER)
             {
                 continue;
             }
@@ -138,7 +139,7 @@ void NodeRequester::search(const QString &text, NodeSelectorModelItemSearch::Typ
         if(typesAllowed & type)
         {
             searchedTypes |= type;
-            auto nodeUptr = std::unique_ptr<mega::MegaNode>(nodeList->get(i)->copy());
+            auto nodeUptr = std::unique_ptr<mega::MegaNode>(node->copy());
             auto item = new NodeSelectorModelItemSearch(std::move(nodeUptr), type);
             items.append(item);
         }
@@ -805,31 +806,8 @@ QVariant NodeSelectorModel::getText(const QModelIndex &index, NodeSelectorModelI
                 return QVariant();
             }
 
-            const QString language = MegaSyncApp->getCurrentLanguageCode();
-            QLocale locale(language);
             QDateTime dateTime = dateTime.fromSecsSinceEpoch(item->getNode()->getCreationTime());
-            QDateTime currentDate = currentDate.currentDateTime();
-            QLatin1String dateFormat ("dd MMM yyyy");
-            QString timeFormat = locale.timeFormat(QLocale::ShortFormat);
-
-            int hours = dateTime.time().hour();
-
-            if(currentDate.toString(dateFormat)
-                    == dateTime.toString(dateFormat))
-            {
-                return tr("Today at %1", "", hours).arg(locale.toString(dateTime, timeFormat));
-            }
-
-            currentDate = currentDate.addDays(-1); //for checking if it was yesterday
-
-            if(currentDate.toString(dateFormat)
-                    == dateTime.toString(dateFormat))
-            {
-                return tr("Yesterday at %1", "", hours).arg(locale.toString(dateTime, timeFormat));
-            }
-            //First: day Second: hour. This is done for allow translators to change the order
-            //in case there are any language that needs to put in another order.
-            return tr("%1 at %2", "", hours).arg(locale.toString(dateTime, dateFormat), locale.toString(dateTime, timeFormat));
+            return MegaSyncApp->getFormattedDateByCurrentLanguage(dateTime, QLocale::FormatType::ShortFormat);
         }
         default:
             break;
@@ -1097,7 +1075,7 @@ QIcon NodeSelectorModel::getFolderIcon(NodeSelectorModelItem *item) const
                 {
                     QIcon icon;
                     icon.addFile(QLatin1String("://images/icons/folder/small-folder-outgoing.png"), QSize(), QIcon::Normal);
-                    icon.addFile(QLatin1String("://images/icons/folder/small-folder-outgoing_disabled.png"), QSize(), QIcon::Disabled);
+                    icon.addFile(QLatin1String("://images/icons/folder/small-folder-outgoing-disabled.png"), QSize(), QIcon::Disabled);
                     return icon;
                 }
                 else if(node->getHandle() == MegaSyncApp->getRootNode()->getHandle())

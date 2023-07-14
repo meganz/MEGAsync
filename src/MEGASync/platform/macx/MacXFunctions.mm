@@ -83,8 +83,16 @@ void selectorsImpl(QString title, QString defaultDir, bool multiSelection, bool 
 
     if(panel)
     {
-        [panel close];
-        panel = NULL;
+        auto panelParentWindow = [panel sheetParent];
+        if(panelParentWindow)
+        {
+            [panelParentWindow endSheet: panel];
+        }
+        else
+        {
+            [panel close];
+            panel = NULL;
+        }
     }
 
     if (!panel)
@@ -139,6 +147,21 @@ void raiseFileSelectionPanels()
     if(panel)
     {
         [panel orderFrontRegardless];
+    }
+}
+
+void closeFileSelectionPanels(QWidget* parent)
+{
+    if(panel)
+    {
+        NSWindow* panelParentWindow(nullptr);
+        NSView* checkParentview = (__bridge NSView*)reinterpret_cast<void*>(parent->window()->winId());
+        NSWindow* checkParentWindow = [checkParentview window];
+        panelParentWindow = [panel sheetParent];
+        if(checkParentWindow == panelParentWindow)
+        {
+            [panelParentWindow endSheet: panel];
+        }
     }
 }
 

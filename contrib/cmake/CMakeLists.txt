@@ -254,11 +254,10 @@ set (MOC_INPUT
     ${MEGAsyncDir}/BlockingStageProgressController.h
 
     ${MEGAsyncDir}/notifications/DesktopNotifications.h
-    ${MEGAsyncDir}/notifications/RemovedSharesNotificator.h
-    ${MEGAsyncDir}/notifications/TransferNotificationBuilderBase.h
+    ${MEGAsyncDir}/notifications/NotificationDelayer.h
+    ${MEGAsyncDir}/notifications/TransferNotificationBuilder.h
     ${MEGAsyncDir}/notifications/NotificatorBase.h
     ${MEGAsyncDir}/notifications/${UiDir}/Notificator.h
-    ${MEGAsyncDir}/notifications/${UiDir}/TransferNotificationBuilder.h
 
     ${MEGAsyncDir}/control/ConnectivityChecker.h
     ${MEGAsyncDir}/control/CrashHandler.h
@@ -278,6 +277,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/control/TextDecorator.h
     ${MEGAsyncDir}/control/TransferBatch.h
     ${MEGAsyncDir}/control/DialogOpener.h
+    ${MEGAsyncDir}/control/Version.h
 
     ${MEGAsyncDir}/gui/AlertItem.h
     ${MEGAsyncDir}/gui/AlertFilterType.h
@@ -341,6 +341,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/CancelConfirmWidget.h
     ${MEGAsyncDir}/gui/MegaNodeNames.h
     ${MEGAsyncDir}/gui/LowDiskSpaceDialog.h
+    ${MEGAsyncDir}/gui/DateTimeFormatter.h
     ${MEGAsyncDir}/gui/node_selector/gui/NodeSelector.h
     ${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorLoadingDelegate.h
     ${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorTreeViewWidgetSpecializations.h
@@ -484,12 +485,11 @@ set (SRCS
     ${MEGAsyncDir}/FolderTransferListener.cpp
     ${MEGAsyncDir}/BlockingStageProgressController.cpp
 
-    ${MEGAsyncDir}/notifications/TransferNotificationBuilderBase.cpp
+    ${MEGAsyncDir}/notifications/TransferNotificationBuilder.cpp
     ${MEGAsyncDir}/notifications/DesktopNotifications.cpp
-    ${MEGAsyncDir}/notifications/RemovedSharesNotificator.cpp
+    ${MEGAsyncDir}/notifications/NotificationDelayer.cpp
     ${MEGAsyncDir}/notifications/NotificatorBase.cpp
     ${MEGAsyncDir}/notifications/${UiDir}/Notificator.cpp
-    ${MEGAsyncDir}/notifications/${UiDir}/TransferNotificationBuilder.cpp
 
     ${FORMS}
     ${MOC_INPUT}
@@ -552,6 +552,7 @@ set (SRCS
     ${MEGAsyncDir}/gui/BlurredShadowEffect.cpp
     ${MEGAsyncDir}/gui/CancelConfirmWidget.cpp
     ${MEGAsyncDir}/gui/LowDiskSpaceDialog.cpp
+    ${MEGAsyncDir}/gui/DateTimeFormatter.cpp
     ${MEGAsyncDir}/gui/MegaDelegateHoverManager.cpp
     ${MEGAsyncDir}/gui/NodeNameSetterDialog/NodeNameSetterDialog.cpp
     ${MEGAsyncDir}/gui/NodeNameSetterDialog/NewFolderDialog.cpp
@@ -890,7 +891,7 @@ if (CMAKE_HOST_APPLE)
             )
 
     execute_process(
-        COMMAND bash "-c" "grep \"const QString Preferences::VERSION_STRING\" ${MEGAsyncDir}/control/Preferences.cpp | awk -F '\"' '{print $2}'"
+        COMMAND bash "-c" "grep \"#define VER_PRODUCTVERSION_STR\" ${MEGAsyncDir}/control/Version.h | awk -F '\"' '{split($2, a, \".\"); print a[1]\".\"a[2]\".\"a[3]}'"
         OUTPUT_VARIABLE MEGASYNC_VERSION
         OUTPUT_STRIP_TRAILING_WHITESPACE)
 

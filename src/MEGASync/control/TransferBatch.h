@@ -12,16 +12,14 @@
 class TransferBatch
 {
 public:
-    TransferBatch();
+    TransferBatch(unsigned long long appDataId);
     ~TransferBatch() = default;
 
     bool isEmpty();
 
-    void add(const QString& nodePath, const QString& nodeName);
-
     void cancel();
 
-    void onScanCompleted(const QString& nodePath);
+    void onScanCompleted(unsigned long long appDataId);
 
     QString description();
 
@@ -30,8 +28,9 @@ public:
     std::shared_ptr<mega::MegaCancelToken> getCancelToken();
 
 private:
-    QStringList mPendingNodes;
     std::shared_ptr<mega::MegaCancelToken> mCancelToken;
+    bool mHasFinished;
+    unsigned long long mAppDataId;
 };
 
 class BlockingBatch
@@ -46,13 +45,11 @@ public:
 
     void cancelTransfer();
 
-    void onScanCompleted(const QString& nodePath);
+    void onScanCompleted(unsigned long long appDataId);
 
     bool isBlockingStageFinished();
 
     void setAsUnblocked();
-
-    void onTransferFinished(const QString& nodePath);
 
     bool hasCancelToken();
     bool isValid() const ;

@@ -6,7 +6,10 @@ pipeline {
         booleanParam(name: 'BUILD_PDFIUM', defaultValue: false, description: 'Should we build pdfium before building MEGAsync?')
         booleanParam(name: 'BUILD_LINUX', defaultValue: true, description: 'Should we build MEGAsync for Linux?')
         booleanParam(name: 'BUILD_MAC', defaultValue: true, description: 'Should we build MEGAsync for MAC?')
+        booleanParam(name: 'UPLOAD_MACOS_PACKAGES', defaultValue: false, description: 'Is this a release?')
+        booleanParam(name: 'UPLOAD_LINUX_PACKAGES', defaultValue: false, description: 'Is this a release?')
         booleanParam(name: 'IS_RELEASE', defaultValue: false, description: 'Is this a release?')
+        string(name: 'SDK_BRANCH', description: 'Optionally, define a custom SDK branch')
         string(name: 'RELEASE_CANDIDATE', defaultValue: '', description: 'Which Release Candidate is it? i.e: RC1, RC2, etc')
     }
 
@@ -62,13 +65,14 @@ pipeline {
                         gitlabCommitStatus(name: 'MacOS build') {
                             script {
                                 echo "Triggering MEGAsync job for macOS."
-                                build job: '../MEGAsync/main', wait: true, propagate: true, parameters: [
+                                build job: '../MEGAsync-package-build-macos/main', wait: true, propagate: true, parameters: [
                                     string(name: 'MEGASYNC_BRANCH', value: "${env.BRANCH_NAME}"),
                                     booleanParam(name: 'BUILD_LINUX', value: false),
                                     booleanParam(name: 'BUILD_MAC', value: true),
+                                    booleanParam(name: 'UPLOAD_MACOS_PACKAGES', value: "${UPLOAD_MACOS_PACKAGES}"),
                                     booleanParam(name: 'IS_RELEASE', value: "${IS_RELEASE}"),
                                     string(name: 'RELEASE_CANDIDATE', value: "${RELEASE_CANDIDATE}")
-                                    ]
+                                    ].plus(env.SDK_BRANCH ? [string(name: 'SDK_BRANCH', value: "${SDK_BRANCH}")] : [])
                             }
                         }
                     }
@@ -82,13 +86,14 @@ pipeline {
                         gitlabCommitStatus(name: 'Linux build') {
                             script {
                                 echo "Triggering MEGAsync job for Linux."
-                                build job: '../MEGAsync/main', wait: true, propagate: true, parameters: [
+                                build job: '../MEGAsync-package-build-linux/main', wait: true, propagate: true, parameters: [
                                     string(name: 'MEGASYNC_BRANCH', value: "${env.BRANCH_NAME}"),
                                     booleanParam(name: 'BUILD_LINUX', value: true),
                                     booleanParam(name: 'BUILD_MAC', value: false),
+                                    booleanParam(name: 'UPLOAD_LINUX_PACKAGES', value: "${UPLOAD_LINUX_PACKAGES}"),
                                     booleanParam(name: 'IS_RELEASE', value: "${IS_RELEASE}"),
                                     string(name: 'RELEASE_CANDIDATE', value: "${RELEASE_CANDIDATE}")
-                                    ]
+                                    ].plus(env.SDK_BRANCH ? [string(name: 'SDK_BRANCH', value: "${SDK_BRANCH}")] : [])
                             }
                         }
                     }

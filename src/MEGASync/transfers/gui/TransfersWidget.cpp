@@ -30,6 +30,7 @@ TransfersWidget::TransfersWidget(QWidget* parent) :
     //Align header pause/cancel buttons to view pause/cancel button
     connect(ui->tvTransfers, &MegaTransferView::verticalScrollBarVisibilityChanged, this, &TransfersWidget::onVerticalScrollBarVisibilityChanged);
     connect(ui->tvTransfers, &MegaTransferView::pauseResumeTransfersByContextMenu, this, &TransfersWidget::onPauseResumeTransfer);
+    connect(ui->tvTransfers, &MegaTransferView::allCancelled, this, &TransfersWidget::changeToAllTransfersTab);
 
     connect(mModel, &TransfersModel::transfersProcessChanged, this, &TransfersWidget::onCheckPauseResumeButton);
     connect(mModel, &TransfersModel::transfersProcessChanged, this, &TransfersWidget::onCheckCancelClearButton);
@@ -56,7 +57,7 @@ void TransfersWidget::setupTransfers()
     connect(mProxyModel, &TransfersManagerSortFilterProxyModel::pauseResumeTransfer, this, &TransfersWidget::onPauseResumeTransfer);
     connect(mProxyModel, &TransfersManagerSortFilterProxyModel::transferCancelClear, this, &TransfersWidget::onCancelClearButtonPressedOnDelegate);
     connect(mProxyModel, &TransfersManagerSortFilterProxyModel::transferRetry, this, &TransfersWidget::onRetryButtonPressedOnDelegate);
-    connect(&mLoadingScene, &ViewLoadingScene<TransferManagerLoadingItem>::sceneVisibilityChange, this, &TransfersWidget::onUiLoadingViewVisibilityChanged);
+    connect(&ui->tvTransfers->loadingView(), &ViewLoadingScene<TransferManagerLoadingItem, QTreeView>::sceneVisibilityChange, this, &TransfersWidget::onUiLoadingViewVisibilityChanged);
     connect(app->getTransfersModel(), &TransfersModel::blockUi, this, &TransfersWidget::onUiBlockedRequested);
     connect(app->getTransfersModel(), &TransfersModel::unblockUi, this, &TransfersWidget::onUiUnblockedRequested);
     connect(app->getTransfersModel(), &TransfersModel::unblockUiAndFilter, this, &TransfersWidget::onUiUnblockedAndFilter);
@@ -88,7 +89,6 @@ void TransfersWidget::configureTransferView()
     ui->tvTransfers->setDragDropMode(QAbstractItemView::InternalMove);
     ui->tvTransfers->enableContextMenu();
 
-    mLoadingScene.setView(ui->tvTransfers);
     mDelegateHoverManager.setView(ui->tvTransfers);
 }
 
@@ -106,10 +106,7 @@ void TransfersWidget::on_tCancelClearVisible_clicked()
 {
     if(getCurrentTab() == TransfersWidget::ALL_TRANSFERS_TAB)
     {
-        if(ui->tvTransfers->onCancelAllTransfers())
-        {
-            emit changeToAllTransfersTab();
-        }
+        ui->tvTransfers->onCancelAllTransfers();
     }
     else if(getCurrentTab() == TransfersWidget::COMPLETED_TAB)
     {
@@ -400,18 +397,18 @@ bool TransfersWidget::eventFilter(QObject *watched, QEvent *event)
 
 bool TransfersWidget::isLoadingViewSet()
 {
-    return mLoadingScene.isLoadingViewSet();
+    return ui->tvTransfers->loadingView().isLoadingViewSet();
 }
 
 void TransfersWidget::setScanningWidgetVisible(bool state)
 {
     mScanningIsActive = state;
 
-    if(!state && mLoadingScene.isLoadingViewSet())
+    if(!state && ui->tvTransfers->loadingView().isLoadingViewSet())
     {
         emit disableTransferManager(true);
     }
-    else if(state && mLoadingScene.isLoadingViewSet())
+    else if(state && ui->tvTransfers->loadingView().isLoadingViewSet())
     {
         emit disableTransferManager(false);
     }
@@ -419,19 +416,16 @@ void TransfersWidget::setScanningWidgetVisible(bool state)
 
 void TransfersWidget::onUiBlockedRequested()
 {
-    mLoadingScene.toggleLoadingScene(true);
+    ui->tvTransfers->loadingView().toggleLoadingScene(true);
 }
 
 void TransfersWidget::onUiUnblockedRequested()
 {
-    mLoadingScene.toggleLoadingScene(false);
+    ui->tvTransfers->loadingView().toggleLoadingScene(false);
 }
 
 void TransfersWidget::onUiLoadingViewVisibilityChanged(bool state)
 {
-    ui->tvTransfers->blockSignals(state);
-    ui->tvTransfers->header()->blockSignals(state);
-
     if(!mScanningIsActive)
     {
         emit disableTransferManager(state);
@@ -453,7 +447,7 @@ void TransfersWidget::onUiLoadingViewVisibilityChanged(bool state)
 
 void TransfersWidget::onUiUnblockedAndFilter()
 {
-    if(mLoadingScene.isLoadingViewSet())
+    if(ui->tvTransfers->loadingView().isLoadingViewSet())
     {
         mProxyModel->refreshFilterFixedString();
     }
@@ -527,18 +521,20 @@ void TransfersWidget::onCancelClearButtonPressedOnDelegate()
 
     auto info = ui->tvTransfers->getSelectedCancelOrClearInfo();
 
-    QPointer<TransfersWidget> dialog = QPointer<TransfersWidget>(this);
-
-    if (QMegaMessageBox::warning(this, QString::fromUtf8("MEGAsync"),
-                             info.actionText,
-                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No, info.buttonsText)
-            != QMessageBox::Yes
-            || !dialog)
-    {
-        return;
-    }
-
-    getModel()->cancelAndClearTransfers(sourceSelectionIndexes, this);
+    QMegaMessageBox::MessageBoxInfo msgInfo;
+    msgInfo.parent = this;
+    msgInfo.title = MegaSyncApp->getMEGAString();
+    msgInfo.text = info.actionText;
+    msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
+    msgInfo.defaultButton = QMessageBox::No;
+    msgInfo.buttonsText = info.buttonsText;
+    msgInfo.finishFunc = [this, sourceSelectionIndexes](QPointer<QMessageBox> msg){
+        if(msg->result() == QMessageBox::Yes)
+        {
+            getModel()->cancelAndClearTransfers(sourceSelectionIndexes, this);
+        }
+    };
+    QMegaMessageBox::warning(msgInfo);
 }
 
 void TransfersWidget::onRetryButtonPressedOnDelegate()

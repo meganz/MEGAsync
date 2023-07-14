@@ -29,6 +29,7 @@ public:
     const std::shared_ptr<mega::MegaNode>& getNode() const;
 
     const QList<std::shared_ptr<DuplicatedNodeInfo>>& getResolvedConflicts();
+    bool isEmpty() const;
 
 protected:
     bool eventFilter(QObject *watched, QEvent *event) override;

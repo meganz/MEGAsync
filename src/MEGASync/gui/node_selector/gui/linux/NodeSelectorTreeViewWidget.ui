@@ -17,9 +17,32 @@
    <string notr="true">QToolButton
 {
 border:none;
+}
+
+#Container
+{
+background-color: #FFFFFF;
 }</string>
   </property>
   <layout class="QVBoxLayout" name="NodeSelectorWidgetLayout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QWidget" name="Container" native="true">
+     <layout class="QVBoxLayout" name="verticalLayout_4">
    <property name="spacing">
     <number>12</number>
    </property>
@@ -51,10 +74,22 @@ border:none;
      </property>
      <item row="0" column="10">
       <widget class="SearchLineEdit" name="leSearch">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="minimumSize">
         <size>
-         <width>150</width>
+         <width>145</width>
          <height>34</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>145</width>
+         <height>16777215</height>
         </size>
        </property>
        <property name="styleSheet">
@@ -397,7 +432,7 @@ QToolButton:pressed
            <bool>true</bool>
           </property>
           <attribute name="buttonGroup">
-           <string notr="true">searchFilterButtonGroup</string>
+            <string notr="true">searchFilterButtonGroup</string>
           </attribute>
          </widget>
         </item>
@@ -479,7 +514,7 @@ QToolButton:pressed
            <bool>true</bool>
           </property>
           <attribute name="buttonGroup">
-           <string notr="true">searchFilterButtonGroup</string>
+            <string notr="true">searchFilterButtonGroup</string>
           </attribute>
          </widget>
         </item>
@@ -990,6 +1025,9 @@ color:#FFFFFF;
       </item>
      </layout>
     </widget>
+   </item>
+  </layout>
+ </widget>
    </item>
   </layout>
  </widget>
