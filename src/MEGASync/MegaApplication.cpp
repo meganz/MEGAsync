@@ -7035,6 +7035,11 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             }
 
             notifyAccountObservers();
+
+            if (infoDialog)
+            {
+                infoDialog->setAccountType(preferences->accountType());
+            }
         }
 
         if (storage)
@@ -7106,28 +7111,36 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             }
 
             notifyStorageObservers();
+
+            if (mStorageOverquotaDialog)
+            {
+                mStorageOverquotaDialog->refreshStorageDetails();
+            }
         }
 
-        const bool proUserIsOverquota (megaApi->getBandwidthOverquotaDelay() &&
-                    preferences->accountType() != Preferences::ACCOUNT_TYPE_FREE);
-        if (proUserIsOverquota)
-        {
-            mTransferQuota->setOverQuota(std::chrono::seconds(megaApi->getBandwidthOverquotaDelay()));
-        }
+        if (transfer)
+        {   // Update transfer related details
+            const bool proUserIsOverquota (megaApi->getBandwidthOverquotaDelay() &&
+                                          preferences->accountType() != Preferences::ACCOUNT_TYPE_FREE);
+            if (proUserIsOverquota)
+            {
+                mTransferQuota->setOverQuota(std::chrono::seconds(megaApi->getBandwidthOverquotaDelay()));
+            }
 
-        preferences->setTotalBandwidth(details->getTransferMax());
-        preferences->setBandwidthInterval(details->getTemporalBandwidthInterval());
-        preferences->setUsedBandwidth(details->getTransferUsed());
+            preferences->setTotalBandwidth(details->getTransferMax());
+            preferences->setBandwidthInterval(details->getTemporalBandwidthInterval());
+            preferences->setUsedBandwidth(details->getTransferUsed());
 
-        preferences->setTemporalBandwidthInterval(details->getTemporalBandwidthInterval());
-        preferences->setTemporalBandwidth(details->getTemporalBandwidth());
-        preferences->setTemporalBandwidthValid(details->isTemporalBandwidthValid());
+            preferences->setTemporalBandwidthInterval(details->getTemporalBandwidthInterval());
+            preferences->setTemporalBandwidth(details->getTemporalBandwidth());
+            preferences->setTemporalBandwidthValid(details->isTemporalBandwidthValid());
 
-        notifyBandwidthObservers();
+            notifyBandwidthObservers();
 
-        if (preferences->accountType() != Preferences::ACCOUNT_TYPE_FREE)
-        {
-            mTransferQuota->updateQuotaState();
+            if (preferences->accountType() != Preferences::ACCOUNT_TYPE_FREE)
+            {
+                mTransferQuota->updateQuotaState();
+            }
         }
 
         preferences->sync();
@@ -7135,16 +7148,8 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         if (infoDialog)
         {
             infoDialog->setUsage();
-            infoDialog->setAccountType(preferences->accountType());
         }
-
-        if (mStorageOverquotaDialog)
-        {
-            mStorageOverquotaDialog->refreshStorageDetails();
-        }
-
         });//end of queued function
-
         });// end of thread pool function
         break;
     }
