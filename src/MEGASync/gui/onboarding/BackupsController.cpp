@@ -4,14 +4,12 @@ BackupsController::BackupsController(QObject *parent)
     : QObject(parent)
     , mBackupController(new SyncController())
 {
-    mRemoteBackups = SyncInfo::getRemoteBackupFolderNames();
-
     connect(mBackupController, &SyncController::syncAddStatus, this, &BackupsController::onBackupAddRequestStatus);
 }
 
 QSet<QString> BackupsController::getRemoteFolders() const
 {
-    return mRemoteBackups;
+    return SyncInfo::getRemoteBackupFolderNames();
 }
 
 void BackupsController::addBackups(const BackupInfoList& backupsInfoList)

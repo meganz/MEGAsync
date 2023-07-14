@@ -12,10 +12,8 @@ BackupFolder::BackupFolder()
     , mFolder(QString::fromUtf8(""))
     , mSize(QString::fromUtf8(""))
     , mSelected(false)
-    , mSelectable(true)
     , mDone(false)
     , mError(0)
-    , mErrorVisible(false)
     , folderSize(0)
 {
 }
@@ -27,10 +25,8 @@ BackupFolder::BackupFolder(const QString& folder,
     , mFolder(folder)
     , mSize(QString::fromUtf8(""))
     , mSelected(selected)
-    , mSelectable(true)
     , mDone(false)
     , mError(0)
-    , mErrorVisible(false)
     , folderSize(0)
 {
     Utilities::getFolderSize(folder, &folderSize);
@@ -50,20 +46,17 @@ BackupsModel::BackupsModel(QObject* parent)
     mRoleNames[FolderRole] = "mFolder";
     mRoleNames[SizeRole] = "mSize";
     mRoleNames[SelectedRole] = "mSelected";
-    mRoleNames[SelectableRole] = "mSelectable";
     mRoleNames[DoneRole] = "mDone";
     mRoleNames[ErrorRole] = "mError";
-    mRoleNames[ErrorVisibleRole] = "mErrorVisible";
 
     // Append mBackupFolderList with the default dirs
     populateDefaultDirectoryList();
 
     connect(SyncInfo::instance(), &SyncInfo::syncRemoved, this, &BackupsModel::onSyncRemoved);
-    connect(SyncInfo::instance(), &SyncInfo::syncStateChanged, this, &BackupsModel::onSyncChanged);
-    connect(mBackupsController, &BackupsController::backupsCreationFinished, this, &BackupsModel::clean);
+    connect(mBackupsController.get(), &BackupsController::backupsCreationFinished, this, &BackupsModel::clean);
 
     MegaSyncApp->qmlEngine()->rootContext()->setContextProperty(QString::fromUtf8("BackupsModel"), this);
-    MegaSyncApp->qmlEngine()->rootContext()->setContextProperty(QString::fromUtf8("BackupsController"), mBackupsController);
+    MegaSyncApp->qmlEngine()->rootContext()->setContextProperty(QString::fromUtf8("BackupsController"), mBackupsController.get());
 
     qmlRegisterUncreatableType<BackupsModel>("BackupsModel", 1, 0, "BackupErrorCode", QString::fromUtf8("Cannot create WarningLevel in QML"));
 }
@@ -103,17 +96,11 @@ bool BackupsModel::setData(const QModelIndex& index, const QVariant& value, int 
                 checkSelectedAll();
                 break;
             }
-            case SelectableRole:
-                item.mSelectable = value.toBool();
-                break;
             case DoneRole:
                 item.mDone = value.toBool();
                 break;
             case ErrorRole:
                 item.mError = value.toInt();
-                break;
-            case ErrorVisibleRole:
-                item.mErrorVisible = value.toBool();
                 break;
             default:
                 result = false;
@@ -150,17 +137,11 @@ QVariant BackupsModel::data(const QModelIndex &index, int role) const
             case SelectedRole:
                 field = item.mSelected;
                 break;
-            case SelectableRole:
-                field = item.mSelectable;
-                break;
             case DoneRole:
                 field = item.mDone;
                 break;
             case ErrorRole:
                 field = item.mError;
-                break;
-            case ErrorVisibleRole:
-                field = item.mErrorVisible;
                 break;
             default:
                 break;
@@ -206,7 +187,7 @@ void BackupsModel::setCheckAllState(Qt::CheckState state, bool fromModel)
 
 BackupsController* BackupsModel::backupsController() const
 {
-    return mBackupsController;
+    return mBackupsController.get();
 }
 
 bool BackupsModel::getExistConflicts() const
@@ -219,7 +200,7 @@ QString BackupsModel::getConflictsNotificationText() const
     return mConflictsNotificationText;
 }
 
-void BackupsModel::insertFolder(const QString &folder)
+void BackupsModel::insert(const QString &folder)
 {
     QString inputPath(QDir::toNativeSeparators(QDir(folder).absolutePath()));
     if(selectIfExistsInsertion(inputPath))
@@ -362,95 +343,6 @@ QModelIndex BackupsModel::getModelIndex(QList<BackupFolder>::iterator item)
 {
     const auto row = std::distance(mBackupFolderList.begin(), item);
     return QModelIndex(index(row, 0));
-}
-
-void BackupsModel::reviewOthers(const QString& folder,
-                                     bool selectable)
-{
-    QList<BackupFolder>::iterator item = mBackupFolderList.begin();
-    while (item != mBackupFolderList.end())
-    {
-        QString existingPath(item->mFolder);
-        if ((folder != existingPath) && isRelatedFolder(folder, existingPath))
-        {
-            QString message;
-            auto syncability = SyncController::isLocalFolderSyncable(existingPath, mega::MegaSync::TYPE_BACKUP, message);
-            if(!item->mSelectable && selectable && (syncability != SyncController::CANT_SYNC)
-                && !existAnotherBackupFolderRelated(existingPath, folder))
-            {
-                item->mSelectable = true;
-                emit dataChanged(getModelIndex(item), getModelIndex(item), { SelectableRole });
-            }
-            else if(item->mSelectable && !selectable)
-            {
-                item->mSelectable = false;
-                item->mSelected = false;
-                emit dataChanged(getModelIndex(item), getModelIndex(item), { SelectableRole, SelectedRole });
-                reviewOthers(existingPath, true);
-            }
-        }
-        item++;
-    }
-}
-
-void BackupsModel::reviewOthersWhenRemoved(const QString& folder)
-{
-    QList<BackupFolder>::iterator item = mBackupFolderList.begin();
-    while (item != mBackupFolderList.end())
-    {
-        QString existingPath(item->mFolder);
-        if (!item->mSelectable
-                && isRelatedFolder(folder, existingPath)
-                && !existAnotherBackupFolderRelated(existingPath, folder))
-        {
-            item->mSelectable = true;
-            emit dataChanged(getModelIndex(item), getModelIndex(item), { SelectableRole });
-        }
-        item++;
-    }
-}
-
-bool BackupsModel::existAnotherBackupFolderRelated(const QString& folder,
-                                                   const QString& selectedFolder) const {
-    bool exists = false;
-    int row = 0;
-    while(!exists && row < rowCount())
-    {
-        QString existingPath(mBackupFolderList[row].mFolder);
-        if (folder != existingPath && selectedFolder != existingPath)
-        {
-            exists = isRelatedFolder(folder, existingPath) && mBackupFolderList[row].mSelected;
-        }
-        row++;
-    }
-    return exists;
-}
-
-void BackupsModel::updateBackupFolder(QList<BackupFolder>::iterator item,
-                                      bool selectable,
-                                      const QString& message)
-{
-    bool toSelectable = !item->mSelectable && selectable;
-    bool toUnselectable = item->mSelectable && !selectable;
-    if(!toSelectable && !toUnselectable)
-    {
-        return;
-    }
-
-    item->mSelectable = selectable;
-    emit dataChanged(getModelIndex(item), getModelIndex(item), { SelectableRole } );
-}
-
-void BackupsModel::reviewAllBackupFolders()
-{
-    QList<BackupFolder>::iterator item = mBackupFolderList.begin();
-    while (item != mBackupFolderList.end())
-    {
-        QString message;
-        auto syncability = SyncController::isLocalFolderSyncable(item->mFolder, mega::MegaSync::TYPE_BACKUP, message);
-        updateBackupFolder(item, syncability != SyncController::CANT_SYNC, message);
-        item++;
-    }
 }
 
 void BackupsModel::checkDuplicatedBackupNames(const QSet<QString>& candidateSet,
@@ -611,7 +503,7 @@ bool BackupsModel::existOtherRelatedFolder(const int currentIndex)
     return found;
 }
 
-void BackupsModel::checkBackups()
+void BackupsModel::check()
 {
     // Clean errors
     for (int row = 0; row < rowCount(); row++)
@@ -656,8 +548,6 @@ void BackupsModel::checkBackups()
     {
         if (mBackupFolderList[row].mSelected)
         {
-            int aa = mBackupFolderList[row].mError;
-            //setData(index(row, 0), QVariant(aa), ErrorRole);
             emit dataChanged(index(row, 0), index(row, 0), { ErrorRole } );
         }
     }
@@ -679,7 +569,7 @@ int BackupsModel::getRow(const QString& folder)
     return row;
 }
 
-int BackupsModel::renameBackup(const QString& folder, const QString& name)
+int BackupsModel::rename(const QString& folder, const QString& name)
 {
     int row = getRow(folder);
     QString originalName = mBackupFolderList[row].mName;
@@ -713,7 +603,7 @@ int BackupsModel::renameBackup(const QString& folder, const QString& name)
     if(!hasError)
     {
         setData(index(row, 0), QVariant(name), NameRole);
-        checkBackups();
+        check();
     }
     else
     {
@@ -746,7 +636,7 @@ void BackupsModel::remove(const QString& folder)
 
     if(found)
     {
-        checkBackups();
+        check();
         checkSelectedAll();
     }
 }
@@ -766,7 +656,7 @@ bool BackupsModel::existsFolder(const QString& inputPath)
     return exists;
 }
 
-void BackupsModel::changeBackup(const QString& oldFolder, const QString& newFolder)
+void BackupsModel::change(const QString& oldFolder, const QString& newFolder)
 {
     if(oldFolder == newFolder)
     {
@@ -786,7 +676,7 @@ void BackupsModel::changeBackup(const QString& oldFolder, const QString& newFold
             setData(index(getRow(oldFolder), 0), QVariant(mSyncController.getSyncNameFromPath(newFolder)), NameRole);
             setData(index(getRow(oldFolder), 0), QVariant(newFolder), FolderRole);
             checkSelectedAll();
-            checkBackups();
+            check();
         }
         item++;
     }
@@ -794,57 +684,8 @@ void BackupsModel::changeBackup(const QString& oldFolder, const QString& newFold
 
 void BackupsModel::onSyncRemoved(std::shared_ptr<SyncSettings> syncSettings)
 {
-    QString localFolder (syncSettings->getLocalFolder());
-    QList<BackupFolder>::iterator item = mBackupFolderList.begin();
-    bool found = false;
-    while (!found && item != mBackupFolderList.end())
-    {
-        if((found = (item->mFolder == localFolder)))
-        {
-            item->mSelectable = true;
-            emit dataChanged(getModelIndex(item), getModelIndex(item), { SelectableRole });
-            reviewOthers(localFolder, true);
-            checkSelectedAll();
-        }
-        item++;
-    }
-
-    if(!found)
-    {
-        reviewOthersWhenRemoved(localFolder);
-        checkSelectedAll();
-    }
-}
-
-void BackupsModel::onSyncChanged(std::shared_ptr<SyncSettings> syncSettings)
-{
-    if(syncSettings->getType() != mega::MegaSync::SyncType::TYPE_TWOWAY
-        || !syncSettings->isActive())
-    {
-        return;
-    }
-
-    QString localFolder (syncSettings->getLocalFolder());
-    QList<BackupFolder>::iterator item = mBackupFolderList.begin();
-    bool found = false;
-    while (!found && item != mBackupFolderList.end())
-    {
-        if((found = (item->mFolder == localFolder)))
-        {
-            QString message;
-            auto syncability = SyncController::isLocalFolderSyncable(localFolder, mega::MegaSync::TYPE_BACKUP, message);
-            if(syncability == SyncController::CANT_SYNC && item->mSelectable)
-            {
-                // This element can not be selected
-                item->mSelected = false;
-                item->mSelectable = false;
-                emit dataChanged(getModelIndex(item), getModelIndex(item), { SelectedRole, SelectableRole });
-                reviewOthers(localFolder, false);
-                checkSelectedAll();
-            }
-        }
-        item++;
-    }
+    Q_UNUSED(syncSettings);
+    check();
 }
 
 void BackupsModel::clean()
@@ -863,32 +704,6 @@ void BackupsModel::clean()
         {
             item++;
         }
-    }
-
-    reviewAllBackupFolders();
-    checkSelectedAll();
-}
-
-void BackupsModel::update(const QString& path, int errorCode)
-{
-    QModelIndex modelIndex;
-    bool found = false;
-    int row = 0;
-    while(!found && row < rowCount())
-    {
-        if((found = (mBackupFolderList[row].mFolder == path)))
-        {
-            modelIndex = index(row, 0);
-            if(errorCode == mega::MegaError::API_OK)
-            {
-                setData(index(row, 0), QVariant(true), DoneRole);
-            }
-            else
-            {
-                setData(index(row, 0), QVariant(errorCode), ErrorRole);
-            }
-        }
-        row++;
     }
 }
 

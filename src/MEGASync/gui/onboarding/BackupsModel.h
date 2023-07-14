@@ -14,10 +14,8 @@ struct BackupFolder
     QString mFolder;
     QString mSize;
     bool mSelected;
-    bool mSelectable;
     bool mDone;
     int mError;
-    bool mErrorVisible;
 
     // Back (without role)
     long long folderSize;
@@ -48,8 +46,7 @@ public:
         SelectedRole,
         SelectableRole,
         DoneRole,
-        ErrorRole,
-        ErrorVisibleRole
+        ErrorRole
     };
 
     enum BackupErrorCode
@@ -86,15 +83,15 @@ public:
 
 public slots:
 
-    void insertFolder(const QString& folder);
+    void insert(const QString& folder);
 
-    void checkBackups();
+    void check();
 
-    int renameBackup(const QString& folder, const QString& name);
+    int rename(const QString& folder, const QString& name);
 
     void remove(const QString& folder);
 
-    void changeBackup(const QString& oldFolder, const QString& newFolder);
+    void change(const QString& oldFolder, const QString& newFolder);
 
 signals:
 
@@ -113,7 +110,7 @@ private:
     int mSelectedRowsTotal;
     long long mBackupsTotalSize;
     SyncController mSyncController;
-    BackupsController* mBackupsController;
+    std::unique_ptr<BackupsController> mBackupsController;
     int mConflictsSize;
     QString mConflictsNotificationText;
     Qt::CheckState mCheckAllState;
@@ -136,20 +133,6 @@ private:
 
     QModelIndex getModelIndex(QList<BackupFolder>::iterator item);
 
-    void reviewOthers(const QString& folder,
-                      bool enable);
-
-    void reviewOthersWhenRemoved(const QString& folder);
-
-    bool existAnotherBackupFolderRelated(const QString& folder,
-                                         const QString& selectedFolder) const;
-
-    void updateBackupFolder(QList<BackupFolder>::iterator item,
-                            bool selectable,
-                            const QString& message);
-
-    void reviewAllBackupFolders();
-
     int getRow(const QString& folder);
 
     void setAllSelected(bool selected);
@@ -171,11 +154,7 @@ private slots:
 
     void onSyncRemoved(std::shared_ptr<SyncSettings> syncSettings);
 
-    void onSyncChanged(std::shared_ptr<SyncSettings> syncSettings);
-
     void clean();
-
-    void update(const QString& path, int errorCode);
 
 };
 

@@ -27,7 +27,6 @@ private:
     SyncController* mBackupController;
     int mBackupsProcessed;
     int mBackupsToDoSize;
-    QSet<QString> mRemoteBackups;
 
     // The first field contains the full path and the second contains the backup name
     BackupInfoList mBackupsToDoList;

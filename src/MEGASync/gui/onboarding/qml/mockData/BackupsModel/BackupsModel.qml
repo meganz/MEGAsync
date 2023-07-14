@@ -12,20 +12,26 @@ ListModel {
         PathRelation = 4
     }
 
-    function insertFolder(folder) {
-        console.log("mockup BackupsModel -> insertFolder() : folder -> " + folder);
+    function insert(folder) {
+        console.debug("mockup BackupsModel -> insert() : folder -> " + folder);
     }
 
-    function checkBackups() {
-        console.log("mockup BackupsModel -> checkBackups()");
+    function check() {
+        console.debug("mockup BackupsModel -> check()");
     }
 
-    function renameBackup(folder, name) {
-        console.log("mockup BackupsModel -> renameBackup() : folder -> " + folder + " : name -> " + name);
+    function rename(folder, name) {
+        console.debug("mockup BackupsModel -> rename() : folder -> " + folder
+                      + " : name -> " + name);
     }
 
     function remove(folder) {
-        console.log("mockup BackupsModel -> remove() : folder -> " + folder);
+        console.debug("mockup BackupsModel -> remove() : folder -> " + folder);
+    }
+
+    function change(oldFolder, newFolder) {
+        console.debug("mockup BackupsModel -> change() : oldFolder -> " + oldFolder
+                      + " : newFolder -> " + newFolder);
     }
 
     signal backupsCreationFinished()
@@ -46,7 +52,6 @@ ListModel {
         mSelectable: true
         mDone: false
         mError: 1
-        mErrorVisible: false
     }
     ListElement {
         mName: "Documents12345678910111213141516171819202122232425262728293031323334353637383940"
@@ -56,7 +61,6 @@ ListModel {
         mSelectable: true
         mDone: false
         mError: 1
-        mErrorVisible: false
     }
     ListElement {
         mName: "Music"
@@ -66,7 +70,6 @@ ListModel {
         mSelectable: true
         mDone: false
         mError: 0
-        mErrorVisible: false
     }
     ListElement {
         mName: "Images"
@@ -76,6 +79,5 @@ ListModel {
         mSelectable: true
         mDone: false
         mError: 0
-        mErrorVisible: false
     }
 }

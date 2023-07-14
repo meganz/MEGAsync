@@ -23,7 +23,7 @@ SelectFoldersPageForm {
         rightPrimary {
             enabled: BackupsModel.mCheckAllState !== Qt.Unchecked
             onClicked: {
-                BackupsModel.checkBackups();
+                BackupsModel.check();
                 backupsProxyModel.selectedFilterEnabled = true;
                 backupsFlow.state = confirmBackup;
             }

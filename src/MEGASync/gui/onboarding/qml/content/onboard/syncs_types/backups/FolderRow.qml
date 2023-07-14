@@ -127,30 +127,6 @@ Rectangle {
                         text: mName
                         horizontalAlignment: Qt.AlignLeft
                         verticalAlignment: Qt.AlignVCenter
-
-                        MouseArea {
-                            hoverEnabled: true
-                            anchors.fill: parent
-
-                            MegaToolTips.ToolTip {
-                                visible: parent.containsMouse
-                                leftIconSource: Images.pc
-                                text: mFolder
-                                delay: 500
-                                timeout: 5000
-
-                                onVisibleChanged: {
-                                    if(visible) {
-                                        if((parent.mouseX + width) > 363) {
-                                            x = 363 - width;
-                                        } else {
-                                            x = parent.mouseX;
-                                        }
-                                        y = parent.mouseY - height - 2;
-                                    }
-                                }
-                            }
-                        }
                     }
                 }
             }
@@ -278,7 +254,7 @@ Rectangle {
                         id: folderDialog
 
                         onFolderChanged: {
-                            BackupsModel.changeBackup(mFolder, folderDialog.getFolder());
+                            BackupsModel.change(mFolder, folderDialog.getFolder());
                         }
                     }
                 }
@@ -318,7 +294,7 @@ Rectangle {
                 text: OnboardingStrings.done
                 onClicked: {
                     editTextField.hint.visible = false;
-                    var error = BackupsModel.renameBackup(mFolder, editTextField.text);
+                    var error = BackupsModel.rename(mFolder, editTextField.text);
                     switch(error) {
                         case BackupsModel.BackupErrorCode.None:
                         case BackupsModel.BackupErrorCode.SyncConflict:
