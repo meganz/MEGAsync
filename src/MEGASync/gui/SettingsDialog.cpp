@@ -1266,7 +1266,7 @@ void SettingsDialog::updateBandwidthElements()
         {
             int percentage = Utilities::partPer(usedBandwidth, totalBandwidth);
             mUi->pTransferQuota->setValue(std::min(percentage, 100));
-            mUi->lBandwidth->setText(Utilities::createCompleteUsedString(usedBandwidth, std::min(percentage, 100), totalBandwidth));
+            mUi->lBandwidth->setText(Utilities::createCompleteUsedString(usedBandwidth, totalBandwidth, std::min(percentage, 100)));
         }
     }
 }
