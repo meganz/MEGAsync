@@ -51,6 +51,14 @@ ConfirmFoldersPageForm {
         onNoneSelected: {
             footerButtons.rightSecondary.clicked();
         }
+
+        onExistConflictsChanged: {
+            if(BackupsModel.mConflictsNotificationText !== "") {
+                stepPanel.state = stepPanel.step4Warning;
+            } else {
+                stepPanel.state = stepPanel.step4;
+            }
+        }
     }
 
     Connections {

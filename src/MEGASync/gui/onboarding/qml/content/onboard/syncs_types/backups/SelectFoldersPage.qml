@@ -26,6 +26,11 @@ SelectFoldersPageForm {
                 BackupsModel.check();
                 backupsProxyModel.selectedFilterEnabled = true;
                 backupsFlow.state = confirmBackup;
+                if(BackupsModel.mConflictsNotificationText !== "") {
+                    stepPanel.state = stepPanel.step4Warning;
+                } else {
+                    stepPanel.state = stepPanel.step4;
+                }
             }
         }
     }
