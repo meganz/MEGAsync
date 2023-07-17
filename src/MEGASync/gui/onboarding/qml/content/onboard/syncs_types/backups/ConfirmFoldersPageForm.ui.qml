@@ -1,19 +1,16 @@
 // System
 import QtQuick 2.12
 import QtQuick.Layouts 1.12
-import QtQuick.Controls 2.12
 
 // QML common
-import Components.TextFields 1.0 as MegaTextFields
-import Components.Texts 1.0 as MegaTexts
 import Common 1.0
+import Components.TextFields 1.0 as MegaTextFields
 
 // Local
 import Onboard 1.0
 import Onboard.Syncs_types 1.0
 
 // C++
-import Onboarding 1.0
 import BackupsModel 1.0
 
 SyncsPage {
@@ -23,7 +20,7 @@ SyncsPage {
     footerButtons.rightPrimary {
         text: OnboardingStrings.backup
         icons.source: Images.cloud
-        enabled: !BackupsModel.mExistConflicts
+        enabled: BackupsModel.mGlobalError === BackupsModel.BackupErrorCode.None
     }
 
     ColumnLayout {
@@ -46,14 +43,7 @@ SyncsPage {
             Layout.preferredWidth: parent.width
             spacing: 24
 
-            FoldersTable {
-                Layout.preferredWidth: parent.width
-                Layout.preferredHeight: (backupsProxyModel.selectedFilterEnabled
-                                            && BackupsModel.mConflictsNotificationText !== "")
-                                        ? 229
-                                        : 192
-                model: backupsProxyModel
-            }
+            ConfirmTable {}
 
             MegaTextFields.TextField {
                 id: folderField
@@ -61,7 +51,6 @@ SyncsPage {
                 Layout.preferredWidth: parent.width + 2 * folderField.sizes.focusBorderWidth
                 Layout.leftMargin: -folderField.sizes.focusBorderWidth
                 title: OnboardingStrings.backupTo
-                text: "/Backups"
                 leftIcon.source: Images.database
                 textField.readOnly: true
                 enabled: false

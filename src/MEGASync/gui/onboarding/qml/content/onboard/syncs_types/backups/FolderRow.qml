@@ -57,7 +57,8 @@ Rectangle {
                     return selectContent;
                 } else {
                     if(mError === BackupsModel.BackupErrorCode.SyncConflict
-                        || mError === BackupsModel.BackupErrorCode.PathRelation) {
+                        || mError === BackupsModel.BackupErrorCode.PathRelation
+                        || mError === BackupsModel.BackupErrorCode.SDKCreation) {
                         return conflictContent;
                     } else {
                         // DuplicatedName or ExistsRemote errors
@@ -170,8 +171,9 @@ Rectangle {
             readonly property int textWidth: 248
             readonly property int sizeTextWidth: 50
 
-            property bool showChange: (mError === BackupsModel.BackupErrorCode.SyncConflict
-                                       || mError === BackupsModel.BackupErrorCode.PathRelation)
+            property bool showChange: mError === BackupsModel.BackupErrorCode.SyncConflict
+                                        || mError === BackupsModel.BackupErrorCode.PathRelation
+                                        || mError === BackupsModel.BackupErrorCode.SDKCreation
 
             Row {
                 id: imageText
@@ -187,9 +189,13 @@ Rectangle {
                 MegaImages.SvgImage {
                     anchors.top: parent.top
                     anchors.bottom: parent.bottom
-                    source: Images.alertTriangle
+                    source: mError === BackupsModel.BackupErrorCode.SDKCreation
+                            ? Images.alertCircle
+                            : Images.alertTriangle
                     sourceSize: Qt.size(contentRoot.imageWidth, contentRoot.imageWidth)
-                    color: Styles.textWarning
+                    color: mError === BackupsModel.BackupErrorCode.SDKCreation
+                           ? Styles.textError
+                           : Styles.textWarning
                     //opacity: mSelectable ? 1.0 : 0.3
                 }
 
@@ -204,6 +210,9 @@ Rectangle {
                     text: mName
                     horizontalAlignment: Qt.AlignLeft
                     verticalAlignment: Qt.AlignVCenter
+                    color: mError === BackupsModel.BackupErrorCode.SDKCreation
+                           ? Styles.textError
+                           : Styles.textWarning
                 }
             }
             MouseArea {
@@ -292,6 +301,7 @@ Rectangle {
                 id: doneButton
 
                 text: OnboardingStrings.done
+                sizes: MegaButtons.SmallSizes {}
                 onClicked: {
                     editTextField.hint.visible = false;
                     var error = BackupsModel.rename(mFolder, editTextField.text);
@@ -299,15 +309,20 @@ Rectangle {
                         case BackupsModel.BackupErrorCode.None:
                         case BackupsModel.BackupErrorCode.SyncConflict:
                         case BackupsModel.BackupErrorCode.PathRelation:
+                        case BackupsModel.BackupErrorCode.SDKCreation:
                             root.height = root.totalHeight;
                             break;
                         case BackupsModel.BackupErrorCode.ExistsRemote:
-                            editTextField.hint.text = OnboardingStrings.confirmBackupErrorRemote;
+                            editTextField.hint.text =
+                                OnboardingStrings.confirmBackupErrorRemote.replace(/"([^"]*)"/g,
+                                                                                   '"' + editTextField.text + '"');
                             editTextField.hint.visible = true;
                             root.height = editTextField.height + root.extraMarginWhenHintShowed;
                             break;
                         case BackupsModel.BackupErrorCode.DuplicatedName:
-                            editTextField.hint.text = OnboardingStrings.confirmBackupErrorDuplicated;
+                            editTextField.hint.text =
+                                OnboardingStrings.confirmBackupErrorDuplicated.replace(/"([^"]*)"/g,
+                                                                                       '"' + editTextField.text + '"');
                             editTextField.hint.visible = true;
                             root.height = editTextField.height + root.extraMarginWhenHintShowed;
                             break;
@@ -317,7 +332,6 @@ Rectangle {
                             break;
                     }
                 }
-                sizes: MegaButtons.SmallSizes {}
             }
         }
     }

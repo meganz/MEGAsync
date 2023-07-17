@@ -9,7 +9,8 @@ ListModel {
         DuplicatedName = 1,
         ExistsRemote = 2,
         SyncConflict = 3,
-        PathRelation = 4
+        PathRelation = 4,
+        SDKCreationError = 5
     }
 
     function insert(folder) {

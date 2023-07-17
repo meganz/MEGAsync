@@ -40,7 +40,9 @@ BackupsModel::BackupsModel(QObject* parent)
     , mBackupsTotalSize(0)
     , mBackupsController(new BackupsController(this))
     , mConflictsSize(0)
+    , mConflictsNotificationText(QString::fromUtf8(""))
     , mCheckAllState(Qt::CheckState::Unchecked)
+    , mGlobalError(BackupErrorCode::None)
 {
     mRoleNames[NameRole] = "mName";
     mRoleNames[FolderRole] = "mFolder";
@@ -52,13 +54,19 @@ BackupsModel::BackupsModel(QObject* parent)
     // Append mBackupFolderList with the default dirs
     populateDefaultDirectoryList();
 
-    connect(SyncInfo::instance(), &SyncInfo::syncRemoved, this, &BackupsModel::onSyncRemoved);
-    connect(mBackupsController.get(), &BackupsController::backupsCreationFinished, this, &BackupsModel::clean);
+    connect(SyncInfo::instance(), &SyncInfo::syncRemoved,
+            this, &BackupsModel::onSyncRemoved);
+    connect(mBackupsController.get(), &BackupsController::backupsCreationFinished,
+            this, &BackupsModel::onBackupsCreationFinished);
+    connect(mBackupsController.get(), &BackupsController::backupFinished,
+            this, &BackupsModel::onBackupFinished);
 
     MegaSyncApp->qmlEngine()->rootContext()->setContextProperty(QString::fromUtf8("BackupsModel"), this);
-    MegaSyncApp->qmlEngine()->rootContext()->setContextProperty(QString::fromUtf8("BackupsController"), mBackupsController.get());
+    MegaSyncApp->qmlEngine()->rootContext()->setContextProperty(QString::fromUtf8("BackupsController"),
+                                                                mBackupsController.get());
 
-    qmlRegisterUncreatableType<BackupsModel>("BackupsModel", 1, 0, "BackupErrorCode", QString::fromUtf8("Cannot create WarningLevel in QML"));
+    qmlRegisterUncreatableType<BackupsModel>("BackupsModel", 1, 0, "BackupErrorCode",
+                                             QString::fromUtf8("Cannot create WarningLevel in QML"));
 }
 
 QHash<int, QByteArray> BackupsModel::roleNames() const
@@ -198,6 +206,11 @@ bool BackupsModel::getExistConflicts() const
 QString BackupsModel::getConflictsNotificationText() const
 {
     return mConflictsNotificationText;
+}
+
+int BackupsModel::getGlobalError() const
+{
+    return mGlobalError;
 }
 
 void BackupsModel::insert(const QString &folder)
@@ -419,6 +432,7 @@ void BackupsModel::reviewConflicts()
     if(syncConflictCount > 0)
     {
         // The conflict text has been changed in existOtherRelatedFolder method
+        setGlobalError(BackupErrorCode::SyncConflict);
         return;
     }
 
@@ -428,22 +442,26 @@ void BackupsModel::reviewConflicts()
         conflictText = tr("You can't back up folders with the same name. "
                           "Rename them to continue with the backup. "
                           "Folder names won't change on your computer.");
+        setGlobalError(BackupErrorCode::DuplicatedName);
     }
     else if(remoteCount == 1)
     {
         conflictText = tr("A folder named \"%1\" already exists in your Backups. "
                           "Rename the new folder to continue with the backup. "
                           "Folder name will not change on your computer.").arg(firstRemoteNameConflict);
+        setGlobalError(BackupErrorCode::ExistsRemote);
     }
     else if(remoteCount > 1)
     {
         conflictText = tr("Some folders with the same name already exist in your Backups. "
                           "Rename the new folders to continue with the backup. "
                           "Folder names will not change on your computer.");
+        setGlobalError(BackupErrorCode::ExistsRemote);
     }
     else if(pathRelationCount > 1)
     {
-        conflictText = tr("Backup folders can't contain or be contained by other backup folder.");
+        conflictText = tr("Backup folders can't contain or be contained by other backup folder");
+        setGlobalError(BackupErrorCode::PathRelation);
     }
     changeConflictsNotificationText(conflictText);
 }
@@ -515,6 +533,7 @@ void BackupsModel::check()
     }
 
     mConflictsNotificationText = QString::fromUtf8("");
+    mGlobalError = BackupErrorCode::None;
 
     QStringList candidateList;
     for (int row = 0; row < rowCount(); row++)
@@ -557,6 +576,11 @@ void BackupsModel::check()
     {
         emit existConflictsChanged();
     }
+
+    if(mGlobalError == BackupErrorCode::None)
+    {
+        emit globalErrorChanged();
+    }
 }
 
 
@@ -572,6 +596,7 @@ int BackupsModel::getRow(const QString& folder)
             row++;
         }
     }
+
     return row;
 }
 
@@ -585,7 +610,6 @@ int BackupsModel::rename(const QString& folder, const QString& name)
 
     QSet<QString> duplicatedSet = mBackupsController->getRemoteFolders();
     duplicatedSet.intersect(candidateSet);
-
 
     if(!duplicatedSet.isEmpty())
     {
@@ -710,6 +734,36 @@ void BackupsModel::clean()
         {
             item++;
         }
+    }
+}
+
+void BackupsModel::setGlobalError(BackupErrorCode error)
+{
+    mGlobalError = error;
+    emit globalErrorChanged();
+}
+
+void BackupsModel::onBackupsCreationFinished(bool success, const QString& message)
+{
+    clean();
+    if(!success)
+    {
+        mConflictsNotificationText = message;
+        emit existConflictsChanged();
+        setGlobalError(BackupErrorCode::SDKCreation);
+    }
+}
+
+void BackupsModel::onBackupFinished(const QString& folder, bool done)
+{
+    int row = getRow(folder);
+    if(done)
+    {
+        setData(index(row, 0), QVariant(true), DoneRole);
+    }
+    else
+    {
+        setData(index(row, 0), QVariant(BackupsModel::SDKCreation), ErrorRole);
     }
 }
 

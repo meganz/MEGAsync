@@ -31,9 +31,19 @@ class BackupsModel : public QAbstractListModel
 {
     Q_OBJECT
 
-    Q_PROPERTY(QString mTotalSize READ getTotalSize NOTIFY totalSizeChanged)
-    Q_PROPERTY(Qt::CheckState mCheckAllState READ getCheckAllState WRITE setCheckAllState NOTIFY checkAllStateChanged)
-    Q_PROPERTY(QString mConflictsNotificationText READ getConflictsNotificationText NOTIFY existConflictsChanged)
+    Q_PROPERTY(QString mTotalSize
+               READ getTotalSize
+               NOTIFY totalSizeChanged)
+    Q_PROPERTY(Qt::CheckState mCheckAllState
+               READ getCheckAllState
+               WRITE setCheckAllState
+               NOTIFY checkAllStateChanged)
+    Q_PROPERTY(QString mConflictsNotificationText
+               READ getConflictsNotificationText
+               NOTIFY existConflictsChanged)
+    Q_PROPERTY(int mGlobalError
+               READ getGlobalError
+               NOTIFY globalErrorChanged)
 
 public:
 
@@ -54,7 +64,8 @@ public:
         DuplicatedName = 1,
         ExistsRemote = 2,
         SyncConflict = 3,
-        PathRelation = 4
+        PathRelation = 4,
+        SDKCreation = 5
     };
     Q_ENUM(BackupErrorCode)
 
@@ -80,6 +91,8 @@ public:
 
     QString getConflictsNotificationText() const;
 
+    int getGlobalError() const;
+
 public slots:
 
     void insert(const QString& folder);
@@ -102,6 +115,8 @@ signals:
 
     void noneSelected();
 
+    void globalErrorChanged();
+
 private:
 
     QList<BackupFolder> mBackupFolderList;
@@ -113,6 +128,7 @@ private:
     int mConflictsSize;
     QString mConflictsNotificationText;
     Qt::CheckState mCheckAllState;
+    int mGlobalError;
 
     void populateDefaultDirectoryList();
 
@@ -149,11 +165,17 @@ private:
 
     bool existsFolder(const QString& inputPath);
 
+    void clean();
+
+    void setGlobalError(BackupErrorCode error);
+
 private slots:
 
     void onSyncRemoved(std::shared_ptr<SyncSettings> syncSettings);
 
-    void clean();
+    void onBackupsCreationFinished(bool success, const QString& message);
+
+    void onBackupFinished(const QString& folder, bool done);
 
 };
 

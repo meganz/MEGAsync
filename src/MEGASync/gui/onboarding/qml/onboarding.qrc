@@ -30,11 +30,11 @@
         <file>content/onboard/syncs_types/backups/BackupsFlow.qml</file>
         <file>content/onboard/syncs_types/backups/ConfirmFoldersPage.qml</file>
         <file>content/onboard/syncs_types/backups/ConfirmFoldersPageForm.ui.qml</file>
-        <file>content/onboard/syncs_types/backups/FolderFooter.qml</file>
+        <file>content/onboard/syncs_types/backups/ConfirmTable.qml</file>
         <file>content/onboard/syncs_types/backups/FolderRow.qml</file>
-        <file>content/onboard/syncs_types/backups/FoldersTable.qml</file>
         <file>content/onboard/syncs_types/backups/SelectFoldersPage.qml</file>
         <file>content/onboard/syncs_types/backups/SelectFoldersPageForm.ui.qml</file>
+        <file>content/onboard/syncs_types/backups/SelectTable.qml</file>
         <file>content/onboard/syncs_types/left_panel/Step.qml</file>
         <file>content/onboard/syncs_types/left_panel/StepPanel.qml</file>
         <file>content/onboard/syncs_types/left_panel/SubStep.qml</file>

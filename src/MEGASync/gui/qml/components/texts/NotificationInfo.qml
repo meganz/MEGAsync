@@ -8,8 +8,8 @@ QtObject {
 
     enum Type {
         None = 0,
-        Warning,
-        Error
+        Warning = 1,
+        Error = 2
     }
 
     property int type: NotificationInfo.Type.None
