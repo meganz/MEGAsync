@@ -23,6 +23,8 @@ QtObject {
     property int spacing: 8
     property int radius: 8
 
+    property bool topBorderRect: false
+
     onTypeChanged: {
         switch(type) {
             case NotificationInfo.Type.None:

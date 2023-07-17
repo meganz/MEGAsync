@@ -83,6 +83,15 @@ Item {
         }
     }
 
+    Rectangle {
+        height: attributes.radius
+        color: attributes.backgroundColor
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+        visible: attributes.topBorderRect
+    }
+
     Component {
         id: iconComponent
 

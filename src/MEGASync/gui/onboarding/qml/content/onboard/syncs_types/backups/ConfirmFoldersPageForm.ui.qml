@@ -47,10 +47,11 @@ SyncsPage {
             spacing: 24
 
             FoldersTable {
-                id: backupTable
-
                 Layout.preferredWidth: parent.width
-                Layout.preferredHeight: 176
+                Layout.preferredHeight: (backupsProxyModel.selectedFilterEnabled
+                                            && BackupsModel.mConflictsNotificationText !== "")
+                                        ? 229
+                                        : 192
                 model: backupsProxyModel
             }
 
@@ -64,16 +65,6 @@ SyncsPage {
                 leftIcon.source: Images.database
                 textField.readOnly: true
                 enabled: false
-                visible: !BackupsModel.mExistConflicts
-            }
-
-            MegaTexts.NotificationText {
-                Layout.preferredWidth: parent.width
-                attributes.type: MegaTexts.NotificationInfo.Type.Warning
-                attributes.icon.source: ""
-                attributes.icon.visible: false
-                text: BackupsModel.mConflictsNotificationText
-                visible: BackupsModel.mExistConflicts
             }
         }
     }

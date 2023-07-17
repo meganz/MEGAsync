@@ -154,67 +154,10 @@ Rectangle {
     Component {
         id: footerComponent
 
-        Rectangle {
+        FolderFooter {
             anchors.right: parent.right
             anchors.left: parent.left
-            height: headerFooterHeight
-            z: 3
-            visible: !backupsProxyModel.selectedFilterEnabled
-            color: "white"
-            radius: tableRectangle.radius
-
-            RowLayout {
-                id: addFoldersButton
-
-                anchors.left: parent.left
-                anchors.top: parent.top
-                anchors.bottom: parent.bottom
-                anchors.leftMargin: headerFooterMargin
-                spacing: headerFooterMargin / 2
-
-                MegaImages.SvgImage {
-                    source: Images.plus
-                    color: Styles.buttonPrimary
-                    sourceSize: Qt.size(16, 16)
-                }
-
-                MegaTexts.Text {
-                    text: OnboardingStrings.addFolders
-                    font.weight: Font.DemiBold
-                }
-            }
-
-            MouseArea {
-                anchors.fill: addFoldersButton
-                cursorShape: Qt.PointingHandCursor
-                z: 3
-                onClicked: {
-                    folderDialog.openFolderSelector();
-                }
-            }
-
-            ChooseLocalFolder {
-                id: folderDialog
-
-                onFolderChanged: {
-                    BackupsModel.insert(folderDialog.getFolder());
-                }
-            }
-
-            Rectangle {
-                height: borderRectangle.border.width
-                color: borderRectangle.border.color
-                anchors.top: parent.top
-                anchors.left: parent.left
-                anchors.right: parent.right
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                cursorShape: Qt.ArrowCursor
-            }
         }
-
     }
 
 }

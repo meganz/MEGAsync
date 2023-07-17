@@ -41,8 +41,8 @@ ListModel {
 
     property string mTotalSize: "24.7 MB"
     property int mCheckAllState: Qt.Unchecked
-    property bool mExistConflicts: false
-    property string mConflictsNotificationText: ""
+    property bool mExistConflicts: true
+    property string mConflictsNotificationText: "This is an error text"
 
     ListElement {
         mName: "Desktop"

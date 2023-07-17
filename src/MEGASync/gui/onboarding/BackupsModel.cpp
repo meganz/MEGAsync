@@ -515,6 +515,7 @@ void BackupsModel::check()
     }
 
     mConflictsNotificationText = QString::fromUtf8("");
+
     QStringList candidateList;
     for (int row = 0; row < rowCount(); row++)
     {
@@ -550,6 +551,11 @@ void BackupsModel::check()
         {
             emit dataChanged(index(row, 0), index(row, 0), { ErrorRole } );
         }
+    }
+
+    if(mConflictsNotificationText.isEmpty())
+    {
+        emit existConflictsChanged();
     }
 }
 

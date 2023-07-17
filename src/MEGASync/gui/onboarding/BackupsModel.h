@@ -33,7 +33,6 @@ class BackupsModel : public QAbstractListModel
 
     Q_PROPERTY(QString mTotalSize READ getTotalSize NOTIFY totalSizeChanged)
     Q_PROPERTY(Qt::CheckState mCheckAllState READ getCheckAllState WRITE setCheckAllState NOTIFY checkAllStateChanged)
-    Q_PROPERTY(bool mExistConflicts  READ getExistConflicts NOTIFY existConflictsChanged)
     Q_PROPERTY(QString mConflictsNotificationText READ getConflictsNotificationText NOTIFY existConflictsChanged)
 
 public:
