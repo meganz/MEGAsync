@@ -33,8 +33,9 @@ void DownloadQueueController::startAvailableSpaceChecking()
         {
             partialSum += node->getSize();
         }
-        else
-        {
+        else if (currentNode->getTransferOrigin() != WrappedNode::FROM_WEBSERVER)
+        { // Ignore folders if the transfer comes from the webclient, because it provides
+          // both all folders and all files, and not only top files/folders.
             mFolderCountPendingSizeComputation++;
             mMegaApi->getFolderInfo(node, mListener.get());
         }
