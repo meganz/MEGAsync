@@ -13,8 +13,8 @@ Item {
 
     property NotificationInfo attributes: NotificationInfo {}
 
-    property string title
-    property string text
+    property string title: ""
+    property string text: ""
 
     visible: false
     height: content.height
@@ -41,7 +41,7 @@ Item {
 
         anchors.left: parent.left
         anchors.right: parent.right
-        height: mainLayout.height + 2 * attributes.margin
+        height: mainLayout.height
         color: attributes.backgroundColor
         radius: attributes.radius
 
@@ -52,7 +52,7 @@ Item {
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.margins: attributes.margin
-            height: textColumn.height + attributes.margin
+            height: textColumn.height + 2 * attributes.margin
             spacing: attributes.spacing
 
             Loader {
@@ -62,9 +62,9 @@ Item {
             Column {
                 id: textColumn
 
-                height: titleLoader.height + textLoader.height
+                height: titleLoader.height + textLoader.height + spacing
                 width: mainLayout.width - iconLoader.width - mainLayout.spacing
-                spacing: attributes.spacing
+                spacing: titleLoader.height > 0 && textLoader.height > 0 ? attributes.spacing : 0
 
                 Loader {
                     id: titleLoader

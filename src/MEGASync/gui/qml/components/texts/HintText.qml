@@ -8,7 +8,7 @@ import Components.Texts 1.0 as MegaTexts
 import Components.Images 1.0 as MegaImages
 import Common 1.0
 
-Rectangle {
+Row {
     id: root
 
     property url icon: ""
@@ -19,8 +19,8 @@ Rectangle {
     property int textSize: Text.Size.Normal
 
     height: visible ? titleLoader.height + textLoader.height : 0
-    color: "transparent"
     visible: false
+    spacing: iconLoader.width > 0 ? 8 : 0
 
     onIconChanged: {
         if(icon.length === 0) {
@@ -51,30 +51,21 @@ Rectangle {
     }
 
     Column {
-        anchors.left: iconLoader.right
-        anchors.right: parent.right
         anchors.top: parent.top
         anchors.bottom: parent.bottom
-        anchors.leftMargin: 8
-
-        spacing: 4
+        width: parent.width - iconLoader.width - root.spacing
+        spacing: titleLoader.height > 0 && textLoader.height > 0 ? 2 : 0
 
         Loader {
             id: titleLoader
 
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.leftMargin: 0
-            anchors.rightMargin: 0
+            width: parent.width
         }
 
         Loader {
             id: textLoader
 
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.rightMargin: 0
-            anchors.leftMargin: 0
+            width: parent.width
         }
     }
 
