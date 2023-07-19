@@ -66,8 +66,6 @@ void StalledIssueHeader::issueIgnored()
 
 void StalledIssueHeader::clearLabels()
 {
-    ui->leftTitleText->clear();
-    ui->rightTitleText->clear();
     ui->fileNameTitle->clear();
 
     ui->errorTitleTextContainer->removeEventFilter(this);
@@ -150,27 +148,14 @@ void StalledIssueHeader::showSolvedMessage(const QString& customMessage)
     }
 }
 
-void StalledIssueHeader::setLeftTitleText(const QString &text)
+void StalledIssueHeader::setText(const QString &text)
 {
-    ui->leftTitleText->setText(text);
+    ui->fileNameTitle->setText(text);
 }
 
-void StalledIssueHeader::addFileName(bool preferCloud)
+QString StalledIssueHeader::displayFileName(bool preferCloud)
 {
-    auto fileName = getData().consultData()->getFileName(preferCloud);
-    addFileName(fileName);
-}
-
-void StalledIssueHeader::addFileName(const QString& filename)
-{
-    ui->fileNameTitle->setText(filename);
-    ui->fileNameTitle->setProperty(FILENAME_PROPERTY, filename);
-    ui->errorTitleTextContainer->installEventFilter(this);
-}
-
-void StalledIssueHeader::setRightTitleText(const QString &text)
-{
-    ui->rightTitleText->setText(text);
+    return getData().consultData()->getFileName(preferCloud);
 }
 
 void StalledIssueHeader::setTitleDescriptionText(const QString &text)
@@ -263,25 +248,6 @@ void StalledIssueHeader::on_ignoreFileButton_clicked()
     };
 
     QMegaMessageBox::warning(msgInfo);
-}
-
-bool StalledIssueHeader::eventFilter(QObject *watched, QEvent *event)
-{
-    if(watched == ui->errorTitleTextContainer && event->type() == QEvent::Resize)
-    {
-        if(!ui->fileNameTitle->text().isEmpty())
-        {
-            auto filename = ui->fileNameTitle->property(FILENAME_PROPERTY).toString();
-
-            auto blankSpaces = ui->errorTitleTextContainer->layout()->spacing() * 2 + ui->errorTitleTextContainer->contentsMargins().right() + ui->errorTitleTextContainer->contentsMargins().left();
-            auto availableWidth = ui->errorTitleTextContainer->width() - ui->rightTitleText->width() - ui->leftTitleText->width() - ui->fileTypeIcon->width() - blankSpaces -50;
-
-            auto elidedText = ui->fileNameTitle->fontMetrics().elidedText(filename,Qt::ElideMiddle, availableWidth);
-            ui->fileNameTitle->setText(elidedText);
-        }
-    }
-
-    return StalledIssueBaseDelegateWidget::eventFilter(watched, event);
 }
 
 void StalledIssueHeader::refreshUi()

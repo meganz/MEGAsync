@@ -251,6 +251,7 @@ public:
 
     QSize getDelegateSize(SizeType type) const;
     void setDelegateSize(const QSize &newDelegateSize, SizeType type);
+    void removeDelegateSize(SizeType type);
 
     const std::shared_ptr<mega::MegaSyncStall> &getOriginalStall() const;
 
@@ -318,6 +319,10 @@ public:
     void setDelegateSize(const QSize &newDelegateSize, StalledIssue::SizeType type)
     {
         mData->setDelegateSize(newDelegateSize, type);
+    }
+    void removeDelegateSize(StalledIssue::SizeType type)
+    {
+        mData->removeDelegateSize(type);
     }
 
     template <class Type>

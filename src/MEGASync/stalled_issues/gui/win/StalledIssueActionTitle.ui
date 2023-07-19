@@ -45,7 +45,7 @@
     color: #333333;
 }
 
-#titleContainer QLabel
+#titleContainer QTextEdit
 {
     font-family: Lato;
     font-size: 13px;
@@ -217,7 +217,7 @@ QPushButton[main=true]
                 </widget>
                </item>
                <item>
-                <widget class="QLabel" name="titleLabel">
+                <widget class="WordWrapLabel" name="titleLabel">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                    <horstretch>0</horstretch>
@@ -378,6 +378,13 @@ QPushButton[main=true]
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>WordWrapLabel</class>
+   <extends>QTextEdit</extends>
+   <header>WordWrapLabel.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

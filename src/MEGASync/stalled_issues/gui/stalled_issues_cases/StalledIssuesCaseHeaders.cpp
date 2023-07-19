@@ -33,8 +33,7 @@ DefaultHeader::DefaultHeader(StalledIssueHeader* header)
 
 void DefaultHeader::refreshCaseUi(StalledIssueHeader* header)
 {
-    header->setLeftTitleText(tr("Error detected with"));
-    header->addFileName();
+    header->setText(tr("Error detected with <b>%1</b>").arg(header->displayFileName()));
     header->setTitleDescriptionText(tr("Reason not found."));
 }
 
@@ -45,8 +44,7 @@ FileIssueHeader::FileIssueHeader(StalledIssueHeader* header)
 
 void FileIssueHeader::refreshCaseUi(StalledIssueHeader* header)
 {
-    header->setLeftTitleText(tr("Can´t sync"));
-    header->addFileName();
+    header->setText(tr("Can´t sync <b>%1</b>").arg(header->displayFileName()));
     if(header->getData().consultData()->hasFiles() > 0)
     {
         header->setTitleDescriptionText(tr("A single file had an issue that needs a user decision to solve"));
@@ -64,8 +62,7 @@ MoveOrRenameCannotOccurHeader::MoveOrRenameCannotOccurHeader(StalledIssueHeader*
 
 void MoveOrRenameCannotOccurHeader::refreshCaseUi(StalledIssueHeader* header)
 {
-    header->setLeftTitleText(tr("Cannot move or rename"));
-    header->addFileName();
+    header->setText(tr("Cannot move or rename <b>%1</b>").arg(header->displayFileName()));
     if (header->getData().consultData()->mDetectedMEGASide)
     {
         header->setTitleDescriptionText(tr("A move or rename was detected in MEGA, but could not be replicated in the local filesystem."));
@@ -83,8 +80,7 @@ DeleteOrMoveWaitingOnScanningHeader::DeleteOrMoveWaitingOnScanningHeader(Stalled
 
 void DeleteOrMoveWaitingOnScanningHeader::refreshCaseUi(StalledIssueHeader* header)
 {
-    header->setLeftTitleText(tr("Can´t find"));
-    header->addFileName();
+    header->setText(tr("Can´t find <b>%1</b>").arg(header->displayFileName()));
     header->setTitleDescriptionText(tr("Waiting to finish scan to see if the file was moved or deleted."));
 }
 
@@ -95,8 +91,7 @@ DeleteWaitingOnMovesHeader::DeleteWaitingOnMovesHeader(StalledIssueHeader* heade
 
 void DeleteWaitingOnMovesHeader::refreshCaseUi(StalledIssueHeader* header)
 {
-    header->setLeftTitleText(tr("Waiting to move"));
-    header->addFileName();
+    header->setText(tr("Waiting to move <b>%1</b>").arg(header->displayFileName()));
     header->setTitleDescriptionText(tr("Waiting for other processes to complete."));
 }
 
@@ -108,9 +103,7 @@ UploadIssueHeader::UploadIssueHeader(StalledIssueHeader* header)
 
 void UploadIssueHeader::refreshCaseUi(StalledIssueHeader* header)
 {
-    header->setLeftTitleText(tr("Can´t upload"));
-    header->addFileName(false);
-    header->setRightTitleText(tr("to the selected location"));
+    header->setText(tr("Can´t upload <b>%1</b> to the selected location").arg(header->displayFileName()));
     header->setTitleDescriptionText(tr("Cannot reach the destination folder."));
 }
 
@@ -122,9 +115,7 @@ DownloadIssueHeader::DownloadIssueHeader(StalledIssueHeader* header)
 
 void DownloadIssueHeader::refreshCaseUi(StalledIssueHeader* header)
 {
-    header->setLeftTitleText(tr("Can´t download"));
-    header->addFileName(true);
-    header->setRightTitleText(tr("to the selected location"));
+    header->setText(tr("Can´t download <b>%1</b> to the selected location").arg(header->displayFileName(true)));
     header->setTitleDescriptionText(tr("A failure occurred either downloading the file, or moving the downloaded temporary file to its final name and location."));
 }
 
@@ -135,8 +126,7 @@ CannotCreateFolderHeader::CannotCreateFolderHeader(StalledIssueHeader* header)
 
 void CannotCreateFolderHeader::refreshCaseUi(StalledIssueHeader* header)
 {
-    header->setLeftTitleText(tr("Cannot create"));
-    header->addFileName();
+    header->setText(tr("Cannot create <b>%1</b>").arg(header->displayFileName()));
     header->setTitleDescriptionText(tr("Filesystem error preventing folder access."));
 }
 
@@ -147,8 +137,7 @@ CannotPerformDeletionHeader::CannotPerformDeletionHeader(StalledIssueHeader* hea
 
 void CannotPerformDeletionHeader::refreshCaseUi(StalledIssueHeader* header)
 {
-    header->setLeftTitleText(tr("Cannot perform deletion"));
-    header->addFileName();
+    header->setText(tr("Cannot perform deletion <b>%1</b>").arg(header->displayFileName()));
     header->setTitleDescriptionText(tr("Filesystem error preventing folder access."));
 }
 
@@ -160,8 +149,7 @@ SyncItemExceedsSupoortedTreeDepthHeader::SyncItemExceedsSupoortedTreeDepthHeader
 
 void SyncItemExceedsSupoortedTreeDepthHeader::refreshCaseUi(StalledIssueHeader* header)
 {
-    header->setLeftTitleText(tr("Unable to sync"));
-    header->addFileName();
+    header->setText(tr("Unable to sync <b>%1</b>").arg(header->displayFileName()));
     header->setTitleDescriptionText(tr("Target is too deep on your folder structure.\nPlease move it to a location that is less than 64 folders deep."));
 }
 
@@ -185,7 +173,7 @@ void SyncItemExceedsSupoortedTreeDepthHeader::refreshCaseUi(StalledIssueHeader* 
 //    setLeftTitleText(tr("Unable to sync"));
 //    addFileName();
 //    setTitleDescriptionText(tr("Folder name too long. Your Operating System only supports folder"
-//                               "\nnames up to %1 characters.").arg(QString::number(maxCharacters)));
+//                               "\nnames up to <b>%1</b> characters.").arg(QString::number(maxCharacters)));
 //}
 
 //SymlinksNotSupported
@@ -196,8 +184,7 @@ FolderMatchedAgainstFileHeader::FolderMatchedAgainstFileHeader(StalledIssueHeade
 
 void FolderMatchedAgainstFileHeader::refreshCaseUi(StalledIssueHeader* header)
 {
-    header->setLeftTitleText(tr("Cannot sync"));
-    header->addFileName();
+    header->setText(tr("Can´t sync <b>%1</b>").arg(header->displayFileName()));
     header->setTitleDescriptionText(tr("Cannot sync folders against files."));
 }
 
@@ -213,8 +200,7 @@ void LocalAndRemotePreviouslyUnsyncedDifferHeader::onActionButtonClicked(Stalled
 
 void LocalAndRemotePreviouslyUnsyncedDifferHeader::refreshCaseUi(StalledIssueHeader* header)
 {
-    header->setLeftTitleText(tr("Can´t sync"));
-    header->addFileName();
+    header->setText(tr("Can´t sync <b>%1</b>").arg(header->displayFileName()));
     header->setTitleDescriptionText(tr("This file has conflicting copies"));
 
     if(auto conflict = header->getData().convert<LocalOrRemoteUserMustChooseStalledIssue>())
@@ -248,8 +234,7 @@ void LocalAndRemoteChangedSinceLastSyncedStateHeader::onActionButtonClicked(Stal
 
 void LocalAndRemoteChangedSinceLastSyncedStateHeader::refreshCaseUi(StalledIssueHeader* header)
 {
-    header->setLeftTitleText(tr("Can´t sync"));
-    header->addFileName();
+    header->setText(tr("Can´t sync <b>%1</b>").arg(header->displayFileName()));
     header->setTitleDescriptionText(tr("This file has been changed both in MEGA and locally since it it was last synced."));
 
     if(auto conflict = header->getData().convert<LocalOrRemoteUserMustChooseStalledIssue>())
@@ -337,21 +322,23 @@ void NameConflictsHeader::refreshCaseUi(StalledIssueHeader* header)
 {
     if(auto nameConflict = header->getData().convert<NameConflictedStalledIssue>())
     {
+        QString text(tr("Name Conflicts: <b>%1</b>"));
+
         auto cloudData = nameConflict->getNameConflictCloudData();
         if(cloudData.firstNameConflict())
         {
-            header->addFileName(cloudData.firstNameConflict()->getConflictedName());
+            text = text.arg(cloudData.firstNameConflict()->getConflictedName());
         }
         else
         {
             auto localConflictedNames = nameConflict->getNameConflictLocalData();
             if(!localConflictedNames.isEmpty())
             {
-                header->addFileName(localConflictedNames.first()->getConflictedName());
+                text = text.arg(localConflictedNames.first()->getConflictedName());
             }
         }
 
-        header->setLeftTitleText(tr("Name Conflicts:"));
+        header->setText(text);
 
         if(header->getData().consultData()->hasFiles() > 0 && header->getData().consultData()->hasFolders() > 0)
         {

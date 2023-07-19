@@ -12,21 +12,14 @@ WordWrapLabel::WordWrapLabel(QWidget* parent)
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+
+    document()->setDocumentMargin(0);
 }
 
 void WordWrapLabel::setText(const QString &text)
 {
     QTextEdit::setText(text);
-
-    QSize docSize = document()->size().toSize();
-    if(docSize.isValid())
-    {
-        if(docSize.height() != (height() + 3))
-        {
-            docSize.setHeight(docSize.height() + 3);
-            setFixedHeight(docSize.height());
-        }
-    }
+    adaptHeight();
 }
 
 QSize WordWrapLabel::sizeHint() const
@@ -35,6 +28,18 @@ QSize WordWrapLabel::sizeHint() const
     size.setHeight(size.height() + 3);
 
     return size;
+}
+
+void WordWrapLabel::adaptHeight()
+{
+    QSize docSize = document()->size().toSize();
+    if(docSize.isValid())
+    {
+        if((docSize.height() + 3) != (height()))
+        {
+            setFixedHeight(docSize.height() + 3);
+        }
+    }
 }
 
 void WordWrapLabel::resizeEvent (QResizeEvent *event)
@@ -46,16 +51,7 @@ void WordWrapLabel::resizeEvent (QResizeEvent *event)
       */
     updateGeometry();
 
-
-    QSize docSize = document()->size().toSize();
-    if(docSize.isValid())
-    {
-        if(docSize.height() != (height() + 3))
-        {
-            docSize.setHeight(docSize.height() + 3);
-            setFixedHeight(docSize.height());
-        }
-    }
+    adaptHeight();
 
     QTextEdit::resizeEvent(event);
 }

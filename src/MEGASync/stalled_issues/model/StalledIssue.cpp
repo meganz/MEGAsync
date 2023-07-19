@@ -352,6 +352,19 @@ void StalledIssue::setDelegateSize(const QSize &newDelegateSize, SizeType type)
     }
 }
 
+void StalledIssue::removeDelegateSize(SizeType type)
+{
+    switch(type)
+    {
+        case SizeType::Header:
+            mHeaderDelegateSize = QSize();
+            break;
+        case SizeType::Body:
+            mBodyDelegateSize = QSize();
+            break;
+    }
+}
+
 bool StalledIssue::isSolved() const
 {
     return mIsSolved;

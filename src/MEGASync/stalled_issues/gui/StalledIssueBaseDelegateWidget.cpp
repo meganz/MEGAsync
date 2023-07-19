@@ -1,6 +1,7 @@
 #include "StalledIssueBaseDelegateWidget.h"
 
 #include "MegaApplication.h"
+#include "WordWrapLabel.h"
 
 #include "mega/types.h"
 
@@ -57,22 +58,15 @@ QSize StalledIssueBaseDelegateWidget::sizeHint() const
 
     QSize size;
 
-    if(isHeader())
+    if(mData.getDelegateSize(sizeType).isValid())
     {
-        if(mData.getDelegateSize(sizeType).isValid())
-        {
-            size = mData.getDelegateSize(sizeType);
-        }
+        size = mData.getDelegateSize(sizeType);
     }
 
     if(!size.isValid())
     {
         size = QWidget::sizeHint();
-
-        if(isHeader())
-        {
-            mData.setDelegateSize(size, sizeType);
-        }
+        mData.setDelegateSize(size, sizeType);
     }
 
     return size;
@@ -83,18 +77,17 @@ bool StalledIssueBaseDelegateWidget::isHeader() const
     return mCurrentIndex.isValid() && !mCurrentIndex.parent().isValid();
 }
 
-void StalledIssueBaseDelegateWidget::resizeEvent(QResizeEvent *event)
+void StalledIssueBaseDelegateWidget::resizeEvent(QResizeEvent* event)
 {
-    if(mDelegate)
-    {
-        auto currentSize(event->size());
-        auto realSize(QWidget::sizeHint());
+    QWidget::resizeEvent(event);
 
-        if(currentSize.height() != realSize.height())
-        {
-            updateSizeHint();
-        }
-    }
+    StalledIssue::SizeType sizeType = isHeader() ? StalledIssue::Header : StalledIssue::Body;
+    mData.removeDelegateSize(sizeType);
+
+    QTimer::singleShot(10, [this]()
+    {
+        updateSizeHint();
+    });
 }
 
 void StalledIssueBaseDelegateWidget::setDelegate(QStyledItemDelegate *newDelegate)
@@ -104,5 +97,20 @@ void StalledIssueBaseDelegateWidget::setDelegate(QStyledItemDelegate *newDelegat
 
 void StalledIssueBaseDelegateWidget::updateSizeHint()
 {
-    mDelegate->sizeHintChanged(getCurrentIndex());
+    if(mDelegate)
+    {
+        layout()->activate();
+        updateGeometry();
+
+
+        auto currentSize(size());
+        auto realSize(QWidget::sizeHint());
+
+        if(currentSize.height() != realSize.height())
+        {
+            StalledIssue::SizeType sizeType = isHeader() ? StalledIssue::Header : StalledIssue::Body;
+            mData.removeDelegateSize(sizeType);
+            mDelegate->sizeHintChanged(getCurrentIndex());
+        }
+    }
 }

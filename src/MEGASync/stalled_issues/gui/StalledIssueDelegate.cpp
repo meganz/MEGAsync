@@ -36,25 +36,11 @@ StalledIssueDelegate::StalledIssueDelegate(StalledIssuesProxyModel* proxyModel, 
 
 QSize StalledIssueDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
-    bool adaptativeHeight(true);
-
-    if(!index.parent().isValid())
+    auto stalledIssueItem (qvariant_cast<StalledIssueVariant>(index.data(Qt::DisplayRole)));
+    StalledIssueBaseDelegateWidget* w (getStalledIssueItemWidget(index, stalledIssueItem));
+    if(w)
     {
-       adaptativeHeight = index.data(StalledIssuesModel::ADAPTATIVE_HEIGHT_ROLE).toBool();
-    }
-
-    if(adaptativeHeight)
-    {
-        auto stalledIssueItem (qvariant_cast<StalledIssueVariant>(index.data(Qt::DisplayRole)));
-        StalledIssueBaseDelegateWidget* w (getStalledIssueItemWidget(index, stalledIssueItem));
-        if(w)
-        {
-            return w->sizeHint();
-        }
-    }
-    else
-    {
-        return QSize(200,StalledIssueHeader::HEIGHT);
+        return w->sizeHint();
     }
 
     return QStyledItemDelegate::sizeHint(option, index);

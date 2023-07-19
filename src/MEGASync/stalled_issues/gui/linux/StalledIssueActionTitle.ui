@@ -49,7 +49,7 @@
     color: #333333;
 }
 
-#titleContainer QLabel
+#titleContainer QTextEdit
 {
     font-family: Lato;
     font-size: 13px;
@@ -224,25 +224,12 @@ QPushButton[main=true]
                 </widget>
                </item>
                <item>
-                <widget class="QLabel" name="titleLabel">
+                <widget class="WordWrapLabel" name="titleLabel">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                    <horstretch>0</horstretch>
                    <verstretch>0</verstretch>
                   </sizepolicy>
-                 </property>
-                 <property name="font">
-                  <font>
-                   <family>Lato</family>
-                   <pointsize>-1</pointsize>
-                   <bold>true</bold>
-                  </font>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true"/>
-                 </property>
-                 <property name="text">
-                  <string/>
                  </property>
                 </widget>
                </item>
@@ -397,6 +384,13 @@ QCheckBox::indicator::unchecked
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>WordWrapLabel</class>
+   <extends>QTextEdit</extends>
+   <header>WordWrapLabel.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

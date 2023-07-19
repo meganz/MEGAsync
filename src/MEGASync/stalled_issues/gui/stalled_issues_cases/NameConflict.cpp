@@ -221,8 +221,8 @@ void NameConflict::onRawInfoChecked()
         auto conflictedNames = getConflictedNames(mIssue);
         std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo> info(conflictedNames.at(title->getIndex()));
         updateTitleExtraInfo(title, info);
-        //To let the view know that it may change
 
+        //To let the view know that the size may change
         mDelegateWidget->updateSizeHint();
     }
 }

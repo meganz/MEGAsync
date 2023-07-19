@@ -239,16 +239,7 @@ bool StalledIssueActionTitle::eventFilter(QObject *watched, QEvent *event)
 {
     if(event->type() == QEvent::Resize)
     {
-        if(watched == ui->titleLabel)
-        {
-            auto titleText = ui->titleLabel->property(MESSAGE_TEXT).toString();
-            if(!titleText.isEmpty())
-            {
-                auto elidedText = ui->titleLabel->fontMetrics().elidedText(titleText, Qt::ElideMiddle, ui->titleLabel->width());
-                ui->titleLabel->setText(elidedText);
-            }
-        }
-        else if(watched == ui->generalContainer)
+        if(watched == ui->generalContainer)
         {
             updateExtraInfoLayout();
         }
@@ -260,11 +251,8 @@ bool StalledIssueActionTitle::eventFilter(QObject *watched, QEvent *event)
                 auto childLabels = contentWidget->findChildren<QLabel*>();
                 foreach(auto label, childLabels)
                 {
-                    if(label != ui->titleLabel)
-                    {
-                        auto elidedText = label->fontMetrics().elidedText(label->property(MESSAGE_TEXT).toString(), Qt::ElideMiddle, contentWidget->width() - 50);
-                        label->setText(elidedText);
-                    }
+                    auto elidedText = label->fontMetrics().elidedText(label->property(MESSAGE_TEXT).toString(), Qt::ElideMiddle, contentWidget->width() - 50);
+                    label->setText(elidedText);
                 }
             }
         }

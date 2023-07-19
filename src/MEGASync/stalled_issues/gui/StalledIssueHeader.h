@@ -41,10 +41,8 @@ public:
     void showMessage(const QString& message, const QPixmap &pixmap);
     void showSolvedMessage(const QString& customMessage = QString());
 
-    void setLeftTitleText(const QString& text);
-    void addFileName(bool preferCloud = false);
-    void addFileName(const QString& filename);
-    void setRightTitleText(const QString& text);
+    void setText(const QString& text);
+    QString displayFileName(bool preferCloud = false);
 
     void setTitleDescriptionText(const QString& text);
 
@@ -52,8 +50,6 @@ public:
     void reset();
 
 protected:
-    bool eventFilter(QObject *watched, QEvent *event) override;
-
     QString fileName();
 
 protected slots:

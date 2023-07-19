@@ -13,6 +13,9 @@ public:
 protected:
     QSize sizeHint() const;
     void resizeEvent(QResizeEvent *e) override;
+
+private:
+    void adaptHeight();
 };
 
 #endif // WORDWRAPLABEL_H
