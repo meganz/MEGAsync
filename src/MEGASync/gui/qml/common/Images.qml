@@ -23,6 +23,8 @@ QtObject {
     readonly property url indeterminate: imagesPath + "indeterminate.svg"
     readonly property url lock: imagesPath + "lock.svg"
     readonly property url loader: imagesPath + "loader.svg"
+    readonly property url smallCircle: imagesPath + "small_circle.svg"
+    readonly property url tip: imagesPath + "tip.svg"
     readonly property url trash: imagesPath + "trash.svg"
     readonly property url xCircle: imagesPath + "x_circle.svg"
 

@@ -12,3 +12,6 @@ TwoFAPageForm 1.0 TwoFAPageForm.ui.qml
 ChangeEmailPageForm 1.0 ChangeEmailPageForm.ui.qml
 StackViewPage 1.0 StackViewPage.qml
 CancelLogin 1.0 CancelLogin.qml
+PasswordInfoPopUp 1.0 PasswordInfoPopUp.qml
+PasswordConditionItem 1.0 PasswordConditionItem.qml
+PasswordInfoContentForm 1.0 PasswordInfoContentForm.ui.qml

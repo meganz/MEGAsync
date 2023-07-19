@@ -53,5 +53,9 @@
         <file>content/onboard/ChangeEmailPageForm.ui.qml</file>
         <file>content/onboard/CancelLogin.qml</file>
         <file>content/onboard/StackViewPage.qml</file>
+        <file>content/onboard/PasswordConditionItem.qml</file>
+        <file>content/onboard/PasswordInfoContent.qml</file>
+        <file>content/onboard/PasswordInfoContentForm.ui.qml</file>
+        <file>content/onboard/PasswordInfoPopUp.qml</file>
     </qresource>
 </RCC>

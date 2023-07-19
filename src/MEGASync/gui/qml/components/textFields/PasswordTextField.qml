@@ -9,40 +9,30 @@ import PasswordStrengthChecker 1.0
 
 MegaTextFields.TextField {
 
-    property bool showHint: false
+    //property bool showHint: false
 
     textField.echoMode: TextInput.Password
 
-    readonly property MegaTexts.HintStyle veryWeak: MegaTexts.HintStyle {
-        iconColor: Styles.indicatorPink
-        titleColor: Styles.textError
-        textColor: Styles.textSecondary
+    textField.onFocusChanged: {
+        if(textField.focus) {
+            rightIcon.visible = true;
+        }
     }
 
-    readonly property MegaTexts.HintStyle weak: MegaTexts.HintStyle {
-        iconColor: Styles.supportError;
-        titleColor: Styles.textError;
-        textColor: Styles.textSecondary;
+    rightIcon.visible: false
+    rightIcon.source: "images/eye.svg"
+    rightIconMouseArea.onClicked: {
+        textField.focus = true;
+        if(textField.echoMode === TextInput.Password) {
+            textField.echoMode = TextInput.Normal;
+            rightIcon.source = "images/eye-off.svg";
+        } else if(textField.echoMode === TextInput.Normal) {
+            textField.echoMode = TextInput.Password;
+            rightIcon.source = "images/eye.svg";
+        }
     }
 
-    readonly property MegaTexts.HintStyle medium: MegaTexts.HintStyle {
-        iconColor: Styles.supportWarning;
-        titleColor: Styles.supportWarning;
-        textColor: Styles.textSecondary;
-    }
-
-    readonly property MegaTexts.HintStyle good: MegaTexts.HintStyle {
-        iconColor: Styles.supportSuccess;
-        titleColor: Styles.textSuccess;
-        textColor: Styles.textSecondary;
-    }
-
-    readonly property MegaTexts.HintStyle strong: MegaTexts.HintStyle {
-        iconColor: Styles.supportSuccess;
-        titleColor: Styles.supportSuccess;
-        textColor: Styles.textSecondary;
-    }
-
+    /*
     textField.onTextChanged: {
         if(!showHint)
         {
@@ -94,29 +84,11 @@ MegaTextFields.TextField {
         }
         }
     }
+    */
 
-    textField.onFocusChanged: {
-        if(textField.focus) {
-            rightIcon.visible = true;
-        }
-    }
-
-    rightIcon.visible: false
-    rightIcon.source: "images/eye.svg"
-    rightIconMouseArea.onClicked: {
-        textField.focus = true;
-        if(textField.echoMode === TextInput.Password) {
-            textField.echoMode = TextInput.Normal;
-            rightIcon.source = "images/eye-off.svg";
-        } else if(textField.echoMode === TextInput.Normal) {
-            textField.echoMode = TextInput.Password;
-            rightIcon.source = "images/eye.svg";
-        }
-    }
-
+    /*
     onShowHintChanged: {
-        if(showHint)
-        {
+        if(showHint) {
             strengthCheckerLoader.sourceComponent = strengthCheckerComponent
         }
     }
@@ -130,4 +102,5 @@ MegaTextFields.TextField {
         PasswordStrengthChecker{
         }
     }
+    */
 }
