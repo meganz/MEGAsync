@@ -14,6 +14,11 @@ NodeSelectorTreeViewWidgetCloudDrive::NodeSelectorTreeViewWidgetCloudDrive(Selec
     ui->searchEmptyInfoWidget->hide();
 }
 
+void NodeSelectorTreeViewWidgetCloudDrive::setShowEmptyView(bool newShowEmptyView)
+{
+    mShowEmptyView = newShowEmptyView;
+}
+
 QString NodeSelectorTreeViewWidgetCloudDrive::getRootText()
 {
     return MegaNodeNames::getCloudDriveName();
@@ -27,7 +32,7 @@ std::unique_ptr<NodeSelectorModel> NodeSelectorTreeViewWidgetCloudDrive::createM
 void NodeSelectorTreeViewWidgetCloudDrive::modelLoaded()
 {
     auto rootIndex = mModel->index(0,0);
-    if(mModel->rowCount(rootIndex) == 0)
+    if(mModel->rowCount(rootIndex) == 0 && showEmptyView())
     {
         ui->stackedWidget->setCurrentWidget(ui->emptyPage);
     }
