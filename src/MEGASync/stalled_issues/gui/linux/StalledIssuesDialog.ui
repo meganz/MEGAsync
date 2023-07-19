@@ -955,7 +955,8 @@ with each issue</string>
               <widget class="QLabel" name="SmartDescription">
                <property name="text">
                 <string>Solve automatically
-most of the common issues</string>
+most of the common issues
+(Coming soon)</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>

@@ -269,6 +269,7 @@ public:
 
     void renameNodesAutomatically();
 
+    bool solveIssue(int option);
     bool solveIssue(bool autoSolve) override;
 
     bool hasDuplicatedNodes() const;

@@ -643,13 +643,13 @@ void StalledIssuesModel::ignoreItems(const QModelIndexList &list)
     }
 }
 
-void StalledIssuesModel::solveNameConflictIssues(const QModelIndexList &list)
+void StalledIssuesModel::solveNameConflictIssues(const QModelIndexList &list, int option)
 {
     if(list.isEmpty())
     {
         blockUi();
 
-        mThreadPool->push([this]()
+        mThreadPool->push([this, option]()
         {
             for(int row = 0; row < rowCount(QModelIndex()); ++row)
             {
@@ -663,7 +663,7 @@ void StalledIssuesModel::solveNameConflictIssues(const QModelIndexList &list)
                 {
                     if(auto nameConflict = item->convert<NameConflictedStalledIssue>())
                     {
-                        nameConflict->solveIssue(false);
+                        nameConflict->solveIssue(option);
                     }
                 }
             }
@@ -675,7 +675,7 @@ void StalledIssuesModel::solveNameConflictIssues(const QModelIndexList &list)
     {
         blockUi();
 
-        mThreadPool->push([this, list]()
+        mThreadPool->push([this, list, option]()
         {
             foreach(auto index, list)
             {
@@ -683,7 +683,7 @@ void StalledIssuesModel::solveNameConflictIssues(const QModelIndexList &list)
 
                 if(auto nameConflict = mStalledIssues.at(potentialIndex.row())->convert<NameConflictedStalledIssue>())
                 {
-                    nameConflict->solveIssue(false);
+                    nameConflict->solveIssue(option);
                 }
             }
 

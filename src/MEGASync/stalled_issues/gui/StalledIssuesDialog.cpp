@@ -67,6 +67,9 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
         showView(valueChanged);
     });
 
+    //Temporary
+    ui->Smart->setDisabled(true);
+
     if(Preferences::instance()->stalledIssueMode() == Preferences::StalledIssuesModeType::None)
     {
         showModeSelector();
@@ -134,7 +137,7 @@ bool StalledIssuesDialog::eventFilter(QObject* obj, QEvent* event)
 
             mModeSelected = Preferences::StalledIssuesModeType::Verbose;
         }
-        else if(obj == ui->Smart)
+        else if(obj == ui->Smart && ui->Smart->isEnabled())
         {
             ui->Smart->setProperty(MODE_SELECTED, true);
             ui->Smart->setStyleSheet(ui->Smart->styleSheet());

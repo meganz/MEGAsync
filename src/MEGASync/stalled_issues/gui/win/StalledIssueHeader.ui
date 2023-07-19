@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>366</width>
-    <height>67</height>
+    <width>454</width>
+    <height>60</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -55,7 +55,7 @@
   font-weight: normal;
 }
 
-#actionButton, #ignoreFileButton
+#actionButton, #ignoreFileButton, #multipleActionButton
 {
    font-size:14px;
    background-color: #FCFCFC;
@@ -66,12 +66,12 @@
    padding-right: 16px;
 }
 
-#actionButton:hover:enabled, #ignoreFileButton::hover:enabled
+#actionButton:hover:enabled, #ignoreFileButton::hover:enabled,  #multipleActionButton::hover:enabled
 {
     background-color: #E2E2E2;
 }
 
-#actionButton:pressed:enabled, #ignoreFileButton::pressed:enabled
+#actionButton:pressed:enabled, #ignoreFileButton::pressed:enabled,  #multipleActionButton::pressed:enabled
 {
     background-color: #C9C9C9;
 }</string>
@@ -441,6 +441,39 @@
         </property>
         <property name="text">
          <string/>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="multipleActionButton">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="layoutDirection">
+         <enum>Qt::RightToLeft</enum>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normalon>:/images/node_selector/Icon-Small-Arrow-Down.png</normalon>
+         </iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>16</width>
+          <height>16</height>
+         </size>
         </property>
        </widget>
       </item>

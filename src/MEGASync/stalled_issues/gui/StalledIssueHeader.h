@@ -35,6 +35,9 @@ public:
     void showAction(const QString& actionButtonText);
     void hideAction();
 
+    void showMultipleAction(const QString& actionButtonText, const QStringList& actions);
+    void hideMultipleAction();
+
     void showMessage(const QString& message, const QPixmap &pixmap);
     void showSolvedMessage(const QString& customMessage = QString());
 
@@ -56,6 +59,9 @@ protected:
 protected slots:
     virtual void on_actionButton_clicked();
     virtual void on_ignoreFileButton_clicked();
+
+private slots:
+    void onMultipleActionClicked();
 
 private:
     void showIgnoreFile();

@@ -451,19 +451,29 @@ bool NameConflictedStalledIssue::checkAndSolveConflictedNamesSolved(const QList<
     return mIsSolved;
 }
 
-bool NameConflictedStalledIssue::solveIssue(bool autoSolve)
+bool NameConflictedStalledIssue::solveIssue(int option)
 {
-   mCloudConflictedNames.removeDuplicatedNodes();
-   renameNodesAutomatically();
+    if(option == 0)
+    {
+        mCloudConflictedNames.removeDuplicatedNodes();
+    }
 
-   auto cloudConflictedNames(mCloudConflictedNames.getConflictedNames());
+    renameNodesAutomatically();
 
-   auto result = checkAndSolveConflictedNamesSolved(cloudConflictedNames);
-   if(result)
-   {
-       checkAndSolveConflictedNamesSolved(mLocalConflictedNames);
-   }
+    auto cloudConflictedNames(mCloudConflictedNames.getConflictedNames());
 
-   return true;
+    auto result = checkAndSolveConflictedNamesSolved(cloudConflictedNames);
+    if(result)
+    {
+        checkAndSolveConflictedNamesSolved(mLocalConflictedNames);
+    }
+
+    return true;
+}
+
+
+bool NameConflictedStalledIssue::solveIssue(bool)
+{
+   return solveIssue(0);
 }
 

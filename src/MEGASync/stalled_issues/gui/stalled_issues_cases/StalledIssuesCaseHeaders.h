@@ -14,6 +14,7 @@ public:
 
     virtual void refreshCaseUi(StalledIssueHeader* header) = 0;
     virtual void onActionButtonClicked(StalledIssueHeader* header){}
+    virtual void onMultipleActionButtonOptionSelected(StalledIssueHeader* header, int index){}
 };
 
 //DefaultHeader failed
@@ -187,7 +188,7 @@ class NameConflictsHeader : public StalledIssueHeaderCase
 
 public:
     NameConflictsHeader(StalledIssueHeader* header);
-    void onActionButtonClicked(StalledIssueHeader* header) override;
+    void onMultipleActionButtonOptionSelected(StalledIssueHeader* header, int index) override;
 
 protected slots:
     void refreshCaseUi(StalledIssueHeader* header) override;

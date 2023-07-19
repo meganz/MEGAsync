@@ -109,6 +109,9 @@
 background-color: #f0f0f0;
 }</string>
      </property>
+     <property name="currentIndex">
+      <number>1</number>
+     </property>
      <widget class="QWidget" name="ModeSelector">
       <property name="styleSheet">
        <string notr="true">#ModeTitle
@@ -349,7 +352,8 @@ with each issue</string>
               <widget class="QLabel" name="SmartDescription">
                <property name="text">
                 <string>Solve automatically
-most of the common issues</string>
+most of the common issues
+(Coming soon)</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>

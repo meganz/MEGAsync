@@ -32,6 +32,8 @@ StalledIssueHeader::StalledIssueHeader(QWidget *parent) :
     ui->actionButton->hide();
     ui->actionMessageContainer->hide();
     ui->ignoreFileButton->hide();
+
+    connect(ui->multipleActionButton, &QPushButton::clicked, this, &StalledIssueHeader::onMultipleActionClicked);
 }
 
 StalledIssueHeader::~StalledIssueHeader()
@@ -80,6 +82,48 @@ void StalledIssueHeader::showAction(const QString &actionButtonText)
 void StalledIssueHeader::hideAction()
 {
     ui->actionButton->setVisible(false);
+}
+
+void StalledIssueHeader::showMultipleAction(const QString &actionButtonText, const QStringList &actions)
+{
+    ui->multipleActionButton->setVisible(true);
+    ui->multipleActionButton->setText(actionButtonText);
+    ui->multipleActionButton->setProperty("ACTIONS", actions);
+}
+
+void StalledIssueHeader::hideMultipleAction()
+{
+    ui->multipleActionButton->setVisible(false);
+}
+
+void StalledIssueHeader::onMultipleActionClicked()
+{
+    auto actions(ui->multipleActionButton->property("ACTIONS").toStringList());
+    if(!actions.isEmpty())
+    {
+        QMenu *menu(new QMenu(ui->multipleActionButton));
+        Platform::getInstance()->initMenu(menu, "MultipleActionStalledIssues");
+        menu->setAttribute(Qt::WA_DeleteOnClose);
+
+        int index(0);
+        foreach(auto action, actions)
+        {
+            // Show in system file explorer action
+            auto actionItem (new MenuItemAction(action, QIcon()));
+            connect(actionItem, &MenuItemAction::triggered, this, [this, index]()
+            {
+                mHeaderCase->onMultipleActionButtonOptionSelected(this, index);
+            });
+            actionItem->setParent(menu);
+            menu->addAction(actionItem);
+
+            index++;
+        }
+
+        auto pos(ui->actionContainer->mapToGlobal(ui->multipleActionButton->pos()));
+        pos.setY(pos.y() + ui->multipleActionButton->height());
+        menu->popup(pos);
+    }
 }
 
 void StalledIssueHeader::showMessage(const QString &message, const QPixmap& pixmap)

@@ -88,7 +88,7 @@ public:
     bool solveCloudConflictedNameByRemove(int conflictIndex, const QModelIndex& index);
     bool solveCloudConflictedNameByRename(const QString &renameTo, int conflictIndex, const QModelIndex& index);
 
-    void solveNameConflictIssues(const QModelIndexList& list);
+    void solveNameConflictIssues(const QModelIndexList& list, int option);
 
     //LocalOrRemoteConflicts
     void chooseSide(bool remote, const QModelIndexList& list);

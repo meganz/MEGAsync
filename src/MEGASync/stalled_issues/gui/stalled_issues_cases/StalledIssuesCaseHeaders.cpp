@@ -371,17 +371,18 @@ void NameConflictsHeader::refreshCaseUi(StalledIssueHeader* header)
 
         if(!nameConflict->isSolved())
         {
-            header->showAction(tr("Solve"));
+            header->showMultipleAction(tr("Solve options"), QStringList() << tr("Remove duplicates and rename the rest") << tr("Rename all items"));
         }
         else
         {
             header->showSolvedMessage();
-            header->hideAction();
+            header->hideMultipleAction();
         }
     }
 }
 
-void NameConflictsHeader::onActionButtonClicked(StalledIssueHeader* header)
+
+void NameConflictsHeader::onMultipleActionButtonOptionSelected(StalledIssueHeader* header, int index)
 {
     if(auto nameConflict = header->getData().convert<NameConflictedStalledIssue>())
     {
@@ -420,17 +421,18 @@ void NameConflictsHeader::onActionButtonClicked(StalledIssueHeader* header)
 
         msgInfo.buttonsText = textsByButton;
         msgInfo.text = tr("Are you sure you want to solve the issue?");
-        msgInfo.informativeText = tr("This action will delete the duplicate files and rename the rest of names.");
+        msgInfo.informativeText = index == 0 ? tr("This action will delete the duplicate files and rename the rest of names.")
+                                             : tr("This action will rename the conflicted items.");
 
-        msgInfo.finishFunc = [this, selection, header, nameConflict](QMessageBox* msgBox)
+        msgInfo.finishFunc = [this, index, selection, header, nameConflict](QMessageBox* msgBox)
         {
             if(msgBox->result() == QDialogButtonBox::Ok)
             {
-                MegaSyncApp->getStalledIssuesModel()->solveNameConflictIssues(selection);
+                MegaSyncApp->getStalledIssuesModel()->solveNameConflictIssues(selection, index);
             }
             else if(msgBox->result() == QDialogButtonBox::Yes)
             {
-                MegaSyncApp->getStalledIssuesModel()->solveNameConflictIssues(QModelIndexList());
+                MegaSyncApp->getStalledIssuesModel()->solveNameConflictIssues(QModelIndexList(), index);
             }
         };
 
