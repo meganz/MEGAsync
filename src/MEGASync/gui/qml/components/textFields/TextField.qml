@@ -215,6 +215,7 @@ Rectangle {
             text: root.hint.text
             styles: root.hint.styles
             visible: root.hint.visible
+            textSize: root.sizes.hintTextSize
         }
     }
 

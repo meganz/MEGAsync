@@ -1,8 +1,6 @@
 // System
 import QtQuick 2.12
 import QtQuick.Layouts 1.12
-import QtQuick.Controls 2.12
-import QtQuick.Dialogs 1.1
 
 // QML common
 import Common 1.0
@@ -14,27 +12,28 @@ import Components.Images 1.0 as MegaImages
 import Onboard 1.0
 
 // C++
-import BackupsProxyModel 1.0
 import BackupsModel 1.0
 import ChooseLocalFolder 1.0
 
 Rectangle {
-    id: tableRectangle
 
-    property var model
-    property int headerFooterMargin: 24
-    property int headerFooterHeight: 40
+    readonly property int headerFooterMargin: 24
+    readonly property int headerFooterHeight: 40
+    readonly property int tableRadius: 8
 
-    height: 186
-    radius: 8
+    Layout.preferredWidth: parent.width
+    Layout.preferredHeight: height
+    height: 224
+    width: parent.width
+    radius: tableRadius
 
     color: "white"
 
     Rectangle {
         id: borderRectangle
 
-        width: tableRectangle.width
-        height: tableRectangle.height
+        width: parent.width
+        height: parent.height
         color: "transparent"
         border.color: Styles.borderStrong
         border.width: 1
@@ -43,9 +42,7 @@ Rectangle {
     }
 
     ListView {
-        id: backupList
-
-        model: tableRectangle.model
+        model: BackupsModel
         anchors.fill: parent
         headerPositioning: ListView.OverlayHeader
         focus: true
@@ -61,11 +58,10 @@ Rectangle {
 
         Rectangle {
             height: headerFooterHeight
-            anchors.top: parent.top
             anchors.left: parent.left
             anchors.right: parent.right
             color: "white"
-            radius: tableRectangle.radius
+            radius: tableRadius
             z: 3
 
             RowLayout {
@@ -82,7 +78,6 @@ Rectangle {
                     Layout.leftMargin: headerFooterMargin
                     text: OnboardingStrings.selectAll
                     tristate: true
-                    visible: !backupsProxyModel.selectedFilterEnabled
 
                     onCheckStateChanged: {
                         if (!selectAll.fromModel) {
@@ -103,32 +98,6 @@ Rectangle {
                     Component.onCompleted: {
                         selectAll.checkState = BackupsModel.mCheckAllState;
                     }
-                }
-
-                RowLayout {
-                    Layout.leftMargin: headerFooterMargin
-                    Layout.fillWidth: true
-                    spacing: headerFooterMargin / 2
-                    visible: backupsProxyModel.selectedFilterEnabled
-
-                    MegaImages.SvgImage {
-                        source: Images.database
-                        color: Styles.iconPrimary
-                        sourceSize: Qt.size(16, 16)
-                    }
-
-                    MegaTexts.Text {
-                        text: OnboardingStrings.backupFolders
-                    }
-                }
-
-                MegaTexts.Text {
-                    Layout.rightMargin: headerFooterMargin
-                    Layout.alignment: Qt.AlignRight
-                    text: BackupsModel.mTotalSize
-                    font.pixelSize: MegaTexts.Text.Size.Small
-                    font.weight: Font.DemiBold
-                    visible: backupsProxyModel.selectedFilterEnabled
                 }
             }
 
@@ -155,20 +124,18 @@ Rectangle {
         id: footerComponent
 
         Rectangle {
-            anchors.right: parent.right
             anchors.left: parent.left
+            anchors.right: parent.right
             height: headerFooterHeight
-            z: 3
-            visible: !backupsProxyModel.selectedFilterEnabled
+            radius: tableRadius
             color: "white"
-            radius: tableRectangle.radius
+            z: 3
 
             RowLayout {
                 id: addFoldersButton
 
                 anchors.left: parent.left
-                anchors.top: parent.top
-                anchors.bottom: parent.bottom
+                anchors.verticalCenter: parent.verticalCenter
                 anchors.leftMargin: headerFooterMargin
                 spacing: headerFooterMargin / 2
 
@@ -184,6 +151,14 @@ Rectangle {
                 }
             }
 
+            Rectangle {
+                height: borderRectangle.border.width
+                color: borderRectangle.border.color
+                anchors.top: parent.top
+                anchors.left: parent.left
+                anchors.right: parent.right
+            }
+
             MouseArea {
                 anchors.fill: addFoldersButton
                 cursorShape: Qt.PointingHandCursor
@@ -197,24 +172,10 @@ Rectangle {
                 id: folderDialog
 
                 onFolderChanged: {
-                    BackupsModel.insertFolder(folderDialog.getFolder());
+                    BackupsModel.insert(folderDialog.getFolder());
                 }
             }
-
-            Rectangle {
-                height: borderRectangle.border.width
-                color: borderRectangle.border.color
-                anchors.top: parent.top
-                anchors.left: parent.left
-                anchors.right: parent.right
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                cursorShape: Qt.ArrowCursor
-            }
         }
-
     }
 
 }

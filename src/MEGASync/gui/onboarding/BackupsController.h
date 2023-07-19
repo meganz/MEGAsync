@@ -15,19 +15,18 @@ public:
 
     void addBackups(const BackupInfoList& localPathList);
 
-public slots:
     QSet<QString> getRemoteFolders() const;
 
 signals:
-    void backupsCreationFinished();
+    void backupFinished(const QString& folder, bool done);
+    void backupsCreationFinished(bool success, const QString& message);
 
 private:
     mega::MegaApi* mMegaApi;
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
     SyncController* mBackupController;
-    int mBackupsProcessed;
     int mBackupsToDoSize;
-    QSet<QString> mRemoteBackups;
+    int mBackupsProcessedWithError;
 
     // The first field contains the full path and the second contains the backup name
     BackupInfoList mBackupsToDoList;

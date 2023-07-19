@@ -1,20 +1,15 @@
 // System
 import QtQuick 2.12
 
-// QML common
-import Common 1.0
-
-// Local
-import Onboard 1.0
-
 // C++
 import Onboarding 1.0
 import BackupsController 1.0
+import BackupsModel 1.0
 
 ConfirmFoldersPageForm {
     id: root
 
-    property bool success: false
+    property bool existsSDKError: false
 
     footerButtons {
 
@@ -24,7 +19,7 @@ ConfirmFoldersPageForm {
         }
 
         rightPrimary.onClicked: {
-            success = false;
+            root.existsSDKError = false;
             root.enabled = false;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
             backupsProxyModel.createBackups();
@@ -45,12 +40,35 @@ ConfirmFoldersPageForm {
     }
 
     Connections {
+        target: BackupsModel
+
+        onNoneSelected: {
+            footerButtons.rightSecondary.clicked();
+        }
+
+        onExistConflictsChanged: {
+            if(!root.existsSDKError) {
+                if(BackupsModel.mConflictsNotificationText !== "") {
+                    stepPanel.state = stepPanel.step4Warning;
+                } else {
+                    stepPanel.state = stepPanel.step4;
+                }
+            }
+        }
+    }
+
+    Connections {
         target: BackupsController
 
-        onBackupsCreationFinished: {
+        onBackupsCreationFinished: (success, message) => {
+            root.existsSDKError = !success;
             root.enabled = true;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = false;
-            syncsPanel.state = syncsPanel.finalState;
+            if(success) {
+                syncsPanel.state = syncsPanel.finalState;
+            } else {
+                stepPanel.state = stepPanel.step4Error;
+            }
         }
     }
 

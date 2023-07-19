@@ -11,14 +11,11 @@ struct BackupFolder
 {
     // Front (with role)
     QString mName;
-    QString mTooltip;
     QString mFolder;
     QString mSize;
     bool mSelected;
-    bool mSelectable;
     bool mDone;
     int mError;
-    bool mErrorVisible;
 
     // Back (without role)
     long long folderSize;
@@ -34,10 +31,19 @@ class BackupsModel : public QAbstractListModel
 {
     Q_OBJECT
 
-    Q_PROPERTY(QString mTotalSize READ getTotalSize NOTIFY totalSizeChanged)
-    Q_PROPERTY(Qt::CheckState mCheckAllState READ getCheckAllState WRITE setCheckAllState NOTIFY checkAllStateChanged)
-    Q_PROPERTY(bool mExistConflicts  READ getExistConflicts NOTIFY existConflictsChanged)
-    Q_PROPERTY(QString mConflictsNotificationText READ getConflictsNotificationText NOTIFY existConflictsChanged)
+    Q_PROPERTY(QString mTotalSize
+               READ getTotalSize
+               NOTIFY totalSizeChanged)
+    Q_PROPERTY(Qt::CheckState mCheckAllState
+               READ getCheckAllState
+               WRITE setCheckAllState
+               NOTIFY checkAllStateChanged)
+    Q_PROPERTY(QString mConflictsNotificationText
+               READ getConflictsNotificationText
+               NOTIFY existConflictsChanged)
+    Q_PROPERTY(int mGlobalError
+               READ getGlobalError
+               NOTIFY globalErrorChanged)
 
 public:
 
@@ -49,15 +55,17 @@ public:
         SelectedRole,
         SelectableRole,
         DoneRole,
-        ErrorRole,
-        ErrorVisibleRole
+        ErrorRole
     };
 
     enum BackupErrorCode
     {
         None = 0,
         DuplicatedName = 1,
-        ExistsRemote = 2
+        ExistsRemote = 2,
+        SyncConflict = 3,
+        PathRelation = 4,
+        SDKCreation = 5
     };
     Q_ENUM(BackupErrorCode)
 
@@ -83,15 +91,19 @@ public:
 
     QString getConflictsNotificationText() const;
 
+    int getGlobalError() const;
+
 public slots:
 
-    void insertFolder(const QString& folder);
+    void insert(const QString& folder);
 
-    void checkBackups();
+    void check();
 
-    bool renameBackup(const QString& folder, const QString& name);
+    int rename(const QString& folder, const QString& name);
 
     void remove(const QString& folder);
+
+    void change(const QString& oldFolder, const QString& newFolder);
 
 signals:
 
@@ -101,6 +113,10 @@ signals:
 
     void existConflictsChanged();
 
+    void noneSelected();
+
+    void globalErrorChanged();
+
 private:
 
     QList<BackupFolder> mBackupFolderList;
@@ -108,10 +124,11 @@ private:
     int mSelectedRowsTotal;
     long long mBackupsTotalSize;
     SyncController mSyncController;
-    BackupsController* mBackupsController;
+    std::unique_ptr<BackupsController> mBackupsController;
     int mConflictsSize;
     QString mConflictsNotificationText;
     Qt::CheckState mCheckAllState;
+    int mGlobalError;
 
     void populateDefaultDirectoryList();
 
@@ -123,9 +140,6 @@ private:
 
     bool selectIfExistsInsertion(const QString& inputPath);
 
-    QString getToolTipErrorText(const QString& folder,
-                                const QString& existingPath) const;
-
     bool folderContainsOther(const QString& folder,
                              const QString& other) const;
 
@@ -134,25 +148,9 @@ private:
 
     QModelIndex getModelIndex(QList<BackupFolder>::iterator item);
 
-    void reviewOthers(const QString& folder,
-                      bool enable);
-
-    void reviewOthersWhenRemoved(const QString& folder);
-
-    bool existAnotherBackupFolderRelated(const QString& folder,
-                                         const QString& selectedFolder) const;
-
-    void updateBackupFolder(QList<BackupFolder>::iterator item,
-                            bool selectable,
-                            const QString& message);
-
-    void reviewAllBackupFolders();
-
     int getRow(const QString& folder);
 
     void setAllSelected(bool selected);
-
-    void reviewOtherBackupErrors(const QString& name);
 
     void checkRemoteDuplicatedBackups(const QSet<QString>& candidateSet);
 
@@ -161,15 +159,23 @@ private:
 
     void reviewConflicts();
 
+    void changeConflictsNotificationText(const QString& text);
+
+    bool existOtherRelatedFolder(const int currentIndex);
+
+    bool existsFolder(const QString& inputPath);
+
+    void clean();
+
+    void setGlobalError(BackupErrorCode error);
+
 private slots:
 
     void onSyncRemoved(std::shared_ptr<SyncSettings> syncSettings);
 
-    void onSyncChanged(std::shared_ptr<SyncSettings> syncSettings);
+    void onBackupsCreationFinished(bool success, const QString& message);
 
-    void clean();
-
-    void update(const QString& path, int errorCode);
+    void onBackupFinished(const QString& folder, bool done);
 
 };
 

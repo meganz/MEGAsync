@@ -4,14 +4,12 @@ BackupsController::BackupsController(QObject *parent)
     : QObject(parent)
     , mBackupController(new SyncController())
 {
-    mRemoteBackups = SyncInfo::getRemoteBackupFolderNames();
-
     connect(mBackupController, &SyncController::syncAddStatus, this, &BackupsController::onBackupAddRequestStatus);
 }
 
 QSet<QString> BackupsController::getRemoteFolders() const
 {
-    return mRemoteBackups;
+    return SyncInfo::getRemoteBackupFolderNames();
 }
 
 void BackupsController::addBackups(const BackupInfoList& backupsInfoList)
@@ -21,7 +19,7 @@ void BackupsController::addBackups(const BackupInfoList& backupsInfoList)
         return;
     }
 
-    mBackupsProcessed = 0;
+    mBackupsProcessedWithError = 0;
     mBackupsToDoSize = backupsInfoList.size();
     mBackupsToDoList = backupsInfoList;
     mBackupController->addBackup(mBackupsToDoList.first().first, mBackupsToDoList.first().second);
@@ -31,15 +29,13 @@ void BackupsController::onBackupAddRequestStatus(int errorCode,
                                           const QString& errorMsg,
                                           const QString& name)
 {
+    Q_UNUSED(errorMsg)
+
     bool found = false;
     auto it = mBackupsToDoList.constBegin();
-    QString backupName(QString::fromUtf8(""));
     while(!found && it != mBackupsToDoList.constEnd())
     {
-        if((found = (it->first == name)))
-        {
-            backupName = it->second;
-        }
+        found = (it->first == name);
         it++;
     }
 
@@ -48,18 +44,37 @@ void BackupsController::onBackupAddRequestStatus(int errorCode,
         return;
     }
 
-    mBackupsProcessed++;
-
-    if(errorCode == 0)
+    if(errorCode == mega::MegaError::API_OK)
     {
-        mBackupsToDoList.removeFirst();
-        if(mBackupsToDoList.size() > 0)
-        {
-            mBackupController->addBackup(mBackupsToDoList.first().first, mBackupsToDoList.first().second);
-        }
+        emit backupFinished(mBackupsToDoList.first().first, true);
+    }
+    else
+    {
+        emit backupFinished(mBackupsToDoList.first().first, false);
+        mBackupsProcessedWithError++;
     }
 
-    if(mBackupsToDoList.size() == 0 || mBackupsProcessed == mBackupsToDoSize) {
-        emit backupsCreationFinished();
+    mBackupsToDoList.removeFirst();
+    if(mBackupsToDoList.size() > 0)
+    {
+        mBackupController->addBackup(mBackupsToDoList.first().first, mBackupsToDoList.first().second);
+    }
+
+    if(mBackupsToDoList.size() == 0)
+    {
+        QString message(QString::fromUtf8(""));
+        if(errorCode != mega::MegaError::API_OK)
+        {
+            if(mBackupsProcessedWithError == 1)
+            {
+                message = tr("Folder wasn't backed up. Try again.");
+            }
+            else
+            {
+                message = tr("These folders weren't backed up. Try again.");
+            }
+        }
+
+        emit backupsCreationFinished(mBackupsProcessedWithError == 0, message);
     }
 }

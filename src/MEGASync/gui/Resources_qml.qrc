@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
+        <file>images/qml/alert_circle.svg</file>
         <file>images/qml/alert_triangle.svg</file>
         <file>images/qml/arrow_right.svg</file>
         <file>images/qml/check.svg</file>

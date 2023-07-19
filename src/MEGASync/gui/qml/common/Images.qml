@@ -15,6 +15,7 @@ QtObject {
     //   Image paths - Sorted alphabetically by dir
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
+    readonly property url alertCircle: imagesPath + "alert_circle.svg"
     readonly property url alertTriangle: imagesPath + "alert_triangle.svg"
     readonly property url arrowRight: imagesPath + "arrow_right.svg"
     readonly property url check: imagesPath + "check.svg"

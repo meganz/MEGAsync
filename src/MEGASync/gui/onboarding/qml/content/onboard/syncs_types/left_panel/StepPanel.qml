@@ -170,6 +170,76 @@ Rectangle {
             }
         },
         State {
+            name: step4Warning
+            PropertyChanges {
+                target: step1_computerName;
+                toState: Step.ToStates.Done;
+            }
+            PropertyChanges {
+                target: step2_line;
+                color: Styles.iconButton;
+            }
+            PropertyChanges {
+                target: step2_installationType;
+                toState: Step.ToStates.CurrentSubstep;
+            }
+            PropertyChanges {
+                target: step3_line;
+                color: Styles.iconButton;
+                visible: true;
+            }
+            PropertyChanges {
+                target: step3_content;
+                toState: SubStep.ToStates.Done;
+                visible: true;
+            }
+            PropertyChanges {
+                target: step4_line;
+                color: Styles.iconButton;
+                visible: true;
+            }
+            PropertyChanges {
+                target: step4_content;
+                toState: SubStep.ToStates.Warning;
+                visible: true;
+            }
+        },
+        State {
+            name: step4Error
+            PropertyChanges {
+                target: step1_computerName;
+                toState: Step.ToStates.Done;
+            }
+            PropertyChanges {
+                target: step2_line;
+                color: Styles.iconButton;
+            }
+            PropertyChanges {
+                target: step2_installationType;
+                toState: Step.ToStates.CurrentSubstep;
+            }
+            PropertyChanges {
+                target: step3_line;
+                color: Styles.iconButton;
+                visible: true;
+            }
+            PropertyChanges {
+                target: step3_content;
+                toState: SubStep.ToStates.Done;
+                visible: true;
+            }
+            PropertyChanges {
+                target: step4_line;
+                color: Styles.iconButton;
+                visible: true;
+            }
+            PropertyChanges {
+                target: step4_content;
+                toState: SubStep.ToStates.Error;
+                visible: true;
+            }
+        },
+        State {
             name: stepAllDone
             PropertyChanges {
                 target: step1_computerName;

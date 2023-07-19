@@ -7,80 +7,81 @@ ListModel {
     enum BackupErrorCode {
         None = 0,
         DuplicatedName = 1,
-        ExistsRemote = 2
+        ExistsRemote = 2,
+        SyncConflict = 3,
+        PathRelation = 4,
+        SDKCreationError = 5
     }
 
-    property string mTotalSize: "24.7 MB"
-    property int mCheckAllState: Qt.Unchecked
-    property bool mExistConflicts: false
-    property string mConflictsNotificationText: ""
+    function insert(folder) {
+        console.debug("mockup BackupsModel -> insert() : folder -> " + folder);
+    }
+
+    function check() {
+        console.debug("mockup BackupsModel -> check()");
+    }
+
+    function rename(folder, name) {
+        console.debug("mockup BackupsModel -> rename() : folder -> " + folder
+                      + " : name -> " + name);
+    }
+
+    function remove(folder) {
+        console.debug("mockup BackupsModel -> remove() : folder -> " + folder);
+    }
+
+    function change(oldFolder, newFolder) {
+        console.debug("mockup BackupsModel -> change() : oldFolder -> " + oldFolder
+                      + " : newFolder -> " + newFolder);
+    }
 
     signal backupsCreationFinished()
     signal checkAllStateChanged()
     signal existConfilctsChanged()
+    signal noneSelected()
 
-    function insertFolder(folder) {
-        console.debug("mockup BackupsModel::insertFolder() : folder -> " + folder);
-    }
-
-    function checkBackups() {
-        console.debug("mockup BackupsModel::checkBackups()");
-    }
-
-    function renameBackup(folder, name) {
-        console.debug("mockup BackupsModel::renameBackup() : folder -> "
-                    + folder + " : name -> " + name);
-    }
-
-    function remove(folder) {
-        console.debug("mockup BackupsModel::remove(folder) : folder -> " + folder);
-    }
+    property string mTotalSize: "24.7 MB"
+    property int mCheckAllState: Qt.Unchecked
+    property bool mExistConflicts: true
+    property string mConflictsNotificationText: "This is an error text"
 
     ListElement {
         mName: "Desktop"
-        toolTip: "C:\\Users\\mega\\Desktop"
         mFolder: "C:\\Users\\mega\\Desktop"
         mSize: "30 MB"
         mSelected: false
         mSelectable: true
         mDone: false
-        mError: 0
-        mErrorVisible: false
+        mError: 1
     }
 
     ListElement {
-        mName: "Documents"
-        toolTip: "C:\\Users\\mega\\Documents"
-        mFolder: "C:\\Users\\mega\\Documents"
-        mSize: "2.3 GB"
+        mName: "Documents12345678910111213141516171819202122232425262728293031323334353637383940"
+        mFolder: "C:\\Users\\mega\\Documents12345678910111213141516171819202122232425262728293031323334353637383940"
+        mSize: "2.3 GB12345678910111213141516171819202122232425262728293031323334353637383940"
         mSelected: false
         mSelectable: true
         mDone: false
-        mError: 0
-        mErrorVisible: false
+        mError: 1
     }
 
     ListElement {
         mName: "Music"
-        toolTip: "C:\\Users\\mega\\Music"
         mFolder: "C:\\Users\\mega\\Music"
         mSize: "24.692 KB"
         mSelected: false
         mSelectable: true
         mDone: false
         mError: 0
-        mErrorVisible: false
     }
 
     ListElement {
         mName: "Images"
-        toolTip: "C:\\Users\\mega\\Images"
         mFolder: "C:\\Users\\mega\\Images"
         mSize: "1 KB"
         mSelected: false
         mSelectable: true
         mDone: false
         mError: 0
-        mErrorVisible: false
     }
 }

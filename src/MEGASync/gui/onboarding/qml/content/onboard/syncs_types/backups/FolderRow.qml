@@ -16,6 +16,7 @@ import Onboard 1.0
 
 // C++
 import BackupsModel 1.0
+import ChooseLocalFolder 1.0
 
 Rectangle {
     id: root
@@ -23,6 +24,9 @@ Rectangle {
     readonly property int totalHeight: 32
     readonly property int horizontalMargin: 8
     readonly property int internalMargin: 8
+    readonly property int extraMarginWhenHintShowed: 5
+
+    property bool editMode: false
 
     height: totalHeight
     anchors.right: parent.right
@@ -48,15 +52,22 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
             anchors.fill: parent
             sourceComponent: {
-                if(backupsProxyModel.selectedFilterEnabled) {
-                    if(mError !== BackupsModel.DuplicatedName
-                            && mError !== BackupsModel.ExistsRemote) {
-                        return confirmContent;
-                    } else {
-                        return conflictContent;
-                    }
-                } else {
+                if(!backupsProxyModel.selectedFilterEnabled
+                    || mError === BackupsModel.BackupErrorCode.None) {
                     return selectContent;
+                } else {
+                    if(mError === BackupsModel.BackupErrorCode.SyncConflict
+                        || mError === BackupsModel.BackupErrorCode.PathRelation
+                        || mError === BackupsModel.BackupErrorCode.SDKCreation) {
+                        return conflictContent;
+                    } else {
+                        // DuplicatedName or ExistsRemote errors
+                        if(editMode) {
+                            return editContent;
+                        } else {
+                            return conflictContent;
+                        }
+                    }
                 }
             }
         }
@@ -66,91 +77,84 @@ Rectangle {
         id: selectContent
 
         Item {
+            id: contentRoot
+
+            readonly property int contentMargin: 8
+            readonly property int checkboxWidth: 16
+            readonly property int checkboxSpacing: 12
+            readonly property int imageTextSpacing: 8
+            readonly property int imageWidth: 16
+            readonly property int textWidth: 248
+            readonly property int sizeTextWidth: 50
+
             anchors.fill: parent
+            anchors.margins: contentMargin
 
-            RowLayout {
-                anchors.fill: parent
+            Row {
+                anchors.left: parent.left
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                spacing: checkboxSpacing
 
-                RowLayout {
-                    Layout.alignment: Qt.AlignLeft
+                MegaCheckBoxes.CheckBox {
+                    id: checkbox
 
-                    MegaCheckBoxes.CheckBox {
-                        Layout.leftMargin: 8
-                        Layout.preferredWidth: 16
-                        Layout.preferredHeight: 16
-                        checked: mSelected
-                        checkable: mSelectable
-                        enabled: mSelectable
-                    }
+                    width: backupsProxyModel.selectedFilterEnabled ? 0 : contentRoot.checkboxWidth
+                    checked: mSelected
+                    visible: !backupsProxyModel.selectedFilterEnabled
+                }
+
+                Row {
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
+                    spacing: contentRoot.imageTextSpacing
 
                     MegaImages.SvgImage {
-                        Layout.leftMargin: 18
-                        source: mError ? Images.alertTriangle : Images.folder
-                        sourceSize: Qt.size(14, 14)
-                        color: mError ? Styles.textWarning : color
-                        opacity: mSelectable ? 1.0 : 0.3
+                        anchors.top: parent.top
+                        anchors.bottom: parent.bottom
+                        source: Images.folder
+                        sourceSize: Qt.size(contentRoot.imageWidth, contentRoot.imageWidth)
+                        //opacity: mSelectable ? 1.0 : 0.3
                     }
 
                     MegaTexts.Text {
-                        Layout.leftMargin: 13
-                        Layout.maximumWidth: 345
+                        anchors.top: parent.top
+                        anchors.bottom: parent.bottom
+                        width: contentRoot.width - checkbox.width - contentRoot.checkboxSpacing
+                               - contentRoot.imageTextSpacing - contentRoot.imageWidth - contentRoot.sizeTextWidth
                         maximumLineCount: 1
+                        font.pixelSize: MegaTexts.Text.Size.Small
                         wrapMode: Text.WrapAnywhere
                         text: mName
+                        horizontalAlignment: Qt.AlignLeft
+                        verticalAlignment: Qt.AlignVCenter
                     }
-                }
-
-                MegaTexts.Text {
-                    Layout.alignment: Qt.AlignRight
-                    Layout.rightMargin: 8
-                    text: mSize
-                    font.pixelSize: MegaTexts.Text.Size.Small
-                }
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                hoverEnabled: true
-                cursorShape: Qt.PointingHandCursor
-                onClicked: {
-                    mSelected = !mSelected;
-                }
-            }
-        }
-    }
-
-    Component {
-        id: confirmContent
-
-        RowLayout {
-
-            RowLayout {
-                Layout.alignment: Qt.AlignLeft
-
-                MegaImages.SvgImage {
-                    Layout.leftMargin: 8
-                    Layout.preferredWidth: 16
-                    source: mError !== 0 ? Images.alertTriangle : Images.folder
-                    sourceSize: Qt.size(14, 14)
-                    color: mError ? Styles.textWarning : color
-                    opacity: mSelectable ? 1.0 : 0.3
-                }
-
-                MegaTexts.Text {
-                    Layout.leftMargin: 13
-                    Layout.maximumWidth: 345
-                    Layout.preferredWidth: 345
-                    maximumLineCount: 1
-                    wrapMode: Text.WrapAnywhere
-                    text: mName
                 }
             }
 
             MegaTexts.Text {
-                Layout.alignment: Qt.AlignRight
-                Layout.rightMargin: 8
+                width: contentRoot.sizeTextWidth
+                anchors.right: parent.right
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
                 text: mSize
                 font.pixelSize: MegaTexts.Text.Size.Small
+                horizontalAlignment: Qt.AlignRight
+                verticalAlignment: Qt.AlignVCenter
+                maximumLineCount: 1
+                wrapMode: Text.WrapAnywhere
+                color: enabled ? Styles.textSecondary : Styles.textDisabled
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                cursorShape: backupsProxyModel.selectedFilterEnabled
+                             ? Qt.ArrowCursor
+                             : Qt.PointingHandCursor
+                onClicked: {
+                    mSelected = !mSelected;
+                }
+                enabled: !backupsProxyModel.selectedFilterEnabled
             }
         }
     }
@@ -158,63 +162,113 @@ Rectangle {
     Component {
         id: conflictContent
 
-        RowLayout {
+        Item {
+            id: contentRoot
 
-            RowLayout {
-                Layout.alignment: Qt.AlignLeft
-                spacing: 8
+            readonly property int contentMargin: 8
+            readonly property int imageTextSpacing: 8
+            readonly property int imageWidth: 16
+            readonly property int textWidth: 248
+            readonly property int sizeTextWidth: 50
+
+            property bool showChange: mError === BackupsModel.BackupErrorCode.SyncConflict
+                                        || mError === BackupsModel.BackupErrorCode.PathRelation
+                                        || mError === BackupsModel.BackupErrorCode.SDKCreation
+
+            Row {
+                id: imageText
+
+                anchors.left: parent.left
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                anchors.leftMargin: contentRoot.contentMargin
+                anchors.topMargin: contentRoot.contentMargin
+                anchors.bottomMargin: contentRoot.contentMargin
+                spacing: imageTextSpacing
 
                 MegaImages.SvgImage {
-                    Layout.leftMargin: 8
-                    source: Images.alertTriangle
-                    sourceSize: Qt.size(14, 14)
-                    color: Styles.textWarning
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
+                    source: mError === BackupsModel.BackupErrorCode.SDKCreation
+                            ? Images.alertCircle
+                            : Images.alertTriangle
+                    sourceSize: Qt.size(contentRoot.imageWidth, contentRoot.imageWidth)
+                    color: mError === BackupsModel.BackupErrorCode.SDKCreation
+                           ? Styles.textError
+                           : Styles.textWarning
+                    //opacity: mSelectable ? 1.0 : 0.3
                 }
 
                 MegaTexts.Text {
-                    Layout.maximumWidth: 300
-                    Layout.preferredWidth: 300
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
+                    width: contentRoot.width - contentRoot.imageTextSpacing - contentRoot.imageWidth
+                            - buttonRow.width - 8
                     maximumLineCount: 1
+                    font.pixelSize: MegaTexts.Text.Size.Small
                     wrapMode: Text.WrapAnywhere
                     text: mName
+                    horizontalAlignment: Qt.AlignLeft
+                    verticalAlignment: Qt.AlignVCenter
+                    color: mError === BackupsModel.BackupErrorCode.SDKCreation
+                           ? Styles.textError
+                           : Styles.textWarning
+                }
+            }
+            MouseArea {
+                hoverEnabled: true
+                anchors.fill: imageText
 
-                    MouseArea {
-                        id: conflictMouseArea
+                MegaToolTips.ToolTip {
+                    visible: parent.containsMouse
+                    leftIconSource: Images.pc
+                    text: mFolder
+                    delay: 500
+                    timeout: 5000
 
-                        anchors.fill: parent
-                        hoverEnabled: true
-                        cursorShape: Qt.PointingHandCursor
-                        onClicked: {
-                            content.sourceComponent = editContent;
+                    onVisibleChanged: {
+                        if(visible) {
+                            if((parent.mouseX + width) > 363) {
+                                x = 363 - width;
+                            } else {
+                                x = parent.mouseX;
+                            }
+                            y = parent.mouseY - height - 2;
+                        }
+                    }
+                }
+            }
+
+            Row {
+                id: buttonRow
+
+                anchors.right: parent.right
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+
+                MegaButtons.SecondaryButton {
+                    text: contentRoot.showChange ? OnboardingStrings.changeFolder : OnboardingStrings.rename
+                    icons.position: MegaButtons.Icon.Position.LEFT
+                    icons.source: contentRoot.showChange ? "" : Images.edit
+                    onClicked: {
+                        if(contentRoot.showChange) {
+                            folderDialog.openFolderSelector();
+                        } else {
+                            editMode = true;
+                        }
+                    }
+                    sizes: MegaButtons.SmallSizes {}
+
+                    ChooseLocalFolder {
+                        id: folderDialog
+
+                        onFolderChanged: {
+                            BackupsModel.change(mFolder, folderDialog.getFolder());
                         }
                     }
                 }
 
-                MegaToolTips.ToolTip {
-                    visible: conflictMouseArea.containsMouse
-                    leftIconSource: Images.pc
-                    text: toolTip
-                    delay: 500
-                    timeout: 5000
-                }
-            }
-
-            RowLayout {
-                Layout.alignment: Qt.AlignRight
-                spacing: 4
-
                 MegaButtons.SecondaryButton {
-                    text: OnboardingStrings.rename
-                    icons.position: MegaButtons.Icon.Position.LEFT
-                    icons.source: Images.edit
-                    onClicked: {
-                        content.sourceComponent = editContent;
-                    }
-                    sizes: MegaButtons.SmallSizes {}
-                }
-
-                MegaButtons.SecondaryButton {
-                    Layout.rightMargin: 8
                     icons.source: Images.trash
                     onClicked: {
                         BackupsModel.remove(mFolder);
@@ -222,44 +276,64 @@ Rectangle {
                     sizes: MegaButtons.SmallSizes {}
                 }
             }
+
         }
     }
 
     Component {
         id: editContent
 
-        RowLayout {
+        Row {
+            spacing: 2
+
             MegaTextFields.TextField {
                 id: editTextField
 
-                Layout.preferredWidth: 313
+                width: parent.width - parent.spacing - doneButton.width
                 text: mName
                 leftIcon.source: Images.edit
                 leftIcon.color: Styles.iconSecondary
-                error: mErrorVisible
-                hint.visible: mErrorVisible
-                hint.text: {
-                    if(mError === BackupsModel.ExistsRemote) {
-                        return OnboardingStrings.confirmBackupErrorRemote;
-                    }
-                    if(mError === BackupsModel.DuplicatedName) {
-                        return OnboardingStrings.confirmBackupErrorDuplicated;
-                    }
-                    return "";
-                }
+                error: hint.visible
                 sizes: MegaTextFields.SmallSizes {}
             }
 
             MegaButtons.PrimaryButton {
+                id: doneButton
+
                 text: OnboardingStrings.done
+                sizes: MegaButtons.SmallSizes {}
                 onClicked: {
-                    if(BackupsModel.renameBackup(mFolder, editTextField.text)) {
-                        mName = editTextField.text;
-                        content.sourceComponent = confirmContent;
+                    editTextField.hint.visible = false;
+                    var error = BackupsModel.rename(mFolder, editTextField.text);
+                    switch(error) {
+                        case BackupsModel.BackupErrorCode.None:
+                        case BackupsModel.BackupErrorCode.SyncConflict:
+                        case BackupsModel.BackupErrorCode.PathRelation:
+                        case BackupsModel.BackupErrorCode.SDKCreation:
+                            root.height = root.totalHeight;
+                            break;
+                        case BackupsModel.BackupErrorCode.ExistsRemote:
+                            editTextField.hint.text =
+                                OnboardingStrings.confirmBackupErrorRemote.replace(/"([^"]*)"/g,
+                                                                                   '"' + editTextField.text + '"');
+                            editTextField.hint.visible = true;
+                            root.height = editTextField.height + root.extraMarginWhenHintShowed;
+                            break;
+                        case BackupsModel.BackupErrorCode.DuplicatedName:
+                            editTextField.hint.text =
+                                OnboardingStrings.confirmBackupErrorDuplicated.replace(/"([^"]*)"/g,
+                                                                                       '"' + editTextField.text + '"');
+                            editTextField.hint.visible = true;
+                            root.height = editTextField.height + root.extraMarginWhenHintShowed;
+                            break;
+                        default:
+                            root.height = root.totalHeight;
+                            console.error("FolderRow: Unexpected error after rename -> " + error);
+                            break;
                     }
                 }
-                sizes: MegaButtons.SmallSizes {}
             }
         }
     }
+
 }

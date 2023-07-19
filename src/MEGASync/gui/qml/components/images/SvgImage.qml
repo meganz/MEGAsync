@@ -22,11 +22,12 @@ Item {
 
     Rectangle {
         id: iconFill
+
         anchors.fill: parent
         visible: false
         onColorChanged: {
-            opacityLoader.sourceComponent = opacityMask
-            image.visible = false
+            opacityLoader.sourceComponent = opacityMask;
+            image.visible = false;
         }
     }
 
@@ -37,12 +38,15 @@ Item {
         anchors.centerIn: parent
     }
 
-    Loader{
+    Loader {
         id: opacityLoader
+
         anchors.fill: iconFill
     }
-    Component{
+
+    Component {
         id: opacityMask
+
         OpacityMask {
             anchors.fill: parent
             source: iconFill
