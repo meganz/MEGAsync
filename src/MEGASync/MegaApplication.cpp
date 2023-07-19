@@ -485,7 +485,7 @@ void MegaApplication::initialize()
     // version not using the mustDeleteSdkCacheAtStartup flag, did not restart
     // from the settings dialog to activate the new exclusions, and the app got (auto) updated.
     if (preferences->mustDeleteSdkCacheAtStartup()
-        || (prevVersion <= Preferences::LAST_VERSION_WITHOUT_deleteSdkCacheAtStartup_FLAG
+        || (updated && prevVersion <= Preferences::LAST_VERSION_WITHOUT_deleteSdkCacheAtStartup_FLAG
             && preferences->isCrashed()))
     {
         preferences->setDeleteSdkCacheAtStartup(false);
