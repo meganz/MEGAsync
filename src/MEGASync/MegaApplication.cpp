@@ -3281,6 +3281,11 @@ void MegaApplication::logBatchStatus(const char* tag)
 
 void MegaApplication::enableTransferActions(bool enable)
 {
+    if (appfinished)
+    {
+        return;
+    }
+
 #ifdef _WIN32
     if(updateAvailable && windowsUpdateAction)
     {
@@ -3297,6 +3302,7 @@ void MegaApplication::enableTransferActions(bool enable)
     {
         updateAction->setEnabled(enable);
     }
+
     guestSettingsAction->setEnabled(enable);
     importLinksAction->setEnabled(enable);
     uploadAction->setEnabled(enable);
