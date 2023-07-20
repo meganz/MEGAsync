@@ -7,9 +7,9 @@ EphemeralCredentials::EphemeralCredentials()
 }
 
 EphemeralCredentials::EphemeralCredentials(const EphemeralCredentials &cred)
+    : email(cred.email)
+    , sessionId(cred.sessionId)
 {
-    this->email = cred.email;
-    this->sessionId = cred.sessionId;
 }
 
 bool EphemeralCredentials::operator==(const EphemeralCredentials& cred) const
