@@ -342,6 +342,7 @@ bool StalledIssueDelegate::eventFilter(QObject *object, QEvent *event)
 void StalledIssueDelegate::destroyEditor(QWidget*, const QModelIndex&) const
 {
     //Do not destroy it the editor, as it is also used to paint the row and it is saved in a cache
+    mEditor = nullptr;
 }
 
 void StalledIssueDelegate::onHoverEnter(const QModelIndex &index)

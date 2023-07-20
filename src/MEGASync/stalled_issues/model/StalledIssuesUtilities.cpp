@@ -57,6 +57,10 @@ void StalledIssuesSyncDebrisUtilities::moveToSyncDebris(const QList<mega::MegaHa
                         return;
                     }
                 }
+                else
+                {
+                    mHandles.clear();
+                }
 
                 delete this;
             }));
@@ -87,6 +91,10 @@ void StalledIssuesSyncDebrisUtilities::moveToSyncDebris(const QList<mega::MegaHa
                     moveToDateFolder(std::move(newFolder),fullDuplicatedFolderPath);
                     return;
                 }
+            }
+            else
+            {
+                mHandles.clear();
             }
 
             delete this;
