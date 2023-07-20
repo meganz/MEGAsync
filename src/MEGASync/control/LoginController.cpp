@@ -330,8 +330,10 @@ void LoginController::onAccountCreationCancel(mega::MegaRequest *request, mega::
     Q_UNUSED(request)
     Q_UNUSED(e)
     mPreferences->removeEphemeralCredentials();
-    mEmail = QString();
-    mPassword = QString();
+    mEmail.clear();
+    mPassword.clear();
+    mName.clear();
+    mLastName.clear();
     emit emailChanged();
     emit accountCreateCancelled();
 }
