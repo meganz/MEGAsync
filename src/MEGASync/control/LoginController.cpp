@@ -531,11 +531,11 @@ void LoginController::loadSyncExclusionRules(const QString& email)
 
     mMegaApi->setExcludedNames(&vExclusions);
 
-    QStringList exclusionPaths = mPreferences->getExcludedSyncPaths();
+    const QStringList exclusionPaths = mPreferences->getExcludedSyncPaths();
     std::vector<std::string> vExclusionPaths;
-    for (int i = 0; i < exclusionPaths.size(); i++)
+    for (const QString& exclusionPath : exclusionPaths)
     {
-        vExclusionPaths.push_back(exclusionPaths[i].toUtf8().constData());
+        vExclusionPaths.push_back(exclusionPath.toStdString());
     }
     mMegaApi->setExcludedPaths(&vExclusionPaths);
 
