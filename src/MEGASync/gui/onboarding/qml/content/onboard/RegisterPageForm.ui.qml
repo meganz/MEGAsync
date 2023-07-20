@@ -7,7 +7,6 @@ import QtQuick.Layouts 1.12
 import Components.Buttons 1.0 as MegaButtons
 import Components.Texts 1.0 as MegaTexts
 import Components.Views 1.0 as MegaViews
-import Components.TextFields 1.0 as MegaTextFields
 import Common 1.0
 
 // Local

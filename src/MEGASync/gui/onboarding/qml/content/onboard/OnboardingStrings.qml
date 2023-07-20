@@ -110,5 +110,7 @@ QtObject {
     readonly property var upperAndLowerCase: qsTr("Upper and lower case letters")
     readonly property var numberOrSpecialChar: qsTr("At least one number or special character")
     readonly property var longerPassword: qsTr("A longer password")
+    readonly property var minimum8Chars: qsTr("Enter a minimum of 8 characters.")
+    readonly property var passwordEasilyGuessed: qsTr("Your password could be easily guessed. Try making it stronger.")
 
 }

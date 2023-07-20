@@ -98,7 +98,7 @@ Column {
     Column {
         anchors.left: parent.left
         anchors.right: parent.right
-        spacing: 12
+        spacing: 14
 
         Column {
             anchors.left: parent.left
@@ -156,8 +156,36 @@ Column {
 
             anchors.left: parent.left
             anchors.right: parent.right
-            showHint: true
             title: OnboardingStrings.password
+
+            textField.onTextChanged: {
+                passwordInfoPopup.content.checkPasswordConditions(text);
+            }
+
+            textField.onFocusChanged: {
+                if (textField.focus) {
+                    passwordInfoPopup.open();
+                    hint.visible = false;
+                } else {
+                    if(textField.text.length < 8) {
+                        hint.text = OnboardingStrings.minimum8Chars;
+                        hint.styles.textColor = Styles.textError;
+                        hint.visible = true;
+                    } else if(!passwordInfoPopup.content.allChecked()) {
+                        hint.text = OnboardingStrings.passwordEasilyGuessed;
+                        hint.styles.textColor = Styles.textWarning;
+                        hint.visible = true;
+                    }
+                    passwordInfoPopup.close();
+                }
+            }
+
+            PasswordInfoPopUp {
+                id: passwordInfoPopup
+
+                x: -335
+                y: -78
+            }
         }
 
         MegaTextFields.PasswordTextField {
@@ -167,7 +195,6 @@ Column {
             anchors.right: parent.right
             title: OnboardingStrings.confirmPassword
             hint.icon: Images.key
-            showHint: false
         }
     }
 
