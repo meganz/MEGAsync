@@ -7,6 +7,7 @@
 #include <QString>
 #include <QFutureWatcher>
 #include <QFileInfo>
+#include <QReadWriteLock>
 
 #include <memory>
 
@@ -30,13 +31,12 @@ signals:
     void actionFinished();
     void remoteActionFinished(mega::MegaHandle handle);
 
-private slots:
-    void onIgnoreFileFinished();
-
 private:
     static QIcon getFileIcon(bool isFile, const QFileInfo &fileInfo, bool hasProblem);
 
-    QFutureWatcher<void> mIgnoreWatcher;
+    mutable QReadWriteLock  mIgnoreMutex;
+    QStringList mIgnorePaths;
+
     QList<mega::MegaHandle> mRemoteHandles;
 };
 

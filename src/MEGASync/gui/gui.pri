@@ -60,6 +60,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/GuiUtilities.cpp \
     $$PWD/CancelConfirmWidget.cpp \
     $$PWD/RemoteItemUi.cpp \
+    $$PWD/WordWrapLabel.cpp \
     $$PWD/NodeNameSetterDialog/NodeNameSetterDialog.cpp \
     $$PWD/NodeNameSetterDialog/NewFolderDialog.cpp \
     $$PWD/NodeNameSetterDialog/RenameNodeDialog.cpp \   
@@ -140,6 +141,7 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/GuiUtilities.h \
     $$PWD/CancelConfirmWidget.h \
     $$PWD/RemoteItemUi.h \
+    $$PWD/WordWrapLabel.h \
     $$PWD/NodeNameSetterDialog/NodeNameSetterDialog.h \
     $$PWD/NodeNameSetterDialog/NewFolderDialog.h \
     $$PWD/NodeNameSetterDialog/RenameNodeDialog.h \

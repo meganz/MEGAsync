@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>366</width>
-    <height>67</height>
+    <width>454</width>
+    <height>60</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -55,7 +55,7 @@
   font-weight: normal;
 }
 
-#actionButton, #ignoreFileButton
+#actionButton, #ignoreFileButton, #multipleActionButton
 {
    font-size:14px;
    background-color: #FCFCFC;
@@ -64,6 +64,16 @@
    border: 1px solid rgba(0,0,0,0.15);
    padding-left: 16px;
    padding-right: 16px;
+}
+
+#actionButton:hover:enabled, #ignoreFileButton::hover:enabled,  #multipleActionButton::hover:enabled
+{
+    background-color: #E2E2E2;
+}
+
+#actionButton:pressed:enabled, #ignoreFileButton::pressed:enabled,  #multipleActionButton::pressed:enabled
+{
+    background-color: #C9C9C9;
 }</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="1,0">
@@ -241,16 +251,7 @@
                </sizepolicy>
               </property>
               <property name="styleSheet">
-               <string notr="true">#leftTitleText, #rightTitleText
-{
-    color: #333333;
-    font-size: 13px;
-    line-height: 16px;
-    font-weight: normal;
-    font-family: Lato;
-}
-
-#fileNameTitle
+               <string notr="true">#fileNameTitle
 {
      color: #333333;
      font-size: 13px;
@@ -259,7 +260,7 @@
 }
 </string>
               </property>
-              <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,0,0,0">
+              <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0">
                <property name="spacing">
                 <number>3</number>
                </property>
@@ -276,60 +277,14 @@
                 <number>0</number>
                </property>
                <item>
-                <widget class="QLabel" name="leftTitleText">
-                 <property name="text">
-                  <string/>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="fileNameTitle">
+                <widget class="WordWrapLabel" name="fileNameTitle">
                  <property name="sizePolicy">
-                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                    <horstretch>0</horstretch>
                    <verstretch>0</verstretch>
                   </sizepolicy>
                  </property>
-                 <property name="font">
-                  <font>
-                   <family>Lato 13</family>
-                   <pointsize>-1</pointsize>
-                   <bold>true</bold>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
                 </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="rightTitleText">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                 <property name="textFormat">
-                  <enum>Qt::AutoText</enum>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <spacer name="horizontalSpacer_2">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>0</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                </spacer>
                </item>
               </layout>
              </widget>
@@ -345,7 +300,7 @@
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
-           <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1">
+           <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0">
             <property name="spacing">
              <number>3</number>
             </property>
@@ -362,15 +317,12 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="QLabel" name="errorDescriptionText">
+             <widget class="WordWrapLabel" name="errorDescriptionText">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
-              </property>
-              <property name="text">
-               <string/>
               </property>
              </widget>
             </item>
@@ -435,6 +387,39 @@
        </widget>
       </item>
       <item>
+       <widget class="QPushButton" name="multipleActionButton">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="layoutDirection">
+         <enum>Qt::RightToLeft</enum>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normalon>:/images/node_selector/Icon-Small-Arrow-Down.png</normalon>
+         </iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>16</width>
+          <height>16</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="ignoreFileButton">
         <property name="minimumSize">
          <size>
@@ -493,6 +478,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>WordWrapLabel</class>
+   <extends>QTextEdit</extends>
+   <header>WordWrapLabel.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

@@ -290,6 +290,11 @@ const bool Preferences::defaultShowNotifications = true;
 const bool Preferences::defaultDeprecatedNotifications      = true;
 const QString Preferences::showDeprecatedNotificationsKey   = QString::fromAscii("showNotifications");
 
+//Stalled Issues
+const Preferences::StalledIssuesModeType Preferences::defaultStalledIssuesMode = Preferences::StalledIssuesModeType::None;
+const QString Preferences::stalledIssuesModeKey   = QString::fromAscii("stalledIssuesSmartMode");
+//End of Stalled Issues
+
 const QString Preferences::accountTypeKey           = QString::fromAscii("accountType");
 const QString Preferences::proExpirityTimeKey       = QString::fromAscii("proExpirityTime");
 const QString Preferences::startOnStartupKey        = QString::fromAscii("startOnStartup");
@@ -1359,6 +1364,19 @@ QString Preferences::notificationsTypeToString(NotificationsTypes type)
 {
     QMetaEnum metaEnum = QMetaEnum::fromType<NotificationsTypes>();
     return QString::fromUtf8(metaEnum.valueToKey(notificationsTypeUT(type)));
+}
+
+/************ STALLED ISSUES **********************************/
+
+Preferences::StalledIssuesModeType Preferences::stalledIssueMode()
+{
+    auto value = getValueConcurrent<int>(stalledIssuesModeKey, static_cast<int>(defaultStalledIssuesMode));
+    return static_cast<StalledIssuesModeType>(value);
+}
+
+void Preferences::setStalledIssueMode(StalledIssuesModeType value)
+{
+    setValueAndSyncConcurrent(stalledIssuesModeKey, static_cast<int>(value));
 }
 
 /************ END OF NOTIFICATIONS GETTERS/SETTERS ************/

@@ -7,6 +7,7 @@
 #include <QMap>
 #include <QModelIndex>
 #include <QPointer>
+#include <QStyledItemDelegate>
 
 class StalledIssueHeader;
 class StalledIssueHeaderCase;
@@ -17,10 +18,10 @@ class StalledIssueBaseDelegateWidget;
 class StalledIssuesDelegateWidgetsCache
 {
 public:
-    StalledIssuesDelegateWidgetsCache();
+    StalledIssuesDelegateWidgetsCache(QStyledItemDelegate* delegate);
 
-    StalledIssueHeader* getStalledIssueHeaderWidget(const QModelIndex& index, QWidget *parent, const StalledIssueVariant &issue, bool isEditor) const;
-    StalledIssueBaseDelegateWidget* getStalledIssueInfoWidget(const QModelIndex& index, QWidget *parent, const StalledIssueVariant &issue, bool isEditor) const;
+    StalledIssueHeader* getStalledIssueHeaderWidget(const QModelIndex& index, QWidget *parent, const StalledIssueVariant &issue) const;
+    StalledIssueBaseDelegateWidget* getStalledIssueInfoWidget(const QModelIndex& index, QWidget *parent, const StalledIssueVariant &issue) const;
 
     static bool adaptativeHeight(mega::MegaSyncStall::SyncStallReason reason);
 
@@ -38,6 +39,7 @@ private:
     StalledIssueHeaderCase* createHeaderCaseWidget(StalledIssueHeader* header, const StalledIssueVariant &issue) const;
 
     StalledIssuesProxyModel* mProxyModel;
+    QStyledItemDelegate* mDelegate;
 };
 
 #endif // STALLEDISSUEHEADERWIDGETMANAGER_H

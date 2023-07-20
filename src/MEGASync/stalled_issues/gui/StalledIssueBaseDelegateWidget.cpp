@@ -1,6 +1,7 @@
 #include "StalledIssueBaseDelegateWidget.h"
 
 #include "MegaApplication.h"
+#include "WordWrapLabel.h"
 
 #include "mega/types.h"
 
@@ -9,7 +10,7 @@
 
 StalledIssueBaseDelegateWidget::StalledIssueBaseDelegateWidget(QWidget *parent)
     : QWidget(parent),
-      mIsSolved(false)
+      mDelegate(nullptr)
 {
 }
 
@@ -54,18 +55,62 @@ void StalledIssueBaseDelegateWidget::reset()
 QSize StalledIssueBaseDelegateWidget::sizeHint() const
 {
     StalledIssue::SizeType sizeType = isHeader() ? StalledIssue::Header : StalledIssue::Body;
+
+    QSize size;
+
     if(mData.getDelegateSize(sizeType).isValid())
     {
-        return mData.getDelegateSize(sizeType);
+        size = mData.getDelegateSize(sizeType);
     }
 
-    auto size = QWidget::sizeHint();
-    mData.setDelegateSize(size, sizeType);
+    if(!size.isValid())
+    {
+        size = QWidget::sizeHint();
+        mData.setDelegateSize(size, sizeType);
+    }
 
     return size;
 }
 
 bool StalledIssueBaseDelegateWidget::isHeader() const
 {
-    return mCurrentIndex.isValid() && mCurrentIndex.parent().isValid();
+    return mCurrentIndex.isValid() && !mCurrentIndex.parent().isValid();
+}
+
+void StalledIssueBaseDelegateWidget::resizeEvent(QResizeEvent* event)
+{
+    QWidget::resizeEvent(event);
+
+    StalledIssue::SizeType sizeType = isHeader() ? StalledIssue::Header : StalledIssue::Body;
+    mData.removeDelegateSize(sizeType);
+
+    QTimer::singleShot(10, [this]()
+    {
+        updateSizeHint();
+    });
+}
+
+void StalledIssueBaseDelegateWidget::setDelegate(QStyledItemDelegate *newDelegate)
+{
+    mDelegate = newDelegate;
+}
+
+void StalledIssueBaseDelegateWidget::updateSizeHint()
+{
+    if(mDelegate)
+    {
+        layout()->activate();
+        updateGeometry();
+
+
+        auto currentSize(size());
+        auto realSize(QWidget::sizeHint());
+
+        if(currentSize.height() != realSize.height())
+        {
+            StalledIssue::SizeType sizeType = isHeader() ? StalledIssue::Header : StalledIssue::Body;
+            mData.removeDelegateSize(sizeType);
+            mDelegate->sizeHintChanged(getCurrentIndex());
+        }
+    }
 }

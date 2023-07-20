@@ -4,6 +4,7 @@
 #include "MegaDelegateHoverManager.h"
 #include "StalledIssue.h"
 #include "StalledIssueLoadingItem.h"
+#include "Preferences.h"
 
 #include <ViewLoadingScene.h>
 
@@ -25,6 +26,11 @@ public:
     explicit StalledIssuesDialog(QWidget *parent = nullptr);
     ~StalledIssuesDialog();
 
+    QModelIndexList getSelection(QList<mega::MegaSyncStall::SyncStallReason> reasons) const;
+    QModelIndexList getSelection(std::function<bool (const std::shared_ptr<const StalledIssue>)> checker) const;
+
+    void updateView();
+
 protected:
     bool eventFilter(QObject *, QEvent *) override;
 
@@ -32,7 +38,7 @@ private slots:
     void on_doneButton_clicked();
     void on_updateButton_clicked();
     void checkIfViewIsEmpty();
-    void onGlobalSyncStateChanged(bool state);
+    void onGlobalSyncStateChanged(bool);
 
     void toggleTab(StalledIssueFilterCriterion filterCriterion);
 
@@ -43,12 +49,18 @@ private slots:
     void onModelFiltered();
     void onLoadingSceneChanged(bool state);
 
+    void showModeSelector();
+
 private:
+    void showView(bool update);
+
     Ui::StalledIssuesDialog *ui;
     MegaDelegateHoverManager mViewHoverManager;
     StalledIssueFilterCriterion mCurrentTab;
     StalledIssuesProxyModel* mProxyModel;
     StalledIssueDelegate* mDelegate;
+
+    Preferences::StalledIssuesModeType mModeSelected = Preferences::StalledIssuesModeType::None;
 };
 
 #endif // STALLEDISSUESDIALOG_H

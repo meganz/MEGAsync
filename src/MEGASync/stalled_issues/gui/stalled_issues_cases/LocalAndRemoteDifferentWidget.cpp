@@ -8,6 +8,7 @@
 #include <StalledIssuesDialog.h>
 #include <PlatformStrings.h>
 #include <QMegaMessageBox.h>
+#include <LocalOrRemoteUserMustChooseStalledIssue.h>
 
 #include "mega/types.h"
 
@@ -38,12 +39,11 @@ LocalAndRemoteDifferentWidget::~LocalAndRemoteDifferentWidget()
 
 void LocalAndRemoteDifferentWidget::refreshUi()
 {
-    auto issue = getData();
+    auto issue = getData().convert<LocalOrRemoteUserMustChooseStalledIssue>();
 
-    if(issue.consultData()->consultLocalData())
+    if(issue->consultLocalData())
     {
-        ui->chooseLocalCopy->setIssueSolved(issue.consultData()->isSolved());
-        ui->chooseLocalCopy->updateUi(issue.consultData()->consultLocalData());
+        ui->chooseLocalCopy->updateUi(issue->consultLocalData(), issue->getChosenSide());
 
         ui->chooseLocalCopy->show();
     }
@@ -52,10 +52,9 @@ void LocalAndRemoteDifferentWidget::refreshUi()
         ui->chooseLocalCopy->hide();
     }
 
-    if(issue.consultData()->consultCloudData())
+    if(issue->consultCloudData())
     {
-        ui->chooseRemoteCopy->setIssueSolved(issue.consultData()->isSolved());
-        ui->chooseRemoteCopy->updateUi(issue.consultData()->consultCloudData());
+        ui->chooseRemoteCopy->updateUi(issue->consultCloudData(), issue->getChosenSide());
 
         ui->chooseRemoteCopy->show();
     }
@@ -77,6 +76,34 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
     msgInfo.title = MegaSyncApp->getMEGAString();
     msgInfo.textFormat = Qt::RichText;
     msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
+    QMap<QMessageBox::Button, QString> textsByButton;
+    textsByButton.insert(QMessageBox::No, tr("Cancel"));
+
+    auto reasons(QList<mega::MegaSyncStall::SyncStallReason>() << mega::MegaSyncStall::LocalAndRemoteChangedSinceLastSyncedState_userMustChoose
+                 << mega::MegaSyncStall::LocalAndRemotePreviouslyUnsyncedDiffer_userMustChoose);
+    auto selection = dialog->getDialog()->getSelection(reasons);
+
+    if(selection.size() <= 1)
+    {
+        auto allSimilarIssues = MegaSyncApp->getStalledIssuesModel()->getIssuesByReason(reasons);
+
+        if(allSimilarIssues.size() != selection.size())
+        {
+            msgInfo.buttons |= QMessageBox::Yes;
+            textsByButton.insert(QMessageBox::Yes, tr("Apply to all similar issues (%1)").arg(allSimilarIssues.size()));
+            textsByButton.insert(QMessageBox::Ok, tr("Apply to selected issue"));
+        }
+        else
+        {
+            textsByButton.insert(QMessageBox::Ok, tr("Ok"));
+        }
+    }
+    else
+    {
+        textsByButton.insert(QMessageBox::Ok, tr("Apply to selected issues (%1)").arg(selection.size()));
+    }
+
+    msgInfo.buttonsText = textsByButton;
 
     if(localInfo.isFile())
     {
@@ -89,24 +116,22 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
 
     if(node->isFile())
     {
-        msgInfo.informativeText = tr("The <b>remote file</b> %1 will be moved to MEGA Rubbish Bin along with its versions.<br>You will be able to retrieve the file and its versions from there.</br>").arg(localInfo.fileName());
+        msgInfo.informativeText = tr("The <b>local file</b> %1 will be uploaded to MEGA and added as a version to the remote file.\nPlease, the issue will be fixed when transfer is finished.</br>").arg(localInfo.fileName());
     }
     else
     {
         msgInfo.informativeText = tr("The <b>remote folder</b> %1 will be moved to MEGA Rubbish Bin.<br>You will be able to retrieve the folder from there.</br>").arg(localInfo.fileName());
     }
 
-    msgInfo.finishFunc = [this](QMessageBox* msgBox)
+    msgInfo.finishFunc = [this, selection, dialog](QMessageBox* msgBox)
     {
         if(msgBox->result() == QDialogButtonBox::Ok)
         {
-            mUtilities.removeRemoteFile(ui->chooseRemoteCopy->data()->getFilePath());
-            MegaSyncApp->getStalledIssuesModel()->solveIssue(false, getCurrentIndex());
-
-            // Prevent this one showing again (if they Refresh) until sync has made a full fresh pass
-            MegaSyncApp->getMegaApi()->clearStalledPath(originalStall.get());
-
-            refreshUi();
+            MegaSyncApp->getStalledIssuesModel()->chooseSide(false, selection);
+        }
+        else if(msgBox->result() == QDialogButtonBox::Yes)
+        {
+            MegaSyncApp->getStalledIssuesModel()->chooseSide(false, QModelIndexList());
         }
     };
 
@@ -126,6 +151,37 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
     msgInfo.textFormat = Qt::RichText;
     msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
 
+    msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
+    QMap<QMessageBox::Button, QString> textsByButton;
+    textsByButton.insert(QMessageBox::No, tr("Cancel"));
+
+    auto reasons(QList<mega::MegaSyncStall::SyncStallReason>() << mega::MegaSyncStall::LocalAndRemoteChangedSinceLastSyncedState_userMustChoose
+                     << mega::MegaSyncStall::LocalAndRemotePreviouslyUnsyncedDiffer_userMustChoose);
+    auto selection = dialog->getDialog()->getSelection(reasons);
+
+    if(selection.size() <= 1)
+    {
+        auto allSimilarIssues = MegaSyncApp->getStalledIssuesModel()->getIssuesByReason(reasons);
+
+        if(allSimilarIssues.size() != selection.size())
+        {
+            msgInfo.buttons |= QMessageBox::Yes;
+            textsByButton.insert(QMessageBox::Yes, tr("Apply to all similar issues (%1)").arg(allSimilarIssues.size()));
+            textsByButton.insert(QMessageBox::Ok, tr("Apply to selected issue"));
+        }
+        else
+        {
+            textsByButton.insert(QMessageBox::Ok, tr("Ok"));
+        }
+
+    }
+    else
+    {
+        textsByButton.insert(QMessageBox::Ok, tr("Apply to selected issues (%1)").arg(selection.size()));
+    }
+
+    msgInfo.buttonsText = textsByButton;
+
     if(node->isFile())
     {
         msgInfo.text = tr("Are you sure you want to keep the <b>remote file</b> %1?").arg(ui->chooseRemoteCopy->data()->getFileName());
@@ -144,17 +200,15 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
         msgInfo.informativeText = tr("The <b>local folder</b> %1 will be moved to OS %2").arg(localInfo.fileName(), PlatformStrings::bin());
     }
 
-    msgInfo.finishFunc = [this](QMessageBox* msgBox)
+    msgInfo.finishFunc = [this, selection](QMessageBox* msgBox)
     {
         if(msgBox->result() == QDialogButtonBox::Ok)
         {
-            mUtilities.removeLocalFile(ui->chooseLocalCopy->data()->getNativeFilePath());
-            MegaSyncApp->getStalledIssuesModel()->solveIssue(true, getCurrentIndex());
-
-            // Prevent this one showing again (if they Refresh) until sync has made a full fresh pass
-            MegaSyncApp->getMegaApi()->clearStalledPath(originalStall.get());
-
-            refreshUi();
+           MegaSyncApp->getStalledIssuesModel()->chooseSide(true, selection);
+        }
+        else if(msgBox->result() == QDialogButtonBox::Yes)
+        {
+            MegaSyncApp->getStalledIssuesModel()->chooseSide(true, QModelIndexList());
         }
     };
 

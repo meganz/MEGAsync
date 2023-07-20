@@ -10,6 +10,7 @@
 #include <QMegaMessageBox.h>
 #include <DialogOpener.h>
 #include <StalledIssuesDialog.h>
+#include <LocalOrRemoteUserMustChooseStalledIssue.h>
 
 #ifdef _WIN32
     #include "minwindef.h"
@@ -32,8 +33,7 @@ DefaultHeader::DefaultHeader(StalledIssueHeader* header)
 
 void DefaultHeader::refreshCaseUi(StalledIssueHeader* header)
 {
-    header->setLeftTitleText(tr("Error detected with"));
-    header->addFileName();
+    header->setText(tr("Error detected with <b>%1</b>").arg(header->displayFileName()));
     header->setTitleDescriptionText(tr("Reason not found."));
 }
 
@@ -44,8 +44,7 @@ FileIssueHeader::FileIssueHeader(StalledIssueHeader* header)
 
 void FileIssueHeader::refreshCaseUi(StalledIssueHeader* header)
 {
-    header->setLeftTitleText(tr("Can´t sync"));
-    header->addFileName();
+    header->setText(tr("Can´t sync <b>%1</b>").arg(header->displayFileName()));
     if(header->getData().consultData()->hasFiles() > 0)
     {
         header->setTitleDescriptionText(tr("A single file had an issue that needs a user decision to solve"));
@@ -63,8 +62,7 @@ MoveOrRenameCannotOccurHeader::MoveOrRenameCannotOccurHeader(StalledIssueHeader*
 
 void MoveOrRenameCannotOccurHeader::refreshCaseUi(StalledIssueHeader* header)
 {
-    header->setLeftTitleText(tr("Cannot move or rename"));
-    header->addFileName();
+    header->setText(tr("Cannot move or rename <b>%1</b>").arg(header->displayFileName()));
     if (header->getData().consultData()->mDetectedMEGASide)
     {
         header->setTitleDescriptionText(tr("A move or rename was detected in MEGA, but could not be replicated in the local filesystem."));
@@ -82,8 +80,7 @@ DeleteOrMoveWaitingOnScanningHeader::DeleteOrMoveWaitingOnScanningHeader(Stalled
 
 void DeleteOrMoveWaitingOnScanningHeader::refreshCaseUi(StalledIssueHeader* header)
 {
-    header->setLeftTitleText(tr("Can´t find"));
-    header->addFileName();
+    header->setText(tr("Can´t find <b>%1</b>").arg(header->displayFileName()));
     header->setTitleDescriptionText(tr("Waiting to finish scan to see if the file was moved or deleted."));
 }
 
@@ -94,8 +91,7 @@ DeleteWaitingOnMovesHeader::DeleteWaitingOnMovesHeader(StalledIssueHeader* heade
 
 void DeleteWaitingOnMovesHeader::refreshCaseUi(StalledIssueHeader* header)
 {
-    header->setLeftTitleText(tr("Waiting to move"));
-    header->addFileName();
+    header->setText(tr("Waiting to move <b>%1</b>").arg(header->displayFileName()));
     header->setTitleDescriptionText(tr("Waiting for other processes to complete."));
 }
 
@@ -107,9 +103,7 @@ UploadIssueHeader::UploadIssueHeader(StalledIssueHeader* header)
 
 void UploadIssueHeader::refreshCaseUi(StalledIssueHeader* header)
 {
-    header->setLeftTitleText(tr("Can´t upload"));
-    header->addFileName(false);
-    header->setRightTitleText(tr("to the selected location"));
+    header->setText(tr("Can´t upload <b>%1</b> to the selected location").arg(header->displayFileName()));
     header->setTitleDescriptionText(tr("Cannot reach the destination folder."));
 }
 
@@ -121,9 +115,7 @@ DownloadIssueHeader::DownloadIssueHeader(StalledIssueHeader* header)
 
 void DownloadIssueHeader::refreshCaseUi(StalledIssueHeader* header)
 {
-    header->setLeftTitleText(tr("Can´t download"));
-    header->addFileName(true);
-    header->setRightTitleText(tr("to the selected location"));
+    header->setText(tr("Can´t download <b>%1</b> to the selected location").arg(header->displayFileName(true)));
     header->setTitleDescriptionText(tr("A failure occurred either downloading the file, or moving the downloaded temporary file to its final name and location."));
 }
 
@@ -134,8 +126,7 @@ CannotCreateFolderHeader::CannotCreateFolderHeader(StalledIssueHeader* header)
 
 void CannotCreateFolderHeader::refreshCaseUi(StalledIssueHeader* header)
 {
-    header->setLeftTitleText(tr("Cannot create"));
-    header->addFileName();
+    header->setText(tr("Cannot create <b>%1</b>").arg(header->displayFileName()));
     header->setTitleDescriptionText(tr("Filesystem error preventing folder access."));
 }
 
@@ -146,8 +137,7 @@ CannotPerformDeletionHeader::CannotPerformDeletionHeader(StalledIssueHeader* hea
 
 void CannotPerformDeletionHeader::refreshCaseUi(StalledIssueHeader* header)
 {
-    header->setLeftTitleText(tr("Cannot perform deletion"));
-    header->addFileName();
+    header->setText(tr("Cannot perform deletion <b>%1</b>").arg(header->displayFileName()));
     header->setTitleDescriptionText(tr("Filesystem error preventing folder access."));
 }
 
@@ -159,8 +149,7 @@ SyncItemExceedsSupoortedTreeDepthHeader::SyncItemExceedsSupoortedTreeDepthHeader
 
 void SyncItemExceedsSupoortedTreeDepthHeader::refreshCaseUi(StalledIssueHeader* header)
 {
-    header->setLeftTitleText(tr("Unable to sync"));
-    header->addFileName();
+    header->setText(tr("Unable to sync <b>%1</b>").arg(header->displayFileName()));
     header->setTitleDescriptionText(tr("Target is too deep on your folder structure.\nPlease move it to a location that is less than 64 folders deep."));
 }
 
@@ -184,7 +173,7 @@ void SyncItemExceedsSupoortedTreeDepthHeader::refreshCaseUi(StalledIssueHeader* 
 //    setLeftTitleText(tr("Unable to sync"));
 //    addFileName();
 //    setTitleDescriptionText(tr("Folder name too long. Your Operating System only supports folder"
-//                               "\nnames up to %1 characters.").arg(QString::number(maxCharacters)));
+//                               "\nnames up to <b>%1</b> characters.").arg(QString::number(maxCharacters)));
 //}
 
 //SymlinksNotSupported
@@ -195,8 +184,7 @@ FolderMatchedAgainstFileHeader::FolderMatchedAgainstFileHeader(StalledIssueHeade
 
 void FolderMatchedAgainstFileHeader::refreshCaseUi(StalledIssueHeader* header)
 {
-    header->setLeftTitleText(tr("Cannot sync"));
-    header->addFileName();
+    header->setText(tr("Can´t sync <b>%1</b>").arg(header->displayFileName()));
     header->setTitleDescriptionText(tr("Cannot sync folders against files."));
 }
 
@@ -205,11 +193,32 @@ LocalAndRemotePreviouslyUnsyncedDifferHeader::LocalAndRemotePreviouslyUnsyncedDi
 {
 }
 
+void LocalAndRemotePreviouslyUnsyncedDifferHeader::onActionButtonClicked(StalledIssueHeader *header)
+{
+    LocalAndRemoteActionButtonClicked::actionClicked(header);
+}
+
 void LocalAndRemotePreviouslyUnsyncedDifferHeader::refreshCaseUi(StalledIssueHeader* header)
 {
-    header->setLeftTitleText(tr("Can´t sync"));
-    header->addFileName();
+    header->setText(tr("Can´t sync <b>%1</b>").arg(header->displayFileName()));
     header->setTitleDescriptionText(tr("This file has conflicting copies"));
+
+    if(auto conflict = header->getData().convert<LocalOrRemoteUserMustChooseStalledIssue>())
+    {
+        if(conflict->isSolvable() && !conflict->isSolved())
+        {
+            header->showAction(tr("Solve"));
+        }
+        else
+        {
+            header->hideAction();
+        }
+
+        if(conflict->isSolved())
+        {
+            header->showSolvedMessage();
+        }
+    }
 }
 
 //Local and remote previously synced differ
@@ -218,11 +227,89 @@ LocalAndRemoteChangedSinceLastSyncedStateHeader::LocalAndRemoteChangedSinceLastS
 {
 }
 
+void LocalAndRemoteChangedSinceLastSyncedStateHeader::onActionButtonClicked(StalledIssueHeader *header)
+{
+    LocalAndRemoteActionButtonClicked::actionClicked(header);
+}
+
 void LocalAndRemoteChangedSinceLastSyncedStateHeader::refreshCaseUi(StalledIssueHeader* header)
 {
-    header->setLeftTitleText(tr("Can´t sync"));
-    header->addFileName();
+    header->setText(tr("Can´t sync <b>%1</b>").arg(header->displayFileName()));
     header->setTitleDescriptionText(tr("This file has been changed both in MEGA and locally since it it was last synced."));
+
+    if(auto conflict = header->getData().convert<LocalOrRemoteUserMustChooseStalledIssue>())
+    {
+        if(conflict->isSolvable() && !conflict->isSolved())
+        {
+            header->showAction(tr("Solve"));
+        }
+        else
+        {
+            header->hideAction();
+        }
+
+        if(conflict->isSolved())
+        {
+            header->showSolvedMessage();
+        }
+    }
+}
+
+void LocalAndRemoteActionButtonClicked::actionClicked(StalledIssueHeader *header)
+{
+    if(auto conflict = header->getData().convert<LocalOrRemoteUserMustChooseStalledIssue>())
+    {
+        auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
+
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
+        msgInfo.title = MegaSyncApp->getMEGAString();
+        msgInfo.textFormat = Qt::RichText;
+        msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
+        QMap<QMessageBox::Button, QString> textsByButton;
+        textsByButton.insert(QMessageBox::No, tr("Cancel"));
+
+        auto reasons(QList<mega::MegaSyncStall::SyncStallReason>() << mega::MegaSyncStall::NamesWouldClashWhenSynced);
+        auto selection = dialog->getDialog()->getSelection(reasons);
+
+        if(selection.size() <= 1)
+        {
+            auto allSimilarIssues = MegaSyncApp->getStalledIssuesModel()->getIssuesByReason(reasons);
+
+            if(allSimilarIssues.size() != selection.size())
+            {
+                msgInfo.buttons |= QMessageBox::Yes;
+                textsByButton.insert(QMessageBox::Yes, tr("Apply to all similar issues (%1)").arg(allSimilarIssues.size()));
+                textsByButton.insert(QMessageBox::Ok, tr("Apply only to this issue"));
+            }
+            else
+            {
+                textsByButton.insert(QMessageBox::Ok, tr("Ok"));
+            }
+        }
+        else
+        {
+            textsByButton.insert(QMessageBox::Ok, tr("Apply to selected issues (%1)").arg(selection.size()));
+        }
+
+        msgInfo.buttonsText = textsByButton;
+        msgInfo.text = tr("Are you sure you want to solve the issue?");
+        msgInfo.informativeText = tr("This action will choose the local side if they are duplicated");
+
+        msgInfo.finishFunc = [selection, header, conflict](QMessageBox* msgBox)
+        {
+            if(msgBox->result() == QDialogButtonBox::Ok)
+            {
+                MegaSyncApp->getStalledIssuesModel()->solveSideConflict(selection);
+            }
+            else if(msgBox->result() == QDialogButtonBox::Yes)
+            {
+                MegaSyncApp->getStalledIssuesModel()->solveSideConflict(QModelIndexList());
+            }
+        };
+
+        QMegaMessageBox::warning(msgInfo);
+    }
 }
 
 //Name Conflicts
@@ -233,23 +320,25 @@ NameConflictsHeader::NameConflictsHeader(StalledIssueHeader* header)
 
 void NameConflictsHeader::refreshCaseUi(StalledIssueHeader* header)
 {
-    if(auto nameConflict = std::dynamic_pointer_cast<const NameConflictedStalledIssue>(header->getData().consultData()))
+    if(auto nameConflict = header->getData().convert<NameConflictedStalledIssue>())
     {
+        QString text(tr("Name Conflicts: <b>%1</b>"));
+
         auto cloudData = nameConflict->getNameConflictCloudData();
         if(cloudData.firstNameConflict())
         {
-            header->addFileName(cloudData.firstNameConflict()->mConflictedName);
+            text = text.arg(cloudData.firstNameConflict()->getConflictedName());
         }
         else
         {
             auto localConflictedNames = nameConflict->getNameConflictLocalData();
             if(!localConflictedNames.isEmpty())
             {
-                header->addFileName(localConflictedNames.first()->mConflictedName);
+                text = text.arg(localConflictedNames.first()->getConflictedName());
             }
         }
 
-        header->setLeftTitleText(tr("Name Conflicts:"));
+        header->setText(text);
 
         if(header->getData().consultData()->hasFiles() > 0 && header->getData().consultData()->hasFolders() > 0)
         {
@@ -267,20 +356,22 @@ void NameConflictsHeader::refreshCaseUi(StalledIssueHeader* header)
                                                "\nThis may be due to syncing to case insensitive local filesystems, or the effects of escaped characters."));
         }
 
-        if(nameConflict->hasDuplicatedNodes())
+        if(!nameConflict->isSolved())
         {
-            header->showAction(tr("Solve"));
+            header->showMultipleAction(tr("Solve options"), QStringList() << tr("Remove duplicates and rename the rest") << tr("Rename all items"));
         }
         else
         {
-            header->hideAction();
+            header->showSolvedMessage();
+            header->hideMultipleAction();
         }
     }
 }
 
-void NameConflictsHeader::onActionButtonClicked(StalledIssueHeader* header)
+
+void NameConflictsHeader::onMultipleActionButtonOptionSelected(StalledIssueHeader* header, int index)
 {
-    if(auto nameConflict = std::dynamic_pointer_cast<const NameConflictedStalledIssue>(header->getData().consultData()))
+    if(auto nameConflict = header->getData().convert<NameConflictedStalledIssue>())
     {
         auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
 
@@ -289,15 +380,46 @@ void NameConflictsHeader::onActionButtonClicked(StalledIssueHeader* header)
         msgInfo.title = MegaSyncApp->getMEGAString();
         msgInfo.textFormat = Qt::RichText;
         msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
+        QMap<QMessageBox::Button, QString> textsByButton;
+        textsByButton.insert(QMessageBox::No, tr("Cancel"));
 
+        auto reasons(QList<mega::MegaSyncStall::SyncStallReason>() << mega::MegaSyncStall::NamesWouldClashWhenSynced);
+        auto selection = dialog->getDialog()->getSelection(reasons);
+
+        if(selection.size() <= 1)
+        {
+            auto allSimilarIssues = MegaSyncApp->getStalledIssuesModel()->getIssuesByReason(reasons);
+
+            if(allSimilarIssues.size() != selection.size())
+            {
+                msgInfo.buttons |= QMessageBox::Yes;
+                textsByButton.insert(QMessageBox::Yes, tr("Apply to all similar issues (%1)").arg(allSimilarIssues.size()));
+                textsByButton.insert(QMessageBox::Ok, tr("Apply only to this issue"));
+            }
+            else
+            {
+                textsByButton.insert(QMessageBox::Ok, tr("Ok"));
+            }
+        }
+        else
+        {
+            textsByButton.insert(QMessageBox::Ok, tr("Apply to selected issues (%1)").arg(selection.size()));
+        }
+
+        msgInfo.buttonsText = textsByButton;
         msgInfo.text = tr("Are you sure you want to solve the issue?");
-        msgInfo.informativeText = tr("This action will delete the duplicate files.");
+        msgInfo.informativeText = index == 0 ? tr("This action will delete the duplicate files and rename the rest of names.")
+                                             : tr("This action will rename the conflicted items.");
 
-        msgInfo.finishFunc = [this, header, nameConflict](QMessageBox* msgBox)
+        msgInfo.finishFunc = [this, index, selection, header, nameConflict](QMessageBox* msgBox)
         {
             if(msgBox->result() == QDialogButtonBox::Ok)
             {
-                MegaSyncApp->getStalledIssuesModel()->solveDuplicatedIssues(header->getCurrentIndex());
+                MegaSyncApp->getStalledIssuesModel()->solveNameConflictIssues(selection, index);
+            }
+            else if(msgBox->result() == QDialogButtonBox::Yes)
+            {
+                MegaSyncApp->getStalledIssuesModel()->solveNameConflictIssues(QModelIndexList(), index);
             }
         };
 

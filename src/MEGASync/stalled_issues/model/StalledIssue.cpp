@@ -5,7 +5,6 @@
 
 StalledIssueData::StalledIssueData(std::unique_ptr<mega::MegaSyncStall> originalstall)
     : original(std::move(originalstall))
-    , mIsSolved(false)
 {
     qRegisterMetaType<StalledIssueDataPtr>("StalledIssueDataPtr");
     qRegisterMetaType<StalledIssuesDataList>("StalledIssuesDataList");
@@ -128,16 +127,6 @@ QString StalledIssueData::getFileName() const
     return fileName;
 }
 
-bool StalledIssueData::isSolved() const
-{
-    return mIsSolved;
-}
-
-void StalledIssueData::setIsSolved(bool newIsSolved)
-{
-    mIsSolved = newIsSolved;
-}
-
 void StalledIssueData::checkTrailingSpaces(QString &name) const
 {
     auto trimmedPath = name.trimmed();
@@ -156,7 +145,7 @@ std::shared_ptr<mega::MegaNode> CloudStalledIssueData::getNode() const
         return mRemoteNode;
     }
 
-    auto newNode = std::shared_ptr<mega::MegaNode>(MegaSyncApp->getMegaApi()->getNodeByPath(mPath.path.toUtf8().constData()));
+    auto newNode = std::shared_ptr<mega::MegaNode>(MegaSyncApp->getMegaApi()->getNodeByHandle(mPathHandle));
     if(!newNode)
     {
         return mRemoteNode;
@@ -207,9 +196,7 @@ bool LocalStalledIssueData::isEqual(const mega::MegaSyncStall* stall) const
 ///
 StalledIssue::StalledIssue(const mega::MegaSyncStall *stallIssue)
 {
-    fillIssue(stallIssue);
     originalStall.reset(stallIssue->copy());
-    endFillingIssue();
 }
 
 bool StalledIssue::initLocalIssue(const mega::MegaSyncStall *stallIssue)
@@ -365,23 +352,32 @@ void StalledIssue::setDelegateSize(const QSize &newDelegateSize, SizeType type)
     }
 }
 
+void StalledIssue::removeDelegateSize(SizeType type)
+{
+    switch(type)
+    {
+        case SizeType::Header:
+            mHeaderDelegateSize = QSize();
+            break;
+        case SizeType::Body:
+            mBodyDelegateSize = QSize();
+            break;
+    }
+}
+
 bool StalledIssue::isSolved() const
 {
     return mIsSolved;
 }
 
-void StalledIssue::setIsSolved(bool isCloud)
+void StalledIssue::setIsSolved()
 {
     mIsSolved = true;
+}
 
-    if(!isCloud && consultLocalData())
-    {
-        getLocalData()->setIsSolved(true);
-    }
-    else if(isCloud && consultCloudData())
-    {
-        getCloudData()->setIsSolved(true);
-    }
+bool StalledIssue::solveIssue(bool)
+{
+    return false;
 }
 
 bool StalledIssue::canBeIgnored() const
@@ -392,6 +388,11 @@ bool StalledIssue::canBeIgnored() const
 QStringList StalledIssue::getIgnoredFiles() const
 {
     return mIgnoredPaths;
+}
+
+bool StalledIssue::isFile() const
+{
+    return mFiles > 0 && mFolders == 0;
 }
 
 const LocalStalledIssueDataPtr StalledIssue::consultLocalData() const

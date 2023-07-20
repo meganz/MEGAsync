@@ -26,12 +26,13 @@ public:
 
 protected:
     bool eventFilter(QObject *watched, QEvent *event) override;
+    void resizeEvent(QResizeEvent *event) override;
 
 private slots:
     void onHelpIconClicked();
 
 private:
-    void showHoverAction(QEvent::Type type, QWidget* actionWidget, const QString &path);
+    void showHoverAction(QEvent::Type type, QLabel *actionWidget, const QString &path);
     void updateFileIcons();
     void updateMoveFileIcons();
 
@@ -50,6 +51,7 @@ private:
     Ui::StalledIssueFilePath *ui;
     StalledIssueDataPtr mData;
     bool mShowFullPath;
+    QIcon mOpenIcon;
 };
 
 #endif // STALLEDISSUEFILEPATH_H

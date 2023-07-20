@@ -349,6 +349,8 @@ public:
     static QDir linuxTrashLocation(const QString& sourcePath);
 #endif
 
+    static QString getNonDuplicatedNodeName(mega::MegaNode* node, mega::MegaNode* parentNode, const QString& currentName, bool unescapeName, const QStringList &itemsBeingRenamed);
+    static QString getNonDuplicatedLocalName(const QFileInfo& currentFile, bool unescapeName, const QStringList &itemsBeingRenamed);
     static QPair<QString, QString> getFilenameBasenameAndSuffix(const QString& fileName);
 
     static void upgradeClicked();

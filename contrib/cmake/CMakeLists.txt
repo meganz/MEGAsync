@@ -365,6 +365,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/LowDiskSpaceDialog.h
     ${MEGAsyncDir}/gui/DateTimeFormatter.h
     ${MEGAsyncDir}/gui/RemoteItemUI.h
+    ${MEGAsyncDir}/gui/WordWrapLabel.h
     ${MEGAsyncDir}/gui/node_selector/gui/NodeSelector.h
     ${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorLoadingDelegate.h
     ${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorTreeViewWidgetSpecializations.h
@@ -445,10 +446,11 @@ set (MOC_INPUT
 
     ${MEGAsyncDir}/stalled_issues/model/StalledIssue.h
     ${MEGAsyncDir}/stalled_issues/model/NameConflictStalledIssue.h
+	
     ${MEGAsyncDir}/stalled_issues/model/StalledIssuesModel.h
     ${MEGAsyncDir}/stalled_issues/model/StalledIssuesProxyModel.h
     ${MEGAsyncDir}/stalled_issues/model/StalledIssuesUtilities.h
-
+    ${MEGAsyncDir}/stalled_issues/model/LocalOrRemoteUserMustChooseStalledIssue.h
     ${MEGAsyncDir}/stalled_issues/gui/StalledIssueChooseWidget.h
 	${MEGAsyncDir}/stalled_issues/gui/StalledIssueChooseTitle.h
 	${MEGAsyncDir}/stalled_issues/gui/StalledIssueActionTitle.h
@@ -602,6 +604,7 @@ set (SRCS
     ${MEGAsyncDir}/gui/DateTimeFormatter.cpp
     ${MEGAsyncDir}/gui/RemoteItemUI.cpp
     ${MEGAsyncDir}/gui/MegaDelegateHoverManager.cpp
+    ${MEGAsyncDir}/gui/WordWrapLabel.cpp
     ${MEGAsyncDir}/gui/NodeNameSetterDialog/NodeNameSetterDialog.cpp
     ${MEGAsyncDir}/gui/NodeNameSetterDialog/NewFolderDialog.cpp
     ${MEGAsyncDir}/gui/NodeNameSetterDialog/RenameNodeDialog.cpp
@@ -646,6 +649,7 @@ set (SRCS
 
     ${MEGAsyncDir}/stalled_issues/model/StalledIssue.cpp
     ${MEGAsyncDir}/stalled_issues/model/NameConflictStalledIssue.cpp
+	${MEGAsyncDir}/stalled_issues/model/LocalOrRemoteUserMustChooseStalledIssue.cpp
     ${MEGAsyncDir}/stalled_issues/model/StalledIssuesModel.cpp
     ${MEGAsyncDir}/stalled_issues/model/StalledIssuesProxyModel.cpp
     ${MEGAsyncDir}/stalled_issues/model/StalledIssuesUtilities.cpp

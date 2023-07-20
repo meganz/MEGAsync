@@ -24,6 +24,7 @@ public:
     virtual void requestSize(QObject* caller,std::function<void(qint64)> func);
     virtual void requestModifiedTime(QObject *caller, std::function<void(const QDateTime&)> func);
     virtual void requestCreatedTime(QObject *caller, std::function<void(const QDateTime&)> func);
+    virtual void requestFingerprint(QObject* caller,std::function<void(const QString&)> func);
 
     void cancel();
 
@@ -33,10 +34,18 @@ public:
         return std::dynamic_pointer_cast<Type>(attributes);
     }
 
+
+
+    int64_t size() const;
+    int64_t modifiedTime() const;
+    int64_t createdTime() const;
+    const QString& fingerprint() const;
+
 signals:
     void sizeReady(qint64);
     void modifiedTimeReady(const QDateTime&);
     void createdTimeReady(const QDateTime&);
+    void fingerprintReady(const QString&);
 
 protected:
     enum AttributeTypes
@@ -44,6 +53,7 @@ protected:
         Size = 0,
         ModifiedTime,
         CreatedTime,
+        Fingerprint,
         LocalAttributes = 10,
         RemoteAttributes = 20,
         Last
@@ -54,6 +64,7 @@ protected:
     qint64 mSize;
     QDateTime mModifiedTime;
     QDateTime mCreatedTime;
+    QString mFp;
 
     bool attributeNeedsUpdate(int type);
     QObject* requestReady(int type, QObject* caller);
@@ -73,6 +84,7 @@ public:
     void requestSize(QObject* caller,std::function<void(qint64)> func) override;
     void requestModifiedTime(QObject* caller,std::function<void(const QDateTime&)> func) override;
     void requestCreatedTime(QObject* caller,std::function<void(const QDateTime&)> func) override;
+    void requestFingerprint(QObject* caller,std::function<void(const QString&)> func) override;
 
 private slots:
     void onModifiedTimeCalculated();
@@ -101,6 +113,7 @@ public:
     void requestSize(QObject* caller,std::function<void(qint64)> func) override;
     void requestModifiedTime(QObject* caller,std::function<void(const QDateTime&)> func) override;
     void requestCreatedTime(QObject* caller,std::function<void(const QDateTime&)> func) override;
+    void requestFingerprint(QObject* caller,std::function<void(const QString&)> func) override;
     void requestUser(QObject* caller, std::function<void(QString, bool)> func);
     void requestUser(QObject* caller, mega::MegaHandle currentUser, std::function<void(QString, bool)> func);
     void requestVersions(QObject*, std::function<void(int)> func);
@@ -111,7 +124,6 @@ private:
         First,
         Last
     };
-
     std::unique_ptr<mega::MegaNode> getNode(Version type = Version::Last) const;
 
     QString mFilePath;

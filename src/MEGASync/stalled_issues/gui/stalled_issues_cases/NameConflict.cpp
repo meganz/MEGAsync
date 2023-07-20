@@ -115,7 +115,7 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
     for(int index = conflictedNames.size()-1; index >= 0; index--)
     {
         std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo> info(conflictedNames.at(index));
-        QString conflictedName(info->mConflictedName);
+        QString conflictedName(info->getConflictedName());
 
         QWidget* parent(ui->nameConflicts);
         QVBoxLayout* titleLayout(ui->nameConflictsLayout);
@@ -144,6 +144,7 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
         if(firstTime)
         {
             title = new NameConflictTitle(index, conflictedName, parent);
+            connect(title, &StalledIssueActionTitle::rawInfoCheckToggled, this, &NameConflict::onRawInfoChecked);
             connect(title, &StalledIssueActionTitle::actionClicked, this, &NameConflict::onActionClicked);
             titleLayout->addWidget(title);
             mTitlesByIndex.insert(index, title);
@@ -153,50 +154,7 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
             title = mTitlesByIndex.value(index);
         }
 
-        info->mItemAttributes->requestModifiedTime(title, [this, index](const QDateTime& time)
-        {
-            mTitlesByIndex.value(index)->updateLastTimeModified(time);
-        });
-
-        if(isCloud())
-        {
-            info->mItemAttributes->requestCreatedTime(title, [this, index](const QDateTime& time)
-            {
-                mTitlesByIndex.value(index)->updateCreatedTime(time);
-            });
-        }
-        else
-        {
-#ifndef Q_OS_LINUX
-            info->mItemAttributes->requestCreatedTime(title, [this, index](const QDateTime& time)
-            {
-                mTitlesByIndex.value(index)->updateCreatedTime(time);
-            });
-#endif
-        }
-
-        info->mItemAttributes->requestSize(title,[this, index](qint64 size)
-        {
-            mTitlesByIndex.value(index)->updateSize(Utilities::getSizeString(size));
-        });
-
-        //These items go in order
-        //Modified time -- created time -- size
-        //User
-        if(isCloud())
-        {
-            auto cloudAttributes(FileFolderAttributes::convert<RemoteFileFolderAttributes>(info->mItemAttributes));
-
-            cloudAttributes->requestVersions(title,[this, index](int versions)
-            {
-                mTitlesByIndex.value(index)->updateVersionsCount(versions);
-            });
-
-            cloudAttributes->requestUser(title, MegaSyncApp->getMegaApi()->getMyUserHandleBinary(), [this, index](QString user, bool showAttribute)
-            {
-                mTitlesByIndex.value(index)->updateUser(user, showAttribute);
-            });
-        }
+        updateTitleExtraInfo(title, info);
 
         nameData->checkTrailingSpaces(conflictedName);
         if(isCloud())
@@ -254,15 +212,87 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
     mIssue = issue;
 }
 
-void NameConflict::removeConflictedNameWidget(QWidget* widget)
+void NameConflict::onRawInfoChecked()
 {
-    ui->nameConflictsLayout->removeWidget(widget);
-    widget->deleteLater();
+    auto title = dynamic_cast<NameConflictTitle*>(sender());
+    if(title)
+    {
+        //Fill conflict names
+        auto conflictedNames = getConflictedNames(mIssue);
+        std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo> info(conflictedNames.at(title->getIndex()));
+        updateTitleExtraInfo(title, info);
+
+        //To let the view know that the size may change
+        mDelegateWidget->updateSizeHint();
+    }
 }
+
+void NameConflict::updateTitleExtraInfo(NameConflictTitle* title, std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo> info)
+{
+    auto index = title->getIndex();
+
+    if(title->showRawInfo())
+    {
+        info->mItemAttributes->requestFingerprint(title, [this, index](const QString& fp)
+        {
+            mTitlesByIndex.value(index)->updateFingerprint(fp);
+        });
+    }
+    else
+    {
+        title->updateFingerprint(QString());
+    }
+
+    info->mItemAttributes->requestModifiedTime(title, [this, index](const QDateTime& time)
+    {
+        mTitlesByIndex.value(index)->updateLastTimeModified(time);
+    });
+
+    if(isCloud())
+    {
+        info->mItemAttributes->requestCreatedTime(title, [this, index](const QDateTime& time)
+        {
+            mTitlesByIndex.value(index)->updateCreatedTime(time);
+        });
+    }
+    else
+    {
+#ifndef Q_OS_LINUX
+        info->mItemAttributes->requestCreatedTime(title, [this, index](const QDateTime& time)
+        {
+            mTitlesByIndex.value(index)->updateCreatedTime(time);
+        });
+#endif
+    }
+
+    info->mItemAttributes->requestSize(title,[this, index](qint64 size)
+    {
+        mTitlesByIndex.value(index)->updateSize(size);
+    });
+
+    //These items go in order
+    //Modified time -- created time -- size
+    //User
+    if(isCloud())
+    {
+        auto cloudAttributes(FileFolderAttributes::convert<RemoteFileFolderAttributes>(info->mItemAttributes));
+
+        cloudAttributes->requestVersions(title,[this, index](int versions)
+        {
+            mTitlesByIndex.value(index)->updateVersionsCount(versions);
+        });
+
+        cloudAttributes->requestUser(title, MegaSyncApp->getMegaApi()->getMyUserHandleBinary(), [this, index](QString user, bool showAttribute)
+        {
+            mTitlesByIndex.value(index)->updateUser(user, showAttribute);
+        });
+    }
+}
+
 
 void NameConflict::setDelegate(QPointer<StalledIssueBaseDelegateWidget> newDelegate)
 {
-    mDelegate = newDelegate;
+    mDelegateWidget = newDelegate;
 }
 
 void NameConflict::setDisabled()
@@ -279,12 +309,12 @@ void NameConflict::onActionClicked(int actionId)
 {
     if(auto chooseTitle = dynamic_cast<NameConflictTitle*>(sender()))
     {
-        auto data = getData(mIssue);
+        auto issueData = getData(mIssue);
         auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
 
         QFileInfo info;
         auto titleFileName = chooseTitle->property(TITLE_FILENAME).toString();
-        info.setFile(data->getNativePath(), titleFileName);
+        info.setFile(issueData->getNativePath(), titleFileName);
         QString filePath(info.filePath());
 
         auto conflictedNames(getConflictedNames(mIssue));
@@ -314,7 +344,7 @@ void NameConflict::onActionClicked(int actionId)
             renameDialog->init();
 
             DialogOpener::showDialog<RenameNodeDialog>(renameDialog,
-                                                       [this, data, titleFileName, conflictIndex, renameDialog](){
+                                                       [this, issueData, titleFileName, conflictIndex, renameDialog](){
 
                 if(renameDialog->result() == QDialog::Accepted)
                 {
@@ -324,15 +354,15 @@ void NameConflict::onActionClicked(int actionId)
 
                     if(isCloud())
                     {
-                        areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveCloudConflictedNameByRename(newName, conflictIndex, mDelegate->getCurrentIndex());
+                        areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveCloudConflictedNameByRename(newName, conflictIndex, mDelegateWidget->getCurrentIndex());
                     }
                     else
                     {
-                        areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveLocalConflictedNameByRename(newName, conflictIndex, mDelegate->getCurrentIndex());
+                        areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveLocalConflictedNameByRename(newName, conflictIndex, mDelegateWidget->getCurrentIndex());
                     }
 
                     // Prevent this one showing again (if they Refresh) until sync has made a full fresh pass
-                    MegaSyncApp->getMegaApi()->clearStalledPath(data->original.get());
+                    MegaSyncApp->getMegaApi()->clearStalledPath(issueData->original.get());
 
                     if(areAllSolved)
                     {
@@ -340,7 +370,7 @@ void NameConflict::onActionClicked(int actionId)
                     }
 
                     //Now, close the editor because the action has been finished
-                    if(mDelegate)
+                    if(mDelegateWidget)
                     {
                         emit refreshUi();
                     }
@@ -396,7 +426,7 @@ void NameConflict::onActionClicked(int actionId)
                 }
             }
 
-            msgInfo.finishFunc = [this, data, handle, filePath, titleFileName, conflictIndex](QMessageBox* msgBox)
+            msgInfo.finishFunc = [this, issueData, handle, filePath, titleFileName, conflictIndex](QMessageBox* msgBox)
             {
                 if (msgBox->result() == QDialogButtonBox::Yes)
                 {
@@ -404,7 +434,7 @@ void NameConflict::onActionClicked(int actionId)
 
                     if(isCloud())
                     {
-                        areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveCloudConflictedNameByRemove(conflictIndex, mDelegate->getCurrentIndex());
+                        areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveCloudConflictedNameByRemove(conflictIndex, mDelegateWidget->getCurrentIndex());
                         if(handle != mega::INVALID_HANDLE)
                         {
                             std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
@@ -420,12 +450,12 @@ void NameConflict::onActionClicked(int actionId)
                     }
                     else
                     {
-                        areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveLocalConflictedNameByRemove(conflictIndex, mDelegate->getCurrentIndex());
+                        areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveLocalConflictedNameByRemove(conflictIndex, mDelegateWidget->getCurrentIndex());
                         mUtilities.removeLocalFile(QDir::toNativeSeparators(filePath));
                     }
 
                     // Prevent this one showing again (if they Refresh) until sync has made a full fresh pass
-                    MegaSyncApp->getMegaApi()->clearStalledPath(data->original.get());
+                    MegaSyncApp->getMegaApi()->clearStalledPath(issueData->original.get());
 
                     if(areAllSolved)
                     {
@@ -433,7 +463,7 @@ void NameConflict::onActionClicked(int actionId)
                     }
 
                     //Now, close the editor because the action has been finished
-                    if(mDelegate)
+                    if(mDelegateWidget)
                     {
                         emit refreshUi();
                     }

@@ -263,5 +263,5 @@ void DuplicatedRenameItem::setInfo(std::shared_ptr<DuplicatedNodeInfo> conflict)
 
 QString DuplicatedRenameItem::getNodeName()
 {
-    return mInfo->getNewName();
+    return mInfo->getDisplayNewName();
 }

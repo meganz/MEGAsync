@@ -4,6 +4,7 @@
 #include "QTMegaRequestListener.h"
 #include "QTMegaGlobalListener.h"
 #include "StalledIssue.h"
+#include "StalledIssuesUtilities.h"
 
 #include <QObject>
 #include <QMutex>
@@ -76,16 +77,25 @@ public:
 
     void updateIndex(const QModelIndex& index);
 
-    //Methods to modify data
+    StalledIssuesVariantList getIssuesByReason(QList<mega::MegaSyncStall::SyncStallReason> reasons);
+    StalledIssuesVariantList getIssues(std::function<bool (const std::shared_ptr<const StalledIssue>)> checker);
+
+    //SOLVE PROBLEMS
+    //Name conflicts
     bool solveLocalConflictedNameByRemove(int conflictIndex, const QModelIndex& index);
     bool solveLocalConflictedNameByRename(const QString& renameTo, int conflictIndex, const QModelIndex& index);
 
     bool solveCloudConflictedNameByRemove(int conflictIndex, const QModelIndex& index);
     bool solveCloudConflictedNameByRename(const QString &renameTo, int conflictIndex, const QModelIndex& index);
 
-    void solveIssue(bool isCloud, const QModelIndex& index);
+    void solveNameConflictIssues(const QModelIndexList& list, int option);
 
-    void solveDuplicatedIssues(const QModelIndex& index);
+    //LocalOrRemoteConflicts
+    void chooseSide(bool remote, const QModelIndexList& list);
+    void solveSideConflict(const QModelIndexList& list);
+
+    //IgnoreConflicts
+    void ignoreItems(const QModelIndexList& list);
 
 signals:
     void stalledIssuesReceived(bool state);
@@ -116,6 +126,7 @@ private:
     bool mHasStalledIssues;
     bool mUpdateWhenGlobalStateChanges;
     bool mIssuesRequested;
+    StalledIssuesUtilities mUtilities;
 
     mutable QMutex mModelMutex;
 

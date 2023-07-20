@@ -7,8 +7,12 @@
 #include <Preferences.h>
 
 #include "Utilities.h"
+#include <DialogOpener.h>
+#include <StalledIssuesDialog.h>
+#include <QMegaMessageBox.h>
 
 #include <QFile>
+#include <QMouseEvent>
 
 const int StalledIssueHeader::ARROW_INDENT = 6 + 16; //Left margin + arrow;
 const int StalledIssueHeader::ICON_INDENT = 8 + 48; // fileIcon + spacer;
@@ -28,6 +32,8 @@ StalledIssueHeader::StalledIssueHeader(QWidget *parent) :
     ui->actionButton->hide();
     ui->actionMessageContainer->hide();
     ui->ignoreFileButton->hide();
+
+    connect(ui->multipleActionButton, &QPushButton::clicked, this, &StalledIssueHeader::onMultipleActionClicked);
 }
 
 StalledIssueHeader::~StalledIssueHeader()
@@ -55,20 +61,11 @@ void StalledIssueHeader::issueIgnored()
 {
     ui->ignoreFileButton->hide();
     QIcon icon(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
-    showMessage(tr("Ignored"), icon.pixmap(24,24));
-
-    if(!ui->titleContainer->graphicsEffect())
-    {
-        auto fileNameEffect = new QGraphicsOpacityEffect(this);
-        fileNameEffect->setOpacity(0.30);
-        ui->titleContainer->setGraphicsEffect(fileNameEffect);
-    }
+    showSolvedMessage(tr("Ignored"));
 }
 
 void StalledIssueHeader::clearLabels()
 {
-    ui->leftTitleText->clear();
-    ui->rightTitleText->clear();
     ui->fileNameTitle->clear();
 
     ui->errorTitleTextContainer->removeEventFilter(this);
@@ -85,6 +82,48 @@ void StalledIssueHeader::hideAction()
     ui->actionButton->setVisible(false);
 }
 
+void StalledIssueHeader::showMultipleAction(const QString &actionButtonText, const QStringList &actions)
+{
+    ui->multipleActionButton->setVisible(true);
+    ui->multipleActionButton->setText(actionButtonText);
+    ui->multipleActionButton->setProperty("ACTIONS", actions);
+}
+
+void StalledIssueHeader::hideMultipleAction()
+{
+    ui->multipleActionButton->setVisible(false);
+}
+
+void StalledIssueHeader::onMultipleActionClicked()
+{
+    auto actions(ui->multipleActionButton->property("ACTIONS").toStringList());
+    if(!actions.isEmpty())
+    {
+        QMenu *menu(new QMenu(ui->multipleActionButton));
+        Platform::getInstance()->initMenu(menu, "MultipleActionStalledIssues");
+        menu->setAttribute(Qt::WA_DeleteOnClose);
+
+        int index(0);
+        foreach(auto action, actions)
+        {
+            // Show in system file explorer action
+            auto actionItem (new MenuItemAction(action, QIcon()));
+            connect(actionItem, &MenuItemAction::triggered, this, [this, index]()
+            {
+                mHeaderCase->onMultipleActionButtonOptionSelected(this, index);
+            });
+            actionItem->setParent(menu);
+            menu->addAction(actionItem);
+
+            index++;
+        }
+
+        auto pos(ui->actionContainer->mapToGlobal(ui->multipleActionButton->pos()));
+        pos.setY(pos.y() + ui->multipleActionButton->height());
+        menu->popup(pos);
+    }
+}
+
 void StalledIssueHeader::showMessage(const QString &message, const QPixmap& pixmap)
 {
     ui->actionMessageContainer->setVisible(true);
@@ -96,27 +135,27 @@ void StalledIssueHeader::showMessage(const QString &message, const QPixmap& pixm
     }
 }
 
-void StalledIssueHeader::setLeftTitleText(const QString &text)
+void StalledIssueHeader::showSolvedMessage(const QString& customMessage)
 {
-    ui->leftTitleText->setText(text);
+    QIcon icon(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
+    showMessage(customMessage.isEmpty() ? tr("Solved") : customMessage, icon.pixmap(24,24));
+
+    if(!ui->titleContainer->graphicsEffect())
+    {
+        auto fileNameEffect = new QGraphicsOpacityEffect(this);
+        fileNameEffect->setOpacity(0.30);
+        ui->titleContainer->setGraphicsEffect(fileNameEffect);
+    }
 }
 
-void StalledIssueHeader::addFileName(bool preferCloud)
+void StalledIssueHeader::setText(const QString &text)
 {
-    auto fileName = getData().consultData()->getFileName(preferCloud);
-    addFileName(fileName);
+    ui->fileNameTitle->setText(text);
 }
 
-void StalledIssueHeader::addFileName(const QString& filename)
+QString StalledIssueHeader::displayFileName(bool preferCloud)
 {
-    ui->fileNameTitle->setText(filename);
-    ui->fileNameTitle->setProperty(FILENAME_PROPERTY, filename);
-    ui->errorTitleTextContainer->installEventFilter(this);
-}
-
-void StalledIssueHeader::setRightTitleText(const QString &text)
-{
-    ui->rightTitleText->setText(text);
+    return getData().consultData()->getFileName(preferCloud);
 }
 
 void StalledIssueHeader::setTitleDescriptionText(const QString &text)
@@ -144,44 +183,71 @@ void StalledIssueHeader::on_actionButton_clicked()
 {
     if(mHeaderCase)
     {
+        QApplication::postEvent(this, new QMouseEvent(QEvent::MouseButtonPress, QPointF(), Qt::LeftButton, Qt::NoButton, Qt::KeyboardModifier::NoModifier));
+        qApp->processEvents();
         mHeaderCase->onActionButtonClicked(this);
+
+        auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
+        dialog->getDialog()->updateView();
     }
 }
 
 void StalledIssueHeader::on_ignoreFileButton_clicked()
 {
-    auto info = getData().consultData();
-    if(info)
-    {
-        auto ignoredFiles = info->getIgnoredFiles();
+    auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
 
-        foreach(auto file, ignoredFiles)
+    auto canBeIgnoredChecker = [](const std::shared_ptr<const StalledIssue> issue){
+        return issue->canBeIgnored();
+    };
+
+    QMegaMessageBox::MessageBoxInfo msgInfo;
+    msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
+    msgInfo.title = MegaSyncApp->getMEGAString();
+    msgInfo.textFormat = Qt::RichText;
+    msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
+    QMap<QMessageBox::Button, QString> textsByButton;
+    textsByButton.insert(QMessageBox::No, tr("Cancel"));
+
+    auto selection = dialog->getDialog()->getSelection(canBeIgnoredChecker);
+
+    if(selection.size() <= 1)
+    {
+        auto allSimilarIssues = MegaSyncApp->getStalledIssuesModel()->getIssues(canBeIgnoredChecker);
+
+        if(allSimilarIssues.size() != selection.size())
         {
-            mUtilities.ignoreFile(file);
+            msgInfo.buttons |= QMessageBox::Yes;
+            textsByButton.insert(QMessageBox::Yes, tr("Apply to all similar issues (%1)").arg(allSimilarIssues.size()));
+            textsByButton.insert(QMessageBox::Ok, tr("Apply only to this issue"));
+        }
+        else
+        {
+            textsByButton.insert(QMessageBox::Ok, tr("Ok"));
         }
 
-        MegaSyncApp->getStalledIssuesModel()->solveIssue(false,getCurrentIndex());
-        mIsSolved = true;
-        refreshUi();
     }
-}
-
-bool StalledIssueHeader::eventFilter(QObject *watched, QEvent *event)
-{
-    if(watched == ui->errorTitleTextContainer && event->type() == QEvent::Resize)
+    else
     {
-        if(!ui->fileNameTitle->text().isEmpty())
-        {
-            auto filename = ui->fileNameTitle->property(FILENAME_PROPERTY).toString();
-
-            auto blankSpaces = ui->errorTitleTextContainer->layout()->spacing() * 2 + ui->errorTitleTextContainer->contentsMargins().right() + ui->errorTitleTextContainer->contentsMargins().left();
-            auto availableWidth = ui->errorTitleTextContainer->width() - ui->rightTitleText->width() - ui->leftTitleText->width() - ui->fileTypeIcon->width() - blankSpaces;
-            auto elidedText = ui->fileNameTitle->fontMetrics().elidedText(filename,Qt::ElideMiddle, availableWidth);
-            ui->fileNameTitle->setText(elidedText);
-        }
+        textsByButton.insert(QMessageBox::Ok, tr("Apply to selected issues (%1)").arg(selection.size()));
     }
 
-    return StalledIssueBaseDelegateWidget::eventFilter(watched, event);
+    msgInfo.buttonsText = textsByButton;
+    msgInfo.text = tr("Are you sure you want to ignore this issue?");
+    msgInfo.informativeText = tr("This action will ignore this issue and it will not be synced.");
+
+    msgInfo.finishFunc = [this, selection](QMessageBox* msgBox)
+    {
+        if(msgBox->result() == QDialogButtonBox::Ok)
+        {
+            MegaSyncApp->getStalledIssuesModel()->ignoreItems(selection);
+        }
+        else if(msgBox->result() == QDialogButtonBox::Yes)
+        {
+            MegaSyncApp->getStalledIssuesModel()->ignoreItems(QModelIndexList());
+        }
+    };
+
+    QMegaMessageBox::warning(msgInfo);
 }
 
 void StalledIssueHeader::refreshUi()

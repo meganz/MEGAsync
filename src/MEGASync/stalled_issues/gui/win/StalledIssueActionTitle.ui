@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>74</width>
-    <height>52</height>
+    <width>141</width>
+    <height>58</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -37,7 +37,15 @@
     color: #333333;
 }
 
-#titleContainer QLabel
+#rawInfoCheck
+{
+	font-family: Lato;
+    font-size: 12px;
+    line-height: 16px;
+    color: #333333;
+}
+
+#titleContainer QTextEdit
 {
     font-family: Lato;
     font-size: 13px;
@@ -151,7 +159,7 @@ QPushButton[main=true]
              <number>0</number>
             </property>
             <property name="rightMargin">
-             <number>0</number>
+             <number>5</number>
             </property>
             <property name="bottomMargin">
              <number>0</number>
@@ -209,7 +217,7 @@ QPushButton[main=true]
                 </widget>
                </item>
                <item>
-                <widget class="QLabel" name="titleLabel">
+                <widget class="WordWrapLabel" name="titleLabel">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                    <horstretch>0</horstretch>
@@ -281,6 +289,34 @@ QPushButton[main=true]
           </widget>
          </item>
          <item>
+          <widget class="QWidget" name="checkContainer" native="true">
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="leftMargin">
+             <number>36</number>
+            </property>
+            <property name="topMargin">
+             <number>3</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>3</number>
+            </property>
+            <item>
+             <widget class="QCheckBox" name="rawInfoCheck">
+              <property name="text">
+               <string>Show raw info</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
           <widget class="QWidget" name="extraInfoContainer" native="true">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -291,7 +327,7 @@ QPushButton[main=true]
            <property name="minimumSize">
             <size>
              <width>0</width>
-             <height>20</height>
+             <height>0</height>
             </size>
            </property>
            <layout class="QVBoxLayout" name="extraInfoLayout">
@@ -342,6 +378,13 @@ QPushButton[main=true]
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>WordWrapLabel</class>
+   <extends>QTextEdit</extends>
+   <header>WordWrapLabel.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

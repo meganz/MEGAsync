@@ -60,7 +60,10 @@ void StalledIssuesProxyModel::filter(StalledIssueFilterCriterion filterCriterion
     }
     else
     {
+        sourceM->blockUi();
         sourceM->unBlockUi();
+
+        onModelSortedFiltered();
     }
 }
 

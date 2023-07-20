@@ -14,6 +14,7 @@ public:
 
     virtual void refreshCaseUi(StalledIssueHeader* header) = 0;
     virtual void onActionButtonClicked(StalledIssueHeader* header){}
+    virtual void onMultipleActionButtonOptionSelected(StalledIssueHeader* header, int index){}
 };
 
 //DefaultHeader failed
@@ -149,12 +150,19 @@ protected slots:
     void refreshCaseUi(StalledIssueHeader* header) override;
 };
 
+class LocalAndRemoteActionButtonClicked : QObject
+{
+public:
+    static void actionClicked(StalledIssueHeader *header);
+};
+
 class LocalAndRemotePreviouslyUnsyncedDifferHeader : public StalledIssueHeaderCase
 {
     Q_OBJECT
 
 public:
     LocalAndRemotePreviouslyUnsyncedDifferHeader(StalledIssueHeader* header);
+    void onActionButtonClicked(StalledIssueHeader *header) override;
 
 protected slots:
     void refreshCaseUi(StalledIssueHeader* header) override;
@@ -167,6 +175,7 @@ class LocalAndRemoteChangedSinceLastSyncedStateHeader : public StalledIssueHeade
 
 public:
     LocalAndRemoteChangedSinceLastSyncedStateHeader(StalledIssueHeader* header);
+    void onActionButtonClicked(StalledIssueHeader *header) override;
 
 protected slots:
     void refreshCaseUi(StalledIssueHeader* header) override;
@@ -179,7 +188,7 @@ class NameConflictsHeader : public StalledIssueHeaderCase
 
 public:
     NameConflictsHeader(StalledIssueHeader* header);
-    void onActionButtonClicked(StalledIssueHeader* header) override;
+    void onMultipleActionButtonOptionSelected(StalledIssueHeader* header, int index) override;
 
 protected slots:
     void refreshCaseUi(StalledIssueHeader* header) override;

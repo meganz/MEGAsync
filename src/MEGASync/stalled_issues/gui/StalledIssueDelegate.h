@@ -32,6 +32,7 @@ protected:
     bool eventFilter(QObject *object, QEvent *event) override;
     void destroyEditor(QWidget *, const QModelIndex &) const override;
 
+
 protected slots:
     void onHoverEnter(const QModelIndex& index);
     void onHoverLeave(const QModelIndex&);
@@ -40,12 +41,14 @@ private:
     QColor getRowColor(const QModelIndex& index) const;
     QModelIndex getEditorCurrentIndex() const;
 
-    StalledIssueBaseDelegateWidget *getStalledIssueItemWidget(const QModelIndex &index, const StalledIssueVariant &data, bool isEditor) const;
+    StalledIssueBaseDelegateWidget *getStalledIssueItemWidget(const QModelIndex &index, const StalledIssueVariant &data) const;
 
     StalledIssuesView* mView;
     StalledIssuesProxyModel* mProxyModel;
     StalledIssuesModel* mSourceModel;
     StalledIssuesDelegateWidgetsCache mCacheManager;
+
+    mutable QMap<QModelIndex, bool> mMouseHoverOrSelectedLastState;
 
     mutable QPointer<StalledIssueBaseDelegateWidget> mEditor;
 };

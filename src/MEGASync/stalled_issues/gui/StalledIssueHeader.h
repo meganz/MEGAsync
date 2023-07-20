@@ -35,12 +35,14 @@ public:
     void showAction(const QString& actionButtonText);
     void hideAction();
 
-    void showMessage(const QString& message, const QPixmap &pixmap);
+    void showMultipleAction(const QString& actionButtonText, const QStringList& actions);
+    void hideMultipleAction();
 
-    void setLeftTitleText(const QString& text);
-    void addFileName(bool preferCloud = false);
-    void addFileName(const QString& filename);
-    void setRightTitleText(const QString& text);
+    void showMessage(const QString& message, const QPixmap &pixmap);
+    void showSolvedMessage(const QString& customMessage = QString());
+
+    void setText(const QString& text);
+    QString displayFileName(bool preferCloud = false);
 
     void setTitleDescriptionText(const QString& text);
 
@@ -48,13 +50,14 @@ public:
     void reset();
 
 protected:
-    bool eventFilter(QObject *watched, QEvent *event) override;
-
     QString fileName();
 
 protected slots:
     virtual void on_actionButton_clicked();
     virtual void on_ignoreFileButton_clicked();
+
+private slots:
+    void onMultipleActionClicked();
 
 private:
     void showIgnoreFile();

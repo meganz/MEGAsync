@@ -1,9 +1,10 @@
 #include "DuplicatedNodeInfo.h"
+#include "DuplicatedUploadChecker.h"
 
 #include <Utilities.h>
 #include <MegaApplication.h>
 
-DuplicatedNodeInfo::DuplicatedNodeInfo() : mSolution(NodeItemType::DONT_UPLOAD), mIsLocalFile(false), mHasConflict(false), mHaveDifferentType(false)
+DuplicatedNodeInfo::DuplicatedNodeInfo(DuplicatedUploadBase* checker) : mSolution(NodeItemType::DONT_UPLOAD), mIsLocalFile(false), mHasConflict(false), mHaveDifferentType(false), mChecker(checker)
 {
 }
 
@@ -28,8 +29,6 @@ void DuplicatedNodeInfo::setRemoteConflictNode(const std::shared_ptr<mega::MegaN
     mRemoteConflictNode = newRemoteConflictNode;
 
     mName = QString::fromUtf8(mRemoteConflictNode->getName()).toHtmlEscaped();
-
-    initNewName();
 
     auto time = newRemoteConflictNode->isFile() ? mRemoteConflictNode->getModificationTime()
                                                 : mRemoteConflictNode->getCreationTime();
@@ -56,7 +55,7 @@ NodeItemType DuplicatedNodeInfo::getSolution() const
 
 std::shared_ptr<mega::MegaNode> DuplicatedNodeInfo::checkNameNode(const QString &nodeName, std::shared_ptr<mega::MegaNode> parentNode)
 {
-    auto node = std::shared_ptr<mega::MegaNode>(MegaSyncApp->getMegaApi()->getChildNodeOfType(parentNode.get(), nodeName.toStdString().c_str(),
+    auto node = std::shared_ptr<mega::MegaNode>(MegaSyncApp->getMegaApi()->getChildNodeOfType(parentNode.get(), nodeName.toUtf8().constData(),
                                                               isLocalFile() ? mega::MegaNode::TYPE_FILE : mega::MegaNode::TYPE_FOLDER));
 
     return node;
@@ -65,16 +64,32 @@ std::shared_ptr<mega::MegaNode> DuplicatedNodeInfo::checkNameNode(const QString 
 void DuplicatedNodeInfo::setSolution(NodeItemType newSolution)
 {
     mSolution = newSolution;
-
-    if(mSolution != NodeItemType::UPLOAD_AND_RENAME)
-    {
-        mNewName.clear();
-    }
 }
 
-const QString &DuplicatedNodeInfo::getNewName() const
+const QString &DuplicatedNodeInfo::getNewName()
 {
+    if(mSolution == NodeItemType::UPLOAD_AND_RENAME)
+    {
+        if(mNewName.isEmpty() && mRemoteConflictNode)
+        {
+            mNewName = Utilities::getNonDuplicatedNodeName(mRemoteConflictNode.get(), mParentNode.get(), mName, false, mChecker->getCheckedNames());
+            auto& checkedNames = mChecker->getCheckedNames();
+            checkedNames.removeOne(mName);
+            checkedNames.append(mNewName);
+        }
+    }
+
     return mNewName;
+}
+
+const QString &DuplicatedNodeInfo::getDisplayNewName()
+{
+    if(mDisplayNewName.isEmpty())
+    {
+        mDisplayNewName = Utilities::getNonDuplicatedNodeName(mRemoteConflictNode.get(), mParentNode.get(), mName, false, mChecker->getCheckedNames());
+    }
+
+    return mDisplayNewName;
 }
 
 const QString &DuplicatedNodeInfo::getName() const
@@ -121,53 +136,4 @@ void DuplicatedNodeInfo::setLocalModifiedTime(const QDateTime &newLocalModifiedT
 bool DuplicatedNodeInfo::haveDifferentType() const
 {
     return mHaveDifferentType;
-}
-
-void DuplicatedNodeInfo::initNewName()
-{
-    QString nodeName;
-    QString suffix;
-
-    if(mRemoteConflictNode->isFile())
-    {
-        QFileInfo fileInfo(QString::fromUtf8(mRemoteConflictNode->getName()));
-
-        auto nameSplitted = Utilities::getFilenameBasenameAndSuffix(fileInfo.fileName());
-        if(nameSplitted != QPair<QString, QString>())
-        {
-            nodeName = nameSplitted.first;
-            suffix = nameSplitted.second;
-        }
-        else
-        {
-            nodeName = fileInfo.fileName();
-        }
-    }
-    else
-    {
-        nodeName = mName;
-    }
-
-    bool nameFound(false);
-    int counter(1);
-    while(!nameFound)
-    {
-        QString repeatedName = nodeName + QString(QLatin1Literal("(%1)")).arg(QString::number(counter));
-        if(mRemoteConflictNode)
-        {
-            if(mRemoteConflictNode->isFile() && !suffix.isEmpty())
-            {
-                repeatedName.append(suffix);
-            }
-        }
-
-        auto foundNode = checkNameNode(repeatedName, mParentNode);
-        if(!foundNode)
-        {
-            mNewName = repeatedName;
-            nameFound = true;
-        }
-
-        counter++;
-    }
 }

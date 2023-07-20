@@ -38,7 +38,7 @@ LocalAndRemoteNameConflicts::~LocalAndRemoteNameConflicts()
 
 void LocalAndRemoteNameConflicts::refreshUi()
 {
-    if(auto nameConflict = std::dynamic_pointer_cast<const NameConflictedStalledIssue>(getData().consultData()))
+    if(auto nameConflict =  getData().convert<NameConflictedStalledIssue>())
     {
         auto cloudData = nameConflict->getNameConflictCloudData();
         if(cloudData.isEmpty())
