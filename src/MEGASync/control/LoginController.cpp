@@ -297,21 +297,6 @@ void LoginController::onFetchNodes(mega::MegaRequest *request, mega::MegaError *
         mPreferences->setAccountStateInGeneral(Preferences::STATE_FETCHNODES_OK);
         mPreferences->setNeedsFetchNodesInGeneral(false);
 
-               // TODO: check with sdk team if this case is possible
-        if (!MegaSyncApp->getRootNode())
-        {
-            QMegaMessageBox::MessageBoxInfo msgInfo;
-            msgInfo.title = QMegaMessageBox::errorTitle();
-            msgInfo.text = tr("Unable to get the filesystem.\n"
-                               "Please, try again. If the problem persists "
-                               "please contact bug@mega.co.nz");
-            msgInfo.buttons = QMessageBox::Ok;
-
-            QMegaMessageBox::warning(msgInfo);
-            MegaSyncApp->rebootApplication(false);
-            return;
-        }
-
         bool fTime(false);
         onFetchNodesSuccess(fTime);
         emit fetchingNodesFinished(fTime);
