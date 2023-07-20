@@ -49,7 +49,6 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest *r
                 variant->getData()->fillIssue(stall);
                 variant->getData()->endFillingIssue();
 
-                //No auto solving for the moment
                 if(Preferences::instance()->stalledIssueMode() == Preferences::StalledIssuesModeType::Smart)
                 {
                     variant->getData()->solveIssue(true);

@@ -30,6 +30,7 @@ StalledIssueHeader::StalledIssueHeader(QWidget *parent) :
     ui->setupUi(this);
 
     ui->actionButton->hide();
+    ui->multipleActionButton->hide();
     ui->actionMessageContainer->hide();
     ui->ignoreFileButton->hide();
 
@@ -107,7 +108,7 @@ void StalledIssueHeader::onMultipleActionClicked()
         foreach(auto action, actions)
         {
             // Show in system file explorer action
-            auto actionItem (new MenuItemAction(action, QIcon()));
+            auto actionItem (new MenuItemAction(action, QString()));
             connect(actionItem, &MenuItemAction::triggered, this, [this, index]()
             {
                 mHeaderCase->onMultipleActionButtonOptionSelected(this, index);
