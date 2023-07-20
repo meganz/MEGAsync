@@ -69,7 +69,7 @@ Item {
                     border.width: 0;
                 }
                 PropertyChanges { target: stepCircleImage; visible: false; }
-                PropertyChanges { target: stepCircleText; color: "white"/*Styles.textInverseAccent;*/ }
+                PropertyChanges { target: stepCircleText; color: Styles.textInverseAccent; }
                 PropertyChanges { target: stepText; color: Styles.iconButton; }
             },
             State {
@@ -145,7 +145,7 @@ Item {
 
                     anchors.centerIn: parent
                     source: Images.check
-                    sourceSize: Qt.size(10, 7.5)
+                    sourceSize: Qt.size(2 * parent.width / 3, 2 * parent.width / 3)
                     color: Styles.textInverseAccent
                     visible: false
                 }
