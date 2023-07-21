@@ -243,7 +243,10 @@ SettingsDialog::~SettingsDialog()
     mApp->dettachBandwidthObserver(*this);
     mApp->dettachAccountObserver(*this);
 
+#ifdef Q_OS_MACOS
     mToolBar->deleteLater();
+#endif
+
     delete mUi;
 }
 
