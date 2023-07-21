@@ -178,7 +178,7 @@
     <message>
         <source>NEW</source>
         <translatorcomment>Label that indicates there is a new notification available.</translatorcomment>
-        <translation>NEW</translation>
+        <translation>New</translation>
     </message>
     <message>
         <source>Contacts</source>
@@ -2934,7 +2934,7 @@ Transfers will automatically resume when you re-open the app.</numerusform>
     <message>
         <source>Warning</source>
         <translatorcomment>Title for dialogs with warning messages. SNC-3299</translatorcomment>
-        <translation type="unfinished">Warning</translation>
+        <translation>Warning</translation>
     </message>
 </context>
 <context>
@@ -3012,7 +3012,7 @@ Transfers will automatically resume when you re-open the app.</numerusform>
     <message>
         <source>Invalid key/Decryption error</source>
         <translatorcomment>Label to show that an error related with the decryption process of a node occurs during a SDK operation.</translatorcomment>
-        <translation>Invalid key/Decryption error</translation>
+        <translation>Decryption error</translation>
     </message>
     <message>
         <source>Bad session ID</source>
@@ -3528,7 +3528,7 @@ Your selected incomplete sync transfers won’t be cancelled. All the other sele
     <message>
         <source>Too many items selected. To continue, deselect some or select the parent folder instead.</source>
         <translatorcomment>Message displayed as a tooltip on the OK button when there are too many items selected. See CON-326.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Too many items selected. To continue, deselect some or select the parent folder instead.</translation>
     </message>
 </context>
 <context>
@@ -4149,8 +4149,8 @@ Enter a different name.</translation>
 - Detected crash fixes on Windows, Linux, and macOS.
 </source>
         <translatorcomment>Changelog for v4.9.6 version</translatorcomment>
-        <translation type="unfinished">- UI enhancements.
-- Detected crash fixes on Windows, Linux, and macOS.</translation>
+        <translation>- UI enhanced.
+- Detected crashes fixed on Windows, Linux, and macOS.</translation>
     </message>
 </context>
 <context>
@@ -7430,7 +7430,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message numerus="yes">
         <source>%1 used</source>
         <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1. SNC-3429</translatorcomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%1 used</numerusform>
             <numerusform>%1 used</numerusform>
         </translation>
@@ -7438,7 +7438,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message numerus="yes">
         <source>%1 (%2%) of %3 used</source>
         <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically. SNC-3429</translatorcomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%1 (%2%) of %3 used</numerusform>
             <numerusform>%1 (%2%) of %3 used</numerusform>
         </translation>
