@@ -3483,6 +3483,7 @@ void MegaApplication::processUpgradeSecurityEvent()
     msgInfo.title = tr("Security upgrade");
     msgInfo.text = message;
     msgInfo.buttons = QMessageBox::Ok|QMessageBox::Cancel;
+    msgInfo.textFormat = Qt::RichText;
     msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
         {
         if (msg->result() == QMessageBox::Ok)
