@@ -230,10 +230,6 @@ void LoginController::onLogin(mega::MegaRequest *request, mega::MegaError *e)
                 mEmail = QString::fromUtf8(request->getEmail());
                 break;
             }
-            case mega::MegaError::API_EACCESS: //locallogout called prior to login finished
-            {
-                break;
-            }
             default:
             {
                 errorMsg = QCoreApplication::translate("MegaError", e->getErrorString());

@@ -147,17 +147,25 @@ LoginPageForm {
                 }
                 case ApiEnums.API_EINCOMPLETE: //mega::MegaError::API_EINCOMPLETE: -> account not confirmed
                 {
-                    //what to do here?
+                    //what to do here?                    //add banners
+
                     break;
                 }
                 case ApiEnums.API_ETOOMANY: //mega::MegaError::API_ETOOMANY: -> too many attempts
                 {
-                    //what to do here?
+                    //what to do here?                    //add banners
+
                     break;
                 }
                 case ApiEnums.API_EBLOCKED: //mega::MegaError::API_EBLOCKED: ->  blocked account
                 {
-                    //what to do here?
+                    //what to do here?                    //add banners
+
+                    break;
+                }
+                case ApiEnums.API_EACCESS: //locallogout called prior to login finished
+                {
+                    //add banners
                     break;
                 }
                 case ApiEnums.API_OK: //mega::MegaError::API_OK:
