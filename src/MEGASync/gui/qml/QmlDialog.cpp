@@ -1,5 +1,6 @@
 #include "QmlDialog.h"
 #include "MegaApplication.h"
+#include "mega/types.h"
 
 #include <QEvent>
 #include <QScreen>
@@ -49,7 +50,8 @@ bool QmlDialog::event(QEvent *evnt)
             emit closingButLoggingIn();
             return true;
         }
-        else if(!MegaSyncApp->getMegaApi()->isLoggedIn())
+        else if(mega::NOTLOGGEDIN == MegaSyncApp->getMegaApi()->isLoggedIn()
+               || mega::EPHEMERALACCOUNT == MegaSyncApp->getMegaApi()->isLoggedIn())
         {
             hide();
             return true;
