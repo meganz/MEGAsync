@@ -391,7 +391,7 @@ void NodeSelectorTreeViewWidget::modelLoaded()
 {
     if(mModel)
     {
-        if(mModel->rowCount() == 0)
+        if(mModel->rowCount() == 0 && showEmptyView())
         {
             ui->stackedWidget->setCurrentWidget(ui->emptyPage);
             return;

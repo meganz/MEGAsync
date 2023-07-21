@@ -734,9 +734,21 @@ void SettingsDialog::animateSettingPage(int endValue, int duration)
     mAnimationGroup->start();
 }
 
+void SettingsDialog::closeMenus()
+{
+    auto menus = findChildren<QMenu*>();
+    foreach(auto& menu, menus)
+    {
+        if(dynamic_cast<QAbstractItemView*>(menu->parentWidget()))
+        {
+            menu->close();
+        }
+    }
+}
+
 void SettingsDialog::closeEvent(QCloseEvent *event)
 {
-    emit closeMenus();
+    closeMenus();
     QDialog::closeEvent(event);
 }
 
@@ -806,7 +818,7 @@ void SettingsDialog::on_bGeneral_clicked()
     mUi->wStack->setCurrentWidget(mUi->pGeneral);
 
 #ifdef Q_OS_MACOS
-    emit closeMenus();
+    closeMenus();
     onCacheSizeAvailable();
 
     mUi->pGeneral->hide();
@@ -1211,7 +1223,7 @@ void SettingsDialog::updateBandwidthElements()
         {
             int percentage = Utilities::partPer(usedBandwidth, totalBandwidth);
             mUi->pTransferQuota->setValue(std::min(percentage, 100));
-            mUi->lBandwidth->setText(Utilities::createCompleteUsedString(usedBandwidth, std::min(percentage, 100), totalBandwidth));
+            mUi->lBandwidth->setText(Utilities::createCompleteUsedString(usedBandwidth, totalBandwidth, std::min(percentage, 100)));
         }
     }
 }
@@ -1294,7 +1306,7 @@ void SettingsDialog::on_bAccount_clicked()
     mUi->wStack->setCurrentWidget(mUi->pAccount);
 
 #ifdef Q_OS_MACOS
-    emit closeMenus();
+    closeMenus();
     mUi->pAccount->hide();
     animateSettingPage(SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
 #endif
@@ -1406,7 +1418,7 @@ void SettingsDialog::on_bSyncs_clicked()
     mUi->wStack->setCurrentWidget(mUi->pSyncs);
 
 #ifdef Q_OS_MACOS
-    emit closeMenus();
+    closeMenus();
     mUi->pSyncs->hide();
     animateSettingPage(SETTING_ANIMATION_SYNCS_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
 #endif
@@ -1427,6 +1439,7 @@ void SettingsDialog::on_bBackup_clicked()
     mUi->wStack->setCurrentWidget(mUi->pBackup);
 
 #ifdef Q_OS_MACOS
+    closeMenus();
     mUi->pBackup->hide();
     animateSettingPage(SETTING_ANIMATION_BACKUP_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
 #endif
@@ -1452,7 +1465,7 @@ void SettingsDialog::on_bSecurity_clicked()
     mUi->wStack->setCurrentWidget(mUi->pSecurity);
 
 #ifdef Q_OS_MACOS
-    emit closeMenus();
+    closeMenus();
     mUi->pSecurity->hide();
     animateSettingPage(SETTING_ANIMATION_SECURITY_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
 #endif
@@ -1583,7 +1596,7 @@ void SettingsDialog::on_bFolders_clicked()
     mUi->wStack->setCurrentWidget(mUi->pFolders);
 
 #ifdef Q_OS_MACOS
-    emit closeMenus();
+    closeMenus();
     mUi->pFolders->hide();
     animateSettingPage(SETTING_ANIMATION_FOLDERS_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
 #endif
@@ -1835,7 +1848,7 @@ void SettingsDialog::on_bNetwork_clicked()
     mUi->wStack->setCurrentWidget(mUi->pNetwork);
 
 #ifdef Q_OS_MACOS
-    emit closeMenus();
+    closeMenus();
     mUi->pNetwork->hide();
     animateSettingPage(SETTING_ANIMATION_NETWORK_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
 #endif
@@ -1888,7 +1901,7 @@ void SettingsDialog::on_bNotifications_clicked()
     mUi->wStack->setCurrentWidget(mUi->pNotifications);
 
 #ifdef Q_OS_MACOS
-    emit closeMenus();
+    closeMenus();
     mUi->pNotifications->hide();
     animateSettingPage(SETTING_ANIMATION_NOTIFICATIONS_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
 #endif

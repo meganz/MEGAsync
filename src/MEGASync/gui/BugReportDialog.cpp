@@ -323,6 +323,10 @@ void BugReportDialog::cancelSendReport()
     warningShown = true;
 
     MegaSyncApp->getTransfersModel()->pauseResumeTransferByTag(currentTransfer, true);
+    if(mSendProgress)
+    {
+        mSendProgress->close();
+    }
 
     QMegaMessageBox::MessageBoxInfo msgInfo;
     msgInfo.parent = this;
@@ -342,10 +346,6 @@ void BugReportDialog::cancelSendReport()
             cancelCurrentReportUpload();
             preparing = false;
             warningShown = false;
-
-            QTimer::singleShot(0, this, [this](){
-                mSendProgress->close();
-            });
         }
         else
         {

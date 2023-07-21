@@ -487,7 +487,7 @@ void MegaApplication::initialize()
     // version not using the mustDeleteSdkCacheAtStartup flag, did not restart
     // from the settings dialog to activate the new exclusions, and the app got (auto) updated.
     if (preferences->mustDeleteSdkCacheAtStartup()
-        || (prevVersion <= Preferences::LAST_VERSION_WITHOUT_deleteSdkCacheAtStartup_FLAG
+        || (updated && prevVersion <= Preferences::LAST_VERSION_WITHOUT_deleteSdkCacheAtStartup_FLAG
             && preferences->isCrashed()))
     {
         preferences->setDeleteSdkCacheAtStartup(false);
@@ -3306,6 +3306,11 @@ void MegaApplication::logBatchStatus(const char* tag)
 
 void MegaApplication::enableTransferActions(bool enable)
 {
+    if (appfinished)
+    {
+        return;
+    }
+
 #ifdef _WIN32
     if(updateAvailable && windowsUpdateAction)
     {
@@ -3322,6 +3327,7 @@ void MegaApplication::enableTransferActions(bool enable)
     {
         updateAction->setEnabled(enable);
     }
+
     guestSettingsAction->setEnabled(enable);
     importLinksAction->setEnabled(enable);
     uploadAction->setEnabled(enable);
@@ -6540,6 +6546,7 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
                 QMegaMessageBox::MessageBoxInfo msgInfo;
                 msgInfo.title = getMEGAString();
                 msgInfo.text = tr("Your account has been disabled by your administrator. Please contact your business account administrator for further details.");
+                msgInfo.ignoreCloseAll = true;
                 QMegaMessageBox::warning(msgInfo);
                 break;
             }
@@ -6548,6 +6555,7 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
                 QMegaMessageBox::MessageBoxInfo msgInfo;
                 msgInfo.title = getMEGAString();
                 msgInfo.text = QCoreApplication::translate("MegaError", event->getText());
+                msgInfo.ignoreCloseAll = true;
                 QMegaMessageBox::critical(msgInfo);
                 break;
         }
@@ -6811,18 +6819,18 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     }
     case MegaRequest::TYPE_LOGOUT:
     {
+        int paramType =  request->getParamType();
         int errorCode = e->getErrorCode();
-        if (errorCode)
-        {
-            mLogoutWithError = true;
 
+        if (errorCode || paramType)
+        {
             QMegaMessageBox::MessageBoxInfo msgInfo;
             msgInfo.title =  getMEGAString();
             msgInfo.finishFunc = [this](QPointer<QMessageBox>){
-                mLogoutWithError = false;
                 unlink();};
+            msgInfo.ignoreCloseAll = true;
 
-            if (errorCode == MegaError::API_EINCOMPLETE && request->getParamType() == MegaError::API_ESSL)
+            if (errorCode == MegaError::API_EINCOMPLETE && paramType == MegaError::API_ESSL)
             {
                 //Typical case: Connecting from a public wifi when the wifi sends you to a landing page
                 //SDK cannot connect through SSL securely and asks MEGA Desktop to log out
@@ -6836,18 +6844,19 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 break;
             }
 
-            if (errorCode == MegaError::API_ESID)
+            if (paramType == MegaError::API_ESID)
             {
                 msgInfo.text = tr("You have been logged out on this computer from another location");
                 QMegaMessageBox::information(msgInfo);
             }
-            else if (errorCode == MegaError::API_ESSL)
+            else if (paramType == MegaError::API_ESSL)
             {
                 msgInfo.text = tr("Our SSL key can't be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.")
                         + QString::fromUtf8(" (Issuer: %1)").arg(QString::fromUtf8(request->getText() ? request->getText() : "Unknown"));
                 QMegaMessageBox::critical(msgInfo);
             }
-            else if (errorCode != MegaError::API_EACCESS)
+            else if (paramType != MegaError::API_EACCESS
+                     && paramType != MegaError::API_EBLOCKED)
             {
                 msgInfo.text = tr("You have been logged out because of this error: %1")
                         .arg(QCoreApplication::translate("MegaError", e->getErrorString()));
@@ -6858,10 +6867,8 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 unlink();
             }
         }
-        else if(!mLogoutWithError)
-        {
-            DialogOpener::closeAllDialogs();
-        }
+
+        DialogOpener::closeAllDialogs();
 
         // note, model is not necessarily up to date here
         const auto syncSettings (model->getAllSyncSettings());

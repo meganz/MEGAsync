@@ -638,8 +638,9 @@ void TransferMetaData::start(mega::MegaTransfer *transfer)
             else
             {
                 addFile(transfer->getTag());
-                checkScanningState();
             }
+
+            checkScanningState();
         }
     }
 }
