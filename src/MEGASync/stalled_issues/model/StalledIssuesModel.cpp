@@ -4,6 +4,7 @@
 #include <StalledIssuesDelegateWidgetsCache.h>
 #include <NameConflictStalledIssue.h>
 #include <LocalOrRemoteUserMustChooseStalledIssue.h>
+#include <AppStatsEvents.h>
 
 #include "mega/types.h"
 
@@ -50,7 +51,7 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest *r
 
                 if(Preferences::instance()->stalledIssueMode() == Preferences::StalledIssuesModeType::Smart)
                 {
-                    variant->getData()->solveIssue(true);
+                    variant->getData()->autoSolveIssue();
                 }
 
                 if(!variant->consultData()->isSolved())
@@ -434,55 +435,7 @@ int StalledIssuesModel::getCountByFilterCriterion(StalledIssueFilterCriterion cr
 }
 
 //METHODS TO MODIFY DATA
-bool StalledIssuesModel::solveLocalConflictedNameByRemove(int conflictIndex, const QModelIndex &index)
-{
-    auto potentialIndex = getSolveIssueIndex(index);
-
-    if(auto nameConflict = mStalledIssues.at(potentialIndex.row())->convert<NameConflictedStalledIssue>())
-    {
-        return nameConflict->solveLocalConflictedNameByRemove(conflictIndex);
-    }
-
-    return false;
-}
-
-bool StalledIssuesModel::solveLocalConflictedNameByRename(const QString &renameTo, int conflictIndex, const QModelIndex &index)
-{
-    auto potentialIndex = getSolveIssueIndex(index);
-
-    if(auto nameConflict = mStalledIssues.at(potentialIndex.row())->convert<NameConflictedStalledIssue>())
-    {
-        return nameConflict->solveLocalConflictedNameByRename(conflictIndex, renameTo);
-    }
-
-    return false;
-}
-
-bool StalledIssuesModel::solveCloudConflictedNameByRemove(int conflictIndex, const QModelIndex &index)
-{
-    auto potentialIndex = getSolveIssueIndex(index);
-
-    if(auto nameConflict = mStalledIssues.at(potentialIndex.row())->convert<NameConflictedStalledIssue>())
-    {
-        return nameConflict-> solveCloudConflictedNameByRemove(conflictIndex);
-    }
-
-    return false;
-}
-
-bool StalledIssuesModel::solveCloudConflictedNameByRename(const QString& renameTo, int conflictIndex, const QModelIndex &index)
-{
-    auto potentialIndex = getSolveIssueIndex(index);
-
-    if(auto nameConflict = mStalledIssues.at(potentialIndex.row())->convert<NameConflictedStalledIssue>())
-    {
-        return nameConflict->solveCloudConflictedNameByRename(conflictIndex, renameTo);
-    }
-
-    return false;
-}
-
-void StalledIssuesModel::chooseSide(bool remote, const QModelIndexList &list)
+void StalledIssuesModel::chooseSideManually(bool remote, const QModelIndexList &list)
 {
     auto resolveIssue = [this, remote](int row)
     {
@@ -493,6 +446,12 @@ void StalledIssuesModel::chooseSide(bool remote, const QModelIndexList &list)
             if(auto issue = item->convert<LocalOrRemoteUserMustChooseStalledIssue>())
             {
                 remote ? issue->chooseRemoteSide() : issue->chooseLocalSide();
+                if(item->consultData()->isSolved())
+                {
+//                    MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_LOCALREMOTE_SOLVED_MANUALLY,
+//                                                         "Local/Remote issue solved manually", false, nullptr);
+                    qDebug() << "Local/Remote issue solved manually";
+                }
             }
         }
     };
@@ -539,13 +498,29 @@ void StalledIssuesModel::chooseSide(bool remote, const QModelIndexList &list)
     }
 }
 
-void StalledIssuesModel::solveSideConflict(const QModelIndexList &list)
+void StalledIssuesModel::semiAutoSolveLocalRemoteIssues(const QModelIndexList &list)
 {
+    auto resolveIssue = [this](int row)
+    {
+        auto item = mStalledIssues.at(row)->convert<LocalOrRemoteUserMustChooseStalledIssue>();
+        if(item)
+        {
+            item->chooseLastMTimeSide();
+
+            if(item->isSolved())
+            {
+//                MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_LOCALREMOTE_SOLVED_SEMI_AUTOMATICALLY,
+//                                                     "Local/Remote issue solved semi-automatically", false, nullptr);
+                qDebug() << "Local/Remote issue solved semi-automatically";
+            }
+        }
+    };
+
     if(list.isEmpty())
     {
         blockUi();
 
-        Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this]()
+        Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this, resolveIssue]()
         {
             for(int row = 0; row < rowCount(QModelIndex()); ++row)
             {
@@ -554,11 +529,7 @@ void StalledIssuesModel::solveSideConflict(const QModelIndexList &list)
                     break;
                 }
 
-                auto item = mStalledIssues.at(row)->convert<LocalOrRemoteUserMustChooseStalledIssue>();
-                if(item)
-                {
-                    item->solveIssue(false);
-                }
+                resolveIssue(row);
             }
 
             emit stalledIssuesChanged();
@@ -569,20 +540,17 @@ void StalledIssuesModel::solveSideConflict(const QModelIndexList &list)
     {
         blockUi();
 
-        Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this, list]()
+        Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this, list, resolveIssue]()
         {
             foreach(auto index, list)
             {
                 if(mThreadFinished)
                 {
                     break;
-                }
 
-                auto item = mStalledIssues.at(index.row())->convert<LocalOrRemoteUserMustChooseStalledIssue>();
-                if(item)
-                {
-                    item->solveIssue(false);
                 }
+                auto potentialIndex = getSolveIssueIndex(index);
+                resolveIssue(potentialIndex.row());
             }
 
             emit stalledIssuesChanged();
@@ -612,6 +580,9 @@ void StalledIssuesModel::ignoreItems(const QModelIndexList &list)
             }
 
             item->getData()->setIsSolved();
+//            MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_IGNORE_SOLVED_MANUALLY,
+//                                                 "Issue ignored manually", false, nullptr);
+            qDebug() << "Issue ignored manually";
         }
     };
 
@@ -657,13 +628,31 @@ void StalledIssuesModel::ignoreItems(const QModelIndexList &list)
     }
 }
 
-void StalledIssuesModel::solveNameConflictIssues(const QModelIndexList &list, int option)
+void StalledIssuesModel::semiAutoSolveNameConflictIssues(const QModelIndexList &list, int option)
 {
+    auto resolveIssue = [this, option](int row)
+    {
+        auto item = mStalledIssues.at(row);
+        if(item->consultData()->getReason() == mega::MegaSyncStall::SyncStallReason::NamesWouldClashWhenSynced)
+        {
+            if(auto nameConflict = item->convert<NameConflictedStalledIssue>())
+            {
+                nameConflict->semiAutoSolveIssue(option);
+                if(item->consultData()->isSolved())
+                {
+//                    MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_NAMECONFLICT_SOLVED_SEMI_AUTOMATICALLY,
+//                                                         "Name conflict issue solved semi-automatically", false, nullptr);
+                    qDebug() << "Name conflict issue solved semi-automatically";
+                }
+            }
+        }
+    };
+
     if(list.isEmpty())
     {
         blockUi();
 
-        Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this, option]()
+        Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this, option, resolveIssue]()
         {
             for(int row = 0; row < rowCount(QModelIndex()); ++row)
             {
@@ -672,14 +661,7 @@ void StalledIssuesModel::solveNameConflictIssues(const QModelIndexList &list, in
                     break;
                 }
 
-                auto item = mStalledIssues.at(row);
-                if(item->consultData()->getReason() == mega::MegaSyncStall::SyncStallReason::NamesWouldClashWhenSynced)
-                {
-                    if(auto nameConflict = item->convert<NameConflictedStalledIssue>())
-                    {
-                        nameConflict->solveIssue(option);
-                    }
-                }
+                resolveIssue(row);
             }
 
             emit stalledIssuesChanged();
@@ -690,7 +672,7 @@ void StalledIssuesModel::solveNameConflictIssues(const QModelIndexList &list, in
     {
         blockUi();
 
-        Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this, list, option]()
+        Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this, list, option, resolveIssue]()
         {
             foreach(auto index, list)
             {
@@ -700,15 +682,95 @@ void StalledIssuesModel::solveNameConflictIssues(const QModelIndexList &list, in
                 }
 
                 auto potentialIndex = getSolveIssueIndex(index);
-
-                if(auto nameConflict = mStalledIssues.at(potentialIndex.row())->convert<NameConflictedStalledIssue>())
-                {
-                    nameConflict->solveIssue(option);
-                }
+                resolveIssue(potentialIndex.row());
             }
 
             emit stalledIssuesChanged();
             unBlockUi();
         });
     }
+}
+
+bool StalledIssuesModel::solveLocalConflictedNameByRemove(int conflictIndex, const QModelIndex &index)
+{
+    auto result(false);
+
+    auto potentialIndex = getSolveIssueIndex(index);
+
+    if(auto nameConflict = mStalledIssues.at(potentialIndex.row())->convert<NameConflictedStalledIssue>())
+    {
+        result = nameConflict->solveLocalConflictedNameByRemove(conflictIndex);
+
+        if(nameConflict->isSolved())
+        {
+//            MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_NAMECONFLICT_SOLVED_MANUALLY,
+//                                                 "Name conflict issue solved manually", false, nullptr);
+            qDebug() << "Name conflict issue solved manually";
+        }
+    }
+
+    return result;
+}
+
+bool StalledIssuesModel::solveLocalConflictedNameByRename(const QString &renameTo, int conflictIndex, const QModelIndex &index)
+{
+    auto result(false);
+
+    auto potentialIndex = getSolveIssueIndex(index);
+
+    if(auto nameConflict = mStalledIssues.at(potentialIndex.row())->convert<NameConflictedStalledIssue>())
+    {
+        result = nameConflict->solveLocalConflictedNameByRename(conflictIndex, renameTo);
+
+        if(nameConflict->isSolved())
+        {
+//            MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_NAMECONFLICT_SOLVED_MANUALLY,
+//                                                 "Name conflict issue solved manually", false, nullptr);
+            qDebug() << "Name conflict issue solved manually";
+        }
+    }
+
+    return result;
+}
+
+bool StalledIssuesModel::solveCloudConflictedNameByRemove(int conflictIndex, const QModelIndex &index)
+{
+    auto result(false);
+
+    auto potentialIndex = getSolveIssueIndex(index);
+
+    if(auto nameConflict = mStalledIssues.at(potentialIndex.row())->convert<NameConflictedStalledIssue>())
+    {
+        result = nameConflict-> solveCloudConflictedNameByRemove(conflictIndex);
+
+        if(nameConflict->isSolved())
+        {
+//            MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_NAMECONFLICT_SOLVED_MANUALLY,
+//                                                 "Name conflict issue solved manually", false, nullptr);
+            qDebug() << "Name conflict issue solved manually";
+        }
+    }
+
+    return result;
+}
+
+bool StalledIssuesModel::solveCloudConflictedNameByRename(const QString& renameTo, int conflictIndex, const QModelIndex &index)
+{
+    auto result(false);
+
+    auto potentialIndex = getSolveIssueIndex(index);
+
+    if(auto nameConflict = mStalledIssues.at(potentialIndex.row())->convert<NameConflictedStalledIssue>())
+    {
+        result = nameConflict->solveCloudConflictedNameByRename(conflictIndex, renameTo);
+
+        if(nameConflict->isSolved())
+        {
+//            MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_NAMECONFLICT_SOLVED_MANUALLY,
+//                                                 "Name conflict issue solved manually", false, nullptr);
+            qDebug() << "Name conflict issue solved manually";
+        }
+    }
+
+    return result;
 }

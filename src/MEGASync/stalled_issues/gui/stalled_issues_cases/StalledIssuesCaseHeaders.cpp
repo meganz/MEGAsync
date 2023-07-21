@@ -300,11 +300,11 @@ void LocalAndRemoteActionButtonClicked::actionClicked(StalledIssueHeader *header
         {
             if(msgBox->result() == QDialogButtonBox::Ok)
             {
-                MegaSyncApp->getStalledIssuesModel()->solveSideConflict(selection);
+                MegaSyncApp->getStalledIssuesModel()->semiAutoSolveLocalRemoteIssues(selection);
             }
             else if(msgBox->result() == QDialogButtonBox::Yes)
             {
-                MegaSyncApp->getStalledIssuesModel()->solveSideConflict(QModelIndexList());
+                MegaSyncApp->getStalledIssuesModel()->semiAutoSolveLocalRemoteIssues(QModelIndexList());
             }
         };
 
@@ -424,11 +424,11 @@ void NameConflictsHeader::onMultipleActionButtonOptionSelected(StalledIssueHeade
         {
             if(msgBox->result() == QDialogButtonBox::Ok)
             {
-                MegaSyncApp->getStalledIssuesModel()->solveNameConflictIssues(selection, index);
+                MegaSyncApp->getStalledIssuesModel()->semiAutoSolveNameConflictIssues(selection, index);
             }
             else if(msgBox->result() == QDialogButtonBox::Yes)
             {
-                MegaSyncApp->getStalledIssuesModel()->solveNameConflictIssues(QModelIndexList(), index);
+                MegaSyncApp->getStalledIssuesModel()->semiAutoSolveNameConflictIssues(QModelIndexList(), index);
             }
         };
 

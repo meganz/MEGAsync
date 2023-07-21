@@ -127,11 +127,11 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
     {
         if(msgBox->result() == QDialogButtonBox::Ok)
         {
-            MegaSyncApp->getStalledIssuesModel()->chooseSide(false, selection);
+            MegaSyncApp->getStalledIssuesModel()->chooseSideManually(false, selection);
         }
         else if(msgBox->result() == QDialogButtonBox::Yes)
         {
-            MegaSyncApp->getStalledIssuesModel()->chooseSide(false, QModelIndexList());
+            MegaSyncApp->getStalledIssuesModel()->chooseSideManually(false, QModelIndexList());
         }
     };
 
@@ -204,11 +204,11 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
     {
         if(msgBox->result() == QDialogButtonBox::Ok)
         {
-           MegaSyncApp->getStalledIssuesModel()->chooseSide(true, selection);
+           MegaSyncApp->getStalledIssuesModel()->chooseSideManually(true, selection);
         }
         else if(msgBox->result() == QDialogButtonBox::Yes)
         {
-            MegaSyncApp->getStalledIssuesModel()->chooseSide(true, QModelIndexList());
+            MegaSyncApp->getStalledIssuesModel()->chooseSideManually(true, QModelIndexList());
         }
     };
 

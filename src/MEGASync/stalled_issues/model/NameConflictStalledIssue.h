@@ -268,8 +268,8 @@ public:
 
     void renameNodesAutomatically();
 
-    void solveIssue(int option);
-    void solveIssue(bool autoSolve) override;
+    void semiAutoSolveIssue(int option);
+    void autoSolveIssue() override;
 
     bool hasDuplicatedNodes() const;
 
@@ -283,8 +283,10 @@ private:
         All = Local | Cloud
     };
     Q_DECLARE_FLAGS(SidesChecked, SideChecked);
-
     bool checkAndSolveConflictedNamesSolved(SidesChecked sidesChecked = SideChecked::All);
+
+    void solveIssue(int option);
+
     void renameCloudNodesAutomatically(const QList<std::shared_ptr<ConflictedNameInfo>>& cloudConflictedNames,
                                        const QList<std::shared_ptr<ConflictedNameInfo>>& localConflictedNames,
                                        bool ignoreLastModifiedName,

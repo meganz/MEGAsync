@@ -375,10 +375,6 @@ void StalledIssue::setIsSolved()
     mIsSolved = true;
 }
 
-void StalledIssue::solveIssue(bool)
-{
-}
-
 bool StalledIssue::canBeIgnored() const
 {
     return !mIgnoredPaths.isEmpty();

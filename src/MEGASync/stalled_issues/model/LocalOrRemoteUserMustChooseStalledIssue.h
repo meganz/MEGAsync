@@ -11,7 +11,7 @@ class LocalOrRemoteUserMustChooseStalledIssue : public StalledIssue
 public:
     LocalOrRemoteUserMustChooseStalledIssue(const mega::MegaSyncStall *stallIssue);
 
-    void solveIssue(bool) override;
+    void autoSolveIssue() override;
     bool isSolvable() const;
     bool isBeingSolved(TransfersModel::UploadTransferInfo &info) const;
 

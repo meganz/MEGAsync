@@ -1,6 +1,7 @@
 #include "NameConflictStalledIssue.h"
 
 #include "mega/types.h"
+#include "AppStatsEvents.h"
 
 //Name conflict Stalled Issue
 NameConflictedStalledIssue::NameConflictedStalledIssue(const NameConflictedStalledIssue &tdr)
@@ -465,6 +466,21 @@ bool NameConflictedStalledIssue::checkAndSolveConflictedNamesSolved(SidesChecked
     return mIsSolved;
 }
 
+void NameConflictedStalledIssue::semiAutoSolveIssue(int option)
+{
+    solveIssue(option);
+}
+
+void NameConflictedStalledIssue::autoSolveIssue()
+{
+    solveIssue(0);
+    if(isSolved())
+    {
+        qDebug() << "Name conflict issue solved automatically";
+        //MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_NAMECONFLICT_SOLVED_AUTOMATICALLY, "Name conflict issue solved automatically", false, nullptr);
+    }
+}
+
 void NameConflictedStalledIssue::solveIssue(int option)
 {
     auto result(false);
@@ -482,9 +498,4 @@ void NameConflictedStalledIssue::solveIssue(int option)
     }
 
     result = checkAndSolveConflictedNamesSolved();
-}
-
-void NameConflictedStalledIssue::solveIssue(bool)
-{
-   return solveIssue(0);
 }

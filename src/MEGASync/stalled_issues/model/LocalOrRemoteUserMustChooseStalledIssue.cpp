@@ -4,6 +4,7 @@
 #include <MegaUploader.h>
 #include <TransfersModel.h>
 #include <StalledIssuesUtilities.h>
+#include "AppStatsEvents.h"
 
 LocalOrRemoteUserMustChooseStalledIssue::LocalOrRemoteUserMustChooseStalledIssue(const mega::MegaSyncStall *stallIssue)
     : StalledIssue(stallIssue),
@@ -11,11 +12,17 @@ LocalOrRemoteUserMustChooseStalledIssue::LocalOrRemoteUserMustChooseStalledIssue
 {
 }
 
-void LocalOrRemoteUserMustChooseStalledIssue::solveIssue(bool)
+void LocalOrRemoteUserMustChooseStalledIssue::autoSolveIssue()
 {
     if(isSolvable())
     {
         chooseLastMTimeSide();
+
+        if(isSolved())
+        {
+            qDebug() << "Local/Remote issue solved automatically";
+            //MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_LOCALREMOTE_SOLVED_AUTOMATICALLY, "Local/Remote issue solved automatically", false, nullptr);
+        }
     }
 }
 

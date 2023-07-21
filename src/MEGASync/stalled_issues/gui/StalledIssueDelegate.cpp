@@ -97,7 +97,7 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
         bool isHoverOrSelected((parentState & QStyle::State_MouseOver) && (parentState & QStyle::State_Selected));
         if(isHoverOrSelected != mMouseHoverOrSelectedLastState.value(index, false))
         {
-            mView->update(index.parent().isValid() ? index.parent() : index.child(0,0));
+            mView->update(index.parent().isValid() ? index.parent() : index.model()->index(0,0,index);
 
             mMouseHoverOrSelectedLastState.insert(index, isHoverOrSelected);
         }
@@ -313,7 +313,7 @@ bool StalledIssueDelegate::eventFilter(QObject *object, QEvent *event)
                             mEditor->expand(!currentState);
                         }
 
-                        auto childIndex = index.child(0,0);
+                        auto childIndex = index.model()->index(0,0,index);
                         //If it is going to be expanded
                         if(!currentState)
                         {
