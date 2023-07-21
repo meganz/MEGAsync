@@ -49,8 +49,7 @@ signals:
     void fetchingNodesFinished(bool firstTime);
     void emailConfirmed();
     void accountCreationResumed();
-    void logoutByUser();
-    void logoutBySdk();
+    void logout();
     void accountCreateCancelled();
 
 protected:

@@ -1270,9 +1270,6 @@ void MegaApplication::loggedIn(bool fromWizard)
         return;
     }
 
-    LogoutController* logoutController = new LogoutController();
-    connect(logoutController, &LogoutController::onLogoutFinished, this, &MegaApplication::onLogout);
-
     //Send pending crash report log if neccessary
     if (!crashReportFilePath.isNull() && megaApi)
     {

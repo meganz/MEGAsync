@@ -198,6 +198,9 @@ void LoginController::onLogin(mega::MegaRequest *request, mega::MegaError *e)
     QString errorMsg;
     if(e->getErrorCode() == mega::MegaError::API_OK)
     {
+        LogoutController* logoutController = new LogoutController();
+        connect(logoutController, &LogoutController::onLogoutFinished, MegaSyncApp, &MegaApplication::onLogout);
+
         mPreferences->setAccountStateInGeneral(Preferences::STATE_LOGGED_OK);
 
         auto email = request->getEmail();
@@ -347,26 +350,10 @@ void LoginController::onAccountCreationCancel(mega::MegaRequest *request, mega::
 void LoginController::onLogout(mega::MegaRequest *request, mega::MegaError *e)
 {
     Q_UNUSED(e)
+    Q_UNUSED(request)
 
-           //This message is shown every time the user tries to login and the SSL fails
-    if(request->getParamType() == mega::MegaError::API_ESSL)
-    {
-        QMegaMessageBox::MessageBoxInfo msgInfo;
-        msgInfo.title = QMegaMessageBox::errorTitle();
-        msgInfo.text = tr("Our SSL key can't be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.")
-                       + QString::fromUtf8(" (Issuer: %1)").arg(QString::fromUtf8(request->getText() ? request->getText() : "Unknown"));
-        msgInfo.buttons = QMessageBox::Ok;
-
-        QMegaMessageBox::warning(msgInfo);
-        emit logoutBySdk();
-    }
-    else if(request->getParamType() != mega::MegaError::API_EBLOCKED)
-    {
-        emit logoutByUser();
-    }
-    DialogOpener::closeAllDialogs();
-    MegaSyncApp->unlink(true);
-    MegaSyncApp->onLogout();
+    emit logout();
+    mFetchingNodes = false;
 }
 
 void LoginController::fetchNodes(const QString& email)
@@ -670,6 +657,9 @@ void FastLoginController::onLogin(mega::MegaRequest *request, mega::MegaError *e
         int errorCode = e->getErrorCode();
         if (errorCode == mega::MegaError::API_OK)
         {
+            LogoutController* logoutController = new LogoutController();
+            connect(logoutController, &LogoutController::onLogoutFinished, MegaSyncApp, &MegaApplication::onLogout);
+
             if (!mPreferences->getSession().isEmpty())
             {
                 //Successful login, fetch nodes
@@ -715,9 +705,10 @@ void LogoutController::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *re
         return;
     }
     int errorCode = e->getErrorCode();
-    if (errorCode)
+    int paramType =  request->getParamType();
+    if (errorCode || paramType)
     {
-        if (errorCode == mega::MegaError::API_EINCOMPLETE && request->getParamType() == mega::MegaError::API_ESSL)
+        if (errorCode == mega::MegaError::API_EINCOMPLETE && paramType == mega::MegaError::API_ESSL)
         {
             //Typical case: Connecting from a public wifi when the wifi sends you to a landing page
             //SDK cannot connect through SSL securely and asks MEGA Desktop to log out
@@ -731,29 +722,32 @@ void LogoutController::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *re
             return;
         }
 
-        if (errorCode == mega::MegaError::API_ESID)
+        if (paramType == mega::MegaError::API_ESID)
         {
             QMegaMessageBox::MessageBoxInfo msgInfo;
             msgInfo.title = tr("MEGAsync");
             msgInfo.text = tr("You have been logged out on this computer from another location");
+            msgInfo.ignoreCloseAll = true;
 
             QMegaMessageBox::information(msgInfo);
         }
-        else if (errorCode == mega::MegaError::API_ESSL)
+        else if (paramType == mega::MegaError::API_ESSL)
         {
             QMegaMessageBox::MessageBoxInfo msgInfo;
             msgInfo.title = tr("MEGAsync");
             msgInfo.text = tr("Our SSL key can't be verified. You could be affected by a man-in-the-middle attack or your antivirus software "
                                "could be intercepting your communications and causing this problem. Please disable it and try again.")
                            + QString::fromUtf8(" (Issuer: %1)").arg(QString::fromUtf8(request->getText() ? request->getText() : "Unknown"));
+            msgInfo.ignoreCloseAll = true;
 
             QMegaMessageBox::critical(msgInfo);
         }
-        else if (errorCode != mega::MegaError::API_EACCESS)
+        else if (paramType != mega::MegaError::API_EACCESS)
         {
             QMegaMessageBox::MessageBoxInfo msgInfo;
             msgInfo.title = tr("MEGAsync");
             msgInfo.text =tr("You have been logged out because of this error: %1").arg(QCoreApplication::translate("MegaError", e->getErrorString()));
+            msgInfo.ignoreCloseAll = true;
 
             QMegaMessageBox::information(msgInfo);
         }

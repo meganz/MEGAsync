@@ -17,6 +17,7 @@ LoginPageForm {
     function setNormalStatus(){
         root.enabled = true;
         loginButton.icons.busyIndicatorVisible = false;
+        loginButton.progress.value = 0;
         state = normalStatus;
         password.text = "";
         onboardingWindow.loggingIn = false;
@@ -108,12 +109,7 @@ LoginPageForm {
             registerFlow.state = confirmEmail;
         }
 
-        onLogoutBySdk: {
-            onboardingWindow.forceClose();
-            setNormalStatus();
-        }
-
-        onLogoutByUser: {
+        onLogout: {
             cancelLogin.close();
             onboardingWindow.forceClose();
             setNormalStatus();
