@@ -40,10 +40,10 @@ signals:
     void editorKeepStateChanged(bool state);
 
 protected:
+    void resizeEvent(QResizeEvent *event) override;
+
     StalledIssuesUtilities mUtilities;
     QStyledItemDelegate* mDelegate;
-
-    void resizeEvent(QResizeEvent *event) override;
 
 private:
     virtual void refreshUi() = 0;

@@ -10,13 +10,14 @@ class LocalOrRemoteUserMustChooseStalledIssue : public StalledIssue
 public:
     LocalOrRemoteUserMustChooseStalledIssue(const mega::MegaSyncStall *stallIssue);
 
-    bool solveIssue(bool autosolve) override;
+    void solveIssue(bool) override;
     bool isSolvable() const;
 
     void endFillingIssue() override;
 
     void chooseLocalSide();
     void chooseRemoteSide();
+    void chooseLastMTimeSide();
 
     enum class ChosenSide
     {

@@ -393,6 +393,7 @@ public:
     static void copyRecursively(QString srcPath, QString dstPath);
 
     static void queueFunctionInAppThread(std::function<void()> fun);
+    static void queueFunctionInObjectThread(QObject* object, std::function<void()> fun);
 
     static void getFolderSize(QString folderPath, long long *size);
     static qreal getDevicePixelRatio();

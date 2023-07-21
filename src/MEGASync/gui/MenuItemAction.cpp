@@ -170,4 +170,3 @@ const QString& MenuItemAction::getColor() const
     else
         return Colors::Normal;
 }
-

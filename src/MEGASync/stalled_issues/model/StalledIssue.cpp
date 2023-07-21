@@ -375,9 +375,8 @@ void StalledIssue::setIsSolved()
     mIsSolved = true;
 }
 
-bool StalledIssue::solveIssue(bool)
+void StalledIssue::solveIssue(bool)
 {
-    return false;
 }
 
 bool StalledIssue::canBeIgnored() const

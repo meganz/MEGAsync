@@ -6,21 +6,16 @@
 #include <QFile>
 #include <QDir>
 
-QList<mega::MegaHandle> StalledIssuesSyncDebrisUtilities::mHandles = QList<mega::MegaHandle>();
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-void StalledIssuesSyncDebrisUtilities::moveToSyncDebris(const QList<mega::MegaHandle> &handles)
+/// \brief StalledIssuesSyncDebrisUtilities::moveToSyncDebris
+/// \param handles
+/// This method is run synchronously. So, it waits for the SDK to create the folders, and only then we move the files
+/// As the SDK createFolder is async, we need to use QEventLoop to stop the thread (which is not the main thread, so UI will not be frozen)
+/// When the createFolder returns we continue or stop the eventloop.
+/// When all files are moved, we stop the eventloop and we continue
+bool StalledIssuesSyncDebrisUtilities::moveToSyncDebris(const QList<mega::MegaHandle> &handles)
 {
-    if(mHandles.isEmpty())
-    {
-        mHandles = handles;
-    }
-    else
-    {
-        mHandles.append(handles);
-        //If there are still handles, it is because other handles are being moved, so no need to create again the folder
-        return;
-    }
+    mHandles = handles;
 
     auto moveToDateFolder = [this](std::unique_ptr<mega::MegaNode> parentNode, const QString& duplicatedSyncFolderPath)
     {
@@ -32,11 +27,10 @@ void StalledIssuesSyncDebrisUtilities::moveToSyncDebris(const QList<mega::MegaHa
                 {
                     MegaSyncApp->getMegaApi()->moveNode(nodeToMove.get(),rubbishNode.get());
                 }
-
-                mHandles.removeOne(handle);
             }
 
-            delete this;
+            mResult = true;
+            mEventLoop.quit();
         };
 
         QString dateFolder(QDate::currentDate().toString(Qt::DateFormat::ISODate));
@@ -45,8 +39,8 @@ void StalledIssuesSyncDebrisUtilities::moveToSyncDebris(const QList<mega::MegaHa
         if(!duplicatedRubbishDateNode)
         {
             MegaSyncApp->getMegaApi()->createFolder(dateFolder.toUtf8().constData(), parentNode.get(), new mega::OnFinishOneShot(MegaSyncApp->getMegaApi(),
-                                                                                                                                 [this, moveLambda]
-                                                                                                                                 (const mega::MegaError& e, const mega::MegaRequest& request)
+                                                      [this, moveLambda]
+                                                      (const mega::MegaError& e, const mega::MegaRequest& request)
             {
                 if (e.getErrorCode() == mega::MegaError::API_OK)
                 {
@@ -57,13 +51,15 @@ void StalledIssuesSyncDebrisUtilities::moveToSyncDebris(const QList<mega::MegaHa
                         return;
                     }
                 }
-                else
-                {
-                    mHandles.clear();
-                }
 
-                delete this;
+                mEventLoop.quit();
             }));
+
+            if(!mEventLoop.isRunning())
+            {
+                //In order to execute in synchronously
+                mEventLoop.exec();
+            }
         }
         else
         {
@@ -92,18 +88,19 @@ void StalledIssuesSyncDebrisUtilities::moveToSyncDebris(const QList<mega::MegaHa
                     return;
                 }
             }
-            else
-            {
-                mHandles.clear();
-            }
 
-            delete this;
+            mEventLoop.quit();
         }));
+
+        //In order to execute in synchronously
+        mEventLoop.exec();
     }
     else
     {
         moveToDateFolder(std::move(duplicatedRubbishNode), fullDuplicatedFolderPath);
     }
+
+    return mResult;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////

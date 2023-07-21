@@ -451,7 +451,7 @@ bool NameConflictedStalledIssue::checkAndSolveConflictedNamesSolved(const QList<
     return mIsSolved;
 }
 
-bool NameConflictedStalledIssue::solveIssue(int option)
+void NameConflictedStalledIssue::solveIssue(int option)
 {
     if(option == 0)
     {
@@ -467,13 +467,10 @@ bool NameConflictedStalledIssue::solveIssue(int option)
     {
         checkAndSolveConflictedNamesSolved(mLocalConflictedNames);
     }
-
-    return true;
 }
 
 
-bool NameConflictedStalledIssue::solveIssue(bool)
+void NameConflictedStalledIssue::solveIssue(bool)
 {
    return solveIssue(0);
 }
-

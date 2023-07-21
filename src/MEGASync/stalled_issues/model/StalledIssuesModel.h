@@ -11,8 +11,6 @@
 #include <QAbstractItemModel>
 #include <QTimer>
 
-class ThreadPool;
-
 class StalledIssuesReceiver : public QObject, public mega::MegaRequestListener
 {
     Q_OBJECT
@@ -117,9 +115,11 @@ private:
     void updateStalledIssuedByOrder();
     void reset();
     QModelIndex getSolveIssueIndex(const QModelIndex& index);
+    void quitReceiverThread();
 
     QThread* mStalledIssuesThread;
     StalledIssuesReceiver* mStalledIssuedReceiver;
+    std::atomic_bool mThreadFinished = false;
     mega::QTMegaRequestListener* mRequestListener;
     mega::QTMegaGlobalListener* mGlobalListener;
     mega::MegaApi* mMegaApi;
@@ -127,6 +127,7 @@ private:
     bool mUpdateWhenGlobalStateChanges;
     bool mIssuesRequested;
     StalledIssuesUtilities mUtilities;
+    QStringList ignoredItems;
 
     mutable QMutex mModelMutex;
 
@@ -134,8 +135,6 @@ private:
     mutable QHash<StalledIssueVariant*, int> mStalledIssuesByOrder;
 
     QHash<int, int> mCountByFilterCriterion;
-
-    std::unique_ptr<ThreadPool> mThreadPool;
 };
 
 #endif // STALLEDISSUESMODEL_H

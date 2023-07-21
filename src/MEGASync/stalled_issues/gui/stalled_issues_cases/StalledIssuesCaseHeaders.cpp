@@ -294,7 +294,7 @@ void LocalAndRemoteActionButtonClicked::actionClicked(StalledIssueHeader *header
 
         msgInfo.buttonsText = textsByButton;
         msgInfo.text = tr("Are you sure you want to solve the issue?");
-        msgInfo.informativeText = tr("This action will choose the local side if they are duplicated");
+        msgInfo.informativeText = tr("This action will choose the latest modified side");
 
         msgInfo.finishFunc = [selection, header, conflict](QMessageBox* msgBox)
         {

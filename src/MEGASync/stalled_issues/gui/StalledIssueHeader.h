@@ -64,6 +64,8 @@ private:
     void issueIgnored();
     void clearLabels();
 
+    void propagateButtonClick();
+
     void refreshUi() override;
 
     Ui::StalledIssueHeader *ui;

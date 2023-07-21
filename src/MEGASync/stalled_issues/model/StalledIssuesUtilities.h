@@ -8,6 +8,7 @@
 #include <QFutureWatcher>
 #include <QFileInfo>
 #include <QReadWriteLock>
+#include <QEventLoop>
 
 #include <memory>
 
@@ -35,7 +36,6 @@ private:
     static QIcon getFileIcon(bool isFile, const QFileInfo &fileInfo, bool hasProblem);
 
     mutable QReadWriteLock  mIgnoreMutex;
-    QStringList mIgnorePaths;
 
     QList<mega::MegaHandle> mRemoteHandles;
 };
@@ -45,10 +45,12 @@ class StalledIssuesSyncDebrisUtilities
 public:
     StalledIssuesSyncDebrisUtilities(){}
 
-    void moveToSyncDebris(const QList<mega::MegaHandle>& handles);
+    bool moveToSyncDebris(const QList<mega::MegaHandle>& handles);
 
 private:
-    static QList<mega::MegaHandle> mHandles;
+    QList<mega::MegaHandle> mHandles;
+    QEventLoop mEventLoop;
+    bool mResult = false;
 };
 
 #endif // STALLEDISSUESUTILITIES_H

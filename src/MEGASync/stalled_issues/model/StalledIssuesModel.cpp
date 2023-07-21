@@ -5,7 +5,6 @@
 #include <NameConflictStalledIssue.h>
 #include <LocalOrRemoteUserMustChooseStalledIssue.h>
 
-#include "ThreadPool.h"
 #include "mega/types.h"
 
 #include <QSortFilterProxyModel>
@@ -70,8 +69,7 @@ StalledIssuesModel::StalledIssuesModel(QObject *parent)
     : QAbstractItemModel(parent),
     mMegaApi (MegaSyncApp->getMegaApi()),
     mHasStalledIssues(false),
-    mUpdateWhenGlobalStateChanges(false),
-    mThreadPool(mega::make_unique<ThreadPool>(1))
+    mUpdateWhenGlobalStateChanges(false)
 {
     mStalledIssuesThread = new QThread();
     mStalledIssuedReceiver = new StalledIssuesReceiver();
@@ -96,8 +94,9 @@ StalledIssuesModel::~StalledIssuesModel()
     mMegaApi->removeRequestListener(mRequestListener);
     mMegaApi->removeGlobalListener(mGlobalListener);
 
+    mThreadFinished = true;
+
     mStalledIssuesThread->quit();
-    mStalledIssuesThread->deleteLater();
     mStalledIssuedReceiver->deleteLater();
 
     mRequestListener->deleteLater();
@@ -107,7 +106,7 @@ void StalledIssuesModel::onProcessStalledIssues(StalledIssuesReceiver::StalledIs
 {
     reset();
 
-    mThreadPool->push([this, issuesReceived]()
+    Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this, issuesReceived]()
     {
         mModelMutex.lock();
 
@@ -122,7 +121,7 @@ void StalledIssuesModel::onProcessStalledIssues(StalledIssuesReceiver::StalledIs
 
             for (auto it = issuesReceived.stalledIssues.begin(); it != issuesReceived.stalledIssues.end();)
             {
-                if(mThreadPool->isThreadInterrupted())
+                if(mThreadFinished)
                 {
                     return;
                 }
@@ -423,6 +422,11 @@ QModelIndex StalledIssuesModel::getSolveIssueIndex(const QModelIndex &index)
     return indexParent.isValid() ? indexParent : index;
 }
 
+void StalledIssuesModel::quitReceiverThread()
+{
+    mStalledIssuesThread->quit();
+}
+
 int StalledIssuesModel::getCountByFilterCriterion(StalledIssueFilterCriterion criterion)
 {
     if(criterion == StalledIssueFilterCriterion::ALL_ISSUES)
@@ -503,13 +507,13 @@ void StalledIssuesModel::chooseSide(bool remote, const QModelIndexList &list)
     {
         blockUi();
 
-        mThreadPool->push([this, resolveIssue]()
+        Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this, resolveIssue]()
         {
             for(int row = 0; row < rowCount(QModelIndex()); ++row)
             {
-                if(mThreadPool->isThreadInterrupted())
+                if(mThreadFinished)
                 {
-                    return;
+                    break;
                 }
 
                 resolveIssue(row);
@@ -522,13 +526,13 @@ void StalledIssuesModel::chooseSide(bool remote, const QModelIndexList &list)
     {
         blockUi();
 
-        mThreadPool->push([this, resolveIssue, list]()
+        Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this, resolveIssue, list]()
         {
             foreach(auto index, list)
             {
-                if(mThreadPool->isThreadInterrupted())
+                if(mThreadFinished)
                 {
-                    return;
+                    break;
                 }
 
                 resolveIssue(index.row());
@@ -545,13 +549,13 @@ void StalledIssuesModel::solveSideConflict(const QModelIndexList &list)
     {
         blockUi();
 
-        mThreadPool->push([this]()
+        Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this]()
         {
             for(int row = 0; row < rowCount(QModelIndex()); ++row)
             {
-                if(mThreadPool->isThreadInterrupted())
+                if(mThreadFinished)
                 {
-                    return;
+                    break;
                 }
 
                 auto item = mStalledIssues.at(row)->convert<LocalOrRemoteUserMustChooseStalledIssue>();
@@ -568,13 +572,13 @@ void StalledIssuesModel::solveSideConflict(const QModelIndexList &list)
     {
         blockUi();
 
-        mThreadPool->push([this, list]()
+        Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this, list]()
         {
             foreach(auto index, list)
             {
-                if(mThreadPool->isThreadInterrupted())
+                if(mThreadFinished)
                 {
-                    return;
+                    break;
                 }
 
                 auto item = mStalledIssues.at(index.row())->convert<LocalOrRemoteUserMustChooseStalledIssue>();
@@ -591,6 +595,8 @@ void StalledIssuesModel::solveSideConflict(const QModelIndexList &list)
 
 void StalledIssuesModel::ignoreItems(const QModelIndexList &list)
 {
+    ignoredItems.clear();
+
     auto resolveIssue = [this](int row)
     {
         auto item = mStalledIssues.at(row);
@@ -600,7 +606,11 @@ void StalledIssuesModel::ignoreItems(const QModelIndexList &list)
 
             foreach(auto file, ignoredFiles)
             {
-                mUtilities.ignoreFile(file);
+                if(!ignoredItems.contains(file))
+                {
+                    ignoredItems.append(file);
+                    mUtilities.ignoreFile(file);
+                }
             }
 
             item->getData()->setIsSolved();
@@ -611,13 +621,13 @@ void StalledIssuesModel::ignoreItems(const QModelIndexList &list)
     {
         blockUi();
 
-        mThreadPool->push([this, resolveIssue]()
+        Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this, resolveIssue]()
         {
             for(int row = 0; row < rowCount(QModelIndex()); ++row)
             {
-                if(mThreadPool->isThreadInterrupted())
+                if(mThreadFinished)
                 {
-                    return;
+                    break;
                 }
 
                 resolveIssue(row);
@@ -630,10 +640,15 @@ void StalledIssuesModel::ignoreItems(const QModelIndexList &list)
     {
         blockUi();
 
-        mThreadPool->push([this, resolveIssue, list]()
+        Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this, resolveIssue, list]()
         {
             foreach(auto index, list)
             {
+                if(mThreadFinished)
+                {
+                    break;
+                }
+
                 resolveIssue(index.row());
             }
 
@@ -648,13 +663,13 @@ void StalledIssuesModel::solveNameConflictIssues(const QModelIndexList &list, in
     {
         blockUi();
 
-        mThreadPool->push([this, option]()
+        Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this, option]()
         {
             for(int row = 0; row < rowCount(QModelIndex()); ++row)
             {
-                if(mThreadPool->isThreadInterrupted())
+                if(mThreadFinished)
                 {
-                    return;
+                    break;
                 }
 
                 auto item = mStalledIssues.at(row);
@@ -674,10 +689,15 @@ void StalledIssuesModel::solveNameConflictIssues(const QModelIndexList &list, in
     {
         blockUi();
 
-        mThreadPool->push([this, list, option]()
+        Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this, list, option]()
         {
             foreach(auto index, list)
             {
+                if(mThreadFinished)
+                {
+                    break;
+                }
+
                 auto potentialIndex = getSolveIssueIndex(index);
 
                 if(auto nameConflict = mStalledIssues.at(potentialIndex.row())->convert<NameConflictedStalledIssue>())

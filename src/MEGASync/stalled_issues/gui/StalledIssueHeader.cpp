@@ -72,6 +72,15 @@ void StalledIssueHeader::clearLabels()
     ui->errorTitleTextContainer->removeEventFilter(this);
 }
 
+void StalledIssueHeader::propagateButtonClick()
+{
+    QApplication::postEvent(this, new QMouseEvent(QEvent::MouseButtonPress, QPointF(), Qt::LeftButton, Qt::NoButton, Qt::KeyboardModifier::NoModifier));
+    qApp->processEvents();
+
+    auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
+    dialog->getDialog()->updateView();
+}
+
 void StalledIssueHeader::showAction(const QString &actionButtonText)
 {
     ui->actionButton->setVisible(true);
@@ -97,6 +106,8 @@ void StalledIssueHeader::hideMultipleAction()
 
 void StalledIssueHeader::onMultipleActionClicked()
 {
+    propagateButtonClick();
+
     auto actions(ui->multipleActionButton->property("ACTIONS").toStringList());
     if(!actions.isEmpty())
     {
@@ -184,18 +195,17 @@ void StalledIssueHeader::on_actionButton_clicked()
 {
     if(mHeaderCase)
     {
-        QApplication::postEvent(this, new QMouseEvent(QEvent::MouseButtonPress, QPointF(), Qt::LeftButton, Qt::NoButton, Qt::KeyboardModifier::NoModifier));
-        qApp->processEvents();
-        mHeaderCase->onActionButtonClicked(this);
+        propagateButtonClick();
 
-        auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
-        dialog->getDialog()->updateView();
+        mHeaderCase->onActionButtonClicked(this);
     }
 }
 
 void StalledIssueHeader::on_ignoreFileButton_clicked()
 {
     auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
+
+    propagateButtonClick();
 
     auto canBeIgnoredChecker = [](const std::shared_ptr<const StalledIssue> issue){
         return issue->canBeIgnored();

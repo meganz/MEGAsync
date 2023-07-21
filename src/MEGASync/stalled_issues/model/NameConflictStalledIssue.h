@@ -218,6 +218,9 @@ public:
 
         void removeDuplicatedNodes()
         {
+            std::unique_ptr<StalledIssuesSyncDebrisUtilities> utilities(new StalledIssuesSyncDebrisUtilities());
+            QList<mega::MegaHandle> nodesToMove;
+
             for(int index = 0; index < mConflictedNames.size(); ++index)
             {
                 auto& conflictedNamesGroup = mConflictedNames[index];
@@ -225,10 +228,6 @@ public:
                 if(conflictedNamesGroup.conflictedNames.size() > 1)
                 {
                     //The object is auto deleted when finished (as it needs to survive this issue)
-                    StalledIssuesSyncDebrisUtilities* utilities(new StalledIssuesSyncDebrisUtilities());
-
-                    QList<mega::MegaHandle> nodesToMove;
-
                     foreach(auto conflictedName, conflictedNamesGroup.conflictedNames)
                     {
                         if(conflictedName != (*(conflictedNamesGroup.conflictedNames.end()-1)))
@@ -238,12 +237,11 @@ public:
                         }
                     }
 
-                    utilities->moveToSyncDebris(nodesToMove);
-
                     conflictedNamesGroup.solved = true;
                 }
             }
 
+            utilities->moveToSyncDebris(nodesToMove);
             mDuplicatedSolved = true;
         }
 
@@ -269,8 +267,8 @@ public:
 
     void renameNodesAutomatically();
 
-    bool solveIssue(int option);
-    bool solveIssue(bool autoSolve) override;
+    void solveIssue(int option);
+    void solveIssue(bool autoSolve) override;
 
     bool hasDuplicatedNodes() const;
 

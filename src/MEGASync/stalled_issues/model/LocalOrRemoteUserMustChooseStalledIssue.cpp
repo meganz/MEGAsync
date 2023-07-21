@@ -11,35 +11,36 @@ LocalOrRemoteUserMustChooseStalledIssue::LocalOrRemoteUserMustChooseStalledIssue
 {
 }
 
-bool LocalOrRemoteUserMustChooseStalledIssue::solveIssue(bool autoSolve)
+void LocalOrRemoteUserMustChooseStalledIssue::solveIssue(bool)
 {
     if(isSolvable())
     {
-        chooseLocalSide();
-        return true;
+        chooseLastMTimeSide();
     }
+}
 
-    return StalledIssue::solveIssue(autoSolve);
+void LocalOrRemoteUserMustChooseStalledIssue::chooseLastMTimeSide()
+{
+    if(consultLocalData()->getAttributes()->modifiedTime() >= consultCloudData()->getAttributes()->modifiedTime())
+    {
+        chooseLocalSide();
+    }
+    else
+    {
+        chooseRemoteSide();
+    }
 }
 
 bool LocalOrRemoteUserMustChooseStalledIssue::isSolvable() const
 {
-    const char* localFingerPrint(MegaSyncApp->getMegaApi()->getFingerprint(consultLocalData()->getNativeFilePath().toUtf8().constData()));
-    const char* cloudFingerPrint(consultCloudData()->getNode()->getFingerprint());
-
-    if(localFingerPrint &&
-       cloudFingerPrint &&
-       std::strcmp(localFingerPrint, cloudFingerPrint) == 0)
+    if(isFile() && (consultLocalData()->getAttributes()->size() == consultCloudData()->getAttributes()->size()))
     {
-        if(consultLocalData()->getAttributes()->size() == consultCloudData()->getAttributes()->size())
+        //Check names
+        auto localName(QString::fromUtf8(MegaSyncApp->getMegaApi()->unescapeFsIncompatible(consultLocalData()->getFileName().toUtf8().constData())));
+        auto cloudName(QString::fromUtf8(MegaSyncApp->getMegaApi()->unescapeFsIncompatible(consultCloudData()->getFileName().toUtf8().constData())));
+        if(localName.compare(cloudName, Qt::CaseSensitive) == 0)
         {
-            //Check names
-            auto localName(QString::fromUtf8(MegaSyncApp->getMegaApi()->unescapeFsIncompatible(consultLocalData()->getFileName().toUtf8().constData())));
-            auto cloudName(QString::fromUtf8(MegaSyncApp->getMegaApi()->unescapeFsIncompatible(consultCloudData()->getFileName().toUtf8().constData())));
-            if(localName.compare(cloudName, Qt::CaseSensitive) == 0)
-            {
-                return true;
-            }
+            return true;
         }
     }
 
@@ -50,9 +51,15 @@ void LocalOrRemoteUserMustChooseStalledIssue::endFillingIssue()
 {
     StalledIssue::endFillingIssue();
 
-    //For autosolving
-    getLocalData()->getAttributes()->requestSize(nullptr, nullptr);
-    getCloudData()->getAttributes()->requestSize(nullptr, nullptr);
+    if(isFile())
+    {
+        //For autosolving
+        getLocalData()->getAttributes()->requestSize(nullptr, nullptr);
+        getCloudData()->getAttributes()->requestSize(nullptr, nullptr);
+
+        getLocalData()->getAttributes()->requestModifiedTime(nullptr, nullptr);
+        getCloudData()->getAttributes()->requestModifiedTime(nullptr, nullptr);
+    }
 }
 
 void LocalOrRemoteUserMustChooseStalledIssue::chooseLocalSide()

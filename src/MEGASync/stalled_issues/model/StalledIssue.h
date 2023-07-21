@@ -232,7 +232,7 @@ public:
 
     bool isSolved() const;
     void setIsSolved();
-    virtual bool solveIssue(bool autoresolve);
+    virtual void solveIssue(bool autoresolve);
 
     bool canBeIgnored() const;
     QStringList getIgnoredFiles() const;
