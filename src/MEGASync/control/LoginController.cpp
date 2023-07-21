@@ -5,16 +5,19 @@
 #include "Platform.h"
 #include "QMegaMessageBox.h"
 #include "DialogOpener.h"
+#include "mega/types.h"
 
 LoginController::LoginController(QObject *parent)
     : QObject{parent}
       , mMegaApi(MegaSyncApp->getMegaApi())
       , mPreferences(Preferences::instance())
-      , mDelegateListener(new mega::QTMegaRequestListener(MegaSyncApp->getMegaApi(), this))
+      , mDelegateListener(mega::make_unique<mega::QTMegaRequestListener>(MegaSyncApp->getMegaApi(), this))
+      , mGlobalListener(mega::make_unique<mega::QTMegaGlobalListener>(MegaSyncApp->getMegaApi(), this))
       , mFetchingNodes(false)
       , mEmailConfirmed(false)
 {
     mMegaApi->addRequestListener(mDelegateListener.get());
+    mMegaApi->addGlobalListener(mGlobalListener.get());
     mConnectivityTimer = new QTimer(this);
     mConnectivityTimer->setSingleShot(true);
     mConnectivityTimer->setInterval(static_cast<int>(Preferences::MAX_LOGIN_TIME_MS));
@@ -25,7 +28,6 @@ LoginController::LoginController(QObject *parent)
     {
         mMegaApi->resumeCreateAccount(credentials.sessionId.toUtf8().constData());
     }
-    new EmailConfirmationListener(this);
 }
 
 LoginController::~LoginController()
@@ -46,7 +48,7 @@ void LoginController::createAccount(const QString &email, const QString &passwor
 
 void LoginController::changeRegistrationEmail(const QString &email)
 {
-    QString fullName = mName + QString::fromUtf8(" ") + mLastName;
+    QString fullName = mName + QLatin1Char(' ') + mLastName;
     mMegaApi->resendSignupLink(email.toUtf8().constData(), fullName.toUtf8().constData());
 }
 
@@ -170,6 +172,14 @@ void LoginController::onRequestStart(mega::MegaApi *api, mega::MegaRequest *requ
     if(request->getType() == mega::MegaRequest::TYPE_LOGIN)
     {
         mConnectivityTimer->start();
+    }
+}
+
+void LoginController::onEvent(mega::MegaApi *, mega::MegaEvent *event)
+{
+    if(event->getType() == mega::MegaEvent::EVENT_CONFIRM_USER_EMAIL)
+    {
+        emailConfirmation(QString::fromLatin1(event->getText()));
     }
 }
 
@@ -762,20 +772,4 @@ void LogoutController::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *re
         Preferences::instance()->setNotifyDisabledSyncsOnLogin(true);
     }
     emit onLogoutFinished();
-}
-
-
-EmailConfirmationListener::EmailConfirmationListener(LoginController* parent)
-    : QObject(parent)
-      , mGlobalListener(new mega::QTMegaGlobalListener(MegaSyncApp->getMegaApi(), this))
-{
-    MegaSyncApp->getMegaApi()->addGlobalListener(mGlobalListener.get());
-}
-
-void EmailConfirmationListener::onEvent(mega::MegaApi *, mega::MegaEvent *event)
-{
-    if(event->getType() == mega::MegaEvent::EVENT_CONFIRM_USER_EMAIL)
-    {
-        static_cast<LoginController*>(parent())->emailConfirmation(QString::fromLatin1(event->getText()));
-    }
 }

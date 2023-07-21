@@ -11,7 +11,7 @@
 #include <memory>
 
 class Preferences;
-class LoginController : public QObject, public mega::MegaRequestListener
+class LoginController : public QObject, public mega::MegaRequestListener, public mega::MegaGlobalListener
 {
     Q_OBJECT
     Q_PROPERTY(QString email MEMBER mEmail READ getEmail NOTIFY emailChanged)
@@ -35,6 +35,9 @@ public:
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest* request, mega::MegaError* e) override;
     void onRequestUpdate(mega::MegaApi* api, mega::MegaRequest* request) override;
     void onRequestStart(mega::MegaApi *api, mega::MegaRequest *request) override;
+
+    void onEvent(mega::MegaApi*, mega::MegaEvent* event) override;
+
     void emailConfirmation(const QString& email);
 
 signals:
@@ -76,6 +79,8 @@ private:
     void loadSyncExclusionRules(const QString& email);
 
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
+    std::unique_ptr<mega::QTMegaGlobalListener> mGlobalListener;
+
     QTimer *mConnectivityTimer;
     bool mFetchingNodes;
     bool mEmailConfirmed;
@@ -113,18 +118,6 @@ signals:
 private:
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
     mega::MegaApi * mMegaApi;
-};
-
-class EmailConfirmationListener : public QObject, mega::MegaGlobalListener
-{
-public:
-    explicit EmailConfirmationListener(LoginController* parent = nullptr);
-
-    void onEvent(mega::MegaApi*, mega::MegaEvent* event) override;
-
-private:
-    std::unique_ptr<mega::QTMegaGlobalListener> mGlobalListener;
-
 };
 
 #endif // LOGINCONTROLLER_H
