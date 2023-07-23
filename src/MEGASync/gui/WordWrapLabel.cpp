@@ -1,6 +1,8 @@
 #include "WordWrapLabel.h"
 
 #include <QDebug>
+#include <QEvent>
+#include <QApplication>
 
 WordWrapLabel::WordWrapLabel(QWidget* parent)
     : QTextEdit(parent)
@@ -38,6 +40,7 @@ void WordWrapLabel::adaptHeight()
         if((docSize.height() + 3) != (height()))
         {
             setFixedHeight(docSize.height() + 3);
+            qApp->postEvent(this, new QEvent(QEvent::WhatsThisClicked));
         }
     }
 }

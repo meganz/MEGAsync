@@ -12,6 +12,8 @@ StalledIssueBaseDelegateWidget::StalledIssueBaseDelegateWidget(QWidget *parent)
     : QWidget(parent),
       mDelegate(nullptr)
 {
+    connect(&mSizeHintTimer, &QTimer::timeout,
+            this, &StalledIssueBaseDelegateWidget::checkForSizeHintChanges);
 }
 
 void StalledIssueBaseDelegateWidget::updateIndex()
@@ -28,6 +30,7 @@ void StalledIssueBaseDelegateWidget::render(const QStyleOptionViewItem &,
 {
     QWidget::render(painter,QPoint(0,0),sourceRegion);
 }
+
 void StalledIssueBaseDelegateWidget::updateUi(const QModelIndex& index, const StalledIssueVariant &data)
 {
     mCurrentIndex = QPersistentModelIndex(index);
@@ -80,14 +83,42 @@ bool StalledIssueBaseDelegateWidget::isHeader() const
 void StalledIssueBaseDelegateWidget::resizeEvent(QResizeEvent* event)
 {
     QWidget::resizeEvent(event);
+}
+
+bool StalledIssueBaseDelegateWidget::event(QEvent *event)
+{
+    if(event->type() == QEvent::WhatsThisClicked)
+    {
+        mSizeHintChanged = 0;
+        mSizeHintTimer.start(10);
+    }
+
+    return QWidget::event(event);
+}
+
+void StalledIssueBaseDelegateWidget::checkForSizeHintChanges()
+{
+    auto newSizeHintHeigth(QWidget::sizeHint().height());
+
+    if(mLastSizeHint != newSizeHintHeigth)
+    {
+        mLastSizeHint = newSizeHintHeigth;
+        mSizeHintChanged = 0;
+    }
+    else
+    {
+        mSizeHintChanged++;
+    }
+
+    if(mSizeHintChanged > 1)
+    {
+        mSizeHintTimer.stop();
+        mSizeHintChanged = 0;
+    }
 
     StalledIssue::SizeType sizeType = isHeader() ? StalledIssue::Header : StalledIssue::Body;
     mData.removeDelegateSize(sizeType);
-
-    QTimer::singleShot(10, [this]()
-    {
-        updateSizeHint();
-    });
+    mDelegate->sizeHintChanged(getCurrentIndex());
 }
 
 void StalledIssueBaseDelegateWidget::setDelegate(QStyledItemDelegate *newDelegate)
@@ -101,7 +132,6 @@ void StalledIssueBaseDelegateWidget::updateSizeHint()
     {
         layout()->activate();
         updateGeometry();
-
 
         auto currentSize(size());
         auto realSize(QWidget::sizeHint());

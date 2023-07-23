@@ -7,6 +7,7 @@
 #include <QWidget>
 #include <QStyleOptionViewItem>
 #include <QStyledItemDelegate>
+#include <QTimer>
 
 
 class StalledIssueBaseDelegateWidget : public QWidget
@@ -41,12 +42,19 @@ signals:
 
 protected:
     void resizeEvent(QResizeEvent *event) override;
+    bool event(QEvent *event) override;
 
     StalledIssuesUtilities mUtilities;
     QStyledItemDelegate* mDelegate;
 
+private slots:
+    void checkForSizeHintChanges();
+
 private:
     virtual void refreshUi() = 0;
+    QTimer mSizeHintTimer;
+    uint8_t mSizeHintChanged = 0;
+    int mLastSizeHint = 0;
 
     mutable StalledIssueVariant mData;
     QPersistentModelIndex mCurrentIndex;
