@@ -116,10 +116,14 @@ private:
     void reset();
     QModelIndex getSolveIssueIndex(const QModelIndex& index);
     void quitReceiverThread();
+    
+    StalledIssuesModel(const StalledIssuesModel&) = delete;
+    void operator=(const StalledIssuesModel&) = delete;
+    
 
     QThread* mStalledIssuesThread;
     StalledIssuesReceiver* mStalledIssuedReceiver;
-    std::atomic_bool mThreadFinished = false;
+    std::atomic_bool mThreadFinished { false };
     mega::QTMegaRequestListener* mRequestListener;
     mega::QTMegaGlobalListener* mGlobalListener;
     mega::MegaApi* mMegaApi;
