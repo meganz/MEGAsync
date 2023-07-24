@@ -4,16 +4,18 @@ import QtQuick.Controls 2.12 as Qml
 import QtGraphicalEffects 1.0
 
 // QML common
+import Common 1.0
 import Components.Texts 1.0 as MegaTexts
 import Components.Images 1.0 as MegaImages
 import Components.Buttons 1.0 as MegaButtons
-import Common 1.0
+import Components.ProgressBars 1.0 as MegaProgressBars
 
 // Local
 import Onboard 1.0
 import Guest 1.0
 
 Rectangle {
+    id: content
 
     property alias loginButton: loginButton
     property alias signUpButton: signUpButton
@@ -22,11 +24,68 @@ Rectangle {
     property alias aboutMenuItem: aboutMenuItem
     property alias preferencesItem: preferencesItem
     property alias exitItem: exitItem
+    property alias progressBar: progressBar
+
+    property string infoText: ""
+    property bool indeterminateProgress: true
+
+    readonly property string stateNormal: "NORMAL"
+    readonly property string stateInProgress: "IN_PROGRESS"
 
     width: 400
     height: 560
     radius: 10
     color: Styles.surface1
+
+    state: content.stateNormal
+    states: [
+        State {
+            name: content.stateNormal
+            PropertyChanges {
+                target: progressBar;
+                visible: false;
+            }
+            PropertyChanges {
+                target: descriptionText;
+                font.pixelSize: MegaTexts.Text.Size.MediumLarge;
+                font.bold: true;
+                color: Styles.textPrimary;
+            }
+            PropertyChanges {
+                target: content;
+                infoText: GuestStrings.logInOrSignUp;
+            }
+            PropertyChanges {
+                target: loginButton;
+                enabled: true;
+            }
+            PropertyChanges {
+                target: signUpButton;
+                enabled: true;
+            }
+        },
+        State {
+            name: content.stateInProgress
+            PropertyChanges {
+                target: progressBar;
+                visible: true;
+            }
+            PropertyChanges {
+                target: descriptionText;
+                font.pixelSize: MegaTexts.Text.Size.Small;
+                font.bold: false;
+                color: Styles.textSecondary;
+            }
+            PropertyChanges {
+                target: loginButton;
+                enabled: false;
+            }
+            PropertyChanges {
+                target: signUpButton;
+                enabled: false;
+            }
+        }
+    ]
 
     MegaImages.SvgImage {
         anchors.top: parent.top
@@ -113,30 +172,23 @@ Rectangle {
         anchors.bottomMargin: 48
         spacing: 24
 
-        Column {
-            spacing: 12
-            width: 352
+        MegaProgressBars.HorizontalProgressBar {
+            id: progressBar
 
-            MegaTexts.Text {
-                anchors.left: parent.left
-                anchors.right: parent.right
-                text: GuestStrings.title
-                font.pixelSize: MegaTexts.Text.Size.MediumLarge
-                font.bold: true
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-            }
+            width: 304
+            indeterminate: content.indeterminateProgress
+        }
 
-            MegaTexts.Text {
-                anchors.left: parent.left
-                anchors.right: parent.right
-                text: GuestStrings.description
-                color: Styles.textSecondary
-                font.weight: Font.DemiBold
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-            }
+        MegaTexts.Text {
+            id: descriptionText
 
+            anchors.left: parent.left
+            anchors.right: parent.right
+            text: infoText
+            font.pixelSize: MegaTexts.Text.Size.MediumLarge
+            font.bold: true
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
         }
 
         Row {

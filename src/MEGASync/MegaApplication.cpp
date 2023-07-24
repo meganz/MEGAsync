@@ -3209,6 +3209,9 @@ void MegaApplication::registerCommonQMLElements()
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/images/SvgImage.qml")), "Components.Images", 1, 0, "SvgImage");
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/images/Image.qml")), "Components.Images", 1, 0, "Image");
 
+    qmlRegisterModule("Components.ProgressBars", 1, 0);
+    qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/progressBars/HorizontalProgressBar.qml")), "Components.ProgressBars", 1, 0, "HorizontalProgressBar");
+
     qmlRegisterModule("Components.ScrollBars", 1, 0);
     qmlRegisterType(QUrl(QString::fromUtf8("qrc:/components/scrollBars/ScrollBar.qml")), "Components.ScrollBars", 1, 0, "ScrollBar");
 

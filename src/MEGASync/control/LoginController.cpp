@@ -162,7 +162,10 @@ void LoginController::onRequestUpdate(mega::MegaApi *api, mega::MegaRequest *req
             double total = static_cast<double>(request->getTotalBytes());
             double part = static_cast<double>(request->getTransferredBytes());
             double progress = part/total;
-            emit fetchingNodesProgress(progress);
+            if(progress > 0.15)
+            {
+                emit fetchingNodesProgress(progress);
+            }
         }
     }
 }
@@ -173,6 +176,10 @@ void LoginController::onRequestStart(mega::MegaApi *api, mega::MegaRequest *requ
     if(request->getType() == mega::MegaRequest::TYPE_LOGIN)
     {
         mConnectivityTimer->start();
+    }
+    if (request->getType() == mega::MegaRequest::TYPE_FETCH_NODES)
+    {
+        emit fetchingNodesProgress(0.15);
     }
 }
 
