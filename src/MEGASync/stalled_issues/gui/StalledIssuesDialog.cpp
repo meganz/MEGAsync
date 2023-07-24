@@ -128,6 +128,10 @@ bool StalledIssuesDialog::eventFilter(QObject* obj, QEvent* event)
 {
     if(event->type() == QEvent::MouseButtonRelease)
     {
+        if(auto wid = dynamic_cast<QWidget*>(obj))
+        {
+            if(wid->isEnabled())
+    {
         if(obj == ui->Verbose)
         {
             ui->Smart->setProperty(MODE_SELECTED, false);
@@ -137,7 +141,7 @@ bool StalledIssuesDialog::eventFilter(QObject* obj, QEvent* event)
 
             mModeSelected = Preferences::StalledIssuesModeType::Verbose;
         }
-        else if(obj == ui->Smart && ui->Smart->isEnabled())
+                else if(obj == ui->Smart)
         {
             ui->Smart->setProperty(MODE_SELECTED, true);
             ui->Smart->setStyleSheet(ui->Smart->styleSheet());
@@ -148,6 +152,8 @@ bool StalledIssuesDialog::eventFilter(QObject* obj, QEvent* event)
         }
 
         ui->SelectButton->setEnabled(true);
+    }
+        }
     }
 
     return QDialog::eventFilter(obj, event);

@@ -7889,7 +7889,18 @@ void MegaApplication::onGlobalSyncStateChangedImpl(MegaApi *, bool timeout)
         indexing = megaApi->isScanning();
         waiting = megaApi->isWaiting() || megaApi->isSyncStalled();
         syncing = megaApi->isSyncing();
-        syncStalled = megaApi->isSyncStalled();
+
+        if(getStalledIssuesModel() && syncStalled != megaApi->isSyncStalled())
+        {
+            syncStalled = !syncStalled;
+            if(syncStalled)
+            {
+                //For Smart mode -> resolve problems as soon as they are received
+                //For Events -> Send events as soon as issues are received
+                getStalledIssuesModel()->updateStalledIssues();
+            }
+        }
+
         auto transferCount = model->getTransfersCount();
         transferring = transferCount.pendingUploads || transferCount.pendingDownloads;
 
