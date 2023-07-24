@@ -579,6 +579,16 @@ int main(int argc, char *argv[])
     QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Lato-Regular.ttf"));
     QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Lato-Semibold.ttf"));
 
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Inter-Bold.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Inter-Black.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Inter-ExtraBold.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Inter-ExtraLight.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Inter-Light.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Inter-Medium.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Inter-Regular.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Inter-SemiBold.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Inter-Thin.ttf"));
+
     app.initialize();
     app.start();
 
