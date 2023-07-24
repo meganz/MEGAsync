@@ -23,6 +23,12 @@ LoginPageForm {
         onboardingWindow.loggingIn = false;
     }
 
+    function startProgressInInfoDialog(indeterminate, text) {
+        guestContent.indeterminateProgress = indeterminate;
+        guestContent.state = guestContent.stateInProgress;
+        guestContent.infoText = text;
+    }
+
     Keys.onEnterPressed: {
         loginButton.forceActiveFocus();
         loginButton.clicked();
@@ -61,6 +67,7 @@ LoginPageForm {
         loginController.login(email.text, password.text);
         onboardingWindow.loggingIn = true;
         loginAttempt = true;
+        startProgressInInfoDialog(true, OnboardingStrings.statusLogin);
     }
 
     signUpButton.onClicked: {
@@ -76,8 +83,7 @@ LoginPageForm {
     Connections {
         target: Onboarding
 
-        onAccountBlocked:
-        {
+        onAccountBlocked: {
             setNormalStatus();
             onboardingWindow.forceClose();
         }
@@ -87,20 +93,18 @@ LoginPageForm {
         target: loginController
 
         onFetchingNodesProgress: {
-            console.log("LOGIN PAGE progress: " + progress);
+            console.error("LOGIN PAGE progress: " + progress);
             loginButton.progress.value = progress;
         }
 
         onFetchingNodesFinished: (firstTime) => {
+            console.error("LOGIN PAGE finish: " + firstTime);
             onboardingWindow.loggingIn = false;
-            if(firstTime)
-            {
+            if(firstTime) {
                 loginButton.icons.busyIndicatorVisible = false;
                 state = normalStatus;
                 onboardingFlow.state = syncs;
-            }
-            else
-            {
+            } else {
                 onboardingWindow.close();
             }
         }
@@ -116,61 +120,41 @@ LoginPageForm {
         }
 
         onLoginFinished: (errorCode, errorMsg) => {
-            if(errorCode !== ApiEnums.API_OK)
-            {
+            if(errorCode !== ApiEnums.API_OK) {
                 setNormalStatus();
             }
 
-            switch(errorCode)
-            {
-                case ApiEnums.API_EMFAREQUIRED://-26: //mega::MegaError::API_EMFAREQUIRED:->2FA required
-                {
+            switch(errorCode) {
+                case ApiEnums.API_EMFAREQUIRED: //-26: //mega::MegaError::API_EMFAREQUIRED:->2FA required
                     registerFlow.state = twoFA;
                     break;
-                }
                 case ApiEnums.API_EFAILED: //mega::MegaError::API_EFAILED: ->
                 case ApiEnums.API_EEXPIRED: //mega::MegaError::API_EEXPIRED: -> 2FA failed
-                {
                     break;
-                }
                 case ApiEnums.API_ENOENT: //mega::MegaError::API_ENOENT: -> user or pass failed
-                {
                     email.error = true;
                     password.error = true;
                     password.hint.text = OnboardingStrings.errorLogin;
                     password.hint.visible = true;
                     break;
-                }
                 case ApiEnums.API_EINCOMPLETE: //mega::MegaError::API_EINCOMPLETE: -> account not confirmed
-                {
                     //what to do here?                    //add banners
-
                     break;
-                }
                 case ApiEnums.API_ETOOMANY: //mega::MegaError::API_ETOOMANY: -> too many attempts
-                {
                     //what to do here?                    //add banners
-
                     break;
-                }
                 case ApiEnums.API_EBLOCKED: //mega::MegaError::API_EBLOCKED: ->  blocked account
-                {
                     //what to do here?                    //add banners
-
                     break;
-                }
                 case ApiEnums.API_EACCESS: //locallogout called prior to login finished
-                {
                     //add banners
                     break;
-                }
                 case ApiEnums.API_OK: //mega::MegaError::API_OK:
-                {
                     state = fetchNodesStatus;
+                    startProgressInInfoDialog(false, OnboardingStrings.statusFetchNodes);
                     break;
-                }
                 default:
-
+                    break;
             }
         }
     }

@@ -18,8 +18,14 @@ RegisterPageForm {
         nextButton.icons.busyIndicatorVisible = true;
         state = signUpStatus;
 
-        loginController.createAccount(registerContent.email.text, registerContent.password.text,
-                                   registerContent.firstName.text, registerContent.lastName.text);
+        guestContent.indeterminateProgress = true;
+        guestContent.state = guestContent.stateInProgress;
+        guestContent.infoText = OnboardingStrings.statusSignUp;
+
+        loginController.createAccount(registerContent.email.text,
+                                      registerContent.password.text,
+                                      registerContent.firstName.text,
+                                      registerContent.lastName.text);
     }
 
     nextButton.progress.onAnimationFinished: {

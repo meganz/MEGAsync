@@ -6,11 +6,11 @@ Window {
     function realocate() {
         var screenWidth = Screen.width;
         var screenHeight = Screen.height;
-        console.debug("mock GuestWindow::realocate() : " + " resolution -> " + screenWidth + "x" + screenHeight);
+        console.debug("mock GuestWindow::realocate() : " + "resolution -> " + screenWidth + "x" + screenHeight);
 
         // Change to emulate a different OS
         var os = Qt.platform.os;
-        console.debug("mock GuestWindow::realocate() : " + " emulate -> " + os);
+        console.debug("mock GuestWindow::realocate() : " + "emulate -> " + os);
         switch(os) {
             case "windows":
                 x = screenWidth - width;
@@ -28,6 +28,8 @@ Window {
                 y = 30;
                 break;
         }
+
+        console.debug("mock GuestWindow::realocate() : " + "x -> " + x + " : y -> " + y);
     }
 
 }

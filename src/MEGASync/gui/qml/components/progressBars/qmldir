@@ -1,0 +1,2 @@
+module Components.ProgressBars
+HorizontalProgressBar 1.0 HorizontalProgressBar.qml

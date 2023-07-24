@@ -16,6 +16,8 @@ Item {
     signal fetchingNodesProgress(double progress)
     signal showLoginPage
     signal showSignUpPage
+    signal hideGuestWindow
+    signal showGuestWindow
 
     function onForgotPasswordClicked() {
         console.info("onForgotPasswordClicked()");

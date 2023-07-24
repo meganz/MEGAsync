@@ -193,7 +193,6 @@ Rectangle {
             target: Onboarding
 
             onShowGuestWindow: {
-                console.error("show");
                 guestWindow.visible = true;
             }
 
