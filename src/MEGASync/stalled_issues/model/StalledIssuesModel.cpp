@@ -49,6 +49,9 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest *r
                 variant->getData()->fillIssue(stall);
                 variant->getData()->endFillingIssue();
 
+                qDebug() << "Stalled Issue received";
+                //MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_STALLED_ISSUE_RECEIVED, "Stalled issue received", false, nullptr);
+
                 if(Preferences::instance()->stalledIssueMode() == Preferences::StalledIssuesModeType::Smart)
                 {
                     variant->getData()->autoSolveIssue();

@@ -128,28 +128,28 @@ bool StalledIssuesDialog::eventFilter(QObject* obj, QEvent* event)
         if(auto wid = dynamic_cast<QWidget*>(obj))
         {
             if(wid->isEnabled())
-    {
-        if(obj == ui->Verbose)
-        {
-            ui->Smart->setProperty(MODE_SELECTED, false);
-            ui->Smart->setStyleSheet(ui->Smart->styleSheet());
-            ui->Verbose->setProperty(MODE_SELECTED, true);
-            ui->Verbose->setStyleSheet(ui->Verbose->styleSheet());
+            {
+                if(obj == ui->Verbose)
+                {
+                    ui->Smart->setProperty(MODE_SELECTED, false);
+                    ui->Smart->setStyleSheet(ui->Smart->styleSheet());
+                    ui->Verbose->setProperty(MODE_SELECTED, true);
+                    ui->Verbose->setStyleSheet(ui->Verbose->styleSheet());
 
-            mModeSelected = Preferences::StalledIssuesModeType::Verbose;
-        }
+                    mModeSelected = Preferences::StalledIssuesModeType::Verbose;
+                }
                 else if(obj == ui->Smart)
-        {
-            ui->Smart->setProperty(MODE_SELECTED, true);
-            ui->Smart->setStyleSheet(ui->Smart->styleSheet());
-            ui->Verbose->setProperty(MODE_SELECTED, false);
-            ui->Verbose->setStyleSheet(ui->Verbose->styleSheet());
+                {
+                    ui->Smart->setProperty(MODE_SELECTED, true);
+                    ui->Smart->setStyleSheet(ui->Smart->styleSheet());
+                    ui->Verbose->setProperty(MODE_SELECTED, false);
+                    ui->Verbose->setStyleSheet(ui->Verbose->styleSheet());
 
-            mModeSelected = Preferences::StalledIssuesModeType::Smart;
-        }
+                    mModeSelected = Preferences::StalledIssuesModeType::Smart;
+                }
 
-        ui->SelectButton->setEnabled(true);
-    }
+                ui->SelectButton->setEnabled(true);
+            }
         }
     }
 
