@@ -22,6 +22,7 @@ const int StalledIssueHeader::GROUPBOX_CONTENTS_INDENT = 9;// Following the InVi
 const int StalledIssueHeader::HEIGHT = 60;
 
 const char* FILENAME_PROPERTY = "FILENAME_PROPERTY";
+const char* MULTIPLE_ACTIONS_PROPERTY = "ACTIONS_PROPERTY";
 
 StalledIssueHeader::StalledIssueHeader(QWidget *parent) :
     StalledIssueBaseDelegateWidget(parent),
@@ -92,11 +93,11 @@ void StalledIssueHeader::hideAction()
     ui->actionButton->setVisible(false);
 }
 
-void StalledIssueHeader::showMultipleAction(const QString &actionButtonText, const QStringList &actions)
+void StalledIssueHeader::showMultipleAction(const QString &actionButtonText, const QList<ActionInfo>& actions)
 {
     ui->multipleActionButton->setVisible(true);
     ui->multipleActionButton->setText(actionButtonText);
-    ui->multipleActionButton->setProperty("ACTIONS", actions);
+    ui->multipleActionButton->setProperty(MULTIPLE_ACTIONS_PROPERTY, QVariant::fromValue<QList<ActionInfo>>(actions));
 }
 
 void StalledIssueHeader::hideMultipleAction()
@@ -108,26 +109,24 @@ void StalledIssueHeader::onMultipleActionClicked()
 {
     propagateButtonClick();
 
-    auto actions(ui->multipleActionButton->property("ACTIONS").toStringList());
+    auto actions(ui->multipleActionButton->property(MULTIPLE_ACTIONS_PROPERTY).value<QList<ActionInfo>>());
     if(!actions.isEmpty())
     {
         QMenu *menu(new QMenu(ui->multipleActionButton));
         Platform::getInstance()->initMenu(menu, "MultipleActionStalledIssues");
         menu->setAttribute(Qt::WA_DeleteOnClose);
 
-        int index(0);
         foreach(auto action, actions)
         {
             // Show in system file explorer action
-            auto actionItem (new MenuItemAction(action, QString()));
-            connect(actionItem, &MenuItemAction::triggered, this, [this, index]()
+            auto actionItem (new MenuItemAction(action.actionText, QString()));
+            auto id(action.id);
+            connect(actionItem, &MenuItemAction::triggered, this, [this, id]()
             {
-                mHeaderCase->onMultipleActionButtonOptionSelected(this, index);
+                mHeaderCase->onMultipleActionButtonOptionSelected(this, id);
             });
             actionItem->setParent(menu);
             menu->addAction(actionItem);
-
-            index++;
         }
 
         auto pos(ui->actionContainer->mapToGlobal(ui->multipleActionButton->pos()));

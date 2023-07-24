@@ -358,7 +358,16 @@ void NameConflictsHeader::refreshCaseUi(StalledIssueHeader* header)
 
         if(!nameConflict->isSolved())
         {
-            header->showMultipleAction(tr("Solve options"), QStringList() << tr("Remove duplicates and rename the rest") << tr("Rename all items"));
+            QList<StalledIssueHeader::ActionInfo> actions;
+
+            if(nameConflict->hasDuplicatedNodes())
+            {
+                actions << StalledIssueHeader::ActionInfo(tr("Remove duplicates and rename the rest"), SolveOptions::RemoveDuplicateAndRename);
+            }
+
+            actions << StalledIssueHeader::ActionInfo(tr("Rename all items"), SolveOptions::RenameAll);
+
+            header->showMultipleAction(tr("Solve options"), actions);
         }
         else
         {
@@ -408,7 +417,7 @@ void NameConflictsHeader::onMultipleActionButtonOptionSelected(StalledIssueHeade
 
         msgInfo.buttonsText = textsByButton;
         msgInfo.text = tr("Are you sure you want to solve the issue?");
-        msgInfo.informativeText = index == 0 ? tr("This action will delete the duplicate files and rename the rest of names.")
+        msgInfo.informativeText = index == SolveOptions::RemoveDuplicateAndRename ? tr("This action will delete the duplicate files and rename the rest of names.")
                                              : tr("This action will rename the conflicted items.");
 
         msgInfo.finishFunc = [this, index, selection, header, nameConflict](QMessageBox* msgBox)

@@ -35,7 +35,18 @@ public:
     void showAction(const QString& actionButtonText);
     void hideAction();
 
-    void showMultipleAction(const QString& actionButtonText, const QStringList& actions);
+    struct ActionInfo
+    {
+        ActionInfo(const QString& text, int id):
+            actionText(text),
+            id(id)
+        {}
+
+        QString actionText;
+        int id;
+    };
+
+    void showMultipleAction(const QString& actionButtonText, const QList<ActionInfo>& actions);
     void hideMultipleAction();
 
     void showMessage(const QString& message, const QPixmap &pixmap);
@@ -71,5 +82,7 @@ private:
     Ui::StalledIssueHeader *ui;
     QPointer<StalledIssueHeaderCase> mHeaderCase;
 };
+
+Q_DECLARE_METATYPE(QList<StalledIssueHeader::ActionInfo>)
 
 #endif // STALLEDISSUEHEADER_H

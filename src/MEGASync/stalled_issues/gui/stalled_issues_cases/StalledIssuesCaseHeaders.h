@@ -192,6 +192,13 @@ public:
 
 protected slots:
     void refreshCaseUi(StalledIssueHeader* header) override;
+
+private:
+    enum SolveOptions
+    {
+        RemoveDuplicateAndRename = 0,
+        RenameAll
+    };
 };
 
 #endif // STALLEDISSUESCASEHEADERS_H

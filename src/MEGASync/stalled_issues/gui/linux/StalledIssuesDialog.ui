@@ -799,6 +799,9 @@ background-color: #f6f6f6;
 }</string>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <property name="spacing">
+           <number>50</number>
+          </property>
           <property name="leftMargin">
            <number>75</number>
           </property>
@@ -806,10 +809,23 @@ background-color: #f6f6f6;
            <number>75</number>
           </property>
           <item>
+           <spacer name="horizontalSpacer_4">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
            <widget class="QFrame" name="Verbose">
             <property name="minimumSize">
              <size>
-              <width>0</width>
+              <width>250</width>
               <height>0</height>
              </size>
             </property>
@@ -889,7 +905,7 @@ with each issue</string>
            <widget class="QFrame" name="Smart">
             <property name="minimumSize">
              <size>
-              <width>0</width>
+              <width>250</width>
               <height>0</height>
              </size>
             </property>
@@ -965,6 +981,19 @@ most of the common issues
              </item>
             </layout>
            </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_5">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
           </item>
          </layout>
         </widget>
