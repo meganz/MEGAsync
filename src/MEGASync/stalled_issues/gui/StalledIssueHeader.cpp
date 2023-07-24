@@ -175,9 +175,9 @@ void StalledIssueHeader::setTitleDescriptionText(const QString &text)
     ui->errorDescriptionText->setText(text);
 }
 
-void StalledIssueHeader::setData(StalledIssueHeaderCase *data)
+void StalledIssueHeader::setData(StalledIssueHeaderCase * issueData)
 {
-    mHeaderCase = data;
+    mHeaderCase = issueData;
 }
 
 void StalledIssueHeader::reset()

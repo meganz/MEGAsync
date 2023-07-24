@@ -69,7 +69,7 @@ padding-left:4px;
 QTableView::item::selected
 {
 background-color: rgba(0,120,215,0.8);
-text-color:white;
+color:white;
 }
 
 QHeaderView

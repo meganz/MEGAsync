@@ -31,10 +31,10 @@ void StalledIssueBaseDelegateWidget::render(const QStyleOptionViewItem &,
     QWidget::render(painter,QPoint(0,0),sourceRegion);
 }
 
-void StalledIssueBaseDelegateWidget::updateUi(const QModelIndex& index, const StalledIssueVariant &data)
+void StalledIssueBaseDelegateWidget::updateUi(const QModelIndex& index, const StalledIssueVariant & issueData)
 {
     mCurrentIndex = QPersistentModelIndex(index);
-    mData = data;
+    mData = issueData;
 
     refreshUi();
 }

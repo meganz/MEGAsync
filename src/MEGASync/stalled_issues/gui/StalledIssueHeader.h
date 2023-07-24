@@ -46,7 +46,7 @@ public:
 
     void setTitleDescriptionText(const QString& text);
 
-    void setData(StalledIssueHeaderCase* data);
+    void setData(StalledIssueHeaderCase* issueData);
     void reset();
 
 protected:

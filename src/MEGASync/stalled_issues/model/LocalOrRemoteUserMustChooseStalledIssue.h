@@ -2,6 +2,7 @@
 #define LOCALORREMOTEUSERMUSTCHOOSESTALLEDISSUE_H
 
 #include <StalledIssue.h>
+#include <TransfersModel.h>
 
 class MegaUploader;
 
@@ -12,7 +13,9 @@ public:
 
     void solveIssue(bool) override;
     bool isSolvable() const;
+    bool isBeingSolved(TransfersModel::UploadTransferInfo &info) const;
 
+    void fillIssue(const mega::MegaSyncStall *stall) override;
     void endFillingIssue() override;
 
     void chooseLocalSide();

@@ -22,7 +22,7 @@ public:
     void render(const QStyleOptionViewItem &option,
                 QPainter *painter,
                 const QRegion &sourceRegion);
-    virtual void updateUi(const QModelIndex &index, const StalledIssueVariant &data);
+    virtual void updateUi(const QModelIndex &index, const StalledIssueVariant& issueData);
     virtual void setIndent(int){}
 
     QModelIndex getCurrentIndex() const;

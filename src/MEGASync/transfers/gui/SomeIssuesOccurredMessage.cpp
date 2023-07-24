@@ -26,7 +26,7 @@ void SomeIssuesOccurredMessage::on_viewIssuesButton_clicked()
     }
     else
     {
-        auto stalledIssuesDialog = new StalledIssuesDialog();
-        DialogOpener::showDialog<StalledIssuesDialog>(stalledIssuesDialog);
+        auto newStalledIssuesDialog = new StalledIssuesDialog();
+        DialogOpener::showDialog<StalledIssuesDialog>(newStalledIssuesDialog);
     }
 }

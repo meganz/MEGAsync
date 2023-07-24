@@ -149,6 +149,7 @@ void StalledIssueActionTitle::addMessage(const QString &message, const QPixmap& 
     labelContainer->installEventFilter(this);
     labelContainer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     QHBoxLayout* labelContainerLayout = new QHBoxLayout();
+    labelContainerLayout->setObjectName(QString::fromLatin1("messageLayout"));
     labelContainerLayout->setContentsMargins(0,0,10,0);
     labelContainer->setLayout(labelContainerLayout);
     labelContainerLayout->addStretch();

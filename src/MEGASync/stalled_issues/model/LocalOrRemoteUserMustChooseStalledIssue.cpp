@@ -47,6 +47,37 @@ bool LocalOrRemoteUserMustChooseStalledIssue::isSolvable() const
     return false;
 }
 
+bool LocalOrRemoteUserMustChooseStalledIssue::isBeingSolved(TransfersModel::UploadTransferInfo& info) const
+{
+    auto result(false);
+
+    auto node = getCloudData()->getNode();
+    if(node)
+    {
+        info.filename = consultLocalData()->getFileName();
+        info.localPath = consultLocalData()->getNativeFilePath();
+        info.parentHandle = node->getParentHandle();
+        auto transfer = MegaSyncApp->getTransfersModel()->activeTransferFound(info);
+
+        result =  transfer != nullptr;
+    }
+
+    return result;
+}
+
+void LocalOrRemoteUserMustChooseStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
+{
+    StalledIssue::fillIssue(stall);
+
+    TransfersModel::UploadTransferInfo info;
+    //Check if transfer already exists
+    if(isBeingSolved(info))
+    {
+        MegaSyncApp->getMegaApi()->clearStalledPath(getOriginalStall().get());
+        setIsSolved();
+    }
+}
+
 void LocalOrRemoteUserMustChooseStalledIssue::endFillingIssue()
 {
     StalledIssue::endFillingIssue();
@@ -66,23 +97,15 @@ void LocalOrRemoteUserMustChooseStalledIssue::chooseLocalSide()
 {
     if(getCloudData())
     {
-        auto node = getCloudData()->getNode();
-        if(node)
+        TransfersModel::UploadTransferInfo info;
+        //Check if transfer already exists
+        if(!isBeingSolved(info))
         {
-            std::shared_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getNodeByHandle(node->getParentHandle()));
+            std::shared_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getNodeByHandle(info.parentHandle));
             if(parentNode)
             {
-                //Check if transfer already exists
-                TransfersModel::UploadTransferInfo info;
-                info.filename = consultLocalData()->getFileName();
-                info.localPath = consultLocalData()->getNativeFilePath();
-                info.parentHandle = parentNode->getHandle();
-                auto transfer = MegaSyncApp->getTransfersModel()->getUploadTransferByInfo(info);
-
-                if(!transfer)
-                {
-                    mUploader->upload(info.localPath, info.filename, parentNode, (unsigned long long)-1, nullptr);
-                }
+                //Using appDataId == 0 means that there will be no notification for this upload
+                mUploader->upload(info.localPath, info.filename, parentNode, 0, nullptr);
 
                 // Prevent this one showing again (if they Refresh) until sync has made a full fresh pass
                 MegaSyncApp->getMegaApi()->clearStalledPath(getOriginalStall().get());

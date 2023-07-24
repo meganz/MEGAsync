@@ -271,7 +271,7 @@ public:
         mega::MegaHandle parentHandle;
     };
 
-    const QExplicitlySharedDataPointer<const TransferData> getUploadTransferByInfo(const UploadTransferInfo& info) const;
+    const QExplicitlySharedDataPointer<const TransferData> activeTransferFound(const UploadTransferInfo& info) const;
 
     const QExplicitlySharedDataPointer<const TransferData> getTransferByTag(int tag) const;
     QExplicitlySharedDataPointer<TransferData> getTransferByTag(int tag);

@@ -13,8 +13,8 @@ public:
     ~StalledIssueHeaderCase() = default;
 
     virtual void refreshCaseUi(StalledIssueHeader* header) = 0;
-    virtual void onActionButtonClicked(StalledIssueHeader* header){}
-    virtual void onMultipleActionButtonOptionSelected(StalledIssueHeader* header, int index){}
+    virtual void onActionButtonClicked(StalledIssueHeader*){}
+    virtual void onMultipleActionButtonOptionSelected(StalledIssueHeader*, int){}
 };
 
 //DefaultHeader failed

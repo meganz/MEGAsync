@@ -834,7 +834,7 @@ bool TransfersModel::areAllPaused() const
     return mAreAllPaused;
 }
 
-const QExplicitlySharedDataPointer<const TransferData> TransfersModel::getUploadTransferByInfo(const UploadTransferInfo &info) const
+const QExplicitlySharedDataPointer<const TransferData> TransfersModel::activeTransferFound(const UploadTransferInfo &info) const
 {
     QExplicitlySharedDataPointer<const TransferData> foundTransfer;
 
@@ -846,7 +846,8 @@ const QExplicitlySharedDataPointer<const TransferData> TransfersModel::getUpload
         {
             if(transfer->mFilename.compare(info.filename, Qt::CaseSensitive) == 0 &&
                transfer->mParentHandle == info.parentHandle &&
-               transfer->path() == info.localPath)
+               transfer->path() == info.localPath &&
+               transfer->isActiveOrPending())
             {
                 foundTransfer = transfer;
                 break;
