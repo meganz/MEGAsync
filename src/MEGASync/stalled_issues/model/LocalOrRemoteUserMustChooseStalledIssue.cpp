@@ -81,7 +81,7 @@ void LocalOrRemoteUserMustChooseStalledIssue::chooseLocalSide()
 
                 if(!transfer)
                 {
-                    mUploader->upload(info.localPath, info.filename, parentNode, -1, nullptr);
+                    mUploader->upload(info.localPath, info.filename, parentNode, (unsigned long long)-1, nullptr);
                 }
 
                 // Prevent this one showing again (if they Refresh) until sync has made a full fresh pass

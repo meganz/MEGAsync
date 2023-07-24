@@ -444,8 +444,14 @@ void RemoteFileFolderAttributes::requestFingerprint(QObject *caller, std::functi
     std::unique_ptr<mega::MegaNode> node = getNode();
     if(node)
     {
-        const char* fp(node->getFingerprint());
-        mFp = QString::fromUtf8(node->getFingerprint());
+        if (const char* fp = node->getFingerprint())
+        {
+            mFp = QString::fromUtf8(node->getFingerprint());
+        }
+        else
+        {
+            mFp = QString();
+        }
     }
 
     emit fingerprintReady(mFp);
