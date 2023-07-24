@@ -49,10 +49,15 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest *r
                 variant->getData()->fillIssue(stall);
                 variant->getData()->endFillingIssue();
 
-                qDebug() << "Stalled Issue received";
-                //MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_STALLED_ISSUE_RECEIVED, "Stalled issue received", false, nullptr);
+                if(Preferences::instance()->stalledIssuesEventLastDate() != QDate::currentDate())
+                {
+                    Preferences::instance()->updateStalledIssuesEventLastDate();
 
-                if(Preferences::instance()->stalledIssueMode() == Preferences::StalledIssuesModeType::Smart)
+                    QString eventMessage(QString::fromLatin1("Stalled issue received: Type %1").arg(QString::number(stall->reason())));
+                    MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_STALLED_ISSUE_RECEIVED, eventMessage.toUtf8().constData(), false, nullptr);
+                }
+
+                if(Preferences::instance()->stalledIssuesMode() == Preferences::StalledIssuesModeType::Smart)
                 {
                     variant->getData()->autoSolveIssue();
                 }
@@ -451,9 +456,8 @@ void StalledIssuesModel::chooseSideManually(bool remote, const QModelIndexList &
                 remote ? issue->chooseRemoteSide() : issue->chooseLocalSide();
                 if(item->consultData()->isSolved())
                 {
-//                    MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_LOCALREMOTE_SOLVED_MANUALLY,
-//                                                         "Local/Remote issue solved manually", false, nullptr);
-                    qDebug() << "Local/Remote issue solved manually";
+                    MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_LOCALREMOTE_SOLVED_MANUALLY,
+                                                         "Local/Remote issue solved manually", false, nullptr);
                 }
             }
         }
@@ -512,9 +516,8 @@ void StalledIssuesModel::semiAutoSolveLocalRemoteIssues(const QModelIndexList &l
 
             if(item->isSolved())
             {
-//                MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_LOCALREMOTE_SOLVED_SEMI_AUTOMATICALLY,
-//                                                     "Local/Remote issue solved semi-automatically", false, nullptr);
-                qDebug() << "Local/Remote issue solved semi-automatically";
+                MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_LOCALREMOTE_SOLVED_SEMI_AUTOMATICALLY,
+                                                     "Local/Remote issue solved semi-automatically", false, nullptr);
             }
         }
     };
@@ -583,9 +586,8 @@ void StalledIssuesModel::ignoreItems(const QModelIndexList &list)
             }
 
             item->getData()->setIsSolved();
-//            MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_IGNORE_SOLVED_MANUALLY,
-//                                                 "Issue ignored manually", false, nullptr);
-            qDebug() << "Issue ignored manually";
+            MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_IGNORE_SOLVED_MANUALLY,
+                                                 "Issue ignored manually", false, nullptr);
         }
     };
 
@@ -643,9 +645,8 @@ void StalledIssuesModel::semiAutoSolveNameConflictIssues(const QModelIndexList &
                 nameConflict->semiAutoSolveIssue(option);
                 if(item->consultData()->isSolved())
                 {
-//                    MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_NAMECONFLICT_SOLVED_SEMI_AUTOMATICALLY,
-//                                                         "Name conflict issue solved semi-automatically", false, nullptr);
-                    qDebug() << "Name conflict issue solved semi-automatically";
+                    MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_NAMECONFLICT_SOLVED_SEMI_AUTOMATICALLY,
+                                                         "Name conflict issue solved semi-automatically", false, nullptr);
                 }
             }
         }
@@ -706,9 +707,8 @@ bool StalledIssuesModel::solveLocalConflictedNameByRemove(int conflictIndex, con
 
         if(nameConflict->isSolved())
         {
-//            MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_NAMECONFLICT_SOLVED_MANUALLY,
-//                                                 "Name conflict issue solved manually", false, nullptr);
-            qDebug() << "Name conflict issue solved manually";
+            MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_NAMECONFLICT_SOLVED_MANUALLY,
+                                                 "Name conflict issue solved manually", false, nullptr);
         }
     }
 
@@ -727,9 +727,8 @@ bool StalledIssuesModel::solveLocalConflictedNameByRename(const QString &renameT
 
         if(nameConflict->isSolved())
         {
-//            MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_NAMECONFLICT_SOLVED_MANUALLY,
-//                                                 "Name conflict issue solved manually", false, nullptr);
-            qDebug() << "Name conflict issue solved manually";
+            MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_NAMECONFLICT_SOLVED_MANUALLY,
+                                                 "Name conflict issue solved manually", false, nullptr);
         }
     }
 
@@ -748,9 +747,8 @@ bool StalledIssuesModel::solveCloudConflictedNameByRemove(int conflictIndex, con
 
         if(nameConflict->isSolved())
         {
-//            MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_NAMECONFLICT_SOLVED_MANUALLY,
-//                                                 "Name conflict issue solved manually", false, nullptr);
-            qDebug() << "Name conflict issue solved manually";
+            MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_NAMECONFLICT_SOLVED_MANUALLY,
+                                                 "Name conflict issue solved manually", false, nullptr);
         }
     }
 
@@ -769,9 +767,8 @@ bool StalledIssuesModel::solveCloudConflictedNameByRename(const QString& renameT
 
         if(nameConflict->isSolved())
         {
-//            MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_NAMECONFLICT_SOLVED_MANUALLY,
-//                                                 "Name conflict issue solved manually", false, nullptr);
-            qDebug() << "Name conflict issue solved manually";
+            MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_NAMECONFLICT_SOLVED_MANUALLY,
+                                                 "Name conflict issue solved manually", false, nullptr);
         }
     }
 

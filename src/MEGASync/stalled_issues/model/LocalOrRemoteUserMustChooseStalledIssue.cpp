@@ -20,8 +20,7 @@ void LocalOrRemoteUserMustChooseStalledIssue::autoSolveIssue()
 
         if(isSolved())
         {
-            qDebug() << "Local/Remote issue solved automatically";
-            //MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_LOCALREMOTE_SOLVED_AUTOMATICALLY, "Local/Remote issue solved automatically", false, nullptr);
+            MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_LOCALREMOTE_SOLVED_AUTOMATICALLY, "Local/Remote issue solved automatically", false, nullptr);
         }
     }
 }

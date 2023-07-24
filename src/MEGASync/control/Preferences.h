@@ -180,8 +180,11 @@ public:
         Smart,
         Verbose
     };
-    StalledIssuesModeType stalledIssueMode();
-    void setStalledIssueMode(StalledIssuesModeType value);
+    StalledIssuesModeType stalledIssuesMode();
+    void setStalledIssuesMode(StalledIssuesModeType value);
+
+    QDate stalledIssuesEventLastDate();
+    void updateStalledIssuesEventLastDate();
 
     //**** END OF Stalled Issues ****/
 
@@ -747,7 +750,8 @@ protected:
     static const QString stalledIssuesModeKey;
     static const StalledIssuesModeType defaultStalledIssuesMode;
 
-    //End of stalled issues
+    //Stalled issues event date
+    static const QString stalledIssuesEventDateKey;
 
     static const bool defaultStartOnStartup;
     static const bool defaultUpdateAutomatically;

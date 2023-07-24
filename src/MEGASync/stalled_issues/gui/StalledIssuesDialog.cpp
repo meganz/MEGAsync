@@ -56,10 +56,10 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
     connect(ui->ModeSelectorButton, &QPushButton::clicked, this, &StalledIssuesDialog::showModeSelector);
 
     connect(ui->SelectButton, &QPushButton::clicked, this, [this](){
-        auto valueChanged(mModeSelected != Preferences::instance()->stalledIssueMode());
+        auto valueChanged(mModeSelected != Preferences::instance()->stalledIssuesMode());
         if(valueChanged)
         {
-            Preferences::instance()->setStalledIssueMode(mModeSelected);
+            Preferences::instance()->setStalledIssuesMode(mModeSelected);
         }
         showView(valueChanged);
     });
@@ -67,7 +67,7 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
     //Temporary
     ui->Smart->setDisabled(true);
 
-    if(Preferences::instance()->stalledIssueMode() == Preferences::StalledIssuesModeType::None)
+    if(Preferences::instance()->stalledIssuesMode() == Preferences::StalledIssuesModeType::None)
     {
         showModeSelector();
     }
@@ -226,7 +226,7 @@ void StalledIssuesDialog::onLoadingSceneChanged(bool state)
 
 void StalledIssuesDialog::showModeSelector()
 {
-    auto mode = Preferences::instance()->stalledIssueMode();
+    auto mode = Preferences::instance()->stalledIssuesMode();
     if(mode != Preferences::StalledIssuesModeType::None)
     {
         if(mode == Preferences::StalledIssuesModeType::Smart)

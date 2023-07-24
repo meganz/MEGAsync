@@ -293,6 +293,8 @@ const QString Preferences::showDeprecatedNotificationsKey   = QString::fromAscii
 //Stalled Issues
 const Preferences::StalledIssuesModeType Preferences::defaultStalledIssuesMode = Preferences::StalledIssuesModeType::None;
 const QString Preferences::stalledIssuesModeKey   = QString::fromAscii("stalledIssuesSmartMode");
+
+const QString Preferences::stalledIssuesEventDateKey = QString::fromAscii("stalledIssuesEventDate");
 //End of Stalled Issues
 
 const QString Preferences::accountTypeKey           = QString::fromAscii("accountType");
@@ -1368,15 +1370,25 @@ QString Preferences::notificationsTypeToString(NotificationsTypes type)
 
 /************ STALLED ISSUES **********************************/
 
-Preferences::StalledIssuesModeType Preferences::stalledIssueMode()
+Preferences::StalledIssuesModeType Preferences::stalledIssuesMode()
 {
     auto value = getValueConcurrent<int>(stalledIssuesModeKey, static_cast<int>(defaultStalledIssuesMode));
     return static_cast<StalledIssuesModeType>(value);
 }
 
-void Preferences::setStalledIssueMode(StalledIssuesModeType value)
+void Preferences::setStalledIssuesMode(StalledIssuesModeType value)
 {
     setValueAndSyncConcurrent(stalledIssuesModeKey, static_cast<int>(value));
+}
+
+QDate Preferences::stalledIssuesEventLastDate()
+{
+    return getValueConcurrent<QDate>(stalledIssuesEventDateKey, QDate());
+}
+
+void Preferences::updateStalledIssuesEventLastDate()
+{
+    setValueAndSyncConcurrent(stalledIssuesEventDateKey, QDate::currentDate());
 }
 
 /************ END OF NOTIFICATIONS GETTERS/SETTERS ************/

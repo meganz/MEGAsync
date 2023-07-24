@@ -476,8 +476,7 @@ void NameConflictedStalledIssue::autoSolveIssue()
     solveIssue(0);
     if(isSolved())
     {
-        qDebug() << "Name conflict issue solved automatically";
-        //MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_NAMECONFLICT_SOLVED_AUTOMATICALLY, "Name conflict issue solved automatically", false, nullptr);
+        MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_NAMECONFLICT_SOLVED_AUTOMATICALLY, "Name conflict issue solved automatically", false, nullptr);
     }
 }
 
