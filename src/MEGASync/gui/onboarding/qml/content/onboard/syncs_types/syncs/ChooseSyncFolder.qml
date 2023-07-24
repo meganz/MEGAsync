@@ -38,7 +38,7 @@ Rectangle {
     function reset() {
         if(local)
         {
-            localFolderChooser.reset()
+            localFolderChooser.reset();
         }
         else
         {

@@ -103,7 +103,7 @@ Rectangle {
             leftMargin: 48
             rightMargin: 48
             topMargin: 45
-            bottomMargin: 45
+            bottomMargin: 16
         }
 
         replaceEnter: Transition {

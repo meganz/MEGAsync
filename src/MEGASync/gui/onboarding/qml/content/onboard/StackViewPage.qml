@@ -94,7 +94,6 @@ Rectangle {
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: root.bottom
-            bottomMargin: 16
         }
         font.pixelSize: MegaTexts.Text.Size.Small
         color: Styles.textSecondary

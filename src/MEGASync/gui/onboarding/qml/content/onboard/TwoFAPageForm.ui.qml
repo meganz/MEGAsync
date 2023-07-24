@@ -47,6 +47,7 @@ StackViewPage {
         anchors {
             right: root.right
             bottom: root.bottom
+            bottomMargin: 29
             left: root.left
         }
 

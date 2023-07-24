@@ -61,6 +61,7 @@ StackViewPage {
         anchors {
             bottom: parent.bottom
             right: parent.right
+            bottomMargin: 29
         }
         spacing: 8
 

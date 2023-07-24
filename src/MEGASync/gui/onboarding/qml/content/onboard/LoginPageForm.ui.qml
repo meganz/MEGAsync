@@ -69,6 +69,7 @@ StackViewPage {
     RowLayout {
         anchors.right: root.right
         anchors.bottom: root.bottom
+        anchors.bottomMargin: 29
         anchors.left: root.left
 
         MegaButtons.OutlineButton {

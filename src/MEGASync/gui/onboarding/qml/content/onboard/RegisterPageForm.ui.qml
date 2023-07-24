@@ -63,6 +63,7 @@ StackViewPage {
         anchors {
             right: root.right
             bottom: root.bottom
+            bottomMargin: 29
             left: root.left
         }
 
@@ -72,7 +73,6 @@ StackViewPage {
             Layout.alignment: Qt.AlignLeft
             Layout.leftMargin: -loginButton.sizes.focusBorderWidth
             text: OnboardingStrings.login
-
         }
 
         MegaButtons.PrimaryButton {
