@@ -1177,7 +1177,8 @@ void SettingsDialog::on_bFullCheck_clicked()
         if(msg->result() == QMessageBox::Yes)
         {
             MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting deleteSdkCacheAtStartup true: full re-scan requested");
-            restartApp();
+            mPreferences->setDeleteSdkCacheAtStartup(true);
+            MegaSyncApp->rebootApplication(false);
         }
     };
 
@@ -2285,19 +2286,6 @@ void SettingsDialog::saveExcludeSyncNames()
     mPreferences->setDeleteSdkCacheAtStartup(true);
 }
 
-void SettingsDialog::restartApp()
-{
-    mPreferences->setDeleteSdkCacheAtStartup(true);
-    // Restart MEGAsync
-#if defined(Q_OS_MACX)
-    mApp->rebootApplication(false);
-#else
-    //we enqueue this call, so as not to close before properly
-    // handling the exit of Settings Dialog
-    QTimer::singleShot(0, [] () {MegaSyncApp->rebootApplication(false);});
-#endif
-}
-
 void SettingsDialog::onShellNotificationsProcessed()
 {
     mUi->cOverlayIcons->setEnabled(true);
@@ -2315,7 +2303,8 @@ void SettingsDialog::on_bRestart_clicked()
     msgInfo.finishFunc = [this](QPointer<QMessageBox> msg){
         if(msg->result() == QMessageBox::Yes)
         {
-            restartApp();
+            mPreferences->setDeleteSdkCacheAtStartup(true);
+            MegaSyncApp->rebootApplication(false);
         }
     };
     QMegaMessageBox::warning(msgInfo);

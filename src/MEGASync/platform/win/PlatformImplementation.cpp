@@ -941,7 +941,7 @@ QByteArray PlatformImplementation::decrypt(QByteArray data, QByteArray key)
 
     if (!CryptUnprotectData(&dataIn, NULL, &entropy, NULL, NULL, 0, &dataOut))
     {
-        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error encrypting data: %1. data.size = %2, key.size = %3")
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error decrypting data: %1. data.size = %2, key.size = %3")
                      .arg(GetLastError()).arg(data.size()).arg(key.size()).toUtf8().constData());
         return data;
     }
