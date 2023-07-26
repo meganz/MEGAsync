@@ -54,47 +54,45 @@ void SyncController::addSync(const QString& localFolder, const MegaHandle& remot
                              const QString& syncName, MegaSync::SyncType type)
 {
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Adding sync (%1) \"%2\" for path \"%3\"")
-                 .arg(getSyncTypeString(type), syncName, localFolder).toUtf8().constData());
+                                              .arg(getSyncTypeString(type), syncName, localFolder).toUtf8().constData());
     QString syncCleanName = syncName;
     syncCleanName.remove(Utilities::FORBIDDEN_CHARS_RX);
     mApi->syncFolder(type, localFolder.toUtf8().constData(),
                      syncName.isEmpty() ? nullptr : syncCleanName.toUtf8().constData(),
                      remoteHandle, nullptr,
                      new OnFinishOneShot(mApi, [=](const mega::MegaRequest& request, const MegaError& e){
-        auto errorCode = e.getErrorCode();
-        if ( errorCode != MegaError::API_OK)
-        {
-            int syncErrorCode (request.getNumDetails());
-            QString errorMsg;
-            bool error = false;
 
-            if (syncErrorCode != MegaSync::NO_SYNC_ERROR)
-            {
-                errorMsg = QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(syncErrorCode));
-                error = true;
-            }
-            else if (errorCode != MegaError::API_OK)
-            {
-                errorMsg = getSyncAPIErrorMsg(errorCode);
-                if(errorMsg.isEmpty())
-                    errorMsg = QCoreApplication::translate("MegaError", e.getErrorString());
-                error = true;
-            }
+                         auto errorCode (e.getErrorCode());
+                         auto syncErrorCode (request.getNumDetails());
+                         QString errorMsg;
+                         bool error = false;
 
-            if(error)
-            {
-                std::shared_ptr<MegaNode> remoteNode(mApi->getNodeByHandle(request.getNodeHandle()));
-                QString logMsg = QString::fromUtf8("Error adding sync (%1) \"%2\" for \"%3\" to \"%4\" (request error): %5").arg(
-                                     getSyncTypeString(type),
-                                     QString::fromUtf8(request.getName()),
-                                     localFolder,
-                                     QString::fromUtf8(mApi->getNodePath(remoteNode.get())),
-                                     errorMsg);
-                MegaApi::log(MegaApi::LOG_LEVEL_ERROR, logMsg.toUtf8().constData());
-            }
-            emit syncAddStatus(errorCode, errorMsg, localFolder);
-        }
-    }));
+                         if (syncErrorCode != MegaSync::NO_SYNC_ERROR)
+                         {
+                             errorMsg = QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(syncErrorCode));
+                             error = true;
+                         }
+                         else if (errorCode != MegaError::API_OK)
+                         {
+                             errorMsg = getSyncAPIErrorMsg(errorCode);
+                             if(errorMsg.isEmpty())
+                                 errorMsg = QCoreApplication::translate("MegaError", e.getErrorString());
+                             error = true;
+                         }
+
+                         if(error)
+                         {
+                             std::shared_ptr<MegaNode> remoteNode(mApi->getNodeByHandle(request.getNodeHandle()));
+                             QString logMsg = QString::fromUtf8("Error adding sync (%1) \"%2\" for \"%3\" to \"%4\" (request error): %5").arg(
+                                 getSyncTypeString(type),
+                                 QString::fromUtf8(request.getName()),
+                                 localFolder,
+                                 QString::fromUtf8(mApi->getNodePath(remoteNode.get())),
+                                 errorMsg);
+                             MegaApi::log(MegaApi::LOG_LEVEL_ERROR, logMsg.toUtf8().constData());
+                         }
+                         emit syncAddStatus(errorCode, errorMsg, localFolder);
+                     }));
 }
 
 void SyncController::removeSync(std::shared_ptr<SyncSettings> syncSetting, const MegaHandle& remoteHandle)
