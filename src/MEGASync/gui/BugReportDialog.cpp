@@ -155,7 +155,9 @@ void BugReportDialog::onRequestFinish(MegaApi*, MegaRequest* request, MegaError*
                                                                             : QString::fromUtf8(":/images/bug_report_success@2x.png"));
                 msgInfo.finishFunc = [this](QPointer<QMessageBox>)
                 {
-                    close();
+                    QTimer::singleShot(0, this, [this](){
+                        accept();
+                    });
                 };
 
                 QMegaMessageBox::information(msgInfo);
@@ -189,8 +191,8 @@ void BugReportDialog::showErrorMessage()
     msgInfo.buttons = QMessageBox::Ok;
     msgInfo.finishFunc = [this](QPointer<QMessageBox>)
     {
+        preparing = false;
         errorShown = false;
-        close();
     };
 
 
@@ -321,6 +323,10 @@ void BugReportDialog::cancelSendReport()
     warningShown = true;
 
     MegaSyncApp->getTransfersModel()->pauseResumeTransferByTag(currentTransfer, true);
+    if(mSendProgress)
+    {
+        mSendProgress->close();
+    }
 
     QMegaMessageBox::MessageBoxInfo msgInfo;
     msgInfo.parent = this;
@@ -340,7 +346,6 @@ void BugReportDialog::cancelSendReport()
             cancelCurrentReportUpload();
             preparing = false;
             warningShown = false;
-            reject();
         }
         else
         {

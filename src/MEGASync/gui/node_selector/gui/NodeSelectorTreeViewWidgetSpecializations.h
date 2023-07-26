@@ -19,12 +19,17 @@ class NodeSelectorTreeViewWidgetCloudDrive : public NodeSelectorTreeViewWidget
 public:
     explicit NodeSelectorTreeViewWidgetCloudDrive(SelectTypeSPtr mode, QWidget *parent = nullptr);
 
+    void setShowEmptyView(bool newShowEmptyView);
+
 private:
     QString getRootText() override;
     void onRootIndexChanged(const QModelIndex& idx) override;
     std::unique_ptr<NodeSelectorModel> createModel() override;
     void modelLoaded() override;
     QIcon getEmptyIcon() override;
+    bool showEmptyView() override {return mShowEmptyView;}
+
+    bool mShowEmptyView = true;
 };
 
 class NodeSelectorTreeViewWidgetIncomingShares : public NodeSelectorTreeViewWidget

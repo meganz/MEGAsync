@@ -25,8 +25,8 @@ SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type,
                      QObject *parent) :
     QObject(parent),
     mMenu (new QMenu()),
-    mAddAction (new MenuItemAction(QString(), QIcon(), true)),
-    mMenuAction (new MenuItemAction(QString(), QIcon(), true)),
+    mAddAction (new MenuItemAction(QString(), QIcon())),
+    mMenuAction (new MenuItemAction(QString(), QIcon())),
     mLastHovered (nullptr),
     mType (type),
     mMenuIcon(iconMenu),
@@ -171,8 +171,7 @@ void TwoWaySyncsMenu::refresh()
             activeFolders++;
             MenuItemAction* action =
                 new MenuItemAction(SyncController::getSyncNameFromPath(backupSetting->getLocalFolder(true)),
-                                   QIcon(QLatin1String("://images/icons/folder/folder-mono_24.png")),
-                                   true);
+                                   QIcon(QLatin1String("://images/icons/folder/folder-mono_24.png")));
             action->setToolTip(createSyncTooltipText(backupSetting));
             connect(action, &MenuItemAction::triggered,
                     this, [backupSetting](){
@@ -266,7 +265,7 @@ void BackupSyncsMenu::refresh()
             MenuItemAction* action =
                 new MenuItemAction(SyncController::getSyncNameFromPath(backupSetting->getLocalFolder(true)),
                                    QIcon(QLatin1String("://images/icons/folder/folder-mono_24.png")),
-                                   true, true);
+                                   true);
             action->setToolTip(createSyncTooltipText(backupSetting));
             connect(action, &MenuItemAction::triggered,
                     this, [backupSetting](){
