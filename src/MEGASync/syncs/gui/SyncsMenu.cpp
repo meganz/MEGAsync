@@ -185,15 +185,14 @@ void TwoWaySyncsMenu::refresh()
                 firstBackup = action;
             }
         }
-
-        // Display "Add <type>" at the end of the list
-        if (activeFolders)
-        {
-            const QIcon iconAdd (QLatin1String("://images/icons/ico_add_sync.png"));
-            mAddAction->setIcon(iconAdd);
-            mMenu->addSeparator();
-            mMenu->addAction(mAddAction);
-        }
+    }
+    // Display "Add <type>" at the end of the list
+    if (activeFolders)
+    {
+        const QIcon iconAdd (QLatin1String("://images/icons/ico_add_sync.png"));
+        mAddAction->setIcon(iconAdd);
+        mMenu->addSeparator();
+        mMenu->addAction(mAddAction);
     }
 
     if (!numItems || !activeFolders)
@@ -279,15 +278,14 @@ void BackupSyncsMenu::refresh()
                 firstBackup = action;
             }
         }
-
-        // Display "Add <type>" at the end of the list
-        if (activeFolders)
-        {
-            const QIcon iconAdd (QLatin1String("://images/icons/ico_add_sync.png"));
-            mAddAction->setIcon(iconAdd);
-            mMenu->addSeparator();
-            mMenu->addAction(mAddAction);
-        }
+    }
+    // Display "Add <type>" at the end of the list
+    if (activeFolders)
+    {
+        const QIcon iconAdd (QLatin1String("://images/icons/ico_add_sync.png"));
+        mAddAction->setIcon(iconAdd);
+        mMenu->addSeparator();
+        mMenu->addAction(mAddAction);
     }
 
     if (!numItems || !activeFolders)
@@ -301,7 +299,7 @@ void BackupSyncsMenu::refresh()
         if (!mDevNameAction)
         {
             // Display device name before folders
-            mDevNameAction = new MenuItemAction(QString(), QIcon(DEVICE_ICON), true);
+            mDevNameAction = new MenuItemAction(QString(), QIcon(DEVICE_ICON));
             mDevNameAction->setParent(this);
             // Insert the action in the menu to make sure it is here when the
             // set device name slot is called.
