@@ -1417,7 +1417,7 @@ In some cases they may contain details about your data, such as file or folder n
     </message>
     <message numerus="yes">
         <source>%1 item selected</source>
-        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed.
         First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
         <translation>
             <numerusform>%1 item selected.</numerusform>
@@ -1426,7 +1426,7 @@ In some cases they may contain details about your data, such as file or folder n
     </message>
     <message numerus="yes">
         <source>%1. %2 has been removed. To reselect, close this window and try again.</source>
-        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
+        <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed.
         First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
         <translation>
             <numerusform>%1. %2 has been removed. To reselect, close this window and try again.</numerusform>
@@ -3350,11 +3350,6 @@ Transfers will automatically resume when you re-open the app.</numerusform>
         <translation>Show in folder</translation>
     </message>
     <message>
-        <source>Clear</source>
-        <translatorcomment>Label of context menu option to clear selected transfer item of completed view</translatorcomment>
-        <translation>Clear</translation>
-    </message>
-    <message>
         <source>Get link</source>
         <translatorcomment>Context menu action to get transfer link</translatorcomment>
         <translation>Get link</translation>
@@ -3508,19 +3503,24 @@ Your selected incomplete sync transfers won’t be cancelled. All the other sele
         </translation>
     </message>
     <message>
-        <source>Yes, cancel</source>
-        <translatorcomment>Dialog button to do the proposed actions (cancel the transfers)</translatorcomment>
-        <translation>Yes, cancel</translation>
+        <source>Cancel</source>
+        <translatorcomment>Dialog button to do the proposed actions (cancel the transfers). See CON-188.</translatorcomment>
+        <translation type="unfinished">Cancel</translation>
     </message>
     <message>
-        <source>No, continue</source>
-        <translatorcomment>Dialog button to abort the proposed action</translatorcomment>
-        <translation>No, continue</translation>
+        <source>Don&apos;t cancel</source>
+        <translatorcomment>Dialog button to abort the proposed action (cancel the transfers). See CON-188.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Yes, clear</source>
-        <translatorcomment>Dialog button to do the proposed actions (clear the transfers)</translatorcomment>
-        <translation>Yes, clear</translation>
+        <source>Don&apos;t clear</source>
+        <translatorcomment>Dialog button to abort the proposed actions (clear the transfers). See CON-188.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <comment>Dialog button to do the proposed actions (clear the transfers) or label of context menu option to clear selected transfer item. See CON-188.</comment>
+        <translation type="unfinished">Clear</translation>
     </message>
 </context>
 <context>
@@ -4087,12 +4087,12 @@ Enter a different name.</translation>
     </message>
     <message>
         <source>Additional storage charged at %1 per %2TB.</source>
-        <translatorcomment>Balloon tooltip to inform users that additional storate for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
+        <translatorcomment>Tooltip to inform users that additional storage quota will be charged at %1 price per %2 TB. %1 reflects the price and %2 the quantity of storage quota.</translatorcomment>
         <translation>Additional storage charged at %1 per %2&#xa0;TB.</translation>
     </message>
     <message>
         <source>Additional transfer quota charged at %1 per %2TB.</source>
-        <translatorcomment>Balloon tooltip to inform users that additional transfer quota for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
+        <translatorcomment>Tooltip to inform users that additional transfer quota will be charged at %1 price per %2 TB. %1 reflects the price and %2 the quantity of transfer quota.</translatorcomment>
         <translation>Additional transfer quota charged at %1 per %2&#xa0;TB.</translation>
     </message>
     <message numerus="yes">
@@ -4145,8 +4145,7 @@ Enter a different name.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- You can now search the stored data in your account.
-- We&apos;ve improved system notifications.
+        <source>- We&apos;ve enhanced system notifications.
 - We&apos;ve enhanced the UI.
 - We&apos;ve fixed the detected crashes on Windows, Linux, and macOS.
 </source>
@@ -7346,7 +7345,7 @@ Please delete the folder sync from settings to cancel them.</source>
     </message>
     <message numerus="yes">
         <source>%n second ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n seconds ago</translatorcomment>
+        <translatorcomment>Label to indicate that a transfer has finished %n seconds ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
         <translation>
             <numerusform>%n second ago</numerusform>
             <numerusform>%n seconds ago</numerusform>
@@ -7354,7 +7353,7 @@ Please delete the folder sync from settings to cancel them.</source>
     </message>
     <message numerus="yes">
         <source>%n minute ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n minutes ago</translatorcomment>
+        <translatorcomment>Label to indicate that a transfer has finished %n minutes ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
         <translation>
             <numerusform>%n minute ago</numerusform>
             <numerusform>%n minutes ago</numerusform>
@@ -7362,7 +7361,7 @@ Please delete the folder sync from settings to cancel them.</source>
     </message>
     <message numerus="yes">
         <source>%n hour ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n hours ago</translatorcomment>
+        <translatorcomment>Label to indicate that a transfer has finished %n hours ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
         <translation>
             <numerusform>%n hour ago</numerusform>
             <numerusform>%n hours ago</numerusform>
@@ -7370,7 +7369,7 @@ Please delete the folder sync from settings to cancel them.</source>
     </message>
     <message numerus="yes">
         <source>%n day ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n days ago</translatorcomment>
+        <translatorcomment>Label to indicate that a transfer has finished %n days ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
         <translation>
             <numerusform>%n day ago</numerusform>
             <numerusform>%n days ago</numerusform>
@@ -7378,7 +7377,7 @@ Please delete the folder sync from settings to cancel them.</source>
     </message>
     <message numerus="yes">
         <source>%n month ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n months ago</translatorcomment>
+        <translatorcomment>Label to indicate that a transfer has finished %n months ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
         <translation>
             <numerusform>%n month ago</numerusform>
             <numerusform>%n months ago</numerusform>
@@ -7386,7 +7385,7 @@ Please delete the folder sync from settings to cancel them.</source>
     </message>
     <message numerus="yes">
         <source>%n year ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished %n years ago</translatorcomment>
+        <translatorcomment>Label to indicate that a transfer has finished %n years ago. Used to replace placeholder in &quot;Added [A]&quot; string.</translatorcomment>
         <translation>
             <numerusform>%n year ago</numerusform>
             <numerusform>%n years ago</numerusform>

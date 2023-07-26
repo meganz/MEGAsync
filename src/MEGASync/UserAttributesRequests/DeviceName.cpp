@@ -65,7 +65,7 @@ AttributeRequest::RequestInfo DeviceName::fillRequestInfo()
     std::function<void()> requestFunc = []()
     {
         mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG, "Requesting device name");
-        MegaSyncApp->getMegaApi()->getDeviceName();
+        MegaSyncApp->getMegaApi()->getDeviceName(nullptr, nullptr);
     };
     QSharedPointer<ParamInfo> paramInfo(new ParamInfo(requestFunc, QList<int>()
                                                       << mega::MegaError::API_OK
@@ -175,6 +175,6 @@ void DeviceName::setDeviceNameAttribute(bool isRetry)
                        QString::fromUtf8("Setting Device name to \"%1\"").arg(deviceNameToSet)
                        .toUtf8().constData());
     mRequestInfo.mParamInfo[mega::MegaApi::USER_ATTR_DEVICE_NAMES]->setPending(true);
-    MegaSyncApp->getMegaApi()->setDeviceName(deviceNameToSet.toUtf8().constData());
+    MegaSyncApp->getMegaApi()->setDeviceName(nullptr, deviceNameToSet.toUtf8().constData());
 }
 }//end namespace UserAttributes

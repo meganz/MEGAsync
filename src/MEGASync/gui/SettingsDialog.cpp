@@ -243,6 +243,10 @@ SettingsDialog::~SettingsDialog()
     mApp->dettachBandwidthObserver(*this);
     mApp->dettachAccountObserver(*this);
 
+#ifdef Q_OS_MACOS
+    mToolBar->deleteLater();
+#endif
+
     delete mUi;
 }
 
@@ -257,8 +261,8 @@ void SettingsDialog::openSettingsTab(int tab)
 #ifndef Q_OS_MACOS
         mUi->bGeneral->click();
 #else
-        mToolBar->setSelectedItem(bGeneral.get());
-        emit bGeneral.get()->activated();
+        mToolBar->setSelectedItem(bGeneral);
+        emit bGeneral->activated();
 #endif
         break;
 
@@ -266,8 +270,8 @@ void SettingsDialog::openSettingsTab(int tab)
 #ifndef Q_OS_MACOS
         mUi->bAccount->click();
 #else
-        mToolBar->setSelectedItem(bAccount.get());
-        emit bAccount.get()->activated();
+        mToolBar->setSelectedItem(bAccount);
+        emit bAccount->activated();
 #endif
         break;
 
@@ -275,8 +279,8 @@ void SettingsDialog::openSettingsTab(int tab)
 #ifndef Q_OS_MACOS
         mUi->bSyncs->click();
 #else
-        mToolBar->setSelectedItem(bSyncs.get());
-        emit bSyncs.get()->activated();
+        mToolBar->setSelectedItem(bSyncs);
+        emit bSyncs->activated();
 #endif
         break;
 
@@ -284,8 +288,8 @@ void SettingsDialog::openSettingsTab(int tab)
 #ifndef Q_OS_MACOS
         mUi->bBackup->click();
 #else
-        mToolBar->setSelectedItem(bBackup.get());
-        emit bBackup.get()->activated();
+        mToolBar->setSelectedItem(bBackup);
+        emit bBackup->activated();
 #endif
         break;
 
@@ -293,8 +297,8 @@ void SettingsDialog::openSettingsTab(int tab)
 #ifndef Q_OS_MACOS
         mUi->bSecurity->click();
 #else
-        mToolBar->setSelectedItem(bSecurity.get());
-        emit bSecurity.get()->activated();
+        mToolBar->setSelectedItem(bSecurity);
+        emit bSecurity->activated();
 #endif
         break;
 
@@ -302,8 +306,8 @@ void SettingsDialog::openSettingsTab(int tab)
 #ifndef Q_OS_MACOS
         mUi->bFolders->click();
 #else
-        mToolBar->setSelectedItem(bFolders.get());
-        emit bFolders.get()->activated();
+        mToolBar->setSelectedItem(bFolders);
+        emit bFolders->activated();
 #endif
         break;
 
@@ -311,8 +315,8 @@ void SettingsDialog::openSettingsTab(int tab)
 #ifndef Q_OS_MACOS
         mUi->bNetwork->click();
 #else
-        mToolBar->setSelectedItem(bNetwork.get());
-        emit bNetwork.get()->activated();
+        mToolBar->setSelectedItem(bNetwork);
+        emit bNetwork->activated();
 #endif
         break;
 
@@ -320,8 +324,8 @@ void SettingsDialog::openSettingsTab(int tab)
 #ifndef Q_OS_MACOS
         mUi->bNotifications->click();
 #else
-        mToolBar->setSelectedItem(bNotifications.get());
-        emit bNotifications.get()->activated();
+        mToolBar->setSelectedItem(bNotifications);
+        emit bNotifications->activated();
 #endif
         break;
 
@@ -350,7 +354,7 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
         // TODO: Re-evaluate sizes for Network tab
         setMinimumHeight(435);
         setMaximumHeight(435);
-        mToolBar->setSelectedItem(bNetwork.get());
+        mToolBar->setSelectedItem(bNetwork);
 #else
         mUi->bNetwork->setEnabled(true);
         mUi->bNetwork->setChecked(true);
@@ -392,7 +396,7 @@ void SettingsDialog::initializeNativeUIComponents()
             this, &SettingsDialog::on_bHelp_clicked);
 
     // Set native NSToolBar for settings.
-    mToolBar = ::mega::make_unique<QCustomMacToolbar>();
+    mToolBar = new QCustomMacToolbar();
 
     QString general(QString::fromUtf8("settings-general"));
     QString account(QString::fromUtf8("settings-account"));
@@ -404,49 +408,49 @@ void SettingsDialog::initializeNativeUIComponents()
     QString notifications(QString::fromUtf8("settings-notifications"));
 
     // add Items
-    bGeneral.reset(mToolBar->addItem(QIcon(), tr("General")));
-    mToolBar->customizeIconToolBarItem(bGeneral.get(), general);
-    connect(bGeneral.get(), &QMacToolBarItem::activated,
+    bGeneral = mToolBar->addItem(QIcon(), tr("General"));
+    mToolBar->customizeIconToolBarItem(bGeneral, general);
+    connect(bGeneral, &QMacToolBarItem::activated,
             this, &SettingsDialog::on_bGeneral_clicked);
 
-    bAccount.reset(mToolBar->addItem(QIcon(), tr("Account")));
-    mToolBar->customizeIconToolBarItem(bAccount.get(), account);
-    connect(bAccount.get(), &QMacToolBarItem::activated,
+    bAccount=mToolBar->addItem(QIcon(), tr("Account"));
+    mToolBar->customizeIconToolBarItem(bAccount, account);
+    connect(bAccount, &QMacToolBarItem::activated,
             this, &SettingsDialog::on_bAccount_clicked);
 
-    bSyncs.reset(mToolBar->addItem(QIcon(), tr("Sync")));
-    mToolBar->customizeIconToolBarItem(bSyncs.get(), syncs);
-    connect(bSyncs.get(), &QMacToolBarItem::activated,
+    bSyncs=mToolBar->addItem(QIcon(), tr("Sync"));
+    mToolBar->customizeIconToolBarItem(bSyncs, syncs);
+    connect(bSyncs, &QMacToolBarItem::activated,
             this, &SettingsDialog::on_bSyncs_clicked);
 
-    bBackup.reset(mToolBar->addItem(QIcon(), tr("Backup")));
-    mToolBar->customizeIconToolBarItem(bBackup.get(), backup);
-    connect(bBackup.get(), &QMacToolBarItem::activated,
+    bBackup=mToolBar->addItem(QIcon(), tr("Backup"));
+    mToolBar->customizeIconToolBarItem(bBackup, backup);
+    connect(bBackup, &QMacToolBarItem::activated,
             this, &SettingsDialog::on_bBackup_clicked);
 
-    bSecurity.reset(mToolBar->addItem(QIcon(), tr("Security")));
-    mToolBar->customizeIconToolBarItem(bSecurity.get(), security);
-    connect(bSecurity.get(), &QMacToolBarItem::activated,
+    bSecurity=mToolBar->addItem(QIcon(), tr("Security"));
+    mToolBar->customizeIconToolBarItem(bSecurity, security);
+    connect(bSecurity, &QMacToolBarItem::activated,
             this, &SettingsDialog::on_bSecurity_clicked);
 
-    bFolders.reset(mToolBar->addItem(QIcon(), tr("Folders")));
-    mToolBar->customizeIconToolBarItem(bFolders.get(), folders);
-    connect(bFolders.get(), &QMacToolBarItem::activated,
+    bFolders=mToolBar->addItem(QIcon(), tr("Folders"));
+    mToolBar->customizeIconToolBarItem(bFolders, folders);
+    connect(bFolders, &QMacToolBarItem::activated,
             this, &SettingsDialog::on_bFolders_clicked);
 
-    bNetwork.reset(mToolBar->addItem(QIcon(), tr("Network")));
-    mToolBar->customizeIconToolBarItem(bNetwork.get(), network);
-    connect(bNetwork.get(), &QMacToolBarItem::activated,
+    bNetwork=mToolBar->addItem(QIcon(), tr("Network"));
+    mToolBar->customizeIconToolBarItem(bNetwork, network);
+    connect(bNetwork, &QMacToolBarItem::activated,
             this, &SettingsDialog::on_bNetwork_clicked);
 
-    bNotifications.reset(mToolBar->addItem(QIcon(), tr("Notifications")));
-    mToolBar->customizeIconToolBarItem(bNotifications.get(), notifications);
-    connect(bNotifications.get(), &QMacToolBarItem::activated,
+    bNotifications = mToolBar->addItem(QIcon(), tr("Notifications"));
+    mToolBar->customizeIconToolBarItem(bNotifications, notifications);
+    connect(bNotifications, &QMacToolBarItem::activated,
             this, &SettingsDialog::on_bNotifications_clicked);
 
     mToolBar->setSelectableItems(true);
     mToolBar->setAllowsUserCustomization(false);
-    mToolBar->setSelectedItem(bGeneral.get());
+    mToolBar->setSelectedItem(bGeneral);
 
     // Attach to the window according Qt docs
     this->window()->winId(); // create window->windowhandle()
@@ -777,9 +781,21 @@ void SettingsDialog::animateSettingPage(int endValue, int duration)
     mAnimationGroup->start();
 }
 
+void SettingsDialog::closeMenus()
+{
+    auto menus = findChildren<QMenu*>();
+    foreach(auto& menu, menus)
+    {
+        if(dynamic_cast<QAbstractItemView*>(menu->parentWidget()))
+        {
+            menu->close();
+        }
+    }
+}
+
 void SettingsDialog::closeEvent(QCloseEvent *event)
 {
-    emit closeMenus();
+    closeMenus();
     QDialog::closeEvent(event);
 }
 
@@ -800,14 +816,14 @@ void SettingsDialog::macOSretainSizeWhenHidden()
 
 void SettingsDialog::reloadToolBarItemNames()
 {
-    bGeneral.get()->setText(tr("General"));
-    bAccount.get()->setText(tr("Account"));
-    bSyncs.get()->setText(tr("Sync"));
-    bBackup.get()->setText(tr("Backup"));
-    bSecurity.get()->setText(tr("Security"));
-    bFolders.get()->setText(tr("Folders"));
-    bNetwork.get()->setText(tr("Network"));
-    bNotifications.get()->setText(tr("Notifications"));
+    bGeneral->setText(tr("General"));
+    bAccount->setText(tr("Account"));
+    bSyncs->setText(tr("Sync"));
+    bBackup->setText(tr("Backup"));
+    bSecurity->setText(tr("Security"));
+    bFolders->setText(tr("Folders"));
+    bNetwork->setText(tr("Network"));
+    bNotifications->setText(tr("Notifications"));
 }
 #endif
 
@@ -851,7 +867,7 @@ void SettingsDialog::on_bGeneral_clicked()
     mUi->wStack->setCurrentWidget(mUi->pGeneral);
 
 #ifdef Q_OS_MACOS
-    emit closeMenus();
+    closeMenus();
     onCacheSizeAvailable();
 
     mUi->pGeneral->hide();
@@ -1161,7 +1177,8 @@ void SettingsDialog::on_bFullCheck_clicked()
         if(msg->result() == QMessageBox::Yes)
         {
             MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Setting deleteSdkCacheAtStartup true: full re-scan requested");
-            restartApp();
+            mPreferences->setDeleteSdkCacheAtStartup(true);
+            MegaSyncApp->rebootApplication(false);
         }
     };
 
@@ -1254,7 +1271,7 @@ void SettingsDialog::updateBandwidthElements()
         {
             int percentage = Utilities::partPer(usedBandwidth, totalBandwidth);
             mUi->pTransferQuota->setValue(std::min(percentage, 100));
-            mUi->lBandwidth->setText(Utilities::createCompleteUsedString(usedBandwidth, std::min(percentage, 100), totalBandwidth));
+            mUi->lBandwidth->setText(Utilities::createCompleteUsedString(usedBandwidth, totalBandwidth, std::min(percentage, 100)));
         }
     }
 }
@@ -1343,7 +1360,7 @@ void SettingsDialog::on_bAccount_clicked()
     mUi->wStack->setCurrentWidget(mUi->pAccount);
 
 #ifdef Q_OS_MACOS
-    emit closeMenus();
+    closeMenus();
     mUi->pAccount->hide();
     animateSettingPage(SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
 #endif
@@ -1589,7 +1606,7 @@ void SettingsDialog::on_bSyncs_clicked()
     mUi->wStack->setCurrentWidget(mUi->pSyncs);
 
 #ifdef Q_OS_MACOS
-    emit closeMenus();
+    closeMenus();
     mUi->pSyncs->hide();
     animateSettingPage(SETTING_ANIMATION_SYNCS_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
 #endif
@@ -1665,7 +1682,7 @@ void SettingsDialog::syncsStateInformation(SyncStateInformation state)
 
     #ifdef Q_OS_MACOS
                 QString syncs(QString::fromUtf8("settings-syncs-error"));
-                mToolBar->customizeIconToolBarItem(bSyncs.get(), syncs);
+                mToolBar->customizeIconToolBarItem(bSyncs, syncs);
     #else
                mUi->bSyncs->setIcon(QIcon(QString::fromUtf8(":/images/settings-syncs-warn.png")));
     #endif
@@ -1676,7 +1693,7 @@ void SettingsDialog::syncsStateInformation(SyncStateInformation state)
 
     #ifdef Q_OS_MACOS
                 QString syncs(QString::fromUtf8("settings-syncs"));
-                mToolBar->customizeIconToolBarItem(bSyncs.get(), syncs);
+                mToolBar->customizeIconToolBarItem(bSyncs, syncs);
     #else
                  mUi->bSyncs->setIcon(QIcon(QString::fromUtf8(":/images/settings-syncs.png")));
     #endif
@@ -1692,7 +1709,7 @@ void SettingsDialog::syncsStateInformation(SyncStateInformation state)
 
 #ifdef Q_OS_MACOS
             QString backup(QString::fromUtf8("settings-backups-error"));
-            mToolBar->customizeIconToolBarItem(bBackup.get(), backup);
+            mToolBar->customizeIconToolBarItem(bBackup, backup);
 #else
             mUi->bBackup->setIcon(QIcon(QString::fromUtf8(":/images/settings-backups-warn.png")));
 #endif
@@ -1703,7 +1720,7 @@ void SettingsDialog::syncsStateInformation(SyncStateInformation state)
 
 #ifdef Q_OS_MACOS
             QString backup(QString::fromUtf8("settings-backup"));
-            mToolBar->customizeIconToolBarItem(bBackup.get(), backup);
+            mToolBar->customizeIconToolBarItem(bBackup, backup);
 #else
             mUi->bBackup->setIcon(QIcon(QString::fromUtf8(":/images/settings-backup.png")));
 #endif
@@ -1825,6 +1842,7 @@ void SettingsDialog::on_bBackup_clicked()
     mUi->wStack->setCurrentWidget(mUi->pBackup);
 
 #ifdef Q_OS_MACOS
+    closeMenus();
     mUi->pBackup->hide();
     animateSettingPage(SETTING_ANIMATION_BACKUP_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
 #endif
@@ -1922,7 +1940,7 @@ void SettingsDialog::on_bSecurity_clicked()
     mUi->wStack->setCurrentWidget(mUi->pSecurity);
 
 #ifdef Q_OS_MACOS
-    emit closeMenus();
+    closeMenus();
     mUi->pSecurity->hide();
     animateSettingPage(SETTING_ANIMATION_SECURITY_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
 #endif
@@ -2053,7 +2071,7 @@ void SettingsDialog::on_bFolders_clicked()
     mUi->wStack->setCurrentWidget(mUi->pFolders);
 
 #ifdef Q_OS_MACOS
-    emit closeMenus();
+    closeMenus();
     mUi->pFolders->hide();
     animateSettingPage(SETTING_ANIMATION_FOLDERS_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
 #endif
@@ -2268,19 +2286,6 @@ void SettingsDialog::saveExcludeSyncNames()
     mPreferences->setDeleteSdkCacheAtStartup(true);
 }
 
-void SettingsDialog::restartApp()
-{
-    mPreferences->setDeleteSdkCacheAtStartup(true);
-    // Restart MEGAsync
-#if defined(Q_OS_MACX)
-    mApp->rebootApplication(false);
-#else
-    //we enqueue this call, so as not to close before properly
-    // handling the exit of Settings Dialog
-    QTimer::singleShot(0, [] () {MegaSyncApp->rebootApplication(false);});
-#endif
-}
-
 void SettingsDialog::onShellNotificationsProcessed()
 {
     mUi->cOverlayIcons->setEnabled(true);
@@ -2298,7 +2303,8 @@ void SettingsDialog::on_bRestart_clicked()
     msgInfo.finishFunc = [this](QPointer<QMessageBox> msg){
         if(msg->result() == QMessageBox::Yes)
         {
-            restartApp();
+            mPreferences->setDeleteSdkCacheAtStartup(true);
+            MegaSyncApp->rebootApplication(false);
         }
     };
     QMegaMessageBox::warning(msgInfo);
@@ -2317,7 +2323,7 @@ void SettingsDialog::on_bNetwork_clicked()
     mUi->wStack->setCurrentWidget(mUi->pNetwork);
 
 #ifdef Q_OS_MACOS
-    emit closeMenus();
+    closeMenus();
     mUi->pNetwork->hide();
     animateSettingPage(SETTING_ANIMATION_NETWORK_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
 #endif
@@ -2370,7 +2376,7 @@ void SettingsDialog::on_bNotifications_clicked()
     mUi->wStack->setCurrentWidget(mUi->pNotifications);
 
 #ifdef Q_OS_MACOS
-    emit closeMenus();
+    closeMenus();
     mUi->pNotifications->hide();
     animateSettingPage(SETTING_ANIMATION_NOTIFICATIONS_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
 #endif

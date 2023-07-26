@@ -58,6 +58,8 @@ void NodeSelectorModelCloudDrive::onRootItemCreated()
     }
     else
     {
+        //In case the root item is empty (CD empty), let the model know that we have finished
+        loadLevelFinished();
         emit blockUi(false);
     }
 }

@@ -83,6 +83,7 @@ protected:
     QModelIndex getParentIncomingShareByIndex(QModelIndex idx);
     SelectTypeSPtr getSelectType(){return mSelectType;}
     virtual void modelLoaded();
+    virtual bool showEmptyView(){return true;}
 
     Ui::NodeSelectorTreeViewWidget *ui;
     std::unique_ptr<NodeSelectorProxyModel> mProxyModel;
