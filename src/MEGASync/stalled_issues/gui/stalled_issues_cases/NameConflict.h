@@ -10,21 +10,6 @@ namespace Ui {
 class NameConflict;
 }
 
-class NameConflictTitle : public StalledIssueActionTitle
-{
-    Q_OBJECT
-
-public:
-    explicit NameConflictTitle(int index, const QString &conflictedName, QWidget* parent = nullptr);
-    ~NameConflictTitle() = default;
-
-    void initTitle(const QString &conflictedName);
-    int getIndex() const;
-
-private:
-    int mIndex;
-};
-
 class NameDuplicatedContainer : public QWidget
 {
 public:
@@ -63,13 +48,14 @@ private slots:
     void onRawInfoChecked();
 
 private:
-    void updateTitleExtraInfo(NameConflictTitle* title, std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo> info);
+    void initTitle(StalledIssueActionTitle* title, int index, const QString& conflictedName);
+    void updateTitleExtraInfo(StalledIssueActionTitle* title, std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo> info);
 
     Ui::NameConflict *ui;
     std::shared_ptr<const NameConflictedStalledIssue> mIssue;
     StalledIssuesUtilities mUtilities;
     QPointer<StalledIssueBaseDelegateWidget> mDelegateWidget;
-    QMap<int, QPointer<NameConflictTitle>> mTitlesByIndex;
+    QMap<int, QPointer<StalledIssueActionTitle>> mTitlesByIndex;
     QMap<int, QPointer<QWidget>> mContainerByDuplicateByGroupId;
 };
 

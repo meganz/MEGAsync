@@ -98,27 +98,30 @@ bool StalledIssueBaseDelegateWidget::event(QEvent *event)
 
 void StalledIssueBaseDelegateWidget::checkForSizeHintChanges()
 {
-    auto newSizeHintHeigth(QWidget::sizeHint().height());
-
-    if(mLastSizeHint != newSizeHintHeigth)
+    if(mDelegate && mData.consultData())
     {
-        mLastSizeHint = newSizeHintHeigth;
-        mSizeHintChanged = 0;
-    }
-    else
-    {
-        mSizeHintChanged++;
-    }
+        auto newSizeHintHeigth(QWidget::sizeHint().height());
 
-    if(mSizeHintChanged > 1)
-    {
-        mSizeHintTimer.stop();
-        mSizeHintChanged = 0;
-    }
+        if(mLastSizeHint != newSizeHintHeigth)
+        {
+            mLastSizeHint = newSizeHintHeigth;
+            mSizeHintChanged = 0;
+        }
+        else
+        {
+            mSizeHintChanged++;
+        }
 
-    StalledIssue::SizeType sizeType = isHeader() ? StalledIssue::Header : StalledIssue::Body;
-    mData.removeDelegateSize(sizeType);
-    mDelegate->sizeHintChanged(getCurrentIndex());
+        if(mSizeHintChanged > 1)
+        {
+            mSizeHintTimer.stop();
+            mSizeHintChanged = 0;
+        }
+
+        StalledIssue::SizeType sizeType = isHeader() ? StalledIssue::Header : StalledIssue::Body;
+        mData.removeDelegateSize(sizeType);
+        mDelegate->sizeHintChanged(getCurrentIndex());
+    }
 }
 
 void StalledIssueBaseDelegateWidget::setDelegate(QStyledItemDelegate *newDelegate)

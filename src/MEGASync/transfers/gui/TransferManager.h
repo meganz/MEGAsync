@@ -144,7 +144,7 @@ private slots:
     void on_bPause_toggled();
     void pauseResumeTransfers(bool isPaused);
 
-    void onStalledIssuesStateChanged(bool state);
+    void onStalledIssuesStateChanged();
     void checkContentInfo();
     void on_bOpenLinks_clicked();
     void on_tCogWheel_clicked();

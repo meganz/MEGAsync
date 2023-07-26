@@ -303,6 +303,10 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     mResetTransferSummaryWidget.setInterval(2000);
     mResetTransferSummaryWidget.setSingleShot(true);
     connect(&mResetTransferSummaryWidget, &QTimer::timeout, this, &InfoDialog::onResetTransfersSummaryWidget);
+
+    connect(MegaSyncApp->getStalledIssuesModel(), &StalledIssuesModel::stalledIssuesChanged,
+            this,  &InfoDialog::onStalledIssuesReceived);
+    onStalledIssuesReceived();
 }
 
 InfoDialog::~InfoDialog()
@@ -600,6 +604,18 @@ void InfoDialog::onTransfersStateChanged()
     }
 }
 
+void InfoDialog::onStalledIssuesReceived()
+{
+    if (!MegaSyncApp->getStalledIssuesModel()->isEmpty())
+    {
+        showSomeIssues();
+    }
+    else
+    {
+        hideSomeIssues();
+    }
+}
+
 void InfoDialog::onResetTransfersSummaryWidget()
 {
     ui->bTransferManager->reset();
@@ -660,16 +676,6 @@ void InfoDialog::updateBlockedState()
     {
         return;
     }
-
-    if (megaApi->isSyncStalled())
-    {
-        showSomeIssues();
-    }
-    else
-    {
-        hideSomeIssues();
-    }
-
 }
 
 void InfoDialog::updateState()
@@ -743,7 +749,7 @@ bool InfoDialog::checkFailedState()
     auto isFailed(false);
 
     if((app->getTransfersModel() && app->getTransfersModel()->failedTransfers()) 
-    || (app->getStalledIssuesModel() && app->getStalledIssuesModel()->hasStalledIssues()))
+    || (app->getStalledIssuesModel() && !app->getStalledIssuesModel()->isEmpty()))
     {
         if(mState != StatusInfo::TRANSFERS_STATES::STATE_FAILED)
         {

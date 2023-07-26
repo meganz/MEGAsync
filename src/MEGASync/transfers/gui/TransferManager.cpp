@@ -202,13 +202,11 @@ TransferManager::TransferManager(TransfersWidget::TM_TAB tab, MegaApi *megaApi) 
         }
     });
 
-    mFoundStalledIssues = MegaSyncApp->getStalledIssuesModel()->hasStalledIssues();
-    checkContentInfo();
     connect(MegaSyncApp->getStalledIssuesModel(),
-            &StalledIssuesModel::globalSyncStateChanged,
+            &StalledIssuesModel::stalledIssuesChanged,
             this, &TransferManager::onStalledIssuesStateChanged);
 
-    onStalledIssuesStateChanged(MegaSyncApp->getStalledIssuesModel()->hasStalledIssues());
+    onStalledIssuesStateChanged();
 
     mScanningTimer.setInterval(60);
     connect(&mScanningTimer, &QTimer::timeout, this, &TransferManager::onScanningAnimationUpdate);
@@ -602,7 +600,7 @@ void TransferManager::refreshStateStats()
 
     // If we don't have transfers, stop refresh timer and show "Up to date",
     // and if current tab is ALL TRANSFERS, show empty.
-    if (processedNumber == 0 && failedNumber == 0 && !MegaSyncApp->getStalledIssuesModel()->hasStalledIssues())
+    if (processedNumber == 0 && failedNumber == 0 && MegaSyncApp->getStalledIssuesModel()->isEmpty())
     {
         if(mTransferScanCancelUi && mTransferScanCancelUi->isActive())
         {
@@ -632,7 +630,7 @@ void TransferManager::refreshStateStats()
         {
             leftFooterWidget = mUi->pScanning;
         }
-        else if(failedNumber != 0 || MegaSyncApp->getStalledIssuesModel()->hasStalledIssues())
+        else if(failedNumber != 0 || !MegaSyncApp->getStalledIssuesModel()->isEmpty())
         {
             leftFooterWidget = mUi->pSomeIssues;
             mUi->bSomeIssues->setText(tr("Issue found", "", failedNumber));
@@ -963,9 +961,9 @@ void TransferManager::pauseResumeTransfers(bool isPaused)
     onUpdatePauseState(isPaused);
 }
 
-void TransferManager::onStalledIssuesStateChanged(bool state)
+void TransferManager::onStalledIssuesStateChanged()
 {
-    mFoundStalledIssues = state;
+    mFoundStalledIssues = !MegaSyncApp->getStalledIssuesModel()->isEmpty();
     checkContentInfo();
 }
 

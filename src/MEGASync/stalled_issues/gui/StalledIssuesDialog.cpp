@@ -33,11 +33,8 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
     connect(MegaSyncApp->getStalledIssuesModel(), &StalledIssuesModel::uiUnblocked,
             this,  &StalledIssuesDialog::onUiUnblocked);
 
-    connect(MegaSyncApp->getStalledIssuesModel(), &StalledIssuesModel::stalledIssuesReceived,
+    connect(MegaSyncApp->getStalledIssuesModel(), &StalledIssuesModel::stalledIssuesChanged,
             this,  &StalledIssuesDialog::onStalledIssuesLoaded);
-
-    connect(MegaSyncApp->getStalledIssuesModel(), &StalledIssuesModel::globalSyncStateChanged,
-            this,  &StalledIssuesDialog::onGlobalSyncStateChanged);
 
     //Init all categories
     auto tabs = ui->header->findChildren<StalledIssueTab*>();

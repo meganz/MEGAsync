@@ -130,9 +130,7 @@ void StalledIssueActionTitle::showIcon()
 
     if(mIsCloud)
     {
-        std::unique_ptr<mega::MegaNode> node(mHandle != mega::INVALID_HANDLE ? MegaSyncApp->getMegaApi()->getNodeByHandle(mHandle)
-                                                                             : MegaSyncApp->getMegaApi()->getNodeByPath(mPath.toUtf8().constData()));
-        fileTypeIcon = StalledIssuesUtilities::getRemoteFileIcon(node.get(), fileInfo, false);
+        fileTypeIcon = StalledIssuesUtilities::getRemoteFileIcon(mNode.get(), fileInfo, false);
     }
     else
     {
@@ -310,7 +308,7 @@ void StalledIssueActionTitle::updateVersionsCount(int versions)
 
 void StalledIssueActionTitle::updateSize(int64_t size)
 {
-    auto rawValues = showRawInfo();
+    auto rawValues = isRawInfoVisible();
     QString sizeText;
     if(size >= 0)
     {
@@ -336,7 +334,7 @@ void StalledIssueActionTitle::updateSize(int64_t size)
 
 void StalledIssueActionTitle::updateFingerprint(const QString& fp)
 {
-    auto rawValues = showRawInfo();
+    auto rawValues = isRawInfoVisible();
 
     if(rawValues)
     {
@@ -362,7 +360,7 @@ void StalledIssueActionTitle::updateFingerprint(const QString& fp)
 
 void StalledIssueActionTitle::updateLastTimeModified(const QDateTime& time)
 {
-    auto rawValues = showRawInfo();
+    auto rawValues = isRawInfoVisible();
     QString timeString;
     if(time.isValid())
     {
@@ -388,7 +386,7 @@ void StalledIssueActionTitle::updateLastTimeModified(const QDateTime& time)
 
 void StalledIssueActionTitle::updateCreatedTime(const QDateTime& time)
 {
-    auto rawValues = showRawInfo();
+    auto rawValues = isRawInfoVisible();
     QString timeString;
     if(time.isValid())
     {
@@ -507,17 +505,18 @@ void StalledIssueActionTitle::updateExtraInfoLayout()
     }
 }
 
-void StalledIssueActionTitle::setPath(const QString &newPath)
+void StalledIssueActionTitle::setInfo(const QString &newPath, mega::MegaHandle handle)
 {
     mPath = newPath;
+
+    if(mIsCloud)
+    {
+        mNode.reset(handle != mega::INVALID_HANDLE ? MegaSyncApp->getMegaApi()->getNodeByHandle(handle)
+                                                                             : MegaSyncApp->getMegaApi()->getNodeByPath(mPath.toUtf8().constData()));
+    }
 }
 
-void StalledIssueActionTitle::setHandle(mega::MegaHandle handle)
-{
-    mHandle = handle;
-}
-
-bool StalledIssueActionTitle::showRawInfo() const
+bool StalledIssueActionTitle::isRawInfoVisible() const
 {
     return ui->rawInfoCheck->isChecked();
 }

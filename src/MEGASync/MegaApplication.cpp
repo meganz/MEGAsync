@@ -24,6 +24,8 @@
 #include "DialogOpener.h"
 #include "PowerOptions.h"
 #include "DateTimeFormatter.h"
+#include <StalledIssuesDialog.h>
+#include <DialogOpener.h>
 
 #include "mega/types.h"
 
@@ -7893,7 +7895,9 @@ void MegaApplication::onGlobalSyncStateChangedImpl(MegaApi *, bool timeout)
         if(getStalledIssuesModel() && syncStalled != megaApi->isSyncStalled())
         {
             syncStalled = !syncStalled;
-            if(syncStalled)
+
+            auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
+            if(!dialog)
             {
                 //For Smart mode -> resolve problems as soon as they are received
                 //For Events -> Send events as soon as issues are received

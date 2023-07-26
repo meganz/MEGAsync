@@ -4,6 +4,7 @@
 #include <StalledIssuesDialog.h>
 #include <DialogOpener.h>
 #include <Platform.h>
+#include <StalledIssuesModel.h>
 
 SomeIssuesOccurredMessage::SomeIssuesOccurredMessage(QWidget *parent) :
     QWidget(parent),
@@ -27,6 +28,9 @@ void SomeIssuesOccurredMessage::on_viewIssuesButton_clicked()
     else
     {
         auto newStalledIssuesDialog = new StalledIssuesDialog();
-        DialogOpener::showDialog<StalledIssuesDialog>(newStalledIssuesDialog);
+        DialogOpener::showDialog<StalledIssuesDialog>(newStalledIssuesDialog, [this](){
+                //Update the list of issues to show/hide again the button
+                MegaSyncApp->getStalledIssuesModel()->updateStalledIssues();
+        });
     }
 }

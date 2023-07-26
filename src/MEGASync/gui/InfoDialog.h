@@ -175,6 +175,8 @@ private slots:
     void onResetTransfersSummaryWidget();
     void onTransfersStateChanged();
 
+    void onStalledIssuesReceived();
+
 signals:
     void triggerShowSyncProblems(QString s);
 

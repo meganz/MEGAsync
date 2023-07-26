@@ -41,16 +41,18 @@ void StalledIssueChooseWidget::updateUi(StalledIssueDataPtr data,
     ui->chooseTitle->showIcon();
 
     ui->name->setTitle(fileName);
+
+    mega::MegaHandle handle(mega::INVALID_HANDLE);
     if(data->isCloud())
     {
         auto cloudData = data->convert<CloudStalledIssueData>();
         if(cloudData)
         {
-            ui->name->setHandle(cloudData->getPathHandle());
+            handle = cloudData->getPathHandle();
         }
     }
 
-    ui->name->setPath(data->getNativeFilePath());
+    ui->name->setInfo(data->getNativeFilePath(), handle);
     ui->name->setIsCloud(data->isCloud());
     ui->name->showIcon();
 
@@ -167,7 +169,7 @@ void LocalStalledIssueChooseWidget::updateExtraInfo(LocalStalledIssueDataPtr loc
         ui->name->updateSize(size);
     });
 
-    if(ui->name->showRawInfo())
+    if(ui->name->isRawInfoVisible())
     {
         localData->getFileFolderAttributes()->requestFingerprint(this, [this](const QString& fp)
         {
@@ -216,7 +218,7 @@ void CloudStalledIssueChooseWidget::updateExtraInfo(CloudStalledIssueDataPtr clo
             ui->name->updateSize(size);
         });
 
-        if(ui->name->showRawInfo())
+        if(ui->name->isRawInfoVisible())
         {
             cloudData->getFileFolderAttributes()->requestFingerprint(this, [this](const QString& fp)
             {

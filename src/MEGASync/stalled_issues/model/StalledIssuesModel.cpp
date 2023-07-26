@@ -68,7 +68,6 @@ const int StalledIssuesModel::ADAPTATIVE_HEIGHT_ROLE = Qt::UserRole;
 StalledIssuesModel::StalledIssuesModel(QObject *parent)
     : QAbstractItemModel(parent),
     mMegaApi (MegaSyncApp->getMegaApi()),
-    mHasStalledIssues(false),
     mUpdateWhenGlobalStateChanges(false)
 {
     mStalledIssuesThread = new QThread();
@@ -141,7 +140,7 @@ void StalledIssuesModel::onProcessStalledIssues(StalledIssuesReceiver::StalledIs
         mModelMutex.unlock();
 
         emit stalledIssuesCountChanged();
-        emit stalledIssuesReceived(true);
+        emit stalledIssuesChanged();
     });
 }
 
@@ -159,11 +158,6 @@ void StalledIssuesModel::updateStalledIssuesWhenReady()
 
 void StalledIssuesModel::onGlobalSyncStateChanged(mega::MegaApi* api)
 {
-    if(mHasStalledIssues != api->isSyncStalled())
-    {
-        mHasStalledIssues = api->isSyncStalled();
-        emit globalSyncStateChanged(mHasStalledIssues);
-    }
 }
 
 Qt::DropActions StalledIssuesModel::supportedDropActions() const
@@ -262,6 +256,11 @@ Qt::ItemFlags StalledIssuesModel::flags(const QModelIndex &index) const
     return QAbstractItemModel::flags(index) | Qt::ItemIsEnabled | Qt::ItemIsEditable;
 }
 
+bool StalledIssuesModel::isEmpty() const
+{
+    return rowCount(QModelIndex()) == 0 || !MegaSyncApp->getMegaApi()->isSyncStalled();
+}
+
 void StalledIssuesModel::finishStalledIssues(const QModelIndexList &indexes)
 {
     auto indexesToFinish(indexes);
@@ -344,11 +343,6 @@ void StalledIssuesModel::updateStalledIssuedByOrder()
     }
 
     emit stalledIssuesCountChanged();
-}
-
-bool StalledIssuesModel::hasStalledIssues() const
-{
-    return mHasStalledIssues;
 }
 
 void StalledIssuesModel::lockModelMutex(bool lock)
@@ -519,6 +513,7 @@ void StalledIssuesModel::chooseSide(bool remote, const QModelIndexList &list)
                 resolveIssue(row);
             }
 
+            emit stalledIssuesChanged();
             unBlockUi();
         });
     }
@@ -538,6 +533,7 @@ void StalledIssuesModel::chooseSide(bool remote, const QModelIndexList &list)
                 resolveIssue(index.row());
             }
 
+            emit stalledIssuesChanged();
             unBlockUi();
         });
     }
@@ -565,6 +561,7 @@ void StalledIssuesModel::solveSideConflict(const QModelIndexList &list)
                 }
             }
 
+            emit stalledIssuesChanged();
             unBlockUi();
         });
     }
@@ -588,6 +585,7 @@ void StalledIssuesModel::solveSideConflict(const QModelIndexList &list)
                 }
             }
 
+            emit stalledIssuesChanged();
             unBlockUi();
         });
     }
@@ -633,6 +631,7 @@ void StalledIssuesModel::ignoreItems(const QModelIndexList &list)
                 resolveIssue(row);
             }
 
+            emit stalledIssuesChanged();
             unBlockUi();
         });
     }
@@ -652,6 +651,7 @@ void StalledIssuesModel::ignoreItems(const QModelIndexList &list)
                 resolveIssue(index.row());
             }
 
+            emit stalledIssuesChanged();
             unBlockUi();
         });
     }
@@ -682,6 +682,7 @@ void StalledIssuesModel::solveNameConflictIssues(const QModelIndexList &list, in
                 }
             }
 
+            emit stalledIssuesChanged();
             unBlockUi();
         });
     }
@@ -706,6 +707,7 @@ void StalledIssuesModel::solveNameConflictIssues(const QModelIndexList &list, in
                 }
             }
 
+            emit stalledIssuesChanged();
             unBlockUi();
         });
     }

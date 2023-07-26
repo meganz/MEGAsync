@@ -230,7 +230,8 @@ public:
                     //The object is auto deleted when finished (as it needs to survive this issue)
                     foreach(auto conflictedName, conflictedNamesGroup.conflictedNames)
                     {
-                        if(conflictedName != (*(conflictedNamesGroup.conflictedNames.end()-1)))
+                        if(conflictedName->mSolved == NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::UNSOLVED &&
+                           conflictedName != (*(conflictedNamesGroup.conflictedNames.end()-1)))
                         {
                             conflictedName->mSolved = NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::REMOVE;
                             nodesToMove.append(conflictedName->mHandle);
@@ -275,7 +276,15 @@ public:
     void updateIssue(const mega::MegaSyncStall *stallIssue) override;
 
 private:
-    bool checkAndSolveConflictedNamesSolved(const QList<std::shared_ptr<ConflictedNameInfo>>& conflicts);
+    enum class SideChecked
+    {
+        Local = 0x01,
+        Cloud = 0x02,
+        All = Local | Cloud
+    };
+    Q_DECLARE_FLAGS(SidesChecked, SideChecked);
+
+    bool checkAndSolveConflictedNamesSolved(SidesChecked sidesChecked = SideChecked::All);
     void renameCloudNodesAutomatically(const QList<std::shared_ptr<ConflictedNameInfo>>& cloudConflictedNames,
                                        const QList<std::shared_ptr<ConflictedNameInfo>>& localConflictedNames,
                                        bool ignoreLastModifiedName,
@@ -284,6 +293,13 @@ private:
                                        const QList<std::shared_ptr<ConflictedNameInfo>>& localConflictedNames,
                                        bool ignoreLastModifiedName,
                                        QStringList &cloudItemsBeingRenamed);
+
+    //Rename siblings
+    void renameCloudSibling(std::shared_ptr<ConflictedNameInfo> item, const QString& newName);
+    void renameLocalSibling(std::shared_ptr<ConflictedNameInfo> item, const QString& newName);
+
+    //Find local or remote sibling
+    std::shared_ptr<ConflictedNameInfo> findOtherSideItem(const QList<std::shared_ptr<ConflictedNameInfo>>& items, std::shared_ptr<ConflictedNameInfo> check);
 
     CloudConflictedNamesByHandle mCloudConflictedNames;
     QList<std::shared_ptr<ConflictedNameInfo>> mLocalConflictedNames;

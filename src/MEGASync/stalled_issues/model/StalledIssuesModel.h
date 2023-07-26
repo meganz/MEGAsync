@@ -61,12 +61,13 @@ public:
     QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const override;
     Qt::ItemFlags flags(const QModelIndex &index) const override;
 
+    bool isEmpty() const;
+
     int getCountByFilterCriterion(StalledIssueFilterCriterion criterion);
 
     void finishStalledIssues(const QModelIndexList& indexes);
     void updateStalledIssues();
-    void updateStalledIssuesWhenReady();
-    bool hasStalledIssues() const;
+    void updateStalledIssuesWhenReady();;
 
     void lockModelMutex(bool lock);
 
@@ -96,8 +97,7 @@ public:
     void ignoreItems(const QModelIndexList& list);
 
 signals:
-    void stalledIssuesReceived(bool state);
-    void globalSyncStateChanged(bool state);
+    void stalledIssuesChanged();
     void stalledIssuesCountChanged();
 
     void uiBlocked();
@@ -127,7 +127,6 @@ private:
     mega::QTMegaRequestListener* mRequestListener;
     mega::QTMegaGlobalListener* mGlobalListener;
     mega::MegaApi* mMegaApi;
-    bool mHasStalledIssues;
     bool mUpdateWhenGlobalStateChanges;
     bool mIssuesRequested;
     StalledIssuesUtilities mUtilities;

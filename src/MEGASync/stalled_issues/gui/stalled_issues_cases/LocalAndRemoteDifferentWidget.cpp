@@ -116,7 +116,7 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
 
     if(node->isFile())
     {
-        msgInfo.informativeText = tr("The <b>local file</b> %1 will be uploaded to MEGA and added as a version to the remote file.\nPlease, the issue will be fixed when transfer is finished.</br>").arg(localInfo.fileName());
+        msgInfo.informativeText = tr("The <b>local file</b> %1 will be uploaded to MEGA and added as a version to the remote file.\nPlease wait for the upload to complete.</br>").arg(localInfo.fileName());
     }
     else
     {

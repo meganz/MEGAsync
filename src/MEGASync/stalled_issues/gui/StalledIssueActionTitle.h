@@ -8,6 +8,8 @@
 
 #include <megaapi.h>
 
+#include <memory>
+
 namespace Ui {
 class StalledIssueActionTitle;
 }
@@ -38,10 +40,10 @@ public:
 
     void setIsCloud(bool state);
 
-    void setPath(const QString &newPath);
+    void setInfo(const QString &newPath, mega::MegaHandle handle);
     void setHandle(mega::MegaHandle handle);
 
-    bool showRawInfo() const;
+    bool isRawInfoVisible() const;
 
     void updateLastTimeModified(const QDateTime &time);
     void updateCreatedTime(const QDateTime &time);
@@ -69,7 +71,7 @@ protected:
     Ui::StalledIssueActionTitle *ui;
     bool mIsCloud;
     QString mPath;
-    mega::MegaHandle mHandle;
+    std::unique_ptr<mega::MegaNode> mNode;
 
     bool eventFilter(QObject *watched, QEvent *event) override;
 

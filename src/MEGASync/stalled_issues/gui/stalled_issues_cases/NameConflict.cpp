@@ -22,32 +22,7 @@ static const int RENAME_ID = 0;
 static const int REMOVE_ID = 1;
 
 const char* TITLE_FILENAME = "TITLE_FILENAME";
-
-//NAME CONFLICT TITLE
-//THINK ABOUT ANOTHER WAY TO RESUSE THE STALLED ISSUE ACTION TITLE OR CREATE ONE FOR THE NAME CONFLICT
-NameConflictTitle::NameConflictTitle(int index, const QString& conflictedName, QWidget *parent)
-    : mIndex(index),
-      StalledIssueActionTitle(parent)
-{
-    initTitle(conflictedName);
-}
-
-void NameConflictTitle::initTitle(const QString& conflictedName)
-{
-    setTitle(conflictedName);
-    setProperty(TITLE_FILENAME, conflictedName);
-    setSolved(false);
-
-    QIcon renameIcon(QString::fromUtf8("://images/StalledIssues/rename_node_default.png"));
-    QIcon removeIcon(QString::fromUtf8("://images/StalledIssues/remove_default.png"));
-    addActionButton(renameIcon, tr("Rename"), RENAME_ID, false);
-    addActionButton(removeIcon, QString(), REMOVE_ID, false);
-}
-
-int NameConflictTitle::getIndex() const
-{
-    return mIndex;
-}
+const char* TITLE_INDEX = "TITLE_INDEX";
 
 //NAME DUPLICATED
 void NameDuplicatedContainer::paintEvent(QPaintEvent*)
@@ -139,11 +114,12 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
             titleLayout = dynamic_cast<QVBoxLayout*>(groupContainer->layout());
         }
 
-        NameConflictTitle* title(nullptr);
+        StalledIssueActionTitle* title(nullptr);
 
         if(firstTime)
         {
-            title = new NameConflictTitle(index, conflictedName, parent);
+            title = new StalledIssueActionTitle(parent);
+            initTitle(title, index, conflictedName);
             connect(title, &StalledIssueActionTitle::rawInfoCheckToggled, this, &NameConflict::onRawInfoChecked);
             connect(title, &StalledIssueActionTitle::actionClicked, this, &NameConflict::onActionClicked);
             titleLayout->addWidget(title);
@@ -154,18 +130,13 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
             title = mTitlesByIndex.value(index);
         }
 
+        title->setTitle(conflictedName);
+
         updateTitleExtraInfo(title, info);
 
         nameData->checkTrailingSpaces(conflictedName);
-        if(isCloud())
-        {
-            if(info->mHandle != mega::INVALID_HANDLE)
-            {
-                title->setHandle(info->mHandle);
-            }
-        }
 
-        title->setPath(info->mConflictedPath);
+        title->setInfo(info->mConflictedPath, info->mHandle);
         title->setIsCloud(isCloud());
         title->showIcon();
 
@@ -212,14 +183,26 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
     mIssue = issue;
 }
 
+void NameConflict::initTitle(StalledIssueActionTitle* title, int index, const QString& conflictedName)
+{
+    title->setProperty(TITLE_FILENAME, conflictedName);
+    title->setProperty(TITLE_INDEX, index);
+    title->setSolved(false);
+
+    QIcon renameIcon(QString::fromUtf8("://images/StalledIssues/rename_node_default.png"));
+    QIcon removeIcon(QString::fromUtf8("://images/StalledIssues/remove_default.png"));
+    title->addActionButton(renameIcon, tr("Rename"), RENAME_ID, false);
+    title->addActionButton(removeIcon, QString(), REMOVE_ID, false);
+}
+
 void NameConflict::onRawInfoChecked()
 {
-    auto title = dynamic_cast<NameConflictTitle*>(sender());
+    auto title = dynamic_cast<StalledIssueActionTitle*>(sender());
     if(title)
     {
         //Fill conflict names
         auto conflictedNames = getConflictedNames(mIssue);
-        std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo> info(conflictedNames.at(title->getIndex()));
+        std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo> info(conflictedNames.at(title->property(TITLE_INDEX).toInt()));
         updateTitleExtraInfo(title, info);
 
         //To let the view know that the size may change
@@ -227,11 +210,11 @@ void NameConflict::onRawInfoChecked()
     }
 }
 
-void NameConflict::updateTitleExtraInfo(NameConflictTitle* title, std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo> info)
+void NameConflict::updateTitleExtraInfo(StalledIssueActionTitle* title, std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo> info)
 {
-    auto index = title->getIndex();
+    auto index = title->property(TITLE_INDEX).toInt();
 
-    if(title->showRawInfo())
+    if(title->isRawInfoVisible())
     {
         info->mItemAttributes->requestFingerprint(title, [this, index](const QString& fp)
         {
@@ -307,7 +290,7 @@ void NameConflict::setDisabled()
 
 void NameConflict::onActionClicked(int actionId)
 {
-    if(auto chooseTitle = dynamic_cast<NameConflictTitle*>(sender()))
+    if(auto chooseTitle = dynamic_cast<StalledIssueActionTitle*>(sender()))
     {
         auto issueData = getData(mIssue);
         auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
@@ -318,7 +301,7 @@ void NameConflict::onActionClicked(int actionId)
         QString filePath(info.filePath());
 
         auto conflictedNames(getConflictedNames(mIssue));
-        auto conflictIndex(chooseTitle->getIndex());
+        auto conflictIndex(chooseTitle->property(TITLE_INDEX).toInt());
 
         if(actionId == RENAME_ID)
         {
