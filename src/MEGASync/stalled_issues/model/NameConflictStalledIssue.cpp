@@ -437,10 +437,26 @@ bool NameConflictedStalledIssue::checkAndSolveConflictedNamesSolved(SidesChecked
         return unsolvedItems;
     };
 
-    auto unsolvedCloudItems = sidesChecked & SideChecked::Cloud ? checkLogic(mCloudConflictedNames.getConflictedNames()) : -1;
-    auto unsolvedLocalItems = sidesChecked & SideChecked::Local ? checkLogic(mLocalConflictedNames) : -1;
+    auto unsolvedItems(0);
+    auto cloudConflicts = mCloudConflictedNames.getConflictedNames();
+    if(cloudConflicts.size() > mLocalConflictedNames.size())
+    {
+        unsolvedItems = sidesChecked & SideChecked::Cloud ? checkLogic(cloudConflicts) : -1;
+        if(unsolvedItems == 0)
+        {
+            unsolvedItems = sidesChecked & SideChecked::Local ? checkLogic(mLocalConflictedNames) : -1;
+        }
+    }
+    else
+    {
+        unsolvedItems = sidesChecked & SideChecked::Local ? checkLogic(mLocalConflictedNames) : -1;
+        if(unsolvedItems == 0)
+        {
+            unsolvedItems = sidesChecked & SideChecked::Cloud ? checkLogic(cloudConflicts) : -1;
+        }
+    }
 
-    if(!mIsSolved && (unsolvedCloudItems == 0 && unsolvedLocalItems == 0))
+    if(!mIsSolved && unsolvedItems == 0)
     {
         mIsSolved = true;
         MegaSyncApp->getMegaApi()->clearStalledPath(originalStall.get());
@@ -451,12 +467,15 @@ bool NameConflictedStalledIssue::checkAndSolveConflictedNamesSolved(SidesChecked
 
 void NameConflictedStalledIssue::solveIssue(int option)
 {
+    auto result(false);
+
     if(option == 0)
     {
         mCloudConflictedNames.removeDuplicatedNodes();
     }
 
-    auto result = checkAndSolveConflictedNamesSolved(SideChecked::Cloud);
+    result = checkAndSolveConflictedNamesSolved(SideChecked::Cloud);
+
     if(!result)
     {
         renameNodesAutomatically();
