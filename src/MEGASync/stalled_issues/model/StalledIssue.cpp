@@ -375,6 +375,14 @@ void StalledIssue::setIsSolved()
     mIsSolved = true;
 }
 
+bool StalledIssue::isSolvable() const
+{
+    return mReason == mega::MegaSyncStall::SyncStallReason::NamesWouldClashWhenSynced ||
+           mReason == mega::MegaSyncStall::SyncStallReason::LocalAndRemoteChangedSinceLastSyncedState_userMustChoose ||
+           mReason == mega::MegaSyncStall::SyncStallReason::LocalAndRemotePreviouslyUnsyncedDiffer_userMustChoose ||
+            canBeIgnored();
+}
+
 bool StalledIssue::canBeIgnored() const
 {
     return !mIgnoredPaths.isEmpty();

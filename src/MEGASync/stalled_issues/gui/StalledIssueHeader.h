@@ -73,7 +73,6 @@ private slots:
 private:
     void showIgnoreFile();
     void issueIgnored();
-    void clearLabels();
 
     void propagateButtonClick();
 

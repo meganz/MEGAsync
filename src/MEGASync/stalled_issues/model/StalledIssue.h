@@ -237,6 +237,8 @@ public:
     bool canBeIgnored() const;
     QStringList getIgnoredFiles() const;
 
+    bool isSolvable() const;
+
     bool mDetectedMEGASide = false;
 
     bool isFile() const;

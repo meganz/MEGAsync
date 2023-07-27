@@ -29,6 +29,9 @@ public:
     explicit StalledIssuesReceiver(QObject *parent = nullptr);
     ~StalledIssuesReceiver(){}
 
+public slots:
+    void onSetIsEventRequest();
+
 signals:
     void stalledIssuesReady(StalledIssuesReceiver::StalledIssuesReceived);
 
@@ -38,6 +41,7 @@ protected:
 private:
     QMutex mCacheMutex;
     StalledIssuesReceived mCacheStalledIssues;
+    std::atomic_bool mIsEventRequest { false };
 };
 
 Q_DECLARE_METATYPE(StalledIssuesReceiver::StalledIssuesReceived);
@@ -103,11 +107,14 @@ signals:
     void uiBlocked();
     void uiUnblocked();
 
+    void setIsEventRequest();
+
 protected slots:
     void onGlobalSyncStateChanged(mega::MegaApi *api) override;
 
 private slots:
     void onProcessStalledIssues(StalledIssuesReceiver::StalledIssuesReceived issuesReceived);
+    void onSendEvent();
 
 private:
     void removeRows(QModelIndexList &indexesToRemove);
@@ -138,6 +145,8 @@ private:
     mutable QHash<StalledIssueVariant*, int> mStalledIssuesByOrder;
 
     QHash<int, int> mCountByFilterCriterion;
+
+    QTimer mEventTimer;
 };
 
 #endif // STALLEDISSUESMODEL_H

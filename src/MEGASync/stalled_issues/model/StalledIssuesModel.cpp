@@ -49,30 +49,47 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest *r
                 variant->getData()->fillIssue(stall);
                 variant->getData()->endFillingIssue();
 
-                if(Preferences::instance()->stalledIssuesEventLastDate() != QDate::currentDate())
+                if(mIsEventRequest)
                 {
-                    Preferences::instance()->updateStalledIssuesEventLastDate();
-
-                    QString eventMessage(QString::fromLatin1("Stalled issue received: Type %1").arg(QString::number(stall->reason())));
-                    MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_STALLED_ISSUE_RECEIVED, eventMessage.toUtf8().constData(), false, nullptr);
+                    if(!variant->getData()->isSolvable())
+                    {
+                        QString eventMessage(QString::fromLatin1("Stalled issue received: Type %1").arg(QString::number(stall->reason())));
+                        MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_SI_STALLED_ISSUE_RECEIVED, eventMessage.toUtf8().constData(), false, nullptr);
+                    }
                 }
-
-                if(Preferences::instance()->stalledIssuesMode() == Preferences::StalledIssuesModeType::Smart)
+                else
                 {
-                    variant->getData()->autoSolveIssue();
-                }
+                    if(Preferences::instance()->stalledIssuesMode() == Preferences::StalledIssuesModeType::Smart)
+                    {
+                        variant->getData()->autoSolveIssue();
+                    }
 
-                if(!variant->consultData()->isSolved())
-                {
-                    mCacheStalledIssues.stalledIssues.append(variant);
+                    if(!variant->consultData()->isSolved())
+                    {
+                        mCacheStalledIssues.stalledIssues.append(variant);
+                    }
                 }
             }
         }
-        emit stalledIssuesReady(mCacheStalledIssues);
+
+        if(mIsEventRequest)
+        {
+            mIsEventRequest = false;
+        }
+        else
+        {
+            emit stalledIssuesReady(mCacheStalledIssues);
+        }
     }
 }
 
+void StalledIssuesReceiver::onSetIsEventRequest()
+{
+    mIsEventRequest = true;
+}
+
 const int StalledIssuesModel::ADAPTATIVE_HEIGHT_ROLE = Qt::UserRole;
+const int EVENT_REQUEST_DELAY = 600000; /*10 minutes*/
 
 StalledIssuesModel::StalledIssuesModel(QObject *parent)
     : QAbstractItemModel(parent),
@@ -92,9 +109,16 @@ StalledIssuesModel::StalledIssuesModel(QObject *parent)
 
     mStalledIssuesThread->start();
 
+    connect(this, &StalledIssuesModel::setIsEventRequest,
+            mStalledIssuedReceiver, &StalledIssuesReceiver::onSetIsEventRequest,
+            Qt::QueuedConnection);
+
     connect(mStalledIssuedReceiver, &StalledIssuesReceiver::stalledIssuesReady,
             this, &StalledIssuesModel::onProcessStalledIssues,
             Qt::QueuedConnection);
+
+    connect(&mEventTimer,&QTimer::timeout, this, &StalledIssuesModel::onSendEvent);
+    mEventTimer.setSingleShot(true);
 }
 
 StalledIssuesModel::~StalledIssuesModel()
@@ -113,6 +137,11 @@ StalledIssuesModel::~StalledIssuesModel()
 void StalledIssuesModel::onProcessStalledIssues(StalledIssuesReceiver::StalledIssuesReceived issuesReceived)
 {
     reset();
+
+    if(!issuesReceived.stalledIssues.isEmpty() && !mEventTimer.isActive())
+    {
+        mEventTimer.start(EVENT_REQUEST_DELAY);
+    }
 
     Utilities::queueFunctionInObjectThread(mStalledIssuedReceiver, [this, issuesReceived]()
     {
@@ -153,6 +182,17 @@ void StalledIssuesModel::onProcessStalledIssues(StalledIssuesReceiver::StalledIs
     });
 }
 
+void StalledIssuesModel::onSendEvent()
+{
+    if(Preferences::instance()->stalledIssuesEventLastDate() != QDate::currentDate())
+    {
+        Preferences::instance()->updateStalledIssuesEventLastDate();
+
+        emit setIsEventRequest();
+        mMegaApi->getMegaSyncStallList(nullptr);
+    }
+}
+
 void StalledIssuesModel::updateStalledIssues()
 {
     blockUi();
@@ -165,7 +205,7 @@ void StalledIssuesModel::updateStalledIssuesWhenReady()
     mUpdateWhenGlobalStateChanges = true;
 }
 
-void StalledIssuesModel::onGlobalSyncStateChanged(mega::MegaApi* api)
+void StalledIssuesModel::onGlobalSyncStateChanged(mega::MegaApi*)
 {
 }
 

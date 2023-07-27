@@ -66,13 +66,6 @@ void StalledIssueHeader::issueIgnored()
     showSolvedMessage(tr("Ignored"));
 }
 
-void StalledIssueHeader::clearLabels()
-{
-    ui->fileNameTitle->clear();
-
-    ui->errorTitleTextContainer->removeEventFilter(this);
-}
-
 void StalledIssueHeader::propagateButtonClick()
 {
     QApplication::postEvent(this, new QMouseEvent(QEvent::MouseButtonPress, QPointF(), Qt::LeftButton, Qt::NoButton, Qt::KeyboardModifier::NoModifier));
@@ -267,8 +260,6 @@ void StalledIssueHeader::refreshUi()
 
     QIcon fileTypeIcon;
     QFileInfo fileInfo;
-
-    clearLabels();
 
     //Get full path -> it can be taken from the cloud data or the local data.
     if(getData().consultData()->consultLocalData())
