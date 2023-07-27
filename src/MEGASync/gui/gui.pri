@@ -90,6 +90,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/onboarding/PasswordStrengthChecker.cpp \
     $$PWD/onboarding/BackupsController.cpp \
     $$PWD/onboarding/GuestWindow.cpp \
+    $$PWD/onboarding/OnboardingQmlDialog.cpp \
     $$PWD/onboarding/GuestController.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
@@ -180,6 +181,7 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/onboarding/PasswordStrengthChecker.h \
     $$PWD/onboarding/BackupsController.h \
     $$PWD/onboarding/GuestWindow.h \
+    $$PWD/onboarding/OnboardingQmlDialog.h \
     $$PWD/onboarding/GuestController.h
 
 INCLUDEPATH += $$PWD

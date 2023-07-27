@@ -14,7 +14,7 @@ import Onboard.Syncs_types.Syncs 1.0
 import com.qmldialog 1.0 as Cpp
 import Onboarding 1.0
 
-Cpp.QmlDialog {
+Cpp.OnboardingQmlDialog {
     id: onboardingWindow
 
     title: OnboardingStrings.setUpMEGA

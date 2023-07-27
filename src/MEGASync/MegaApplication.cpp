@@ -30,6 +30,7 @@
 #include "qml/ApiEnums.h"
 #include "onboarding/Onboarding.h"
 #include "onboarding/BackupsModel.h"
+#include "onboarding/GuestController.h"
 
 #include <QQmlApplicationEngine>
 #include "DialogOpener.h"
@@ -5449,6 +5450,16 @@ void MegaApplication::openInfoWizard()
 
     QPointer<QmlDialogWrapper<Onboarding>> onboarding = new QmlDialogWrapper<Onboarding>();
     DialogOpener::showDialog(onboarding)->setIgnoreCloseAllAction(true);
+
+    if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<GuestController>>())
+    {
+        DialogOpener::showDialog(dialog->getDialog());
+        dialog->getDialog()->raise();
+        return;
+    }
+
+    QPointer<QmlDialogWrapper<GuestController>> guest = new QmlDialogWrapper<GuestController>();
+    DialogOpener::showDialog(guest);
 }
 
 void MegaApplication::openSettings(int tab)

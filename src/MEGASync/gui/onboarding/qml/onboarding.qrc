@@ -61,5 +61,6 @@
         <file>content/guest/GuestContentForm.ui.qml</file>
         <file>content/guest/GuestStrings.qml</file>
         <file>content/guest/MenuItem.qml</file>
+		<file>content/guest/GuestDialog.qml</file>
     </qresource>
 </RCC>

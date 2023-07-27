@@ -327,11 +327,6 @@ void InfoDialog::showEvent(QShowEvent *event)
         isShown = true;
         QDialog::showEvent(event);
         mTransferScanCancelUi->update();
-    } else {
-        if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>())
-        {
-            dialog->getDialog()->wrapper()->showGuestInfoDialog();
-        }
     }
 }
 
@@ -398,14 +393,6 @@ void InfoDialog::hideEvent(QHideEvent *event)
 #ifdef _WIN32
     lastWindowHideTime = std::chrono::steady_clock::now();
 #endif
-
-    }
-    else
-    {
-        if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>())
-        {
-            dialog->getDialog()->wrapper()->hideGuestInfoDialog();
-        }
     }
 }
 

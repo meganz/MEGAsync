@@ -1,9 +1,9 @@
 #ifndef GUESTWINDOW_H
 #define GUESTWINDOW_H
 
-#include <QQuickWindow>
+#include "qml/QmlDialog.h"
 
-class GuestWindow : public QQuickWindow
+class GuestWindow : public QmlDialog
 {
     Q_OBJECT
 
