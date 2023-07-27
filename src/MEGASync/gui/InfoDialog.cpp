@@ -172,7 +172,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     cloudItem = NULL;
     sharesItem = NULL;
     rubbishItem = NULL;
-    gWidget = NULL;
     opacityEffect = NULL;
     animation = NULL;
 
@@ -304,7 +303,6 @@ InfoDialog::~InfoDialog()
 {
     removeEventFilter(this);
     delete ui;
-    delete gWidget;
     delete animation;
     delete filterMenu;
 }
@@ -717,14 +715,6 @@ void InfoDialog::updateBlockedState()
 
 void InfoDialog::updateState()
 {
-    if (!mPreferences->logged())
-    {
-        if (gWidget)
-        {
-            gWidget->resetFocus();
-        }
-    }
-
     if (!mPreferences->logged())
     {
         return;
@@ -1396,33 +1386,12 @@ void InfoDialog::regenerateLayout(int blockState, InfoDialog* olddialog)
         case STATE_LOCKED_EMAIL:
         case STATE_LOCKED_SMS:
         {
-            if (!gWidget)
-            {
-                gWidget = new GuestWidget();
-
-                connect(gWidget, SIGNAL(onPageLogin()), this, SLOT(resetLoggedInMode()));
-                connect(gWidget, SIGNAL(forwardAction(int)), this, SLOT(onUserAction(int)));
-                if (olddialog)
-                {
-                    auto t = olddialog->gWidget->getTexts();
-                    gWidget->setTexts(t.first, t.second);
-                }
-            }
-            else
-            {
-                gWidget->enableListener();
-            }
-
-            gWidget->setBlockState(blockState);
-
             updateOverStorageState(Preferences::STATE_BELOW_OVER_STORAGE);
             setOverQuotaMode(false);
             ui->wPSA->removeAnnounce();
 
             dialogLayout->removeWidget(ui->wInfoDialogIn);
             ui->wInfoDialogIn->setVisible(false);
-            dialogLayout->addWidget(gWidget);
-            gWidget->setVisible(true);
 
             #ifdef __APPLE__
                 if (!dummy)
@@ -1443,14 +1412,6 @@ void InfoDialog::regenerateLayout(int blockState, InfoDialog* olddialog)
 
         case STATE_LOGGEDIN:
         {
-            if (gWidget)
-            {
-                gWidget->disableListener();
-                gWidget->initialize();
-
-                dialogLayout->removeWidget(gWidget);
-                gWidget->setVisible(false);
-            }
             dialogLayout->addWidget(ui->wInfoDialogIn);
             ui->wInfoDialogIn->setVisible(true);
 
@@ -1521,11 +1482,6 @@ void InfoDialog::animateStates(bool opt)
             }
         }
     }
-}
-
-void InfoDialog::onUserAction(int action)
-{
-    //app->userAction(action); TODO ONBOARDING
 }
 
 void InfoDialog::resetLoggedInMode()

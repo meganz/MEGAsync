@@ -1,6 +1,6 @@
 #include "Login2FA.h"
 #include "ui_Login2FA.h"
-#include "Preferences.h"
+#include "Preferences/Preferences.h"
 #include "Utilities.h"
 
 #include <QRegExp>

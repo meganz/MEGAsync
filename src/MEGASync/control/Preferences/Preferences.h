@@ -2,8 +2,9 @@
 #define PREFERENCES_H
 
 #include <megaapi.h>
-#include "control/EncryptedSettings.h"
+#include "EncryptedSettings.h"
 #include "syncs/control/SyncInfo.h"
+#include "EphemeralCredentials.h"
 
 #include <QLocale>
 #include <QStringList>
@@ -53,6 +54,10 @@ public:
     void setSession(QString session);
     void setSessionInUserGroup(QString session);
     QString getSession();
+    void removeEphemeralCredentials();
+    void setEphemeralCredentials(EphemeralCredentials &cred);
+    EphemeralCredentials getEphemeralCredentials();
+
     unsigned long long transferIdentifier();
     long long lastTransferNotificationTimestamp();
     void setLastTransferNotificationTimestamp();
@@ -688,6 +693,7 @@ protected:
     static const QString disableFileVersioningKey;
     static const QString disableLeftPaneIconsKey;
     static const QString sessionKey;
+    static const QString ephemeralSessionKey;
     static const QString firstStartDoneKey;
     static const QString firstSyncDoneKey;
     static const QString firstBackupDoneKey;

@@ -2,21 +2,27 @@ import QtQuick 2.0
 import QtQuick.Window 2.12
 
 Window {
-    flags: Qt.Dialog
+
+    property bool loggingIn: true
+
+    signal closingButLoggingIn
 
     function onForgotPasswordClicked() {
-        console.info("onForgotPasswordClicked()");
+        console.debug("mockup QmlDialog::onForgotPasswordClicked()");
     }
 
     function onLoginClicked(data) {
-        console.info("onLoginClicked() -> " + JSON.stringify(data));
+        console.debug("mockup QmlDialog::onLoginClicked() -> "
+                      + JSON.stringify(data));
     }
 
     function accept() {
-        console.log("QmlDialog accepted");
+        console.debug("mockup QmlDialog::accept()");
     }
 
     function reject() {
-        console.log("QmlDialog rejected");
+        console.debug("mockup QmlDialog::reject()");
     }
+
+    flags: Qt.Dialog
 }

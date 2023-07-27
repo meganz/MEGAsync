@@ -6,9 +6,6 @@ import Common 1.0
 // Local
 import Onboard 1.0
 
-// C++
-import Onboarding 1.0
-
 RegisterPageForm {
     id: registerPage
 
@@ -21,14 +18,8 @@ RegisterPageForm {
         nextButton.icons.busyIndicatorVisible = true;
         state = signUpStatus;
 
-        var formData = {
-            [Onboarding.RegisterForm.PASSWORD]: registerContent.password.text,
-            [Onboarding.RegisterForm.EMAIL]: registerContent.email.text,
-            [Onboarding.RegisterForm.FIRST_NAME]: registerContent.firstName.text,
-            [Onboarding.RegisterForm.LAST_NAME]: registerContent.lastName.text
-        }
-
-        Onboarding.onRegisterClicked(formData);
+        loginController.createAccount(registerContent.email.text, registerContent.password.text,
+                                   registerContent.firstName.text, registerContent.lastName.text);
     }
 
     nextButton.progress.onAnimationFinished: {
@@ -45,18 +36,18 @@ RegisterPageForm {
     }
 
     Connections {
-        target: Onboarding
+        target: loginController
 
         onRegisterFinished: (success) => {
             if(success) {
                 registerFlow.state = confirmEmail;
                 registerContent.clean();
             } else {
-                nextButton.progressValue = 0;
+                nextButton.progress.value = 0;
                 registerContent.showEmailAlreadyExistsError();
             }
             state = normalStatus;
-            nextButton.busyIndicatorVisible = false;
+            nextButton.icons.busyIndicatorVisible = false;
         }
     }
 }

@@ -51,10 +51,6 @@ Item {
                         {
                             var finished = progressBarRect.width === backgroundRect.width;
                             animationFinished(finished);
-                            if(finished)
-                            {
-                                backgroundLoader.destroy();
-                            }
                         }
                     }
                 }

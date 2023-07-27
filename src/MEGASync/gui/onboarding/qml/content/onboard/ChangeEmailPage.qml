@@ -1,7 +1,6 @@
 import QtQml 2.12
 
 // Local
-import Onboarding 1.0
 import Onboard 1.0
 
 ChangeEmailPageForm {
@@ -11,13 +10,13 @@ ChangeEmailPageForm {
     }
 
     resendButton.onClicked: {
-        Onboarding.changeRegistrationEmail(emailTextField.text);
+        loginController.changeRegistrationEmail(emailTextField.text);
     }
 
-    emailTextField.text: Onboarding.email
+    emailTextField.text: loginController.email
 
     Connections {
-        target: Onboarding
+        target: loginController
 
         onChangeRegistrationEmailFinished: (success) => {
             if(success) {

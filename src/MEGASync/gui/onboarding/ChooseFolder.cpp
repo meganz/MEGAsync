@@ -4,7 +4,7 @@
 #include "ChooseFolder.h"
 #include <Platform.h>
 #include <MegaApplication.h>
-#include <node_selector/gui/NodeSelector.h>
+#include "gui/node_selector/gui/NodeSelectorSpecializations.h"
 #include <DialogOpener.h>
 
 

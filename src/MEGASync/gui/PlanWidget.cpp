@@ -1,7 +1,7 @@
 #include "PlanWidget.h"
 #include "ui_PlanWidget.h"
 #include "Utilities.h"
-#include "Preferences.h"
+#include "Preferences/Preferences.h"
 #include "megaapi.h"
 #include "MegaApplication.h"
 

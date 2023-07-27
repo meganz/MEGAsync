@@ -1,8 +1,8 @@
 // System
 import QtQml 2.12
 
-// C++
-import Onboarding 1.0
+//C++
+import Syncs 1.0
 
 SelectiveSyncPageForm {
     id: root
@@ -10,7 +10,7 @@ SelectiveSyncPageForm {
     footerButtons {
 
         rightSecondary.onClicked: {
-            syncsPanel.state = syncs;
+            syncsFlow.state = syncType;
         }
 
         rightPrimary.onClicked: {
@@ -18,12 +18,12 @@ SelectiveSyncPageForm {
             localFolderChooser.folderField.hint.visible = false;
             localFolderChooser.folderField.error = false;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
-            Onboarding.addSync(localFolderChooser.getSyncData(), remoteFolderChooser.getSyncData());
+            syncsCpp.addSync(localFolderChooser.getSyncData(), remoteFolderChooser.getSyncData());
         }
     }
 
-    Connections {
-        target: Onboarding
+    Syncs {
+        id: syncsCpp
 
         onSyncSetupSuccess: {
             root.enabled = true;

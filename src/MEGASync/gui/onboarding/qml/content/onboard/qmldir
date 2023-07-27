@@ -11,3 +11,4 @@ SyncSelectTypeButton 1.0 SyncSelectTypeButton.qml
 TwoFAPageForm 1.0 TwoFAPageForm.ui.qml
 ChangeEmailPageForm 1.0 ChangeEmailPageForm.ui.qml
 StackViewPage 1.0 StackViewPage.qml
+CancelLogin 1.0 CancelLogin.qml

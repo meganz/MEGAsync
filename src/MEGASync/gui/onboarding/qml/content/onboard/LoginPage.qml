@@ -2,16 +2,26 @@
 import QtQuick 2.12
 
 // Local
-import Onboarding 1.0
+import Onboard 1.0
 
 // C++
-import Onboard 1.0
+import Onboarding 1.0
+import LoginController 1.0
+import ApiEnums 1.0
 
 LoginPageForm {
     id: root
 
     property bool loginAttempt: false
-    property bool twoFARequired: false
+
+    function setNormalStatus(){
+        root.enabled = true;
+        loginButton.icons.busyIndicatorVisible = false;
+        loginButton.progress.value = 0;
+        state = normalStatus;
+        password.text = "";
+        onboardingWindow.loggingIn = false;
+    }
 
     Keys.onEnterPressed: {
         loginButton.forceActiveFocus();
@@ -48,17 +58,9 @@ LoginPageForm {
 
         loginButton.icons.busyIndicatorVisible = true;
         state = logInStatus;
-        Onboarding.onLoginClicked({ [Onboarding.RegisterForm.EMAIL]: email.text,
-                                    [Onboarding.RegisterForm.PASSWORD]: password.text })
+        loginController.login(email.text, password.text);
+        onboardingWindow.loggingIn = true;
         loginAttempt = true;
-    }
-
-    loginButton.progress.onAnimationFinished: {
-        if(completed) {
-            loginButton.icons.busyIndicatorVisible = false;
-            state = normalStatus;
-            onboardingFlow.state = syncs;
-        }
     }
 
     signUpButton.onClicked: {
@@ -74,28 +76,102 @@ LoginPageForm {
     Connections {
         target: Onboarding
 
-        onUserPassFailed: {
-            root.enabled = true;
-            email.error = true;
-            password.error = true;
-            password.hint.text = OnboardingStrings.errorLogin;
-            password.hint.visible = true;
-            loginButton.icons.busyIndicatorVisible = false;
-            state = normalStatus;
+        onAccountBlocked:
+        {
+            setNormalStatus();
+            onboardingWindow.forceClose();
         }
+    }
+
+    Connections {
+        target: loginController
 
         onFetchingNodesProgress: {
-            console.log("LOGIN PAGE progress:"+progress)
+            console.log("LOGIN PAGE progress: " + progress);
             loginButton.progress.value = progress;
         }
 
-        onLoginFinished: {
-            state = fetchNodesStatus;
+        onFetchingNodesFinished: (firstTime) => {
+            onboardingWindow.loggingIn = false;
+            if(firstTime)
+            {
+                loginButton.icons.busyIndicatorVisible = false;
+                state = normalStatus;
+                onboardingFlow.state = syncs;
+            }
+            else
+            {
+                onboardingWindow.close();
+            }
         }
 
-        onTwoFARequired: {
-            loginButton.icons.busyIndicatorVisible = false;
-            registerFlow.state = twoFA;
+        onAccountCreationResumed: {
+            registerFlow.state = confirmEmail;
+        }
+
+        onLogout: {
+            cancelLogin.close();
+            onboardingWindow.forceClose();
+            setNormalStatus();
+        }
+
+        onLoginFinished: (errorCode, errorMsg) => {
+            if(errorCode !== ApiEnums.API_OK)
+            {
+                setNormalStatus();
+            }
+
+            switch(errorCode)
+            {
+                case ApiEnums.API_EMFAREQUIRED://-26: //mega::MegaError::API_EMFAREQUIRED:->2FA required
+                {
+                    registerFlow.state = twoFA;
+                    break;
+                }
+                case ApiEnums.API_EFAILED: //mega::MegaError::API_EFAILED: ->
+                case ApiEnums.API_EEXPIRED: //mega::MegaError::API_EEXPIRED: -> 2FA failed
+                {
+                    break;
+                }
+                case ApiEnums.API_ENOENT: //mega::MegaError::API_ENOENT: -> user or pass failed
+                {
+                    email.error = true;
+                    password.error = true;
+                    password.hint.text = OnboardingStrings.errorLogin;
+                    password.hint.visible = true;
+                    break;
+                }
+                case ApiEnums.API_EINCOMPLETE: //mega::MegaError::API_EINCOMPLETE: -> account not confirmed
+                {
+                    //what to do here?                    //add banners
+
+                    break;
+                }
+                case ApiEnums.API_ETOOMANY: //mega::MegaError::API_ETOOMANY: -> too many attempts
+                {
+                    //what to do here?                    //add banners
+
+                    break;
+                }
+                case ApiEnums.API_EBLOCKED: //mega::MegaError::API_EBLOCKED: ->  blocked account
+                {
+                    //what to do here?                    //add banners
+
+                    break;
+                }
+                case ApiEnums.API_EACCESS: //locallogout called prior to login finished
+                {
+                    //add banners
+                    break;
+                }
+                case ApiEnums.API_OK: //mega::MegaError::API_OK:
+                {
+                    state = fetchNodesStatus;
+                    break;
+                }
+                default:
+
+            }
         }
     }
 }

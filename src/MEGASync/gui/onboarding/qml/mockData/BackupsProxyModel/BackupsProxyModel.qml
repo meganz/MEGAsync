@@ -5,17 +5,18 @@ import BackupsController 1.0
 ListModel {
     id: proxyModel
 
-    function createBackups() {
-        console.log("mockup BackupsProxyModel::createBackups()");
-        BackupsController.createBackups();
-    }
+    property bool selectedFilterEnabled: false
 
     signal rowSelectedChanged(bool selectedRow, bool selectedAll)
 
-    property bool selectedFilterEnabled: false
+    function createBackups() {
+        console.debug("mockup BackupsProxyModel::createBackups()");
+        BackupsController.createBackups();
+    }
 
     onSelectedFilterEnabledChanged: {
-        console.log("mockup BackupsProxyModel::selectedFilterEnabled: " + selectedFilterEnabled);
+        console.debug("mockup BackupsProxyModel::selectedFilterEnabled: "
+                      + selectedFilterEnabled);
     }
 
     ListElement {
@@ -27,6 +28,7 @@ ListModel {
         mDone: false
         mError: 0
     }
+
     ListElement {
         mName: "Documents12345678910111213141516171819202122232425262728293031323334353637383940"
         mFolder: "C:\\Users\\mega\\Documents12345678910111213141516171819202122232425262728293031323334353637383940"

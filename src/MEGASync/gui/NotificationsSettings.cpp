@@ -2,7 +2,7 @@
 #include "ui_NotificationsSettings.h"
 #include "SwitchButton.h"
 
-#include "Preferences.h"
+#include "Preferences/Preferences.h"
 
 #include <QCheckBox>
 

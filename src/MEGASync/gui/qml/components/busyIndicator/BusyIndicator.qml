@@ -22,22 +22,23 @@ Qml.BusyIndicator {
         anchors.fill: parent
         anchors.centerIn: parent
         visible: root.visible
+    }
 
-        ConicalGradient {
-            anchors.fill: iconImage
-            source: iconImage
-            angle: 120
-            gradient: Gradient {
-                GradientStop { position: 0.0; color: "#303233"; }
-                GradientStop { position: 1.0; color: "transparent"; }
-            }
+    ConicalGradient {
+        anchors.fill: iconImage
+        source: iconImage
+        angle: 120
+        gradient: Gradient {
+            GradientStop { position: 0.0; color: "#303233"; }
+            GradientStop { position: 1.0; color: "transparent"; }
         }
+    }
 
-        RotationAnimator on rotation {
-            running: root.visible
-            loops: Animation.Infinite
-            duration: 2000
-            from: 0 ; to: 360
-        }
+
+    RotationAnimator on rotation {
+        running: root.visible
+        loops: Animation.Infinite
+        duration: 2000
+        from: 0 ; to: 360
     }
 }

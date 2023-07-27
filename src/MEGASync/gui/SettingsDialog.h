@@ -4,7 +4,7 @@
 #include "AccountDetailsDialog.h"
 #include "DownloadFromMegaDialog.h"
 #include "ChangePassword.h"
-#include "Preferences.h"
+#include "Preferences/Preferences.h"
 #include "control/Utilities.h"
 #include "syncs/model/SyncItemModel.h"
 #include "syncs/model/BackupItemModel.h"

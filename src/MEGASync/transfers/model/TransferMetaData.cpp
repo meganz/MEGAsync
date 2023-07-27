@@ -3,7 +3,7 @@
 #include <QDir>
 
 #include <MegaApplication.h>
-#include <Preferences.h>
+#include "Preferences/Preferences.h"
 #include <Notificator.h>
 #include <MegaNodeNames.h>
 

@@ -6,12 +6,14 @@ QT       += network
 SOURCES += $$PWD/HTTPServer.cpp \
     $$PWD/DialogOpener.cpp \
     $$PWD/DownloadQueueController.cpp \
-    $$PWD/Preferences.cpp \
+    $$PWD/LoginController.cpp \
+    $$PWD/Preferences/Preferences.cpp \
+    $$PWD/Preferences/EphemeralCredentials.cpp \
+    $$PWD/Preferences/EncryptedSettings.cpp \
     $$PWD/LinkProcessor.cpp \
     $$PWD/MegaUploader.cpp \
     $$PWD/TransferRemainingTime.cpp \
     $$PWD/UpdateTask.cpp \
-    $$PWD/EncryptedSettings.cpp \
     $$PWD/CrashHandler.cpp \
     $$PWD/ExportProcessor.cpp \
     $$PWD/UserAttributesManager.cpp \
@@ -28,12 +30,14 @@ HEADERS  +=  $$PWD/HTTPServer.h \
     $$PWD/AppStatsEvents.h \
     $$PWD/DialogOpener.h \
     $$PWD/DownloadQueueController.h \
-    $$PWD/Preferences.h \
+    $$PWD/LoginController.h \
+    $$PWD/Preferences/Preferences.h \
+    $$PWD/Preferences/EphemeralCredentials.h \
+    $$PWD/Preferences/EncryptedSettings.h \
     $$PWD/LinkProcessor.h \
     $$PWD/MegaUploader.h \
     $$PWD/TransferRemainingTime.h \
     $$PWD/UpdateTask.h \
-    $$PWD/EncryptedSettings.h \
     $$PWD/CrashHandler.h \
     $$PWD/ExportProcessor.h \
     $$PWD/UserAttributesManager.h \
