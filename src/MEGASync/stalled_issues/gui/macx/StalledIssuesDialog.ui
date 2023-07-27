@@ -65,24 +65,29 @@
     spacing: 5px;
 }
 
-#updateButton:enabled
+#updateButton
 {
-    background-color: #AAAAAA;
-}
-
-#updateButton:hover:enabled
-{
-    background-color: #BDBDBD;
-}
-
-#updateButton:pressed:enabled
-{
-    background-color: #C6C6C6;
+min-height:32px;
+padding-left:12px;
+padding-right:12px;
+font-size:14px;
+font-weight: 400;
+border-radius:4px;
+background:#00BFA5;
+border: 1px solid rgba(0, 0, 0, 0.1);
+color:#FFFFFF;
 }
 
 #updateButton:disabled
 {
-    background-color: rgba(170,170,170,30%);
+background: rgba(0, 191, 165, 0.3);
+color:#FFFFFF;
+}
+
+#updateButton:hover
+{
+background: #00A787;
+color:#FFFFFF;
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -219,86 +224,6 @@ background-color: #f6f6f6;
            </spacer>
           </item>
           <item>
-           <widget class="QFrame" name="Verbose">
-            <property name="minimumSize">
-             <size>
-              <width>250</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>250</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="cursor">
-             <cursorShape>PointingHandCursor</cursorShape>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">#VerboseTitle
-{
-  font-family: &quot;Poppins&quot;;
-  font-size:16px;
-  line-height: 30px;
-  font-weight: 600;
-  color: #e2564c;
-}
-
-#VerboseDescription
-{
-  font-family: &quot;Poppins&quot;;
-  font-size:14px;
-  line-height: 30px;
-  font-weight: 600;
-  color: #666666;
-}
-</string>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::Panel</enum>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayout_6">
-             <property name="spacing">
-              <number>15</number>
-             </property>
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
-              <number>30</number>
-             </property>
-             <item>
-              <widget class="QWidget" name="VerboseIcon" native="true"/>
-             </item>
-             <item>
-              <widget class="QLabel" name="VerboseTitle">
-               <property name="text">
-                <string>Verbose</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="VerboseDescription">
-               <property name="text">
-                <string>Choose what to do
-with each issue</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item>
            <widget class="QFrame" name="Smart">
             <property name="minimumSize">
              <size>
@@ -367,9 +292,88 @@ with each issue</string>
              <item>
               <widget class="QLabel" name="SmartDescription">
                <property name="text">
-                <string>Solve automatically
-most of the common issues
-(Coming soon)</string>
+                <string>Let Mega solve stalls
+automatically</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QFrame" name="Verbose">
+            <property name="minimumSize">
+             <size>
+              <width>250</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>250</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">#VerboseTitle
+{
+  font-family: &quot;Poppins&quot;;
+  font-size:16px;
+  line-height: 30px;
+  font-weight: 600;
+  color: #e2564c;
+}
+
+#VerboseDescription
+{
+  font-family: &quot;Poppins&quot;;
+  font-size:14px;
+  line-height: 30px;
+  font-weight: 600;
+  color: #666666;
+}
+</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Panel</enum>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_6">
+             <property name="spacing">
+              <number>15</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>30</number>
+             </property>
+             <item>
+              <widget class="QWidget" name="VerboseIcon" native="true"/>
+             </item>
+             <item>
+              <widget class="QLabel" name="VerboseTitle">
+               <property name="text">
+                <string>Advanced</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="VerboseDescription">
+               <property name="text">
+                <string>Get full control
+of the sync issues</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
@@ -1004,7 +1008,7 @@ QMenu::item:default
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>32</height>
+              <height>34</height>
              </size>
             </property>
             <property name="maximumSize">

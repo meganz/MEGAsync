@@ -65,7 +65,7 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
     });
 
     //Temporary
-    ui->Smart->setDisabled(true);
+    //ui->Smart->setDisabled(true);
 
     if(Preferences::instance()->stalledIssuesMode() == Preferences::StalledIssuesModeType::None)
     {
