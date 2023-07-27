@@ -7,7 +7,7 @@
 // Update scrips relying on this value if you move it
 #define VER_PRODUCTVERSION_STR      "4.9.6.0\0"
 
-#define VER_BUILD_ID                1
+#define VER_BUILD_ID                2
 
 #define VER_COMPANYNAME_STR         "Mega Limited\0"
 #define VER_FILEDESCRIPTION_STR     "MEGAsync\0"
